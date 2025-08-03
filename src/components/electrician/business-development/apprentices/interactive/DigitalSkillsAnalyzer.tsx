@@ -7,7 +7,7 @@ import { useState } from "react";
 
 const DigitalSkillsAnalyzer = () => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [answers, setAnswers] = useState({});
+  const [answers, setAnswers] = useState<Record<number, number>>({});
   const [isComplete, setIsComplete] = useState(false);
 
   const skillsQuestions = [
@@ -163,7 +163,7 @@ const DigitalSkillsAnalyzer = () => {
                   <div key={index} className="flex justify-between items-center p-3 bg-elec-dark/50 rounded">
                     <span className="text-white">{question.category}</span>
                     <div className="flex items-center gap-2">
-                      <Progress value={(answers[index] / 4) * 100} className="w-20" />
+                      <Progress value={((answers[index] || 0) / 4) * 100} className="w-20" />
                       <span className="text-sm text-muted-foreground">{answers[index] || 0}/4</span>
                     </div>
                   </div>

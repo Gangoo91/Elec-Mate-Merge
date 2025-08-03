@@ -8,169 +8,127 @@ import { Shield, CheckCircle, AlertTriangle, ExternalLink, FileText } from "luci
 import { useState, useEffect } from "react";
 
 const ComplianceChecker = () => {
-  const [checkedItems, setCheckedItems] = useState({});
+  const [checkedItems, setCheckedItems] = useState<Record<string, boolean>>({});
   const [score, setScore] = useState(0);
 
   const complianceCategories = [
     {
       category: "Legal Requirements",
-      priority: "critical",
+      priority: "critical" as const,
       items: [
         {
           id: "apprenticeship-agreement",
           text: "Written apprenticeship agreement signed by all parties",
           regulation: "Education and Skills Act 2008",
-          penalty: "Invalid apprenticeship",
-          guidance: "Must include start/end dates, training provider, qualifications"
+          penalty: "Invalid apprenticeship"
         },
         {
           id: "minimum-wage",
           text: "Apprentice minimum wage compliance (£6.81/hour for under 19s or first year)",
           regulation: "National Minimum Wage Act 1998",
-          penalty: "Fines up to £20,000 per apprentice",
-          guidance: "Regular wage reviews required as apprentice progresses"
+          penalty: "Fines up to £20,000 per apprentice"
         },
         {
           id: "off-job-training",
           text: "20% off-the-job training documented and tracked",
           regulation: "Apprenticeship Funding Rules",
-          penalty: "Funding clawback",
-          guidance: "Minimum 8 hours per week, must be evidenced"
+          penalty: "Funding clawback"
         },
         {
           id: "training-provider",
           text: "Approved training provider contract in place",
           regulation: "Education and Skills Act 2008",
-          penalty: "Qualification invalid",
-          guidance: "Provider must be on Register of Apprenticeship Training Providers"
+          penalty: "Qualification invalid"
         }
       ]
     },
     {
       category: "Health & Safety",
-      priority: "critical",
+      priority: "critical" as const,
       items: [
         {
           id: "risk-assessment",
           text: "Young person risk assessment completed (under 18s)",
           regulation: "Management of H&S at Work Regulations 1999",
-          penalty: "Prosecution, unlimited fines",
-          guidance: "Must consider restricted activities and working hours"
+          penalty: "Prosecution, unlimited fines"
         },
         {
           id: "safety-training",
           text: "Comprehensive safety induction and ongoing training",
           regulation: "Health and Safety at Work Act 1974",
-          penalty: "Prosecution, unlimited fines",
-          guidance: "Must include site-specific hazards and emergency procedures"
+          penalty: "Prosecution, unlimited fines"
         },
         {
           id: "supervision",
           text: "Appropriate supervision arrangements for apprentice",
           regulation: "Management of H&S at Work Regulations 1999",
-          penalty: "Prosecution, enforcement notices",
-          guidance: "Competent person assigned with clear responsibilities"
+          penalty: "Prosecution, enforcement notices"
         },
         {
           id: "ppe",
           text: "Personal protective equipment provided and training given",
           regulation: "Personal Protective Equipment at Work Regulations 2022",
-          penalty: "Improvement/prohibition notices",
-          guidance: "Must be suitable for young person and task-specific"
+          penalty: "Improvement/prohibition notices"
         }
       ]
     },
     {
       category: "Documentation & Records",
-      priority: "high",
+      priority: "high" as const,
       items: [
         {
           id: "progress-reviews",
           text: "Regular progress reviews documented (minimum every 12 weeks)",
           regulation: "Apprenticeship Funding Rules",
-          penalty: "Funding issues",
-          guidance: "Three-way meetings between employer, apprentice, and provider"
+          penalty: "Funding issues"
         },
         {
           id: "evidence-portfolio",
           text: "Digital portfolio maintained with regular evidence uploads",
           regulation: "Apprenticeship Standard Assessment Plan",
-          penalty: "EPA failure",
-          guidance: "Must demonstrate competency development over time"
+          penalty: "EPA failure"
         },
         {
           id: "time-records",
           text: "Accurate time recording system for on/off-job training",
           regulation: "Apprenticeship Funding Rules",
-          penalty: "Audit failure, funding clawback",
-          guidance: "Must be able to demonstrate 20% off-job compliance"
+          penalty: "Audit failure, funding clawback"
         },
         {
           id: "qualifications",
           text: "Functional skills and technical qualifications tracking",
           regulation: "Apprenticeship Standard",
-          penalty: "EPA gateway failure",
-          guidance: "Level 2 English and Maths required before EPA"
+          penalty: "EPA gateway failure"
         }
       ]
     },
     {
       category: "Financial Compliance",
-      priority: "medium",
+      priority: "medium" as const,
       items: [
         {
           id: "funding-rules",
           text: "Apprenticeship levy/co-investment rules followed",
           regulation: "Apprenticeship Funding Rules",
-          penalty: "Funding recovery",
-          guidance: "Must use levy funds within 24 months or face expiry"
+          penalty: "Funding recovery"
         },
         {
           id: "incentive-claims",
           text: "Government incentive payments claimed correctly",
           regulation: "Apprenticeship Incentive Terms",
-          penalty: "Recovery of payments",
-          guidance: "£3,000 for 16-18s, £1,500 for 19-24s, specific claim deadlines"
+          penalty: "Recovery of payments"
         },
         {
           id: "payroll-setup",
           text: "Apprentice correctly set up on payroll with appropriate deductions",
           regulation: "PAYE Regulations",
-          penalty: "HMRC penalties",
-          guidance: "Standard tax/NI rules apply, consider pension auto-enrolment"
-        }
-      ]
-    },
-    {
-      category: "Quality Assurance",
-      priority: "medium",
-      items: [
-        {
-          id: "epa-preparation",
-          text: "End Point Assessment preparation and gateway readiness",
-          regulation: "Apprenticeship Standard Assessment Plan",
-          penalty: "EPA failure, extended training",
-          guidance: "Gateway must be passed before EPA booking"
-        },
-        {
-          id: "employer-engagement",
-          text: "Active employer engagement in apprentice development",
-          regulation: "Apprenticeship Standard",
-          penalty: "Poor outcomes",
-          guidance: "Regular workplace projects and mentoring required"
-        },
-        {
-          id: "continuous-improvement",
-          text: "Feedback collection and continuous improvement processes",
-          regulation: "Quality Assurance Framework",
-          penalty: "Provider performance issues",
-          guidance: "Regular surveys and outcome tracking"
+          penalty: "HMRC penalties"
         }
       ]
     }
   ];
 
-  const handleItemCheck = (itemId, checked) => {
+  const handleItemCheck = (itemId: string, checked: boolean) => {
     setCheckedItems(prev => ({
       ...prev,
       [itemId]: checked
@@ -204,128 +162,114 @@ const ComplianceChecker = () => {
   };
 
   return (
-    <Card className="border-amber-500/20 bg-amber-500/10">
-      <CardHeader>
-        <CardTitle className="text-amber-400 flex items-center gap-2">
-          <Shield className="h-5 w-5" />
-          2025 BS7671 Compliance Checker
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div className="space-y-6">
-          {/* Score Overview */}
-          <div className="text-center p-4 bg-elec-gray border border-amber-500/30 rounded-lg">
-            <div className="flex items-center justify-center gap-4 mb-3">
-              <div className={`text-3xl font-bold ${getScoreColor()}`}>
-                {score.toFixed(0)}%
-              </div>
-              <div className="text-right">
-                <div className={`font-medium ${getScoreColor()}`}>{getScoreLevel()}</div>
-                <div className="text-sm text-muted-foreground">Compliance Score</div>
-              </div>
-            </div>
-            <Progress value={score} className="w-full" />
-            
-            {getCriticalIssues().length > 0 && (
-              <Alert className="mt-4 border-red-500/50 bg-red-500/10">
-                <AlertTriangle className="h-4 w-4 text-red-400" />
-                <AlertDescription className="text-red-200">
-                  {getCriticalIssues().length} critical compliance issues require immediate attention
-                </AlertDescription>
-              </Alert>
-            )}
-          </div>
-
-          {/* Compliance Categories */}
-          <div className="space-y-4">
-            {complianceCategories.map((category, categoryIndex) => (
-              <div key={categoryIndex} className="border border-amber-500/20 rounded-lg p-4">
-                <div className="flex items-center justify-between mb-3">
-                  <h4 className="font-semibold text-white">{category.category}</h4>
-                  <Badge 
-                    variant="outline" 
-                    className={`${
-                      category.priority === 'critical' ? 'border-red-400/30 text-red-300' :
-                      category.priority === 'high' ? 'border-amber-400/30 text-amber-300' : 
-                      'border-blue-400/30 text-blue-300'
-                    }`}
-                  >
-                    {category.priority}
-                  </Badge>
-                </div>
-                
-                <div className="space-y-3">
-                  {category.items.map((item, itemIndex) => (
-                    <div key={itemIndex} className="border border-amber-500/10 rounded p-3">
-                      <div className="flex items-start gap-3">
-                        <Checkbox
-                          id={item.id}
-                          checked={checkedItems[item.id] || false}
-                          onCheckedChange={(checked) => handleItemCheck(item.id, checked)}
-                          className="mt-1"
-                        />
-                        <div className="flex-1 space-y-2">
-                          <label htmlFor={item.id} className="text-white font-medium cursor-pointer">
-                            {item.text}
-                          </label>
-                          
-                          <div className="grid grid-cols-1 md:grid-cols-3 gap-2 text-xs">
-                            <div className="p-2 bg-blue-500/10 border border-blue-500/30 rounded">
-                              <div className="font-medium text-blue-300">Regulation</div>
-                              <div className="text-blue-200">{item.regulation}</div>
-                            </div>
-                            
-                            <div className="p-2 bg-red-500/10 border border-red-500/30 rounded">
-                              <div className="font-medium text-red-300">Non-Compliance Risk</div>
-                              <div className="text-red-200">{item.penalty}</div>
-                            </div>
-                            
-                            <div className="p-2 bg-green-500/10 border border-green-500/30 rounded">
-                              <div className="font-medium text-green-300">Guidance</div>
-                              <div className="text-green-200">{item.guidance}</div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Action Buttons */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-            <Button variant="outline" className="border-blue-500/30">
-              <FileText className="h-4 w-4 mr-2" />
-              Generate Report
-            </Button>
-            
-            <Button variant="outline" className="border-green-500/30">
-              <ExternalLink className="h-4 w-4 mr-2" />
-              ESFA Guidance
-            </Button>
-            
-            <Button variant="outline" className="border-purple-500/30">
-              <CheckCircle className="h-4 w-4 mr-2" />
-              Schedule Review
-            </Button>
-          </div>
-
-          {/* Quick Tips */}
-          <div className="p-4 bg-elec-gray border border-elec-yellow/20 rounded-lg">
-            <h5 className="font-medium text-elec-yellow mb-2">Pro Tips for Maintaining Compliance</h5>
-            <ul className="space-y-1 text-sm text-muted-foreground">
-              <li>• Schedule monthly compliance reviews to catch issues early</li>
-              <li>• Use digital systems for automatic record-keeping and alerts</li>
-              <li>• Maintain regular contact with your training provider</li>
-              <li>• Set calendar reminders for key compliance deadlines</li>
-              <li>• Keep all documentation in a central, easily accessible location</li>
-            </ul>
-          </div>
+    <div className="space-y-4">
+      {/* Header */}
+      <div className="text-center">
+        <h3 className="text-xl font-bold text-elec-yellow mb-2">2025 BS7671 Compliance Checker</h3>
+        <div className="flex items-center justify-center gap-2 mb-3">
+          <Shield className="h-5 w-5 text-amber-400" />
+          <span className="text-muted-foreground">Ensure apprenticeship programme compliance</span>
         </div>
-      </CardContent>
-    </Card>
+      </div>
+
+      {/* Score Overview - Simplified */}
+      <div className="text-center p-6 bg-elec-gray rounded-lg border border-amber-500/30">
+        <div className={`text-4xl font-bold ${getScoreColor()} mb-2`}>
+          {score.toFixed(0)}%
+        </div>
+        <div className={`text-lg font-medium ${getScoreColor()} mb-3`}>{getScoreLevel()}</div>
+        <div className="text-sm text-muted-foreground mb-4">Compliance Score</div>
+        <Progress value={score} className="w-full max-w-md mx-auto mb-4" />
+        
+        {getCriticalIssues().length > 0 && (
+          <div className="flex items-center justify-center gap-2 mt-4 p-3 bg-red-500/10 border border-red-500/30 rounded">
+            <AlertTriangle className="h-4 w-4 text-red-400" />
+            <span className="text-red-200 text-sm">
+              {getCriticalIssues().length} critical compliance issues require immediate attention
+            </span>
+          </div>
+        )}
+      </div>
+
+      {/* Compliance Items - Flat List */}
+      <div className="space-y-3">
+        {complianceCategories.map((category, categoryIndex) => (
+          <div key={categoryIndex}>
+            <div className="flex items-center justify-between mb-3 p-3 bg-elec-dark/30 rounded-lg">
+              <h4 className="font-semibold text-white">{category.category}</h4>
+              <Badge 
+                variant="outline" 
+                className={`${
+                  category.priority === 'critical' ? 'border-red-400/30 text-red-300' :
+                  category.priority === 'high' ? 'border-amber-400/30 text-amber-300' : 
+                  'border-blue-400/30 text-blue-300'
+                }`}
+              >
+                {category.priority}
+              </Badge>
+            </div>
+            
+            <div className="space-y-2">
+              {category.items.map((item, itemIndex) => (
+                <div key={itemIndex} className="p-4 bg-elec-gray/50 rounded-lg border border-amber-500/10">
+                  <div className="flex items-start gap-3 mb-3">
+                    <Checkbox
+                      id={item.id}
+                      checked={checkedItems[item.id] || false}
+                      onCheckedChange={(checked) => handleItemCheck(item.id, !!checked)}
+                      className="mt-1"
+                    />
+                    <label htmlFor={item.id} className="text-white font-medium cursor-pointer flex-1">
+                      {item.text}
+                    </label>
+                  </div>
+                  
+                  <div className="ml-6 grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+                    <div className="flex items-center gap-2">
+                      <span className="text-blue-300 font-medium">Regulation:</span>
+                      <span className="text-blue-200">{item.regulation}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-red-300 font-medium">Risk:</span>
+                      <span className="text-red-200">{item.penalty}</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Action Buttons */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+        <Button variant="outline" className="border-blue-500/30">
+          <FileText className="h-4 w-4 mr-2" />
+          Generate Report
+        </Button>
+        
+        <Button variant="outline" className="border-green-500/30">
+          <ExternalLink className="h-4 w-4 mr-2" />
+          ESFA Guidance
+        </Button>
+        
+        <Button variant="outline" className="border-purple-500/30">
+          <CheckCircle className="h-4 w-4 mr-2" />
+          Schedule Review
+        </Button>
+      </div>
+
+      {/* Quick Tips */}
+      <div className="p-4 bg-elec-dark/30 rounded-lg border border-elec-yellow/20">
+        <h5 className="font-medium text-elec-yellow mb-2">Pro Tips for Maintaining Compliance</h5>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm text-muted-foreground">
+          <div>• Schedule monthly compliance reviews</div>
+          <div>• Use digital systems for record-keeping</div>
+          <div>• Maintain regular contact with training provider</div>
+          <div>• Set calendar reminders for key deadlines</div>
+        </div>
+      </div>
+    </div>
   );
 };
 
