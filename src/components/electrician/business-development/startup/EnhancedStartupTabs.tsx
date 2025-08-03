@@ -1,9 +1,8 @@
 
 import BackButton from "@/components/common/BackButton";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { DropdownTabs } from "@/components/ui/dropdown-tabs";
-import { Heart } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Heart, TrendingUp, Scale, Users } from "lucide-react";
 import BusinessPlanningTab from "./BusinessPlanningTab";
 import LegalComplianceTab from "./LegalComplianceTab";
 import SupportResourcesTab from "./SupportResourcesTab";
@@ -11,36 +10,46 @@ import SupportResourcesTab from "./SupportResourcesTab";
 
 const EnhancedStartupTabs = () => {
   return (
-    <div className="max-w-6xl mx-auto space-y-8 animate-fade-in px-4 sm:px-6">
+    <div className="max-w-6xl mx-auto space-y-8 animate-fade-in">
       <div className="flex flex-col items-center justify-center mb-6">
-        <h1 className="text-2xl md:text-3xl font-bold tracking-tight mb-4 text-center">Starting an Electrical Business</h1>
-        <p className="text-muted-foreground text-center max-w-2xl mb-4 text-sm md:text-base px-4">
+        <h1 className="text-3xl font-bold tracking-tight mb-4 flex items-center gap-3">
+          <TrendingUp className="h-8 w-8 text-elec-yellow" />
+          Starting an Electrical Business
+        </h1>
+        <p className="text-muted-foreground text-center max-w-2xl mb-4">
           Your complete guide to establishing and growing a successful electrical contracting business in the UK
         </p>
         <BackButton customUrl="/electrician/business-development" label="Back to Business Development" />
       </div>
 
-      <DropdownTabs
-        defaultValue="planning"
-        placeholder="Select a section"
-        tabs={[
-          {
-            value: "planning",
-            label: "Business Planning",
-            content: <BusinessPlanningTab />
-          },
-          {
-            value: "legal",
-            label: "Legal & Compliance",
-            content: <LegalComplianceTab />
-          },
-          {
-            value: "support",
-            label: "Support & Resources",
-            content: <SupportResourcesTab />
-          }
-        ]}
-      />
+      <Tabs defaultValue="planning" className="w-full">
+        <TabsList className="grid w-full grid-cols-3">
+          <TabsTrigger value="planning" className="flex items-center gap-2">
+            <TrendingUp className="h-4 w-4" />
+            Business Planning
+          </TabsTrigger>
+          <TabsTrigger value="legal" className="flex items-center gap-2">
+            <Scale className="h-4 w-4" />
+            Legal & Compliance
+          </TabsTrigger>
+          <TabsTrigger value="support" className="flex items-center gap-2">
+            <Users className="h-4 w-4" />
+            Support & Resources
+          </TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="planning">
+          <BusinessPlanningTab />
+        </TabsContent>
+
+        <TabsContent value="legal">
+          <LegalComplianceTab />
+        </TabsContent>
+
+        <TabsContent value="support">
+          <SupportResourcesTab />
+        </TabsContent>
+      </Tabs>
 
       <Card className="border-green-500/50 bg-green-500/10">
         <CardHeader>
