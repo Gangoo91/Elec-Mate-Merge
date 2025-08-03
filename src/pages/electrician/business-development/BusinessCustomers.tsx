@@ -1,8 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DropdownTabs } from "@/components/ui/dropdown-tabs";
-import { Target, TrendingUp, Users, Search, Monitor, Megaphone, ArrowLeft, Zap } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { Target, TrendingUp, Users, Search, Monitor, Megaphone, Zap } from "lucide-react";
+import BackButton from "@/components/common/BackButton";
 import MarketResearchTab from "@/components/electrician/business/customers/tabs/MarketResearchTab";
 import DigitalMarketingTab from "@/components/electrician/business/customers/tabs/DigitalMarketingTab";
 import TraditionalMarketingTab from "@/components/electrician/business/customers/tabs/TraditionalMarketingTab";
@@ -12,19 +11,22 @@ import RetentionGrowthTab from "@/components/electrician/business/customers/tabs
 
 const BusinessCustomers = () => {
   return (
-    <div className="space-y-6 animate-fade-in">
-      {/* Hero Section */}
-      <div className="bg-elec-dark rounded-lg py-8 px-8 text-center space-y-6">
-        <p className="text-base text-muted-foreground max-w-3xl mx-auto">
+    <div className="max-w-6xl mx-auto space-y-6 animate-fade-in">
+      {/* Header Section */}
+      <div className="text-center space-y-4">
+        <div className="flex items-center justify-center gap-3">
+          <Zap className="h-8 w-8 text-elec-yellow" />
+          <h1 className="text-3xl font-bold">Customer Acquisition for Electricians</h1>
+        </div>
+        
+        <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
           Building a solid customer base requires both strategy and consistency. This comprehensive guide offers proven methods for UK electrical contractors to attract, convert and retain valuable customers.
         </p>
         
-        <Link to="/electrician/business-development">
-          <Button variant="outline" size="lg" className="gap-2 border-elec-yellow/20 hover:bg-elec-yellow/10">
-            <ArrowLeft className="h-4 w-4" />
-            <span>Back to Business Development</span>
-          </Button>
-        </Link>
+        <BackButton 
+          customUrl="/electrician/business-development" 
+          label="Back to Business Development" 
+        />
       </div>
 
       <DropdownTabs
