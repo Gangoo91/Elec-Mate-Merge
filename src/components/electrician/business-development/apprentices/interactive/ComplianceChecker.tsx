@@ -211,26 +211,30 @@ const ComplianceChecker = () => {
             
             <div className="space-y-2">
               {category.items.map((item, itemIndex) => (
-                <div key={itemIndex} className="p-4 bg-elec-gray/50 rounded-lg border border-amber-500/10">
-                  <div className="flex items-start gap-3 mb-3">
+                <div key={itemIndex} className="p-4 bg-elec-gray/50 rounded-lg border border-amber-500/10 text-center">
+                  {/* Checkbox at top center */}
+                  <div className="flex justify-center mb-4">
                     <Checkbox
                       id={item.id}
                       checked={checkedItems[item.id] || false}
                       onCheckedChange={(checked) => handleItemCheck(item.id, !!checked)}
-                      className="mt-1"
+                      className="h-5 w-5"
                     />
-                    <label htmlFor={item.id} className="text-white font-medium cursor-pointer flex-1">
-                      {item.text}
-                    </label>
                   </div>
                   
-                  <div className="ml-6 grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
-                    <div className="flex items-center gap-2">
-                      <span className="text-blue-300 font-medium">Regulation:</span>
+                  {/* Main text centered */}
+                  <label htmlFor={item.id} className="block text-white font-medium cursor-pointer mb-4">
+                    {item.text}
+                  </label>
+                  
+                  {/* Regulation and Risk stacked centrally */}
+                  <div className="space-y-3">
+                    <div className="max-w-md mx-auto">
+                      <span className="text-blue-300 font-medium">Regulation: </span>
                       <span className="text-blue-200">{item.regulation}</span>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <span className="text-red-300 font-medium">Risk:</span>
+                    <div className="max-w-md mx-auto">
+                      <span className="text-red-300 font-medium">Risk: </span>
                       <span className="text-red-200">{item.penalty}</span>
                     </div>
                   </div>
