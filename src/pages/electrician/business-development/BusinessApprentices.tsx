@@ -84,7 +84,7 @@ const BusinessApprentices = () => {
                   <ChevronDown className="h-4 w-4 ml-2" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="center" className="w-full min-w-[300px] bg-elec-dark border-elec-gray/40">
+              <DropdownMenuContent align="center" className="w-full min-w-[300px] bg-elec-dark border-elec-gray/40 z-50 shadow-lg">
                 <DropdownMenuItem onClick={() => setActiveTab("recruitment")} className="justify-center">
                   <Users className="h-4 w-4 mr-2" />
                   Recruitment & Selection
