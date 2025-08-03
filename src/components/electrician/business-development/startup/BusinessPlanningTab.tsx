@@ -261,18 +261,30 @@ const BusinessPlanningTab = () => {
                       </Badge>
                     </div>
                     
-                    <div className="space-y-2">
+                    <div className="space-y-3">
                       {category.investments.map((investment, invIndex) => (
-                        <div key={invIndex} className="flex items-center justify-between p-2 bg-green-500/5 border border-green-500/20 rounded">
-                          <div className="flex-1">
-                            <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-green-200`}>{investment.item}</span>
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <Badge variant="outline" className={`text-green-300 border-green-400/30 ${isMobile ? 'text-xs' : 'text-sm'}`}>
-                              {investment.necessity}
-                            </Badge>
-                            <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-white font-medium`}>{investment.amount}</span>
-                          </div>
+                        <div key={invIndex} className={`${isMobile ? 'text-center space-y-2' : 'flex items-center justify-between'} p-3 bg-green-500/5 border border-green-500/20 rounded`}>
+                          {isMobile ? (
+                            <>
+                              <div className="text-sm text-green-200 font-medium">{investment.item}</div>
+                              <Badge variant="outline" className="text-green-300 border-green-400/30 text-sm">
+                                {investment.necessity}
+                              </Badge>
+                              <div className="text-base text-white font-bold">{investment.amount}</div>
+                            </>
+                          ) : (
+                            <>
+                              <div className="flex-1">
+                                <span className="text-sm text-green-200">{investment.item}</span>
+                              </div>
+                              <div className="flex items-center gap-2">
+                                <Badge variant="outline" className="text-green-300 border-green-400/30 text-sm">
+                                  {investment.necessity}
+                                </Badge>
+                                <span className="text-sm text-white font-medium">{investment.amount}</span>
+                              </div>
+                            </>
+                          )}
                         </div>
                       ))}
                     </div>
