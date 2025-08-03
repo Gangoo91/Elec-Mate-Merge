@@ -384,7 +384,7 @@ const RetentionTab = () => {
                   onClick={() => window.open('https://www.cipd.co.uk/knowledge/fundamentals/people/employee-retention', '_blank')}
                 >
                   <Heart className="h-4 w-4 mr-3 text-green-400 flex-shrink-0" />
-                  <div className={`${isMobile ? 'text-sm' : 'text-base'} text-white`}>CIPD Retention Guide</div>
+                  <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>CIPD Retention Guide</div>
                 </Button>
 
                 <Button 
@@ -393,7 +393,7 @@ const RetentionTab = () => {
                   onClick={() => window.open('https://www.gov.uk/browse/employing-people', '_blank')}
                 >
                   <Users className="h-4 w-4 mr-3 text-blue-400 flex-shrink-0" />
-                  <div className={`${isMobile ? 'text-sm' : 'text-base'} text-white`}>Employment Law Guidance</div>
+                  <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>Employment Law Guidance</div>
                 </Button>
 
                 <Button 
@@ -402,7 +402,7 @@ const RetentionTab = () => {
                   onClick={() => window.open('https://www.glassdoor.co.uk/employers/', '_blank')}
                 >
                   <Trophy className="h-4 w-4 mr-3 text-purple-400 flex-shrink-0" />
-                  <div className={`${isMobile ? 'text-sm' : 'text-base'} text-white`}>Employer Brand Building</div>
+                  <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>Employer Brand Building</div>
                 </Button>
               </div>
 
