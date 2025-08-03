@@ -2,7 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DropdownTabs } from "@/components/ui/dropdown-tabs";
 import { Target, TrendingUp, Users, Search, Monitor, Megaphone, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import SafeLink from "@/components/common/SafeLink";
+import { Link } from "react-router-dom";
 import MarketResearchTab from "@/components/electrician/business/customers/tabs/MarketResearchTab";
 import DigitalMarketingTab from "@/components/electrician/business/customers/tabs/DigitalMarketingTab";
 import TraditionalMarketingTab from "@/components/electrician/business/customers/tabs/TraditionalMarketingTab";
@@ -12,25 +12,30 @@ import RetentionGrowthTab from "@/components/electrician/business/customers/tabs
 
 const BusinessCustomers = () => {
   return (
-    <div className="max-w-6xl mx-auto space-y-6 animate-fade-in">
-      <div className="flex items-center gap-2 mb-6">
-        <SafeLink to="/electrician/business-development">
+    <div className="space-y-6 animate-fade-in">
+      <div className="flex items-center gap-2">
+        <Link to="/electrician/business-development">
           <Button variant="ghost" size="sm" className="gap-1">
             <ArrowLeft className="h-4 w-4" />
             <span>Back</span>
           </Button>
-        </SafeLink>
-        <Target className="h-6 w-6 text-elec-yellow" />
-        <h1 className="text-2xl font-bold">Customer Acquisition for Electricians</h1>
+        </Link>
+        <div className="flex items-center gap-3">
+          <Target className="h-6 w-6 text-elec-yellow" />
+          <h1 className="text-2xl font-bold">Customer Acquisition for Electricians</h1>
+        </div>
       </div>
-      
-      <p className="text-muted-foreground mb-6">
-        Building a solid customer base requires both strategy and consistency. This comprehensive guide offers proven methods for UK electrical contractors to attract, convert and retain valuable customers.
-      </p>
+
+      <div className="mb-6">
+        <p className="text-muted-foreground">
+          Building a solid customer base requires both strategy and consistency. This comprehensive guide offers proven methods for UK electrical contractors to attract, convert and retain valuable customers.
+        </p>
+      </div>
 
       <DropdownTabs
         defaultValue="market-research"
         placeholder="Select a customer topic..."
+        className="w-full"
         tabs={[
           {
             value: "market-research",
@@ -71,15 +76,15 @@ const BusinessCustomers = () => {
         ]}
       />
 
-      <Card className="border-elec-yellow/20 bg-elec-gray/50 backdrop-blur-sm">
+      <Card className="border-elec-yellow/20 bg-elec-gray/50">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2">
+          <CardTitle className="text-lg flex items-center gap-2">
             <Target className="h-5 w-5 text-elec-yellow" />
             Remember
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-sm md:text-base leading-relaxed">
+          <p className="text-sm text-muted-foreground">
             Customer acquisition is a marathon, not a sprint. Focus on building genuine relationships, 
             delivering exceptional service, and maintaining consistent marketing efforts. Remember that 
             satisfied customers are your best marketing tool - they provide referrals and testimonials 
