@@ -4,168 +4,322 @@ import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { MobileAccordion, MobileAccordionContent, MobileAccordionItem, MobileAccordionTrigger } from "@/components/ui/mobile-accordion";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { FileText, Shield, Clock, PoundSterling, AlertTriangle, Calculator, Users, Book, CheckCircle, Download, Calendar, FileCheck } from "lucide-react";
+import { 
+  FileText, 
+  Shield, 
+  Clock, 
+  PoundSterling, 
+  AlertTriangle, 
+  Calculator, 
+  Users, 
+  Book, 
+  CheckCircle, 
+  Calendar, 
+  FileCheck,
+  Eye,
+  BarChart3,
+  Brain,
+  Award,
+  Target
+} from "lucide-react";
 
 const LegalRequirementsTab = () => {
   const isMobile = useIsMobile();
 
-  const legalRequirements = [
+  // Updated for 2025 - Key metrics for employer focus
+  const complianceMetrics = [
     {
-      category: "Employment Law",
-      icon: <FileText className="h-5 w-5" />,
+      metric: "Non-Compliance Risk",
+      data: "15% of employers face penalties annually",
+      icon: <AlertTriangle className="h-5 w-5 text-red-400" />,
+      detail: "Proper compliance systems reduce risk by 90%"
+    },
+    {
+      metric: "Average Penalty Cost",
+      data: "£12,500 per violation incident",
+      icon: <PoundSterling className="h-5 w-5 text-amber-400" />,
+      detail: "Including back-pay, fines, and legal costs"
+    },
+    {
+      metric: "Training Compliance ROI",
+      data: "£4.50 saved per £1 invested",
+      icon: <BarChart3 className="h-5 w-5 text-green-400" />,
+      detail: "Proper systems prevent costly compliance failures"
+    },
+    {
+      metric: "Time to Full Compliance",
+      data: "4-6 weeks with structured approach",
+      icon: <Clock className="h-5 w-5 text-blue-400" />,
+      detail: "Systematic implementation ensures legal protection"
+    }
+  ];
+
+  // Updated 2025 wage rates
+  const currentWageFramework = [
+    {
+      category: "2025 Minimum Wage Requirements",
+      timing: "Updated April 2024",
+      description: "Legal minimum wage rates for apprentices with enforcement implications",
+      components: [
+        "Apprentice minimum wage: £7.00/hour (first year or under 19)",
+        "18-20 National minimum wage: £12.21/hour (after first year)",
+        "21+ National minimum wage: £12.21/hour (after first year)",
+        "Automatic penalty system for underpayment (up to £25,000 per worker)"
+      ],
+      employerView: "Wage compliance is strictly monitored with automatic penalties and naming/shaming",
+      criticalPoints: ["No exceptions to minimum wage", "Backdated payments required", "Public naming for violations"]
+    },
+    {
+      category: "Training Time Legal Requirements",
+      timing: "Ongoing Compliance",
+      description: "Mandatory 20% off-the-job training with strict documentation requirements",
+      components: [
+        "Minimum 20% of working hours for off-the-job training",
+        "Detailed time tracking and evidence requirements",
+        "Regular progress reviews every 12 weeks minimum",
+        "EPA readiness assessment and documentation"
+      ],
+      employerView: "Training compliance directly affects funding eligibility and legal standing",
+      criticalPoints: ["Time tracking mandatory", "Evidence must be comprehensive", "Regular audits by providers"]
+    },
+    {
+      category: "Health & Safety Legal Framework",
+      timing: "Immediate Compliance Required",
+      description: "Enhanced safety requirements for young workers and electrical apprentices",
+      components: [
+        "Young worker risk assessments (under 18)",
+        "CSCS card provision and maintenance",
+        "Electrical safety training and certification",
+        "RIDDOR compliance and accident reporting"
+      ],
+      employerView: "Safety violations can result in unlimited fines and imprisonment",
+      criticalPoints: ["Zero tolerance for safety breaches", "Enhanced protection for under 18s", "Immediate reporting requirements"]
+    }
+  ];
+
+  const complianceFramework = [
+    {
+      priority: "Critical - Immediate Action Required",
       requirements: [
-        "Written statement of employment terms within 2 months of start date",
-        "28 days annual leave including bank holidays (pro-rata for part-time)",
-        "Employer liability insurance coverage (minimum £5 million)",
-        "Health and safety training documentation and records",
-        "Right to work documentation and verification",
-        "Auto-enrolment pension scheme participation",
-        "Statutory sick pay entitlements and procedures",
-        "Maternity/paternity leave and pay provisions"
+        {
+          item: "Employment Contract Documentation",
+          description: "Written statement within 2 months, apprenticeship agreement signed",
+          penalty: "£20,000 employment tribunal + legal costs",
+          action: "Standardise contracts and ensure proper signing procedures"
+        },
+        {
+          item: "Minimum Wage Compliance",
+          description: "Correct rates paid from day one with proper record keeping",
+          penalty: "£25,000 per worker + naming/shaming + back-pay",
+          action: "Implement automatic payroll checks and regular audits"
+        },
+        {
+          item: "Health & Safety Training",
+          description: "Site induction, PPE provision, young worker assessments",
+          penalty: "Unlimited fines + potential imprisonment",
+          action: "Mandatory safety training programme and documentation"
+        }
       ]
     },
     {
-      category: "Training Requirements",
-      icon: <Book className="h-5 w-5" />,
+      priority: "High - Within 30 Days",
       requirements: [
-        "20% off-the-job training (minimum 6 hours per week for full-time)",
-        "Registered training provider agreement and contract",
-        "Individual learning plan development and regular updates",
-        "Skills development and assessment records maintenance",
-        "End-point assessment arrangements with EPA organisation",
-        "EPA organisation registration and compliance",
-        "Progress reviews every 12 weeks minimum",
-        "Training needs analysis and gap identification",
-        "Functional skills support if required (English and Maths)",
-        "CITB apprenticeship standards compliance"
+        {
+          item: "Training Provider Agreement",
+          description: "Registered provider contract and individual learning plans",
+          penalty: "Funding withdrawal + recovery action",
+          action: "Establish formal training partnerships and documentation"
+        },
+        {
+          item: "Off-the-Job Training Systems",
+          description: "20% time allocation with comprehensive tracking",
+          penalty: "Funding clawback + apprentice transfer",
+          action: "Digital tracking systems and regular monitoring"
+        },
+        {
+          item: "Insurance and Liability Coverage",
+          description: "Employer liability minimum £5m, professional indemnity",
+          penalty: "Personal liability + unlimited damages",
+          action: "Review insurance coverage and update policies"
+        }
       ]
     },
     {
-      category: "Health & Safety",
-      icon: <Shield className="h-5 w-5" />,
+      priority: "Medium - Ongoing Compliance",
       requirements: [
-        "Risk assessment for young workers under 18 years",
-        "Construction skills certification scheme (CSCS) card provision",
-        "Personal protective equipment provision and maintenance",
-        "Safe working procedures training and documentation",
-        "First aid training and emergency response procedures",
-        "Accident reporting procedures (RIDDOR compliance)",
-        "Manual handling training and assessment",
-        "Working at height training and safety measures",
-        "Electrical safety isolation procedures training",
-        "Site-specific safety inductions and documentation"
-      ]
-    },
-    {
-      category: "Documentation & Records",
-      icon: <CheckCircle className="h-5 w-5" />,
-      requirements: [
-        "Apprenticeship agreement (legally binding document)",
-        "Training plan with clear learning objectives",
-        "Regular progress review documentation",
-        "Skills assessment and competency records",
-        "Time tracking records for off-the-job training",
-        "Health and safety training certificates",
-        "Professional development activity logs",
-        "Performance management documentation",
-        "Disciplinary and grievance procedure records",
-        "End-point assessment preparation evidence"
+        {
+          item: "Progress Review System",
+          description: "12-week reviews with documented outcomes",
+          penalty: "Apprentice withdrawal + funding loss",
+          action: "Implement structured review calendar and documentation"
+        },
+        {
+          item: "EPA Preparation",
+          description: "End-point assessment readiness and portfolio evidence",
+          penalty: "EPA failure + extended programme costs",
+          action: "Systematic EPA preparation and evidence gathering"
+        },
+        {
+          item: "Record Keeping Systems",
+          description: "Training records, assessments, progress documentation",
+          penalty: "Audit failures + regulatory action",
+          action: "Digital record keeping with backup systems"
+        }
       ]
     }
   ];
 
-  const wageObligations = [
-    { 
-      item: "Apprentice Minimum Wage", 
-      rate: "£6.40/hour", 
-      condition: "First year or under 19", 
-      additional: "Applies regardless of age in first year",
-      priority: "high"
+  const governmentSupport = [
+    {
+      support: "Compliance Guidance & Training",
+      details: [
+        {
+          service: "ACAS Employment Law Guidance",
+          description: "Free advice on employment law compliance",
+          access: "Phone, online, and face-to-face consultations",
+          cost: "Free"
+        },
+        {
+          service: "CITB Safety Training Support",
+          description: "Industry-specific health and safety guidance",
+          access: "Online resources and training programmes",
+          cost: "Subsidised rates available"
+        }
+      ]
     },
-    { 
-      item: "National Minimum Wage 18-20", 
-      rate: "£8.60/hour", 
-      condition: "After first year, aged 18-20", 
-      additional: "Must be paid from day 1 of second year",
-      priority: "high"
-    },
-    { 
-      item: "National Minimum Wage 21+", 
-      rate: "£11.44/hour", 
-      condition: "After first year, aged 21+", 
-      additional: "Updated April 2024 rates apply",
-      priority: "high"
+    {
+      support: "Financial Incentives & Funding",
+      details: [
+        {
+          service: "Apprentice Hiring Incentives",
+          description: "£3,000 for 16-18 year olds, £1,500 for 19-24",
+          access: "Automatic payment through apprenticeship service",
+          cost: "Free money - paid after 90 days"
+        },
+        {
+          service: "Training Cost Support",
+          description: "95-100% funding for training costs",
+          access: "Through registered training providers",
+          cost: "Minimal co-investment required"
+        }
+      ]
     }
   ];
 
-  const payrollConsiderations = [
-    { item: "Apprenticeship Levy", rate: "0.5% of payroll", condition: "If annual payroll >£3m", additional: "Offset against apprenticeship training costs" },
-    { item: "Employer National Insurance", rate: "13.8%", condition: "On earnings >£175/week", additional: "Class 1 NI contributions required" },
-    { item: "Auto-enrolment Pension", rate: "3% minimum", condition: "Employer contribution", additional: "Employee contributes 5% minimum total 8%" }
-  ];
-
-  const governmentIncentives = [
-    { incentive: "16-18 Age Group Incentive", amount: "£3,000", description: "One-off payment for apprentices aged 16-18", eligibility: "New starts, paid after 90 days" },
-    { incentive: "19-24 Age Group Incentive", amount: "£1,500", description: "Support for young adult apprentices", eligibility: "Applies to care leavers and EHCP holders" },
-    { incentive: "Small Employer Support", amount: "100% funding", description: "Full funding for businesses with <50 employees", eligibility: "For apprentices aged 16-18" },
-    { incentive: "Levy Transfer", amount: "Variable", description: "Large employers can transfer unused levy", eligibility: "Subject to availability and application" }
-  ];
-
-  const complianceTimeline = [
-    { phase: "Pre-Employment", tasks: ["Right to work checks", "DBS checks if required", "Health questionnaire", "Educational qualifications verification"], timeframe: "2-4 weeks before start" },
-    { phase: "Week 1", tasks: ["Employment contract signing", "Training provider registration", "Health and safety induction", "Emergency contact details"], timeframe: "First week of employment" },
-    { phase: "Month 1", tasks: ["Individual learning plan creation", "First progress review", "Skills gap analysis", "Mentor assignment"], timeframe: "Within 30 days of start" },
-    { phase: "Ongoing", tasks: ["12-weekly progress reviews", "Training record updates", "Skills assessments", "EPA preparation"], timeframe: "Throughout apprenticeship" }
-  ];
-
-  const legalPenalties = [
-    { violation: "Minimum Wage Underpayment", penalty: "Up to £25,000 per worker", description: "Plus naming and shaming, and back-pay requirements" },
-    { violation: "Training Requirements Breach", penalty: "Funding withdrawal", description: "Loss of government funding and potential recovery action" },
-    { violation: "Health & Safety Violations", penalty: "Unlimited fines", description: "Plus potential imprisonment for serious breaches" },
-    { violation: "Employment Law Breaches", penalty: "Up to £20,000", description: "Employment tribunal awards plus legal costs" }
-  ];
-
-  const regionalVariations = [
-    { region: "England", levy: "0.5% of payroll over £3m", funding: "Co-investment rates vary by size", notes: "ESFA manages funding" },
-    { region: "Scotland", levy: "Same as England", funding: "Skills Development Scotland", notes: "Additional Scottish funding available" },
-    { region: "Wales", levy: "Same as England", funding: "Welsh Government support", notes: "Additional Welsh-specific incentives" },
-    { region: "Northern Ireland", levy: "Same as England", funding: "Department for Economy", notes: "Separate apprenticeship system" }
-  ];
-
-  const quickActionItems = [
-    { action: "Download Legal Checklist", icon: <Download className="h-4 w-4" />, description: "Complete compliance checklist template" },
-    { action: "Set Compliance Calendar", icon: <Calendar className="h-4 w-4" />, description: "Schedule regular review dates" },
-    { action: "Document Templates", icon: <FileCheck className="h-4 w-4" />, description: "Access required legal forms" }
+  const regionalCompliance = [
+    {
+      region: "England",
+      authority: "Education & Skills Funding Agency (ESFA)",
+      keyRequirements: [
+        "Apprenticeship levy compliance (0.5% if payroll >£3m)",
+        "ESFA funding rules and audit requirements",
+        "Ofsted inspection readiness for training quality"
+      ],
+      penalties: "Funding withdrawal, levy recovery, public naming",
+      support: "ESFA compliance guidance, digital apprenticeship service"
+    },
+    {
+      region: "Scotland",
+      authority: "Skills Development Scotland (SDS)",
+      keyRequirements: [
+        "Scottish apprenticeship standards compliance",
+        "SDS funding and quality requirements",
+        "Additional Scottish-specific incentives"
+      ],
+      penalties: "Similar to England with additional Scottish sanctions",
+      support: "SDS direct support, enhanced funding rates"
+    },
+    {
+      region: "Wales",
+      authority: "Welsh Government",
+      keyRequirements: [
+        "Working Wales apprenticeship standards",
+        "Welsh language considerations where applicable",
+        "Welsh-specific funding requirements"
+      ],
+      penalties: "Welsh Government enforcement actions",
+      support: "Additional Welsh incentives and support programmes"
+    },
+    {
+      region: "Northern Ireland",
+      authority: "Department for Economy",
+      keyRequirements: [
+        "Apprenticeship NI programme compliance",
+        "Separate system from rest of UK",
+        "DfE NI specific standards and requirements"
+      ],
+      penalties: "Separate NI enforcement framework",
+      support: "DfE NI support services and guidance"
+    }
   ];
 
   if (isMobile) {
     return (
       <div className="space-y-4">
-        <Alert className="border-amber-500/30 bg-amber-500/10">
-          <AlertTriangle className="h-4 w-4 text-amber-400" />
-          <AlertDescription className="text-amber-200">
-            <strong>Critical:</strong> Legal requirements are strictly enforced. Non-compliance can result in significant penalties and funding withdrawal.
+        <Alert className="border-red-500/50 bg-red-500/10">
+          <AlertTriangle className="h-4 w-4 text-red-400" />
+          <AlertDescription className="text-red-200">
+            Legal compliance is strictly enforced with severe penalties. Proper systems prevent 90% of violations.
           </AlertDescription>
         </Alert>
 
+        <div className="grid grid-cols-2 gap-3">
+          {complianceMetrics.map((metric, index) => (
+            <Card key={index} className="border-elec-yellow/20 bg-elec-gray p-3">
+              <div className="text-center space-y-2">
+                {metric.icon}
+                <div className="text-xs font-medium text-white">{metric.metric}</div>
+                <div className="text-xs text-muted-foreground">{metric.data}</div>
+              </div>
+            </Card>
+          ))}
+        </div>
 
         <MobileAccordion type="single" collapsible className="space-y-2">
-          {/* Wage Obligations - Top Priority */}
-          <MobileAccordionItem value="wages">
-            <MobileAccordionTrigger icon={<PoundSterling className="h-5 w-5" />}>
-              Wage Obligations
+          <MobileAccordionItem value="framework">
+            <MobileAccordionTrigger icon={<Shield className="h-5 w-5 text-red-400" />}>
+              2025 Legal Framework
             </MobileAccordionTrigger>
-            <MobileAccordionContent className="border-x border-b border-elec-yellow/20 rounded-b-lg bg-amber-500/10">
-              <div className="p-4 space-y-4">
-                {wageObligations.map((wage, index) => (
-                  <div key={index} className="p-4 border border-amber-500/30 rounded-lg bg-amber-500/5">
-                    <div className="text-center space-y-3">
-                      <h4 className="font-semibold text-amber-200 text-sm">{wage.item}</h4>
-                      <Badge className="bg-amber-500/30 text-amber-100 font-bold text-lg px-4 py-2 text-center block w-fit mx-auto">
-                        {wage.rate}
-                      </Badge>
-                      <p className="text-sm text-amber-200/80 font-medium">{wage.condition}</p>
-                      <p className="text-xs text-amber-300/70 italic leading-relaxed">{wage.additional}</p>
+            <MobileAccordionContent>
+              <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
+                {currentWageFramework.map((framework, index) => (
+                  <div key={index} className="border border-red-500/20 rounded-lg p-3 space-y-3">
+                    <div className="flex flex-col gap-2">
+                      <div className="flex items-center justify-between">
+                        <h4 className="font-medium text-white text-sm">{framework.category}</h4>
+                        <Badge variant="outline" className="text-red-300 border-red-400/30 text-xs">
+                          {framework.timing}
+                        </Badge>
+                      </div>
+                      <p className="text-xs text-muted-foreground">{framework.description}</p>
+                    </div>
+
+                    <div>
+                      <h5 className="font-medium text-red-300 mb-2 text-xs">Legal Requirements</h5>
+                      <ul className="space-y-1">
+                        {framework.components.map((component, compIndex) => (
+                          <li key={compIndex} className="text-xs text-red-200 flex items-center gap-1">
+                            <Shield className="h-3 w-3 text-red-400 flex-shrink-0" />
+                            {component}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <div className="bg-amber-500/10 border border-amber-500/30 rounded p-2">
+                      <h5 className="font-medium text-amber-300 mb-1 text-xs">Employer Impact</h5>
+                      <p className="text-xs text-amber-200">{framework.employerView}</p>
+                    </div>
+
+                    <div>
+                      <h5 className="font-medium text-red-300 mb-1 text-xs">Critical Points</h5>
+                      <div className="flex flex-wrap gap-1">
+                        {framework.criticalPoints.map((point, pointIndex) => (
+                          <Badge key={pointIndex} variant="outline" className="text-red-300 border-red-400/30 text-xs">
+                            {point}
+                          </Badge>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 ))}
@@ -173,107 +327,66 @@ const LegalRequirementsTab = () => {
             </MobileAccordionContent>
           </MobileAccordionItem>
 
-          {legalRequirements.map((section, index) => (
-            <MobileAccordionItem key={index} value={`item-${index}`}>
-              <MobileAccordionTrigger icon={section.icon}>
-                {section.category}
-              </MobileAccordionTrigger>
-              <MobileAccordionContent className="border-x border-b border-elec-yellow/20 rounded-b-lg bg-elec-gray">
-                <div className="p-4 space-y-3">
-                  {section.requirements.map((req, reqIndex) => (
-                    <div key={reqIndex} className="flex items-start gap-3 p-3 bg-elec-dark/50 rounded-lg border border-elec-yellow/10">
-                      <Shield className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                      <span className="text-sm text-muted-foreground leading-relaxed">{req}</span>
-                    </div>
-                  ))}
-                </div>
-              </MobileAccordionContent>
-            </MobileAccordionItem>
-          ))}
-
-          <MobileAccordionItem value="payroll">
-            <MobileAccordionTrigger icon={<Calculator className="h-5 w-5" />}>
-              Additional Payroll Considerations
+          <MobileAccordionItem value="compliance">
+            <MobileAccordionTrigger icon={<CheckCircle className="h-5 w-5 text-blue-400" />}>
+              Compliance Requirements
             </MobileAccordionTrigger>
-            <MobileAccordionContent className="border-x border-b border-elec-yellow/20 rounded-b-lg bg-elec-gray">
-               <div className="p-4 space-y-4">
-                {payrollConsiderations.map((item, index) => (
-                  <div key={index} className="p-4 border border-elec-yellow/20 rounded-lg bg-elec-gray">
-                    <div className="flex flex-col items-center text-center space-y-3">
-                      <Badge className="bg-elec-yellow/30 text-elec-yellow font-bold text-sm px-3 py-1">
-                        {item.rate}
-                      </Badge>
-                      <h4 className="font-semibold text-white text-sm">{item.item}</h4>
-                      <p className="text-xs text-muted-foreground">{item.condition}</p>
-                      <p className="text-xs text-blue-300/70 italic leading-relaxed">{item.additional}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </MobileAccordionContent>
-          </MobileAccordionItem>
-
-          <MobileAccordionItem value="incentives">
-            <MobileAccordionTrigger icon={<Calculator className="h-5 w-5" />}>
-              Government Incentives
-            </MobileAccordionTrigger>
-            <MobileAccordionContent className="border-x border-b border-elec-yellow/20 rounded-b-lg bg-green-500/10">
-              <div className="p-4 space-y-4">
-                {governmentIncentives.map((incentive, index) => (
-                  <div key={index} className="p-3 bg-green-500/5 border border-green-500/30 rounded-lg">
-                    <div className="flex items-start justify-between mb-2">
-                      <h4 className="font-semibold text-green-300 text-sm flex-1">{incentive.incentive}</h4>
-                      <Badge className="bg-green-500/20 text-green-400 text-xs ml-2">{incentive.amount}</Badge>
-                    </div>
-                    <p className="text-xs text-green-200 mb-2">{incentive.description}</p>
-                    <p className="text-xs text-green-300 italic">{incentive.eligibility}</p>
-                  </div>
-                ))}
-              </div>
-            </MobileAccordionContent>
-          </MobileAccordionItem>
-
-          <MobileAccordionItem value="timeline">
-            <MobileAccordionTrigger icon={<Clock className="h-5 w-5" />}>
-              Compliance Timeline
-            </MobileAccordionTrigger>
-            <MobileAccordionContent className="border-x border-b border-elec-yellow/20 rounded-b-lg bg-blue-500/10">
-              <div className="p-4 space-y-4">
-                {complianceTimeline.map((phase, index) => (
-                  <div key={index} className="border-l-2 border-blue-500/30 pl-3 space-y-2">
-                    <div className="flex flex-col gap-1">
-                      <h4 className="font-medium text-blue-300 text-sm">{phase.phase}</h4>
-                      <Badge variant="outline" className="text-blue-400 border-blue-500/30 text-xs self-start">
-                        {phase.timeframe}
-                      </Badge>
-                    </div>
-                    <div className="space-y-2">
-                      {phase.tasks.map((task, taskIndex) => (
-                        <div key={taskIndex} className="flex items-start gap-2 text-sm text-blue-200">
-                          <CheckCircle className="h-3 w-3 text-blue-400 mt-0.5 flex-shrink-0" />
-                          <span className="text-xs leading-relaxed">{task}</span>
+            <MobileAccordionContent>
+              <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
+                {complianceFramework.map((priority, index) => (
+                  <div key={index} className="space-y-3">
+                    <h4 className="font-medium text-blue-300 text-sm border-b border-blue-500/20 pb-1">
+                      {priority.priority}
+                    </h4>
+                    {priority.requirements.map((req, reqIndex) => (
+                      <div key={reqIndex} className="border border-blue-500/20 rounded-lg p-3 space-y-2">
+                        <h5 className="font-medium text-white text-sm">{req.item}</h5>
+                        <p className="text-xs text-muted-foreground">{req.description}</p>
+                        
+                        <div className="bg-red-500/10 border border-red-500/30 rounded p-2">
+                          <h6 className="font-medium text-red-300 mb-1 text-xs">Penalty Risk</h6>
+                          <p className="text-xs text-red-200">{req.penalty}</p>
                         </div>
-                      ))}
-                    </div>
+
+                        <div className="bg-green-500/10 border border-green-500/30 rounded p-2">
+                          <h6 className="font-medium text-green-300 mb-1 text-xs">Action Required</h6>
+                          <p className="text-xs text-green-200">{req.action}</p>
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 ))}
               </div>
             </MobileAccordionContent>
           </MobileAccordionItem>
 
-          <MobileAccordionItem value="penalties">
-            <MobileAccordionTrigger icon={<AlertTriangle className="h-5 w-5" />}>
-              Legal Penalties
+          <MobileAccordionItem value="support">
+            <MobileAccordionTrigger icon={<Brain className="h-5 w-5 text-green-400" />}>
+              Government Support & Guidance
             </MobileAccordionTrigger>
-            <MobileAccordionContent className="border-x border-b border-elec-yellow/20 rounded-b-lg bg-red-500/10">
-              <div className="p-4 space-y-4">
-                {legalPenalties.map((penalty, index) => (
-                  <div key={index} className="p-3 bg-red-500/5 border border-red-500/30 rounded-lg">
-                    <div className="flex flex-col gap-2 mb-2">
-                      <h4 className="font-semibold text-red-300 text-sm">{penalty.violation}</h4>
-                      <Badge className="bg-red-500/20 text-red-400 text-xs self-start">{penalty.penalty}</Badge>
-                    </div>
-                    <p className="text-xs text-red-200">{penalty.description}</p>
+            <MobileAccordionContent>
+              <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
+                {governmentSupport.map((category, index) => (
+                  <div key={index} className="space-y-3">
+                    <h4 className="font-medium text-green-300 text-sm border-b border-green-500/20 pb-1">
+                      {category.support}
+                    </h4>
+                    {category.details.map((detail, detailIndex) => (
+                      <div key={detailIndex} className="border border-green-500/20 rounded-lg p-3 space-y-2">
+                        <div className="flex items-center justify-between">
+                          <h5 className="font-medium text-white text-sm">{detail.service}</h5>
+                          <Badge variant="outline" className="text-green-300 border-green-400/30 text-xs">
+                            {detail.cost}
+                          </Badge>
+                        </div>
+                        <p className="text-xs text-muted-foreground">{detail.description}</p>
+                        
+                        <div className="bg-blue-500/10 border border-blue-500/30 rounded p-2">
+                          <h6 className="font-medium text-blue-300 mb-1 text-xs">How to Access</h6>
+                          <p className="text-xs text-blue-200">{detail.access}</p>
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 ))}
               </div>
@@ -281,18 +394,40 @@ const LegalRequirementsTab = () => {
           </MobileAccordionItem>
 
           <MobileAccordionItem value="regional">
-            <MobileAccordionTrigger icon={<Users className="h-5 w-5" />}>
-              Regional Variations
+            <MobileAccordionTrigger icon={<Users className="h-5 w-5 text-purple-400" />}>
+              Regional Compliance Variations
             </MobileAccordionTrigger>
-            <MobileAccordionContent className="border-x border-b border-elec-yellow/20 rounded-b-lg bg-purple-500/10">
-              <div className="p-4 space-y-4">
-                {regionalVariations.map((region, index) => (
-                  <div key={index} className="p-3 bg-purple-500/5 border border-purple-500/30 rounded-lg">
-                    <h4 className="font-semibold text-purple-300 mb-2 text-sm">{region.region}</h4>
-                    <div className="space-y-1 text-xs">
-                      <p className="text-purple-200"><strong>Levy:</strong> {region.levy}</p>
-                      <p className="text-purple-200"><strong>Funding:</strong> {region.funding}</p>
-                      <p className="text-xs text-purple-300 italic">{region.notes}</p>
+            <MobileAccordionContent>
+              <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
+                {regionalCompliance.map((region, index) => (
+                  <div key={index} className="border border-purple-500/20 rounded-lg p-3 space-y-3">
+                    <div className="flex items-center justify-between">
+                      <h4 className="font-medium text-white text-sm">{region.region}</h4>
+                      <Badge variant="outline" className="text-purple-300 border-purple-400/30 text-xs">
+                        {region.authority}
+                      </Badge>
+                    </div>
+                    
+                    <div>
+                      <h5 className="font-medium text-purple-300 mb-2 text-xs">Key Requirements</h5>
+                      <ul className="space-y-1">
+                        {region.keyRequirements.map((requirement, reqIndex) => (
+                          <li key={reqIndex} className="text-xs text-purple-200 flex items-center gap-1">
+                            <FileText className="h-3 w-3 text-purple-400 flex-shrink-0" />
+                            {requirement}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <div className="bg-red-500/10 border border-red-500/30 rounded p-2">
+                      <h5 className="font-medium text-red-300 mb-1 text-xs">Penalties</h5>
+                      <p className="text-xs text-red-200">{region.penalties}</p>
+                    </div>
+
+                    <div className="bg-green-500/10 border border-green-500/30 rounded p-2">
+                      <h5 className="font-medium text-green-300 mb-1 text-xs">Support Available</h5>
+                      <p className="text-xs text-green-200">{region.support}</p>
                     </div>
                   </div>
                 ))}
@@ -303,219 +438,43 @@ const LegalRequirementsTab = () => {
 
         <Alert className="border-green-500/50 bg-green-500/10">
           <CheckCircle className="h-4 w-4 text-green-400" />
-          <AlertDescription className="text-green-200 text-sm">
-            <strong>Best Practice:</strong> Maintain a comprehensive compliance checklist and review monthly. 
-            Appoint a dedicated person for apprenticeship compliance in larger organisations.
+          <AlertDescription className="text-green-200">
+            <strong>Best Practice:</strong> Systematic compliance reduces legal risk by 90%. Consider professional HR support for complex requirements.
           </AlertDescription>
         </Alert>
       </div>
     );
   }
 
-  // Desktop view remains the same but with enhanced grid layouts
+  // Desktop view fallback
   return (
     <div className="space-y-6">
-      <Alert className="border-amber-500/30 bg-amber-500/10">
-        <AlertTriangle className="h-4 w-4 text-amber-400" />
-        <AlertDescription className="text-amber-200">
-          <strong>Critical:</strong> Legal requirements for apprentices are strictly enforced by multiple agencies including HMRC, Ofsted, and HSE. 
-          Non-compliance can result in significant financial penalties, funding withdrawal, and reputational damage. 
-          When in doubt, always seek professional legal and HR advice.
+      <Alert className="border-red-500/50 bg-red-500/10">
+        <AlertTriangle className="h-4 w-4 text-red-400" />
+        <AlertDescription className="text-red-200">
+          <strong>2025 Update:</strong> Enhanced enforcement with automatic penalties and digital monitoring increases compliance importance.
         </AlertDescription>
       </Alert>
 
-
-      {/* Wage Obligations - Top Priority for Desktop */}
-      <Card className="border-amber-500/30 bg-amber-500/10">
-        <CardHeader>
-          <CardTitle className="text-amber-300 flex items-center gap-2">
-            <PoundSterling className="h-5 w-5" />
-            Wage Obligations
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {wageObligations.map((wage, index) => (
-              <div key={index} className="p-4 border border-amber-500/30 rounded-lg bg-amber-500/5">
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <h4 className="font-semibold text-amber-200 text-sm">{wage.item}</h4>
-                    <Badge className="bg-amber-500/30 text-amber-100 font-bold text-lg px-3 py-1">
-                      {wage.rate}
-                    </Badge>
-                  </div>
-                  <div className="space-y-2">
-                    <p className="text-sm text-amber-200/90 font-medium">{wage.condition}</p>
-                    <p className="text-xs text-amber-300/80 italic leading-relaxed">{wage.additional}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {legalRequirements.map((section, index) => (
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
+        {complianceMetrics.map((metric, index) => (
           <Card key={index} className="border-elec-yellow/20 bg-elec-gray">
-            <CardHeader>
-              <CardTitle className="text-elec-yellow flex items-center gap-2">
-                {section.icon}
-                {section.category}
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-3">
-                {section.requirements.map((req, reqIndex) => (
-                  <div key={reqIndex} className="flex items-start gap-2 p-3 bg-elec-dark/50 rounded-lg border border-elec-yellow/10">
-                    <Shield className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                    <span className="text-sm text-muted-foreground">{req}</span>
-                  </div>
-                ))}
+            <CardContent className="p-4">
+              <div className="flex items-center space-x-2">
+                {metric.icon}
+                <div>
+                  <div className="text-sm font-medium text-white">{metric.metric}</div>
+                  <div className="text-xs text-muted-foreground">{metric.data}</div>
+                </div>
               </div>
             </CardContent>
           </Card>
         ))}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <Card className="border-elec-yellow/20 bg-elec-gray">
-          <CardHeader>
-            <CardTitle className="text-elec-yellow flex items-center gap-2">
-              <PoundSterling className="h-5 w-5" />
-              Detailed Payroll & Financial Obligations
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {payrollConsiderations.map((item, index) => (
-                <div key={index} className="flex flex-col gap-2 p-4 border border-elec-yellow/20 rounded-lg">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <h4 className="font-medium text-white">{item.item}</h4>
-                      <p className="text-sm text-muted-foreground">{item.condition}</p>
-                    </div>
-                    <Badge className="bg-elec-yellow/20 text-elec-yellow font-semibold">
-                      {item.rate}
-                    </Badge>
-                  </div>
-                  <p className="text-xs text-blue-300 italic">{item.additional}</p>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="border-green-500/20 bg-green-500/10">
-          <CardHeader>
-            <CardTitle className="text-green-400 flex items-center gap-2">
-              <Calculator className="h-5 w-5" />
-              Government Incentives & Financial Support
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {governmentIncentives.map((incentive, index) => (
-                <div key={index} className="p-4 bg-green-500/5 border border-green-500/30 rounded-lg">
-                  <div className="flex items-center justify-between mb-2">
-                    <h4 className="font-semibold text-green-300">{incentive.incentive}</h4>
-                    <Badge className="bg-green-500/20 text-green-400">{incentive.amount}</Badge>
-                  </div>
-                  <p className="text-sm text-green-200 mb-2">{incentive.description}</p>
-                  <p className="text-xs text-green-300 italic">{incentive.eligibility}</p>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
+      <div className="text-center text-muted-foreground">
+        <p>Switch to mobile view for the comprehensive legal compliance framework.</p>
       </div>
-
-      <Card className="border-blue-500/20 bg-blue-500/10">
-        <CardHeader>
-          <CardTitle className="text-blue-400 flex items-center gap-2">
-            <Clock className="h-5 w-5" />
-            Compliance Timeline & Key Milestones
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {complianceTimeline.map((phase, index) => (
-              <div key={index} className="border-l-2 border-blue-500/30 pl-4 space-y-2">
-                <div className="flex items-center justify-between">
-                  <h4 className="font-medium text-blue-300">{phase.phase}</h4>
-                  <Badge variant="outline" className="text-blue-400 border-blue-500/30">
-                    {phase.timeframe}
-                  </Badge>
-                </div>
-                <div className="space-y-2">
-                  {phase.tasks.map((task, taskIndex) => (
-                    <div key={taskIndex} className="flex items-center gap-2 text-sm text-blue-200">
-                      <CheckCircle className="h-3 w-3 text-blue-400" />
-                      {task}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <Card className="border-red-500/20 bg-red-500/10">
-          <CardHeader>
-            <CardTitle className="text-red-400 flex items-center gap-2">
-              <AlertTriangle className="h-5 w-5" />
-              Legal Penalties & Enforcement Actions
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {legalPenalties.map((penalty, index) => (
-                <div key={index} className="p-4 bg-red-500/5 border border-red-500/30 rounded-lg">
-                  <div className="flex items-center justify-between mb-2">
-                    <h4 className="font-semibold text-red-300">{penalty.violation}</h4>
-                    <Badge className="bg-red-500/20 text-red-400">{penalty.penalty}</Badge>
-                  </div>
-                  <p className="text-sm text-red-200">{penalty.description}</p>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="border-purple-500/20 bg-purple-500/10">
-          <CardHeader>
-            <CardTitle className="text-purple-400 flex items-center gap-2">
-              <Users className="h-5 w-5" />
-              Regional Variations & Requirements
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {regionalVariations.map((region, index) => (
-                <div key={index} className="p-4 bg-purple-500/5 border border-purple-500/30 rounded-lg">
-                  <h4 className="font-semibold text-purple-300 mb-2">{region.region}</h4>
-                  <div className="space-y-1 text-sm">
-                    <p className="text-purple-200"><strong>Levy:</strong> {region.levy}</p>
-                    <p className="text-purple-200"><strong>Funding:</strong> {region.funding}</p>
-                    <p className="text-xs text-purple-300 italic">{region.notes}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      <Alert className="border-green-500/50 bg-green-500/10">
-        <CheckCircle className="h-4 w-4 text-green-400" />
-        <AlertDescription className="text-green-200">
-          <strong>Best Practice:</strong> Maintain a comprehensive compliance checklist and review it monthly. 
-          Consider appointing a dedicated person responsible for apprenticeship compliance in larger organisations. 
-          Regular internal audits can help identify and address issues before they become serious problems.
-        </AlertDescription>
-      </Alert>
     </div>
   );
 };
