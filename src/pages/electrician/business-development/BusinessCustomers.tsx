@@ -13,23 +13,25 @@ import RetentionGrowthTab from "@/components/electrician/business/customers/tabs
 const BusinessCustomers = () => {
   return (
     <div className="space-y-6 animate-fade-in">
-      <div className="flex items-center gap-2">
-        <Link to="/electrician/business-development">
-          <Button variant="ghost" size="sm" className="gap-1">
-            <ArrowLeft className="h-4 w-4" />
-            <span>Back</span>
-          </Button>
-        </Link>
-        <div className="flex items-center gap-3">
-          <Target className="h-6 w-6 text-elec-yellow" />
-          <h1 className="text-2xl font-bold">Customer Acquisition for Electricians</h1>
+      {/* Hero Section */}
+      <div className="bg-elec-gray rounded-lg p-8 text-center space-y-6">
+        <div className="flex items-center justify-center gap-4">
+          <Target className="h-8 w-8 text-elec-yellow" />
+          <h1 className="text-4xl md:text-5xl font-bold text-white">
+            Customer Acquisition for Electricians
+          </h1>
         </div>
-      </div>
-
-      <div className="mb-6">
-        <p className="text-muted-foreground">
+        
+        <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
           Building a solid customer base requires both strategy and consistency. This comprehensive guide offers proven methods for UK electrical contractors to attract, convert and retain valuable customers.
         </p>
+        
+        <Link to="/electrician/business-development">
+          <Button variant="outline" size="lg" className="gap-2 border-elec-yellow/20 hover:bg-elec-yellow/10">
+            <ArrowLeft className="h-4 w-4" />
+            <span>Back to Business Development</span>
+          </Button>
+        </Link>
       </div>
 
       <DropdownTabs
