@@ -472,71 +472,115 @@ export const OperationsTab = () => {
             </MobileAccordionContent>
           </MobileAccordionItem>
         ))}
-      </MobileAccordion>
 
-      <div className="grid gap-4 md:grid-cols-2">
-        <Card className="border-elec-yellow/20 bg-elec-gray/50 p-4">
-          <h4 className="font-medium text-elec-yellow mb-3 flex items-center gap-2">
-            <BarChart3 className="h-4 w-4" />
-            Operational Benchmarks
-          </h4>
-          <div className="space-y-4">
-            {operationalBenchmarks.map((category, index) => (
-              <div key={index}>
-                <h5 className="text-sm font-medium text-white mb-2">{category.category}</h5>
-                <div className="space-y-2">
-                  {category.benchmarks.map((benchmark, bIndex) => (
-                    <div key={bIndex} className="flex justify-between text-xs">
-                      <span className="text-muted-foreground">{benchmark.metric}</span>
-                      <span className="text-blue-300">{benchmark.target}</span>
+        <MobileAccordionItem value="operational-benchmarks">
+        <MobileAccordionTrigger icon={<BarChart3 className="h-5 w-5 text-orange-400" />}>
+          Operational Benchmarks
+        </MobileAccordionTrigger>
+        <MobileAccordionContent>
+          <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
+            <div className="border border-orange-500/20 rounded-lg p-3 space-y-3">
+              <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>Performance Benchmarks</h4>
+              <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                Industry-standard metrics to track operational improvements and business growth
+              </p>
+              
+              <div className="space-y-4">
+                {operationalBenchmarks.map((category, index) => (
+                  <div key={index} className="border border-orange-400/20 rounded-lg p-3">
+                    <h5 className={`font-medium text-orange-300 mb-3 ${isMobile ? 'text-xs' : 'text-sm'}`}>{category.category}</h5>
+                    <div className="space-y-2">
+                      {category.benchmarks.map((benchmark, bIndex) => (
+                        <div key={bIndex} className="flex justify-between items-center">
+                          <span className={`text-muted-foreground ${isMobile ? 'text-xs' : 'text-sm'}`}>{benchmark.metric}</span>
+                          <Badge variant="outline" className="text-blue-300 border-blue-400/30">
+                            {benchmark.target}
+                          </Badge>
+                        </div>
+                      ))}
                     </div>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </Card>
-
-        <Card className="border-elec-yellow/20 bg-elec-gray/50 p-4">
-          <h4 className="font-medium text-elec-yellow mb-3 flex items-center gap-2">
-            <Award className="h-4 w-4" />
-            Scaling Advantages
-          </h4>
-          <div className="space-y-3">
-            {scalingAdvantages.map((advantage, index) => (
-              <div key={index} className="space-y-2">
-                <h5 className="text-sm font-medium text-white">{advantage.title}</h5>
-                <p className="text-xs text-muted-foreground">{advantage.description}</p>
-                <div className="text-xs text-blue-300 bg-blue-500/10 rounded p-2">
-                  {advantage.impact}
-                </div>
-              </div>
-            ))}
-          </div>
-        </Card>
-      </div>
-
-      <Card className="border-elec-yellow/20 bg-elec-gray/50 p-4">
-        <h4 className="font-medium text-elec-yellow mb-3 flex items-center gap-2">
-          <LineChart className="h-4 w-4" />
-          Performance Monitoring & KPIs
-        </h4>
-        <div className="grid gap-4 md:grid-cols-3">
-          {performanceMetrics.map((category, index) => (
-            <div key={index}>
-              <h5 className="text-sm font-medium text-white mb-2">{category.category}</h5>
-              <ul className="space-y-1">
-                {category.kpis.map((kpi, kpiIndex) => (
-                  <li key={kpiIndex} className="flex items-start gap-2 text-xs text-muted-foreground">
-                    <Zap className="h-3 w-3 text-elec-yellow mt-0.5 shrink-0" />
-                    {kpi}
-                  </li>
+                  </div>
                 ))}
-              </ul>
+              </div>
             </div>
-          ))}
-        </div>
-      </Card>
+          </div>
+        </MobileAccordionContent>
+      </MobileAccordionItem>
+
+      <MobileAccordionItem value="scaling-advantages">
+        <MobileAccordionTrigger icon={<Award className="h-5 w-5 text-green-400" />}>
+          Scaling Advantages
+        </MobileAccordionTrigger>
+        <MobileAccordionContent>
+          <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
+            <div className="border border-green-500/20 rounded-lg p-3 space-y-3">
+              <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>Growth Through Operations</h4>
+              <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                Strategic operational advantages that enable sustainable business scaling
+              </p>
+              
+              <div className="space-y-4">
+                {scalingAdvantages.map((advantage, index) => (
+                  <div key={index} className="border border-green-400/20 rounded-lg p-3 space-y-3">
+                    <h5 className={`font-medium text-green-300 ${isMobile ? 'text-xs' : 'text-sm'}`}>{advantage.title}</h5>
+                    <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{advantage.description}</p>
+                    
+                    <div>
+                      <h6 className={`font-medium text-green-300 mb-2 ${isMobile ? 'text-xs' : 'text-sm'}`}>Key Advantages</h6>
+                      <ul className="space-y-1">
+                        {advantage.advantages.map((adv, advIndex) => (
+                          <li key={advIndex} className={`flex items-start gap-2 ${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                            <CheckCircle className={`${isMobile ? 'h-3 w-3' : 'h-4 w-4'} text-green-400 mt-0.5 shrink-0`} />
+                            {adv}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    
+                    <div className="bg-green-500/10 rounded p-3 border border-green-400/20">
+                      <h6 className={`font-medium text-green-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Business Impact</h6>
+                      <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-green-200`}>{advantage.impact}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </MobileAccordionContent>
+      </MobileAccordionItem>
+
+      <MobileAccordionItem value="performance-metrics">
+        <MobileAccordionTrigger icon={<LineChart className="h-5 w-5 text-purple-400" />}>
+          Performance Monitoring & KPIs
+        </MobileAccordionTrigger>
+        <MobileAccordionContent>
+          <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
+            <div className="border border-purple-500/20 rounded-lg p-3 space-y-3">
+              <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>Key Performance Indicators</h4>
+              <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                Essential metrics to monitor operational performance and drive continuous improvement
+              </p>
+              
+              <div className="space-y-4">
+                {performanceMetrics.map((category, index) => (
+                  <div key={index} className="border border-purple-400/20 rounded-lg p-3">
+                    <h5 className={`font-medium text-purple-300 mb-3 ${isMobile ? 'text-xs' : 'text-sm'}`}>{category.category}</h5>
+                    <ul className="space-y-2">
+                      {category.kpis.map((kpi, kpiIndex) => (
+                        <li key={kpiIndex} className={`flex items-start gap-2 ${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                          <Zap className={`${isMobile ? 'h-3 w-3' : 'h-4 w-4'} text-elec-yellow mt-0.5 shrink-0`} />
+                          {kpi}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </MobileAccordionContent>
+      </MobileAccordionItem>
+      </MobileAccordion>
     </div>
   );
 };
