@@ -3,7 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { MobileAccordion, MobileAccordionContent, MobileAccordionItem, MobileAccordionTrigger } from "@/components/ui/mobile-accordion";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { Star, Shield, Clock, Users, MessageSquare, Award, AlertTriangle, Heart } from "lucide-react";
+import { Star, Shield, Clock, Users, MessageSquare, Award, AlertTriangle, Heart, Monitor } from "lucide-react";
 
 const CustomerExperienceTab = () => {
   const isMobile = useIsMobile();
@@ -213,6 +213,69 @@ const CustomerExperienceTab = () => {
                     <li>• Follow up to ensure satisfaction</li>
                     <li>• Implement process improvements</li>
                     <li>• Document lessons learned</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </MobileAccordionContent>
+        </MobileAccordionItem>
+        
+        <MobileAccordionItem value="digital">
+          <MobileAccordionTrigger icon={<Monitor className="h-5 w-5 text-orange-400" />}>
+            Digital Customer Experience
+          </MobileAccordionTrigger>
+          <MobileAccordionContent>
+            <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
+              <div className="text-sm text-muted-foreground">
+                Leveraging digital tools and platforms to enhance customer convenience, communication, and overall service experience.
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-3">
+                  <h4 className="font-semibold text-elec-yellow">Digital Service Tools</h4>
+                  <ul className="space-y-2 text-sm">
+                    <li>• Online booking system with real-time availability</li>
+                    <li>• Customer portal for appointment tracking</li>
+                    <li>• Digital invoicing and payment options</li>
+                    <li>• Electronic certificates and warranties</li>
+                    <li>• Photo documentation of completed work</li>
+                    <li>• QR codes for service manuals and support</li>
+                  </ul>
+                </div>
+                <div className="space-y-3">
+                  <h4 className="font-semibold text-elec-yellow">Communication Channels</h4>
+                  <ul className="space-y-2 text-sm">
+                    <li>• SMS notifications for appointments</li>
+                    <li>• WhatsApp Business for quick queries</li>
+                    <li>• Email progress updates with photos</li>
+                    <li>• Live chat on website for support</li>
+                    <li>• Video calls for remote consultations</li>
+                    <li>• Social media for customer service</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                <div className="space-y-3">
+                  <h4 className="font-semibold text-elec-yellow">Customer Self-Service</h4>
+                  <ul className="space-y-2 text-sm">
+                    <li>• Online FAQ and troubleshooting guides</li>
+                    <li>• Emergency contact information portal</li>
+                    <li>• Service history and documentation access</li>
+                    <li>• Maintenance reminder sign-ups</li>
+                    <li>• Review and testimonial platforms</li>
+                    <li>• Energy efficiency advice resources</li>
+                  </ul>
+                </div>
+                <div className="space-y-3">
+                  <h4 className="font-semibold text-elec-yellow">Data & Analytics</h4>
+                  <ul className="space-y-2 text-sm">
+                    <li>• Customer satisfaction tracking</li>
+                    <li>• Service performance metrics</li>
+                    <li>• Response time monitoring</li>
+                    <li>• Digital feedback collection</li>
+                    <li>• Personalised service recommendations</li>
+                    <li>• Predictive maintenance scheduling</li>
                   </ul>
                 </div>
               </div>
