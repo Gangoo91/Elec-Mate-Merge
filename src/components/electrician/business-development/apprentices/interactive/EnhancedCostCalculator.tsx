@@ -27,7 +27,8 @@ const EnhancedCostCalculator = () => {
     southeast: 1.15,
     southwest: 1.05,
     midlands: 1.0,
-    north: 0.95,
+    northwest: 0.95,
+    northeast: 0.92,
     scotland: 1.05,
     wales: 0.98,
     ni: 0.92
@@ -169,7 +170,8 @@ const EnhancedCostCalculator = () => {
                   <SelectItem value="southeast">South East</SelectItem>
                   <SelectItem value="southwest">South West</SelectItem>
                   <SelectItem value="midlands">Midlands</SelectItem>
-                  <SelectItem value="north">North England</SelectItem>
+                  <SelectItem value="northwest">North West</SelectItem>
+                  <SelectItem value="northeast">North East</SelectItem>
                   <SelectItem value="scotland">Scotland</SelectItem>
                   <SelectItem value="wales">Wales</SelectItem>
                   <SelectItem value="ni">Northern Ireland</SelectItem>
