@@ -1,5 +1,5 @@
 
-import { TrendingUp, ArrowLeft, Target, PoundSterling, Megaphone, Wrench, Settings, BarChart3, Calculator } from "lucide-react";
+import { TrendingUp, ArrowLeft, Target, PoundSterling, Megaphone, Wrench, Settings, BarChart3 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -10,7 +10,6 @@ import { MarketingTab } from "@/components/electrician/business-development/grow
 import { ServiceDiversificationTab } from "@/components/electrician/business-development/growth/ServiceDiversificationTab";
 import { OperationsTab } from "@/components/electrician/business-development/growth/OperationsTab";
 import { FinancialManagementTab } from "@/components/electrician/business-development/growth/FinancialManagementTab";
-import { ToolsTab } from "@/components/electrician/business-development/growth/ToolsTab";
 
 const BusinessGrowth = () => {
   const tabs = [
@@ -49,12 +48,6 @@ const BusinessGrowth = () => {
       label: "Financial Management",
       icon: BarChart3,
       content: <FinancialManagementTab />
-    },
-    {
-      value: "tools",
-      label: "Business Tools",
-      icon: Calculator,
-      content: <ToolsTab />
     }
   ];
 
