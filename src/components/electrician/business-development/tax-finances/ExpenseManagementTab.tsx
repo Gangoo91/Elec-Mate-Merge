@@ -548,11 +548,8 @@ const ExpenseManagementTab = () => {
               <div className="flex justify-center">
                 {metric.icon}
               </div>
-              <div>
-                <div className="text-lg font-bold text-white">{metric.data}</div>
-                <div className="text-xs text-muted-foreground leading-tight">{metric.metric}</div>
-              </div>
-              <p className="text-xs text-muted-foreground leading-relaxed px-1">{metric.detail}</p>
+              <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-white`}>{metric.metric}</div>
+              <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{metric.data}</div>
             </div>
           </Card>
         ))}
