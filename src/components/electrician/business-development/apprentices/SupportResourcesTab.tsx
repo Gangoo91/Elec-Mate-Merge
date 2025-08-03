@@ -3,9 +3,13 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { MobileAccordion, MobileAccordionItem, MobileAccordionTrigger, MobileAccordionContent } from "@/components/ui/mobile-accordion";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { Phone, Mail, Globe, MessageCircle, FileText, Users, Heart, ExternalLink, Clock, HelpCircle } from "lucide-react";
 
 const SupportResourcesTab = () => {
+  const isMobile = useIsMobile();
+  
   const emergencyContacts = [
     {
       name: "ACAS (Advisory, Conciliation and Arbitration Service)",
@@ -33,31 +37,31 @@ const SupportResourcesTab = () => {
   const onlineResources = [
     {
       name: "GOV.UK Apprenticeships Guide",
-      url: "gov.uk/apprenticeships-guide",
+      url: "https://www.gov.uk/apprenticeships-guide",
       description: "Official government guidance on apprentice rights and responsibilities",
       category: "Government"
     },
     {
       name: "ACAS Apprentice Guide",
-      url: "acas.org.uk/apprentices",
+      url: "https://www.acas.org.uk/apprentices",
       description: "Employment rights and workplace issues for apprentices",
       category: "Employment Rights"
     },
     {
       name: "Citizens Advice",
-      url: "citizensadvice.org.uk",
+      url: "https://www.citizensadvice.org.uk",
       description: "Free advice on work, benefits, and legal issues",
       category: "General Support"
     },
     {
       name: "CITB Apprentice Hub",
-      url: "citb.co.uk/apprentices",
+      url: "https://www.citb.co.uk/apprentices",
       description: "Construction-specific apprentice resources and support",
       category: "Industry Specific"
     },
     {
       name: "National Apprenticeship Service",
-      url: "apprenticeships.gov.uk",
+      url: "https://www.apprenticeships.gov.uk",
       description: "Find training providers, employers, and career information",
       category: "Career Development"
     }
@@ -150,6 +154,265 @@ const SupportResourcesTab = () => {
     }
   ];
 
+  if (isMobile) {
+    return (
+      <div className="space-y-4">
+        <Alert className="border-green-500/50 bg-green-500/10">
+          <Heart className="h-4 w-4 text-green-400" />
+          <AlertDescription className="text-green-200">
+            Remember: Asking for help is a sign of strength, not weakness. Early support prevents small issues becoming big problems.
+          </AlertDescription>
+        </Alert>
+
+        <MobileAccordion type="single" collapsible className="space-y-2">
+          <MobileAccordionItem value="emergency">
+            <MobileAccordionTrigger icon={<Phone className="h-5 w-5 text-red-400" />}>
+              Emergency Support & Helplines
+            </MobileAccordionTrigger>
+            <MobileAccordionContent>
+              <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
+                {emergencyContacts.map((contact, index) => (
+                  <div key={index} className="space-y-3 border border-red-500/20 rounded-lg p-3">
+                    <div className="flex flex-col gap-2">
+                      <h4 className="font-medium text-white text-sm">{contact.name}</h4>
+                      <Badge variant="outline" className="text-red-300 border-red-400/30 w-fit">
+                        {contact.phone}
+                      </Badge>
+                    </div>
+                    <p className="text-xs text-muted-foreground">{contact.description}</p>
+                    <div className="space-y-1 text-xs">
+                      <div className="text-red-200 flex items-center gap-1">
+                        <Clock className="h-3 w-3" />
+                        {contact.availability}
+                      </div>
+                      <div className="text-red-300">{contact.website}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </MobileAccordionContent>
+          </MobileAccordionItem>
+
+          <MobileAccordionItem value="online">
+            <MobileAccordionTrigger icon={<Globe className="h-5 w-5 text-blue-400" />}>
+              Online Resources & Information
+            </MobileAccordionTrigger>
+            <MobileAccordionContent>
+              <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
+                {onlineResources.map((resource, index) => (
+                  <div key={index} className="border border-blue-500/20 rounded-lg p-3 space-y-2">
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="flex-1 min-w-0">
+                        <div className="flex flex-wrap items-center gap-2 mb-2">
+                          <h4 className="font-medium text-white text-sm">{resource.name}</h4>
+                          <Badge variant="outline" className="text-blue-300 border-blue-400/30 text-xs">
+                            {resource.category}
+                          </Badge>
+                        </div>
+                        <p className="text-xs text-muted-foreground mb-2">{resource.description}</p>
+                      </div>
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        className="border-blue-500/30 shrink-0"
+                        onClick={() => window.open(resource.url, '_blank')}
+                      >
+                        <ExternalLink className="h-3 w-3" />
+                      </Button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </MobileAccordionContent>
+          </MobileAccordionItem>
+
+          <MobileAccordionItem value="unions">
+            <MobileAccordionTrigger icon={<Users className="h-5 w-5 text-green-400" />}>
+              Trade Union Support
+            </MobileAccordionTrigger>
+            <MobileAccordionContent>
+              <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
+                {tradeUnions.map((union, index) => (
+                  <div key={index} className="space-y-3 border border-green-500/20 rounded-lg p-3">
+                    <div className="flex flex-col gap-2">
+                      <h4 className="font-medium text-white text-sm">{union.name}</h4>
+                      <Badge variant="outline" className="text-green-300 border-green-400/30 w-fit">
+                        {union.contact}
+                      </Badge>
+                    </div>
+                    <p className="text-xs text-muted-foreground">{union.description}</p>
+                    <div className="flex flex-wrap gap-1">
+                      {union.benefits.map((benefit, benefitIndex) => (
+                        <Badge key={benefitIndex} variant="outline" className="text-green-300 border-green-400/30 text-xs">
+                          {benefit}
+                        </Badge>
+                      ))}
+                    </div>
+                    <p className="text-xs text-green-300">{union.website}</p>
+                  </div>
+                ))}
+              </div>
+            </MobileAccordionContent>
+          </MobileAccordionItem>
+
+          <MobileAccordionItem value="training">
+            <MobileAccordionTrigger icon={<FileText className="h-5 w-5 text-purple-400" />}>
+              Training Provider Support
+            </MobileAccordionTrigger>
+            <MobileAccordionContent>
+              <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
+                {trainingProviders.map((provider, index) => (
+                  <div key={index} className="space-y-3 border border-purple-500/20 rounded-lg p-3">
+                    <h4 className="font-medium text-white text-sm">{provider.name}</h4>
+                    <div className="space-y-3">
+                      <div>
+                        <h5 className="font-medium text-purple-300 mb-2 text-xs">Services</h5>
+                        <ul className="space-y-1">
+                          {provider.services.map((service, serviceIndex) => (
+                            <li key={serviceIndex} className="text-xs text-purple-200 flex items-center gap-1">
+                              <div className="w-1 h-1 bg-purple-400 rounded-full flex-shrink-0" />
+                              {service}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div>
+                        <h5 className="font-medium text-purple-300 mb-2 text-xs">Support</h5>
+                        <ul className="space-y-1">
+                          {provider.support.map((supportItem, supportIndex) => (
+                            <li key={supportIndex} className="text-xs text-purple-200 flex items-center gap-1">
+                              <div className="w-1 h-1 bg-purple-400 rounded-full flex-shrink-0" />
+                              {supportItem}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div>
+                        <h5 className="font-medium text-purple-300 mb-2 text-xs">Funding</h5>
+                        <p className="text-xs text-purple-200">{provider.cost}</p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </MobileAccordionContent>
+          </MobileAccordionItem>
+
+          <MobileAccordionItem value="mentorship">
+            <MobileAccordionTrigger icon={<MessageCircle className="h-5 w-5 text-orange-400" />}>
+              Mentorship & Peer Support
+            </MobileAccordionTrigger>
+            <MobileAccordionContent>
+              <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
+                {mentorshipResources.map((resource, index) => (
+                  <div key={index} className="space-y-3 border border-orange-500/20 rounded-lg p-3">
+                    <h4 className="font-medium text-white text-sm">{resource.resource}</h4>
+                    <p className="text-xs text-muted-foreground">{resource.description}</p>
+                    <div>
+                      <h5 className="font-medium text-orange-300 mb-2 text-xs">Available Through</h5>
+                      <div className="flex flex-wrap gap-1">
+                        {resource.providers.map((provider, providerIndex) => (
+                          <Badge key={providerIndex} variant="outline" className="text-orange-300 border-orange-400/30 text-xs">
+                            {provider}
+                          </Badge>
+                        ))}
+                      </div>
+                    </div>
+                    <div>
+                      <h5 className="font-medium text-orange-300 mb-2 text-xs">Benefits</h5>
+                      <div className="flex flex-wrap gap-1">
+                        {resource.benefits.map((benefit, benefitIndex) => (
+                          <Badge key={benefitIndex} variant="outline" className="text-orange-200 border-orange-400/20 text-xs">
+                            {benefit}
+                          </Badge>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </MobileAccordionContent>
+          </MobileAccordionItem>
+
+          <MobileAccordionItem value="wellbeing">
+            <MobileAccordionTrigger icon={<Heart className="h-5 w-5 text-pink-400" />}>
+              Wellbeing & Personal Support
+            </MobileAccordionTrigger>
+            <MobileAccordionContent>
+              <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
+                {wellbeingSupport.map((support, index) => (
+                  <div key={index} className="space-y-3 border border-pink-500/20 rounded-lg p-3">
+                    <div className="flex flex-col gap-2">
+                      <h4 className="font-medium text-white text-sm">{support.service}</h4>
+                      <Badge variant="outline" className="text-pink-300 border-pink-400/30 text-xs w-fit">
+                        {support.availability}
+                      </Badge>
+                    </div>
+                    <p className="text-xs text-muted-foreground">{support.description}</p>
+                    <p className="text-xs text-pink-200">{support.providers}</p>
+                  </div>
+                ))}
+              </div>
+            </MobileAccordionContent>
+          </MobileAccordionItem>
+
+          <MobileAccordionItem value="rights">
+            <MobileAccordionTrigger icon={<HelpCircle className="h-5 w-5 text-elec-yellow" />}>
+              Document Everything & Know Your Rights
+            </MobileAccordionTrigger>
+            <MobileAccordionContent>
+              <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
+                <div>
+                  <h4 className="font-medium text-white mb-3 text-sm">Keep Records Of</h4>
+                  <ul className="space-y-2 text-xs">
+                    <li className="flex items-center gap-2">
+                      <FileText className="h-3 w-3 text-elec-yellow flex-shrink-0" />
+                      <span className="text-muted-foreground">Date, time, and details of any incidents</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <Users className="h-3 w-3 text-elec-yellow flex-shrink-0" />
+                      <span className="text-muted-foreground">Names of witnesses present</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <FileText className="h-3 w-3 text-elec-yellow flex-shrink-0" />
+                      <span className="text-muted-foreground">Copies of any written communications</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <Heart className="h-3 w-3 text-elec-yellow flex-shrink-0" />
+                      <span className="text-muted-foreground">Medical records if injured</span>
+                    </li>
+                  </ul>
+                </div>
+                <div>
+                  <h4 className="font-medium text-white mb-3 text-sm">Your Key Rights</h4>
+                  <ul className="space-y-2 text-xs">
+                    <li className="flex items-center gap-2">
+                      <Clock className="h-3 w-3 text-green-400 flex-shrink-0" />
+                      <span className="text-muted-foreground">20% off-the-job training time</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <Users className="h-3 w-3 text-green-400 flex-shrink-0" />
+                      <span className="text-muted-foreground">Qualified mentor support</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <FileText className="h-3 w-3 text-green-400 flex-shrink-0" />
+                      <span className="text-muted-foreground">Safe working environment</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <Phone className="h-3 w-3 text-green-400 flex-shrink-0" />
+                      <span className="text-muted-foreground">Right to raise concerns</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </MobileAccordionContent>
+          </MobileAccordionItem>
+        </MobileAccordion>
+      </div>
+    );
+  }
+
+  // Desktop layout
   return (
     <div className="space-y-6">
       <Alert className="border-green-500/50 bg-green-500/10">
@@ -208,13 +471,20 @@ const SupportResourcesTab = () => {
                 <p className="text-sm text-muted-foreground">{resource.description}</p>
                 <p className="text-xs text-blue-300 mt-1">{resource.url}</p>
               </div>
-              <Button variant="outline" size="sm" className="border-blue-500/30">
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className="border-blue-500/30"
+                onClick={() => window.open(resource.url, '_blank')}
+              >
                 <ExternalLink className="h-4 w-4" />
               </Button>
             </div>
           ))}
         </CardContent>
       </Card>
+
+      {/* ... keep existing code (other desktop cards) */}
 
       <Card className="border-green-500/50 bg-green-500/10">
         <CardHeader>
