@@ -253,228 +253,187 @@ const LegalRequirementsTab = () => {
     }
   ];
 
-  if (isMobile) {
-    return (
-      <div className="space-y-4">
-        <Alert className="border-red-500/50 bg-red-500/10">
-          <AlertTriangle className="h-4 w-4 text-red-400" />
-          <AlertDescription className="text-red-200">
-            Legal compliance is strictly enforced with severe penalties. Proper systems prevent 90% of violations.
-          </AlertDescription>
-        </Alert>
-
-        <div className="grid grid-cols-2 gap-3">
-          {complianceMetrics.map((metric, index) => (
-            <Card key={index} className="border-elec-yellow/20 bg-elec-gray p-3">
-              <div className="text-center space-y-2">
-                {metric.icon}
-                <div className="text-xs font-medium text-white">{metric.metric}</div>
-                <div className="text-xs text-muted-foreground">{metric.data}</div>
-              </div>
-            </Card>
-          ))}
-        </div>
-
-        <MobileAccordion type="single" collapsible className="space-y-2">
-          <MobileAccordionItem value="framework">
-            <MobileAccordionTrigger icon={<Shield className="h-5 w-5 text-red-400" />}>
-              2025 Legal Framework
-            </MobileAccordionTrigger>
-            <MobileAccordionContent>
-              <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-                {currentWageFramework.map((framework, index) => (
-                  <div key={index} className="border border-red-500/20 rounded-lg p-3 space-y-3">
-                    <div className="flex flex-col gap-2">
-                      <div className="flex items-center justify-between">
-                        <h4 className="font-medium text-white text-sm">{framework.category}</h4>
-                        <Badge variant="outline" className="text-red-300 border-red-400/30 text-xs">
-                          {framework.timing}
-                        </Badge>
-                      </div>
-                      <p className="text-xs text-muted-foreground">{framework.description}</p>
-                    </div>
-
-                    <div>
-                      <h5 className="font-medium text-red-300 mb-2 text-xs">Legal Requirements</h5>
-                      <ul className="space-y-1">
-                        {framework.components.map((component, compIndex) => (
-                          <li key={compIndex} className="text-xs text-red-200 flex items-center gap-1">
-                            <Shield className="h-3 w-3 text-red-400 flex-shrink-0" />
-                            {component}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    <div className="bg-amber-500/10 border border-amber-500/30 rounded p-2">
-                      <h5 className="font-medium text-amber-300 mb-1 text-xs">Employer Impact</h5>
-                      <p className="text-xs text-amber-200">{framework.employerView}</p>
-                    </div>
-
-                    <div>
-                      <h5 className="font-medium text-red-300 mb-1 text-xs">Critical Points</h5>
-                      <div className="flex flex-wrap gap-1">
-                        {framework.criticalPoints.map((point, pointIndex) => (
-                          <Badge key={pointIndex} variant="outline" className="text-red-300 border-red-400/30 text-xs">
-                            {point}
-                          </Badge>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </MobileAccordionContent>
-          </MobileAccordionItem>
-
-          <MobileAccordionItem value="compliance">
-            <MobileAccordionTrigger icon={<CheckCircle className="h-5 w-5 text-blue-400" />}>
-              Compliance Requirements
-            </MobileAccordionTrigger>
-            <MobileAccordionContent>
-              <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-                {complianceFramework.map((priority, index) => (
-                  <div key={index} className="space-y-3">
-                    <h4 className="font-medium text-blue-300 text-sm border-b border-blue-500/20 pb-1">
-                      {priority.priority}
-                    </h4>
-                    {priority.requirements.map((req, reqIndex) => (
-                      <div key={reqIndex} className="border border-blue-500/20 rounded-lg p-3 space-y-2">
-                        <h5 className="font-medium text-white text-sm">{req.item}</h5>
-                        <p className="text-xs text-muted-foreground">{req.description}</p>
-                        
-                        <div className="bg-red-500/10 border border-red-500/30 rounded p-2">
-                          <h6 className="font-medium text-red-300 mb-1 text-xs">Penalty Risk</h6>
-                          <p className="text-xs text-red-200">{req.penalty}</p>
-                        </div>
-
-                        <div className="bg-green-500/10 border border-green-500/30 rounded p-2">
-                          <h6 className="font-medium text-green-300 mb-1 text-xs">Action Required</h6>
-                          <p className="text-xs text-green-200">{req.action}</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                ))}
-              </div>
-            </MobileAccordionContent>
-          </MobileAccordionItem>
-
-          <MobileAccordionItem value="support">
-            <MobileAccordionTrigger icon={<Brain className="h-5 w-5 text-green-400" />}>
-              Government Support & Guidance
-            </MobileAccordionTrigger>
-            <MobileAccordionContent>
-              <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-                {governmentSupport.map((category, index) => (
-                  <div key={index} className="space-y-3">
-                    <h4 className="font-medium text-green-300 text-sm border-b border-green-500/20 pb-1">
-                      {category.support}
-                    </h4>
-                    {category.details.map((detail, detailIndex) => (
-                      <div key={detailIndex} className="border border-green-500/20 rounded-lg p-3 space-y-2">
-                        <div className="flex items-center justify-between">
-                          <h5 className="font-medium text-white text-sm">{detail.service}</h5>
-                          <Badge variant="outline" className="text-green-300 border-green-400/30 text-xs">
-                            {detail.cost}
-                          </Badge>
-                        </div>
-                        <p className="text-xs text-muted-foreground">{detail.description}</p>
-                        
-                        <div className="bg-blue-500/10 border border-blue-500/30 rounded p-2">
-                          <h6 className="font-medium text-blue-300 mb-1 text-xs">How to Access</h6>
-                          <p className="text-xs text-blue-200">{detail.access}</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                ))}
-              </div>
-            </MobileAccordionContent>
-          </MobileAccordionItem>
-
-          <MobileAccordionItem value="regional">
-            <MobileAccordionTrigger icon={<Users className="h-5 w-5 text-purple-400" />}>
-              Regional Compliance Variations
-            </MobileAccordionTrigger>
-            <MobileAccordionContent>
-              <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-                {regionalCompliance.map((region, index) => (
-                  <div key={index} className="border border-purple-500/20 rounded-lg p-3 space-y-3">
-                    <div className="flex items-center justify-between">
-                      <h4 className="font-medium text-white text-sm">{region.region}</h4>
-                      <Badge variant="outline" className="text-purple-300 border-purple-400/30 text-xs">
-                        {region.authority}
-                      </Badge>
-                    </div>
-                    
-                    <div>
-                      <h5 className="font-medium text-purple-300 mb-2 text-xs">Key Requirements</h5>
-                      <ul className="space-y-1">
-                        {region.keyRequirements.map((requirement, reqIndex) => (
-                          <li key={reqIndex} className="text-xs text-purple-200 flex items-center gap-1">
-                            <FileText className="h-3 w-3 text-purple-400 flex-shrink-0" />
-                            {requirement}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    <div className="bg-red-500/10 border border-red-500/30 rounded p-2">
-                      <h5 className="font-medium text-red-300 mb-1 text-xs">Penalties</h5>
-                      <p className="text-xs text-red-200">{region.penalties}</p>
-                    </div>
-
-                    <div className="bg-green-500/10 border border-green-500/30 rounded p-2">
-                      <h5 className="font-medium text-green-300 mb-1 text-xs">Support Available</h5>
-                      <p className="text-xs text-green-200">{region.support}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </MobileAccordionContent>
-          </MobileAccordionItem>
-        </MobileAccordion>
-
-        <Alert className="border-green-500/50 bg-green-500/10">
-          <CheckCircle className="h-4 w-4 text-green-400" />
-          <AlertDescription className="text-green-200">
-            <strong>Best Practice:</strong> Systematic compliance reduces legal risk by 90%. Consider professional HR support for complex requirements.
-          </AlertDescription>
-        </Alert>
-      </div>
-    );
-  }
-
-  // Desktop view fallback
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <Alert className="border-red-500/50 bg-red-500/10">
         <AlertTriangle className="h-4 w-4 text-red-400" />
         <AlertDescription className="text-red-200">
-          <strong>2025 Update:</strong> Enhanced enforcement with automatic penalties and digital monitoring increases compliance importance.
+          Legal compliance is strictly enforced with severe penalties. Proper systems prevent 90% of violations.
         </AlertDescription>
       </Alert>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 gap-3">
         {complianceMetrics.map((metric, index) => (
-          <Card key={index} className="border-elec-yellow/20 bg-elec-gray">
-            <CardContent className="p-4">
-              <div className="flex items-center space-x-2">
-                {metric.icon}
-                <div>
-                  <div className="text-sm font-medium text-white">{metric.metric}</div>
-                  <div className="text-xs text-muted-foreground">{metric.data}</div>
-                </div>
-              </div>
-            </CardContent>
+          <Card key={index} className="border-elec-yellow/20 bg-elec-gray p-3">
+            <div className="text-center space-y-2">
+              {metric.icon}
+              <div className="text-xs font-medium text-white">{metric.metric}</div>
+              <div className="text-xs text-muted-foreground">{metric.data}</div>
+            </div>
           </Card>
         ))}
       </div>
 
-      <div className="text-center text-muted-foreground">
-        <p>Switch to mobile view for the comprehensive legal compliance framework.</p>
-      </div>
+      <MobileAccordion type="single" collapsible className="space-y-2">
+        <MobileAccordionItem value="framework">
+          <MobileAccordionTrigger icon={<Shield className="h-5 w-5 text-red-400" />}>
+            2025 Legal Framework
+          </MobileAccordionTrigger>
+          <MobileAccordionContent>
+            <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
+              {currentWageFramework.map((framework, index) => (
+                <div key={index} className="border border-red-500/20 rounded-lg p-3 space-y-3">
+                  <div className="flex flex-col gap-2">
+                    <div className="flex items-center justify-between">
+                      <h4 className="font-medium text-white text-sm">{framework.category}</h4>
+                      <Badge variant="outline" className="text-red-300 border-red-400/30 text-xs">
+                        {framework.timing}
+                      </Badge>
+                    </div>
+                    <p className="text-xs text-muted-foreground">{framework.description}</p>
+                  </div>
+
+                  <div>
+                    <h5 className="font-medium text-red-300 mb-2 text-xs">Legal Requirements</h5>
+                    <ul className="space-y-1">
+                      {framework.components.map((component, compIndex) => (
+                        <li key={compIndex} className="text-xs text-red-200 flex items-center gap-1">
+                          <Shield className="h-3 w-3 text-red-400 flex-shrink-0" />
+                          {component}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div className="bg-amber-500/10 border border-amber-500/30 rounded p-2">
+                    <h5 className="font-medium text-amber-300 mb-1 text-xs">Employer Impact</h5>
+                    <p className="text-xs text-amber-200">{framework.employerView}</p>
+                  </div>
+
+                  <div>
+                    <h5 className="font-medium text-red-300 mb-1 text-xs">Critical Points</h5>
+                    <div className="flex flex-wrap gap-1">
+                      {framework.criticalPoints.map((point, pointIndex) => (
+                        <Badge key={pointIndex} variant="outline" className="text-red-300 border-red-400/30 text-xs">
+                          {point}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </MobileAccordionContent>
+        </MobileAccordionItem>
+
+        <MobileAccordionItem value="compliance">
+          <MobileAccordionTrigger icon={<CheckCircle className="h-5 w-5 text-blue-400" />}>
+            Compliance Requirements
+          </MobileAccordionTrigger>
+          <MobileAccordionContent>
+            <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
+              {complianceFramework.map((priority, index) => (
+                <div key={index} className="space-y-3">
+                  <h4 className="font-medium text-blue-300 text-sm border-b border-blue-500/20 pb-1">
+                    {priority.priority}
+                  </h4>
+                  {priority.requirements.map((req, reqIndex) => (
+                    <div key={reqIndex} className="border border-blue-500/20 rounded-lg p-3 space-y-2">
+                      <h5 className="font-medium text-white text-sm">{req.item}</h5>
+                      <p className="text-xs text-muted-foreground">{req.description}</p>
+                      
+                      <div className="bg-red-500/10 border border-red-500/30 rounded p-2">
+                        <h6 className="font-medium text-red-300 mb-1 text-xs">Penalty Risk</h6>
+                        <p className="text-xs text-red-200">{req.penalty}</p>
+                      </div>
+
+                      <div className="bg-green-500/10 border border-green-500/30 rounded p-2">
+                        <h6 className="font-medium text-green-300 mb-1 text-xs">Action Required</h6>
+                        <p className="text-xs text-green-200">{req.action}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </div>
+          </MobileAccordionContent>
+        </MobileAccordionItem>
+
+        <MobileAccordionItem value="support">
+          <MobileAccordionTrigger icon={<Brain className="h-5 w-5 text-green-400" />}>
+            Government Support & Guidance
+          </MobileAccordionTrigger>
+          <MobileAccordionContent>
+            <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
+              {governmentSupport.map((category, index) => (
+                <div key={index} className="space-y-3">
+                  <h4 className="font-medium text-green-300 text-sm border-b border-green-500/20 pb-1">
+                    {category.support}
+                  </h4>
+                  {category.details.map((detail, detailIndex) => (
+                    <div key={detailIndex} className="border border-green-500/20 rounded-lg p-3 space-y-2">
+                      <div className="flex items-center justify-between">
+                        <h5 className="font-medium text-white text-sm">{detail.service}</h5>
+                        <Badge variant="outline" className="text-green-300 border-green-400/30 text-xs">
+                          {detail.cost}
+                        </Badge>
+                      </div>
+                      <p className="text-xs text-muted-foreground">{detail.description}</p>
+                      
+                      <div className="bg-blue-500/10 border border-blue-500/30 rounded p-2">
+                        <h6 className="font-medium text-blue-300 mb-1 text-xs">How to Access</h6>
+                        <p className="text-xs text-blue-200">{detail.access}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </div>
+          </MobileAccordionContent>
+        </MobileAccordionItem>
+
+        <MobileAccordionItem value="regional">
+          <MobileAccordionTrigger icon={<Users className="h-5 w-5 text-purple-400" />}>
+            Regional Compliance Variations
+          </MobileAccordionTrigger>
+          <MobileAccordionContent>
+            <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
+              {regionalCompliance.map((region, index) => (
+                <div key={index} className="border border-purple-500/20 rounded-lg p-3 space-y-3">
+                  <div className="flex items-center justify-between">
+                    <h4 className="font-medium text-white text-sm">{region.region}</h4>
+                    <Badge variant="outline" className="text-purple-300 border-purple-400/30 text-xs">
+                      {region.authority}
+                    </Badge>
+                  </div>
+                  
+                  <div>
+                    <h5 className="font-medium text-purple-300 mb-2 text-xs">Key Requirements</h5>
+                    <ul className="space-y-1">
+                      {region.keyRequirements.map((req, reqIndex) => (
+                        <li key={reqIndex} className="text-xs text-purple-200 flex items-center gap-1">
+                          <Shield className="h-3 w-3 text-purple-400 flex-shrink-0" />
+                          {req}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div className="bg-red-500/10 border border-red-500/30 rounded p-2">
+                    <h5 className="font-medium text-red-300 mb-1 text-xs">Enforcement</h5>
+                    <p className="text-xs text-red-200">{region.penalties}</p>
+                  </div>
+
+                  <div className="bg-green-500/10 border border-green-500/30 rounded p-2">
+                    <h5 className="font-medium text-green-300 mb-1 text-xs">Available Support</h5>
+                    <p className="text-xs text-green-200">{region.support}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </MobileAccordionContent>
+        </MobileAccordionItem>
+      </MobileAccordion>
     </div>
   );
 };
