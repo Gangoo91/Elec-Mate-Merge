@@ -284,7 +284,7 @@ export const PricingStrategiesTab = () => {
   return (
     <div className="space-y-6">
       {/* Key Metrics Grid - 2x2 layout matching screenshot */}
-      <div className="grid gap-4 md:grid-cols-2">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {keyMetrics.map((metric, index) => (
           <Card key={index} className="bg-elec-gray border border-elec-yellow/20">
             <CardContent className="p-6">
