@@ -610,6 +610,236 @@ export const MarketingTab = () => {
             </div>
           </MobileAccordionContent>
         </MobileAccordionItem>
+
+        <MobileAccordionItem value="what-this-means">
+          <MobileAccordionTrigger icon={<Lightbulb className="h-5 w-5 text-blue-400" />}>
+            What this means
+          </MobileAccordionTrigger>
+          <MobileAccordionContent>
+            <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
+              <div className="border border-blue-500/20 rounded-lg p-3 space-y-3">
+                <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                  Understanding the impact and significance of effective marketing for your electrical business
+                </p>
+                
+                <div className="space-y-4">
+                  <div className="bg-elec-gray/30 rounded-lg p-4 space-y-3">
+                    <h4 className={`font-semibold text-blue-300 ${isMobile ? 'text-sm' : 'text-base'}`}>Business Growth Impact</h4>
+                    <ul className="space-y-2">
+                      <li className="flex items-start gap-2">
+                        <TrendingUp className="h-4 w-4 text-green-400 shrink-0 mt-0.5" />
+                        <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
+                          Effective marketing can increase your customer base by 200-400% within the first year
+                        </span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <PoundSterling className="h-4 w-4 text-green-400 shrink-0 mt-0.5" />
+                        <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
+                          Proper digital presence reduces customer acquisition costs by 30-50%
+                        </span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <Star className="h-4 w-4 text-green-400 shrink-0 mt-0.5" />
+                        <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
+                          Strong brand reputation leads to premium pricing opportunities (15-25% higher rates)
+                        </span>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div className="bg-elec-gray/30 rounded-lg p-4 space-y-3">
+                    <h4 className={`font-semibold text-blue-300 ${isMobile ? 'text-sm' : 'text-base'}`}>Market Position</h4>
+                    <ul className="space-y-2">
+                      <li className="flex items-start gap-2">
+                        <Target className="h-4 w-4 text-yellow-400 shrink-0 mt-0.5" />
+                        <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
+                          Most electrical contractors still rely heavily on word-of-mouth, creating opportunities for digital-savvy businesses
+                        </span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <Globe className="h-4 w-4 text-yellow-400 shrink-0 mt-0.5" />
+                        <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
+                          78% of customers research electricians online before making contact, making digital presence crucial
+                        </span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <Users className="h-4 w-4 text-yellow-400 shrink-0 mt-0.5" />
+                        <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
+                          Referral systems can generate 40-60% of new business for established electrical contractors
+                        </span>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div className="bg-elec-gray/30 rounded-lg p-4 space-y-3">
+                    <h4 className={`font-semibold text-blue-300 ${isMobile ? 'text-sm' : 'text-base'}`}>Long-term Benefits</h4>
+                    <ul className="space-y-2">
+                      <li className="flex items-start gap-2">
+                        <Shield className="h-4 w-4 text-purple-400 shrink-0 mt-0.5" />
+                        <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
+                          Consistent marketing creates business stability and reduces dependence on irregular work patterns
+                        </span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <Building className="h-4 w-4 text-purple-400 shrink-0 mt-0.5" />
+                        <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
+                          Strong brand presence enables business scaling and potential expansion into new service areas
+                        </span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <Award className="h-4 w-4 text-purple-400 shrink-0 mt-0.5" />
+                        <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
+                          Established marketing systems increase business value for potential sale or succession planning
+                        </span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </MobileAccordionContent>
+        </MobileAccordionItem>
+
+        <MobileAccordionItem value="who-can-do-this">
+          <MobileAccordionTrigger icon={<Users className="h-5 w-5 text-green-400" />}>
+            Who can do this
+          </MobileAccordionTrigger>
+          <MobileAccordionContent>
+            <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
+              <div className="border border-blue-500/20 rounded-lg p-3 space-y-3">
+                <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                  Understanding who can effectively implement marketing strategies for electrical businesses
+                </p>
+                
+                <div className="space-y-4">
+                  <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-4 space-y-3">
+                    <h4 className={`font-semibold text-green-300 flex items-center gap-2 ${isMobile ? 'text-sm' : 'text-base'}`}>
+                      <CheckCircle className="h-4 w-4" />
+                      Solo Electricians & Small Teams
+                    </h4>
+                    <ul className="space-y-2">
+                      <li className="flex items-start gap-2">
+                        <div className="w-1 h-1 bg-green-400 rounded-full mt-2 shrink-0" />
+                        <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-green-200`}>
+                          Can start with digital marketing basics (Google My Business, social media presence)
+                        </span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <div className="w-1 h-1 bg-green-400 rounded-full mt-2 shrink-0" />
+                        <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-green-200`}>
+                          Focus on local networking and referral systems as primary growth strategies
+                        </span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <div className="w-1 h-1 bg-green-400 rounded-full mt-2 shrink-0" />
+                        <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-green-200`}>
+                          Can implement customer follow-up systems and review management independently
+                        </span>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4 space-y-3">
+                    <h4 className={`font-semibold text-blue-300 flex items-center gap-2 ${isMobile ? 'text-sm' : 'text-base'}`}>
+                      <Building className="h-4 w-4" />
+                      Established Electrical Contractors
+                    </h4>
+                    <ul className="space-y-2">
+                      <li className="flex items-start gap-2">
+                        <div className="w-1 h-1 bg-blue-400 rounded-full mt-2 shrink-0" />
+                        <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-blue-200`}>
+                          Can invest in comprehensive digital marketing campaigns and professional websites
+                        </span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <div className="w-1 h-1 bg-blue-400 rounded-full mt-2 shrink-0" />
+                        <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-blue-200`}>
+                          Have resources to hire marketing specialists or agencies for advanced strategies
+                        </span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <div className="w-1 h-1 bg-blue-400 rounded-full mt-2 shrink-0" />
+                        <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-blue-200`}>
+                          Can implement multi-channel marketing approaches and track detailed performance metrics
+                        </span>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div className="bg-purple-500/10 border border-purple-500/20 rounded-lg p-4 space-y-3">
+                    <h4 className={`font-semibold text-purple-300 flex items-center gap-2 ${isMobile ? 'text-sm' : 'text-base'}`}>
+                      <Network className="h-4 w-4" />
+                      Marketing Partners & Support
+                    </h4>
+                    <ul className="space-y-2">
+                      <li className="flex items-start gap-2">
+                        <div className="w-1 h-1 bg-purple-400 rounded-full mt-2 shrink-0" />
+                        <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-purple-200`}>
+                          Digital marketing agencies specialising in trade businesses
+                        </span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <div className="w-1 h-1 bg-purple-400 rounded-full mt-2 shrink-0" />
+                        <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-purple-200`}>
+                          Local business consultants with electrical industry experience
+                        </span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <div className="w-1 h-1 bg-purple-400 rounded-full mt-2 shrink-0" />
+                        <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-purple-200`}>
+                          Trade association marketing resources and networking opportunities
+                        </span>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div className="bg-orange-500/10 border border-orange-500/20 rounded-lg p-4 space-y-3">
+                    <h4 className={`font-semibold text-orange-300 flex items-center gap-2 ${isMobile ? 'text-sm' : 'text-base'}`}>
+                      <Brain className="h-4 w-4" />
+                      Required Skills & Resources
+                    </h4>
+                    <div className={`grid gap-3 ${isMobile ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-2'}`}>
+                      <div className="space-y-2">
+                        <h5 className={`font-medium text-orange-200 ${isMobile ? 'text-xs' : 'text-sm'}`}>Essential Skills:</h5>
+                        <ul className="space-y-1">
+                          <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-orange-100 flex items-center gap-1`}>
+                            <CheckCircle className="h-3 w-3 text-orange-400" />
+                            Basic computer and internet skills
+                          </li>
+                          <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-orange-100 flex items-center gap-1`}>
+                            <CheckCircle className="h-3 w-3 text-orange-400" />
+                            Customer communication abilities
+                          </li>
+                          <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-orange-100 flex items-center gap-1`}>
+                            <CheckCircle className="h-3 w-3 text-orange-400" />
+                            Basic photography for project documentation
+                          </li>
+                        </ul>
+                      </div>
+                      <div className="space-y-2">
+                        <h5 className={`font-medium text-orange-200 ${isMobile ? 'text-xs' : 'text-sm'}`}>Time Investment:</h5>
+                        <ul className="space-y-1">
+                          <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-orange-100 flex items-center gap-1`}>
+                            <Clock className="h-3 w-3 text-orange-400" />
+                            2-5 hours/week for basic marketing
+                          </li>
+                          <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-orange-100 flex items-center gap-1`}>
+                            <Clock className="h-3 w-3 text-orange-400" />
+                            10-15 hours/week for comprehensive campaigns
+                          </li>
+                          <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-orange-100 flex items-center gap-1`}>
+                            <Clock className="h-3 w-3 text-orange-400" />
+                            Consistent daily social media engagement
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </MobileAccordionContent>
+        </MobileAccordionItem>
       </MobileAccordion>
     </div>
   );
