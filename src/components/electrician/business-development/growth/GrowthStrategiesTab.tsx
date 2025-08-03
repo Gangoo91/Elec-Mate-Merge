@@ -9,7 +9,7 @@ import {
   Users, 
   MapPin, 
   Building, 
-  DollarSign, 
+  PoundSterling, 
   Clock, 
   BarChart3,
   Lightbulb,
@@ -294,7 +294,7 @@ export const GrowthStrategiesTab = () => {
               strategy.id === "market-expansion" ? <MapPin className="h-5 w-5 text-blue-400" /> :
               strategy.id === "team-scaling" ? <Users className="h-5 w-5 text-green-400" /> :
               strategy.id === "digital-transformation" ? <Smartphone className="h-5 w-5 text-purple-400" /> :
-              <DollarSign className="h-5 w-5 text-yellow-400" />
+              <PoundSterling className="h-5 w-5 text-yellow-400" />
             }>
               {strategy.title}
             </MobileAccordionTrigger>
