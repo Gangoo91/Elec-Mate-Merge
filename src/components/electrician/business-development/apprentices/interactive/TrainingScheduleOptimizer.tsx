@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Calendar, Clock, Target, CheckCircle, AlertCircle } from "lucide-react";
 import { useState } from "react";
 
-const TrainingScheduleOptimizer = () => {
+const TrainingScheduleOptimiser = () => {
   const [businessType, setBusinessType] = useState("");
   const [seasonality, setSeasonality] = useState("");
   const [workloadPeak, setWorkloadPeak] = useState("");
@@ -107,7 +107,7 @@ const TrainingScheduleOptimizer = () => {
       <CardHeader>
         <CardTitle className="text-green-400 flex items-center gap-2">
           <Calendar className="h-5 w-5" />
-          Training Schedule Optimizer
+          Training Schedule Optimiser
         </CardTitle>
       </CardHeader>
       <CardContent>
@@ -292,4 +292,4 @@ const TrainingScheduleOptimizer = () => {
   );
 };
 
-export default TrainingScheduleOptimizer;
+export default TrainingScheduleOptimiser;

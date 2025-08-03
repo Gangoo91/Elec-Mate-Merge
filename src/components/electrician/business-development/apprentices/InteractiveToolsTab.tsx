@@ -17,7 +17,7 @@ import {
 } from "lucide-react";
 import EnhancedCostCalculator from "./interactive/EnhancedCostCalculator";
 import DigitalSkillsAnalyser from "./interactive/DigitalSkillsAnalyser";
-import TrainingScheduleOptimizer from "./interactive/TrainingScheduleOptimizer";
+import TrainingScheduleOptimiser from "./interactive/TrainingScheduleOptimizer";
 import ComplianceChecker from "./interactive/ComplianceChecker";
 
 const InteractiveToolsTab = () => {
@@ -103,11 +103,11 @@ const InteractiveToolsTab = () => {
 
           <MobileAccordionItem value="schedule">
             <MobileAccordionTrigger icon={<Calendar className="h-5 w-5 text-green-400" />}>
-              Training Schedule Optimizer
+              Training Schedule Optimiser
             </MobileAccordionTrigger>
             <MobileAccordionContent>
               <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4">
-                <TrainingScheduleOptimizer />
+                <TrainingScheduleOptimiser />
               </div>
             </MobileAccordionContent>
           </MobileAccordionItem>
@@ -186,7 +186,7 @@ const InteractiveToolsTab = () => {
         
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <DigitalSkillsAnalyser />
-          <TrainingScheduleOptimizer />
+          <TrainingScheduleOptimiser />
         </div>
         
         <ComplianceChecker />
