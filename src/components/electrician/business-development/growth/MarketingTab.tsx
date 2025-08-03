@@ -485,26 +485,28 @@ export const MarketingTab = () => {
                   Industry benchmarks and performance standards for electrical marketing channels
                 </p>
                 
-                <div className={`grid gap-6 ${isMobile ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-2'}`}>
+                <div className={`grid gap-4 ${isMobile ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-2'}`}>
                   {marketingChannelsBenchmarks.map((category, categoryIndex) => (
                     <div key={categoryIndex} className="space-y-4">
                       <h4 className={`font-semibold text-elec-yellow ${isMobile ? 'text-sm' : 'text-base'}`}>{category.category}</h4>
                       <div className="space-y-3">
                         {category.benchmarks.map((benchmark, benchmarkIndex) => (
-                          <div key={benchmarkIndex} className="border border-blue-500/20 rounded-lg p-3">
-                            <div className="flex justify-between items-center mb-2">
-                              <span className={`font-medium text-white ${isMobile ? 'text-xs' : 'text-sm'}`}>
-                                {benchmark.metric}
-                              </span>
+                          <div key={benchmarkIndex} className="bg-elec-gray/30 rounded-lg p-4 space-y-2">
+                            <div className="flex justify-center">
                               <Badge variant="outline" className={`text-green-300 border-green-400/30 ${isMobile ? 'text-xs' : 'text-sm'}`}>
                                 {benchmark.target}
                               </Badge>
                             </div>
-                            <div className="flex items-center gap-2">
-                              <LineChart className="h-4 w-4 text-muted-foreground" />
-                              <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
-                                {benchmark.current}
-                              </span>
+                            <div className="text-center">
+                              <h5 className={`font-medium text-white ${isMobile ? 'text-xs' : 'text-sm'}`}>
+                                {benchmark.metric}
+                              </h5>
+                              <div className="flex items-center justify-center gap-2 mt-1">
+                                <LineChart className="h-3 w-3 text-muted-foreground" />
+                                <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                                  {benchmark.current}
+                                </span>
+                              </div>
                             </div>
                           </div>
                         ))}
