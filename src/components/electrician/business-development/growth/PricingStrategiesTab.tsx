@@ -474,201 +474,218 @@ export const PricingStrategiesTab = () => {
         ))}
       </MobileAccordion>
 
-      {/* Pricing Benchmarks Section */}
-      <Card className="border-elec-yellow/20 bg-gradient-to-br from-elec-gray/20 to-elec-gray/10">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <BarChart3 className="h-5 w-5 text-elec-yellow" />
+      {/* Additional Pricing Strategy Sections */}
+      <MobileAccordion type="single" collapsible className="space-y-2">
+        {/* Pricing Benchmarks */}
+        <MobileAccordionItem value="pricing-benchmarks">
+          <MobileAccordionTrigger icon={<BarChart3 className="h-5 w-5 text-blue-400" />}>
             UK Pricing Benchmarks & Regional Standards
-          </CardTitle>
-          <CardDescription>
-            Compare your pricing against current UK electrical industry standards
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="grid gap-6 md:grid-cols-2">
-            {pricingBenchmarks.map((category, categoryIndex) => (
-              <div key={categoryIndex} className="space-y-4">
-                <h4 className="font-semibold text-elec-yellow">{category.category}</h4>
-                <div className="space-y-3">
-                  {category.benchmarks.map((benchmark, benchmarkIndex) => (
-                    <div key={benchmarkIndex} className="border border-blue-500/20 rounded-lg p-3">
-                      <div className="flex justify-between items-center mb-2">
-                        <span className={`font-medium text-white ${isMobile ? 'text-xs' : 'text-sm'}`}>
-                          {benchmark.metric}
-                        </span>
-                        <Badge variant="outline" className="text-green-300 border-green-400/30">
-                          {benchmark.target}
+          </MobileAccordionTrigger>
+          <MobileAccordionContent>
+            <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
+              <div className="border border-blue-500/20 rounded-lg p-3 space-y-3">
+                <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                  Compare your pricing against current UK electrical industry standards
+                </p>
+                
+                <div className="grid gap-4 md:grid-cols-2">
+                  {pricingBenchmarks.map((category, categoryIndex) => (
+                    <div key={categoryIndex} className="space-y-3">
+                      <h4 className={`font-medium text-elec-yellow ${isMobile ? 'text-sm' : 'text-base'}`}>
+                        {category.category}
+                      </h4>
+                      <div className="space-y-2">
+                        {category.benchmarks.map((benchmark, benchmarkIndex) => (
+                          <div key={benchmarkIndex} className="bg-elec-gray/50 border border-blue-500/20 rounded-lg p-3">
+                            <div className="flex justify-between items-center mb-2">
+                              <span className={`font-medium text-white ${isMobile ? 'text-xs' : 'text-sm'}`}>
+                                {benchmark.metric}
+                              </span>
+                              <Badge variant="outline" className="text-green-300 border-green-400/30">
+                                {benchmark.target}
+                              </Badge>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <LineChart className="h-4 w-4 text-muted-foreground" />
+                              <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                                {benchmark.current}
+                              </span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </MobileAccordionContent>
+        </MobileAccordionItem>
+
+        {/* Competitive Advantages */}
+        <MobileAccordionItem value="competitive-advantages">
+          <MobileAccordionTrigger icon={<Crown className="h-5 w-5 text-purple-400" />}>
+            Pricing Competitive Advantages
+          </MobileAccordionTrigger>
+          <MobileAccordionContent>
+            <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
+              <div className="border border-purple-500/20 rounded-lg p-3 space-y-3">
+                <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                  Strategies to justify premium pricing and differentiate your services
+                </p>
+                
+                <div className="space-y-4">
+                  {competitiveAdvantages.map((advantage, advantageIndex) => (
+                    <div key={advantageIndex} className="bg-elec-gray/50 border border-purple-500/20 rounded-lg p-4 space-y-3">
+                      <div className="flex items-start justify-between">
+                        <div>
+                          <h4 className={`font-semibold text-purple-300 ${isMobile ? 'text-sm' : 'text-base'}`}>
+                            {advantage.title}
+                          </h4>
+                          <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground mt-1`}>
+                            {advantage.description}
+                          </p>
+                        </div>
+                        <Badge variant="outline" className="text-purple-300 border-purple-400/30 ml-2">
+                          <Star className="h-3 w-3 mr-1" />
+                          Premium
                         </Badge>
                       </div>
-                      <div className="flex items-center gap-2">
-                        <LineChart className="h-4 w-4 text-muted-foreground" />
-                        <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
-                          {benchmark.current}
+                      
+                      <div className="grid gap-2">
+                        {advantage.advantages.map((item, itemIndex) => (
+                          <div key={itemIndex} className="flex items-center gap-2">
+                            <Award className="h-3 w-3 text-purple-400 shrink-0" />
+                            <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-purple-200`}>
+                              {item}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                      
+                      <div className="flex items-center gap-2 pt-2 border-t border-purple-500/20">
+                        <TrendingUp className="h-4 w-4 text-green-400" />
+                        <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-green-300 font-medium`}>
+                          Impact: {advantage.impact}
                         </span>
                       </div>
                     </div>
                   ))}
                 </div>
               </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+            </div>
+          </MobileAccordionContent>
+        </MobileAccordionItem>
 
-      {/* Competitive Advantages Section */}
-      <Card className="border-elec-yellow/20 bg-gradient-to-br from-elec-gray/20 to-elec-gray/10">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Crown className="h-5 w-5 text-elec-yellow" />
-            Pricing Competitive Advantages
-          </CardTitle>
-          <CardDescription>
-            Strategies to justify premium pricing and differentiate your services
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            {competitiveAdvantages.map((advantage, advantageIndex) => (
-              <div key={advantageIndex} className="border border-purple-500/20 rounded-lg p-4 space-y-3">
-                <div className="flex items-start justify-between">
-                  <div>
-                    <h4 className={`font-semibold text-purple-300 ${isMobile ? 'text-sm' : 'text-base'}`}>
-                      {advantage.title}
-                    </h4>
-                    <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground mt-1`}>
-                      {advantage.description}
-                    </p>
-                  </div>
-                  <Badge variant="outline" className="text-purple-300 border-purple-400/30 ml-2">
-                    <Star className="h-3 w-3 mr-1" />
-                    Premium
-                  </Badge>
-                </div>
-                
-                <div className="grid gap-2">
-                  {advantage.advantages.map((item, itemIndex) => (
-                    <div key={itemIndex} className="flex items-center gap-2">
-                      <Award className="h-3 w-3 text-purple-400 shrink-0" />
-                      <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-purple-200`}>
-                        {item}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-                
-                <div className="flex items-center gap-2 pt-2 border-t border-purple-500/20">
-                  <TrendingUp className="h-4 w-4 text-green-400" />
-                  <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-green-300 font-medium`}>
-                    Impact: {advantage.impact}
-                  </span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Performance Measurement Section */}
-      <Card className="border-elec-yellow/20 bg-gradient-to-br from-elec-gray/20 to-elec-gray/10">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Target className="h-5 w-5 text-elec-yellow" />
+        {/* Performance Measurement */}
+        <MobileAccordionItem value="performance-metrics">
+          <MobileAccordionTrigger icon={<Target className="h-5 w-5 text-green-400" />}>
             Pricing Performance Measurement
-          </CardTitle>
-          <CardDescription>
-            Key metrics to track pricing strategy success and optimisation
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="grid gap-6 md:grid-cols-3">
-            {performanceMetrics.map((metricCategory, categoryIndex) => (
-              <div key={categoryIndex} className="space-y-4">
-                <h4 className="font-semibold text-elec-yellow flex items-center gap-2">
-                  {metricCategory.category === "Pricing Performance" && <PoundSterling className="h-4 w-4" />}
-                  {metricCategory.category === "Market Position" && <Eye className="h-4 w-4" />}
-                  {metricCategory.category === "Financial Health" && <Heart className="h-4 w-4" />}
-                  {metricCategory.category}
-                </h4>
-                <div className="space-y-2">
-                  {metricCategory.kpis.map((kpi, kpiIndex) => (
-                    <div key={kpiIndex} className="flex items-start gap-2 p-2 bg-elec-gray/30 rounded-lg">
-                      <CheckCircle className="h-3 w-3 text-green-400 shrink-0 mt-0.5" />
-                      <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
-                        {kpi}
-                      </span>
+          </MobileAccordionTrigger>
+          <MobileAccordionContent>
+            <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
+              <div className="border border-green-500/20 rounded-lg p-3 space-y-3">
+                <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                  Key metrics to track pricing strategy success and optimisation
+                </p>
+                
+                <div className="grid gap-4 md:grid-cols-3">
+                  {performanceMetrics.map((metricCategory, categoryIndex) => (
+                    <div key={categoryIndex} className="space-y-3">
+                      <h4 className={`font-medium text-elec-yellow flex items-center gap-2 ${isMobile ? 'text-sm' : 'text-base'}`}>
+                        {metricCategory.category === "Pricing Performance" && <PoundSterling className="h-4 w-4" />}
+                        {metricCategory.category === "Market Position" && <Eye className="h-4 w-4" />}
+                        {metricCategory.category === "Financial Health" && <Heart className="h-4 w-4" />}
+                        {metricCategory.category}
+                      </h4>
+                      <div className="space-y-2">
+                        {metricCategory.kpis.map((kpi, kpiIndex) => (
+                          <div key={kpiIndex} className="flex items-start gap-2 p-2 bg-elec-gray/50 rounded-lg">
+                            <CheckCircle className="h-3 w-3 text-green-400 shrink-0 mt-0.5" />
+                            <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
+                              {kpi}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
                     </div>
                   ))}
                 </div>
               </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+            </div>
+          </MobileAccordionContent>
+        </MobileAccordionItem>
 
-      {/* 30-Day Pricing Action Plan */}
-      <Card className="border-elec-yellow/20 bg-gradient-to-br from-elec-gray/20 to-elec-gray/10">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <CheckCircle className="h-5 w-5 text-elec-yellow" />
+        {/* Action Plan */}
+        <MobileAccordionItem value="action-plan">
+          <MobileAccordionTrigger icon={<CheckCircle className="h-5 w-5 text-yellow-400" />}>
             30-Day Pricing Optimisation Plan
-          </CardTitle>
-          <CardDescription>
-            Immediate steps to improve your pricing strategy and profitability
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="grid gap-4 md:grid-cols-2">
-            <div className="space-y-3">
-              <h4 className="font-semibold text-green-300">Week 1-2: Analysis & Foundation</h4>
-              <div className="space-y-2">
-                <div className="flex items-start gap-2">
-                  <Timer className="h-4 w-4 text-green-400 shrink-0 mt-0.5" />
-                  <span className={`${isMobile ? 'text-xs' : 'text-sm'}`}>
-                    Complete comprehensive cost analysis and overhead calculation
-                  </span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <Calculator className="h-4 w-4 text-green-400 shrink-0 mt-0.5" />
-                  <span className={`${isMobile ? 'text-xs' : 'text-sm'}`}>
-                    Research competitor pricing and market positioning
-                  </span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <Target className="h-4 w-4 text-green-400 shrink-0 mt-0.5" />
-                  <span className={`${isMobile ? 'text-xs' : 'text-sm'}`}>
-                    Set profit margin targets and pricing objectives
-                  </span>
-                </div>
-              </div>
-            </div>
+          </MobileAccordionTrigger>
+          <MobileAccordionContent>
+            <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
+              <div className="border border-yellow-500/20 rounded-lg p-3 space-y-3">
+                <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                  Immediate steps to improve your pricing strategy and profitability
+                </p>
+                
+                <div className="grid gap-4 md:grid-cols-2">
+                  <div className="space-y-3">
+                    <h4 className={`font-medium text-green-300 ${isMobile ? 'text-sm' : 'text-base'}`}>
+                      Week 1-2: Analysis & Foundation
+                    </h4>
+                    <div className="space-y-2">
+                      <div className="flex items-start gap-2">
+                        <Timer className="h-4 w-4 text-green-400 shrink-0 mt-0.5" />
+                        <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
+                          Complete comprehensive cost analysis and overhead calculation
+                        </span>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <Calculator className="h-4 w-4 text-green-400 shrink-0 mt-0.5" />
+                        <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
+                          Research competitor pricing and market positioning
+                        </span>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <Target className="h-4 w-4 text-green-400 shrink-0 mt-0.5" />
+                        <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
+                          Set profit margin targets and pricing objectives
+                        </span>
+                      </div>
+                    </div>
+                  </div>
 
-            <div className="space-y-3">
-              <h4 className="font-semibold text-blue-300">Week 3-4: Implementation & Testing</h4>
-              <div className="space-y-2">
-                <div className="flex items-start gap-2">
-                  <Settings className="h-4 w-4 text-blue-400 shrink-0 mt-0.5" />
-                  <span className={`${isMobile ? 'text-xs' : 'text-sm'}`}>
-                    Implement new pricing structure and quote templates
-                  </span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <Users className="h-4 w-4 text-blue-400 shrink-0 mt-0.5" />
-                  <span className={`${isMobile ? 'text-xs' : 'text-sm'}`}>
-                    Train team on value communication and pricing justification
-                  </span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <BarChart3 className="h-4 w-4 text-blue-400 shrink-0 mt-0.5" />
-                  <span className={`${isMobile ? 'text-xs' : 'text-sm'}`}>
-                    Monitor quote success rates and customer feedback
-                  </span>
+                  <div className="space-y-3">
+                    <h4 className={`font-medium text-blue-300 ${isMobile ? 'text-sm' : 'text-base'}`}>
+                      Week 3-4: Implementation & Testing
+                    </h4>
+                    <div className="space-y-2">
+                      <div className="flex items-start gap-2">
+                        <Settings className="h-4 w-4 text-blue-400 shrink-0 mt-0.5" />
+                        <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
+                          Implement new pricing structure and quote templates
+                        </span>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <Users className="h-4 w-4 text-blue-400 shrink-0 mt-0.5" />
+                        <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
+                          Train team on value communication and pricing justification
+                        </span>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <BarChart3 className="h-4 w-4 text-blue-400 shrink-0 mt-0.5" />
+                        <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
+                          Monitor quote success rates and customer feedback
+                        </span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </CardContent>
-      </Card>
+          </MobileAccordionContent>
+        </MobileAccordionItem>
+      </MobileAccordion>
     </div>
   );
 };
