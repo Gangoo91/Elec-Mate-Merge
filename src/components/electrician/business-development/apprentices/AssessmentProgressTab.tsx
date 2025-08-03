@@ -416,37 +416,37 @@ const AssessmentProgressTab = () => {
                   
                   <Button 
                     variant="outline" 
-                    className="w-full justify-start border-blue-500/30 text-left"
+                    className="w-full justify-start border-blue-500/30 text-left h-auto p-3"
                     onClick={() => window.open('https://www.instituteforapprenticeships.org/', '_blank')}
                   >
-                    <FileText className="h-4 w-4 mr-2 text-blue-400" />
-                    <div className="text-left">
-                      <div className="text-sm text-white">Institute for Apprenticeships</div>
-                      <div className="text-xs text-muted-foreground">Official standards and EPA guidance</div>
+                    <FileText className="h-4 w-4 mr-3 text-blue-400 flex-shrink-0" />
+                    <div className="text-left flex-1 min-w-0">
+                      <div className="text-sm text-white truncate">Institute for Apprenticeships</div>
+                      <div className="text-xs text-muted-foreground break-words">Official standards and EPA guidance</div>
                     </div>
                   </Button>
 
                   <Button 
                     variant="outline" 
-                    className="w-full justify-start border-green-500/30 text-left"
+                    className="w-full justify-start border-green-500/30 text-left h-auto p-3"
                     onClick={() => window.open('https://www.citb.co.uk/apprenticeships/', '_blank')}
                   >
-                    <Shield className="h-4 w-4 mr-2 text-green-400" />
-                    <div className="text-left">
-                      <div className="text-sm text-white">CITB Apprenticeship Hub</div>
-                      <div className="text-xs text-muted-foreground">Industry-specific guidance and support</div>
+                    <Shield className="h-4 w-4 mr-3 text-green-400 flex-shrink-0" />
+                    <div className="text-left flex-1 min-w-0">
+                      <div className="text-sm text-white truncate">CITB Apprenticeship Hub</div>
+                      <div className="text-xs text-muted-foreground break-words">Industry-specific guidance and support</div>
                     </div>
                   </Button>
 
                   <Button 
                     variant="outline" 
-                    className="w-full justify-start border-purple-500/30 text-left"
+                    className="w-full justify-start border-purple-500/30 text-left h-auto p-3"
                     onClick={() => window.open('https://www.apprenticeships.gov.uk/', '_blank')}
                   >
-                    <Brain className="h-4 w-4 mr-2 text-purple-400" />
-                    <div className="text-left">
-                      <div className="text-sm text-white">Apprenticeships.gov.uk</div>
-                      <div className="text-xs text-muted-foreground">Government support and funding information</div>
+                    <Brain className="h-4 w-4 mr-3 text-purple-400 flex-shrink-0" />
+                    <div className="text-left flex-1 min-w-0">
+                      <div className="text-sm text-white truncate">Apprenticeships.gov.uk</div>
+                      <div className="text-xs text-muted-foreground break-words">Government support and funding information</div>
                     </div>
                   </Button>
                 </div>
