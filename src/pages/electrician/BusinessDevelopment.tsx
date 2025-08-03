@@ -21,49 +21,49 @@ const BusinessDevelopment = () => {
       id: 1,
       title: "Starting an Electrical Business",
       description: "Essential guidance for establishing your electrical contracting business, from registration to certification",
-      icon: <Briefcase className="h-12 w-12 text-elec-yellow opacity-80" />,
+      icon: <Briefcase className="h-12 w-12 text-elec-yellow" />,
       link: "/electrician/business-development/startup"
     },
     {
       id: 2,
       title: "Onboarding Apprentices",
       description: "Best practices for recruiting, mentoring and developing apprentices in your electrical business",
-      icon: <GraduationCap className="h-12 w-12 text-elec-yellow opacity-80" />,
+      icon: <GraduationCap className="h-12 w-12 text-elec-yellow" />,
       link: "/electrician/business-development/apprentices"
     },
     {
       id: 3,
       title: "Onboarding Electricians",
       description: "Effective strategies for recruiting, integrating and retaining qualified electricians",
-      icon: <UserCheck className="h-12 w-12 text-elec-yellow opacity-80" />,
+      icon: <UserCheck className="h-12 w-12 text-elec-yellow" />,
       link: "/electrician/business-development/electricians"
     },
     {
       id: 4,
       title: "Growing Your Business",
       description: "Strategies for expanding your electrical business, from marketing to diversifying services",
-      icon: <TrendingUp className="h-12 w-12 text-elec-yellow opacity-80" />,
+      icon: <TrendingUp className="h-12 w-12 text-elec-yellow" />,
       link: "/electrician/business-development/growth"
     },
     {
       id: 5,
       title: "Customer Acquisition",
       description: "Effective methods to attract and retain clients for your electrical services",
-      icon: <HandHelping className="h-12 w-12 text-elec-yellow opacity-80" />,
+      icon: <HandHelping className="h-12 w-12 text-elec-yellow" />,
       link: "/electrician/business-development/customers"
     },
     {
       id: 6,
       title: "Tax & Finances",
       description: "Financial management, tax obligations, and accounting best practices for electrical contractors",
-      icon: <Calculator className="h-12 w-12 text-elec-yellow opacity-80" />,
+      icon: <Calculator className="h-12 w-12 text-elec-yellow" />,
       link: "/electrician/business-development/tax-finances"
     },
     {
       id: 7,
       title: "Debt Recovery & Non-Payers",
       description: "Strategies for managing late payments, debt recovery, and protecting your cash flow",
-      icon: <CreditCard className="h-12 w-12 text-elec-yellow opacity-80" />,
+      icon: <CreditCard className="h-12 w-12 text-elec-yellow" />,
       link: "/electrician/business-development/debt-recovery"
     }
   ];
@@ -91,17 +91,12 @@ const BusinessDevelopment = () => {
         {businessSections.map((section) => (
           <Link key={section.id} to={section.link} className="group focus:outline-none hover-scale">
             <Card className="h-full border-elec-yellow/20 bg-elec-gray hover:bg-elec-gray/80 transition-all duration-200 cursor-pointer">
-              <CardHeader className="pb-2">
-                <CardTitle className="text-xl">{section.title}</CardTitle>
-                <CardDescription className="text-sm">
-                  {section.description}
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="flex items-center justify-center py-6">
-                <div className="transition-transform group-hover:scale-110">
+              <CardHeader className="flex flex-col items-center justify-center text-center py-6 md:py-8">
+                <div className="transition-transform group-hover:scale-110 mb-3">
                   {section.icon}
                 </div>
-              </CardContent>
+                <CardTitle className="text-base sm:text-lg leading-tight">{section.title}</CardTitle>
+              </CardHeader>
             </Card>
           </Link>
         ))}
