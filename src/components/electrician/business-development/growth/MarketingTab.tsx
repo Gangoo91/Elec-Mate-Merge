@@ -846,7 +846,7 @@ export const MarketingTab = () => {
                     </p>
                     
                     <div className="space-y-4">
-                      <div className="bg-cyan-500/5 rounded-lg p-3 space-y-2">
+                      <div className="space-y-2">
                         <h5 className={`font-medium text-cyan-200 ${isMobile ? 'text-xs' : 'text-sm'}`}>Freelance Social Media Managers</h5>
                         <div className={`grid gap-2 ${isMobile ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-2'}`}>
                           <div>
@@ -870,7 +870,7 @@ export const MarketingTab = () => {
                         </div>
                       </div>
 
-                      <div className="bg-cyan-500/5 rounded-lg p-3 space-y-2">
+                      <div className="space-y-2">
                         <h5 className={`font-medium text-cyan-200 ${isMobile ? 'text-xs' : 'text-sm'}`}>Digital Marketing Agencies</h5>
                         <div className={`grid gap-2 ${isMobile ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-2'}`}>
                           <div>
@@ -894,7 +894,7 @@ export const MarketingTab = () => {
                         </div>
                       </div>
 
-                      <div className="bg-cyan-500/5 rounded-lg p-3 space-y-2">
+                      <div className="space-y-2">
                         <h5 className={`font-medium text-cyan-200 ${isMobile ? 'text-xs' : 'text-sm'}`}>Part-time Marketing Assistant</h5>
                         <div className={`grid gap-2 ${isMobile ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-2'}`}>
                           <div>
@@ -918,7 +918,7 @@ export const MarketingTab = () => {
                         </div>
                       </div>
 
-                      <div className="bg-cyan-500/5 rounded-lg p-3 space-y-2">
+                      <div className="space-y-2">
                         <h5 className={`font-medium text-cyan-200 ${isMobile ? 'text-xs' : 'text-sm'}`}>What to Look For When Hiring</h5>
                         <div className={`grid gap-3 ${isMobile ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-3'}`}>
                           <div>
