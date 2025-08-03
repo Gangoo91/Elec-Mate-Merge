@@ -551,3 +551,5 @@ const SupportResourcesTab = () => {
     </div>
   );
 };
+
+export default SupportResourcesTab;
