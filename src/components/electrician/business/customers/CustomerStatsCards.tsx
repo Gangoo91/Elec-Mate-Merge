@@ -8,28 +8,32 @@ const CustomerStatsCards = () => {
       value: "£2,500",
       description: "Per domestic installation",
       icon: PoundSterling,
-      trend: "+12%"
+      trend: "+12%",
+      color: "text-blue-400"
     },
     {
       title: "Lead Conversion Rate",
       value: "25%",
       description: "Industry average",
       icon: Target,
-      trend: "+8%"
+      trend: "+8%",
+      color: "text-green-400"
     },
     {
       title: "Customer Retention",
       value: "78%",
       description: "Annual retention rate",
       icon: Users,
-      trend: "+15%"
+      trend: "+15%",
+      color: "text-purple-400"
     },
     {
       title: "Market Growth",
       value: "6.2%",
       description: "UK electrical services",
       icon: TrendingUp,
-      trend: "+2.1%"
+      trend: "+2.1%",
+      color: "text-orange-400"
     }
   ];
 
@@ -38,20 +42,20 @@ const CustomerStatsCards = () => {
       {stats.map((stat, index) => {
         const IconComponent = stat.icon;
         return (
-          <Card key={index} className="bg-elec-gray border-elec-yellow/20">
+          <Card key={index} className="bg-elec-dark/50 border-white/10 backdrop-blur-sm">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-muted-foreground">
+              <CardTitle className="text-sm font-medium text-gray-400">
                 {stat.title}
               </CardTitle>
-              <IconComponent className="h-4 w-4 text-elec-yellow" />
+              <IconComponent className={`h-4 w-4 ${stat.color}`} />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-elec-yellow">{stat.value}</div>
+              <div className={`text-2xl font-bold ${stat.color}`}>{stat.value}</div>
               <div className="flex items-center justify-between mt-1">
-                <p className="text-xs text-muted-foreground">
+                <p className="text-xs text-gray-400">
                   {stat.description}
                 </p>
-                <span className="text-xs text-elec-yellow">{stat.trend}</span>
+                <span className={`text-xs ${stat.color}`}>{stat.trend}</span>
               </div>
             </CardContent>
           </Card>

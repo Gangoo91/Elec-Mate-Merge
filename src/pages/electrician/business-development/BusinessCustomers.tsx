@@ -28,58 +28,62 @@ const BusinessCustomers = () => {
 
       <CustomerStatsCards />
 
-      <DropdownTabs
-        defaultValue="market-research"
-        placeholder="Select a section"
-        tabs={[
-          {
-            value: "market-research",
-            label: "Market Research & Targeting",
-            icon: Search,
-            content: <MarketResearchTab />
-          },
-          {
-            value: "digital-marketing",
-            label: "Digital Marketing",
-            icon: Monitor,
-            content: <DigitalMarketingTab />
-          },
-          {
-            value: "traditional-marketing",
-            label: "Traditional Marketing",
-            icon: Megaphone,
-            content: <TraditionalMarketingTab />
-          },
-          {
-            value: "lead-generation",
-            label: "Lead Generation",
-            icon: Target,
-            content: <LeadGenerationTab />
-          },
-          {
-            value: "customer-experience",
-            label: "Customer Experience",
-            icon: Users,
-            content: <CustomerExperienceTab />
-          },
-          {
-            value: "retention-growth",
-            label: "Retention & Growth",
-            icon: TrendingUp,
-            content: <RetentionGrowthTab />
-          }
-        ]}
-      />
+      <Card className="border-elec-yellow/30 bg-gradient-to-br from-elec-yellow/10 to-blue-500/10 backdrop-blur-sm mb-6">
+        <CardContent className="p-6">
+          <DropdownTabs
+            defaultValue="market-research"
+            placeholder="Select a section"
+            tabs={[
+              {
+                value: "market-research",
+                label: "Market Research & Targeting",
+                icon: Search,
+                content: <MarketResearchTab />
+              },
+              {
+                value: "digital-marketing",
+                label: "Digital Marketing",
+                icon: Monitor,
+                content: <DigitalMarketingTab />
+              },
+              {
+                value: "traditional-marketing",
+                label: "Traditional Marketing",
+                icon: Megaphone,
+                content: <TraditionalMarketingTab />
+              },
+              {
+                value: "lead-generation",
+                label: "Lead Generation",
+                icon: Target,
+                content: <LeadGenerationTab />
+              },
+              {
+                value: "customer-experience",
+                label: "Customer Experience",
+                icon: Users,
+                content: <CustomerExperienceTab />
+              },
+              {
+                value: "retention-growth",
+                label: "Retention & Growth",
+                icon: TrendingUp,
+                content: <RetentionGrowthTab />
+              }
+            ]}
+          />
+        </CardContent>
+      </Card>
 
-      <Card className="border-elec-yellow/20 bg-elec-yellow/5">
+      <Card className="border-green-500/50 bg-green-500/10 backdrop-blur-sm">
         <CardHeader>
-          <CardTitle className="text-elec-yellow flex items-center gap-2">
+          <CardTitle className="text-green-300 flex items-center gap-2">
             <Target className="h-5 w-5" />
             Success Tip
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-muted-foreground text-sm md:text-base leading-relaxed text-center md:text-left">
+          <p className="text-gray-300 text-sm md:text-base leading-relaxed text-center md:text-left">
             Customer acquisition is a marathon, not a sprint. Focus on building genuine relationships, 
             delivering exceptional service, and maintaining consistent marketing efforts. Remember that 
             satisfied customers are your best marketing tool - they provide referrals and testimonials 
