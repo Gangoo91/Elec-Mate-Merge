@@ -30,25 +30,25 @@ const BusinessCalculators = () => {
       id: "cash-flow",
       title: "Cash Flow Planner",
       icon: <TrendingUp className="h-12 w-12 text-elec-yellow" />,
-      status: "coming-soon"
+      status: "available"
     },
     {
       id: "pricing-strategy", 
       title: "Pricing Strategy Calculator",
       icon: <Target className="h-12 w-12 text-elec-yellow" />,
-      status: "coming-soon"
+      status: "available"
     },
     {
       id: "roi-calculator",
       title: "Equipment ROI Calculator",
       icon: <BarChart3 className="h-12 w-12 text-elec-yellow" />,
-      status: "coming-soon"
+      status: "available"
     },
     {
       id: "hourly-rate",
       title: "Hourly Rate Calculator",
       icon: <Clock className="h-12 w-12 text-elec-yellow" />,
-      status: "coming-soon"
+      status: "available"
     },
     {
       id: "capacity-planner",
