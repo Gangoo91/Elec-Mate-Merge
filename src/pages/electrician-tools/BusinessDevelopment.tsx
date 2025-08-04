@@ -100,34 +100,19 @@ const BusinessDevelopment = () => {
             return (
               <Card 
                 key={calculator.id}
-                className={`bg-gray-800 border-gray-700 hover:border-elec-yellow/50 transition-all duration-200 ${
-                  calculator.status === "available" 
-                    ? "cursor-pointer hover:bg-gray-750" 
-                    : "opacity-75"
+                className={`border-elec-yellow/20 bg-elec-gray h-full hover:bg-elec-gray/80 transition-colors cursor-pointer flex flex-col justify-center items-center py-8 ${
+                  calculator.status === "coming-soon" ? "opacity-75" : ""
                 }`}
                 onClick={() => handleCalculatorClick(calculator.id, calculator.status)}
               >
-                <CardHeader className="text-center pb-4">
-                  <div className="mx-auto mb-4 flex items-center justify-center">
-                    <IconComponent className="h-16 w-16 text-elec-yellow" />
+                <CardHeader className="text-center pb-0 pt-0">
+                  <div className="flex flex-col items-center justify-center gap-4">
+                    <IconComponent className="h-12 w-12 text-elec-yellow mb-2" />
+                    <CardTitle className="text-xl font-bold">{calculator.title}</CardTitle>
                   </div>
-                  <CardTitle className="text-xl text-white">{calculator.title}</CardTitle>
-                  <CardDescription className="text-sm text-gray-300">
-                    {calculator.description}
-                  </CardDescription>
                 </CardHeader>
-                <CardContent className="text-center pt-0">
-                  <Button 
-                    variant={calculator.status === "available" ? "default" : "secondary"}
-                    className={`w-full ${
-                      calculator.status === "available" 
-                        ? "bg-elec-yellow text-black hover:bg-elec-yellow/90" 
-                        : "bg-gray-600 text-gray-300"
-                    }`}
-                    disabled={calculator.status === "coming-soon"}
-                  >
-                    {calculator.status === "available" ? "Use Calculator" : "Coming Soon"}
-                  </Button>
+                <CardContent className="pt-0">
+                  {/* Empty card content for clean design */}
                 </CardContent>
               </Card>
             );
