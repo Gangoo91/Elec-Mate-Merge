@@ -545,26 +545,26 @@ const JobProfitabilityCalculator = () => {
               ) : (
                 <>
                   {/* Cost Breakdown */}
-                  <div className="space-y-4">
-                    <h4 className="text-white font-semibold flex items-center justify-center gap-2">
+                  <div className="bg-elec-dark/30 rounded-lg p-6 space-y-4">
+                    <h4 className="text-white font-semibold flex items-center gap-2 text-center justify-center">
                       <PoundSterling className="h-4 w-4 text-elec-yellow" />
                       Cost Breakdown
                     </h4>
                     <div className="space-y-3">
-                      <div className="flex justify-between text-white">
-                        <span>Material Costs:</span>
-                        <span>£{inputs.materialCost.toFixed(2)}</span>
+                      <div className="flex justify-between items-center text-white py-1">
+                        <span className="text-sm">Material Costs:</span>
+                        <span className="font-medium">£{inputs.materialCost.toFixed(2)}</span>
                       </div>
-                      <div className="flex justify-between text-white">
-                        <span>Labour Costs ({inputs.labourHours}h × £{inputs.hourlyRate}):</span>
-                        <span>£{labourCost.toFixed(2)}</span>
+                      <div className="flex justify-between items-center text-white py-1">
+                        <span className="text-sm">Labour Costs ({inputs.labourHours}h × £{inputs.hourlyRate}):</span>
+                        <span className="font-medium">£{labourCost.toFixed(2)}</span>
                       </div>
-                      <div className="flex justify-between text-white">
-                        <span>Overhead Costs ({inputs.overheadPercentage}%):</span>
-                        <span>£{overheadCosts.toFixed(2)}</span>
+                      <div className="flex justify-between items-center text-white py-1">
+                        <span className="text-sm">Overhead Costs ({inputs.overheadPercentage}%):</span>
+                        <span className="font-medium">£{overheadCosts.toFixed(2)}</span>
                       </div>
                       <Separator className="bg-elec-yellow/20" />
-                      <div className="flex justify-between text-white font-semibold text-lg">
+                      <div className="flex justify-between items-center text-white font-semibold text-lg py-2 bg-elec-yellow/10 px-4 rounded">
                         <span>Total Project Costs:</span>
                         <span className="text-elec-yellow">£{totalCosts.toFixed(2)}</span>
                       </div>
@@ -574,35 +574,31 @@ const JobProfitabilityCalculator = () => {
                   <Separator className="bg-elec-yellow/30" />
 
                   {/* Profitability Analysis */}
-                  <div className="space-y-4">
-                    <h4 className="text-white font-semibold flex items-center justify-center gap-2">
+                  <div className="bg-elec-dark/30 rounded-lg p-6 space-y-4">
+                    <h4 className="text-white font-semibold flex items-center gap-2 text-center justify-center">
                       <TrendingUp className="h-4 w-4 text-elec-yellow" />
                       Profitability Metrics
                     </h4>
-                    <div className="grid md:grid-cols-2 gap-4">
-                      <div className="space-y-3">
-                        <div className="flex justify-between text-white">
-                          <span>Minimum Quote Required:</span>
-                          <span className="text-elec-yellow font-semibold">£{minimumQuote.toFixed(2)}</span>
-                        </div>
-                        <div className="flex justify-between text-white">
-                          <span>Your Quote:</span>
-                          <span>£{inputs.quoteAmount.toFixed(2)}</span>
-                        </div>
+                    <div className="space-y-4">
+                      <div className="flex justify-between items-center text-white py-2">
+                        <span className="text-sm">Minimum Quote Required:</span>
+                        <span className="text-elec-yellow font-semibold">£{minimumQuote.toFixed(2)}</span>
                       </div>
-                      <div className="space-y-3">
-                        <div className="flex justify-between text-white">
-                          <span>Actual Profit:</span>
-                          <span className={actualProfit >= 0 ? "text-green-400 font-semibold" : "text-red-400 font-semibold"}>
-                            £{actualProfit.toFixed(2)}
-                          </span>
-                        </div>
-                        <div className="flex justify-between text-white">
-                          <span>Actual Profit Margin:</span>
-                          <span className={actualProfitMargin >= inputs.desiredProfitMargin ? "text-green-400 font-semibold" : "text-red-400 font-semibold"}>
-                            {actualProfitMargin.toFixed(1)}%
-                          </span>
-                        </div>
+                      <div className="flex justify-between items-center text-white py-2">
+                        <span className="text-sm">Your Quote:</span>
+                        <span className="font-medium">£{inputs.quoteAmount.toFixed(2)}</span>
+                      </div>
+                      <div className="flex justify-between items-center text-white py-2">
+                        <span className="text-sm">Actual Profit:</span>
+                        <span className={`font-semibold ${actualProfit >= 0 ? "text-green-400" : "text-red-400"}`}>
+                          £{actualProfit.toFixed(2)}
+                        </span>
+                      </div>
+                      <div className="flex justify-between items-center text-white py-2">
+                        <span className="text-sm">Actual Profit Margin:</span>
+                        <span className={`font-semibold ${actualProfitMargin >= inputs.desiredProfitMargin ? "text-green-400" : "text-red-400"}`}>
+                          {actualProfitMargin.toFixed(1)}%
+                        </span>
                       </div>
                     </div>
                   </div>
