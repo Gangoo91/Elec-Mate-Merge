@@ -95,7 +95,7 @@ const BusinessDevelopment = () => {
         </Link>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 md:gap-6">
         {businessSections.map((section) => (
           <Link key={section.id} to={section.link} className="group focus:outline-none hover-scale">
             <Card className="h-full border-elec-yellow/20 bg-elec-gray hover:bg-elec-gray/80 transition-all duration-200 cursor-pointer">
