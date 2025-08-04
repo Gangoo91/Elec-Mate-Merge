@@ -1,7 +1,10 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Shield, CreditCard, FileText, UserCheck } from "lucide-react";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { MobileAccordion, MobileAccordionContent, MobileAccordionTrigger } from "@/components/ui/mobile-accordion";
+import { AccordionItem } from "@radix-ui/react-accordion";
+import { Shield, CreditCard, FileText, UserCheck, AlertTriangle, TrendingDown, CheckCircle, Users, Target } from "lucide-react";
 
 const PreventionTab = () => {
   const preventionStrategies = [
@@ -89,52 +92,82 @@ const PreventionTab = () => {
 
   return (
     <div className="space-y-6">
-      <Card className="border-green-500/50 bg-green-500/10">
-        <CardHeader>
-          <CardTitle className="text-green-300 flex items-center gap-2 text-lg md:text-xl">
-            <Shield className="h-5 w-5" />
-            Prevention is Your Best Protection
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-muted-foreground text-sm md:text-base leading-relaxed">
-            The most effective debt recovery strategy is preventing bad debts before they occur. 
-            Implement these preventive measures to minimise your risk of non-payment.
-          </p>
-        </CardContent>
-      </Card>
+      {/* Alert Banner */}
+      <Alert className="border-green-500/50 bg-green-500/10">
+        <Shield className="h-4 w-4" />
+        <AlertTitle className="text-green-300">Prevention is Your Best Protection</AlertTitle>
+        <AlertDescription className="text-muted-foreground">
+          The most effective debt recovery strategy is preventing bad debts before they occur. 
+          Implement these preventive measures to minimise your risk of non-payment.
+        </AlertDescription>
+      </Alert>
 
-      <div className="grid gap-6">
+      {/* Key Metrics */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <Card className="text-center p-4">
+          <div className="flex items-center justify-center mb-2">
+            <TrendingDown className="h-6 w-6 text-green-400" />
+          </div>
+          <div className="text-2xl font-bold text-green-400">68%</div>
+          <div className="text-xs text-muted-foreground">Reduction in bad debts</div>
+        </Card>
+        <Card className="text-center p-4">
+          <div className="flex items-center justify-center mb-2">
+            <CheckCircle className="h-6 w-6 text-blue-400" />
+          </div>
+          <div className="text-2xl font-bold text-blue-400">95%</div>
+          <div className="text-xs text-muted-foreground">Success with contracts</div>
+        </Card>
+        <Card className="text-center p-4">
+          <div className="flex items-center justify-center mb-2">
+            <Users className="h-6 w-6 text-yellow-400" />
+          </div>
+          <div className="text-2xl font-bold text-yellow-400">78%</div>
+          <div className="text-xs text-muted-foreground">Client retention rate</div>
+        </Card>
+        <Card className="text-center p-4">
+          <div className="flex items-center justify-center mb-2">
+            <Target className="h-6 w-6 text-purple-400" />
+          </div>
+          <div className="text-2xl font-bold text-purple-400">15</div>
+          <div className="text-xs text-muted-foreground">Days faster payment</div>
+        </Card>
+      </div>
+
+      {/* Prevention Strategies */}
+      <MobileAccordion type="multiple" className="w-full space-y-4">
         {preventionStrategies.map((strategy, index) => (
-          <Card key={index} className="border-elec-yellow/20 bg-elec-gray">
-            <CardHeader>
-              <div className="flex items-start md:items-center gap-3">
-                <div className="p-2 rounded-lg bg-elec-yellow/10 shrink-0">
-                  {strategy.icon}
-                </div>
-                <div className="flex-1 min-w-0">
-                  <CardTitle className="text-lg md:text-xl text-elec-yellow leading-tight">{strategy.title}</CardTitle>
-                  <p className="text-muted-foreground text-sm leading-relaxed">{strategy.description}</p>
-                </div>
+          <AccordionItem key={index} value={`item-${index}`} className="border border-elec-yellow/20 rounded-lg bg-elec-card">
+            <MobileAccordionTrigger 
+              className="px-6 py-4 hover:bg-elec-yellow/5"
+              icon={strategy.icon}
+            >
+              <div className="text-left">
+                <div className="font-semibold text-elec-yellow">{strategy.title}</div>
+                <div className="text-sm text-muted-foreground">{strategy.description}</div>
               </div>
-            </CardHeader>
-            <CardContent>
-              <div className="grid gap-2">
+            </MobileAccordionTrigger>
+            <MobileAccordionContent className="px-6 pb-4">
+              <div className="grid gap-3">
                 {strategy.strategies.map((item, itemIndex) => (
-                  <div key={itemIndex} className="flex items-start gap-2">
+                  <div key={itemIndex} className="flex items-start gap-3">
                     <div className="w-2 h-2 bg-elec-yellow rounded-full mt-2 shrink-0"></div>
                     <span className="text-sm text-muted-foreground leading-relaxed">{item}</span>
                   </div>
                 ))}
               </div>
-            </CardContent>
-          </Card>
+            </MobileAccordionContent>
+          </AccordionItem>
         ))}
-      </div>
+      </MobileAccordion>
 
+      {/* Warning Signs */}
       <Card className="border-red-500/50 bg-red-500/10">
         <CardHeader>
-          <CardTitle className="text-red-300 text-lg md:text-xl">Warning Signs to Watch For</CardTitle>
+          <CardTitle className="text-red-300 flex items-center gap-2 text-lg md:text-xl">
+            <AlertTriangle className="h-5 w-5" />
+            Warning Signs to Watch For
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid md:grid-cols-2 gap-4">
