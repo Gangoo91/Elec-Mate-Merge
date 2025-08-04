@@ -1,5 +1,5 @@
 
-// Enhanced Recovery Process Tab - Comprehensive debt recovery guidance
+// Enhanced Recovery Process Tab - Comprehensive debt recovery guidance for UK electricians
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
