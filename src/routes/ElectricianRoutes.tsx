@@ -33,6 +33,12 @@ import VisualAnalysisPage from "@/pages/electrician-tools/ai-tools/VisualAnalysi
 import ReportWriterPage from "@/pages/electrician-tools/ai-tools/ReportWriterPage";
 import RegulationsPage from "@/pages/electrician-tools/ai-tools/RegulationsPage";
 import CircuitDesignerPage from "@/pages/electrician-tools/ai-tools/CircuitDesignerPage";
+import BusinessDevelopment from "@/pages/electrician-tools/BusinessDevelopment";
+import JobProfitabilityCalculator from "@/components/electrician/business-development/JobProfitabilityCalculator";
+import HourlyRateCalculator from "@/components/electrician/business-development/HourlyRateCalculator";
+import CashFlowProjector from "@/components/electrician/business-development/CashFlowProjector";
+import BreakEvenCalculator from "@/components/electrician/business-development/BreakEvenCalculator";
+import BusinessCostCalculator from "@/components/electrician/business-development/startup/BusinessCostCalculator";
 
 const ElectricianRoutes = () => (
   <Routes>
@@ -68,6 +74,12 @@ const ElectricianRoutes = () => (
     <Route path="financial-tools" element={<FinancialTools />} />
     <Route path="career-progression" element={<CareerProgression />} />
     <Route path="site-safety" element={<SiteSafety />} />
+    <Route path="business-development" element={<BusinessDevelopment />} />
+    <Route path="business-development/job-profitability" element={<JobProfitabilityCalculator />} />
+    <Route path="business-development/hourly-rate" element={<HourlyRateCalculator />} />
+    <Route path="business-development/cash-flow" element={<CashFlowProjector />} />
+    <Route path="business-development/break-even" element={<BreakEvenCalculator />} />
+    <Route path="business-development/business-costs" element={<BusinessCostCalculator />} />
   </Routes>
 );
 
