@@ -1,4 +1,6 @@
 
+// Enhanced Recovery Process Tab - Comprehensive debt recovery guidance
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
