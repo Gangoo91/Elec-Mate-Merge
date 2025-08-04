@@ -84,7 +84,7 @@ const BusinessDevelopment = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white">
+    <div className="min-h-screen bg-elec-dark text-white">
       <div className="container mx-auto p-6 space-y-6">
         <div className="flex items-center mb-6">
           <Button
