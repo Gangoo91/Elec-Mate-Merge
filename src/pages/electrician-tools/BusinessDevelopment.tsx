@@ -89,11 +89,11 @@ const BusinessDevelopment = () => {
         <div className="flex items-center mb-6">
           <Button
             variant="ghost"
-            onClick={() => navigate('/electrician-tools')}
+            onClick={() => navigate('/electrician/business-development')}
             className="flex items-center gap-2 text-white hover:text-elec-yellow hover:bg-elec-gray"
           >
             <ArrowLeft className="h-4 w-4" />
-            Back to Electrician Tools
+            Back to Business Development
           </Button>
         </div>
         
