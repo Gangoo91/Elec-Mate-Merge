@@ -69,10 +69,10 @@ const BusinessDevelopment = () => {
     },
     {
       id: 8,
-      title: "Business Development Tools",
-      description: "Essential tools and resources to streamline your electrical business operations and growth",
-      icon: <Wrench className="h-12 w-12 text-elec-yellow" />,
-      link: "/electrician-tools/business-development"
+      title: "Business Calculators",
+      description: "Professional calculators for job costing, profitability analysis, and business planning",
+      icon: <Calculator className="h-12 w-12 text-elec-yellow" />,
+      link: "/electrician/business-development/tools"
     }
   ];
 

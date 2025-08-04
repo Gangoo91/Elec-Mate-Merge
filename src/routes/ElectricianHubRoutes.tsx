@@ -29,6 +29,9 @@ import DebtRecovery from "@/pages/electrician/business-development/DebtRecovery"
 import ElectricianMentalHealth from "@/pages/electrician/ElectricianMentalHealth";
 import WorkLifeBalance from "@/pages/electrician/mental-health/WorkLifeBalance";
 import MentalHealthResources from "@/pages/electrician/mental-health/MentalHealthResources";
+import BusinessCalculators from "@/pages/electrician/business-development/tools/BusinessCalculators";
+import JobProfitabilityCalculator from "@/pages/electrician/business-development/tools/JobProfitabilityCalculator";
+import BusinessCostCalculator from "@/pages/electrician/business-development/tools/BusinessCostCalculator";
 
 const ElectricianHubRoutes = () => (
   <Routes>
@@ -65,6 +68,9 @@ const ElectricianHubRoutes = () => (
     <Route path="business-development/templates" element={<BusinessTemplates />} />
     <Route path="business-development/tax-finances" element={<TaxFinances />} />
     <Route path="business-development/debt-recovery" element={<DebtRecovery />} />
+    <Route path="business-development/tools" element={<BusinessCalculators />} />
+    <Route path="business-development/tools/job-profitability" element={<JobProfitabilityCalculator />} />
+    <Route path="business-development/tools/business-cost" element={<BusinessCostCalculator />} />
   </Routes>
 );
 
