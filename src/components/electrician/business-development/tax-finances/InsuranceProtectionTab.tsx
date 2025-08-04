@@ -374,36 +374,42 @@ const InsuranceProtectionTab = () => {
         ))}
       </div>
 
-      <MobileAccordion type="single" collapsible className="space-y-4">
+      <MobileAccordion type="single" collapsible className="space-y-2">
         {insuranceSections.map((section, index) => (
           <MobileAccordionItem key={index} value={`section-${index}`}>
-            <MobileAccordionTrigger icon={section.icon} className="text-white">
+            <MobileAccordionTrigger icon={section.icon}>
               {section.title}
             </MobileAccordionTrigger>
             <MobileAccordionContent>
               <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-                <div className="grid gap-4">
-                  {section.cards.map((card, cardIndex) => (
-                    <Card key={cardIndex} className={`${getCardClasses(card.color)} border-elec-yellow/20`}>
-                      <CardContent className="p-4">
-                        <div className="flex items-start gap-3 mb-3">
-                          <div className={`p-2 rounded-lg bg-${card.color}-500/10 shrink-0`}>
-                            <div className={getCardIconClasses(card.color)}>
-                              {card.icon}
-                            </div>
-                          </div>
-                          <div className="flex-1 min-w-0">
-                            <h4 className="font-semibold text-white text-sm leading-tight mb-2">
-                              {card.title}
-                            </h4>
-                            <p className="text-xs text-muted-foreground leading-relaxed">
-                              {card.content}
-                            </p>
-                          </div>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  ))}
+                <div className="text-sm text-muted-foreground">
+                  {section.title} guidance for UK electrical contractors covering compliance requirements and best practices.
+                </div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-4">
+                    {section.cards.slice(0, 3).map((card, cardIndex) => (
+                      <div key={cardIndex} className={`${getCardClasses(card.color)} p-3 rounded-lg border`}>
+                        <h4 className={`font-semibold ${getCardIconClasses(card.color)} mb-2 flex items-center gap-2`}>
+                          {card.icon}
+                          {card.title}
+                        </h4>
+                        <p className="text-sm">{card.content}</p>
+                      </div>
+                    ))}
+                  </div>
+                  
+                  <div className="space-y-4">
+                    {section.cards.slice(3, 6).map((card, cardIndex) => (
+                      <div key={cardIndex} className={`${getCardClasses(card.color)} p-3 rounded-lg border`}>
+                        <h4 className={`font-semibold ${getCardIconClasses(card.color)} mb-2 flex items-center gap-2`}>
+                          {card.icon}
+                          {card.title}
+                        </h4>
+                        <p className="text-sm">{card.content}</p>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             </MobileAccordionContent>
