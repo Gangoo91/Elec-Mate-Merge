@@ -10,7 +10,8 @@ import {
   DollarSign,
   Calendar,
   Handshake,
-  CreditCard
+  CreditCard,
+  ArrowLeft
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
@@ -85,6 +86,17 @@ const BusinessDevelopment = () => {
   return (
     <div className="min-h-screen bg-gray-900 text-white">
       <div className="container mx-auto p-6 space-y-6">
+        <div className="flex items-center mb-6">
+          <Button
+            variant="ghost"
+            onClick={() => navigate('/electrician-tools')}
+            className="flex items-center gap-2 text-white hover:text-elec-yellow hover:bg-elec-gray"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Back to Electrician Tools
+          </Button>
+        </div>
+        
         <div className="text-center space-y-4">
           <h1 className="text-3xl font-bold text-white">Business Development Tools</h1>
           <p className="text-gray-300 max-w-2xl mx-auto">
