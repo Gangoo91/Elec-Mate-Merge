@@ -31,32 +31,28 @@ import {
 const VATComplianceTab = () => {
   const vatMetrics = [
     {
-      title: "VAT Registration Threshold",
-      value: "£90,000",
-      description: "Annual turnover threshold for 2024/25",
+      metric: "VAT Registration Threshold",
+      data: "£90,000 annual turnover",
       icon: <PoundSterling className="h-5 w-5 text-purple-400" />,
-      trend: "Must register within 30 days of exceeding"
+      detail: "Must register within 30 days of exceeding"
     },
     {
-      title: "Standard VAT Rate",
-      value: "20%",
-      description: "Applied to most electrical services",
-      icon: <Calculator className="h-5 w-5 text-purple-400" />,
-      trend: "Reduced rates available for some work"
+      metric: "Standard VAT Rate",
+      data: "20%",
+      icon: <Calculator className="h-5 w-5 text-blue-400" />,
+      detail: "Applied to most electrical services"
     },
     {
-      title: "CIS Deduction Rate", 
-      value: "20%",
-      description: "Standard rate for subcontractors",
-      icon: <Building2 className="h-5 w-5 text-purple-400" />,
-      trend: "0% available with gross payment status"
+      metric: "CIS Deduction Rate", 
+      data: "20% standard",
+      icon: <Building2 className="h-5 w-5 text-green-400" />,
+      detail: "0% available with gross payment status"
     },
     {
-      title: "MTD Compliance",
-      value: "Apr 2024",
-      description: "Mandatory digital record keeping",
-      icon: <Smartphone className="h-5 w-5 text-purple-400" />,
-      trend: "Quarterly submissions required"
+      metric: "MTD Compliance",
+      data: "Mandatory from Apr 2024",
+      icon: <Smartphone className="h-5 w-5 text-orange-400" />,
+      detail: "Digital record keeping required"
     }
   ];
 
@@ -371,80 +367,64 @@ const VATComplianceTab = () => {
 
   return (
     <div className="space-y-6">
-      {/* Alert Section */}
-      <Alert className="border-purple-500/50 bg-purple-500/10">
+      <Alert className="border-purple-400/50 bg-purple-400/10">
         <AlertTriangle className="h-4 w-4 text-purple-400" />
-        <AlertDescription className="text-purple-200">
-          <strong>Important:</strong> VAT and HMRC compliance requirements for electrical contractors. This guidance covers UK regulations current as of 2024/25. 
-          Always consult with a qualified accountant for business-specific advice and ensure compliance with the latest HMRC requirements.
+        <AlertDescription className="text-purple-400">
+          VAT and HMRC compliance requirements for electrical contractors. This guidance covers UK regulations current as of 2024/25. Always consult with a qualified accountant for business-specific advice.
         </AlertDescription>
       </Alert>
 
-      {/* Metrics Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid gap-3 grid-cols-1 md:grid-cols-2 xl:grid-cols-4">
         {vatMetrics.map((metric, index) => (
-          <Card key={index} className="border-purple-500/20 bg-purple-500/5">
-            <CardContent className="p-4">
-              <div className="flex items-center justify-between mb-2">
-                <div className="p-2 rounded-lg bg-purple-500/10">
-                  {metric.icon}
-                </div>
-              </div>
-              <div className="space-y-1">
-                <p className="text-2xl font-bold text-purple-300">{metric.value}</p>
-                <p className="text-sm font-medium text-white">{metric.title}</p>
-                <p className="text-xs text-muted-foreground">{metric.description}</p>
-                <p className="text-xs text-purple-400">{metric.trend}</p>
-              </div>
-            </CardContent>
+          <Card key={index} className="border-elec-yellow/20 bg-elec-gray p-3">
+            <div className="text-center space-y-2">
+              {metric.icon}
+              <div className="text-sm font-medium text-white">{metric.metric}</div>
+              <div className="text-sm text-muted-foreground">{metric.data}</div>
+            </div>
           </Card>
         ))}
       </div>
 
-      {/* Accordion Sections */}
-      <MobileAccordion type="single" collapsible className="space-y-4">
+      <MobileAccordion type="single" collapsible className="space-y-2">
         {vatSections.map((section, index) => (
           <MobileAccordionItem key={index} value={`section-${index}`}>
-            <Card className={getThemeClasses(section.theme)}>
-              <MobileAccordionTrigger 
-                icon={section.icon}
-                className="px-6 py-4 hover:no-underline"
-              >
-                <div className="flex items-center gap-3 text-left">
-                  <div className={`p-2 rounded-lg bg-${section.theme}-500/10`}>
-                    <div className={getThemeIcon(section.theme)}>
-                      {section.icon}
-                    </div>
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-white">{section.title}</h3>
-                  </div>
+            <MobileAccordionTrigger icon={section.icon}>
+              {section.title}
+            </MobileAccordionTrigger>
+            <MobileAccordionContent>
+              <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
+                <div className="text-sm text-muted-foreground">
+                  {section.title} guidance for UK electrical contractors covering compliance requirements and best practices.
                 </div>
-              </MobileAccordionTrigger>
-              <MobileAccordionContent>
-                <div className="px-6 pb-6">
-                  <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                    {section.cards.map((card, cardIndex) => (
-                      <Card key={cardIndex} className={`${getCardClasses(card.color)} border border-gray-700/50`}>
-                        <CardHeader className="pb-3">
-                          <CardTitle className="text-sm font-semibold text-white flex items-center gap-2">
-                            <div className={getCardIconClasses(card.color)}>
-                              {card.icon}
-                            </div>
-                            {card.title}
-                          </CardTitle>
-                        </CardHeader>
-                        <CardContent className="pt-0">
-                          <p className="text-sm text-muted-foreground leading-relaxed">
-                            {card.content}
-                          </p>
-                        </CardContent>
-                      </Card>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-4">
+                    {section.cards.slice(0, 3).map((card, cardIndex) => (
+                      <div key={cardIndex} className={`${getCardClasses(card.color)} p-3 rounded-lg border`}>
+                        <h4 className={`font-semibold ${getCardIconClasses(card.color)} mb-2 flex items-center gap-2`}>
+                          {card.icon}
+                          {card.title}
+                        </h4>
+                        <p className="text-sm">{card.content}</p>
+                      </div>
+                    ))}
+                  </div>
+                  
+                  <div className="space-y-4">
+                    {section.cards.slice(3, 6).map((card, cardIndex) => (
+                      <div key={cardIndex} className={`${getCardClasses(card.color)} p-3 rounded-lg border`}>
+                        <h4 className={`font-semibold ${getCardIconClasses(card.color)} mb-2 flex items-center gap-2`}>
+                          {card.icon}
+                          {card.title}
+                        </h4>
+                        <p className="text-sm">{card.content}</p>
+                      </div>
                     ))}
                   </div>
                 </div>
-              </MobileAccordionContent>
-            </Card>
+              </div>
+            </MobileAccordionContent>
           </MobileAccordionItem>
         ))}
       </MobileAccordion>
