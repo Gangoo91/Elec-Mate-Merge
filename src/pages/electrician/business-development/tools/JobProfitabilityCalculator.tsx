@@ -514,23 +514,6 @@ const JobProfitabilityCalculator = () => {
               <CardTitle className="text-white flex items-center justify-center gap-2">
                 <TrendingUp className="h-5 w-5 text-elec-yellow" />
                 Profitability Analysis
-                {calculated && (
-                  <Badge variant="success" className="ml-auto">
-                    Calculated
-                  </Badge>
-                )}
-                <div className="ml-auto flex gap-2">
-                  {history.length > 0 && (
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => setShowHistory(!showHistory)}
-                      className="text-elec-yellow hover:bg-elec-yellow/10"
-                    >
-                      <History className="h-4 w-4" />
-                    </Button>
-                  )}
-                </div>
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
@@ -550,23 +533,23 @@ const JobProfitabilityCalculator = () => {
                       <PoundSterling className="h-4 w-4 text-elec-yellow" />
                       Cost Breakdown
                     </h4>
-                    <div className="space-y-3">
-                      <div className="flex justify-between items-center text-white py-1">
-                        <span className="text-sm">Material Costs:</span>
-                        <span className="font-medium">£{inputs.materialCost.toFixed(2)}</span>
+                    <div className="space-y-4">
+                      <div className="text-center py-3">
+                        <div className="text-sm text-white mb-1">Material Costs:</div>
+                        <div className="text-lg font-medium text-white">£{inputs.materialCost.toFixed(2)}</div>
                       </div>
-                      <div className="flex justify-between items-center text-white py-1">
-                        <span className="text-sm">Labour Costs ({inputs.labourHours}h × £{inputs.hourlyRate}):</span>
-                        <span className="font-medium">£{labourCost.toFixed(2)}</span>
+                      <div className="text-center py-3">
+                        <div className="text-sm text-white mb-1">Labour Costs ({inputs.labourHours}h × £{inputs.hourlyRate}):</div>
+                        <div className="text-lg font-medium text-white">£{labourCost.toFixed(2)}</div>
                       </div>
-                      <div className="flex justify-between items-center text-white py-1">
-                        <span className="text-sm">Overhead Costs ({inputs.overheadPercentage}%):</span>
-                        <span className="font-medium">£{overheadCosts.toFixed(2)}</span>
+                      <div className="text-center py-3">
+                        <div className="text-sm text-white mb-1">Overhead Costs ({inputs.overheadPercentage}%):</div>
+                        <div className="text-lg font-medium text-white">£{overheadCosts.toFixed(2)}</div>
                       </div>
                       <Separator className="bg-elec-yellow/20" />
-                      <div className="flex justify-between items-center text-white font-semibold text-lg py-2 bg-elec-yellow/10 px-4 rounded">
-                        <span>Total Project Costs:</span>
-                        <span className="text-elec-yellow">£{totalCosts.toFixed(2)}</span>
+                      <div className="text-center py-4 bg-elec-yellow/10 rounded">
+                        <div className="text-sm text-white mb-2">Total Project Costs:</div>
+                        <div className="text-xl font-semibold text-elec-yellow">£{totalCosts.toFixed(2)}</div>
                       </div>
                     </div>
                   </div>
