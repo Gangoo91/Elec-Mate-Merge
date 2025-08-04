@@ -19,8 +19,8 @@ const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
   const progressPercentage = (currentStep / totalSteps) * 100;
 
   return (
-    <Card className="border-elec-yellow/20 bg-elec-card mb-6">
-      <CardContent className="p-6">
+    <Card className="border-elec-yellow/20 bg-elec-card mb-4">
+      <CardContent className="p-4">
         <div className="space-y-4">
           {/* Progress Bar */}
           <div className="space-y-2">
@@ -30,7 +30,7 @@ const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
                 {currentStep}/{totalSteps} Complete
               </span>
             </div>
-            <Progress value={progressPercentage} className="h-2" />
+            <Progress value={progressPercentage} className="h-1.5" />
           </div>
 
           {/* Step Indicators */}
@@ -39,7 +39,7 @@ const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
               <React.Fragment key={index}>
                 <div className="flex flex-col items-center space-y-2">
                   <div
-                    className={`flex items-center justify-center w-8 h-8 rounded-full border-2 transition-all duration-200 ${
+                    className={`flex items-center justify-center w-6 h-6 rounded-full border-2 transition-all duration-200 ${
                       completedSteps[index]
                         ? "bg-elec-yellow border-elec-yellow text-black"
                         : index === currentStep
@@ -48,13 +48,13 @@ const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
                     }`}
                   >
                     {completedSteps[index] ? (
-                      <CheckCircle className="h-5 w-5" />
+                      <CheckCircle className="h-3 w-3" />
                     ) : (
-                      <Circle className="h-5 w-5" />
+                      <Circle className="h-3 w-3" />
                     )}
                   </div>
                   <span
-                    className={`text-xs text-center max-w-20 leading-tight ${
+                    className={`text-xs text-center max-w-16 leading-tight ${
                       completedSteps[index] || index === currentStep
                         ? "text-elec-yellow"
                         : "text-muted-foreground"
@@ -65,7 +65,7 @@ const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
                 </div>
                 {index < stepLabels.length - 1 && (
                   <ArrowRight
-                    className={`h-4 w-4 mx-2 ${
+                    className={`h-3 w-3 mx-1 ${
                       completedSteps[index] ? "text-elec-yellow" : "text-muted-foreground"
                     }`}
                   />
@@ -75,8 +75,8 @@ const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
           </div>
 
           {/* Current Step Description */}
-          <div className="text-center pt-2">
-            <p className="text-sm text-muted-foreground">
+          <div className="text-center pt-1">
+            <p className="text-xs text-muted-foreground">
               {currentStep < totalSteps
                 ? `Complete ${stepLabels[currentStep]} to continue`
                 : "All steps completed! Review your business plan."}

@@ -14,7 +14,7 @@ import ScenarioComparison from "@/components/business-calculator/ScenarioCompari
 import ProgressIndicator from "@/components/business-calculator/ProgressIndicator";
 import MobileOptimizedLayout from "@/components/business-calculator/MobileOptimizedLayout";
 
-interface StartupInputs {
+interface StartupInputs extends Record<string, number> {
   tools: number;
   testEquipment: number;
   vehicle: number;
@@ -24,7 +24,7 @@ interface StartupInputs {
   workingCapital: number;
 }
 
-interface MonthlyInputs {
+interface MonthlyInputs extends Record<string, number> {
   insurance: number;
   fuel: number;
   toolMaintenance: number;

@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Slider } from "@/components/ui/slider";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { Badge } from "@/components/ui/badge";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
@@ -62,33 +62,33 @@ const InteractiveInputs: React.FC<InteractiveInputsProps> = ({
     return hints[type]?.[field]?.[businessType] || "";
   };
 
-  const getSliderConfig = (field: string, type: 'startup' | 'monthly') => {
+  const getDropdownOptions = (field: string, type: 'startup' | 'monthly') => {
     const configs = {
       startup: {
-        tools: { min: 0, max: 25000, step: 500 },
-        testEquipment: { min: 0, max: 10000, step: 250 },
-        vehicle: { min: 0, max: 60000, step: 1000 },
-        insurance: { min: 0, max: 5000, step: 100 },
-        qualifications: { min: 0, max: 8000, step: 200 },
-        marketing: { min: 0, max: 10000, step: 250 },
-        workingCapital: { min: 0, max: 50000, step: 1000 }
+        tools: [0, 2000, 5000, 8000, 12000, 15000, 20000, 25000],
+        testEquipment: [0, 500, 1000, 2000, 3000, 5000, 8000, 10000],
+        vehicle: [0, 5000, 10000, 15000, 25000, 35000, 50000, 60000],
+        insurance: [0, 500, 1000, 2000, 3000, 4000, 5000],
+        qualifications: [0, 1000, 2000, 3000, 5000, 6000, 8000],
+        marketing: [0, 500, 1000, 2500, 5000, 7500, 10000],
+        workingCapital: [0, 5000, 10000, 20000, 30000, 40000, 50000]
       },
       monthly: {
-        insurance: { min: 0, max: 1000, step: 25 },
-        fuel: { min: 0, max: 800, step: 25 },
-        toolMaintenance: { min: 0, max: 300, step: 10 },
-        marketing: { min: 0, max: 1500, step: 50 },
-        phoneInternet: { min: 0, max: 200, step: 10 },
-        accountancy: { min: 0, max: 500, step: 25 },
-        rent: { min: 0, max: 2000, step: 50 },
-        utilities: { min: 0, max: 400, step: 25 }
+        insurance: [0, 100, 200, 300, 500, 700, 1000],
+        fuel: [0, 100, 200, 300, 400, 600, 800],
+        toolMaintenance: [0, 50, 100, 150, 200, 250, 300],
+        marketing: [0, 200, 400, 600, 900, 1200, 1500],
+        phoneInternet: [0, 30, 60, 100, 150, 200],
+        accountancy: [0, 100, 200, 300, 400, 500],
+        rent: [0, 300, 600, 1000, 1500, 2000],
+        utilities: [0, 50, 100, 200, 300, 400]
       }
     };
     
-    return configs[type][field] || { min: 0, max: 10000, step: 100 };
+    return configs[type][field] || [0, 1000, 2000, 5000, 10000];
   };
 
-  const SliderInput = ({ 
+  const DropdownInput = ({ 
     label, 
     field, 
     value, 
@@ -103,42 +103,39 @@ const InteractiveInputs: React.FC<InteractiveInputsProps> = ({
     type: 'startup' | 'monthly';
     icon: React.ReactNode;
   }) => {
-    const config = getSliderConfig(field, type);
+    const options = getDropdownOptions(field, type);
     const hint = getFieldHint(field, type);
     
     return (
       <div className="space-y-3">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="text-elec-yellow">{icon}</div>
-            <label className="text-sm font-medium">{label}</label>
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger>
-                  <HelpCircle className="h-4 w-4 text-muted-foreground" />
-                </TooltipTrigger>
-                <TooltipContent className="max-w-xs">
-                  <p>{hint}</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-          </div>
-          <Badge variant="outline" className="text-elec-yellow border-elec-yellow/30">
-            £{value.toLocaleString()}
-          </Badge>
+        <div className="flex items-center gap-2">
+          <div className="text-elec-yellow">{icon}</div>
+          <label className="text-sm font-medium">{label}</label>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger>
+                <HelpCircle className="h-4 w-4 text-muted-foreground" />
+              </TooltipTrigger>
+              <TooltipContent className="max-w-xs">
+                <p>{hint}</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         </div>
-        <Slider
-          value={[value]}
-          onValueChange={(values) => onChange(field, values[0])}
-          min={config.min}
-          max={config.max}
-          step={config.step}
-          className="w-full"
-        />
-        <div className="flex justify-between text-xs text-muted-foreground">
-          <span>£{config.min.toLocaleString()}</span>
-          <span>£{config.max.toLocaleString()}</span>
-        </div>
+        <Select value={value.toString()} onValueChange={(val) => onChange(field, parseInt(val))}>
+          <SelectTrigger className="w-full border-elec-yellow/30 bg-background">
+            <SelectValue placeholder="Select amount">
+              £{value.toLocaleString()}
+            </SelectValue>
+          </SelectTrigger>
+          <SelectContent className="bg-background border-elec-yellow/30 z-50">
+            {options.map((option) => (
+              <SelectItem key={option} value={option.toString()}>
+                £{option.toLocaleString()}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
       </div>
     );
   };
@@ -154,7 +151,7 @@ const InteractiveInputs: React.FC<InteractiveInputsProps> = ({
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-6">
-          <SliderInput
+          <DropdownInput
             label="Professional Tools"
             field="tools"
             value={startupInputs.tools || 0}
@@ -162,7 +159,7 @@ const InteractiveInputs: React.FC<InteractiveInputsProps> = ({
             type="startup"
             icon={<PoundSterling className="h-4 w-4" />}
           />
-          <SliderInput
+          <DropdownInput
             label="Test Equipment"
             field="testEquipment"
             value={startupInputs.testEquipment || 0}
@@ -170,7 +167,7 @@ const InteractiveInputs: React.FC<InteractiveInputsProps> = ({
             type="startup"
             icon={<PoundSterling className="h-4 w-4" />}
           />
-          <SliderInput
+          <DropdownInput
             label="Vehicle & Setup"
             field="vehicle"
             value={startupInputs.vehicle || 0}
@@ -178,7 +175,7 @@ const InteractiveInputs: React.FC<InteractiveInputsProps> = ({
             type="startup"
             icon={<PoundSterling className="h-4 w-4" />}
           />
-          <SliderInput
+          <DropdownInput
             label="Initial Insurance"
             field="insurance"
             value={startupInputs.insurance || 0}
@@ -186,7 +183,7 @@ const InteractiveInputs: React.FC<InteractiveInputsProps> = ({
             type="startup"
             icon={<PoundSterling className="h-4 w-4" />}
           />
-          <SliderInput
+          <DropdownInput
             label="Qualifications"
             field="qualifications"
             value={startupInputs.qualifications || 0}
@@ -194,7 +191,7 @@ const InteractiveInputs: React.FC<InteractiveInputsProps> = ({
             type="startup"
             icon={<PoundSterling className="h-4 w-4" />}
           />
-          <SliderInput
+          <DropdownInput
             label="Marketing Setup"
             field="marketing"
             value={startupInputs.marketing || 0}
@@ -202,7 +199,7 @@ const InteractiveInputs: React.FC<InteractiveInputsProps> = ({
             type="startup"
             icon={<PoundSterling className="h-4 w-4" />}
           />
-          <SliderInput
+          <DropdownInput
             label="Working Capital"
             field="workingCapital"
             value={startupInputs.workingCapital || 0}
@@ -222,7 +219,7 @@ const InteractiveInputs: React.FC<InteractiveInputsProps> = ({
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-6">
-          <SliderInput
+          <DropdownInput
             label="Insurance"
             field="insurance"
             value={monthlyInputs.insurance || 0}
@@ -230,7 +227,7 @@ const InteractiveInputs: React.FC<InteractiveInputsProps> = ({
             type="monthly"
             icon={<PoundSterling className="h-4 w-4" />}
           />
-          <SliderInput
+          <DropdownInput
             label="Fuel & Travel"
             field="fuel"
             value={monthlyInputs.fuel || 0}
@@ -238,7 +235,7 @@ const InteractiveInputs: React.FC<InteractiveInputsProps> = ({
             type="monthly"
             icon={<PoundSterling className="h-4 w-4" />}
           />
-          <SliderInput
+          <DropdownInput
             label="Tool Maintenance"
             field="toolMaintenance"
             value={monthlyInputs.toolMaintenance || 0}
@@ -246,7 +243,7 @@ const InteractiveInputs: React.FC<InteractiveInputsProps> = ({
             type="monthly"
             icon={<PoundSterling className="h-4 w-4" />}
           />
-          <SliderInput
+          <DropdownInput
             label="Marketing"
             field="marketing"
             value={monthlyInputs.marketing || 0}
@@ -254,7 +251,7 @@ const InteractiveInputs: React.FC<InteractiveInputsProps> = ({
             type="monthly"
             icon={<PoundSterling className="h-4 w-4" />}
           />
-          <SliderInput
+          <DropdownInput
             label="Phone & Internet"
             field="phoneInternet"
             value={monthlyInputs.phoneInternet || 0}
@@ -262,7 +259,7 @@ const InteractiveInputs: React.FC<InteractiveInputsProps> = ({
             type="monthly"
             icon={<PoundSterling className="h-4 w-4" />}
           />
-          <SliderInput
+          <DropdownInput
             label="Professional Services"
             field="accountancy"
             value={monthlyInputs.accountancy || 0}
@@ -270,7 +267,7 @@ const InteractiveInputs: React.FC<InteractiveInputsProps> = ({
             type="monthly"
             icon={<PoundSterling className="h-4 w-4" />}
           />
-          <SliderInput
+          <DropdownInput
             label="Premises Rent"
             field="rent"
             value={monthlyInputs.rent || 0}
@@ -278,7 +275,7 @@ const InteractiveInputs: React.FC<InteractiveInputsProps> = ({
             type="monthly"
             icon={<PoundSterling className="h-4 w-4" />}
           />
-          <SliderInput
+          <DropdownInput
             label="Utilities"
             field="utilities"
             value={monthlyInputs.utilities || 0}
