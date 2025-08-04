@@ -72,7 +72,7 @@ const BusinessDevelopment = () => {
       title: "Business Development Tools",
       description: "Essential tools and resources to streamline your electrical business operations and growth",
       icon: <Wrench className="h-12 w-12 text-elec-yellow" />,
-      link: "/electrician/business-development/tools"
+      link: "/electrician-tools/business-development"
     }
   ];
 
