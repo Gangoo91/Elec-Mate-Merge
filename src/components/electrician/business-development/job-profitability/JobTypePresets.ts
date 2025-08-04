@@ -12,7 +12,69 @@ export interface JobPreset {
 }
 
 export const jobTypePresets: JobPreset[] = [
-  // Domestic Work
+  // Domestic Work - New Build & Rewires
+  {
+    id: "domestic-full-rewire-2bed",
+    name: "Full House Rewire (2-3 Bed)",
+    category: "Domestic",
+    description: "Complete rewire including CU, circuits, and testing",
+    defaults: {
+      labourHours: 40,
+      hourlyRate: 45,
+      overheadPercentage: 20,
+      desiredProfitMargin: 25
+    }
+  },
+  {
+    id: "domestic-full-rewire-4bed",
+    name: "Full House Rewire (4-5 Bed)",
+    category: "Domestic",
+    description: "Complete rewire for larger property including CU upgrade",
+    defaults: {
+      labourHours: 60,
+      hourlyRate: 45,
+      overheadPercentage: 20,
+      desiredProfitMargin: 25
+    }
+  },
+  {
+    id: "domestic-first-fix",
+    name: "First Fix Wiring",
+    category: "Domestic",
+    description: "Cable installation and back boxes before plastering",
+    defaults: {
+      labourHours: 24,
+      hourlyRate: 45,
+      overheadPercentage: 20,
+      desiredProfitMargin: 25
+    }
+  },
+  {
+    id: "domestic-second-fix",
+    name: "Second Fix Wiring",
+    category: "Domestic",
+    description: "Socket/switch installation and testing after decoration",
+    defaults: {
+      labourHours: 16,
+      hourlyRate: 45,
+      overheadPercentage: 20,
+      desiredProfitMargin: 25
+    }
+  },
+  {
+    id: "domestic-partial-rewire",
+    name: "Partial Rewire",
+    category: "Domestic",
+    description: "Rewire of specific circuits (kitchen/bathroom)",
+    defaults: {
+      labourHours: 20,
+      hourlyRate: 45,
+      overheadPercentage: 20,
+      desiredProfitMargin: 25
+    }
+  },
+
+  // Domestic Work - Specific Installations
   {
     id: "domestic-socket",
     name: "Additional Socket Installation",
@@ -65,7 +127,7 @@ export const jobTypePresets: JobPreset[] = [
     id: "domestic-consumer-unit",
     name: "Consumer Unit Replacement",
     category: "Domestic",
-    description: "Full CU upgrade with testing",
+    description: "Full CU upgrade with testing and certification",
     defaults: {
       labourHours: 8,
       hourlyRate: 45,
@@ -73,8 +135,80 @@ export const jobTypePresets: JobPreset[] = [
       desiredProfitMargin: 25
     }
   },
-  
-  // Commercial Work
+  {
+    id: "domestic-ev-charger",
+    name: "EV Charger Installation",
+    category: "Domestic",
+    description: "Electric vehicle charging point with dedicated circuit",
+    defaults: {
+      labourHours: 6,
+      hourlyRate: 50,
+      overheadPercentage: 20,
+      desiredProfitMargin: 25
+    }
+  },
+  {
+    id: "domestic-outdoor-socket",
+    name: "Outdoor Socket & Lighting",
+    category: "Domestic",
+    description: "External power and lighting with weatherproof fittings",
+    defaults: {
+      labourHours: 4,
+      hourlyRate: 45,
+      overheadPercentage: 20,
+      desiredProfitMargin: 25
+    }
+  },
+  {
+    id: "domestic-smoke-alarms",
+    name: "Smoke Alarm Installation",
+    category: "Domestic",
+    description: "Mains powered smoke detectors with battery backup",
+    defaults: {
+      labourHours: 3,
+      hourlyRate: 45,
+      overheadPercentage: 20,
+      desiredProfitMargin: 30
+    }
+  },
+
+  // Commercial Work - Offices & Retail
+  {
+    id: "commercial-office-fit-out",
+    name: "Office Fit-Out Electrical",
+    category: "Commercial",
+    description: "Complete electrical installation for office space",
+    defaults: {
+      labourHours: 80,
+      hourlyRate: 55,
+      overheadPercentage: 18,
+      desiredProfitMargin: 20
+    }
+  },
+  {
+    id: "commercial-retail-lighting",
+    name: "Retail Lighting System",
+    category: "Commercial",
+    description: "Track lighting and display lighting installation",
+    defaults: {
+      labourHours: 16,
+      hourlyRate: 55,
+      overheadPercentage: 18,
+      desiredProfitMargin: 20
+    }
+  },
+  {
+    id: "commercial-kitchen",
+    name: "Commercial Kitchen Electrical",
+    category: "Commercial",
+    description: "Kitchen equipment circuits and ventilation controls",
+    defaults: {
+      labourHours: 24,
+      hourlyRate: 60,
+      overheadPercentage: 18,
+      desiredProfitMargin: 22
+    }
+  },
   {
     id: "commercial-lighting",
     name: "Commercial Lighting Installation",
@@ -111,7 +245,31 @@ export const jobTypePresets: JobPreset[] = [
       desiredProfitMargin: 22
     }
   },
-  
+  {
+    id: "commercial-emergency-lighting",
+    name: "Emergency Lighting System",
+    category: "Commercial",
+    description: "Emergency lighting with central battery system",
+    defaults: {
+      labourHours: 12,
+      hourlyRate: 55,
+      overheadPercentage: 18,
+      desiredProfitMargin: 22
+    }
+  },
+  {
+    id: "commercial-data-cabling",
+    name: "Data Cabling Installation",
+    category: "Commercial",
+    description: "Cat6 data cabling and network infrastructure",
+    defaults: {
+      labourHours: 10,
+      hourlyRate: 50,
+      overheadPercentage: 18,
+      desiredProfitMargin: 25
+    }
+  },
+
   // Industrial Work
   {
     id: "industrial-motor",
@@ -137,13 +295,61 @@ export const jobTypePresets: JobPreset[] = [
       desiredProfitMargin: 18
     }
   },
-  
+  {
+    id: "industrial-machinery",
+    name: "Machinery Installation",
+    category: "Industrial",
+    description: "Factory machinery electrical connections",
+    defaults: {
+      labourHours: 16,
+      hourlyRate: 65,
+      overheadPercentage: 15,
+      desiredProfitMargin: 18
+    }
+  },
+  {
+    id: "industrial-distribution",
+    name: "Industrial Distribution Board",
+    category: "Industrial",
+    description: "High current distribution panel installation",
+    defaults: {
+      labourHours: 20,
+      hourlyRate: 65,
+      overheadPercentage: 15,
+      desiredProfitMargin: 18
+    }
+  },
+  {
+    id: "industrial-lighting",
+    name: "Industrial Lighting",
+    category: "Industrial",
+    description: "High bay LED lighting for warehouses/factories",
+    defaults: {
+      labourHours: 12,
+      hourlyRate: 60,
+      overheadPercentage: 15,
+      desiredProfitMargin: 20
+    }
+  },
+  {
+    id: "industrial-earthing",
+    name: "Earthing & Bonding System",
+    category: "Industrial",
+    description: "Earth electrode and equipotential bonding",
+    defaults: {
+      labourHours: 8,
+      hourlyRate: 60,
+      overheadPercentage: 15,
+      desiredProfitMargin: 22
+    }
+  },
+
   // Testing & Inspection
   {
     id: "eicr-domestic",
     name: "Domestic EICR",
     category: "Testing",
-    description: "Electrical Installation Condition Report",
+    description: "Electrical Installation Condition Report for homes",
     defaults: {
       labourHours: 4,
       hourlyRate: 50,
@@ -164,6 +370,18 @@ export const jobTypePresets: JobPreset[] = [
     }
   },
   {
+    id: "eicr-industrial",
+    name: "Industrial EICR",
+    category: "Testing",
+    description: "Industrial installation condition report",
+    defaults: {
+      labourHours: 12,
+      hourlyRate: 60,
+      overheadPercentage: 15,
+      desiredProfitMargin: 25
+    }
+  },
+  {
     id: "pat-testing",
     name: "PAT Testing",
     category: "Testing",
@@ -173,6 +391,68 @@ export const jobTypePresets: JobPreset[] = [
       hourlyRate: 40,
       overheadPercentage: 15,
       desiredProfitMargin: 35
+    }
+  },
+  {
+    id: "electrical-testing",
+    name: "Electrical Installation Testing",
+    category: "Testing",
+    description: "Initial verification testing for new installations",
+    defaults: {
+      labourHours: 4,
+      hourlyRate: 50,
+      overheadPercentage: 15,
+      desiredProfitMargin: 30
+    }
+  },
+  {
+    id: "periodic-inspection",
+    name: "Periodic Inspection",
+    category: "Testing",
+    description: "Routine electrical safety inspection",
+    defaults: {
+      labourHours: 6,
+      hourlyRate: 50,
+      overheadPercentage: 15,
+      desiredProfitMargin: 28
+    }
+  },
+
+  // Maintenance & Repairs
+  {
+    id: "maintenance-fault-finding",
+    name: "Fault Finding & Repair",
+    category: "Maintenance",
+    description: "Electrical fault diagnosis and repair work",
+    defaults: {
+      labourHours: 3,
+      hourlyRate: 55,
+      overheadPercentage: 18,
+      desiredProfitMargin: 35
+    }
+  },
+  {
+    id: "maintenance-emergency-call",
+    name: "Emergency Call-Out",
+    category: "Maintenance",
+    description: "Out-of-hours emergency electrical repair",
+    defaults: {
+      labourHours: 2,
+      hourlyRate: 75,
+      overheadPercentage: 20,
+      desiredProfitMargin: 40
+    }
+  },
+  {
+    id: "maintenance-planned",
+    name: "Planned Maintenance",
+    category: "Maintenance",
+    description: "Routine electrical maintenance and checks",
+    defaults: {
+      labourHours: 4,
+      hourlyRate: 50,
+      overheadPercentage: 18,
+      desiredProfitMargin: 25
     }
   }
 ];
