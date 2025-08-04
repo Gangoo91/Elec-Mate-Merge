@@ -1,7 +1,10 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Phone, Mail, FileText, Clock } from "lucide-react";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { MobileAccordion, MobileAccordionContent, MobileAccordionTrigger } from "@/components/ui/mobile-accordion";
+import { AccordionItem } from "@radix-ui/react-accordion";
+import { Phone, Mail, FileText, Clock, TrendingUp, Users, CheckCircle, Target } from "lucide-react";
 
 const RecoveryProcessTab = () => {
   const recoverySteps = [
@@ -100,100 +103,188 @@ const RecoveryProcessTab = () => {
 
   return (
     <div className="space-y-6">
-      <Card className="border-blue-500/50 bg-blue-500/10">
+      {/* Alert Banner */}
+      <Alert className="border-blue-500/50 bg-blue-500/10">
+        <Phone className="h-4 w-4" />
+        <AlertTitle className="text-blue-300">Professional Recovery Process</AlertTitle>
+        <AlertDescription className="text-muted-foreground">
+          Follow this structured approach to debt recovery. Each step escalates the pressure while 
+          maintaining professionalism and legal compliance under UK law.
+        </AlertDescription>
+      </Alert>
+
+      {/* Key Metrics */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <Card>
+          <CardContent className="p-4">
+            <div className="flex items-center gap-2">
+              <TrendingUp className="h-4 w-4 text-blue-400" />
+              <div>
+                <p className="text-2xl font-bold text-blue-300">65%</p>
+                <p className="text-xs text-muted-foreground">Step 1-2 Success</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardContent className="p-4">
+            <div className="flex items-center gap-2">
+              <Clock className="h-4 w-4 text-elec-yellow" />
+              <div>
+                <p className="text-2xl font-bold text-elec-yellow">14</p>
+                <p className="text-xs text-muted-foreground">Average Days</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardContent className="p-4">
+            <div className="flex items-center gap-2">
+              <Users className="h-4 w-4 text-green-400" />
+              <div>
+                <p className="text-2xl font-bold text-green-300">78%</p>
+                <p className="text-xs text-muted-foreground">Client Retention</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardContent className="p-4">
+            <div className="flex items-center gap-2">
+              <Target className="h-4 w-4 text-purple-400" />
+              <div>
+                <p className="text-2xl font-bold text-purple-300">85%</p>
+                <p className="text-xs text-muted-foreground">Total Recovery</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Recovery Process Steps */}
+      <Card>
         <CardHeader>
-          <CardTitle className="text-blue-300 flex items-center gap-2">
+          <CardTitle className="flex items-center gap-2">
             <Phone className="h-5 w-5" />
-            Professional Recovery Process
+            5-Step Recovery Process
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-muted-foreground mb-4">
-            Follow this structured approach to debt recovery. Each step escalates the pressure while 
-            maintaining professionalism and legal compliance.
-          </p>
-          <div className="grid gap-4">
+          <MobileAccordion type="single" collapsible className="space-y-2">
             {recoverySteps.map((step, index) => (
-              <div key={index} className="border border-blue-500/30 rounded-lg p-4">
-                <div className="flex items-start gap-4">
-                  <div className="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-300 font-semibold flex-shrink-0">
-                    {step.step}
+              <AccordionItem key={index} value={`step-${index}`} className="border border-border rounded-lg">
+                <MobileAccordionTrigger 
+                  className="px-4"
+                  icon={
+                    <div className="w-6 h-6 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-300 text-sm font-semibold">
+                      {step.step}
+                    </div>
+                  }
+                >
+                  <div className="flex flex-col items-start text-left">
+                    <span className="font-medium">{step.title}</span>
+                    <span className="text-sm text-muted-foreground">{step.timeframe}</span>
                   </div>
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-2">
-                      <h4 className="font-semibold text-white">{step.title}</h4>
-                      <Badge variant="outline" className="border-blue-500/30">
-                        {step.timeframe}
-                      </Badge>
+                </MobileAccordionTrigger>
+                <MobileAccordionContent className="px-4 pb-4">
+                  <div className="space-y-3">
+                    <div>
+                      <span className="text-blue-400 font-medium">Methods: </span>
+                      <span className="text-muted-foreground">{step.methods.join(", ")}</span>
                     </div>
-                    <div className="grid md:grid-cols-2 gap-3 text-sm">
-                      <div>
-                        <span className="text-blue-400">Methods: </span>
-                        <span className="text-muted-foreground">{step.methods.join(", ")}</span>
-                      </div>
-                      <div>
-                        <span className="text-blue-400">Tone: </span>
-                        <span className="text-muted-foreground">{step.tone}</span>
-                      </div>
+                    <div>
+                      <span className="text-blue-400 font-medium">Tone: </span>
+                      <span className="text-muted-foreground">{step.tone}</span>
                     </div>
-                    <div className="mt-2 text-sm">
-                      <span className="text-blue-400">Objective: </span>
+                    <div>
+                      <span className="text-blue-400 font-medium">Objective: </span>
                       <span className="text-muted-foreground">{step.objective}</span>
                     </div>
                   </div>
-                </div>
-              </div>
+                </MobileAccordionContent>
+              </AccordionItem>
             ))}
-          </div>
+          </MobileAccordion>
         </CardContent>
       </Card>
 
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      {/* Communication Templates */}
+      <Card>
         <CardHeader>
-          <CardTitle className="text-elec-yellow flex items-center gap-2">
+          <CardTitle className="flex items-center gap-2">
             <Mail className="h-5 w-5" />
             Communication Templates
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid gap-4">
+          <MobileAccordion type="single" collapsible className="space-y-2">
             {communicationTemplates.map((template, index) => (
-              <div key={index} className="border border-elec-yellow/20 rounded-lg p-4">
-                <div className="flex items-center gap-2 mb-3">
-                  <Badge className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/40">
-                    {template.stage}
-                  </Badge>
-                  <span className="text-sm text-muted-foreground">Subject: {template.subject}</span>
-                </div>
-                <div className="bg-elec-dark/50 rounded p-3 text-sm text-muted-foreground border border-elec-yellow/10">
-                  "{template.template}"
-                </div>
-              </div>
+              <AccordionItem key={index} value={`template-${index}`} className="border border-border rounded-lg">
+                <MobileAccordionTrigger 
+                  className="px-4"
+                  icon={<Mail className="h-4 w-4" />}
+                >
+                  <div className="flex flex-col items-start text-left">
+                    <span className="font-medium">{template.stage}</span>
+                    <span className="text-sm text-muted-foreground">{template.subject}</span>
+                  </div>
+                </MobileAccordionTrigger>
+                <MobileAccordionContent className="px-4 pb-4">
+                  <div className="bg-muted/50 rounded p-3 text-sm">
+                    <div className="mb-2">
+                      <span className="font-medium">Subject: </span>
+                      <span className="text-muted-foreground">{template.subject}</span>
+                    </div>
+                    <div className="border-t pt-2">
+                      <span className="italic text-muted-foreground">"{template.template}"</span>
+                    </div>
+                  </div>
+                </MobileAccordionContent>
+              </AccordionItem>
             ))}
-          </div>
+          </MobileAccordion>
         </CardContent>
       </Card>
 
-      <Card className="border-green-500/50 bg-green-500/10">
+      {/* Negotiation Tips */}
+      <Card>
         <CardHeader>
-          <CardTitle className="text-green-300 flex items-center gap-2">
+          <CardTitle className="flex items-center gap-2">
             <FileText className="h-5 w-5" />
             Negotiation Best Practices
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid md:grid-cols-2 gap-4">
+          <MobileAccordion type="single" collapsible className="space-y-2">
             {negotiationTips.map((tip, index) => (
-              <div key={index} className="border border-green-500/30 rounded-lg p-4">
-                <h4 className="font-semibold text-white mb-2">{tip.tip}</h4>
-                <p className="text-sm text-muted-foreground mb-2">{tip.description}</p>
-                <div className="text-xs">
-                  <span className="text-green-400">Benefit: </span>
-                  <span className="text-muted-foreground">{tip.benefit}</span>
-                </div>
-              </div>
+              <AccordionItem key={index} value={`tip-${index}`} className="border border-border rounded-lg">
+                <MobileAccordionTrigger 
+                  className="px-4"
+                  icon={<CheckCircle className="h-4 w-4" />}
+                >
+                  <div className="flex flex-col items-start text-left">
+                    <span className="font-medium">{tip.tip}</span>
+                    <span className="text-sm text-muted-foreground">{tip.description}</span>
+                  </div>
+                </MobileAccordionTrigger>
+                <MobileAccordionContent className="px-4 pb-4">
+                  <div className="space-y-2">
+                    <div>
+                      <span className="text-green-400 font-medium">Description: </span>
+                      <span className="text-muted-foreground">{tip.description}</span>
+                    </div>
+                    <div>
+                      <span className="text-green-400 font-medium">Benefit: </span>
+                      <span className="text-muted-foreground">{tip.benefit}</span>
+                    </div>
+                  </div>
+                </MobileAccordionContent>
+              </AccordionItem>
             ))}
-          </div>
+          </MobileAccordion>
         </CardContent>
       </Card>
     </div>
