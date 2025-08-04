@@ -563,25 +563,25 @@ const JobProfitabilityCalculator = () => {
                       Profitability Metrics
                     </h4>
                     <div className="space-y-4">
-                      <div className="flex justify-between items-center text-white py-2">
-                        <span className="text-sm">Minimum Quote Required:</span>
-                        <span className="text-elec-yellow font-semibold">£{minimumQuote.toFixed(2)}</span>
+                      <div className="text-center py-3">
+                        <div className="text-sm text-white mb-1">Minimum Quote Required:</div>
+                        <div className="text-lg font-semibold text-elec-yellow">£{minimumQuote.toFixed(2)}</div>
                       </div>
-                      <div className="flex justify-between items-center text-white py-2">
-                        <span className="text-sm">Your Quote:</span>
-                        <span className="font-medium">£{inputs.quoteAmount.toFixed(2)}</span>
+                      <div className="text-center py-3">
+                        <div className="text-sm text-white mb-1">Your Quote:</div>
+                        <div className="text-lg font-medium text-white">£{inputs.quoteAmount.toFixed(2)}</div>
                       </div>
-                      <div className="flex justify-between items-center text-white py-2">
-                        <span className="text-sm">Actual Profit:</span>
-                        <span className={`font-semibold ${actualProfit >= 0 ? "text-green-400" : "text-red-400"}`}>
+                      <div className="text-center py-3">
+                        <div className="text-sm text-white mb-1">Actual Profit:</div>
+                        <div className={`text-lg font-semibold ${actualProfit >= 0 ? "text-green-400" : "text-red-400"}`}>
                           £{actualProfit.toFixed(2)}
-                        </span>
+                        </div>
                       </div>
-                      <div className="flex justify-between items-center text-white py-2">
-                        <span className="text-sm">Actual Profit Margin:</span>
-                        <span className={`font-semibold ${actualProfitMargin >= inputs.desiredProfitMargin ? "text-green-400" : "text-red-400"}`}>
+                      <div className="text-center py-3">
+                        <div className="text-sm text-white mb-1">Actual Profit Margin:</div>
+                        <div className={`text-lg font-semibold ${actualProfitMargin >= inputs.desiredProfitMargin ? "text-green-400" : "text-red-400"}`}>
                           {actualProfitMargin.toFixed(1)}%
-                        </span>
+                        </div>
                       </div>
                     </div>
                   </div>
