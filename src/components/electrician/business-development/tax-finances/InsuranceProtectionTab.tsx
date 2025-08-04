@@ -362,13 +362,15 @@ const InsuranceProtectionTab = () => {
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {insuranceMetrics.map((metric, index) => (
           <Card key={index} className="border-purple-400/30 bg-gradient-to-br from-purple-500/5 to-purple-600/10">
-            <CardContent className="p-4">
-              <div className="flex items-center gap-2 mb-2">
+            <CardContent className="p-6 text-center">
+              <div className="flex justify-center mb-3">
                 {metric.icon}
-                <h3 className="font-semibold text-sm text-white">{metric.metric}</h3>
               </div>
-              <p className="text-xl font-bold text-purple-300 mb-1">{metric.data}</p>
-              <p className="text-xs text-purple-200/70">{metric.detail}</p>
+              <h3 className="font-semibold text-sm text-white mb-4 leading-tight">
+                {metric.metric}
+              </h3>
+              <p className="text-xl font-bold text-purple-300 mb-2">{metric.data}</p>
+              <p className="text-xs text-purple-200/70 leading-relaxed">{metric.detail}</p>
             </CardContent>
           </Card>
         ))}
