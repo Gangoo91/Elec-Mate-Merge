@@ -11,6 +11,7 @@ import {
   UserCheck,
   Calculator,
   CreditCard,
+  Wrench,
   ArrowLeft,
   ChevronLeft
 } from "lucide-react";
@@ -65,6 +66,13 @@ const BusinessDevelopment = () => {
       description: "Strategies for managing late payments, debt recovery, and protecting your cash flow",
       icon: <CreditCard className="h-12 w-12 text-elec-yellow" />,
       link: "/electrician/business-development/debt-recovery"
+    },
+    {
+      id: 8,
+      title: "Business Development Tools",
+      description: "Essential tools and resources to streamline your electrical business operations and growth",
+      icon: <Wrench className="h-12 w-12 text-elec-yellow" />,
+      link: "/electrician/business-development/tools"
     }
   ];
 
