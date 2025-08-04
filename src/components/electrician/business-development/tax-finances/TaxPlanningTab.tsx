@@ -24,34 +24,39 @@ import {
   Receipt,
   Building2,
   Users,
-  CreditCard
+  CreditCard,
+  Globe,
+  GraduationCap,
+  Lightbulb,
+  Map,
+  Network
 } from "lucide-react";
 
 const TaxPlanningTab = () => {
   const taxMetrics = [
     {
-      metric: "Tax Efficiency Threshold",
-      data: "£50,000",
-      subtext: "annual profit",
-      icon: <Calculator className="h-5 w-5 text-purple-400" />
+      metric: "Self Assessment Deadline",
+      data: "31st January 2025",
+      icon: <Clock className="h-5 w-5 text-purple-400" />,
+      detail: "Online submission and payment due"
     },
     {
-      metric: "Corporation Tax Rates",
+      metric: "Corporation Tax Rate",
       data: "19% to 25%",
-      subtext: "",
-      icon: <CreditCard className="h-5 w-5 text-blue-400" />
+      icon: <Calculator className="h-5 w-5 text-blue-400" />,
+      detail: "Based on profit levels from April 2024"
     },
     {
       metric: "Personal Allowance",
       data: "£12,570",
-      subtext: "tax-free",
-      icon: <Users className="h-5 w-5 text-green-400" />
+      icon: <Users className="h-5 w-5 text-green-400" />,
+      detail: "Tax-free income for 2024/25"
     },
     {
-      metric: "Liability Protection",
-      data: "Limited company",
-      subtext: "advantage",
-      icon: <Shield className="h-5 w-5 text-orange-400" />
+      metric: "Pension Annual Allowance",
+      data: "£60,000",
+      icon: <PiggyBank className="h-5 w-5 text-orange-400" />,
+      detail: "Maximum tax-relieved contributions"
     }
   ];
 
@@ -65,37 +70,37 @@ const TaxPlanningTab = () => {
           title: "Strategy Overview",
           color: "purple",
           icon: <Target className="h-4 w-4" />,
-          content: "Develop a comprehensive tax strategy that maximises allowances, reliefs, and timing opportunities. Focus on reducing overall tax burden whilst maintaining compliance and supporting business growth objectives throughout the tax year."
+          content: "Develop a comprehensive tax strategy that maximises allowances, reliefs, and timing opportunities. Focus on reducing overall tax burden whilst maintaining compliance and supporting business growth objectives."
         },
         {
           title: "Implementation Timeline",
           color: "blue",
           icon: <Calendar className="h-4 w-4" />,
-          content: "Begin planning in Q3 of tax year (October-December). Review income forecasts, plan major purchases, consider pension contributions, and prepare for year-end. Submit self-assessment by 31st January with all supporting documentation."
+          content: "Begin planning in Q3 of tax year (October-December). Review income forecasts, plan major purchases, consider pension contributions, and prepare for year-end submissions by 31st January."
         },
         {
           title: "Business Benefits",
           color: "green",
           icon: <TrendingUp className="h-4 w-4" />,
-          content: "Effective tax planning reduces overall tax liability, improves cash flow through timing strategies, enables better business investment decisions, and provides certainty for financial planning and business growth strategies."
+          content: "Effective tax planning reduces overall liability, improves cash flow through timing strategies, enables better investment decisions, and provides certainty for financial planning and growth."
         },
         {
-          title: "Key Features & Requirements",
+          title: "Key Requirements",
           color: "orange",
           icon: <CheckCircle2 className="h-4 w-4" />,
-          content: "Maintain detailed income and expense records, track allowable business deductions, monitor tax rate thresholds, plan timing of income and expenditure, and ensure all reliefs and allowances are properly claimed."
+          content: "Maintain detailed income and expense records, track allowable business deductions, monitor tax rate thresholds, plan timing of income and expenditure, ensure all reliefs are claimed."
         },
         {
           title: "Tax Considerations",
           color: "yellow",
           icon: <Calculator className="h-4 w-4" />,
-          content: "Consider interaction between income tax, National Insurance, and VAT. Plan for tax rate changes, understand marginal rates impact, and factor in timing differences between cash received and tax liability dates."
+          content: "Consider interaction between income tax, National Insurance, and VAT. Plan for tax rate changes, understand marginal rates impact, and factor in timing differences between cash received and tax liability."
         },
         {
-          title: "Success Metrics/KPIs",
+          title: "Success Metrics",
           color: "red",
           icon: <Target className="h-4 w-4" />,
-          content: "Track effective tax rate year-on-year, monitor successful claim rates for allowances and reliefs, measure tax planning savings achieved, and maintain 100% compliance with filing deadlines and payment dates."
+          content: "Track effective tax rate year-on-year, monitor successful claim rates for allowances and reliefs, measure tax planning savings achieved, maintain 100% compliance with filing deadlines."
         }
       ]
     },
@@ -105,240 +110,259 @@ const TaxPlanningTab = () => {
       theme: "blue",
       cards: [
         {
-          title: "Strategy Overview",
+          title: "Critical Deadlines",
           color: "purple",
-          icon: <Target className="h-4 w-4" />,
-          content: "Master the critical tax calendar to avoid penalties and maximise planning opportunities. Build systems that ensure compliance whilst creating opportunities for tax-efficient timing of business activities and payments."
-        },
-        {
-          title: "Implementation Timeline",
-          color: "blue",
           icon: <Calendar className="h-4 w-4" />,
-          content: "Set up calendar reminders for key dates: 5th April (tax year end), 31st October (registration deadline), 31st January (self-assessment), 31st July (payments on account). Plan quarterly reviews of tax position."
+          content: "Self Assessment: 31st October (paper) or 31st January (online). Corporation Tax: 9 months after year-end. VAT Returns: Monthly/quarterly. CIS Returns: Monthly by 19th of following month."
         },
         {
-          title: "Business Benefits",
+          title: "Planning Calendar",
+          color: "blue",
+          icon: <Clock className="h-4 w-4" />,
+          content: "Set up calendar reminders for key dates. Plan quarterly reviews of tax position. Schedule annual review meetings with accountant. Create systematic approaches to deadline management."
+        },
+        {
+          title: "Compliance Benefits",
           color: "green",
-          icon: <TrendingUp className="h-4 w-4" />,
-          content: "Avoid costly penalties and interest charges, maintain good standing with HMRC, enable better cash flow planning, reduce stress through organised approach, and create opportunities for tax-efficient timing decisions."
+          icon: <Shield className="h-4 w-4" />,
+          content: "Avoid costly penalties and interest charges, maintain good standing with HMRC, enable better cash flow planning, reduce stress through organised approach, create tax-efficient timing opportunities."
         },
         {
-          title: "Key Features & Requirements",
+          title: "Documentation",
           color: "orange",
-          icon: <CheckCircle2 className="h-4 w-4" />,
-          content: "Track all critical tax deadlines, maintain organised record-keeping systems, set up payment schedules for tax liabilities, respond promptly to HMRC correspondence, and keep detailed evidence for all claims and deductions."
+          icon: <FileText className="h-4 w-4" />,
+          content: "Track all critical tax deadlines, maintain organised record-keeping systems, set up payment schedules for tax liabilities, respond promptly to HMRC correspondence, keep detailed evidence for claims."
         },
         {
-          title: "Tax Considerations",
+          title: "Penalty Management",
           color: "yellow",
-          icon: <Calculator className="h-4 w-4" />,
-          content: "Understand penalty regimes for late filing and payment, plan for payments on account system, consider interest charges on late payments, and factor in timing of income recognition for tax purposes."
+          icon: <AlertTriangle className="h-4 w-4" />,
+          content: "Understand penalty regimes for late filing and payment, plan for payments on account system, consider interest charges on late payments, factor in timing of income recognition."
         },
         {
-          title: "Success Metrics/KPIs",
+          title: "Performance Tracking",
           color: "red",
-          icon: <Target className="h-4 w-4" />,
-          content: "Achieve 100% on-time submission rate, maintain zero penalty record, meet all payment deadlines, respond to HMRC queries within required timeframes, and keep compliance costs below 2% of turnover."
+          icon: <CheckCircle2 className="h-4 w-4" />,
+          content: "Achieve 100% on-time submission rate, maintain zero penalty record, meet all payment deadlines, respond to HMRC queries within required timeframes, keep compliance costs minimal."
         }
       ]
     },
     {
-      title: "Business Tax Strategies",
-      icon: <Briefcase className="h-5 w-5 text-green-400" />,
+      title: "HMRC Resources",
+      icon: <Globe className="h-5 w-5 text-green-400" />,
       theme: "green",
       cards: [
         {
-          title: "Strategy Overview",
+          title: "GOV.UK Tax Portal",
           color: "purple",
-          icon: <Target className="h-4 w-4" />,
-          content: "Implement tax-efficient business structures and practices that support growth whilst minimising tax burden. Consider sole trader, partnership, or limited company structures based on income levels and business objectives."
+          icon: <Globe className="h-4 w-4" />,
+          content: "Access official HMRC guidance, submit returns online, view your tax account, make payments, and track correspondence. Essential for Managing Tax Digital compliance and real-time tax management."
         },
         {
-          title: "Implementation Timeline",
+          title: "CIS Helpline",
           color: "blue",
-          icon: <Calendar className="h-4 w-4" />,
-          content: "Review business structure annually or when significant income changes occur. Plan major equipment purchases for maximum capital allowances. Time income recognition and expense claims for optimal tax efficiency."
+          icon: <Building2 className="h-4 w-4" />,
+          content: "Dedicated Construction Industry Scheme support: 0300 200 3210. Get help with contractor registration, subcontractor verification, monthly returns, and gross payment status applications."
         },
         {
-          title: "Business Benefits",
+          title: "VAT Helpline",
           color: "green",
-          icon: <TrendingUp className="h-4 w-4" />,
-          content: "Optimise business structure for tax efficiency, maximise available reliefs and allowances, improve cash flow through timing strategies, and create opportunities for reinvestment and business expansion."
-        },
-        {
-          title: "Key Features & Requirements",
-          color: "orange",
-          icon: <CheckCircle2 className="h-4 w-4" />,
-          content: "Claim all eligible business expenses, maximise capital allowances on equipment, consider incorporation when beneficial, utilise available reliefs like R&D credits, and maintain proper business/personal expense separation."
-        },
-        {
-          title: "Tax Considerations",
-          color: "yellow",
           icon: <Calculator className="h-4 w-4" />,
-          content: "Compare sole trader income tax vs corporation tax rates, consider National Insurance implications, factor in dividend tax for limited companies, and understand timing differences between different business structures."
+          content: "VAT-specific guidance and support: 0300 200 3700. Assistance with registration, scheme selection, Making Tax Digital queries, and complex VAT calculations for electrical work."
         },
         {
-          title: "Success Metrics/KPIs",
+          title: "Self Assessment Support",
+          color: "orange",
+          icon: <FileText className="h-4 w-4" />,
+          content: "Self Assessment helpline: 0300 200 3310. Help with return completion, allowable expenses queries, and deadline guidance. Online chat and digital assistant also available."
+        },
+        {
+          title: "Business Support",
+          color: "yellow",
+          icon: <Briefcase className="h-4 w-4" />,
+          content: "HMRC Business Support Team provides guidance for new businesses, compliance visits, and complex queries. Free webinars and workshops available for small business owners."
+        },
+        {
+          title: "Digital Services",
           color: "red",
           icon: <Target className="h-4 w-4" />,
-          content: "Monitor effective tax rate by business structure, track successful claims for reliefs and allowances, measure administrative costs vs tax savings, and review structure efficiency annually against income levels."
+          content: "HMRC app for mobiles, online tax account access, digital record keeping guidance, and Making Tax Digital software recommendations. Essential for modern tax compliance."
         }
       ]
     },
     {
-      title: "Pension & Retirement Planning",
-      icon: <PiggyBank className="h-5 w-5 text-orange-400" />,
+      title: "Common Scenarios",
+      icon: <Lightbulb className="h-5 w-5 text-orange-400" />,
       theme: "orange",
       cards: [
         {
-          title: "Strategy Overview",
+          title: "Starting as Sole Trader",
           color: "purple",
-          icon: <Target className="h-4 w-4" />,
-          content: "Maximise pension contributions for tax relief whilst building retirement security. Consider annual allowance, carry forward rules, and lifetime allowance to create tax-efficient retirement funding strategies."
+          icon: <Users className="h-4 w-4" />,
+          content: "Register for Self Assessment, consider early voluntary VAT registration, understand allowable business expenses, plan for first year tax bill. Keep detailed records from day one."
         },
         {
-          title: "Implementation Timeline",
+          title: "Incorporating Your Business",
           color: "blue",
-          icon: <Calendar className="h-4 w-4" />,
-          content: "Review pension strategy annually before 5th April. Calculate optimal contribution levels based on income and available allowances. Set up regular contributions or plan timing of lump sum payments for maximum efficiency."
+          icon: <Building2 className="h-4 w-4" />,
+          content: "Timing considerations, share capital structure, salary vs dividend strategy, corporation tax planning, transfer of business assets. Professional advice essential for optimal structure."
         },
         {
-          title: "Business Benefits",
+          title: "High-Value Equipment Purchases",
           color: "green",
-          icon: <TrendingUp className="h-4 w-4" />,
-          content: "Reduce current year tax liability through pension contributions, build retirement security, benefit from tax-free growth within pension wrapper, and create flexible income options for future retirement."
-        },
-        {
-          title: "Key Features & Requirements",
-          color: "orange",
-          icon: <CheckCircle2 className="h-4 w-4" />,
-          content: "Understand annual allowance limits (£60,000 for 2024/25), utilise carry forward of unused allowances from previous three years, choose appropriate pension schemes, and maintain detailed contribution records."
-        },
-        {
-          title: "Tax Considerations",
-          color: "yellow",
           icon: <Calculator className="h-4 w-4" />,
-          content: "Calculate tax relief rates on contributions, understand tapered allowance for high earners, consider timing of contributions with income fluctuations, and plan for future tax treatment of pension withdrawals."
+          content: "Annual Investment Allowance planning, timing purchases for maximum tax relief, VAT considerations, leasing vs buying analysis. Consider cash flow impact on tax planning."
         },
         {
-          title: "Success Metrics/KPIs",
+          title: "Domestic vs Commercial Split",
+          color: "orange",
+          icon: <Shield className="h-4 w-4" />,
+          content: "Different VAT rates (20% vs 5% for energy-saving), CIS applications vary, insurance requirements differ, record-keeping complexity increases. Plan systems to track both streams."
+        },
+        {
+          title: "Subcontractor Arrangements",
+          color: "yellow",
+          icon: <Receipt className="h-4 w-4" />,
+          content: "CIS registration requirements, gross payment status benefits, invoice requirements, tax treatment of payments received, interaction with VAT obligations on same work."
+        },
+        {
+          title: "Retirement Planning",
           color: "red",
-          icon: <Target className="h-4 w-4" />,
-          content: "Maximise annual allowance usage, track tax relief claimed on contributions, monitor retirement fund growth, review contribution efficiency against income levels, and maintain on-track progress towards retirement goals."
+          icon: <PiggyBank className="h-4 w-4" />,
+          content: "Pension contribution strategies, business sale considerations, capital gains planning, income drawdown vs annuity decisions. Start planning early for optimal outcomes."
         }
       ]
     },
     {
-      title: "Record Keeping Systems",
-      icon: <FileText className="h-5 w-5 text-yellow-400" />,
+      title: "Quick Reference Cards",
+      icon: <Map className="h-5 w-5 text-yellow-400" />,
       theme: "yellow",
       cards: [
         {
-          title: "Strategy Overview",
+          title: "Key Tax Rates 2024/25",
           color: "purple",
-          icon: <Target className="h-4 w-4" />,
-          content: "Establish comprehensive record-keeping systems that support accurate tax returns, enable effective business analysis, and provide audit trails for HMRC compliance. Focus on digital solutions that integrate with tax requirements."
-        },
-        {
-          title: "Implementation Timeline",
-          color: "blue",
-          icon: <Calendar className="h-4 w-4" />,
-          content: "Set up record-keeping systems before starting business operations. Implement monthly reconciliation processes, establish systematic filing for receipts and invoices, and create backup procedures for all financial records."
-        },
-        {
-          title: "Business Benefits",
-          color: "green",
-          icon: <TrendingUp className="h-4 w-4" />,
-          content: "Support accurate tax return preparation, enable effective business performance analysis, simplify year-end accounts process, provide evidence for expense claims, and reduce risk of errors or missed deductions."
-        },
-        {
-          title: "Key Features & Requirements",
-          color: "orange",
-          icon: <CheckCircle2 className="h-4 w-4" />,
-          content: "Keep records for minimum 5 years after submission deadline, maintain detailed income and expense records, track mileage and travel expenses, store receipts and invoices systematically, and separate business from personal expenses."
-        },
-        {
-          title: "Tax Considerations",
-          color: "yellow",
           icon: <Calculator className="h-4 w-4" />,
-          content: "Ensure records support all tax claims and deductions, maintain evidence for capital allowance claims, track any private use adjustments, and keep detailed records of any cash transactions or payments."
+          content: "Personal Allowance: £12,570 | Basic Rate: 20% (£12,571-£50,270) | Higher Rate: 40% (£50,271-£125,140) | Corporation Tax: 19%-25% | VAT: 20% standard, 5% energy-saving"
         },
         {
-          title: "Success Metrics/KPIs",
+          title: "Important Deadlines",
+          color: "blue",
+          icon: <Clock className="h-4 w-4" />,
+          content: "Self Assessment: 31st Jan | Corporation Tax: 9 months + 1 day | VAT Returns: 1 month + 7 days | CIS Returns: 19th of following month | Pension contributions: 5th April"
+        },
+        {
+          title: "Allowable Business Expenses",
+          color: "green",
+          icon: <Receipt className="h-4 w-4" />,
+          content: "Tools and equipment | Vehicle expenses | Professional fees | Training costs | Insurance premiums | Office costs | Protective clothing | Phone bills (business use) | Advertising"
+        },
+        {
+          title: "VAT Registration Thresholds",
+          color: "orange",
+          icon: <TrendingUp className="h-4 w-4" />,
+          content: "Mandatory: £90,000 turnover | Voluntary: Any level | Deregistration: Below £88,000 | Flat Rate Scheme: 12.5% for electrical contractors | Annual accounting available"
+        },
+        {
+          title: "CIS Quick Facts",
+          color: "yellow",
+          icon: <Building2 className="h-4 w-4" />,
+          content: "Standard Rate: 20% deduction | Higher Rate: 30% (unverified) | Gross Payment: 0% (if qualified) | Monthly returns due 19th | Applies to construction work only"
+        },
+        {
+          title: "Emergency Contacts",
           color: "red",
-          icon: <Target className="h-4 w-4" />,
-          content: "Achieve monthly reconciliation within 5 working days, maintain 100% documentation for all claims, reduce time spent on year-end accounts preparation, and receive positive feedback from accountants or HMRC inspections."
+          icon: <AlertTriangle className="h-4 w-4" />,
+          content: "HMRC General: 0300 200 3300 | CIS: 0300 200 3210 | VAT: 0300 200 3700 | Self Assessment: 0300 200 3310 | Online services help: 0300 200 3600"
         }
       ]
     },
     {
-      title: "Risk Management & Compliance",
-      icon: <Shield className="h-5 w-5 text-red-400" />,
+      title: "Seasonal Planning",
+      icon: <Calendar className="h-5 w-5 text-red-400" />,
       theme: "red",
       cards: [
         {
-          title: "Strategy Overview",
+          title: "Q1 (April-June)",
           color: "purple",
-          icon: <Target className="h-4 w-4" />,
-          content: "Implement robust systems to manage tax compliance risks and avoid penalties. Focus on accurate record-keeping, timely submissions, and proactive communication with HMRC to maintain good standing and protect business reputation."
-        },
-        {
-          title: "Implementation Timeline",
-          color: "blue",
           icon: <Calendar className="h-4 w-4" />,
-          content: "Establish risk management procedures from business start. Set up systematic deadline tracking, implement error-checking processes for returns, create contingency plans for compliance issues, and schedule regular compliance reviews."
+          content: "New tax year begins. Review allowances and rates. Plan major equipment purchases. Consider pension contributions. Set up new year record-keeping systems. Register for CIS if needed."
         },
         {
-          title: "Business Benefits",
-          color: "green",
+          title: "Q2 (July-September)",
+          color: "blue",
           icon: <TrendingUp className="h-4 w-4" />,
-          content: "Avoid costly penalties and interest charges, maintain good relationships with HMRC, protect business reputation and credit rating, reduce stress through organised approach, and ensure predictable tax costs."
+          content: "Mid-year tax review. Assess income projections. Plan timing of major expenses. Review business structure efficiency. Consider incorporation timing. Update insurance arrangements."
         },
         {
-          title: "Key Features & Requirements",
-          color: "orange",
-          icon: <CheckCircle2 className="h-4 w-4" />,
-          content: "Implement deadline management systems, maintain accurate and complete records, establish error-checking procedures, respond promptly to HMRC correspondence, and make voluntary disclosures when errors are discovered."
-        },
-        {
-          title: "Tax Considerations",
-          color: "yellow",
+          title: "Q3 (October-December)",
+          color: "green",
           icon: <Calculator className="h-4 w-4" />,
-          content: "Understand penalty regimes for different types of non-compliance, know when to make voluntary disclosures, consider professional indemnity insurance, and factor compliance costs into business planning."
+          content: "Tax planning intensifies. Make equipment purchases for maximum allowances. Plan pension contributions. Prepare for Self Assessment. Consider income timing strategies. Book accountant appointments."
         },
         {
-          title: "Success Metrics/KPIs",
+          title: "Q4 (January-March)",
+          color: "orange",
+          icon: <FileText className="h-4 w-4" />,
+          content: "Complete Self Assessment by 31st January. Make tax payments. Prepare corporation tax returns. Analyse previous year performance. Plan improvements for new tax year ahead."
+        },
+        {
+          title: "Year-End Activities",
+          color: "yellow",
+          icon: <CheckCircle2 className="h-4 w-4" />,
+          content: "Stocktake and valuations. Review bad debts. Check all expenses claimed. Confirm allowances maximised. Prepare accounts. Book tax payment dates. Plan cash flow for tax bills."
+        },
+        {
+          title: "Continuous Tasks",
           color: "red",
           icon: <Target className="h-4 w-4" />,
-          content: "Maintain zero penalty record, achieve 100% on-time submission rate, keep error rates below 1% of turnover, respond to all HMRC queries within required timeframes, and maintain comprehensive audit trail for all transactions."
+          content: "Monthly record reconciliation. VAT return preparation. CIS monthly returns. Invoice processing. Receipt storage. Bank reconciliation. Professional development tracking."
+        }
+      ]
+    },
+    {
+      title: "Professional Network",
+      icon: <Network className="h-5 w-5 text-indigo-400" />,
+      theme: "indigo",
+      cards: [
+        {
+          title: "Qualified Accountants",
+          color: "purple",
+          icon: <GraduationCap className="h-4 w-4" />,
+          content: "ACCA, ICAEW, or CIMA qualified accountants with construction industry experience. Look for CIS and electrical trade specialisation. Check references and professional indemnity insurance."
+        },
+        {
+          title: "Tax Advisors",
+          color: "blue",
+          icon: <Calculator className="h-4 w-4" />,
+          content: "Chartered Tax Advisers (CTA) for complex planning. Specialists in small business taxation, incorporation planning, and succession planning. Essential for high-value tax decisions."
+        },
+        {
+          title: "Business Mentors",
+          color: "green",
+          icon: <Users className="h-4 w-4" />,
+          content: "SCORE mentors, Prince's Trust advisors, local business networks. Industry-specific mentoring through electrical trade associations. Peer support groups for business owners."
+        },
+        {
+          title: "Legal Support",
+          color: "orange",
+          icon: <Shield className="h-4 w-4" />,
+          content: "Solicitors specialising in small business, employment law, and contract disputes. Essential for incorporation, partnership agreements, and complex commercial arrangements."
+        },
+        {
+          title: "Financial Services",
+          color: "yellow",
+          icon: <PiggyBank className="h-4 w-4" />,
+          content: "Business bank relationships, equipment finance specialists, pension advisors. Insurance brokers with construction industry expertise. Factoring services for cash flow."
+        },
+        {
+          title: "Professional Bodies",
+          color: "red",
+          icon: <BookOpen className="h-4 w-4" />,
+          content: "NICEIC, NAPIT, SELECT for technical standards. Federation of Small Businesses for business support. Local Chamber of Commerce for networking and advocacy."
         }
       ]
     }
   ];
-
-  const getThemeClasses = (theme: string) => {
-    const themes = {
-      purple: "border-purple-500/30 bg-purple-500/5",
-      blue: "border-blue-500/30 bg-blue-500/5", 
-      green: "border-green-500/30 bg-green-500/5",
-      orange: "border-orange-500/30 bg-orange-500/5",
-      yellow: "border-yellow-500/30 bg-yellow-500/5",
-      red: "border-red-500/30 bg-red-500/5"
-    };
-    return themes[theme as keyof typeof themes] || themes.purple;
-  };
-
-  const getThemeIcon = (theme: string) => {
-    const themes = {
-      purple: "text-purple-400",
-      blue: "text-blue-400",
-      green: "text-green-400", 
-      orange: "text-orange-400",
-      yellow: "text-yellow-400",
-      red: "text-red-400"
-    };
-    return themes[theme as keyof typeof themes] || themes.purple;
-  };
 
   const getCardClasses = (color: string) => {
     const colors = {
@@ -347,7 +371,8 @@ const TaxPlanningTab = () => {
       green: "border-l-4 border-l-green-500 bg-green-500/5", 
       orange: "border-l-4 border-l-orange-500 bg-orange-500/5",
       yellow: "border-l-4 border-l-yellow-500 bg-yellow-500/5",
-      red: "border-l-4 border-l-red-500 bg-red-500/5"
+      red: "border-l-4 border-l-red-500 bg-red-500/5",
+      indigo: "border-l-4 border-l-indigo-500 bg-indigo-500/5"
     };
     return colors[color as keyof typeof colors] || colors.purple;
   };
@@ -359,7 +384,8 @@ const TaxPlanningTab = () => {
       green: "text-green-400",
       orange: "text-orange-400",
       yellow: "text-yellow-400",
-      red: "text-red-400"
+      red: "text-red-400",
+      indigo: "text-indigo-400"
     };
     return colors[color as keyof typeof colors] || colors.purple;
   };
@@ -377,47 +403,51 @@ const TaxPlanningTab = () => {
         {taxMetrics.map((metric, index) => (
           <Card key={index} className="border-elec-yellow/20 bg-elec-gray p-3">
             <div className="text-center space-y-2">
-              <div className="flex justify-center">{metric.icon}</div>
-              <div className="space-y-1">
-                <p className="text-xs text-muted-foreground font-medium leading-tight">{metric.metric}</p>
-                <p className="text-sm font-bold text-elec-yellow leading-tight">{metric.data}</p>
-                <p className="text-xs text-muted-foreground leading-tight">{metric.subtext}</p>
-              </div>
+              {metric.icon}
+              <div className="text-sm font-medium text-white">{metric.metric}</div>
+              <div className="text-sm text-muted-foreground">{metric.data}</div>
             </div>
           </Card>
         ))}
       </div>
 
-      <MobileAccordion type="single" collapsible className="space-y-4">
+      <MobileAccordion type="single" collapsible className="space-y-2">
         {taxSections.map((section, index) => (
-          <MobileAccordionItem key={index} value={`item-${index}`} className={getThemeClasses(section.theme)}>
-            <MobileAccordionTrigger 
-              icon={section.icon}
-              className={`px-6 py-4 hover:no-underline ${getThemeIcon(section.theme)}`}
-            >
-              <span className={`font-semibold text-base ${getThemeIcon(section.theme)}`}>
-                {section.title}
-              </span>
+          <MobileAccordionItem key={index} value={`section-${index}`}>
+            <MobileAccordionTrigger icon={section.icon}>
+              {section.title}
             </MobileAccordionTrigger>
-            <MobileAccordionContent className="px-6 pb-6">
-              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                {section.cards.map((card, cardIndex) => (
-                  <Card key={cardIndex} className={`p-4 ${getCardClasses(card.color)}`}>
-                    <div className="space-y-3">
-                      <div className="flex items-center gap-2">
-                        <span className={getCardIconClasses(card.color)}>
+            <MobileAccordionContent>
+              <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
+                <div className="text-sm text-muted-foreground">
+                  {section.title} guidance for UK electrical contractors covering compliance requirements and best practices.
+                </div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-4">
+                    {section.cards.slice(0, 3).map((card, cardIndex) => (
+                      <div key={cardIndex} className={`${getCardClasses(card.color)} p-3 rounded-lg border`}>
+                        <h4 className={`font-semibold ${getCardIconClasses(card.color)} mb-2 flex items-center gap-2`}>
                           {card.icon}
-                        </span>
-                        <h4 className={`font-semibold text-sm ${getCardIconClasses(card.color)}`}>
                           {card.title}
                         </h4>
+                        <p className="text-sm">{card.content}</p>
                       </div>
-                      <p className="text-sm text-muted-foreground leading-relaxed">
-                        {card.content}
-                      </p>
-                    </div>
-                  </Card>
-                ))}
+                    ))}
+                  </div>
+                  
+                  <div className="space-y-4">
+                    {section.cards.slice(3, 6).map((card, cardIndex) => (
+                      <div key={cardIndex} className={`${getCardClasses(card.color)} p-3 rounded-lg border`}>
+                        <h4 className={`font-semibold ${getCardIconClasses(card.color)} mb-2 flex items-center gap-2`}>
+                          {card.icon}
+                          {card.title}
+                        </h4>
+                        <p className="text-sm">{card.content}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
             </MobileAccordionContent>
           </MobileAccordionItem>
