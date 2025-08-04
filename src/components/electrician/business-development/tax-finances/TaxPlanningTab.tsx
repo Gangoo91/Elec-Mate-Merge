@@ -1,225 +1,428 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
-import { Clock, Calendar, AlertCircle, Calculator } from "lucide-react";
+import { 
+  MobileAccordion, 
+  MobileAccordionContent, 
+  MobileAccordionItem, 
+  MobileAccordionTrigger 
+} from "@/components/ui/mobile-accordion";
+import { 
+  AlertTriangle, 
+  Clock, 
+  Calendar, 
+  Calculator, 
+  FileText, 
+  Shield,
+  TrendingUp,
+  PiggyBank,
+  BookOpen,
+  Target,
+  CheckCircle2,
+  Briefcase,
+  Receipt,
+  Building2,
+  Users,
+  CreditCard
+} from "lucide-react";
 
 const TaxPlanningTab = () => {
-  const taxYearEvents = [
+  const taxMetrics = [
     {
-      date: "5th April",
-      event: "Tax Year End",
-      description: "End of tax year - gather all financial records",
-      importance: "Critical"
+      metric: "Income Tax Personal Allowance",
+      data: "£12,570 (2024/25)",
+      icon: <Calculator className="h-5 w-5 text-purple-400" />,
+      detail: "Tax-free earnings threshold"
     },
     {
-      date: "6th April",
-      event: "New Tax Year Begins",
-      description: "Start new record keeping for the new tax year",
-      importance: "High"
+      metric: "Higher Rate Threshold",
+      data: "£50,270",
+      icon: <TrendingUp className="h-5 w-5 text-blue-400" />,
+      detail: "40% tax rate applies above this level"
     },
     {
-      date: "31st May",
-      event: "P60 & P11D Deadline",
-      description: "Deadline for employers to provide tax documents",
-      importance: "Medium"
+      metric: "Self Assessment Deadline",
+      data: "31st January",
+      icon: <Calendar className="h-5 w-5 text-green-400" />,
+      detail: "Submit return and pay tax owed"
     },
     {
-      date: "31st October",
-      event: "Self Assessment Registration",
-      description: "Final deadline to register for Self Assessment",
-      importance: "Critical"
-    },
-    {
-      date: "31st January",
-      event: "Self Assessment & Payment",
-      description: "Submit tax return and pay any tax owed",
-      importance: "Critical"
-    },
-    {
-      date: "31st July",
-      event: "Payment on Account",
-      description: "Second payment on account for next year's tax",
-      importance: "High"
+      metric: "Annual Pension Allowance",
+      data: "£60,000",
+      icon: <PiggyBank className="h-5 w-5 text-orange-400" />,
+      detail: "Maximum annual pension contributions"
     }
   ];
 
-  const monthlyTasks = [
+  const taxSections = [
     {
-      task: "Record all income and expenses",
-      frequency: "Monthly",
-      description: "Keep detailed records of all business transactions"
+      title: "Tax Planning Fundamentals",
+      icon: <BookOpen className="h-5 w-5 text-purple-400" />,
+      theme: "purple",
+      cards: [
+        {
+          title: "Strategy Overview",
+          color: "purple",
+          icon: <Target className="h-4 w-4" />,
+          content: "Develop a comprehensive tax strategy that maximises allowances, reliefs, and timing opportunities. Focus on reducing overall tax burden whilst maintaining compliance and supporting business growth objectives throughout the tax year."
+        },
+        {
+          title: "Implementation Timeline",
+          color: "blue",
+          icon: <Calendar className="h-4 w-4" />,
+          content: "Begin planning in Q3 of tax year (October-December). Review income forecasts, plan major purchases, consider pension contributions, and prepare for year-end. Submit self-assessment by 31st January with all supporting documentation."
+        },
+        {
+          title: "Business Benefits",
+          color: "green",
+          icon: <TrendingUp className="h-4 w-4" />,
+          content: "Effective tax planning reduces overall tax liability, improves cash flow through timing strategies, enables better business investment decisions, and provides certainty for financial planning and business growth strategies."
+        },
+        {
+          title: "Key Features & Requirements",
+          color: "orange",
+          icon: <CheckCircle2 className="h-4 w-4" />,
+          content: "Maintain detailed income and expense records, track allowable business deductions, monitor tax rate thresholds, plan timing of income and expenditure, and ensure all reliefs and allowances are properly claimed."
+        },
+        {
+          title: "Tax Considerations",
+          color: "yellow",
+          icon: <Calculator className="h-4 w-4" />,
+          content: "Consider interaction between income tax, National Insurance, and VAT. Plan for tax rate changes, understand marginal rates impact, and factor in timing differences between cash received and tax liability dates."
+        },
+        {
+          title: "Success Metrics/KPIs",
+          color: "red",
+          icon: <Target className="h-4 w-4" />,
+          content: "Track effective tax rate year-on-year, monitor successful claim rates for allowances and reliefs, measure tax planning savings achieved, and maintain 100% compliance with filing deadlines and payment dates."
+        }
+      ]
     },
     {
-      task: "Reconcile bank statements",
-      frequency: "Monthly", 
-      description: "Match bank transactions with your records"
+      title: "Key Deadlines & Compliance",
+      icon: <Clock className="h-5 w-5 text-blue-400" />,
+      theme: "blue",
+      cards: [
+        {
+          title: "Strategy Overview",
+          color: "purple",
+          icon: <Target className="h-4 w-4" />,
+          content: "Master the critical tax calendar to avoid penalties and maximise planning opportunities. Build systems that ensure compliance whilst creating opportunities for tax-efficient timing of business activities and payments."
+        },
+        {
+          title: "Implementation Timeline",
+          color: "blue",
+          icon: <Calendar className="h-4 w-4" />,
+          content: "Set up calendar reminders for key dates: 5th April (tax year end), 31st October (registration deadline), 31st January (self-assessment), 31st July (payments on account). Plan quarterly reviews of tax position."
+        },
+        {
+          title: "Business Benefits",
+          color: "green",
+          icon: <TrendingUp className="h-4 w-4" />,
+          content: "Avoid costly penalties and interest charges, maintain good standing with HMRC, enable better cash flow planning, reduce stress through organised approach, and create opportunities for tax-efficient timing decisions."
+        },
+        {
+          title: "Key Features & Requirements",
+          color: "orange",
+          icon: <CheckCircle2 className="h-4 w-4" />,
+          content: "Track all critical tax deadlines, maintain organised record-keeping systems, set up payment schedules for tax liabilities, respond promptly to HMRC correspondence, and keep detailed evidence for all claims and deductions."
+        },
+        {
+          title: "Tax Considerations",
+          color: "yellow",
+          icon: <Calculator className="h-4 w-4" />,
+          content: "Understand penalty regimes for late filing and payment, plan for payments on account system, consider interest charges on late payments, and factor in timing of income recognition for tax purposes."
+        },
+        {
+          title: "Success Metrics/KPIs",
+          color: "red",
+          icon: <Target className="h-4 w-4" />,
+          content: "Achieve 100% on-time submission rate, maintain zero penalty record, meet all payment deadlines, respond to HMRC queries within required timeframes, and keep compliance costs below 2% of turnover."
+        }
+      ]
     },
     {
-      task: "Review and categorise expenses",
-      frequency: "Monthly",
-      description: "Ensure all expenses are properly categorised"
+      title: "Business Tax Strategies",
+      icon: <Briefcase className="h-5 w-5 text-green-400" />,
+      theme: "green",
+      cards: [
+        {
+          title: "Strategy Overview",
+          color: "purple",
+          icon: <Target className="h-4 w-4" />,
+          content: "Implement tax-efficient business structures and practices that support growth whilst minimising tax burden. Consider sole trader, partnership, or limited company structures based on income levels and business objectives."
+        },
+        {
+          title: "Implementation Timeline",
+          color: "blue",
+          icon: <Calendar className="h-4 w-4" />,
+          content: "Review business structure annually or when significant income changes occur. Plan major equipment purchases for maximum capital allowances. Time income recognition and expense claims for optimal tax efficiency."
+        },
+        {
+          title: "Business Benefits",
+          color: "green",
+          icon: <TrendingUp className="h-4 w-4" />,
+          content: "Optimise business structure for tax efficiency, maximise available reliefs and allowances, improve cash flow through timing strategies, and create opportunities for reinvestment and business expansion."
+        },
+        {
+          title: "Key Features & Requirements",
+          color: "orange",
+          icon: <CheckCircle2 className="h-4 w-4" />,
+          content: "Claim all eligible business expenses, maximise capital allowances on equipment, consider incorporation when beneficial, utilise available reliefs like R&D credits, and maintain proper business/personal expense separation."
+        },
+        {
+          title: "Tax Considerations",
+          color: "yellow",
+          icon: <Calculator className="h-4 w-4" />,
+          content: "Compare sole trader income tax vs corporation tax rates, consider National Insurance implications, factor in dividend tax for limited companies, and understand timing differences between different business structures."
+        },
+        {
+          title: "Success Metrics/KPIs",
+          color: "red",
+          icon: <Target className="h-4 w-4" />,
+          content: "Monitor effective tax rate by business structure, track successful claims for reliefs and allowances, measure administrative costs vs tax savings, and review structure efficiency annually against income levels."
+        }
+      ]
     },
     {
-      task: "Update mileage logs",
-      frequency: "Weekly",
-      description: "Record all business journeys promptly"
+      title: "Pension & Retirement Planning",
+      icon: <PiggyBank className="h-5 w-5 text-orange-400" />,
+      theme: "orange",
+      cards: [
+        {
+          title: "Strategy Overview",
+          color: "purple",
+          icon: <Target className="h-4 w-4" />,
+          content: "Maximise pension contributions for tax relief whilst building retirement security. Consider annual allowance, carry forward rules, and lifetime allowance to create tax-efficient retirement funding strategies."
+        },
+        {
+          title: "Implementation Timeline",
+          color: "blue",
+          icon: <Calendar className="h-4 w-4" />,
+          content: "Review pension strategy annually before 5th April. Calculate optimal contribution levels based on income and available allowances. Set up regular contributions or plan timing of lump sum payments for maximum efficiency."
+        },
+        {
+          title: "Business Benefits",
+          color: "green",
+          icon: <TrendingUp className="h-4 w-4" />,
+          content: "Reduce current year tax liability through pension contributions, build retirement security, benefit from tax-free growth within pension wrapper, and create flexible income options for future retirement."
+        },
+        {
+          title: "Key Features & Requirements",
+          color: "orange",
+          icon: <CheckCircle2 className="h-4 w-4" />,
+          content: "Understand annual allowance limits (£60,000 for 2024/25), utilise carry forward of unused allowances from previous three years, choose appropriate pension schemes, and maintain detailed contribution records."
+        },
+        {
+          title: "Tax Considerations",
+          color: "yellow",
+          icon: <Calculator className="h-4 w-4" />,
+          content: "Calculate tax relief rates on contributions, understand tapered allowance for high earners, consider timing of contributions with income fluctuations, and plan for future tax treatment of pension withdrawals."
+        },
+        {
+          title: "Success Metrics/KPIs",
+          color: "red",
+          icon: <Target className="h-4 w-4" />,
+          content: "Maximise annual allowance usage, track tax relief claimed on contributions, monitor retirement fund growth, review contribution efficiency against income levels, and maintain on-track progress towards retirement goals."
+        }
+      ]
     },
     {
-      task: "File receipts and invoices",
-      frequency: "Weekly",
-      description: "Organise physical and digital documentation"
+      title: "Record Keeping Systems",
+      icon: <FileText className="h-5 w-5 text-yellow-400" />,
+      theme: "yellow",
+      cards: [
+        {
+          title: "Strategy Overview",
+          color: "purple",
+          icon: <Target className="h-4 w-4" />,
+          content: "Establish comprehensive record-keeping systems that support accurate tax returns, enable effective business analysis, and provide audit trails for HMRC compliance. Focus on digital solutions that integrate with tax requirements."
+        },
+        {
+          title: "Implementation Timeline",
+          color: "blue",
+          icon: <Calendar className="h-4 w-4" />,
+          content: "Set up record-keeping systems before starting business operations. Implement monthly reconciliation processes, establish systematic filing for receipts and invoices, and create backup procedures for all financial records."
+        },
+        {
+          title: "Business Benefits",
+          color: "green",
+          icon: <TrendingUp className="h-4 w-4" />,
+          content: "Support accurate tax return preparation, enable effective business performance analysis, simplify year-end accounts process, provide evidence for expense claims, and reduce risk of errors or missed deductions."
+        },
+        {
+          title: "Key Features & Requirements",
+          color: "orange",
+          icon: <CheckCircle2 className="h-4 w-4" />,
+          content: "Keep records for minimum 5 years after submission deadline, maintain detailed income and expense records, track mileage and travel expenses, store receipts and invoices systematically, and separate business from personal expenses."
+        },
+        {
+          title: "Tax Considerations",
+          color: "yellow",
+          icon: <Calculator className="h-4 w-4" />,
+          content: "Ensure records support all tax claims and deductions, maintain evidence for capital allowance claims, track any private use adjustments, and keep detailed records of any cash transactions or payments."
+        },
+        {
+          title: "Success Metrics/KPIs",
+          color: "red",
+          icon: <Target className="h-4 w-4" />,
+          content: "Achieve monthly reconciliation within 5 working days, maintain 100% documentation for all claims, reduce time spent on year-end accounts preparation, and receive positive feedback from accountants or HMRC inspections."
+        }
+      ]
     },
     {
-      task: "Review cash flow",
-      frequency: "Monthly",
-      description: "Monitor business financial health"
+      title: "Risk Management & Compliance",
+      icon: <Shield className="h-5 w-5 text-red-400" />,
+      theme: "red",
+      cards: [
+        {
+          title: "Strategy Overview",
+          color: "purple",
+          icon: <Target className="h-4 w-4" />,
+          content: "Implement robust systems to manage tax compliance risks and avoid penalties. Focus on accurate record-keeping, timely submissions, and proactive communication with HMRC to maintain good standing and protect business reputation."
+        },
+        {
+          title: "Implementation Timeline",
+          color: "blue",
+          icon: <Calendar className="h-4 w-4" />,
+          content: "Establish risk management procedures from business start. Set up systematic deadline tracking, implement error-checking processes for returns, create contingency plans for compliance issues, and schedule regular compliance reviews."
+        },
+        {
+          title: "Business Benefits",
+          color: "green",
+          icon: <TrendingUp className="h-4 w-4" />,
+          content: "Avoid costly penalties and interest charges, maintain good relationships with HMRC, protect business reputation and credit rating, reduce stress through organised approach, and ensure predictable tax costs."
+        },
+        {
+          title: "Key Features & Requirements",
+          color: "orange",
+          icon: <CheckCircle2 className="h-4 w-4" />,
+          content: "Implement deadline management systems, maintain accurate and complete records, establish error-checking procedures, respond promptly to HMRC correspondence, and make voluntary disclosures when errors are discovered."
+        },
+        {
+          title: "Tax Considerations",
+          color: "yellow",
+          icon: <Calculator className="h-4 w-4" />,
+          content: "Understand penalty regimes for different types of non-compliance, know when to make voluntary disclosures, consider professional indemnity insurance, and factor compliance costs into business planning."
+        },
+        {
+          title: "Success Metrics/KPIs",
+          color: "red",
+          icon: <Target className="h-4 w-4" />,
+          content: "Maintain zero penalty record, achieve 100% on-time submission rate, keep error rates below 1% of turnover, respond to all HMRC queries within required timeframes, and maintain comprehensive audit trail for all transactions."
+        }
+      ]
     }
   ];
 
-  const taxPlanningTips = [
-    {
-      category: "Income Spreading",
-      tips: [
-        "Consider timing of large invoices near year-end",
-        "Spread work over tax years to manage tax bands",
-        "Plan for irregular income months"
-      ]
-    },
-    {
-      category: "Expense Timing",
-      tips: [
-        "Purchase equipment before year-end if beneficial",
-        "Time training courses for maximum tax relief",
-        "Consider prepaying some expenses"
-      ]
-    },
-    {
-      category: "Pension Planning",
-      tips: [
-        "Maximise annual allowance contributions",
-        "Consider carry forward of unused allowances",
-        "Review pension tax relief benefits"
-      ]
-    },
-    {
-      category: "Business Structure",
-      tips: [
-        "Review if current structure is tax-efficient",
-        "Consider incorporation timing",
-        "Plan for future growth and tax implications"
-      ]
-    }
-  ];
+  const getThemeClasses = (theme: string) => {
+    const themes = {
+      purple: "border-purple-500/30 bg-purple-500/5",
+      blue: "border-blue-500/30 bg-blue-500/5", 
+      green: "border-green-500/30 bg-green-500/5",
+      orange: "border-orange-500/30 bg-orange-500/5",
+      yellow: "border-yellow-500/30 bg-yellow-500/5",
+      red: "border-red-500/30 bg-red-500/5"
+    };
+    return themes[theme as keyof typeof themes] || themes.purple;
+  };
+
+  const getThemeIcon = (theme: string) => {
+    const themes = {
+      purple: "text-purple-400",
+      blue: "text-blue-400",
+      green: "text-green-400", 
+      orange: "text-orange-400",
+      yellow: "text-yellow-400",
+      red: "text-red-400"
+    };
+    return themes[theme as keyof typeof themes] || themes.purple;
+  };
+
+  const getCardClasses = (color: string) => {
+    const colors = {
+      purple: "border-l-4 border-l-purple-500 bg-purple-500/5",
+      blue: "border-l-4 border-l-blue-500 bg-blue-500/5",
+      green: "border-l-4 border-l-green-500 bg-green-500/5", 
+      orange: "border-l-4 border-l-orange-500 bg-orange-500/5",
+      yellow: "border-l-4 border-l-yellow-500 bg-yellow-500/5",
+      red: "border-l-4 border-l-red-500 bg-red-500/5"
+    };
+    return colors[color as keyof typeof colors] || colors.purple;
+  };
+
+  const getCardIconClasses = (color: string) => {
+    const colors = {
+      purple: "text-purple-400",
+      blue: "text-blue-400", 
+      green: "text-green-400",
+      orange: "text-orange-400",
+      yellow: "text-yellow-400",
+      red: "text-red-400"
+    };
+    return colors[color as keyof typeof colors] || colors.purple;
+  };
 
   return (
     <div className="space-y-6">
-      <Card className="border-blue-500/50 bg-blue-500/10">
-        <CardHeader>
-          <CardTitle className="text-blue-300 flex items-center gap-2 text-lg md:text-xl">
-            <Clock className="h-5 w-5" />
-            Tax Planning & Key Deadlines
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-muted-foreground mb-4 text-sm md:text-base leading-relaxed">
-            Effective tax planning requires understanding key deadlines and maintaining organised records 
-            throughout the year. Proper planning can significantly reduce your tax liability.
-          </p>
-        </CardContent>
-      </Card>
+      <Alert className="border-purple-400/50 bg-purple-400/10">
+        <AlertTriangle className="h-4 w-4 text-purple-400" />
+        <AlertDescription className="text-purple-400">
+          Tax planning and deadline guidance for electrical contractors. This information covers UK tax regulations current as of 2024/25. Always consult with a qualified tax advisor for business-specific advice.
+        </AlertDescription>
+      </Alert>
 
-      <Card className="border-red-500/50 bg-red-500/10">
-        <CardHeader>
-          <CardTitle className="text-red-300 flex items-center gap-2 text-lg md:text-xl">
-            <Calendar className="h-5 w-5" />
-            Key Tax Dates & Deadlines
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid gap-4">
-            {taxYearEvents.map((event, index) => (
-              <div key={index} className="flex items-start gap-3 p-4 border border-red-500/30 rounded-lg">
-                <div className="flex-shrink-0">
-                  <Badge 
-                    variant="outline" 
-                    className={`border-red-500/50 ${
-                      event.importance === 'Critical' ? 'text-red-300' : 'text-orange-300'
-                    }`}
-                  >
-                    {event.date}
-                  </Badge>
-                </div>
-                <div className="flex-1 min-w-0">
-                  <h4 className="font-semibold text-white mb-1">{event.event}</h4>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{event.description}</p>
-                </div>
-                <Badge 
-                  variant="outline" 
-                  className={`shrink-0 ${
-                    event.importance === 'Critical' 
-                      ? 'border-red-500/50 text-red-300' 
-                      : event.importance === 'High'
-                      ? 'border-orange-500/50 text-orange-300'
-                      : 'border-yellow-500/50 text-yellow-300'
-                  }`}
-                >
-                  {event.importance}
-                </Badge>
+      <div className="grid gap-3 grid-cols-2 md:grid-cols-2 xl:grid-cols-4">
+        {taxMetrics.map((metric, index) => (
+          <Card key={index} className="border-elec-yellow/20 bg-elec-gray p-3">
+            <div className="text-center space-y-2">
+              <div className="flex justify-center">{metric.icon}</div>
+              <div className="space-y-1">
+                <p className="text-xs text-muted-foreground font-medium leading-tight">{metric.metric}</p>
+                <p className="text-sm font-bold text-elec-yellow leading-tight">{metric.data}</p>
+                <p className="text-xs text-muted-foreground leading-tight">{metric.detail}</p>
               </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+            </div>
+          </Card>
+        ))}
+      </div>
 
-      <Card className="border-green-500/50 bg-green-500/10">
-        <CardHeader>
-          <CardTitle className="text-green-300 flex items-center gap-2 text-lg md:text-xl">
-            <AlertCircle className="h-5 w-5" />
-            Regular Tax Tasks
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid md:grid-cols-2 gap-4">
-            {monthlyTasks.map((task, index) => (
-              <div key={index} className="p-4 border border-green-500/30 rounded-lg">
-                <div className="flex items-start gap-2 mb-2">
-                  <Badge variant="outline" className="border-green-500/30 shrink-0">
-                    {task.frequency}
-                  </Badge>
-                  <h4 className="font-semibold text-white leading-tight">{task.task}</h4>
-                </div>
-                <p className="text-sm text-muted-foreground leading-relaxed">{task.description}</p>
+      <MobileAccordion type="single" collapsible className="space-y-4">
+        {taxSections.map((section, index) => (
+          <MobileAccordionItem key={index} value={`item-${index}`} className={getThemeClasses(section.theme)}>
+            <MobileAccordionTrigger 
+              icon={section.icon}
+              className={`px-6 py-4 hover:no-underline ${getThemeIcon(section.theme)}`}
+            >
+              <span className={`font-semibold text-base ${getThemeIcon(section.theme)}`}>
+                {section.title}
+              </span>
+            </MobileAccordionTrigger>
+            <MobileAccordionContent className="px-6 pb-6">
+              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                {section.cards.map((card, cardIndex) => (
+                  <Card key={cardIndex} className={`p-4 ${getCardClasses(card.color)}`}>
+                    <div className="space-y-3">
+                      <div className="flex items-center gap-2">
+                        <span className={getCardIconClasses(card.color)}>
+                          {card.icon}
+                        </span>
+                        <h4 className={`font-semibold text-sm ${getCardIconClasses(card.color)}`}>
+                          {card.title}
+                        </h4>
+                      </div>
+                      <p className="text-sm text-muted-foreground leading-relaxed">
+                        {card.content}
+                      </p>
+                    </div>
+                  </Card>
+                ))}
               </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-
-      <Card className="border-purple-500/50 bg-purple-500/10">
-        <CardHeader>
-          <CardTitle className="text-purple-300 flex items-center gap-2 text-lg md:text-xl">
-            <Calculator className="h-5 w-5" />
-            Advanced Tax Planning Strategies
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid gap-6">
-            {taxPlanningTips.map((category, index) => (
-              <div key={index} className="border border-purple-500/30 rounded-lg p-4">
-                <h4 className="font-semibold text-purple-200 mb-3">{category.category}</h4>
-                <ul className="space-y-2">
-                  {category.tips.map((tip, tipIndex) => (
-                    <li key={tipIndex} className="flex items-start gap-2 text-sm text-muted-foreground leading-relaxed">
-                      <span className="text-purple-400 mt-1 shrink-0">•</span>
-                      <span>{tip}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+            </MobileAccordionContent>
+          </MobileAccordionItem>
+        ))}
+      </MobileAccordion>
     </div>
   );
 };
