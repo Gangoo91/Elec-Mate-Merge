@@ -93,9 +93,9 @@ const CustomerAcquisitionCalculator = () => {
               <SelectValue placeholder="Select analysis section" />
             </SelectTrigger>
             <SelectContent className="bg-elec-gray border-elec-yellow/20 z-50">
-              <SelectItem value="current" className="text-white hover:bg-elec-yellow/10">Current Metrics</SelectItem>
-              <SelectItem value="growth" className="text-white hover:bg-elec-yellow/10">Growth Planning</SelectItem>
-              <SelectItem value="analysis" className="text-white hover:bg-elec-yellow/10">Analysis & ROI</SelectItem>
+              <SelectItem value="current" className="text-white hover:bg-elec-yellow/20 data-[state=checked]:bg-elec-yellow data-[state=checked]:text-elec-dark focus:bg-elec-yellow/20">Current Metrics</SelectItem>
+              <SelectItem value="growth" className="text-white hover:bg-elec-yellow/20 data-[state=checked]:bg-elec-yellow data-[state=checked]:text-elec-dark focus:bg-elec-yellow/20">Growth Planning</SelectItem>
+              <SelectItem value="analysis" className="text-white hover:bg-elec-yellow/20 data-[state=checked]:bg-elec-yellow data-[state=checked]:text-elec-dark focus:bg-elec-yellow/20">Analysis & ROI</SelectItem>
             </SelectContent>
           </Select>
         </div>
