@@ -40,28 +40,28 @@ import {
 const InsuranceProtectionTab = () => {
   const insuranceMetrics = [
     {
-      metric: "Public Liability Coverage",
-      data: "£2 million minimum",
-      icon: <Shield className="h-5 w-5 text-purple-400" />,
-      detail: "Standard requirement for most clients"
+      metric: "Tax Efficiency Threshold",
+      data: "£50,000",
+      icon: <Calculator className="h-5 w-5 text-purple-400" />,
+      detail: "annual profit"
     },
     {
-      metric: "Professional Indemnity",
-      data: "£250k - £2 million",
-      icon: <AlertTriangle className="h-5 w-5 text-blue-400" />,
-      detail: "For design and advisory work"
+      metric: "Corporation Tax Rates",
+      data: "19% to 25%",
+      icon: <CreditCard className="h-5 w-5 text-blue-400" />,
+      detail: "Based on profit levels from April 2024"
     },
     {
-      metric: "Annual Insurance Cost",
-      data: "£800 - £2,500",
-      icon: <Calculator className="h-5 w-5 text-green-400" />,
-      detail: "Typical comprehensive coverage"
+      metric: "Personal Allowance",
+      data: "£12,570",
+      icon: <Users className="h-5 w-5 text-green-400" />,
+      detail: "tax-free"
     },
     {
-      metric: "Employer Liability",
-      data: "£10 million",
-      icon: <Users className="h-5 w-5 text-orange-400" />,
-      detail: "Legal minimum if employing staff"
+      metric: "Liability Protection",
+      data: "Limited company advantage",
+      icon: <Shield className="h-5 w-5 text-orange-400" />,
+      detail: "Limited company advantage"
     }
   ];
 
