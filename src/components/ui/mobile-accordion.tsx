@@ -54,7 +54,7 @@ const MobileAccordionContent = React.forwardRef<
     className="overflow-hidden text-sm transition-all data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down"
     {...props}
   >
-    <div className={cn("p-0", className)}>
+    <div className={cn("p-0 text-white", className)}>
       {children}
     </div>
   </AccordionPrimitive.Content>
