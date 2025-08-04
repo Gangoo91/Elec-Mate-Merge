@@ -158,42 +158,11 @@ const ProtectionTab = () => {
         </AlertDescription>
       </Alert>
 
-      {/* Key Metrics */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <Card className="text-center p-4 border-yellow-500/20">
-          <div className="flex items-center justify-center mb-2">
-            <TrendingUp className="h-6 w-6 text-yellow-400" />
-          </div>
-          <div className="text-xl font-bold text-yellow-400">91%</div>
-          <div className="text-xs text-muted-foreground">Protection effectiveness</div>
-        </Card>
-        <Card className="text-center p-4 border-yellow-500/20">
-          <div className="flex items-center justify-center mb-2">
-            <Clock className="h-6 w-6 text-yellow-400" />
-          </div>
-          <div className="text-xl font-bold text-yellow-400">£4.7k</div>
-          <div className="text-xs text-muted-foreground">Average cost savings</div>
-        </Card>
-        <Card className="text-center p-4 border-yellow-500/20">
-          <div className="flex items-center justify-center mb-2">
-            <Target className="h-6 w-6 text-yellow-400" />
-          </div>
-          <div className="text-xl font-bold text-yellow-400">15</div>
-          <div className="text-xs text-muted-foreground">Days reduction in delays</div>
-        </Card>
-        <Card className="text-center p-4 border-yellow-500/20">
-          <div className="flex items-center justify-center mb-2">
-            <CheckCircle className="h-6 w-6 text-yellow-400" />
-          </div>
-          <div className="text-xl font-bold text-yellow-400">96%</div>
-          <div className="text-xs text-muted-foreground">Business improvement</div>
-        </Card>
-      </div>
 
       {/* Protection Strategies */}
       <Card>
         <CardHeader>
-          <CardTitle className="text-yellow-300 flex items-center gap-2">
+          <CardTitle className="flex items-center gap-2">
             <Shield className="h-5 w-5" />
             Protection Strategies
           </CardTitle>
@@ -211,8 +180,8 @@ const ProtectionTab = () => {
                 <MobileAccordionContent>
                   <div className="space-y-3 pt-4">
                     {strategy.strategies.map((item, itemIndex) => (
-                      <div key={itemIndex} className="flex items-start gap-3 p-3 rounded-lg bg-elec-gray/50">
-                        <div className="w-2 h-2 bg-yellow-400 rounded-full mt-2"></div>
+                      <div key={itemIndex} className="flex items-start gap-3 p-3 rounded-lg bg-muted/50">
+                        <div className="w-2 h-2 bg-primary rounded-full mt-2"></div>
                         <span className="text-sm leading-relaxed">{item}</span>
                       </div>
                     ))}
@@ -227,7 +196,7 @@ const ProtectionTab = () => {
       {/* Insurance & Protection */}
       <Card>
         <CardHeader>
-          <CardTitle className="text-yellow-300 flex items-center gap-2">
+          <CardTitle className="flex items-center gap-2">
             <PiggyBank className="h-5 w-5" />
             Insurance & Protection Products
           </CardTitle>
@@ -244,7 +213,7 @@ const ProtectionTab = () => {
                         <div className="text-sm text-muted-foreground">{option.description}</div>
                       </div>
                       <div className="text-right ml-4">
-                        <Badge variant="outline" className="border-yellow-500/30 text-yellow-400 mb-1">
+                        <Badge variant="outline" className="border-primary/30 text-primary mb-1">
                           {option.coverage}
                         </Badge>
                         <div className="text-xs text-muted-foreground">{option.cost}</div>
@@ -255,8 +224,8 @@ const ProtectionTab = () => {
                 <MobileAccordionContent>
                   <div className="space-y-3 pt-4">
                     {option.benefits.map((benefit, benefitIndex) => (
-                      <div key={benefitIndex} className="flex items-start gap-3 p-3 rounded-lg bg-elec-gray/50">
-                        <div className="w-2 h-2 bg-yellow-400 rounded-full mt-2"></div>
+                      <div key={benefitIndex} className="flex items-start gap-3 p-3 rounded-lg bg-muted/50">
+                        <div className="w-2 h-2 bg-primary rounded-full mt-2"></div>
                         <span className="text-sm leading-relaxed">{benefit}</span>
                       </div>
                     ))}
@@ -271,7 +240,7 @@ const ProtectionTab = () => {
       {/* Business Practices */}
       <Card>
         <CardHeader>
-          <CardTitle className="text-yellow-300 flex items-center gap-2">
+          <CardTitle className="flex items-center gap-2">
             <CheckCircle className="h-5 w-5" />
             Best Business Practices
           </CardTitle>
@@ -289,8 +258,8 @@ const ProtectionTab = () => {
                 <MobileAccordionContent>
                   <div className="space-y-3 pt-4">
                     {practice.implementation.map((step, stepIndex) => (
-                      <div key={stepIndex} className="flex items-start gap-3 p-3 rounded-lg bg-elec-gray/50">
-                        <div className="w-2 h-2 bg-yellow-400 rounded-full mt-2"></div>
+                      <div key={stepIndex} className="flex items-start gap-3 p-3 rounded-lg bg-muted/50">
+                        <div className="w-2 h-2 bg-primary rounded-full mt-2"></div>
                         <span className="text-sm leading-relaxed">{step}</span>
                       </div>
                     ))}
@@ -305,7 +274,7 @@ const ProtectionTab = () => {
       {/* Professional Services */}
       <Card>
         <CardHeader>
-          <CardTitle className="text-yellow-300 flex items-center gap-2">
+          <CardTitle className="flex items-center gap-2">
             <Users className="h-5 w-5" />
             Professional Recovery Services
           </CardTitle>
@@ -313,19 +282,19 @@ const ProtectionTab = () => {
         <CardContent>
           <div className="grid md:grid-cols-2 gap-4">
             {recoveryServices.map((service, index) => (
-              <div key={index} className="border border-yellow-500/30 rounded-lg p-4">
-                <h4 className="font-semibold text-white mb-2">{service.service}</h4>
+              <div key={index} className="border border-border rounded-lg p-4">
+                <h4 className="font-semibold mb-2">{service.service}</h4>
                 <div className="space-y-2 text-sm">
                   <div>
-                    <span className="text-yellow-400">When: </span>
+                    <span className="text-primary">When: </span>
                     <span className="text-muted-foreground">{service.when}</span>
                   </div>
                   <div>
-                    <span className="text-yellow-400">Cost: </span>
+                    <span className="text-primary">Cost: </span>
                     <span className="text-muted-foreground">{service.cost}</span>
                   </div>
                   <div>
-                    <span className="text-yellow-400">Benefits: </span>
+                    <span className="text-primary">Benefits: </span>
                     <span className="text-muted-foreground">{service.benefits}</span>
                   </div>
                 </div>

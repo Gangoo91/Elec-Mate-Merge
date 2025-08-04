@@ -102,64 +102,42 @@ const PreventionTab = () => {
         </AlertDescription>
       </Alert>
 
-      {/* Key Metrics */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <Card className="text-center p-4">
-          <div className="flex items-center justify-center mb-2">
-            <TrendingDown className="h-6 w-6 text-green-400" />
-          </div>
-          <div className="text-2xl font-bold text-green-400">68%</div>
-          <div className="text-xs text-muted-foreground">Reduction in bad debts</div>
-        </Card>
-        <Card className="text-center p-4">
-          <div className="flex items-center justify-center mb-2">
-            <CheckCircle className="h-6 w-6 text-blue-400" />
-          </div>
-          <div className="text-2xl font-bold text-blue-400">95%</div>
-          <div className="text-xs text-muted-foreground">Success with contracts</div>
-        </Card>
-        <Card className="text-center p-4">
-          <div className="flex items-center justify-center mb-2">
-            <Users className="h-6 w-6 text-yellow-400" />
-          </div>
-          <div className="text-2xl font-bold text-yellow-400">78%</div>
-          <div className="text-xs text-muted-foreground">Client retention rate</div>
-        </Card>
-        <Card className="text-center p-4">
-          <div className="flex items-center justify-center mb-2">
-            <Target className="h-6 w-6 text-purple-400" />
-          </div>
-          <div className="text-2xl font-bold text-purple-400">15</div>
-          <div className="text-xs text-muted-foreground">Days faster payment</div>
-        </Card>
-      </div>
-
       {/* Prevention Strategies */}
-      <MobileAccordion type="multiple" className="w-full space-y-4">
-        {preventionStrategies.map((strategy, index) => (
-          <AccordionItem key={index} value={`item-${index}`} className="border border-elec-yellow/20 rounded-lg bg-elec-card">
-            <MobileAccordionTrigger 
-              className="px-6 py-4 hover:bg-elec-yellow/5"
-              icon={strategy.icon}
-            >
-              <div className="text-left">
-                <div className="font-semibold text-elec-yellow">{strategy.title}</div>
-                <div className="text-sm text-muted-foreground">{strategy.description}</div>
-              </div>
-            </MobileAccordionTrigger>
-            <MobileAccordionContent className="px-6 pb-4">
-              <div className="grid gap-3">
-                {strategy.strategies.map((item, itemIndex) => (
-                  <div key={itemIndex} className="flex items-start gap-3">
-                    <div className="w-2 h-2 bg-elec-yellow rounded-full mt-2 shrink-0"></div>
-                    <span className="text-sm text-muted-foreground leading-relaxed">{item}</span>
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Shield className="h-5 w-5 text-elec-yellow" />
+            Prevention Strategies
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <MobileAccordion type="multiple" className="w-full space-y-2">
+            {preventionStrategies.map((strategy, index) => (
+              <AccordionItem key={index} value={`item-${index}`} className="border border-border rounded-lg">
+                <MobileAccordionTrigger 
+                  className="px-4"
+                  icon={strategy.icon}
+                >
+                  <div className="text-left">
+                    <div className="font-semibold">{strategy.title}</div>
+                    <div className="text-sm text-muted-foreground">{strategy.description}</div>
                   </div>
-                ))}
-              </div>
-            </MobileAccordionContent>
-          </AccordionItem>
-        ))}
-      </MobileAccordion>
+                </MobileAccordionTrigger>
+                <MobileAccordionContent className="px-4 pb-4">
+                  <div className="space-y-3">
+                    {strategy.strategies.map((item, itemIndex) => (
+                      <div key={itemIndex} className="flex items-start gap-3 p-3 rounded-lg bg-muted/50">
+                        <div className="w-2 h-2 bg-primary rounded-full mt-2 shrink-0"></div>
+                        <span className="text-sm text-muted-foreground leading-relaxed">{item}</span>
+                      </div>
+                    ))}
+                  </div>
+                </MobileAccordionContent>
+              </AccordionItem>
+            ))}
+          </MobileAccordion>
+        </CardContent>
+      </Card>
 
       {/* Warning Signs */}
       <Card className="border-red-500/50 bg-red-500/10">

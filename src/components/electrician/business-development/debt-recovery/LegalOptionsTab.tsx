@@ -128,42 +128,11 @@ const LegalOptionsTab = () => {
         </AlertDescription>
       </Alert>
 
-      {/* Key Metrics */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <Card className="text-center p-4 border-purple-500/20">
-          <div className="flex items-center justify-center mb-2">
-            <TrendingUp className="h-6 w-6 text-purple-400" />
-          </div>
-          <div className="text-xl font-bold text-purple-400">76%</div>
-          <div className="text-xs text-muted-foreground">Legal success rate</div>
-        </Card>
-        <Card className="text-center p-4 border-purple-500/20">
-          <div className="flex items-center justify-center mb-2">
-            <Clock className="h-6 w-6 text-purple-400" />
-          </div>
-          <div className="text-xl font-bold text-purple-400">12</div>
-          <div className="text-xs text-muted-foreground">Average weeks to judgment</div>
-        </Card>
-        <Card className="text-center p-4 border-purple-500/20">
-          <div className="flex items-center justify-center mb-2">
-            <Target className="h-6 w-6 text-purple-400" />
-          </div>
-          <div className="text-xl font-bold text-purple-400">£850</div>
-          <div className="text-xs text-muted-foreground">Average legal costs</div>
-        </Card>
-        <Card className="text-center p-4 border-purple-500/20">
-          <div className="flex items-center justify-center mb-2">
-            <CheckCircle className="h-6 w-6 text-purple-400" />
-          </div>
-          <div className="text-xl font-bold text-purple-400">64%</div>
-          <div className="text-xs text-muted-foreground">Full debt recovery</div>
-        </Card>
-      </div>
 
       {/* Legal Options Accordion */}
       <Card>
         <CardHeader>
-          <CardTitle className="text-purple-300 flex items-center gap-2">
+          <CardTitle className="flex items-center gap-2">
             <Scale className="h-5 w-5" />
             Legal Recovery Options
           </CardTitle>
@@ -180,7 +149,7 @@ const LegalOptionsTab = () => {
                         <div className="text-sm text-muted-foreground">{option.description}</div>
                       </div>
                       <div className="text-right ml-4">
-                        <Badge className="bg-purple-500/20 text-purple-400 border-purple-500/40 mb-1">
+                        <Badge variant="outline" className="border-primary/30 text-primary mb-1">
                           {option.cost}
                         </Badge>
                         <div className="text-xs text-muted-foreground">{option.timeframe}</div>
@@ -194,14 +163,14 @@ const LegalOptionsTab = () => {
                       <h4 className="font-semibold text-white mb-2">Process</h4>
                       <ol className="space-y-2">
                         {option.process.map((step, stepIndex) => (
-                          <li key={stepIndex} className="flex items-start gap-3 p-3 rounded-lg bg-elec-gray/50">
-                            <span className="text-purple-400 mt-1 font-semibold">{stepIndex + 1}.</span>
+                          <li key={stepIndex} className="flex items-start gap-3 p-3 rounded-lg bg-muted/50">
+                            <span className="text-primary mt-1 font-semibold">{stepIndex + 1}.</span>
                             <span className="text-sm leading-relaxed text-muted-foreground">{step}</span>
                           </li>
                         ))}
                       </ol>
                     </div>
-                    <div className="border-t border-purple-400/20 pt-3">
+                    <div className="border-t border-border pt-3">
                       <Badge variant="outline" className="border-green-500/30 text-green-400">
                         Best for: {option.suitableFor}
                       </Badge>
@@ -217,7 +186,7 @@ const LegalOptionsTab = () => {
       {/* Enforcement Methods */}
       <Card>
         <CardHeader>
-          <CardTitle className="text-purple-300 flex items-center gap-2">
+          <CardTitle className="flex items-center gap-2">
             <CreditCard className="h-5 w-5" />
             Enforcement Methods
           </CardTitle>
@@ -228,16 +197,16 @@ const LegalOptionsTab = () => {
           </p>
           <div className="grid md:grid-cols-2 gap-4">
             {enforcementMethods.map((method, index) => (
-              <div key={index} className="border border-purple-500/30 rounded-lg p-4">
-                <h4 className="font-semibold text-white mb-2">{method.method}</h4>
+              <div key={index} className="border border-border rounded-lg p-4">
+                <h4 className="font-semibold mb-2">{method.method}</h4>
                 <p className="text-sm text-muted-foreground mb-2">{method.description}</p>
                 <div className="grid grid-cols-2 gap-2 text-xs">
                   <div>
-                    <span className="text-purple-400">Cost: </span>
+                    <span className="text-primary">Cost: </span>
                     <span className="text-muted-foreground">{method.cost}</span>
                   </div>
                   <div>
-                    <span className="text-purple-400">Effectiveness: </span>
+                    <span className="text-primary">Effectiveness: </span>
                     <span className="text-muted-foreground">{method.effectiveness}</span>
                   </div>
                 </div>
@@ -250,7 +219,7 @@ const LegalOptionsTab = () => {
       {/* Cost Considerations */}
       <Card>
         <CardHeader>
-          <CardTitle className="text-purple-300 flex items-center gap-2">
+          <CardTitle className="flex items-center gap-2">
             <FileText className="h-5 w-5" />
             Cost Considerations
           </CardTitle>
@@ -267,8 +236,8 @@ const LegalOptionsTab = () => {
                 </MobileAccordionTrigger>
                 <MobileAccordionContent>
                   <div className="pt-4">
-                    <div className="p-3 rounded-lg bg-elec-gray/50">
-                      <span className="text-purple-400 font-medium">Recovery: </span>
+                    <div className="p-3 rounded-lg bg-muted/50">
+                      <span className="text-primary font-medium">Recovery: </span>
                       <span className="text-muted-foreground">{consideration.recovery}</span>
                     </div>
                   </div>

@@ -113,56 +113,6 @@ const RecoveryProcessTab = () => {
         </AlertDescription>
       </Alert>
 
-      {/* Key Metrics */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <Card>
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2">
-              <TrendingUp className="h-4 w-4 text-blue-400" />
-              <div>
-                <p className="text-2xl font-bold text-blue-300">65%</p>
-                <p className="text-xs text-muted-foreground">Step 1-2 Success</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2">
-              <Clock className="h-4 w-4 text-elec-yellow" />
-              <div>
-                <p className="text-2xl font-bold text-elec-yellow">14</p>
-                <p className="text-xs text-muted-foreground">Average Days</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2">
-              <Users className="h-4 w-4 text-green-400" />
-              <div>
-                <p className="text-2xl font-bold text-green-300">78%</p>
-                <p className="text-xs text-muted-foreground">Client Retention</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2">
-              <Target className="h-4 w-4 text-purple-400" />
-              <div>
-                <p className="text-2xl font-bold text-purple-300">85%</p>
-                <p className="text-xs text-muted-foreground">Total Recovery</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
 
       {/* Recovery Process Steps */}
       <Card>
@@ -179,7 +129,7 @@ const RecoveryProcessTab = () => {
                 <MobileAccordionTrigger 
                   className="px-4"
                   icon={
-                    <div className="w-6 h-6 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-300 text-sm font-semibold">
+                    <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center text-primary text-sm font-semibold">
                       {step.step}
                     </div>
                   }
@@ -191,16 +141,16 @@ const RecoveryProcessTab = () => {
                 </MobileAccordionTrigger>
                 <MobileAccordionContent className="px-4 pb-4">
                   <div className="space-y-3">
-                    <div>
-                      <span className="text-blue-400 font-medium">Methods: </span>
+                    <div className="p-3 rounded-lg bg-muted/50">
+                      <span className="text-primary font-medium">Methods: </span>
                       <span className="text-muted-foreground">{step.methods.join(", ")}</span>
                     </div>
-                    <div>
-                      <span className="text-blue-400 font-medium">Tone: </span>
+                    <div className="p-3 rounded-lg bg-muted/50">
+                      <span className="text-primary font-medium">Tone: </span>
                       <span className="text-muted-foreground">{step.tone}</span>
                     </div>
-                    <div>
-                      <span className="text-blue-400 font-medium">Objective: </span>
+                    <div className="p-3 rounded-lg bg-muted/50">
+                      <span className="text-primary font-medium">Objective: </span>
                       <span className="text-muted-foreground">{step.objective}</span>
                     </div>
                   </div>
