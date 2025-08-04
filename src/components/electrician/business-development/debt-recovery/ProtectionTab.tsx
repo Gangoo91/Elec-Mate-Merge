@@ -4,7 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { MobileAccordion, MobileAccordionItem, MobileAccordionTrigger, MobileAccordionContent } from "@/components/ui/mobile-accordion";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { CheckCircle, Database, Users, PiggyBank, Shield, TrendingUp, Clock, Target, Award, Building } from "lucide-react";
+import { CheckCircle, Database, Users, PiggyBank, Shield, TrendingUp, Clock, Target, Award, Building, Smartphone, Globe, Lock, FileCheck, CreditCard, Bot, Zap, Settings, AlertTriangle, BookOpen } from "lucide-react";
 
 const ProtectionTab = () => {
   const isMobile = useIsMobile();
@@ -176,6 +176,292 @@ const ProtectionTab = () => {
     }
   ];
 
+  const technologySolutions = [
+    {
+      solution: "Cloud-Based CRM Systems",
+      description: "Modern customer relationship management for comprehensive client tracking",
+      features: [
+        "Real-time payment status monitoring with automated alerts",
+        "Complete customer communication history and notes",
+        "Integration with accounting software and banking systems",
+        "Mobile access for on-site client information",
+        "Automated credit scoring and risk assessment tools",
+        "Document storage for contracts, certificates, and correspondence"
+      ],
+      providers: ["Salesforce", "HubSpot", "Zoho CRM", "Pipedrive"],
+      cost: "£15-£150 per user per month",
+      roi: "40% reduction in administrative time"
+    },
+    {
+      solution: "AI-Powered Credit Assessment",
+      description: "Artificial intelligence for real-time client risk evaluation",
+      features: [
+        "Machine learning algorithms for payment prediction",
+        "Social media and online presence analysis",
+        "Company financial health scoring",
+        "Industry-specific risk factors assessment",
+        "Early warning systems for potential defaults",
+        "Automated credit limit recommendations"
+      ],
+      providers: ["Experian", "Credit Safe", "Dun & Bradstreet", "CreditHQ"],
+      cost: "£5-£25 per credit check",
+      roi: "60% reduction in bad debt exposure"
+    },
+    {
+      solution: "Blockchain Payment Systems",
+      description: "Secure, transparent payment processing with smart contracts",
+      features: [
+        "Immutable payment records and transaction history",
+        "Smart contracts for automatic payment releases",
+        "Cryptocurrency payment options for tech-savvy clients",
+        "Reduced transaction fees and processing times",
+        "Enhanced security and fraud prevention",
+        "Global payment accessibility and currency conversion"
+      ],
+      providers: ["BitPay", "Coinbase Commerce", "PayPal Crypto", "Square Crypto"],
+      cost: "1-3% transaction fee",
+      roi: "25% faster payment processing"
+    },
+    {
+      solution: "Digital Identity Verification",
+      description: "Advanced client verification to prevent fraud and misrepresentation",
+      features: [
+        "Biometric verification and digital fingerprinting",
+        "Government ID document verification",
+        "Address verification and utility bill confirmation",
+        "Bank account ownership verification",
+        "Social media and digital footprint analysis",
+        "Real-time fraud detection and prevention"
+      ],
+      providers: ["Jumio", "Onfido", "Trulioo", "Veriff"],
+      cost: "£1-£5 per verification",
+      roi: "90% reduction in fraudulent clients"
+    }
+  ];
+
+  const industryPartnerships = [
+    {
+      partnership: "Electrical Contractors' Association (ECA)",
+      description: "Leading trade association providing comprehensive member benefits",
+      protectionBenefits: [
+        "Member directory for trusted contractor referrals",
+        "Dispute resolution services for payment issues",
+        "Industry best practice guidelines and training",
+        "Government liaison and regulatory updates",
+        "Group insurance schemes with preferential rates",
+        "Legal advice helpline for contract and payment issues"
+      ],
+      membershipCost: "£300-£800 annually",
+      networkSize: "3,000+ members nationwide",
+      additionalServices: "Technical support, certification schemes, marketing tools"
+    },
+    {
+      partnership: "National Inspection Council for Electrical Installation Contracting (NICEIC)",
+      description: "UK's leading voluntary regulatory body for electrical installation",
+      protectionBenefits: [
+        "Approved contractor status enhances credibility",
+        "Access to technical helpline and support",
+        "Insurance cover for approved contractors",
+        "Consumer complaints procedure and resolution",
+        "Marketing support and find-a-contractor service",
+        "Regular assessment ensuring quality standards"
+      ],
+      membershipCost: "£400-£1,200 annually",
+      networkSize: "30,000+ approved contractors",
+      additionalServices: "Training courses, certification, technical bulletins"
+    },
+    {
+      partnership: "SELECT (Scotland's electrical trade association)",
+      description: "Scotland's premier electrical contractors' trade association",
+      protectionBenefits: [
+        "Member verification and quality assurance",
+        "Industry networking and collaboration opportunities",
+        "Technical training and skills development",
+        "Government representation and advocacy",
+        "Insurance schemes and financial services",
+        "Business development support and mentoring"
+      ],
+      membershipCost: "£250-£600 annually (Scotland-based)",
+      networkSize: "1,200+ members in Scotland",
+      additionalServices: "Apprenticeship schemes, health & safety support"
+    },
+    {
+      partnership: "Federation of Master Builders (FMB)",
+      description: "Multi-trade association representing the building industry",
+      protectionBenefits: [
+        "Cross-trade networking and collaboration",
+        "Warranty and insurance protection schemes",
+        "Dispute resolution and mediation services",
+        "Government lobbying and industry representation",
+        "Business advice and commercial support",
+        "Consumer protection and trust mark schemes"
+      ],
+      membershipCost: "£200-£500 annually",
+      networkSize: "8,000+ members across all trades",
+      additionalServices: "Health & safety guidance, training programmes"
+    }
+  ];
+
+  const regulatoryCompliance = [
+    {
+      regulation: "Construction (Design and Management) Regulations 2015",
+      relevance: "Legal obligations for construction work health and safety",
+      protectionMeasures: [
+        "Ensure all electrical work complies with CDM regulations",
+        "Maintain detailed health and safety documentation",
+        "Verify client awareness of their duties under CDM",
+        "Document risk assessments and method statements",
+        "Ensure proper coordination with other contractors",
+        "Keep records of competency assessments and training"
+      ],
+      penalties: "Unlimited fines and potential imprisonment",
+      complianceCost: "£500-£2,000 annual training and documentation",
+      riskMitigation: "Protects against liability claims and project delays"
+    },
+    {
+      regulation: "Electrical Safety Standards in the Private Rented Sector Regulations 2020",
+      relevance: "Mandatory electrical safety checks for rental properties",
+      protectionMeasures: [
+        "Provide compliant Electrical Installation Condition Reports (EICR)",
+        "Ensure all work meets current BS 7671 standards",
+        "Maintain certification and qualification records",
+        "Document all remedial work and safety improvements",
+        "Verify landlord compliance with 5-year inspection cycles",
+        "Keep detailed records of all electrical safety checks"
+      ],
+      penalties: "£30,000 maximum penalty per property",
+      complianceCost: "Ongoing training and certification maintenance",
+      riskMitigation: "Ensures payment for essential safety work"
+    },
+    {
+      regulation: "General Data Protection Regulation (GDPR) 2018",
+      relevance: "Data protection for customer information and business records",
+      protectionMeasures: [
+        "Implement robust data protection policies and procedures",
+        "Secure storage and processing of client personal data",
+        "Obtain proper consent for data collection and use",
+        "Establish data breach notification procedures",
+        "Provide clear privacy notices to customers",
+        "Regular staff training on data protection requirements"
+      ],
+      penalties: "Up to €20 million or 4% of annual turnover",
+      complianceCost: "£1,000-£5,000 for systems and training",
+      riskMitigation: "Protects against data protection claims and fines"
+    }
+  ];
+
+  const futureProofingStrategies = [
+    {
+      strategy: "Digital Transformation & Automation",
+      timeframe: "1-2 years implementation",
+      description: "Modernise business operations with digital tools and automation",
+      implementation: [
+        "Implement cloud-based project management and CRM systems",
+        "Automate invoicing, payment processing, and debt collection",
+        "Use digital signature solutions for contracts and agreements",
+        "Deploy mobile apps for real-time job tracking and communication",
+        "Integrate IoT devices for remote monitoring and diagnostics",
+        "Develop online customer portals for self-service and transparency"
+      ],
+      investmentRequired: "£5,000-£20,000 initial setup",
+      expectedROI: "200-300% within 24 months",
+      riskReduction: "Eliminates human error, improves efficiency, enhances customer experience"
+    },
+    {
+      strategy: "Renewable Energy & Smart Grid Specialisation",
+      timeframe: "6-18 months training and certification",
+      description: "Position business for the growing renewable energy market",
+      implementation: [
+        "Obtain certifications in solar PV, wind, and battery storage",
+        "Develop expertise in smart home and energy management systems",
+        "Partner with renewable energy equipment suppliers",
+        "Create maintenance packages for renewable installations",
+        "Offer energy efficiency audits and improvement services",
+        "Develop expertise in electric vehicle charging point installation"
+      ],
+      investmentRequired: "£10,000-£30,000 training and equipment",
+      expectedROI: "150-250% within 18 months",
+      riskReduction: "Access to high-value, government-supported market segments"
+    },
+    {
+      strategy: "Advanced Risk Management Systems",
+      timeframe: "3-6 months implementation",
+      description: "Implement sophisticated risk assessment and management protocols",
+      implementation: [
+        "Deploy AI-powered credit scoring and risk assessment tools",
+        "Establish real-time financial monitoring and alert systems",
+        "Create comprehensive client due diligence procedures",
+        "Implement dynamic pricing based on risk assessment",
+        "Develop tiered service levels based on client risk profiles",
+        "Establish emergency fund and contingency planning"
+      ],
+      investmentRequired: "£3,000-£10,000 for systems and training",
+      expectedROI: "300-500% through bad debt reduction",
+      riskReduction: "Proactive identification and mitigation of financial risks"
+    },
+    {
+      strategy: "Strategic Business Diversification",
+      timeframe: "12-24 months full implementation",
+      description: "Diversify service offerings and revenue streams for stability",
+      implementation: [
+        "Develop complementary services (security systems, data cabling)",
+        "Create recurring revenue through maintenance contracts",
+        "Offer training and consultancy services to other contractors",
+        "Develop partnerships with related trades and services",
+        "Create online courses and digital products",
+        "Establish equipment rental and tool services"
+      ],
+      investmentRequired: "£15,000-£50,000 depending on diversification scope",
+      expectedROI: "100-200% within 24 months",
+      riskReduction: "Multiple revenue streams reduce dependency on single income source"
+    }
+  ];
+
+  const emergencyResponseProtocols = [
+    {
+      scenario: "Major Client Default or Insolvency",
+      triggerSigns: ["Delayed payments beyond normal terms", "Reduction in order volume", "Changes in payment methods", "Difficulty contacting client"],
+      immediateActions: [
+        "Cease all work immediately and secure tools/materials on site",
+        "Issue formal notice of suspension of work due to non-payment",
+        "Initiate legal proceedings for debt recovery within 7 days",
+        "Contact insurance providers to report potential claim",
+        "Secure retention of title for any materials supplied",
+        "Document all communications and maintain detailed records"
+      ],
+      timeframe: "Action within 24-48 hours",
+      preventionMeasures: "Enhanced credit monitoring, payment milestone structures"
+    },
+    {
+      scenario: "Economic Downturn or Market Disruption",
+      triggerSigns: ["Industry-wide payment delays", "Increased competition", "Material cost inflation", "Reduced project availability"],
+      immediateActions: [
+        "Implement enhanced credit control procedures",
+        "Review and tighten payment terms for new contracts",
+        "Accelerate collection of existing debts",
+        "Reduce overhead costs and optimise operations",
+        "Explore government support schemes and grants",
+        "Strengthen relationships with reliable, creditworthy clients"
+      ],
+      timeframe: "Ongoing monitoring and adjustment",
+      preventionMeasures: "Diversified client base, strong cash reserves, flexible cost structure"
+    },
+    {
+      scenario: "Regulatory Changes or Compliance Issues",
+      triggerSigns: ["New legislation announcements", "Industry guidance updates", "Insurance requirement changes", "Certification standard updates"],
+      immediateActions: [
+        "Assess impact on current operations and contracts",
+        "Update terms and conditions to reflect new requirements",
+        "Obtain necessary training and certifications promptly",
+        "Review insurance coverage and update as needed",
+        "Communicate changes to clients and adjust pricing accordingly",
+        "Ensure all documentation and procedures are compliant"
+      ],
+      timeframe: "Compliance within regulatory deadlines",
+      preventionMeasures: "Regular regulatory monitoring, industry association membership"
+    }
+  ];
+
   return (
     <div className="space-y-4">
       <Alert className="border-yellow-500/50 bg-yellow-500/10">
@@ -203,8 +489,7 @@ const ProtectionTab = () => {
             Protection Strategies & Systems
           </MobileAccordionTrigger>
           <MobileAccordionContent>
-            <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-              {protectionStrategies.map((strategy, index) => (
+            {protectionStrategies.map((strategy, index) => (
                 <div key={index} className="border border-green-500/20 rounded-lg p-3 space-y-3">
                   <div className="flex flex-col gap-2">
                     <div className="flex items-center gap-2">
@@ -227,7 +512,6 @@ const ProtectionTab = () => {
                   </div>
                 </div>
               ))}
-            </div>
           </MobileAccordionContent>
         </MobileAccordionItem>
 
@@ -236,8 +520,7 @@ const ProtectionTab = () => {
             Insurance & Financial Protection
           </MobileAccordionTrigger>
           <MobileAccordionContent>
-            <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-              {insuranceOptions.map((option, index) => (
+            {insuranceOptions.map((option, index) => (
                 <div key={index} className="border border-purple-500/20 rounded-lg p-3 space-y-3">
                   <div className="flex flex-col gap-2">
                     <div className="flex items-center justify-between">
@@ -267,7 +550,6 @@ const ProtectionTab = () => {
                   </div>
                 </div>
               ))}
-            </div>
           </MobileAccordionContent>
         </MobileAccordionItem>
 
@@ -276,8 +558,7 @@ const ProtectionTab = () => {
             Best Business Practices & Systems
           </MobileAccordionTrigger>
           <MobileAccordionContent>
-            <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-              {businessPractices.map((practice, index) => (
+            {businessPractices.map((practice, index) => (
                 <div key={index} className="border border-blue-500/20 rounded-lg p-3 space-y-3">
                   <div className="flex flex-col gap-2">
                     <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{practice.practice}</h4>
@@ -297,7 +578,6 @@ const ProtectionTab = () => {
                   </div>
                 </div>
               ))}
-            </div>
           </MobileAccordionContent>
         </MobileAccordionItem>
 
@@ -306,8 +586,7 @@ const ProtectionTab = () => {
             Professional Recovery Services
           </MobileAccordionTrigger>
           <MobileAccordionContent>
-            <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-              {recoveryServices.map((service, index) => (
+            {recoveryServices.map((service, index) => (
                 <div key={index} className="border border-orange-500/20 rounded-lg p-3 space-y-3">
                   <div className="flex flex-col gap-2">
                     <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{service.service}</h4>
@@ -331,7 +610,235 @@ const ProtectionTab = () => {
                   </div>
                 </div>
               ))}
-            </div>
+          </MobileAccordionContent>
+        </MobileAccordionItem>
+
+        <MobileAccordionItem value="technology-solutions">
+          <MobileAccordionTrigger icon={<Smartphone className="h-5 w-5 text-blue-400" />}>
+            Advanced Technology Solutions & Digital Protection
+          </MobileAccordionTrigger>
+          <MobileAccordionContent>
+            {technologySolutions.map((tech, index) => (
+              <div key={index} className="border border-blue-500/20 rounded-lg p-3 space-y-3">
+                <div className="flex flex-col gap-2">
+                  <div className="flex items-center justify-between">
+                    <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{tech.solution}</h4>
+                    <Badge variant="outline" className={`text-blue-300 border-blue-400/30 ${isMobile ? 'text-xs' : 'text-sm'}`}>
+                      {tech.roi}
+                    </Badge>
+                  </div>
+                  <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{tech.description}</p>
+                </div>
+
+                <div>
+                  <h5 className={`font-medium text-blue-300 mb-2 ${isMobile ? 'text-xs' : 'text-sm'}`}>Key Features & Capabilities</h5>
+                  <ul className="space-y-1">
+                    {tech.features.map((feature, featureIndex) => (
+                      <li key={featureIndex} className={`${isMobile ? 'text-xs' : 'text-sm'} text-blue-200 flex items-start gap-1`}>
+                        <CheckCircle className="h-3 w-3 text-green-400 flex-shrink-0 mt-1" />
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="bg-blue-500/10 border border-blue-500/30 rounded p-3 space-y-2">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                    <div>
+                      <h5 className={`font-medium text-blue-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Leading Providers</h5>
+                      <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-blue-200`}>{tech.providers.join(', ')}</p>
+                    </div>
+                    <div>
+                      <h5 className={`font-medium text-blue-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Cost Structure</h5>
+                      <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-blue-200`}>{tech.cost}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </MobileAccordionContent>
+        </MobileAccordionItem>
+
+        <MobileAccordionItem value="industry-partnerships">
+          <MobileAccordionTrigger icon={<Globe className="h-5 w-5 text-green-400" />}>
+            Industry Partnerships & Professional Networks
+          </MobileAccordionTrigger>
+          <MobileAccordionContent>
+            {industryPartnerships.map((partnership, index) => (
+              <div key={index} className="border border-green-500/20 rounded-lg p-3 space-y-3">
+                <div className="flex flex-col gap-2">
+                  <div className="flex items-center justify-between">
+                    <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{partnership.partnership}</h4>
+                    <Badge variant="outline" className={`text-green-300 border-green-400/30 ${isMobile ? 'text-xs' : 'text-sm'}`}>
+                      {partnership.networkSize}
+                    </Badge>
+                  </div>
+                  <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{partnership.description}</p>
+                </div>
+
+                <div>
+                  <h5 className={`font-medium text-green-300 mb-2 ${isMobile ? 'text-xs' : 'text-sm'}`}>Protection Benefits</h5>
+                  <ul className="space-y-1">
+                    {partnership.protectionBenefits.map((benefit, benefitIndex) => (
+                      <li key={benefitIndex} className={`${isMobile ? 'text-xs' : 'text-sm'} text-green-200 flex items-start gap-1`}>
+                        <CheckCircle className="h-3 w-3 text-green-400 flex-shrink-0 mt-1" />
+                        {benefit}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="bg-green-500/10 border border-green-500/30 rounded p-3 space-y-2">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                    <div>
+                      <h5 className={`font-medium text-green-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Membership Cost</h5>
+                      <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-green-200`}>{partnership.membershipCost}</p>
+                    </div>
+                    <div>
+                      <h5 className={`font-medium text-green-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Additional Services</h5>
+                      <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-green-200`}>{partnership.additionalServices}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </MobileAccordionContent>
+        </MobileAccordionItem>
+
+        <MobileAccordionItem value="regulatory-compliance">
+          <MobileAccordionTrigger icon={<FileCheck className="h-5 w-5 text-purple-400" />}>
+            Regulatory Compliance & Legal Protection Framework
+          </MobileAccordionTrigger>
+          <MobileAccordionContent>
+            {regulatoryCompliance.map((regulation, index) => (
+              <div key={index} className="border border-purple-500/20 rounded-lg p-3 space-y-3">
+                <div className="flex flex-col gap-2">
+                  <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{regulation.regulation}</h4>
+                  <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-purple-300 italic`}>{regulation.relevance}</p>
+                </div>
+
+                <div>
+                  <h5 className={`font-medium text-purple-300 mb-2 ${isMobile ? 'text-xs' : 'text-sm'}`}>Essential Protection Measures</h5>
+                  <ul className="space-y-1">
+                    {regulation.protectionMeasures.map((measure, measureIndex) => (
+                      <li key={measureIndex} className={`${isMobile ? 'text-xs' : 'text-sm'} text-purple-200 flex items-start gap-1`}>
+                        <CheckCircle className="h-3 w-3 text-green-400 flex-shrink-0 mt-1" />
+                        {measure}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="bg-purple-500/10 border border-purple-500/30 rounded p-3 space-y-2">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
+                    <div>
+                      <h5 className={`font-medium text-purple-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Non-Compliance Penalties</h5>
+                      <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-red-300`}>{regulation.penalties}</p>
+                    </div>
+                    <div>
+                      <h5 className={`font-medium text-purple-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Compliance Investment</h5>
+                      <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-purple-200`}>{regulation.complianceCost}</p>
+                    </div>
+                    <div>
+                      <h5 className={`font-medium text-purple-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Risk Mitigation</h5>
+                      <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-purple-200`}>{regulation.riskMitigation}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </MobileAccordionContent>
+        </MobileAccordionItem>
+
+        <MobileAccordionItem value="future-proofing">
+          <MobileAccordionTrigger icon={<Target className="h-5 w-5 text-orange-400" />}>
+            Future-Proofing Strategies & Long-Term Protection
+          </MobileAccordionTrigger>
+          <MobileAccordionContent>
+            {futureProofingStrategies.map((strategy, index) => (
+              <div key={index} className="border border-orange-500/20 rounded-lg p-3 space-y-3">
+                <div className="flex flex-col gap-2">
+                  <div className="flex items-center justify-between">
+                    <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{strategy.strategy}</h4>
+                    <Badge variant="outline" className={`text-orange-300 border-orange-400/30 ${isMobile ? 'text-xs' : 'text-sm'}`}>
+                      {strategy.expectedROI}
+                    </Badge>
+                  </div>
+                  <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{strategy.description}</p>
+                  <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-orange-300 italic`}>Timeline: {strategy.timeframe}</p>
+                </div>
+
+                <div>
+                  <h5 className={`font-medium text-orange-300 mb-2 ${isMobile ? 'text-xs' : 'text-sm'}`}>Implementation Roadmap</h5>
+                  <ul className="space-y-1">
+                    {strategy.implementation.map((step, stepIndex) => (
+                      <li key={stepIndex} className={`${isMobile ? 'text-xs' : 'text-sm'} text-orange-200 flex items-start gap-1`}>
+                        <CheckCircle className="h-3 w-3 text-green-400 flex-shrink-0 mt-1" />
+                        {step}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="bg-orange-500/10 border border-orange-500/30 rounded p-3 space-y-2">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                    <div>
+                      <h5 className={`font-medium text-orange-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Investment Required</h5>
+                      <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-orange-200`}>{strategy.investmentRequired}</p>
+                    </div>
+                    <div>
+                      <h5 className={`font-medium text-orange-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Risk Reduction</h5>
+                      <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-orange-200`}>{strategy.riskReduction}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </MobileAccordionContent>
+        </MobileAccordionItem>
+
+        <MobileAccordionItem value="emergency-protocols">
+          <MobileAccordionTrigger icon={<AlertTriangle className="h-5 w-5 text-red-400" />}>
+            Emergency Response Protocols & Crisis Management
+          </MobileAccordionTrigger>
+          <MobileAccordionContent>
+            {emergencyResponseProtocols.map((protocol, index) => (
+              <div key={index} className="border border-red-500/20 rounded-lg p-3 space-y-3">
+                <div className="flex flex-col gap-2">
+                  <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{protocol.scenario}</h4>
+                  <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-red-300 italic`}>Response Time: {protocol.timeframe}</p>
+                </div>
+
+                <div>
+                  <h5 className={`font-medium text-red-300 mb-2 ${isMobile ? 'text-xs' : 'text-sm'}`}>Warning Signs to Monitor</h5>
+                  <ul className="space-y-1">
+                    {protocol.triggerSigns.map((sign, signIndex) => (
+                      <li key={signIndex} className={`${isMobile ? 'text-xs' : 'text-sm'} text-red-200 flex items-start gap-1`}>
+                        <AlertTriangle className="h-3 w-3 text-red-400 flex-shrink-0 mt-1" />
+                        {sign}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div>
+                  <h5 className={`font-medium text-red-300 mb-2 ${isMobile ? 'text-xs' : 'text-sm'}`}>Immediate Action Plan</h5>
+                  <ul className="space-y-1">
+                    {protocol.immediateActions.map((action, actionIndex) => (
+                      <li key={actionIndex} className={`${isMobile ? 'text-xs' : 'text-sm'} text-red-200 flex items-start gap-1`}>
+                        <CheckCircle className="h-3 w-3 text-green-400 flex-shrink-0 mt-1" />
+                        {action}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="bg-red-500/10 border border-red-500/30 rounded p-2">
+                  <h5 className={`font-medium text-red-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Prevention Strategy</h5>
+                  <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-red-200`}>{protocol.preventionMeasures}</p>
+                </div>
+              </div>
+            ))}
           </MobileAccordionContent>
         </MobileAccordionItem>
       </MobileAccordion>
