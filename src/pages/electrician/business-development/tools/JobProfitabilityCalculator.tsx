@@ -1,12 +1,17 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { MobileInput } from "@/components/ui/mobile-input";
+import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import BackButton from "@/components/common/BackButton";
 import { useToast } from "@/hooks/use-toast";
-import { Calculator, PoundSterling, HelpCircle, TrendingUp, AlertCircle, CheckCircle, Download, Lightbulb } from "lucide-react";
+import { Calculator, PoundSterling, HelpCircle, TrendingUp, AlertCircle, CheckCircle, Download, Lightbulb, Settings, History, Share2, Receipt } from "lucide-react";
+import { JobPresetSelector } from "@/components/electrician/business-development/job-profitability/JobPresetSelector";
+import { VATCalculator } from "@/components/electrician/business-development/job-profitability/VATCalculator";
+import { labourHoursOptions, hourlyRateOptions, overheadPercentageOptions, profitMarginOptions } from "@/components/electrician/business-development/job-profitability/DropdownOptions";
+import { JobPreset } from "@/components/electrician/business-development/job-profitability/JobTypePresets";
 
 interface JobInputs {
   materialCost: number;
@@ -15,6 +20,20 @@ interface JobInputs {
   overheadPercentage: number;
   desiredProfitMargin: number;
   quoteAmount: number;
+}
+
+interface CalculationHistory {
+  id: string;
+  timestamp: Date;
+  jobType: string;
+  inputs: JobInputs;
+  results: {
+    totalCosts: number;
+    actualProfit: number;
+    actualProfitMargin: number;
+    vatAmount: number;
+    totalWithVAT: number;
+  };
 }
 
 interface ValidationErrors {
@@ -34,6 +53,28 @@ const JobProfitabilityCalculator = () => {
 
   const [errors, setErrors] = useState<ValidationErrors>({});
   const [calculated, setCalculated] = useState(false);
+  const [customValues, setCustomValues] = useState<{[key: string]: boolean}>({});
+  const [vatRate, setVATRate] = useState(20);
+  const [vatRegistered, setVATRegistered] = useState(true);
+  const [selectedJobType, setSelectedJobType] = useState<string>("");
+  const [history, setHistory] = useState<CalculationHistory[]>([]);
+  const [showHistory, setShowHistory] = useState(false);
+
+  // Load history from localStorage on mount
+  useEffect(() => {
+    const savedHistory = localStorage.getItem('job-profitability-history');
+    if (savedHistory) {
+      try {
+        const parsedHistory = JSON.parse(savedHistory).map((item: any) => ({
+          ...item,
+          timestamp: new Date(item.timestamp)
+        }));
+        setHistory(parsedHistory);
+      } catch (error) {
+        console.error('Error loading calculation history:', error);
+      }
+    }
+  }, []);
 
   const updateInput = (field: keyof JobInputs, value: number) => {
     setInputs(prev => ({
@@ -93,9 +134,37 @@ const JobProfitabilityCalculator = () => {
     }
 
     setCalculated(true);
+    
+    // Save to history
+    const vatAmount = vatRegistered ? (inputs.quoteAmount * vatRate) / 100 : 0;
+    const labourCost = inputs.labourHours * inputs.hourlyRate;
+    const directCosts = inputs.materialCost + labourCost;
+    const overheadCosts = directCosts * (inputs.overheadPercentage / 100);
+    const totalCosts = directCosts + overheadCosts;
+    const actualProfit = inputs.quoteAmount - totalCosts;
+    const actualProfitMargin = inputs.quoteAmount > 0 ? (actualProfit / inputs.quoteAmount) * 100 : 0;
+    
+    const newHistoryItem: CalculationHistory = {
+      id: Date.now().toString(),
+      timestamp: new Date(),
+      jobType: selectedJobType || "Custom Job",
+      inputs: { ...inputs },
+      results: {
+        totalCosts,
+        actualProfit,
+        actualProfitMargin,
+        vatAmount,
+        totalWithVAT: inputs.quoteAmount + vatAmount
+      }
+    };
+    
+    const updatedHistory = [newHistoryItem, ...history.slice(0, 9)]; // Keep last 10
+    setHistory(updatedHistory);
+    localStorage.setItem('job-profitability-history', JSON.stringify(updatedHistory));
+    
     toast({
       title: "Calculation Complete",
-      description: "Your profitability analysis has been updated.",
+      description: "Your profitability analysis has been updated and saved to history.",
       variant: "success"
     });
   };
@@ -111,11 +180,82 @@ const JobProfitabilityCalculator = () => {
     });
     setErrors({});
     setCalculated(false);
+    setCustomValues({});
+    setSelectedJobType("");
     toast({
       title: "Calculator Reset",
       description: "All fields have been cleared.",
       variant: "default"
     });
+  };
+
+  const handlePresetSelected = (preset: JobPreset) => {
+    setInputs(prev => ({
+      ...prev,
+      labourHours: preset.defaults.labourHours,
+      hourlyRate: preset.defaults.hourlyRate,
+      overheadPercentage: preset.defaults.overheadPercentage,
+      desiredProfitMargin: preset.defaults.desiredProfitMargin,
+    }));
+    setSelectedJobType(preset.name);
+    setCalculated(false);
+    setCustomValues({});
+    toast({
+      title: "Preset Applied",
+      description: `Values loaded for ${preset.name}`,
+      variant: "success"
+    });
+  };
+
+  const handleDropdownChange = (field: keyof JobInputs, value: string) => {
+    if (value === "custom") {
+      setCustomValues(prev => ({ ...prev, [field]: true }));
+    } else {
+      setCustomValues(prev => ({ ...prev, [field]: false }));
+      updateInput(field, parseFloat(value));
+    }
+  };
+
+  const shareCalculation = () => {
+    if (!calculated) {
+      toast({
+        title: "Nothing to Share",
+        description: "Please calculate first before sharing.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    const shareData = {
+      jobType: selectedJobType || "Custom Job",
+      materialCost: inputs.materialCost,
+      labourHours: inputs.labourHours,
+      hourlyRate: inputs.hourlyRate,
+      totalCosts: totalCosts.toFixed(2),
+      quoteAmount: inputs.quoteAmount,
+      profitMargin: actualProfitMargin.toFixed(1)
+    };
+
+    if (navigator.share) {
+      navigator.share({
+        title: 'Job Profitability Calculation',
+        text: `${shareData.jobType}: £${shareData.quoteAmount} quote with ${shareData.profitMargin}% margin`,
+        url: window.location.href
+      });
+    } else {
+      navigator.clipboard.writeText(
+        `Job Profitability Analysis\n` +
+        `Job Type: ${shareData.jobType}\n` +
+        `Quote: £${shareData.quoteAmount}\n` +
+        `Total Costs: £${shareData.totalCosts}\n` +
+        `Profit Margin: ${shareData.profitMargin}%`
+      );
+      toast({
+        title: "Copied to Clipboard",
+        description: "Calculation summary copied to clipboard.",
+        variant: "success"
+      });
+    }
   };
 
   const loadExample = () => {
@@ -140,6 +280,10 @@ const JobProfitabilityCalculator = () => {
   const minimumQuote = calculated ? totalCosts / (1 - inputs.desiredProfitMargin / 100) : 0;
   const actualProfit = calculated ? inputs.quoteAmount - totalCosts : 0;
   const actualProfitMargin = calculated && inputs.quoteAmount > 0 ? (actualProfit / inputs.quoteAmount) * 100 : 0;
+  
+  // VAT calculations
+  const vatAmount = calculated && vatRegistered ? (inputs.quoteAmount * vatRate) / 100 : 0;
+  const totalWithVAT = calculated ? inputs.quoteAmount + vatAmount : 0;
 
   const getProfitabilityStatus = () => {
     if (!calculated) return null;
@@ -181,9 +325,14 @@ const JobProfitabilityCalculator = () => {
         <BackButton customUrl="/electrician/business-development/tools" label="Back to Calculators" />
       </div>
 
-      <div className="flex justify-center mb-8">
-        <div className="w-full max-w-md">
-          {/* Input Section */}
+      <div className="grid lg:grid-cols-3 gap-8 mb-8">
+        {/* Job Presets */}
+        <div className="lg:col-span-1">
+          <JobPresetSelector onPresetSelected={handlePresetSelected} />
+        </div>
+
+        {/* Input Section */}
+        <div className="lg:col-span-1">
           <Card className="border-elec-yellow/20 bg-elec-card">
             <CardHeader className="text-center">
               <CardTitle className="text-white flex items-center justify-center gap-2">
@@ -203,48 +352,96 @@ const JobProfitabilityCalculator = () => {
                 hint="Include all materials, cables, accessories, and components"
               />
 
-              <MobileInput
-                label="Labour Hours"
-                type="number"
-                value={inputs.labourHours || ""}
-                onChange={(e) => updateInput('labourHours', parseFloat(e.target.value) || 0)}
-                error={errors.labourHours}
-                clearError={() => clearError('labourHours')}
-                hint="Total hours including testing and certification"
-              />
+              {customValues.labourHours ? (
+                <MobileInput
+                  label="Labour Hours"
+                  type="number"
+                  value={inputs.labourHours || ""}
+                  onChange={(e) => updateInput('labourHours', parseFloat(e.target.value) || 0)}
+                  error={errors.labourHours}
+                  clearError={() => clearError('labourHours')}
+                  hint="Total hours including testing and certification"
+                />
+              ) : (
+                <MobileSelectWrapper
+                  label="Labour Hours"
+                  placeholder="Select labour hours"
+                  value={inputs.labourHours.toString()}
+                  onValueChange={(value) => handleDropdownChange('labourHours', value)}
+                  options={labourHoursOptions}
+                  error={errors.labourHours}
+                  hint="Choose typical duration or select custom"
+                />
+              )}
 
-              <MobileInput
-                label="Hourly Rate"
-                type="number"
-                value={inputs.hourlyRate || ""}
-                onChange={(e) => updateInput('hourlyRate', parseFloat(e.target.value) || 0)}
-                error={errors.hourlyRate}
-                clearError={() => clearError('hourlyRate')}
-                unit="£"
-                hint="Your standard hourly charging rate"
-              />
+              {customValues.hourlyRate ? (
+                <MobileInput
+                  label="Hourly Rate"
+                  type="number"
+                  value={inputs.hourlyRate || ""}
+                  onChange={(e) => updateInput('hourlyRate', parseFloat(e.target.value) || 0)}
+                  error={errors.hourlyRate}
+                  clearError={() => clearError('hourlyRate')}
+                  unit="£"
+                  hint="Your standard hourly charging rate"
+                />
+              ) : (
+                <MobileSelectWrapper
+                  label="Hourly Rate"
+                  placeholder="Select hourly rate"
+                  value={inputs.hourlyRate.toString()}
+                  onValueChange={(value) => handleDropdownChange('hourlyRate', value)}
+                  options={hourlyRateOptions}
+                  error={errors.hourlyRate}
+                  hint="Choose standard rate or select custom"
+                />
+              )}
 
-              <MobileInput
-                label="Overhead Percentage"
-                type="number"
-                value={inputs.overheadPercentage || ""}
-                onChange={(e) => updateInput('overheadPercentage', parseFloat(e.target.value) || 0)}
-                error={errors.overheadPercentage}
-                clearError={() => clearError('overheadPercentage')}
-                unit="%"
-                hint="Vehicle, insurance, tools, office costs (typically 15-25%)"
-              />
+              {customValues.overheadPercentage ? (
+                <MobileInput
+                  label="Overhead Percentage"
+                  type="number"
+                  value={inputs.overheadPercentage || ""}
+                  onChange={(e) => updateInput('overheadPercentage', parseFloat(e.target.value) || 0)}
+                  error={errors.overheadPercentage}
+                  clearError={() => clearError('overheadPercentage')}
+                  unit="%"
+                  hint="Vehicle, insurance, tools, office costs"
+                />
+              ) : (
+                <MobileSelectWrapper
+                  label="Overhead Percentage"
+                  placeholder="Select overhead percentage"
+                  value={inputs.overheadPercentage.toString()}
+                  onValueChange={(value) => handleDropdownChange('overheadPercentage', value)}
+                  options={overheadPercentageOptions}
+                  error={errors.overheadPercentage}
+                  hint="Business running costs as percentage"
+                />
+              )}
 
-              <MobileInput
-                label="Desired Profit Margin"
-                type="number"
-                value={inputs.desiredProfitMargin || ""}
-                onChange={(e) => updateInput('desiredProfitMargin', parseFloat(e.target.value) || 0)}
-                error={errors.desiredProfitMargin}
-                clearError={() => clearError('desiredProfitMargin')}
-                unit="%"
-                hint="Target profit percentage (typically 20-30%)"
-              />
+              {customValues.desiredProfitMargin ? (
+                <MobileInput
+                  label="Desired Profit Margin"
+                  type="number"
+                  value={inputs.desiredProfitMargin || ""}
+                  onChange={(e) => updateInput('desiredProfitMargin', parseFloat(e.target.value) || 0)}
+                  error={errors.desiredProfitMargin}
+                  clearError={() => clearError('desiredProfitMargin')}
+                  unit="%"
+                  hint="Target profit percentage"
+                />
+              ) : (
+                <MobileSelectWrapper
+                  label="Desired Profit Margin"
+                  placeholder="Select profit margin"
+                  value={inputs.desiredProfitMargin.toString()}
+                  onValueChange={(value) => handleDropdownChange('desiredProfitMargin', value)}
+                  options={profitMarginOptions}
+                  error={errors.desiredProfitMargin}
+                  hint="Target profit for sustainability"
+                />
+              )}
 
               <MobileInput
                 label="Your Quote Amount"
@@ -275,21 +472,43 @@ const JobProfitabilityCalculator = () => {
                 </Button>
               </div>
 
-              <Button 
-                onClick={resetCalculator}
-                variant="outline"
-                className="w-full border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
-              >
-                Reset All
-              </Button>
+              <div className="flex gap-3">
+                <Button 
+                  onClick={resetCalculator}
+                  variant="outline"
+                  className="flex-1 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+                >
+                  Reset All
+                </Button>
+                {calculated && (
+                  <Button 
+                    onClick={shareCalculation}
+                    variant="outline"
+                    className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+                  >
+                    <Share2 className="h-4 w-4" />
+                  </Button>
+                )}
+              </div>
             </CardContent>
           </Card>
+        </div>
+
+        {/* VAT Calculator */}
+        <div className="lg:col-span-1">
+          <VATCalculator
+            quoteAmount={inputs.quoteAmount}
+            vatRate={vatRate}
+            onVATRateChange={setVATRate}
+            vatRegistered={vatRegistered}
+            onVATRegistrationChange={setVATRegistered}
+          />
         </div>
       </div>
 
       {/* Results Section */}
       <div className="flex justify-center">
-        <div className="w-full max-w-4xl">
+        <div className="w-full max-w-6xl">
           <Card className="border-elec-yellow/20 bg-elec-card">
             <CardHeader className="text-center">
               <CardTitle className="text-white flex items-center justify-center gap-2">
@@ -300,6 +519,18 @@ const JobProfitabilityCalculator = () => {
                     Calculated
                   </Badge>
                 )}
+                <div className="ml-auto flex gap-2">
+                  {history.length > 0 && (
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => setShowHistory(!showHistory)}
+                      className="text-elec-yellow hover:bg-elec-yellow/10"
+                    >
+                      <History className="h-4 w-4" />
+                    </Button>
+                  )}
+                </div>
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
@@ -408,7 +639,38 @@ const JobProfitabilityCalculator = () => {
                     </>
                   )}
 
-                  {/* Export Button */}
+                   {/* VAT Summary */}
+                   {vatRegistered && (
+                     <>
+                       <Separator className="bg-elec-yellow/30" />
+                       <div className="space-y-4">
+                         <h4 className="text-white font-semibold flex items-center justify-center gap-2">
+                           <Receipt className="h-4 w-4 text-elec-yellow" />
+                           VAT Summary
+                         </h4>
+                         <div className="grid md:grid-cols-2 gap-4">
+                           <div className="space-y-3">
+                             <div className="flex justify-between text-white">
+                               <span>Net Amount:</span>
+                               <span>£{inputs.quoteAmount.toFixed(2)}</span>
+                             </div>
+                             <div className="flex justify-between text-white">
+                               <span>VAT ({vatRate}%):</span>
+                               <span>£{vatAmount.toFixed(2)}</span>
+                             </div>
+                           </div>
+                           <div className="space-y-3">
+                             <div className="flex justify-between text-white font-semibold text-lg">
+                               <span>Total with VAT:</span>
+                               <span className="text-elec-yellow">£{totalWithVAT.toFixed(2)}</span>
+                             </div>
+                           </div>
+                         </div>
+                       </div>
+                     </>
+                   )}
+
+                   {/* Export Button */}
                   <div className="flex justify-center pt-4">
                     <Button 
                       variant="outline"
@@ -431,6 +693,50 @@ const JobProfitabilityCalculator = () => {
           </Card>
         </div>
       </div>
+
+      {/* History Section */}
+      {showHistory && history.length > 0 && (
+        <Card className="border-elec-yellow/20 bg-elec-card mt-8">
+          <CardHeader>
+            <CardTitle className="text-white flex items-center gap-2">
+              <History className="h-5 w-5 text-elec-yellow" />
+              Calculation History
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              {history.slice(0, 5).map((item) => (
+                <div key={item.id} className="bg-elec-dark/50 rounded-lg p-4">
+                  <div className="flex justify-between items-start mb-2">
+                    <div>
+                      <h4 className="text-white font-medium">{item.jobType}</h4>
+                      <p className="text-xs text-elec-light/60">
+                        {item.timestamp.toLocaleDateString()} at {item.timestamp.toLocaleTimeString()}
+                      </p>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-elec-yellow font-semibold">£{item.inputs.quoteAmount.toFixed(2)}</p>
+                      <p className={`text-sm ${item.results.actualProfitMargin >= 20 ? 'text-green-400' : 'text-red-400'}`}>
+                        {item.results.actualProfitMargin.toFixed(1)}% margin
+                      </p>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-3 gap-4 text-xs text-elec-light/70">
+                    <span>Labour: {item.inputs.labourHours}h × £{item.inputs.hourlyRate}</span>
+                    <span>Materials: £{item.inputs.materialCost.toFixed(2)}</span>
+                    <span>Profit: £{item.results.actualProfit.toFixed(2)}</span>
+                  </div>
+                </div>
+              ))}
+              {history.length > 5 && (
+                <p className="text-center text-elec-light/60 text-sm">
+                  Showing 5 of {history.length} calculations
+                </p>
+              )}
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       {/* Educational Tips */}
       <Card className="border-elec-yellow/20 bg-elec-card mt-8">
