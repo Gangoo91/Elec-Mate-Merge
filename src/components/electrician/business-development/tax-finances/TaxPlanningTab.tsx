@@ -30,28 +30,28 @@ import {
 const TaxPlanningTab = () => {
   const taxMetrics = [
     {
-      metric: "Income Tax Personal Allowance",
-      data: "£12,570 (2024/25)",
-      icon: <Calculator className="h-5 w-5 text-purple-400" />,
-      detail: "Tax-free earnings threshold"
+      metric: "Tax Efficiency Threshold",
+      data: "£50,000",
+      subtext: "annual profit",
+      icon: <Calculator className="h-5 w-5 text-purple-400" />
     },
     {
-      metric: "Higher Rate Threshold",
-      data: "£50,270",
-      icon: <TrendingUp className="h-5 w-5 text-blue-400" />,
-      detail: "40% tax rate applies above this level"
+      metric: "Corporation Tax Rates",
+      data: "19% to 25%",
+      subtext: "",
+      icon: <CreditCard className="h-5 w-5 text-blue-400" />
     },
     {
-      metric: "Self Assessment Deadline",
-      data: "31st January",
-      icon: <Calendar className="h-5 w-5 text-green-400" />,
-      detail: "Submit return and pay tax owed"
+      metric: "Personal Allowance",
+      data: "£12,570",
+      subtext: "tax-free",
+      icon: <Users className="h-5 w-5 text-green-400" />
     },
     {
-      metric: "Annual Pension Allowance",
-      data: "£60,000",
-      icon: <PiggyBank className="h-5 w-5 text-orange-400" />,
-      detail: "Maximum annual pension contributions"
+      metric: "Liability Protection",
+      data: "Limited company",
+      subtext: "advantage",
+      icon: <Shield className="h-5 w-5 text-orange-400" />
     }
   ];
 
@@ -381,7 +381,7 @@ const TaxPlanningTab = () => {
               <div className="space-y-1">
                 <p className="text-xs text-muted-foreground font-medium leading-tight">{metric.metric}</p>
                 <p className="text-sm font-bold text-elec-yellow leading-tight">{metric.data}</p>
-                <p className="text-xs text-muted-foreground leading-tight">{metric.detail}</p>
+                <p className="text-xs text-muted-foreground leading-tight">{metric.subtext}</p>
               </div>
             </div>
           </Card>
