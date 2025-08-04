@@ -32,6 +32,12 @@ import MentalHealthResources from "@/pages/electrician/mental-health/MentalHealt
 import BusinessCalculators from "@/pages/electrician/business-development/tools/BusinessCalculators";
 import JobProfitabilityCalculator from "@/pages/electrician/business-development/tools/JobProfitabilityCalculator";
 import BusinessCostCalculator from "@/pages/electrician/business-development/tools/BusinessCostCalculator";
+import CashFlowPlanner from "@/pages/electrician/business-development/tools/CashFlowPlanner";
+import PricingStrategyCalculator from "@/pages/electrician/business-development/tools/PricingStrategyCalculator";
+import EquipmentROICalculator from "@/pages/electrician/business-development/tools/EquipmentROICalculator";
+import HourlyRateCalculator from "@/pages/electrician/business-development/tools/HourlyRateCalculator";
+import CapacityPlanningTool from "@/pages/electrician/business-development/tools/CapacityPlanningTool";
+import TaxNIEstimator from "@/pages/electrician/business-development/tools/TaxNIEstimator";
 
 const ElectricianHubRoutes = () => (
   <Routes>
@@ -71,6 +77,12 @@ const ElectricianHubRoutes = () => (
     <Route path="business-development/tools" element={<BusinessCalculators />} />
     <Route path="business-development/tools/job-profitability" element={<JobProfitabilityCalculator />} />
     <Route path="business-development/tools/business-cost" element={<BusinessCostCalculator />} />
+    <Route path="business-development/tools/cash-flow" element={<CashFlowPlanner />} />
+    <Route path="business-development/tools/pricing-strategy" element={<PricingStrategyCalculator />} />
+    <Route path="business-development/tools/roi-calculator" element={<EquipmentROICalculator />} />
+    <Route path="business-development/tools/hourly-rate" element={<HourlyRateCalculator />} />
+    <Route path="business-development/tools/capacity-planner" element={<CapacityPlanningTool />} />
+    <Route path="business-development/tools/tax-estimator" element={<TaxNIEstimator />} />
   </Routes>
 );
 
