@@ -24,21 +24,21 @@ const BusinessDevelopment = () => {
       title: "Customer Acquisition",
       description: "Strategies and tools for finding and securing new customers",
       icon: Handshake,
-      status: "coming-soon"
+      status: "available"
     },
     {
       id: "tax-finances",
       title: "Tax & Finances",
       description: "Tax planning tools and financial management resources",
       icon: Calculator,
-      status: "coming-soon"
+      status: "available"
     },
     {
       id: "debt-recovery",
       title: "Debt Recovery & Non-Payers", 
       description: "Tools and strategies for managing late payments and debt recovery",
       icon: CreditCard,
-      status: "coming-soon"
+      status: "available"
     },
     {
       id: "job-profitability",
