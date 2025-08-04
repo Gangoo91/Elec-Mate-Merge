@@ -455,29 +455,28 @@ const JobProfitabilityCalculator = () => {
                 hint="The total amount you're quoting to the customer"
               />
 
-              <div className="flex gap-3">
+              <div className="space-y-3">
                 <Button 
                   onClick={calculateProfitability}
-                  className="flex-1 bg-elec-yellow text-black hover:bg-elec-yellow/90"
+                  className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90"
                   disabled={Object.keys(errors).length > 0}
                 >
                   <Calculator className="h-4 w-4 mr-2" />
                   Calculate
                 </Button>
+                
                 <Button 
                   onClick={loadExample}
                   variant="outline"
-                  className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+                  className="w-full border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
                 >
                   Example
                 </Button>
-              </div>
 
-              <div className="flex gap-3">
                 <Button 
                   onClick={resetCalculator}
                   variant="outline"
-                  className="flex-1 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+                  className="w-full border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
                 >
                   Reset All
                 </Button>
