@@ -3,9 +3,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Separator } from "@/components/ui/separator";
-import { Calculator, Users, Target, TrendingUp, PoundSterling, BarChart3, RefreshCw } from "lucide-react";
+import { Calculator, Users, Target, TrendingUp, PoundSterling, BarChart3, RefreshCw, ChevronDown } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 interface CustomerInputs {
   // Current Business Metrics
@@ -26,6 +26,7 @@ interface CustomerInputs {
 }
 
 const CustomerAcquisitionCalculator = () => {
+  const [activeTab, setActiveTab] = useState("current");
   const [inputs, setInputs] = useState<CustomerInputs>({
     monthlyRevenue: 15000,
     averageJobValue: 850,
@@ -86,230 +87,236 @@ const CustomerAcquisitionCalculator = () => {
           </p>
         </div>
 
-        <Tabs defaultValue="current" className="w-full">
-          <TabsList className="grid w-full grid-cols-3 bg-elec-gray">
-            <TabsTrigger value="current">Current Metrics</TabsTrigger>
-            <TabsTrigger value="growth">Growth Planning</TabsTrigger>
-            <TabsTrigger value="analysis">Analysis & ROI</TabsTrigger>
-          </TabsList>
+        <div className="mb-6">
+          <Select value={activeTab} onValueChange={setActiveTab}>
+            <SelectTrigger className="w-full bg-elec-gray border-elec-yellow/20 text-white">
+              <SelectValue placeholder="Select analysis section" />
+              <ChevronDown className="h-4 w-4 opacity-50" />
+            </SelectTrigger>
+            <SelectContent className="bg-elec-gray border-elec-yellow/20 z-50">
+              <SelectItem value="current" className="text-white hover:bg-elec-yellow/10">Current Metrics</SelectItem>
+              <SelectItem value="growth" className="text-white hover:bg-elec-yellow/10">Growth Planning</SelectItem>
+              <SelectItem value="analysis" className="text-white hover:bg-elec-yellow/10">Analysis & ROI</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
 
-          <TabsContent value="current" className="space-y-6">
-            <div className="grid md:grid-cols-2 gap-6">
-              <Card className="border-elec-yellow/20 bg-elec-gray">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <BarChart3 className="h-5 w-5 text-elec-yellow" />
-                    Business Metrics
-                  </CardTitle>
-                  <CardDescription>Your current business performance indicators</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div>
-                    <Label htmlFor="monthlyRevenue">Monthly Revenue (£)</Label>
-                    <Input
-                      id="monthlyRevenue"
-                      type="number"
-                      value={inputs.monthlyRevenue}
-                      onChange={(e) => updateInput('monthlyRevenue', Number(e.target.value))}
-                      className="bg-elec-dark border-elec-yellow/30"
-                    />
-                  </div>
-                  
-                  <div>
-                    <Label htmlFor="averageJobValue">Average Job Value (£)</Label>
-                    <Input
-                      id="averageJobValue"
-                      type="number"
-                      value={inputs.averageJobValue}
-                      onChange={(e) => updateInput('averageJobValue', Number(e.target.value))}
-                      className="bg-elec-dark border-elec-yellow/30"
-                    />
-                  </div>
-                  
-                  <div>
-                    <Label htmlFor="monthlyJobs">Monthly Jobs Completed</Label>
-                    <Input
-                      id="monthlyJobs"
-                      type="number"
-                      value={inputs.monthlyJobs}
-                      onChange={(e) => updateInput('monthlyJobs', Number(e.target.value))}
-                      className="bg-elec-dark border-elec-yellow/30"
-                    />
-                  </div>
-                  
-                  <div>
-                    <Label htmlFor="conversionRate">Lead Conversion Rate (%)</Label>
-                    <Input
-                      id="conversionRate"
-                      type="number"
-                      value={inputs.conversionRate}
-                      onChange={(e) => updateInput('conversionRate', Number(e.target.value))}
-                      className="bg-elec-dark border-elec-yellow/30"
-                    />
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="border-elec-yellow/20 bg-elec-gray">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <PoundSterling className="h-5 w-5 text-elec-yellow" />
-                    Marketing Investment
-                  </CardTitle>
-                  <CardDescription>Your current marketing spend breakdown</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div>
-                    <Label htmlFor="marketingBudget">Total Monthly Marketing Budget (£)</Label>
-                    <Input
-                      id="marketingBudget"
-                      type="number"
-                      value={inputs.marketingBudget}
-                      onChange={(e) => updateInput('marketingBudget', Number(e.target.value))}
-                      className="bg-elec-dark border-elec-yellow/30"
-                    />
-                  </div>
-                  
-                  <div>
-                    <Label htmlFor="digitalMarketingSpend">Digital Marketing (£)</Label>
-                    <Input
-                      id="digitalMarketingSpend"
-                      type="number"
-                      value={inputs.digitalMarketingSpend}
-                      onChange={(e) => updateInput('digitalMarketingSpend', Number(e.target.value))}
-                      className="bg-elec-dark border-elec-yellow/30"
-                    />
-                  </div>
-                  
-                  <div>
-                    <Label htmlFor="traditionaMarketingSpend">Traditional Marketing (£)</Label>
-                    <Input
-                      id="traditionaMarketingSpend"
-                      type="number"
-                      value={inputs.traditionaMarketingSpend}
-                      onChange={(e) => updateInput('traditionaMarketingSpend', Number(e.target.value))}
-                      className="bg-elec-dark border-elec-yellow/30"
-                    />
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          </TabsContent>
-
-          <TabsContent value="growth" className="space-y-6">
+        {activeTab === "current" && (
+          <div className="grid md:grid-cols-2 gap-6">
             <Card className="border-elec-yellow/20 bg-elec-gray">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Target className="h-5 w-5 text-elec-yellow" />
-                  Growth Targets & Market Analysis
+                  <BarChart3 className="h-5 w-5 text-elec-yellow" />
+                  Business Metrics
                 </CardTitle>
-                <CardDescription>Set your growth targets and market positioning</CardDescription>
+                <CardDescription>Your current business performance indicators</CardDescription>
               </CardHeader>
-              <CardContent className="grid md:grid-cols-3 gap-4">
+              <CardContent className="space-y-4">
                 <div>
-                  <Label htmlFor="targetGrowthRate">Target Growth Rate (%)</Label>
+                  <Label htmlFor="monthlyRevenue">Monthly Revenue (£)</Label>
                   <Input
-                    id="targetGrowthRate"
+                    id="monthlyRevenue"
                     type="number"
-                    value={inputs.targetGrowthRate}
-                    onChange={(e) => updateInput('targetGrowthRate', Number(e.target.value))}
+                    value={inputs.monthlyRevenue}
+                    onChange={(e) => updateInput('monthlyRevenue', Number(e.target.value))}
                     className="bg-elec-dark border-elec-yellow/30"
                   />
                 </div>
                 
                 <div>
-                  <Label htmlFor="targetMarketShare">Target Market Share (%)</Label>
+                  <Label htmlFor="averageJobValue">Average Job Value (£)</Label>
                   <Input
-                    id="targetMarketShare"
+                    id="averageJobValue"
                     type="number"
-                    value={inputs.targetMarketShare}
-                    onChange={(e) => updateInput('targetMarketShare', Number(e.target.value))}
+                    value={inputs.averageJobValue}
+                    onChange={(e) => updateInput('averageJobValue', Number(e.target.value))}
                     className="bg-elec-dark border-elec-yellow/30"
                   />
                 </div>
                 
                 <div>
-                  <Label htmlFor="competitorAnalysis">Competitor Avg. CAC (£)</Label>
+                  <Label htmlFor="monthlyJobs">Monthly Jobs Completed</Label>
                   <Input
-                    id="competitorAnalysis"
+                    id="monthlyJobs"
                     type="number"
-                    value={inputs.competitorAnalysis}
-                    onChange={(e) => updateInput('competitorAnalysis', Number(e.target.value))}
+                    value={inputs.monthlyJobs}
+                    onChange={(e) => updateInput('monthlyJobs', Number(e.target.value))}
+                    className="bg-elec-dark border-elec-yellow/30"
+                  />
+                </div>
+                
+                <div>
+                  <Label htmlFor="conversionRate">Lead Conversion Rate (%)</Label>
+                  <Input
+                    id="conversionRate"
+                    type="number"
+                    value={inputs.conversionRate}
+                    onChange={(e) => updateInput('conversionRate', Number(e.target.value))}
                     className="bg-elec-dark border-elec-yellow/30"
                   />
                 </div>
               </CardContent>
             </Card>
-          </TabsContent>
 
-          <TabsContent value="analysis" className="space-y-6">
-            <div className="grid md:grid-cols-2 gap-6">
-              <Card className="border-elec-yellow/20 bg-elec-gray">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Calculator className="h-5 w-5 text-elec-yellow" />
-                    Customer Acquisition Metrics
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Current CAC:</span>
-                    <span className="font-medium">£{currentCustomerAcquisitionCost.toFixed(2)}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Leads Needed/Month:</span>
-                    <span className="font-medium">{leadsNeeded.toFixed(0)}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Cost Per Lead:</span>
-                    <span className="font-medium">£{costPerLead.toFixed(2)}</span>
-                  </div>
-                  <Separator />
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Marketing ROI:</span>
-                    <span className={`font-medium ${marketingROI > 0 ? 'text-green-400' : 'text-red-400'}`}>
-                      {marketingROI.toFixed(1)}%
-                    </span>
-                  </div>
-                </CardContent>
-              </Card>
+            <Card className="border-elec-yellow/20 bg-elec-gray">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <PoundSterling className="h-5 w-5 text-elec-yellow" />
+                  Marketing Investment
+                </CardTitle>
+                <CardDescription>Your current marketing spend breakdown</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div>
+                  <Label htmlFor="marketingBudget">Total Monthly Marketing Budget (£)</Label>
+                  <Input
+                    id="marketingBudget"
+                    type="number"
+                    value={inputs.marketingBudget}
+                    onChange={(e) => updateInput('marketingBudget', Number(e.target.value))}
+                    className="bg-elec-dark border-elec-yellow/30"
+                  />
+                </div>
+                
+                <div>
+                  <Label htmlFor="digitalMarketingSpend">Digital Marketing (£)</Label>
+                  <Input
+                    id="digitalMarketingSpend"
+                    type="number"
+                    value={inputs.digitalMarketingSpend}
+                    onChange={(e) => updateInput('digitalMarketingSpend', Number(e.target.value))}
+                    className="bg-elec-dark border-elec-yellow/30"
+                  />
+                </div>
+                
+                <div>
+                  <Label htmlFor="traditionaMarketingSpend">Traditional Marketing (£)</Label>
+                  <Input
+                    id="traditionaMarketingSpend"
+                    type="number"
+                    value={inputs.traditionaMarketingSpend}
+                    onChange={(e) => updateInput('traditionaMarketingSpend', Number(e.target.value))}
+                    className="bg-elec-dark border-elec-yellow/30"
+                  />
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        )}
 
-              <Card className="border-elec-yellow/20 bg-elec-gray">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <TrendingUp className="h-5 w-5 text-elec-yellow" />
-                    Growth Projections
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Target Monthly Jobs:</span>
-                    <span className="font-medium">{targetMonthlyJobs.toFixed(0)}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Additional Jobs Needed:</span>
-                    <span className="font-medium">{additionalJobsNeeded.toFixed(0)}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Additional Revenue:</span>
-                    <span className="font-medium">£{additionalRevenueFromGrowth.toFixed(0)}</span>
-                  </div>
-                  <Separator />
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Required Marketing Investment:</span>
-                    <span className="font-medium">£{requiredMarketingInvestment.toFixed(0)}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Projected ROI:</span>
-                    <span className={`font-medium ${projectedROI > 0 ? 'text-green-400' : 'text-red-400'}`}>
-                      {projectedROI.toFixed(1)}%
-                    </span>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          </TabsContent>
-        </Tabs>
+        {activeTab === "growth" && (
+          <Card className="border-elec-yellow/20 bg-elec-gray">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Target className="h-5 w-5 text-elec-yellow" />
+                Growth Targets & Market Analysis
+              </CardTitle>
+              <CardDescription>Set your growth targets and market positioning</CardDescription>
+            </CardHeader>
+            <CardContent className="grid md:grid-cols-3 gap-4">
+              <div>
+                <Label htmlFor="targetGrowthRate">Target Growth Rate (%)</Label>
+                <Input
+                  id="targetGrowthRate"
+                  type="number"
+                  value={inputs.targetGrowthRate}
+                  onChange={(e) => updateInput('targetGrowthRate', Number(e.target.value))}
+                  className="bg-elec-dark border-elec-yellow/30"
+                />
+              </div>
+              
+              <div>
+                <Label htmlFor="targetMarketShare">Target Market Share (%)</Label>
+                <Input
+                  id="targetMarketShare"
+                  type="number"
+                  value={inputs.targetMarketShare}
+                  onChange={(e) => updateInput('targetMarketShare', Number(e.target.value))}
+                  className="bg-elec-dark border-elec-yellow/30"
+                />
+              </div>
+              
+              <div>
+                <Label htmlFor="competitorAnalysis">Competitor Avg. CAC (£)</Label>
+                <Input
+                  id="competitorAnalysis"
+                  type="number"
+                  value={inputs.competitorAnalysis}
+                  onChange={(e) => updateInput('competitorAnalysis', Number(e.target.value))}
+                  className="bg-elec-dark border-elec-yellow/30"
+                />
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
+        {activeTab === "analysis" && (
+          <div className="grid md:grid-cols-2 gap-6">
+            <Card className="border-elec-yellow/20 bg-elec-gray">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Calculator className="h-5 w-5 text-elec-yellow" />
+                  Customer Acquisition Metrics
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Current CAC:</span>
+                  <span className="font-medium">£{currentCustomerAcquisitionCost.toFixed(2)}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Leads Needed/Month:</span>
+                  <span className="font-medium">{leadsNeeded.toFixed(0)}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Cost Per Lead:</span>
+                  <span className="font-medium">£{costPerLead.toFixed(2)}</span>
+                </div>
+                <Separator />
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Marketing ROI:</span>
+                  <span className={`font-medium ${marketingROI > 0 ? 'text-green-400' : 'text-red-400'}`}>
+                    {marketingROI.toFixed(1)}%
+                  </span>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="border-elec-yellow/20 bg-elec-gray">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <TrendingUp className="h-5 w-5 text-elec-yellow" />
+                  Growth Projections
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Target Monthly Jobs:</span>
+                  <span className="font-medium">{targetMonthlyJobs.toFixed(0)}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Additional Jobs Needed:</span>
+                  <span className="font-medium">{additionalJobsNeeded.toFixed(0)}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Additional Revenue:</span>
+                  <span className="font-medium">£{additionalRevenueFromGrowth.toFixed(0)}</span>
+                </div>
+                <Separator />
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Required Marketing Investment:</span>
+                  <span className="font-medium">£{requiredMarketingInvestment.toFixed(0)}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Projected ROI:</span>
+                  <span className={`font-medium ${projectedROI > 0 ? 'text-green-400' : 'text-red-400'}`}>
+                    {projectedROI.toFixed(1)}%
+                  </span>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        )}
 
         <div className="flex justify-center">
           <Button
