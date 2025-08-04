@@ -65,22 +65,32 @@ export function JobPresetSelector({ onPresetSelected }: JobPresetSelectorProps) 
             </div>
             <p className="text-sm text-elec-light/70">{selectedPresetData.description}</p>
             
-            <div className="grid grid-cols-2 gap-3 text-sm">
-              <div className="flex items-center gap-2 text-elec-light/80">
-                <Clock className="h-3 w-3 text-elec-yellow" />
-                <span>{selectedPresetData.defaults.labourHours}h</span>
+            <div className="grid grid-cols-2 gap-4 text-sm">
+              <div className="text-center py-2">
+                <div className="flex items-center justify-center gap-2 text-elec-yellow mb-1">
+                  <Clock className="h-3 w-3" />
+                </div>
+                <div className="text-white font-medium">{selectedPresetData.defaults.labourHours}h</div>
               </div>
-              <div className="flex items-center gap-2 text-elec-light/80">
-                <PoundSterling className="h-3 w-3 text-elec-yellow" />
-                <span>£{selectedPresetData.defaults.hourlyRate}/h</span>
+              <div className="text-center py-2">
+                <div className="flex items-center justify-center gap-2 text-elec-yellow mb-1">
+                  <PoundSterling className="h-3 w-3" />
+                </div>
+                <div className="text-white font-medium">£{selectedPresetData.defaults.hourlyRate}/h</div>
               </div>
-              <div className="flex items-center gap-2 text-elec-light/80">
-                <TrendingUp className="h-3 w-3 text-elec-yellow" />
-                <span>{selectedPresetData.defaults.overheadPercentage}% overhead</span>
+              <div className="text-center py-2">
+                <div className="flex items-center justify-center gap-2 text-elec-yellow mb-1">
+                  <TrendingUp className="h-3 w-3" />
+                </div>
+                <div className="text-white font-medium">{selectedPresetData.defaults.overheadPercentage}%</div>
+                <div className="text-xs text-elec-light/70">overhead</div>
               </div>
-              <div className="flex items-center gap-2 text-elec-light/80">
-                <TrendingUp className="h-3 w-3 text-elec-yellow" />
-                <span>{selectedPresetData.defaults.desiredProfitMargin}% profit</span>
+              <div className="text-center py-2">
+                <div className="flex items-center justify-center gap-2 text-elec-yellow mb-1">
+                  <TrendingUp className="h-3 w-3" />
+                </div>
+                <div className="text-white font-medium">{selectedPresetData.defaults.desiredProfitMargin}%</div>
+                <div className="text-xs text-elec-light/70">profit</div>
               </div>
             </div>
           </div>
