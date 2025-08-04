@@ -374,7 +374,7 @@ const VATComplianceTab = () => {
         </AlertDescription>
       </Alert>
 
-      <div className="grid gap-3 grid-cols-1 md:grid-cols-2 xl:grid-cols-4">
+      <div className="grid gap-3 grid-cols-2 md:grid-cols-2 xl:grid-cols-4">
         {vatMetrics.map((metric, index) => (
           <Card key={index} className="border-elec-yellow/20 bg-elec-gray p-3">
             <div className="text-center space-y-2">
