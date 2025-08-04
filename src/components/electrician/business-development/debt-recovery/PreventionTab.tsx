@@ -317,7 +317,7 @@ const PreventionTab = () => {
           <MobileAccordionContent>
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
               {riskAssessmentTools.map((tool, index) => (
-                <div key={index} className="border border-blue-500/20 rounded-lg p-3 space-y-3">
+                <div key={index} className="space-y-3">
                   <div className="flex flex-col gap-2">
                     <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{tool.tool}</h4>
                     <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{tool.description}</p>
@@ -345,6 +345,8 @@ const PreventionTab = () => {
                       <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-purple-200`}>{tool.benefit}</p>
                     </div>
                   </div>
+
+                  {index < riskAssessmentTools.length - 1 && <div className="border-t border-elec-yellow/10 pt-4"></div>}
                 </div>
               ))}
             </div>
@@ -358,7 +360,7 @@ const PreventionTab = () => {
           <MobileAccordionContent>
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
               {contractBestPractices.map((section, index) => (
-                <div key={index} className="border border-purple-500/20 rounded-lg p-3 space-y-3">
+                <div key={index} className="space-y-3">
                   <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'} border-b border-purple-500/20 pb-1`}>
                     {section.section}
                   </h4>
@@ -374,6 +376,8 @@ const PreventionTab = () => {
                       ))}
                     </ul>
                   </div>
+
+                  {index < contractBestPractices.length - 1 && <div className="border-t border-elec-yellow/10 pt-4"></div>}
                 </div>
               ))}
             </div>
@@ -387,7 +391,7 @@ const PreventionTab = () => {
           <MobileAccordionContent>
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
               {clientScreeningProcedures.map((category, index) => (
-                <div key={index} className="border border-orange-500/20 rounded-lg p-3 space-y-3">
+                <div key={index} className="space-y-3">
                   <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{category.category}</h4>
                   
                   <div className="grid md:grid-cols-2 gap-3">
@@ -415,6 +419,8 @@ const PreventionTab = () => {
                       </ul>
                     </div>
                   </div>
+
+                  {index < clientScreeningProcedures.length - 1 && <div className="border-t border-elec-yellow/10 pt-4"></div>}
                 </div>
               ))}
             </div>
@@ -428,7 +434,7 @@ const PreventionTab = () => {
           <MobileAccordionContent>
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
               {paymentStructures.map((structure, index) => (
-                <div key={index} className="border border-green-500/20 rounded-lg p-3 space-y-3">
+                <div key={index} className="space-y-3">
                   <div className="flex flex-col gap-2">
                     <div className="flex items-center justify-between">
                       <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{structure.jobType}</h4>
@@ -449,6 +455,8 @@ const PreventionTab = () => {
                       ))}
                     </ul>
                   </div>
+
+                  {index < paymentStructures.length - 1 && <div className="border-t border-elec-yellow/10 pt-4"></div>}
                 </div>
               ))}
             </div>
@@ -462,7 +470,7 @@ const PreventionTab = () => {
           <MobileAccordionContent>
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
               {earlyWarningSystem.map((system, index) => (
-                <div key={index} className="border border-amber-500/20 rounded-lg p-3 space-y-3">
+                <div key={index} className="space-y-3">
                   <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{system.indicator}</h4>
                   
                   <div>
@@ -481,6 +489,8 @@ const PreventionTab = () => {
                     <h5 className={`font-medium text-amber-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Immediate Response</h5>
                     <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-amber-200`}>{system.response}</p>
                   </div>
+
+                  {index < earlyWarningSystem.length - 1 && <div className="border-t border-elec-yellow/10 pt-4"></div>}
                 </div>
               ))}
             </div>
@@ -494,7 +504,7 @@ const PreventionTab = () => {
           <MobileAccordionContent>
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
               {preventionStrategies.map((strategy, index) => (
-                <div key={index} className="border border-green-500/20 rounded-lg p-3 space-y-3">
+                <div key={index} className="space-y-3">
                   <div className="flex flex-col gap-2">
                     <div className="flex items-center gap-2">
                       {strategy.icon}
@@ -514,6 +524,8 @@ const PreventionTab = () => {
                       ))}
                     </ul>
                   </div>
+
+                  {index < preventionStrategies.length - 1 && <div className="border-t border-elec-yellow/10 pt-4"></div>}
                 </div>
               ))}
             </div>
@@ -527,7 +539,7 @@ const PreventionTab = () => {
           <MobileAccordionContent>
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
               {redFlags.map((flag, index) => (
-                <div key={index} className="border border-red-500/20 rounded-lg p-3 space-y-3">
+                <div key={index} className="space-y-3">
                   <div className="flex flex-col gap-2">
                     <div className="flex items-center justify-between">
                       <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{flag.warning}</h4>
@@ -541,6 +553,8 @@ const PreventionTab = () => {
                     <h5 className={`font-medium text-red-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Recommended Action</h5>
                     <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-red-200`}>{flag.action}</p>
                   </div>
+
+                  {index < redFlags.length - 1 && <div className="border-t border-elec-yellow/10 pt-4"></div>}
                 </div>
               ))}
             </div>
