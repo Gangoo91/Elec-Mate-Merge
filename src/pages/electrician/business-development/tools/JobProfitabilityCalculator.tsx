@@ -649,23 +649,6 @@ const JobProfitabilityCalculator = () => {
                      </>
                    )}
 
-                   {/* Export Button */}
-                  <div className="flex justify-center pt-4">
-                    <Button 
-                      variant="outline"
-                      className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
-                      onClick={() => {
-                        toast({
-                          title: "Export Feature",
-                          description: "PDF export functionality coming soon!",
-                          variant: "default"
-                        });
-                      }}
-                    >
-                      <Download className="h-4 w-4 mr-2" />
-                      Export PDF
-                    </Button>
-                  </div>
                 </>
               )}
             </CardContent>
