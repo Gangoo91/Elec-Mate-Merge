@@ -105,21 +105,21 @@ const BusinessDevelopment = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {calculators.map((calculator) => {
             const IconComponent = calculator.icon;
             
             return (
               <Card 
                 key={calculator.id}
-                className={`border-elec-yellow/20 bg-elec-gray !bg-elec-gray h-full hover:bg-elec-gray/80 transition-colors cursor-pointer flex flex-col justify-center items-center py-8 ${
+                className={`border-elec-yellow/20 bg-elec-gray !bg-elec-gray h-full hover:bg-elec-gray/80 transition-colors cursor-pointer flex flex-col justify-center items-center py-4 ${
                   calculator.status === "coming-soon" ? "opacity-75" : ""
                 }`}
                 onClick={() => handleCalculatorClick(calculator.id, calculator.status)}
               >
                 <CardHeader className="text-center pb-0 pt-0">
                   <div className="flex flex-col items-center justify-center gap-4">
-                    <IconComponent className="h-12 w-12 text-elec-yellow mb-2" />
+                    <IconComponent className="h-8 w-8 text-elec-yellow mb-2" />
                     <CardTitle className="text-xl font-bold">{calculator.title}</CardTitle>
                   </div>
                 </CardHeader>
