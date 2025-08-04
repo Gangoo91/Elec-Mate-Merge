@@ -20,13 +20,6 @@ const BusinessDevelopment = () => {
 
   const calculators = [
     {
-      id: "customer-acquisition",
-      title: "Customer Acquisition",
-      description: "Strategies and tools for finding and securing new customers",
-      icon: Handshake,
-      status: "available"
-    },
-    {
       id: "tax-finances",
       title: "Tax & Finances",
       description: "Tax planning tools and financial management resources",

@@ -39,7 +39,6 @@ import HourlyRateCalculator from "@/components/electrician/business-development/
 import CashFlowProjector from "@/components/electrician/business-development/CashFlowProjector";
 import BreakEvenCalculator from "@/components/electrician/business-development/BreakEvenCalculator";
 import BusinessCostCalculator from "@/components/electrician/business-development/startup/BusinessCostCalculator";
-import CustomerAcquisitionCalculator from "@/components/electrician/business-development/CustomerAcquisitionCalculator";
 import TaxFinancesCalculator from "@/components/electrician/business-development/TaxFinancesCalculator";
 import DebtRecoveryCalculator from "@/components/electrician/business-development/DebtRecoveryCalculator";
 
@@ -83,7 +82,6 @@ const ElectricianRoutes = () => (
     <Route path="business-development/cash-flow" element={<CashFlowProjector />} />
     <Route path="business-development/break-even" element={<BreakEvenCalculator />} />
     <Route path="business-development/business-costs" element={<BusinessCostCalculator />} />
-    <Route path="business-development/customer-acquisition" element={<CustomerAcquisitionCalculator />} />
     <Route path="business-development/tax-finances" element={<TaxFinancesCalculator />} />
     <Route path="business-development/debt-recovery" element={<DebtRecoveryCalculator />} />
   </Routes>
