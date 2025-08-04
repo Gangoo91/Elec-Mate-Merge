@@ -9,36 +9,31 @@ import {
   MobileAccordionTrigger 
 } from "@/components/ui/mobile-accordion";
 import { 
-  Shield, 
   AlertTriangle, 
-  Heart, 
-  Home,
-  Calculator,
-  Users,
-  Building2,
-  Receipt,
-  FileText,
-  Clock,
-  CheckCircle2,
-  Target,
+  Clock, 
+  Calendar, 
+  Calculator, 
+  FileText, 
+  Shield,
   TrendingUp,
   PiggyBank,
-  Briefcase,
-  Phone,
-  Globe,
   BookOpen,
-  Map,
-  Network,
-  GraduationCap,
+  Target,
+  CheckCircle2,
+  Briefcase,
+  Receipt,
+  Building2,
+  Users,
   CreditCard,
+  Globe,
+  GraduationCap,
   Lightbulb,
-  Car,
-  Wrench,
-  Zap
+  Map,
+  Network
 } from "lucide-react";
 
 const InsuranceProtectionTab = () => {
-  const insuranceMetrics = [
+  const taxMetrics = [
     {
       metric: "Tax Efficiency Threshold",
       data: "£50,000",
@@ -65,266 +60,267 @@ const InsuranceProtectionTab = () => {
     }
   ];
 
-  const insuranceSections = [
+  const taxSections = [
     {
-      title: "Essential Insurance Coverage",
-      icon: <Shield className="h-5 w-5 text-purple-400" />,
+      title: "Business Structure Analysis",
+      icon: <Building2 className="h-5 w-5 text-purple-400" />,
       theme: "purple",
       cards: [
         {
-          title: "Public Liability Insurance",
+          title: "Strategy Overview",
           color: "purple",
-          icon: <Shield className="h-4 w-4" />,
-          content: "Essential protection against third-party injury or property damage claims. £1-6 million coverage typical. Most clients require minimum £2 million. Covers legal costs and compensation. Annual premiums £150-500 depending on turnover and risk level."
+          icon: <Target className="h-4 w-4" />,
+          content: "Choose the optimal business structure for your electrical contracting business. Consider liability protection, tax efficiency, administrative burden, and growth plans when selecting between sole trader, partnership, or limited company status."
         },
         {
-          title: "Professional Indemnity",
-          color: "blue", 
-          icon: <AlertTriangle className="h-4 w-4" />,
-          content: "Covers claims from professional advice, design errors, or negligent services. £250k-£2 million coverage. Essential for consultancy work, design services, and project management. Protects against financial losses to clients from your professional mistakes."
+          title: "Implementation Timeline",
+          color: "blue",
+          icon: <Clock className="h-4 w-4" />,
+          content: "Research options (Month 1), consult accountant and solicitor (Month 2), register new structure (Month 3), transfer business assets and contracts (Month 4), update all business documentation and banking arrangements."
         },
         {
-          title: "Employer's Liability",
+          title: "Business Benefits",
           color: "green",
-          icon: <Users className="h-4 w-4" />,
-          content: "Legally required if employing staff, including apprentices and part-time workers. Minimum £10 million coverage. Covers employee injury claims and workplace accidents. Fines up to £2,500 per day without valid cover."
+          icon: <TrendingUp className="h-4 w-4" />,
+          content: "Limited companies offer liability protection, potential tax savings above £50k profit, enhanced credibility with larger clients, easier access to business finance, and clearer succession planning options."
         },
         {
-          title: "Tools & Equipment Cover",
+          title: "Key Requirements",
           color: "orange",
-          icon: <Wrench className="h-4 w-4" />,
-          content: "Protects valuable tools and test equipment against theft, damage, or loss. Coverage at home, in van, or on-site. Consider new-for-old replacement and temporary hire costs. Essential for expensive testing equipment like PAT testers and installation testers."
+          icon: <CheckCircle2 className="h-4 w-4" />,
+          content: "Companies House registration, separate business bank account, director responsibilities compliance, annual accounts filing, corporation tax returns, payroll setup for director salary."
         },
         {
-          title: "Motor Insurance Enhancement",
+          title: "Tax Considerations",
           color: "yellow",
-          icon: <Car className="h-4 w-4" />,
-          content: "Commercial vehicle insurance with goods in transit cover. Business use classification essential. Tools cover while in vehicle. Breakdown and recovery services. Consider hired-in plant and equipment coverage for larger jobs."
+          icon: <Calculator className="h-4 w-4" />,
+          content: "Corporation tax vs income tax rates, salary vs dividend optimization, National Insurance savings, VAT implications, business expense allowances, and timing of income recognition strategies."
         },
         {
-          title: "Contract Works Insurance",
+          title: "Success Metrics",
           color: "red",
-          icon: <Building2 className="h-4 w-4" />,
-          content: "Covers damage to work in progress and materials on-site. Required for larger projects. Protects against fire, theft, vandalism, and weather damage. Often client-required for contracts over £50,000 value."
+          icon: <Target className="h-4 w-4" />,
+          content: "Measure annual tax savings achieved, compliance costs vs savings, time efficiency in administration, client perception improvements, and access to new business opportunities."
         }
       ]
     },
     {
-      title: "Business Protection Strategies",
-      icon: <Heart className="h-5 w-5 text-blue-400" />,
+      title: "Website Development & SEO",
+      icon: <Globe className="h-5 w-5 text-blue-400" />,
       theme: "blue",
       cards: [
         {
-          title: "Income Protection Insurance",
+          title: "Strategy Overview",
           color: "purple",
-          icon: <PiggyBank className="h-4 w-4" />,
-          content: "Replaces 50-70% of income if unable to work due to illness or injury. Short-term and long-term options available. Tax-deductible premiums for business policies. Essential for sole traders with no sick pay provision."
+          icon: <Target className="h-4 w-4" />,
+          content: "Build a professional, SEO-optimised website that ranks locally and converts visitors to customers."
         },
         {
-          title: "Critical Illness Cover",
+          title: "Implementation Timeline",
           color: "blue",
-          icon: <Heart className="h-4 w-4" />,
-          content: "Lump sum payment upon diagnosis of serious illnesses like cancer, heart attack, stroke. Can pay off business debts or provide living expenses. Separate from life insurance. Premiums vary by age and health status."
+          icon: <Clock className="h-4 w-4" />,
+          content: "• Week 1-2: Website design & development\n• Week 3: Content creation & SEO optimisation\n• Week 4: Testing & launch\n• Ongoing: Content updates & SEO maintenance"
         },
         {
-          title: "Business Interruption",
+          title: "Business Benefits",
           color: "green",
           icon: <TrendingUp className="h-4 w-4" />,
-          content: "Compensates for lost income during business disruption from fire, flood, or other covered events. Includes ongoing business expenses during recovery. Important for workshop-based electrical businesses with premises."
+          content: "Increased online visibility, professional credibility, 24/7 lead generation, competitive advantage, and cost-effective marketing that works while you sleep."
         },
         {
-          title: "Key Person Insurance",
+          title: "Key Requirements",
           color: "orange",
-          icon: <Target className="h-4 w-4" />,
-          content: "Protects business against financial loss from death or incapacity of key individuals. Particularly important for partnerships or businesses dependent on specific technical expertise or client relationships."
+          icon: <CheckCircle2 className="h-4 w-4" />,
+          content: "Professional web design, mobile-responsive layout, local SEO optimization, Google My Business setup, customer testimonials, and clear contact information."
         },
         {
-          title: "Product Liability",
+          title: "Technical Specifications",
           color: "yellow",
-          icon: <Zap className="h-4 w-4" />,
-          content: "Covers claims arising from defective electrical products or installations causing injury or damage. Important for contractors doing design work or specifying equipment. Extended cover for completed operations."
+          icon: <Globe className="h-4 w-4" />,
+          content: "Fast loading times (<3 seconds), SSL certificate, mobile-first design, local search optimization, contact forms, and integration with booking systems."
         },
         {
-          title: "Cyber Liability",
+          title: "Performance Tracking",
           color: "red",
-          icon: <Globe className="h-4 w-4" />,
-          content: "Protection against data breaches, cyber attacks, and digital business interruption. Increasingly important as electrical work becomes more connected and smart. Covers client data protection failures and business system downtime."
+          icon: <Target className="h-4 w-4" />,
+          content: "Monitor website traffic, local search rankings, lead conversion rates, page loading speeds, and return on marketing investment through analytics tools."
         }
       ]
     },
     {
-      title: "Cost Management & Savings",
-      icon: <Calculator className="h-5 w-5 text-green-400" />,
+      title: "Business Fundamentals",
+      icon: <BookOpen className="h-5 w-5 text-green-400" />,
       theme: "green",
       cards: [
         {
-          title: "Insurance Cost Benchmarks",
+          title: "Legal Requirements",
           color: "purple",
-          icon: <Calculator className="h-4 w-4" />,
-          content: "Public Liability: £150-500 annually. Professional Indemnity: £200-800. Combined liability: £400-1,200. Tool insurance: 2-5% of tool value annually. Total business insurance: typically £800-2,500 for comprehensive coverage."
+          icon: <Shield className="h-4 w-4" />,
+          content: "Part P compliance, Building Regulations notification, public liability insurance, electrical installation certificates, and professional indemnity cover for design work."
         },
         {
-          title: "Bundle Policies Strategy",
+          title: "Qualification Standards",
           color: "blue",
-          icon: <Target className="h-4 w-4" />,
-          content: "Combine multiple policies with one insurer for significant discounts. Business packages often include public liability, professional indemnity, and employer's liability. Can save 15-30% compared to separate policies."
+          icon: <GraduationCap className="h-4 w-4" />,
+          content: "18th Edition BS7671 qualification, inspection and testing certification, Part P registration with approved scheme, and ongoing CPD requirements for maintaining competency."
         },
         {
-          title: "Risk Reduction Benefits",
+          title: "Insurance Essentials",
           color: "green",
-          icon: <CheckCircle2 className="h-4 w-4" />,
-          content: "NICEIC/NAPIT membership often provides insurance discounts. Health & safety training reduces premiums. Clean claims history maintains low rates. Risk assessments and safety procedures demonstrate good practice to insurers."
+          icon: <Shield className="h-4 w-4" />,
+          content: "Public liability (£2m minimum), professional indemnity (£250k-£2m), employer liability if staff employed, tool insurance, and business interruption cover."
         },
         {
-          title: "Excess Management",
+          title: "Financial Planning",
           color: "orange",
-          icon: <Receipt className="h-4 w-4" />,
-          content: "Higher excess reduces premiums but increases out-of-pocket costs for claims. Typical excess: £250-1,000 for general claims, £100-500 for tools. Balance excess level against potential claim frequency and business cash flow."
+          icon: <Calculator className="h-4 w-4" />,
+          content: "Cash flow forecasting, emergency fund (3-6 months expenses), equipment replacement planning, tax planning strategies, and pension contribution optimization."
         },
         {
-          title: "Annual Review Process",
+          title: "Quality Standards",
           color: "yellow",
-          icon: <Clock className="h-4 w-4" />,
-          content: "Review all policies annually before renewal. Compare quotes from multiple insurers. Update coverage levels for business growth. Remove unnecessary covers and add new protections as business evolves."
+          icon: <Target className="h-4 w-4" />,
+          content: "NICEIC or NAPIT membership, regular inspection and testing procedures, customer satisfaction monitoring, and continuous professional development tracking."
         },
         {
-          title: "Tax Efficiency",
+          title: "Growth Planning",
           color: "red",
-          icon: <FileText className="h-4 w-4" />,
-          content: "Business insurance premiums are fully tax-deductible expenses. Personal insurance through business may be more tax-efficient. Consider gross vs net cost when evaluating policies. Plan premium payments for optimal cash flow."
+          icon: <TrendingUp className="h-4 w-4" />,
+          content: "Market analysis and expansion opportunities, staff recruitment planning, equipment investment strategies, and business structure optimization for tax efficiency."
         }
       ]
     },
     {
-      title: "Compliance & Legal Requirements",
-      icon: <FileText className="h-5 w-5 text-orange-400" />,
+      title: "Financial Management",
+      icon: <Calculator className="h-5 w-5 text-orange-400" />,
       theme: "orange",
       cards: [
         {
-          title: "Legal Requirements Overview",
+          title: "Cash Flow Control",
           color: "purple",
-          icon: <BookOpen className="h-4 w-4" />,
-          content: "Employer's Liability: Compulsory if employing anyone. Motor Insurance: Legal requirement for business vehicles. Professional standards: NICEIC/NAPIT may require specific coverage levels. Client contracts often mandate minimum insurance levels."
+          icon: <TrendingUp className="h-4 w-4" />,
+          content: "Implement 30-day payment terms, track outstanding invoices weekly, maintain 3-month operating expense buffer, and plan for seasonal variations in electrical work demand."
         },
         {
-          title: "Documentation Requirements",
+          title: "Expense Management",
           color: "blue",
-          icon: <FileText className="h-4 w-4" />,
-          content: "Maintain current certificates and policy documents. Provide insurance evidence to clients before starting work. Display Employer's Liability certificate if employing staff. Keep digital and physical copies accessible."
+          icon: <Receipt className="h-4 w-4" />,
+          content: "Track all business expenses using digital receipts, categorize for tax purposes, monitor tool and equipment depreciation, and plan major purchases for optimal tax relief."
         },
         {
-          title: "Claims Procedures",
+          title: "Pricing Strategy",
           color: "green",
-          icon: <Phone className="h-4 w-4" />,
-          content: "Report claims immediately - most policies require notification within 7-30 days. Don't admit liability at incident scene. Take photos and collect witness details. Cooperate fully with insurer investigations. Keep detailed incident records."
+          icon: <Calculator className="h-4 w-4" />,
+          content: "Calculate hourly rates including all business costs, factor in profit margins, understand market rates, price different services appropriately, and review pricing annually."
         },
         {
-          title: "Policy Terms Understanding",
+          title: "Tax Optimization",
           color: "orange",
-          icon: <AlertTriangle className="h-4 w-4" />,
-          content: "Read policy exclusions carefully. Understand territorial limits (usually UK only unless specified). Check policy periods and renewal dates. Understand notice periods for changes or cancellation. Be aware of warranty requirements."
+          icon: <FileText className="h-4 w-4" />,
+          content: "Maximize business expense claims, plan equipment purchases for tax allowances, consider incorporation timing, optimize salary vs dividend strategy for limited companies."
         },
         {
-          title: "Professional Standards",
+          title: "Investment Planning",
           color: "yellow",
-          icon: <CheckCircle2 className="h-4 w-4" />,
-          content: "NICEIC requires minimum £2m public liability, £250k professional indemnity. NAPIT has similar requirements. Some local authorities require higher limits for approved contractor status. Major clients often mandate £5m+ coverage."
+          icon: <PiggyBank className="h-4 w-4" />,
+          content: "Plan for equipment upgrades, invest in efficiency tools, consider electric vehicle benefits, and build reserves for business expansion opportunities."
         },
         {
-          title: "Breach Consequences",
+          title: "Performance Metrics",
           color: "red",
-          icon: <AlertTriangle className="h-4 w-4" />,
-          content: "Uninsured work can void professional membership. Personal liability for uninsured claims. Inability to bid for larger contracts. Potential prosecution for employer's liability breaches. Reputation damage in tight-knit electrical industry."
+          icon: <Target className="h-4 w-4" />,
+          content: "Track profit margins by job type, monitor cash flow cycles, analyze customer payment patterns, and measure return on equipment investments."
         }
       ]
     },
     {
-      title: "Specialist Insurance Areas",
-      icon: <Lightbulb className="h-5 w-5 text-yellow-400" />,
+      title: "Client Relations",
+      icon: <Users className="h-5 w-5 text-yellow-400" />,
       theme: "yellow",
       cards: [
         {
-          title: "Renewable Energy Work",
+          title: "Customer Acquisition",
           color: "purple",
-          icon: <Zap className="h-4 w-4" />,
-          content: "Solar panel installations require extended professional indemnity for design work. Product liability for specified equipment. Extended warranty periods up to 25 years. Higher coverage limits for large commercial installations."
+          icon: <Target className="h-4 w-4" />,
+          content: "Develop referral programs, maintain online presence, join local business networks, offer emergency call-out services, and build relationships with property developers."
         },
         {
-          title: "Smart Home & Automation",
+          title: "Service Excellence",
           color: "blue",
-          icon: <Home className="h-4 w-4" />,
-          content: "Cyber liability for connected systems. Extended professional indemnity for system design. Product liability for integrated solutions. Data protection insurance for customer information handling in smart systems."
+          icon: <Target className="h-4 w-4" />,
+          content: "Arrive on time, provide clear quotes, explain work clearly, clean up thoroughly, follow up after completion, and exceed customer expectations consistently."
         },
         {
-          title: "Emergency Callout Services",
+          title: "Communication Systems",
           color: "green",
-          icon: <Phone className="h-4 w-4" />,
-          content: "24/7 public liability cover. Enhanced motor insurance for emergency response. Key holder insurance if holding client keys. Increased professional indemnity for urgent diagnostic work. Consider call-out specific policies."
+          icon: <Globe className="h-4 w-4" />,
+          content: "Professional phone manner, prompt email responses, clear written quotes, progress updates during work, and systematic follow-up procedures."
         },
         {
-          title: "Commercial & Industrial",
+          title: "Complaint Resolution",
           color: "orange",
-          icon: <Building2 className="h-4 w-4" />,
-          content: "Higher coverage limits for large commercial work. Contract works insurance for major projects. Plant and equipment hire coverage. Extended professional indemnity for design and specification work. Pollution liability for industrial sites."
+          icon: <AlertTriangle className="h-4 w-4" />,
+          content: "Listen actively to concerns, respond quickly to issues, offer appropriate remedies, document all interactions, and learn from feedback to improve services."
         },
         {
-          title: "Training & Assessment",
+          title: "Repeat Business",
           color: "yellow",
-          icon: <GraduationCap className="h-4 w-4" />,
-          content: "Professional indemnity for training delivery. Public liability for training venues. Equipment insurance for portable training equipment. Employer's liability if employing training staff. Student injury coverage for practical training."
+          icon: <TrendingUp className="h-4 w-4" />,
+          content: "Maintain customer database, schedule regular maintenance contacts, offer service plans, provide seasonal reminders, and incentivize referrals."
         },
         {
-          title: "Electrical Testing Services",
+          title: "Customer Feedback",
           color: "red",
-          icon: <CheckCircle2 className="h-4 w-4" />,
-          content: "Enhanced professional indemnity for test reports and certification. Errors & omissions cover for PAT testing. Equipment insurance for expensive test instruments. Retrospective cover for historical test work. Calibration insurance for test equipment."
+          icon: <Target className="h-4 w-4" />,
+          content: "Request reviews and testimonials, monitor online reputation, respond to feedback professionally, and use insights to improve service delivery."
         }
       ]
     },
     {
-      title: "Resources & Professional Support",
-      icon: <Network className="h-5 w-5 text-red-400" />,
+      title: "Technical Excellence",
+      icon: <Lightbulb className="h-5 w-5 text-red-400" />,
       theme: "red",
       cards: [
         {
-          title: "Industry Associations",
+          title: "Current Regulations",
           color: "purple",
-          icon: <Network className="h-4 w-4" />,
-          content: "NICEIC and NAPIT offer member insurance schemes with preferential rates. ECA provides insurance guidance and group schemes. SELECT (Scotland) offers member benefits. Federation of Small Businesses provides business insurance advice."
-        },
-        {
-          title: "Insurance Brokers",
-          color: "blue",
-          icon: <Briefcase className="h-4 w-4" />,
-          content: "Specialist construction insurance brokers understand electrical trade risks. Can access Lloyd's market for complex risks. Provide annual reviews and claims support. Help with risk assessments and loss prevention advice."
-        },
-        {
-          title: "Legal Support Services",
-          color: "green",
           icon: <BookOpen className="h-4 w-4" />,
-          content: "Many insurance policies include legal helplines. Professional association legal support services. Employment law advice for staff issues. Contract review services for major projects. Dispute resolution support."
+          content: "Stay current with BS7671 18th Edition, understand Building Regulations Part P, follow IET guidance notes, and maintain awareness of upcoming regulation changes."
         },
         {
-          title: "Claims Support",
+          title: "Testing Procedures",
+          color: "blue",
+          icon: <CheckCircle2 className="h-4 w-4" />,
+          content: "Proper use of testing equipment, accurate completion of certificates, understanding test results, maintaining calibrated instruments, and following safety procedures."
+        },
+        {
+          title: "Installation Standards",
+          color: "green",
+          icon: <Lightbulb className="h-4 w-4" />,
+          content: "Cable selection and routing, proper earthing systems, RCD protection requirements, consumer unit installation, and compliance with environmental conditions."
+        },
+        {
+          title: "Safety Protocols",
           color: "orange",
-          icon: <Phone className="h-4 w-4" />,
-          content: "24/7 claims reporting lines. Online claims portals for easy submission. Loss adjusters for complex claims. Legal representation for disputed claims. Rehabilitation support for injury claims. Emergency repair services."
+          icon: <Shield className="h-4 w-4" />,
+          content: "Safe isolation procedures, voltage testing, permit to work systems, personal protective equipment, and emergency response procedures."
         },
         {
-          title: "Risk Management",
+          title: "Continuous Learning",
           color: "yellow",
-          icon: <Target className="h-4 w-4" />,
-          content: "Free risk assessments from insurers. Health & safety training discounts. Equipment security advice. Business continuity planning support. Accident prevention guidance. Regular risk review meetings."
+          icon: <GraduationCap className="h-4 w-4" />,
+          content: "Attend technical seminars, read industry publications, participate in manufacturer training, network with peers, and maintain competency records."
         },
         {
-          title: "Emergency Contacts",
+          title: "Quality Assurance",
           color: "red",
-          icon: <AlertTriangle className="h-4 w-4" />,
-          content: "Insurer claims hotlines available 24/7. NICEIC technical helpline: 0333 015 6626. NAPIT support: 0370 444 1392. HSE incident reporting: 0345 300 9923. Emergency electrical supply: Local DNO numbers. Legal advice hotlines through policies."
+          icon: <Target className="h-4 w-4" />,
+          content: "Self-inspection procedures, photograph completed work, maintain detailed records, handle warranty issues promptly, and continuously improve standards."
         }
       ]
     }
   ];
+
 
   const getCardClasses = (color: string) => {
     const colors = {
@@ -355,56 +351,56 @@ const InsuranceProtectionTab = () => {
       <Alert className="border-purple-400/50 bg-purple-400/10">
         <AlertTriangle className="h-4 w-4 text-purple-400" />
         <AlertDescription className="text-purple-400">
-          <strong>Important Insurance Disclaimer:</strong> This guidance is for general information only and does not constitute professional insurance advice. Always consult with qualified insurance advisors and read policy terms carefully before making coverage decisions.
+          Understanding business structure and tax implications can save thousands 
+          in tax and protect your personal assets. Review annually as your business grows.
         </AlertDescription>
       </Alert>
 
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        {insuranceMetrics.map((metric, index) => (
-          <Card key={index} className="border-elec-yellow/20 bg-elec-gray">
-            <CardContent className="p-4">
+      {/* Metrics Grid */}
+      <div className="grid grid-cols-2 gap-3 md:gap-4">
+        {taxMetrics.map((item, index) => (
+          <Card key={index} className="bg-elec-card/80 border-elec-border">
+            <CardContent className="p-3 md:p-4">
               <div className="flex items-center gap-2 mb-2">
-                {metric.icon}
-                <span className="text-xs text-muted-foreground leading-tight">{metric.metric}</span>
+                {item.icon}
+                <h3 className="font-medium text-xs md:text-sm text-white leading-tight">{item.metric}</h3>
               </div>
-              <div className="text-lg font-bold text-elec-yellow">{metric.data}</div>
-              <div className="text-xs text-muted-foreground mt-1 leading-tight">{metric.detail}</div>
+              <div className="space-y-1">
+                <p className="text-lg md:text-xl font-bold text-white">{item.data}</p>
+                <p className="text-xs text-muted-foreground">{item.detail}</p>
+              </div>
             </CardContent>
           </Card>
         ))}
       </div>
 
       <MobileAccordion type="single" collapsible className="space-y-4">
-        {insuranceSections.map((section, index) => (
-          <MobileAccordionItem key={index} value={`section-${index}`}>
-            <MobileAccordionTrigger icon={section.icon} className="text-white">
-              {section.title}
+        {taxSections.map((section, index) => (
+          <MobileAccordionItem key={index} value={section.title} className="border border-elec-border rounded-lg bg-elec-card/50">
+            <MobileAccordionTrigger 
+              icon={section.icon}
+              className="px-4 py-3 text-white hover:text-white/80"
+            >
+              <span className="text-base font-medium">{section.title}</span>
             </MobileAccordionTrigger>
-            <MobileAccordionContent>
-              <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-                <div className="grid gap-4">
-                  {section.cards.map((card, cardIndex) => (
-                    <Card key={cardIndex} className={`${getCardClasses(card.color)} border-elec-yellow/20`}>
-                      <CardContent className="p-4">
-                        <div className="flex items-start gap-3 mb-3">
-                          <div className={`p-2 rounded-lg bg-${card.color}-500/10 shrink-0`}>
-                            <div className={getCardIconClasses(card.color)}>
-                              {card.icon}
-                            </div>
-                          </div>
-                          <div className="flex-1 min-w-0">
-                            <h4 className="font-semibold text-white text-sm leading-tight mb-2">
-                              {card.title}
-                            </h4>
-                            <p className="text-xs text-muted-foreground leading-relaxed">
-                              {card.content}
-                            </p>
-                          </div>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  ))}
-                </div>
+            <MobileAccordionContent className="px-4 pb-4">
+              <div className="grid gap-4 mt-4">
+                {section.cards.map((card, cardIndex) => (
+                  <div
+                    key={cardIndex}
+                    className={`p-4 rounded-lg ${getCardClasses(card.color)}`}
+                  >
+                    <div className="flex items-start gap-3">
+                      <div className={`mt-0.5 ${getCardIconClasses(card.color)}`}>
+                        {card.icon}
+                      </div>
+                      <div className="space-y-2 flex-1">
+                        <h4 className="font-medium text-white text-sm">{card.title}</h4>
+                        <p className="text-sm text-gray-300 leading-relaxed">{card.content}</p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
             </MobileAccordionContent>
           </MobileAccordionItem>
