@@ -659,69 +659,139 @@ const ProtectionTab = () => {
           </MobileAccordionContent>
         </MobileAccordionItem>
 
-        <MobileAccordionItem value="industry-partnerships">
-          <MobileAccordionTrigger icon={<Globe className="h-5 w-5 text-green-400" />}>
-            Industry Partnerships & Professional Networks
+        <MobileAccordionItem value="credit-protection">
+          <MobileAccordionTrigger icon={<Lock className="h-5 w-5 text-purple-400" />}>
+            Credit Protection & Payment Security Systems
           </MobileAccordionTrigger>
           <MobileAccordionContent>
-            {industryPartnerships.map((partnership, index) => (
-              <div key={index} className="border border-green-500/20 rounded-lg p-3 space-y-3">
+            {[
+              {
+                system: "Payment Milestone Protection",
+                description: "Structure contracts to minimise exposure through staged payments",
+                protections: [
+                  "Maximum 30% upfront payment with materials on first milestone",
+                  "Progress payments tied to measurable completion stages",
+                  "Final payment retained until practical completion and testing",
+                  "Retention clauses for warranty periods",
+                  "Stop work clauses if payments become overdue",
+                  "Clear variation order procedures with advance payment"
+                ],
+                riskReduction: "Limits maximum exposure to 30-50% of contract value"
+              },
+              {
+                system: "Client Financial Health Monitoring",
+                description: "Ongoing monitoring of client financial status throughout projects",
+                protections: [
+                  "Monthly credit report checks during long projects",
+                  "Bank reference verification before large contracts",
+                  "Company House filings monitoring for financial changes",
+                  "Payment behaviour tracking across industry networks",
+                  "Early warning alerts for deteriorating credit scores",
+                  "Director guarantees for limited company clients"
+                ],
+                riskReduction: "85% early detection of potential payment problems"
+              },
+              {
+                system: "Retention of Title Protection",
+                description: "Legal protection for materials and equipment supplied",
+                protections: [
+                  "Clear retention of title clauses in all contracts",
+                  "Detailed materials tracking and identification systems",
+                  "Secure storage arrangements on client premises",
+                  "Regular inventory checks and photographic records",
+                  "Swift recovery procedures for unpaid materials",
+                  "Insurance coverage for materials until payment received"
+                ],
+                riskReduction: "Recovery of 60-90% of unpaid material costs"
+              }
+            ].map((system, index) => (
+              <div key={index} className="border border-purple-500/20 rounded-lg p-3 space-y-3">
                 <div className="flex flex-col gap-2">
-                  <div className="flex items-center justify-between">
-                    <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{partnership.partnership}</h4>
-                    <Badge variant="outline" className={`text-green-300 border-green-400/30 ${isMobile ? 'text-xs' : 'text-sm'}`}>
-                      {partnership.networkSize}
-                    </Badge>
-                  </div>
-                  <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{partnership.description}</p>
+                  <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{system.system}</h4>
+                  <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{system.description}</p>
                 </div>
 
                 <div>
-                  <h5 className={`font-medium text-green-300 mb-2 ${isMobile ? 'text-xs' : 'text-sm'}`}>Protection Benefits</h5>
+                  <h5 className={`font-medium text-purple-300 mb-2 ${isMobile ? 'text-xs' : 'text-sm'}`}>Protection Measures</h5>
                   <ul className="space-y-1">
-                    {partnership.protectionBenefits.map((benefit, benefitIndex) => (
-                      <li key={benefitIndex} className={`${isMobile ? 'text-xs' : 'text-sm'} text-green-200 flex items-start gap-1`}>
+                    {system.protections.map((protection, protectionIndex) => (
+                      <li key={protectionIndex} className={`${isMobile ? 'text-xs' : 'text-sm'} text-purple-200 flex items-start gap-1`}>
                         <CheckCircle className="h-3 w-3 text-green-400 flex-shrink-0 mt-1" />
-                        {benefit}
+                        {protection}
                       </li>
                     ))}
                   </ul>
                 </div>
 
-                <div className="bg-green-500/10 border border-green-500/30 rounded p-3 space-y-2">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                    <div>
-                      <h5 className={`font-medium text-green-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Membership Cost</h5>
-                      <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-green-200`}>{partnership.membershipCost}</p>
-                    </div>
-                    <div>
-                      <h5 className={`font-medium text-green-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Additional Services</h5>
-                      <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-green-200`}>{partnership.additionalServices}</p>
-                    </div>
-                  </div>
+                <div className="bg-purple-500/10 border border-purple-500/30 rounded p-2">
+                  <h5 className={`font-medium text-purple-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Risk Reduction</h5>
+                  <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-purple-200`}>{system.riskReduction}</p>
                 </div>
               </div>
             ))}
           </MobileAccordionContent>
         </MobileAccordionItem>
 
-        <MobileAccordionItem value="regulatory-compliance">
-          <MobileAccordionTrigger icon={<FileCheck className="h-5 w-5 text-purple-400" />}>
-            Regulatory Compliance & Legal Protection Framework
+        <MobileAccordionItem value="debt-prevention">
+          <MobileAccordionTrigger icon={<CreditCard className="h-5 w-5 text-green-400" />}>
+            Proactive Debt Prevention & Early Warning Systems
           </MobileAccordionTrigger>
           <MobileAccordionContent>
-            {regulatoryCompliance.map((regulation, index) => (
-              <div key={index} className="border border-purple-500/20 rounded-lg p-3 space-y-3">
+            {[
+              {
+                strategy: "Client Payment Behaviour Analysis",
+                description: "Track and analyse client payment patterns to predict risk",
+                measures: [
+                  "Detailed payment history database for all clients",
+                  "Average payment time tracking and trend analysis",
+                  "Seasonal payment pattern identification",
+                  "Client communication responsiveness scoring",
+                  "Project complexity vs payment reliability correlation",
+                  "Industry sector payment risk assessment"
+                ],
+                implementation: "Use spreadsheets or CRM systems to track payment data",
+                effectiveness: "Predicts 75% of payment problems before they occur"
+              },
+              {
+                strategy: "Financial Red Flag Monitoring",
+                description: "Systematic monitoring for early warning signs of financial distress",
+                measures: [
+                  "Delayed responses to communications and invoices",
+                  "Requests for extended payment terms without justification",
+                  "Increased complaints about work quality without basis",
+                  "Difficulty reaching decision makers or finance departments",
+                  "Changes in payment methods or banking arrangements",
+                  "Staff turnover or office downsizing at client premises"
+                ],
+                implementation: "Weekly client contact reviews and monthly financial health checks",
+                effectiveness: "Identifies 80% of at-risk clients 30-60 days in advance"
+              },
+              {
+                strategy: "Relationship-Based Protection",
+                description: "Build strong client relationships that encourage timely payment",
+                measures: [
+                  "Regular client check-ins and relationship building",
+                  "Transparent communication about project progress",
+                  "Quick resolution of any quality or service concerns",
+                  "Flexible payment solutions for temporarily struggling clients",
+                  "Long-term maintenance agreements and ongoing relationships",
+                  "Client education about electrical standards and compliance"
+                ],
+                implementation: "Structured client communication schedule and feedback systems",
+                effectiveness: "90% retention rate and 95% payment compliance from relationship clients"
+              }
+            ].map((strategy, index) => (
+              <div key={index} className="border border-green-500/20 rounded-lg p-3 space-y-3">
                 <div className="flex flex-col gap-2">
-                  <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{regulation.regulation}</h4>
-                  <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-purple-300 italic`}>{regulation.relevance}</p>
+                  <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{strategy.strategy}</h4>
+                  <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{strategy.description}</p>
                 </div>
 
                 <div>
-                  <h5 className={`font-medium text-purple-300 mb-2 ${isMobile ? 'text-xs' : 'text-sm'}`}>Essential Protection Measures</h5>
+                  <h5 className={`font-medium text-green-300 mb-2 ${isMobile ? 'text-xs' : 'text-sm'}`}>Key Measures</h5>
                   <ul className="space-y-1">
-                    {regulation.protectionMeasures.map((measure, measureIndex) => (
-                      <li key={measureIndex} className={`${isMobile ? 'text-xs' : 'text-sm'} text-purple-200 flex items-start gap-1`}>
+                    {strategy.measures.map((measure, measureIndex) => (
+                      <li key={measureIndex} className={`${isMobile ? 'text-xs' : 'text-sm'} text-green-200 flex items-start gap-1`}>
                         <CheckCircle className="h-3 w-3 text-green-400 flex-shrink-0 mt-1" />
                         {measure}
                       </li>
@@ -729,20 +799,14 @@ const ProtectionTab = () => {
                   </ul>
                 </div>
 
-                <div className="bg-purple-500/10 border border-purple-500/30 rounded p-3 space-y-2">
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
-                    <div>
-                      <h5 className={`font-medium text-purple-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Non-Compliance Penalties</h5>
-                      <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-red-300`}>{regulation.penalties}</p>
-                    </div>
-                    <div>
-                      <h5 className={`font-medium text-purple-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Compliance Investment</h5>
-                      <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-purple-200`}>{regulation.complianceCost}</p>
-                    </div>
-                    <div>
-                      <h5 className={`font-medium text-purple-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Risk Mitigation</h5>
-                      <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-purple-200`}>{regulation.riskMitigation}</p>
-                    </div>
+                <div className="bg-green-500/10 border border-green-500/30 rounded p-3 space-y-2">
+                  <div>
+                    <h5 className={`font-medium text-green-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Implementation</h5>
+                    <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-green-200`}>{strategy.implementation}</p>
+                  </div>
+                  <div>
+                    <h5 className={`font-medium text-green-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Effectiveness</h5>
+                    <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-green-200`}>{strategy.effectiveness}</p>
                   </div>
                 </div>
               </div>
