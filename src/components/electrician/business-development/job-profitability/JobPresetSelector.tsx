@@ -57,11 +57,8 @@ export function JobPresetSelector({ onPresetSelected }: JobPresetSelectorProps) 
 
         {selectedPresetData && (
           <div className="bg-elec-dark/50 rounded-lg p-4 space-y-3">
-            <div className="flex items-center justify-between">
+            <div className="text-center">
               <h4 className="text-white font-medium">{selectedPresetData.name}</h4>
-              <Badge variant="secondary" className="text-xs">
-                {selectedPresetData.category}
-              </Badge>
             </div>
             <p className="text-sm text-elec-light/70">{selectedPresetData.description}</p>
             
