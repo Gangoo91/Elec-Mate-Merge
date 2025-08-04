@@ -78,14 +78,12 @@ const BusinessCalculators = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {calculators.map((calculator) => {
-          const CardComponent = calculator.status === "available" ? Link : "div";
-          
-          return (
-            <CardComponent
+        {calculators.map((calculator) => (
+          calculator.status === "available" ? (
+            <Link
               key={calculator.id}
-              to={calculator.status === "available" ? `/electrician/business-development/tools/${calculator.id}` : undefined}
-              className={`block no-underline ${calculator.status === "coming-soon" ? "cursor-not-allowed opacity-60" : ""}`}
+              to={`/electrician/business-development/tools/${calculator.id}`}
+              className="block no-underline"
             >
               <Card className="border-elec-yellow/20 bg-elec-gray hover:bg-elec-gray/80 transition-all duration-300 group hover-scale">
                 <CardHeader className="text-center">
@@ -97,9 +95,25 @@ const BusinessCalculators = () => {
                   </CardTitle>
                 </CardHeader>
               </Card>
-            </CardComponent>
-          );
-        })}
+            </Link>
+          ) : (
+            <div
+              key={calculator.id}
+              className="cursor-not-allowed opacity-60"
+            >
+              <Card className="border-elec-yellow/20 bg-elec-gray">
+                <CardHeader className="text-center">
+                  <div className="mx-auto mb-4">
+                    {calculator.icon}
+                  </div>
+                  <CardTitle className="text-white text-lg">
+                    {calculator.title}
+                  </CardTitle>
+                </CardHeader>
+              </Card>
+            </div>
+          )
+        ))}
       </div>
     </div>
   );
