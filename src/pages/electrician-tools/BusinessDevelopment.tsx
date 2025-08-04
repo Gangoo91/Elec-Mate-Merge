@@ -100,7 +100,7 @@ const BusinessDevelopment = () => {
             return (
               <Card 
                 key={calculator.id}
-                className={`border-elec-yellow/20 bg-elec-gray h-full hover:bg-elec-gray/80 transition-colors cursor-pointer flex flex-col justify-center items-center py-8 ${
+                className={`border-elec-yellow/20 bg-elec-gray !bg-elec-gray h-full hover:bg-elec-gray/80 transition-colors cursor-pointer flex flex-col justify-center items-center py-8 ${
                   calculator.status === "coming-soon" ? "opacity-75" : ""
                 }`}
                 onClick={() => handleCalculatorClick(calculator.id, calculator.status)}
