@@ -12,11 +12,87 @@ export interface JobPreset {
 }
 
 export const jobTypePresets: JobPreset[] = [
-  // Domestic Work - New Build & Rewires
+  // Domestic Work - First Fix
+  {
+    id: "domestic-first-fix-2bed",
+    name: "First Fix - 2-3 Bed House",
+    category: "Domestic - First Fix",
+    description: "Cable installation and back boxes before plastering",
+    defaults: {
+      labourHours: 24,
+      hourlyRate: 45,
+      overheadPercentage: 20,
+      desiredProfitMargin: 25
+    }
+  },
+  {
+    id: "domestic-first-fix-4bed",
+    name: "First Fix - 4-5 Bed House",
+    category: "Domestic - First Fix",
+    description: "Cable installation for larger property first fix",
+    defaults: {
+      labourHours: 36,
+      hourlyRate: 45,
+      overheadPercentage: 20,
+      desiredProfitMargin: 25
+    }
+  },
+  {
+    id: "domestic-first-fix-extension",
+    name: "First Fix - Extension/New Build",
+    category: "Domestic - First Fix",
+    description: "First fix wiring for extension or new build",
+    defaults: {
+      labourHours: 16,
+      hourlyRate: 45,
+      overheadPercentage: 20,
+      desiredProfitMargin: 25
+    }
+  },
+  
+  // Domestic Work - Second Fix
+  {
+    id: "domestic-second-fix-2bed",
+    name: "Second Fix - 2-3 Bed House",
+    category: "Domestic - Second Fix",
+    description: "Final connections, fittings, and testing",
+    defaults: {
+      labourHours: 20,
+      hourlyRate: 45,
+      overheadPercentage: 20,
+      desiredProfitMargin: 25
+    }
+  },
+  {
+    id: "domestic-second-fix-4bed",
+    name: "Second Fix - 4-5 Bed House", 
+    category: "Domestic - Second Fix",
+    description: "Second fix for larger property including testing",
+    defaults: {
+      labourHours: 30,
+      hourlyRate: 45,
+      overheadPercentage: 20,
+      desiredProfitMargin: 25
+    }
+  },
+  {
+    id: "domestic-second-fix-extension",
+    name: "Second Fix - Extension/New Build",
+    category: "Domestic - Second Fix", 
+    description: "Second fix for extension including testing and certification",
+    defaults: {
+      labourHours: 12,
+      hourlyRate: 45,
+      overheadPercentage: 20,
+      desiredProfitMargin: 25
+    }
+  },
+
+  // Domestic Work - Complete Rewires
   {
     id: "domestic-full-rewire-2bed",
     name: "Full House Rewire (2-3 Bed)",
-    category: "Domestic",
+    category: "Domestic - Complete Rewires",
     description: "Complete rewire including CU, circuits, and testing",
     defaults: {
       labourHours: 40,
@@ -28,22 +104,10 @@ export const jobTypePresets: JobPreset[] = [
   {
     id: "domestic-full-rewire-4bed",
     name: "Full House Rewire (4-5 Bed)",
-    category: "Domestic",
+    category: "Domestic - Complete Rewires",
     description: "Complete rewire for larger property including CU upgrade",
     defaults: {
       labourHours: 60,
-      hourlyRate: 45,
-      overheadPercentage: 20,
-      desiredProfitMargin: 25
-    }
-  },
-  {
-    id: "domestic-first-fix",
-    name: "First Fix Wiring",
-    category: "Domestic",
-    description: "Cable installation and back boxes before plastering",
-    defaults: {
-      labourHours: 24,
       hourlyRate: 45,
       overheadPercentage: 20,
       desiredProfitMargin: 25

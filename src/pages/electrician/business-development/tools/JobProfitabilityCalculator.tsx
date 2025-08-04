@@ -535,20 +535,20 @@ const JobProfitabilityCalculator = () => {
                     </h4>
                     <div className="space-y-4">
                       <div className="text-center py-3">
-                        <div className="text-sm text-white mb-1">Material Costs:</div>
+                        <div className="text-sm text-white mb-2">Material Costs</div>
                         <div className="text-lg font-medium text-white">£{inputs.materialCost.toFixed(2)}</div>
                       </div>
                       <div className="text-center py-3">
-                        <div className="text-sm text-white mb-1">Labour Costs ({inputs.labourHours}h × £{inputs.hourlyRate}):</div>
+                        <div className="text-sm text-white mb-2">Labour Costs ({inputs.labourHours}h × £{inputs.hourlyRate})</div>
                         <div className="text-lg font-medium text-white">£{labourCost.toFixed(2)}</div>
                       </div>
                       <div className="text-center py-3">
-                        <div className="text-sm text-white mb-1">Overhead Costs ({inputs.overheadPercentage}%):</div>
+                        <div className="text-sm text-white mb-2">Overhead Costs ({inputs.overheadPercentage}%)</div>
                         <div className="text-lg font-medium text-white">£{overheadCosts.toFixed(2)}</div>
                       </div>
                       <Separator className="bg-elec-yellow/20" />
                       <div className="text-center py-4 bg-elec-yellow/10 rounded">
-                        <div className="text-sm text-white mb-2">Total Project Costs:</div>
+                        <div className="text-sm text-white mb-2">Total Project Costs</div>
                         <div className="text-xl font-semibold text-elec-yellow">£{totalCosts.toFixed(2)}</div>
                       </div>
                     </div>
@@ -564,21 +564,21 @@ const JobProfitabilityCalculator = () => {
                     </h4>
                     <div className="space-y-4">
                       <div className="text-center py-3">
-                        <div className="text-sm text-white mb-1">Minimum Quote Required:</div>
+                        <div className="text-sm text-white mb-2">Minimum Quote Required</div>
                         <div className="text-lg font-semibold text-elec-yellow">£{minimumQuote.toFixed(2)}</div>
                       </div>
                       <div className="text-center py-3">
-                        <div className="text-sm text-white mb-1">Your Quote:</div>
+                        <div className="text-sm text-white mb-2">Your Quote</div>
                         <div className="text-lg font-medium text-white">£{inputs.quoteAmount.toFixed(2)}</div>
                       </div>
                       <div className="text-center py-3">
-                        <div className="text-sm text-white mb-1">Actual Profit:</div>
+                        <div className="text-sm text-white mb-2">Actual Profit</div>
                         <div className={`text-lg font-semibold ${actualProfit >= 0 ? "text-green-400" : "text-red-400"}`}>
                           £{actualProfit.toFixed(2)}
                         </div>
                       </div>
                       <div className="text-center py-3">
-                        <div className="text-sm text-white mb-1">Actual Profit Margin:</div>
+                        <div className="text-sm text-white mb-2">Actual Profit Margin</div>
                         <div className={`text-lg font-semibold ${actualProfitMargin >= inputs.desiredProfitMargin ? "text-green-400" : "text-red-400"}`}>
                           {actualProfitMargin.toFixed(1)}%
                         </div>
@@ -628,22 +628,18 @@ const JobProfitabilityCalculator = () => {
                            VAT Summary
                          </h4>
                          <div className="grid md:grid-cols-2 gap-4">
-                           <div className="space-y-3">
-                             <div className="flex justify-between text-white">
-                               <span>Net Amount:</span>
-                               <span>£{inputs.quoteAmount.toFixed(2)}</span>
-                             </div>
-                             <div className="flex justify-between text-white">
-                               <span>VAT ({vatRate}%):</span>
-                               <span>£{vatAmount.toFixed(2)}</span>
-                             </div>
-                           </div>
-                           <div className="space-y-3">
-                             <div className="flex justify-between text-white font-semibold text-lg">
-                               <span>Total with VAT:</span>
-                               <span className="text-elec-yellow">£{totalWithVAT.toFixed(2)}</span>
-                             </div>
-                           </div>
+                            <div className="text-center py-3">
+                              <div className="text-sm text-white mb-2">Net Amount</div>
+                              <div className="text-lg text-white">£{inputs.quoteAmount.toFixed(2)}</div>
+                            </div>
+                            <div className="text-center py-3">
+                              <div className="text-sm text-white mb-2">VAT ({vatRate}%)</div>
+                              <div className="text-lg text-white">£{vatAmount.toFixed(2)}</div>
+                            </div>
+                            <div className="text-center py-4 bg-elec-yellow/10 rounded">
+                              <div className="text-sm text-white mb-2">Total with VAT</div>
+                              <div className="text-xl font-semibold text-elec-yellow">£{totalWithVAT.toFixed(2)}</div>
+                            </div>
                          </div>
                        </div>
                      </>
