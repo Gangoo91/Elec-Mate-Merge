@@ -4,8 +4,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Calculator, FileText, PoundSterling, TrendingUp, AlertTriangle, BookOpen, Clock, Shield, PiggyBank } from "lucide-react";
 import { DropdownTabs, DropdownTab } from "@/components/ui/dropdown-tabs";
+import TaxFinancesCalculator from "@/components/electrician/business-development/tax-finances/TaxFinancesCalculator";
 import BusinessStructureTab from "@/components/electrician/business-development/tax-finances/BusinessStructureTab";
-import ExpenseManagementTab from "@/components/electrician/business-development/tax-finances/ExpenseManagementTab";
 import CashFlowTab from "@/components/electrician/business-development/tax-finances/CashFlowTab";
 import VATComplianceTab from "@/components/electrician/business-development/tax-finances/VATComplianceTab";
 import TaxPlanningTab from "@/components/electrician/business-development/tax-finances/TaxPlanningTab";
@@ -15,16 +15,16 @@ import RetirementPensionsTab from "@/components/electrician/business-development
 const TaxFinances = () => {
   const tabs: DropdownTab[] = [
     {
+      value: "calculator",
+      label: "Tax Calculator",
+      icon: Calculator,
+      content: <TaxFinancesCalculator />
+    },
+    {
       value: "structure",
       label: "Business Structure",
       icon: FileText,
       content: <BusinessStructureTab />
-    },
-    {
-      value: "expenses",
-      label: "Expense Management",
-      icon: Calculator,
-      content: <ExpenseManagementTab />
     },
     {
       value: "cashflow",
@@ -70,7 +70,7 @@ const TaxFinances = () => {
 
       <DropdownTabs 
         tabs={tabs} 
-        defaultValue="structure"
+        defaultValue="calculator"
         placeholder="Select a financial topic"
         className="mb-8"
       />
