@@ -356,8 +356,7 @@ const LegalOptionsTab = () => {
             Legal Recovery Options & Procedures
           </MobileAccordionTrigger>
           <MobileAccordionContent>
-            <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-              {legalOptions.map((option, index) => (
+            {legalOptions.map((option, index) => (
                 <div key={index} className="border border-purple-500/20 rounded-lg p-3 space-y-3">
                   <div className="flex flex-col gap-2">
                     <div className="flex items-center justify-between">
@@ -396,7 +395,6 @@ const LegalOptionsTab = () => {
                   </div>
                 </div>
               ))}
-            </div>
           </MobileAccordionContent>
         </MobileAccordionItem>
 
@@ -405,8 +403,7 @@ const LegalOptionsTab = () => {
             Enforcement Methods & Effectiveness
           </MobileAccordionTrigger>
           <MobileAccordionContent>
-            <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-              {enforcementMethods.map((method, index) => (
+            {enforcementMethods.map((method, index) => (
                 <div key={index} className="border border-green-500/20 rounded-lg p-3 space-y-3">
                   <div className="flex flex-col gap-2">
                     <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{method.method}</h4>
@@ -427,7 +424,6 @@ const LegalOptionsTab = () => {
                   </div>
                 </div>
               ))}
-            </div>
           </MobileAccordionContent>
         </MobileAccordionItem>
 
@@ -436,8 +432,7 @@ const LegalOptionsTab = () => {
             Cost Considerations & Recovery
           </MobileAccordionTrigger>
           <MobileAccordionContent>
-            <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-              {costConsiderations.map((consideration, index) => (
+            {costConsiderations.map((consideration, index) => (
                 <div key={index} className="border border-orange-500/20 rounded-lg p-3 space-y-3">
                   <div className="flex flex-col gap-2">
                     <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{consideration.factor}</h4>
@@ -450,7 +445,6 @@ const LegalOptionsTab = () => {
                   </div>
                 </div>
               ))}
-            </div>
           </MobileAccordionContent>
         </MobileAccordionItem>
 
@@ -459,8 +453,7 @@ const LegalOptionsTab = () => {
             Legal Case Preparation & Evidence Requirements
           </MobileAccordionTrigger>
           <MobileAccordionContent>
-            <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-              {legalPreparationRequirements.map((category, index) => (
+            {legalPreparationRequirements.map((category, index) => (
                 <div key={index} className="border border-blue-500/20 rounded-lg p-3 space-y-3">
                   <div className="flex flex-col gap-2">
                     <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{category.category}</h4>
@@ -480,7 +473,6 @@ const LegalOptionsTab = () => {
                   </div>
                 </div>
               ))}
-            </div>
           </MobileAccordionContent>
         </MobileAccordionItem>
 
@@ -489,8 +481,7 @@ const LegalOptionsTab = () => {
             Advanced Case Strategies & Dispute Resolution
           </MobileAccordionTrigger>
           <MobileAccordionContent>
-            <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-              {caseStrategyOptions.map((strategy, index) => (
+            {caseStrategyOptions.map((strategy, index) => (
                 <div key={index} className="border border-green-500/20 rounded-lg p-3 space-y-3">
                   <div className="flex flex-col gap-2">
                     <div className="flex items-center justify-between">
@@ -532,7 +523,6 @@ const LegalOptionsTab = () => {
                   </div>
                 </div>
               ))}
-            </div>
           </MobileAccordionContent>
         </MobileAccordionItem>
 
@@ -541,8 +531,7 @@ const LegalOptionsTab = () => {
             Post-Judgment Recovery & Asset Tracing
           </MobileAccordionTrigger>
           <MobileAccordionContent>
-            <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-              {postJudgmentRecovery.map((method, index) => (
+            {postJudgmentRecovery.map((method, index) => (
                 <div key={index} className="border border-purple-500/20 rounded-lg p-3 space-y-3">
                   <div className="flex flex-col gap-2">
                     <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{method.method}</h4>
@@ -579,7 +568,6 @@ const LegalOptionsTab = () => {
                   </div>
                 </div>
               ))}
-            </div>
           </MobileAccordionContent>
         </MobileAccordionItem>
 
@@ -588,8 +576,7 @@ const LegalOptionsTab = () => {
             Legal Compliance & Industry-Specific Rights
           </MobileAccordionTrigger>
           <MobileAccordionContent>
-            <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-              {complianceConsiderations.map((compliance, index) => (
+            {complianceConsiderations.map((compliance, index) => (
                 <div key={index} className="border border-orange-500/20 rounded-lg p-3 space-y-3">
                   <div className="flex flex-col gap-2">
                     <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{compliance.aspect}</h4>
@@ -609,7 +596,6 @@ const LegalOptionsTab = () => {
                   </div>
                 </div>
               ))}
-            </div>
           </MobileAccordionContent>
         </MobileAccordionItem>
       </MobileAccordion>
