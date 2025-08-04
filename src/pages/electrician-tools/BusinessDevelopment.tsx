@@ -8,7 +8,9 @@ import {
   PiggyBank, 
   BarChart3,
   DollarSign,
-  Calendar
+  Calendar,
+  Handshake,
+  CreditCard
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
@@ -16,6 +18,27 @@ const BusinessDevelopment = () => {
   const navigate = useNavigate();
 
   const calculators = [
+    {
+      id: "customer-acquisition",
+      title: "Customer Acquisition",
+      description: "Strategies and tools for finding and securing new customers",
+      icon: Handshake,
+      status: "coming-soon"
+    },
+    {
+      id: "tax-finances",
+      title: "Tax & Finances",
+      description: "Tax planning tools and financial management resources",
+      icon: Calculator,
+      status: "coming-soon"
+    },
+    {
+      id: "debt-recovery",
+      title: "Debt Recovery & Non-Payers", 
+      description: "Tools and strategies for managing late payments and debt recovery",
+      icon: CreditCard,
+      status: "coming-soon"
+    },
     {
       id: "job-profitability",
       title: "Job Profitability Calculator",
@@ -48,29 +71,8 @@ const BusinessDevelopment = () => {
       id: "business-costs",
       title: "Business Cost Calculator",
       description: "Estimate startup and running costs for your electrical business",
-      icon: Calculator,
-      status: "available"
-    },
-    {
-      id: "tax-planning",
-      title: "Tax Planning Tool",
-      description: "Plan and estimate tax obligations and allowances",
-      icon: PiggyBank,
-      status: "coming-soon"
-    },
-    {
-      id: "investment-roi",
-      title: "Investment ROI Calculator",
-      description: "Calculate return on investment for tools and equipment",
       icon: DollarSign,
-      status: "coming-soon"
-    },
-    {
-      id: "project-timeline",
-      title: "Project Timeline & Costing",
-      description: "Plan project timelines with accurate cost projections",
-      icon: Calendar,
-      status: "coming-soon"
+      status: "available"
     }
   ];
 
@@ -81,50 +83,56 @@ const BusinessDevelopment = () => {
   };
 
   return (
-    <div className="container mx-auto p-6 space-y-6">
-      <div className="text-center space-y-4">
-        <h1 className="text-3xl font-bold text-foreground">Business Development Tools</h1>
-        <p className="text-muted-foreground max-w-2xl mx-auto">
-          Professional calculators and tools to help grow and manage your electrical business effectively.
-          Make informed decisions with accurate financial planning.
-        </p>
-      </div>
+    <div className="min-h-screen bg-gray-900 text-white">
+      <div className="container mx-auto p-6 space-y-6">
+        <div className="text-center space-y-4">
+          <h1 className="text-3xl font-bold text-white">Business Development Tools</h1>
+          <p className="text-gray-300 max-w-2xl mx-auto">
+            Professional calculators and tools to help grow and manage your electrical business effectively.
+            Make informed decisions with accurate financial planning.
+          </p>
+        </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {calculators.map((calculator) => {
-          const IconComponent = calculator.icon;
-          
-          return (
-            <Card 
-              key={calculator.id}
-              className={`hover:shadow-lg transition-all duration-200 ${
-                calculator.status === "available" 
-                  ? "cursor-pointer hover:border-elec-yellow/50" 
-                  : "opacity-75"
-              }`}
-              onClick={() => handleCalculatorClick(calculator.id, calculator.status)}
-            >
-              <CardHeader className="text-center">
-                <div className="mx-auto mb-4 p-3 rounded-full bg-elec-yellow/10">
-                  <IconComponent className="h-8 w-8 text-elec-yellow" />
-                </div>
-                <CardTitle className="text-xl">{calculator.title}</CardTitle>
-                <CardDescription className="text-sm">
-                  {calculator.description}
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="text-center">
-                <Button 
-                  variant={calculator.status === "available" ? "default" : "secondary"}
-                  className="w-full"
-                  disabled={calculator.status === "coming-soon"}
-                >
-                  {calculator.status === "available" ? "Use Calculator" : "Coming Soon"}
-                </Button>
-              </CardContent>
-            </Card>
-          );
-        })}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {calculators.map((calculator) => {
+            const IconComponent = calculator.icon;
+            
+            return (
+              <Card 
+                key={calculator.id}
+                className={`bg-gray-800 border-gray-700 hover:border-elec-yellow/50 transition-all duration-200 ${
+                  calculator.status === "available" 
+                    ? "cursor-pointer hover:bg-gray-750" 
+                    : "opacity-75"
+                }`}
+                onClick={() => handleCalculatorClick(calculator.id, calculator.status)}
+              >
+                <CardHeader className="text-center pb-4">
+                  <div className="mx-auto mb-4 flex items-center justify-center">
+                    <IconComponent className="h-16 w-16 text-elec-yellow" />
+                  </div>
+                  <CardTitle className="text-xl text-white">{calculator.title}</CardTitle>
+                  <CardDescription className="text-sm text-gray-300">
+                    {calculator.description}
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="text-center pt-0">
+                  <Button 
+                    variant={calculator.status === "available" ? "default" : "secondary"}
+                    className={`w-full ${
+                      calculator.status === "available" 
+                        ? "bg-elec-yellow text-black hover:bg-elec-yellow/90" 
+                        : "bg-gray-600 text-gray-300"
+                    }`}
+                    disabled={calculator.status === "coming-soon"}
+                  >
+                    {calculator.status === "available" ? "Use Calculator" : "Coming Soon"}
+                  </Button>
+                </CardContent>
+              </Card>
+            );
+          })}
+        </div>
       </div>
     </div>
   );
