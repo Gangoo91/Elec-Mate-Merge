@@ -15,79 +15,79 @@ const PreventionTab = () => {
       metric: "Prevention Success Rate",
       data: "95% fewer bad debts",
       icon: <Shield className="h-5 w-5 text-green-400" />,
-      detail: "Proper screening reduces non-payment risk significantly"
+      detail: "Proper client screening reduces non-payment risk significantly"
     },
     {
-      metric: "Average Recovery Time", 
-      data: "3-7 days vs 90+ days",
+      metric: "Recovery Cost Savings", 
+      data: "90% less than debt recovery",
       icon: <Clock className="h-5 w-5 text-blue-400" />,
-      detail: "Prevention costs far less than recovery"
+      detail: "Prevention costs far less than pursuing unpaid invoices"
     },
     {
       metric: "Client Retention Rate",
-      data: "85% with clear terms",
+      data: "85% with clear contracts",
       icon: <TrendingUp className="h-5 w-5 text-purple-400" />,
-      detail: "Professional approach builds lasting relationships"
+      detail: "Professional approach builds lasting business relationships"
     },
     {
-      metric: "Cash Flow Impact",
-      data: "40% improvement",
+      metric: "Cash Flow Improvement",
+      data: "40% more predictable",
       icon: <Target className="h-5 w-5 text-elec-yellow" />,
-      detail: "Proactive measures stabilise business finances"
+      detail: "Proactive measures create stable business finances"
     }
   ];
 
   const preventionStrategies = [
     {
-      title: "Credit Checks & Verification",
-      icon: <UserCheck className="h-5 w-5" />,
-      description: "Research your clients before starting work",
+      title: "Credit Checks & Client Verification",
+      icon: <UserCheck className="h-5 w-5 text-blue-400" />,
+      description: "Research and verify client credentials before commencing work",
       strategies: [
-        "Use credit reference agencies for commercial clients",
-        "Check Companies House for business details",
-        "Search online for client reviews and experiences",
-        "Ask for trade references from other contractors",
-        "Verify business registration and VAT numbers",
-        "Check for County Court Judgments (CCJs)"
+        "Use credit reference agencies for commercial clients and large projects",
+        "Check Companies House records for business registration and financial health", 
+        "Search online reviews and testimonials from other contractors",
+        "Request trade references from previous electrical contractors",
+        "Verify business registration, VAT numbers, and trading addresses",
+        "Check for County Court Judgments (CCJs) and payment defaults"
       ]
     },
     {
-      title: "Clear Contract Terms",
-      icon: <FileText className="h-5 w-5" />,
-      description: "Establish payment expectations upfront",
+      title: "Clear Contract Terms & Documentation",
+      icon: <FileText className="h-5 w-5 text-green-400" />,
+      description: "Establish comprehensive payment expectations and legal protections",
       strategies: [
-        "Include detailed payment terms in contracts",
-        "Specify late payment charges (8% above base rate)",
-        "Add retention of title clauses",
-        "Define what constitutes completion",
-        "Include dispute resolution procedures",
-        "Get contracts signed before starting work"
+        "Include detailed payment terms with specific due dates in all contracts",
+        "Specify late payment charges (8% above Bank of England base rate)",
+        "Add retention of title clauses to protect material investments",
+        "Define precise completion criteria and sign-off procedures",
+        "Include mediation and dispute resolution procedures",
+        "Ensure all contracts are signed before any work commences"
       ]
     },
     {
-      title: "Payment Security Measures",
-      icon: <CreditCard className="h-5 w-5" />,
-      description: "Protect your cash flow with advance payments",
+      title: "Payment Security & Cash Flow Protection", 
+      icon: <CreditCard className="h-5 w-5 text-purple-400" />,
+      description: "Implement secure payment structures to protect business cash flow",
       strategies: [
-        "Request deposits for materials and labour",
-        "Use staged payment schedules for larger jobs",
-        "Accept credit card payments for instant settlement",
-        "Consider payment guarantees for high-value work",
-        "Invoice promptly upon completion",
-        "Offer early payment discounts"
+        "Request material deposits and labour advances for larger projects",
+        "Use staged payment schedules aligned with project milestones",
+        "Accept multiple payment methods including instant card payments",
+        "Consider payment guarantees or bonds for high-value contracts",
+        "Issue invoices promptly upon reaching agreed milestones",
+        "Offer early payment discounts to encourage prompt settlement"
       ]
     },
     {
-      title: "Legal Protections",
-      icon: <Shield className="h-5 w-5" />,
-      description: "Build legal safeguards into your business",
+      title: "Legal Safeguards & Business Protection",
+      icon: <Shield className="h-5 w-5 text-orange-400" />,
+      description: "Build comprehensive legal protections into business operations",
       strategies: [
-        "Use retention of title clauses",
-        "Include personal guarantees for limited companies",
-        "Register company charges at Companies House",
-        "Consider credit insurance for large contracts",
-        "Use construction lien rights where applicable",
-        "Maintain comprehensive business insurance"
+        "Use retention of title clauses to protect ownership until payment",
+        "Include personal guarantees from company directors for limited companies",
+        "Register company charges at Companies House for significant contracts",
+        "Consider trade credit insurance for high-value or risky projects",
+        "Utilise construction lien rights where legally applicable",
+        "Maintain comprehensive professional indemnity and public liability insurance"
       ]
     }
   ];
@@ -95,196 +95,196 @@ const PreventionTab = () => {
   const riskAssessmentTools = [
     {
       tool: "Credit Reference Agencies",
-      description: "Professional credit checking services for commercial clients",
+      description: "Professional credit assessment services for commercial client evaluation",
       implementation: [
-        "Experian Business Express for instant credit reports",
-        "Creditsafe for comprehensive business intelligence",
-        "Dun & Bradstreet for international clients",
-        "Check payment history and financial stability"
+        "Experian Business Express for instant credit reports and risk scores",
+        "Creditsafe for comprehensive business intelligence and monitoring",
+        "Dun & Bradstreet for international clients and corporate structures",
+        "Assess payment history, financial stability, and creditworthiness patterns"
       ],
       cost: "£5-£25 per check",
-      benefit: "Reduces bad debt risk by 70%"
+      benefit: "Reduces bad debt risk by up to 70%"
     },
     {
-      tool: "Companies House Research",
-      description: "Free official records for UK limited companies",
+      tool: "Companies House Intelligence",
+      description: "Official UK business records and financial disclosure research",
       implementation: [
-        "Check annual accounts and filing history",
-        "Review director information and changes",
-        "Look for recent charges or mortgages",
-        "Verify business address and trading status"
+        "Review annual accounts, filing history, and financial performance trends",
+        "Examine director information, appointments, and recent changes",
+        "Investigate outstanding charges, mortgages, and security interests",
+        "Verify current business address, trading status, and operational capacity"
       ],
-      cost: "Free",
-      benefit: "Identifies financially unstable companies"
+      cost: "Free access",
+      benefit: "Identifies financially unstable or dormant companies"
     },
     {
-      tool: "Trade Reference Network",
-      description: "Information sharing with other electrical contractors",
+      tool: "Trade Reference Networks",
+      description: "Industry intelligence sharing with fellow electrical contractors",
       implementation: [
-        "Join local electrical contractor groups",
-        "Exchange client payment experiences",
-        "Share problematic client information legally",
-        "Build trusted referral network"
+        "Join local electrical contractor associations and trade groups",
+        "Exchange client payment experiences through professional networks",
+        "Share information about problematic clients within legal boundaries",
+        "Build trusted referral networks for reliable business opportunities"
       ],
-      cost: "Membership fees vary",
-      benefit: "Real-world payment behaviour insights"
+      cost: "£50-£200 annual membership",
+      benefit: "Real-world payment behaviour insights from industry peers"
     }
   ];
 
   const contractBestPractices = [
     {
-      section: "Payment Terms Clarity",
+      section: "Payment Terms & Conditions",
       requirements: [
-        "Specify exact payment dates (e.g., 'within 30 days of invoice date')",
-        "Include late payment charges (8% above Bank of England base rate)",
-        "Define what constitutes 'completion' for payment trigger",
-        "State preferred payment methods and bank details"
+        "Specify exact payment dates (e.g., 'within 30 days of invoice date, not statement date')",
+        "Include statutory late payment charges (8% above Bank of England base rate plus £40 recovery costs)",
+        "Define precise completion criteria and certification procedures for payment triggers",
+        "State preferred payment methods, bank details, and acceptable proof of payment"
       ]
     },
     {
-      section: "Retention of Title Clauses",
+      section: "Retention of Title & Security",
       requirements: [
-        "Include clause stating materials remain your property until paid",
-        "Specify right to remove unpaid materials from site",
-        "Register charges at Companies House for large contracts",
-        "Include personal guarantees from company directors"
+        "Include comprehensive retention of title clauses stating materials remain contractor property until full payment",
+        "Specify contractual right to remove unpaid materials from site with reasonable notice",
+        "Register charges at Companies House for contracts exceeding £5,000 value",
+        "Include personal guarantees from company directors for limited company clients"
       ]
     },
     {
-      section: "Dispute Resolution",
+      section: "Dispute Resolution & Legal Framework",
       requirements: [
-        "Include mediation clause before legal action",
-        "Specify jurisdiction (England & Wales)",
-        "Define process for variations and additional work",
-        "Include right to suspend work for non-payment"
+        "Include mandatory mediation clause before any legal proceedings commence",
+        "Specify jurisdiction as England & Wales courts for all contractual disputes",
+        "Define clear process for variations, additional work authorisation, and cost approvals",
+        "Include contractual right to suspend work immediately for non-payment of certified invoices"
       ]
     }
   ];
 
   const clientScreeningProcedures = [
     {
-      category: "Initial Contact Assessment",
+      category: "Initial Contact & Communication Assessment",
       redFlags: [
-        "Pressure to start work immediately without contracts",
-        "Reluctance to provide business references",
-        "Vague about budget or payment terms",
-        "No fixed business address or landline number"
+        "Excessive pressure to commence work immediately without proper documentation or contracts",
+        "Reluctance or refusal to provide business references, previous contractor contacts, or credentials",
+        "Vague or evasive responses about project budget, timeline, or payment capabilities",
+        "No fixed business address, only mobile contact, or reluctance to meet at business premises"
       ],
       actions: [
-        "Always request written brief before quoting",
-        "Verify identity and business credentials",
-        "Check online reviews and reputation",
-        "Request previous contractor references"
+        "Always request detailed written project brief and specifications before preparing quotations",
+        "Verify client identity through official documentation and business registration checks",
+        "Research online presence, reviews, and reputation through multiple independent sources",
+        "Request and verify references from at least two previous electrical contractors or suppliers"
       ]
     },
     {
-      category: "Financial Verification",
+      category: "Financial Verification & Business Stability",
       redFlags: [
-        "Recently incorporated with no trading history",
-        "Multiple previous company dissolutions by directors",
-        "Accounts showing consistent losses",
-        "High director loan accounts or minimal assets"
+        "Recently incorporated company with no trading history or established business relationships",
+        "Multiple previous company dissolutions or bankruptcies linked to current directors",
+        "Filed accounts showing consistent losses, declining revenue, or minimal business assets",
+        "High director loan accounts, inter-company debt, or unusual financial arrangements suggesting cash flow issues"
       ],
       actions: [
-        "Request bank references for large projects",
-        "Check credit ratings and CCJ history",
-        "Verify insurance and bonding capacity",
-        "Consider requiring deposits for new clients"
+        "Request bank references or financial statements for contracts exceeding £2,000 value",
+        "Conduct comprehensive credit rating checks and search for County Court Judgments",
+        "Verify current insurance coverage, professional memberships, and bonding capacity",
+        "Consider requiring material deposits or staged payments for clients with limited trading history"
       ]
     }
   ];
 
   const paymentStructures = [
     {
-      jobType: "Small Domestic Jobs (Under £1,000)",
-      structure: "Payment on completion",
+      jobType: "Small Domestic Projects (Under £1,000)",
+      structure: "Payment upon completion",
       terms: [
-        "Full payment within 7 days of completion",
-        "Accept cash, card, or bank transfer",
-        "Provide detailed invoice with breakdown",
-        "Follow up if not paid within agreed timeframe"
+        "Full payment required within 7 days of project completion and final inspection",
+        "Accept cash, debit/credit cards, bank transfer, or digital payment platforms",
+        "Provide detailed invoice with itemised breakdown of labour and materials",
+        "Implement immediate follow-up procedure if payment not received within agreed timeframe"
       ]
     },
     {
-      jobType: "Medium Projects (£1,000-£5,000)",
-      structure: "Staged payments",
+      jobType: "Medium Commercial Projects (£1,000-£5,000)",
+      structure: "Staged payment milestones",
       terms: [
-        "25% deposit on signing contract",
-        "50% on materials delivery/rough-in complete",
-        "25% on completion and testing",
-        "Maximum 30 days payment terms"
+        "25% deposit required upon contract signing and before material procurement",
+        "50% progress payment upon materials delivery and rough installation completion",
+        "25% final payment upon project completion, testing, and certification handover",
+        "Maximum 30-day payment terms with 2% early payment discount for 14-day settlement"
       ]
     },
     {
-      jobType: "Large Commercial Projects (£5,000+)",
-      structure: "Monthly applications",
+      jobType: "Large Commercial Contracts (£5,000+)",
+      structure: "Monthly valuation applications",
       terms: [
-        "10% deposit with signed contract",
-        "Monthly progress payments within 30 days",
-        "5% retention for 12 months post-completion",
-        "Include inflation protection clauses"
+        "10% contract deposit with signed agreement and before any work commencement",
+        "Monthly progress payments based on certified work completion within 30 days of application",
+        "5% retention held for 12 months post-completion as defects liability security",
+        "Include contractual inflation protection and material cost fluctuation clauses"
       ]
     }
   ];
 
   const earlyWarningSystem = [
     {
-      indicator: "Communication Changes",
+      indicator: "Communication Pattern Changes",
       warnings: [
-        "Delayed responses to calls or emails",
-        "Avoiding direct contact with you",
-        "Making excuses about payment delays",
-        "Requesting payment term extensions"
+        "Increasingly delayed responses to phone calls, emails, or text messages",
+        "Avoiding direct contact or delegating all communication to junior staff members",
+        "Making frequent excuses about payment delays or requesting extensions without valid justification",
+        "Requesting significant changes to previously agreed payment terms or project scope to reduce costs"
       ],
-      response: "Immediate phone call to discuss concerns directly"
+      response: "Initiate immediate face-to-face meeting to discuss concerns and clarify project status"
     },
     {
-      indicator: "Financial Stress Signs",
+      indicator: "Financial Stress Indicators",
       warnings: [
-        "Asking to reduce scope of work to save money",
-        "Delaying material orders or deliveries",
-        "Other contractors reporting payment issues",
-        "Business premises looking neglected"
+        "Requesting scope reductions, material downgrades, or cost-cutting measures mid-project",
+        "Delaying material orders, deliveries, or asking for extended credit terms from suppliers",
+        "Reports from other contractors or suppliers about payment difficulties or disputes",
+        "Visible signs of business premises deterioration, staff reductions, or operational scaling-back"
       ],
-      response: "Consider requesting security or payment in advance"
+      response: "Consider requesting additional security deposits or advance payments before continuing work"
     },
     {
-      indicator: "Project Behaviour",
+      indicator: "Project Behaviour & Attitude Shifts",
       warnings: [
-        "Nitpicking work quality without valid reason",
-        "Claiming work doesn't meet specification falsely",
-        "Requesting unnecessary changes or variations",
-        "Being unreasonably demanding about timescales"
+        "Excessive scrutiny or nitpicking of work quality without valid technical grounds",
+        "False claims that completed work doesn't meet agreed specifications or industry standards",
+        "Requesting unnecessary variations, changes, or additional work without budget discussions",
+        "Becoming unreasonably demanding about project timescales or creating artificial urgency"
       ],
-      response: "Document everything and prepare for potential dispute"
+      response: "Document all interactions meticulously and prepare comprehensive evidence for potential payment disputes"
     }
   ];
 
   const redFlags = [
     {
-      category: "Financial",
-      warning: "Poor credit history or multiple CCJs",
-      action: "Request larger deposit or payment guarantees"
+      category: "Financial Risk",
+      warning: "Poor credit history with multiple County Court Judgments or payment defaults",
+      action: "Request larger deposits, payment guarantees, or consider declining the contract"
     },
     {
-      category: "Communication",
-      warning: "Evasive about payment terms or timeline",
-      action: "Clarify expectations before starting work"
+      category: "Communication Risk",
+      warning: "Evasive or inconsistent responses about payment terms, project timeline, or budget",
+      action: "Clarify all expectations in writing and obtain signed acknowledgment before proceeding"
     },
     {
-      category: "Reputation",
-      warning: "Negative reviews from other tradespeople",
-      action: "Seek additional references or avoid"
+      category: "Reputation Risk",
+      warning: "Negative reviews or reports from other electrical contractors about payment issues",
+      action: "Seek additional independent references or avoid taking on the client entirely"
     },
     {
-      category: "Business",
-      warning: "Recently incorporated with no trading history",
-      action: "Request personal guarantees from directors"
+      category: "Business Structure Risk",
+      warning: "Recently incorporated company with no established trading history or business relationships",
+      action: "Request personal guarantees from all company directors and higher deposit requirements"
     },
     {
-      category: "Behaviour",
-      warning: "Pressure to start immediately without paperwork",
-      action: "Insist on proper contracts and payment terms"
+      category: "Behavioural Risk",
+      warning: "Excessive pressure to commence work immediately without proper contracts or documentation",
+      action: "Insist on comprehensive signed contracts and full payment terms agreement before any work begins"
     }
   ];
 
@@ -293,7 +293,7 @@ const PreventionTab = () => {
       <Alert className="border-green-500/50 bg-green-500/10">
         <Shield className="h-4 w-4 text-green-400" />
         <AlertDescription className="text-green-200">
-          Prevention reduces bad debt risk by 95% and saves thousands in recovery costs. Implement these strategies before problems arise.
+          Comprehensive prevention strategies reduce bad debt risk by 95% and save thousands in recovery costs. Implement these measures before problems arise.
         </AlertDescription>
       </Alert>
 
