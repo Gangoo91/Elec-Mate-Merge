@@ -312,20 +312,21 @@ const JobProfitabilityCalculator = () => {
   const profitabilityStatus = getProfitabilityStatus();
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-6xl">
-      <div className="flex flex-col items-center justify-center mb-8">
-        <h1 className="text-3xl font-bold tracking-tight mb-4 flex items-center gap-3">
-          <Calculator className="h-8 w-8 text-elec-yellow" />
-          Job Profitability Calculator
-        </h1>
-        <p className="text-muted-foreground text-center max-w-2xl mb-6">
-          Analyse quote profitability and calculate minimum pricing to achieve your desired profit margins. 
-          BS7671 18th Edition compliant electrical work requires accurate costing for sustainable business growth.
-        </p>
-        <BackButton customUrl="/electrician/business-development/tools" label="Back to Calculators" />
-      </div>
+    <div className="min-h-screen px-4 py-8">
+      <div className="max-w-6xl mx-auto">
+        <div className="flex flex-col items-center justify-center mb-8">
+          <h1 className="text-3xl font-bold tracking-tight mb-4 flex items-center gap-3">
+            <Calculator className="h-8 w-8 text-elec-yellow" />
+            Job Profitability Calculator
+          </h1>
+          <p className="text-muted-foreground text-center max-w-2xl mb-6">
+            Analyse quote profitability and calculate minimum pricing to achieve your desired profit margins. 
+            BS7671 18th Edition compliant electrical work requires accurate costing for sustainable business growth.
+          </p>
+          <BackButton customUrl="/electrician/business-development/tools" label="Back to Calculators" />
+        </div>
 
-      <div className="grid lg:grid-cols-3 gap-8 mb-8 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 mb-8">
         {/* Job Presets */}
         <div className="lg:col-span-1">
           <JobPresetSelector onPresetSelected={handlePresetSelected} />
@@ -504,11 +505,11 @@ const JobProfitabilityCalculator = () => {
             onVATRegistrationChange={setVATRegistered}
           />
         </div>
-      </div>
+        </div>
 
-      {/* Results Section */}
-      <div className="flex justify-center">
-        <div className="w-full max-w-6xl">
+        {/* Results Section */}
+        <div className="flex justify-center">
+          <div className="w-full max-w-6xl">
           <Card className="border-elec-yellow/20 bg-elec-card">
             <CardHeader className="text-center">
               <CardTitle className="text-white flex items-center justify-center gap-2">
@@ -772,6 +773,7 @@ const JobProfitabilityCalculator = () => {
           </div>
         </CardContent>
       </Card>
+      </div>
     </div>
   );
 };
