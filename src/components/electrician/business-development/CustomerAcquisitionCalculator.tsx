@@ -4,7 +4,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Calculator, Users, Target, TrendingUp, PoundSterling, BarChart3, RefreshCw, ChevronDown } from "lucide-react";
+import { Calculator, Users, Target, TrendingUp, PoundSterling, BarChart3, RefreshCw } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 interface CustomerInputs {
@@ -91,7 +91,6 @@ const CustomerAcquisitionCalculator = () => {
           <Select value={activeTab} onValueChange={setActiveTab}>
             <SelectTrigger className="w-full bg-elec-gray border-elec-yellow/20 text-white">
               <SelectValue placeholder="Select analysis section" />
-              <ChevronDown className="h-4 w-4 opacity-50" />
             </SelectTrigger>
             <SelectContent className="bg-elec-gray border-elec-yellow/20 z-50">
               <SelectItem value="current" className="text-white hover:bg-elec-yellow/10">Current Metrics</SelectItem>
