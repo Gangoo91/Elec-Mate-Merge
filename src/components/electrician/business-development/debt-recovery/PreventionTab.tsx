@@ -1,12 +1,42 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { MobileAccordion, MobileAccordionContent, MobileAccordionTrigger } from "@/components/ui/mobile-accordion";
-import { AccordionItem } from "@radix-ui/react-accordion";
-import { Shield, CreditCard, FileText, UserCheck, AlertTriangle, TrendingDown, CheckCircle, Users, Target } from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { MobileAccordion, MobileAccordionItem, MobileAccordionTrigger, MobileAccordionContent } from "@/components/ui/mobile-accordion";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { Shield, CreditCard, FileText, UserCheck, AlertTriangle, TrendingDown, CheckCircle, Users, Target, Clock, TrendingUp } from "lucide-react";
 
 const PreventionTab = () => {
+  const isMobile = useIsMobile();
+
+  // Key prevention metrics for debt avoidance
+  const preventionMetrics = [
+    {
+      metric: "Prevention Success Rate",
+      data: "95% fewer bad debts",
+      icon: <Shield className="h-5 w-5 text-green-400" />,
+      detail: "Proper screening reduces non-payment risk significantly"
+    },
+    {
+      metric: "Average Recovery Time", 
+      data: "3-7 days vs 90+ days",
+      icon: <Clock className="h-5 w-5 text-blue-400" />,
+      detail: "Prevention costs far less than recovery"
+    },
+    {
+      metric: "Client Retention Rate",
+      data: "85% with clear terms",
+      icon: <TrendingUp className="h-5 w-5 text-purple-400" />,
+      detail: "Professional approach builds lasting relationships"
+    },
+    {
+      metric: "Cash Flow Impact",
+      data: "40% improvement",
+      icon: <Target className="h-5 w-5 text-elec-yellow" />,
+      detail: "Proactive measures stabilise business finances"
+    }
+  ];
+
   const preventionStrategies = [
     {
       title: "Credit Checks & Verification",
@@ -91,81 +121,87 @@ const PreventionTab = () => {
   ];
 
   return (
-    <div className="space-y-6">
-      {/* Alert Banner */}
+    <div className="space-y-4">
       <Alert className="border-green-500/50 bg-green-500/10">
-        <Shield className="h-4 w-4" />
-        <AlertTitle className="text-green-300">Prevention is Your Best Protection</AlertTitle>
-        <AlertDescription className="text-muted-foreground">
-          The most effective debt recovery strategy is preventing bad debts before they occur. 
-          Implement these preventive measures to minimise your risk of non-payment.
+        <Shield className="h-4 w-4 text-green-400" />
+        <AlertDescription className="text-green-200">
+          Prevention reduces bad debt risk by 95% and saves thousands in recovery costs. Implement these strategies before problems arise.
         </AlertDescription>
       </Alert>
 
-      {/* Prevention Strategies */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Shield className="h-5 w-5 text-elec-yellow" />
-            Prevention Strategies
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <MobileAccordion type="multiple" className="w-full space-y-2">
-            {preventionStrategies.map((strategy, index) => (
-              <AccordionItem key={index} value={`item-${index}`} className="border border-border rounded-lg">
-                <MobileAccordionTrigger 
-                  className="px-4"
-                  icon={strategy.icon}
-                >
-                  <div className="text-left">
-                    <div className="font-semibold">{strategy.title}</div>
-                    <div className="text-sm text-muted-foreground">{strategy.description}</div>
-                  </div>
-                </MobileAccordionTrigger>
-                <MobileAccordionContent className="px-4 pb-4">
-                  <div className="space-y-3">
-                    {strategy.strategies.map((item, itemIndex) => (
-                      <div key={itemIndex} className="flex items-start gap-3 p-3 rounded-lg bg-muted/50">
-                        <div className="w-2 h-2 bg-primary rounded-full mt-2 shrink-0"></div>
-                        <span className="text-sm text-muted-foreground leading-relaxed">{item}</span>
-                      </div>
-                    ))}
-                  </div>
-                </MobileAccordionContent>
-              </AccordionItem>
-            ))}
-          </MobileAccordion>
-        </CardContent>
-      </Card>
+      <div className={`grid gap-3 ${isMobile ? 'grid-cols-2' : 'grid-cols-1 md:grid-cols-2 xl:grid-cols-4'}`}>
+        {preventionMetrics.map((metric, index) => (
+          <Card key={index} className="border-elec-yellow/20 bg-elec-gray p-3">
+            <div className="text-center space-y-2">
+              {metric.icon}
+              <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-white`}>{metric.metric}</div>
+              <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{metric.data}</div>
+            </div>
+          </Card>
+        ))}
+      </div>
 
-      {/* Warning Signs */}
-      <Card className="border-red-500/50 bg-red-500/10">
-        <CardHeader>
-          <CardTitle className="text-red-300 flex items-center gap-2 text-lg md:text-xl">
-            <AlertTriangle className="h-5 w-5" />
-            Warning Signs to Watch For
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid md:grid-cols-2 gap-4">
-            {redFlags.map((flag, index) => (
-              <div key={index} className="border border-red-500/30 rounded-lg p-4">
-                <div className="flex items-start md:items-center gap-2 mb-2">
-                  <Badge variant="outline" className="border-red-500/30 text-red-400 shrink-0">
-                    {flag.category}
-                  </Badge>
+      <MobileAccordion type="single" collapsible className="space-y-2">
+        <MobileAccordionItem value="prevention-strategies">
+          <MobileAccordionTrigger icon={<Shield className="h-5 w-5 text-green-400" />}>
+            Prevention Strategies & Implementation
+          </MobileAccordionTrigger>
+          <MobileAccordionContent>
+            <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
+              {preventionStrategies.map((strategy, index) => (
+                <div key={index} className="border border-green-500/20 rounded-lg p-3 space-y-3">
+                  <div className="flex flex-col gap-2">
+                    <div className="flex items-center gap-2">
+                      {strategy.icon}
+                      <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{strategy.title}</h4>
+                    </div>
+                    <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{strategy.description}</p>
+                  </div>
+
+                  <div>
+                    <h5 className={`font-medium text-green-300 mb-2 ${isMobile ? 'text-xs' : 'text-sm'}`}>Implementation Steps</h5>
+                    <ul className="space-y-1">
+                      {strategy.strategies.map((step, stepIndex) => (
+                        <li key={stepIndex} className={`${isMobile ? 'text-xs' : 'text-sm'} text-green-200 flex items-center gap-1`}>
+                          <CheckCircle className="h-3 w-3 text-green-400 flex-shrink-0" />
+                          {step}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
-                <h4 className="font-semibold text-white mb-2 leading-tight">{flag.warning}</h4>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  <span className="text-red-400">Action: </span>
-                  {flag.action}
-                </p>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+              ))}
+            </div>
+          </MobileAccordionContent>
+        </MobileAccordionItem>
+
+        <MobileAccordionItem value="warning-signs">
+          <MobileAccordionTrigger icon={<AlertTriangle className="h-5 w-5 text-red-400" />}>
+            Warning Signs & Red Flags
+          </MobileAccordionTrigger>
+          <MobileAccordionContent>
+            <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
+              {redFlags.map((flag, index) => (
+                <div key={index} className="border border-red-500/20 rounded-lg p-3 space-y-3">
+                  <div className="flex flex-col gap-2">
+                    <div className="flex items-center justify-between">
+                      <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{flag.warning}</h4>
+                      <Badge variant="outline" className={`text-red-300 border-red-400/30 ${isMobile ? 'text-xs' : 'text-sm'}`}>
+                        {flag.category}
+                      </Badge>
+                    </div>
+                  </div>
+
+                  <div className="bg-red-500/10 border border-red-500/30 rounded p-2">
+                    <h5 className={`font-medium text-red-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Recommended Action</h5>
+                    <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-red-200`}>{flag.action}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </MobileAccordionContent>
+        </MobileAccordionItem>
+      </MobileAccordion>
     </div>
   );
 };

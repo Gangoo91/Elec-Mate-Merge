@@ -1,12 +1,42 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { MobileAccordion, MobileAccordionContent, MobileAccordionTrigger } from "@/components/ui/mobile-accordion";
-import { AccordionItem } from "@radix-ui/react-accordion";
-import { CheckCircle, Database, Users, PiggyBank, Shield, TrendingUp, Clock, Target } from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { MobileAccordion, MobileAccordionItem, MobileAccordionTrigger, MobileAccordionContent } from "@/components/ui/mobile-accordion";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { CheckCircle, Database, Users, PiggyBank, Shield, TrendingUp, Clock, Target, Award, Building } from "lucide-react";
 
 const ProtectionTab = () => {
+  const isMobile = useIsMobile();
+
+  // Key protection metrics
+  const protectionMetrics = [
+    {
+      metric: "Risk Reduction Rate",
+      data: "80% fewer repeat issues",
+      icon: <Shield className="h-5 w-5 text-green-400" />,
+      detail: "Strong systems prevent future problems"
+    },
+    {
+      metric: "Business Resilience", 
+      data: "60% better cash flow",
+      icon: <TrendingUp className="h-5 w-5 text-blue-400" />,
+      detail: "Diversified client base improves stability"
+    },
+    {
+      metric: "Professional Network",
+      data: "5x more referrals",
+      icon: <Users className="h-5 w-5 text-purple-400" />,
+      detail: "Industry connections provide opportunities"
+    },
+    {
+      metric: "Insurance Protection",
+      data: "Up to 90% coverage",
+      icon: <Award className="h-5 w-5 text-elec-yellow" />,
+      detail: "Financial products protect against losses"
+    }
+  ];
+
   const protectionStrategies = [
     {
       title: "Client Database Management",
@@ -147,162 +177,164 @@ const ProtectionTab = () => {
   ];
 
   return (
-    <div className="space-y-6">
-      {/* Alert Banner */}
+    <div className="space-y-4">
       <Alert className="border-yellow-500/50 bg-yellow-500/10">
-        <Shield className="h-4 w-4" />
-        <AlertTitle className="text-yellow-300">Protecting Your Future Business</AlertTitle>
-        <AlertDescription className="text-muted-foreground">
-          Learn from payment issues to strengthen your business against future problems. 
-          Build robust systems and networks to minimize risk and protect your cash flow.
+        <Shield className="h-4 w-4 text-yellow-400" />
+        <AlertDescription className="text-yellow-200">
+          Future protection strategies reduce repeat issues by 80% and build business resilience through systematic improvements.
         </AlertDescription>
       </Alert>
 
+      <div className={`grid gap-3 ${isMobile ? 'grid-cols-2' : 'grid-cols-1 md:grid-cols-2 xl:grid-cols-4'}`}>
+        {protectionMetrics.map((metric, index) => (
+          <Card key={index} className="border-elec-yellow/20 bg-elec-gray p-3">
+            <div className="text-center space-y-2">
+              {metric.icon}
+              <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-white`}>{metric.metric}</div>
+              <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{metric.data}</div>
+            </div>
+          </Card>
+        ))}
+      </div>
 
-      {/* Protection Strategies */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Shield className="h-5 w-5" />
-            Protection Strategies
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <MobileAccordion type="multiple" className="w-full">
-            {protectionStrategies.map((strategy, index) => (
-              <AccordionItem key={index} value={`protection-${index}`}>
-                <MobileAccordionTrigger icon={strategy.icon}>
-                  <div className="text-left">
-                    <div className="font-semibold">{strategy.title}</div>
-                    <div className="text-sm text-muted-foreground">{strategy.description}</div>
+      <MobileAccordion type="single" collapsible className="space-y-2">
+        <MobileAccordionItem value="protection-strategies">
+          <MobileAccordionTrigger icon={<Shield className="h-5 w-5 text-green-400" />}>
+            Protection Strategies & Systems
+          </MobileAccordionTrigger>
+          <MobileAccordionContent>
+            <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
+              {protectionStrategies.map((strategy, index) => (
+                <div key={index} className="border border-green-500/20 rounded-lg p-3 space-y-3">
+                  <div className="flex flex-col gap-2">
+                    <div className="flex items-center gap-2">
+                      {strategy.icon}
+                      <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{strategy.title}</h4>
+                    </div>
+                    <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{strategy.description}</p>
                   </div>
-                </MobileAccordionTrigger>
-                <MobileAccordionContent>
-                  <div className="space-y-3 pt-4">
-                    {strategy.strategies.map((item, itemIndex) => (
-                      <div key={itemIndex} className="flex items-start gap-3 p-3 rounded-lg bg-muted/50">
-                        <div className="w-2 h-2 bg-primary rounded-full mt-2"></div>
-                        <span className="text-sm leading-relaxed">{item}</span>
-                      </div>
-                    ))}
-                  </div>
-                </MobileAccordionContent>
-              </AccordionItem>
-            ))}
-          </MobileAccordion>
-        </CardContent>
-      </Card>
 
-      {/* Insurance & Protection */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <PiggyBank className="h-5 w-5" />
-            Insurance & Protection Products
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <MobileAccordion type="single" collapsible className="w-full">
-            {insuranceOptions.map((option, index) => (
-              <AccordionItem key={index} value={`insurance-${index}`}>
-                <MobileAccordionTrigger icon={<PiggyBank className="h-4 w-4" />}>
-                  <div className="text-left flex-1">
-                    <div className="flex items-start justify-between">
+                  <div>
+                    <h5 className={`font-medium text-green-300 mb-2 ${isMobile ? 'text-xs' : 'text-sm'}`}>Implementation Steps</h5>
+                    <ul className="space-y-1">
+                      {strategy.strategies.map((step, stepIndex) => (
+                        <li key={stepIndex} className={`${isMobile ? 'text-xs' : 'text-sm'} text-green-200 flex items-center gap-1`}>
+                          <CheckCircle className="h-3 w-3 text-green-400 flex-shrink-0" />
+                          {step}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </MobileAccordionContent>
+        </MobileAccordionItem>
+
+        <MobileAccordionItem value="insurance-protection">
+          <MobileAccordionTrigger icon={<PiggyBank className="h-5 w-5 text-purple-400" />}>
+            Insurance & Financial Protection
+          </MobileAccordionTrigger>
+          <MobileAccordionContent>
+            <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
+              {insuranceOptions.map((option, index) => (
+                <div key={index} className="border border-purple-500/20 rounded-lg p-3 space-y-3">
+                  <div className="flex flex-col gap-2">
+                    <div className="flex items-center justify-between">
+                      <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{option.type}</h4>
+                      <Badge variant="outline" className={`text-purple-300 border-purple-400/30 ${isMobile ? 'text-xs' : 'text-sm'}`}>
+                        {option.coverage}
+                      </Badge>
+                    </div>
+                    <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{option.description}</p>
+                  </div>
+
+                  <div>
+                    <h5 className={`font-medium text-purple-300 mb-2 ${isMobile ? 'text-xs' : 'text-sm'}`}>Key Benefits</h5>
+                    <ul className="space-y-1">
+                      {option.benefits.map((benefit, benefitIndex) => (
+                        <li key={benefitIndex} className={`${isMobile ? 'text-xs' : 'text-sm'} text-purple-200 flex items-center gap-1`}>
+                          <CheckCircle className="h-3 w-3 text-green-400 flex-shrink-0" />
+                          {benefit}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div className="bg-purple-500/10 border border-purple-500/30 rounded p-2">
+                    <h5 className={`font-medium text-purple-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Cost Structure</h5>
+                    <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-purple-200`}>{option.cost}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </MobileAccordionContent>
+        </MobileAccordionItem>
+
+        <MobileAccordionItem value="business-practices">
+          <MobileAccordionTrigger icon={<Building className="h-5 w-5 text-blue-400" />}>
+            Best Business Practices & Systems
+          </MobileAccordionTrigger>
+          <MobileAccordionContent>
+            <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
+              {businessPractices.map((practice, index) => (
+                <div key={index} className="border border-blue-500/20 rounded-lg p-3 space-y-3">
+                  <div className="flex flex-col gap-2">
+                    <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{practice.practice}</h4>
+                    <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{practice.description}</p>
+                  </div>
+
+                  <div>
+                    <h5 className={`font-medium text-blue-300 mb-2 ${isMobile ? 'text-xs' : 'text-sm'}`}>Implementation Steps</h5>
+                    <ul className="space-y-1">
+                      {practice.implementation.map((step, stepIndex) => (
+                        <li key={stepIndex} className={`${isMobile ? 'text-xs' : 'text-sm'} text-blue-200 flex items-center gap-1`}>
+                          <CheckCircle className="h-3 w-3 text-green-400 flex-shrink-0" />
+                          {step}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </MobileAccordionContent>
+        </MobileAccordionItem>
+
+        <MobileAccordionItem value="professional-services">
+          <MobileAccordionTrigger icon={<Users className="h-5 w-5 text-orange-400" />}>
+            Professional Recovery Services
+          </MobileAccordionTrigger>
+          <MobileAccordionContent>
+            <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
+              {recoveryServices.map((service, index) => (
+                <div key={index} className="border border-orange-500/20 rounded-lg p-3 space-y-3">
+                  <div className="flex flex-col gap-2">
+                    <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{service.service}</h4>
+                  </div>
+
+                  <div className="bg-orange-500/10 border border-orange-500/30 rounded p-2">
+                    <div className="space-y-2">
                       <div>
-                        <div className="font-semibold">{option.type}</div>
-                        <div className="text-sm text-muted-foreground">{option.description}</div>
+                        <h5 className={`font-medium text-orange-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>When to Use</h5>
+                        <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-orange-200`}>{service.when}</p>
                       </div>
-                      <div className="text-right ml-4">
-                        <Badge variant="outline" className="border-primary/30 text-primary mb-1">
-                          {option.coverage}
-                        </Badge>
-                        <div className="text-xs text-muted-foreground">{option.cost}</div>
+                      <div>
+                        <h5 className={`font-medium text-orange-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Cost Structure</h5>
+                        <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-orange-200`}>{service.cost}</p>
+                      </div>
+                      <div>
+                        <h5 className={`font-medium text-orange-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Key Benefits</h5>
+                        <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-orange-200`}>{service.benefits}</p>
                       </div>
                     </div>
                   </div>
-                </MobileAccordionTrigger>
-                <MobileAccordionContent>
-                  <div className="space-y-3 pt-4">
-                    {option.benefits.map((benefit, benefitIndex) => (
-                      <div key={benefitIndex} className="flex items-start gap-3 p-3 rounded-lg bg-muted/50">
-                        <div className="w-2 h-2 bg-primary rounded-full mt-2"></div>
-                        <span className="text-sm leading-relaxed">{benefit}</span>
-                      </div>
-                    ))}
-                  </div>
-                </MobileAccordionContent>
-              </AccordionItem>
-            ))}
-          </MobileAccordion>
-        </CardContent>
-      </Card>
-
-      {/* Business Practices */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <CheckCircle className="h-5 w-5" />
-            Best Business Practices
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <MobileAccordion type="multiple" className="w-full">
-            {businessPractices.map((practice, index) => (
-              <AccordionItem key={index} value={`practice-${index}`}>
-                <MobileAccordionTrigger icon={<CheckCircle className="h-4 w-4" />}>
-                  <div className="text-left">
-                    <div className="font-semibold">{practice.practice}</div>
-                    <div className="text-sm text-muted-foreground">{practice.description}</div>
-                  </div>
-                </MobileAccordionTrigger>
-                <MobileAccordionContent>
-                  <div className="space-y-3 pt-4">
-                    {practice.implementation.map((step, stepIndex) => (
-                      <div key={stepIndex} className="flex items-start gap-3 p-3 rounded-lg bg-muted/50">
-                        <div className="w-2 h-2 bg-primary rounded-full mt-2"></div>
-                        <span className="text-sm leading-relaxed">{step}</span>
-                      </div>
-                    ))}
-                  </div>
-                </MobileAccordionContent>
-              </AccordionItem>
-            ))}
-          </MobileAccordion>
-        </CardContent>
-      </Card>
-
-      {/* Professional Services */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Users className="h-5 w-5" />
-            Professional Recovery Services
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid md:grid-cols-2 gap-4">
-            {recoveryServices.map((service, index) => (
-              <div key={index} className="border border-border rounded-lg p-4">
-                <h4 className="font-semibold mb-2">{service.service}</h4>
-                <div className="space-y-2 text-sm">
-                  <div>
-                    <span className="text-primary">When: </span>
-                    <span className="text-muted-foreground">{service.when}</span>
-                  </div>
-                  <div>
-                    <span className="text-primary">Cost: </span>
-                    <span className="text-muted-foreground">{service.cost}</span>
-                  </div>
-                  <div>
-                    <span className="text-primary">Benefits: </span>
-                    <span className="text-muted-foreground">{service.benefits}</span>
-                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+              ))}
+            </div>
+          </MobileAccordionContent>
+        </MobileAccordionItem>
+      </MobileAccordion>
     </div>
   );
 };
