@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Plus, Trash2, Copy, TrendingUp, TrendingDown, Minus } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Plus, Trash2, Copy, TrendingUp, TrendingDown, Minus, Settings } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 interface Scenario {
@@ -31,6 +31,7 @@ const ScenarioComparison: React.FC<ScenarioComparisonProps> = ({
   onLoadScenario,
 }) => {
   const { toast } = useToast();
+  const [viewMode, setViewMode] = useState("comparison");
   const [scenarios, setScenarios] = useState<Scenario[]>([
     {
       id: "1",
@@ -113,113 +114,128 @@ const ScenarioComparison: React.FC<ScenarioComparisonProps> = ({
   };
 
   return (
-    <Card className="border-elec-yellow/20 bg-elec-card">
-      <CardHeader>
-        <div className="flex items-center justify-between">
-          <CardTitle className="flex items-center gap-2">
-            <TrendingUp className="h-5 w-5 text-elec-yellow" />
-            Scenario Analysis
-          </CardTitle>
-          <Button
-            onClick={saveCurrentScenario}
-            size="sm"
-            className="bg-elec-yellow text-black hover:bg-elec-yellow/90"
-          >
-            <Plus className="h-4 w-4 mr-2" />
-            Save Current
-          </Button>
-        </div>
-      </CardHeader>
-      <CardContent>
-        <Tabs defaultValue="comparison" className="w-full">
-          <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="comparison">Compare Scenarios</TabsTrigger>
-            <TabsTrigger value="management">Manage Scenarios</TabsTrigger>
-          </TabsList>
+    <div className="space-y-4">
+      {/* Header with controls */}
+      <Card className="border-elec-yellow/20 bg-elec-card">
+        <CardHeader className="pb-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <CardTitle className="flex items-center gap-2">
+              <TrendingUp className="h-5 w-5 text-elec-yellow" />
+              Scenario Analysis
+            </CardTitle>
+            <div className="flex flex-col sm:flex-row gap-2 sm:items-center">
+              <Select value={viewMode} onValueChange={setViewMode}>
+                <SelectTrigger className="w-full sm:w-[180px] bg-background/50">
+                  <SelectValue placeholder="Select view" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="comparison">Compare Scenarios</SelectItem>
+                  <SelectItem value="management">Manage Scenarios</SelectItem>
+                </SelectContent>
+              </Select>
+              <Button
+                onClick={saveCurrentScenario}
+                size="sm"
+                className="bg-elec-yellow text-black hover:bg-elec-yellow/90"
+              >
+                <Plus className="h-4 w-4 mr-2" />
+                Save Current
+              </Button>
+            </div>
+          </div>
+        </CardHeader>
+      </Card>
 
-          <TabsContent value="comparison" className="space-y-4">
-            {scenarios.length > 0 ? (
-              <div className="space-y-4">
-                {scenarios.map((scenario) => (
-                  <Card key={scenario.id} className="border-muted bg-elec-gray">
-                    <CardContent className="p-4">
-                      <div className="flex items-center justify-between mb-3">
-                        <div className="flex items-center gap-3">
-                          <h4 className="font-semibold">{scenario.name}</h4>
-                          <Badge className={getBusinessTypeColor(scenario.businessType)}>
-                            {scenario.businessType.replace("-", " ")}
-                          </Badge>
+      {/* Content based on view mode */}
+      {viewMode === "comparison" && (
+        <div className="space-y-4">
+          {scenarios.length > 0 ? (
+            <div className="space-y-4">
+              {scenarios.map((scenario) => (
+                <Card key={scenario.id} className="border-muted bg-elec-gray">
+                  <CardContent className="p-4">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
+                      <div className="flex items-center gap-3">
+                        <h4 className="font-semibold">{scenario.name}</h4>
+                        <Badge className={getBusinessTypeColor(scenario.businessType)}>
+                          {scenario.businessType.replace("-", " ")}
+                        </Badge>
+                      </div>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => onLoadScenario?.(scenario)}
+                        className="self-start sm:self-auto"
+                      >
+                        Load
+                      </Button>
+                    </div>
+                    
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                      <div className="text-center p-3 rounded-lg bg-background/30">
+                        <div className="flex items-center justify-center gap-1 mb-2">
+                          {getComparisonIcon(scenario.totalStartup, currentScenario.totalStartup)}
+                          <span className="text-sm text-muted-foreground font-medium">Startup</span>
                         </div>
-                        <div className="flex items-center gap-2">
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => onLoadScenario?.(scenario)}
-                          >
-                            Load
-                          </Button>
-                        </div>
+                        <p className="font-semibold text-lg">£{scenario.totalStartup.toLocaleString()}</p>
+                        <p className="text-xs text-muted-foreground">
+                          {scenario.totalStartup > currentScenario.totalStartup ? "+" : ""}
+                          £{Math.abs(scenario.totalStartup - currentScenario.totalStartup).toLocaleString()}
+                        </p>
                       </div>
                       
-                      <div className="grid grid-cols-3 gap-4">
-                        <div className="text-center">
-                          <div className="flex items-center justify-center gap-1 mb-1">
-                            {getComparisonIcon(scenario.totalStartup, currentScenario.totalStartup)}
-                            <span className="text-sm text-muted-foreground">Startup</span>
-                          </div>
-                          <p className="font-semibold">£{scenario.totalStartup.toLocaleString()}</p>
-                          <p className="text-xs text-muted-foreground">
-                            {scenario.totalStartup > currentScenario.totalStartup ? "+" : ""}
-                            £{Math.abs(scenario.totalStartup - currentScenario.totalStartup).toLocaleString()}
-                          </p>
+                      <div className="text-center p-3 rounded-lg bg-background/30">
+                        <div className="flex items-center justify-center gap-1 mb-2">
+                          {getComparisonIcon(scenario.totalMonthly, currentScenario.totalMonthly)}
+                          <span className="text-sm text-muted-foreground font-medium">Monthly</span>
                         </div>
-                        
-                        <div className="text-center">
-                          <div className="flex items-center justify-center gap-1 mb-1">
-                            {getComparisonIcon(scenario.totalMonthly, currentScenario.totalMonthly)}
-                            <span className="text-sm text-muted-foreground">Monthly</span>
-                          </div>
-                          <p className="font-semibold">£{scenario.totalMonthly.toLocaleString()}</p>
-                          <p className="text-xs text-muted-foreground">
-                            {scenario.totalMonthly > currentScenario.totalMonthly ? "+" : ""}
-                            £{Math.abs(scenario.totalMonthly - currentScenario.totalMonthly).toLocaleString()}
-                          </p>
-                        </div>
-                        
-                        <div className="text-center">
-                          <div className="flex items-center justify-center gap-1 mb-1">
-                            {getComparisonIcon(scenario.yearOneTotal, currentScenario.yearOneTotal)}
-                            <span className="text-sm text-muted-foreground">Year 1</span>
-                          </div>
-                          <p className="font-semibold">£{scenario.yearOneTotal.toLocaleString()}</p>
-                          <p className="text-xs text-muted-foreground">
-                            {scenario.yearOneTotal > currentScenario.yearOneTotal ? "+" : ""}
-                            £{Math.abs(scenario.yearOneTotal - currentScenario.yearOneTotal).toLocaleString()}
-                          </p>
-                        </div>
+                        <p className="font-semibold text-lg">£{scenario.totalMonthly.toLocaleString()}</p>
+                        <p className="text-xs text-muted-foreground">
+                          {scenario.totalMonthly > currentScenario.totalMonthly ? "+" : ""}
+                          £{Math.abs(scenario.totalMonthly - currentScenario.totalMonthly).toLocaleString()}
+                        </p>
                       </div>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            ) : (
-              <div className="text-center py-8">
-                <TrendingUp className="h-12 w-12 text-muted-foreground mx-auto mb-3" />
-                <p className="text-muted-foreground">
-                  No saved scenarios yet. Save your current calculation to start comparing.
+                      
+                      <div className="text-center p-3 rounded-lg bg-background/30">
+                        <div className="flex items-center justify-center gap-1 mb-2">
+                          {getComparisonIcon(scenario.yearOneTotal, currentScenario.yearOneTotal)}
+                          <span className="text-sm text-muted-foreground font-medium">Year 1</span>
+                        </div>
+                        <p className="font-semibold text-lg">£{scenario.yearOneTotal.toLocaleString()}</p>
+                        <p className="text-xs text-muted-foreground">
+                          {scenario.yearOneTotal > currentScenario.yearOneTotal ? "+" : ""}
+                          £{Math.abs(scenario.yearOneTotal - currentScenario.yearOneTotal).toLocaleString()}
+                        </p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          ) : (
+            <Card className="border-dashed border-muted">
+              <CardContent className="text-center py-12">
+                <TrendingUp className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                <p className="text-muted-foreground mb-2 font-medium">No saved scenarios yet</p>
+                <p className="text-sm text-muted-foreground">
+                  Save your current calculation to start comparing different business setups.
                 </p>
-              </div>
-            )}
-          </TabsContent>
+              </CardContent>
+            </Card>
+          )}
+        </div>
+      )}
 
-          <TabsContent value="management" className="space-y-4">
-            {scenarios.map((scenario) => (
+      {viewMode === "management" && (
+        <div className="space-y-4">
+          {scenarios.length > 0 ? (
+            scenarios.map((scenario) => (
               <Card key={scenario.id} className="border-muted bg-elec-gray">
                 <CardContent className="p-4">
-                  <div className="flex items-center justify-between">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                     <div>
-                      <h4 className="font-semibold mb-1">{scenario.name}</h4>
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <h4 className="font-semibold mb-2">{scenario.name}</h4>
+                      <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
                         <Badge className={getBusinessTypeColor(scenario.businessType)}>
                           {scenario.businessType.replace("-", " ")}
                         </Badge>
@@ -227,31 +243,44 @@ const ScenarioComparison: React.FC<ScenarioComparisonProps> = ({
                         <span>Created {scenario.createdAt.toLocaleDateString()}</span>
                       </div>
                     </div>
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 self-start sm:self-auto">
                       <Button
                         variant="ghost"
                         size="sm"
                         onClick={() => duplicateScenario(scenario)}
+                        className="flex items-center gap-2"
                       >
                         <Copy className="h-4 w-4" />
+                        <span className="hidden sm:inline">Copy</span>
                       </Button>
                       <Button
                         variant="ghost"
                         size="sm"
                         onClick={() => deleteScenario(scenario.id)}
-                        className="text-destructive hover:text-destructive"
+                        className="text-destructive hover:text-destructive flex items-center gap-2"
                       >
                         <Trash2 className="h-4 w-4" />
+                        <span className="hidden sm:inline">Delete</span>
                       </Button>
                     </div>
                   </div>
                 </CardContent>
               </Card>
-            ))}
-          </TabsContent>
-        </Tabs>
-      </CardContent>
-    </Card>
+            ))
+          ) : (
+            <Card className="border-dashed border-muted">
+              <CardContent className="text-center py-12">
+                <Settings className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                <p className="text-muted-foreground mb-2 font-medium">No scenarios to manage</p>
+                <p className="text-sm text-muted-foreground">
+                  Save some scenarios first to manage them here.
+                </p>
+              </CardContent>
+            </Card>
+          )}
+        </div>
+      )}
+    </div>
   );
 };
 
