@@ -1,6 +1,6 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
 import { 
   Users, 
@@ -162,152 +162,157 @@ const InterviewGuidanceTab = () => {
         </CardContent>
       </Card>
 
-      {/* Preparation Steps */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <Card className="border-blue-500/20 bg-blue-500/5">
-          <CardHeader>
-            <CardTitle className="text-blue-300 flex items-center gap-2">
-              <Target className="h-5 w-5" />
-              Interview Preparation Steps
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            {preparationSteps.map((step, index) => (
-              <div key={index} className="p-3 bg-blue-500/10 rounded-lg border border-blue-500/20">
-                <div className="flex items-start gap-3">
-                  <div className="flex-shrink-0">{step.icon}</div>
-                  <div className="flex-1">
-                    <h4 className="font-medium text-white text-sm mb-1">{step.title}</h4>
-                    <p className="text-xs text-muted-foreground mb-2">{step.description}</p>
-                    <ul className="space-y-1">
-                      {step.tips.map((tip, tipIndex) => (
-                        <li key={tipIndex} className="text-xs text-muted-foreground flex items-start gap-1">
-                          <CheckCircle className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
-                          {tip}
-                        </li>
-                      ))}
-                    </ul>
+      {/* Interview Guidance Accordion */}
+      <Accordion type="single" collapsible className="space-y-4" defaultValue="preparation">
+        {/* Preparation Steps */}
+        <AccordionItem value="preparation" className="border-elec-yellow/20 bg-elec-gray rounded-md">
+          <AccordionTrigger className="text-white hover:text-elec-yellow px-6 py-4 hover:no-underline">
+            <div className="flex items-center gap-3">
+              <Target className="h-5 w-5 text-blue-400" />
+              <span className="font-medium">Interview Preparation Steps</span>
+            </div>
+          </AccordionTrigger>
+          <AccordionContent className="px-6 pb-6">
+            <div className="space-y-4">
+              {preparationSteps.map((step, index) => (
+                <div key={index} className="p-4 bg-blue-500/10 rounded-lg border border-blue-500/20">
+                  <div className="flex items-start gap-3">
+                    <div className="flex-shrink-0">{step.icon}</div>
+                    <div className="flex-1">
+                      <h4 className="font-medium text-white mb-2">{step.title}</h4>
+                      <p className="text-sm text-muted-foreground mb-3">{step.description}</p>
+                      <ul className="space-y-2">
+                        {step.tips.map((tip, tipIndex) => (
+                          <li key={tipIndex} className="text-sm text-muted-foreground flex items-start gap-2">
+                            <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
+                            {tip}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
-          </CardContent>
-        </Card>
+              ))}
+            </div>
+          </AccordionContent>
+        </AccordionItem>
 
         {/* Interview Types */}
-        <Card className="border-green-500/20 bg-green-500/5">
-          <CardHeader>
-            <CardTitle className="text-green-300 flex items-center gap-2">
-              <Clock className="h-5 w-5" />
-              Types of Electrical Interviews
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            {interviewTypes.map((interview, index) => (
-              <div key={index} className="p-3 bg-green-500/10 rounded-lg border border-green-500/20">
-                <div className="flex items-center justify-between mb-2">
-                  <h4 className="font-medium text-white text-sm">{interview.type}</h4>
-                  <Badge className="bg-green-500/20 text-green-400 border-green-500/30 text-xs">
-                    {interview.duration}
-                  </Badge>
+        <AccordionItem value="interview-types" className="border-elec-yellow/20 bg-elec-gray rounded-md">
+          <AccordionTrigger className="text-white hover:text-elec-yellow px-6 py-4 hover:no-underline">
+            <div className="flex items-center gap-3">
+              <Clock className="h-5 w-5 text-green-400" />
+              <span className="font-medium">Types of Electrical Interviews</span>
+            </div>
+          </AccordionTrigger>
+          <AccordionContent className="px-6 pb-6">
+            <div className="space-y-4">
+              {interviewTypes.map((interview, index) => (
+                <div key={index} className="p-4 bg-green-500/10 rounded-lg border border-green-500/20">
+                  <div className="flex items-center justify-between mb-3">
+                    <h4 className="font-medium text-white">{interview.type}</h4>
+                    <Badge className="bg-green-500/20 text-green-400 border-green-500/30">
+                      {interview.duration}
+                    </Badge>
+                  </div>
+                  <p className="text-sm text-muted-foreground mb-3">{interview.focus}</p>
+                  <ul className="space-y-2">
+                    {interview.tips.map((tip, tipIndex) => (
+                      <li key={tipIndex} className="text-sm text-muted-foreground flex items-start gap-2">
+                        <AlertCircle className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
+                        {tip}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-                <p className="text-xs text-muted-foreground mb-2">{interview.focus}</p>
-                <ul className="space-y-1">
-                  {interview.tips.map((tip, tipIndex) => (
-                    <li key={tipIndex} className="text-xs text-muted-foreground flex items-start gap-1">
-                      <AlertCircle className="h-3 w-3 text-amber-400 mt-0.5 flex-shrink-0" />
-                      {tip}
-                    </li>
-                  ))}
+              ))}
+            </div>
+          </AccordionContent>
+        </AccordionItem>
+
+        {/* Common Questions */}
+        <AccordionItem value="common-questions" className="border-elec-yellow/20 bg-elec-gray rounded-md">
+          <AccordionTrigger className="text-white hover:text-elec-yellow px-6 py-4 hover:no-underline">
+            <div className="flex items-center gap-3">
+              <MessageCircle className="h-5 w-5 text-purple-400" />
+              <span className="font-medium">Common Electrical Interview Questions</span>
+            </div>
+          </AccordionTrigger>
+          <AccordionContent className="px-6 pb-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {commonQuestions.map((category, index) => (
+                <div key={index} className="space-y-3">
+                  <h4 className="font-medium text-white">{category.category}</h4>
+                  <div className="space-y-3">
+                    {category.questions.map((question, qIndex) => (
+                      <div key={qIndex} className="p-3 bg-purple-500/10 rounded border border-purple-500/20">
+                        <p className="text-sm text-muted-foreground">{question}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </AccordionContent>
+        </AccordionItem>
+
+        {/* Final Tips */}
+        <AccordionItem value="final-tips" className="border-elec-yellow/20 bg-elec-gray rounded-md">
+          <AccordionTrigger className="text-white hover:text-elec-yellow px-6 py-4 hover:no-underline">
+            <div className="flex items-center gap-3">
+              <Star className="h-5 w-5 text-amber-400" />
+              <span className="font-medium">Final Interview Tips</span>
+            </div>
+          </AccordionTrigger>
+          <AccordionContent className="px-6 pb-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-4">
+                <h4 className="font-medium text-white">Before the Interview</h4>
+                <ul className="space-y-3 text-sm text-muted-foreground">
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
+                    Print multiple copies of your CV and certificates
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
+                    Plan your route and arrive 10-15 minutes early
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
+                    Prepare a portfolio of your best electrical work
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
+                    Research current electrical regulations and standards
+                  </li>
                 </ul>
               </div>
-            ))}
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Common Questions */}
-      <Card className="border-purple-500/20 bg-purple-500/5">
-        <CardHeader>
-          <CardTitle className="text-purple-300 flex items-center gap-2">
-            <MessageCircle className="h-5 w-5" />
-            Common Electrical Interview Questions
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {commonQuestions.map((category, index) => (
-              <div key={index} className="space-y-3">
-                <h4 className="font-medium text-white">{category.category}</h4>
-                <div className="space-y-2">
-                  {category.questions.map((question, qIndex) => (
-                    <div key={qIndex} className="p-2 bg-purple-500/10 rounded border border-purple-500/20">
-                      <p className="text-xs text-muted-foreground">{question}</p>
-                    </div>
-                  ))}
-                </div>
+              
+              <div className="space-y-4">
+                <h4 className="font-medium text-white">During the Interview</h4>
+                <ul className="space-y-3 text-sm text-muted-foreground">
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
+                    Speak clearly and make eye contact
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
+                    Use specific examples from your experience
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
+                    Ask about safety procedures and company culture
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
+                    Show enthusiasm for learning and development
+                  </li>
+                </ul>
               </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Quick Tips */}
-      <Card className="border-amber-500/20 bg-amber-500/5">
-        <CardHeader>
-          <CardTitle className="text-amber-300 flex items-center gap-2">
-            <Star className="h-5 w-5" />
-            Final Interview Tips
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="space-y-3">
-              <h4 className="font-medium text-white text-sm">Before the Interview</h4>
-              <ul className="space-y-2 text-xs text-muted-foreground">
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
-                  Print multiple copies of your CV and certificates
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
-                  Plan your route and arrive 10-15 minutes early
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
-                  Prepare a portfolio of your best electrical work
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
-                  Research current electrical regulations and standards
-                </li>
-              </ul>
             </div>
-            
-            <div className="space-y-3">
-              <h4 className="font-medium text-white text-sm">During the Interview</h4>
-              <ul className="space-y-2 text-xs text-muted-foreground">
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
-                  Speak clearly and make eye contact
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
-                  Use specific examples from your experience
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
-                  Ask about safety procedures and company culture
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
-                  Show enthusiasm for learning and development
-                </li>
-              </ul>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
     </div>
   );
 };
