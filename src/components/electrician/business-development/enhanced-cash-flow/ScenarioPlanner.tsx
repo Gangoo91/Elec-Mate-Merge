@@ -194,7 +194,7 @@ export const ScenarioPlanner = ({
                             {getScenarioIcon(scenario.id)}
                             <span className="text-white font-medium">{scenario.name}</span>
                             {selectedScenario === scenario.id && (
-                              <Badge variant="outline" size="sm">Current</Badge>
+                              <Badge variant="outline">Current</Badge>
                             )}
                           </div>
                         </td>

@@ -151,7 +151,7 @@ export const CashFlowCharts = ({ projections, selectedScenario }: CashFlowCharts
               />
               <Bar 
                 dataKey="value" 
-                fill={(entry: any) => entry.isPositive ? '#10b981' : '#ef4444'}
+                fill="#10b981"
               >
                 {waterfallData.map((entry, index) => (
                   <Cell key={`cell-${index}`} fill={entry.isPositive ? '#10b981' : '#ef4444'} />

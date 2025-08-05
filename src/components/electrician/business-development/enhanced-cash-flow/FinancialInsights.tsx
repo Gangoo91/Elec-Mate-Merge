@@ -57,7 +57,7 @@ export const FinancialInsights = ({ insights, financialMetrics, emergencyFundTar
       case 'warning':
         return 'destructive';
       case 'success':
-        return 'success';
+        return 'default'; // Use default variant instead of success
       default:
         return 'default';
     }

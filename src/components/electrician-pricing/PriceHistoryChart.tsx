@@ -63,7 +63,7 @@ const PriceHistoryChart = ({ title, data, color, unit }: PriceHistoryChartProps)
                   activeDot={{ r: 6, strokeWidth: 0 }}
                   dot={false}
                 />
-                <ChartLegend content={<ChartLegendContent />} />
+                <ChartLegend content={<ChartLegendContent payload={[]} />} />
               </LineChart>
             </ResponsiveContainer>
           </ChartContainer>

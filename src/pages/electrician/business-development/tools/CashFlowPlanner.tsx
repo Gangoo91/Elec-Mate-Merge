@@ -262,7 +262,7 @@ const CashFlowPlanner = () => {
                     <div className="flex items-center justify-between mb-3">
                       <h4 className="font-medium text-white">{category.name}</h4>
                       <div className="flex items-center gap-2">
-                        {category.variable && <Badge variant="yellow" size="sm">Variable</Badge>}
+                        {category.variable && <Badge variant="yellow">Variable</Badge>}
                         <Button
                           size="sm"
                           variant="ghost"
