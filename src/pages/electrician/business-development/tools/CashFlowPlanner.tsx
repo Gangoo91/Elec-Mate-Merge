@@ -1,331 +1,520 @@
-import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { MobileInput } from "@/components/ui/mobile-input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import BackButton from "@/components/common/BackButton";
 import { useToast } from "@/hooks/use-toast";
-import { TrendingUp, Calendar, PoundSterling, AlertTriangle, TrendingDown } from "lucide-react";
-
-interface MonthlyData {
-  month: string;
-  income: number;
-  expenses: number;
-  balance: number;
-  cumulative: number;
-}
-
-interface CashFlowInputs {
-  regularIncome: number;
-  seasonalIncome: number;
-  materialCosts: number;
-  labourCosts: number;
-  overheads: number;
-  equipment: number;
-  marketing: number;
-  insurance: number;
-  vehicleCosts: number;
-  startingBalance: number;
-}
+import { TrendingUp, Calculator, BarChart3, Target, Settings, Plus, Minus } from "lucide-react";
+import { useCashFlow } from "@/hooks/use-cash-flow";
+import { CashFlowCharts } from "@/components/electrician/business-development/enhanced-cash-flow/CashFlowCharts";
+import { ScenarioPlanner } from "@/components/electrician/business-development/enhanced-cash-flow/ScenarioPlanner";
+import { FinancialInsights } from "@/components/electrician/business-development/enhanced-cash-flow/FinancialInsights";
+import { MobileInput } from "@/components/ui/mobile-input";
+import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
+import { useState } from "react";
 
 const CashFlowPlanner = () => {
   const { toast } = useToast();
-  const [inputs, setInputs] = useState<CashFlowInputs>({
-    regularIncome: 0,
-    seasonalIncome: 0,
-    materialCosts: 0,
-    labourCosts: 0,
-    overheads: 0,
-    equipment: 0,
-    marketing: 0,
-    insurance: 0,
-    vehicleCosts: 0,
-    startingBalance: 0,
+  const {
+    state,
+    monthlyProjections,
+    insights,
+    financialMetrics,
+    updateIncomeStream,
+    addIncomeStream,
+    removeIncomeStream,
+    updateExpenseCategory,
+    addExpenseCategory,
+    removeExpenseCategory,
+    updateSettings
+  } = useCashFlow();
+
+  const [showAddIncome, setShowAddIncome] = useState(false);
+  const [showAddExpense, setShowAddExpense] = useState(false);
+  const [newIncomeForm, setNewIncomeForm] = useState({
+    name: '',
+    amount: 0,
+    frequency: 'monthly' as const,
+    paymentDelayDays: 14,
+    growth: 0.05
   });
-  
-  const [projection, setProjection] = useState<MonthlyData[]>([]);
-  const [calculated, setCalculated] = useState(false);
+  const [newExpenseForm, setNewExpenseForm] = useState({
+    name: '',
+    amount: 0,
+    frequency: 'monthly' as const,
+    variable: true,
+    growth: 0.03
+  });
 
-  const handleInputChange = (field: keyof CashFlowInputs, value: string) => {
-    setInputs(prev => ({
-      ...prev,
-      [field]: parseFloat(value) || 0
-    }));
+  const handleAddIncome = () => {
+    if (newIncomeForm.name && newIncomeForm.amount > 0) {
+      addIncomeStream(newIncomeForm);
+      setNewIncomeForm({
+        name: '',
+        amount: 0,
+        frequency: 'monthly',
+        paymentDelayDays: 14,
+        growth: 0.05
+      });
+      setShowAddIncome(false);
+      toast({
+        title: "Income Stream Added",
+        description: `${newIncomeForm.name} has been added to your cash flow model.`,
+        variant: "success"
+      });
+    }
   };
 
-  const calculateProjection = () => {
-    const months = [];
-    let cumulativeBalance = inputs.startingBalance;
-
-    // Seasonal multipliers for electrical work (higher in summer/autumn, lower in winter)
-    const seasonalMultipliers = [0.8, 0.7, 0.9, 1.1, 1.3, 1.4, 1.5, 1.4, 1.2, 1.1, 0.9, 0.8];
-    const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-
-    for (let i = 0; i < 12; i++) {
-      const seasonalFactor = seasonalMultipliers[i];
-      const monthlyIncome = inputs.regularIncome + (inputs.seasonalIncome * seasonalFactor);
-      const monthlyExpenses = inputs.materialCosts + inputs.labourCosts + inputs.overheads + 
-                             inputs.equipment + inputs.marketing + inputs.insurance + inputs.vehicleCosts;
-      
-      const monthlyBalance = monthlyIncome - monthlyExpenses;
-      cumulativeBalance += monthlyBalance;
-
-      months.push({
-        month: monthNames[i],
-        income: monthlyIncome,
-        expenses: monthlyExpenses,
-        balance: monthlyBalance,
-        cumulative: cumulativeBalance
+  const handleAddExpense = () => {
+    if (newExpenseForm.name && newExpenseForm.amount > 0) {
+      addExpenseCategory(newExpenseForm);
+      setNewExpenseForm({
+        name: '',
+        amount: 0,
+        frequency: 'monthly',
+        variable: true,
+        growth: 0.03
+      });
+      setShowAddExpense(false);
+      toast({
+        title: "Expense Category Added",
+        description: `${newExpenseForm.name} has been added to your cash flow model.`,
+        variant: "success"
       });
     }
-
-    setProjection(months);
-    setCalculated(true);
-    
-    toast({
-      title: "Cash Flow Calculated",
-      description: "Your 12-month projection has been generated with seasonal adjustments.",
-      variant: "success"
-    });
-  };
-
-  const getInsights = () => {
-    if (!projection.length) return [];
-    
-    const insights = [];
-    const totalIncome = projection.reduce((sum, month) => sum + month.income, 0);
-    const totalExpenses = projection.reduce((sum, month) => sum + month.expenses, 0);
-    const worstMonth = projection.reduce((worst, month) => month.cumulative < worst.cumulative ? month : worst);
-    const bestMonth = projection.reduce((best, month) => month.cumulative > best.cumulative ? month : best);
-
-    if (worstMonth.cumulative < 0) {
-      insights.push({
-        type: "warning",
-        message: `Cash flow dips negative in ${worstMonth.month} (£${worstMonth.cumulative.toFixed(0)}). Consider securing additional financing or adjusting expenses.`
-      });
-    }
-
-    if (totalIncome > totalExpenses) {
-      insights.push({
-        type: "success",
-        message: `Projected annual profit: £${(totalIncome - totalExpenses).toFixed(0)}. Strong financial outlook for the year.`
-      });
-    }
-
-    insights.push({
-      type: "info",
-      message: `Peak cash flow occurs in ${bestMonth.month} (£${bestMonth.cumulative.toFixed(0)}). Consider reinvesting during high-cash periods.`
-    });
-
-    return insights;
   };
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-6xl">
+    <div className="container mx-auto px-4 py-8 max-w-7xl">
       <div className="flex flex-col items-center justify-center mb-8">
         <h1 className="text-3xl font-bold tracking-tight mb-4 flex items-center gap-3">
           <TrendingUp className="h-8 w-8 text-elec-yellow" />
-          Cash Flow Planner
+          Advanced Cash Flow Planner
         </h1>
         <p className="text-muted-foreground text-center max-w-2xl mb-6">
-          Plan and forecast your cash flow over 12 months with seasonal adjustments for electrical contracting.
+          Professional cash flow forecasting with scenario planning, industry-specific insights, and BS7671 compliance tracking.
         </p>
         <BackButton customUrl="/electrician/business-development/tools" label="Back to Calculators" />
       </div>
 
-      <Tabs defaultValue="inputs" className="space-y-6">
-        <TabsList className="grid w-full grid-cols-2">
-          <TabsTrigger value="inputs">Income & Expenses</TabsTrigger>
-          <TabsTrigger value="projection" disabled={!calculated}>12-Month Projection</TabsTrigger>
+      <Tabs defaultValue="setup" className="space-y-6">
+        <TabsList className="grid w-full grid-cols-5">
+          <TabsTrigger value="setup" className="flex items-center gap-2">
+            <Settings className="h-4 w-4" />
+            Setup
+          </TabsTrigger>
+          <TabsTrigger value="projections" className="flex items-center gap-2">
+            <Calculator className="h-4 w-4" />
+            Projections
+          </TabsTrigger>
+          <TabsTrigger value="charts" className="flex items-center gap-2">
+            <BarChart3 className="h-4 w-4" />
+            Charts
+          </TabsTrigger>
+          <TabsTrigger value="scenarios" className="flex items-center gap-2">
+            <Target className="h-4 w-4" />
+            Scenarios
+          </TabsTrigger>
+          <TabsTrigger value="insights" className="flex items-center gap-2">
+            <TrendingUp className="h-4 w-4" />
+            Insights
+          </TabsTrigger>
         </TabsList>
 
-        <TabsContent value="inputs" className="space-y-6">
-          <div className="grid gap-6 md:grid-cols-2">
+        <TabsContent value="setup" className="space-y-6">
+          <div className="grid gap-6 lg:grid-cols-2">
+            {/* Income Streams */}
             <Card className="border-elec-yellow/20 bg-elec-card">
               <CardHeader>
-                <CardTitle className="text-white flex items-center gap-2">
-                  <PoundSterling className="h-5 w-5 text-elec-yellow" />
-                  Monthly Income
+                <CardTitle className="text-white flex items-center justify-between">
+                  Income Streams
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={() => setShowAddIncome(!showAddIncome)}
+                    className="flex items-center gap-2"
+                  >
+                    <Plus className="h-4 w-4" />
+                    Add Stream
+                  </Button>
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                <MobileInput
-                  label="Regular Monthly Income"
-                  value={inputs.regularIncome.toString()}
-                  onChange={(e) => handleInputChange('regularIncome', e.target.value)}
-                  type="number"
-                  unit="£"
-                  hint="Consistent monthly revenue from contracts"
-                />
-                <MobileInput
-                  label="Seasonal Income Base"
-                  value={inputs.seasonalIncome.toString()}
-                  onChange={(e) => handleInputChange('seasonalIncome', e.target.value)}
-                  type="number"
-                  unit="£"
-                  hint="Additional seasonal work (automatically adjusted by month)"
-                />
-                <MobileInput
-                  label="Starting Cash Balance"
-                  value={inputs.startingBalance.toString()}
-                  onChange={(e) => handleInputChange('startingBalance', e.target.value)}
-                  type="number"
-                  unit="£"
-                  hint="Current cash on hand"
-                />
+                {state.incomeStreams.map((stream) => (
+                  <div key={stream.id} className="p-4 rounded-lg bg-secondary/20 border border-secondary/40">
+                    <div className="flex items-center justify-between mb-3">
+                      <h4 className="font-medium text-white">{stream.name}</h4>
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        onClick={() => removeIncomeStream(stream.id)}
+                        className="text-red-400 hover:text-red-300"
+                      >
+                        <Minus className="h-4 w-4" />
+                      </Button>
+                    </div>
+                    
+                    <div className="grid gap-3 md:grid-cols-2">
+                      <MobileInput
+                        label="Amount"
+                        value={stream.amount.toString()}
+                        onChange={(e) => updateIncomeStream(stream.id, { amount: parseFloat(e.target.value) || 0 })}
+                        type="number"
+                        unit="£"
+                      />
+                      <MobileSelectWrapper
+                        label="Frequency"
+                        value={stream.frequency}
+                        onValueChange={(value) => updateIncomeStream(stream.id, { frequency: value as any })}
+                        options={[
+                          { value: 'monthly', label: 'Monthly' },
+                          { value: 'quarterly', label: 'Quarterly' },
+                          { value: 'seasonal', label: 'Seasonal' }
+                        ]}
+                      />
+                      <MobileInput
+                        label="Payment Delay"
+                        value={stream.paymentDelayDays.toString()}
+                        onChange={(e) => updateIncomeStream(stream.id, { paymentDelayDays: parseInt(e.target.value) || 0 })}
+                        type="number"
+                        unit="days"
+                        hint="Days between invoice and payment"
+                      />
+                      <MobileInput
+                        label="Annual Growth"
+                        value={(stream.growth * 100).toString()}
+                        onChange={(e) => updateIncomeStream(stream.id, { growth: (parseFloat(e.target.value) || 0) / 100 })}
+                        type="number"
+                        unit="%"
+                        hint="Expected annual growth rate"
+                      />
+                    </div>
+                  </div>
+                ))}
+
+                {showAddIncome && (
+                  <div className="p-4 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30">
+                    <h4 className="font-medium text-white mb-3">Add New Income Stream</h4>
+                    <div className="grid gap-3 md:grid-cols-2">
+                      <MobileInput
+                        label="Name"
+                        value={newIncomeForm.name}
+                        onChange={(e) => setNewIncomeForm(prev => ({ ...prev, name: e.target.value }))}
+                        hint="e.g., Regular Contracts, Emergency Callouts"
+                      />
+                      <MobileInput
+                        label="Amount"
+                        value={newIncomeForm.amount.toString()}
+                        onChange={(e) => setNewIncomeForm(prev => ({ ...prev, amount: parseFloat(e.target.value) || 0 }))}
+                        type="number"
+                        unit="£"
+                      />
+                      <MobileSelectWrapper
+                        label="Frequency"
+                        value={newIncomeForm.frequency}
+                        onValueChange={(value) => setNewIncomeForm(prev => ({ ...prev, frequency: value as any }))}
+                        options={[
+                          { value: 'monthly', label: 'Monthly' },
+                          { value: 'quarterly', label: 'Quarterly' },
+                          { value: 'seasonal', label: 'Seasonal' }
+                        ]}
+                      />
+                      <MobileInput
+                        label="Payment Delay"
+                        value={newIncomeForm.paymentDelayDays.toString()}
+                        onChange={(e) => setNewIncomeForm(prev => ({ ...prev, paymentDelayDays: parseInt(e.target.value) || 0 }))}
+                        type="number"
+                        unit="days"
+                      />
+                    </div>
+                    <div className="flex gap-2 mt-4">
+                      <Button onClick={handleAddIncome} className="bg-elec-yellow text-black hover:bg-elec-yellow/90">
+                        Add Income Stream
+                      </Button>
+                      <Button variant="outline" onClick={() => setShowAddIncome(false)}>
+                        Cancel
+                      </Button>
+                    </div>
+                  </div>
+                )}
               </CardContent>
             </Card>
 
+            {/* Expense Categories */}
             <Card className="border-elec-yellow/20 bg-elec-card">
               <CardHeader>
-                <CardTitle className="text-white flex items-center gap-2">
-                  <TrendingDown className="h-5 w-5 text-elec-yellow" />
-                  Monthly Expenses
+                <CardTitle className="text-white flex items-center justify-between">
+                  Expense Categories
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={() => setShowAddExpense(!showAddExpense)}
+                    className="flex items-center gap-2"
+                  >
+                    <Plus className="h-4 w-4" />
+                    Add Category
+                  </Button>
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                <MobileInput
-                  label="Material Costs"
-                  value={inputs.materialCosts.toString()}
-                  onChange={(e) => handleInputChange('materialCosts', e.target.value)}
-                  type="number"
-                  unit="£"
-                  hint="Cables, switches, fixtures etc."
-                />
-                <MobileInput
-                  label="Labour Costs"
-                  value={inputs.labourCosts.toString()}
-                  onChange={(e) => handleInputChange('labourCosts', e.target.value)}
-                  type="number"
-                  unit="£"
-                  hint="Employee wages and subcontractor fees"
-                />
-                <MobileInput
-                  label="Overheads"
-                  value={inputs.overheads.toString()}
-                  onChange={(e) => handleInputChange('overheads', e.target.value)}
-                  type="number"
-                  unit="£"
-                  hint="Rent, utilities, admin costs"
-                />
-                <MobileInput
-                  label="Equipment & Tools"
-                  value={inputs.equipment.toString()}
-                  onChange={(e) => handleInputChange('equipment', e.target.value)}
-                  type="number"
-                  unit="£"
-                  hint="Tool purchases, maintenance, calibration"
-                />
-                <MobileInput
-                  label="Marketing"
-                  value={inputs.marketing.toString()}
-                  onChange={(e) => handleInputChange('marketing', e.target.value)}
-                  type="number"
-                  unit="£"
-                  hint="Advertising, website, business development"
-                />
-                <MobileInput
-                  label="Insurance & Compliance"
-                  value={inputs.insurance.toString()}
-                  onChange={(e) => handleInputChange('insurance', e.target.value)}
-                  type="number"
-                  unit="£"
-                  hint="Public liability, professional indemnity, NICEIC fees"
-                />
-                <MobileInput
-                  label="Vehicle Costs"
-                  value={inputs.vehicleCosts.toString()}
-                  onChange={(e) => handleInputChange('vehicleCosts', e.target.value)}
-                  type="number"
-                  unit="£"
-                  hint="Fuel, maintenance, insurance, van payments"
-                />
+                {state.expenseCategories.map((category) => (
+                  <div key={category.id} className="p-4 rounded-lg bg-secondary/20 border border-secondary/40">
+                    <div className="flex items-center justify-between mb-3">
+                      <h4 className="font-medium text-white">{category.name}</h4>
+                      <div className="flex items-center gap-2">
+                        {category.variable && <Badge variant="yellow" size="sm">Variable</Badge>}
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          onClick={() => removeExpenseCategory(category.id)}
+                          className="text-red-400 hover:text-red-300"
+                        >
+                          <Minus className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    </div>
+                    
+                    <div className="grid gap-3 md:grid-cols-2">
+                      <MobileInput
+                        label="Amount"
+                        value={category.amount.toString()}
+                        onChange={(e) => updateExpenseCategory(category.id, { amount: parseFloat(e.target.value) || 0 })}
+                        type="number"
+                        unit="£"
+                      />
+                      <MobileSelectWrapper
+                        label="Frequency"
+                        value={category.frequency}
+                        onValueChange={(value) => updateExpenseCategory(category.id, { frequency: value as any })}
+                        options={[
+                          { value: 'monthly', label: 'Monthly' },
+                          { value: 'quarterly', label: 'Quarterly' },
+                          { value: 'annual', label: 'Annual' }
+                        ]}
+                      />
+                      <MobileInput
+                        label="Annual Growth"
+                        value={(category.growth * 100).toString()}
+                        onChange={(e) => updateExpenseCategory(category.id, { growth: (parseFloat(e.target.value) || 0) / 100 })}
+                        type="number"
+                        unit="%"
+                        hint="Expected annual growth rate"
+                      />
+                      {(category.frequency === 'quarterly' || category.frequency === 'annual') && (
+                        <MobileInput
+                          label="Timing (Month)"
+                          value={(category.timing || 1).toString()}
+                          onChange={(e) => updateExpenseCategory(category.id, { timing: parseInt(e.target.value) || 1 })}
+                          type="number"
+                          hint="Month when expense occurs"
+                        />
+                      )}
+                    </div>
+                  </div>
+                ))}
+
+                {showAddExpense && (
+                  <div className="p-4 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30">
+                    <h4 className="font-medium text-white mb-3">Add New Expense Category</h4>
+                    <div className="grid gap-3 md:grid-cols-2">
+                      <MobileInput
+                        label="Name"
+                        value={newExpenseForm.name}
+                        onChange={(e) => setNewExpenseForm(prev => ({ ...prev, name: e.target.value }))}
+                        hint="e.g., Tools & Equipment, Van Insurance"
+                      />
+                      <MobileInput
+                        label="Amount"
+                        value={newExpenseForm.amount.toString()}
+                        onChange={(e) => setNewExpenseForm(prev => ({ ...prev, amount: parseFloat(e.target.value) || 0 }))}
+                        type="number"
+                        unit="£"
+                      />
+                      <MobileSelectWrapper
+                        label="Frequency"
+                        value={newExpenseForm.frequency}
+                        onValueChange={(value) => setNewExpenseForm(prev => ({ ...prev, frequency: value as any }))}
+                        options={[
+                          { value: 'monthly', label: 'Monthly' },
+                          { value: 'quarterly', label: 'Quarterly' },
+                          { value: 'annual', label: 'Annual' }
+                        ]}
+                      />
+                    </div>
+                    <div className="flex gap-2 mt-4">
+                      <Button onClick={handleAddExpense} className="bg-elec-yellow text-black hover:bg-elec-yellow/90">
+                        Add Expense Category
+                      </Button>
+                      <Button variant="outline" onClick={() => setShowAddExpense(false)}>
+                        Cancel
+                      </Button>
+                    </div>
+                  </div>
+                )}
               </CardContent>
             </Card>
           </div>
 
-          <div className="flex justify-center">
-            <Button 
-              onClick={calculateProjection} 
-              size="lg"
-              className="bg-elec-yellow text-black hover:bg-elec-yellow/90"
-            >
-              Generate 12-Month Projection
-            </Button>
-          </div>
+          {/* Settings */}
+          <Card className="border-elec-yellow/20 bg-elec-card">
+            <CardHeader>
+              <CardTitle className="text-white">Settings & Assumptions</CardTitle>
+            </CardHeader>
+            <CardContent className="grid gap-4 md:grid-cols-4">
+              <MobileInput
+                label="Starting Cash Balance"
+                value={state.startingBalance.toString()}
+                onChange={(e) => updateSettings({ startingBalance: parseFloat(e.target.value) || 0 })}
+                type="number"
+                unit="£"
+                hint="Current cash on hand"
+              />
+              <MobileInput
+                label="Emergency Fund Target"
+                value={state.emergencyFundTarget.toString()}
+                onChange={(e) => updateSettings({ emergencyFundTarget: parseFloat(e.target.value) || 0 })}
+                type="number"
+                unit="£"
+                hint="Target emergency reserve"
+              />
+              <MobileSelectWrapper
+                label="VAT Quarter"
+                value={state.vatQuarter.toString()}
+                onValueChange={(value) => updateSettings({ vatQuarter: parseInt(value) })}
+                options={[
+                  { value: '1', label: 'Jan/Apr/Jul/Oct' },
+                  { value: '2', label: 'Feb/May/Aug/Nov' },
+                  { value: '3', label: 'Mar/Jun/Sep/Dec' }
+                ]}
+              />
+              <MobileSelectWrapper
+                label="Active Scenario"
+                value={state.selectedScenario}
+                onValueChange={(value) => updateSettings({ selectedScenario: value })}
+                options={state.scenarios.map(scenario => ({
+                  value: scenario.id,
+                  label: scenario.name
+                }))}
+              />
+            </CardContent>
+          </Card>
         </TabsContent>
 
-        <TabsContent value="projection" className="space-y-6">
-          {calculated && (
-            <>
-              <Card className="border-elec-yellow/20 bg-elec-card">
-                <CardHeader>
-                  <CardTitle className="text-white flex items-center gap-2">
-                    <Calendar className="h-5 w-5 text-elec-yellow" />
-                    Monthly Cash Flow Projection
-                    <Badge variant="success" className="ml-auto">Calculated</Badge>
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                    {projection.map((month, index) => (
-                      <div key={index} className="p-4 rounded-lg bg-secondary/20 border border-secondary/40">
-                        <h4 className="font-semibold text-white mb-2">{month.month}</h4>
-                        <div className="space-y-1 text-sm">
-                          <div className="flex justify-between">
-                            <span className="text-muted-foreground">Income:</span>
-                            <span className="text-green-400">£{month.income.toFixed(0)}</span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span className="text-muted-foreground">Expenses:</span>
-                            <span className="text-red-400">£{month.expenses.toFixed(0)}</span>
-                          </div>
-                          <div className="flex justify-between border-t border-secondary/40 pt-1">
-                            <span className="text-muted-foreground">Net:</span>
-                            <span className={month.balance >= 0 ? "text-green-400" : "text-red-400"}>
-                              £{month.balance.toFixed(0)}
-                            </span>
-                          </div>
-                          <div className="flex justify-between font-semibold">
-                            <span className="text-white">Balance:</span>
-                            <span className={month.cumulative >= 0 ? "text-green-400" : "text-red-400"}>
-                              £{month.cumulative.toFixed(0)}
-                            </span>
-                          </div>
-                        </div>
+        <TabsContent value="projections" className="space-y-6">
+          <Card className="border-elec-yellow/20 bg-elec-card">
+            <CardHeader>
+              <CardTitle className="text-white flex items-center justify-between">
+                12-Month Cash Flow Projection
+                <Badge variant="success">
+                  {state.scenarios.find(s => s.id === state.selectedScenario)?.name} Scenario
+                </Badge>
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                {monthlyProjections.map((month, index) => (
+                  <div key={index} className="p-4 rounded-lg bg-secondary/20 border border-secondary/40">
+                    <h4 className="font-semibold text-white mb-3">{month.monthName}</h4>
+                    <div className="space-y-2 text-sm">
+                      <div className="flex justify-between">
+                        <span className="text-muted-foreground">Income:</span>
+                        <span className="text-green-400 font-medium">£{month.income.toFixed(0)}</span>
                       </div>
-                    ))}
+                      <div className="flex justify-between">
+                        <span className="text-muted-foreground">Expenses:</span>
+                        <span className="text-red-400 font-medium">£{month.expenses.toFixed(0)}</span>
+                      </div>
+                      <div className="flex justify-between border-t border-secondary/40 pt-2">
+                        <span className="text-muted-foreground">Net Flow:</span>
+                        <span className={`font-medium ${month.netFlow >= 0 ? "text-green-400" : "text-red-400"}`}>
+                          £{month.netFlow.toFixed(0)}
+                        </span>
+                      </div>
+                      <div className="flex justify-between font-semibold">
+                        <span className="text-white">Balance:</span>
+                        <span className={`${month.cumulativeBalance >= 0 ? "text-green-400" : "text-red-400"}`}>
+                          £{month.cumulativeBalance.toFixed(0)}
+                        </span>
+                      </div>
+                    </div>
                   </div>
-                </CardContent>
-              </Card>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
 
-              <Card className="border-elec-yellow/20 bg-elec-card">
-                <CardHeader>
-                  <CardTitle className="text-white flex items-center gap-2">
-                    <AlertTriangle className="h-5 w-5 text-elec-yellow" />
-                    Business Insights
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-3">
-                    {getInsights().map((insight, index) => (
-                      <div 
-                        key={index} 
-                        className={`p-4 rounded-lg border ${
-                          insight.type === 'warning' ? 'bg-destructive/10 border-destructive/30 text-destructive' :
-                          insight.type === 'success' ? 'bg-green-500/10 border-green-500/30 text-green-400' :
-                          'bg-blue-500/10 border-blue-500/30 text-blue-400'
-                        }`}
-                      >
-                        {insight.message}
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            </>
-          )}
+          {/* Annual Summary */}
+          <Card className="border-elec-yellow/20 bg-elec-card">
+            <CardHeader>
+              <CardTitle className="text-white">Annual Financial Summary</CardTitle>
+            </CardHeader>
+            <CardContent className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+              <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/30">
+                <h4 className="font-medium text-green-400 mb-2">Total Income</h4>
+                <p className="text-2xl font-bold text-white">£{financialMetrics.totalIncome.toFixed(0)}</p>
+                <p className="text-sm text-muted-foreground">Avg: £{financialMetrics.avgMonthlyIncome.toFixed(0)}/month</p>
+              </div>
+              
+              <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/30">
+                <h4 className="font-medium text-red-400 mb-2">Total Expenses</h4>
+                <p className="text-2xl font-bold text-white">£{financialMetrics.totalExpenses.toFixed(0)}</p>
+                <p className="text-sm text-muted-foreground">Avg: £{financialMetrics.avgMonthlyExpenses.toFixed(0)}/month</p>
+              </div>
+              
+              <div className={`p-4 rounded-lg border ${
+                financialMetrics.netProfit >= 0 
+                  ? 'bg-green-500/10 border-green-500/30' 
+                  : 'bg-red-500/10 border-red-500/30'
+              }`}>
+                <h4 className={`font-medium mb-2 ${
+                  financialMetrics.netProfit >= 0 ? 'text-green-400' : 'text-red-400'
+                }`}>
+                  Net Profit
+                </h4>
+                <p className="text-2xl font-bold text-white">£{financialMetrics.netProfit.toFixed(0)}</p>
+                <p className="text-sm text-muted-foreground">Margin: {financialMetrics.profitMargin.toFixed(1)}%</p>
+              </div>
+              
+              <div className={`p-4 rounded-lg border ${
+                financialMetrics.minBalance >= 0 
+                  ? 'bg-green-500/10 border-green-500/30' 
+                  : 'bg-red-500/10 border-red-500/30'
+              }`}>
+                <h4 className={`font-medium mb-2 ${
+                  financialMetrics.minBalance >= 0 ? 'text-green-400' : 'text-red-400'
+                }`}>
+                  Minimum Balance
+                </h4>
+                <p className="text-2xl font-bold text-white">£{financialMetrics.minBalance.toFixed(0)}</p>
+                <p className="text-sm text-muted-foreground">Runway: {financialMetrics.cashRunway} months</p>
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="charts">
+          <CashFlowCharts 
+            projections={monthlyProjections} 
+            selectedScenario={state.scenarios.find(s => s.id === state.selectedScenario)?.name || 'Realistic'}
+          />
+        </TabsContent>
+
+        <TabsContent value="scenarios">
+          <ScenarioPlanner
+            scenarios={state.scenarios}
+            selectedScenario={state.selectedScenario}
+            onScenarioChange={(scenarioId) => updateSettings({ selectedScenario: scenarioId })}
+            monthlyProjections={monthlyProjections}
+            financialMetrics={financialMetrics}
+          />
+        </TabsContent>
+
+        <TabsContent value="insights">
+          <FinancialInsights
+            insights={insights}
+            financialMetrics={financialMetrics}
+            emergencyFundTarget={state.emergencyFundTarget}
+          />
         </TabsContent>
       </Tabs>
     </div>
