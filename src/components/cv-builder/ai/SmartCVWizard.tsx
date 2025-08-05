@@ -2,15 +2,15 @@
 import React, { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { MobileInput } from "@/components/ui/mobile-input";
+import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
 import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 import { Wand2, Loader2, Plus, Target, User, Briefcase, GraduationCap } from "lucide-react";
 import { CVData } from "../types";
 import { AIService } from "./AIService";
 import { toast } from "@/hooks/use-toast";
+import { useMobileEnhanced } from "@/hooks/use-mobile-enhanced";
 
 interface SmartCVWizardProps {
   onCVGenerated: (cvData: CVData) => void;
@@ -54,6 +54,7 @@ const wizardSteps: WizardStep[] = [
 export const SmartCVWizard: React.FC<SmartCVWizardProps> = ({ onCVGenerated, onClose }) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [isGenerating, setIsGenerating] = useState(false);
+  const { isMobile } = useMobileEnhanced();
   const [wizardData, setWizardData] = useState({
     targetRole: '',
     experienceLevel: '',
@@ -278,55 +279,23 @@ export const SmartCVWizard: React.FC<SmartCVWizardProps> = ({ onCVGenerated, onC
       case 'target':
         return (
           <div className="space-y-6">
-            <div className="space-y-3">
-              <label className="text-sm font-semibold text-elec-light flex items-center gap-2">
-                <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
-                Target Role *
-              </label>
-              <Select value={wizardData.targetRole} onValueChange={(value) => 
-                setWizardData(prev => ({ ...prev, targetRole: value }))
-              }>
-                <SelectTrigger className="w-full h-12 bg-elec-card border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200">
-                  <SelectValue placeholder="Select your target role" />
-                </SelectTrigger>
-                <SelectContent className="bg-elec-card border-elec-gray/40">
-                  {electricalRoles.map(role => (
-                    <SelectItem key={role} value={role} className="text-elec-light hover:bg-elec-yellow/10">
-                      {role}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <p className="text-xs text-elec-light/70 flex items-center gap-1">
-                <span className="w-1 h-1 bg-elec-yellow/60 rounded-full"></span>
-                Choose the electrical role you're applying for
-              </p>
-            </div>
+            <MobileSelectWrapper
+              label="Target Role *"
+              placeholder="Select your target role"
+              value={wizardData.targetRole}
+              onValueChange={(value) => setWizardData(prev => ({ ...prev, targetRole: value }))}
+              options={electricalRoles.map(role => ({ value: role, label: role }))}
+              hint="Choose the electrical role you're applying for"
+            />
 
-            <div className="space-y-3">
-              <label className="text-sm font-semibold text-elec-light flex items-center gap-2">
-                <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
-                Experience Level *
-              </label>
-              <Select value={wizardData.experienceLevel} onValueChange={(value) => 
-                setWizardData(prev => ({ ...prev, experienceLevel: value }))
-              }>
-                <SelectTrigger className="w-full h-12 bg-elec-card border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200">
-                  <SelectValue placeholder="Select your experience level" />
-                </SelectTrigger>
-                <SelectContent className="bg-elec-card border-elec-gray/40">
-                  {experienceLevels.map(level => (
-                    <SelectItem key={level} value={level} className="text-elec-light hover:bg-elec-yellow/10">
-                      {level}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <p className="text-xs text-elec-light/70 flex items-center gap-1">
-                <span className="w-1 h-1 bg-elec-yellow/60 rounded-full"></span>
-                Select your current experience level
-              </p>
-            </div>
+            <MobileSelectWrapper
+              label="Experience Level *"
+              placeholder="Select your experience level"
+              value={wizardData.experienceLevel}
+              onValueChange={(value) => setWizardData(prev => ({ ...prev, experienceLevel: value }))}
+              options={experienceLevels.map(level => ({ value: level, label: level }))}
+              hint="Select your current experience level"
+            />
 
             <div className="space-y-3">
               <label className="text-sm font-semibold text-elec-light flex items-center gap-2">
@@ -351,91 +320,61 @@ export const SmartCVWizard: React.FC<SmartCVWizardProps> = ({ onCVGenerated, onC
       case 'profile':
         return (
           <div className="space-y-6">
-            <div className="space-y-3">
-              <label className="text-sm font-semibold text-elec-light flex items-center gap-2">
-                <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
-                Full Name *
-              </label>
-              <input
-                type="text"
-                value={wizardData.personalInfo.fullName}
+            <MobileInput
+              label="Full Name *"
+              type="text"
+              value={wizardData.personalInfo.fullName}
+              onChange={(e) => setWizardData(prev => ({
+                ...prev,
+                personalInfo: { ...prev.personalInfo, fullName: e.target.value }
+              }))}
+              placeholder="Enter your full name"
+            />
+
+            <div className={`grid gap-4 ${isMobile ? 'grid-cols-1' : 'grid-cols-2'}`}>
+              <MobileInput
+                label="Email *"
+                type="email"
+                value={wizardData.personalInfo.email}
                 onChange={(e) => setWizardData(prev => ({
                   ...prev,
-                  personalInfo: { ...prev.personalInfo, fullName: e.target.value }
+                  personalInfo: { ...prev.personalInfo, email: e.target.value }
                 }))}
-                className="w-full h-12 bg-elec-card border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200 placeholder:text-elec-light/60 text-base font-medium px-4"
-                placeholder="Enter your full name"
+                placeholder="your.email@example.com"
+              />
+              <MobileInput
+                label="Phone"
+                type="tel"
+                value={wizardData.personalInfo.phone}
+                onChange={(e) => setWizardData(prev => ({
+                  ...prev,
+                  personalInfo: { ...prev.personalInfo, phone: e.target.value }
+                }))}
+                placeholder="07700 123456"
               />
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="space-y-3">
-                <label className="text-sm font-semibold text-elec-light flex items-center gap-2">
-                  <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
-                  Email *
-                </label>
-                <input
-                  type="email"
-                  value={wizardData.personalInfo.email}
-                  onChange={(e) => setWizardData(prev => ({
-                    ...prev,
-                    personalInfo: { ...prev.personalInfo, email: e.target.value }
-                  }))}
-                  className="w-full h-12 bg-elec-card border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200 placeholder:text-elec-light/60 text-base font-medium px-4"
-                  placeholder="your.email@example.com"
-                />
-              </div>
-              <div className="space-y-3">
-                <label className="text-sm font-semibold text-elec-light flex items-center gap-2">
-                  <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
-                  Phone
-                </label>
-                <input
-                  type="tel"
-                  value={wizardData.personalInfo.phone}
-                  onChange={(e) => setWizardData(prev => ({
-                    ...prev,
-                    personalInfo: { ...prev.personalInfo, phone: e.target.value }
-                  }))}
-                  className="w-full h-12 bg-elec-card border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200 placeholder:text-elec-light/60 text-base font-medium px-4"
-                  placeholder="07700 123456"
-                />
-              </div>
-            </div>
-
-            <div className="space-y-3">
-              <label className="text-sm font-semibold text-elec-light flex items-center gap-2">
-                <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
-                Address
-              </label>
-              <input
-                type="text"
-                value={wizardData.personalInfo.address}
-                onChange={(e) => setWizardData(prev => ({
-                  ...prev,
-                  personalInfo: { ...prev.personalInfo, address: e.target.value }
-                }))}
-                className="w-full h-12 bg-elec-card border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200 placeholder:text-elec-light/60 text-base font-medium px-4"
-                placeholder="123 High Street, City"
-              />
-            </div>
+            <MobileInput
+              label="Address"
+              type="text"
+              value={wizardData.personalInfo.address}
+              onChange={(e) => setWizardData(prev => ({
+                ...prev,
+                personalInfo: { ...prev.personalInfo, address: e.target.value }
+              }))}
+              placeholder="123 High Street, City"
+            />
             
-            <div className="space-y-3">
-              <label className="text-sm font-semibold text-elec-light flex items-center gap-2">
-                <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
-                Postcode
-              </label>
-              <input
-                type="text"
-                value={wizardData.personalInfo.postcode}
-                onChange={(e) => setWizardData(prev => ({
-                  ...prev,
-                  personalInfo: { ...prev.personalInfo, postcode: e.target.value }
-                }))}
-                className="w-full h-12 bg-elec-card border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200 placeholder:text-elec-light/60 text-base font-medium px-4"
-                placeholder="SW1A 1AA"
-              />
-            </div>
+            <MobileInput
+              label="Postcode"
+              type="text"
+              value={wizardData.personalInfo.postcode}
+              onChange={(e) => setWizardData(prev => ({
+                ...prev,
+                personalInfo: { ...prev.personalInfo, postcode: e.target.value }
+              }))}
+              placeholder="SW1A 1AA"
+            />
           </div>
         );
 
@@ -463,48 +402,29 @@ export const SmartCVWizard: React.FC<SmartCVWizardProps> = ({ onCVGenerated, onC
                       <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
                       Qualification *
                     </label>
-                    <Select value={qual.qualification} onValueChange={(value) => 
-                      updateQualification(index, 'qualification', value)
-                    }>
-                      <SelectTrigger className="w-full h-12 bg-elec-gray border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200">
-                        <SelectValue placeholder="Select qualification" />
-                      </SelectTrigger>
-                      <SelectContent className="bg-elec-card border-elec-gray/40 max-h-60">
-                        {electricalQualifications.map(qualification => (
-                          <SelectItem key={qualification} value={qualification} className="text-elec-light hover:bg-elec-yellow/10">
-                            {qualification}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+                    <MobileSelectWrapper
+                      label=""
+                      placeholder="Select qualification"
+                      value={qual.qualification}
+                      onValueChange={(value) => updateQualification(index, 'qualification', value)}
+                      options={electricalQualifications.map(q => ({ value: q, label: q }))}
+                    />
                   </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="space-y-3">
-                      <label className="text-sm font-semibold text-elec-light flex items-center gap-2">
-                        <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
-                        Institution/Provider
-                      </label>
-                      <input
-                        type="text"
-                        value={qual.institution}
-                        onChange={(e) => updateQualification(index, 'institution', e.target.value)}
-                        className="w-full h-12 bg-elec-gray border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200 placeholder:text-elec-light/60 text-base font-medium px-4"
-                        placeholder="e.g. City & Guilds, Local College"
-                      />
-                    </div>
-                    <div className="space-y-3">
-                      <label className="text-sm font-semibold text-elec-light flex items-center gap-2">
-                        <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
-                        Year Completed
-                      </label>
-                      <input
-                        type="text"
-                        value={qual.year}
-                        onChange={(e) => updateQualification(index, 'year', e.target.value)}
-                        className="w-full h-12 bg-elec-gray border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200 placeholder:text-elec-light/60 text-base font-medium px-4"
-                        placeholder="e.g. 2024, In Progress"
-                      />
-                    </div>
+                  <div className={`grid gap-4 ${isMobile ? 'grid-cols-1' : 'grid-cols-2'}`}>
+                    <MobileInput
+                      label="Institution/Provider"
+                      type="text"
+                      value={qual.institution}
+                      onChange={(e) => updateQualification(index, 'institution', e.target.value)}
+                      placeholder="e.g. City & Guilds, Local College"
+                    />
+                    <MobileInput
+                      label="Year Completed"
+                      type="text"
+                      value={qual.year}
+                      onChange={(e) => updateQualification(index, 'year', e.target.value)}
+                      placeholder="e.g. 2024, In Progress"
+                    />
                   </div>
                 </div>
               </div>
@@ -544,47 +464,29 @@ export const SmartCVWizard: React.FC<SmartCVWizardProps> = ({ onCVGenerated, onC
             {wizardData.workHistory.map((job, index) => (
               <div key={index} className="p-4 bg-elec-card border-2 border-elec-gray/50 rounded-xl">
                 <div className="space-y-4">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <label className="text-sm font-semibold text-elec-light flex items-center gap-2">
-                        <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
-                        Job Title
-                      </label>
-                      <input
-                        type="text"
-                        value={job.jobTitle}
-                        onChange={(e) => updateWorkExperience(index, 'jobTitle', e.target.value)}
-                        className="w-full h-12 bg-elec-gray border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200 placeholder:text-elec-light/60 text-base font-medium px-4"
-                        placeholder="e.g. Electrical Apprentice"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <label className="text-sm font-semibold text-elec-light flex items-center gap-2">
-                        <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
-                        Company
-                      </label>
-                      <input
-                        type="text"
-                        value={job.company}
-                        onChange={(e) => updateWorkExperience(index, 'company', e.target.value)}
-                        className="w-full h-12 bg-elec-gray border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200 placeholder:text-elec-light/60 text-base font-medium px-4"
-                        placeholder="e.g. ABC Electrical Ltd"
-                      />
-                    </div>
-                  </div>
-                  <div className="space-y-2">
-                    <label className="text-sm font-semibold text-elec-light flex items-center gap-2">
-                      <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
-                      Duration
-                    </label>
-                    <input
+                  <div className={`grid gap-4 ${isMobile ? 'grid-cols-1' : 'grid-cols-2'}`}>
+                    <MobileInput
+                      label="Job Title"
                       type="text"
-                      value={job.duration}
-                      onChange={(e) => updateWorkExperience(index, 'duration', e.target.value)}
-                      className="w-full h-12 bg-elec-gray border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200 placeholder:text-elec-light/60 text-base font-medium px-4"
-                      placeholder="e.g. 2 years, Jan 2020 - Present"
+                      value={job.jobTitle}
+                      onChange={(e) => updateWorkExperience(index, 'jobTitle', e.target.value)}
+                      placeholder="e.g. Electrical Apprentice"
+                    />
+                    <MobileInput
+                      label="Company"
+                      type="text"
+                      value={job.company}
+                      onChange={(e) => updateWorkExperience(index, 'company', e.target.value)}
+                      placeholder="e.g. ABC Electrical Ltd"
                     />
                   </div>
+                  <MobileInput
+                    label="Duration"
+                    type="text"
+                    value={job.duration}
+                    onChange={(e) => updateWorkExperience(index, 'duration', e.target.value)}
+                    placeholder="e.g. 2 years, Jan 2020 - Present"
+                  />
                   <div className="space-y-2">
                     <label className="text-sm font-semibold text-elec-light flex items-center gap-2">
                       <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
@@ -642,9 +544,9 @@ export const SmartCVWizard: React.FC<SmartCVWizardProps> = ({ onCVGenerated, onC
   };
 
   return (
-    <div className="max-h-full overflow-y-auto p-6">
+    <div className={`max-h-full overflow-y-auto ${isMobile ? 'p-3' : 'p-6'}`}>
       <div className="bg-elec-gray border-2 border-elec-gray/40 rounded-xl max-w-4xl mx-auto">
-        <div className="p-6 bg-elec-gray">
+        <div className={`bg-elec-gray ${isMobile ? 'p-4' : 'p-6'}`}>
           <div className="flex items-center gap-3">
             <Wand2 className="h-6 w-6 text-elec-yellow" />
             <div>
@@ -654,10 +556,12 @@ export const SmartCVWizard: React.FC<SmartCVWizardProps> = ({ onCVGenerated, onC
           </div>
           
           {/* Step indicator */}
-          <div className="flex items-center gap-2 mt-4">
+          <div className={`flex items-center mt-4 ${isMobile ? 'gap-1 overflow-x-auto pb-2' : 'gap-2'}`}>
             {wizardSteps.map((step, index) => (
-              <div key={step.id} className="flex items-center">
-                <div className={`flex items-center gap-2 px-3 py-2 rounded-lg ${
+              <div key={step.id} className="flex items-center flex-shrink-0">
+                <div className={`flex items-center gap-2 rounded-lg ${
+                  isMobile ? 'px-2 py-1.5' : 'px-3 py-2'
+                } ${
                   index === currentStep 
                     ? 'bg-elec-yellow text-black' 
                     : index < currentStep 
@@ -665,17 +569,19 @@ export const SmartCVWizard: React.FC<SmartCVWizardProps> = ({ onCVGenerated, onC
                       : 'bg-elec-card text-elec-light/60'
                 }`}>
                   {step.icon}
-                  <span className="text-sm font-medium">{step.title}</span>
+                  <span className={`font-medium ${isMobile ? 'text-xs' : 'text-sm'}`}>
+                    {isMobile ? step.title.split(' ')[0] : step.title}
+                  </span>
                 </div>
                 {index < wizardSteps.length - 1 && (
-                  <div className="w-8 h-px bg-elec-gray/60 mx-2" />
+                  <div className={`bg-elec-gray/60 mx-2 ${isMobile ? 'w-4 h-px' : 'w-8 h-px'}`} />
                 )}
               </div>
             ))}
           </div>
         </div>
 
-        <div className="space-y-6 p-6 bg-elec-gray">
+        <div className={`space-y-6 bg-elec-gray ${isMobile ? 'p-4' : 'p-6'}`}>
           <div>
             <h3 className="text-lg font-semibold text-elec-light mb-2">
               {wizardSteps[currentStep].title}
