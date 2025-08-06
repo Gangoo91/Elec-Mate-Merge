@@ -11,7 +11,13 @@ import {
   Users,
   PoundSterling,
   Target,
-  Lightbulb
+  Lightbulb,
+  AlertTriangle,
+  Clock,
+  DollarSign,
+  Factory,
+  ShieldCheck,
+  Brain
 } from "lucide-react";
 
 const IndustryInsights = () => {
@@ -24,9 +30,11 @@ const IndustryInsights = () => {
       opportunities: [
         "Solar PV installers earning £35k-£50k+",
         "Heat pump specialists commanding premium rates",
-        "Government grants creating sustained demand"
+        "Government grants creating sustained demand",
+        "Domestic retrofit market worth £35bn",
+        "Commercial solar installations growing 40% annually"
       ],
-      skills: ["MCS certification", "G99 grid connection", "Battery storage systems"]
+      skills: ["MCS certification", "G99 grid connection", "Battery storage systems", "Heat pump commissioning", "Energy management systems"]
     },
     {
       trend: "Electric Vehicle Infrastructure",
@@ -36,9 +44,11 @@ const IndustryInsights = () => {
       opportunities: [
         "EV charging installers earning £40k-£55k",
         "Commercial rapid charging projects",
-        "Fleet charging management systems"
+        "Fleet charging management systems",
+        "Highway service station upgrades",
+        "Workplace charging installations"
       ],
-      skills: ["EV charging installation", "Load management", "Smart charging systems"]
+      skills: ["EV charging installation", "Load management", "Smart charging systems", "Three-phase systems", "DNO applications"]
     },
     {
       trend: "Smart Building Technology",
@@ -48,9 +58,11 @@ const IndustryInsights = () => {
       opportunities: [
         "Building automation specialists £45k-£60k",
         "Smart home installation services",
-        "Commercial BMS maintenance contracts"
+        "Commercial BMS maintenance contracts",
+        "Retrofit automation projects",
+        "Energy monitoring systems"
       ],
-      skills: ["BMS programming", "IoT integration", "Smart lighting controls"]
+      skills: ["BMS programming", "IoT integration", "Smart lighting controls", "HVAC integration", "Wireless protocols"]
     },
     {
       trend: "Data Centre Expansion",
@@ -60,9 +72,39 @@ const IndustryInsights = () => {
       opportunities: [
         "Critical systems engineers £50k-£70k+",
         "UPS and backup power specialists",
-        "Ongoing maintenance contracts"
+        "Ongoing maintenance contracts",
+        "Edge computing facilities",
+        "Hyperscale data centre projects"
       ],
-      skills: ["High voltage systems", "UPS design", "Critical power management"]
+      skills: ["High voltage systems", "UPS design", "Critical power management", "Cooling systems", "Monitoring systems"]
+    },
+    {
+      trend: "Industrial Automation & Industry 4.0",
+      icon: Building,
+      growth: "+25% annually",
+      description: "Manufacturing digitalisation creating demand for automation electrical specialists",
+      opportunities: [
+        "Industrial automation engineers £45k-£65k",
+        "PLC programming specialists",
+        "Robotics integration projects",
+        "Predictive maintenance systems",
+        "Factory modernisation contracts"
+      ],
+      skills: ["PLC programming", "SCADA systems", "Industrial networks", "Safety systems", "Robotics integration"]
+    },
+    {
+      trend: "Grid Modernisation & Smart Grids",
+      icon: Zap,
+      growth: "+20% annually",
+      description: "Electricity network upgrades for renewable integration and smart grid technology",
+      opportunities: [
+        "Grid connection specialists £40k-£58k",
+        "Smart meter installation teams",
+        "Substation upgrade projects",
+        "Network monitoring systems",
+        "Distributed energy resources"
+      ],
+      skills: ["Grid connection procedures", "Smart metering", "Network protection", "SCADA systems", "Power quality analysis"]
     }
   ];
 
@@ -71,37 +113,49 @@ const IndustryInsights = () => {
       level: "Newly Qualified Electrician",
       experience: "0-2 years",
       salary: "£22k - £28k",
-      description: "Recent apprentice completion, basic installation work"
+      description: "Recent apprentice completion, basic installation work, domestic and small commercial projects"
     },
     {
       level: "Experienced Electrician",
       experience: "3-5 years",
       salary: "£28k - £38k",
-      description: "Independent working, complex installations, some specialisation"
+      description: "Independent working, complex installations, some specialisation, team collaboration"
     },
     {
       level: "Senior Electrician",
       experience: "5-10 years",
       salary: "£35k - £50k",
-      description: "Project leadership, mentoring, advanced problem-solving"
+      description: "Project leadership, mentoring apprentices, advanced problem-solving, quality control"
     },
     {
       level: "Specialist Electrician",
       experience: "5+ years + certification",
       salary: "£40k - £65k",
-      description: "Renewable energy, EV charging, automation specialist"
+      description: "Renewable energy, EV charging, automation specialist with premium rates"
     },
     {
       level: "Electrical Supervisor/Foreman",
       experience: "8-12 years",
       salary: "£45k - £60k",
-      description: "Team management, project oversight, quality control"
+      description: "Team management, project oversight, quality control, client liaison"
     },
     {
       level: "Electrical Engineer",
       experience: "HNC/HND + experience",
       salary: "£50k - £80k+",
-      description: "Design, planning, project management, technical leadership"
+      description: "Design, planning, project management, technical leadership, compliance"
+    },
+    {
+      level: "Principal Electrical Engineer",
+      experience: "Degree + 10+ years",
+      salary: "£65k - £100k+",
+      description: "Major project leadership, technical authority, business development, strategic planning"
+    },
+    {
+      level: "Electrical Contractor/Business Owner",
+      experience: "10+ years + business skills",
+      salary: "£50k - £150k+",
+      description: "Business ownership, multiple projects, team management, client relationships"
     }
   ];
 
@@ -110,29 +164,55 @@ const IndustryInsights = () => {
       region: "London & South East",
       demand: "Very High",
       averageSalary: "£35k - £55k",
-      specialisms: ["Commercial fit-outs", "Smart buildings", "Data centres"],
-      notes: "Highest pay rates but high living costs. Major infrastructure projects."
+      specialisms: ["Commercial fit-outs", "Smart buildings", "Data centres", "High-end residential"],
+      notes: "Highest pay rates but high living costs. Major infrastructure projects and corporate headquarters.",
+      growth: "+15% annually",
+      majorProjects: ["Crossrail electrical systems", "Thames Estuary development", "City office upgrades"]
     },
     {
       region: "Scotland",
       demand: "High",
       averageSalary: "£30k - £45k",
-      specialisms: ["Renewable energy", "Offshore wind", "Industrial"],
-      notes: "Strong renewable energy sector. Government green energy initiatives."
+      specialisms: ["Renewable energy", "Offshore wind", "Industrial", "Oil & gas transition"],
+      notes: "Strong renewable energy sector. Government green energy initiatives and North Sea wind farms.",
+      growth: "+18% annually",
+      majorProjects: ["ScotWind offshore projects", "Green hydrogen facilities", "Grid reinforcement"]
     },
     {
       region: "Northern England",
       demand: "High",
       averageSalary: "£28k - £42k",
-      specialisms: ["Industrial", "Manufacturing", "Infrastructure"],
-      notes: "Manufacturing resurgence. Good work-life balance and lower living costs."
+      specialisms: ["Industrial", "Manufacturing", "Infrastructure", "Nuclear power"],
+      notes: "Manufacturing resurgence. Good work-life balance and lower living costs. Nuclear new build.",
+      growth: "+12% annually",
+      majorProjects: ["Hinkley Point C", "HS2 northern sections", "Gigafactory developments"]
     },
     {
       region: "Midlands",
       demand: "Moderate-High",
       averageSalary: "£26k - £40k",
-      specialisms: ["Automotive", "Manufacturing", "Commercial"],
-      notes: "Automotive industry hub. Growing electric vehicle manufacturing."
+      specialisms: ["Automotive", "Manufacturing", "Commercial", "Logistics"],
+      notes: "Automotive industry hub. Growing electric vehicle manufacturing and battery plants.",
+      growth: "+14% annually",
+      majorProjects: ["EV battery plants", "Automotive facility conversions", "Distribution centres"]
+    },
+    {
+      region: "Wales",
+      demand: "Moderate",
+      averageSalary: "£25k - £38k",
+      specialisms: ["Industrial", "Renewable energy", "Infrastructure", "Tidal power"],
+      notes: "Growing renewable sector. Tidal power developments and industrial modernisation.",
+      growth: "+10% annually",
+      majorProjects: ["Tidal lagoon projects", "Steel industry modernisation", "Grid connections"]
+    },
+    {
+      region: "South West England",
+      demand: "Moderate-High",
+      averageSalary: "£27k - £41k",
+      specialisms: ["Marine technology", "Aerospace", "Nuclear", "Tourism infrastructure"],
+      notes: "Aerospace and marine industries. Nuclear power stations and defence contracts.",
+      growth: "+11% annually",
+      majorProjects: ["Nuclear facility maintenance", "Airport expansions", "Defence installations"]
     }
   ];
 
@@ -140,26 +220,131 @@ const IndustryInsights = () => {
     {
       skill: "Digital Systems Integration",
       importance: "Critical",
-      description: "Connecting electrical systems with digital networks and IoT devices",
-      timeline: "Essential now"
+      description: "Connecting electrical systems with digital networks and IoT devices for smart building management",
+      timeline: "Essential now",
+      salaryImpact: "+£5k-£10k"
     },
     {
       skill: "Energy Storage Technologies",
       importance: "High",
-      description: "Battery systems, grid storage, and energy management",
-      timeline: "Next 2-3 years"
+      description: "Battery systems, grid storage, and energy management for renewable integration",
+      timeline: "Next 2-3 years",
+      salaryImpact: "+£8k-£15k"
     },
     {
       skill: "Cybersecurity Awareness",
       importance: "Growing",
-      description: "Understanding security implications of connected electrical systems",
-      timeline: "Next 3-5 years"
+      description: "Understanding security implications of connected electrical systems and OT networks",
+      timeline: "Next 3-5 years",
+      salaryImpact: "+£3k-£8k"
     },
     {
       skill: "Sustainable Design Principles",
       importance: "Essential",
-      description: "Energy efficiency, carbon reduction, and environmental compliance",
-      timeline: "Essential now"
+      description: "Energy efficiency, carbon reduction, and environmental compliance for net-zero targets",
+      timeline: "Essential now",
+      salaryImpact: "+£5k-£12k"
+    },
+    {
+      skill: "AI and Machine Learning",
+      importance: "Emerging",
+      description: "Understanding AI applications in electrical systems, predictive maintenance, and energy optimisation",
+      timeline: "Next 5-7 years",
+      salaryImpact: "+£10k-£20k"
+    },
+    {
+      skill: "Hydrogen Technologies",
+      importance: "Future Critical",
+      description: "Electrical systems for hydrogen production, storage, and fuel cell technologies",
+      timeline: "Next 5-10 years",
+      salaryImpact: "+£12k-£25k"
+    }
+  ];
+
+  const industryAnalysis = [
+    {
+      sector: "Construction & Infrastructure",
+      marketSize: "£180bn annually",
+      electricalShare: "15-20%",
+      growth: "+8% annually",
+      keyDrivers: ["Population growth", "Infrastructure renewal", "Green building standards"],
+      challenges: ["Skills shortage", "Material costs", "Regulatory complexity"],
+      opportunities: ["Smart buildings", "EV infrastructure", "Renewable integration"]
+    },
+    {
+      sector: "Renewable Energy",
+      marketSize: "£25bn annually",
+      electricalShare: "60-70%",
+      growth: "+35% annually",
+      keyDrivers: ["Net zero targets", "Government incentives", "Cost competitiveness"],
+      challenges: ["Grid connection delays", "Planning permissions", "Skilled workforce"],
+      opportunities: ["Offshore wind", "Energy storage", "Green hydrogen"]
+    },
+    {
+      sector: "Manufacturing",
+      marketSize: "£320bn annually",
+      electricalShare: "12-15%",
+      growth: "+6% annually",
+      keyDrivers: ["Automation", "Nearshoring", "Industry 4.0"],
+      challenges: ["Global competition", "Energy costs", "Skills gaps"],
+      opportunities: ["Smart factories", "Robotics", "Energy efficiency"]
+    },
+    {
+      sector: "Data Centres & Technology",
+      marketSize: "£15bn annually",
+      electricalShare: "40-50%",
+      growth: "+18% annually",
+      keyDrivers: ["Cloud computing", "5G networks", "Edge computing"],
+      challenges: ["Power demand", "Cooling requirements", "Location constraints"],
+      opportunities: ["Edge facilities", "Green data centres", "Liquid cooling"]
+    }
+  ];
+
+  const skillsGapAnalysis = [
+    {
+      skill: "Renewable Energy Installation",
+      currentDemand: "Very High",
+      supply: "Low",
+      gap: "Severe",
+      trainingTime: "6-12 months",
+      certificationCost: "£1,500-£3,000",
+      salaryPremium: "+£8k-£15k"
+    },
+    {
+      skill: "EV Charging Infrastructure",
+      currentDemand: "High",
+      supply: "Low",
+      gap: "High",
+      trainingTime: "3-6 months",
+      certificationCost: "£800-£1,500",
+      salaryPremium: "+£5k-£12k"
+    },
+    {
+      skill: "Building Automation",
+      currentDemand: "High",
+      supply: "Moderate",
+      gap: "Moderate",
+      trainingTime: "6-18 months",
+      certificationCost: "£2,000-£5,000",
+      salaryPremium: "+£6k-£18k"
+    },
+    {
+      skill: "High Voltage Systems",
+      currentDemand: "Moderate",
+      supply: "Low",
+      gap: "High",
+      trainingTime: "12-24 months",
+      certificationCost: "£3,000-£8,000",
+      salaryPremium: "+£10k-£25k"
+    },
+    {
+      skill: "Data Centre Infrastructure",
+      currentDemand: "High",
+      supply: "Very Low",
+      gap: "Severe",
+      trainingTime: "12-18 months",
+      certificationCost: "£4,000-£10,000",
+      salaryPremium: "+£12k-£30k"
     }
   ];
 
@@ -258,7 +443,7 @@ const IndustryInsights = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {regionalInsights.map((region, index) => (
               <div key={index} className="space-y-3">
                 <div className="flex items-center justify-between">
@@ -272,6 +457,10 @@ const IndustryInsights = () => {
                     <span className="text-muted-foreground">Average Salary:</span>
                     <span className="text-elec-yellow font-medium">{region.averageSalary}</span>
                   </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Growth Rate:</span>
+                    <span className="text-green-400 font-medium">{region.growth}</span>
+                  </div>
                   <div>
                     <span className="text-muted-foreground">Key Specialisms:</span>
                     <div className="flex flex-wrap gap-1 mt-1">
@@ -281,6 +470,17 @@ const IndustryInsights = () => {
                         </Badge>
                       ))}
                     </div>
+                  </div>
+                  <div>
+                    <span className="text-muted-foreground text-xs">Major Projects:</span>
+                    <ul className="text-xs text-elec-light/70 mt-1 space-y-1">
+                      {region.majorProjects.map((project, projIndex) => (
+                        <li key={projIndex} className="flex items-center gap-1">
+                          <Target className="h-2 w-2 text-elec-yellow" />
+                          {project}
+                        </li>
+                      ))}
+                    </ul>
                   </div>
                 </div>
                 <p className="text-xs text-elec-light/70">{region.notes}</p>
@@ -313,7 +513,126 @@ const IndustryInsights = () => {
                     </Badge>
                   </div>
                 </div>
-                <p className="text-sm text-elec-light/80">{skill.description}</p>
+                <div className="flex items-center justify-between text-sm">
+                  <p className="text-elec-light/80 flex-1">{skill.description}</p>
+                  <Badge className="ml-2 bg-green-500/20 text-green-400 border-green-500/30 text-xs">
+                    {skill.salaryImpact}
+                  </Badge>
+                </div>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Industry Sector Analysis */}
+      <Card className="border-elec-yellow/20 bg-elec-gray">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Factory className="h-5 w-5 text-elec-yellow" />
+            Industry Sector Analysis
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {industryAnalysis.map((sector, index) => (
+              <div key={index} className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <h3 className="font-semibold text-white">{sector.sector}</h3>
+                  <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30">
+                    {sector.growth}
+                  </Badge>
+                </div>
+                <div className="space-y-2 text-sm">
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Market Size:</span>
+                    <span className="text-elec-yellow font-medium">{sector.marketSize}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Electrical Share:</span>
+                    <span className="text-green-400 font-medium">{sector.electricalShare}</span>
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <div>
+                    <span className="text-muted-foreground text-xs">Key Drivers:</span>
+                    <div className="flex flex-wrap gap-1 mt-1">
+                      {sector.keyDrivers.map((driver, driverIndex) => (
+                        <Badge key={driverIndex} variant="outline" className="text-xs bg-green-500/10">
+                          {driver}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+                  <div>
+                    <span className="text-muted-foreground text-xs">Challenges:</span>
+                    <div className="flex flex-wrap gap-1 mt-1">
+                      {sector.challenges.map((challenge, challengeIndex) => (
+                        <Badge key={challengeIndex} variant="outline" className="text-xs bg-red-500/10">
+                          {challenge}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+                  <div>
+                    <span className="text-muted-foreground text-xs">Opportunities:</span>
+                    <div className="flex flex-wrap gap-1 mt-1">
+                      {sector.opportunities.map((opportunity, oppIndex) => (
+                        <Badge key={oppIndex} variant="outline" className="text-xs bg-yellow-500/10">
+                          {opportunity}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Skills Gap Analysis */}
+      <Card className="border-red-500/20 bg-red-500/5">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2 text-red-400">
+            <AlertTriangle className="h-5 w-5" />
+            Critical Skills Gap Analysis
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            {skillsGapAnalysis.map((skill, index) => (
+              <div key={index} className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <h3 className="font-semibold text-white">{skill.skill}</h3>
+                  <Badge variant={skill.gap === "Severe" ? "destructive" : skill.gap === "High" ? "default" : "secondary"}>
+                    {skill.gap} Gap
+                  </Badge>
+                </div>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                  <div>
+                    <span className="text-muted-foreground text-xs">Demand:</span>
+                    <div className="font-medium text-red-400">{skill.currentDemand}</div>
+                  </div>
+                  <div>
+                    <span className="text-muted-foreground text-xs">Supply:</span>
+                    <div className="font-medium text-orange-400">{skill.supply}</div>
+                  </div>
+                  <div>
+                    <span className="text-muted-foreground text-xs">Training Time:</span>
+                    <div className="font-medium text-blue-400">{skill.trainingTime}</div>
+                  </div>
+                  <div>
+                    <span className="text-muted-foreground text-xs">Cost:</span>
+                    <div className="font-medium text-purple-400">{skill.certificationCost}</div>
+                  </div>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-xs text-muted-foreground">Salary Premium Potential:</span>
+                  <Badge className="bg-green-500/20 text-green-400 border-green-500/30">
+                    {skill.salaryPremium}
+                  </Badge>
+                </div>
               </div>
             ))}
           </div>
