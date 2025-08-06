@@ -713,9 +713,9 @@ const ProfessionalDevelopmentStrategy = () => {
                     {category.category}
                   </h4>
 
-                  <div className="space-y-3">
+                  <div className="space-y-4">
                     {category.developmentAreas.map((area, areaIndex) => (
-                      <div key={areaIndex} className="bg-pink-500/5 border border-pink-500/20 rounded p-3 space-y-2">
+                      <div key={areaIndex} className="space-y-2">
                         <h5 className={`font-medium text-pink-300 ${isMobile ? 'text-sm' : 'text-base'}`}>{area.skill}</h5>
                         <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{area.description}</p>
                         
