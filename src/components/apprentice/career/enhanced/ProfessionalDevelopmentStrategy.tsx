@@ -404,9 +404,8 @@ const ProfessionalDevelopmentStrategy = () => {
           <MobileAccordionTrigger icon={<GraduationCap className="h-5 w-5 text-blue-400" />}>
             Continuing Education & Advanced Qualifications
           </MobileAccordionTrigger>
-          <MobileAccordionContent>
-            <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-              {continuingEducation.map((category, index) => (
+          <MobileAccordionContent className="space-y-4 p-4">
+            {continuingEducation.map((category, index) => (
                 <div key={index} className="border border-blue-500/20 rounded-lg p-3 space-y-3">
                   <div className="flex items-center justify-between">
                     <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{category.category}</h4>
@@ -451,7 +450,6 @@ const ProfessionalDevelopmentStrategy = () => {
                   </div>
                 </div>
               ))}
-            </div>
           </MobileAccordionContent>
         </MobileAccordionItem>
 
@@ -459,9 +457,8 @@ const ProfessionalDevelopmentStrategy = () => {
           <MobileAccordionTrigger icon={<Network className="h-5 w-5 text-green-400" />}>
             Professional Networking & Industry Engagement
           </MobileAccordionTrigger>
-          <MobileAccordionContent>
-            <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-              {networkingStrategy.map((strategy, index) => (
+          <MobileAccordionContent className="space-y-4 p-4">
+            {networkingStrategy.map((strategy, index) => (
                 <div key={index} className="border border-green-500/20 rounded-lg p-3 space-y-3">
                   <div className="flex items-center justify-between">
                     <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{strategy.strategy}</h4>
@@ -500,7 +497,6 @@ const ProfessionalDevelopmentStrategy = () => {
                   </div>
                 </div>
               ))}
-            </div>
           </MobileAccordionContent>
         </MobileAccordionItem>
 
@@ -508,9 +504,8 @@ const ProfessionalDevelopmentStrategy = () => {
           <MobileAccordionTrigger icon={<Users className="h-5 w-5 text-purple-400" />}>
             Leadership & Management Development
           </MobileAccordionTrigger>
-          <MobileAccordionContent>
-            <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-              {leadershipDevelopment.map((category, index) => (
+          <MobileAccordionContent className="space-y-4 p-4">
+            {leadershipDevelopment.map((category, index) => (
                 <div key={index} className="border border-purple-500/20 rounded-lg p-3 space-y-3">
                   <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'} border-b border-purple-500/20 pb-1`}>
                     {category.category}
@@ -536,7 +531,6 @@ const ProfessionalDevelopmentStrategy = () => {
                   </div>
                 </div>
               ))}
-            </div>
           </MobileAccordionContent>
         </MobileAccordionItem>
 
@@ -606,49 +600,12 @@ const ProfessionalDevelopmentStrategy = () => {
           </MobileAccordionContent>
         </MobileAccordionItem>
 
-        <MobileAccordionItem value="leadership-development">
-          <MobileAccordionTrigger icon={<Users className="h-5 w-5 text-purple-400" />}>
-            Leadership & Management Development
-          </MobileAccordionTrigger>
-          <MobileAccordionContent>
-            <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-              {leadershipDevelopment.map((category, index) => (
-                <div key={index} className="border border-purple-500/20 rounded-lg p-3 space-y-3">
-                  <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'} border-b border-purple-500/20 pb-1`}>
-                    {category.category}
-                  </h4>
-
-                  <div className="space-y-3">
-                    {category.developmentAreas.map((area, areaIndex) => (
-                      <div key={areaIndex} className="bg-purple-500/5 border border-purple-500/20 rounded p-3 space-y-2">
-                        <h5 className={`font-medium text-purple-300 ${isMobile ? 'text-sm' : 'text-base'}`}>{area.skill}</h5>
-                        <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{area.description}</p>
-                        
-                        <div>
-                          <h6 className={`font-medium text-purple-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Development Path</h6>
-                          <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-purple-200`}>{area.developmentPath}</p>
-                        </div>
-
-                        <div>
-                          <h6 className={`font-medium text-green-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Business Impact</h6>
-                          <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-green-200`}>{area.businessImpact}</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </MobileAccordionContent>
-        </MobileAccordionItem>
-
         <MobileAccordionItem value="digital-professionalism">
           <MobileAccordionTrigger icon={<Smartphone className="h-5 w-5 text-cyan-400" />}>
             Digital Professionalism & Technology
           </MobileAccordionTrigger>
-          <MobileAccordionContent>
-            <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-              {digitalProfessionalismSkills.map((category, index) => (
+          <MobileAccordionContent className="space-y-4 p-4">
+            {digitalProfessionalismSkills.map((category, index) => (
                 <div key={index} className="border border-cyan-500/20 rounded-lg p-3 space-y-3">
                   <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'} border-b border-cyan-500/20 pb-1`}>
                     {category.category}
@@ -674,7 +631,6 @@ const ProfessionalDevelopmentStrategy = () => {
                   </div>
                 </div>
               ))}
-            </div>
           </MobileAccordionContent>
         </MobileAccordionItem>
 
@@ -682,9 +638,8 @@ const ProfessionalDevelopmentStrategy = () => {
           <MobileAccordionTrigger icon={<Rocket className="h-5 w-5 text-orange-400" />}>
             Innovation & Entrepreneurship
           </MobileAccordionTrigger>
-          <MobileAccordionContent>
-            <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-              {innovationEntrepreneurship.map((category, index) => (
+          <MobileAccordionContent className="space-y-4 p-4">
+            {innovationEntrepreneurship.map((category, index) => (
                 <div key={index} className="border border-orange-500/20 rounded-lg p-3 space-y-3">
                   <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'} border-b border-orange-500/20 pb-1`}>
                     {category.category}
@@ -710,7 +665,6 @@ const ProfessionalDevelopmentStrategy = () => {
                   </div>
                 </div>
               ))}
-            </div>
           </MobileAccordionContent>
         </MobileAccordionItem>
 
@@ -718,9 +672,8 @@ const ProfessionalDevelopmentStrategy = () => {
           <MobileAccordionTrigger icon={<Lightbulb className="h-5 w-5 text-green-400" />}>
             Sustainability & ESG Leadership
           </MobileAccordionTrigger>
-          <MobileAccordionContent>
-            <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-              {sustainabilityESG.map((category, index) => (
+          <MobileAccordionContent className="space-y-4 p-4">
+            {sustainabilityESG.map((category, index) => (
                 <div key={index} className="border border-green-500/20 rounded-lg p-3 space-y-3">
                   <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'} border-b border-green-500/20 pb-1`}>
                     {category.category}
@@ -746,7 +699,6 @@ const ProfessionalDevelopmentStrategy = () => {
                   </div>
                 </div>
               ))}
-            </div>
           </MobileAccordionContent>
         </MobileAccordionItem>
 
@@ -754,9 +706,8 @@ const ProfessionalDevelopmentStrategy = () => {
           <MobileAccordionTrigger icon={<Heart className="h-5 w-5 text-pink-400" />}>
             Wellbeing & Personal Resilience
           </MobileAccordionTrigger>
-          <MobileAccordionContent>
-            <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-              {wellbeingResilience.map((category, index) => (
+          <MobileAccordionContent className="space-y-4 p-4">
+            {wellbeingResilience.map((category, index) => (
                 <div key={index} className="border border-pink-500/20 rounded-lg p-3 space-y-3">
                   <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'} border-b border-pink-500/20 pb-1`}>
                     {category.category}
@@ -782,7 +733,6 @@ const ProfessionalDevelopmentStrategy = () => {
                   </div>
                 </div>
               ))}
-            </div>
           </MobileAccordionContent>
         </MobileAccordionItem>
 
@@ -790,9 +740,8 @@ const ProfessionalDevelopmentStrategy = () => {
           <MobileAccordionTrigger icon={<MessageSquare className="h-5 w-5 text-indigo-400" />}>
             Industry Leadership & Advocacy
           </MobileAccordionTrigger>
-          <MobileAccordionContent>
-            <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-              {industryAdvocacy.map((category, index) => (
+          <MobileAccordionContent className="space-y-4 p-4">
+            {industryAdvocacy.map((category, index) => (
                 <div key={index} className="border border-indigo-500/20 rounded-lg p-3 space-y-3">
                   <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'} border-b border-indigo-500/20 pb-1`}>
                     {category.category}
@@ -818,7 +767,6 @@ const ProfessionalDevelopmentStrategy = () => {
                   </div>
                 </div>
               ))}
-            </div>
           </MobileAccordionContent>
         </MobileAccordionItem>
 
@@ -826,9 +774,8 @@ const ProfessionalDevelopmentStrategy = () => {
           <MobileAccordionTrigger icon={<Globe className="h-5 w-5 text-teal-400" />}>
             International & Global Development
           </MobileAccordionTrigger>
-          <MobileAccordionContent>
-            <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-              {internationalOpportunities.map((category, index) => (
+          <MobileAccordionContent className="space-y-4 p-4">
+            {internationalOpportunities.map((category, index) => (
                 <div key={index} className="border border-teal-500/20 rounded-lg p-3 space-y-3">
                   <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'} border-b border-teal-500/20 pb-1`}>
                     {category.category}
@@ -854,8 +801,7 @@ const ProfessionalDevelopmentStrategy = () => {
                   </div>
                 </div>
               ))}
-            </div>
-          </MobileAccordionContent>
+            </MobileAccordionContent>
         </MobileAccordionItem>
 
         <MobileAccordionItem value="career-planning-toolkit">
