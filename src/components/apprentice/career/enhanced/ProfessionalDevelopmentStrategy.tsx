@@ -15,7 +15,22 @@ import {
   Network,
   Lightbulb,
   Building,
-  GraduationCap
+  GraduationCap,
+  Shield,
+  Brain,
+  Globe,
+  Smartphone,
+  FileText,
+  Calendar,
+  MessageSquare,
+  Star,
+  Rocket,
+  Zap,
+  Heart,
+  Coffee,
+  Camera,
+  PenTool,
+  TrendingDown
 } from "lucide-react";
 
 const ProfessionalDevelopmentStrategy = () => {
@@ -202,6 +217,162 @@ const ProfessionalDevelopmentStrategy = () => {
           description: "Implementing and maintaining quality standards and processes",
           developmentPath: "Quality management training → ISO standards awareness → Process improvement",
           businessImpact: "Consistent quality delivery, customer satisfaction, business efficiency"
+        }
+      ]
+    }
+  ];
+
+  const digitalProfessionalismSkills = [
+    {
+      category: "Digital Communication & Collaboration",
+      developmentAreas: [
+        {
+          skill: "Virtual Team Leadership",
+          description: "Leading and managing teams in hybrid and remote working environments",
+          developmentPath: "Remote leadership training → Virtual team projects → Digital collaboration tools mastery",
+          businessImpact: "Improved team productivity, better remote project outcomes, increased team engagement"
+        },
+        {
+          skill: "Digital Marketing & Social Presence",
+          description: "Building professional online presence and marketing electrical services digitally",
+          developmentPath: "Social media training → LinkedIn optimisation → Content creation → Customer engagement",
+          businessImpact: "Increased brand visibility, more leads, enhanced professional reputation"
+        },
+        {
+          skill: "Customer Relationship Management (CRM)",
+          description: "Managing client relationships and business processes through digital systems",
+          developmentPath: "CRM system training → Process mapping → Data analysis → Customer journey optimisation",
+          businessImpact: "Better customer retention, increased repeat business, streamlined operations"
+        }
+      ]
+    }
+  ];
+
+  const innovationEntrepreneurship = [
+    {
+      category: "Innovation & Technology Adoption",
+      developmentAreas: [
+        {
+          skill: "Technology Scouting & Assessment",
+          description: "Identifying and evaluating emerging technologies for business applications",
+          developmentPath: "Tech trend analysis → Pilot project management → ROI assessment → Implementation planning",
+          businessImpact: "Competitive advantage, improved efficiency, new revenue streams, future-proofing"
+        },
+        {
+          skill: "Business Model Innovation",
+          description: "Developing new approaches to electrical service delivery and value creation",
+          developmentPath: "Business model canvas training → Market research → Pilot testing → Business plan development",
+          businessImpact: "New revenue opportunities, market differentiation, business growth, scalability"
+        },
+        {
+          skill: "Intellectual Property & Patents",
+          description: "Understanding and protecting intellectual property in electrical innovations",
+          developmentPath: "IP law basics → Patent searching → Innovation documentation → Legal consultation",
+          businessImpact: "Protected innovations, licensing opportunities, competitive barriers, asset value"
+        }
+      ]
+    }
+  ];
+
+  const sustainabilityESG = [
+    {
+      category: "Environmental Sustainability",
+      developmentAreas: [
+        {
+          skill: "Carbon Footprint Assessment",
+          description: "Measuring and reducing environmental impact of electrical installations",
+          developmentPath: "Carbon accounting training → Lifecycle assessment → Reduction strategies → Reporting",
+          businessImpact: "Compliance with regulations, cost savings, competitive differentiation, client attraction"
+        },
+        {
+          skill: "Circular Economy Principles",
+          description: "Implementing waste reduction and resource efficiency in electrical work",
+          developmentPath: "Circular economy training → Waste audit → Process redesign → Supplier collaboration",
+          businessImpact: "Reduced material costs, waste minimisation, enhanced reputation, regulatory compliance"
+        },
+        {
+          skill: "Green Building Certification",
+          description: "Understanding BREEAM, LEED and other green building standards",
+          developmentPath: "Green building courses → Certification processes → Sustainable design → Performance monitoring",
+          businessImpact: "Access to premium projects, higher value contracts, future market positioning"
+        }
+      ]
+    }
+  ];
+
+  const wellbeingResilience = [
+    {
+      category: "Personal Wellbeing & Resilience",
+      developmentAreas: [
+        {
+          skill: "Stress Management & Work-Life Balance",
+          description: "Maintaining physical and mental health in demanding electrical work environments",
+          developmentPath: "Stress management training → Mindfulness practice → Time management → Health monitoring",
+          businessImpact: "Improved performance, reduced sick leave, better decision making, longer career longevity"
+        },
+        {
+          skill: "Emotional Intelligence & Self-Awareness",
+          description: "Understanding and managing emotions in professional interactions",
+          developmentPath: "EQ assessment → Self-reflection practice → Feedback sessions → Relationship building",
+          businessImpact: "Better team relationships, improved client communication, effective conflict resolution"
+        },
+        {
+          skill: "Continuous Learning Mindset",
+          description: "Developing adaptability and openness to ongoing skill development",
+          developmentPath: "Learning style assessment → Goal setting → Reflection practice → Knowledge sharing",
+          businessImpact: "Faster adaptation to change, increased innovation, career advancement, job satisfaction"
+        }
+      ]
+    }
+  ];
+
+  const industryAdvocacy = [
+    {
+      category: "Industry Leadership & Advocacy",
+      developmentAreas: [
+        {
+          skill: "Policy & Regulation Engagement",
+          description: "Understanding and influencing electrical industry policy and standards",
+          developmentPath: "Regulatory awareness → Consultation responses → Committee participation → Policy advocacy",
+          businessImpact: "Industry influence, early insight into changes, reputation enhancement, networking"
+        },
+        {
+          skill: "Public Speaking & Thought Leadership",
+          description: "Sharing expertise and representing the electrical industry publicly",
+          developmentPath: "Presentation skills → Conference speaking → Article writing → Media training",
+          businessImpact: "Enhanced reputation, business development, industry recognition, knowledge sharing"
+        },
+        {
+          skill: "Diversity & Inclusion Champions",
+          description: "Promoting inclusive practices and diversity within the electrical industry",
+          developmentPath: "Diversity training → Bias awareness → Inclusive recruitment → Mentoring programmes",
+          businessImpact: "Broader talent pool, improved team performance, industry modernisation, social impact"
+        }
+      ]
+    }
+  ];
+
+  const internationalOpportunities = [
+    {
+      category: "Global Professional Development",
+      developmentAreas: [
+        {
+          skill: "International Standards & Practices",
+          description: "Understanding electrical standards and practices in different countries",
+          developmentPath: "International standards study → Overseas projects → Cultural awareness → Language skills",
+          businessImpact: "Global market access, international contracts, cultural competence, career mobility"
+        },
+        {
+          skill: "Cross-Cultural Communication",
+          description: "Effective communication and collaboration across different cultures",
+          developmentPath: "Cultural awareness training → Language learning → International teamwork → Global networking",
+          businessImpact: "Successful international projects, diverse team leadership, global client relationships"
+        },
+        {
+          skill: "Export & International Business",
+          description: "Developing electrical services and products for international markets",
+          developmentPath: "Export training → Market research → International partnerships → Compliance understanding",
+          businessImpact: "Revenue diversification, business growth, market expansion, risk reduction"
         }
       ]
     }
@@ -431,6 +602,351 @@ const ProfessionalDevelopmentStrategy = () => {
                   </div>
                 </div>
               </div>
+            </div>
+          </MobileAccordionContent>
+        </MobileAccordionItem>
+
+        <MobileAccordionItem value="leadership-development">
+          <MobileAccordionTrigger icon={<Users className="h-5 w-5 text-purple-400" />}>
+            Leadership & Management Development
+          </MobileAccordionTrigger>
+          <MobileAccordionContent>
+            <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
+              {leadershipDevelopment.map((category, index) => (
+                <div key={index} className="border border-purple-500/20 rounded-lg p-3 space-y-3">
+                  <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'} border-b border-purple-500/20 pb-1`}>
+                    {category.category}
+                  </h4>
+
+                  <div className="space-y-3">
+                    {category.developmentAreas.map((area, areaIndex) => (
+                      <div key={areaIndex} className="bg-purple-500/5 border border-purple-500/20 rounded p-3 space-y-2">
+                        <h5 className={`font-medium text-purple-300 ${isMobile ? 'text-sm' : 'text-base'}`}>{area.skill}</h5>
+                        <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{area.description}</p>
+                        
+                        <div>
+                          <h6 className={`font-medium text-purple-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Development Path</h6>
+                          <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-purple-200`}>{area.developmentPath}</p>
+                        </div>
+
+                        <div>
+                          <h6 className={`font-medium text-green-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Business Impact</h6>
+                          <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-green-200`}>{area.businessImpact}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </MobileAccordionContent>
+        </MobileAccordionItem>
+
+        <MobileAccordionItem value="digital-professionalism">
+          <MobileAccordionTrigger icon={<Smartphone className="h-5 w-5 text-cyan-400" />}>
+            Digital Professionalism & Technology
+          </MobileAccordionTrigger>
+          <MobileAccordionContent>
+            <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
+              {digitalProfessionalismSkills.map((category, index) => (
+                <div key={index} className="border border-cyan-500/20 rounded-lg p-3 space-y-3">
+                  <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'} border-b border-cyan-500/20 pb-1`}>
+                    {category.category}
+                  </h4>
+
+                  <div className="space-y-3">
+                    {category.developmentAreas.map((area, areaIndex) => (
+                      <div key={areaIndex} className="bg-cyan-500/5 border border-cyan-500/20 rounded p-3 space-y-2">
+                        <h5 className={`font-medium text-cyan-300 ${isMobile ? 'text-sm' : 'text-base'}`}>{area.skill}</h5>
+                        <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{area.description}</p>
+                        
+                        <div>
+                          <h6 className={`font-medium text-cyan-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Development Path</h6>
+                          <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-cyan-200`}>{area.developmentPath}</p>
+                        </div>
+
+                        <div>
+                          <h6 className={`font-medium text-green-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Business Impact</h6>
+                          <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-green-200`}>{area.businessImpact}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </MobileAccordionContent>
+        </MobileAccordionItem>
+
+        <MobileAccordionItem value="innovation-entrepreneurship">
+          <MobileAccordionTrigger icon={<Rocket className="h-5 w-5 text-orange-400" />}>
+            Innovation & Entrepreneurship
+          </MobileAccordionTrigger>
+          <MobileAccordionContent>
+            <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
+              {innovationEntrepreneurship.map((category, index) => (
+                <div key={index} className="border border-orange-500/20 rounded-lg p-3 space-y-3">
+                  <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'} border-b border-orange-500/20 pb-1`}>
+                    {category.category}
+                  </h4>
+
+                  <div className="space-y-3">
+                    {category.developmentAreas.map((area, areaIndex) => (
+                      <div key={areaIndex} className="bg-orange-500/5 border border-orange-500/20 rounded p-3 space-y-2">
+                        <h5 className={`font-medium text-orange-300 ${isMobile ? 'text-sm' : 'text-base'}`}>{area.skill}</h5>
+                        <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{area.description}</p>
+                        
+                        <div>
+                          <h6 className={`font-medium text-orange-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Development Path</h6>
+                          <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-orange-200`}>{area.developmentPath}</p>
+                        </div>
+
+                        <div>
+                          <h6 className={`font-medium text-green-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Business Impact</h6>
+                          <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-green-200`}>{area.businessImpact}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </MobileAccordionContent>
+        </MobileAccordionItem>
+
+        <MobileAccordionItem value="sustainability-esg">
+          <MobileAccordionTrigger icon={<Lightbulb className="h-5 w-5 text-green-400" />}>
+            Sustainability & ESG Leadership
+          </MobileAccordionTrigger>
+          <MobileAccordionContent>
+            <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
+              {sustainabilityESG.map((category, index) => (
+                <div key={index} className="border border-green-500/20 rounded-lg p-3 space-y-3">
+                  <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'} border-b border-green-500/20 pb-1`}>
+                    {category.category}
+                  </h4>
+
+                  <div className="space-y-3">
+                    {category.developmentAreas.map((area, areaIndex) => (
+                      <div key={areaIndex} className="bg-green-500/5 border border-green-500/20 rounded p-3 space-y-2">
+                        <h5 className={`font-medium text-green-300 ${isMobile ? 'text-sm' : 'text-base'}`}>{area.skill}</h5>
+                        <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{area.description}</p>
+                        
+                        <div>
+                          <h6 className={`font-medium text-green-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Development Path</h6>
+                          <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-green-200`}>{area.developmentPath}</p>
+                        </div>
+
+                        <div>
+                          <h6 className={`font-medium text-blue-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Business Impact</h6>
+                          <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-blue-200`}>{area.businessImpact}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </MobileAccordionContent>
+        </MobileAccordionItem>
+
+        <MobileAccordionItem value="wellbeing-resilience">
+          <MobileAccordionTrigger icon={<Heart className="h-5 w-5 text-pink-400" />}>
+            Wellbeing & Personal Resilience
+          </MobileAccordionTrigger>
+          <MobileAccordionContent>
+            <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
+              {wellbeingResilience.map((category, index) => (
+                <div key={index} className="border border-pink-500/20 rounded-lg p-3 space-y-3">
+                  <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'} border-b border-pink-500/20 pb-1`}>
+                    {category.category}
+                  </h4>
+
+                  <div className="space-y-3">
+                    {category.developmentAreas.map((area, areaIndex) => (
+                      <div key={areaIndex} className="bg-pink-500/5 border border-pink-500/20 rounded p-3 space-y-2">
+                        <h5 className={`font-medium text-pink-300 ${isMobile ? 'text-sm' : 'text-base'}`}>{area.skill}</h5>
+                        <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{area.description}</p>
+                        
+                        <div>
+                          <h6 className={`font-medium text-pink-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Development Path</h6>
+                          <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-pink-200`}>{area.developmentPath}</p>
+                        </div>
+
+                        <div>
+                          <h6 className={`font-medium text-green-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Business Impact</h6>
+                          <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-green-200`}>{area.businessImpact}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </MobileAccordionContent>
+        </MobileAccordionItem>
+
+        <MobileAccordionItem value="industry-advocacy">
+          <MobileAccordionTrigger icon={<MessageSquare className="h-5 w-5 text-indigo-400" />}>
+            Industry Leadership & Advocacy
+          </MobileAccordionTrigger>
+          <MobileAccordionContent>
+            <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
+              {industryAdvocacy.map((category, index) => (
+                <div key={index} className="border border-indigo-500/20 rounded-lg p-3 space-y-3">
+                  <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'} border-b border-indigo-500/20 pb-1`}>
+                    {category.category}
+                  </h4>
+
+                  <div className="space-y-3">
+                    {category.developmentAreas.map((area, areaIndex) => (
+                      <div key={areaIndex} className="bg-indigo-500/5 border border-indigo-500/20 rounded p-3 space-y-2">
+                        <h5 className={`font-medium text-indigo-300 ${isMobile ? 'text-sm' : 'text-base'}`}>{area.skill}</h5>
+                        <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{area.description}</p>
+                        
+                        <div>
+                          <h6 className={`font-medium text-indigo-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Development Path</h6>
+                          <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-indigo-200`}>{area.developmentPath}</p>
+                        </div>
+
+                        <div>
+                          <h6 className={`font-medium text-green-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Business Impact</h6>
+                          <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-green-200`}>{area.businessImpact}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </MobileAccordionContent>
+        </MobileAccordionItem>
+
+        <MobileAccordionItem value="international-opportunities">
+          <MobileAccordionTrigger icon={<Globe className="h-5 w-5 text-teal-400" />}>
+            International & Global Development
+          </MobileAccordionTrigger>
+          <MobileAccordionContent>
+            <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
+              {internationalOpportunities.map((category, index) => (
+                <div key={index} className="border border-teal-500/20 rounded-lg p-3 space-y-3">
+                  <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'} border-b border-teal-500/20 pb-1`}>
+                    {category.category}
+                  </h4>
+
+                  <div className="space-y-3">
+                    {category.developmentAreas.map((area, areaIndex) => (
+                      <div key={areaIndex} className="bg-teal-500/5 border border-teal-500/20 rounded p-3 space-y-2">
+                        <h5 className={`font-medium text-teal-300 ${isMobile ? 'text-sm' : 'text-base'}`}>{area.skill}</h5>
+                        <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{area.description}</p>
+                        
+                        <div>
+                          <h6 className={`font-medium text-teal-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Development Path</h6>
+                          <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-teal-200`}>{area.developmentPath}</p>
+                        </div>
+
+                        <div>
+                          <h6 className={`font-medium text-green-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Business Impact</h6>
+                          <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-green-200`}>{area.businessImpact}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </MobileAccordionContent>
+        </MobileAccordionItem>
+
+        <MobileAccordionItem value="career-planning-toolkit">
+          <MobileAccordionTrigger icon={<Calendar className="h-5 w-5 text-violet-400" />}>
+            Career Planning Toolkit
+          </MobileAccordionTrigger>
+          <MobileAccordionContent>
+            <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <Card className="border-violet-500/20 bg-violet-500/5">
+                  <CardHeader className="pb-3">
+                    <CardTitle className={`text-violet-300 ${isMobile ? 'text-base' : 'text-lg'}`}>5-Year Career Plan Template</CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-3">
+                    <div className="space-y-2">
+                      <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-violet-200`}>
+                        <strong>Year 1-2:</strong> Foundation skills mastery and professional qualification completion
+                      </div>
+                      <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-violet-200`}>
+                        <strong>Year 3:</strong> Specialisation selection and advanced training commencement
+                      </div>
+                      <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-violet-200`}>
+                        <strong>Year 4:</strong> Leadership role development and business skills acquisition
+                      </div>
+                      <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-violet-200`}>
+                        <strong>Year 5:</strong> Senior position achievement or business establishment
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card className="border-violet-500/20 bg-violet-500/5">
+                  <CardHeader className="pb-3">
+                    <CardTitle className={`text-violet-300 ${isMobile ? 'text-base' : 'text-lg'}`}>Personal SWOT Analysis</CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-3">
+                    <div className="grid grid-cols-2 gap-2">
+                      <div className="space-y-1">
+                        <h6 className={`font-medium text-green-300 ${isMobile ? 'text-xs' : 'text-sm'}`}>Strengths</h6>
+                        <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-green-200`}>Technical skills, work ethic, problem-solving</div>
+                      </div>
+                      <div className="space-y-1">
+                        <h6 className={`font-medium text-red-300 ${isMobile ? 'text-xs' : 'text-sm'}`}>Weaknesses</h6>
+                        <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-red-200`}>Business skills, networking, experience</div>
+                      </div>
+                      <div className="space-y-1">
+                        <h6 className={`font-medium text-blue-300 ${isMobile ? 'text-xs' : 'text-sm'}`}>Opportunities</h6>
+                        <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-blue-200`}>Green energy, smart buildings, EV charging</div>
+                      </div>
+                      <div className="space-y-1">
+                        <h6 className={`font-medium text-orange-300 ${isMobile ? 'text-xs' : 'text-sm'}`}>Threats</h6>
+                        <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-orange-200`}>Automation, competition, regulation changes</div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+
+              <Card className="border-violet-500/20 bg-violet-500/5">
+                <CardHeader className="pb-3">
+                  <CardTitle className={`text-violet-300 ${isMobile ? 'text-base' : 'text-lg'}`}>Professional Development Resources</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div className="space-y-2">
+                      <h6 className={`font-medium text-violet-300 ${isMobile ? 'text-sm' : 'text-base'}`}>Career Coaching</h6>
+                      <div className="space-y-1">
+                        <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-violet-200`}>Professional career coaching services</div>
+                        <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-violet-200`}>Industry mentor matching programmes</div>
+                        <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-violet-200`}>Peer coaching and support groups</div>
+                      </div>
+                    </div>
+                    <div className="space-y-2">
+                      <h6 className={`font-medium text-violet-300 ${isMobile ? 'text-sm' : 'text-base'}`}>Skills Assessment</h6>
+                      <div className="space-y-1">
+                        <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-violet-200`}>Professional competency assessments</div>
+                        <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-violet-200`}>Skills gap analysis tools</div>
+                        <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-violet-200`}>360-degree feedback programmes</div>
+                      </div>
+                    </div>
+                    <div className="space-y-2">
+                      <h6 className={`font-medium text-violet-300 ${isMobile ? 'text-sm' : 'text-base'}`}>Planning Tools</h6>
+                      <div className="space-y-1">
+                        <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-violet-200`}>Career planning software and apps</div>
+                        <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-violet-200`}>Goal setting and tracking systems</div>
+                        <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-violet-200`}>Professional portfolio development</div>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
             </div>
           </MobileAccordionContent>
         </MobileAccordionItem>
