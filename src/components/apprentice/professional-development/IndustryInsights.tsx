@@ -359,9 +359,9 @@ const IndustryInsights = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="divide-y divide-border/20">
+          <div className="space-y-8">
             {marketTrends.map((trend, index) => (
-              <div key={index} className={`space-y-3 ${index === 0 ? 'pb-6' : 'py-6'}`}>
+              <div key={index} className="space-y-4">
                 <div className="flex items-center gap-3">
                   <div className="p-2 rounded-md bg-elec-yellow/10">
                     <trend.icon className="h-6 w-6 text-elec-yellow" />
@@ -400,6 +400,14 @@ const IndustryInsights = () => {
                     </div>
                   </div>
                 </div>
+                
+                {index < marketTrends.length - 1 && (
+                  <div className="flex items-center gap-4 pt-4">
+                    <div className="flex-1 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
+                    <div className="w-2 h-2 rounded-full bg-elec-yellow/30" />
+                    <div className="flex-1 h-px bg-gradient-to-r from-border via-transparent to-transparent" />
+                  </div>
+                )}
               </div>
             ))}
           </div>
