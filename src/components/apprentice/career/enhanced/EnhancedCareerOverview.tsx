@@ -420,7 +420,7 @@ const EnhancedCareerOverview = () => {
                   </ul>
                 </div>
 
-                <div className="bg-green-500/5 border border-green-500/20 rounded p-2">
+                <div className="space-y-2">
                   <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-green-300 font-medium`}>Salary Range: </span>
                   <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-green-200`}>{stage.salaryRange}</span>
                 </div>
@@ -496,7 +496,7 @@ const EnhancedCareerOverview = () => {
                   <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{context.title}</h4>
                 </div>
                 <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{context.description}</p>
-                <div className="bg-orange-500/5 border border-orange-500/20 rounded p-2">
+                <div className="space-y-2">
                   <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-orange-300 font-medium`}>Impact: </span>
                   <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-orange-200`}>{context.impact}</span>
                 </div>
@@ -603,7 +603,7 @@ const EnhancedCareerOverview = () => {
                   </ul>
                 </div>
 
-                <div className="bg-teal-500/5 border border-teal-500/20 rounded p-2">
+                <div className="space-y-2">
                   <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-teal-300 font-medium`}>Salary Range: </span>
                   <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-teal-200`}>{sector.salaryRange}</span>
                 </div>
@@ -633,7 +633,7 @@ const EnhancedCareerOverview = () => {
                   </ul>
                 </div>
 
-                <div className="bg-amber-500/5 border border-amber-500/20 rounded p-2">
+                <div className="space-y-2">
                   <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-amber-300 font-medium`}>Potential Earnings: </span>
                   <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-amber-200`}>{path.earnings}</span>
                 </div>

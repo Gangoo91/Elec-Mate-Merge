@@ -269,7 +269,7 @@ const IndustryInsightsAnalysis = () => {
           <MobileAccordionContent>
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
               {marketTrends.map((trend, index) => (
-                <div key={index} className="border border-blue-500/20 rounded-lg p-3 space-y-3">
+                <div key={index} className="space-y-3">
                   <div className="flex items-center justify-between">
                     <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{trend.trend}</h4>
                     <Badge variant="outline" className={`text-blue-300 border-blue-400/30 ${isMobile ? 'text-xs' : 'text-sm'}`}>
@@ -304,7 +304,7 @@ const IndustryInsightsAnalysis = () => {
                     </div>
                   </div>
 
-                  <div className="bg-purple-500/10 border border-purple-500/30 rounded p-2">
+                  <div className="space-y-2">
                     <h5 className={`font-medium text-purple-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Market Value & Timeline</h5>
                     <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-purple-200`}>
                       {trend.marketValue} - {trend.timeline}
@@ -323,7 +323,7 @@ const IndustryInsightsAnalysis = () => {
           <MobileAccordionContent>
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
               {sectorAnalysis.map((sector, index) => (
-                <div key={index} className="border border-green-500/20 rounded-lg p-3 space-y-3">
+                <div key={index} className="space-y-3">
                   <div className="flex items-center justify-between">
                     <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{sector.sector}</h4>
                     <Badge variant="outline" className={`text-green-300 border-green-400/30 ${isMobile ? 'text-xs' : 'text-sm'}`}>
@@ -332,11 +332,11 @@ const IndustryInsightsAnalysis = () => {
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                    <div className="bg-blue-500/10 border border-blue-500/30 rounded p-2">
+                    <div className="space-y-2">
                       <h5 className={`font-medium text-blue-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Project Value</h5>
                       <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-blue-200`}>{sector.averageProjectValue}</p>
                     </div>
-                    <div className="bg-green-500/10 border border-green-500/30 rounded p-2">
+                    <div className="space-y-2">
                       <h5 className={`font-medium text-green-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Profit Margins</h5>
                       <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-green-200`}>{sector.profitMargins}</p>
                     </div>
@@ -390,7 +390,7 @@ const IndustryInsightsAnalysis = () => {
           <MobileAccordionContent>
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
               {futureSkillsDemand.map((category, index) => (
-                <div key={index} className="border border-purple-500/20 rounded-lg p-3 space-y-3">
+                <div key={index} className="space-y-3">
                   <div className="flex items-center justify-between">
                     <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{category.category}</h4>
                     <Badge variant="outline" className={`text-purple-300 border-purple-400/30 ${isMobile ? 'text-xs' : 'text-sm'}`}>
@@ -400,7 +400,7 @@ const IndustryInsightsAnalysis = () => {
 
                   <div className="space-y-3">
                     {category.skills.map((skill, skillIndex) => (
-                      <div key={skillIndex} className="bg-purple-500/5 border border-purple-500/20 rounded p-3 space-y-2">
+                      <div key={skillIndex} className="space-y-2">
                         <div className="flex items-center justify-between">
                           <h5 className={`font-medium text-purple-300 ${isMobile ? 'text-sm' : 'text-base'}`}>{skill.skill}</h5>
                           <div className="flex gap-1">
@@ -438,11 +438,11 @@ const IndustryInsightsAnalysis = () => {
           </MobileAccordionTrigger>
           <MobileAccordionContent>
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-              <div className="border border-orange-500/20 rounded-lg p-3 space-y-3">
+              <div className="space-y-3">
                 <h4 className={`font-medium text-orange-300 ${isMobile ? 'text-sm' : 'text-base'}`}>Strategic Career Positioning</h4>
                 
                 <div className="space-y-3">
-                  <div className="bg-orange-500/5 border border-orange-500/20 rounded p-3">
+                  <div className="space-y-2">
                     <h5 className={`font-medium text-orange-300 mb-2 ${isMobile ? 'text-sm' : 'text-base'}`}>Immediate Opportunities (2024-2025)</h5>
                     <ul className="space-y-1">
                       {[
@@ -459,7 +459,7 @@ const IndustryInsightsAnalysis = () => {
                     </ul>
                   </div>
 
-                  <div className="bg-blue-500/5 border border-blue-500/20 rounded p-3">
+                  <div className="space-y-2">
                     <h5 className={`font-medium text-blue-300 mb-2 ${isMobile ? 'text-sm' : 'text-base'}`}>Medium-term Strategy (2025-2028)</h5>
                     <ul className="space-y-1">
                       {[
@@ -476,7 +476,7 @@ const IndustryInsightsAnalysis = () => {
                     </ul>
                   </div>
 
-                  <div className="bg-green-500/5 border border-green-500/20 rounded p-3">
+                  <div className="space-y-2">
                     <h5 className={`font-medium text-green-300 mb-2 ${isMobile ? 'text-sm' : 'text-base'}`}>Long-term Vision (2028-2035)</h5>
                     <ul className="space-y-1">
                       {[
