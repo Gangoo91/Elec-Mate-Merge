@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { DropdownTabs, DropdownTab } from "@/components/ui/dropdown-tabs";
 import { Clock, Target, TrendingUp, Award } from "lucide-react";
 import CPDOverview from "./CPDOverview";
 import CPDEntryForm from "./CPDEntryForm";
@@ -127,6 +127,39 @@ const CPDTracker = () => {
     );
   }
 
+  const cpdTabs: DropdownTab[] = [
+    {
+      value: "overview",
+      label: "Overview",
+      icon: TrendingUp,
+      content: (
+        <CPDDashboard 
+          onAddEntry={handleAddEntry}
+          onViewHistory={handleViewHistory}
+          onManageGoals={handleManageGoals}
+        />
+      )
+    },
+    {
+      value: "log-activity",
+      label: "Log Activity",
+      icon: Clock,
+      content: <CPDEntryForm />
+    },
+    {
+      value: "history",
+      label: "History",
+      icon: Award,
+      content: <CPDHistory />
+    },
+    {
+      value: "goals",
+      label: "Goals",
+      icon: Target,
+      content: <CPDGoals />
+    }
+  ];
+
   // Desktop layout
   return (
     <div className="space-y-6">
@@ -143,46 +176,13 @@ const CPDTracker = () => {
       </div>
 
       {/* Main Content */}
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="grid w-full grid-cols-4 bg-elec-gray">
-          <TabsTrigger value="overview" className="flex items-center gap-2">
-            <TrendingUp className="h-4 w-4" />
-            Overview
-          </TabsTrigger>
-          <TabsTrigger value="log-activity" className="flex items-center gap-2">
-            <Clock className="h-4 w-4" />
-            Log Activity
-          </TabsTrigger>
-          <TabsTrigger value="history" className="flex items-center gap-2">
-            <Award className="h-4 w-4" />
-            History
-          </TabsTrigger>
-          <TabsTrigger value="goals" className="flex items-center gap-2">
-            <Target className="h-4 w-4" />
-            Goals
-          </TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="overview" className="space-y-6">
-          <CPDDashboard 
-            onAddEntry={handleAddEntry}
-            onViewHistory={handleViewHistory}
-            onManageGoals={handleManageGoals}
-          />
-        </TabsContent>
-
-        <TabsContent value="log-activity" className="space-y-6">
-          <CPDEntryForm />
-        </TabsContent>
-
-        <TabsContent value="history" className="space-y-6">
-          <CPDHistory />
-        </TabsContent>
-
-        <TabsContent value="goals" className="space-y-6">
-          <CPDGoals />
-        </TabsContent>
-      </Tabs>
+      <DropdownTabs 
+        tabs={cpdTabs}
+        defaultValue={activeTab}
+        placeholder="Select CPD section"
+        onValueChange={setActiveTab}
+        className="w-full"
+      />
     </div>
   );
 };

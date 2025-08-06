@@ -1,8 +1,8 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft } from "lucide-react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { ArrowLeft, Eye, Clock, Award, Briefcase, MapPin, TrendingUp } from "lucide-react";
+import { DropdownTabs, DropdownTab } from "@/components/ui/dropdown-tabs";
 import { careerPaths } from "./careerPathsData";
 import CareerPathCard from "./CareerPathCard";
 import CareerAdvancementTips from "./CareerAdvancementTips";
@@ -138,6 +138,66 @@ const CareerPathways = () => {
     );
   }
 
+  const careerPathwaysTabs: DropdownTab[] = [
+    {
+      value: "overview",
+      label: "Overview",
+      icon: Eye,
+      content: (
+        <div className="space-y-6">
+          <CareerAdvancementTips />
+          <CareerProgressionPaths />
+        </div>
+      )
+    },
+    {
+      value: "timeline",
+      label: "Timeline",
+      icon: Clock,
+      content: <UKCareerProgressionTimeline />
+    },
+    {
+      value: "jib",
+      label: "JIB Grades",
+      icon: Award,
+      content: <JIBGradingScheme />
+    },
+    {
+      value: "sectors",
+      label: "Work Sectors",
+      icon: Briefcase,
+      content: <UKWorkSectors />
+    },
+    {
+      value: "regions",
+      label: "Regional Markets",
+      icon: MapPin,
+      content: <UKRegionalJobMarkets />
+    },
+    {
+      value: "paths",
+      label: "Career Paths",
+      icon: TrendingUp,
+      content: (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {careerPaths.map((path) => (
+            <div key={path.id} onClick={() => setSelectedPath(path.id.toString())} className="cursor-pointer">
+              <CareerPathCard 
+                title={path.title}
+                requirements={path.requirements}
+                description={path.description}
+                icon={path.icon}
+                skills={path.skills}
+                salaryRange={path.salaryRange}
+                timeToAchieve={path.timeToAchieve}
+              />
+            </div>
+          ))}
+        </div>
+      )
+    }
+  ];
+
   return (
     <div className="space-y-6">
       <div className="space-y-4">
@@ -148,55 +208,12 @@ const CareerPathways = () => {
         </p>
       </div>
 
-      <Tabs defaultValue="overview" className="space-y-6">
-        <TabsList className="grid w-full grid-cols-2 md:grid-cols-6 bg-elec-dark border border-elec-yellow/20">
-          <TabsTrigger value="overview" className="data-[state=active]:bg-elec-yellow/20">Overview</TabsTrigger>
-          <TabsTrigger value="timeline" className="data-[state=active]:bg-elec-yellow/20">Timeline</TabsTrigger>
-          <TabsTrigger value="jib" className="data-[state=active]:bg-elec-yellow/20">JIB Grades</TabsTrigger>
-          <TabsTrigger value="sectors" className="data-[state=active]:bg-elec-yellow/20">Work Sectors</TabsTrigger>
-          <TabsTrigger value="regions" className="data-[state=active]:bg-elec-yellow/20">Regional Markets</TabsTrigger>
-          <TabsTrigger value="paths" className="data-[state=active]:bg-elec-yellow/20">Career Paths</TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="overview" className="space-y-6">
-          <CareerAdvancementTips />
-          <CareerProgressionPaths />
-        </TabsContent>
-
-        <TabsContent value="timeline" className="space-y-6">
-          <UKCareerProgressionTimeline />
-        </TabsContent>
-
-        <TabsContent value="jib" className="space-y-6">
-          <JIBGradingScheme />
-        </TabsContent>
-
-        <TabsContent value="sectors" className="space-y-6">
-          <UKWorkSectors />
-        </TabsContent>
-
-        <TabsContent value="regions" className="space-y-6">
-          <UKRegionalJobMarkets />
-        </TabsContent>
-
-        <TabsContent value="paths" className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {careerPaths.map((path) => (
-              <div key={path.id} onClick={() => setSelectedPath(path.id.toString())} className="cursor-pointer">
-                <CareerPathCard 
-                  title={path.title}
-                  requirements={path.requirements}
-                  description={path.description}
-                  icon={path.icon}
-                  skills={path.skills}
-                  salaryRange={path.salaryRange}
-                  timeToAchieve={path.timeToAchieve}
-                />
-              </div>
-            ))}
-          </div>
-        </TabsContent>
-      </Tabs>
+      <DropdownTabs 
+        tabs={careerPathwaysTabs}
+        defaultValue="overview"
+        placeholder="Select career section"
+        className="w-full"
+      />
     </div>
   );
 };

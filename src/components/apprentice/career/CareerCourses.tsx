@@ -1,6 +1,6 @@
 
 import React, { useState } from "react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { DropdownTabs, DropdownTab } from "@/components/ui/dropdown-tabs";
 import EnhancedCourseCard from "./courses/EnhancedCourseCard";
 import EnhancedTrainingCenterCard from "./courses/EnhancedTrainingCenterCard";
 import CourseDetailsModal from "./courses/CourseDetailsModal";
@@ -197,65 +197,65 @@ const CareerCourses = () => {
         </CardContent>
       </Card>
 
-      {/* Tab Navigation */}
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-        <TabsList className="grid w-full grid-cols-2 bg-elec-dark border border-elec-yellow/20">
-          <TabsTrigger 
-            value="courses" 
-            className="data-[state=active]:bg-elec-yellow/20 flex items-center gap-2"
-          >
-            <BookOpen className="h-4 w-4" />
-            Courses ({filteredCourses.length})
-          </TabsTrigger>
-          <TabsTrigger 
-            value="centers" 
-            className="data-[state=active]:bg-elec-yellow/20 flex items-center gap-2"
-          >
-            <Users className="h-4 w-4" />
-            Training Centres ({filteredCenters.length})
-          </TabsTrigger>
-        </TabsList>
+      {/* Search Form */}
+      <CourseSearchForm 
+        locations={ukLocations} 
+        onSearch={handleSearchWithLocation}
+      />
 
-        {/* Search Form */}
-        <CourseSearchForm 
-          locations={ukLocations} 
-          onSearch={handleSearchWithLocation}
-        />
-
-        {/* Courses Tab Content */}
-        <TabsContent value="courses" className="space-y-6">
-          {filteredCourses.length > 0 ? (
-            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-              {filteredCourses.map((course) => (
-                <EnhancedCourseCard 
-                  key={course.id} 
-                  course={course}
-                  onViewDetails={viewCourseDetails}
-                />
-              ))}
-            </div>
-          ) : (
-            <EmptySearchResults type="courses" onReset={handleResetAll} />
-          )}
-        </TabsContent>
-        
-        {/* Training Centres Tab Content */}
-        <TabsContent value="centers" className="space-y-6">
-          {filteredCenters.length > 0 ? (
-            <div className="space-y-6">
-              {filteredCenters.map((center) => (
-                <EnhancedTrainingCenterCard 
-                  key={center.id} 
-                  center={center}
-                  onViewDetails={viewCenterDetails}
-                />
-              ))}
-            </div>
-          ) : (
-            <EmptySearchResults type="centers" onReset={handleResetAll} />
-          )}
-        </TabsContent>
-      </Tabs>
+      {/* Dropdown Navigation */}
+      <DropdownTabs 
+        tabs={[
+          {
+            value: "courses",
+            label: `Courses (${filteredCourses.length})`,
+            icon: BookOpen,
+            content: (
+              <div className="space-y-6">
+                {filteredCourses.length > 0 ? (
+                  <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+                    {filteredCourses.map((course) => (
+                      <EnhancedCourseCard 
+                        key={course.id} 
+                        course={course}
+                        onViewDetails={viewCourseDetails}
+                      />
+                    ))}
+                  </div>
+                ) : (
+                  <EmptySearchResults type="courses" onReset={handleResetAll} />
+                )}
+              </div>
+            )
+          },
+          {
+            value: "centers",
+            label: `Training Centres (${filteredCenters.length})`,
+            icon: Users,
+            content: (
+              <div className="space-y-6">
+                {filteredCenters.length > 0 ? (
+                  <div className="space-y-6">
+                    {filteredCenters.map((center) => (
+                      <EnhancedTrainingCenterCard 
+                        key={center.id} 
+                        center={center}
+                        onViewDetails={viewCenterDetails}
+                      />
+                    ))}
+                  </div>
+                ) : (
+                  <EmptySearchResults type="centers" onReset={handleResetAll} />
+                )}
+              </div>
+            )
+          }
+        ]}
+        defaultValue={activeTab}
+        placeholder="Select view"
+        onValueChange={setActiveTab}
+        className="w-full"
+      />
       
       {/* Course Details Modal */}
       {selectedCourse && (
