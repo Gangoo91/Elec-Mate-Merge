@@ -4,8 +4,7 @@ import { ArrowLeft, Target, Brain, TrendingUp, BarChart3, Users, Eye, Clock, Awa
 import { DropdownTabs, DropdownTab } from "@/components/ui/dropdown-tabs";
 import { careerPaths } from "../careerPathsData";
 import CareerPathCard from "../CareerPathCard";
-import CareerAdvancementTips from "../CareerAdvancementTips";
-import CareerProgressionPaths from "../CareerProgressionPaths";
+import EnhancedCareerOverview from "./EnhancedCareerOverview";
 import ProgressTracker from "@/components/career/ProgressTracker";
 import UKCareerProgressionTimeline from "../UKCareerProgressionTimeline";
 import UKRegionalJobMarkets from "../UKRegionalJobMarkets";
@@ -144,12 +143,7 @@ const EnhancedCareerPathways = () => {
       value: "overview",
       label: "Overview",
       icon: Eye,
-      content: (
-        <div className="space-y-6">
-          <CareerAdvancementTips />
-          <CareerProgressionPaths />
-        </div>
-      )
+      content: <EnhancedCareerOverview />
     },
     {
       value: "skills-matrix",
