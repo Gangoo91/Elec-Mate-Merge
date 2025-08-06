@@ -423,9 +423,9 @@ const IndustryInsights = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="space-y-4">
+          <div className="space-y-6">
             {salaryProgression.map((level, index) => (
-              <div key={index} className="space-y-2">
+              <div key={index} className="space-y-3">
                 <h3 className="font-semibold text-white text-base">{level.level}</h3>
                 <div className="flex flex-wrap gap-2">
                   <Badge className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30">
@@ -436,6 +436,14 @@ const IndustryInsights = () => {
                   </Badge>
                 </div>
                 <p className="text-sm text-elec-light/80">{level.description}</p>
+                
+                {index < salaryProgression.length - 1 && (
+                  <div className="flex items-center gap-4 pt-3">
+                    <div className="flex-1 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
+                    <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow/30" />
+                    <div className="flex-1 h-px bg-gradient-to-r from-border via-transparent to-transparent" />
+                  </div>
+                )}
               </div>
             ))}
           </div>
@@ -451,9 +459,9 @@ const IndustryInsights = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {regionalInsights.map((region, index) => (
-              <div key={index} className="space-y-3">
+              <div key={index} className="space-y-4">
                 <h3 className="font-semibold text-white text-base">{region.region}</h3>
                 <div className="flex flex-wrap gap-2">
                   <Badge variant={region.demand === "Very High" ? "default" : region.demand === "High" ? "secondary" : "outline"}>
@@ -466,7 +474,7 @@ const IndustryInsights = () => {
                     {region.growth}
                   </Badge>
                 </div>
-                <div className="space-y-2">
+                <div className="space-y-3">
                   <div>
                     <span className="text-muted-foreground text-sm">Key Specialisms:</span>
                     <div className="flex flex-wrap gap-1 mt-1">
@@ -505,9 +513,9 @@ const IndustryInsights = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="space-y-4">
+          <div className="space-y-6">
             {futureSkills.map((skill, index) => (
-              <div key={index} className="space-y-2">
+              <div key={index} className="space-y-3">
                 <h3 className="font-semibold text-white text-base">{skill.skill}</h3>
                 <div className="flex flex-wrap gap-2">
                   <Badge variant={skill.importance === "Critical" ? "destructive" : skill.importance === "High" ? "default" : "secondary"}>
@@ -521,6 +529,14 @@ const IndustryInsights = () => {
                   </Badge>
                 </div>
                 <p className="text-sm text-elec-light/80">{skill.description}</p>
+                
+                {index < futureSkills.length - 1 && (
+                  <div className="flex items-center gap-4 pt-3">
+                    <div className="flex-1 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
+                    <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow/30" />
+                    <div className="flex-1 h-px bg-gradient-to-r from-border via-transparent to-transparent" />
+                  </div>
+                )}
               </div>
             ))}
           </div>
@@ -536,9 +552,9 @@ const IndustryInsights = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {industryAnalysis.map((sector, index) => (
-              <div key={index} className="space-y-3">
+              <div key={index} className="space-y-4">
                 <h3 className="font-semibold text-white text-base">{sector.sector}</h3>
                 <div className="flex flex-wrap gap-2">
                   <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30">
@@ -551,7 +567,7 @@ const IndustryInsights = () => {
                     {sector.electricalShare}
                   </Badge>
                 </div>
-                <div className="space-y-2">
+                <div className="space-y-3">
                   <div>
                     <span className="text-muted-foreground text-xs">Key Drivers:</span>
                     <div className="flex flex-wrap gap-1 mt-1">
@@ -598,9 +614,9 @@ const IndustryInsights = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="space-y-4">
+          <div className="space-y-6">
             {skillsGapAnalysis.map((skill, index) => (
-              <div key={index} className="space-y-3">
+              <div key={index} className="space-y-4">
                 <h3 className="font-semibold text-white text-base">{skill.skill}</h3>
                 <div className="flex flex-wrap gap-2">
                   <Badge variant={skill.gap === "Severe" ? "destructive" : skill.gap === "High" ? "default" : "secondary"}>
@@ -626,6 +642,14 @@ const IndustryInsights = () => {
                     <div className="font-medium text-purple-400">{skill.certificationCost}</div>
                   </div>
                 </div>
+                
+                {index < skillsGapAnalysis.length - 1 && (
+                  <div className="flex items-center gap-4 pt-3">
+                    <div className="flex-1 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
+                    <div className="w-1.5 h-1.5 rounded-full bg-red-400/30" />
+                    <div className="flex-1 h-px bg-gradient-to-r from-border via-transparent to-transparent" />
+                  </div>
+                )}
               </div>
             ))}
           </div>
