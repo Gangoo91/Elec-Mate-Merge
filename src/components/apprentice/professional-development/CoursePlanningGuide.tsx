@@ -143,7 +143,7 @@ const CoursePlanningGuide = () => {
         <CardContent>
           <div className="space-y-6">
             {planningSteps.map((step, index) => (
-              <div key={index} className="border border-elec-yellow/10 rounded-lg p-4">
+              <div key={index} className="space-y-2">
                 <div className="flex items-start gap-4">
                   <div className="flex-shrink-0 w-8 h-8 bg-elec-yellow/20 rounded-full flex items-center justify-center">
                     <span className="text-sm font-bold text-elec-yellow">{step.step}</span>
@@ -184,7 +184,7 @@ const CoursePlanningGuide = () => {
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {fundingOptions.map((option, index) => (
-              <div key={index} className="border border-elec-yellow/10 rounded-lg p-4 space-y-3">
+              <div key={index} className="space-y-3">
                 <h3 className="font-semibold text-white">{option.title}</h3>
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between">
@@ -225,10 +225,10 @@ const CoursePlanningGuide = () => {
         <CardContent>
           <div className="space-y-4">
             {timingConsiderations.map((consideration, index) => (
-              <div key={index} className="border border-elec-yellow/10 rounded-lg p-4">
+              <div key={index} className="space-y-2">
                 <h3 className="font-semibold text-white mb-2">{consideration.factor}</h3>
                 <p className="text-sm text-elec-light/80 mb-2">{consideration.description}</p>
-                <div className="bg-blue-500/10 border border-blue-500/20 rounded p-2">
+                <div className="space-y-1">
                   <p className="text-xs text-blue-400">
                     <strong>Pro Tip:</strong> {consideration.tip}
                   </p>

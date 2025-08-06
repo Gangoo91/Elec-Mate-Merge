@@ -452,7 +452,7 @@ const AdvancedFundingCalculator = () => {
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {fundingSources.map((source, index) => (
-                  <div key={index} className="border border-elec-yellow/10 rounded-lg p-4 space-y-2">
+                  <div key={index} className="space-y-2">
                     <div className="flex justify-between items-start">
                       <h4 className="font-semibold text-elec-yellow">{source.name}</h4>
                       <span className="font-bold text-green-400">£{source.amount.toLocaleString()}</span>
@@ -499,7 +499,7 @@ const AdvancedFundingCalculator = () => {
               </div>
 
               {calculation.fundingGap > 0 && (
-                <div className="bg-orange-500/10 border border-orange-500/20 rounded-lg p-4">
+                <div className="space-y-2">
                   <h4 className="font-semibold mb-2 text-orange-400">Funding Gap Solutions</h4>
                   <ul className="text-sm space-y-1 text-muted-foreground list-disc list-inside">
                     <li>Consider payment plans with training providers</li>
