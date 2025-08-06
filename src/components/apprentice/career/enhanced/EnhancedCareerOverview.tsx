@@ -198,9 +198,9 @@ const EnhancedCareerOverview = () => {
           <MobileAccordionTrigger icon={<TrendingUp className="h-5 w-5 text-green-400" />}>
             Career Progression Stages
           </MobileAccordionTrigger>
-          <MobileAccordionContent className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
+          <MobileAccordionContent className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-6">
             {progressionStages.map((stage, index) => (
-              <div key={index} className="border border-green-500/20 rounded-lg p-3 space-y-3">
+              <div key={index} className="space-y-3">
                 <div className="flex items-center justify-between">
                   <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{stage.stage}</h4>
                   <div className="flex gap-2">
@@ -245,9 +245,9 @@ const EnhancedCareerOverview = () => {
           <MobileAccordionTrigger icon={<Target className="h-5 w-5 text-blue-400" />}>
             Popular Career Pathways
           </MobileAccordionTrigger>
-          <MobileAccordionContent className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-3">
+          <MobileAccordionContent className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
             {careerPathHighlights.map((path, index) => (
-              <div key={index} className="border border-blue-500/20 rounded-lg p-3 space-y-2">
+              <div key={index} className="space-y-2">
                 <div className="flex items-center gap-3">
                   {path.icon}
                   <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{path.path}</h4>
@@ -276,7 +276,7 @@ const EnhancedCareerOverview = () => {
           </MobileAccordionTrigger>
           <MobileAccordionContent className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
             {advancementTips.map((section, index) => (
-              <div key={index} className="border border-purple-500/20 rounded-lg p-3 space-y-3">
+              <div key={index} className="space-y-3">
                 <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{section.category}</h4>
                 <ul className="space-y-2">
                   {section.tips.map((tip, tipIndex) => (
