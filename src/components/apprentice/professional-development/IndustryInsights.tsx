@@ -361,42 +361,42 @@ const IndustryInsights = () => {
         <CardContent>
           <div className="space-y-6">
             {marketTrends.map((trend, index) => (
-              <div key={index} className="space-y-2">
-                <div className="flex items-start gap-4">
+              <div key={index} className="space-y-3">
+                <div className="flex items-center gap-3">
                   <div className="p-2 rounded-md bg-elec-yellow/10">
                     <trend.icon className="h-6 w-6 text-elec-yellow" />
                   </div>
-                  <div className="flex-1 space-y-3">
-                    <div className="flex items-center justify-between">
-                      <h3 className="font-semibold text-white">{trend.trend}</h3>
+                  <div className="flex-1">
+                    <h3 className="font-semibold text-white text-lg">{trend.trend}</h3>
+                    <div className="flex flex-wrap gap-2 mt-2">
                       <Badge className="bg-green-500/20 text-green-400 border-green-500/30">
                         {trend.growth}
                       </Badge>
                     </div>
-                    <p className="text-sm text-elec-light/80">{trend.description}</p>
-                    
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div>
-                        <h4 className="text-sm font-medium text-elec-yellow mb-2">Key Opportunities</h4>
-                        <ul className="space-y-1">
-                          {trend.opportunities.map((opportunity, oppIndex) => (
-                            <li key={oppIndex} className="text-xs text-muted-foreground flex items-center gap-1">
-                              <Target className="h-3 w-3 text-green-400" />
-                              {opportunity}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                      <div>
-                        <h4 className="text-sm font-medium text-elec-yellow mb-2">Essential Skills</h4>
-                        <div className="flex flex-wrap gap-1">
-                          {trend.skills.map((skill, skillIndex) => (
-                            <Badge key={skillIndex} variant="outline" className="text-xs">
-                              {skill}
-                            </Badge>
-                          ))}
-                        </div>
-                      </div>
+                  </div>
+                </div>
+                <p className="text-sm text-elec-light/80">{trend.description}</p>
+                
+                <div className="space-y-3">
+                  <div>
+                    <h4 className="text-sm font-medium text-elec-yellow mb-2">Key Opportunities</h4>
+                    <ul className="space-y-1">
+                      {trend.opportunities.map((opportunity, oppIndex) => (
+                        <li key={oppIndex} className="text-xs text-muted-foreground flex items-center gap-2">
+                          <Target className="h-3 w-3 text-green-400 flex-shrink-0" />
+                          <span>{opportunity}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-medium text-elec-yellow mb-2">Essential Skills</h4>
+                    <div className="flex flex-wrap gap-1">
+                      {trend.skills.map((skill, skillIndex) => (
+                        <Badge key={skillIndex} variant="outline" className="text-xs">
+                          {skill}
+                        </Badge>
+                      ))}
                     </div>
                   </div>
                 </div>
@@ -418,16 +418,16 @@ const IndustryInsights = () => {
           <div className="space-y-4">
             {salaryProgression.map((level, index) => (
               <div key={index} className="space-y-2">
-                <div className="flex items-center justify-between mb-2">
-                  <h3 className="font-semibold text-white">{level.level}</h3>
+                <h3 className="font-semibold text-white text-base">{level.level}</h3>
+                <div className="flex flex-wrap gap-2">
                   <Badge className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30">
                     {level.salary}
                   </Badge>
+                  <Badge variant="outline" className="text-xs">
+                    {level.experience}
+                  </Badge>
                 </div>
-                <div className="flex items-center gap-4 text-sm">
-                  <span className="text-muted-foreground">Experience: {level.experience}</span>
-                </div>
-                <p className="text-sm text-elec-light/80 mt-2">{level.description}</p>
+                <p className="text-sm text-elec-light/80">{level.description}</p>
               </div>
             ))}
           </div>
@@ -446,23 +446,21 @@ const IndustryInsights = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {regionalInsights.map((region, index) => (
               <div key={index} className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <h3 className="font-semibold text-white">{region.region}</h3>
+                <h3 className="font-semibold text-white text-base">{region.region}</h3>
+                <div className="flex flex-wrap gap-2">
                   <Badge variant={region.demand === "Very High" ? "default" : region.demand === "High" ? "secondary" : "outline"}>
-                    {region.demand}
+                    {region.demand} Demand
+                  </Badge>
+                  <Badge className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30">
+                    {region.averageSalary}
+                  </Badge>
+                  <Badge className="bg-green-500/20 text-green-400 border-green-500/30">
+                    {region.growth}
                   </Badge>
                 </div>
-                <div className="space-y-2 text-sm">
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Average Salary:</span>
-                    <span className="text-elec-yellow font-medium">{region.averageSalary}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Growth Rate:</span>
-                    <span className="text-green-400 font-medium">{region.growth}</span>
-                  </div>
+                <div className="space-y-2">
                   <div>
-                    <span className="text-muted-foreground">Key Specialisms:</span>
+                    <span className="text-muted-foreground text-sm">Key Specialisms:</span>
                     <div className="flex flex-wrap gap-1 mt-1">
                       {region.specialisms.map((specialism, specIndex) => (
                         <Badge key={specIndex} variant="outline" className="text-xs">
@@ -475,9 +473,9 @@ const IndustryInsights = () => {
                     <span className="text-muted-foreground text-xs">Major Projects:</span>
                     <ul className="text-xs text-elec-light/70 mt-1 space-y-1">
                       {region.majorProjects.map((project, projIndex) => (
-                        <li key={projIndex} className="flex items-center gap-1">
-                          <Target className="h-2 w-2 text-elec-yellow" />
-                          {project}
+                        <li key={projIndex} className="flex items-center gap-2">
+                          <Target className="h-2 w-2 text-elec-yellow flex-shrink-0" />
+                          <span>{project}</span>
                         </li>
                       ))}
                     </ul>
@@ -502,23 +500,19 @@ const IndustryInsights = () => {
           <div className="space-y-4">
             {futureSkills.map((skill, index) => (
               <div key={index} className="space-y-2">
-                <div className="flex items-center justify-between mb-2">
-                  <h3 className="font-semibold text-white">{skill.skill}</h3>
-                  <div className="flex items-center gap-2">
-                    <Badge variant={skill.importance === "Critical" ? "destructive" : skill.importance === "High" ? "default" : "secondary"}>
-                      {skill.importance}
-                    </Badge>
-                    <Badge variant="outline" className="text-xs">
-                      {skill.timeline}
-                    </Badge>
-                  </div>
-                </div>
-                <div className="flex items-center justify-between text-sm">
-                  <p className="text-elec-light/80 flex-1">{skill.description}</p>
-                  <Badge className="ml-2 bg-green-500/20 text-green-400 border-green-500/30 text-xs">
+                <h3 className="font-semibold text-white text-base">{skill.skill}</h3>
+                <div className="flex flex-wrap gap-2">
+                  <Badge variant={skill.importance === "Critical" ? "destructive" : skill.importance === "High" ? "default" : "secondary"}>
+                    {skill.importance}
+                  </Badge>
+                  <Badge variant="outline" className="text-xs">
+                    {skill.timeline}
+                  </Badge>
+                  <Badge className="bg-green-500/20 text-green-400 border-green-500/30 text-xs">
                     {skill.salaryImpact}
                   </Badge>
                 </div>
+                <p className="text-sm text-elec-light/80">{skill.description}</p>
               </div>
             ))}
           </div>
@@ -537,21 +531,17 @@ const IndustryInsights = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {industryAnalysis.map((sector, index) => (
               <div key={index} className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <h3 className="font-semibold text-white">{sector.sector}</h3>
+                <h3 className="font-semibold text-white text-base">{sector.sector}</h3>
+                <div className="flex flex-wrap gap-2">
                   <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30">
                     {sector.growth}
                   </Badge>
-                </div>
-                <div className="space-y-2 text-sm">
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Market Size:</span>
-                    <span className="text-elec-yellow font-medium">{sector.marketSize}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Electrical Share:</span>
-                    <span className="text-green-400 font-medium">{sector.electricalShare}</span>
-                  </div>
+                  <Badge className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30 text-xs">
+                    {sector.marketSize}
+                  </Badge>
+                  <Badge className="bg-green-500/20 text-green-400 border-green-500/30 text-xs">
+                    {sector.electricalShare}
+                  </Badge>
                 </div>
                 <div className="space-y-2">
                   <div>
@@ -603,35 +593,30 @@ const IndustryInsights = () => {
           <div className="space-y-4">
             {skillsGapAnalysis.map((skill, index) => (
               <div key={index} className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <h3 className="font-semibold text-white">{skill.skill}</h3>
+                <h3 className="font-semibold text-white text-base">{skill.skill}</h3>
+                <div className="flex flex-wrap gap-2">
                   <Badge variant={skill.gap === "Severe" ? "destructive" : skill.gap === "High" ? "default" : "secondary"}>
                     {skill.gap} Gap
                   </Badge>
+                  <Badge className="bg-red-500/20 text-red-400 border-red-500/30 text-xs">
+                    {skill.currentDemand} Demand
+                  </Badge>
+                  <Badge className="bg-orange-500/20 text-orange-400 border-orange-500/30 text-xs">
+                    {skill.supply} Supply
+                  </Badge>
+                  <Badge className="bg-green-500/20 text-green-400 border-green-500/30 text-xs">
+                    {skill.salaryPremium}
+                  </Badge>
                 </div>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-                  <div>
-                    <span className="text-muted-foreground text-xs">Demand:</span>
-                    <div className="font-medium text-red-400">{skill.currentDemand}</div>
-                  </div>
-                  <div>
-                    <span className="text-muted-foreground text-xs">Supply:</span>
-                    <div className="font-medium text-orange-400">{skill.supply}</div>
-                  </div>
+                <div className="grid grid-cols-2 gap-4 text-sm">
                   <div>
                     <span className="text-muted-foreground text-xs">Training Time:</span>
                     <div className="font-medium text-blue-400">{skill.trainingTime}</div>
                   </div>
                   <div>
-                    <span className="text-muted-foreground text-xs">Cost:</span>
+                    <span className="text-muted-foreground text-xs">Certification Cost:</span>
                     <div className="font-medium text-purple-400">{skill.certificationCost}</div>
                   </div>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-xs text-muted-foreground">Salary Premium Potential:</span>
-                  <Badge className="bg-green-500/20 text-green-400 border-green-500/30">
-                    {skill.salaryPremium}
-                  </Badge>
                 </div>
               </div>
             ))}
