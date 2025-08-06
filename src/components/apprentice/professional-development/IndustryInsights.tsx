@@ -359,9 +359,9 @@ const IndustryInsights = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="space-y-6">
+          <div className="divide-y divide-border/20">
             {marketTrends.map((trend, index) => (
-              <div key={index} className="space-y-3">
+              <div key={index} className={`space-y-3 ${index === 0 ? 'pb-6' : 'py-6'}`}>
                 <div className="flex items-center gap-3">
                   <div className="p-2 rounded-md bg-elec-yellow/10">
                     <trend.icon className="h-6 w-6 text-elec-yellow" />
