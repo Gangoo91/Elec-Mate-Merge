@@ -4,7 +4,7 @@ import { GraduationCap, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "react-router-dom";
-import CareerSectionCard from "@/components/apprentice/career/CareerSectionCard";
+import SimpleCareerCard from "@/components/apprentice/career/SimpleCareerCard";
 import CareerPathways from "@/components/apprentice/career/CareerPathways";
 import CareerCourses from "@/components/apprentice/career/CareerCourses";
 import EnhancedFurtherEducation from "@/components/apprentice/career/EnhancedFurtherEducation";
@@ -71,27 +71,12 @@ const CareerProgression = () => {
 
       {activeSection === null ? (
         <>
-          {/* Welcome Section */}
-          <Card className="border-elec-yellow/20 bg-elec-gray">
-            <CardContent className="p-6 text-center">
-              <h2 className="text-xl font-semibold mb-3 text-white">
-                Advance Your Electrical Career
-              </h2>
-              <p className="text-muted-foreground leading-relaxed">
-                Take your electrical career to the next level with specialised resources designed for qualified electricians. 
-                Explore advanced certifications, leadership opportunities, and business development pathways to achieve 
-                your professional goals and maximise your earning potential.
-              </p>
-            </CardContent>
-          </Card>
-
           {/* Career Sections Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 max-w-6xl mx-auto">
             {electricianCareerSections.map((section) => (
-              <CareerSectionCard 
+              <SimpleCareerCard 
                 key={section.id}
                 title={section.title}
-                description={section.description}
                 icon={section.icon}
                 onClick={() => setActiveSection(section.id)}
               />
