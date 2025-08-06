@@ -185,12 +185,10 @@ const EnhancedCareerOverview = () => {
 
       <div className={`grid gap-3 ${isMobile ? 'grid-cols-2' : 'grid-cols-1 md:grid-cols-2 xl:grid-cols-4'}`}>
         {careerMetrics.map((metric, index) => (
-          <Card key={index} className="border-elec-yellow/20 bg-elec-gray p-3">
-            <div className="text-center space-y-2">
-              {metric.icon}
-              <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-white`}>{metric.metric}</div>
-              <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{metric.data}</div>
-            </div>
+          <Card key={index} className="border-elec-yellow/20 bg-elec-gray p-3 text-center space-y-2">
+            {metric.icon}
+            <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-white`}>{metric.metric}</div>
+            <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{metric.data}</div>
           </Card>
         ))}
       </div>
@@ -200,50 +198,46 @@ const EnhancedCareerOverview = () => {
           <MobileAccordionTrigger icon={<TrendingUp className="h-5 w-5 text-green-400" />}>
             Career Progression Stages
           </MobileAccordionTrigger>
-          <MobileAccordionContent>
-            <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-              {progressionStages.map((stage, index) => (
-                <div key={index} className="border border-green-500/20 rounded-lg p-3 space-y-3">
-                  <div className="flex items-center justify-between">
-                    <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{stage.stage}</h4>
-                    <div className="flex gap-2">
-                      <Badge variant="outline" className={`text-green-300 border-green-400/30 ${isMobile ? 'text-xs' : 'text-sm'}`}>
-                        {stage.duration}
-                      </Badge>
-                      <Badge variant="outline" className={`text-blue-300 border-blue-400/30 ${isMobile ? 'text-xs' : 'text-sm'}`}>
-                        {stage.level}
-                      </Badge>
-                    </div>
-                  </div>
-                  
-                  <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{stage.description}</p>
-                  
-                  <div>
-                    <h6 className={`font-medium text-green-300 mb-2 ${isMobile ? 'text-xs' : 'text-sm'}`}>Key Milestones</h6>
-                    <ul className="space-y-1">
-                      {stage.keyMilestones.map((milestone, milestoneIndex) => (
-                        <li key={milestoneIndex} className={`${isMobile ? 'text-xs' : 'text-sm'} text-green-200 flex items-center gap-2`}>
-                          <CheckCircle className="h-3 w-3 text-green-400 flex-shrink-0" />
-                          {milestone}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <div className="flex items-center justify-between bg-green-500/5 border border-green-500/20 rounded p-2">
-                    <div>
-                      <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-green-300 font-medium`}>Salary Range: </span>
-                      <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-green-200`}>{stage.salaryRange}</span>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-2">
-                    <ArrowRight className="h-4 w-4 text-blue-400" />
-                    <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-blue-200`}>{stage.nextSteps}</span>
+          <MobileAccordionContent className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
+            {progressionStages.map((stage, index) => (
+              <div key={index} className="border border-green-500/20 rounded-lg p-3 space-y-3">
+                <div className="flex items-center justify-between">
+                  <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{stage.stage}</h4>
+                  <div className="flex gap-2">
+                    <Badge variant="outline" className={`text-green-300 border-green-400/30 ${isMobile ? 'text-xs' : 'text-sm'}`}>
+                      {stage.duration}
+                    </Badge>
+                    <Badge variant="outline" className={`text-blue-300 border-blue-400/30 ${isMobile ? 'text-xs' : 'text-sm'}`}>
+                      {stage.level}
+                    </Badge>
                   </div>
                 </div>
-              ))}
-            </div>
+                
+                <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{stage.description}</p>
+                
+                <div>
+                  <h6 className={`font-medium text-green-300 mb-2 ${isMobile ? 'text-xs' : 'text-sm'}`}>Key Milestones</h6>
+                  <ul className="space-y-1">
+                    {stage.keyMilestones.map((milestone, milestoneIndex) => (
+                      <li key={milestoneIndex} className={`${isMobile ? 'text-xs' : 'text-sm'} text-green-200 flex items-center gap-2`}>
+                        <CheckCircle className="h-3 w-3 text-green-400 flex-shrink-0" />
+                        {milestone}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="bg-green-500/5 border border-green-500/20 rounded p-2">
+                  <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-green-300 font-medium`}>Salary Range: </span>
+                  <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-green-200`}>{stage.salaryRange}</span>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <ArrowRight className="h-4 w-4 text-blue-400" />
+                  <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-blue-200`}>{stage.nextSteps}</span>
+                </div>
+              </div>
+            ))}
           </MobileAccordionContent>
         </MobileAccordionItem>
 
@@ -251,30 +245,28 @@ const EnhancedCareerOverview = () => {
           <MobileAccordionTrigger icon={<Target className="h-5 w-5 text-blue-400" />}>
             Popular Career Pathways
           </MobileAccordionTrigger>
-          <MobileAccordionContent>
-            <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-3">
-              {careerPathHighlights.map((path, index) => (
-                <div key={index} className="border border-blue-500/20 rounded-lg p-3 space-y-2">
-                  <div className="flex items-center gap-3">
-                    {path.icon}
-                    <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{path.path}</h4>
-                  </div>
-                  
-                  <div className="grid grid-cols-2 gap-3">
-                    <div>
-                      <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-blue-300 font-medium`}>Growth: </span>
-                      <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-blue-200`}>{path.growth}</span>
-                    </div>
-                    <div>
-                      <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-green-300 font-medium`}>Earning: </span>
-                      <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-green-200`}>{path.earning}</span>
-                    </div>
-                  </div>
-                  
-                  <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{path.speciality}</p>
+          <MobileAccordionContent className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-3">
+            {careerPathHighlights.map((path, index) => (
+              <div key={index} className="border border-blue-500/20 rounded-lg p-3 space-y-2">
+                <div className="flex items-center gap-3">
+                  {path.icon}
+                  <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{path.path}</h4>
                 </div>
-              ))}
-            </div>
+                
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-blue-300 font-medium`}>Growth: </span>
+                    <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-blue-200`}>{path.growth}</span>
+                  </div>
+                  <div>
+                    <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-green-300 font-medium`}>Earning: </span>
+                    <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-green-200`}>{path.earning}</span>
+                  </div>
+                </div>
+                
+                <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{path.speciality}</p>
+              </div>
+            ))}
           </MobileAccordionContent>
         </MobileAccordionItem>
 
@@ -282,22 +274,20 @@ const EnhancedCareerOverview = () => {
           <MobileAccordionTrigger icon={<GraduationCap className="h-5 w-5 text-purple-400" />}>
             Career Advancement Tips
           </MobileAccordionTrigger>
-          <MobileAccordionContent>
-            <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-              {advancementTips.map((section, index) => (
-                <div key={index} className="border border-purple-500/20 rounded-lg p-3 space-y-3">
-                  <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{section.category}</h4>
-                  <ul className="space-y-2">
-                    {section.tips.map((tip, tipIndex) => (
-                      <li key={tipIndex} className={`${isMobile ? 'text-xs' : 'text-sm'} text-purple-200 flex items-start gap-2`}>
-                        <Star className="h-3 w-3 text-purple-400 flex-shrink-0 mt-0.5" />
-                        {tip}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
+          <MobileAccordionContent className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
+            {advancementTips.map((section, index) => (
+              <div key={index} className="border border-purple-500/20 rounded-lg p-3 space-y-3">
+                <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{section.category}</h4>
+                <ul className="space-y-2">
+                  {section.tips.map((tip, tipIndex) => (
+                    <li key={tipIndex} className={`${isMobile ? 'text-xs' : 'text-sm'} text-purple-200 flex items-start gap-2`}>
+                      <Star className="h-3 w-3 text-purple-400 flex-shrink-0 mt-0.5" />
+                      {tip}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </MobileAccordionContent>
         </MobileAccordionItem>
       </MobileAccordion>
