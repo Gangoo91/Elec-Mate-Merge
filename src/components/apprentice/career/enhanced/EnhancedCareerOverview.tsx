@@ -17,7 +17,13 @@ import {
   Building,
   Zap,
   Star,
-  ArrowRight
+  ArrowRight,
+  Briefcase,
+  Sparkles,
+  TreePine,
+  DollarSign,
+  Network,
+  Compass
 } from "lucide-react";
 
 const EnhancedCareerOverview = () => {
@@ -113,6 +119,193 @@ const EnhancedCareerOverview = () => {
     }
   ];
 
+  const industryContext = [
+    {
+      title: "Digital Transformation",
+      description: "Smart buildings, IoT systems, and automated controls are reshaping electrical work",
+      impact: "High demand for tech-savvy electricians",
+      icon: <Zap className="h-5 w-5 text-blue-400" />
+    },
+    {
+      title: "Sustainability Focus",
+      description: "Net-zero targets driving renewable energy adoption and energy efficiency measures",
+      impact: "Growing opportunities in green technology",
+      icon: <Lightbulb className="h-5 w-5 text-green-400" />
+    },
+    {
+      title: "Infrastructure Investment",
+      description: "Major investment in EV charging networks, grid modernisation, and housing",
+      impact: "Sustained job creation across sectors",
+      icon: <Building className="h-5 w-5 text-orange-400" />
+    }
+  ];
+
+  const qualificationPathways = [
+    {
+      pathway: "Traditional Apprenticeship Route",
+      duration: "3-4 years",
+      structure: [
+        "Level 2 Electrical Installation (18 months)",
+        "Level 3 Electrical Installation NVQ (24 months)",
+        "AM2 Assessment and Portfolio completion",
+        "End Point Assessment (EPA)"
+      ],
+      advantages: [
+        "Earn while you learn",
+        "Comprehensive practical experience",
+        "Mentorship from experienced professionals",
+        "Direct pathway to employment"
+      ]
+    },
+    {
+      pathway: "Adult Career Change Route",
+      duration: "12-24 months",
+      structure: [
+        "Intensive Level 2 & 3 courses (12 months)",
+        "Work experience placement (6 months)",
+        "Assessment and certification",
+        "Job placement support"
+      ],
+      advantages: [
+        "Accelerated learning for mature learners",
+        "Recognition of prior experience",
+        "Flexible study options",
+        "Career change support services"
+      ]
+    },
+    {
+      pathway: "Higher Education Route",
+      duration: "3-4 years",
+      structure: [
+        "HNC/HND in Electrical Engineering",
+        "Degree Apprenticeship options",
+        "Professional registration pathway",
+        "Management development track"
+      ],
+      advantages: [
+        "Academic depth and breadth",
+        "Leadership preparation",
+        "Research and innovation exposure",
+        "Higher earning potential"
+      ]
+    }
+  ];
+
+  const professionalDevelopment = [
+    {
+      stage: "Early Career",
+      focus: "Technical Competence",
+      activities: [
+        "Complete mandatory certifications (BS 7671, 2391)",
+        "Gain experience across different electrical systems",
+        "Develop diagnostic and problem-solving skills",
+        "Build professional network through industry events"
+      ]
+    },
+    {
+      stage: "Mid Career",
+      focus: "Specialisation & Leadership",
+      activities: [
+        "Choose specialisation area (renewable energy, industrial, etc.)",
+        "Pursue advanced certifications and manufacturer training",
+        "Develop project management and team leadership skills",
+        "Consider business development or contracting"
+      ]
+    },
+    {
+      stage: "Senior Career",
+      focus: "Innovation & Mentorship",
+      activities: [
+        "Lead complex projects and initiatives",
+        "Mentor next generation of electricians",
+        "Contribute to industry standards and best practices",
+        "Explore entrepreneurship or consultancy opportunities"
+      ]
+    }
+  ];
+
+  const industrySectors = [
+    {
+      sector: "Residential & Domestic",
+      growth: "Steady",
+      opportunities: [
+        "Smart home installations",
+        "EV charging points",
+        "Solar PV systems",
+        "Home automation"
+      ],
+      salaryRange: "£25K - £40K"
+    },
+    {
+      sector: "Commercial & Office",
+      growth: "Growing",
+      opportunities: [
+        "Energy management systems",
+        "LED lighting upgrades",
+        "Emergency lighting compliance",
+        "Data centre installations"
+      ],
+      salaryRange: "£30K - £45K"
+    },
+    {
+      sector: "Industrial & Manufacturing",
+      growth: "High",
+      opportunities: [
+        "Automation and robotics",
+        "Process control systems",
+        "Motor control and drives",
+        "Predictive maintenance"
+      ],
+      salaryRange: "£35K - £55K"
+    },
+    {
+      sector: "Renewable Energy",
+      growth: "Very High",
+      opportunities: [
+        "Solar farm installations",
+        "Wind turbine maintenance",
+        "Battery storage systems",
+        "Grid connection projects"
+      ],
+      salaryRange: "£32K - £52K"
+    }
+  ];
+
+  const entrepreneurshipGuide = [
+    {
+      path: "Self-Employed Electrician",
+      requirements: [
+        "Minimum 3 years post-qualification experience",
+        "Public liability insurance",
+        "Professional scheme membership (NICEIC/NAPIT)",
+        "Business registration and accounting setup"
+      ],
+      earnings: "£30K - £60K+ dependent on workload",
+      considerations: [
+        "Irregular income in early stages",
+        "Responsibility for finding work",
+        "Need for business and marketing skills",
+        "Equipment and vehicle investment required"
+      ]
+    },
+    {
+      path: "Electrical Contracting Business",
+      requirements: [
+        "Significant industry experience",
+        "Business management qualifications",
+        "Capital for equipment and staff",
+        "Strong client network"
+      ],
+      earnings: "£40K - £100K+ as business develops",
+      considerations: [
+        "Higher risk and investment",
+        "Staff management responsibilities",
+        "Complex regulatory compliance",
+        "Potential for significant growth"
+      ]
+    }
+  ];
+
   const careerPathHighlights = [
     {
       path: "Domestic Installation Specialist",
@@ -201,7 +394,7 @@ const EnhancedCareerOverview = () => {
           <MobileAccordionContent className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-6">
             {progressionStages.map((stage, index) => (
               <div key={index} className="space-y-3">
-                <div className="flex items-center justify-between">
+                <div className="space-y-2">
                   <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{stage.stage}</h4>
                   <div className="flex gap-2">
                     <Badge variant="outline" className={`text-green-300 border-green-400/30 ${isMobile ? 'text-xs' : 'text-sm'}`}>
@@ -286,6 +479,176 @@ const EnhancedCareerOverview = () => {
                     </li>
                   ))}
                 </ul>
+              </div>
+            ))}
+          </MobileAccordionContent>
+        </MobileAccordionItem>
+
+        <MobileAccordionItem value="industry-context">
+          <MobileAccordionTrigger icon={<Sparkles className="h-5 w-5 text-orange-400" />}>
+            Industry Context & Trends
+          </MobileAccordionTrigger>
+          <MobileAccordionContent className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
+            {industryContext.map((context, index) => (
+              <div key={index} className="space-y-3">
+                <div className="flex items-center gap-3">
+                  {context.icon}
+                  <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{context.title}</h4>
+                </div>
+                <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{context.description}</p>
+                <div className="bg-orange-500/5 border border-orange-500/20 rounded p-2">
+                  <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-orange-300 font-medium`}>Impact: </span>
+                  <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-orange-200`}>{context.impact}</span>
+                </div>
+              </div>
+            ))}
+          </MobileAccordionContent>
+        </MobileAccordionItem>
+
+        <MobileAccordionItem value="qualification-pathways">
+          <MobileAccordionTrigger icon={<BookOpen className="h-5 w-5 text-indigo-400" />}>
+            Qualification Pathways
+          </MobileAccordionTrigger>
+          <MobileAccordionContent className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-6">
+            {qualificationPathways.map((pathway, index) => (
+              <div key={index} className="space-y-4">
+                <div className="space-y-2">
+                  <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{pathway.pathway}</h4>
+                  <Badge variant="outline" className={`text-indigo-300 border-indigo-400/30 ${isMobile ? 'text-xs' : 'text-sm'}`}>
+                    Duration: {pathway.duration}
+                  </Badge>
+                </div>
+                
+                <div>
+                  <h6 className={`font-medium text-indigo-300 mb-2 ${isMobile ? 'text-xs' : 'text-sm'}`}>Structure</h6>
+                  <ul className="space-y-1">
+                    {pathway.structure.map((step, stepIndex) => (
+                      <li key={stepIndex} className={`${isMobile ? 'text-xs' : 'text-sm'} text-indigo-200 flex items-center gap-2`}>
+                        <CheckCircle className="h-3 w-3 text-indigo-400 flex-shrink-0" />
+                        {step}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div>
+                  <h6 className={`font-medium text-green-300 mb-2 ${isMobile ? 'text-xs' : 'text-sm'}`}>Advantages</h6>
+                  <ul className="space-y-1">
+                    {pathway.advantages.map((advantage, advantageIndex) => (
+                      <li key={advantageIndex} className={`${isMobile ? 'text-xs' : 'text-sm'} text-green-200 flex items-center gap-2`}>
+                        <Star className="h-3 w-3 text-green-400 flex-shrink-0" />
+                        {advantage}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            ))}
+          </MobileAccordionContent>
+        </MobileAccordionItem>
+
+        <MobileAccordionItem value="professional-development">
+          <MobileAccordionTrigger icon={<Network className="h-5 w-5 text-cyan-400" />}>
+            Professional Development Journey
+          </MobileAccordionTrigger>
+          <MobileAccordionContent className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
+            {professionalDevelopment.map((stage, index) => (
+              <div key={index} className="space-y-3">
+                <div className="space-y-2">
+                  <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{stage.stage}</h4>
+                  <Badge variant="outline" className={`text-cyan-300 border-cyan-400/30 ${isMobile ? 'text-xs' : 'text-sm'}`}>
+                    Focus: {stage.focus}
+                  </Badge>
+                </div>
+                
+                <div>
+                  <h6 className={`font-medium text-cyan-300 mb-2 ${isMobile ? 'text-xs' : 'text-sm'}`}>Key Activities</h6>
+                  <ul className="space-y-1">
+                    {stage.activities.map((activity, activityIndex) => (
+                      <li key={activityIndex} className={`${isMobile ? 'text-xs' : 'text-sm'} text-cyan-200 flex items-start gap-2`}>
+                        <ArrowRight className="h-3 w-3 text-cyan-400 flex-shrink-0 mt-0.5" />
+                        {activity}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            ))}
+          </MobileAccordionContent>
+        </MobileAccordionItem>
+
+        <MobileAccordionItem value="industry-sectors">
+          <MobileAccordionTrigger icon={<Building className="h-5 w-5 text-teal-400" />}>
+            Industry Sectors & Opportunities
+          </MobileAccordionTrigger>
+          <MobileAccordionContent className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
+            {industrySectors.map((sector, index) => (
+              <div key={index} className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{sector.sector}</h4>
+                  <Badge variant="outline" className={`text-teal-300 border-teal-400/30 ${isMobile ? 'text-xs' : 'text-sm'}`}>
+                    {sector.growth}
+                  </Badge>
+                </div>
+                
+                <div>
+                  <h6 className={`font-medium text-teal-300 mb-2 ${isMobile ? 'text-xs' : 'text-sm'}`}>Growth Opportunities</h6>
+                  <ul className="space-y-1">
+                    {sector.opportunities.map((opportunity, oppIndex) => (
+                      <li key={oppIndex} className={`${isMobile ? 'text-xs' : 'text-sm'} text-teal-200 flex items-center gap-2`}>
+                        <Lightbulb className="h-3 w-3 text-teal-400 flex-shrink-0" />
+                        {opportunity}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="bg-teal-500/5 border border-teal-500/20 rounded p-2">
+                  <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-teal-300 font-medium`}>Salary Range: </span>
+                  <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-teal-200`}>{sector.salaryRange}</span>
+                </div>
+              </div>
+            ))}
+          </MobileAccordionContent>
+        </MobileAccordionItem>
+
+        <MobileAccordionItem value="entrepreneurship">
+          <MobileAccordionTrigger icon={<Briefcase className="h-5 w-5 text-amber-400" />}>
+            Entrepreneurship & Self-Employment
+          </MobileAccordionTrigger>
+          <MobileAccordionContent className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-6">
+            {entrepreneurshipGuide.map((path, index) => (
+              <div key={index} className="space-y-4">
+                <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{path.path}</h4>
+                
+                <div>
+                  <h6 className={`font-medium text-amber-300 mb-2 ${isMobile ? 'text-xs' : 'text-sm'}`}>Requirements</h6>
+                  <ul className="space-y-1">
+                    {path.requirements.map((requirement, reqIndex) => (
+                      <li key={reqIndex} className={`${isMobile ? 'text-xs' : 'text-sm'} text-amber-200 flex items-center gap-2`}>
+                        <CheckCircle className="h-3 w-3 text-amber-400 flex-shrink-0" />
+                        {requirement}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="bg-amber-500/5 border border-amber-500/20 rounded p-2">
+                  <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-amber-300 font-medium`}>Potential Earnings: </span>
+                  <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-amber-200`}>{path.earnings}</span>
+                </div>
+
+                <div>
+                  <h6 className={`font-medium text-orange-300 mb-2 ${isMobile ? 'text-xs' : 'text-sm'}`}>Key Considerations</h6>
+                  <ul className="space-y-1">
+                    {path.considerations.map((consideration, consIndex) => (
+                      <li key={consIndex} className={`${isMobile ? 'text-xs' : 'text-sm'} text-orange-200 flex items-start gap-2`}>
+                        <Compass className="h-3 w-3 text-orange-400 flex-shrink-0 mt-0.5" />
+                        {consideration}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
             ))}
           </MobileAccordionContent>
