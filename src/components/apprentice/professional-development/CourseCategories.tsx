@@ -203,7 +203,7 @@ const CourseCategories = () => {
           <CardContent>
             <div className="space-y-4">
               {category.courses.map((course, courseIndex) => (
-                <div key={courseIndex} className="border border-elec-yellow/10 rounded-lg p-4 space-y-3">
+                <div key={courseIndex} className="space-y-2">
                   <div className="flex items-start justify-between">
                     <div>
                       <h4 className="font-semibold text-white">{course.name}</h4>
