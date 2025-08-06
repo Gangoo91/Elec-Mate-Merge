@@ -470,22 +470,18 @@ const SkillsDevelopmentMatrix = () => {
                       
                       <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{skill.description}</p>
                       
-                      <div>
-                        <h6 className={`font-medium text-blue-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Learning Path</h6>
-                        <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-blue-200`}>{skill.learningPath}</p>
-                      </div>
+                      <h6 className={`font-medium text-blue-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Learning Path</h6>
+                      <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-blue-200`}>{skill.learningPath}</p>
 
-                      <div>
-                        <h6 className={`font-medium text-green-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Assessment Criteria</h6>
-                        <ul className="space-y-1">
-                          {skill.assessmentCriteria.map((criteria, criteriaIndex) => (
-                            <li key={criteriaIndex} className={`${isMobile ? 'text-xs' : 'text-sm'} text-green-200 flex items-center gap-1`}>
-                              <CheckCircle className="h-3 w-3 text-green-400 flex-shrink-0" />
-                              {criteria}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
+                      <h6 className={`font-medium text-green-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Assessment Criteria</h6>
+                      <ul className="space-y-1">
+                        {skill.assessmentCriteria.map((criteria, criteriaIndex) => (
+                          <li key={criteriaIndex} className={`${isMobile ? 'text-xs' : 'text-sm'} text-green-200 flex items-center gap-1`}>
+                            <CheckCircle className="h-3 w-3 text-green-400 flex-shrink-0" />
+                            {criteria}
+                          </li>
+                        ))}
+                      </ul>
                     </div>
                   ))}
                 </div>
@@ -524,13 +520,10 @@ const SkillsDevelopmentMatrix = () => {
                       
                       <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{skill.description}</p>
                       
-                      <div>
-                        <h6 className={`font-medium text-green-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Learning Path</h6>
-                        <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-green-200`}>{skill.learningPath}</p>
-                      </div>
+                      <h6 className={`font-medium text-green-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Learning Path</h6>
+                      <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-green-200`}>{skill.learningPath}</p>
 
-                      <div>
-                        <h6 className={`font-medium text-blue-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Assessment Criteria</h6>
+                      <h6 className={`font-medium text-blue-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Assessment Criteria</h6>
                         <ul className="space-y-1">
                           {skill.assessmentCriteria.map((criteria, criteriaIndex) => (
                             <li key={criteriaIndex} className={`${isMobile ? 'text-xs' : 'text-sm'} text-blue-200 flex items-center gap-1`}>
@@ -539,7 +532,6 @@ const SkillsDevelopmentMatrix = () => {
                             </li>
                           ))}
                         </ul>
-                      </div>
                     </div>
                   ))}
                 </div>
@@ -578,13 +570,10 @@ const SkillsDevelopmentMatrix = () => {
                       
                       <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{skill.description}</p>
                       
-                      <div>
-                        <h6 className={`font-medium text-purple-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Learning Path</h6>
-                        <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-purple-200`}>{skill.learningPath}</p>
-                      </div>
+                      <h6 className={`font-medium text-purple-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Learning Path</h6>
+                      <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-purple-200`}>{skill.learningPath}</p>
 
-                      <div>
-                        <h6 className={`font-medium text-cyan-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Assessment Criteria</h6>
+                      <h6 className={`font-medium text-cyan-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Assessment Criteria</h6>
                         <ul className="space-y-1">
                           {skill.assessmentCriteria.map((criteria, criteriaIndex) => (
                             <li key={criteriaIndex} className={`${isMobile ? 'text-xs' : 'text-sm'} text-cyan-200 flex items-center gap-1`}>
@@ -593,7 +582,6 @@ const SkillsDevelopmentMatrix = () => {
                             </li>
                           ))}
                         </ul>
-                      </div>
                     </div>
                   ))}
                 </div>
@@ -634,13 +622,10 @@ const SkillsDevelopmentMatrix = () => {
                       
                       <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{skill.description}</p>
                       
-                      <div>
-                        <h6 className={`font-medium text-cyan-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Learning Path</h6>
-                        <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-cyan-200`}>{skill.learningPath}</p>
-                      </div>
+                      <h6 className={`font-medium text-cyan-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Learning Path</h6>
+                      <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-cyan-200`}>{skill.learningPath}</p>
 
-                      <div>
-                        <h6 className={`font-medium text-blue-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Assessment Criteria</h6>
+                      <h6 className={`font-medium text-blue-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Assessment Criteria</h6>
                         <ul className="space-y-1">
                           {skill.assessmentCriteria.map((criteria, criteriaIndex) => (
                             <li key={criteriaIndex} className={`${isMobile ? 'text-xs' : 'text-sm'} text-blue-200 flex items-center gap-1`}>
@@ -649,7 +634,6 @@ const SkillsDevelopmentMatrix = () => {
                             </li>
                           ))}
                         </ul>
-                      </div>
                     </div>
                   ))}
                 </div>
@@ -690,13 +674,10 @@ const SkillsDevelopmentMatrix = () => {
                       
                       <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{skill.description}</p>
                       
-                      <div>
-                        <h6 className={`font-medium text-orange-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Learning Path</h6>
-                        <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-orange-200`}>{skill.learningPath}</p>
-                      </div>
+                      <h6 className={`font-medium text-orange-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Learning Path</h6>
+                      <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-orange-200`}>{skill.learningPath}</p>
 
-                      <div>
-                        <h6 className={`font-medium text-green-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Assessment Criteria</h6>
+                      <h6 className={`font-medium text-green-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Assessment Criteria</h6>
                         <ul className="space-y-1">
                           {skill.assessmentCriteria.map((criteria, criteriaIndex) => (
                             <li key={criteriaIndex} className={`${isMobile ? 'text-xs' : 'text-sm'} text-green-200 flex items-center gap-1`}>
@@ -705,7 +686,6 @@ const SkillsDevelopmentMatrix = () => {
                             </li>
                           ))}
                         </ul>
-                      </div>
                     </div>
                   ))}
                 </div>
@@ -744,13 +724,10 @@ const SkillsDevelopmentMatrix = () => {
                       
                       <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{skill.description}</p>
                       
-                      <div>
-                        <h6 className={`font-medium text-pink-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Learning Path</h6>
-                        <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-pink-200`}>{skill.learningPath}</p>
-                      </div>
+                      <h6 className={`font-medium text-pink-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Learning Path</h6>
+                      <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-pink-200`}>{skill.learningPath}</p>
 
-                      <div>
-                        <h6 className={`font-medium text-cyan-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Assessment Criteria</h6>
+                      <h6 className={`font-medium text-cyan-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Assessment Criteria</h6>
                         <ul className="space-y-1">
                           {skill.assessmentCriteria.map((criteria, criteriaIndex) => (
                             <li key={criteriaIndex} className={`${isMobile ? 'text-xs' : 'text-sm'} text-cyan-200 flex items-center gap-1`}>
@@ -759,7 +736,6 @@ const SkillsDevelopmentMatrix = () => {
                             </li>
                           ))}
                         </ul>
-                      </div>
                     </div>
                   ))}
                 </div>
@@ -799,13 +775,10 @@ const SkillsDevelopmentMatrix = () => {
                       
                       <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{skill.description}</p>
                       
-                      <div>
-                        <h6 className={`font-medium text-indigo-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Learning Path</h6>
-                        <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-indigo-200`}>{skill.learningPath}</p>
-                      </div>
+                      <h6 className={`font-medium text-indigo-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Learning Path</h6>
+                      <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-indigo-200`}>{skill.learningPath}</p>
 
-                      <div>
-                        <h6 className={`font-medium text-blue-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Assessment Criteria</h6>
+                      <h6 className={`font-medium text-blue-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Assessment Criteria</h6>
                         <ul className="space-y-1">
                           {skill.assessmentCriteria.map((criteria, criteriaIndex) => (
                             <li key={criteriaIndex} className={`${isMobile ? 'text-xs' : 'text-sm'} text-blue-200 flex items-center gap-1`}>
@@ -814,7 +787,6 @@ const SkillsDevelopmentMatrix = () => {
                             </li>
                           ))}
                         </ul>
-                      </div>
                     </div>
                   ))}
                 </div>
