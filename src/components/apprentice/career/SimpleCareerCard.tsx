@@ -1,0 +1,25 @@
+import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+
+interface SimpleCareerCardProps {
+  title: string;
+  icon: React.ReactNode;
+  onClick: () => void;
+}
+
+const SimpleCareerCard = ({ title, icon, onClick }: SimpleCareerCardProps) => {
+  return (
+    <Card 
+      className="border-elec-yellow/20 bg-elec-gray h-full hover:bg-elec-gray/80 transition-all duration-200 cursor-pointer hover-scale"
+      onClick={onClick}
+    >
+      <CardHeader className="flex flex-col items-center justify-center text-center py-6 md:py-8">
+        <div className="mb-3">
+          {icon}
+        </div>
+        <CardTitle className="text-base sm:text-lg leading-tight">{title}</CardTitle>
+      </CardHeader>
+    </Card>
+  );
+};
+
+export default SimpleCareerCard;
