@@ -13,7 +13,22 @@ import {
   TrendingUp,
   Lightbulb,
   Users,
-  Shield
+  Shield,
+  Smartphone,
+  Briefcase,
+  Zap,
+  Rocket,
+  GraduationCap,
+  MapPin,
+  TrendingDown,
+  Library,
+  Monitor,
+  Settings,
+  Network,
+  Cpu,
+  Globe,
+  BarChart,
+  Search
 } from "lucide-react";
 
 const SkillsDevelopmentMatrix = () => {
@@ -223,6 +238,186 @@ const SkillsDevelopmentMatrix = () => {
     }
   ];
 
+  const digitalTechSkills = [
+    {
+      category: "Digital Installation Tools",
+      level: "Digital Foundation",
+      duration: "6-12 months",
+      skills: [
+        {
+          skill: "BIM Software Proficiency",
+          description: "Building Information Modelling for electrical design and installation planning",
+          competencyLevel: "Emerging",
+          learningPath: "BIM training → CAD software → 3D modelling practice",
+          assessmentCriteria: ["Create electrical layouts in BIM", "Extract installation data", "Collaborate on digital models"]
+        },
+        {
+          skill: "Electrical Design Software",
+          description: "AutoCAD Electrical, ETAP, or similar design and simulation tools",
+          competencyLevel: "Advanced",
+          learningPath: "Software training → Design projects → Professional certification",
+          assessmentCriteria: ["Design electrical schematics", "Perform load calculations", "Generate installation drawings"]
+        },
+        {
+          skill: "Digital Testing Equipment",
+          description: "Modern digital multimeters, oscilloscopes, and smart testing devices",
+          competencyLevel: "Essential",
+          learningPath: "Equipment training → Practical use → Data interpretation",
+          assessmentCriteria: ["Use advanced testing features", "Record digital data", "Analyse measurement trends"]
+        }
+      ]
+    },
+    {
+      category: "Smart Building Integration",
+      level: "Digital Advanced",
+      duration: "12-18 months",
+      skills: [
+        {
+          skill: "IoT Device Installation",
+          description: "Internet of Things sensors, controllers, and smart building devices",
+          competencyLevel: "Specialist",
+          learningPath: "IoT fundamentals → Device programming → Network integration",
+          assessmentCriteria: ["Configure IoT devices", "Establish communication protocols", "Integrate with building systems"]
+        },
+        {
+          skill: "Network Infrastructure",
+          description: "Ethernet, WiFi, and building automation network installation",
+          competencyLevel: "Advanced",
+          learningPath: "Networking course → Protocol understanding → Infrastructure setup",
+          assessmentCriteria: ["Install structured cabling", "Configure network switches", "Troubleshoot connectivity issues"]
+        },
+        {
+          skill: "Cybersecurity for Buildings",
+          description: "Securing electrical and building automation systems from cyber threats",
+          competencyLevel: "Critical",
+          learningPath: "Cybersecurity training → Risk assessment → Security implementation",
+          assessmentCriteria: ["Identify security vulnerabilities", "Implement access controls", "Monitor system security"]
+        }
+      ]
+    }
+  ];
+
+  const businessSoftSkills = [
+    {
+      category: "Communication & Leadership",
+      level: "Professional Skills",
+      duration: "Ongoing",
+      skills: [
+        {
+          skill: "Client Communication",
+          description: "Effective communication with clients, explaining technical concepts clearly",
+          competencyLevel: "Essential",
+          learningPath: "Communication workshops → Role-playing exercises → Client interaction practice",
+          assessmentCriteria: ["Explain technical issues in layman terms", "Handle client complaints professionally", "Deliver clear project updates"]
+        },
+        {
+          skill: "Team Leadership",
+          description: "Leading electrical teams, delegating tasks, and managing project workflows",
+          competencyLevel: "Advanced",
+          learningPath: "Leadership training → Mentoring experience → Team management practice",
+          assessmentCriteria: ["Coordinate team activities", "Resolve team conflicts", "Motivate team performance"]
+        },
+        {
+          skill: "Project Management",
+          description: "Planning, executing, and delivering electrical projects on time and budget",
+          competencyLevel: "Professional",
+          learningPath: "Project management course → PM software training → Real project experience",
+          assessmentCriteria: ["Create project schedules", "Manage project budgets", "Deliver projects successfully"]
+        }
+      ]
+    },
+    {
+      category: "Business Development",
+      level: "Entrepreneurial",
+      duration: "12-24 months",
+      skills: [
+        {
+          skill: "Cost Estimation & Pricing",
+          description: "Accurate pricing of electrical work, material costs, and labour calculations",
+          competencyLevel: "Critical",
+          learningPath: "Estimating course → Software training → Bid preparation practice",
+          assessmentCriteria: ["Prepare accurate estimates", "Calculate material costs", "Price competitive bids"]
+        },
+        {
+          skill: "Marketing & Sales",
+          description: "Promoting electrical services, building client relationships, and business growth",
+          competencyLevel: "Advanced",
+          learningPath: "Marketing course → Digital marketing → Sales technique training",
+          assessmentCriteria: ["Develop marketing strategies", "Build client relationships", "Close sales effectively"]
+        },
+        {
+          skill: "Quality Management",
+          description: "Implementing quality control processes and continuous improvement",
+          competencyLevel: "Professional",
+          learningPath: "Quality management training → Process development → Audit experience",
+          assessmentCriteria: ["Implement QC processes", "Conduct quality audits", "Drive continuous improvement"]
+        }
+      ]
+    }
+  ];
+
+  const emergingTechSkills = [
+    {
+      category: "Future Technologies",
+      level: "Innovation",
+      duration: "6-18 months",
+      skills: [
+        {
+          skill: "Hydrogen Fuel Systems",
+          description: "Installation and maintenance of hydrogen fuel cell and generation systems",
+          competencyLevel: "Emerging",
+          learningPath: "Hydrogen technology course → Safety training → Practical installations",
+          assessmentCriteria: ["Understand hydrogen safety", "Install fuel cell systems", "Maintain hydrogen equipment"]
+        },
+        {
+          skill: "AI-Powered Building Systems",
+          description: "Artificial intelligence integration in building automation and energy management",
+          competencyLevel: "Specialist",
+          learningPath: "AI fundamentals → Building automation → Machine learning applications",
+          assessmentCriteria: ["Configure AI controllers", "Implement predictive maintenance", "Optimise energy systems"]
+        },
+        {
+          skill: "Wireless Power Transfer",
+          description: "Installation and maintenance of wireless charging and power transmission systems",
+          competencyLevel: "Advanced",
+          learningPath: "Wireless technology course → Safety training → System commissioning",
+          assessmentCriteria: ["Install wireless charging systems", "Ensure electromagnetic compliance", "Troubleshoot wireless issues"]
+        }
+      ]
+    }
+  ];
+
+  const professionalFramework = [
+    {
+      category: "Continuous Learning",
+      level: "Professional Development",
+      duration: "Career-long",
+      skills: [
+        {
+          skill: "CPD Planning & Management",
+          description: "Structured approach to Continuing Professional Development and career planning",
+          competencyLevel: "Essential",
+          learningPath: "CPD planning workshop → Goal setting → Progress tracking",
+          assessmentCriteria: ["Create annual CPD plans", "Track learning outcomes", "Reflect on skill development"]
+        },
+        {
+          skill: "Industry Research & Trends",
+          description: "Staying current with electrical industry developments and emerging technologies",
+          competencyLevel: "Advanced",
+          learningPath: "Industry publications → Conference attendance → Professional networking",
+          assessmentCriteria: ["Identify industry trends", "Evaluate new technologies", "Share knowledge with peers"]
+        },
+        {
+          skill: "Mentoring & Teaching",
+          description: "Sharing knowledge and developing the next generation of electrical professionals",
+          competencyLevel: "Professional",
+          learningPath: "Teaching skills course → Mentoring programme → Knowledge transfer activities",
+          assessmentCriteria: ["Mentor apprentices effectively", "Deliver training sessions", "Develop learning materials"]
+        }
+      ]
+    }
+  ];
+
   return (
     <div className="space-y-4">
       <Alert className="border-blue-500/50 bg-blue-500/10">
@@ -394,11 +589,11 @@ const SkillsDevelopmentMatrix = () => {
                         </div>
 
                         <div>
-                          <h6 className={`font-medium text-amber-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Assessment Criteria</h6>
+                          <h6 className={`font-medium text-cyan-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Assessment Criteria</h6>
                           <ul className="space-y-1">
                             {skill.assessmentCriteria.map((criteria, criteriaIndex) => (
-                              <li key={criteriaIndex} className={`${isMobile ? 'text-xs' : 'text-sm'} text-amber-200 flex items-center gap-1`}>
-                                <CheckCircle className="h-3 w-3 text-amber-400 flex-shrink-0" />
+                              <li key={criteriaIndex} className={`${isMobile ? 'text-xs' : 'text-sm'} text-cyan-200 flex items-center gap-1`}>
+                                <CheckCircle className="h-3 w-3 text-cyan-400 flex-shrink-0" />
                                 {criteria}
                               </li>
                             ))}
@@ -413,68 +608,429 @@ const SkillsDevelopmentMatrix = () => {
           </MobileAccordionContent>
         </MobileAccordionItem>
 
-        <MobileAccordionItem value="skills-assessment">
-          <MobileAccordionTrigger icon={<Lightbulb className="h-5 w-5 text-orange-400" />}>
-            Skills Assessment & Planning
+        <MobileAccordionItem value="digital-tech-skills">
+          <MobileAccordionTrigger icon={<Smartphone className="h-5 w-5 text-cyan-400" />}>
+            Digital & Technology Skills
           </MobileAccordionTrigger>
           <MobileAccordionContent>
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-              <div className="border border-orange-500/20 rounded-lg p-3 space-y-3">
-                <h4 className={`font-medium text-orange-300 ${isMobile ? 'text-sm' : 'text-base'}`}>Personal Development Planning</h4>
-                
-                <div className="space-y-3">
-                  <div className="bg-orange-500/5 border border-orange-500/20 rounded p-3">
-                    <h5 className={`font-medium text-orange-300 mb-2 ${isMobile ? 'text-sm' : 'text-base'}`}>Skills Gap Analysis</h5>
-                    <ul className="space-y-1">
-                      {[
-                        "Assess current competency levels against industry standards",
-                        "Identify priority skills for career progression",
-                        "Map skills to specific job roles and salary expectations",
-                        "Create personalised learning timeline and milestones"
-                      ].map((item, index) => (
-                        <li key={index} className={`${isMobile ? 'text-xs' : 'text-sm'} text-orange-200 flex items-center gap-1`}>
-                          <CheckCircle className="h-3 w-3 text-orange-400 flex-shrink-0" />
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
+              {digitalTechSkills.map((category, index) => (
+                <div key={index} className="border border-cyan-500/20 rounded-lg p-3 space-y-3">
+                  <div className="flex items-center justify-between">
+                    <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{category.category}</h4>
+                    <Badge variant="outline" className={`text-cyan-300 border-cyan-400/30 ${isMobile ? 'text-xs' : 'text-sm'}`}>
+                      {category.duration}
+                    </Badge>
                   </div>
 
-                  <div className="bg-blue-500/5 border border-blue-500/20 rounded p-3">
-                    <h5 className={`font-medium text-blue-300 mb-2 ${isMobile ? 'text-sm' : 'text-base'}`}>Learning Resources</h5>
-                    <ul className="space-y-1">
-                      {[
-                        "City & Guilds and EAL qualification centres",
-                        "Employer training schemes and modern apprenticeships",
-                        "Professional body CPD programmes (IET, SELECT)",
-                        "Online learning platforms and virtual reality training"
-                      ].map((item, index) => (
-                        <li key={index} className={`${isMobile ? 'text-xs' : 'text-sm'} text-blue-200 flex items-center gap-1`}>
-                          <CheckCircle className="h-3 w-3 text-blue-400 flex-shrink-0" />
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                  <div className="space-y-3">
+                    {category.skills.map((skill, skillIndex) => (
+                      <div key={skillIndex} className="bg-cyan-500/5 border border-cyan-500/20 rounded p-3 space-y-2">
+                        <div className="flex items-center justify-between">
+                          <h5 className={`font-medium text-cyan-300 ${isMobile ? 'text-sm' : 'text-base'}`}>{skill.skill}</h5>
+                          <Badge variant="outline" className={`${
+                            skill.competencyLevel === 'Critical' ? 'text-red-300 border-red-400/30' :
+                            skill.competencyLevel === 'Essential' ? 'text-green-300 border-green-400/30' :
+                            skill.competencyLevel === 'Advanced' ? 'text-orange-300 border-orange-400/30' :
+                            skill.competencyLevel === 'Emerging' ? 'text-pink-300 border-pink-400/30' :
+                            'text-yellow-300 border-yellow-400/30'
+                          } ${isMobile ? 'text-xs' : 'text-sm'}`}>
+                            {skill.competencyLevel}
+                          </Badge>
+                        </div>
+                        
+                        <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{skill.description}</p>
+                        
+                        <div>
+                          <h6 className={`font-medium text-cyan-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Learning Path</h6>
+                          <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-cyan-200`}>{skill.learningPath}</p>
+                        </div>
 
-                  <div className="bg-green-500/5 border border-green-500/20 rounded p-3">
-                    <h5 className={`font-medium text-green-300 mb-2 ${isMobile ? 'text-sm' : 'text-base'}`}>Competency Tracking</h5>
-                    <ul className="space-y-1">
-                      {[
-                        "Regular skills assessments with qualified assessors",
-                        "Portfolio development with evidence collection",
-                        "Industry certification and scheme membership",
-                        "Continuous professional development records"
-                      ].map((item, index) => (
-                        <li key={index} className={`${isMobile ? 'text-xs' : 'text-sm'} text-green-200 flex items-center gap-1`}>
-                          <CheckCircle className="h-3 w-3 text-green-400 flex-shrink-0" />
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
+                        <div>
+                          <h6 className={`font-medium text-blue-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Assessment Criteria</h6>
+                          <ul className="space-y-1">
+                            {skill.assessmentCriteria.map((criteria, criteriaIndex) => (
+                              <li key={criteriaIndex} className={`${isMobile ? 'text-xs' : 'text-sm'} text-blue-200 flex items-center gap-1`}>
+                                <CheckCircle className="h-3 w-3 text-blue-400 flex-shrink-0" />
+                                {criteria}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
+              ))}
+            </div>
+          </MobileAccordionContent>
+        </MobileAccordionItem>
+
+        <MobileAccordionItem value="business-soft-skills">
+          <MobileAccordionTrigger icon={<Briefcase className="h-5 w-5 text-orange-400" />}>
+            Business & Soft Skills
+          </MobileAccordionTrigger>
+          <MobileAccordionContent>
+            <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
+              {businessSoftSkills.map((category, index) => (
+                <div key={index} className="border border-orange-500/20 rounded-lg p-3 space-y-3">
+                  <div className="flex items-center justify-between">
+                    <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{category.category}</h4>
+                    <Badge variant="outline" className={`text-orange-300 border-orange-400/30 ${isMobile ? 'text-xs' : 'text-sm'}`}>
+                      {category.duration}
+                    </Badge>
+                  </div>
+
+                  <div className="space-y-3">
+                    {category.skills.map((skill, skillIndex) => (
+                      <div key={skillIndex} className="bg-orange-500/5 border border-orange-500/20 rounded p-3 space-y-2">
+                        <div className="flex items-center justify-between">
+                          <h5 className={`font-medium text-orange-300 ${isMobile ? 'text-sm' : 'text-base'}`}>{skill.skill}</h5>
+                          <Badge variant="outline" className={`${
+                            skill.competencyLevel === 'Critical' ? 'text-red-300 border-red-400/30' :
+                            skill.competencyLevel === 'Essential' ? 'text-green-300 border-green-400/30' :
+                            skill.competencyLevel === 'Advanced' ? 'text-blue-300 border-blue-400/30' :
+                            skill.competencyLevel === 'Professional' ? 'text-purple-300 border-purple-400/30' :
+                            'text-yellow-300 border-yellow-400/30'
+                          } ${isMobile ? 'text-xs' : 'text-sm'}`}>
+                            {skill.competencyLevel}
+                          </Badge>
+                        </div>
+                        
+                        <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{skill.description}</p>
+                        
+                        <div>
+                          <h6 className={`font-medium text-orange-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Learning Path</h6>
+                          <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-orange-200`}>{skill.learningPath}</p>
+                        </div>
+
+                        <div>
+                          <h6 className={`font-medium text-green-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Assessment Criteria</h6>
+                          <ul className="space-y-1">
+                            {skill.assessmentCriteria.map((criteria, criteriaIndex) => (
+                              <li key={criteriaIndex} className={`${isMobile ? 'text-xs' : 'text-sm'} text-green-200 flex items-center gap-1`}>
+                                <CheckCircle className="h-3 w-3 text-green-400 flex-shrink-0" />
+                                {criteria}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </MobileAccordionContent>
+        </MobileAccordionItem>
+
+        <MobileAccordionItem value="emerging-tech-skills">
+          <MobileAccordionTrigger icon={<Rocket className="h-5 w-5 text-pink-400" />}>
+            Emerging Technologies
+          </MobileAccordionTrigger>
+          <MobileAccordionContent>
+            <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
+              {emergingTechSkills.map((category, index) => (
+                <div key={index} className="border border-pink-500/20 rounded-lg p-3 space-y-3">
+                  <div className="flex items-center justify-between">
+                    <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{category.category}</h4>
+                    <Badge variant="outline" className={`text-pink-300 border-pink-400/30 ${isMobile ? 'text-xs' : 'text-sm'}`}>
+                      {category.duration}
+                    </Badge>
+                  </div>
+
+                  <div className="space-y-3">
+                    {category.skills.map((skill, skillIndex) => (
+                      <div key={skillIndex} className="bg-pink-500/5 border border-pink-500/20 rounded p-3 space-y-2">
+                        <div className="flex items-center justify-between">
+                          <h5 className={`font-medium text-pink-300 ${isMobile ? 'text-sm' : 'text-base'}`}>{skill.skill}</h5>
+                          <Badge variant="outline" className={`${
+                            skill.competencyLevel === 'Emerging' ? 'text-cyan-300 border-cyan-400/30' :
+                            skill.competencyLevel === 'Advanced' ? 'text-orange-300 border-orange-400/30' :
+                            'text-yellow-300 border-yellow-400/30'
+                          } ${isMobile ? 'text-xs' : 'text-sm'}`}>
+                            {skill.competencyLevel}
+                          </Badge>
+                        </div>
+                        
+                        <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{skill.description}</p>
+                        
+                        <div>
+                          <h6 className={`font-medium text-pink-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Learning Path</h6>
+                          <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-pink-200`}>{skill.learningPath}</p>
+                        </div>
+
+                        <div>
+                          <h6 className={`font-medium text-cyan-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Assessment Criteria</h6>
+                          <ul className="space-y-1">
+                            {skill.assessmentCriteria.map((criteria, criteriaIndex) => (
+                              <li key={criteriaIndex} className={`${isMobile ? 'text-xs' : 'text-sm'} text-cyan-200 flex items-center gap-1`}>
+                                <CheckCircle className="h-3 w-3 text-cyan-400 flex-shrink-0" />
+                                {criteria}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </MobileAccordionContent>
+        </MobileAccordionItem>
+
+        <MobileAccordionItem value="professional-framework">
+          <MobileAccordionTrigger icon={<GraduationCap className="h-5 w-5 text-indigo-400" />}>
+            Professional Development Framework
+          </MobileAccordionTrigger>
+          <MobileAccordionContent>
+            <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
+              {professionalFramework.map((category, index) => (
+                <div key={index} className="border border-indigo-500/20 rounded-lg p-3 space-y-3">
+                  <div className="flex items-center justify-between">
+                    <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{category.category}</h4>
+                    <Badge variant="outline" className={`text-indigo-300 border-indigo-400/30 ${isMobile ? 'text-xs' : 'text-sm'}`}>
+                      {category.duration}
+                    </Badge>
+                  </div>
+
+                  <div className="space-y-3">
+                    {category.skills.map((skill, skillIndex) => (
+                      <div key={skillIndex} className="bg-indigo-500/5 border border-indigo-500/20 rounded p-3 space-y-2">
+                        <div className="flex items-center justify-between">
+                          <h5 className={`font-medium text-indigo-300 ${isMobile ? 'text-sm' : 'text-base'}`}>{skill.skill}</h5>
+                          <Badge variant="outline" className={`${
+                            skill.competencyLevel === 'Essential' ? 'text-green-300 border-green-400/30' :
+                            skill.competencyLevel === 'Advanced' ? 'text-orange-300 border-orange-400/30' :
+                            skill.competencyLevel === 'Professional' ? 'text-purple-300 border-purple-400/30' :
+                            'text-yellow-300 border-yellow-400/30'
+                          } ${isMobile ? 'text-xs' : 'text-sm'}`}>
+                            {skill.competencyLevel}
+                          </Badge>
+                        </div>
+                        
+                        <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{skill.description}</p>
+                        
+                        <div>
+                          <h6 className={`font-medium text-indigo-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Learning Path</h6>
+                          <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-indigo-200`}>{skill.learningPath}</p>
+                        </div>
+
+                        <div>
+                          <h6 className={`font-medium text-blue-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Assessment Criteria</h6>
+                          <ul className="space-y-1">
+                            {skill.assessmentCriteria.map((criteria, criteriaIndex) => (
+                              <li key={criteriaIndex} className={`${isMobile ? 'text-xs' : 'text-sm'} text-blue-200 flex items-center gap-1`}>
+                                <CheckCircle className="h-3 w-3 text-blue-400 flex-shrink-0" />
+                                {criteria}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </MobileAccordionContent>
+        </MobileAccordionItem>
+
+        <MobileAccordionItem value="regional-skills">
+          <MobileAccordionTrigger icon={<MapPin className="h-5 w-5 text-teal-400" />}>
+            Regional Skills Intelligence
+          </MobileAccordionTrigger>
+          <MobileAccordionContent>
+            <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
+              <Card className="border-teal-500/20 bg-teal-500/5">
+                <CardHeader className="pb-3">
+                  <CardTitle className={`text-teal-300 ${isMobile ? 'text-base' : 'text-lg'}`}>UK Regional Skills Demand</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-3">
+                      <h5 className={`font-medium text-teal-300 ${isMobile ? 'text-sm' : 'text-base'}`}>High Demand Regions</h5>
+                      <div className="space-y-2">
+                        <div className="flex justify-between items-center">
+                          <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-teal-200`}>London & South East</span>
+                          <Badge className="bg-green-500/20 text-green-300 border-green-400/30">
+                            High
+                          </Badge>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-teal-200`}>Manchester & North West</span>
+                          <Badge className="bg-green-500/20 text-green-300 border-green-400/30">
+                            High
+                          </Badge>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-teal-200`}>Birmingham & Midlands</span>
+                          <Badge className="bg-yellow-500/20 text-yellow-300 border-yellow-400/30">
+                            Medium
+                          </Badge>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="space-y-3">
+                      <h5 className={`font-medium text-teal-300 ${isMobile ? 'text-sm' : 'text-base'}`}>In-Demand Skills by Region</h5>
+                      <div className="space-y-2">
+                        <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-teal-200`}>
+                          <strong>London:</strong> Smart building tech, data centres
+                        </div>
+                        <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-teal-200`}>
+                          <strong>Scotland:</strong> Renewable energy, offshore wind
+                        </div>
+                        <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-teal-200`}>
+                          <strong>North:</strong> Industrial automation, manufacturing
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </MobileAccordionContent>
+        </MobileAccordionItem>
+
+        <MobileAccordionItem value="skills-marketplace">
+          <MobileAccordionTrigger icon={<BarChart className="h-5 w-5 text-emerald-400" />}>
+            Skills Marketplace Analysis
+          </MobileAccordionTrigger>
+          <MobileAccordionContent>
+            <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
+              <Card className="border-emerald-500/20 bg-emerald-500/5">
+                <CardHeader className="pb-3">
+                  <CardTitle className={`text-emerald-300 ${isMobile ? 'text-base' : 'text-lg'}`}>Skills Market Intelligence</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-3">
+                      <h5 className={`font-medium text-emerald-300 ${isMobile ? 'text-sm' : 'text-base'}`}>High-Value Skills</h5>
+                      <div className="space-y-2">
+                        <div className="flex justify-between items-center">
+                          <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-emerald-200`}>HV Switching</span>
+                          <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-elec-yellow`}>+£15k</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-emerald-200`}>PLC Programming</span>
+                          <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-elec-yellow`}>+£12k</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-emerald-200`}>Solar PV Design</span>
+                          <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-elec-yellow`}>+£8k</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="space-y-3">
+                      <h5 className={`font-medium text-emerald-300 ${isMobile ? 'text-sm' : 'text-base'}`}>Growth Opportunities</h5>
+                      <div className="space-y-2">
+                        <div className="flex items-center gap-2">
+                          <TrendingUp className="h-3 w-3 text-green-400" />
+                          <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-emerald-200`}>EV Charging: 45% growth</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <TrendingUp className="h-3 w-3 text-green-400" />
+                          <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-emerald-200`}>Smart Buildings: 38% growth</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <TrendingUp className="h-3 w-3 text-green-400" />
+                          <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-emerald-200`}>Battery Storage: 42% growth</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </MobileAccordionContent>
+        </MobileAccordionItem>
+
+        <MobileAccordionItem value="learning-resources">
+          <MobileAccordionTrigger icon={<Library className="h-5 w-5 text-violet-400" />}>
+            Learning Resources Hub
+          </MobileAccordionTrigger>
+          <MobileAccordionContent>
+            <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <Card className="border-violet-500/20 bg-violet-500/5">
+                  <CardHeader className="pb-3">
+                    <CardTitle className={`text-violet-300 ${isMobile ? 'text-base' : 'text-lg'}`}>Training Providers</CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-3">
+                    <div className="space-y-2">
+                      <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-violet-200`}>
+                        <strong>City & Guilds:</strong> Industry-standard qualifications
+                      </div>
+                      <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-violet-200`}>
+                        <strong>EAL:</strong> Awarding organisation for electrical
+                      </div>
+                      <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-violet-200`}>
+                        <strong>NICEIC:</strong> Professional development courses
+                      </div>
+                      <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-violet-200`}>
+                        <strong>Local Colleges:</strong> Part-time and evening courses
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card className="border-violet-500/20 bg-violet-500/5">
+                  <CardHeader className="pb-3">
+                    <CardTitle className={`text-violet-300 ${isMobile ? 'text-base' : 'text-lg'}`}>Online Learning</CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-3">
+                    <div className="space-y-2">
+                      <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-violet-200`}>
+                        <strong>Virtual Classrooms:</strong> Interactive online courses
+                      </div>
+                      <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-violet-200`}>
+                        <strong>Simulation Software:</strong> Practice without risk
+                      </div>
+                      <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-violet-200`}>
+                        <strong>Video Libraries:</strong> Technique demonstrations
+                      </div>
+                      <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-violet-200`}>
+                        <strong>Mobile Apps:</strong> Learn on the go
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
               </div>
+
+              <Card className="border-violet-500/20 bg-violet-500/5">
+                <CardHeader className="pb-3">
+                  <CardTitle className={`text-violet-300 ${isMobile ? 'text-base' : 'text-lg'}`}>Professional Resources</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div className="space-y-2">
+                      <h6 className={`font-medium text-violet-300 ${isMobile ? 'text-sm' : 'text-base'}`}>Publications</h6>
+                      <div className="space-y-1">
+                        <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-violet-200`}>Electrical Review</div>
+                        <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-violet-200`}>Professional Electrician</div>
+                        <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-violet-200`}>Electrical Times</div>
+                      </div>
+                    </div>
+                    <div className="space-y-2">
+                      <h6 className={`font-medium text-violet-300 ${isMobile ? 'text-sm' : 'text-base'}`}>Professional Bodies</h6>
+                      <div className="space-y-1">
+                        <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-violet-200`}>IET (Institution of Engineering and Technology)</div>
+                        <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-violet-200`}>ECA (Electrical Contractors' Association)</div>
+                        <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-violet-200`}>SELECT (Scottish electrical trade association)</div>
+                      </div>
+                    </div>
+                    <div className="space-y-2">
+                      <h6 className={`font-medium text-violet-300 ${isMobile ? 'text-sm' : 'text-base'}`}>Events & Networking</h6>
+                      <div className="space-y-1">
+                        <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-violet-200`}>Electrical Safety First conferences</div>
+                        <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-violet-200`}>Regional trade events</div>
+                        <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-violet-200`}>Manufacturer training days</div>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
             </div>
           </MobileAccordionContent>
         </MobileAccordionItem>
