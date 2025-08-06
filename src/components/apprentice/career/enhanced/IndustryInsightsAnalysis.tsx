@@ -398,12 +398,12 @@ const IndustryInsightsAnalysis = () => {
                     </Badge>
                   </div>
 
-                  <div className="space-y-3">
+                  <div className="space-y-6">
                     {category.skills.map((skill, skillIndex) => (
-                      <div key={skillIndex} className="space-y-2">
+                      <div key={skillIndex} className="space-y-3 p-4 border border-elec-yellow/10 rounded-lg bg-elec-gray/30">
                         <div className="flex items-center justify-between">
                           <h5 className={`font-medium text-purple-300 ${isMobile ? 'text-sm' : 'text-base'}`}>{skill.skill}</h5>
-                          <div className="flex gap-1">
+                          <div className="flex gap-2">
                             <Badge variant="outline" className={`${
                               skill.demandLevel === 'Critical' ? 'text-red-300 border-red-400/30' :
                               skill.demandLevel === 'High' ? 'text-orange-300 border-orange-400/30' :
@@ -417,11 +417,11 @@ const IndustryInsightsAnalysis = () => {
                           </div>
                         </div>
                         
-                        <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{skill.description}</p>
+                        <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground leading-relaxed`}>{skill.description}</p>
                         
-                        <div>
-                          <h6 className={`font-medium text-purple-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Learning Path</h6>
-                          <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-purple-200`}>{skill.learningPath}</p>
+                        <div className="pt-2 border-t border-elec-yellow/10">
+                          <h6 className={`font-medium text-purple-300 mb-2 ${isMobile ? 'text-xs' : 'text-sm'}`}>Learning Path</h6>
+                          <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-purple-200 leading-relaxed`}>{skill.learningPath}</p>
                         </div>
                       </div>
                     ))}
