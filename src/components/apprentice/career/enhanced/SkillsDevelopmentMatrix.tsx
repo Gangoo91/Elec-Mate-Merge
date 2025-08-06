@@ -444,7 +444,7 @@ const SkillsDevelopmentMatrix = () => {
           <MobileAccordionTrigger icon={<BookOpen className="h-5 w-5 text-blue-400" />}>
             Foundation Skills (Years 1-2)
           </MobileAccordionTrigger>
-          <MobileAccordionContent className="space-y-4 p-4">
+          <MobileAccordionContent className="space-y-4 p-4 bg-elec-gray">
             {foundationSkills.map((category, index) => (
               <div key={index} className="border border-blue-500/20 rounded-lg p-3 space-y-3">
                 <div className="flex items-center justify-between">
@@ -498,7 +498,7 @@ const SkillsDevelopmentMatrix = () => {
           <MobileAccordionTrigger icon={<Target className="h-5 w-5 text-green-400" />}>
             Intermediate Skills (Years 2-4)
           </MobileAccordionTrigger>
-          <MobileAccordionContent className="space-y-4 p-4">
+          <MobileAccordionContent className="space-y-4 p-4 bg-elec-gray">
             {intermediateSkills.map((category, index) => (
               <div key={index} className="border border-green-500/20 rounded-lg p-3 space-y-3">
                 <div className="flex items-center justify-between">
@@ -552,7 +552,7 @@ const SkillsDevelopmentMatrix = () => {
           <MobileAccordionTrigger icon={<Award className="h-5 w-5 text-purple-400" />}>
             Specialist Skills (Years 3-5)
           </MobileAccordionTrigger>
-          <MobileAccordionContent className="space-y-4 p-4">
+          <MobileAccordionContent className="space-y-4 p-4 bg-elec-gray">
             {specialistSkills.map((category, index) => (
               <div key={index} className="border border-purple-500/20 rounded-lg p-3 space-y-3">
                 <div className="flex items-center justify-between">
@@ -606,7 +606,7 @@ const SkillsDevelopmentMatrix = () => {
           <MobileAccordionTrigger icon={<Smartphone className="h-5 w-5 text-cyan-400" />}>
             Digital & Technology Skills
           </MobileAccordionTrigger>
-          <MobileAccordionContent className="space-y-4 p-4">
+          <MobileAccordionContent className="space-y-4 p-4 bg-elec-gray">
             {digitalTechSkills.map((category, index) => (
               <div key={index} className="border border-cyan-500/20 rounded-lg p-3 space-y-3">
                 <div className="flex items-center justify-between">
@@ -662,7 +662,7 @@ const SkillsDevelopmentMatrix = () => {
           <MobileAccordionTrigger icon={<Briefcase className="h-5 w-5 text-orange-400" />}>
             Business & Soft Skills
           </MobileAccordionTrigger>
-          <MobileAccordionContent className="space-y-4 p-4">
+          <MobileAccordionContent className="space-y-4 p-4 bg-elec-gray">
             {businessSoftSkills.map((category, index) => (
               <div key={index} className="border border-orange-500/20 rounded-lg p-3 space-y-3">
                 <div className="flex items-center justify-between">
@@ -718,7 +718,7 @@ const SkillsDevelopmentMatrix = () => {
           <MobileAccordionTrigger icon={<Rocket className="h-5 w-5 text-pink-400" />}>
             Emerging Technologies
           </MobileAccordionTrigger>
-          <MobileAccordionContent className="space-y-4 p-4">
+          <MobileAccordionContent className="space-y-4 p-4 bg-elec-gray">
             {emergingTechSkills.map((category, index) => (
               <div key={index} className="border border-pink-500/20 rounded-lg p-3 space-y-3">
                 <div className="flex items-center justify-between">
@@ -772,7 +772,7 @@ const SkillsDevelopmentMatrix = () => {
           <MobileAccordionTrigger icon={<GraduationCap className="h-5 w-5 text-indigo-400" />}>
             Professional Development Framework
           </MobileAccordionTrigger>
-          <MobileAccordionContent className="space-y-4 p-4">
+          <MobileAccordionContent className="space-y-4 p-4 bg-elec-gray">
             {professionalFramework.map((category, index) => (
               <div key={index} className="border border-indigo-500/20 rounded-lg p-3 space-y-3">
                 <div className="flex items-center justify-between">
@@ -827,7 +827,7 @@ const SkillsDevelopmentMatrix = () => {
           <MobileAccordionTrigger icon={<MapPin className="h-5 w-5 text-teal-400" />}>
             Regional Skills Intelligence
           </MobileAccordionTrigger>
-          <MobileAccordionContent className="space-y-4 p-4">
+          <MobileAccordionContent className="space-y-4 p-4 bg-elec-gray">
             <Card className="border-teal-500/20 bg-teal-500/5">
               <CardHeader className="pb-3">
                 <CardTitle className={`text-teal-300 ${isMobile ? 'text-base' : 'text-lg'}`}>UK Regional Skills Demand</CardTitle>
@@ -881,7 +881,7 @@ const SkillsDevelopmentMatrix = () => {
           <MobileAccordionTrigger icon={<BarChart className="h-5 w-5 text-emerald-400" />}>
             Skills Marketplace Analysis
           </MobileAccordionTrigger>
-          <MobileAccordionContent className="space-y-4 p-4">
+          <MobileAccordionContent className="space-y-4 p-4 bg-elec-gray">
             <Card className="border-emerald-500/20 bg-emerald-500/5">
               <CardHeader className="pb-3">
                 <CardTitle className={`text-emerald-300 ${isMobile ? 'text-base' : 'text-lg'}`}>Skills Market Intelligence</CardTitle>
@@ -932,7 +932,7 @@ const SkillsDevelopmentMatrix = () => {
           <MobileAccordionTrigger icon={<Library className="h-5 w-5 text-violet-400" />}>
             Learning Resources Hub
           </MobileAccordionTrigger>
-          <MobileAccordionContent className="space-y-4 p-4">
+          <MobileAccordionContent className="space-y-4 p-4 bg-elec-gray">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <Card className="border-violet-500/20 bg-violet-500/5">
                 <CardHeader className="pb-3">
