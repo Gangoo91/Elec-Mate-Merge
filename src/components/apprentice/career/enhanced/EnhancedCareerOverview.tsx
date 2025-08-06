@@ -275,33 +275,33 @@ const EnhancedCareerOverview = () => {
     {
       path: "Self-Employed Electrician",
       requirements: [
-        "Minimum 3 years post-qualification experience",
-        "Public liability insurance",
-        "Professional scheme membership (NICEIC/NAPIT)",
-        "Business registration and accounting setup"
+        "Minimum 3 years post-qualification experience (with relevant certifications)",
+        "Comprehensive public liability insurance cover",
+        "Professional scheme membership (NICEIC, NAPIT, or equivalent)",
+        "Business registration with HMRC and proper accounting systems"
       ],
-      earnings: "£30K - £60K+ dependent on workload",
+      earnings: "£30K - £60K+ dependent on client base and workload",
       considerations: [
-        "Irregular income in early stages",
-        "Responsibility for finding work",
-        "Need for business and marketing skills",
-        "Equipment and vehicle investment required"
+        "Variable income during initial establishment period",
+        "Personal responsibility for client acquisition and retention",
+        "Essential business development and marketing capabilities required",
+        "Significant initial investment in professional equipment and transport"
       ]
     },
     {
       path: "Electrical Contracting Business",
       requirements: [
-        "Significant industry experience",
-        "Business management qualifications",
-        "Capital for equipment and staff",
-        "Strong client network"
+        "Extensive industry experience with proven track record",
+        "Business management qualifications or demonstrable skills",
+        "Substantial capital investment for equipment, premises, and staff",
+        "Established professional network and client relationships"
       ],
-      earnings: "£40K - £100K+ as business develops",
+      earnings: "£40K - £100K+ scaling with business growth and market position",
       considerations: [
-        "Higher risk and investment",
-        "Staff management responsibilities",
-        "Complex regulatory compliance",
-        "Potential for significant growth"
+        "Elevated financial risk requiring careful business planning",
+        "Full responsibility for staff recruitment, training, and management",
+        "Complex regulatory and compliance obligations across multiple areas",
+        "Significant potential for expansion but requires strategic planning"
       ]
     }
   ];
