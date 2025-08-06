@@ -4,13 +4,13 @@ import { GraduationCap, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "react-router-dom";
-import SimpleCareerCard from "@/components/apprentice/career/SimpleCareerCard";
-import CareerPathways from "@/components/apprentice/career/CareerPathways";
-import CareerCourses from "@/components/apprentice/career/CareerCourses";
-import EnhancedFurtherEducation from "@/components/apprentice/career/EnhancedFurtherEducation";
-import ProfessionalAccreditation from "@/components/apprentice/career/ProfessionalAccreditation";
-import CPDTracker from "@/components/apprentice/career/cpd/CPDTracker";
-import { careerSections } from "@/components/apprentice/career/SectionData";
+import SimpleCareerCard from "@/components/electrician/career/SimpleCareerCard";
+import CareerPathways from "@/components/electrician/career/CareerPathways";
+import CareerCourses from "@/components/electrician/career/CareerCourses";
+import EnhancedFurtherEducation from "@/components/electrician/career/EnhancedFurtherEducation";
+import ProfessionalAccreditation from "@/components/electrician/career/ProfessionalAccreditation";
+import CPDTracker from "@/components/electrician/career/CPDTracker";
+import { electricianCareerSections } from "@/components/electrician/career/SectionData";
 
 const CareerProgression = () => {
   const [activeSection, setActiveSection] = useState<string | null>(null);
@@ -36,8 +36,7 @@ const CareerProgression = () => {
     }
   };
 
-  // Filter sections to exclude business (since it's handled separately in electrical hub)
-  const electricianCareerSections = careerSections.filter(section => section.id !== "business");
+  // Use electrician-specific career sections
 
   return (
     <div className="space-y-8 animate-fade-in px-2 sm:px-0">
