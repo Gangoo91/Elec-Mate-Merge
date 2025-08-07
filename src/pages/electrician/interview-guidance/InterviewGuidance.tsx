@@ -1,4 +1,4 @@
-import { BackButton } from "@/components/common/BackButton";
+import BackButton from "@/components/common/BackButton";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { DropdownTabs } from "@/components/ui/dropdown-tabs";
@@ -55,7 +55,7 @@ export default function InterviewGuidance() {
       <div className="max-w-7xl mx-auto space-y-8">
         {/* Header Section */}
         <div className="space-y-6">
-          <BackButton href="/electrician/job-vacancies" />
+          <BackButton customUrl="/electrician/job-vacancies" label="Back to Job Vacancies" />
           
           <div className="text-center space-y-4">
             <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary via-primary/80 to-primary/60 bg-clip-text text-transparent">
