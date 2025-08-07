@@ -8,32 +8,27 @@ import {
 } from "@/components/ui/mobile-accordion";
 import { Badge } from "@/components/ui/badge";
 import { 
-  Users, 
-  FileText, 
   MessageCircle, 
   CheckCircle, 
   Clock, 
   Lightbulb,
   Target,
-  Star,
-  AlertCircle,
-  Play
+  Star
 } from "lucide-react";
 
 const InterviewGuidanceTab = () => {
-  // Define icon colors to maintain visual distinction without background colors
-  const iconColors = {
-    preparation: "text-blue-400",
-    technical: "text-elec-yellow",
-    process: "text-green-400",
-    questions: "text-purple-400",
-    tips: "text-amber-400"
+  const categoryColors = {
+    preparation: "bg-indigo-500/10 text-indigo-400 border-indigo-500/20",
+    technical: "bg-purple-500/10 text-purple-400 border-purple-500/20", 
+    process: "bg-blue-500/10 text-blue-400 border-blue-500/20",
+    questions: "bg-cyan-500/10 text-cyan-400 border-cyan-500/20",
+    tips: "bg-teal-500/10 text-teal-400 border-teal-500/20"
   };
 
   const difficultyColors = {
-    Essential: "border-green-500/30 text-green-400 bg-green-500/10",
-    Intermediate: "border-yellow-500/30 text-yellow-400 bg-yellow-500/10",
-    Advanced: "border-red-500/30 text-red-400 bg-red-500/10"
+    Essential: "bg-green-500/10 text-green-400 border-green-500/20",
+    Intermediate: "bg-yellow-500/10 text-yellow-400 border-yellow-500/20",
+    Advanced: "bg-red-500/10 text-red-400 border-red-500/20"
   };
 
   const interviewGuides = [
@@ -140,113 +135,94 @@ const InterviewGuidanceTab = () => {
   ];
 
   return (
-    <div className="space-y-6">
-      <Card className="border-elec-yellow/20 bg-gradient-to-r from-elec-gray to-elec-dark/50">
-        <CardHeader>
-          <div className="flex items-center gap-2">
-            <Users className="h-6 w-6 text-elec-yellow" />
-            <CardTitle className="text-elec-yellow">Interview Guidance for Electricians</CardTitle>
+    <Card className="border-indigo-500/20 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-950/50 dark:to-purple-950/50">
+      <CardHeader className="pb-4">
+        <div className="flex items-center gap-3">
+          <div className="p-2 bg-indigo-500/10 rounded-lg">
+            <MessageCircle className="h-6 w-6 text-indigo-500" />
           </div>
-        </CardHeader>
-        <CardContent>
-          <p className="text-muted-foreground mb-4">
-            Comprehensive guidance to help you prepare for electrical job interviews. 
-            From technical questions to professional presentation, we'll help you showcase your skills effectively.
-          </p>
-          
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="text-center">
-              <Target className="h-6 w-6 text-blue-400 mx-auto mb-2" />
-              <div className="text-sm font-medium text-white mb-1">Preparation</div>
-              <div className="text-xs text-muted-foreground">Strategic planning</div>
-            </div>
-            <div className="text-center">
-              <Lightbulb className="h-6 w-6 text-elec-yellow mx-auto mb-2" />
-              <div className="text-sm font-medium text-white mb-1">Technical</div>
-              <div className="text-xs text-muted-foreground">Knowledge review</div>
-            </div>
-            <div className="text-center">
-              <MessageCircle className="h-6 w-6 text-green-400 mx-auto mb-2" />
-              <div className="text-sm font-medium text-white mb-1">Communication</div>
-              <div className="text-xs text-muted-foreground">Professional skills</div>
-            </div>
-            <div className="text-center">
-              <CheckCircle className="h-6 w-6 text-purple-400 mx-auto mb-2" />
-              <div className="text-sm font-medium text-white mb-1">Success</div>
-              <div className="text-xs text-muted-foreground">Land the job</div>
-            </div>
+          <div>
+            <CardTitle className="text-indigo-900 dark:text-indigo-100">Interview Guidance</CardTitle>
+            <p className="text-sm text-indigo-700 dark:text-indigo-300 mt-1">
+              Professional guidance for electrical job interviews
+            </p>
           </div>
-        </CardContent>
-      </Card>
-
-      <Card className="border-elec-yellow/20">
-        <CardHeader>
-          <CardTitle className="text-elec-yellow">Interview Guidance Steps</CardTitle>
-        </CardHeader>
-        <CardContent className="px-4">
-          <MobileAccordion type="single" collapsible className="space-y-2">
-            {interviewGuides.map((guide, index) => {
-              const Icon = guide.icon;
-              const iconColor = iconColors[guide.category as keyof typeof iconColors];
-              
-              return (
-                <MobileAccordionItem key={index} value={`guide-${index}`}>
-                  <MobileAccordionTrigger 
-                    icon={
-                      <div className="flex justify-center">
-                        <Icon className={`h-6 w-6 ${iconColor}`} />
-                      </div>
-                    }
-                  >
+        </div>
+      </CardHeader>
+      <CardContent className="px-6">
+        <MobileAccordion type="single" collapsible className="space-y-3">
+          {interviewGuides.map((guide, index) => {
+            const Icon = guide.icon;
+            const categoryColor = categoryColors[guide.category as keyof typeof categoryColors];
+            const difficultyColor = difficultyColors[guide.difficulty as keyof typeof difficultyColors];
+            
+            return (
+              <MobileAccordionItem key={index} value={`guide-${index}`}>
+                <MobileAccordionTrigger 
+                  icon={
+                    <div className="flex justify-center">
+                      <Icon className="h-5 w-5 text-indigo-600 dark:text-indigo-400" />
+                    </div>
+                  }
+                >
+                  <div className="flex items-center justify-between w-full">
                     <div className="flex flex-col items-start">
-                      <span className="font-semibold text-sm">{guide.title}</span>
-                      <Badge 
-                        variant="outline" 
-                        className={`text-xs mt-1 ${difficultyColors[guide.difficulty as keyof typeof difficultyColors]}`}
-                      >
-                        {guide.difficulty}
-                      </Badge>
-                    </div>
-                  </MobileAccordionTrigger>
-                  <MobileAccordionContent>
-                    <div className="space-y-4">
-                      <div>
-                        <h4 className="font-semibold text-sm text-primary mb-2 flex items-center gap-1">
-                          <CheckCircle className="h-4 w-4" />
-                          Implementation Steps:
-                        </h4>
-                        <ol className="space-y-1">
-                          {guide.steps.map((step, stepIndex) => (
-                            <li key={stepIndex} className="text-sm text-muted-foreground flex items-start gap-2">
-                              <span className="bg-primary/20 text-primary rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">
-                                {stepIndex + 1}
-                              </span>
-                              {step}
-                            </li>
-                          ))}
-                        </ol>
-                      </div>
-                      
-                      <div className="border-t border-border pt-3">
-                        <h4 className="font-semibold text-sm text-primary mb-2">Key Points to Remember:</h4>
-                        <ul className="space-y-1">
-                          {guide.keyPoints.map((point, pointIndex) => (
-                            <li key={pointIndex} className="text-sm text-muted-foreground flex items-start gap-2">
-                              <span className="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0" />
-                              {point}
-                            </li>
-                          ))}
-                        </ul>
+                      <span className="font-semibold text-sm text-indigo-900 dark:text-indigo-100">{guide.title}</span>
+                      <div className="flex gap-2 mt-1">
+                        <Badge 
+                          variant="outline" 
+                          className={`text-xs px-2 py-0.5 ${categoryColor}`}
+                        >
+                          {guide.category}
+                        </Badge>
+                        <Badge 
+                          variant="outline" 
+                          className={`text-xs px-2 py-0.5 ${difficultyColor}`}
+                        >
+                          {guide.difficulty}
+                        </Badge>
                       </div>
                     </div>
-                  </MobileAccordionContent>
-                </MobileAccordionItem>
-              );
-            })}
-          </MobileAccordion>
-        </CardContent>
-      </Card>
-    </div>
+                  </div>
+                </MobileAccordionTrigger>
+                <MobileAccordionContent>
+                  <div className="space-y-4 pt-2">
+                    <div>
+                      <h4 className="font-semibold text-sm text-indigo-900 dark:text-indigo-100 mb-2 flex items-center gap-2">
+                        <CheckCircle className="h-4 w-4 text-indigo-500" />
+                        Implementation Steps:
+                      </h4>
+                      <ol className="space-y-2">
+                        {guide.steps.map((step, stepIndex) => (
+                          <li key={stepIndex} className="text-sm text-indigo-700 dark:text-indigo-300 flex items-start gap-3">
+                            <span className="bg-indigo-500/20 text-indigo-700 dark:text-indigo-300 rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">
+                              {stepIndex + 1}
+                            </span>
+                            {step}
+                          </li>
+                        ))}
+                      </ol>
+                    </div>
+                    
+                    <div className="border-t border-indigo-200 dark:border-indigo-800 pt-3">
+                      <h4 className="font-semibold text-sm text-indigo-900 dark:text-indigo-100 mb-2">Key Points to Remember:</h4>
+                      <ul className="space-y-1">
+                        {guide.keyPoints.map((point, pointIndex) => (
+                          <li key={pointIndex} className="text-sm text-indigo-700 dark:text-indigo-300 flex items-start gap-2">
+                            <span className="w-1.5 h-1.5 bg-indigo-500 rounded-full mt-2 flex-shrink-0" />
+                            {point}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </MobileAccordionContent>
+              </MobileAccordionItem>
+            );
+          })}
+        </MobileAccordion>
+      </CardContent>
+    </Card>
   );
 };
 
