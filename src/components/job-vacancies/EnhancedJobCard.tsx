@@ -34,9 +34,11 @@ interface EnhancedJobCardProps {
   selectedJob: string | null;
   handleApply: (jobId: string, url: string) => void;
   isAIEnhanced?: boolean;
+  aiMatchScore?: number;
+  aiInsights?: string[];
 }
 
-const EnhancedJobCard = ({ job, selectedJob, handleApply, isAIEnhanced = false }: EnhancedJobCardProps) => {
+const EnhancedJobCard = ({ job, selectedJob, handleApply, isAIEnhanced = false, aiMatchScore, aiInsights = [] }: EnhancedJobCardProps) => {
   const isSelected = selectedJob === job.id;
   
   const formatDescription = (description: string) => {
@@ -95,10 +97,18 @@ const EnhancedJobCard = ({ job, selectedJob, handleApply, isAIEnhanced = false }
               )}
             </div>
             
-            {isAIEnhanced && (
-              <Badge className="bg-gradient-to-r from-purple-500 to-pink-500 text-white text-xs mt-2 w-fit">
+            {isAIEnhanced && aiMatchScore !== undefined && (
+              <Badge 
+                className={`text-xs font-medium mt-2 w-fit ${
+                  aiMatchScore >= 80 
+                    ? 'bg-green-500/20 text-green-400 border-green-500/30' 
+                    : aiMatchScore >= 60 
+                    ? 'bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30'
+                    : 'bg-blue-500/20 text-blue-400 border-blue-500/30'
+                }`}
+              >
                 <Sparkles className="h-3 w-3 mr-1" />
-                AI Enhanced
+                {aiMatchScore}% Match
               </Badge>
             )}
           </div>
@@ -127,6 +137,21 @@ const EnhancedJobCard = ({ job, selectedJob, handleApply, isAIEnhanced = false }
             </div>
           )}
         </div>
+
+        {/* AI Insights */}
+        {isAIEnhanced && aiInsights && aiInsights.length > 0 && (
+          <div className="bg-elec-yellow/10 border border-elec-yellow/20 rounded-lg p-3 mb-4 space-y-2">
+            <div className="flex items-center gap-2">
+              <Sparkles className="h-4 w-4 text-elec-yellow" />
+              <span className="text-sm font-medium text-elec-yellow">AI Insights</span>
+            </div>
+            <div className="space-y-1">
+              {aiInsights.map((insight, index) => (
+                <p key={index} className="text-xs text-elec-light/90">{insight}</p>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Description */}
         <p className="text-sm text-muted-foreground mb-4 line-clamp-3">

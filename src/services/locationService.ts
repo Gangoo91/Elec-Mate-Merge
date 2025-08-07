@@ -134,6 +134,38 @@ export class LocationService {
     return R * c;
   }
 
+  static calculateLocationMatch(jobLocation: string, searchLocation: string): number {
+    const normalizedJob = this.normalizeLocation(jobLocation);
+    const normalizedSearch = this.normalizeLocation(searchLocation);
+    
+    // Direct match
+    if (normalizedJob === normalizedSearch) return 1.0;
+    
+    // Contains match
+    if (normalizedJob.includes(normalizedSearch) || normalizedSearch.includes(normalizedJob)) {
+      return 0.8;
+    }
+    
+    // Check known locations for distance-based matching
+    const jobMatch = this.findLocationMatch(jobLocation);
+    const searchMatch = this.findLocationMatch(searchLocation);
+    
+    if (jobMatch && searchMatch && jobMatch.coordinates && searchMatch.coordinates) {
+      const distance = this.calculateDistance(
+        jobMatch.coordinates.lat, jobMatch.coordinates.lng,
+        searchMatch.coordinates.lat, searchMatch.coordinates.lng
+      );
+      
+      // Return score based on distance (closer = higher score)
+      if (distance <= 10) return 0.9;
+      if (distance <= 25) return 0.7;
+      if (distance <= 50) return 0.5;
+      if (distance <= 100) return 0.3;
+    }
+    
+    return 0.0;
+  }
+
   private static deg2rad(deg: number): number {
     return deg * (Math.PI/180);
   }

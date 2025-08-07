@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { DropdownTabs } from "@/components/ui/dropdown-tabs";
 import JobVacancyHeader from "@/components/job-vacancies/JobVacancyHeader";
-import BasicJobSearch from "@/components/job-vacancies/BasicJobSearch";
+import UnifiedJobSearch from "@/components/job-vacancies/UnifiedJobSearch";
 import CVBuilderBox from "@/components/electrician-tools/CVBuilderBox";
 import InterviewGuidanceTab from "@/components/job-vacancies/tabs/InterviewGuidanceTab";
 import KnowingYourWorthTab from "@/components/job-vacancies/tabs/KnowingYourWorthTab";
@@ -115,9 +115,9 @@ const JobVacancies = () => {
                     <CVBuilderBox />
                   </div>
 
-                  {/* Basic Job Search - Simplified version */}
+                  {/* Unified Job Search */}
                   <div className="w-full">
-                    <BasicJobSearch />
+                    <UnifiedJobSearch />
                   </div>
 
                   {/* Job Insights */}
@@ -127,42 +127,6 @@ const JobVacancies = () => {
                 </div>
               )
             },
-          {
-            value: "ai-matcher",
-            label: "AI Job Matcher",
-            icon: Brain,
-            content: (
-              <div className="space-y-6">
-                <AIJobMatcher
-                  onProfileUpdate={handleProfileUpdate}
-                  onGenerateMatches={handleGenerateMatches}
-                  isMatching={isMatching}
-                />
-                
-                {aiMatchedJobs.length > 0 && (
-                  <div className="space-y-4">
-                    <h3 className="text-lg font-semibold text-elec-light flex items-center gap-2">
-                      <Brain className="h-5 w-5 text-elec-yellow" />
-                      Your AI Matched Jobs
-                    </h3>
-                    <div className="grid gap-4">
-                      {aiMatchedJobs.map((job) => (
-                        <ModernJobCard
-                          key={job.id}
-                          job={job}
-                          selectedJob={null}
-                          handleApply={handleApply}
-                          aiMatchScore={job.aiMatchScore}
-                          onSave={handleSaveJob}
-                          isSaved={savedJobs.includes(job.id)}
-                        />
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
-            )
-          },
           {
             value: "market-insights",
             label: "Market Insights",
