@@ -544,22 +544,22 @@ export const SmartCVWizard: React.FC<SmartCVWizardProps> = ({ onCVGenerated, onC
   };
 
   return (
-    <div className={`max-h-full overflow-y-auto ${isMobile ? 'p-3' : 'p-6'}`}>
-      <div className="bg-elec-gray border-2 border-elec-gray/40 rounded-xl max-w-4xl mx-auto">
-        <div className={`bg-elec-gray ${isMobile ? 'p-4' : 'p-6'}`}>
-          <div className="flex items-center gap-3">
-            <Wand2 className="h-6 w-6 text-elec-yellow" />
-            <div>
-              <h1 className="text-xl font-semibold text-elec-light">Smart CV Wizard</h1>
-              <p className="text-elec-light/60 text-sm">AI-powered CV generation for electrical professionals</p>
+    <div className="min-h-full">
+      <div className="max-w-4xl mx-auto">
+        <div className={`bg-elec-gray ${isMobile ? 'p-3' : 'p-6'} border-b border-elec-gray/20`}>
+          <div className="flex items-center gap-2 sm:gap-3">
+            <Wand2 className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow flex-shrink-0" />
+            <div className="min-w-0">
+              <h1 className="text-lg sm:text-xl font-semibold text-elec-light truncate">Smart CV Wizard</h1>
+              <p className="text-elec-light/60 text-xs sm:text-sm">AI-powered CV generation for electrical professionals</p>
             </div>
           </div>
           
           {/* Step indicator */}
-          <div className={`flex items-center mt-4 ${isMobile ? 'gap-1 overflow-x-auto pb-2' : 'gap-2'}`}>
+          <div className="flex items-center mt-3 sm:mt-4 gap-1 sm:gap-2 overflow-x-auto pb-2">
             {wizardSteps.map((step, index) => (
               <div key={step.id} className="flex items-center flex-shrink-0">
-                <div className={`flex items-center gap-2 rounded-lg ${
+                <div className={`flex items-center gap-1 sm:gap-2 rounded-lg whitespace-nowrap ${
                   isMobile ? 'px-2 py-1.5' : 'px-3 py-2'
                 } ${
                   index === currentStep 
@@ -568,36 +568,36 @@ export const SmartCVWizard: React.FC<SmartCVWizardProps> = ({ onCVGenerated, onC
                       ? 'bg-green-500/20 text-green-400' 
                       : 'bg-elec-card text-elec-light/60'
                 }`}>
-                  {step.icon}
+                  <div className="flex-shrink-0">{step.icon}</div>
                   <span className={`font-medium ${isMobile ? 'text-xs' : 'text-sm'}`}>
-                    {isMobile ? step.title.split(' ')[0] : step.title}
+                    {isMobile && step.title.includes(' ') ? step.title.split(' ')[0] : step.title}
                   </span>
                 </div>
                 {index < wizardSteps.length - 1 && (
-                  <div className={`bg-elec-gray/60 mx-2 ${isMobile ? 'w-4 h-px' : 'w-8 h-px'}`} />
+                  <div className={`bg-elec-gray/60 mx-1 sm:mx-2 ${isMobile ? 'w-2 h-px' : 'w-4 h-px'} flex-shrink-0`} />
                 )}
               </div>
             ))}
           </div>
         </div>
 
-        <div className={`space-y-6 bg-elec-gray ${isMobile ? 'p-4' : 'p-6'}`}>
+        <div className={`space-y-4 sm:space-y-6 bg-elec-gray ${isMobile ? 'p-3' : 'p-6'}`}>
           <div>
-            <h3 className="text-lg font-semibold text-elec-light mb-2">
+            <h3 className="text-base sm:text-lg font-semibold text-elec-light mb-1 sm:mb-2">
               {wizardSteps[currentStep].title}
             </h3>
-            <p className="text-elec-light/60 text-sm mb-6">
+            <p className="text-elec-light/60 text-xs sm:text-sm mb-4 sm:mb-6">
               {wizardSteps[currentStep].description}
             </p>
           </div>
 
-        {renderStepContent()}
+          {renderStepContent()}
 
-          <div className="flex justify-between pt-6 border-t border-elec-gray/20">
+          <div className="flex flex-col-reverse sm:flex-row justify-between gap-3 pt-4 sm:pt-6 border-t border-elec-gray/20">
             <Button
               onClick={() => currentStep > 0 ? setCurrentStep(currentStep - 1) : onClose()}
               variant="outline"
-              className="border-elec-yellow/30 text-elec-light hover:bg-elec-yellow/10"
+              className="border-elec-yellow/30 text-elec-light hover:bg-elec-yellow/10 w-full sm:w-auto"
             >
               {currentStep > 0 ? 'Back' : 'Cancel'}
             </Button>
@@ -605,7 +605,7 @@ export const SmartCVWizard: React.FC<SmartCVWizardProps> = ({ onCVGenerated, onC
             <Button
               onClick={handleStepComplete}
               disabled={!isStepValid() || isGenerating}
-              className="bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold"
+              className="bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold w-full sm:w-auto"
             >
               {isGenerating ? (
                 <>

@@ -95,96 +95,96 @@ const SimplifiedCVBuilder = () => {
   }, []);
 
   if (showPreview && hasGeneratedCV) {
-    return (
-      <div className="h-full bg-elec-gray">
-        <Card className="border-elec-yellow/20 bg-elec-gray h-full flex flex-col">
-          <CardHeader className="pb-4 border-b border-elec-gray/40">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="relative">
-                  <FileText className="h-6 w-6 text-elec-yellow" />
-                  <Sparkles className="h-3 w-3 text-elec-yellow absolute -top-1 -right-1" />
-                </div>
-                <div>
-                  <CardTitle className="text-elec-light text-xl">CV Preview</CardTitle>
-                  <p className="text-elec-light/60 text-sm">Your AI-generated professional CV</p>
-                </div>
+  return (
+    <div className="min-h-full bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-elec-gray min-h-full flex flex-col border-none shadow-none">
+        <CardHeader className="pb-3 sm:pb-4 border-b border-elec-gray/40 px-3 sm:px-6 pt-3 sm:pt-6">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+            <div className="flex items-center gap-3">
+              <div className="relative">
+                <FileText className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow" />
+                <Sparkles className="h-2 w-2 sm:h-3 sm:w-3 text-elec-yellow absolute -top-1 -right-1" />
               </div>
-              
-              <div className="flex items-center gap-2">
-                <Button
-                  onClick={() => setShowPreview(false)}
-                  variant="outline"
-                  size="sm"
-                  className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
-                >
-                  <Wand2 className="h-4 w-4 mr-2" />
-                  Back to Wizard
-                </Button>
-                <Button
-                  onClick={handleSave}
-                  variant="outline"
-                  size="sm"
-                  className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
-                >
-                  <Save className="h-4 w-4 mr-2" />
-                  Save CV
-                </Button>
-                <Button
-                  onClick={handleDownload}
-                  disabled={isGenerating}
-                  size="sm"
-                  className="bg-elec-yellow text-black hover:bg-elec-yellow/90"
-                >
-                  <Download className="h-4 w-4 mr-2" />
-                  {isGenerating ? "Generating..." : "Download PDF"}
-                </Button>
+              <div>
+                <CardTitle className="text-elec-light text-lg sm:text-xl">CV Preview</CardTitle>
+                <p className="text-elec-light/60 text-xs sm:text-sm">Your AI-generated professional CV</p>
               </div>
             </div>
-          </CardHeader>
+            
+            <div className="flex flex-wrap items-center gap-1 sm:gap-2 w-full sm:w-auto">
+              <Button
+                onClick={() => setShowPreview(false)}
+                variant="outline"
+                size="sm"
+                className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 text-xs sm:text-sm flex-1 sm:flex-none"
+              >
+                <Wand2 className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
+                Back to Wizard
+              </Button>
+              <Button
+                onClick={handleSave}
+                variant="outline"
+                size="sm"
+                className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 text-xs sm:text-sm flex-1 sm:flex-none"
+              >
+                <Save className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
+                Save CV
+              </Button>
+              <Button
+                onClick={handleDownload}
+                disabled={isGenerating}
+                size="sm"
+                className="bg-elec-yellow text-black hover:bg-elec-yellow/90 text-xs sm:text-sm flex-1 sm:flex-none"
+              >
+                <Download className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
+                {isGenerating ? "Generating..." : "Download PDF"}
+              </Button>
+            </div>
+          </div>
+        </CardHeader>
 
-          <CardContent className="flex-1 p-6">
-            <CVPreview cvData={cvData} />
-          </CardContent>
-        </Card>
-      </div>
-    );
+        <CardContent className="flex-1 p-3 sm:p-6">
+          <CVPreview cvData={cvData} />
+        </CardContent>
+      </Card>
+    </div>
+  );
   }
 
   return (
-    <div className="h-full bg-elec-gray">
-      <Card className="border-elec-yellow/20 bg-elec-gray h-full flex flex-col">
-        <CardHeader className="pb-4 border-b border-elec-gray/40">
-          <div className="flex items-center justify-between">
+    <div className="min-h-full bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-elec-gray min-h-full flex flex-col border-none shadow-none">
+        <CardHeader className="pb-3 sm:pb-4 border-b border-elec-gray/40 px-3 sm:px-6 pt-3 sm:pt-6">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
             <div className="flex items-center gap-3">
               <div className="relative">
-                <Wand2 className="h-6 w-6 text-elec-yellow" />
-                <Sparkles className="h-3 w-3 text-elec-yellow absolute -top-1 -right-1" />
+                <Wand2 className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow" />
+                <Sparkles className="h-2 w-2 sm:h-3 sm:w-3 text-elec-yellow absolute -top-1 -right-1" />
               </div>
               <div>
-                <CardTitle className="text-elec-light text-xl">Smart CV Builder</CardTitle>
-                <p className="text-elec-light/60 text-sm">AI-powered professional CV generation</p>
+                <CardTitle className="text-elec-light text-lg sm:text-xl">Smart CV Builder</CardTitle>
+                <p className="text-elec-light/60 text-xs sm:text-sm">AI-powered professional CV generation</p>
               </div>
             </div>
             
             {hasGeneratedCV && (
-              <div className="flex items-center gap-2">
+              <div className="flex flex-wrap items-center gap-1 sm:gap-2 w-full sm:w-auto">
                 <Button
                   onClick={() => setShowPreview(true)}
                   variant="outline"
                   size="sm"
-                  className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+                  className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 text-xs sm:text-sm flex-1 sm:flex-none"
                 >
-                  <FileText className="h-4 w-4 mr-2" />
+                  <FileText className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
                   View CV
                 </Button>
                 <Button
                   onClick={handleStartNew}
                   variant="outline"
                   size="sm"
-                  className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+                  className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 text-xs sm:text-sm flex-1 sm:flex-none"
                 >
-                  <Wand2 className="h-4 w-4 mr-2" />
+                  <Wand2 className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
                   Start New
                 </Button>
               </div>
