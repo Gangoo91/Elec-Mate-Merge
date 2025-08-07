@@ -21,38 +21,19 @@ import {
 } from "lucide-react";
 
 const InterviewGuidanceTab = () => {
-  // Define category colors for different interview guidance areas
-  const categoryColors = {
-    preparation: {
-      bg: "bg-blue-500/10",
-      border: "border-blue-500/20",
-      text: "text-blue-400",
-      badge: "bg-blue-500/20 text-blue-400 border-blue-500/30"
-    },
-    technical: {
-      bg: "bg-elec-yellow/10",
-      border: "border-elec-yellow/20",
-      text: "text-elec-yellow",
-      badge: "bg-elec-yellow/20 text-elec-dark border-elec-yellow/30"
-    },
-    process: {
-      bg: "bg-green-500/10",
-      border: "border-green-500/20",
-      text: "text-green-400",
-      badge: "bg-green-500/20 text-green-400 border-green-500/30"
-    },
-    questions: {
-      bg: "bg-purple-500/10",
-      border: "border-purple-500/20",
-      text: "text-purple-400",
-      badge: "bg-purple-500/20 text-purple-400 border-purple-500/30"
-    },
-    tips: {
-      bg: "bg-amber-500/10",
-      border: "border-amber-500/20",
-      text: "text-amber-400",
-      badge: "bg-amber-500/20 text-amber-400 border-amber-500/30"
-    }
+  // Define icon colors to maintain visual distinction without background colors
+  const iconColors = {
+    preparation: "text-blue-400",
+    technical: "text-elec-yellow",
+    process: "text-green-400",
+    questions: "text-purple-400",
+    tips: "text-amber-400"
+  };
+
+  const difficultyColors = {
+    Essential: "border-green-500/30 text-green-400 bg-green-500/10",
+    Intermediate: "border-yellow-500/30 text-yellow-400 bg-yellow-500/10",
+    Advanced: "border-red-500/30 text-red-400 bg-red-500/10"
   };
 
   const interviewGuides = [
@@ -202,53 +183,57 @@ const InterviewGuidanceTab = () => {
         <CardHeader>
           <CardTitle className="text-elec-yellow">Interview Guidance Steps</CardTitle>
         </CardHeader>
-        <CardContent className="p-0">
-          <MobileAccordion type="single" collapsible className="space-y-0">
+        <CardContent className="px-4">
+          <MobileAccordion type="single" collapsible className="space-y-2">
             {interviewGuides.map((guide, index) => {
-              const colors = categoryColors[guide.category as keyof typeof categoryColors];
               const Icon = guide.icon;
+              const iconColor = iconColors[guide.category as keyof typeof iconColors];
               
               return (
-                <MobileAccordionItem key={index} value={guide.title.toLowerCase().replace(/\s+/g, '-')}>
-                  <MobileAccordionTrigger
-                    icon={<Icon className={`h-6 w-6 ${colors.text}`} />}
+                <MobileAccordionItem key={index} value={`guide-${index}`}>
+                  <MobileAccordionTrigger 
+                    icon={
+                      <div className="flex justify-center">
+                        <Icon className={`h-6 w-6 ${iconColor}`} />
+                      </div>
+                    }
                   >
-                    <div className="flex flex-col items-center gap-1">
-                      <span className="font-medium text-center">{guide.title}</span>
-                      <Badge className={`text-xs ${colors.badge}`}>
+                    <div className="flex flex-col items-start">
+                      <span className="font-semibold text-sm">{guide.title}</span>
+                      <Badge 
+                        variant="outline" 
+                        className={`text-xs mt-1 ${difficultyColors[guide.difficulty as keyof typeof difficultyColors]}`}
+                      >
                         {guide.difficulty}
                       </Badge>
                     </div>
                   </MobileAccordionTrigger>
-                  <MobileAccordionContent className={`${colors.bg} ${colors.border} border-x border-b rounded-b-lg`}>
-                    <div className="p-6 space-y-6">
+                  <MobileAccordionContent>
+                    <div className="space-y-4">
                       <div>
-                        <h4 className="font-semibold text-white mb-3 flex items-center gap-2">
-                          <CheckCircle className="h-5 w-5 text-green-400" />
-                          Implementation Steps
+                        <h4 className="font-semibold text-sm text-primary mb-2 flex items-center gap-1">
+                          <CheckCircle className="h-4 w-4" />
+                          Implementation Steps:
                         </h4>
-                        <ol className="space-y-3">
+                        <ol className="space-y-1">
                           {guide.steps.map((step, stepIndex) => (
-                            <li key={stepIndex} className="flex items-start gap-3">
-                              <span className={`inline-flex items-center justify-center w-6 h-6 rounded-full ${colors.badge} text-sm font-medium flex-shrink-0 mt-0.5`}>
+                            <li key={stepIndex} className="text-sm text-muted-foreground flex items-start gap-2">
+                              <span className="bg-primary/20 text-primary rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">
                                 {stepIndex + 1}
                               </span>
-                              <span className="text-muted-foreground leading-relaxed">{step}</span>
+                              {step}
                             </li>
                           ))}
                         </ol>
                       </div>
                       
-                      <div>
-                        <h4 className="font-semibold text-white mb-3 flex items-center gap-2">
-                          <Star className="h-5 w-5 text-amber-400" />
-                          Key Points
-                        </h4>
-                        <ul className="space-y-2">
+                      <div className="border-t border-border pt-3">
+                        <h4 className="font-semibold text-sm text-primary mb-2">Key Points to Remember:</h4>
+                        <ul className="space-y-1">
                           {guide.keyPoints.map((point, pointIndex) => (
-                            <li key={pointIndex} className="flex items-start gap-2">
-                              <div className={`w-1.5 h-1.5 rounded-full ${colors.bg} ${colors.border} border mt-2 flex-shrink-0`} />
-                              <span className="text-muted-foreground text-sm leading-relaxed">{point}</span>
+                            <li key={pointIndex} className="text-sm text-muted-foreground flex items-start gap-2">
+                              <span className="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0" />
+                              {point}
                             </li>
                           ))}
                         </ul>
