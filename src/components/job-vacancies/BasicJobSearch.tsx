@@ -282,18 +282,36 @@ const BasicJobSearch = () => {
                 : `No electrical jobs found matching "${query}"`
               }
             </p>
-            <div className="text-sm text-muted-foreground">
-              <p className="mb-2">Try:</p>
-              <ul className="list-disc list-inside space-y-1">
-                <li>Using broader terms like "electrician", "electrical", or "maintenance"</li>
-                <li>Expanding your search location or trying nearby areas</li>
-                <li>Checking spelling and trying alternative keywords</li>
-                <li>Using job-specific terms like "testing", "installation", or "commissioning"</li>
-                <li>Including qualifications like "18th edition" or "City & Guilds"</li>
+            <div className="bg-elec-dark/50 rounded-lg p-4 mt-4">
+              <p className="text-elec-yellow font-medium mb-3">Search suggestions:</p>
+              <ul className="text-sm text-elec-light/80 space-y-2">
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow mt-0.5">•</span>
+                  <span>Use broader terms like "electrician", "electrical", or "maintenance"</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow mt-0.5">•</span>
+                  <span>Expand your search location or try nearby areas</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow mt-0.5">•</span>
+                  <span>Check spelling and try alternative keywords</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow mt-0.5">•</span>
+                  <span>Use job-specific terms like "testing", "installation", or "commissioning"</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow mt-0.5">•</span>
+                  <span>Include qualifications like "18th edition" or "City & Guilds"</span>
+                </li>
               </ul>
-              <p className="mt-3 text-xs text-muted-foreground">
-                Popular searches: "electrician", "electrical engineer", "maintenance electrician", "electrical testing"
-              </p>
+              <div className="mt-4 pt-3 border-t border-elec-yellow/20">
+                <p className="text-xs text-elec-yellow/70 font-medium mb-2">Popular searches:</p>
+                <p className="text-xs text-elec-light/60">
+                  "electrician", "electrical engineer", "maintenance electrician", "electrical testing"
+                </p>
+              </div>
             </div>
           </CardContent>
         </Card>
