@@ -179,63 +179,65 @@ const BasicJobSearch = () => {
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="grid grid-cols-1 gap-4">
-            <div className="space-y-2">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6">
+            <div className="lg:col-span-5 space-y-2">
               <label className="text-sm font-medium text-elec-yellow">Job Title / Keywords</label>
               <Input
                 placeholder="e.g. electrician, maintenance, testing..."
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
-                className="h-12 bg-elec-gray border-elec-yellow/30 text-elec-light placeholder:text-muted-foreground focus:border-elec-yellow transition-colors"
+                className="h-11 sm:h-12 bg-elec-gray border-elec-yellow/30 text-elec-light placeholder:text-muted-foreground focus:border-elec-yellow transition-colors"
               />
             </div>
             
-            <div className="space-y-2 relative">
+            <div className="lg:col-span-4 space-y-2 relative">
               <label className="text-sm font-medium text-elec-yellow">Location</label>
               <div className="relative">
-                <MapPin className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-elec-yellow" />
+                <MapPin className="absolute left-3 sm:left-4 top-1/2 transform -translate-y-1/2 h-4 w-4 sm:h-5 sm:w-5 text-elec-yellow" />
                 <Input
                   placeholder="Location (UK)"
                   value={location}
                   onChange={(e) => handleLocationChange(e.target.value)}
                   onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
-                  className="h-12 pl-12 bg-elec-gray border-elec-yellow/30 text-elec-light placeholder:text-muted-foreground focus:border-elec-yellow transition-colors"
+                  className="h-11 sm:h-12 pl-10 sm:pl-12 bg-elec-gray border-elec-yellow/30 text-elec-light placeholder:text-muted-foreground focus:border-elec-yellow transition-colors"
                 />
               </div>
               
               {/* Location Suggestions */}
               {showLocationSuggestions && (
-                <div className="absolute z-50 w-full mt-1 bg-elec-card border border-elec-yellow/30 rounded-lg shadow-xl">
+                <div className="absolute z-50 w-full mt-1 bg-elec-card border border-elec-yellow/30 rounded-lg shadow-xl max-h-48 overflow-y-auto scrollbar-none">
                   {locationSuggestions.map((suggestion, index) => (
                     <button
                       key={index}
-                      className="w-full text-left px-4 py-3 hover:bg-elec-yellow/10 text-sm text-elec-light border-b border-elec-yellow/20 last:border-b-0 first:rounded-t-lg last:rounded-b-lg transition-colors"
+                      className="w-full text-left px-3 sm:px-4 py-2 sm:py-3 hover:bg-elec-yellow/10 text-sm text-elec-light border-b border-elec-yellow/20 last:border-b-0 first:rounded-t-lg last:rounded-b-lg transition-colors"
                       onClick={() => selectLocationSuggestion(suggestion)}
                     >
-                      <MapPin className="inline h-4 w-4 mr-3 text-elec-yellow" />
-                      {suggestion}
+                      <MapPin className="inline h-3 w-3 sm:h-4 sm:w-4 mr-2 sm:mr-3 text-elec-yellow" />
+                      <span className="truncate">{suggestion}</span>
                     </button>
                   ))}
                 </div>
               )}
             </div>
 
-            <div className="pt-2">
+            <div className="lg:col-span-3 flex items-end">
               <Button 
                 onClick={handleSearch} 
                 disabled={loading}
-                className="h-12 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 w-full font-semibold text-lg transition-all duration-200"
+                className="h-11 sm:h-12 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 w-full font-semibold transition-all duration-200"
               >
                 {loading ? (
                   <>
-                    <Loader2 className="mr-3 h-5 w-5 animate-spin" />
-                    Searching...
+                    <Loader2 className="mr-2 h-4 w-4 sm:h-5 sm:w-5 animate-spin" />
+                    <span className="hidden sm:inline">Searching...</span>
+                    <span className="sm:hidden">...</span>
                   </>
                 ) : (
                   <>
-                    <Search className="mr-3 h-5 w-5" />
-                    Search
+                    <Search className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
+                    <span className="hidden sm:inline">Search Jobs</span>
+                    <span className="sm:hidden">Search</span>
                   </>
                 )}
               </Button>
@@ -261,6 +263,7 @@ const BasicJobSearch = () => {
                 job={job}
                 selectedJob={null}
                 handleApply={handleApply}
+                isAIEnhanced={false}
               />
             ))}
           </div>
