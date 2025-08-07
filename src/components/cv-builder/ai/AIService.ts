@@ -1,4 +1,6 @@
 
+import { supabase } from "@/integrations/supabase/client";
+
 interface AIGenerationRequest {
   type: 'professional_summary' | 'job_description' | 'skills' | 'achievements' | 'complete_cv';
   context: {
@@ -23,25 +25,28 @@ interface AIGenerationResponse {
 export class AIService {
   private static async callAIAssistant(request: AIGenerationRequest): Promise<AIGenerationResponse> {
     try {
-      const response = await fetch('/api/v1/electrician-ai-assistant', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
+      const { data, error } = await supabase.functions.invoke('electrician-ai-assistant', {
+        body: {
           prompt: this.buildPrompt(request),
           type: 'cv_generation'
-        }),
+        }
       });
 
-      if (!response.ok) {
-        throw new Error('Failed to generate AI content');
+      if (error) {
+        console.error('Supabase function error:', error);
+        throw new Error(`AI service error: ${error.message}`);
       }
 
-      const data = await response.json();
+      if (!data || !data.response) {
+        throw new Error('Invalid response from AI service');
+      }
+
       return this.parseAIResponse(data.response, request.type);
     } catch (error) {
       console.error('AI Service Error:', error);
+      if (error instanceof Error) {
+        throw new Error(`Failed to generate content: ${error.message}`);
+      }
       throw new Error('Failed to generate content. Please try again.');
     }
   }
