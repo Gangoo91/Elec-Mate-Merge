@@ -18,17 +18,17 @@ import {
 
 const InterviewGuidanceTab = () => {
   const categoryColors = {
-    preparation: "bg-indigo-500/10 text-indigo-400 border-indigo-500/20",
-    technical: "bg-purple-500/10 text-purple-400 border-purple-500/20", 
-    process: "bg-blue-500/10 text-blue-400 border-blue-500/20",
-    questions: "bg-cyan-500/10 text-cyan-400 border-cyan-500/20",
-    tips: "bg-teal-500/10 text-teal-400 border-teal-500/20"
+    preparation: "indigo",
+    technical: "purple", 
+    process: "blue",
+    questions: "cyan",
+    tips: "teal"
   };
 
   const difficultyColors = {
-    Essential: "bg-green-500/10 text-green-400 border-green-500/20",
-    Intermediate: "bg-yellow-500/10 text-yellow-400 border-yellow-500/20",
-    Advanced: "bg-red-500/10 text-red-400 border-red-500/20"
+    Essential: "green",
+    Intermediate: "yellow",
+    Advanced: "red"
   };
 
   const interviewGuides = [
@@ -135,49 +135,40 @@ const InterviewGuidanceTab = () => {
   ];
 
   return (
-    <Card className="border-indigo-500/20 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-950/50 dark:to-purple-950/50">
-      <CardHeader className="pb-4">
+    <Card className="border-indigo-500/20">
+      <CardHeader>
         <div className="flex items-center gap-3">
-          <div className="p-2 bg-indigo-500/10 rounded-lg">
-            <MessageCircle className="h-6 w-6 text-indigo-500" />
-          </div>
-          <div>
-            <CardTitle className="text-indigo-900 dark:text-indigo-100">Interview Guidance</CardTitle>
-            <p className="text-sm text-indigo-700 dark:text-indigo-300 mt-1">
-              Professional guidance for electrical job interviews
-            </p>
-          </div>
+          <MessageCircle className="h-6 w-6 text-indigo-500" />
+          <CardTitle>Interview Guidance</CardTitle>
         </div>
+        <p className="text-muted-foreground">Professional step-by-step guides for electrical job interviews</p>
       </CardHeader>
-      <CardContent className="px-6">
-        <MobileAccordion type="single" collapsible className="space-y-3">
+      <CardContent>
+        <MobileAccordion type="single" collapsible className="w-full">
           {interviewGuides.map((guide, index) => {
             const Icon = guide.icon;
             const categoryColor = categoryColors[guide.category as keyof typeof categoryColors];
             const difficultyColor = difficultyColors[guide.difficulty as keyof typeof difficultyColors];
             
             return (
-              <MobileAccordionItem key={index} value={`guide-${index}`}>
-                <MobileAccordionTrigger 
-                  icon={
-                    <div className="flex justify-center">
-                      <Icon className="h-5 w-5 text-indigo-600 dark:text-indigo-400" />
+              <MobileAccordionItem key={index} value={`guide-${index}`} className="border border-border rounded-lg mb-3">
+                <MobileAccordionTrigger className="px-4 py-3">
+                  <div className="flex items-center gap-3 flex-1">
+                    <div className={`p-2 rounded-lg bg-${categoryColor}-500/10`}>
+                      <Icon className={`h-5 w-5 text-${categoryColor}-500`} />
                     </div>
-                  }
-                >
-                  <div className="flex items-center justify-between w-full">
-                    <div className="flex flex-col items-start">
-                      <span className="font-semibold text-sm text-indigo-900 dark:text-indigo-100">{guide.title}</span>
+                    <div className="flex-1 text-left">
+                      <div className="font-semibold text-sm">{guide.title}</div>
                       <div className="flex gap-2 mt-1">
                         <Badge 
-                          variant="outline" 
-                          className={`text-xs px-2 py-0.5 ${categoryColor}`}
+                          variant="secondary" 
+                          className={`text-xs bg-${categoryColor}-500/10 text-${categoryColor}-700 dark:text-${categoryColor}-300`}
                         >
                           {guide.category}
                         </Badge>
                         <Badge 
                           variant="outline" 
-                          className={`text-xs px-2 py-0.5 ${difficultyColor}`}
+                          className={`text-xs bg-${difficultyColor}-500/10 text-${difficultyColor}-700 dark:text-${difficultyColor}-300 border-${difficultyColor}-500/20`}
                         >
                           {guide.difficulty}
                         </Badge>
@@ -185,32 +176,32 @@ const InterviewGuidanceTab = () => {
                     </div>
                   </div>
                 </MobileAccordionTrigger>
-                <MobileAccordionContent>
-                  <div className="space-y-4 pt-2">
+                <MobileAccordionContent className="px-4 pb-4">
+                  <div className="space-y-4">
                     <div>
-                      <h4 className="font-semibold text-sm text-indigo-900 dark:text-indigo-100 mb-2 flex items-center gap-2">
-                        <CheckCircle className="h-4 w-4 text-indigo-500" />
-                        Implementation Steps:
+                      <h4 className="font-semibold text-sm mb-3 flex items-center gap-2">
+                        <CheckCircle className="h-4 w-4 text-green-500" />
+                        Implementation Steps
                       </h4>
-                      <ol className="space-y-2">
+                      <ol className="space-y-3">
                         {guide.steps.map((step, stepIndex) => (
-                          <li key={stepIndex} className="text-sm text-indigo-700 dark:text-indigo-300 flex items-start gap-3">
-                            <span className="bg-indigo-500/20 text-indigo-700 dark:text-indigo-300 rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">
+                          <li key={stepIndex} className="flex items-start gap-3 text-sm">
+                            <span className="bg-primary/10 text-primary rounded-full w-6 h-6 flex items-center justify-center text-xs font-semibold flex-shrink-0 mt-0.5">
                               {stepIndex + 1}
                             </span>
-                            {step}
+                            <span className="leading-relaxed">{step}</span>
                           </li>
                         ))}
                       </ol>
                     </div>
                     
-                    <div className="border-t border-indigo-200 dark:border-indigo-800 pt-3">
-                      <h4 className="font-semibold text-sm text-indigo-900 dark:text-indigo-100 mb-2">Key Points to Remember:</h4>
-                      <ul className="space-y-1">
+                    <div className="border-t pt-4">
+                      <h4 className="font-semibold text-sm mb-3">Key Points</h4>
+                      <ul className="space-y-2">
                         {guide.keyPoints.map((point, pointIndex) => (
-                          <li key={pointIndex} className="text-sm text-indigo-700 dark:text-indigo-300 flex items-start gap-2">
-                            <span className="w-1.5 h-1.5 bg-indigo-500 rounded-full mt-2 flex-shrink-0" />
-                            {point}
+                          <li key={pointIndex} className="flex items-start gap-2 text-sm">
+                            <span className="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0" />
+                            <span className="leading-relaxed">{point}</span>
                           </li>
                         ))}
                       </ul>
