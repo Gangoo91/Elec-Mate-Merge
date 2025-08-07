@@ -122,7 +122,7 @@ const AdvancedFilters: React.FC<AdvancedFiltersProps> = ({
   };
 
   return (
-    <Card className="border-elec-yellow/20 bg-elec-card">
+    <Card className="border-elec-yellow/20 bg-elec-card w-full">
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
           <CardTitle className="flex items-center gap-2 text-elec-light">

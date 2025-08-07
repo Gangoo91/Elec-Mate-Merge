@@ -169,11 +169,11 @@ const BasicJobSearch = () => {
   return (
     <div className="space-y-6">
       {/* Search Form */}
-      <Card className="border-2 border-yellow-400/30 bg-gradient-to-br from-gray-900 to-gray-800 shadow-xl">
+      <Card className="border-elec-yellow/20 bg-elec-card w-full">
         <CardHeader className="pb-4">
-          <CardTitle className="flex items-center gap-3 text-white text-xl">
-            <div className="p-2 bg-yellow-400 rounded-lg">
-              <Search className="h-5 w-5 text-black" />
+          <CardTitle className="flex items-center gap-3 text-elec-light text-xl">
+            <div className="p-2 bg-elec-yellow rounded-lg">
+              <Search className="h-5 w-5 text-elec-dark" />
             </div>
             Job Search
           </CardTitle>
@@ -181,39 +181,39 @@ const BasicJobSearch = () => {
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 gap-4">
             <div className="space-y-2">
-              <label className="text-sm font-medium text-yellow-400">Job Title / Keywords</label>
+              <label className="text-sm font-medium text-elec-yellow">Job Title / Keywords</label>
               <Input
                 placeholder="e.g. electrician, maintenance, testing..."
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
-                className="h-12 bg-gray-800 border-2 border-yellow-400/30 text-white placeholder:text-gray-400 focus:border-yellow-400 transition-colors rounded-lg"
+                className="h-12 bg-elec-gray border-elec-yellow/30 text-elec-light placeholder:text-muted-foreground focus:border-elec-yellow transition-colors"
               />
             </div>
             
             <div className="space-y-2 relative">
-              <label className="text-sm font-medium text-yellow-400">Location</label>
+              <label className="text-sm font-medium text-elec-yellow">Location</label>
               <div className="relative">
-                <MapPin className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-yellow-400" />
+                <MapPin className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-elec-yellow" />
                 <Input
                   placeholder="Location (UK)"
                   value={location}
                   onChange={(e) => handleLocationChange(e.target.value)}
                   onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
-                  className="h-12 pl-12 bg-gray-800 border-2 border-yellow-400/30 text-white placeholder:text-gray-400 focus:border-yellow-400 transition-colors rounded-lg"
+                  className="h-12 pl-12 bg-elec-gray border-elec-yellow/30 text-elec-light placeholder:text-muted-foreground focus:border-elec-yellow transition-colors"
                 />
               </div>
               
               {/* Location Suggestions */}
               {showLocationSuggestions && (
-                <div className="absolute z-10 w-full mt-1 bg-gray-800 border-2 border-yellow-400/30 rounded-lg shadow-xl">
+                <div className="absolute z-50 w-full mt-1 bg-elec-card border border-elec-yellow/30 rounded-lg shadow-xl">
                   {locationSuggestions.map((suggestion, index) => (
                     <button
                       key={index}
-                      className="w-full text-left px-4 py-3 hover:bg-yellow-400/10 text-sm text-white border-b border-gray-700 last:border-b-0 first:rounded-t-lg last:rounded-b-lg transition-colors"
+                      className="w-full text-left px-4 py-3 hover:bg-elec-yellow/10 text-sm text-elec-light border-b border-elec-yellow/20 last:border-b-0 first:rounded-t-lg last:rounded-b-lg transition-colors"
                       onClick={() => selectLocationSuggestion(suggestion)}
                     >
-                      <MapPin className="inline h-4 w-4 mr-3 text-yellow-400" />
+                      <MapPin className="inline h-4 w-4 mr-3 text-elec-yellow" />
                       {suggestion}
                     </button>
                   ))}
@@ -225,7 +225,7 @@ const BasicJobSearch = () => {
               <Button 
                 onClick={handleSearch} 
                 disabled={loading}
-                className="h-12 bg-yellow-400 text-black hover:bg-yellow-500 w-full font-semibold text-lg rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl"
+                className="h-12 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 w-full font-semibold text-lg transition-all duration-200"
               >
                 {loading ? (
                   <>
@@ -250,7 +250,7 @@ const BasicJobSearch = () => {
       {/* Results */}
       {jobs.length > 0 && (
         <div className="space-y-4">
-          <h3 className="text-lg font-semibold text-white">
+          <h3 className="text-lg font-semibold text-elec-light">
             {jobs.length} Job{jobs.length !== 1 ? 's' : ''} Found
           </h3>
 
@@ -269,17 +269,17 @@ const BasicJobSearch = () => {
 
       {/* Empty State */}
       {!loading && jobs.length === 0 && query && (
-        <Card className="border-elec-yellow/20 bg-elec-gray">
+        <Card className="border-elec-yellow/20 bg-elec-card">
           <CardContent className="text-center py-12">
-            <AlertCircle className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-lg font-semibold mb-2 text-white">No Jobs Found</h3>
-            <p className="text-gray-400 mb-4">
+            <AlertCircle className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+            <h3 className="text-lg font-semibold mb-2 text-elec-light">No Jobs Found</h3>
+            <p className="text-muted-foreground mb-4">
               {location 
                 ? `No electrical jobs found matching "${query}" in or near ${location}`
                 : `No electrical jobs found matching "${query}"`
               }
             </p>
-            <div className="text-sm text-gray-400">
+            <div className="text-sm text-muted-foreground">
               <p className="mb-2">Try:</p>
               <ul className="list-disc list-inside space-y-1">
                 <li>Using broader terms like "electrician", "electrical", or "maintenance"</li>
@@ -288,7 +288,7 @@ const BasicJobSearch = () => {
                 <li>Using job-specific terms like "testing", "installation", or "commissioning"</li>
                 <li>Including qualifications like "18th edition" or "City & Guilds"</li>
               </ul>
-              <p className="mt-3 text-xs text-gray-500">
+              <p className="mt-3 text-xs text-muted-foreground">
                 Popular searches: "electrician", "electrical engineer", "maintenance electrician", "electrical testing"
               </p>
             </div>

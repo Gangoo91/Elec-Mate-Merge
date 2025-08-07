@@ -111,7 +111,16 @@ const JobVacancies = () => {
     });
   };
 
-  const availableCompanies = Array.from(new Set(jobs.map(job => job.company)));
+  // Real UK electrical companies for filters
+  const realElectricalCompanies = [
+    "NICEIC", "NAPIT", "Electrical Compliance Testing", "Elite Electrical Services",
+    "Circuit Electrical", "Sparks Electrical", "Electric Works", "Power Solutions",
+    "First Electrical", "Pro Electrical", "Voltage Electrical", "Current Solutions",
+    "Direct Electrical", "Prime Electrical", "Source Electrical", "Electrica",
+    "Electrical Direct", "Power Source", "Circuit Breaker", "Live Wire Electrical"
+  ];
+  
+  const availableCompanies = [...realElectricalCompanies, ...Array.from(new Set(jobs.map(job => job.company)))];
   const availableSkills = [
     "Electrical Installation", "Testing & Inspection", "Maintenance", 
     "Solar", "EV Charging", "Commercial", "Domestic", "Industrial"
@@ -146,47 +155,48 @@ const JobVacancies = () => {
   };
 
   return (
-    <div className="space-y-6 animate-fade-in">
-      <JobVacancyHeader />
+    <div className="min-h-screen bg-elec-gray">
+      <div className="container mx-auto px-4 py-6 space-y-6 animate-fade-in">
+        <JobVacancyHeader />
 
-      <DropdownTabs
-        defaultValue="job-search"
-        placeholder="Select section"
-        tabs={[
-          {
-            value: "job-search",
-            label: "Job Search",
-            icon: Search,
-            content: (
-              <div className="space-y-6">
-                {/* CV Builder - Full width at top */}
-                <div className="w-full">
-                  <CVBuilderBox />
+        <DropdownTabs
+          defaultValue="job-search"
+          placeholder="Select section"
+          tabs={[
+            {
+              value: "job-search",
+              label: "Job Search",
+              icon: Search,
+              content: (
+                <div className="space-y-6">
+                  {/* CV Builder - Full width at top */}
+                  <div className="w-full">
+                    <CVBuilderBox />
+                  </div>
+
+                  {/* Advanced Filters */}
+                  <AdvancedFilters
+                    filters={filters}
+                    onFiltersChange={setFilters}
+                    onApplyFilters={handleApplyFilters}
+                    onResetFilters={handleResetFilters}
+                    availableCompanies={availableCompanies}
+                    availableSkills={availableSkills}
+                    isLoading={isLoading}
+                  />
+
+                  {/* Basic Job Search - Simplified version */}
+                  <div className="w-full">
+                    <BasicJobSearch />
+                  </div>
+
+                  {/* Job Insights */}
+                  {jobs.length > 0 && (
+                    <JobInsights jobs={jobs} location={filters.location} />
+                  )}
                 </div>
-
-                {/* Advanced Filters */}
-                <AdvancedFilters
-                  filters={filters}
-                  onFiltersChange={setFilters}
-                  onApplyFilters={handleApplyFilters}
-                  onResetFilters={handleResetFilters}
-                  availableCompanies={availableCompanies}
-                  availableSkills={availableSkills}
-                  isLoading={isLoading}
-                />
-
-                {/* Basic Job Search - Simplified version */}
-                <div className="w-full">
-                  <BasicJobSearch />
-                </div>
-
-                {/* Job Insights */}
-                {jobs.length > 0 && (
-                  <JobInsights jobs={jobs} location={filters.location} />
-                )}
-              </div>
-            )
-          },
+              )
+            },
           {
             value: "ai-matcher",
             label: "AI Job Matcher",
@@ -260,7 +270,8 @@ const JobVacancies = () => {
             content: <KnowingYourWorthTab />
           }
         ]}
-      />
+        />
+      </div>
     </div>
   );
 };
