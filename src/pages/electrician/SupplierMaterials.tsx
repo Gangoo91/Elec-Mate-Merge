@@ -1,5 +1,6 @@
 
 import { useState, useEffect } from "react";
+import { Helmet } from "react-helmet";
 import { Link, useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Package, ArrowLeft, AlertTriangle, ExternalLink, Star, BellDot, RefreshCw } from "lucide-react";
@@ -133,6 +134,11 @@ const SupplierMaterials = () => {
 
   return (
     <div className="space-y-6 animate-fade-in">
+      <Helmet>
+        <title>{`${supplier} Deals | ElecMate Electrical Materials`}</title>
+        <meta name="description" content={`Latest ${supplier} electrical materials and deals. BS 7671 18th Edition aware recommendations for UK electricians.`} />
+        <link rel="canonical" href={typeof window !== 'undefined' ? window.location.href : ''} />
+      </Helmet>
       {/* Header with navigation */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
@@ -179,7 +185,7 @@ const SupplierMaterials = () => {
       </Alert>
 
       {/* Search bar */}
-      <MaterialSearch />
+      <MaterialSearch supplierSlug={supplierSlug?.toLowerCase()} onResults={(items) => { setProducts(items); toast({ title: "Search results", description: `Showing ${items.length} items`, duration: 2500 }); }} />
 
       {/* External catalog link */}
       <Card className="border-elec-yellow/20 bg-elec-gray">

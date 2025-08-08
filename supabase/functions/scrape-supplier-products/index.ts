@@ -108,8 +108,12 @@ serve(async (req) => {
           let match: RegExpExecArray | null;
           while ((match = anchorRegex.exec(html)) !== null && results.length < 48) {
             const hrefRaw = match[1];
-            let text = (match[2] || "").replace(textRegex, "").replace(/\s+/g, " ").trim();
+            let innerHtml = (match[2] || "");
+            let text = innerHtml.replace(textRegex, "").replace(/\s+/g, " ").trim();
             if (!hrefRaw || !text || text.length < 3) continue;
+
+            // Skip obvious non-product links
+            if (/account|basket|cart|help|delivery|contact|login|register|cookie|privacy|terms/i.test(text)) continue;
 
             // Only keep links pointing to the same supplier domain
             let url: URL | null = null;
@@ -124,6 +128,15 @@ serve(async (req) => {
             if (seen.has(key)) continue;
             seen.add(key);
 
+            // Try to extract an image from inside the anchor tag
+            let image = "placeholder.svg";
+            const imgMatch = innerHtml.match(/<img[^>]*src=["']([^"']+)["'][^>]*>/i);
+            if (imgMatch && imgMatch[1]) {
+              try {
+                image = new URL(imgMatch[1], searchUrl).toString();
+              } catch { /* keep placeholder */ }
+            }
+
             const isCable = /cable|t\s*&\s*e|twin\s*&\s*earth|swa|flex|armoured|mm²|mm2|cat\d/i.test(text) || /cable/i.test(searchTerm);
             const name = text.length > 120 ? text.slice(0, 117) + "…" : text;
 
@@ -133,7 +146,7 @@ serve(async (req) => {
               category: isCable ? "Cables" : "Materials",
               price: (text.match(likelyPrice)?.[0] ?? "£—"),
               supplier: supplierName,
-              image: "placeholder.svg",
+              image,
               productUrl: url.toString(),
             });
           }

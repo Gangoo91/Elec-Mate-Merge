@@ -3,16 +3,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ExternalLink } from "lucide-react";
 
-interface MaterialItem {
-  id: number;
-  name: string;
-  category: string;
-  price: string;
-  supplier: string;
-  image: string;
-  isOnSale?: boolean;
-  salePrice?: string;
-  stockStatus?: "In Stock" | "Low Stock" | "Out of Stock";
+import { MaterialItem as BaseMaterialItem } from "@/data/electrician/productData";
+
+interface MaterialItem extends BaseMaterialItem {
   productUrl?: string;
 }
 
@@ -61,8 +54,14 @@ const MaterialCard: React.FC<MaterialCardProps> = ({ item }) => {
         <CardTitle className="text-lg">{item.name}</CardTitle>
       </CardHeader>
       <CardContent className="flex flex-col flex-1 justify-between">
-        <div className="bg-elec-card/50 h-32 rounded-md mb-4 flex items-center justify-center">
-          <span className="text-elec-yellow/40">Product Image</span>
+        <div className="bg-elec-card/50 h-32 rounded-md mb-4 flex items-center justify-center overflow-hidden">
+          <img
+            src={item.image || "/placeholder.svg"}
+            alt={`${item.name} from ${item.supplier} - electrical materials`}
+            loading="lazy"
+            className="object-contain w-full h-full"
+            onError={(e) => { (e.currentTarget as HTMLImageElement).src = "/placeholder.svg"; }}
+          />
         </div>
         
         <div className="space-y-4">

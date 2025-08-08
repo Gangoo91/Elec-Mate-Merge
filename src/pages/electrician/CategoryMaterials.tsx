@@ -1,12 +1,14 @@
 
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Package, ArrowLeft, Filter } from "lucide-react";
+import { Package, ArrowLeft, Filter, RefreshCw } from "lucide-react";
 import { productsBySupplier, MaterialItem } from "@/data/electrician/productData";
 import MaterialCard from "@/components/electrician-materials/MaterialCard";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "@/hooks/use-toast";
 
 const CATEGORY_META: Record<string, { title: string; description: string } > = {
   cables: {
@@ -62,6 +64,29 @@ const CategoryMaterials = () => {
   const allProducts = useMemo(() => Object.values(productsBySupplier).flat(), []);
   const products = useMemo(() => allProducts.filter((p) => matchesCategory(p, categoryId)), [allProducts, categoryId]);
 
+  const [liveProducts, setLiveProducts] = useState<MaterialItem[]>([]);
+  const [isFetching, setIsFetching] = useState(false);
+  const displayProducts = liveProducts.length > 0 ? liveProducts : products;
+
+  const fetchLiveCables = async () => {
+    if (categoryId !== 'cables') return;
+    setIsFetching(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('scrape-supplier-products', {
+        body: { supplierSlug: 'electricaldirect', searchTerm: 'cable' }
+      });
+      if (error) throw new Error(error.message);
+      const items = Array.isArray(data?.products) ? (data.products as MaterialItem[]) : [];
+      setLiveProducts(items);
+      toast({ title: 'Live cables', description: `Loaded ${items.length} items` });
+    } catch (e) {
+      console.error(e);
+      toast({ title: 'Failed to fetch', description: 'Please try again later.', variant: 'destructive' });
+    } finally {
+      setIsFetching(false);
+    }
+  };
+
   const pageTitle = `${meta.title} | ElecMate Electrical Materials`;
   const pageDescription = `${meta.title} for UK electricians — ${meta.description}. BS 7671 18th Edition compliant guidance.`.slice(0, 160);
 
@@ -81,11 +106,19 @@ const CategoryMaterials = () => {
           </h1>
           <p className="text-muted-foreground mt-1">{meta.description}</p>
         </div>
-        <Link to="/electrician/materials">
-          <Button variant="outline" className="flex items-center gap-2">
-            <ArrowLeft className="h-4 w-4" /> Back to Materials
-          </Button>
-        </Link>
+        <div className="flex gap-2">
+          <Link to="/electrician/materials">
+            <Button variant="outline" className="flex items-center gap-2">
+              <ArrowLeft className="h-4 w-4" /> Back
+            </Button>
+          </Link>
+          {categoryId === 'cables' && (
+            <Button variant="outline" onClick={fetchLiveCables} disabled={isFetching} className="flex items-center gap-2">
+              <RefreshCw className={`h-4 w-4 ${isFetching ? 'animate-spin' : ''}`} />
+              {isFetching ? 'Fetching…' : 'Fetch Live Cables'}
+            </Button>
+          )}
+        </div>
       </header>
 
       <section aria-labelledby="filters" className="hidden">
@@ -95,7 +128,7 @@ const CategoryMaterials = () => {
         </div>
       </section>
 
-      {products.length === 0 ? (
+      {displayProducts.length === 0 ? (
         <Card className="border-elec-yellow/20 bg-elec-gray">
           <CardContent className="p-6 text-center">
             <p className="text-muted-foreground">No products found in this category yet. Showing curated items soon.</p>
@@ -104,7 +137,7 @@ const CategoryMaterials = () => {
       ) : (
         <section aria-label={`${meta.title} products`} className="space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {products.map((item) => (
+            {displayProducts.map((item) => (
               <MaterialCard key={item.id} item={item} />
             ))}
           </div>
