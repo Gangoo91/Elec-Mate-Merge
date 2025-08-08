@@ -157,7 +157,25 @@ const InterviewGuidanceTab = () => {
         <CardTitle className="text-xl">Interview Guidance</CardTitle>
         <p className="text-muted-foreground">Professional step-by-step guides for electrical job interviews</p>
       </CardHeader>
-      <CardContent>
+      <CardContent className="space-y-4">
+        {/* Metric tiles like Business Development */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          {[
+            { title: 'Preparation Success', sub: 'Candidates ready in 3–5 days', icon: <CheckCircle className="h-4 w-4 text-green-400" /> },
+            { title: 'Time to Offer', sub: '7–14 days typical', icon: <Clock className="h-4 w-4 text-elec-yellow" /> },
+            { title: 'Technical Pass Rate', sub: '↑ with focused revision', icon: <Lightbulb className="h-4 w-4 text-blue-400" /> },
+            { title: 'Interview ROI', sub: 'Higher offer & salary outcomes', icon: <Target className="h-4 w-4 text-purple-400" /> },
+          ].map((m, i) => (
+            <Card key={i} className="border-elec-yellow/20 bg-elec-gray p-3">
+              <div className="text-center space-y-1">
+                <div className="flex items-center justify-center">{m.icon}</div>
+                <div className="text-xs font-medium text-elec-light">{m.title}</div>
+                <div className="text-[11px] text-muted-foreground">{m.sub}</div>
+              </div>
+            </Card>
+          ))}
+        </div>
+
         <MobileAccordion type="single" collapsible className="w-full">
           {interviewGuides.map((guide, index) => {
             const Icon = guide.icon;
@@ -193,7 +211,7 @@ const InterviewGuidanceTab = () => {
                   </div>
                 </MobileAccordionTrigger>
                 <MobileAccordionContent className="px-4 pb-4">
-                  <div className="space-y-4">
+                  <div className="rounded-lg border border-elec-yellow/20 bg-elec-card/60 p-4 space-y-4">
                     <div>
                       <h4 className="font-semibold text-sm mb-3 flex items-center gap-2">
                         <CheckCircle className="h-4 w-4 text-green-500" />
@@ -221,6 +239,13 @@ const InterviewGuidanceTab = () => {
                           </li>
                         ))}
                       </ul>
+                    </div>
+
+                    <div className="rounded-lg border border-green-500/20 bg-green-500/5 p-3">
+                      <div className="text-sm font-medium text-green-300 mb-1">Impact</div>
+                      <p className="text-xs text-muted-foreground">
+                        Following this guidance typically improves interview performance and offer rates while demonstrating BS 7671 awareness.
+                      </p>
                     </div>
                   </div>
                 </MobileAccordionContent>
