@@ -12,6 +12,7 @@ import { FinancialInsights } from "@/components/electrician/business-development
 import { MobileInput } from "@/components/ui/mobile-input";
 import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
 import WhyThisMatters from "@/components/common/WhyThisMatters";
+import { useState } from "react";
 
 const CashFlowPlanner = () => {
   const { toast } = useToast();
