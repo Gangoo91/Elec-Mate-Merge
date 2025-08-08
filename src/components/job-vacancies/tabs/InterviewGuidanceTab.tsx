@@ -149,7 +149,7 @@ const InterviewGuidanceTab = () => {
   ];
 
   return (
-    <Card className="bg-transparent border-none shadow-none">
+    <Card className="bg-elec-dark border-none shadow-none">
       <CardHeader className="text-center space-y-3 pt-2 max-w-[680px] mx-auto">
         <div className="mx-auto w-10 h-10 rounded-lg bg-elec-yellow/10 flex items-center justify-center">
           <MessageCircle className="h-5 w-5 text-elec-yellow" />
@@ -159,7 +159,7 @@ const InterviewGuidanceTab = () => {
       </CardHeader>
       <CardContent className="space-y-4">
         {/* Metric tiles like Business Development */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        <div className="grid grid-cols-2 gap-3">
           {[
             { title: 'Preparation Success', sub: 'Candidates ready in 3–5 days', icon: <CheckCircle className="h-4 w-4 text-green-400" /> },
             { title: 'Time to Offer', sub: '7–14 days typical', icon: <Clock className="h-4 w-4 text-elec-yellow" /> },
