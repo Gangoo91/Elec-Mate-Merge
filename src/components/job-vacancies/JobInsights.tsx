@@ -316,7 +316,7 @@ const JobInsights: React.FC<JobInsightsProps> = ({ jobs, location }) => {
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between mb-4">
         <div className="flex items-center gap-2">
           <BarChart3 className="h-5 w-5 text-elec-yellow" />
           <h3 className="text-lg font-semibold text-elec-light">Market Insights</h3>
@@ -331,6 +331,7 @@ const JobInsights: React.FC<JobInsightsProps> = ({ jobs, location }) => {
               body: { keywords: 'electrician', location: location || 'UK' }
             });
             if (error) throw new Error(error.message || 'Failed to fetch');
+            if (data?.error) throw new Error(data.error);
             if (data) {
               setSalaryStats(data.salaryStats || salaryStats);
               setSalaryBuckets(data.salaryBuckets || []);
@@ -344,11 +345,12 @@ const JobInsights: React.FC<JobInsightsProps> = ({ jobs, location }) => {
               toast({ title: 'Live insights updated' });
             }
           } catch (e) {
-            toast({ title: 'Live update failed', description: 'Please try again', variant: 'destructive' });
+            const msg = e instanceof Error ? e.message : 'Please try again';
+            toast({ title: 'Live update failed', description: msg, variant: 'destructive' });
           } finally {
             setIsLiveLoading(false);
           }
-        }} className="border-elec-yellow/30 hover:bg-elec-yellow/10" disabled={isLiveLoading}>
+        }} className="border-elec-yellow/30 hover:bg-elec-yellow/10 self-start" disabled={isLiveLoading}>
           {isLiveLoading ? 'Refreshing…' : 'Live data'}
         </Button>
       </div>
