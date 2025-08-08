@@ -150,7 +150,7 @@ const InterviewGuidanceTab = () => {
 
   return (
     <Card className="bg-elec-dark border-none shadow-none">
-      <CardHeader className="text-center space-y-3 pt-2 max-w-[680px] mx-auto">
+      <CardHeader className="text-center space-y-2 pt-2 max-w-[680px] mx-auto">
         <div className="mx-auto w-10 h-10 rounded-lg bg-elec-yellow/10 flex items-center justify-center">
           <MessageCircle className="h-5 w-5 text-elec-yellow" />
         </div>
@@ -166,7 +166,7 @@ const InterviewGuidanceTab = () => {
             { title: 'Technical Pass Rate', sub: '↑ with focused revision', icon: <Lightbulb className="h-4 w-4 text-blue-400" /> },
             { title: 'Interview ROI', sub: 'Higher offer & salary outcomes', icon: <Target className="h-4 w-4 text-purple-400" /> },
           ].map((m, i) => (
-            <Card key={i} className="border-elec-yellow/20 bg-elec-gray p-3">
+            <Card key={i} className="border-elec-yellow/20 bg-elec-gray p-2.5">
               <div className="text-center space-y-1">
                 <div className="flex items-center justify-center">{m.icon}</div>
                 <div className="text-xs font-medium text-elec-light">{m.title}</div>
@@ -185,28 +185,28 @@ const InterviewGuidanceTab = () => {
             const diff = difficultyStyle[difficultyColor] || difficultyStyle.green;
             
             return (
-              <MobileAccordionItem key={index} value={`guide-${index}`} className="border border-elec-yellow/20 bg-elec-gray rounded-xl mb-3">
+              <MobileAccordionItem key={index} value={`guide-${index}`} className="rounded-lg mb-3">
                 <MobileAccordionTrigger
-                  className="px-4 py-5 bg-transparent border-0"
+                  className="px-4 py-2 bg-transparent border-0"
                   icon={
-                    <div className={cn("p-2.5 rounded-lg", cat.iconBg)}>
-                      <Icon className={cn("h-6 w-6", cat.icon)} />
+                    <div className={cn("p-2 rounded-lg", cat.iconBg)}>
+                      <Icon className={cn("h-5 w-5", cat.icon)} />
                     </div>
                   }
                 >
-                  <div className="text-base sm:text-lg font-semibold text-elec-light">{guide.title}</div>
+                  <div className="text-sm sm:text-base font-semibold text-elec-light">{guide.title}</div>
                 </MobileAccordionTrigger>
                 <MobileAccordionContent className="px-4 pb-4">
-                  <div className="rounded-lg border border-elec-yellow/20 bg-elec-card/60 p-4 space-y-4">
+                  <div className="rounded-lg border border-elec-yellow/20 bg-elec-card/60 p-3 space-y-4">
                     <div>
                       <h4 className="font-semibold text-sm mb-3 flex items-center gap-2">
                         <CheckCircle className="h-4 w-4 text-green-500" />
                         Implementation Steps
                       </h4>
-                      <ol className="space-y-3">
+                      <ol className="space-y-2">
                         {guide.steps.map((step, stepIndex) => (
                           <li key={stepIndex} className="flex items-start gap-3 text-sm">
-                            <span className="bg-primary/10 text-primary rounded-full w-6 h-6 flex items-center justify-center text-xs font-semibold flex-shrink-0 mt-0.5">
+                            <span className="bg-primary/10 text-primary rounded-full w-5 h-5 flex items-center justify-center text-xs font-semibold flex-shrink-0 mt-0.5">
                               {stepIndex + 1}
                             </span>
                             <span className="leading-relaxed">{step}</span>
@@ -215,7 +215,7 @@ const InterviewGuidanceTab = () => {
                       </ol>
                     </div>
                     
-                    <div className="border-t pt-4">
+                    <div className="border-t pt-3">
                       <h4 className="font-semibold text-sm mb-3">Key Points</h4>
                       <ul className="space-y-2">
                         {guide.keyPoints.map((point, pointIndex) => (
@@ -227,7 +227,7 @@ const InterviewGuidanceTab = () => {
                       </ul>
                     </div>
 
-                    <div className="rounded-lg border border-green-500/20 bg-green-500/5 p-3">
+                    <div className="rounded-lg border border-green-500/20 bg-green-500/5 p-2.5">
                       <div className="text-sm font-medium text-green-300 mb-1">Impact</div>
                       <p className="text-xs text-muted-foreground">
                         Following this guidance typically improves interview performance and offer rates while demonstrating BS 7671 awareness.
