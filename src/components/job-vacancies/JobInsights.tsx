@@ -32,6 +32,15 @@ interface JobInsightsProps {
 
 const JobInsights: React.FC<JobInsightsProps> = ({ jobs, location }) => {
   const [insights, setInsights] = useState<JobInsight[]>([]);
+  const [salaryStats, setSalaryStats] = useState({ median: 0, q1: 0, q3: 0, min: 0, max: 0, count: 0 });
+  const [salaryBuckets, setSalaryBuckets] = useState<{ label: string; count: number }[]>([]);
+  const [jobTypeMix, setJobTypeMix] = useState<{ label: string; count: number }[]>([]);
+  const [experienceMix, setExperienceMix] = useState<{ label: string; count: number }[]>([]);
+  const [workingPattern, setWorkingPattern] = useState<{ label: string; count: number }[]>([]);
+  const [freshness, setFreshness] = useState<{ last48hPct: number; recent7dPct: number; medianDays: number }>({ last48hPct: 0, recent7dPct: 0, medianDays: 0 });
+  const [topCompanies, setTopCompanies] = useState<{ name: string; count: number }[]>([]);
+  const [topSkills, setTopSkills] = useState<{ name: string; count: number }[]>([]);
+  const [topCerts, setTopCerts] = useState<{ name: string; count: number }[]>([]);
 
   useEffect(() => {
     generateInsights();
@@ -42,23 +51,25 @@ const JobInsights: React.FC<JobInsightsProps> = ({ jobs, location }) => {
 
     const newInsights: JobInsight[] = [];
 
-    // Salary Analysis
-    const salaries = jobs
+    // Salary Analysis (basic average for insight card)
+    const baseSalaries = jobs
       .filter(job => job.salary)
       .map(job => {
-        const salaryText = job.salary.replace(/[£$,]/g, '');
-        const numbers = salaryText.match(/\d+/g);
-        return numbers ? parseInt(numbers[0]) : 0;
+        const clean = job.salary.replace(/[£$,]/g, '');
+        const nums = clean.match(/\d+/g);
+        if (!nums) return 0;
+        if (nums.length >= 2) return Math.round((parseInt(nums[0]) + parseInt(nums[1])) / 2);
+        return parseInt(nums[0]);
       })
-      .filter(salary => salary > 0);
+      .filter((v) => v > 0);
 
-    if (salaries.length > 0) {
-      const avgSalary = Math.round(salaries.reduce((sum: number, s: number) => sum + s, 0) / salaries.length);
+    if (baseSalaries.length > 0) {
+      const avgSalary = Math.round(baseSalaries.reduce((sum: number, s: number) => sum + s, 0) / baseSalaries.length);
       newInsights.push({
         id: 'avg-salary',
         type: 'salary',
         title: 'Average Salary',
-        description: `Based on ${salaries.length} job postings`,
+        description: `Based on ${baseSalaries.length} job postings`,
         value: `£${avgSalary.toLocaleString()}`,
         icon: <TrendingUp className="h-4 w-4" />,
         color: 'text-green-400'
@@ -72,7 +83,7 @@ const JobInsights: React.FC<JobInsightsProps> = ({ jobs, location }) => {
     }, {} as Record<string, number>);
 
     const topCompany = Object.entries(companyCounts)
-      .sort(([,a], [,b]) => (b as number) - (a as number))[0];
+      .sort(([, a], [, b]) => (b as number) - (a as number))[0];
 
     if (topCompany) {
       newInsights.push({
@@ -88,12 +99,13 @@ const JobInsights: React.FC<JobInsightsProps> = ({ jobs, location }) => {
 
     // Job Type Distribution
     const typeCounts = jobs.reduce((acc: Record<string, number>, job) => {
-      acc[job.type] = (acc[job.type] || 0) + 1;
+      const t = (job.type || 'Unspecified').toString();
+      acc[t] = (acc[t] || 0) + 1;
       return acc;
     }, {} as Record<string, number>);
 
     const topType = Object.entries(typeCounts)
-      .sort(([,a], [,b]) => (b as number) - (a as number))[0];
+      .sort(([, a], [, b]) => (b as number) - (a as number))[0];
 
     if (topType) {
       const percentage = Math.round(((topType[1] as number) / jobs.length) * 100);
@@ -110,13 +122,13 @@ const JobInsights: React.FC<JobInsightsProps> = ({ jobs, location }) => {
 
     // Location Hotspots
     const locationCounts = jobs.reduce((acc: Record<string, number>, job) => {
-      const location = job.location || 'Unknown';
-      acc[location] = (acc[location] || 0) + 1;
+      const loc = job.location || 'Unknown';
+      acc[loc] = (acc[loc] || 0) + 1;
       return acc;
     }, {} as Record<string, number>);
 
     const topLocation = Object.entries(locationCounts)
-      .sort(([,a], [,b]) => (b as number) - (a as number))[0];
+      .sort(([, a], [, b]) => (b as number) - (a as number))[0];
 
     if (topLocation && topLocation[0] !== 'Unknown') {
       newInsights.push({
@@ -151,37 +163,127 @@ const JobInsights: React.FC<JobInsightsProps> = ({ jobs, location }) => {
       });
     }
 
-    // Skills Analysis (from job descriptions)
+    // Skills & Certs Analysis
     const skillKeywords = [
-      'testing', 'installation', 'maintenance', 'commissioning', 
+      'testing', 'installation', 'maintenance', 'commissioning',
       'solar', 'led', 'commercial', 'domestic', 'industrial',
-      '18th edition', 'part p', 'pat testing', 'eicr'
+      'eicr', 'fault finding', 'controls'
     ];
 
+    const certKeywordsMap: Record<string, string> = {
+      'bs 7671': 'BS 7671 (18th Edition)',
+      '18th edition': '18th Edition',
+      '2391': '2391 Testing & Inspection',
+      'ecs': 'ECS',
+      'cscs': 'CSCS',
+      'niceic': 'NICEIC',
+      'napit': 'NAPIT',
+      'ev': 'EV Charging',
+      'solar': 'Solar'
+    };
+
+    const lowerText = (job: any) => `${job.title} ${job.description}`.toLowerCase();
+
     const skillCounts = skillKeywords.reduce((acc: Record<string, number>, skill) => {
-      const count = jobs.filter(job => 
-        job.description.toLowerCase().includes(skill) ||
-        job.title.toLowerCase().includes(skill)
-      ).length;
+      const count = jobs.filter(job => lowerText(job).includes(skill)).length;
       if (count > 0) acc[skill] = count;
       return acc;
     }, {} as Record<string, number>);
 
-    const topSkill = Object.entries(skillCounts)
-      .sort(([,a], [,b]) => (b as number) - (a as number))[0];
+    const certCounts = Object.keys(certKeywordsMap).reduce((acc: Record<string, number>, key) => {
+      const count = jobs.filter(job => lowerText(job).includes(key)).length;
+      if (count > 0) acc[key] = count;
+      return acc;
+    }, {} as Record<string, number>);
 
-    if (topSkill) {
-      const percentage = Math.round((topSkill[1] / jobs.length) * 100);
-      newInsights.push({
-        id: 'in-demand-skill',
-        type: 'skill',
-        title: 'In-Demand Skill',
-        description: `Required in ${percentage}% of jobs`,
-        value: topSkill[0].charAt(0).toUpperCase() + topSkill[0].slice(1),
-        icon: <Award className="h-4 w-4" />,
-        color: 'text-pink-400'
-      });
+    // Compute Pay Stats (median & quartiles) and buckets
+    if (baseSalaries.length > 0) {
+      const sorted = [...baseSalaries].sort((a, b) => a - b);
+      const n = sorted.length;
+      const median = sorted[Math.floor(n / 2)];
+      const q1 = sorted[Math.floor(n * 0.25)];
+      const q3 = sorted[Math.floor(n * 0.75)];
+      const min = sorted[0];
+      const max = sorted[n - 1];
+      setSalaryStats({ median, q1, q3, min, max, count: n });
+
+      const ranges = [
+        { label: 'Up to £25k', min: 0, max: 25000 },
+        { label: '£25k–£35k', min: 25000, max: 35000 },
+        { label: '£35k–£45k', min: 35000, max: 45000 },
+        { label: '£45k–£60k', min: 45000, max: 60000 },
+        { label: '£60k+', min: 60000, max: Infinity },
+      ];
+      setSalaryBuckets(ranges.map(r => ({
+        label: r.label,
+        count: sorted.filter(v => v >= r.min && v < r.max).length
+      })));
+    } else {
+      setSalaryStats({ median: 0, q1: 0, q3: 0, min: 0, max: 0, count: 0 });
+      setSalaryBuckets([]);
     }
+
+    // Build Job Type Mix array
+    setJobTypeMix(Object.entries(typeCounts).map(([label, count]) => ({ label, count: count as number })));
+
+    // Experience Mix (parsed from text)
+    const expCounters: Record<string, number> = { 'Apprentice/Trainee': 0, 'Entry': 0, 'Mid': 0, 'Senior': 0, 'Unspecified': 0 };
+    jobs.forEach(job => {
+      const t = lowerText(job);
+      if (/(apprentice|trainee)/.test(t)) expCounters['Apprentice/Trainee'] += 1;
+      else if (/(senior|lead|manager)/.test(t)) expCounters['Senior'] += 1;
+      else if (/(mid|intermediate)/.test(t)) expCounters['Mid'] += 1;
+      else if (/(junior|entry)/.test(t)) expCounters['Entry'] += 1;
+      else expCounters['Unspecified'] += 1;
+    });
+    setExperienceMix(Object.entries(expCounters).map(([label, count]) => ({ label, count })));
+
+    // Working Pattern
+    const workCounters: Record<string, number> = { 'Remote': 0, 'Hybrid': 0, 'On-site': 0 };
+    jobs.forEach(job => {
+      const t = lowerText(job);
+      if (/remote/.test(t)) workCounters['Remote'] += 1;
+      else if (/hybrid/.test(t)) workCounters['Hybrid'] += 1;
+      else workCounters['On-site'] += 1;
+    });
+    setWorkingPattern(Object.entries(workCounters).map(([label, count]) => ({ label, count })));
+
+    // Freshness
+    const ages = jobs.map(job => {
+      const d = new Date(job.posted_date);
+      return Math.max(0, Math.round((now.getTime() - d.getTime()) / (1000 * 3600 * 24)));
+    });
+    const agesSorted = [...ages].sort((a, b) => a - b);
+    const medianDays = agesSorted[Math.floor(agesSorted.length / 2)] || 0;
+    const last48h = jobs.filter(job => {
+      const d = new Date(job.posted_date);
+      return (now.getTime() - d.getTime()) <= 48 * 3600 * 1000;
+    }).length;
+    const last7d = jobs.filter(job => {
+      const d = new Date(job.posted_date);
+      return (now.getTime() - d.getTime()) <= 7 * 24 * 3600 * 1000;
+    }).length;
+    setFreshness({
+      last48hPct: Math.round((last48h / jobs.length) * 100),
+      recent7dPct: Math.round((last7d / jobs.length) * 100),
+      medianDays
+    });
+
+    // Top companies list (top 5)
+    const topCompaniesArr = Object.entries(companyCounts)
+      .sort(([, a], [, b]) => (b as number) - (a as number))
+      .slice(0, 5)
+      .map(([name, count]) => ({ name, count: count as number }));
+    setTopCompanies(topCompaniesArr);
+
+    // Set top skills and certs
+    const skillsArr = Object.entries(skillCounts).sort(([, a], [, b]) => (b as number) - (a as number)).slice(0, 6)
+      .map(([name, count]) => ({ name: name.charAt(0).toUpperCase() + name.slice(1), count: count as number }));
+    setTopSkills(skillsArr);
+
+    const certsArr = Object.entries(certCounts).sort(([, a], [, b]) => (b as number) - (a as number)).slice(0, 6)
+      .map(([key, count]) => ({ name: certKeywordsMap[key], count: count as number }));
+    setTopCerts(certsArr);
 
     setInsights(newInsights);
   };
