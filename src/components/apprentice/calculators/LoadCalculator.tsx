@@ -1,24 +1,32 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Calculator, Info, RotateCcw, BarChart4, Zap } from "lucide-react";
-import { useState } from "react";
+import { Calculator, Info, RotateCcw, BarChart4, Zap, Copy, Download } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { MobileAccordion, MobileAccordionContent, MobileAccordionItem, MobileAccordionTrigger } from "@/components/ui/mobile-accordion";
 import { MobileInput } from "@/components/ui/mobile-input";
 import { MobileButton } from "@/components/ui/mobile-button";
 import { ResultCard } from "@/components/ui/result-card";
+import { usePersistentState } from "@/hooks/usePersistentState";
+import { copyToClipboard, downloadJSON } from "@/lib/calc-utils";
 
 const LoadCalculator = () => {
-  const [lighting, setLighting] = useState<string>("");
-  const [sockets, setSockets] = useState<string>("");
-  const [heating, setHeating] = useState<string>("");
-  const [motors, setMotors] = useState<string>("");
-  const [diversityFactor, setDiversityFactor] = useState<string>("0.8");
-  const [result, setResult] = useState<{
+  const [lighting, setLighting] = usePersistentState<string>("calc.load.lighting", "");
+  const [sockets, setSockets] = usePersistentState<string>("calc.load.sockets", "");
+  const [heating, setHeating] = usePersistentState<string>("calc.load.heating", "");
+  const [motors, setMotors] = usePersistentState<string>("calc.load.motors", "");
+  const [diversityFactor, setDiversityFactor] = usePersistentState<string>("calc.load.diversity", "0.8");
+  const [result, setResult] = usePersistentState<{
     totalLoad: number;
     diversifiedLoad: number;
     recommendedSupply: number;
-  } | null>(null);
+  } | null>("calc.load.result", null);
+
+  const canCalculate = (() => {
+    const vals = [lighting, sockets, heating, motors].map((v) => parseFloat(v) || 0);
+    const diversity = parseFloat(diversityFactor);
+    const anyPositive = vals.some((n) => n > 0);
+    return anyPositive && diversity > 0 && diversity <= 1;
+  })();
 
   const calculateLoad = () => {
     const lightingLoad = parseFloat(lighting) || 0;
@@ -45,6 +53,24 @@ const LoadCalculator = () => {
     setMotors("");
     setDiversityFactor("0.8");
     setResult(null);
+  };
+
+  const handleCopy = async () => {
+    const payload = {
+      inputs: { lighting, sockets, heating, motors, diversityFactor },
+      result,
+      standard: "BS 7671",
+    };
+    await copyToClipboard(JSON.stringify(payload, null, 2));
+  };
+
+  const handleExport = () => {
+    const payload = {
+      inputs: { lighting, sockets, heating, motors, diversityFactor },
+      result,
+      standard: "BS 7671",
+    };
+    downloadJSON(payload, "load-calculation.json");
   };
 
   return (
@@ -121,10 +147,11 @@ const LoadCalculator = () => {
                   />
 
                   <div className="flex gap-3 pt-4">
-                    <MobileButton
+<MobileButton
                       variant="elec"
                       size="wide"
                       onClick={calculateLoad}
+                      disabled={!canCalculate}
                       icon={<Calculator className="h-4 w-4" />}
                     >
                       Calculate Load
@@ -264,10 +291,11 @@ const LoadCalculator = () => {
             />
 
             <div className="flex gap-3">
-              <MobileButton
+<MobileButton
                 variant="elec"
                 size="wide"
                 onClick={calculateLoad}
+                disabled={!canCalculate}
                 icon={<Calculator className="h-4 w-4" />}
               >
                 Calculate Load
@@ -325,6 +353,10 @@ const LoadCalculator = () => {
               </AlertDescription>
             </Alert>
           </div>
+        </div>
+        <div className="pt-2 flex gap-2 justify-end">
+          <MobileButton variant="elec-outline" onClick={handleCopy} icon={<Copy className="h-4 w-4" />}>Copy</MobileButton>
+          <MobileButton variant="elec-outline" onClick={handleExport} icon={<Download className="h-4 w-4" />}>Export</MobileButton>
         </div>
       </CardContent>
     </Card>
