@@ -323,12 +323,12 @@ const KnowingYourWorthTab = () => {
       {/* Interactive Smart Calculator */}
       <Card className="border-green-500/20 bg-gradient-to-br from-green-500/5 to-emerald-500/5">
         <CardHeader>
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
             <CardTitle className="text-green-300 flex items-center gap-2">
               <Brain className="h-5 w-5" />
               Salary Calculator
             </CardTitle>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 self-start sm:self-auto">
               <Gauge className="h-4 w-4 text-green-400" />
               <span className="text-sm text-green-400">{calculateSalary.confidence}% confidence</span>
             </div>
@@ -489,7 +489,7 @@ const KnowingYourWorthTab = () => {
           {/* Specialisms */}
           <div className="space-y-3">
             <label className="text-sm font-medium text-white">Specialisms & Certifications</label>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
               {[
                 { id: 'renewable_energy', label: 'Renewable Energy' },
                 { id: 'ev_charging', label: 'EV Charging' },
@@ -502,7 +502,7 @@ const KnowingYourWorthTab = () => {
                 { id: 'niceic_approved', label: 'NICEIC Approved' },
                 { id: 'testing_inspection', label: 'Testing & Inspection' }
               ].map((spec) => (
-                <div key={spec.id} className="flex items-center space-x-2">
+                <div key={spec.id} className="flex items-center gap-3 py-1.5">
                   <Checkbox
                     id={spec.id}
                     checked={specialisms.includes(spec.id)}
@@ -516,7 +516,7 @@ const KnowingYourWorthTab = () => {
                   />
                   <label
                     htmlFor={spec.id}
-                    className="text-xs text-white cursor-pointer"
+                    className="text-sm leading-snug text-white cursor-pointer"
                   >
                     {spec.label}
                   </label>
@@ -561,16 +561,11 @@ const KnowingYourWorthTab = () => {
                 <Progress value={calculateSalary.confidence} className="h-2" />
               </div>
 
-              <div className="mt-4 p-3 bg-white/5 rounded border border-white/10">
-                <div className="flex items-start gap-2">
-                  <Lightbulb className="h-4 w-4 text-yellow-400 mt-0.5" />
-                  <div className="text-xs text-muted-foreground">
-                    <strong className="text-white">Confidence factors:</strong> {' '}
-                    {location ? '✓ Location specified' : '• Add location for better accuracy'}{', '}
-                    {qualification ? '✓ Qualification provided' : '• Add qualification'}{', '}
-                    {specialisms.length > 0 ? `✓ ${specialisms.length} specialisms` : '• Add specialisms for premium calculation'}
-                  </div>
-                </div>
+              <div className="mt-2 text-xs text-muted-foreground">
+                <span className="text-white font-medium">Confidence factors: </span>
+                {location ? '✓ Location specified' : '• Add location for better accuracy'},{' '}
+                {qualification ? '✓ Qualification provided' : '• Add qualification'},{' '}
+                {specialisms.length > 0 ? `✓ ${specialisms.length} specialisms` : '• Add specialisms for premium calculation'}
               </div>
             </div>
 
@@ -579,7 +574,7 @@ const KnowingYourWorthTab = () => {
               variant="outline"
               className="w-full border-green-500/20 hover:bg-green-500/10"
             >
-              {showDetailedBreakdown ? 'Hide' : 'Show'} Detailed Breakdown
+              {showDetailedBreakdown ? 'Hide Breakdown' : 'Breakdown'}
               <ArrowRight className={`h-4 w-4 ml-2 transition-transform ${showDetailedBreakdown ? 'rotate-90' : ''}`} />
             </Button>
           </div>
