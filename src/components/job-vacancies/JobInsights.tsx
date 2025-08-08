@@ -205,7 +205,7 @@ const JobInsights: React.FC<JobInsightsProps> = ({ jobs, location }) => {
         <BarChart3 className="h-5 w-5 text-elec-yellow" />
         <h3 className="text-lg font-semibold text-elec-light">Market Insights</h3>
         <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
-          {jobs.length} jobs analyzed
+          {jobs.length} jobs analysed
         </Badge>
       </div>
 

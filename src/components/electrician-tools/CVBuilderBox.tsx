@@ -12,11 +12,11 @@ const CVBuilderBox = () => {
   return (
     <Card className="border-elec-yellow/20 bg-elec-gray w-full">
       <CardHeader className="pb-4">
-        <CardTitle className="text-xl flex items-center gap-2">
-          <div className="relative">
-            <FileText className="h-5 w-5 text-elec-yellow" />
-            <Sparkles className="h-3 w-3 text-elec-yellow absolute -top-1 -right-1" />
-          </div>
+        <div className="relative mb-2">
+          <FileText className="h-6 w-6 text-elec-yellow" />
+          <Sparkles className="h-3 w-3 text-elec-yellow absolute -top-1 -right-1" />
+        </div>
+        <CardTitle className="text-xl">
           AI-Powered CV Builder
         </CardTitle>
         <CardDescription className="text-muted-foreground/70">
