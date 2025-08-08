@@ -186,13 +186,15 @@ const InterviewGuidanceTab = () => {
             
             return (
               <MobileAccordionItem key={index} value={`guide-${index}`} className="border border-elec-yellow/20 bg-elec-gray rounded-xl mb-3">
-                <MobileAccordionTrigger className="px-4 py-4">
-                  <div className="flex items-center justify-center gap-3 w-full">
+                <MobileAccordionTrigger
+                  className="px-4 py-5 bg-transparent border-0"
+                  icon={
                     <div className={cn("p-2.5 rounded-lg", cat.iconBg)}>
-                      <Icon className={cn("h-5 w-5", cat.icon)} />
+                      <Icon className={cn("h-6 w-6", cat.icon)} />
                     </div>
-                    <div className="text-base font-semibold text-elec-light text-center">{guide.title}</div>
-                  </div>
+                  }
+                >
+                  <div className="text-base sm:text-lg font-semibold text-elec-light">{guide.title}</div>
                 </MobileAccordionTrigger>
                 <MobileAccordionContent className="px-4 pb-4">
                   <div className="rounded-lg border border-elec-yellow/20 bg-elec-card/60 p-4 space-y-4">
