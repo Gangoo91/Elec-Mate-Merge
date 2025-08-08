@@ -6,7 +6,7 @@ import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import BackButton from "@/components/common/BackButton";
 import { useToast } from "@/hooks/use-toast";
-import { DollarSign, PoundSterling, HelpCircle, TrendingUp, AlertCircle, CheckCircle, Download, Lightbulb, Calculator } from "lucide-react";
+import { PoundSterling, HelpCircle, TrendingUp, AlertCircle, CheckCircle, Download, Lightbulb, Calculator } from "lucide-react";
 
 interface TaxInputs {
   annualIncome: number;
@@ -248,7 +248,7 @@ const TaxNIEstimator = () => {
     <div className="container mx-auto px-4 py-8 max-w-7xl">
       <div className="flex flex-col items-center justify-center mb-8">
         <h1 className="text-3xl font-bold tracking-tight mb-4 flex items-center gap-3">
-          <DollarSign className="h-8 w-8 text-elec-yellow" />
+          <PoundSterling className="h-8 w-8 text-elec-yellow" />
           Tax & NI Estimator
         </h1>
         <p className="text-muted-foreground text-center max-w-2xl mb-6">
@@ -429,7 +429,7 @@ const TaxNIEstimator = () => {
                 onClick={calculateTax}
                 className="flex-1 bg-elec-yellow text-black hover:bg-elec-yellow/90"
               >
-                <DollarSign className="h-4 w-4 mr-2" />
+                <PoundSterling className="h-4 w-4 mr-2" />
                 Calculate
               </Button>
               <Button 
@@ -467,7 +467,7 @@ const TaxNIEstimator = () => {
           <CardContent className="space-y-6">
             {!calculated ? (
               <div className="text-center py-12">
-                <DollarSign className="h-16 w-16 text-elec-yellow/50 mx-auto mb-4" />
+                <PoundSterling className="h-16 w-16 text-elec-yellow/50 mx-auto mb-4" />
                 <h3 className="text-lg font-semibold text-white mb-2">Ready to Calculate</h3>
                 <p className="text-muted-foreground">
                   Enter your income and expense details, then click "Calculate" to see your tax estimation.
