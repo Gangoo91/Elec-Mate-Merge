@@ -1,233 +1,137 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Helmet } from "react-helmet";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import {
-  Wrench,
-  ArrowLeft,
-  Store,
-  Building,
-  ShoppingCart,
+import { 
+  Calculator, 
+  FileText, 
+  Wrench, 
+  Zap,
+  Settings,
+  BookOpen,
+  MapPin,
   Shield,
-  Package,
-  ExternalLink,
+  ChevronLeft
 } from "lucide-react";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import ToolBuyingGuides from "@/components/electrician-tools/ToolBuyingGuides";
 
 const ElectricianTools = () => {
-  const [activeTab, setActiveTab] = useState<"tools" | "suppliers" | "guides">("tools");
-
-  // Purchase categories that route to our live materials pages
-  const purchaseCategories = [
+  // Main 2x2 grid - 4 most essential tools
+  const mainTools = [
     {
-      id: "tools",
-      title: "Electrical Tools & Testers",
-      description: "Meters, hand tools and power tools for UK electricians",
-      icon: Wrench,
-      link: "/electrician/materials/category/tools",
+      id: 1,
+      title: "Electrical Calculations",
+      icon: Calculator,
+      link: "/electrician-tools/calculations"
     },
     {
-      id: "protection",
-      title: "PPE & Protection",
-      description: "Gloves, eyewear and site protection essentials",
+      id: 2,
+      title: "Inspection & Testing",
+      icon: Zap,
+      link: "/electrician-tools/inspection-testing"
+    },
+    {
+      id: 3,
+      title: "Install Planner",
+      icon: MapPin,
+      link: "/electrician-tools/install-planner"
+    },
+    {
+      id: 4,
+      title: "Site Safety & RAMS",
       icon: Shield,
-      link: "/electrician/materials/category/protection",
-    },
-    {
-      id: "accessories",
-      title: "Installation Accessories",
-      description: "Boxes, glands, fixings and consumables",
-      icon: Package,
-      link: "/electrician/materials/category/accessories",
-    },
-  ] as const;
+      link: "/electrician-tools/site-safety"
+    }
+  ];
 
-  const suppliers = [
+  // Additional tools in smaller grid
+  const additionalTools = [
     {
-      name: "Screwfix",
-      slug: "screwfix",
-      description: "Nationwide supplier with rapid Click & Collect",
-      icon: Store,
+      id: 5,
+      title: "Business Admin",
+      icon: Settings,
+      link: "/electrician-tools/admin"
     },
     {
-      name: "Toolstation",
-      slug: "toolstation",
-      description: "Competitive pricing and next‑day delivery",
-      icon: ShoppingCart,
+      id: 6,
+      title: "Document Templates",
+      icon: FileText,
+      link: "/electrician-tools/document-templates"
     },
     {
-      name: "ElectricalDirect",
-      slug: "electricaldirect",
-      description: "Trade-focused catalogue and bulk deals",
-      icon: Building,
-    },
-    {
-      name: "CEF",
-      slug: "city-electrical-factors",
-      description: "City Electrical Factors trade counters UK‑wide",
-      icon: Building,
-    },
-  ] as const;
-
-  const pageTitle = "Electrical Tools & Buying Guides | UK Suppliers";
-  const pageDescription = "Browse tools, trusted UK suppliers and BS 7671 buying guides. Mobile-friendly tabs with dropdowns.";
+      id: 7,
+      title: "AI Assistant Tools",
+      icon: BookOpen,
+      link: "/electrician-tools/ai-tooling"
+    }
+  ];
 
   return (
-    <div className="space-y-6 md:space-y-8 animate-fade-in">
-      <Helmet>
-        <title>{pageTitle}</title>
-        <meta name="description" content={pageDescription} />
-        <link
-          rel="canonical"
-          href={typeof window !== "undefined" ? window.location.href : "https://elecmate.app/electrician/tools"}
-        />
-      </Helmet>
+    <div className="space-y-6 md:space-y-8 animate-fade-in px-4 md:px-0">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-4 md:mb-6">
+        <div>
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-center sm:text-left flex items-center gap-3 justify-center sm:justify-start">
+            <Wrench className="h-6 w-6 sm:h-8 sm:w-8 text-elec-yellow" />
+            Electrical Workshop
+          </h1>
+          <p className="text-muted-foreground text-center sm:text-left">
+            Professional tools and calculators for electrical work
+          </p>
+        </div>
+        <Link to="/electrician" className="flex-shrink-0 w-full sm:w-auto">
+          <Button variant="outline" className="w-full sm:w-auto">
+            <ChevronLeft className="mr-2 h-4 w-4" />
+            Back to Electrical Hub
+          </Button>
+        </Link>
+      </div>
 
-      <header className="px-4 md:px-0">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          <div className="space-y-1">
-            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight flex items-center gap-2">
-              <Wrench className="h-6 w-6 text-elec-yellow" />
-              Electrical Tools & Buying Guides
-            </h1>
-            <p className="text-muted-foreground text-sm md:text-base">
-              Source and compare tools with BS 7671‑aware guidance.
+      {/* Main 2x2 Grid - Essential Tools */}
+      <div className="space-y-4">
+        <h2 className="text-lg sm:text-xl font-semibold text-center">Essential Tools</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6 max-w-4xl mx-auto">
+          {mainTools.map((tool) => (
+            <Link to={tool.link} key={tool.id} className="focus:outline-none hover-scale">
+              <Card className="border-elec-yellow/20 bg-elec-gray h-full hover:bg-elec-gray/80 transition-all duration-200 cursor-pointer">
+                <CardHeader className="flex flex-col items-center justify-center text-center py-6 md:py-8">
+                  <tool.icon className="h-10 w-10 sm:h-12 sm:w-12 mb-3 text-elec-yellow" />
+                  <CardTitle className="text-base sm:text-lg leading-tight">{tool.title}</CardTitle>
+                </CardHeader>
+              </Card>
+            </Link>
+          ))}
+        </div>
+      </div>
+
+      {/* Additional Tools Section */}
+      <div className="space-y-4">
+        <h2 className="text-lg sm:text-xl font-semibold text-center">Additional Tools</h2>
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
+          {additionalTools.map((tool) => (
+            <Link to={tool.link} key={tool.id} className="focus:outline-none hover-scale">
+              <Card className="border-elec-yellow/20 bg-elec-gray h-full hover:bg-elec-gray/80 transition-all duration-200 cursor-pointer">
+                <CardHeader className="flex flex-col items-center justify-center text-center py-4 md:py-6 px-2 md:px-6">
+                  <tool.icon className="h-6 w-6 sm:h-8 sm:w-8 mb-2 text-elec-yellow" />
+                  <CardTitle className="text-xs sm:text-sm md:text-base leading-tight text-center">
+                    {tool.title}
+                  </CardTitle>
+                </CardHeader>
+              </Card>
+            </Link>
+          ))}
+        </div>
+      </div>
+
+      {/* Info Card */}
+      <Card className="bg-elec-gray/30 border-elec-yellow/20">
+        <CardContent className="p-4 md:p-6">
+          <div className="text-center">
+            <h3 className="text-lg font-semibold mb-2">Professional Tools for Electricians</h3>
+            <p className="text-sm text-muted-foreground">
+              Access industry-standard calculations, project management tools, and business resources 
+              designed specifically for electrical professionals.
             </p>
           </div>
-          <Link to="/electrician/trade-essentials">
-            <Button variant="outline" className="flex items-center gap-2">
-              <ArrowLeft className="h-4 w-4" /> Back to Trade Essentials
-            </Button>
-          </Link>
-        </div>
-
-        {/* Mobile: dropdown */}
-        <div className="mt-4 sm:hidden">
-          <Select value={activeTab} onValueChange={(v) => setActiveTab(v as any)}>
-            <SelectTrigger className="w-full">
-              <SelectValue placeholder="Select section" />
-            </SelectTrigger>
-            <SelectContent className="z-50">
-              <SelectItem value="tools">Browse Tools</SelectItem>
-              <SelectItem value="suppliers">UK Suppliers</SelectItem>
-              <SelectItem value="guides">Buying Guides</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-
-        {/* Desktop: tab buttons */}
-        <nav className="hidden sm:flex items-center gap-2 mt-4" aria-label="Sections">
-          {([
-            { key: "tools", label: "Browse Tools" },
-            { key: "suppliers", label: "UK Suppliers" },
-            { key: "guides", label: "Buying Guides" },
-          ] as const).map((tab) => (
-            <Button
-              key={tab.key}
-              variant={activeTab === tab.key ? "default" : "outline"}
-              onClick={() => setActiveTab(tab.key as any)}
-              className={activeTab === tab.key ? "bg-elec-yellow text-elec-dark" : ""}
-            >
-              {tab.label}
-            </Button>
-          ))}
-        </nav>
-      </header>
-
-      <main className="px-4 md:px-0 space-y-6">
-        {activeTab === "tools" && (
-          <section aria-labelledby="browse-tools" className="space-y-4">
-            <h2 id="browse-tools" className="sr-only">Browse Tools</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {purchaseCategories.map((cat) => (
-                <Link key={cat.id} to={cat.link} className="focus:outline-none hover-scale">
-                  <Card className="bg-elec-gray border-elec-gray/40 hover:border-elec-yellow/40 transition-all cursor-pointer h-full">
-                    <CardHeader className="pb-2">
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-elec-yellow/10 border border-elec-yellow/20 rounded-lg flex items-center justify-center">
-                          <cat.icon className="h-5 w-5 text-elec-yellow" />
-                        </div>
-                        <CardTitle className="text-lg text-elec-light">{cat.title}</CardTitle>
-                      </div>
-                    </CardHeader>
-                    <CardContent className="pt-0">
-                      <CardDescription className="text-elec-light/70">
-                        {cat.description}
-                      </CardDescription>
-                      <Button className="mt-3 w-full bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90">
-                        Browse {cat.title.split(" ")[0]}
-                      </Button>
-                    </CardContent>
-                  </Card>
-                </Link>
-              ))}
-            </div>
-          </section>
-        )}
-
-        {activeTab === "suppliers" && (
-          <section aria-labelledby="uk-suppliers" className="space-y-4">
-            <h2 id="uk-suppliers" className="sr-only">UK Suppliers</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {suppliers.map((s) => (
-                <Link key={s.slug} to={`/electrician/materials/supplier/${s.slug}`} className="hover-scale">
-                  <Card className="bg-elec-gray border-elec-gray/40 hover:border-elec-yellow/40 transition-all h-full">
-                    <CardHeader className="pb-2">
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-elec-yellow/10 border border-elec-yellow/20 rounded-lg flex items-center justify-center">
-                          <s.icon className="h-5 w-5 text-elec-yellow" />
-                        </div>
-                        <CardTitle className="text-lg text-elec-light">{s.name}</CardTitle>
-                      </div>
-                      <CardDescription className="text-elec-light/70 mt-1">{s.description}</CardDescription>
-                    </CardHeader>
-                    <CardContent className="pt-0">
-                      <Button className="w-full bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90">
-                        Browse Deals
-                      </Button>
-                    </CardContent>
-                  </Card>
-                </Link>
-              ))}
-            </div>
-
-            <Card className="bg-elec-gray border-elec-gray/40">
-              <CardContent className="p-4 md:p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-                <div>
-                  <h3 className="text-lg font-semibold">Full Supplier Catalogues</h3>
-                  <p className="text-sm text-elec-light/70">For the complete range, visit official supplier websites.</p>
-                </div>
-                <div className="flex gap-2">
-                  <a href="https://www.screwfix.com" target="_blank" rel="noopener noreferrer">
-                    <Button variant="outline" className="flex items-center gap-2">
-                      Screwfix <ExternalLink className="h-4 w-4" />
-                    </Button>
-                  </a>
-                  <a href="https://www.toolstation.com" target="_blank" rel="noopener noreferrer">
-                    <Button variant="outline" className="flex items-center gap-2">
-                      Toolstation <ExternalLink className="h-4 w-4" />
-                    </Button>
-                  </a>
-                  <a href="https://www.electricaldirect.co.uk" target="_blank" rel="noopener noreferrer">
-                    <Button variant="outline" className="flex items-center gap-2">
-                      ElectricalDirect <ExternalLink className="h-4 w-4" />
-                    </Button>
-                  </a>
-                </div>
-              </CardContent>
-            </Card>
-          </section>
-        )}
-
-        {activeTab === "guides" && (
-          <section aria-labelledby="buying-guides" className="space-y-4">
-            <h2 id="buying-guides" className="sr-only">Buying Guides</h2>
-            <ToolBuyingGuides />
-          </section>
-        )}
-      </main>
+        </CardContent>
+      </Card>
     </div>
   );
 };
