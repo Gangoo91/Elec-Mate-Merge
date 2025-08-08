@@ -19,11 +19,23 @@ const NotFound = () => {
     if (location.pathname.includes('/rights-and-pay')) {
       console.log("Suggestion: This should probably be /apprentice/rights-and-pay");
     }
+    if (location.pathname.startsWith('/materials')) {
+      console.log("Suggestion: This should probably be /electrician/materials…");
+    }
+    if (location.pathname.startsWith('/electrical-hub')) {
+      console.log("Suggestion: This should probably be /electrician…");
+    }
   }, [location.pathname, location]);
 
   // Check if this looks like an apprentice route that's missing the prefix
   const isLikelyApprenticeRoute = location.pathname.match(/^\/(rights-and-pay|toolbox|study|mental-health|mentor|chat|ojt)$/);
-  
+  // Check for legacy electrician paths
+  const isLikelyElectricianRoute = location.pathname.match(/^\/(materials|electrical-hub)(\/|$)/);
+  const electricianSuggestion = isLikelyElectricianRoute ? (
+    location.pathname.startsWith('/materials')
+      ? `/electrician/materials${location.pathname.replace(/^\/materials/, '')}`
+      : `/electrician${location.pathname.replace(/^\/electrical-hub/, '')}`
+  ) : "";
   return (
     <div className="min-h-screen flex items-center justify-center bg-elec-dark">
       <div className="text-center p-6 max-w-md">
@@ -53,6 +65,19 @@ const NotFound = () => {
             </Link>
           </div>
         )}
+
+        {isLikelyElectricianRoute && (
+          <div className="mb-6 p-3 bg-blue-500/10 border border-blue-500/30 rounded">
+            <p className="text-blue-400 text-sm mb-2">
+              <strong>Suggestion:</strong> This looks like an electrician materials/tools route.
+            </p>
+            <Link to={electricianSuggestion}>
+              <Button variant="outline" size="sm" className="border-blue-500/30 text-blue-400 hover:bg-blue-500/10">
+                Try {electricianSuggestion}
+              </Button>
+            </Link>
+          </div>
+        )}
         
         <div className="flex flex-col gap-3">
           <Button asChild size="lg">
@@ -66,6 +91,13 @@ const NotFound = () => {
             <Link to="/apprentice" className="flex items-center gap-2">
               <ArrowLeft className="h-4 w-4" />
               Go to Apprentice Hub
+            </Link>
+          </Button>
+
+          <Button asChild variant="outline" size="lg">
+            <Link to="/electrician" className="flex items-center gap-2">
+              <ArrowLeft className="h-4 w-4" />
+              Go to Electrician Hub
             </Link>
           </Button>
         </div>

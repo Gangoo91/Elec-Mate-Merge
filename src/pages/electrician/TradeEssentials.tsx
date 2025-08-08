@@ -51,7 +51,7 @@ const TradeEssentials = () => {
             Essential services and resources for electrical professionals
           </p>
         </div>
-        <Link to="/electrical-hub" className="flex-shrink-0 w-full sm:w-auto">
+        <Link to="/electrician" className="flex-shrink-0 w-full sm:w-auto">
           <Button variant="outline" className="w-full sm:w-auto">
             <ChevronLeft className="mr-2 h-4 w-4" />
             Back to Electrical Hub

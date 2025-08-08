@@ -23,7 +23,7 @@ const ElectricianMentalHealth = () => {
             Your wellbeing matters. Find support, resources, and community here to help you thrive 
             both professionally and personally throughout your electrical career.
           </p>
-          <BackButton customUrl="/electrical-hub" label="Back to Hub" />
+          <BackButton customUrl="/electrician" label="Back to Hub" />
         </div>
 
         {/* Emergency Banner */}

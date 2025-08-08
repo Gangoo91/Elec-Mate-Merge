@@ -14,7 +14,7 @@ interface MentalHealthHubLayoutProps {
 const MentalHealthHubLayout = ({ children, showBackButton = true }: MentalHealthHubLayoutProps) => {
   const location = useLocation();
   const isElectricianPath = location.pathname.startsWith('/electrician/');
-  const basePath = isElectricianPath ? '/electrical-hub' : '/apprentice';
+  const basePath = isElectricianPath ? '/electrician' : '/apprentice';
 
   const quickAccessCards = [
     {

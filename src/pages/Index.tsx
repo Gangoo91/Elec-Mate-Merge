@@ -35,7 +35,7 @@ const Index = () => {
               </CardHeader>
               <CardContent>
                 <Button asChild size="sm" variant="outline" className="w-full">
-                  <Link to="/electrical-hub">Access Tools</Link>
+                  <Link to="/electrician">Access Tools</Link>
                 </Button>
               </CardContent>
             </Card>
