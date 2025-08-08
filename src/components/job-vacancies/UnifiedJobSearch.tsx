@@ -422,7 +422,7 @@ const UnifiedJobSearch = () => {
               
               {/* Active Filters */}
               {(salaryFilter !== "all" || jobTypeFilter !== "all" || experienceFilter !== "all") && (
-                <div className="flex items-center gap-2 pt-2">
+                <div className="flex flex-col items-start gap-2 pt-2">
                   <span className="text-sm text-elec-light">Active filters:</span>
                   {salaryFilter !== "all" && (
                     <Badge variant="secondary" className="bg-elec-yellow/20 text-elec-yellow">
