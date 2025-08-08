@@ -149,7 +149,7 @@ const InterviewGuidanceTab = () => {
   ];
 
   return (
-    <Card className="border-elec-yellow/20 bg-elec-card">
+    <Card className="bg-transparent border-none shadow-none">
       <CardHeader className="text-center space-y-2">
         <div className="mx-auto w-10 h-10 rounded-lg bg-elec-yellow/10 flex items-center justify-center">
           <MessageCircle className="h-5 w-5 text-elec-yellow" />
