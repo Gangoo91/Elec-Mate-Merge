@@ -295,7 +295,7 @@ const KnowingYourWorthTab = () => {
           </div>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
             <div className="text-center p-3 bg-white/5 rounded-lg border border-white/10">
               <Calculator className="h-6 w-6 text-green-400 mx-auto mb-2" />
               <div className="text-sm font-medium text-white mb-1">Calculator</div>
@@ -528,12 +528,12 @@ const KnowingYourWorthTab = () => {
           {/* Results */}
           <div className="space-y-4">
             <div className="p-6 bg-gradient-to-r from-green-500/10 to-emerald-500/10 rounded-lg border border-green-500/20">
-              <div className="flex items-center justify-between mb-4">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-4">
                 <div className="flex items-center gap-2">
                   <TrendingUp className="h-5 w-5 text-green-400" />
-                  <span className="font-medium text-white">Your Estimated Salary Range</span>
+                  <span className="font-medium text-white text-sm">Your Estimated Salary Range</span>
                 </div>
-                <Badge className="bg-green-500/20 text-green-400 border-green-500/30">
+                <Badge className="bg-green-500/20 text-green-400 border-green-500/30 self-start sm:self-auto mt-1 sm:mt-0">
                   2025 Market Rate
                 </Badge>
               </div>
