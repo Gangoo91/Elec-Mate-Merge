@@ -185,29 +185,13 @@ const InterviewGuidanceTab = () => {
             const diff = difficultyStyle[difficultyColor] || difficultyStyle.green;
             
             return (
-              <MobileAccordionItem key={index} value={`guide-${index}`} className="border border-elec-yellow/20 bg-elec-gray rounded-lg mb-3">
-                <MobileAccordionTrigger className="px-4 py-3">
-                  <div className="flex items-center gap-3 flex-1">
-                    <div className={cn("p-2 rounded-lg", cat.iconBg)}>
+              <MobileAccordionItem key={index} value={`guide-${index}`} className="border border-elec-yellow/20 bg-elec-gray rounded-xl mb-3">
+                <MobileAccordionTrigger className="px-4 py-4">
+                  <div className="flex items-center justify-center gap-3 w-full">
+                    <div className={cn("p-2.5 rounded-lg", cat.iconBg)}>
                       <Icon className={cn("h-5 w-5", cat.icon)} />
                     </div>
-                    <div className="flex-1 text-left">
-                      <div className="font-semibold text-sm">{guide.title}</div>
-                      <div className="flex gap-2 mt-1">
-                        <Badge 
-                          variant="secondary" 
-                          className={cn("text-xs", cat.badgeBg, cat.badgeText)}
-                        >
-                          {guide.category}
-                        </Badge>
-                        <Badge 
-                          variant="outline" 
-                          className={cn("text-xs border", diff.bg, diff.text, diff.border)}
-                        >
-                          {guide.difficulty}
-                        </Badge>
-                      </div>
-                    </div>
+                    <div className="text-base font-semibold text-elec-light text-center">{guide.title}</div>
                   </div>
                 </MobileAccordionTrigger>
                 <MobileAccordionContent className="px-4 pb-4">
