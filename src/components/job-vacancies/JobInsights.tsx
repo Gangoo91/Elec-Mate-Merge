@@ -13,6 +13,7 @@ import {
   Zap,
   Building2
 } from "lucide-react";
+import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid } from "recharts";
 
 interface JobInsight {
   id: string;
@@ -339,6 +340,181 @@ const JobInsights: React.FC<JobInsightsProps> = ({ jobs, location }) => {
           </Card>
         ))}
       </div>
+
+      {/* Detailed analytics */}
+      {salaryStats.count > 0 && (
+        <Card className="border-elec-yellow/20 bg-elec-card">
+          <CardHeader className="pb-2">
+            <CardTitle className="text-base text-elec-light">Salary Overview</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm">
+              <div>
+                <p className="text-muted-foreground">Median</p>
+                <p className="font-semibold text-elec-light">£{salaryStats.median.toLocaleString()}</p>
+              </div>
+              <div>
+                <p className="text-muted-foreground">Q1–Q3</p>
+                <p className="font-semibold text-elec-light">£{salaryStats.q1.toLocaleString()} – £{salaryStats.q3.toLocaleString()}</p>
+              </div>
+              <div>
+                <p className="text-muted-foreground">Range</p>
+                <p className="font-semibold text-elec-light">£{salaryStats.min.toLocaleString()} – £{salaryStats.max.toLocaleString()}</p>
+              </div>
+            </div>
+            {salaryBuckets.length > 0 && (
+              <div className="h-40 text-elec-yellow">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={salaryBuckets} margin={{ top: 8, right: 8, left: 0, bottom: 0 }}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="label" tick={{ fill: 'currentColor' }} interval={0} angle={0} height={30} />
+                    <YAxis allowDecimals={false} tick={{ fill: 'currentColor' }} width={30} />
+                    <Tooltip />
+                    <Bar dataKey="count" fill="currentColor" radius={[4,4,0,0]} />
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Mix breakdowns */}
+      <Card className="border-elec-yellow/20 bg-elec-card">
+        <CardHeader className="pb-2">
+          <CardTitle className="text-base text-elec-light">Job Mix & Working Patterns</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div>
+            <p className="text-sm mb-2 text-elec-yellow">Job Type</p>
+            <div className="space-y-2">
+              {jobTypeMix.map((item) => {
+                const total = Math.max(1, jobTypeMix.reduce((s, i) => s + (i.count as number), 0));
+                const pct = Math.round((item.count / total) * 100);
+                return (
+                  <div key={`type-${item.label}`}> 
+                    <div className="flex justify-between text-xs text-muted-foreground">
+                      <span>{item.label}</span>
+                      <span>{pct}%</span>
+                    </div>
+                    <div className="h-2 bg-muted rounded">
+                      <div className="h-2 bg-elec-yellow rounded" style={{ width: `${pct}%` }} />
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+          <div>
+            <p className="text-sm mb-2 text-elec-yellow">Experience Level</p>
+            <div className="space-y-2">
+              {experienceMix.map((item) => {
+                const total = Math.max(1, experienceMix.reduce((s, i) => s + (i.count as number), 0));
+                const pct = Math.round((item.count / total) * 100);
+                return (
+                  <div key={`exp-${item.label}`}>
+                    <div className="flex justify-between text-xs text-muted-foreground">
+                      <span>{item.label}</span>
+                      <span>{pct}%</span>
+                    </div>
+                    <div className="h-2 bg-muted rounded">
+                      <div className="h-2 bg-elec-yellow rounded" style={{ width: `${pct}%` }} />
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+          <div>
+            <p className="text-sm mb-2 text-elec-yellow">Working Pattern</p>
+            <div className="space-y-2">
+              {workingPattern.map((item) => {
+                const total = Math.max(1, workingPattern.reduce((s, i) => s + (i.count as number), 0));
+                const pct = Math.round((item.count / total) * 100);
+                return (
+                  <div key={`work-${item.label}`}>
+                    <div className="flex justify-between text-xs text-muted-foreground">
+                      <span>{item.label}</span>
+                      <span>{pct}%</span>
+                    </div>
+                    <div className="h-2 bg-muted rounded">
+                      <div className="h-2 bg-elec-yellow rounded" style={{ width: `${pct}%` }} />
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Freshness & Companies */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <Card className="border-elec-yellow/20 bg-elec-card">
+          <CardHeader className="pb-2">
+            <CardTitle className="text-base text-elec-light">Posting Freshness</CardTitle>
+          </CardHeader>
+          <CardContent className="grid grid-cols-3 gap-4 text-sm">
+            <div>
+              <p className="text-muted-foreground">Last 48h</p>
+              <p className="font-semibold text-elec-light">{freshness.last48hPct}%</p>
+            </div>
+            <div>
+              <p className="text-muted-foreground">Last 7 days</p>
+              <p className="font-semibold text-elec-light">{freshness.recent7dPct}%</p>
+            </div>
+            <div>
+              <p className="text-muted-foreground">Median age</p>
+              <p className="font-semibold text-elec-light">{freshness.medianDays} days</p>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="border-elec-yellow/20 bg-elec-card">
+          <CardHeader className="pb-2">
+            <CardTitle className="text-base text-elec-light">Top Companies</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-2 text-sm">
+            {topCompanies.map((c) => (
+              <div key={c.name} className="flex items-center justify-between">
+                <span className="text-elec-light">{c.name}</span>
+                <span className="text-muted-foreground">{c.count} roles</span>
+              </div>
+            ))}
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Skills & Certifications */}
+      <Card className="border-elec-yellow/20 bg-elec-card">
+        <CardHeader className="pb-2">
+          <CardTitle className="text-base text-elec-light">Skills & Certifications Demand</CardTitle>
+        </CardHeader>
+        <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <p className="text-sm mb-2 text-elec-yellow">Top Skills</p>
+            <ul className="space-y-1 text-sm">
+              {topSkills.map((s) => (
+                <li key={s.name} className="flex items-center justify-between">
+                  <span className="text-elec-light">{s.name}</span>
+                  <span className="text-muted-foreground">{s.count}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <p className="text-sm mb-2 text-elec-yellow">Top Certifications</p>
+            <ul className="space-y-1 text-sm">
+              {topCerts.map((s) => (
+                <li key={s.name} className="flex items-center justify-between">
+                  <span className="text-elec-light">{s.name}</span>
+                  <span className="text-muted-foreground">{s.count}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </CardContent>
+      </Card>
 
       {/* Quick Tips */}
       <Card className="border-elec-yellow/20 bg-elec-card">
