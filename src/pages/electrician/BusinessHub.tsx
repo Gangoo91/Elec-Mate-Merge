@@ -1,26 +1,28 @@
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Briefcase, Settings as Cog, ArrowLeft } from "lucide-react";
+import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+import { Briefcase, Settings as Cog, Calculator, ArrowLeft } from "lucide-react";
 
 const BusinessHub = () => {
   const cards = [
     {
       id: 1,
       title: "Start & Grow",
-      description:
-        "Guides, templates and calculators to plan, launch and grow your electrical business in the UK.",
       icon: Briefcase,
       link: "/electrician/business-development",
     },
     {
       id: 2,
       title: "Run the Business",
-      description:
-        "Admin tools for day‑to‑day operations: documents, pricing, management and more.",
       icon: Cog,
       link: "/electrician-tools/admin",
+    },
+    {
+      id: 3,
+      title: "Business Calculators",
+      icon: Calculator,
+      link: "/electrician/business-development/tools",
     },
   ];
 
@@ -65,9 +67,6 @@ const BusinessHub = () => {
                     <c.icon className="h-10 w-10 sm:h-12 sm:w-12 mb-3 text-elec-yellow" />
                     <CardTitle className="text-base sm:text-lg leading-tight">{c.title}</CardTitle>
                   </CardHeader>
-                  <CardContent className="text-center pb-6 -mt-2">
-                    <p className="text-sm text-muted-foreground">{c.description}</p>
-                  </CardContent>
                 </Card>
               </Link>
             ))}
