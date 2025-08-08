@@ -32,7 +32,8 @@ const MaterialCard: React.FC<MaterialCardProps> = ({ item }) => {
       case "city electrical factors":
         return "https://www.cef.co.uk/search?q=" + encodeURIComponent(item.name);
       case "electricaldirect":
-        return "https://www.electricaldirect.co.uk/search?q=" + encodeURIComponent(item.name);
+        // ElectricalDirect uses `query` for search param; `q` can 404 on their Netlify setup
+        return "https://www.electricaldirect.co.uk/search?query=" + encodeURIComponent(item.name);
       case "toolstation":
         return "https://www.toolstation.com/search?q=" + encodeURIComponent(item.name);
       default:
