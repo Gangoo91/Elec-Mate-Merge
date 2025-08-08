@@ -17,6 +17,7 @@ import ElectricalTools from "@/pages/electrician/ElectricalTools";
 import LivePricing from "@/pages/electrician/LivePricing";
 import ElectricalHub from "@/pages/ElectricalHub";
 import CareerProgression from "@/pages/electrician/CareerProgression";
+import BusinessHub from "@/pages/electrician/BusinessHub";
 import BusinessDevelopment from "@/pages/electrician/BusinessDevelopment";
 import BusinessCustomers from "@/pages/electrician/business-development/BusinessCustomers";
 import BusinessTemplates from "@/pages/electrician/business-development/BusinessTemplates";
@@ -70,6 +71,8 @@ const ElectricianHubRoutes = () => (
     
     <Route path="career-progression" element={<CareerProgression />} />
     
+    {/* Business Routes */}
+    <Route path="business" element={<BusinessHub />} />
     {/* Business Development Routes */}
     <Route path="business-development" element={<BusinessDevelopment />} />
     <Route path="business-development/startup" element={<BusinessStartup />} />

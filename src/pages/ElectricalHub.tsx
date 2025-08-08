@@ -27,9 +27,9 @@ const ElectricalHub = () => {
     },
     {
       id: 4,
-      title: "Business Development",
+      title: "Business Hub",
       icon: Briefcase,
-      link: "/electrician/business-development"
+      link: "/electrician/business"
     }
   ];
 
