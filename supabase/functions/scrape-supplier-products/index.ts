@@ -103,13 +103,21 @@ serve(async (req) => {
           const seen = new Set<string>();
 
           const domain = new URL(searchUrl).hostname.replace(/^www\./, "");
-          const likelyPrice = /£\s?\d+[\d,.]*/i;
+          const priceRegex = /£\s?\d{1,4}(?:[.,]\d{2})?/i;
+          const norm = (s: string) => s.toLowerCase().replace(/\s+/g, ' ').trim();
+          const termTokens = norm(searchTerm)
+            .replace(/mm²/g, 'mm2')
+            .split(/[^a-z0-9+]+/)
+            .filter(t => t && !['and','the','for','with','of','to'].includes(t));
+          if (termTokens.includes('twin') && !termTokens.includes('t&e')) termTokens.push('t&e');
+
           const results: MaterialItem[] = [];
           let match: RegExpExecArray | null;
           while ((match = anchorRegex.exec(html)) !== null && results.length < 48) {
             const hrefRaw = match[1];
-            let innerHtml = (match[2] || "");
-            let text = innerHtml.replace(textRegex, "").replace(/\s+/g, " ").trim();
+            const innerHtml = (match[2] || "");
+            const textRaw = innerHtml.replace(textRegex, '').replace(/\s+/g, ' ').trim();
+            const text = norm(textRaw);
             if (!hrefRaw || !text || text.length < 3) continue;
 
             // Skip obvious non-product links
@@ -126,6 +134,18 @@ serve(async (req) => {
 
             const key = url.toString();
             if (seen.has(key)) continue;
+
+            // Require at least two tokens from the search term to appear for higher precision
+            const tokenHits = termTokens.reduce((acc, t) => acc + (text.includes(t) ? 1 : 0), 0);
+            if (termTokens.length >= 3 && tokenHits < 2) continue;
+
+            // Try to extract a price near the anchor context
+            const start = Math.max(0, (match.index || 0) - 400);
+            const end = Math.min(html.length, anchorRegex.lastIndex + 400);
+            const snippet = html.slice(start, end);
+            const priceMatch = snippet.match(priceRegex);
+            if (!priceMatch) continue; // skip if no price found -> avoids fake £—
+
             seen.add(key);
 
             // Try to extract an image from inside the anchor tag
@@ -137,14 +157,14 @@ serve(async (req) => {
               } catch { /* keep placeholder */ }
             }
 
-            const isCable = /cable|t\s*&\s*e|twin\s*&\s*earth|swa|flex|armoured|mm²|mm2|cat\d/i.test(text) || /cable/i.test(searchTerm);
-            const name = text.length > 120 ? text.slice(0, 117) + "…" : text;
+            const isCable = /\b(cable|t\s*&\s*e|twin\s*&\s*earth|twin|earth|swa|flex|mm2|mm²|cat\d)\b/i.test(text) || /cable/i.test(searchTerm);
+            const name = textRaw.length > 120 ? textRaw.slice(0, 117) + "…" : textRaw;
 
             results.push({
               id: Date.now() + results.length,
               name,
               category: isCable ? "Cables" : "Materials",
-              price: (text.match(likelyPrice)?.[0] ?? "£—"),
+              price: priceMatch[0],
               supplier: supplierName,
               image,
               productUrl: url.toString(),
@@ -158,72 +178,78 @@ serve(async (req) => {
       }
     }
 
-    // Fallback curated dataset if scraping produced no items
+    // Fallback behaviour
     if (!products || products.length === 0) {
-      products = [
-        {
-          id: 10001,
-          name: "Twin & Earth 2.5mm² (100m)",
-          category: "Cables",
-          price: "£89.20",
-          supplier: supplierName,
-          image: "/placeholder.svg",
-          stockStatus: "In Stock",
-          productUrl: searchUrl,
-        },
-        {
-          id: 10004,
-          name: "6mm² SWA Cable (50m)",
-          category: "Cables",
-          price: "£154.10",
-          supplier: supplierName,
-          image: "/placeholder.svg",
-          stockStatus: "In Stock",
-          productUrl: searchUrl,
-        },
-        {
-          id: 10002,
-          name: "32A Type B MCB",
-          category: "Protection",
-          price: "£7.95",
-          supplier: supplierName,
-          image: "/placeholder.svg",
-          stockStatus: "In Stock",
-          productUrl: searchUrl,
-        },
-        {
-          id: 10003,
-          name: "LED Downlight 6W Fire-Rated",
-          category: "Lighting",
-          price: "£18.49",
-          supplier: supplierName,
-          image: "/placeholder.svg",
-          isOnSale: true,
-          salePrice: "£16.99",
-          stockStatus: "Low Stock",
-          productUrl: searchUrl,
-        },
-        {
-          id: 10005,
-          name: "18th Edition Consumer Unit (10 Way)",
-          category: "Distribution",
-          price: "£112.30",
-          supplier: supplierName,
-          image: "/placeholder.svg",
-          stockStatus: "In Stock",
-          productUrl: searchUrl,
-        },
-        {
-          id: 10006,
-          name: "Weatherproof Junction Box",
-          category: "Accessories",
-          price: "£3.39",
-          supplier: supplierName,
-          image: "/placeholder.svg",
-          stockStatus: "In Stock",
-          productUrl: searchUrl,
-        },
-      ];
+      if (firecrawlKey) {
+        // When Firecrawl is configured but yielded no items, return empty to avoid misleading prices
+        products = [];
+      } else {
+        // No Firecrawl key: return curated dataset
+        products = [
+          {
+            id: 10001,
+            name: "Twin & Earth 2.5mm² (100m)",
+            category: "Cables",
+            price: "£89.20",
+            supplier: supplierName,
+            image: "/placeholder.svg",
+            stockStatus: "In Stock",
+            productUrl: searchUrl,
+          },
+          {
+            id: 10004,
+            name: "6mm² SWA Cable (50m)",
+            category: "Cables",
+            price: "£154.10",
+            supplier: supplierName,
+            image: "/placeholder.svg",
+            stockStatus: "In Stock",
+            productUrl: searchUrl,
+          },
+          {
+            id: 10002,
+            name: "32A Type B MCB",
+            category: "Protection",
+            price: "£7.95",
+            supplier: supplierName,
+            image: "/placeholder.svg",
+            stockStatus: "In Stock",
+            productUrl: searchUrl,
+          },
+          {
+            id: 10003,
+            name: "LED Downlight 6W Fire-Rated",
+            category: "Lighting",
+            price: "£18.49",
+            supplier: supplierName,
+            image: "/placeholder.svg",
+            isOnSale: true,
+            salePrice: "£16.99",
+            stockStatus: "Low Stock",
+            productUrl: searchUrl,
+          },
+          {
+            id: 10005,
+            name: "18th Edition Consumer Unit (10 Way)",
+            category: "Distribution",
+            price: "£112.30",
+            supplier: supplierName,
+            image: "/placeholder.svg",
+            stockStatus: "In Stock",
+            productUrl: searchUrl,
+          },
+          {
+            id: 10006,
+            name: "Weatherproof Junction Box",
+            category: "Accessories",
+            price: "£3.39",
+            supplier: supplierName,
+            image: "/placeholder.svg",
+            stockStatus: "In Stock",
+            productUrl: searchUrl,
+          },
+        ];
+      }
     }
 
     return new Response(
@@ -231,7 +257,7 @@ serve(async (req) => {
         products,
         supplier: supplierName,
         lastUpdated: now,
-        note: firecrawlKey ? "Live scraping attempted" : "Firecrawl key missing - returning curated results",
+        note: firecrawlKey ? (products.length ? "Live scraping results" : "Live scraping returned no products") : "Firecrawl key missing - returning curated results",
       }),
       { headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );

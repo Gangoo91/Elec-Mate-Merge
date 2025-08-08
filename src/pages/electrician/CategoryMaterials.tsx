@@ -71,12 +71,12 @@ const CategoryMaterials = () => {
 
   // Quick search seeds per category to improve hit-rate
   const CATEGORY_QUERIES: Record<string, string[]> = {
-    cables: ["twin and earth", "swa cable", "flex cable"],
-    components: ["consumer unit", "isolator", "rcbo"],
-    protection: ["rcd", "rcbo", "surge protection"],
-    accessories: ["junction box", "gland", "trunking"],
-    lighting: ["led downlight", "batten light", "emergency light"],
-    tools: ["multimeter", "voltage tester", "crimper"],
+    cables: ["2.5mm twin and earth 100m"],
+    components: ["consumer unit"],
+    protection: ["rcbo"],
+    accessories: ["junction box"],
+    lighting: ["led downlight"],
+    tools: ["multimeter"],
   };
 
   const allProducts = useMemo(() => Object.values(productsBySupplier).flat(), []);
@@ -91,15 +91,14 @@ const CategoryMaterials = () => {
     setIsFetching(true);
     try {
       const seeds = CATEGORY_QUERIES[categoryId] || [meta.title];
+      const term = seeds[0] || meta.title;
       const tasks: Promise<any>[] = [];
       for (const supplier of SUPPLIERS) {
-        for (const term of seeds) {
-          tasks.push(
-            supabase.functions.invoke('scrape-supplier-products', {
-              body: { supplierSlug: supplier, searchTerm: term }
-            })
-          );
-        }
+        tasks.push(
+          supabase.functions.invoke('scrape-supplier-products', {
+            body: { supplierSlug: supplier, searchTerm: term }
+          })
+        );
       }
       const responses = await Promise.allSettled(tasks);
       const collected: LiveItem[] = [];
