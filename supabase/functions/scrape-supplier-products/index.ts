@@ -79,7 +79,7 @@ serve(async (req) => {
 
     if (firecrawlKey) {
       try {
-        const fcRes = await fetch("https://api.firecrawl.dev/v1/crawl", {
+        const fcRes = await fetch("https://api.firecrawl.dev/v1/scrape", {
           method: "POST",
           headers: {
             "Authorization": `Bearer ${firecrawlKey}`,
@@ -87,15 +87,14 @@ serve(async (req) => {
           },
           body: JSON.stringify({
             url: searchUrl,
-            limit: 1,
-            scrapeOptions: { formats: ["html"] },
+            formats: ["html"],
           }),
         });
 
         const fcJson: any = await fcRes.json().catch(() => ({}));
-        console.log("[SCRAPE-SUPPLIER-PRODUCTS] Firecrawl status:", fcRes.status, fcJson?.status);
+        console.log("[SCRAPE-SUPPLIER-PRODUCTS] Firecrawl status:", fcRes.status, fcJson?.status || fcJson?.success);
 
-        const html: string = fcJson?.data?.[0]?.html || fcJson?.html || "";
+        const html: string = fcJson?.data?.html || fcJson?.html || "";
 
         if (html) {
           const anchorRegex = /<a\s+[^>]*href=["']([^"']+)["'][^>]*>(.*?)<\/a>/gi;
@@ -105,11 +104,25 @@ serve(async (req) => {
           const domain = new URL(searchUrl).hostname.replace(/^www\./, "");
           const priceRegex = /£\s?\d{1,4}(?:[.,]\d{2})?/i;
           const norm = (s: string) => s.toLowerCase().replace(/\s+/g, ' ').trim();
-          const termTokens = norm(searchTerm)
+          const lowerTerm = norm(searchTerm);
+          const termTokens = lowerTerm
             .replace(/mm²/g, 'mm2')
             .split(/[^a-z0-9+]+/)
             .filter(t => t && !['and','the','for','with','of','to'].includes(t));
           if (termTokens.includes('twin') && !termTokens.includes('t&e')) termTokens.push('t&e');
+
+          // Strict cable matching derived from the search term (for accuracy & speed)
+          const strict = /twin/i.test(lowerTerm) && /earth/i.test(lowerTerm);
+          const mmMatch = lowerTerm.match(/(\d+(?:\.\d+)?)\s*mm(?:2|²)?/i);
+          const mmTokens = mmMatch ? [
+            `${mmMatch[1]}`, `${mmMatch[1]}mm`, `${mmMatch[1]} mm`, `${mmMatch[1]}mm2`, `${mmMatch[1]}mm²`
+          ] : [];
+          const lenMatch = lowerTerm.match(/(\d{2,4})\s*m\b/i);
+          const len = lenMatch?.[1];
+          const lenTokens = len ? [
+            `${len}m`, `${len} m`, `${len}metre`, `${len}meter`, `${len}mtr`, `${len}mt`
+          ] : [];
+          const perMRegex = /per\s*m|\/\s*m|per\s*metre|per\s*meter/i;
 
           const results: MaterialItem[] = [];
           let match: RegExpExecArray | null;
@@ -125,9 +138,7 @@ serve(async (req) => {
 
             // Only keep links pointing to the same supplier domain
             let url: URL | null = null;
-            try {
-              url = new URL(hrefRaw, searchUrl);
-            } catch (_) { /* ignore */ }
+            try { url = new URL(hrefRaw, searchUrl); } catch (_) { /* ignore */ }
             if (!url) continue;
             const host = url.hostname.replace(/^www\./, "");
             if (!host.endsWith(domain)) continue;
@@ -135,16 +146,38 @@ serve(async (req) => {
             const key = url.toString();
             if (seen.has(key)) continue;
 
-            // Require at least two tokens from the search term to appear for higher precision
-            const tokenHits = termTokens.reduce((acc, t) => acc + (text.includes(t) ? 1 : 0), 0);
-            if (termTokens.length >= 3 && tokenHits < 2) continue;
+            // Strict 2.5mm T&E 100m style matching when applicable
+            if (strict) {
+              const hasMM = mmTokens.length ? mmTokens.some(t => text.includes(t)) : true;
+              const hasLen = lenTokens.length ? lenTokens.some(t => text.includes(t)) : true;
+              const hasTE = text.includes('t&e') || (text.includes('twin') && text.includes('earth'));
+              if (!(hasMM && hasLen && hasTE)) continue;
+            } else {
+              // General relevance: require at least 2 token hits if we have 3+ tokens
+              const tokenHits = termTokens.reduce((acc, t) => acc + (text.includes(t) ? 1 : 0), 0);
+              if (termTokens.length >= 3 && tokenHits < 2) continue;
+            }
 
-            // Try to extract a price near the anchor context
+            // Extract a sensible price near the anchor, avoiding per-metre prices
             const start = Math.max(0, (match.index || 0) - 400);
             const end = Math.min(html.length, anchorRegex.lastIndex + 400);
             const snippet = html.slice(start, end);
-            const priceMatch = snippet.match(priceRegex);
-            if (!priceMatch) continue; // skip if no price found -> avoids fake £—
+
+            const priceMatches = Array.from(snippet.matchAll(/£\s?\d{1,4}(?:[.,]\d{2})?/gi));
+            let chosenPrice: string | null = null;
+            for (const m of priceMatches) {
+              const idx = m.index ?? 0;
+              const window = snippet.slice(Math.max(0, idx - 24), Math.min(snippet.length, idx + 24));
+              if (perMRegex.test(window)) {
+                continue; // skip per-metre prices
+              }
+              chosenPrice = m[0];
+              break;
+            }
+            if (!chosenPrice && priceMatches[0]) {
+              chosenPrice = priceMatches[0][0]; // fallback to first if none qualified
+            }
+            if (!chosenPrice) continue;
 
             seen.add(key);
 
@@ -152,9 +185,7 @@ serve(async (req) => {
             let image = "/placeholder.svg";
             const imgMatch = innerHtml.match(/<img[^>]*src=["']([^"']+)["'][^>]*>/i);
             if (imgMatch && imgMatch[1]) {
-              try {
-                image = new URL(imgMatch[1], searchUrl).toString();
-              } catch { /* keep placeholder */ }
+              try { image = new URL(imgMatch[1], searchUrl).toString(); } catch { /* keep placeholder */ }
             }
 
             const isCable = /\b(cable|t\s*&\s*e|twin\s*&\s*earth|twin|earth|swa|flex|mm2|mm²|cat\d)\b/i.test(text) || /cable/i.test(searchTerm);
@@ -164,14 +195,16 @@ serve(async (req) => {
               id: Date.now() + results.length,
               name,
               category: isCable ? "Cables" : "Materials",
-              price: priceMatch[0],
+              price: chosenPrice,
               supplier: supplierName,
               image,
               productUrl: url.toString(),
             });
           }
 
-          products = results;
+          // Sort by numeric price and keep top results for speed/clarity
+          results.sort((a, b) => (parseFloat(a.price.replace(/[^\d.]/g, '')) || 0) - (parseFloat(b.price.replace(/[^\d.]/g, '')) || 0));
+          products = results.slice(0, 8);
         }
       } catch (err) {
         console.error("[SCRAPE-SUPPLIER-PRODUCTS] Firecrawl fetch failed:", err);
