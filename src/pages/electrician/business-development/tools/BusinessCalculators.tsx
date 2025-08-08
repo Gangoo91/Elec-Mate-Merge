@@ -11,6 +11,7 @@ import {
   Building,
   DollarSign
 } from "lucide-react";
+import { Helmet } from "react-helmet";
 
 const BusinessCalculators = () => {
   const calculators = [
@@ -54,18 +55,23 @@ const BusinessCalculators = () => {
       id: "capacity-planner",
       title: "Capacity Planning Tool",
       icon: <Building className="h-12 w-12 text-elec-yellow" />,
-      status: "coming-soon"
+      status: "available"
     },
     {
       id: "tax-estimator",
       title: "Tax & NI Estimator",
       icon: <DollarSign className="h-12 w-12 text-elec-yellow" />,
-      status: "coming-soon"
+      status: "available"
     }
   ];
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-6xl">
+      <Helmet>
+        <title>Electrician Business Calculators UK | Pricing, ROI, Tax</title>
+        <meta name="description" content="UK electrician calculators: hourly rate, pricing, ROI, cash flow, capacity and tax. Mobile-first, fast and accurate." />
+        <link rel="canonical" href="/electrician/business-development/tools" />
+      </Helmet>
       <div className="flex flex-col items-center justify-center mb-8">
         <h1 className="text-3xl font-bold tracking-tight mb-4 flex items-center gap-3">
           <Calculator className="h-8 w-8 text-elec-yellow" />
