@@ -6,7 +6,7 @@ import {
   MobileAccordionTrigger,
   MobileAccordionContent,
 } from "@/components/ui/mobile-accordion";
-import { Badge } from "@/components/ui/badge";
+
 import { cn } from "@/lib/utils";
 import { 
   MessageCircle, 
@@ -182,12 +182,12 @@ const InterviewGuidanceTab = () => {
             const categoryColor = categoryColors[guide.category as keyof typeof categoryColors];
             const difficultyColor = difficultyColors[guide.difficulty as keyof typeof difficultyColors];
             const cat = categoryStyle[categoryColor] || categoryStyle.indigo;
-            const diff = difficultyStyle[difficultyColor] || difficultyStyle.green;
+            
             
             return (
               <MobileAccordionItem key={index} value={`guide-${index}`} className="rounded-lg mb-3">
                 <MobileAccordionTrigger
-                  className="px-4 py-2 bg-transparent border-0"
+                  className="px-4 py-2"
                   icon={
                     <div className={cn("p-2 rounded-lg", cat.iconBg)}>
                       <Icon className={cn("h-5 w-5", cat.icon)} />
