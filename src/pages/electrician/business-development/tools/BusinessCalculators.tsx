@@ -75,7 +75,7 @@ const BusinessCalculators = () => {
       <div className="flex flex-col items-center justify-center mb-8">
         <h1 className="text-3xl font-bold tracking-tight mb-4 flex items-center gap-3">
           <Calculator className="h-8 w-8 text-elec-yellow" />
-          Business Development Calculators
+          Business Calculators
         </h1>
         <p className="text-muted-foreground text-center max-w-2xl mb-6">
           Professional calculators and tools to help you make informed business decisions and plan for success.
