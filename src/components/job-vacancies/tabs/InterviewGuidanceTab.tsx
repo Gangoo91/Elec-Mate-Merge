@@ -14,7 +14,8 @@ import {
   Clock, 
   Lightbulb,
   Target,
-  Star
+  Star,
+  XCircle
 } from "lucide-react";
 
 const InterviewGuidanceTab = () => {
@@ -45,7 +46,75 @@ const InterviewGuidanceTab = () => {
     yellow: { bg: "bg-yellow-500/10", text: "text-yellow-300", border: "border-yellow-500/20" },
     red: { bg: "bg-red-500/10", text: "text-red-300", border: "border-red-500/20" },
   };
-  const interviewGuides = [
+const extras: Record<string, { good: string[]; avoid: string[]; phrase: string }> = {
+  preparation: {
+    good: [
+      "Evidence of research into company projects and clients",
+      "Organised documents and punctual arrival",
+      "STAR answers with safety-first outcomes"
+    ],
+    avoid: [
+      "Vague answers and guesswork",
+      "No awareness of 18th Edition updates",
+      "Late arrival or missing ID"
+    ],
+    phrase: "I'm prepared, BS 7671 aware, and ready to add value from day one."
+  },
+  technical: {
+    good: [
+      "Clear calculations with stated assumptions",
+      "Accurate, ordered test sequence",
+      "Links results to protection selection and safety"
+    ],
+    avoid: [
+      "Mixing up TN systems or bonding rules",
+      "Quoting regulations incorrectly",
+      "Skipping isolation or re-energising prematurely"
+    ],
+    phrase: "I'll talk through my method, verify safely, and justify decisions with the regs."
+  },
+  process: {
+    good: [
+      "Clarifies expectations and safety requirements for each stage",
+      "Brings PPE and ID when requested",
+      "Confirms next steps and follows up politely"
+    ],
+    avoid: [
+      "Complaining about assessments or time limits",
+      "Arriving unprepared for site protocols",
+      "No questions at the end"
+    ],
+    phrase: "I adapt to each stage while keeping quality and safety consistent."
+  },
+  questions: {
+    good: [
+      "Specific, concise examples with outcomes",
+      "Explains escalation and documentation",
+      "Balances technical detail with client-friendly language"
+    ],
+    avoid: [
+      "Blaming others or sounding defensive",
+      "Overlong stories without clear outcomes",
+      "Speculation without evidence"
+    ],
+    phrase: "Here's a concise example using STAR that shows the outcome."
+  },
+  tips: {
+    good: [
+      "Polite, professional tone and body language",
+      "Curiosity about training, supervision, and safety culture",
+      "Sends a brief thank-you note within 24 hours"
+    ],
+    avoid: [
+      "Jargon-heavy answers when not needed",
+      "Speaking over interviewers",
+      "Negative comments about previous employers"
+    ],
+    phrase: "Thanks for your time today. I'm excited about the role and the team."
+  }
+};
+
+const interviewGuides = [
     {
       title: "Interview Preparation",
       icon: Target,
@@ -297,7 +366,7 @@ const InterviewGuidanceTab = () => {
             const categoryColor = categoryColors[guide.category as keyof typeof categoryColors];
             const difficultyColor = difficultyColors[guide.difficulty as keyof typeof difficultyColors];
             const cat = categoryStyle[categoryColor] || categoryStyle.indigo;
-            
+            const extra = (extras as any)[guide.category];
             
             return (
               <MobileAccordionItem key={index} value={`guide-${index}`} className="rounded-lg mb-3">
@@ -309,9 +378,9 @@ const InterviewGuidanceTab = () => {
                     </div>
                   }
                 >
-                  <div className="text-sm sm:text-base font-semibold text-elec-light">{guide.title}</div>
+                  <div className="text-[13px] sm:text-sm font-semibold text-elec-light">{guide.title}</div>
                 </MobileAccordionTrigger>
-                <MobileAccordionContent className="bg-elec-gray border border-elec-yellow/20 border-t-0 rounded-b-lg px-4 py-3">
+                <MobileAccordionContent className="bg-elec-gray border border-elec-yellow/20 border-t-0 rounded-b-lg px-4 py-3 text-[13px]">
                   {"overviewTitle" in guide && (
                     <div className="mb-2">
                       <h5 className="font-semibold text-sm">{(guide as any).overviewTitle}</h5>
@@ -375,6 +444,44 @@ const InterviewGuidanceTab = () => {
                       </ul>
                     </div>
                   )}
+
+                  {extra?.good?.length ? (
+                    <div className="border-t pt-3">
+                      <h5 className="font-semibold text-sm mb-2">What good looks like</h5>
+                      <ul className="space-y-2">
+                        {extra.good.map((g: string, i: number) => (
+                          <li key={i} className="flex items-start gap-2 text-sm">
+                            <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
+                            <span className="leading-relaxed">{g}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ) : null}
+
+                  {extra?.avoid?.length ? (
+                    <div className="border-t pt-3">
+                      <h5 className="font-semibold text-sm mb-2 flex items-center gap-2">
+                        <XCircle className="h-4 w-4 text-red-500" />
+                        Avoid
+                      </h5>
+                      <ul className="space-y-2">
+                        {extra.avoid.map((a: string, i: number) => (
+                          <li key={i} className="flex items-start gap-2 text-sm">
+                            <XCircle className="h-4 w-4 text-red-500 mt-0.5 flex-shrink-0" />
+                            <span className="leading-relaxed">{a}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ) : null}
+
+                  {extra?.phrase ? (
+                    <div className="border-t pt-3">
+                      <h5 className="font-semibold text-sm mb-2">Pocket phrase</h5>
+                      <p className="text-xs text-muted-foreground italic">"{extra.phrase}"</p>
+                    </div>
+                  ) : null}
 
                   <div className="rounded-lg border border-green-500/20 bg-green-500/5 p-2.5 mt-3">
                     <div className="text-sm font-medium text-green-300 mb-1">Impact</div>
