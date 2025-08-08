@@ -13,6 +13,7 @@ import { MobileInput } from "@/components/ui/mobile-input";
 import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
 import WhyThisMatters from "@/components/common/WhyThisMatters";
 import { useState } from "react";
+import { Helmet } from "react-helmet";
 
 const CashFlowPlanner = () => {
   const { toast } = useToast();
@@ -87,6 +88,11 @@ const CashFlowPlanner = () => {
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-7xl">
+      <Helmet>
+        <title>Cash Flow Planner UK for Electricians | Forecast & Scenarios</title>
+        <meta name="description" content="Plan electrician cash flow with projections, VAT quarters, scenarios and insights. Mobile-first." />
+        <link rel="canonical" href="/electrician/business-development/tools/cash-flow" />
+      </Helmet>
       <div className="flex flex-col items-center justify-center mb-8">
         <h1 className="text-3xl font-bold tracking-tight mb-4 flex items-center gap-3">
           <TrendingUp className="h-8 w-8 text-elec-yellow" />
