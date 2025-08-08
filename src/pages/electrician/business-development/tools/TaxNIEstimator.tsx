@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { MobileInput } from "@/components/ui/mobile-input";
+import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
@@ -41,6 +42,7 @@ const TaxNIEstimator = () => {
   });
 
   const [calculated, setCalculated] = useState(false);
+  const [taxYear, setTaxYear] = useState<'2025/26' | '2024/25'>('2025/26');
 
   const updateInput = (field: keyof TaxInputs, value: number | boolean) => {
     setInputs(prev => ({
@@ -98,24 +100,49 @@ const TaxNIEstimator = () => {
     setCalculated(false);
   };
 
-  // UK Tax Year 2024/25 rates and thresholds
-  const TAX_RATES = {
-    personalAllowance: 12570,
-    basicRateThreshold: 37700,
-    higherRateThreshold: 125140,
-    basicRate: 0.20,
-    higherRate: 0.40,
-    additionalRate: 0.45,
-    niLowerEarningsLimit: 6396,
-    niUpperEarningsLimit: 50270,
-    niClass2Rate: 3.45,
-    niClass4LowerRate: 0.09,
-    niClass4HigherRate: 0.02,
-    marriageAllowance: 1260,
-    vatThreshold: 85000,
-    vatRate: 0.20
+  // UK Tax rates and thresholds (selected year)
+  const getRates = (year: '2025/26' | '2024/25') => {
+    if (year === '2025/26') {
+      return {
+        personalAllowance: 12570,
+        basicRateThreshold: 37700,
+        higherRateThreshold: 125140,
+        basicRate: 0.20,
+        higherRate: 0.40,
+        additionalRate: 0.45,
+        // NI (self-employed)
+        class2WeeklyRate: 0, // Class 2 abolished
+        class2SPT: 6725, // Small profits threshold (credits)
+        class4LowerRate: 0.06,
+        class4HigherRate: 0.02,
+        class4LowerProfitsLimit: 12570,
+        class4UpperProfitsLimit: 50270,
+        marriageAllowance: 1260,
+        vatThreshold: 90000,
+        vatRate: 0.20,
+      };
+    }
+    // 2024/25
+    return {
+      personalAllowance: 12570,
+      basicRateThreshold: 37700,
+      higherRateThreshold: 125140,
+      basicRate: 0.20,
+      higherRate: 0.40,
+      additionalRate: 0.45,
+      // NI (self-employed)
+      class2WeeklyRate: 3.45,
+      class2SPT: 6725,
+      class4LowerRate: 0.06, // Reduced from 9%
+      class4HigherRate: 0.02,
+      class4LowerProfitsLimit: 12570,
+      class4UpperProfitsLimit: 50270,
+      marriageAllowance: 1260,
+      vatThreshold: 90000,
+      vatRate: 0.20,
+    };
   };
-
+  const TAX_RATES = getRates(taxYear);
   // Calculate tax and NI
   const calculateEstimates = () => {
     if (!calculated) return {
@@ -166,18 +193,18 @@ const TaxNIEstimator = () => {
     // Calculate National Insurance (Self-employed)
     let nationalInsurance = 0;
     
-    // Class 2 NI (if profit > £6,396)
-    if (grossProfit > TAX_RATES.niLowerEarningsLimit) {
-      nationalInsurance += TAX_RATES.niClass2Rate * 52; // Weekly rate
+    // Class 2 NI (abolished in 2025/26; credits may apply)
+    if (TAX_RATES.class2WeeklyRate > 0 && grossProfit >= TAX_RATES.class2SPT) {
+      nationalInsurance += TAX_RATES.class2WeeklyRate * 52; // Weekly rate
     }
 
     // Class 4 NI
-    if (grossProfit > TAX_RATES.niLowerEarningsLimit) {
-      const class4Profit = Math.min(grossProfit, TAX_RATES.niUpperEarningsLimit) - TAX_RATES.niLowerEarningsLimit;
-      nationalInsurance += class4Profit * TAX_RATES.niClass4LowerRate;
+    if (grossProfit > TAX_RATES.class4LowerProfitsLimit) {
+      const class4AtLowerBand = Math.max(0, Math.min(grossProfit, TAX_RATES.class4UpperProfitsLimit) - TAX_RATES.class4LowerProfitsLimit);
+      nationalInsurance += class4AtLowerBand * TAX_RATES.class4LowerRate;
       
-      if (grossProfit > TAX_RATES.niUpperEarningsLimit) {
-        nationalInsurance += (grossProfit - TAX_RATES.niUpperEarningsLimit) * TAX_RATES.niClass4HigherRate;
+      if (grossProfit > TAX_RATES.class4UpperProfitsLimit) {
+        nationalInsurance += (grossProfit - TAX_RATES.class4UpperProfitsLimit) * TAX_RATES.class4HigherRate;
       }
     }
 
@@ -249,7 +276,7 @@ const TaxNIEstimator = () => {
   return (
     <div className="container mx-auto px-4 py-8 max-w-7xl">
       <Helmet>
-        <title>UK Tax & NI Estimator for Electricians | 2024/25</title>
+        <title>UK Tax & NI Estimator for Electricians | 2025/26</title>
         <meta name="description" content="Estimate UK Income Tax, National Insurance and VAT impacts for electricians. Mobile-first and BS 7671 aligned." />
         <link rel="canonical" href="/electrician/business-development/tools/tax-estimator" />
       </Helmet>
@@ -268,7 +295,7 @@ const TaxNIEstimator = () => {
             <div>
               <h4 className="text-orange-300 font-medium mb-2">Important Notice</h4>
               <p className="text-sm text-orange-200">
-                This calculator provides estimates based on 2024/25 tax year rates. 
+                This calculator uses {taxYear} UK rates. 
                 Always consult a qualified accountant for accurate tax advice and compliance.
               </p>
             </div>
@@ -295,6 +322,18 @@ const TaxNIEstimator = () => {
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
+            <div className="grid md:grid-cols-2 gap-3">
+              <MobileSelectWrapper
+                label="Tax Year"
+                value={taxYear}
+                onValueChange={(v) => setTaxYear(v as any)}
+                options={[
+                  { value: '2025/26', label: '2025/26' },
+                  { value: '2024/25', label: '2024/25' },
+                ]}
+                hint={`VAT threshold £${TAX_RATES.vatThreshold.toLocaleString()}`}
+              />
+            </div>
             <div className="space-y-4">
               <h4 className="text-white font-semibold">Business Income</h4>
               
