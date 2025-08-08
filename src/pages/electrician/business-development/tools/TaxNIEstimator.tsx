@@ -8,6 +8,7 @@ import BackButton from "@/components/common/BackButton";
 import { useToast } from "@/hooks/use-toast";
 import { PoundSterling, HelpCircle, TrendingUp, AlertCircle, CheckCircle, Download, Lightbulb, Calculator } from "lucide-react";
 import WhyThisMatters from "@/components/common/WhyThisMatters";
+import { Helmet } from "react-helmet";
 
 interface TaxInputs {
   annualIncome: number;
@@ -247,6 +248,11 @@ const TaxNIEstimator = () => {
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-7xl">
+      <Helmet>
+        <title>UK Tax & NI Estimator for Electricians | 2024/25</title>
+        <meta name="description" content="Estimate UK Income Tax, National Insurance and VAT impacts for electricians. Mobile-first and BS 7671 aligned." />
+        <link rel="canonical" href="/electrician/business-development/tools/tax-estimator" />
+      </Helmet>
       <div className="flex flex-col items-center justify-center mb-8">
         <h1 className="text-3xl font-bold tracking-tight mb-4 flex items-center gap-3">
           <PoundSterling className="h-8 w-8 text-elec-yellow" />
