@@ -51,19 +51,42 @@ const InterviewGuidanceTab = () => {
       icon: Target,
       category: "preparation",
       difficulty: "Essential",
+      overviewTitle: "Preparation Overview",
+      overviewDescription: "Get ready quickly and professionally for UK electrical interviews – focused, BS 7671 aware, and employer specific.",
       steps: [
-        "Research the company's recent electrical projects and values",
-        "Review BS 7671 18th Edition key changes and updates",
-        "Prepare 3-4 STAR method examples from your experience",
-        "Plan your route and prepare all necessary documents",
-        "Practice common technical and behavioural questions"
+        "Research the company projects, sectors, and clients using their website and LinkedIn",
+        "Review BS 7671 18th Edition key updates including AFDD application guidance",
+        "Prepare 3–4 STAR examples covering safety, fault finding, time pressure, and teamwork",
+        "Check travel route, ID, ECS/CSCS card, and bring copies of certificates",
+        "Practise clear, concise answers aloud – aim for 60–90 seconds per response"
       ],
       keyPoints: [
-        "Company research shows genuine interest and preparation",
-        "Technical knowledge review demonstrates competency",
-        "STAR method examples provide structured responses",
-        "Professional presentation creates positive first impressions",
-        "Preparation reduces anxiety and increases confidence"
+        "Company research shows intent and helps tailor answers",
+        "Structured STAR examples keep answers focused",
+        "Evidence of certification and cards speeds onboarding",
+        "Communication clarity matters as much as technical depth",
+        "Safety-first mindset is essential in all answers"
+      ],
+      questions: [
+        "Walk me through how you plan safe isolation on a live site",
+        "Tell me about a time you diagnosed a difficult fault",
+        "How do you ensure compliance with 18th Edition changes?",
+        "Describe how you prioritise when multiple jobs are urgent",
+        "What would you do if a client pressures you to cut corners?"
+      ],
+      bs7671: [
+        "Part 4 – Protection for safety (fault protection, RCD application)",
+        "Chapter 41 – ADS and RCD requirements",
+        "Chapter 52 – Cable selection and installation (support in escape routes)",
+        "Appendix 6 – Inspection and testing sequence",
+        "Guidance on AFDD application in higher risk residential buildings"
+      ],
+      checklist: [
+        "Photo ID, ECS/CSCS card, certifications",
+        "Printed CV and references",
+        "Pens, notepad, and PPE if requested",
+        "Arrival 10–15 minutes early",
+        "Phone on silent and no gum"
       ]
     },
     {
@@ -71,19 +94,42 @@ const InterviewGuidanceTab = () => {
       icon: Lightbulb,
       category: "technical",
       difficulty: "Advanced",
+      overviewTitle: "Technical Focus",
+      overviewDescription: "Demonstrate solid fundamentals and the ability to apply BS 7671 in practical scenarios.",
       steps: [
-        "Review electrical fundamentals and current regulations",
-        "Prepare explanations for different earthing systems",
-        "Practice calculations for fault currents and cable sizing",
-        "Study RCD testing procedures and trip times",
-        "Understand permit to work and isolation procedures"
+        "Refresh on earthing systems (TN-S, TN-C-S, TT) and where each is typical",
+        "Practise Zs, Ze, and prospective fault current calculations",
+        "Revise RCD testing procedures and trip times including Type A vs AC",
+        "Review safe isolation, permits to work, and lock-off tagging",
+        "Be ready to sketch simple schematics to explain your thinking"
       ],
       keyPoints: [
-        "Be ready to explain TN-S vs TT earthing systems clearly",
-        "Know minimum IR test values for different circuits",
-        "Understand equipotential bonding requirements",
-        "Demonstrate knowledge of current safety regulations",
-        "Show awareness of industry best practices"
+        "Use UK terminology consistently (ring final circuits, protective devices)",
+        "Quote regs where relevant without overdoing it",
+        "Explain your assumptions when doing calculations",
+        "Link test results to safety decisions",
+        "Show methodical troubleshooting"
+      ],
+      questions: [
+        "Explain differences between TN-S and TT and implications for RCD use",
+        "How do you determine maximum Zs for a given protective device?",
+        "Outline your sequence for initial verification testing",
+        "When would AFDDs be considered and why?",
+        "How do you confirm polarity on a ring circuit?"
+      ],
+      bs7671: [
+        "Chapter 41 – Disconnection times",
+        "Chapter 43 – Protection against overcurrent",
+        "Chapter 54 – Earthing arrangements and protective conductors",
+        "Appendix 3 – Time-current characteristics",
+        "Appendix 6 – Test sequences"
+      ],
+      checklist: [
+        "Calculator and test sheet familiarity",
+        "Know common device curves and trip times",
+        "Be ready with worked examples",
+        "Use precise, concise language",
+        "Relate answers to safety impact"
       ]
     },
     {
@@ -91,19 +137,42 @@ const InterviewGuidanceTab = () => {
       icon: Clock,
       category: "process",
       difficulty: "Intermediate",
+      overviewTitle: "Process Overview",
+      overviewDescription: "What each stage assesses and how to prepare for it.",
       steps: [
-        "Understand phone/video screening format (30-45 mins)",
-        "Prepare for technical interviews (60-90 mins)",
-        "Ready yourself for on-site visits (2-4 hours)",
-        "Know what to expect from practical assessments",
-        "Understand multiple-stage interview processes"
+        "Phone/video: availability, attitude, and basics – quiet space and notes ready",
+        "Technical: deeper knowledge checks – prepare examples and whiteboard sketches",
+        "On-site: practical skills and culture fit – bring PPE if requested",
+        "Assessment: timed tasks – read instructions twice, stay methodical",
+        "Final: offer discussion – be ready with salary expectations"
       ],
       keyPoints: [
-        "Phone interviews focus on basic screening and availability",
-        "Technical interviews test in-depth knowledge and problem-solving",
-        "On-site visits assess practical skills and cultural fit",
-        "Practical assessments may include hands-on electrical work",
-        "Each stage has different focus areas and expectations"
+        "Each stage has different focus – adapt your preparation",
+        "Bring evidence of tickets and recent work",
+        "Ask clear questions about safety culture and supervision",
+        "Confirm travel, parking, and security steps in advance",
+        "Follow up with a concise thank-you email"
+      ],
+      questions: [
+        "What will the practical assessment involve?",
+        "How are permits to work managed on site?",
+        "What is the team structure and typical shift pattern?",
+        "What does success in the first 90 days look like?",
+        "Are there upskilling opportunities and funded courses?"
+      ],
+      bs7671: [
+        "Appendix 6 – Test documentation",
+        "Part 6 – Inspection and testing responsibilities",
+        "Health and safety integration with electrical work",
+        "Manufacturer instructions and coordination",
+        "Risk assessments for temporary supplies"
+      ],
+      checklist: [
+        "Devices, ID, and PPE as requested",
+        "Printed directions and contact name",
+        "Allow buffer time for security",
+        "Know expected duration",
+        "Plan follow-up questions"
       ]
     },
     {
@@ -111,19 +180,42 @@ const InterviewGuidanceTab = () => {
       icon: MessageCircle,
       category: "questions",
       difficulty: "Essential",
+      overviewTitle: "Question Themes",
+      overviewDescription: "Be ready for technical, safety, behavioural, and client-facing scenarios.",
       steps: [
-        "Prepare answers for technical regulation questions",
-        "Practice responses to safety and procedure enquiries",
-        "Develop examples for behavioural questions",
-        "Ready explanations of your electrical experience",
-        "Prepare thoughtful questions to ask the interviewer"
+        "Prepare short, specific examples with outcomes",
+        "Translate site experience into client-friendly language",
+        "Show how you handle pressure without cutting corners",
+        "Demonstrate collaborative working with other trades",
+        "Have two thoughtful questions prepared"
       ],
       keyPoints: [
-        "Technical questions test your electrical knowledge depth",
-        "Safety questions assess your risk awareness",
-        "Behavioural questions explore your work approach",
-        "Experience questions validate your practical skills",
-        "Your questions show genuine interest in the role"
+        "Answer the question asked – then stop",
+        "Evidence beats opinion",
+        "Link to regulation or best practice when relevant",
+        "Be honest about limits and how you escalate",
+        "Stay calm and professional"
+      ],
+      questions: [
+        "Describe a time you found a non-compliant installation and how you handled it",
+        "How do you prioritise safety when deadlines are tight?",
+        "Give an example of improving a job through planning",
+        "What documentation do you complete after testing?",
+        "How do you communicate risks to non-technical stakeholders?"
+      ],
+      bs7671: [
+        "Certification and reporting requirements",
+        "RCD additional protection in various locations",
+        "Special locations and additional measures",
+        "Earthing and bonding checks during alterations",
+        "Record keeping and traceability"
+      ],
+      checklist: [
+        "Two STAR examples ready",
+        "One safety example and one customer example",
+        "Clear salary and shift expectations",
+        "Availability dates noted",
+        "References contactable"
       ]
     },
     {
@@ -131,19 +223,42 @@ const InterviewGuidanceTab = () => {
       icon: Star,
       category: "tips",
       difficulty: "Essential",
+      overviewTitle: "Final Polishing",
+      overviewDescription: "Simple behaviours that make a strong impression and speed offers.",
       steps: [
-        "Arrive 10-15 minutes early with all documents",
-        "Dress professionally appropriate to the workplace",
-        "Bring safety boots if visiting active construction sites",
-        "Maintain eye contact and speak clearly throughout",
-        "Show enthusiasm for learning and development"
+        "Arrive early, greet everyone politely, and maintain eye contact",
+        "Answer concisely and avoid jargon unless asked",
+        "Show safety-first decisions in examples",
+        "Ask about training, supervision, and safety culture",
+        "Summarise your fit at the end and thank the panel"
       ],
       keyPoints: [
-        "Punctuality demonstrates reliability and professionalism",
-        "Appropriate dress shows respect for the opportunity",
-        "Safety awareness is crucial in electrical work environments",
-        "Good communication skills are essential for team work",
-        "Willingness to learn indicates long-term potential"
+        "Professionalism is remembered",
+        "Safety and compliance are non-negotiable",
+        "Clarity beats complexity",
+        "Curiosity shows growth mindset",
+        "Follow-up confirms reliability"
+      ],
+      questions: [
+        "What development routes are available (2391, 18th refresh, HV authorisations)?",
+        "How do you manage toolbox talks and refreshers?",
+        "How are overtime and call-outs structured?",
+        "What tools and test instruments are provided?",
+        "What are the typical sites and hazards?"
+      ],
+      bs7671: [
+        "Inspection intervals and reporting",
+        "Updates since the 18th Edition amendments",
+        "Selection of protective devices",
+        "Documentation accuracy and sign-off",
+        "Temporary works considerations"
+      ],
+      checklist: [
+        "Thank-you note sent within 24 hours",
+        "Right-to-work docs ready",
+        "Referees briefed",
+        "Clean PPE if site visit expected",
+        "Travel planned with backup"
       ]
     }
   ];
@@ -197,41 +312,84 @@ const InterviewGuidanceTab = () => {
                   <div className="text-sm sm:text-base font-semibold text-elec-light">{guide.title}</div>
                 </MobileAccordionTrigger>
                 <MobileAccordionContent className="px-4 pb-4">
-                  <div className="rounded-lg border border-elec-yellow/20 bg-elec-card/60 p-3 space-y-4">
-                    <div>
-                      <h4 className="font-semibold text-sm mb-3 flex items-center gap-2">
-                        <CheckCircle className="h-4 w-4 text-green-500" />
-                        Implementation Steps
-                      </h4>
-                      <ol className="space-y-2">
-                        {guide.steps.map((step, stepIndex) => (
-                          <li key={stepIndex} className="flex items-start gap-3 text-sm">
-                            <span className="bg-primary/10 text-primary rounded-full w-5 h-5 flex items-center justify-center text-xs font-semibold flex-shrink-0 mt-0.5">
-                              {stepIndex + 1}
-                            </span>
-                            <span className="leading-relaxed">{step}</span>
-                          </li>
-                        ))}
-                      </ol>
+                  <div className="rounded-xl border border-elec-yellow/20 bg-elec-card/60 overflow-hidden">
+                    <div className="px-4 py-3 border-b border-elec-yellow/20 flex items-center justify-center gap-2">
+                      <div className={cn("p-2 rounded-lg", cat.iconBg)}>
+                        <Icon className={cn("h-5 w-5", cat.icon)} />
+                      </div>
+                      <h4 className="font-semibold text-sm sm:text-base text-elec-light">{guide.title}</h4>
                     </div>
-                    
-                    <div className="border-t pt-3">
-                      <h4 className="font-semibold text-sm mb-3">Key Points</h4>
-                      <ul className="space-y-2">
-                        {guide.keyPoints.map((point, pointIndex) => (
-                          <li key={pointIndex} className="flex items-start gap-2 text-sm">
-                            <span className="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0" />
-                            <span className="leading-relaxed">{point}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
+                    <div className="p-3 space-y-4">
+                      {"overviewTitle" in guide && (
+                        <div>
+                          <h5 className="font-semibold text-sm mb-1">{(guide as any).overviewTitle}</h5>
+                          <p className="text-xs text-muted-foreground">{(guide as any).overviewDescription}</p>
+                        </div>
+                      )}
 
-                    <div className="rounded-lg border border-green-500/20 bg-green-500/5 p-2.5">
-                      <div className="text-sm font-medium text-green-300 mb-1">Impact</div>
-                      <p className="text-xs text-muted-foreground">
-                        Following this guidance typically improves interview performance and offer rates while demonstrating BS 7671 awareness.
-                      </p>
+                      <div className="border-t pt-3">
+                        <h5 className="font-semibold text-sm mb-2 flex items-center gap-2">
+                          <CheckCircle className="h-4 w-4 text-green-500" />
+                          Implementation Steps
+                        </h5>
+                        <ul className="space-y-2">
+                          {guide.steps.map((step, stepIndex) => (
+                            <li key={stepIndex} className="flex items-start gap-2 text-sm">
+                              <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
+                              <span className="leading-relaxed">{step}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+
+                      {"questions" in guide && (
+                        <div className="border-t pt-3">
+                          <h5 className="font-semibold text-sm mb-2">Practice Questions</h5>
+                          <ul className="space-y-2">
+                            {(guide as any).questions.map((q: string, i: number) => (
+                              <li key={i} className="flex items-start gap-2 text-sm">
+                                <span className="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0" />
+                                <span className="leading-relaxed">{q}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+
+                      {"bs7671" in guide && (
+                        <div className="border-t pt-3">
+                          <h5 className="font-semibold text-sm mb-2">BS 7671 Focus</h5>
+                          <ul className="space-y-2">
+                            {(guide as any).bs7671.map((p: string, i: number) => (
+                              <li key={i} className="flex items-start gap-2 text-sm">
+                                <span className="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0" />
+                                <span className="leading-relaxed">{p}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+
+                      {"checklist" in guide && (
+                        <div className="border-t pt-3">
+                          <h5 className="font-semibold text-sm mb-2">Quick Checklist</h5>
+                          <ul className="space-y-2">
+                            {(guide as any).checklist.map((p: string, i: number) => (
+                              <li key={i} className="flex items-start gap-2 text-sm">
+                                <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
+                                <span className="leading-relaxed">{p}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+
+                      <div className="rounded-lg border border-green-500/20 bg-green-500/5 p-2.5">
+                        <div className="text-sm font-medium text-green-300 mb-1">Impact</div>
+                        <p className="text-xs text-muted-foreground">
+                          Following this guidance typically improves interview performance and offer rates while demonstrating BS 7671 awareness.
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </MobileAccordionContent>
