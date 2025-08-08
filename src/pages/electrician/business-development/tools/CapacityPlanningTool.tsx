@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import BackButton from "@/components/common/BackButton";
 import { useToast } from "@/hooks/use-toast";
 import { Building, Users, Clock, HelpCircle, TrendingUp, AlertCircle, CheckCircle, Download, Lightbulb, Calendar } from "lucide-react";
+import WhyThisMatters from "@/components/common/WhyThisMatters";
 
 interface CapacityInputs {
   totalElectricians: number;
@@ -229,6 +230,14 @@ const CapacityPlanningTool = () => {
         </p>
         <BackButton customUrl="/electrician/business-development/tools" label="Back to Calculators" />
       </div>
+
+      <WhyThisMatters
+        points={[
+          "Balances staffing with workload to prevent burnout and missed deadlines.",
+          "Improves utilisation by accounting for admin, travel and realistic job times.",
+          "Aligns hiring plans with growth targets and service levels."
+        ]}
+      />
 
       <div className="grid lg:grid-cols-3 gap-8">
         {/* Input Section */}

@@ -60,7 +60,7 @@ const BusinessCalculators = () => {
     {
       id: "tax-estimator",
       title: "Tax & NI Estimator",
-      icon: <DollarSign className="h-12 w-12 text-elec-yellow" />,
+      icon: <PoundSterling className="h-12 w-12 text-elec-yellow" />,
       status: "available"
     }
   ];

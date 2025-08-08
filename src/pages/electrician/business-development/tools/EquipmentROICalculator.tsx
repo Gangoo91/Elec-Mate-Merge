@@ -9,6 +9,7 @@ import { MobileInput } from "@/components/ui/mobile-input";
 import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
 import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid } from "recharts";
 import { Helmet } from "react-helmet";
+import WhyThisMatters from "@/components/common/WhyThisMatters";
 
 interface ROIInputs {
   equipmentCost: number;
@@ -185,6 +186,14 @@ const EquipmentROICalculator = () => {
         </p>
         <BackButton customUrl="/electrician/business-development/tools" label="Back to Calculators" />
       </div>
+
+      <WhyThisMatters
+        points={[
+          "Checks if a purchase pays back and improves cash flow before you commit.",
+          "NPV/IRR quantify value vs risk and utilisation for smarter capex decisions.",
+          "Supports justification to lenders/partners with clear evidence."
+        ]}
+      />
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <Card className="border-elec-yellow/20 bg-elec-card">

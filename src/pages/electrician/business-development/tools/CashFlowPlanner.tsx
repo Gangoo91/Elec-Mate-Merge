@@ -11,7 +11,7 @@ import { ScenarioPlanner } from "@/components/electrician/business-development/e
 import { FinancialInsights } from "@/components/electrician/business-development/enhanced-cash-flow/FinancialInsights";
 import { MobileInput } from "@/components/ui/mobile-input";
 import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
-import { useState } from "react";
+import WhyThisMatters from "@/components/common/WhyThisMatters";
 
 const CashFlowPlanner = () => {
   const { toast } = useToast();
@@ -96,6 +96,14 @@ const CashFlowPlanner = () => {
         </p>
         <BackButton customUrl="/electrician/business-development/tools" label="Back to Calculators" />
       </div>
+
+      <WhyThisMatters
+        points={[
+          "Forecasts peaks/troughs so VAT quarters, tax and payroll never surprise you.",
+          "Prevents cash crunches by planning deposits, delays and emergency buffers.",
+          "Enables confident decisions on hiring, vehicles and marketing."
+        ]}
+      />
 
       <Tabs defaultValue="setup" className="space-y-6">
         <TabsList className="grid w-full grid-cols-5">

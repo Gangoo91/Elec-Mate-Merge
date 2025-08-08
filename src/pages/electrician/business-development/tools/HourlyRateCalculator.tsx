@@ -8,6 +8,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Clock, PoundSterling, Calculator, CheckCircle, RefreshCw, Save, Info } from "lucide-react";
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid } from "recharts";
 import { Helmet } from "react-helmet";
+import WhyThisMatters from "@/components/common/WhyThisMatters";
 interface RateInputs {
   annualSalary: number;
   workingDaysPerYear: number;
@@ -104,6 +105,14 @@ const HourlyRateCalculator = () => {
         </p>
         <BackButton customUrl="/electrician/business-development/tools" label="Back to Calculators" />
       </div>
+
+      <WhyThisMatters
+        points={[
+          "Covers costs, overheads and target profit so you don’t undercharge.",
+          "Aligns price with realistic utilisation (billable vs admin/travel).",
+          "Builds a defendable rate for BS 7671 testing/certification time."
+        ]}
+      />
 
       <div className="grid md:grid-cols-2 gap-8">
         <Card className="border-elec-yellow/20 bg-elec-card">

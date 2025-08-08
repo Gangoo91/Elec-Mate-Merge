@@ -12,6 +12,7 @@ import { JobPresetSelector } from "@/components/electrician/business-development
 import { VATCalculator } from "@/components/electrician/business-development/job-profitability/VATCalculator";
 import { labourHoursOptions, hourlyRateOptions, overheadPercentageOptions, profitMarginOptions } from "@/components/electrician/business-development/job-profitability/DropdownOptions";
 import { JobPreset } from "@/components/electrician/business-development/job-profitability/JobTypePresets";
+import WhyThisMatters from "@/components/common/WhyThisMatters";
 
 interface JobInputs {
   materialCost: number;
@@ -325,6 +326,14 @@ const JobProfitabilityCalculator = () => {
           </p>
           <BackButton customUrl="/electrician/business-development/tools" label="Back to Calculators" />
         </div>
+
+        <WhyThisMatters
+          points={[
+            "Reveals profit per job so you know which work to chase or drop.",
+            "Captures non-billable time (travel/admin) that quietly kills margin.",
+            "Builds a feedback loop between quoting, delivery and pricing."
+          ]}
+        />
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 mb-8">
         {/* Job Presets */}

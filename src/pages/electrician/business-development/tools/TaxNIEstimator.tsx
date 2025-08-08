@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import BackButton from "@/components/common/BackButton";
 import { useToast } from "@/hooks/use-toast";
 import { PoundSterling, HelpCircle, TrendingUp, AlertCircle, CheckCircle, Download, Lightbulb, Calculator } from "lucide-react";
+import WhyThisMatters from "@/components/common/WhyThisMatters";
 
 interface TaxInputs {
   annualIncome: number;
@@ -269,6 +270,14 @@ const TaxNIEstimator = () => {
         </div>
         <BackButton customUrl="/electrician/business-development/tools" label="Back to Calculators" />
       </div>
+
+      <WhyThisMatters
+        points={[
+          "Shows likely tax/NI so you can plan payments and avoid surprises.",
+          "Explores impacts of VAT registration and allowances on net income.",
+          "Converts annual liabilities into monthly/quarterly figures for cash flow."
+        ]}
+      />
 
       <div className="grid lg:grid-cols-3 gap-8">
         {/* Input Section */}

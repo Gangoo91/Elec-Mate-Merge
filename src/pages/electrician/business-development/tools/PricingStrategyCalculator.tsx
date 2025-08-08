@@ -11,6 +11,7 @@ import { VATCalculator } from "@/components/electrician/business-development/job
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid } from "recharts";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
+import WhyThisMatters from "@/components/common/WhyThisMatters";
 
 interface PricingInputs {
   materialsCost: number;
@@ -128,6 +129,14 @@ const PricingStrategyCalculator = () => {
         </p>
         <BackButton customUrl="/electrician/business-development/tools" label="Back to Calculators" />
       </div>
+
+      <WhyThisMatters
+        points={[
+          "Connects materials, labour and overhead into a profitable selling price.",
+          "Protects margins after discounts and VAT so quotes remain sustainable.",
+          "Keeps pricing transparent and comparable for customers and teams."
+        ]}
+      />
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <Card className="border-elec-yellow/20 bg-elec-card">

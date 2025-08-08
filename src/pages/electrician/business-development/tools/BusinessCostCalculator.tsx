@@ -6,6 +6,7 @@ import BackButton from "@/components/common/BackButton";
 import { useToast } from "@/hooks/use-toast";
 import { Calculator, Building, Download, Lightbulb, TrendingUp } from "lucide-react";
 import { Helmet } from "react-helmet";
+import WhyThisMatters from "@/components/common/WhyThisMatters";
 
 // Enhanced components
 import BusinessTypeSelector from "@/components/business-calculator/BusinessTypeSelector";
@@ -211,6 +212,14 @@ const BusinessCostCalculator = () => {
         </p>
         <BackButton customUrl="/electrician/business-development/tools" label="Back to Calculators" />
       </div>
+
+      <WhyThisMatters
+        points={[
+          "Clarifies true start-up and monthly running costs to set realistic budgets.",
+          "Reveals Year‑1 cash needs and working capital so you don’t run short.",
+          "Highlights structure impacts (sole trader vs ltd) on costs and planning."
+        ]}
+      />
 
       <ProgressIndicator
         currentStep={currentStep}
