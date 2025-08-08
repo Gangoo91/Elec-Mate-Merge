@@ -570,7 +570,7 @@ const interviewGuides = [
             const extra = (extras as any)[guide.category];
             
             return (
-              <MobileAccordionItem key={index} value={`guide-${index}`} className="rounded-lg mb-3">
+              <MobileAccordionItem key={index} value={`guide-${index}`} className="rounded-lg mb-4">
                 <MobileAccordionTrigger
                   className="px-4 py-2"
                   icon={
