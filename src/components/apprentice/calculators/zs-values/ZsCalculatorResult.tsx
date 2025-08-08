@@ -4,6 +4,7 @@ import { CheckCircle, XCircle, AlertTriangle, Calculator } from "lucide-react";
 
 interface ZsCalculatorResultProps {
   result: number | null;
+  calculatedZs: number | null;
   protectionType: string;
   mcbRating: string;
   rcboRating: string;
@@ -15,6 +16,7 @@ interface ZsCalculatorResultProps {
 
 const ZsCalculatorResult = ({
   result,
+  calculatedZs,
   protectionType,
   mcbRating,
   rcboRating,
@@ -84,6 +86,23 @@ const ZsCalculatorResult = ({
           </div>
         </CardContent>
       </Card>
+
+      {calculatedZs !== null && (
+        <Card className="border-amber-500/30 bg-amber-500/5">
+          <CardContent className="pt-4">
+            <div className="space-y-3">
+              <h4 className="text-amber-300 font-semibold">Calculated Circuit Zs</h4>
+              <div className="flex justify-between items-center">
+                <span className="text-amber-200">Ze + (R1 + R2):</span>
+                <span className="text-amber-300 font-mono text-lg">{calculatedZs.toFixed(2)} Ω</span>
+              </div>
+              <div className={`mt-2 text-sm ${calculatedZs <= get80PercentValue() ? 'text-green-300' : 'text-red-300'}`}>
+                {calculatedZs <= get80PercentValue() ? '✓ Compliant (≤ 80% test value)' : '✗ Non-compliant (> 80% test value)'}
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       <Card className="border-blue-500/30 bg-blue-500/5">
         <CardContent className="pt-4">

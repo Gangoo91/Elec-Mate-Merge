@@ -9,6 +9,8 @@ export const useCalculator = () => {
   const [voltage, setVoltage] = useState<string>("");
   const [calculationMethod, setCalculationMethod] = useState<"power" | "currentVoltage">("power");
   const [powerFactor, setPowerFactor] = useState<string | null>(null);
+  const [targetPF, setTargetPF] = useState<string>("0.95");
+  const [capacitorKVAr, setCapacitorKVAr] = useState<string | null>(null);
   const [validation, setValidation] = useState<ValidationResult | null>(null);
   const [errors, setErrors] = useState<{[key: string]: string}>({});
 
@@ -88,6 +90,16 @@ export const useCalculator = () => {
         }
       }
     }
+
+    // Target PF validation
+    if (!targetPF) {
+      newErrors.targetPF = "Target PF is required";
+    } else {
+      const t = parseFloat(targetPF);
+      if (isNaN(t) || t <= 0 || t > 1) {
+        newErrors.targetPF = "Target PF must be between 0 and 1";
+      }
+    }
     
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -135,6 +147,14 @@ export const useCalculator = () => {
     
     setValidation(pfValidation);
     setPowerFactor(pf.toFixed(4)); // Professional precision to 4 decimal places
+
+    // Capacitor sizing to reach target PF
+    const tpf = Math.min(Math.max(parseFloat(targetPF || '0.95'), 0.1), 1);
+    const phi1 = Math.acos(pf);
+    const phi2 = Math.acos(tpf);
+    const PkW = activeValue >= 1000 ? activeValue / 1000 : activeValue; // Accept W or kW input
+    const kvar = Math.max(0, PkW * (Math.tan(phi1) - Math.tan(phi2)));
+    setCapacitorKVAr(kvar.toFixed(2));
     
     // Clear any previous errors if calculation is successful
     if (pfValidation.isValid) {
@@ -163,6 +183,8 @@ export const useCalculator = () => {
     setCurrent("");
     setVoltage("");
     setPowerFactor(null);
+    setTargetPF("0.95");
+    setCapacitorKVAr(null);
     setValidation(null);
     setErrors({});
   };
@@ -180,6 +202,9 @@ export const useCalculator = () => {
     setCalculationMethod,
     powerFactor,
     setPowerFactor,
+    targetPF,
+    setTargetPF,
+    capacitorKVAr,
     validation,
     errors,
     setErrors,

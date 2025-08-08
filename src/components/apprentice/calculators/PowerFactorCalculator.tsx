@@ -25,7 +25,10 @@ const PowerFactorCalculator = () => {
     errors,
     calculatePowerFactor,
     clearError,
-    resetCalculator
+    resetCalculator,
+    targetPF,
+    setTargetPF,
+    capacitorKVAr
   } = useCalculator();
 
   const renderCalculationForm = () => {
@@ -239,6 +242,18 @@ const PowerFactorCalculator = () => {
               isEmpty={powerFactor === null}
               emptyMessage="Enter values to calculate power factor"
             />
+
+            {capacitorKVAr && (
+              <ResultCard
+                title="Recommended Capacitor"
+                value={capacitorKVAr}
+                unit="kVAr"
+                subtitle={`To correct to PF ${targetPF}`}
+                status="info"
+                icon={<Zap className="h-6 w-6" />}
+                isEmpty={false}
+              />
+            )}
             
             <Alert className="border-blue-500/20 bg-blue-500/10">
               <AlertDescription className="text-blue-200 space-y-2">

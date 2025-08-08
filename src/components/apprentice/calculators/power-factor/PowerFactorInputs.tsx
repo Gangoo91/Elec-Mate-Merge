@@ -16,6 +16,8 @@ interface PowerFactorInputsProps {
   setCurrent: (value: string) => void;
   voltage: string;
   setVoltage: (value: string) => void;
+  targetPF: string;
+  setTargetPF: (value: string) => void;
   errors: {[key: string]: string};
   clearError: (field: string) => void;
   calculatePowerFactor: () => void;
@@ -33,6 +35,8 @@ const PowerFactorInputs = ({
   setCurrent,
   voltage,
   setVoltage,
+  targetPF,
+  setTargetPF,
   errors,
   clearError,
   calculatePowerFactor,
@@ -173,6 +177,23 @@ const PowerFactorInputs = ({
           </div>
         </>
       )}
+
+      <div className="space-y-2">
+        <Label htmlFor="target-pf">Target Power Factor</Label>
+        <Input 
+          id="target-pf" 
+          type="number" 
+          placeholder="e.g., 0.95" 
+          className="bg-elec-dark border-elec-yellow/20"
+          value={targetPF}
+          onChange={(e) => {
+            setTargetPF(e.target.value);
+            clearError('targetPF');
+          }}
+        />
+        {errors.targetPF && <p className="text-xs text-destructive">{errors.targetPF}</p>}
+        <p className="text-xs text-muted-foreground">Used to estimate capacitor size for PF correction</p>
+      </div>
 
       <div className="flex space-x-3 pt-2">
         <Button onClick={calculatePowerFactor} className="flex-1">Calculate</Button>

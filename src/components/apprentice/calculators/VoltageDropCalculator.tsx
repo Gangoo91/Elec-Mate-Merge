@@ -14,10 +14,13 @@ const VoltageDropCalculator = () => {
   const [length, setLength] = useState<string>("");
   const [cableSize, setCableSize] = useState<string>("");
   const [voltage, setVoltage] = useState<string>("230");
+  const [phase, setPhase] = useState<"single" | "three">("single");
+  const [circuitType, setCircuitType] = useState<"lighting" | "other">("lighting");
   const [result, setResult] = useState<{
     voltageDrop: number;
     percentageDrop: number;
     acceptable: boolean;
+    limitPercent: number;
   } | null>(null);
 
   // Cable resistance values (mΩ/m for copper T&E at 70°C)
@@ -33,31 +36,37 @@ const VoltageDropCalculator = () => {
     "35.0": 0.565
   };
 
-  const calculateVoltageDrop = () => {
+const calculateVoltageDrop = () => {
     const I = parseFloat(current);
     const L = parseFloat(length);
     const V = parseFloat(voltage);
     const R = cableResistance[cableSize as keyof typeof cableResistance];
 
     if (I > 0 && L > 0 && R && V > 0) {
-      // Voltage drop = 2 × I × L × R / 1000 (factor of 2 for line and neutral)
-      const voltageDrop = (2 * I * L * R) / 1000;
-      const percentageDrop = (voltageDrop / V) * 100;
-      const acceptable = percentageDrop <= 3; // BS 7671 limit for lighting, 5% for other circuits
+      const limit = circuitType === "lighting" ? 3 : 5; // BS 7671 design limits
+      const vdVolts =
+        phase === "single"
+          ? (2 * I * L * R) / 1000 // line and neutral return path
+          : (Math.sqrt(3) * I * L * R) / 1000; // three-phase
+      const percentageDrop = (vdVolts / V) * 100;
+      const acceptable = percentageDrop <= limit;
 
       setResult({
-        voltageDrop,
+        voltageDrop: vdVolts,
         percentageDrop,
-        acceptable
+        acceptable,
+        limitPercent: limit
       });
     }
   };
 
-  const reset = () => {
+const reset = () => {
     setCurrent("");
     setLength("");
     setCableSize("");
     setVoltage("230");
+    setPhase("single");
+    setCircuitType("lighting");
     setResult(null);
   };
 
@@ -120,6 +129,26 @@ const VoltageDropCalculator = () => {
               </MobileSelectContent>
             </MobileSelect>
 
+            <MobileSelect value={phase} onValueChange={(v: "single" | "three") => setPhase(v)}>
+              <MobileSelectTrigger label="System Phase">
+                <MobileSelectValue placeholder="Select phase" />
+              </MobileSelectTrigger>
+              <MobileSelectContent>
+                <MobileSelectItem value="single">Single-phase (1φ)</MobileSelectItem>
+                <MobileSelectItem value="three">Three-phase (3φ)</MobileSelectItem>
+              </MobileSelectContent>
+            </MobileSelect>
+
+            <MobileSelect value={circuitType} onValueChange={(v: "lighting" | "other") => setCircuitType(v)}>
+              <MobileSelectTrigger label="Circuit Type (BS 7671 limit)">
+                <MobileSelectValue placeholder="Select circuit type" />
+              </MobileSelectTrigger>
+              <MobileSelectContent>
+                <MobileSelectItem value="lighting">Lighting (3%)</MobileSelectItem>
+                <MobileSelectItem value="other">Other final circuits (5%)</MobileSelectItem>
+              </MobileSelectContent>
+            </MobileSelect>
+
             <div className="flex gap-2">
               <MobileButton onClick={calculateVoltageDrop} className="flex-1" variant="elec" icon={<Calculator className="h-4 w-4" />}>
                 Calculate
@@ -156,6 +185,16 @@ const VoltageDropCalculator = () => {
                     <div>
                       <span className="text-muted-foreground">Percentage Drop:</span>
                       <div className="font-mono text-elec-yellow text-lg">{result.percentageDrop.toFixed(2)}%</div>
+                    </div>
+                    
+                    <div>
+                      <span className="text-muted-foreground">Design Limit ({circuitType === "lighting" ? "Lighting" : "Other"}):</span>
+                      <div className="font-mono text-elec-yellow">{result.limitPercent.toFixed(0)}%</div>
+                    </div>
+
+                    <div>
+                      <span className="text-muted-foreground">System Phase:</span>
+                      <div className="font-mono text-elec-yellow">{phase === "single" ? "Single-phase (1φ)" : "Three-phase (3φ)"}</div>
                     </div>
                     
                     <div>

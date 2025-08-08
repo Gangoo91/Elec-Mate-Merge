@@ -2,6 +2,7 @@
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
 import { Calculator } from "lucide-react";
 import { fuseTypes, fuseRatings, curveTypes } from "./ZsValuesData";
 
@@ -20,6 +21,10 @@ interface ZsCalculatorFormProps {
   setMcbCurve: (value: string) => void;
   rcboCurve: string;
   setRcboCurve: (value: string) => void;
+  ze: string;
+  setZe: (value: string) => void;
+  r1r2: string;
+  setR1R2: (value: string) => void;
   onCalculate: () => void;
   onReset: () => void;
 }
@@ -39,6 +44,10 @@ const ZsCalculatorForm = ({
   setMcbCurve,
   rcboCurve,
   setRcboCurve,
+  ze,
+  setZe,
+  r1r2,
+  setR1R2,
   onCalculate,
   onReset
 }: ZsCalculatorFormProps) => {
@@ -172,6 +181,33 @@ const ZsCalculatorForm = ({
           )}
         </>
       )}
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <Label htmlFor="ze">External Earth Loop Impedance Ze (Ω)</Label>
+          <Input
+            id="ze"
+            type="number"
+            inputMode="decimal"
+            placeholder="e.g., 0.35"
+            className="bg-elec-dark border-elec-yellow/20"
+            value={ze}
+            onChange={(e) => setZe(e.target.value)}
+          />
+        </div>
+        <div>
+          <Label htmlFor="r1r2">R1 + R2 (Ω)</Label>
+          <Input
+            id="r1r2"
+            type="number"
+            inputMode="decimal"
+            placeholder="e.g., 0.23"
+            className="bg-elec-dark border-elec-yellow/20"
+            value={r1r2}
+            onChange={(e) => setR1R2(e.target.value)}
+          />
+        </div>
+      </div>
 
       <div className="flex gap-2">
         <Button 

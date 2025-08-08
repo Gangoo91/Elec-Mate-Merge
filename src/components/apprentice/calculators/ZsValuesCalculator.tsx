@@ -16,7 +16,11 @@ const ZsValuesCalculator = () => {
   const [protectionType, setProtectionType] = useState("");
   const [mcbCurve, setMcbCurve] = useState("");
   const [rcboCurve, setRcboCurve] = useState("");
+  const [ze, setZe] = useState<string>("");
+  const [r1r2, setR1R2] = useState<string>("");
   const [result, setResult] = useState<number | null>(null);
+
+  const calculatedZs = ze && r1r2 ? parseFloat(ze) + parseFloat(r1r2) : null;
 
   const calculateZs = () => {
     let rating: number;
@@ -52,7 +56,7 @@ const ZsValuesCalculator = () => {
     setResult(maxZs || null);
   };
 
-  const resetCalculator = () => {
+const resetCalculator = () => {
     setMcbRating("");
     setRcboRating("");
     setFusRating("");
@@ -60,6 +64,8 @@ const ZsValuesCalculator = () => {
     setProtectionType("");
     setMcbCurve("");
     setRcboCurve("");
+    setZe("");
+    setR1R2("");
     setResult(null);
   };
 
@@ -108,12 +114,17 @@ const ZsValuesCalculator = () => {
                 setMcbCurve={setMcbCurve}
                 rcboCurve={rcboCurve}
                 setRcboCurve={setRcboCurve}
+                ze={ze}
+                setZe={setZe}
+                r1r2={r1r2}
+                setR1R2={setR1R2}
                 onCalculate={calculateZs}
                 onReset={resetCalculator}
               />
               
               <ZsCalculatorResult
                 result={result}
+                calculatedZs={calculatedZs}
                 protectionType={protectionType}
                 mcbRating={mcbRating}
                 rcboRating={rcboRating}
