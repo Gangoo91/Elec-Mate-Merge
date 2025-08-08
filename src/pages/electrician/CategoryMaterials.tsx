@@ -156,6 +156,11 @@ const CategoryMaterials = () => {
               <ArrowLeft className="h-4 w-4" /> Back
             </Button>
           </Link>
+          <Link to="/electrician/trade-essentials">
+            <Button variant="outline" className="flex items-center gap-2">
+              <ArrowLeft className="h-4 w-4" /> Trade Essentials
+            </Button>
+          </Link>
           <Button variant="outline" onClick={fetchLiveDeals} disabled={isFetching} className="flex items-center gap-2">
             <RefreshCw className={`h-4 w-4 ${isFetching ? 'animate-spin' : ''}`} />
             {isFetching ? 'Fetching…' : 'Fetch Live Deals'}

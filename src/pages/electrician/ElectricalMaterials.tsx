@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { 
   Package, 
   Search,
@@ -10,9 +11,10 @@ import {
   Shield,
   Settings,
   Wrench,
-  Building
+  Building,
+  ArrowLeft
 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const ElectricalMaterials = () => {
   const navigate = useNavigate();
@@ -76,12 +78,17 @@ const ElectricalMaterials = () => {
 
   return (
     <div className="space-y-6 animate-fade-in">
-      <div className="space-y-2">
-        <h1 className="text-2xl md:text-3xl font-bold tracking-tight">Materials</h1>
-        <p className="text-muted-foreground text-sm md:text-base">
-          Browse electrical materials for your projects
-        </p>
-      </div>
+      <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div className="space-y-2">
+          <h1 className="text-2xl md:text-3xl font-bold tracking-tight">Materials</h1>
+          <p className="text-muted-foreground text-sm md:text-base">Browse electrical materials for your projects</p>
+        </div>
+        <Link to="/electrician/trade-essentials">
+          <Button variant="outline" className="flex items-center gap-2">
+            <ArrowLeft className="h-4 w-4" /> Back to Trade Essentials
+          </Button>
+        </Link>
+      </header>
 
       <div className="relative max-w-md">
         <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
