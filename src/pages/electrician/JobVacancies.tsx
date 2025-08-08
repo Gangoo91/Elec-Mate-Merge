@@ -13,7 +13,7 @@ import JobInsights from "@/components/job-vacancies/JobInsights";
 import { useJobListings } from "@/hooks/job-vacancies/useJobListings";
 import { Search, MessageCircle, PoundSterling, Brain, BarChart3 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
-
+import { Helmet } from "react-helmet";
 // Define a consistent JobListing interface to avoid type conflicts
 export interface JobListing {
   id: string;
@@ -98,6 +98,11 @@ const JobVacancies = () => {
   return (
     <div className="min-h-screen bg-elec-gray">
       <div className="container mx-auto px-4 py-6 space-y-6 animate-fade-in">
+        <Helmet>
+          <title>UK Electrician Job Vacancies | Mobile Job Search</title>
+          <meta name="description" content="Find electrician jobs across the UK with mobile-first search, filters and insights. BS7671-aware." />
+          <link rel="canonical" href="/electrician/job-vacancies" />
+        </Helmet>
         <JobVacancyHeader />
 
         <DropdownTabs

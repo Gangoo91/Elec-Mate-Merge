@@ -28,7 +28,7 @@ import { formatDistanceToNow } from "date-fns";
 import { LocationService } from "@/services/locationService";
 import { supabase } from "@/integrations/supabase/client";
 import SearchError from "./SearchError";
-
+import { Skeleton } from "@/components/ui/skeleton";
 interface Job {
   id: string;
   title: string;
@@ -279,7 +279,7 @@ const UnifiedJobSearch = () => {
   return (
     <div className="space-y-6">
       {/* Search Form with Integrated Filters */}
-      <Card className="border-elec-yellow/20 bg-elec-card w-full">
+      <Card className="border-elec-yellow/20 bg-elec-card w-full sm:static sticky top-2 z-50">
         <CardHeader className="pb-4">
           <CardTitle className="flex items-center gap-3 text-elec-light text-xl">
             <div className="p-2 bg-elec-yellow rounded-lg">
@@ -377,7 +377,7 @@ const UnifiedJobSearch = () => {
                     <SelectTrigger className="bg-elec-gray border-elec-yellow/30">
                       <SelectValue />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className="bg-elec-card z-50"> 
                       {salaryRanges.map(range => (
                         <SelectItem key={range.value} value={range.value}>
                           {range.label}
@@ -393,7 +393,7 @@ const UnifiedJobSearch = () => {
                     <SelectTrigger className="bg-elec-gray border-elec-yellow/30">
                       <SelectValue />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className="bg-elec-card z-50">
                       {jobTypes.map(type => (
                         <SelectItem key={type.value} value={type.value}>
                           {type.label}
@@ -409,7 +409,7 @@ const UnifiedJobSearch = () => {
                     <SelectTrigger className="bg-elec-gray border-elec-yellow/30">
                       <SelectValue />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className="bg-elec-card z-50">
                       {experienceLevels.map(level => (
                         <SelectItem key={level.value} value={level.value}>
                           {level.label}
@@ -448,6 +448,27 @@ const UnifiedJobSearch = () => {
 
       {/* Error Display */}
       {error && <SearchError error={error} onRetry={() => handleSearch()} />}
+
+      {/* Loading state */}
+      {loading && (
+        <div className="grid gap-4">
+          {[1,2,3].map((i) => (
+            <Card key={i} className="border-elec-yellow/20 bg-elec-card">
+              <CardContent className="p-6 space-y-4">
+                <div className="flex items-center justify-between">
+                  <div className="space-y-2 w-3/4">
+                    <Skeleton className="h-5 w-5/6" />
+                    <Skeleton className="h-4 w-1/2" />
+                  </div>
+                  <Skeleton className="h-10 w-28" />
+                </div>
+                <Skeleton className="h-4 w-full" />
+                <Skeleton className="h-4 w-5/6" />
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      )}
 
       {/* Results */}
       {jobs.length > 0 && (

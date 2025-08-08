@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
-import { useToast } from '@/components/ui/use-toast';
+import { useToast } from '@/hooks/use-toast';
 import { ApiErrorDisplay, ApiTroubleshooting } from '../electrician-pricing/merchant-finder/ApiErrorDisplay';
 
 interface GoogleMapsLoaderProps {
