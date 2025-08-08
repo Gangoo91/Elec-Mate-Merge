@@ -34,6 +34,14 @@ const MaterialCard: React.FC<MaterialCardProps> = ({ item }) => {
     }
   };
 
+  // Normalise image paths to ensure relative placeholders become absolute
+  const imageSrc = (() => {
+    const src = item.image;
+    if (!src) return "/placeholder.svg";
+    if (/^https?:\/\//i.test(src) || src.startsWith("/")) return src;
+    return `/${src}`;
+  })();
+
   return (
     <Card className="border-elec-yellow/20 bg-elec-gray flex flex-col h-full hover:border-elec-yellow/50 transition-all">
       <CardHeader className="pb-2">
@@ -56,7 +64,7 @@ const MaterialCard: React.FC<MaterialCardProps> = ({ item }) => {
       <CardContent className="flex flex-col flex-1 justify-between">
         <div className="bg-elec-card/50 h-32 rounded-md mb-4 flex items-center justify-center overflow-hidden">
           <img
-            src={item.image || "/placeholder.svg"}
+            src={imageSrc}
             alt={`${item.name} from ${item.supplier} - electrical materials`}
             loading="lazy"
             className="object-contain w-full h-full"

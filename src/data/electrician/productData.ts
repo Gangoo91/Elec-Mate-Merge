@@ -19,7 +19,7 @@ export const productsBySupplier: Record<string, MaterialItem[]> = {
       category: "Accessories",
       price: "£6.75",
       supplier: "Screwfix",
-      image: "placeholder.svg",
+      image: "/placeholder.svg",
       stockStatus: "In Stock" as "In Stock"
     },
     {
@@ -28,7 +28,7 @@ export const productsBySupplier: Record<string, MaterialItem[]> = {
       category: "Accessories",
       price: "£4.99",
       supplier: "Screwfix",
-      image: "placeholder.svg",
+      image: "/placeholder.svg",
       stockStatus: "In Stock" as "In Stock"
     },
     {
@@ -37,7 +37,7 @@ export const productsBySupplier: Record<string, MaterialItem[]> = {
       category: "Protection",
       price: "£8.50",
       supplier: "Screwfix",
-      image: "placeholder.svg",
+      image: "/placeholder.svg",
       stockStatus: "Low Stock" as "Low Stock"
     }
   ],
@@ -48,7 +48,7 @@ export const productsBySupplier: Record<string, MaterialItem[]> = {
       category: "Distribution",
       price: "£109.50",
       supplier: "City Electrical Factors",
-      image: "placeholder.svg",
+      image: "/placeholder.svg",
       isOnSale: true,
       salePrice: "£95.75",
       stockStatus: "In Stock" as "In Stock"
@@ -59,7 +59,7 @@ export const productsBySupplier: Record<string, MaterialItem[]> = {
       category: "Protection",
       price: "£34.25",
       supplier: "City Electrical Factors",
-      image: "placeholder.svg",
+      image: "/placeholder.svg",
       stockStatus: "In Stock" as "In Stock"
     }
   ],
@@ -70,7 +70,7 @@ export const productsBySupplier: Record<string, MaterialItem[]> = {
       category: "Cables",
       price: "£85.99",
       supplier: "ElectricalDirect",
-      image: "placeholder.svg",
+      image: "/placeholder.svg",
       stockStatus: "In Stock" as "In Stock"
     },
     {
@@ -79,7 +79,7 @@ export const productsBySupplier: Record<string, MaterialItem[]> = {
       category: "Protection",
       price: "£7.50",
       supplier: "ElectricalDirect",
-      image: "placeholder.svg",
+      image: "/placeholder.svg",
       stockStatus: "In Stock" as "In Stock"
     }
   ],
@@ -90,7 +90,7 @@ export const productsBySupplier: Record<string, MaterialItem[]> = {
       category: "Lighting",
       price: "£29.99",
       supplier: "Toolstation",
-      image: "placeholder.svg",
+      image: "/placeholder.svg",
       isOnSale: true,
       salePrice: "£24.99",
       stockStatus: "In Stock" as "In Stock"
@@ -101,7 +101,7 @@ export const productsBySupplier: Record<string, MaterialItem[]> = {
       category: "Accessories",
       price: "£3.49",
       supplier: "Toolstation",
-      image: "placeholder.svg",
+      image: "/placeholder.svg",
       stockStatus: "In Stock" as "In Stock"
     }
   ]
