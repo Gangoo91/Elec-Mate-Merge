@@ -7,6 +7,7 @@ import {
   MobileAccordionContent,
 } from "@/components/ui/mobile-accordion";
 import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
 import { 
   MessageCircle, 
   CheckCircle, 
@@ -25,12 +26,25 @@ const InterviewGuidanceTab = () => {
     tips: "teal"
   };
 
+  const categoryStyle: Record<string, { iconBg: string; icon: string; badgeBg: string; badgeText: string }> = {
+    indigo: { iconBg: "bg-indigo-500/10", icon: "text-indigo-400", badgeBg: "bg-indigo-500/10", badgeText: "text-indigo-300" },
+    purple: { iconBg: "bg-purple-500/10", icon: "text-purple-400", badgeBg: "bg-purple-500/10", badgeText: "text-purple-300" },
+    blue: { iconBg: "bg-blue-500/10", icon: "text-blue-400", badgeBg: "bg-blue-500/10", badgeText: "text-blue-300" },
+    cyan: { iconBg: "bg-cyan-500/10", icon: "text-cyan-400", badgeBg: "bg-cyan-500/10", badgeText: "text-cyan-300" },
+    teal: { iconBg: "bg-teal-500/10", icon: "text-teal-400", badgeBg: "bg-teal-500/10", badgeText: "text-teal-300" },
+  };
+
   const difficultyColors = {
     Essential: "green",
     Intermediate: "yellow",
     Advanced: "red"
   };
 
+  const difficultyStyle: Record<string, { bg: string; text: string; border: string }> = {
+    green: { bg: "bg-green-500/10", text: "text-green-300", border: "border-green-500/20" },
+    yellow: { bg: "bg-yellow-500/10", text: "text-yellow-300", border: "border-yellow-500/20" },
+    red: { bg: "bg-red-500/10", text: "text-red-300", border: "border-red-500/20" },
+  };
   const interviewGuides = [
     {
       title: "Interview Preparation",
@@ -135,12 +149,12 @@ const InterviewGuidanceTab = () => {
   ];
 
   return (
-    <Card className="border-indigo-500/20">
-      <CardHeader>
-        <div className="flex items-center gap-3">
-          <MessageCircle className="h-6 w-6 text-indigo-500" />
-          <CardTitle>Interview Guidance</CardTitle>
+    <Card className="border-elec-yellow/20 bg-elec-card">
+      <CardHeader className="text-center space-y-2">
+        <div className="mx-auto w-10 h-10 rounded-lg bg-elec-yellow/10 flex items-center justify-center">
+          <MessageCircle className="h-5 w-5 text-elec-yellow" />
         </div>
+        <CardTitle className="text-xl">Interview Guidance</CardTitle>
         <p className="text-muted-foreground">Professional step-by-step guides for electrical job interviews</p>
       </CardHeader>
       <CardContent>
@@ -149,26 +163,28 @@ const InterviewGuidanceTab = () => {
             const Icon = guide.icon;
             const categoryColor = categoryColors[guide.category as keyof typeof categoryColors];
             const difficultyColor = difficultyColors[guide.difficulty as keyof typeof difficultyColors];
+            const cat = categoryStyle[categoryColor] || categoryStyle.indigo;
+            const diff = difficultyStyle[difficultyColor] || difficultyStyle.green;
             
             return (
-              <MobileAccordionItem key={index} value={`guide-${index}`} className="border border-border rounded-lg mb-3">
+              <MobileAccordionItem key={index} value={`guide-${index}`} className="border border-elec-yellow/20 bg-elec-gray rounded-lg mb-3">
                 <MobileAccordionTrigger className="px-4 py-3">
                   <div className="flex items-center gap-3 flex-1">
-                    <div className={`p-2 rounded-lg bg-${categoryColor}-500/10`}>
-                      <Icon className={`h-5 w-5 text-${categoryColor}-500`} />
+                    <div className={cn("p-2 rounded-lg", cat.iconBg)}>
+                      <Icon className={cn("h-5 w-5", cat.icon)} />
                     </div>
                     <div className="flex-1 text-left">
                       <div className="font-semibold text-sm">{guide.title}</div>
                       <div className="flex gap-2 mt-1">
                         <Badge 
                           variant="secondary" 
-                          className={`text-xs bg-${categoryColor}-500/10 text-${categoryColor}-700 dark:text-${categoryColor}-300`}
+                          className={cn("text-xs", cat.badgeBg, cat.badgeText)}
                         >
                           {guide.category}
                         </Badge>
                         <Badge 
                           variant="outline" 
-                          className={`text-xs bg-${difficultyColor}-500/10 text-${difficultyColor}-700 dark:text-${difficultyColor}-300 border-${difficultyColor}-500/20`}
+                          className={cn("text-xs border", diff.bg, diff.text, diff.border)}
                         >
                           {guide.difficulty}
                         </Badge>
