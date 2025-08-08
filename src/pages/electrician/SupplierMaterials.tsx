@@ -74,7 +74,7 @@ const SupplierMaterials = () => {
     setIsFetchingLive(true);
     try {
       const { data, error } = await supabase.functions.invoke('scrape-supplier-products', {
-        body: { supplierSlug: supplierSlug.toLowerCase(), searchTerm: "electrical" }
+        body: { supplierSlug: supplierSlug.toLowerCase(), searchTerm: "cable" }
       });
 
       if (error) {

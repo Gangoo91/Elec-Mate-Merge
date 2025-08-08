@@ -31,7 +31,8 @@ function buildSearchUrl(slug: SupplierSlug, query: string) {
     case "city-electrical-factors":
       return `https://www.cef.co.uk/search?q=${q}`;
     case "electricaldirect":
-      return `https://www.electricaldirect.co.uk/search?q=${q}`;
+      // ElectricalDirect prefers `query` param – using `q` can yield Netlify 404s
+      return `https://www.electricaldirect.co.uk/search?query=${q}`;
     case "toolstation":
       return `https://www.toolstation.com/search?q=${q}`;
     default:
@@ -73,83 +74,151 @@ serve(async (req) => {
     const supplierName = SUPPLIER_NAMES[supplierSlug];
     const searchUrl = buildSearchUrl(supplierSlug, searchTerm);
 
-    // Placeholder "live" dataset (ready to swap with Firecrawl extraction)
-    const products: MaterialItem[] = [
-      {
-        id: 10001,
-        name: "Twin & Earth 2.5mm² (100m)",
-        category: "Cables",
-        price: "£89.20",
-        supplier: supplierName,
-        image: "placeholder.svg",
-        stockStatus: "In Stock",
-        productUrl: searchUrl
-      },
-      {
-        id: 10002,
-        name: "32A Type B MCB",
-        category: "Protection",
-        price: "£7.95",
-        supplier: supplierName,
-        image: "placeholder.svg",
-        stockStatus: "In Stock",
-        productUrl: searchUrl
-      },
-      {
-        id: 10003,
-        name: "LED Downlight 6W Fire-Rated",
-        category: "Lighting",
-        price: "£18.49",
-        supplier: supplierName,
-        image: "placeholder.svg",
-        isOnSale: true,
-        salePrice: "£16.99",
-        stockStatus: "Low Stock",
-        productUrl: searchUrl
-      },
-      {
-        id: 10004,
-        name: "6mm² SWA Cable (50m)",
-        category: "Cables",
-        price: "£154.10",
-        supplier: supplierName,
-        image: "placeholder.svg",
-        stockStatus: "In Stock",
-        productUrl: searchUrl
-      },
-      {
-        id: 10005,
-        name: "18th Edition Consumer Unit (10 Way)",
-        category: "Distribution",
-        price: "£112.30",
-        supplier: supplierName,
-        image: "placeholder.svg",
-        stockStatus: "In Stock",
-        productUrl: searchUrl
-      },
-      {
-        id: 10006,
-        name: "Weatherproof Junction Box",
-        category: "Accessories",
-        price: "£3.39",
-        supplier: supplierName,
-        image: "placeholder.svg",
-        stockStatus: "In Stock",
-        productUrl: searchUrl
-      }
-    ];
+    // Attempt live scraping with Firecrawl if API key is configured
+    let products: MaterialItem[] = [];
 
-    // Future enhancement: Firecrawl integration example (pseudo)
-    // 1) Fetch supplier page with Firecrawl (Authorization: Bearer FIRECRAWL_API_KEY)
-    // 2) Extract product cards into MaterialItem[] using page structure
-    // 3) Return structured results as below
+    if (firecrawlKey) {
+      try {
+        const fcRes = await fetch("https://api.firecrawl.dev/v1/crawl", {
+          method: "POST",
+          headers: {
+            "Authorization": `Bearer ${firecrawlKey}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            url: searchUrl,
+            limit: 1,
+            scrapeOptions: { formats: ["html"] },
+          }),
+        });
+
+        const fcJson: any = await fcRes.json().catch(() => ({}));
+        console.log("[SCRAPE-SUPPLIER-PRODUCTS] Firecrawl status:", fcRes.status, fcJson?.status);
+
+        const html: string = fcJson?.data?.[0]?.html || fcJson?.html || "";
+
+        if (html) {
+          const anchorRegex = /<a\s+[^>]*href=["']([^"']+)["'][^>]*>(.*?)<\/a>/gi;
+          const textRegex = /<[^>]+>/g; // strip tags
+          const seen = new Set<string>();
+
+          const domain = new URL(searchUrl).hostname.replace(/^www\./, "");
+          const likelyPrice = /£\s?\d+[\d,.]*/i;
+          const results: MaterialItem[] = [];
+          let match: RegExpExecArray | null;
+          while ((match = anchorRegex.exec(html)) !== null && results.length < 48) {
+            const hrefRaw = match[1];
+            let text = (match[2] || "").replace(textRegex, "").replace(/\s+/g, " ").trim();
+            if (!hrefRaw || !text || text.length < 3) continue;
+
+            // Only keep links pointing to the same supplier domain
+            let url: URL | null = null;
+            try {
+              url = new URL(hrefRaw, searchUrl);
+            } catch (_) { /* ignore */ }
+            if (!url) continue;
+            const host = url.hostname.replace(/^www\./, "");
+            if (!host.endsWith(domain)) continue;
+
+            const key = url.toString();
+            if (seen.has(key)) continue;
+            seen.add(key);
+
+            const isCable = /cable|t\s*&\s*e|twin\s*&\s*earth|swa|flex|armoured|mm²|mm2|cat\d/i.test(text) || /cable/i.test(searchTerm);
+            const name = text.length > 120 ? text.slice(0, 117) + "…" : text;
+
+            results.push({
+              id: Date.now() + results.length,
+              name,
+              category: isCable ? "Cables" : "Materials",
+              price: (text.match(likelyPrice)?.[0] ?? "£—"),
+              supplier: supplierName,
+              image: "placeholder.svg",
+              productUrl: url.toString(),
+            });
+          }
+
+          products = results;
+        }
+      } catch (err) {
+        console.error("[SCRAPE-SUPPLIER-PRODUCTS] Firecrawl fetch failed:", err);
+      }
+    }
+
+    // Fallback curated dataset if scraping produced no items
+    if (!products || products.length === 0) {
+      products = [
+        {
+          id: 10001,
+          name: "Twin & Earth 2.5mm² (100m)",
+          category: "Cables",
+          price: "£89.20",
+          supplier: supplierName,
+          image: "placeholder.svg",
+          stockStatus: "In Stock",
+          productUrl: searchUrl,
+        },
+        {
+          id: 10004,
+          name: "6mm² SWA Cable (50m)",
+          category: "Cables",
+          price: "£154.10",
+          supplier: supplierName,
+          image: "placeholder.svg",
+          stockStatus: "In Stock",
+          productUrl: searchUrl,
+        },
+        {
+          id: 10002,
+          name: "32A Type B MCB",
+          category: "Protection",
+          price: "£7.95",
+          supplier: supplierName,
+          image: "placeholder.svg",
+          stockStatus: "In Stock",
+          productUrl: searchUrl,
+        },
+        {
+          id: 10003,
+          name: "LED Downlight 6W Fire-Rated",
+          category: "Lighting",
+          price: "£18.49",
+          supplier: supplierName,
+          image: "placeholder.svg",
+          isOnSale: true,
+          salePrice: "£16.99",
+          stockStatus: "Low Stock",
+          productUrl: searchUrl,
+        },
+        {
+          id: 10005,
+          name: "18th Edition Consumer Unit (10 Way)",
+          category: "Distribution",
+          price: "£112.30",
+          supplier: supplierName,
+          image: "placeholder.svg",
+          stockStatus: "In Stock",
+          productUrl: searchUrl,
+        },
+        {
+          id: 10006,
+          name: "Weatherproof Junction Box",
+          category: "Accessories",
+          price: "£3.39",
+          supplier: supplierName,
+          image: "placeholder.svg",
+          stockStatus: "In Stock",
+          productUrl: searchUrl,
+        },
+      ];
+    }
 
     return new Response(
       JSON.stringify({
         products,
         supplier: supplierName,
         lastUpdated: now,
-        note: firecrawlKey ? "Live scraping ready - Firecrawl key detected" : "Firecrawl key missing - returning curated results",
+        note: firecrawlKey ? "Live scraping attempted" : "Firecrawl key missing - returning curated results",
       }),
       { headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
