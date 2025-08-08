@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { MobileInput } from "@/components/ui/mobile-input";
+import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import BackButton from "@/components/common/BackButton";
@@ -28,7 +29,9 @@ const HourlyRateCalculator = () => {
     profitMargin: 25,
     utilizationRate: 75,
   });
-  const [calculated, setCalculated] = useState(false);
+const [calculated, setCalculated] = useState(false);
+  const [vatRegistered, setVatRegistered] = useState(false);
+  const [rounding, setRounding] = useState<'none' | 'nearest1' | 'nearest5' | 'nearest10'>('nearest1');
 
   const calculateRate = () => {
     setCalculated(true);
@@ -81,6 +84,24 @@ const HourlyRateCalculator = () => {
   const totalCostPerHour = baseCostPerHour + overheadCostPerHour;
   const minimumRate = totalCostPerHour / Math.max(1 - inputs.profitMargin / 100, 0.01);
   const dayRate = minimumRate * inputs.hoursPerDay;
+
+  const VAT_RATE = 0.2;
+  const applyRounding = (v: number) => {
+    switch (rounding) {
+      case 'nearest1':
+        return Math.round(v);
+      case 'nearest5':
+        return Math.round(v / 5) * 5;
+      case 'nearest10':
+        return Math.round(v / 10) * 10;
+      default:
+        return Number(v.toFixed(2));
+    }
+  };
+  const roundedHourlyExVat = applyRounding(minimumRate);
+  const roundedDayExVat = applyRounding(dayRate);
+  const hourlyIncVat = vatRegistered ? applyRounding(roundedHourlyExVat * (1 + VAT_RATE)) : null;
+  const dayIncVat = vatRegistered ? applyRounding(roundedDayExVat * (1 + VAT_RATE)) : null;
 
   const chartData = useMemo(() => [
     { name: "Base", value: Number(baseCostPerHour.toFixed(2)) },
@@ -166,6 +187,44 @@ const HourlyRateCalculator = () => {
               unit="%"
               hint="Billable vs total hours (70-80%)"
             />
+            <div className="space-y-4">
+              <h4 className="text-white font-semibold">Options</h4>
+              <div className="grid sm:grid-cols-2 gap-3">
+                <div className="space-y-2">
+                  <label className="text-white text-sm font-medium">VAT Registered?</label>
+                  <div className="flex gap-2">
+                    <Button
+                      variant={vatRegistered ? "default" : "outline"}
+                      size="sm"
+                      onClick={() => setVatRegistered(true)}
+                      className={vatRegistered ? "bg-elec-yellow text-black" : "border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"}
+                    >
+                      Yes
+                    </Button>
+                    <Button
+                      variant={!vatRegistered ? "default" : "outline"}
+                      size="sm"
+                      onClick={() => setVatRegistered(false)}
+                      className={!vatRegistered ? "bg-elec-yellow text-black" : "border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"}
+                    >
+                      No
+                    </Button>
+                  </div>
+                </div>
+                <MobileSelectWrapper
+                  label="Rounding"
+                  value={rounding}
+                  onValueChange={(v) => setRounding(v as any)}
+                  options={[
+                    { value: 'none', label: 'Exact (£0.01)' },
+                    { value: 'nearest1', label: 'Nearest £1' },
+                    { value: 'nearest5', label: 'Nearest £5' },
+                    { value: 'nearest10', label: 'Nearest £10' },
+                  ]}
+                  hint="Applies to rates shown"
+                />
+              </div>
+            </div>
             <div className="flex flex-wrap gap-3">
               <Button onClick={calculateRate} className="bg-elec-yellow text-black hover:bg-elec-yellow/90">
                 <Calculator className="h-4 w-4 mr-2" />
@@ -193,9 +252,13 @@ const HourlyRateCalculator = () => {
             {calculated ? (
               <>
                 <div className="text-center bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-6">
-                  <h3 className="text-white font-semibold mb-2">Recommended Hourly Rate</h3>
-                  <p className="text-4xl font-bold text-elec-yellow">£{minimumRate.toFixed(2)}</p>
-                  <p className="text-sm text-muted-foreground mt-2">Minimum rate to achieve targets</p>
+                  <h3 className="text-white font-semibold mb-2">Recommended Hourly Rate (ex VAT)</h3>
+                  <p className="text-4xl font-bold text-elec-yellow">£{roundedHourlyExVat.toFixed(2)}</p>
+                  {vatRegistered && (
+                    <p className="text-sm text-elec-light mt-2">
+                      Inc VAT: <span className="font-semibold text-elec-yellow">£{hourlyIncVat?.toFixed(2)}</span>
+                    </p>
+                  )}
                 </div>
                 
                 <div className="space-y-4">
@@ -222,8 +285,11 @@ const HourlyRateCalculator = () => {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="text-center bg-elec-dark/50 rounded-lg p-4 border border-elec-yellow/20">
-                    <h4 className="text-white font-medium">Estimated Day Rate</h4>
-                    <div className="text-2xl font-bold text-elec-yellow mt-1">£{dayRate.toFixed(2)}</div>
+                    <h4 className="text-white font-medium">Estimated Day Rate (ex VAT)</h4>
+                    <div className="text-2xl font-bold text-elec-yellow mt-1">£{roundedDayExVat.toFixed(2)}</div>
+                    {vatRegistered && (
+                      <p className="text-xs text-elec-light mt-1">Inc VAT: £{dayIncVat?.toFixed(2)}</p>
+                    )}
                     <p className="text-xs text-elec-light mt-1">Based on {inputs.hoursPerDay} hours/day</p>
                   </div>
 
@@ -258,7 +324,7 @@ const HourlyRateCalculator = () => {
                     <h4 className="font-medium">Rate Recommendations</h4>
                   </div>
                   <p className="text-sm text-green-200 mt-2">
-                    Your calculated rate of £{minimumRate.toFixed(2)}/hour should cover all costs and deliver your target salary.
+                    Your calculated rate of £{roundedHourlyExVat.toFixed(2)}/hour (ex VAT){vatRegistered ? ` or £${hourlyIncVat?.toFixed(2)}/hour inc VAT` : ''} should cover all costs and deliver your target salary.
                     Consider market rates and adjust accordingly.
                   </p>
                 </div>
