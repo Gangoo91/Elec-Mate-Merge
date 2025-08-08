@@ -80,7 +80,7 @@ const BusinessCalculators = () => {
         <p className="text-muted-foreground text-center max-w-2xl mb-6">
           Professional calculators and tools to help you make informed business decisions and plan for success.
         </p>
-        <BackButton customUrl="/electrician/business-development" label="Back to Business Development" />
+        <BackButton customUrl="/electrician/business" label="Back to Business Hub" />
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
