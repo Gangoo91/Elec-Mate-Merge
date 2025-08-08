@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Package, ArrowLeft, AlertTriangle, ExternalLink, Star, BellDot } from "lucide-react";
+import { Package, ArrowLeft, AlertTriangle, ExternalLink, Star, BellDot, RefreshCw } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { toast } from "@/hooks/use-toast";
 import MaterialSearch from "@/components/electrician-materials/MaterialSearch";
@@ -11,6 +11,7 @@ import SupplierProductGrid from "@/components/electrician-materials/SupplierProd
 import { supplierData, SupplierInfo } from "@/data/electrician/supplierData";
 import { productsBySupplier, MaterialItem } from "@/data/electrician/productData";
 import { Card, CardContent } from "@/components/ui/card";
+import { supabase } from "@/integrations/supabase/client";
 
 const SupplierMaterials = () => {
   const { supplierSlug } = useParams<{ supplierSlug: string }>();
@@ -18,6 +19,7 @@ const SupplierMaterials = () => {
   const [products, setProducts] = useState<MaterialItem[]>([]);
   const [supplierInfo, setSupplierInfo] = useState<SupplierInfo | null>(null);
   const [isNotifying, setIsNotifying] = useState<boolean>(false);
+  const [isFetchingLive, setIsFetchingLive] = useState<boolean>(false);
 
   useEffect(() => {
     if (supplierSlug) {
@@ -67,6 +69,43 @@ const SupplierMaterials = () => {
     });
   };
 
+  const fetchLiveDeals = async () => {
+    if (!supplierSlug) return;
+    setIsFetchingLive(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('scrape-supplier-products', {
+        body: { supplierSlug: supplierSlug.toLowerCase(), searchTerm: "electrical" }
+      });
+
+      if (error) {
+        throw new Error(error.message);
+      }
+
+      if (data?.products && Array.isArray(data.products) && data.products.length > 0) {
+        setProducts(data.products);
+        toast({
+          title: "Live deals loaded",
+          description: `Showing latest products from ${data.supplier || supplier}.`,
+        });
+      } else {
+        toast({
+          title: "No live deals found",
+          description: "Showing curated products for now.",
+          variant: "destructive"
+        });
+      }
+    } catch (err) {
+      console.error("Error fetching live deals:", err);
+      toast({
+        title: "Failed to load live deals",
+        description: err instanceof Error ? err.message : "Please try again later.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsFetchingLive(false);
+    }
+  };
+
   if (!supplierInfo) {
     return <div className="py-10 text-center">Loading supplier information...</div>;
   }
@@ -92,6 +131,15 @@ const SupplierMaterials = () => {
             className={isNotifying ? "border-elec-yellow text-elec-yellow" : ""}
           >
             <BellDot className={`h-4 w-4 ${isNotifying ? "text-elec-yellow" : ""}`} />
+          </Button>
+          <Button 
+            variant="outline" 
+            onClick={fetchLiveDeals}
+            disabled={isFetchingLive}
+            className="flex items-center gap-2"
+          >
+            <RefreshCw className={`h-4 w-4 ${isFetchingLive ? "animate-spin" : ""}`} />
+            {isFetchingLive ? "Fetching…" : "Fetch Live Deals"}
           </Button>
           <Link to="/electrician/materials">
             <Button variant="outline" className="flex items-center gap-2">

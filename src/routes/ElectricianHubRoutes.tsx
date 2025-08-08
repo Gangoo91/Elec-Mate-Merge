@@ -38,6 +38,7 @@ import EquipmentROICalculator from "@/pages/electrician/business-development/too
 import HourlyRateCalculator from "@/pages/electrician/business-development/tools/HourlyRateCalculator";
 import CapacityPlanningTool from "@/pages/electrician/business-development/tools/CapacityPlanningTool";
 import TaxNIEstimator from "@/pages/electrician/business-development/tools/TaxNIEstimator";
+import SupplierMaterials from "@/pages/electrician/SupplierMaterials";
 
 const ElectricianHubRoutes = () => (
   <Routes>
@@ -47,6 +48,7 @@ const ElectricianHubRoutes = () => (
     
     <Route path="job-vacancies" element={<JobVacancies />} />
     <Route path="materials" element={<ElectricalMaterials />} />
+    <Route path="materials/:supplierSlug" element={<SupplierMaterials />} />
     <Route path="tools" element={<ElectricalTools />} />
     <Route path="safety-shares" element={<SafetyShares />} />
     <Route path="safety-shares/projects" element={<MajorProjects />} />
