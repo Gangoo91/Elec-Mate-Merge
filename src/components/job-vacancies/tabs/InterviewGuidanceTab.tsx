@@ -150,12 +150,12 @@ const InterviewGuidanceTab = () => {
 
   return (
     <Card className="bg-transparent border-none shadow-none">
-      <CardHeader className="text-center space-y-2">
+      <CardHeader className="text-center space-y-3 pt-2 max-w-[680px] mx-auto">
         <div className="mx-auto w-10 h-10 rounded-lg bg-elec-yellow/10 flex items-center justify-center">
           <MessageCircle className="h-5 w-5 text-elec-yellow" />
         </div>
         <CardTitle className="text-xl">Interview Guidance</CardTitle>
-        <p className="text-muted-foreground">Professional step-by-step guides for electrical job interviews</p>
+        <p className="text-muted-foreground max-w-prose mx-auto">Professional step-by-step guides for electrical job interviews</p>
       </CardHeader>
       <CardContent className="space-y-4">
         {/* Metric tiles like Business Development */}
