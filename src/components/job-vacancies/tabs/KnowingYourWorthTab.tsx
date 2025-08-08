@@ -523,13 +523,13 @@ const KnowingYourWorthTab = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                 <div className="text-center p-4 bg-green-500/10 rounded-lg">
                   <div className="text-sm text-muted-foreground mb-1">Minimum Expected</div>
-                  <div className="text-2xl font-bold text-green-400">
+                  <div className="text-2xl font-bold text-green-400 text-center">
                     £{calculateSalary.min.toLocaleString()}
                   </div>
                 </div>
                 <div className="text-center p-4 bg-emerald-500/10 rounded-lg">
                   <div className="text-sm text-muted-foreground mb-1">Maximum Potential</div>
-                  <div className="text-2xl font-bold text-emerald-400">
+                  <div className="text-2xl font-bold text-emerald-400 text-center">
                     £{calculateSalary.max.toLocaleString()}
                   </div>
                 </div>
