@@ -265,7 +265,7 @@ const InterviewGuidanceTab = () => {
 
   return (
     <Card className="bg-elec-dark border-none shadow-none">
-      <CardHeader className="text-center space-y-2 pt-2 max-w-[680px] mx-auto">
+      <CardHeader className="text-center space-y-2 pt-2">
         <div className="mx-auto w-10 h-10 rounded-lg bg-elec-yellow/10 flex items-center justify-center">
           <MessageCircle className="h-5 w-5 text-elec-yellow" />
         </div>
@@ -311,86 +311,76 @@ const InterviewGuidanceTab = () => {
                 >
                   <div className="text-sm sm:text-base font-semibold text-elec-light">{guide.title}</div>
                 </MobileAccordionTrigger>
-                <MobileAccordionContent className="px-4 pb-4">
-                  <div className="rounded-xl border border-elec-yellow/20 bg-elec-card/60 overflow-hidden">
-                    <div className="px-4 py-3 border-b border-elec-yellow/20 flex items-center justify-center gap-2">
-                      <div className={cn("p-2 rounded-lg", cat.iconBg)}>
-                        <Icon className={cn("h-5 w-5", cat.icon)} />
-                      </div>
-                      <h4 className="font-semibold text-sm sm:text-base text-elec-light">{guide.title}</h4>
+                <MobileAccordionContent className="bg-elec-gray border border-elec-yellow/20 border-t-0 rounded-b-lg px-4 py-3">
+                  {"overviewTitle" in guide && (
+                    <div className="mb-2">
+                      <h5 className="font-semibold text-sm">{(guide as any).overviewTitle}</h5>
+                      <p className="text-xs text-muted-foreground">{(guide as any).overviewDescription}</p>
                     </div>
-                    <div className="p-3 space-y-4">
-                      {"overviewTitle" in guide && (
-                        <div>
-                          <h5 className="font-semibold text-sm mb-1">{(guide as any).overviewTitle}</h5>
-                          <p className="text-xs text-muted-foreground">{(guide as any).overviewDescription}</p>
-                        </div>
-                      )}
+                  )}
 
-                      <div className="border-t pt-3">
-                        <h5 className="font-semibold text-sm mb-2 flex items-center gap-2">
-                          <CheckCircle className="h-4 w-4 text-green-500" />
-                          Implementation Steps
-                        </h5>
-                        <ul className="space-y-2">
-                          {guide.steps.map((step, stepIndex) => (
-                            <li key={stepIndex} className="flex items-start gap-2 text-sm">
-                              <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
-                              <span className="leading-relaxed">{step}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
+                  <div className="border-t pt-3">
+                    <h5 className="font-semibold text-sm mb-2 flex items-center gap-2">
+                      <CheckCircle className="h-4 w-4 text-green-500" />
+                      Implementation Steps
+                    </h5>
+                    <ul className="space-y-2">
+                      {guide.steps.map((step, stepIndex) => (
+                        <li key={stepIndex} className="flex items-start gap-2 text-sm">
+                          <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
+                          <span className="leading-relaxed">{step}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
 
-                      {"questions" in guide && (
-                        <div className="border-t pt-3">
-                          <h5 className="font-semibold text-sm mb-2">Practice Questions</h5>
-                          <ul className="space-y-2">
-                            {(guide as any).questions.map((q: string, i: number) => (
-                              <li key={i} className="flex items-start gap-2 text-sm">
-                                <span className="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0" />
-                                <span className="leading-relaxed">{q}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
-
-                      {"bs7671" in guide && (
-                        <div className="border-t pt-3">
-                          <h5 className="font-semibold text-sm mb-2">BS 7671 Focus</h5>
-                          <ul className="space-y-2">
-                            {(guide as any).bs7671.map((p: string, i: number) => (
-                              <li key={i} className="flex items-start gap-2 text-sm">
-                                <span className="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0" />
-                                <span className="leading-relaxed">{p}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
-
-                      {"checklist" in guide && (
-                        <div className="border-t pt-3">
-                          <h5 className="font-semibold text-sm mb-2">Quick Checklist</h5>
-                          <ul className="space-y-2">
-                            {(guide as any).checklist.map((p: string, i: number) => (
-                              <li key={i} className="flex items-start gap-2 text-sm">
-                                <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
-                                <span className="leading-relaxed">{p}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
-
-                      <div className="rounded-lg border border-green-500/20 bg-green-500/5 p-2.5">
-                        <div className="text-sm font-medium text-green-300 mb-1">Impact</div>
-                        <p className="text-xs text-muted-foreground">
-                          Following this guidance typically improves interview performance and offer rates while demonstrating BS 7671 awareness.
-                        </p>
-                      </div>
+                  {"questions" in guide && (
+                    <div className="border-t pt-3">
+                      <h5 className="font-semibold text-sm mb-2">Practice Questions</h5>
+                      <ul className="space-y-2">
+                        {(guide as any).questions.map((q: string, i: number) => (
+                          <li key={i} className="flex items-start gap-2 text-sm">
+                            <span className="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0" />
+                            <span className="leading-relaxed">{q}</span>
+                          </li>
+                        ))}
+                      </ul>
                     </div>
+                  )}
+
+                  {"bs7671" in guide && (
+                    <div className="border-t pt-3">
+                      <h5 className="font-semibold text-sm mb-2">BS 7671 Focus</h5>
+                      <ul className="space-y-2">
+                        {(guide as any).bs7671.map((p: string, i: number) => (
+                          <li key={i} className="flex items-start gap-2 text-sm">
+                            <span className="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0" />
+                            <span className="leading-relaxed">{p}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  {"checklist" in guide && (
+                    <div className="border-t pt-3">
+                      <h5 className="font-semibold text-sm mb-2">Quick Checklist</h5>
+                      <ul className="space-y-2">
+                        {(guide as any).checklist.map((p: string, i: number) => (
+                          <li key={i} className="flex items-start gap-2 text-sm">
+                            <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
+                            <span className="leading-relaxed">{p}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  <div className="rounded-lg border border-green-500/20 bg-green-500/5 p-2.5 mt-3">
+                    <div className="text-sm font-medium text-green-300 mb-1">Impact</div>
+                    <p className="text-xs text-muted-foreground">
+                      Following this guidance typically improves interview performance and offer rates while demonstrating BS 7671 awareness.
+                    </p>
                   </div>
                 </MobileAccordionContent>
               </MobileAccordionItem>
