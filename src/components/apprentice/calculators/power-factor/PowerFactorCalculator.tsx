@@ -37,7 +37,10 @@ const PowerFactorCalculator = () => {
     validateInputs,
     calculatePowerFactor,
     clearError,
-    resetCalculator
+    resetCalculator,
+    targetPF,
+    setTargetPF,
+    capacitorKVAr
   } = useCalculator();
 
   // Enhanced calculation with history saving
@@ -146,6 +149,8 @@ const PowerFactorCalculator = () => {
                 setCurrent={setCurrent}
                 voltage={voltage}
                 setVoltage={setVoltage}
+                targetPF={targetPF}
+                setTargetPF={setTargetPF}
                 errors={errors}
                 clearError={clearError}
                 calculatePowerFactor={handleCalculate}
