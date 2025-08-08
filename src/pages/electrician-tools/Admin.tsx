@@ -47,7 +47,7 @@ const Admin = () => {
           Streamline your electrical business operations with professional tools designed for the trade. 
           Manage projects, staff, compliance, and finances all in one place.
         </p>
-        <BackButton customUrl="/electrician-tools" label="Back to Electrical Workshop" />
+        <BackButton customUrl="/electrician/business" label="Back to Business Hub" />
       </div>
 
       {/* Section Selector Dropdown */}

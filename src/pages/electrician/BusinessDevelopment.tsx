@@ -87,10 +87,10 @@ const BusinessDevelopment = () => {
             Resources and guidance to establish and grow your electrical contracting business
           </p>
         </div>
-        <Link to="/electrician" className="flex-shrink-0 w-full sm:w-auto">
+        <Link to="/electrician/business" className="flex-shrink-0 w-full sm:w-auto">
           <Button variant="outline" className="w-full sm:w-auto">
             <ChevronLeft className="mr-2 h-4 w-4" />
-            Back to Electrical Hub
+            Back to Business Hub
           </Button>
         </Link>
       </div>
