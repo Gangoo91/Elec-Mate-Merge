@@ -39,6 +39,8 @@ import HourlyRateCalculator from "@/pages/electrician/business-development/tools
 import CapacityPlanningTool from "@/pages/electrician/business-development/tools/CapacityPlanningTool";
 import TaxNIEstimator from "@/pages/electrician/business-development/tools/TaxNIEstimator";
 import SupplierMaterials from "@/pages/electrician/SupplierMaterials";
+import CategoryMaterials from "@/pages/electrician/CategoryMaterials";
+import MaterialsSlugRedirect from "@/pages/electrician/MaterialsSlugRedirect";
 
 const ElectricianHubRoutes = () => (
   <Routes>
@@ -48,7 +50,9 @@ const ElectricianHubRoutes = () => (
     
     <Route path="job-vacancies" element={<JobVacancies />} />
     <Route path="materials" element={<ElectricalMaterials />} />
-    <Route path="materials/:supplierSlug" element={<SupplierMaterials />} />
+    <Route path="materials/category/:categoryId" element={<CategoryMaterials />} />
+    <Route path="materials/supplier/:supplierSlug" element={<SupplierMaterials />} />
+    <Route path="materials/:slug" element={<MaterialsSlugRedirect />} />
     <Route path="tools" element={<ElectricalTools />} />
     <Route path="safety-shares" element={<SafetyShares />} />
     <Route path="safety-shares/projects" element={<MajorProjects />} />

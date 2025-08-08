@@ -24,7 +24,7 @@ const ElectricalMaterials = () => {
       title: "Cables & Wiring",
       description: "Twin & Earth, SWA, flex cables and data cables",
       icon: <Cable className="h-6 w-6 text-elec-yellow" />,
-      path: "/electrician/materials/cables",
+      path: "/electrician/materials/category/cables",
       productCount: 324
     },
     {
@@ -32,7 +32,7 @@ const ElectricalMaterials = () => {
       title: "Electrical Components",
       description: "Consumer units, MCBs, RCDs and isolators",
       icon: <Zap className="h-6 w-6 text-elec-yellow" />,
-      path: "/electrician/materials/components",
+      path: "/electrician/materials/category/components",
       productCount: 186
     },
     {
@@ -40,7 +40,7 @@ const ElectricalMaterials = () => {
       title: "Protection Equipment",
       description: "Earth rods, surge protectors and circuit breakers",
       icon: <Shield className="h-6 w-6 text-elec-yellow" />,
-      path: "/electrician/materials/protection",
+      path: "/electrician/materials/category/protection",
       productCount: 95
     },
     {
@@ -48,7 +48,7 @@ const ElectricalMaterials = () => {
       title: "Installation Accessories",
       description: "Junction boxes, cable glands and trunking",
       icon: <Settings className="h-6 w-6 text-elec-yellow" />,
-      path: "/electrician/materials/accessories",
+      path: "/electrician/materials/category/accessories",
       productCount: 412
     },
     {
@@ -56,7 +56,7 @@ const ElectricalMaterials = () => {
       title: "Lighting Solutions",
       description: "LED downlights, battens and emergency lighting",
       icon: <Building className="h-6 w-6 text-elec-yellow" />,
-      path: "/electrician/materials/lighting",
+      path: "/electrician/materials/category/lighting",
       productCount: 278
     },
     {
@@ -64,7 +64,7 @@ const ElectricalMaterials = () => {
       title: "Electrical Tools",
       description: "Testing equipment, hand tools and power tools",
       icon: <Wrench className="h-6 w-6 text-elec-yellow" />,
-      path: "/electrician/materials/tools",
+      path: "/electrician/materials/category/tools",
       productCount: 156
     }
   ];

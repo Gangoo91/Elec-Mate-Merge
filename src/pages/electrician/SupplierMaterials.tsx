@@ -107,7 +107,28 @@ const SupplierMaterials = () => {
   };
 
   if (!supplierInfo) {
-    return <div className="py-10 text-center">Loading supplier information...</div>;
+    return (
+      <div className="space-y-6 animate-fade-in">
+        <div className="flex items-center justify-between">
+          <h1 className="text-3xl font-bold tracking-tight flex items-center gap-2">
+            <Package className="h-8 w-8 text-elec-yellow" />
+            Supplier not found
+          </h1>
+          <Link to="/electrician/materials">
+            <Button variant="outline" className="flex items-center gap-2">
+              <ArrowLeft className="h-4 w-4" /> Back to Materials
+            </Button>
+          </Link>
+        </div>
+        <Card className="border-elec-yellow/20 bg-elec-gray">
+          <CardContent className="p-6 text-center">
+            <p className="text-muted-foreground">
+              We couldn't find this supplier. Please choose from our curated list of suppliers.
+            </p>
+          </CardContent>
+        </Card>
+      </div>
+    );
   }
 
   return (
