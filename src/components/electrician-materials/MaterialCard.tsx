@@ -16,22 +16,38 @@ interface MaterialCardProps {
 const MaterialCard: React.FC<MaterialCardProps> = ({ item }) => {
   // Default URLs if not provided in the data
   const getProductUrl = () => {
-    if (item.productUrl) return item.productUrl;
-    
-    // Fallback URLs based on supplier
-    switch (item.supplier.toLowerCase()) {
-      case "screwfix":
-        return "https://www.screwfix.com/search?search=" + encodeURIComponent(item.name);
-      case "city electrical factors":
-        return "https://www.cef.co.uk/search?q=" + encodeURIComponent(item.name);
-      case "electricaldirect":
-        // ElectricalDirect uses `query` for search param; `q` can 404 on their Netlify setup
-        return "https://www.electricaldirect.co.uk/search?query=" + encodeURIComponent(item.name);
-      case "toolstation":
-        return "https://www.toolstation.com/search?q=" + encodeURIComponent(item.name);
-      default:
-        return "#";
+    const supplier = (item.supplier || "").toLowerCase();
+    const hosts: Record<string, string> = {
+      "screwfix": "screwfix.com",
+      "city electrical factors": "cef.co.uk",
+      "city-electrical-factors": "cef.co.uk",
+      "electricaldirect": "electricaldirect.co.uk",
+      "toolstation": "toolstation.com",
+    };
+    const expectedHost = hosts[supplier];
+
+    const buildSearch = (q: string) => {
+      const term = encodeURIComponent(q);
+      if (supplier.includes("electricaldirect")) return `https://www.electricaldirect.co.uk/search?query=${term}`;
+      if (supplier.includes("city")) return `https://www.cef.co.uk/search?q=${term}`;
+      if (supplier.includes("screwfix")) return `https://www.screwfix.com/search?search=${term}`;
+      if (supplier.includes("toolstation")) return `https://www.toolstation.com/search?q=${term}`;
+      return "#";
+    };
+
+    if (item.productUrl) {
+      try {
+        const base = expectedHost ? `https://www.${expectedHost}/` : undefined;
+        const url = base ? new URL(item.productUrl, base) : new URL(item.productUrl);
+        const isHttp = /^https?:$/.test(url.protocol);
+        const hostOk = expectedHost ? url.hostname.endsWith(expectedHost) : true;
+        if (isHttp && hostOk) return url.toString();
+      } catch {
+        // ignore and fall back
+      }
     }
+
+    return buildSearch(item.name);
   };
 
   // Normalise image paths to ensure relative placeholders become absolute
