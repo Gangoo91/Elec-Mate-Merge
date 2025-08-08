@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { 
   TrendingUp, 
@@ -14,6 +15,8 @@ import {
   Building2
 } from "lucide-react";
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid } from "recharts";
+import { toast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 interface JobInsight {
   id: string;
@@ -42,6 +45,15 @@ const JobInsights: React.FC<JobInsightsProps> = ({ jobs, location }) => {
   const [topCompanies, setTopCompanies] = useState<{ name: string; count: number }[]>([]);
   const [topSkills, setTopSkills] = useState<{ name: string; count: number }[]>([]);
   const [topCerts, setTopCerts] = useState<{ name: string; count: number }[]>([]);
+  const [isLiveLoading, setIsLiveLoading] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 400);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
 
   useEffect(() => {
     generateInsights();
@@ -304,12 +316,41 @@ const JobInsights: React.FC<JobInsightsProps> = ({ jobs, location }) => {
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center gap-2 mb-4">
-        <BarChart3 className="h-5 w-5 text-elec-yellow" />
-        <h3 className="text-lg font-semibold text-elec-light">Market Insights</h3>
-        <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
-          {jobs.length} jobs analysed
-        </Badge>
+      <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center gap-2">
+          <BarChart3 className="h-5 w-5 text-elec-yellow" />
+          <h3 className="text-lg font-semibold text-elec-light">Market Insights</h3>
+          <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
+            {jobs.length} jobs analysed
+          </Badge>
+        </div>
+        <Button size="sm" variant="outline" onClick={async () => {
+          setIsLiveLoading(true);
+          try {
+            const { data, error } = await supabase.functions.invoke('market-insights', {
+              body: { keywords: 'electrician', location: location || 'UK' }
+            });
+            if (error) throw new Error(error.message || 'Failed to fetch');
+            if (data) {
+              setSalaryStats(data.salaryStats || salaryStats);
+              setSalaryBuckets(data.salaryBuckets || []);
+              setJobTypeMix(data.jobTypeMix || []);
+              setExperienceMix(data.experienceMix || []);
+              setWorkingPattern(data.workingPattern || []);
+              setFreshness(data.freshness || freshness);
+              setTopCompanies(data.topCompanies || []);
+              setTopSkills(data.topSkills || []);
+              setTopCerts(data.topCerts || []);
+              toast({ title: 'Live insights updated' });
+            }
+          } catch (e) {
+            toast({ title: 'Live update failed', description: 'Please try again', variant: 'destructive' });
+          } finally {
+            setIsLiveLoading(false);
+          }
+        }} className="border-elec-yellow/30 hover:bg-elec-yellow/10" disabled={isLiveLoading}>
+          {isLiveLoading ? 'Refreshing…' : 'Live data'}
+        </Button>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -363,12 +404,29 @@ const JobInsights: React.FC<JobInsightsProps> = ({ jobs, location }) => {
               </div>
             </div>
             {salaryBuckets.length > 0 && (
-              <div className="h-40 text-elec-yellow">
+              <div className="h-48 text-elec-yellow pb-2">
                 <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={salaryBuckets} margin={{ top: 8, right: 8, left: 0, bottom: 0 }}>
+                  <BarChart data={salaryBuckets} margin={{ top: 8, right: 8, left: 0, bottom: isMobile ? 24 : 8 }}>
                     <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="label" tick={{ fill: 'currentColor' }} interval={0} angle={0} height={30} />
-                    <YAxis allowDecimals={false} tick={{ fill: 'currentColor' }} width={30} />
+                    <XAxis 
+                      dataKey="label" 
+                      tickFormatter={(v) => {
+                        const map: Record<string, string> = {
+                          'Up to £25k': '≤£25k',
+                          '£25k–£35k': '£25–35k',
+                          '£35k–£45k': '£35–45k',
+                          '£45k–£60k': '£45–60k',
+                          '£60k+': '£60k+'
+                        };
+                        return isMobile ? (map[v] || v) : v;
+                      }}
+                      interval={0}
+                      angle={isMobile ? -30 : 0}
+                      textAnchor={isMobile ? 'end' : 'middle'}
+                      height={isMobile ? 42 : 30}
+                      tick={{ fill: 'currentColor', fontSize: isMobile ? 10 : 12 }}
+                    />
+                    <YAxis allowDecimals={false} tick={{ fill: 'currentColor', fontSize: 12 }} width={28} />
                     <Tooltip />
                     <Bar dataKey="count" fill="currentColor" radius={[4,4,0,0]} />
                   </BarChart>

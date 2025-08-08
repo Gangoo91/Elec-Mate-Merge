@@ -88,3 +88,6 @@ verify_jwt = false
 # [functions.YOUR_FUNCTION_NAME]
 # set verify_jwt = true to enable JWT verification.
 # verify_jwt = false
+
+[functions.market-insights]
+verify_jwt = false
