@@ -473,13 +473,11 @@ const UnifiedJobSearch = () => {
       {/* Results */}
       {jobs.length > 0 && (
         <div className="space-y-4">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 text-center sm:text-left">
             <h3 className="text-lg font-semibold text-elec-light">
-              {jobs.length} Job{jobs.length !== 1 ? 's' : ''} Found
+              {jobs.length} Job{jobs.length !== 1 ? "s" : ""} Found
             </h3>
-            <div className="text-sm text-muted-foreground">
-              Sorted by relevance
-            </div>
+            <div className="text-sm text-muted-foreground">Sorted by relevance</div>
           </div>
 
           <div className="grid gap-4">
@@ -489,20 +487,20 @@ const UnifiedJobSearch = () => {
               return (
                 <Card key={job.id} className="border-elec-yellow/20 bg-elec-card hover:border-elec-yellow/40 transition-all duration-200 group">
                   <CardContent className="p-6">
-                    <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
+                    <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between items-center text-center gap-4">
                       <div className="flex-1 space-y-3">
-                        <div className="flex items-start justify-between">
-                          <div>
+                        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between items-center gap-3 w-full">
+                          <div className="text-center sm:text-left">
                             <h3 className="text-lg font-semibold text-elec-light group-hover:text-elec-yellow transition-colors line-clamp-2">
                               {job.title}
                             </h3>
-                            <div className="flex items-center gap-2 mt-1 text-muted-foreground">
+                            <div className="flex items-center gap-2 mt-1 text-muted-foreground justify-center sm:justify-start">
                               <Building2 className="h-4 w-4" />
                               <span>{job.company}</span>
                             </div>
                           </div>
                           
-                          <div className="flex items-center gap-2 bg-elec-yellow/10 px-3 py-1 rounded-full">
+                          <div className="flex items-center gap-2 bg-elec-yellow/10 px-3 py-1 rounded-full self-center sm:self-auto mt-2 sm:mt-0">
                             <Zap className="h-4 w-4 text-elec-yellow" />
                             <span className="text-sm font-semibold text-elec-yellow">
                               {matchPercentage}% match
@@ -510,7 +508,7 @@ const UnifiedJobSearch = () => {
                           </div>
                         </div>
 
-                        <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
+                        <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3 text-sm text-muted-foreground">
                           <div className="flex items-center gap-1">
                             <MapPin className="h-4 w-4" />
                             <span>{job.location}</span>
