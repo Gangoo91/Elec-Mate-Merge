@@ -425,12 +425,12 @@ const JobInsights: React.FC<JobInsightsProps> = ({ jobs, location }) => {
                       interval={0}
                       angle={isMobile ? -30 : 0}
                       textAnchor={isMobile ? 'end' : 'middle'}
-                      height={isMobile ? 42 : 30}
-                      tick={{ fill: 'currentColor', fontSize: isMobile ? 10 : 12 }}
+                      height={isMobile ? 0 : 30}
+                      tick={isMobile ? false : { fill: 'currentColor', fontSize: 12 }}
                     />
                     <YAxis allowDecimals={false} tick={{ fill: 'currentColor', fontSize: 12 }} width={28} />
-                    <Tooltip />
-                    <Bar dataKey="count" fill="currentColor" radius={[4,4,0,0]} />
+                    <Tooltip wrapperStyle={{ fontSize: 12 }} />
+                    <Bar dataKey="count" fill="currentColor" radius={[4,4,0,0]} maxBarSize={40} />
                   </BarChart>
                 </ResponsiveContainer>
               </div>

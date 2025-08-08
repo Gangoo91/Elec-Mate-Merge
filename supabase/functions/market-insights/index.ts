@@ -4,6 +4,7 @@ import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Methods": "POST, OPTIONS",
 };
 
 interface UnifiedJob {
@@ -177,22 +178,46 @@ serve(async (req) => {
     const adzunaKey = Deno.env.get('ADZUNA_APP_KEY');
     const reedKey = Deno.env.get('REED_API_KEY');
 
-    const adzunaUrl = `https://api.adzuna.com/v1/api/jobs/gb/search/1?app_id=${adzunaId}&app_key=${adzunaKey}&results_per_page=50&what=${encodeURIComponent(keywords)}&where=${encodeURIComponent(location)}`;
+    console.log('market-insights: keys present', {
+      adzunaId: !!adzunaId, adzunaKey: !!adzunaKey, reedKey: !!reedKey
+    });
 
-    const adzunaPromise = fetch(adzunaUrl).then(r => r.json()).then(parseAdzuna).catch(() => []);
+    if (!adzunaId || !adzunaKey) {
+      console.error('Missing Adzuna credentials');
+    }
+
+    const adzunaUrl = adzunaId && adzunaKey 
+      ? `https://api.adzuna.com/v1/api/jobs/gb/search/1?app_id=${adzunaId}&app_key=${adzunaKey}&results_per_page=50&what=${encodeURIComponent(keywords)}&where=${encodeURIComponent(location)}`
+      : '';
+
+    const adzunaPromise = adzunaUrl
+      ? fetch(adzunaUrl).then(r => r.json()).then((j)=>{ console.log('Adzuna ok'); return parseAdzuna(j); }).catch((e) => { console.error('Adzuna fetch error', e); return []; })
+      : Promise.resolve([] as UnifiedJob[]);
 
     const reedPromise = (async () => {
       if (!reedKey) return [] as UnifiedJob[];
-      const url = `https://www.reed.co.uk/api/1.0/search?keywords=${encodeURIComponent(keywords)}&locationName=${encodeURIComponent(location)}`;
-      const auth = btoa(`${reedKey}:`);
-      const res = await fetch(url, { headers: { Authorization: `Basic ${auth}` } });
-      if (!res.ok) return [] as UnifiedJob[];
-      const json = await res.json();
-      return parseReed(json);
-    })().catch(() => []);
+      try {
+        const url = `https://www.reed.co.uk/api/1.0/search?keywords=${encodeURIComponent(keywords)}&locationName=${encodeURIComponent(location)}`;
+        const auth = btoa(`${reedKey}:`);
+        const res = await fetch(url, { headers: { Authorization: `Basic ${auth}` } });
+        if (!res.ok) { console.error('Reed non-200', res.status); return [] as UnifiedJob[]; }
+        const json = await res.json();
+        console.log('Reed ok');
+        return parseReed(json);
+      } catch (e) {
+        console.error('Reed fetch error', e);
+        return [] as UnifiedJob[];
+      }
+    })();
 
     const [adzuna, reed] = await Promise.all([adzunaPromise, reedPromise]);
     const jobs = [...adzuna, ...reed];
+    console.log('market-insights: job counts', { adzuna: adzuna.length, reed: reed.length, total: jobs.length });
+
+    if (jobs.length === 0) {
+      return new Response(JSON.stringify({ error: 'No jobs returned from providers. Check API keys/quotas.' }), { status: 502, headers: { ...corsHeaders, "Content-Type": "application/json" } });
+    }
+
 
     const metrics = computeMetrics(jobs);
 
