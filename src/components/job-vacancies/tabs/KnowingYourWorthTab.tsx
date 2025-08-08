@@ -278,47 +278,29 @@ const KnowingYourWorthTab = () => {
 
   return (
     <div className="space-y-6">
-      {/* Enhanced Header with Market Intelligence */}
-      <Card className="border-elec-yellow/20 bg-gradient-to-r from-elec-gray to-elec-dark/50 relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-32 h-32 bg-elec-yellow/10 rounded-full -translate-y-16 translate-x-16"></div>
-        <CardHeader>
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <div className="p-2 bg-elec-yellow/20 rounded-lg">
-                <PoundSterling className="h-6 w-6 text-elec-yellow" />
-              </div>
-              <div>
-                <CardTitle className="text-elec-yellow">Know Your Worth 2025</CardTitle>
-                <p className="text-sm text-muted-foreground">AI-powered salary intelligence for electricians</p>
-              </div>
-            </div>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="text-center p-3 bg-white/5 rounded-lg border border-white/10">
-              <Calculator className="h-6 w-6 text-green-400 mx-auto mb-2" />
-              <div className="text-sm font-medium text-white mb-1">Calculator</div>
-              <div className="text-xs text-muted-foreground">AI-powered estimation</div>
-            </div>
-            <div className="text-center p-3 bg-white/5 rounded-lg border border-white/10">
-              <BarChart3 className="h-6 w-6 text-blue-400 mx-auto mb-2" />
-              <div className="text-sm font-medium text-white mb-1">Market Data</div>
-              <div className="text-xs text-muted-foreground">July 2025 insights</div>
-            </div>
-            <div className="text-center p-3 bg-white/5 rounded-lg border border-white/10">
-              <TrendingUp className="h-6 w-6 text-purple-400 mx-auto mb-2" />
-              <div className="text-sm font-medium text-white mb-1">Growth Trends</div>
-              <div className="text-xs text-muted-foreground">Future projections</div>
-            </div>
-            <div className="text-center p-3 bg-white/5 rounded-lg border border-white/10">
-              <MessageSquare className="h-6 w-6 text-red-400 mx-auto mb-2" />
-              <div className="text-sm font-medium text-white mb-1">Negotiation</div>
-              <div className="text-xs text-muted-foreground">Professional tips</div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+      {/* Key Metrics (2x2 grid, no outer box) */}
+      <div aria-label="Key metrics" className="grid grid-cols-2 gap-3 sm:grid-cols-2">
+        <div className="text-center p-3 bg-white/5 rounded-lg border border-white/10">
+          <Calculator className="h-6 w-6 text-green-400 mx-auto mb-2" />
+          <div className="text-sm font-medium text-white mb-1">Calculator</div>
+          <div className="text-xs text-muted-foreground">AI-powered estimation</div>
+        </div>
+        <div className="text-center p-3 bg-white/5 rounded-lg border border-white/10">
+          <BarChart3 className="h-6 w-6 text-blue-400 mx-auto mb-2" />
+          <div className="text-sm font-medium text-white mb-1">Market Data</div>
+          <div className="text-xs text-muted-foreground">July 2025 insights</div>
+        </div>
+        <div className="text-center p-3 bg-white/5 rounded-lg border border-white/10">
+          <TrendingUp className="h-6 w-6 text-purple-400 mx-auto mb-2" />
+          <div className="text-sm font-medium text-white mb-1">Growth Trends</div>
+          <div className="text-xs text-muted-foreground">Future projections</div>
+        </div>
+        <div className="text-center p-3 bg-white/5 rounded-lg border border-white/10">
+          <MessageSquare className="h-6 w-6 text-red-400 mx-auto mb-2" />
+          <div className="text-sm font-medium text-white mb-1">Negotiation</div>
+          <div className="text-xs text-muted-foreground">Professional tips</div>
+        </div>
+      </div>
 
       {/* Interactive Smart Calculator */}
       <Card className="border-green-500/20 bg-gradient-to-br from-green-500/5 to-emerald-500/5">
@@ -351,11 +333,11 @@ const KnowingYourWorthTab = () => {
               step={1}
               className="w-full"
             />
-            <div className="flex justify-between text-xs text-muted-foreground">
-              <span>Apprentice</span>
-              <span>Qualified</span>
-              <span>Experienced</span>
-              <span>Senior</span>
+            <div className="grid grid-cols-4 gap-2 text-[10px] sm:text-xs text-muted-foreground">
+              <span className="text-center">Apprentice</span>
+              <span className="text-center">Qualified</span>
+              <span className="text-center">Experienced</span>
+              <span className="text-center">Senior</span>
             </div>
           </div>
 
@@ -629,12 +611,12 @@ const KnowingYourWorthTab = () => {
           <div className="grid grid-cols-1 gap-4">
             {salaryRanges.map((range, index) => (
               <div key={index} className="p-4 bg-blue-500/10 rounded-lg border border-blue-500/20 hover:border-blue-500/40 transition-all hover:shadow-lg hover:shadow-blue-500/10">
-                <div className="flex items-center justify-between mb-3">
+                <div className="mb-3">
                   <div className="flex items-center gap-2">
                     {range.icon}
                     <h4 className="font-medium text-white text-sm">{range.level}</h4>
                   </div>
-                  <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30 text-xs">
+                  <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30 text-xs mt-2 w-fit">
                     {range.yearRange}
                   </Badge>
                 </div>
@@ -702,9 +684,9 @@ const KnowingYourWorthTab = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {skillPremiums.map((skill, index) => (
               <div key={index} className="p-4 bg-amber-500/10 rounded-lg border border-amber-500/20 hover:border-amber-500/40 transition-all hover:shadow-lg hover:shadow-amber-500/10">
-                <div className="flex items-center justify-between mb-3">
+                <div className="mb-3">
                   <h4 className="font-medium text-white text-sm">{skill.skill}</h4>
-                  <div className="flex gap-2">
+                  <div className="mt-2 flex gap-2 flex-wrap">
                     <Badge className={`text-xs ${
                       skill.premium === "Essential" 
                         ? "bg-red-500/20 text-red-400 border-red-500/30" 
