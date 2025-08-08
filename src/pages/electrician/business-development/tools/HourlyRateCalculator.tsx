@@ -1,12 +1,13 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { MobileInput } from "@/components/ui/mobile-input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import BackButton from "@/components/common/BackButton";
 import { useToast } from "@/hooks/use-toast";
-import { Clock, PoundSterling, Calculator, CheckCircle } from "lucide-react";
-
+import { Clock, PoundSterling, Calculator, CheckCircle, RefreshCw, Save, Info } from "lucide-react";
+import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid } from "recharts";
+import { Helmet } from "react-helmet";
 interface RateInputs {
   annualSalary: number;
   workingDaysPerYear: number;
@@ -38,16 +39,61 @@ const HourlyRateCalculator = () => {
     setCalculated(false);
   };
 
+  const STORAGE_KEY = "hourly_rate_scenarios";
+  const saveScenario = () => {
+    const payload = {
+      id: crypto.randomUUID(),
+      createdAt: new Date().toISOString(),
+      inputs,
+      results: {
+        totalWorkingHours,
+        billableHours,
+        baseCostPerHour,
+        overheadCostPerHour,
+        totalCostPerHour,
+        minimumRate,
+        dayRate,
+      },
+    };
+    const existing = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+    localStorage.setItem(STORAGE_KEY, JSON.stringify([payload, ...existing].slice(0, 20)));
+    toast({ title: "Scenario saved", description: "Saved locally on this device.", variant: "success" });
+  };
+
+  const reset = () => {
+    setInputs({
+      annualSalary: 30000,
+      workingDaysPerYear: 230,
+      hoursPerDay: 8,
+      overheadPercentage: 25,
+      profitMargin: 25,
+      utilizationRate: 75,
+    });
+    setCalculated(false);
+  };
+
   // Calculations
   const totalWorkingHours = inputs.workingDaysPerYear * inputs.hoursPerDay;
   const billableHours = (totalWorkingHours * inputs.utilizationRate) / 100;
-  const baseCostPerHour = inputs.annualSalary / billableHours;
+  const baseCostPerHour = inputs.annualSalary / Math.max(billableHours, 1);
   const overheadCostPerHour = baseCostPerHour * (inputs.overheadPercentage / 100);
   const totalCostPerHour = baseCostPerHour + overheadCostPerHour;
-  const minimumRate = totalCostPerHour / (1 - inputs.profitMargin / 100);
+  const minimumRate = totalCostPerHour / Math.max(1 - inputs.profitMargin / 100, 0.01);
+  const dayRate = minimumRate * inputs.hoursPerDay;
 
+  const chartData = useMemo(() => [
+    { name: "Base", value: Number(baseCostPerHour.toFixed(2)) },
+    { name: "Overhead", value: Number(overheadCostPerHour.toFixed(2)) },
+    { name: "Cost/hr", value: Number(totalCostPerHour.toFixed(2)) },
+    { name: "Rate/hr", value: Number(minimumRate.toFixed(2)) },
+  ], [baseCostPerHour, overheadCostPerHour, totalCostPerHour, minimumRate]);
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
+      <Helmet>
+        <title>Hourly Rate Calculator UK | Electrician Pricing</title>
+        <meta name="description" content="Calculate a UK electrician hourly and day rate with costs, overheads and profit. Mobile-first and fast." />
+        <link rel="canonical" href="/electrician/business-development/tools/hourly-rate" />
+      </Helmet>
       <div className="flex flex-col items-center justify-center mb-8">
         <h1 className="text-3xl font-bold tracking-tight mb-4 flex items-center gap-3">
           <Clock className="h-8 w-8 text-elec-yellow" />
@@ -111,10 +157,18 @@ const HourlyRateCalculator = () => {
               unit="%"
               hint="Billable vs total hours (70-80%)"
             />
-            <Button onClick={calculateRate} className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90">
-              <Calculator className="h-4 w-4 mr-2" />
-              Calculate Rate
-            </Button>
+            <div className="flex flex-wrap gap-3">
+              <Button onClick={calculateRate} className="bg-elec-yellow text-black hover:bg-elec-yellow/90">
+                <Calculator className="h-4 w-4 mr-2" />
+                Calculate Rate
+              </Button>
+              <Button variant="secondary" onClick={saveScenario} className="gap-2">
+                <Save className="h-4 w-4" /> Save Scenario
+              </Button>
+              <Button variant="outline" onClick={reset} className="gap-2">
+                <RefreshCw className="h-4 w-4" /> Reset
+              </Button>
+            </div>
           </CardContent>
         </Card>
 
@@ -154,6 +208,38 @@ const HourlyRateCalculator = () => {
                       <span>Profit margin:</span>
                       <span className="text-green-400">£{(minimumRate - totalCostPerHour).toFixed(2)}</span>
                     </div>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="text-center bg-elec-dark/50 rounded-lg p-4 border border-elec-yellow/20">
+                    <h4 className="text-white font-medium">Estimated Day Rate</h4>
+                    <div className="text-2xl font-bold text-elec-yellow mt-1">£{dayRate.toFixed(2)}</div>
+                    <p className="text-xs text-elec-light mt-1">Based on {inputs.hoursPerDay} hours/day</p>
+                  </div>
+
+                  <div className="bg-elec-dark/50 rounded-lg p-4">
+                    <h4 className="text-white font-medium mb-2">Cost vs Rate</h4>
+                    <div className="h-40">
+                      <ResponsiveContainer width="100%" height="100%">
+                        <BarChart data={chartData}>
+                          <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
+                          <XAxis dataKey="name" stroke="rgba(255,255,255,0.6)" />
+                          <YAxis stroke="rgba(255,255,255,0.6)" tickFormatter={(v) => `£${v}`} />
+                          <Tooltip formatter={(v: any) => `£${(v as number).toFixed(2)}`} contentStyle={{ background: "#0b0f15", border: "1px solid rgba(255,255,255,0.1)" }} />
+                          <Bar dataKey="value" fill="#F7D154" />
+                        </BarChart>
+                      </ResponsiveContainer>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-3">
+                  <div className="flex items-start gap-2">
+                    <Info className="h-4 w-4 text-blue-400 mt-0.5 flex-shrink-0" />
+                    <p className="text-blue-200/80 text-xs">
+                      Utilisation set at {inputs.utilizationRate}%. {inputs.utilizationRate < 65 ? 'This is low; consider marketing/admin balance to improve billable hours.' : inputs.utilizationRate > 85 ? 'High utilisation may risk burnout; ensure realistic allowances for travel/admin.' : 'This is within a typical 70–80% range.'}
+                    </p>
                   </div>
                 </div>
 

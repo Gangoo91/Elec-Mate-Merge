@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import BackButton from "@/components/common/BackButton";
 import { useToast } from "@/hooks/use-toast";
 import { Calculator, Building, Download, Lightbulb, TrendingUp } from "lucide-react";
+import { Helmet } from "react-helmet";
 
 // Enhanced components
 import BusinessTypeSelector from "@/components/business-calculator/BusinessTypeSelector";
@@ -64,6 +65,12 @@ const BusinessCostCalculator = () => {
 
   const [calculated, setCalculated] = useState(false);
 
+  const STORAGE_KEY = "business_cost_scenarios";
+
+  useEffect(() => {
+    document.documentElement.style.setProperty("--dropdown-z", "9999");
+  }, []);
+
   const stepLabels = ["Business Type", "Startup Costs", "Monthly Costs", "Analysis"];
   const completedSteps = [
     businessType !== "",
@@ -85,13 +92,25 @@ const BusinessCostCalculator = () => {
   const calculateCosts = () => {
     setCalculated(true);
     setCurrentStep(3);
+
+    // Save scenario locally
+    const payload = {
+      id: crypto.randomUUID(),
+      createdAt: new Date().toISOString(),
+      businessType,
+      startupInputs,
+      monthlyInputs,
+      totals: { totalStartup, totalMonthly, yearOneTotal },
+    };
+    const existing = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+    localStorage.setItem(STORAGE_KEY, JSON.stringify([payload, ...existing].slice(0, 20)));
+
     toast({
       title: "Calculation Complete",
       description: "Your enhanced business analysis is ready!",
       variant: "success"
     });
   };
-
   // Calculate totals
   const totalStartup = Object.values(startupInputs).reduce((sum, value) => sum + value, 0);
   const totalMonthly = Object.values(monthlyInputs).reduce((sum, value) => sum + value, 0);
