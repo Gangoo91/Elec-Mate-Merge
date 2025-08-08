@@ -17,11 +17,12 @@ export const CircuitAnalysisCard: React.FC<CircuitAnalysisCardProps> = ({
 }) => {
   const bestRecommendation = analysis.recommendations[0];
   
-  // Check if voltage drop > 3% and get next cable size if needed
+  // Check against BS 7671 voltage drop limit (3% lighting, 5% others)
+  const vdLimit = circuit.loadType === "lighting" ? 3 : 5;
   let finalRecommendation = bestRecommendation;
-  if (bestRecommendation?.voltageDropPercentage > 3) {
+  if (bestRecommendation?.voltageDropPercentage > vdLimit) {
     const nextSizeUp = analysis.recommendations.find((rec: any) => 
-      rec.voltageDropPercentage <= 3 && rec.size !== bestRecommendation.size
+      rec.voltageDropPercentage <= vdLimit && rec.size !== bestRecommendation.size
     );
     if (nextSizeUp) {
       finalRecommendation = nextSizeUp;

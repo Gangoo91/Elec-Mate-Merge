@@ -176,7 +176,7 @@ export class EnhancedCableSelectionEngine {
     }
 
     // Installation method optimization
-    if (planData.installationMethod === "conduit" && planData.cableLength > 50) {
+    if (this.mapInstallationMethod(planData.installationMethod) === "conduit" && planData.cableLength > 50) {
       suggestions.push({
         type: "installation-method",
         title: "Consider Alternative Installation Method",
@@ -284,7 +284,7 @@ export class EnhancedCableSelectionEngine {
     factor *= planData.groupingFactor || 1;
     
     // Installation method factor
-    if (planData.installationMethod === "conduit" && planData.cableLength > 100) {
+    if (this.mapInstallationMethod(planData.installationMethod) === "conduit" && planData.cableLength > 100) {
       factor *= 0.95;
     }
     
@@ -293,13 +293,39 @@ export class EnhancedCableSelectionEngine {
 
   private static mapInstallationMethod(method: string): string {
     const mapping: Record<string, string> = {
+      // Base mappings
       "clipped-direct": "clipped-direct",
       "conduit": "conduit",
       "trunking": "trunking",
       "ducted": "ducted",
       "buried-direct": "buried-direct",
       "tray": "tray",
-      "overhead": "clipped-direct"
+      
+      // UI variants → normalised
+      "conduit-surface": "conduit",
+      "conduit-embedded": "conduit",
+      "conduit-underground": "conduit",
+      "enclosed-conduit": "conduit",
+      
+      "trunking-metal": "trunking",
+      "trunking-plastic": "trunking",
+      
+      "ducting": "ducted",
+      "floor-duct": "ducted",
+      
+      "direct-buried": "buried-direct",
+      
+      "cable-tray": "tray",
+      "cable-ladder": "tray",
+      "basket-tray": "tray",
+      "ladder": "tray",
+      
+      "overhead": "clipped-direct",
+      
+      // Other contextual placements
+      "ceiling-void": "trunking",
+      "wall-chase": "conduit",
+      "rising-main": "trunking"
     };
     return mapping[method] || "clipped-direct";
   }

@@ -276,6 +276,22 @@ const LoadDetailsStep = ({ planData, updatePlanData }: LoadDetailsStepProps) => 
           icon={<Activity className="h-5 w-5" />}
           hint={`Suggested for ${planData.loadType}: ${guidance.defaultPF}`}
         />
+
+        <MobileSelectWrapper
+          label="Protective Device"
+          placeholder="Select protective device"
+          value={planData.protectiveDevice || "mcb-b"}
+          onValueChange={(value) => updatePlanData({ protectiveDevice: value })}
+          options={[
+            { value: "mcb-b", label: "MCB Type B (3-5 × In)" },
+            { value: "mcb-c", label: "MCB Type C (5-10 × In)" },
+            { value: "mcb-d", label: "MCB Type D (10-20 × In)" },
+            { value: "rcbo-b", label: "RCBO Type B (30mA)" },
+            { value: "rcbo-c", label: "RCBO Type C (30mA)" },
+            { value: "rcbo-100ma", label: "RCBO 100mA (Fire Protection)" }
+          ]}
+          hint="Device curve affects Zs and disconnection times"
+        />
       </div>
 
       {/* Guidance Card */}
