@@ -2,12 +2,8 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Briefcase, ArrowLeft } from "lucide-react";
-
+import { Link } from "react-router-dom";
 const JobVacancyHeader = () => {
-  const handleBackClick = () => {
-    window.history.back();
-  };
-  
   return (
     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
       <div>
@@ -20,9 +16,11 @@ const JobVacancyHeader = () => {
         </p>
       </div>
       
-      <Button variant="outline" className="flex items-center gap-2" onClick={handleBackClick}>
-        <ArrowLeft className="h-4 w-4" /> Back to Trade Essentials
-      </Button>
+      <Link to="/electrician/trade-essentials" className="w-full sm:w-auto">
+        <Button variant="outline" className="flex items-center gap-2">
+          <ArrowLeft className="h-4 w-4" /> Back to Trade Essentials
+        </Button>
+      </Link>
     </div>
   );
 };
