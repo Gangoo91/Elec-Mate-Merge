@@ -129,7 +129,7 @@ serve(async (req) => {
             seen.add(key);
 
             // Try to extract an image from inside the anchor tag
-            let image = "placeholder.svg";
+            let image = "/placeholder.svg";
             const imgMatch = innerHtml.match(/<img[^>]*src=["']([^"']+)["'][^>]*>/i);
             if (imgMatch && imgMatch[1]) {
               try {
@@ -167,7 +167,7 @@ serve(async (req) => {
           category: "Cables",
           price: "£89.20",
           supplier: supplierName,
-          image: "placeholder.svg",
+          image: "/placeholder.svg",
           stockStatus: "In Stock",
           productUrl: searchUrl,
         },
@@ -177,7 +177,7 @@ serve(async (req) => {
           category: "Cables",
           price: "£154.10",
           supplier: supplierName,
-          image: "placeholder.svg",
+          image: "/placeholder.svg",
           stockStatus: "In Stock",
           productUrl: searchUrl,
         },
@@ -187,7 +187,7 @@ serve(async (req) => {
           category: "Protection",
           price: "£7.95",
           supplier: supplierName,
-          image: "placeholder.svg",
+          image: "/placeholder.svg",
           stockStatus: "In Stock",
           productUrl: searchUrl,
         },
@@ -197,7 +197,7 @@ serve(async (req) => {
           category: "Lighting",
           price: "£18.49",
           supplier: supplierName,
-          image: "placeholder.svg",
+          image: "/placeholder.svg",
           isOnSale: true,
           salePrice: "£16.99",
           stockStatus: "Low Stock",
@@ -209,7 +209,7 @@ serve(async (req) => {
           category: "Distribution",
           price: "£112.30",
           supplier: supplierName,
-          image: "placeholder.svg",
+          image: "/placeholder.svg",
           stockStatus: "In Stock",
           productUrl: searchUrl,
         },
@@ -219,7 +219,7 @@ serve(async (req) => {
           category: "Accessories",
           price: "£3.39",
           supplier: supplierName,
-          image: "placeholder.svg",
+          image: "/placeholder.svg",
           stockStatus: "In Stock",
           productUrl: searchUrl,
         },

@@ -61,24 +61,69 @@ const CategoryMaterials = () => {
   const { categoryId = "" } = useParams<{ categoryId: string }>();
   const meta = CATEGORY_META[categoryId] || { title: "Materials", description: "Browse curated products by category" };
 
+  // Suppliers supported by the edge function
+  const SUPPLIERS = [
+    "screwfix",
+    "city-electrical-factors",
+    "electricaldirect",
+    "toolstation",
+  ] as const;
+
+  // Quick search seeds per category to improve hit-rate
+  const CATEGORY_QUERIES: Record<string, string[]> = {
+    cables: ["twin and earth", "swa cable", "flex cable"],
+    components: ["consumer unit", "isolator", "rcbo"],
+    protection: ["rcd", "rcbo", "surge protection"],
+    accessories: ["junction box", "gland", "trunking"],
+    lighting: ["led downlight", "batten light", "emergency light"],
+    tools: ["multimeter", "voltage tester", "crimper"],
+  };
+
   const allProducts = useMemo(() => Object.values(productsBySupplier).flat(), []);
   const products = useMemo(() => allProducts.filter((p) => matchesCategory(p, categoryId)), [allProducts, categoryId]);
 
-  const [liveProducts, setLiveProducts] = useState<MaterialItem[]>([]);
+  type LiveItem = MaterialItem & { productUrl?: string };
+  const [liveProducts, setLiveProducts] = useState<LiveItem[]>([]);
   const [isFetching, setIsFetching] = useState(false);
   const displayProducts = liveProducts.length > 0 ? liveProducts : products;
 
-  const fetchLiveCables = async () => {
-    if (categoryId !== 'cables') return;
+  const fetchLiveDeals = async () => {
     setIsFetching(true);
     try {
-      const { data, error } = await supabase.functions.invoke('scrape-supplier-products', {
-        body: { supplierSlug: 'electricaldirect', searchTerm: 'cable' }
-      });
-      if (error) throw new Error(error.message);
-      const items = Array.isArray(data?.products) ? (data.products as MaterialItem[]) : [];
-      setLiveProducts(items);
-      toast({ title: 'Live cables', description: `Loaded ${items.length} items` });
+      const seeds = CATEGORY_QUERIES[categoryId] || [meta.title];
+      const tasks: Promise<any>[] = [];
+      for (const supplier of SUPPLIERS) {
+        for (const term of seeds) {
+          tasks.push(
+            supabase.functions.invoke('scrape-supplier-products', {
+              body: { supplierSlug: supplier, searchTerm: term }
+            })
+          );
+        }
+      }
+      const responses = await Promise.allSettled(tasks);
+      const collected: LiveItem[] = [];
+      for (const r of responses) {
+        if (r.status === 'fulfilled') {
+          const d = r.value?.data;
+          if (Array.isArray(d?.products)) {
+            collected.push(...(d.products as LiveItem[]));
+          }
+        }
+      }
+      // Filter to category and dedupe by productUrl or name+supplier
+      const inCat = collected.filter((p) => matchesCategory(p, categoryId));
+      const deduped: LiveItem[] = [];
+      const seen = new Set<string>();
+      for (const item of inCat) {
+        const key = item.productUrl || `${item.supplier}|${item.name}`;
+        if (key && !seen.has(key)) {
+          seen.add(key);
+          deduped.push(item);
+        }
+      }
+      setLiveProducts(deduped);
+      toast({ title: 'Live deals loaded', description: `Fetched ${deduped.length} items` });
     } catch (e) {
       console.error(e);
       toast({ title: 'Failed to fetch', description: 'Please try again later.', variant: 'destructive' });
@@ -112,12 +157,10 @@ const CategoryMaterials = () => {
               <ArrowLeft className="h-4 w-4" /> Back
             </Button>
           </Link>
-          {categoryId === 'cables' && (
-            <Button variant="outline" onClick={fetchLiveCables} disabled={isFetching} className="flex items-center gap-2">
-              <RefreshCw className={`h-4 w-4 ${isFetching ? 'animate-spin' : ''}`} />
-              {isFetching ? 'Fetching…' : 'Fetch Live Cables'}
-            </Button>
-          )}
+          <Button variant="outline" onClick={fetchLiveDeals} disabled={isFetching} className="flex items-center gap-2">
+            <RefreshCw className={`h-4 w-4 ${isFetching ? 'animate-spin' : ''}`} />
+            {isFetching ? 'Fetching…' : 'Fetch Live Deals'}
+          </Button>
         </div>
       </header>
 
