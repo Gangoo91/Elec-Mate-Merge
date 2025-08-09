@@ -123,12 +123,12 @@ const InteractiveInputs: React.FC<InteractiveInputsProps> = ({
           </TooltipProvider>
         </div>
         <Select value={value.toString()} onValueChange={(val) => onChange(field, parseInt(val))}>
-          <SelectTrigger className="w-full border-elec-yellow/30 bg-background">
+          <SelectTrigger className="w-full border border-muted/40 bg-card">
             <SelectValue placeholder="Select amount">
               £{value.toLocaleString()}
             </SelectValue>
           </SelectTrigger>
-          <SelectContent className="bg-background border-elec-yellow/30 z-50">
+          <SelectContent className="bg-card border border-muted/40 z-50">
             {options.map((option) => (
               <SelectItem key={option} value={option.toString()}>
                 £{option.toLocaleString()}
@@ -143,7 +143,7 @@ const InteractiveInputs: React.FC<InteractiveInputsProps> = ({
   return (
     <div className="grid lg:grid-cols-2 gap-6">
       {/* Startup Costs */}
-      <Card className="border-elec-yellow/20 bg-elec-card">
+      <Card className="border border-muted/40 bg-card">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <PoundSterling className="h-5 w-5 text-elec-yellow" />
@@ -211,7 +211,7 @@ const InteractiveInputs: React.FC<InteractiveInputsProps> = ({
       </Card>
 
       {/* Monthly Costs */}
-      <Card className="border-elec-yellow/20 bg-elec-card">
+      <Card className="border border-muted/40 bg-card">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <TrendingUp className="h-5 w-5 text-elec-yellow" />

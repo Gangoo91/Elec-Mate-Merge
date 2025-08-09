@@ -48,7 +48,7 @@ const VoltageDropCalculator = () => {
   const cableOptions = getCableOptionsForType();
 
   return (
-    <Card className="border-elec-yellow/20 bg-elec-gray">
+    <Card className="border border-muted/40 bg-card">
       <CardHeader>
         <div className="flex items-center gap-2">
           <Calculator className="h-5 w-5 text-elec-yellow" />
@@ -65,7 +65,7 @@ const VoltageDropCalculator = () => {
             id="cable-length" 
             type="number" 
             placeholder="Enter cable length" 
-            className="bg-elec-dark border-elec-yellow/20"
+            className="bg-card border border-muted/40"
             value={cableLength}
             onChange={(e) => setCableLength(e.target.value)}
           />
@@ -74,7 +74,7 @@ const VoltageDropCalculator = () => {
         <div className="space-y-2">
           <Label htmlFor="cable-type">Cable Type</Label>
           <Select value={cableType} onValueChange={setCableType}>
-            <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
+            <SelectTrigger className="bg-card border border-muted/40">
               <SelectValue placeholder="Select cable type" />
             </SelectTrigger>
             <SelectContent>
@@ -91,7 +91,7 @@ const VoltageDropCalculator = () => {
         <div className="space-y-2">
           <Label htmlFor="cable-size">Cable Size</Label>
           <Select value={cableSize} onValueChange={setCableSize}>
-            <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
+            <SelectTrigger className="bg-card border border-muted/40">
               <SelectValue placeholder="Select cable size" />
             </SelectTrigger>
             <SelectContent>
@@ -110,13 +110,13 @@ const VoltageDropCalculator = () => {
             id="load-current" 
             type="number" 
             placeholder="Enter load current" 
-            className="bg-elec-dark border-elec-yellow/20"
+            className="bg-card border border-muted/40"
             value={loadCurrent}
             onChange={(e) => setLoadCurrent(e.target.value)}
           />
         </div>
         <Button className="w-full" onClick={calculateVoltageDrop}>Calculate Voltage Drop</Button>
-        <div className="rounded-md bg-elec-dark p-4 text-center">
+        <div className="rounded-md bg-muted p-4 text-center">
           <div className="text-sm text-muted-foreground">Voltage Drop:</div>
           <div className="text-2xl font-bold text-elec-yellow">{voltageDrop ? `${voltageDrop} V` : '-- V'}</div>
         </div>

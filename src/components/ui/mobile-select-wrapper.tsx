@@ -47,25 +47,25 @@ export function MobileSelectWrapper({
         <MobileSelect value={value} onValueChange={onValueChange} disabled={disabled}>
           <MobileSelectTrigger 
             className={cn(
-              "h-14 bg-elec-card border-2 border-elec-gray/50 rounded-xl",
-              "hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200",
+              "h-14 bg-card border border-muted/40 rounded-xl",
+              "hover:border-elec-yellow/40 focus-visible:ring-2 focus-visible:ring-elec-yellow focus-visible:ring-offset-2 focus-visible:ring-offset-background transition-all duration-200",
               "group-hover:shadow-lg group-hover:shadow-elec-yellow/10",
-              "text-elec-light placeholder:text-elec-light/60",
+              "text-foreground placeholder:text-muted-foreground",
               "text-sm font-normal overflow-hidden",
-              error ? "border-destructive focus:border-destructive" : ""
+              error ? "border-destructive focus-visible:ring-destructive" : ""
             )}
           >
             <MobileSelectValue 
               placeholder={placeholder} 
-              className="text-sm font-normal text-elec-light truncate"
+              className="text-sm font-normal text-foreground truncate"
             />
           </MobileSelectTrigger>
-          <MobileSelectContent className="bg-elec-card border-elec-gray/50 shadow-2xl z-[9999] max-w-[calc(100vw-2rem)]">
+          <MobileSelectContent className="bg-card border border-muted/40 shadow-2xl z-[9999] max-w-[calc(100vw-2rem)]">
             {options.map((option) => (
               <MobileSelectItem 
                 key={option.value} 
                 value={option.value}
-                className="text-elec-light hover:bg-elec-yellow/20 focus:bg-elec-yellow/20 text-sm"
+                className="text-foreground hover:bg-muted/50 focus:bg-muted/50 text-sm"
               >
                 <span className="text-sm truncate">{option.label}</span>
               </MobileSelectItem>
@@ -78,7 +78,7 @@ export function MobileSelectWrapper({
       </div>
       
       {hint && !error && (
-        <p className="text-xs text-elec-light/70 flex items-center gap-1">
+        <p className="text-xs text-muted-foreground flex items-center gap-1">
           <span className="w-1 h-1 bg-elec-yellow/60 rounded-full"></span>
           {hint}
         </p>

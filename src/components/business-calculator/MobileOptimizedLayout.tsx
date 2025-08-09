@@ -52,13 +52,13 @@ const MobileOptimizedLayout: React.FC<MobileOptimizedLayoutProps> = ({
   const MobileView = () => (
     <div className="space-y-4 md:hidden">
       {sections.map((section, index) => (
-        <Card key={section.id} className="border-elec-yellow/20 bg-elec-card">
+        <Card key={section.id} className="border border-muted/40 bg-card">
           <Collapsible
             open={openSections.includes(section.id)}
             onOpenChange={() => toggleSection(section.id)}
           >
             <CollapsibleTrigger asChild>
-              <CardHeader className="cursor-pointer hover:bg-elec-yellow/5 transition-colors">
+              <CardHeader className="cursor-pointer hover:bg-muted/50 transition-colors">
                 <div className="flex items-center justify-between">
                   <CardTitle className="flex items-center gap-3 text-lg">
                     <div className="text-elec-yellow">{section.icon}</div>
@@ -91,7 +91,7 @@ const MobileOptimizedLayout: React.FC<MobileOptimizedLayoutProps> = ({
     <div className="hidden md:block">
       <div {...handlers} className="relative">
         {/* Navigation Header */}
-        <div className="flex items-center justify-between mb-6 p-4 bg-elec-card rounded-lg border border-elec-yellow/20">
+        <div className="flex items-center justify-between mb-6 p-4 bg-card rounded-lg border border-muted/40">
           <div className="flex items-center gap-4">
             <div className="text-elec-yellow">{sections[currentSectionIndex]?.icon}</div>
             <h2 className="text-xl font-semibold">{sections[currentSectionIndex]?.title}</h2>
@@ -133,7 +133,7 @@ const MobileOptimizedLayout: React.FC<MobileOptimizedLayoutProps> = ({
         </div>
 
         {/* Current Section Content */}
-        <Card className="border-elec-yellow/20 bg-elec-card">
+        <Card className="border border-muted/40 bg-card">
           <CardContent className="p-6">
             {sections[currentSectionIndex]?.content}
           </CardContent>

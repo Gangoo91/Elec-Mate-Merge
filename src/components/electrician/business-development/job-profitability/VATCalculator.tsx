@@ -51,9 +51,9 @@ export function VATCalculator({
   };
 
   return (
-    <Card className="border-elec-yellow/20 bg-elec-card">
+    <Card className="border border-muted/40 bg-card">
       <CardHeader>
-        <CardTitle className="text-white flex items-center gap-2">
+        <CardTitle className="text-foreground flex items-center gap-2">
           <Receipt className="h-5 w-5 text-elec-yellow" />
           VAT Calculation
         </CardTitle>
@@ -80,8 +80,8 @@ export function VATCalculator({
         )}
 
         {quoteAmount > 0 && (
-          <div className="bg-elec-dark/50 rounded-lg p-4 space-y-3">
-            <h4 className="text-white font-medium flex items-center gap-2">
+          <div className="bg-muted rounded-lg p-4 space-y-3">
+            <h4 className="text-foreground font-medium flex items-center gap-2">
               VAT Breakdown
               {vatRate === 5 && (
                 <Badge variant="secondary" className="text-xs">Reduced Rate</Badge>
@@ -89,18 +89,18 @@ export function VATCalculator({
             </h4>
             
             <div className="space-y-2 text-sm">
-              <div className="flex justify-between text-elec-light">
+              <div className="flex justify-between text-muted-foreground">
                 <span>Net Amount:</span>
                 <span>£{quoteAmount.toFixed(2)}</span>
               </div>
-              <div className="flex justify-between text-elec-light">
+              <div className="flex justify-between text-muted-foreground">
                 <span>VAT ({vatRate}%):</span>
                 <span>£{vatAmount.toFixed(2)}</span>
               </div>
-              <div className="border-t border-elec-yellow/20 pt-2 flex justify-between text-white font-semibold">
-                <span>Total including VAT:</span>
-                <span className="text-elec-yellow">£{totalWithVAT.toFixed(2)}</span>
-              </div>
+            <div className="border-t border-muted/40 pt-2 flex justify-between text-foreground font-semibold">
+              <span>Total including VAT:</span>
+              <span className="text-elec-yellow">£{totalWithVAT.toFixed(2)}</span>
+            </div>
             </div>
 
             {vatRate === 5 && (

@@ -235,7 +235,7 @@ const BusinessCostCalculator = () => {
       />
 
       {calculated && (
-        <Card className="border-elec-yellow/20 bg-elec-card mt-8">
+        <Card className="border border-muted/40 bg-card mt-8">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Download className="h-5 w-5 text-elec-yellow" />
@@ -246,7 +246,7 @@ const BusinessCostCalculator = () => {
             <div className="flex flex-wrap gap-4 justify-center">
               <Button 
                 variant="outline"
-                className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+                className="border border-muted/40 hover:bg-muted/50"
                 onClick={() => toast({ title: "Export Feature", description: "PDF export coming soon!" })}
               >
                 <Download className="h-4 w-4 mr-2" />

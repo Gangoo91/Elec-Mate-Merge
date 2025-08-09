@@ -91,12 +91,12 @@ const BusinessCalculators = () => {
               to={`/electrician/business-development/tools/${calculator.id}`}
               className="block no-underline"
             >
-              <Card className="border-elec-yellow/20 bg-elec-gray hover:bg-elec-gray/80 transition-all duration-300 group hover-scale">
+              <Card className="border border-muted/40 bg-card hover:bg-muted/50 transition-all duration-300 group">
                 <CardHeader className="text-center">
                   <div className="transition-transform group-hover:scale-110 duration-300 mx-auto mb-4">
                     {calculator.icon}
                   </div>
-                  <CardTitle className="text-white text-lg">
+                  <CardTitle className="text-foreground text-lg">
                     {calculator.title}
                   </CardTitle>
                 </CardHeader>
@@ -107,12 +107,12 @@ const BusinessCalculators = () => {
               key={calculator.id}
               className="cursor-not-allowed opacity-60"
             >
-              <Card className="border-elec-yellow/20 bg-elec-gray">
+              <Card className="border border-muted/40 bg-card">
                 <CardHeader className="text-center">
                   <div className="mx-auto mb-4">
                     {calculator.icon}
                   </div>
-                  <CardTitle className="text-white text-lg">
+                  <CardTitle className="text-foreground text-lg">
                     {calculator.title}
                   </CardTitle>
                 </CardHeader>
