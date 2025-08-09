@@ -21,6 +21,17 @@ interface JobInputs {
   overheadPercentage: number;
   desiredProfitMargin: number;
   quoteAmount: number;
+  travelHours: number;
+  adminHours: number;
+  miles: number;
+  mileageRate: number; // £ per mile
+  subcontractorCost: number;
+  parkingTolls: number;
+  consumablesPercent: number;
+  materialMarkupPercent: number;
+  contingencyPercent: number;
+  warrantyReservePercent: number;
+  discountPercent: number;
 }
 
 interface CalculationHistory {
@@ -50,6 +61,17 @@ const JobProfitabilityCalculator = () => {
     overheadPercentage: 0,
     desiredProfitMargin: 0,
     quoteAmount: 0,
+    travelHours: 0,
+    adminHours: 0,
+    miles: 0,
+    mileageRate: 0.45,
+    subcontractorCost: 0,
+    parkingTolls: 0,
+    consumablesPercent: 0,
+    materialMarkupPercent: 0,
+    contingencyPercent: 0,
+    warrantyReservePercent: 0,
+    discountPercent: 0,
   });
 
   const [errors, setErrors] = useState<ValidationErrors>({});
@@ -178,6 +200,17 @@ const JobProfitabilityCalculator = () => {
       overheadPercentage: 0,
       desiredProfitMargin: 0,
       quoteAmount: 0,
+      travelHours: 0,
+      adminHours: 0,
+      miles: 0,
+      mileageRate: 0.45,
+      subcontractorCost: 0,
+      parkingTolls: 0,
+      consumablesPercent: 0,
+      materialMarkupPercent: 0,
+      contingencyPercent: 0,
+      warrantyReservePercent: 0,
+      discountPercent: 0,
     });
     setErrors({});
     setCalculated(false);
@@ -267,6 +300,17 @@ const JobProfitabilityCalculator = () => {
       overheadPercentage: 20,
       desiredProfitMargin: 25,
       quoteAmount: 900,
+      travelHours: 1,
+      adminHours: 0.5,
+      miles: 20,
+      mileageRate: 0.45,
+      subcontractorCost: 0,
+      parkingTolls: 10,
+      consumablesPercent: 5,
+      materialMarkupPercent: 10,
+      contingencyPercent: 5,
+      warrantyReservePercent: 0,
+      discountPercent: 0,
     });
     setErrors({});
     setCalculated(false);

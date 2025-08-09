@@ -14,6 +14,16 @@ interface RateInputs {
   annualSalary: number;
   workingDaysPerYear: number;
   hoursPerDay: number;
+  paidLeaveDays: number;
+  bankHolidays: number;
+  sickDays: number;
+  trainingDays: number;
+  employerNI: number; // % of salary
+  employerPension: number; // % of salary
+  profFeesAnnual: number;
+  calibrationAnnual: number;
+  softwareAnnual: number;
+  vehicleAnnual: number;
   overheadPercentage: number;
   profitMargin: number;
   utilizationRate: number;
@@ -25,6 +35,16 @@ const HourlyRateCalculator = () => {
     annualSalary: 30000,
     workingDaysPerYear: 230,
     hoursPerDay: 8,
+    paidLeaveDays: 25,
+    bankHolidays: 8,
+    sickDays: 5,
+    trainingDays: 3,
+    employerNI: 13.8,
+    employerPension: 3,
+    profFeesAnnual: 600,
+    calibrationAnnual: 200,
+    softwareAnnual: 300,
+    vehicleAnnual: 2400,
     overheadPercentage: 25,
     profitMargin: 25,
     utilizationRate: 75,
@@ -69,6 +89,16 @@ const [calculated, setCalculated] = useState(false);
       annualSalary: 30000,
       workingDaysPerYear: 230,
       hoursPerDay: 8,
+      paidLeaveDays: 25,
+      bankHolidays: 8,
+      sickDays: 5,
+      trainingDays: 3,
+      employerNI: 13.8,
+      employerPension: 3,
+      profFeesAnnual: 600,
+      calibrationAnnual: 200,
+      softwareAnnual: 300,
+      vehicleAnnual: 2400,
       overheadPercentage: 25,
       profitMargin: 25,
       utilizationRate: 75,
@@ -77,10 +107,23 @@ const [calculated, setCalculated] = useState(false);
   };
 
   // Calculations
-  const totalWorkingHours = inputs.workingDaysPerYear * inputs.hoursPerDay;
-  const billableHours = (totalWorkingHours * inputs.utilizationRate) / 100;
-  const baseCostPerHour = inputs.annualSalary / Math.max(billableHours, 1);
-  const overheadCostPerHour = baseCostPerHour * (inputs.overheadPercentage / 100);
+  const effectiveWorkingDays = Math.max(
+    inputs.workingDaysPerYear - inputs.paidLeaveDays - inputs.bankHolidays - inputs.sickDays - inputs.trainingDays,
+    0
+  );
+  const totalWorkingHours = effectiveWorkingDays * inputs.hoursPerDay;
+  const billableHours = Math.max((totalWorkingHours * inputs.utilizationRate) / 100, 1);
+
+  const baseCostAnnual =
+    inputs.annualSalary * (1 + (inputs.employerNI + inputs.employerPension) / 100) +
+    inputs.profFeesAnnual +
+    inputs.calibrationAnnual +
+    inputs.softwareAnnual +
+    inputs.vehicleAnnual;
+
+  const baseCostPerHour = baseCostAnnual / billableHours;
+  const overheadAnnual = baseCostAnnual * (inputs.overheadPercentage / 100);
+  const overheadCostPerHour = overheadAnnual / billableHours;
   const totalCostPerHour = baseCostPerHour + overheadCostPerHour;
   const minimumRate = totalCostPerHour / Math.max(1 - inputs.profitMargin / 100, 0.01);
   const dayRate = minimumRate * inputs.hoursPerDay;
@@ -136,9 +179,9 @@ const [calculated, setCalculated] = useState(false);
       />
 
       <div className="grid md:grid-cols-2 gap-8">
-        <Card className="border-elec-yellow/20 bg-elec-card">
+        <Card className="border border-muted/40 bg-card"> 
           <CardHeader>
-            <CardTitle className="text-white">Rate Calculation Inputs</CardTitle>
+            <CardTitle className="text-foreground">Rate Calculation Inputs</CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
             <MobileInput
@@ -163,6 +206,85 @@ const [calculated, setCalculated] = useState(false);
               onChange={(e) => updateInput('hoursPerDay', parseInt(e.target.value) || 0)}
               hint="Standard working hours"
             />
+            {/* Time allowances */}
+            <div className="grid sm:grid-cols-2 gap-4">
+              <MobileInput
+                label="Paid Leave Days"
+                type="number"
+                value={inputs.paidLeaveDays || ""}
+                onChange={(e) => updateInput('paidLeaveDays', parseFloat(e.target.value) || 0)}
+                hint="Typical 20–28 days"
+              />
+              <MobileInput
+                label="Bank Holidays"
+                type="number"
+                value={inputs.bankHolidays || ""}
+                onChange={(e) => updateInput('bankHolidays', parseFloat(e.target.value) || 0)}
+                hint="UK standard ~8"
+              />
+              <MobileInput
+                label="Sick Days (allowance)"
+                type="number"
+                value={inputs.sickDays || ""}
+                onChange={(e) => updateInput('sickDays', parseFloat(e.target.value) || 0)}
+              />
+              <MobileInput
+                label="Training/CPD Days"
+                type="number"
+                value={inputs.trainingDays || ""}
+                onChange={(e) => updateInput('trainingDays', parseFloat(e.target.value) || 0)}
+              />
+            </div>
+
+            {/* Employer on-costs & annual costs */}
+            <div className="grid sm:grid-cols-2 gap-4">
+              <MobileInput
+                label="Employer NI"
+                type="number"
+                unit="%"
+                value={inputs.employerNI || ""}
+                onChange={(e) => updateInput('employerNI', parseFloat(e.target.value) || 0)}
+                hint="Typical 13.8%"
+              />
+              <MobileInput
+                label="Employer Pension"
+                type="number"
+                unit="%"
+                value={inputs.employerPension || ""}
+                onChange={(e) => updateInput('employerPension', parseFloat(e.target.value) || 0)}
+                hint="Typical 3%"
+              />
+              <MobileInput
+                label="Professional Fees (annual)"
+                type="number"
+                unit="£"
+                value={inputs.profFeesAnnual || ""}
+                onChange={(e) => updateInput('profFeesAnnual', parseFloat(e.target.value) || 0)}
+                hint="Schemes, insurances"
+              />
+              <MobileInput
+                label="Calibration/Tools (annual)"
+                type="number"
+                unit="£"
+                value={inputs.calibrationAnnual || ""}
+                onChange={(e) => updateInput('calibrationAnnual', parseFloat(e.target.value) || 0)}
+              />
+              <MobileInput
+                label="Software (annual)"
+                type="number"
+                unit="£"
+                value={inputs.softwareAnnual || ""}
+                onChange={(e) => updateInput('softwareAnnual', parseFloat(e.target.value) || 0)}
+              />
+              <MobileInput
+                label="Vehicle Allowance (annual)"
+                type="number"
+                unit="£"
+                value={inputs.vehicleAnnual || ""}
+                onChange={(e) => updateInput('vehicleAnnual', parseFloat(e.target.value) || 0)}
+              />
+            </div>
+
             <MobileInput
               label="Overhead Percentage"
               type="number"
