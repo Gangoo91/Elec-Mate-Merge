@@ -411,6 +411,52 @@ const CashFlowPlanner = () => {
                   label: scenario.name
                 }))}
               />
+
+              {/* New realism settings */}
+              <MobileSelectWrapper
+                label="VAT Scheme"
+                value={state.vatScheme}
+                onValueChange={(value) => updateSettings({ vatScheme: value as any })}
+                options={[
+                  { value: 'standard', label: 'Standard' },
+                  { value: 'flat-rate', label: 'Flat Rate' }
+                ]}
+                hint="Affects quarterly VAT payment"
+              />
+              {state.vatScheme === 'flat-rate' && (
+                <MobileInput
+                  label="Flat Rate %"
+                  value={state.flatRatePercent.toString()}
+                  onChange={(e) => updateSettings({ flatRatePercent: parseFloat(e.target.value) || 0 })}
+                  type="number"
+                  unit="%"
+                  hint="Typical 12.5% for services"
+                />
+              )}
+              <MobileInput
+                label="Bad Debt % of Income"
+                value={state.badDebtPercent.toString()}
+                onChange={(e) => updateSettings({ badDebtPercent: parseFloat(e.target.value) || 0 })}
+                type="number"
+                unit="%"
+                hint="Allowance for non-payment"
+              />
+              <MobileInput
+                label="Card Fees % of Income"
+                value={state.cardFeesPercent.toString()}
+                onChange={(e) => updateSettings({ cardFeesPercent: parseFloat(e.target.value) || 0 })}
+                type="number"
+                unit="%"
+                hint="Payment processing fees"
+              />
+              <MobileInput
+                label="Monthly Loan Repayments"
+                value={state.monthlyLoanRepayments.toString()}
+                onChange={(e) => updateSettings({ monthlyLoanRepayments: parseFloat(e.target.value) || 0 })}
+                type="number"
+                unit="£"
+                hint="Simple fixed monthly amount"
+              />
             </CardContent>
           </Card>
         </TabsContent>

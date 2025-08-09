@@ -91,7 +91,7 @@ const BusinessCalculators = () => {
               to={`/electrician/business-development/tools/${calculator.id}`}
               className="block no-underline"
             >
-              <Card className="border border-muted/40 bg-card hover:bg-muted/50 transition-all duration-300 group">
+              <Card className="border-elec-yellow/20 bg-elec-card hover:bg-elec-yellow/5 transition-all duration-300 group">
                 <CardHeader className="text-center">
                   <div className="transition-transform group-hover:scale-110 duration-300 mx-auto mb-4">
                     {calculator.icon}
@@ -107,7 +107,7 @@ const BusinessCalculators = () => {
               key={calculator.id}
               className="cursor-not-allowed opacity-60"
             >
-              <Card className="border border-muted/40 bg-card">
+              <Card className="border-elec-yellow/20 bg-elec-card">
                 <CardHeader className="text-center">
                   <div className="mx-auto mb-4">
                     {calculator.icon}

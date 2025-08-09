@@ -46,6 +46,11 @@ export interface CashFlowState {
   selectedScenario: string;
   emergencyFundTarget: number;
   vatQuarter: number;
+  vatScheme: 'standard' | 'flat-rate';
+  flatRatePercent: number; // e.g., 12.5
+  badDebtPercent: number; // % of income assumed uncollected
+  cardFeesPercent: number; // % of income lost to card fees
+  monthlyLoanRepayments: number; // fixed monthly loan payment
 }
 
 const defaultScenarios: Scenario[] = [
@@ -127,7 +132,12 @@ export const useCashFlow = () => {
     scenarios: defaultScenarios,
     selectedScenario: 'realistic',
     emergencyFundTarget: 18000,
-    vatQuarter: 3
+    vatQuarter: 3,
+    vatScheme: 'standard',
+    flatRatePercent: 12.5,
+    badDebtPercent: 0,
+    cardFeesPercent: 1.5,
+    monthlyLoanRepayments: 0,
   });
 
   const updateIncomeStream = useCallback((id: string, updates: Partial<IncomeStream>) => {
@@ -176,7 +186,10 @@ export const useCashFlow = () => {
     }));
   }, []);
 
-  const updateSettings = useCallback((updates: Partial<Pick<CashFlowState, 'startingBalance' | 'selectedScenario' | 'emergencyFundTarget' | 'vatQuarter'>>) => {
+  const updateSettings = useCallback((updates: Partial<Pick<CashFlowState,
+    'startingBalance' | 'selectedScenario' | 'emergencyFundTarget' | 'vatQuarter' |
+    'vatScheme' | 'flatRatePercent' | 'badDebtPercent' | 'cardFeesPercent' | 'monthlyLoanRepayments'
+  >>) => {
     setState(prev => ({ ...prev, ...updates }));
   }, []);
 
@@ -230,9 +243,28 @@ export const useCashFlow = () => {
         totalExpenses += monthlyAmount;
       });
 
-      // Add VAT payment if applicable
+      // Bad debt and card fees (as expenses)
+      const badDebt = totalIncome * (state.badDebtPercent / 100);
+      if (badDebt > 0) {
+        expenseBreakdown['Bad Debt'] = badDebt;
+        totalExpenses += badDebt;
+      }
+      const cardFees = totalIncome * (state.cardFeesPercent / 100);
+      if (cardFees > 0) {
+        expenseBreakdown['Card Fees'] = cardFees;
+        totalExpenses += cardFees;
+      }
+
+      // Monthly loan repayments
+      if (state.monthlyLoanRepayments > 0) {
+        expenseBreakdown['Loan Repayment'] = state.monthlyLoanRepayments;
+        totalExpenses += state.monthlyLoanRepayments;
+      }
+
+      // VAT payment (quarterly, simplified)
       if (month % 3 === state.vatQuarter % 3) {
-        const vatPayment = totalIncome * 0.2 * 3; // Simplified VAT calculation
+        const vatRate = state.vatScheme === 'flat-rate' ? (state.flatRatePercent / 100) : 0.2;
+        const vatPayment = totalIncome * vatRate * 3;
         expenseBreakdown['VAT Payment'] = vatPayment;
         totalExpenses += vatPayment;
       }

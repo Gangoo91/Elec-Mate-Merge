@@ -235,7 +235,7 @@ const BusinessCostCalculator = () => {
       />
 
       {calculated && (
-        <Card className="border border-muted/40 bg-card mt-8">
+        <Card className="border-elec-yellow/20 bg-elec-card mt-8">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Download className="h-5 w-5 text-elec-yellow" />

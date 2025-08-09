@@ -424,7 +424,7 @@ const JobProfitabilityCalculator = () => {
 
         {/* Input Section */}
         <div className="lg:col-span-1">
-          <Card className="border border-muted/40 bg-card">
+          <Card className="border-elec-yellow/20 bg-elec-card">
             <CardHeader className="text-center">
               <CardTitle className="text-white flex items-center justify-center gap-2">
                 <PoundSterling className="h-5 w-5 text-elec-yellow" />
@@ -599,7 +599,7 @@ const JobProfitabilityCalculator = () => {
         {/* Results Section */}
         <div className="flex justify-center">
           <div className="w-full max-w-6xl">
-          <Card className="border border-muted/40 bg-card">
+          <Card className="border-elec-yellow/20 bg-elec-card">
             <CardHeader className="text-center">
               <CardTitle className="text-white flex items-center justify-center gap-2">
                 <TrendingUp className="h-5 w-5 text-elec-yellow" />

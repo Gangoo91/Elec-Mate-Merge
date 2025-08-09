@@ -27,6 +27,10 @@ interface RateInputs {
   overheadPercentage: number;
   profitMargin: number;
   utilizationRate: number;
+  // Premiums & call-out
+  callOutMinHours: number; // minimum billable hours for call-outs
+  afterHoursMultiplier: number; // e.g. 1.5x
+  weekendMultiplier: number; // e.g. 2.0x
 }
 
 const HourlyRateCalculator = () => {
@@ -48,6 +52,9 @@ const HourlyRateCalculator = () => {
     overheadPercentage: 25,
     profitMargin: 25,
     utilizationRate: 75,
+    callOutMinHours: 2,
+    afterHoursMultiplier: 1.5,
+    weekendMultiplier: 2.0,
   });
 const [calculated, setCalculated] = useState(false);
   const [vatRegistered, setVatRegistered] = useState(false);
@@ -102,6 +109,9 @@ const [calculated, setCalculated] = useState(false);
       overheadPercentage: 25,
       profitMargin: 25,
       utilizationRate: 75,
+      callOutMinHours: 2,
+      afterHoursMultiplier: 1.5,
+      weekendMultiplier: 2.0,
     });
     setCalculated(false);
   };
@@ -146,6 +156,18 @@ const [calculated, setCalculated] = useState(false);
   const hourlyIncVat = vatRegistered ? applyRounding(roundedHourlyExVat * (1 + VAT_RATE)) : null;
   const dayIncVat = vatRegistered ? applyRounding(roundedDayExVat * (1 + VAT_RATE)) : null;
 
+  // Premium & call-out derived rates
+  const callOutFeeExVat = applyRounding(roundedHourlyExVat * Math.max(inputs.callOutMinHours || 0, 0));
+  const callOutFeeIncVat = vatRegistered ? applyRounding(callOutFeeExVat * (1 + VAT_RATE)) : null;
+  const afterHoursHourlyExVat = applyRounding(roundedHourlyExVat * Math.max(inputs.afterHoursMultiplier || 0, 0));
+  const afterHoursDayExVat = applyRounding(roundedDayExVat * Math.max(inputs.afterHoursMultiplier || 0, 0));
+  const weekendHourlyExVat = applyRounding(roundedHourlyExVat * Math.max(inputs.weekendMultiplier || 0, 0));
+  const weekendDayExVat = applyRounding(roundedDayExVat * Math.max(inputs.weekendMultiplier || 0, 0));
+  const afterHoursHourlyIncVat = vatRegistered ? applyRounding(afterHoursHourlyExVat * (1 + VAT_RATE)) : null;
+  const afterHoursDayIncVat = vatRegistered ? applyRounding(afterHoursDayExVat * (1 + VAT_RATE)) : null;
+  const weekendHourlyIncVat = vatRegistered ? applyRounding(weekendHourlyExVat * (1 + VAT_RATE)) : null;
+  const weekendDayIncVat = vatRegistered ? applyRounding(weekendDayExVat * (1 + VAT_RATE)) : null;
+
   const chartData = useMemo(() => [
     { name: "Base", value: Number(baseCostPerHour.toFixed(2)) },
     { name: "Overhead", value: Number(overheadCostPerHour.toFixed(2)) },
@@ -179,7 +201,7 @@ const [calculated, setCalculated] = useState(false);
       />
 
       <div className="grid md:grid-cols-2 gap-8">
-        <Card className="border border-muted/40 bg-card"> 
+        <Card className="border-elec-yellow/20 bg-elec-card"> 
           <CardHeader>
             <CardTitle className="text-foreground">Rate Calculation Inputs</CardTitle>
           </CardHeader>
@@ -346,6 +368,29 @@ const [calculated, setCalculated] = useState(false);
                   hint="Applies to rates shown"
                 />
               </div>
+              <div className="grid sm:grid-cols-3 gap-3">
+                <MobileInput
+                  label="Call-out min hours"
+                  type="number"
+                  value={inputs.callOutMinHours || ""}
+                  onChange={(e) => updateInput('callOutMinHours', parseFloat(e.target.value) || 0)}
+                  hint="Typical 1.5–2.0"
+                />
+                <MobileInput
+                  label="After-hours multiplier"
+                  type="number"
+                  value={inputs.afterHoursMultiplier || ""}
+                  onChange={(e) => updateInput('afterHoursMultiplier', parseFloat(e.target.value) || 0)}
+                  hint="e.g. 1.5x"
+                />
+                <MobileInput
+                  label="Weekend multiplier"
+                  type="number"
+                  value={inputs.weekendMultiplier || ""}
+                  onChange={(e) => updateInput('weekendMultiplier', parseFloat(e.target.value) || 0)}
+                  hint="e.g. 2.0x"
+                />
+              </div>
             </div>
             <div className="flex flex-wrap gap-3">
               <Button onClick={calculateRate} className="bg-elec-yellow text-black hover:bg-elec-yellow/90">
@@ -428,6 +473,32 @@ const [calculated, setCalculated] = useState(false);
                         </BarChart>
                       </ResponsiveContainer>
                     </div>
+                  </div>
+                </div>
+
+                {/* Premium & Call-out Suggestions */}
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <div className="text-center bg-elec-yellow/10 rounded-lg p-4 border border-elec-yellow/30">
+                    <h4 className="text-white font-medium">Call-out minimum</h4>
+                    <div className="text-xl font-bold text-elec-yellow mt-1">£{callOutFeeExVat.toFixed(2)} ex VAT</div>
+                    {vatRegistered && <p className="text-xs text-elec-light mt-1">£{callOutFeeIncVat?.toFixed(2)} inc VAT</p>}
+                    <p className="text-xs text-elec-light mt-1">{inputs.callOutMinHours}h minimum</p>
+                  </div>
+                  <div className="text-center bg-elec-dark/50 rounded-lg p-4 border border-elec-yellow/20">
+                    <h4 className="text-white font-medium">After-hours</h4>
+                    <div className="text-xl font-bold text-elec-yellow mt-1">£{afterHoursHourlyExVat.toFixed(2)}/h</div>
+                    <p className="text-xs text-elec-light mt-1">Day: £{afterHoursDayExVat.toFixed(2)}</p>
+                    {vatRegistered && (
+                      <p className="text-xs text-elec-light mt-1">Inc VAT: £{afterHoursHourlyIncVat?.toFixed(2)}/h • £{afterHoursDayIncVat?.toFixed(2)}/day</p>
+                    )}
+                  </div>
+                  <div className="text-center bg-elec-dark/50 rounded-lg p-4 border border-elec-yellow/20">
+                    <h4 className="text-white font-medium">Weekend</h4>
+                    <div className="text-xl font-bold text-elec-yellow mt-1">£{weekendHourlyExVat.toFixed(2)}/h</div>
+                    <p className="text-xs text-elec-light mt-1">Day: £{weekendDayExVat.toFixed(2)}</p>
+                    {vatRegistered && (
+                      <p className="text-xs text-elec-light mt-1">Inc VAT: £{weekendHourlyIncVat?.toFixed(2)}/h • £{weekendDayIncVat?.toFixed(2)}/day</p>
+                    )}
                   </div>
                 </div>
 
