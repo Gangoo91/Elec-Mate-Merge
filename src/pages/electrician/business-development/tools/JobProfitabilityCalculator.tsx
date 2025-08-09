@@ -12,6 +12,7 @@ import { JobPresetSelector } from "@/components/electrician/business-development
 import { VATCalculator } from "@/components/electrician/business-development/job-profitability/VATCalculator";
 import { labourHoursOptions, hourlyRateOptions, overheadPercentageOptions, profitMarginOptions } from "@/components/electrician/business-development/job-profitability/DropdownOptions";
 import { JobPreset } from "@/components/electrician/business-development/job-profitability/JobTypePresets";
+import { Helmet } from "react-helmet";
 import WhyThisMatters from "@/components/common/WhyThisMatters";
 
 interface JobInputs {
@@ -134,12 +135,25 @@ const JobProfitabilityCalculator = () => {
     if (inputs.materialCost <= 0) newErrors.materialCost = "Material cost must be greater than £0";
     if (inputs.labourHours <= 0) newErrors.labourHours = "Labour hours must be greater than 0";
     if (inputs.hourlyRate <= 0) newErrors.hourlyRate = "Hourly rate must be greater than £0";
-    if (inputs.overheadPercentage < 0 || inputs.overheadPercentage > 100) {
-      newErrors.overheadPercentage = "Overhead percentage must be between 0-100%";
-    }
-    if (inputs.desiredProfitMargin < 0 || inputs.desiredProfitMargin > 100) {
-      newErrors.desiredProfitMargin = "Profit margin must be between 0-100%";
-    }
+
+    // Percent ranges
+    const percentFields: (keyof JobInputs)[] = [
+      'overheadPercentage', 'desiredProfitMargin', 'consumablesPercent', 'materialMarkupPercent', 'contingencyPercent', 'warrantyReservePercent', 'discountPercent'
+    ];
+    percentFields.forEach((f) => {
+      const v = inputs[f] as number;
+      if (v < 0 || v > 100) newErrors[f as string] = 'Must be between 0–100%';
+    });
+
+    // Non-negative numeric fields
+    const nonNegativeFields: (keyof JobInputs)[] = [
+      'travelHours','adminHours','miles','mileageRate','subcontractorCost','parkingTolls'
+    ];
+    nonNegativeFields.forEach((f) => {
+      const v = inputs[f] as number;
+      if (v < 0) newErrors[f as string] = 'Cannot be negative';
+    });
+
     if (inputs.quoteAmount <= 0) newErrors.quoteAmount = "Quote amount must be greater than £0";
 
     setErrors(newErrors);
@@ -160,12 +174,23 @@ const JobProfitabilityCalculator = () => {
     
     // Save to history
     const vatAmount = vatRegistered ? (inputs.quoteAmount * vatRate) / 100 : 0;
-    const labourCost = inputs.labourHours * inputs.hourlyRate;
-    const directCosts = inputs.materialCost + labourCost;
-    const overheadCosts = directCosts * (inputs.overheadPercentage / 100);
-    const totalCosts = directCosts + overheadCosts;
-    const actualProfit = inputs.quoteAmount - totalCosts;
-    const actualProfitMargin = inputs.quoteAmount > 0 ? (actualProfit / inputs.quoteAmount) * 100 : 0;
+    const labourCostBaseLocal = inputs.labourHours * inputs.hourlyRate;
+    const nonBillableCostLocal = (inputs.travelHours + inputs.adminHours) * inputs.hourlyRate;
+    const mileageCostLocal = inputs.miles * inputs.mileageRate;
+    const consumablesCostLocal = inputs.materialCost * (inputs.consumablesPercent / 100);
+    const directCostsLocal = inputs.materialCost + labourCostBaseLocal + nonBillableCostLocal + mileageCostLocal + inputs.parkingTolls + inputs.subcontractorCost + consumablesCostLocal;
+    const overheadCostsLocal = directCostsLocal * (inputs.overheadPercentage / 100);
+    const contingencyCostLocal = directCostsLocal * (inputs.contingencyPercent / 100);
+    const warrantyReserveCostLocal = directCostsLocal * (inputs.warrantyReservePercent / 100);
+    const totalCostsLocal = directCostsLocal + overheadCostsLocal + contingencyCostLocal + warrantyReserveCostLocal;
+    const minimumQuoteExVATLocal = totalCostsLocal / Math.max(1 - inputs.desiredProfitMargin / 100, 0.01);
+    const materialMarkupValueLocal = inputs.materialCost * (inputs.materialMarkupPercent / 100);
+    const discountBaseLocal = minimumQuoteExVATLocal + materialMarkupValueLocal;
+    const discountValueLocal = discountBaseLocal * (inputs.discountPercent / 100);
+    const suggestedClientPriceExVATLocal = discountBaseLocal - discountValueLocal;
+    const actualProfitLocal = inputs.quoteAmount - totalCostsLocal;
+    const actualProfitMarginLocal = inputs.quoteAmount > 0 ? (actualProfitLocal / inputs.quoteAmount) * 100 : 0;
+    const effectiveMarginLocal = suggestedClientPriceExVATLocal > 0 ? ((suggestedClientPriceExVATLocal - totalCostsLocal) / suggestedClientPriceExVATLocal) * 100 : 0;
     
     const newHistoryItem: CalculationHistory = {
       id: Date.now().toString(),
@@ -173,11 +198,11 @@ const JobProfitabilityCalculator = () => {
       jobType: selectedJobType || "Custom Job",
       inputs: { ...inputs },
       results: {
-        totalCosts,
-        actualProfit,
-        actualProfitMargin,
+        totalCosts: totalCostsLocal,
+        actualProfit: actualProfitLocal,
+        actualProfitMargin: actualProfitMarginLocal,
         vatAmount,
-        totalWithVAT: inputs.quoteAmount + vatAmount
+        totalWithVAT: inputs.quoteAmount + vatAmount,
       }
     };
     
@@ -317,14 +342,26 @@ const JobProfitabilityCalculator = () => {
   };
 
   // Calculations (only if calculated is true)
-  const labourCost = calculated ? inputs.labourHours * inputs.hourlyRate : 0;
-  const directCosts = calculated ? inputs.materialCost + labourCost : 0;
+  const labourCostBase = calculated ? inputs.labourHours * inputs.hourlyRate : 0;
+  const nonBillableCost = calculated ? (inputs.travelHours + inputs.adminHours) * inputs.hourlyRate : 0;
+  const mileageCost = calculated ? inputs.miles * inputs.mileageRate : 0;
+  const consumablesCost = calculated ? inputs.materialCost * (inputs.consumablesPercent / 100) : 0;
+  const directCosts = calculated 
+    ? inputs.materialCost + labourCostBase + nonBillableCost + mileageCost + inputs.parkingTolls + inputs.subcontractorCost + consumablesCost 
+    : 0;
   const overheadCosts = calculated ? directCosts * (inputs.overheadPercentage / 100) : 0;
-  const totalCosts = calculated ? directCosts + overheadCosts : 0;
-  
-  const minimumQuote = calculated ? totalCosts / (1 - inputs.desiredProfitMargin / 100) : 0;
+  const contingencyCost = calculated ? directCosts * (inputs.contingencyPercent / 100) : 0;
+  const warrantyReserveCost = calculated ? directCosts * (inputs.warrantyReservePercent / 100) : 0;
+  const totalCosts = calculated ? directCosts + overheadCosts + contingencyCost + warrantyReserveCost : 0;
+
+  const minimumQuoteExVAT = calculated ? totalCosts / Math.max(1 - inputs.desiredProfitMargin / 100, 0.01) : 0;
+  const materialMarkupValue = calculated ? inputs.materialCost * (inputs.materialMarkupPercent / 100) : 0;
+  const discountBase = calculated ? minimumQuoteExVAT + materialMarkupValue : 0;
+  const discountValue = calculated ? discountBase * (inputs.discountPercent / 100) : 0;
+  const suggestedClientPriceExVAT = calculated ? discountBase - discountValue : 0;
   const actualProfit = calculated ? inputs.quoteAmount - totalCosts : 0;
   const actualProfitMargin = calculated && inputs.quoteAmount > 0 ? (actualProfit / inputs.quoteAmount) * 100 : 0;
+  const effectiveMargin = calculated && suggestedClientPriceExVAT > 0 ? ((suggestedClientPriceExVAT - totalCosts) / suggestedClientPriceExVAT) * 100 : 0;
   
   // VAT calculations
   const vatAmount = calculated && vatRegistered ? (inputs.quoteAmount * vatRate) / 100 : 0;
@@ -347,7 +384,7 @@ const JobProfitabilityCalculator = () => {
         status: "warning",
         icon: <AlertCircle className="h-5 w-5" />,
         title: "Unprofitable Quote",
-        message: `Increase quote by £${(minimumQuote - inputs.quoteAmount).toFixed(2)} to achieve desired margin`,
+        message: `Increase quote by £${(minimumQuoteExVAT - inputs.quoteAmount).toFixed(2)} to achieve desired margin`,
         color: "text-red-300",
         bgColor: "bg-red-500/20 border-red-500/30"
       };
@@ -387,7 +424,7 @@ const JobProfitabilityCalculator = () => {
 
         {/* Input Section */}
         <div className="lg:col-span-1">
-          <Card className="border-elec-yellow/20 bg-elec-card">
+          <Card className="border border-muted/40 bg-card">
             <CardHeader className="text-center">
               <CardTitle className="text-white flex items-center justify-center gap-2">
                 <PoundSterling className="h-5 w-5 text-elec-yellow" />
@@ -562,7 +599,7 @@ const JobProfitabilityCalculator = () => {
         {/* Results Section */}
         <div className="flex justify-center">
           <div className="w-full max-w-6xl">
-          <Card className="border-elec-yellow/20 bg-elec-card">
+          <Card className="border border-muted/40 bg-card">
             <CardHeader className="text-center">
               <CardTitle className="text-white flex items-center justify-center gap-2">
                 <TrendingUp className="h-5 w-5 text-elec-yellow" />
@@ -593,7 +630,7 @@ const JobProfitabilityCalculator = () => {
                       </div>
                       <div className="text-center py-3">
                         <div className="text-sm text-white mb-2">Labour Costs ({inputs.labourHours}h × £{inputs.hourlyRate})</div>
-                        <div className="text-lg font-medium text-white">£{labourCost.toFixed(2)}</div>
+                        <div className="text-lg font-medium text-white">£{labourCostBase.toFixed(2)}</div>
                       </div>
                       <div className="text-center py-3">
                         <div className="text-sm text-white mb-2">Overhead Costs ({inputs.overheadPercentage}%)</div>
@@ -618,7 +655,7 @@ const JobProfitabilityCalculator = () => {
                     <div className="space-y-4">
                       <div className="text-center py-3">
                         <div className="text-sm text-white mb-2">Minimum Quote Required</div>
-                        <div className="text-lg font-semibold text-elec-yellow">£{minimumQuote.toFixed(2)}</div>
+                        <div className="text-lg font-semibold text-elec-yellow">£{minimumQuoteExVAT.toFixed(2)}</div>
                       </div>
                       <div className="text-center py-3">
                         <div className="text-sm text-white mb-2">Your Quote</div>
