@@ -13,8 +13,7 @@ import {
   Scale,
   Users,
   ClipboardList,
-  Percent,
-  Receipt
+  Percent
 } from "lucide-react";
 import { Helmet } from "react-helmet";
 
@@ -101,7 +100,7 @@ const BusinessCalculators = () => {
     {
       id: "cis-drc",
       title: "CIS & DRC Helper (UK)",
-      icon: <Receipt className="h-12 w-12 text-elec-yellow" />,
+      icon: <PoundSterling className="h-12 w-12 text-elec-yellow" />,
       status: "available"
     }
   ];
