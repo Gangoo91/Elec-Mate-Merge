@@ -431,6 +431,60 @@ const EnhancedCareerOverview = () => {
                 </div>
               </div>
             ))}
+
+            <div className="pt-2 border-t border-elec-yellow/10 space-y-4">
+              <div>
+                <h6 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>UK Compliance & Best Practice</h6>
+                <ul className="mt-2 space-y-1">
+                  <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-blue-200 flex items-start gap-2`}>
+                    <CheckCircle className="h-3 w-3 text-blue-400 flex-shrink-0 mt-0.5" />
+                    Apply BS 7671 (18th Edition) selection and erection principles and keep up with latest amendments
+                  </li>
+                  <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-blue-200 flex items-start gap-2`}>
+                    <CheckCircle className="h-3 w-3 text-blue-400 flex-shrink-0 mt-0.5" />
+                    Follow Safe Isolation and live working avoidance (HSE GS38) at all times
+                  </li>
+                  <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-blue-200 flex items-start gap-2`}>
+                    <CheckCircle className="h-3 w-3 text-blue-400 flex-shrink-0 mt-0.5" />
+                    Record EIC/EICR correctly; store certificates securely for at least 6 years
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <h6 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>Typical Roles by Stage</h6>
+                <div className="mt-2 grid grid-cols-2 gap-2">
+                  <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                    Foundation: Electrical Mate, Trainee Installer
+                  </div>
+                  <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                    Development: Improver, Installation Electrician
+                  </div>
+                  <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                    Specialisation: Testing & Inspection, EV Installer, Industrial Maintenance
+                  </div>
+                  <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                    Mastery: Supervisor, Qualified Supervisor (QS), Project Manager
+                  </div>
+                </div>
+              </div>
+              <div>
+                <h6 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>Recommended CPD</h6>
+                <ul className="mt-2 space-y-1">
+                  <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-green-200 flex items-start gap-2`}>
+                    <Star className="h-3 w-3 text-green-400 flex-shrink-0 mt-0.5" />
+                    10–25 CPD hours/year aligned to IET guidance depending on career stage
+                  </li>
+                  <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-green-200 flex items-start gap-2`}>
+                    <Star className="h-3 w-3 text-green-400 flex-shrink-0 mt-0.5" />
+                    Quarterly manufacturer training and product updates (RCD/AFDD, EV, controls)
+                  </li>
+                  <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-green-200 flex items-start gap-2`}>
+                    <Star className="h-3 w-3 text-green-400 flex-shrink-0 mt-0.5" />
+                    Monthly toolbox talks and site safety refreshers
+                  </li>
+                </ul>
+              </div>
+            </div>
           </MobileAccordionContent>
         </MobileAccordionItem>
 
@@ -460,6 +514,28 @@ const EnhancedCareerOverview = () => {
                 <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{path.speciality}</p>
               </div>
             ))}
+
+            <div className="pt-2 border-t border-elec-yellow/10 space-y-3">
+              <h6 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>Typical Certifications</h6>
+              <ul className="space-y-1">
+                <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-indigo-200 flex items-start gap-2`}>
+                  <CheckCircle className="h-3 w-3 text-indigo-400 flex-shrink-0 mt-0.5" />
+                  BS 7671 (18th Edition), ECS/JIB card, 2391 (Inspection & Testing)
+                </li>
+                <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-indigo-200 flex items-start gap-2`}>
+                  <CheckCircle className="h-3 w-3 text-indigo-400 flex-shrink-0 mt-0.5" />
+                  Domestic Part P (where applicable), EV charging (e.g., C&G 2919)
+                </li>
+              </ul>
+              <h6 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>Common Employers</h6>
+              <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                Electrical contractors, facilities management, housebuilders, local authorities, utilities/DNOs
+              </p>
+              <h6 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>Salary Benchmarks</h6>
+              <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                Entry £24–28k · Experienced £35–45k · Specialist £45–60k+ (London weighting +10–20%)
+              </p>
+            </div>
           </MobileAccordionContent>
         </MobileAccordionItem>
 
@@ -481,6 +557,31 @@ const EnhancedCareerOverview = () => {
                 </ul>
               </div>
             ))}
+
+            <div className="pt-2 border-t border-elec-yellow/10 space-y-3">
+              <h6 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>Quick Wins</h6>
+              <ul className="space-y-1">
+                <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-purple-200 flex items-start gap-2`}>
+                  <Star className="h-3 w-3 text-purple-400 flex-shrink-0 mt-0.5" />
+                  Keep a simple CPD log and update it weekly (photos of certs, brief notes)
+                </li>
+                <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-purple-200 flex items-start gap-2`}>
+                  <Star className="h-3 w-3 text-purple-400 flex-shrink-0 mt-0.5" />
+                  Ask for manufacturer tool-box sessions on-site to upskill the team
+                </li>
+              </ul>
+              <h6 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>Avoid These Pitfalls</h6>
+              <ul className="space-y-1">
+                <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-red-200 flex items-start gap-2`}>
+                  <CheckCircle className="h-3 w-3 text-red-400 flex-shrink-0 mt-0.5" />
+                  Letting qualifications lapse; schedule reminders 3–6 months before expiry
+                </li>
+                <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-red-200 flex items-start gap-2`}>
+                  <CheckCircle className="h-3 w-3 text-red-400 flex-shrink-0 mt-0.5" />
+                  Ignoring paperwork (EIC/EICR); build templates and stick to them
+                </li>
+              </ul>
+            </div>
           </MobileAccordionContent>
         </MobileAccordionItem>
 
@@ -502,9 +603,27 @@ const EnhancedCareerOverview = () => {
                 </div>
               </div>
             ))}
+
+            <div className="pt-2 border-t border-elec-yellow/10 space-y-3">
+              <h6 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>What this means for you</h6>
+              <ul className="space-y-1">
+                <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-orange-200 flex items-start gap-2`}>
+                  <Compass className="h-3 w-3 text-orange-400 flex-shrink-0 mt-0.5" />
+                  Prioritise digital skills (smart systems, basic networking, controls)
+                </li>
+                <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-orange-200 flex items-start gap-2`}>
+                  <Compass className="h-3 w-3 text-orange-400 flex-shrink-0 mt-0.5" />
+                  Build renewable/energy efficiency competencies to align with net‑zero demand
+                </li>
+              </ul>
+              <h6 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>Skills to focus on</h6>
+              <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                Testing & verification, commissioning, data cabling, basic PLC awareness, safe systems of work
+              </p>
+            </div>
           </MobileAccordionContent>
         </MobileAccordionItem>
-
+        
         <MobileAccordionItem value="qualification-pathways">
           <MobileAccordionTrigger icon={<BookOpen className="h-5 w-5 text-indigo-400" />}>
             Qualification Pathways
@@ -544,6 +663,21 @@ const EnhancedCareerOverview = () => {
                 </div>
               </div>
             ))}
+
+            <div className="pt-2 border-t border-elec-yellow/10 space-y-3">
+              <h6 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>Entry requirements</h6>
+              <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                GCSEs (or equivalent) typically in Maths and English; aptitude for practical work; health & safety awareness.
+              </p>
+              <h6 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>Assessment methods</h6>
+              <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                Portfolio evidence, on‑site observations, written/practical exams, AM2/EPA as applicable.
+              </p>
+              <h6 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>Funding routes</h6>
+              <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                Employer apprenticeship levy, adult learning loans, regional grants; check local colleges/providers.
+              </p>
+            </div>
           </MobileAccordionContent>
         </MobileAccordionItem>
 
@@ -574,6 +708,24 @@ const EnhancedCareerOverview = () => {
                 </div>
               </div>
             ))}
+
+            <div className="pt-2 border-t border-elec-yellow/10 space-y-3">
+              <h6 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>CPD Targets</h6>
+              <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                Early 10–15h/yr · Mid 15–25h/yr · Senior 25h+/yr (mix of formal, informal, and on‑the‑job learning)
+              </p>
+              <h6 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>Simple Learning Plan</h6>
+              <ul className="space-y-1">
+                <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-cyan-200 flex items-start gap-2`}>
+                  <ArrowRight className="h-3 w-3 text-cyan-400 flex-shrink-0 mt-0.5" />
+                  One certification, one manufacturer course, one soft‑skill per quarter
+                </li>
+                <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-cyan-200 flex items-start gap-2`}>
+                  <ArrowRight className="h-3 w-3 text-cyan-400 flex-shrink-0 mt-0.5" />
+                  Track evidence with dates, reflections, and outcomes
+                </li>
+              </ul>
+            </div>
           </MobileAccordionContent>
         </MobileAccordionItem>
 
@@ -609,6 +761,21 @@ const EnhancedCareerOverview = () => {
                 </div>
               </div>
             ))}
+
+            <div className="pt-2 border-t border-elec-yellow/10 space-y-3">
+              <h6 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>Mandatory certs</h6>
+              <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                BS 7671, ECS/JIB, site inductions; sector‑specific may include IPAF, PASMA, confined spaces.
+              </p>
+              <h6 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>Key risks</h6>
+              <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                Live work exposure, working at height, isolation errors—mitigate via SSOW, permits, and competency checks.
+              </p>
+              <h6 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>Essential tools</h6>
+              <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                Calibrated testers, lock‑off kits, voltage indicators (GS38), appropriate PPE per task and environment.
+              </p>
+            </div>
           </MobileAccordionContent>
         </MobileAccordionItem>
 
@@ -651,6 +818,51 @@ const EnhancedCareerOverview = () => {
                 </div>
               </div>
             ))}
+
+            <div className="pt-2 border-t border-elec-yellow/10 space-y-3">
+              <h6 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>Start‑up costs (indicative)</h6>
+              <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                Insurance, test equipment, van/tools, scheme fees, marketing, accounting software: £5k–£15k+ depending on scope.
+              </p>
+              <h6 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>Day rates & pricing</h6>
+              <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                Typical day rate £180–£350+ region dependent. Price by value with allowances for testing, certification, and warranty.
+              </p>
+              <h6 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>Compliance checklist</h6>
+              <ul className="space-y-1">
+                <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-amber-200 flex items-start gap-2`}>
+                  <CheckCircle className="h-3 w-3 text-amber-400 flex-shrink-0 mt-0.5" />
+                  HMRC registration, public/professional liability insurance, waste carrier (if needed), contracts and T&Cs
+                </li>
+                <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-amber-200 flex items-start gap-2`}>
+                  <CheckCircle className="h-3 w-3 text-amber-400 flex-shrink-0 mt-0.5" />
+                  Scheme membership (NICEIC/NAPIT) where required; calibration and document control process
+                </li>
+              </ul>
+              <h6 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>Useful UK links</h6>
+              <ul className="space-y-1">
+                <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                  <a href="https://www.gov.uk/set-up-business" target="_blank" rel="noreferrer" className="underline">
+                    GOV.UK — Set up a business
+                  </a>
+                </li>
+                <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                  <a href="https://www.niceic.com/" target="_blank" rel="noreferrer" className="underline">
+                    NICEIC — Certification schemes
+                  </a>
+                </li>
+                <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                  <a href="https://www.napit.org.uk/" target="_blank" rel="noreferrer" className="underline">
+                    NAPIT — Competent Person scheme
+                  </a>
+                </li>
+                <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                  <a href="https://www.hse.gov.uk/electricity/index.htm" target="_blank" rel="noreferrer" className="underline">
+                    HSE — Electrical safety
+                  </a>
+                </li>
+              </ul>
+            </div>
           </MobileAccordionContent>
         </MobileAccordionItem>
       </MobileAccordion>
