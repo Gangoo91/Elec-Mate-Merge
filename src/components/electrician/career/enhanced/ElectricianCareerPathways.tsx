@@ -183,31 +183,112 @@ const ElectricianCareerPathways = () => {
       icon: Briefcase,
       content: (
         <div className="space-y-4">
+          {/* Metrics tiles - match JIB colours and spacing */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-            <div className="rounded-lg border border-elec-yellow/20 bg-elec-gray/50 p-3 text-center">
-              <div className="text-elec-yellow text-lg font-semibold">Sectors</div>
-              <div className="text-xs text-muted-foreground">UK coverage</div>
+            <div className="rounded-lg border border-elec-yellow/20 bg-elec-gray/50 p-3">
+              <div className="flex items-center gap-2 mb-1">
+                <Briefcase className="h-5 w-5 text-purple-400" />
+                <div className="text-elec-yellow text-base font-semibold">Work sectors</div>
+              </div>
+              <div className="text-xs text-muted-foreground">Domestic, Commercial, Industrial, Specialist</div>
             </div>
-            <div className="rounded-lg border border-elec-yellow/20 bg-elec-gray/50 p-3 text-center">
-              <div className="text-elec-yellow text-lg font-semibold">Rates</div>
-              <div className="text-xs text-muted-foreground">Typical day rates</div>
+            <div className="rounded-lg border border-elec-yellow/20 bg-elec-gray/50 p-3">
+              <div className="flex items-center gap-2 mb-1">
+                <Clock className="h-5 w-5 text-elec-yellow" />
+                <div className="text-elec-yellow text-base font-semibold">Typical day rates</div>
+              </div>
+              <div className="text-xs text-muted-foreground">~£150–£450/day (scope & experience)</div>
             </div>
-            <div className="rounded-lg border border-elec-yellow/20 bg-elec-gray/50 p-3 text-center">
-              <div className="text-elec-yellow text-lg font-semibold">Demand</div>
-              <div className="text-xs text-muted-foreground">Current market</div>
+            <div className="rounded-lg border border-elec-yellow/20 bg-elec-gray/50 p-3">
+              <div className="flex items-center gap-2 mb-1">
+                <Users className="h-5 w-5 text-green-400" />
+                <div className="text-elec-yellow text-base font-semibold">Market demand</div>
+              </div>
+              <div className="text-xs text-muted-foreground">Testing, EV, Data, Renewables in demand</div>
             </div>
-            <div className="rounded-lg border border-elec-yellow/20 bg-elec-gray/50 p-3 text-center">
-              <div className="text-elec-yellow text-lg font-semibold">Skills</div>
-              <div className="text-xs text-muted-foreground">In-demand</div>
+            <div className="rounded-lg border border-elec-yellow/20 bg-elec-gray/50 p-3">
+              <div className="flex items-center gap-2 mb-1">
+                <Target className="h-5 w-5 text-blue-400" />
+                <div className="text-elec-yellow text-base font-semibold">Key skills</div>
+              </div>
+              <div className="text-xs text-muted-foreground">I&T (2391), containment, LV design, H&S</div>
             </div>
           </div>
-          <MobileAccordion type="single" collapsible className="w-full">
+
+          {/* Accordion layout */}
+          <MobileAccordion type="multiple" className="w-full">
             <MobileAccordionItem value="sectors-explore">
               <MobileAccordionTrigger className="bg-elec-gray border border-elec-yellow/20 rounded-lg px-4">
                 Explore sectors
               </MobileAccordionTrigger>
               <MobileAccordionContent className="bg-elec-gray border-x border-b border-elec-yellow/20 rounded-b-lg p-3">
                 <UKWorkSectors />
+              </MobileAccordionContent>
+            </MobileAccordionItem>
+
+            <MobileAccordionItem value="sectors-insights">
+              <MobileAccordionTrigger className="bg-elec-gray border border-elec-yellow/20 rounded-lg px-4">
+                Sector insights & guidance
+              </MobileAccordionTrigger>
+              <MobileAccordionContent className="bg-elec-gray border-x border-b border-elec-yellow/20 rounded-b-lg p-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="rounded-md border border-elec-yellow/10 bg-elec-dark/40 p-3">
+                    <p className="text-sm font-medium mb-2">High‑growth areas</p>
+                    <ul className="text-sm list-disc pl-4 space-y-1 text-muted-foreground">
+                      <li>EV charge points and renewables integration</li>
+                      <li>Data/comms and smart building systems</li>
+                      <li>Testing, inspection and periodic reports</li>
+                    </ul>
+                  </div>
+                  <div className="rounded-md border border-elec-yellow/10 bg-elec-dark/40 p-3">
+                    <p className="text-sm font-medium mb-2">Progression tips</p>
+                    <ul className="text-sm list-disc pl-4 space-y-1 text-muted-foreground">
+                      <li>Build a portfolio of sector‑specific projects</li>
+                      <li>Maintain CPD aligned to BS 7671 (18th)</li>
+                      <li>Collect references and manufacturer certs</li>
+                    </ul>
+                  </div>
+                </div>
+              </MobileAccordionContent>
+            </MobileAccordionItem>
+
+            <MobileAccordionItem value="sectors-pay">
+              <MobileAccordionTrigger className="bg-elec-gray border border-elec-yellow/20 rounded-lg px-4">
+                Pay rates & allowances
+              </MobileAccordionTrigger>
+              <MobileAccordionContent className="bg-elec-gray border-x border-b border-elec-yellow/20 rounded-b-lg p-3">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
+                  <div className="rounded-md border border-elec-yellow/10 bg-elec-dark/40 p-3">
+                    <p className="font-medium mb-1">Domestic</p>
+                    <p className="text-muted-foreground">£150–£250/day</p>
+                  </div>
+                  <div className="rounded-md border border-elec-yellow/10 bg-elec-dark/40 p-3">
+                    <p className="font-medium mb-1">Commercial</p>
+                    <p className="text-muted-foreground">£180–£350/day</p>
+                  </div>
+                  <div className="rounded-md border border-elec-yellow/10 bg-elec-dark/40 p-3">
+                    <p className="font-medium mb-1">Industrial</p>
+                    <p className="text-muted-foreground">£200–£400/day</p>
+                  </div>
+                  <div className="rounded-md border border-elec-yellow/10 bg-elec-dark/40 p-3">
+                    <p className="font-medium mb-1">Specialist</p>
+                    <p className="text-muted-foreground">£250–£450+/day</p>
+                  </div>
+                </div>
+                <p className="text-xs text-muted-foreground mt-2">Guide only. Varies by region, certs, experience and scope.</p>
+              </MobileAccordionContent>
+            </MobileAccordionItem>
+
+            <MobileAccordionItem value="sectors-compliance">
+              <MobileAccordionTrigger className="bg-elec-gray border border-elec-yellow/20 rounded-lg px-4">
+                Compliance & best practice
+              </MobileAccordionTrigger>
+              <MobileAccordionContent className="bg-elec-gray border-x border-b border-elec-yellow/20 rounded-b-lg p-3">
+                <ul className="text-sm list-disc pl-4 space-y-1 text-muted-foreground">
+                  <li>BS 7671:2018 (18th Edition) requirements</li>
+                  <li>Building Regs (Part P), Health & Safety, RAMS</li>
+                  <li>ECS/JIB grading, insurance and calibration records</li>
+                </ul>
               </MobileAccordionContent>
             </MobileAccordionItem>
           </MobileAccordion>
