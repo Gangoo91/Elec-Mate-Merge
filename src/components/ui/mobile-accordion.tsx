@@ -29,8 +29,8 @@ const MobileAccordionTrigger = React.forwardRef<
       ref={ref}
       className={cn(
         "flex flex-1 items-center justify-center py-4 px-4 text-sm font-medium transition-all hover:underline relative",
-        "bg-elec-gray border border-elec-yellow/20 rounded-t-lg [&[data-state=open]]:rounded-b-none",
-        "touch-manipulation min-h-[48px] text-white", // Minimum touch target size + white text
+        "bg-transparent border border-elec-yellow/20 rounded-t-lg [&[data-state=open]]:rounded-b-none",
+        "touch-manipulation min-h-[48px] text-white",
         className
       )}
       {...props}
