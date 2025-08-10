@@ -339,14 +339,14 @@ const [calculated, setCalculated] = useState(false);
                     <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
                     VAT Registered?
                   </div>
-                  <div className="inline-flex rounded-xl overflow-hidden border border-elec-yellow/30">
+                  <div className="inline-flex w-full rounded-xl overflow-hidden border border-elec-yellow/30">
                     <Button
                       variant={vatRegistered ? "default" : "outline"}
                       size="sm"
                       onClick={() => setVatRegistered(true)}
                       className={
                         (vatRegistered ? "bg-elec-yellow text-black" : "text-elec-yellow hover:bg-elec-yellow/10") +
-                        " h-14 px-6 rounded-none border-0"
+                        " h-14 rounded-none border-0 flex-1"
                       }
                     >
                       Yes
@@ -357,25 +357,30 @@ const [calculated, setCalculated] = useState(false);
                       onClick={() => setVatRegistered(false)}
                       className={
                         (!vatRegistered ? "bg-elec-yellow text-black" : "text-elec-yellow hover:bg-elec-yellow/10") +
-                        " h-14 px-6 rounded-none border-0"
+                        " h-14 rounded-none border-0 flex-1"
                       }
                     >
                       No
                     </Button>
                   </div>
                 </div>
-                <MobileSelectWrapper
-                  label="Rounding"
-                  value={rounding}
-                  onValueChange={(v) => setRounding(v as any)}
-                  options={[
-                    { value: 'none', label: 'Exact (£0.01)' },
-                    { value: 'nearest1', label: 'Nearest £1' },
-                    { value: 'nearest5', label: 'Nearest £5' },
-                    { value: 'nearest10', label: 'Nearest £10' },
-                  ]}
-                  hint="Applies to rates shown"
-                />
+                <div className="space-y-2">
+                  <div className="text-sm font-semibold text-elec-light flex items-center gap-2">
+                    <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
+                    Rounding
+                  </div>
+                  <MobileSelectWrapper
+                    value={rounding}
+                    onValueChange={(v) => setRounding(v as any)}
+                    options={[
+                      { value: 'none', label: 'Exact (£0.01)' },
+                      { value: 'nearest1', label: 'Nearest £1' },
+                      { value: 'nearest5', label: 'Nearest £5' },
+                      { value: 'nearest10', label: 'Nearest £10' },
+                    ]}
+                    hint="Applies to rates shown"
+                  />
+                </div>
               </div>
             </div>
               <div className="grid sm:grid-cols-3 gap-3 items-end">
