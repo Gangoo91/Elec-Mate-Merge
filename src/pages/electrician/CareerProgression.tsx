@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { GraduationCap, ArrowLeft } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "react-router-dom";
@@ -41,16 +41,11 @@ const CareerProgression = () => {
   return (
     <div className="space-y-8 animate-fade-in px-2 sm:px-0">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight flex items-center gap-2">
-            <GraduationCap className="h-7 w-7 sm:h-8 sm:w-8 text-elec-yellow" />
-            Electrician Career Progression
-          </h1>
-          <p className="text-sm sm:text-base text-muted-foreground mt-2">
-            Advanced career development resources for qualified electricians
-          </p>
-        </div>
+      <div className="space-y-3">
+        <h1 className="sr-only">Electrician Career Progression</h1>
+        <p className="text-sm sm:text-base text-muted-foreground">
+          Advanced career development resources for qualified electricians
+        </p>
         {activeSection ? (
           <Button 
             variant="outline" 
