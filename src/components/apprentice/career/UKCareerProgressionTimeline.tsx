@@ -132,9 +132,10 @@ const UKCareerProgressionTimeline = () => {
                                 Career Prospects:
                               </p>
                               <p className="text-xs">
-                                {level.title.includes("Apprentice") ? "Foundation level with structured learning pathway" :
+                                 {level.title.includes("Apprentice") ? "Foundation level with structured learning pathway" :
                                  level.title.includes("Improver") ? "Developing skills towards full qualification" :
-                                 level.title.includes("Approved") ? "Fully qualified with industry recognition" :
+                                 level.title.includes("Electrician") ? "Fully qualified (Gold Card) with independent working" :
+                                 level.title.includes("Approved") ? "Industry-recognised with testing and certification" :
                                  "Advanced level with leadership opportunities"}
                               </p>
                             </div>
@@ -176,10 +177,10 @@ const UKCareerProgressionTimeline = () => {
                 <div>
                   <h4 className="font-medium mb-2">Progression Timeline:</h4>
                   <ul className="space-y-1 text-xs text-muted-foreground">
-                    <li>• Apprentice to Improver: 4+ years</li>
-                    <li>• Improver to Approved: 1-2 years</li>
-                    <li>• Approved to Senior: 5-8+ years</li>
-                    <li>• Senior to Supervisor: Variable based on opportunities</li>
+                    <li>• Apprentice to Improver: 3-4 years (apprenticeship)</li>
+                    <li>• Improver to Electrician: 0.5-2 years (NVQ3 + AM2)</li>
+                    <li>• Electrician to Approved: 1-3 years (with 2391 + experience)</li>
+                    <li>• Approved to Supervisor/Technician: 2-4 years</li>
                   </ul>
                 </div>
                 <div>

@@ -28,48 +28,48 @@ const JIBGradingScheme = () => {
       duration: "1-2 years typically"
     },
     {
-      grade: "Approved Electrician",
+      grade: "Electrician (Gold Card)",
       color: "bg-yellow-500/20 text-yellow-400 border-yellow-500/30",
       requirements: [
         "Level 3 NVQ Diploma",
         "AM2 assessment passed",
         "18th Edition BS 7671",
-        "Health & Safety test"
+        "ECS H&S test"
       ],
-      benefits: ["JIB Gold Card", "Highest skilled worker rates", "Industry-wide recognition", "Supervisory roles"],
+      benefits: ["JIB Gold Card", "Skilled worker rates", "Industry-wide recognition"],
       duration: "Career level"
     },
     {
       grade: "Approved Electrician (JIB)",
       color: "bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30",
       requirements: [
-        "All Approved Electrician requirements",
-        "Additional JIB membership",
-        "Inspection & Testing qualification recommended"
+        "All Electrician (Gold Card) requirements",
+        "Inspection & Testing (2391)",
+        "Post-qualification site experience"
       ],
-      benefits: ["Enhanced industry recognition", "Access to JIB resources", "Professional development support"],
+      benefits: ["Enhanced recognition", "Access to JIB resources", "Higher responsibility roles"],
       duration: "Career level"
     },
     {
-      grade: "Senior Approved Electrician",
+      grade: "Technician Electrician (JIB)",
       color: "bg-green-500/20 text-green-400 border-green-500/30",
       requirements: [
         "Approved Electrician status",
-        "Significant experience (typically 8+ years)",
-        "Leadership/supervisory experience",
-        "Additional qualifications (HNC/HND preferred)"
+        "Advanced qualifications (2391; HNC/HND preferred)",
+        "Design/inspection competence",
+        "Significant experience"
       ],
-      benefits: ["Highest pay grades", "Team leadership roles", "Complex project work", "Training responsibilities"],
+      benefits: ["Technical leadership", "Complex project work", "Design and test authority", "Mentoring responsibilities"],
       duration: "Career level"
     },
     {
       grade: "Supervisor",
       color: "bg-red-500/20 text-red-400 border-red-500/30",
       requirements: [
-        "Senior Approved Electrician status",
-        "Management experience",
-        "Additional training qualifications",
-        "Proven leadership track record"
+        "Approved Electrician or Technician Electrician",
+        "Management/leadership experience",
+        "SSSTS/SMSTS or IOSH Managing Safely",
+        "Proven track record on site"
       ],
       benefits: ["Management responsibilities", "Project oversight", "Staff development role", "Strategic planning involvement"],
       duration: "Career level"

@@ -150,10 +150,42 @@ export const ukCareerLevels: UKCareerLevel[] = [
     work_sectors: ["Domestic", "Commercial", "Industrial", "Maintenance"]
   },
   {
+    id: "electrician",
+    title: "Electrician",
+    jib_grade: "Electrician (Gold Card)",
+    typical_experience: "4-7 years",
+    key_qualifications: [
+      ukQualifications[1], // Level 3 NVQ
+      ukQualifications[2], // AM2
+      ukQualifications[3]  // 18th Edition
+    ],
+    salary_ranges: {
+      london: "£32,000 - £42,000",
+      south_east: "£30,000 - £40,000",
+      midlands: "£27,000 - £37,000",
+      north: "£25,000 - £35,000",
+      scotland_wales: "£25,000 - £35,000"
+    },
+    progression_timeline: "Achieved after NVQ3 + AM2 (Gold Card)",
+    typical_responsibilities: [
+      "Independent electrical work",
+      "Testing and certification for own work",
+      "Mentoring improvers/apprentices",
+      "Advanced fault finding"
+    ],
+    next_steps: [
+      "Gain Inspection & Testing (2391)",
+      "Progress to Approved Electrician with experience",
+      "Choose a specialism (EV, Solar PV, Data, Industrial)",
+      "Consider Qualified Supervisor (NICEIC/NAPIT)"
+    ],
+    work_sectors: ["Domestic", "Commercial", "Industrial", "Maintenance"]
+  },
+  {
     id: "approved",
     title: "Approved Electrician",
     jib_grade: "Approved Electrician",
-    typical_experience: "4-8 years",
+    typical_experience: "5-10 years",
     key_qualifications: [
       ukQualifications[1], // Level 3 NVQ
       ukQualifications[2], // AM2
@@ -167,7 +199,7 @@ export const ukCareerLevels: UKCareerLevel[] = [
       north: "£26,000 - £36,000",
       scotland_wales: "£26,000 - £36,000"
     },
-    progression_timeline: "2-4 years from improver with required qualifications",
+    progression_timeline: "1-3 years from Electrician with 2391 and experience",
     typical_responsibilities: [
       "Independent electrical work",
       "Supervising apprentices and improvers",
@@ -176,52 +208,18 @@ export const ukCareerLevels: UKCareerLevel[] = [
       "Certification and compliance"
     ],
     next_steps: [
-      "Specialise in specific sectors",
-      "Consider HNC/HND qualifications",
-      "Progress to Senior/Supervisor roles",
-      "Start own contracting business"
+      "Lead small teams or become Qualified Supervisor",
+      "Progress to Supervisor or Technician Electrician (JIB)",
+      "Consider HNC/HND or design-focused courses",
+      "Start or scale a contracting business"
     ],
-    work_sectors: ["All sectors", "Project management", "Specialist installations"]
-  },
-  {
-    id: "senior",
-    title: "Senior Electrician",
-    jib_grade: "Senior Approved Electrician",
-    typical_experience: "8-12 years",
-    key_qualifications: [
-      ukQualifications[1], // Level 3 NVQ
-      ukQualifications[2], // AM2
-      ukQualifications[4], // 2391
-      ukQualifications[5]  // HNC
-    ],
-    salary_ranges: {
-      london: "£40,000 - £55,000",
-      south_east: "£38,000 - £50,000",
-      midlands: "£35,000 - £45,000",
-      north: "£32,000 - £42,000",
-      scotland_wales: "£32,000 - £42,000"
-    },
-    progression_timeline: "3-5 years from approved status with leadership experience",
-    typical_responsibilities: [
-      "Leading electrical teams",
-      "Complex project oversight",
-      "Technical problem solving",
-      "Quality assurance",
-      "Training and mentoring"
-    ],
-    next_steps: [
-      "Electrical Supervisor role",
-      "Project Management positions",
-      "Electrical Engineering roles",
-      "Business ownership"
-    ],
-    work_sectors: ["Industrial", "Commercial", "Infrastructure", "Renewable energy"]
+    work_sectors: ["All sectors", "Specialist installations", "Commissioning"]
   },
   {
     id: "supervisor",
     title: "Electrical Supervisor",
     jib_grade: "Supervisor",
-    typical_experience: "10-15 years",
+    typical_experience: "7-12 years",
     key_qualifications: [
       ukQualifications[1], // Level 3 NVQ
       ukQualifications[4], // 2391
@@ -234,7 +232,7 @@ export const ukCareerLevels: UKCareerLevel[] = [
       north: "£35,000 - £50,000",
       scotland_wales: "£35,000 - £50,000"
     },
-    progression_timeline: "4-6 years from senior role with management experience",
+    progression_timeline: "2-4 years from Approved with leadership experience",
     typical_responsibilities: [
       "Managing electrical teams and projects",
       "Budget and resource planning",
