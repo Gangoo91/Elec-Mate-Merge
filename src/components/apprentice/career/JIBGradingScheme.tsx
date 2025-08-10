@@ -91,43 +91,41 @@ const JIBGradingScheme = () => {
         </CardHeader>
         <CardContent>
           {/* Overview */}
-          <Card className="border-elec-yellow/10 bg-elec-dark/30 mb-6">
-            <CardContent className="p-4">
-              <h3 className="font-semibold text-elec-yellow mb-2">What is the JIB?</h3>
-              <p className="text-sm text-muted-foreground mb-3">
-                The Joint Industry Board for the Electrical Contracting Industry (JIB) is the body that sets employment,
-                training and grading standards for electricians in the UK. It operates the ECS (Electrotechnical Certification Scheme)
-                card system that provides industry-wide recognition of skills and qualifications.
-              </p>
-              {/* 2x2 metrics grid with coloured icons (stays 2 columns on all breakpoints) */}
-              <div className="grid grid-cols-2 gap-3 text-sm">
-                <div className="text-center p-3 rounded border border-elec-yellow/10 bg-elec-dark/40">
-                  <div className="font-semibold flex items-center justify-center gap-2">
-                    <Award className="h-4 w-4 text-purple-400" /> 6 Grades
-                  </div>
-                  <div className="text-xs text-muted-foreground">Clear progression pathway</div>
+          <div className="rounded border border-elec-yellow/10 bg-elec-dark/30 mb-6 p-4">
+            <h3 className="font-semibold text-elec-yellow mb-2">What is the JIB?</h3>
+            <p className="text-sm text-muted-foreground mb-3">
+              The Joint Industry Board for the Electrical Contracting Industry (JIB) is the body that sets employment,
+              training and grading standards for electricians in the UK. It operates the ECS (Electrotechnical Certification Scheme)
+              card system that provides industry-wide recognition of skills and qualifications.
+            </p>
+            {/* 2x2 metrics grid with coloured icons (stays 2 columns on all breakpoints) */}
+            <div className="grid grid-cols-2 gap-3 text-sm">
+              <div className="text-center p-3 rounded border border-elec-yellow/10 bg-elec-dark/40">
+                <div className="font-semibold flex items-center justify-center gap-2">
+                  <Award className="h-4 w-4 text-purple-400" /> 6 Grades
                 </div>
-                <div className="text-center p-3 rounded border border-elec-yellow/10 bg-elec-dark/40">
-                  <div className="font-semibold flex items-center justify-center gap-2">
-                    <Clock className="h-4 w-4 text-elec-yellow" /> 4–5 yrs
-                  </div>
-                  <div className="text-xs text-muted-foreground">Typical time to Gold Card</div>
-                </div>
-                <div className="text-center p-3 rounded border border-elec-yellow/10 bg-elec-dark/40">
-                  <div className="font-semibold flex items-center justify-center gap-2">
-                    <Shield className="h-4 w-4 text-green-400" /> 3‑year cycle
-                  </div>
-                  <div className="text-xs text-muted-foreground">ECS card renewal</div>
-                </div>
-                <div className="text-center p-3 rounded border border-elec-yellow/10 bg-elec-dark/40">
-                  <div className="font-semibold flex items-center justify-center gap-2">
-                    <Briefcase className="h-4 w-4 text-blue-400" /> UK‑wide
-                  </div>
-                  <div className="text-xs text-muted-foreground">Employer recognition</div>
-                </div>
+                <div className="text-xs text-muted-foreground">Clear progression pathway</div>
               </div>
-            </CardContent>
-          </Card>
+              <div className="text-center p-3 rounded border border-elec-yellow/10 bg-elec-dark/40">
+                <div className="font-semibold flex items-center justify-center gap-2">
+                  <Clock className="h-4 w-4 text-elec-yellow" /> 4–5 yrs
+                </div>
+                <div className="text-xs text-muted-foreground">Typical time to Gold Card</div>
+              </div>
+              <div className="text-center p-3 rounded border border-elec-yellow/10 bg-elec-dark/40">
+                <div className="font-semibold flex items-center justify-center gap-2">
+                  <Shield className="h-4 w-4 text-green-400" /> 3‑year cycle
+                </div>
+                <div className="text-xs text-muted-foreground">ECS card renewal</div>
+              </div>
+              <div className="text-center p-3 rounded border border-elec-yellow/10 bg-elec-dark/40">
+                <div className="font-semibold flex items-center justify-center gap-2">
+                  <Briefcase className="h-4 w-4 text-blue-400" /> UK‑wide
+                </div>
+                <div className="text-xs text-muted-foreground">Employer recognition</div>
+              </div>
+            </div>
+          </div>
 
           {/* Structured content like Skills Development (mobile‑first accordion) */}
           <MobileAccordion type="multiple" className="space-y-4">
@@ -137,50 +135,46 @@ const JIBGradingScheme = () => {
               <MobileAccordionContent>
                 <div className="space-y-4">
                   {jibGrades.map((grade, index) => (
-                    <Card key={grade.grade} className="border-elec-yellow/10 bg-elec-dark/50">
-                      <CardHeader className="pb-3">
-                        <div className="flex items-center justify-between">
-                          <CardTitle className="text-lg text-white">{grade.grade}</CardTitle>
-                          <Badge className={grade.color}>Grade {index + 1}</Badge>
-                        </div>
-                      </CardHeader>
-                      <CardContent>
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                          <div>
-                            <h4 className="text-sm font-medium mb-2 text-elec-yellow flex items-center gap-1">
-                              <BookOpen className="h-3 w-3" /> Requirements
-                            </h4>
-                            <div className="space-y-1">
-                              {grade.requirements.map((req, idx) => (
-                                <div key={idx} className="text-xs flex items-start gap-2">
-                                  <CheckCircle className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
-                                  {req}
-                                </div>
-                              ))}
-                            </div>
-                          </div>
-                          <div>
-                            <h4 className="text-sm font-medium mb-2 text-elec-yellow flex items-center gap-1">
-                              <Award className="h-3 w-3" /> Benefits
-                            </h4>
-                            <div className="space-y-1">
-                              {grade.benefits.map((benefit, idx) => (
-                                <div key={idx} className="text-xs flex items-start gap-2">
-                                  <div className="w-1 h-1 rounded-full bg-elec-yellow mt-1.5 flex-shrink-0" />
-                                  {benefit}
-                                </div>
-                              ))}
-                            </div>
-                          </div>
-                          <div>
-                            <h4 className="text-sm font-medium mb-2 text-elec-yellow flex items-center gap-1">
-                              <Clock className="h-3 w-3" /> Duration
-                            </h4>
-                            <div className="text-sm text-muted-foreground">{grade.duration}</div>
+                    <div key={grade.grade} className="rounded border border-elec-yellow/10 bg-elec-dark/50 p-3 md:p-4">
+                      <div className="flex items-center justify-between mb-2">
+                        <div className="text-lg font-semibold text-white">{grade.grade}</div>
+                        <Badge className={grade.color}>Grade {index + 1}</Badge>
+                      </div>
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div>
+                          <h4 className="text-sm font-medium mb-2 text-elec-yellow flex items-center gap-1">
+                            <BookOpen className="h-3 w-3" /> Requirements
+                          </h4>
+                          <div className="space-y-1">
+                            {grade.requirements.map((req, idx) => (
+                              <div key={idx} className="text-xs flex items-start gap-2">
+                                <CheckCircle className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
+                                {req}
+                              </div>
+                            ))}
                           </div>
                         </div>
-                      </CardContent>
-                    </Card>
+                        <div>
+                          <h4 className="text-sm font-medium mb-2 text-elec-yellow flex items-center gap-1">
+                            <Award className="h-3 w-3" /> Benefits
+                          </h4>
+                          <div className="space-y-1">
+                            {grade.benefits.map((benefit, idx) => (
+                              <div key={idx} className="text-xs flex items-start gap-2">
+                                <div className="w-1 h-1 rounded-full bg-elec-yellow mt-1.5 flex-shrink-0" />
+                                {benefit}
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                        <div>
+                          <h4 className="text-sm font-medium mb-2 text-elec-yellow flex items-center gap-1">
+                            <Clock className="h-3 w-3" /> Duration
+                          </h4>
+                          <div className="text-sm text-muted-foreground">{grade.duration}</div>
+                        </div>
+                      </div>
+                    </div>
                   ))}
                 </div>
               </MobileAccordionContent>
@@ -191,28 +185,28 @@ const JIBGradingScheme = () => {
               <MobileAccordionTrigger icon={<Shield className="h-4 w-4 text-elec-yellow" />}>ECS Cards & Categories</MobileAccordionTrigger>
               <MobileAccordionContent>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <Card className="border-elec-yellow/10 bg-elec-dark/40">
-                    <CardHeader className="pb-2"><CardTitle className="text-base">Core Electrical</CardTitle></CardHeader>
-                    <CardContent className="text-sm space-y-2">
+                  <div className="rounded border border-elec-yellow/10 bg-elec-dark/40 p-3">
+                    <div className="text-base font-medium mb-1">Core Electrical</div>
+                    <div className="text-sm space-y-2">
                       <div className="flex flex-wrap gap-2">
                         {["Apprentice","Trainee/Improver","Electrician (Gold)","Approved Electrician","Technician Electrician","Site Supervisor/Manager"].map((t) => (
                           <Badge key={t} variant="outline" className="border-elec-yellow/30 text-elec-yellow">{t}</Badge>
                         ))}
                       </div>
                       <p className="text-xs text-muted-foreground">Cards verify competence, qualifications and H&S.</p>
-                    </CardContent>
-                  </Card>
-                  <Card className="border-elec-yellow/10 bg-elec-dark/40">
-                    <CardHeader className="pb-2"><CardTitle className="text-base">Specialist Disciplines</CardTitle></CardHeader>
-                    <CardContent className="text-sm space-y-2">
+                    </div>
+                  </div>
+                  <div className="rounded border border-elec-yellow/10 bg-elec-dark/40 p-3">
+                    <div className="text-base font-medium mb-1">Specialist Disciplines</div>
+                    <div className="text-sm space-y-2">
                       <div className="flex flex-wrap gap-2">
                         {["Data Comms","Fire & Security","Network Cabling","EV Charging","Renewables","H.V. (authorised)"].map((t) => (
                           <Badge key={t} variant="outline" className="border-elec-yellow/30 text-elec-yellow">{t}</Badge>
                         ))}
                       </div>
                       <p className="text-xs text-muted-foreground">Specialist routes often require manufacturer or scheme approval.</p>
-                    </CardContent>
-                  </Card>
+                    </div>
+                  </div>
                 </div>
               </MobileAccordionContent>
             </MobileAccordionItem>
@@ -222,31 +216,31 @@ const JIBGradingScheme = () => {
               <MobileAccordionTrigger icon={<Briefcase className="h-4 w-4 text-elec-yellow" />}>Pay Rates & Allowances</MobileAccordionTrigger>
               <MobileAccordionContent>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-                  <Card className="border-elec-yellow/10 bg-elec-dark/40">
-                    <CardHeader className="pb-2"><CardTitle className="text-base">Indicative Day Rates</CardTitle></CardHeader>
-                    <CardContent className="space-y-1 text-xs">
+                  <div className="rounded border border-elec-yellow/10 bg-elec-dark/40 p-3">
+                    <div className="text-base font-medium mb-1">Indicative Day Rates</div>
+                    <div className="space-y-1 text-xs">
                       <div className="flex items-center gap-2"><Banknote className="h-3 w-3 text-elec-yellow" /> Electrician: £180–£260</div>
                       <div className="flex items-center gap-2"><Banknote className="h-3 w-3 text-elec-yellow" /> Approved: £220–£320</div>
                       <div className="flex items-center gap-2"><Banknote className="h-3 w-3 text-elec-yellow" /> Technician/Supervisor: £260–£400+</div>
                       <p className="text-muted-foreground mt-2">Varies by region, project type and experience.</p>
-                    </CardContent>
-                  </Card>
-                  <Card className="border-elec-yellow/10 bg-elec-dark/40">
-                    <CardHeader className="pb-2"><CardTitle className="text-base">JIB Working Rules</CardTitle></CardHeader>
-                    <CardContent className="text-xs space-y-1">
+                    </div>
+                  </div>
+                  <div className="rounded border border-elec-yellow/10 bg-elec-dark/40 p-3">
+                    <div className="text-base font-medium mb-1">JIB Working Rules</div>
+                    <div className="text-xs space-y-1">
                       <div>• Standardised pay scales (check latest JIB agreement)</div>
                       <div>• Overtime, lodge and travel allowances where applicable</div>
                       <div>• Holiday and pension arrangements</div>
-                    </CardContent>
-                  </Card>
-                  <Card className="border-elec-yellow/10 bg-elec-dark/40">
-                    <CardHeader className="pb-2"><CardTitle className="text-base">Regional Notes</CardTitle></CardHeader>
-                    <CardContent className="text-xs space-y-1">
+                    </div>
+                  </div>
+                  <div className="rounded border border-elec-yellow/10 bg-elec-dark/40 p-3">
+                    <div className="text-base font-medium mb-1">Regional Notes</div>
+                    <div className="text-xs space-y-1">
                       <div className="flex items-center gap-2"><MapPin className="h-3 w-3 text-elec-yellow" /> London & SE tend to command higher rates</div>
                       <div className="flex items-center gap-2"><MapPin className="h-3 w-3 text-elec-yellow" /> Scotland: SJIB equivalent grading and rates</div>
                       <div className="flex items-center gap-2"><MapPin className="h-3 w-3 text-elec-yellow" /> Major projects can offer enhanced uplifts</div>
-                    </CardContent>
-                  </Card>
+                    </div>
+                  </div>
                 </div>
               </MobileAccordionContent>
             </MobileAccordionItem>
@@ -256,20 +250,20 @@ const JIBGradingScheme = () => {
               <MobileAccordionTrigger icon={<TrendingUp className="h-4 w-4 text-elec-yellow" />}>Upgrade Pathways</MobileAccordionTrigger>
               <MobileAccordionContent>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                  <Card className="border-elec-yellow/10 bg-elec-dark/40">
-                    <CardHeader className="pb-2"><CardTitle className="text-base">Standard Route</CardTitle></CardHeader>
-                    <CardContent className="text-xs space-y-1">
+                  <div className="rounded border border-elec-yellow/10 bg-elec-dark/40 p-3">
+                    <div className="text-base font-medium mb-1">Standard Route</div>
+                    <div className="text-xs space-y-1">
                       <div>Apprentice → Improver → Electrician (Gold) → Approved → Technician</div>
                       <div className="text-muted-foreground">Typical 6–10 years to Technician depending on experience and quals.</div>
-                    </CardContent>
-                  </Card>
-                  <Card className="border-elec-yellow/10 bg-elec-dark/40">
-                    <CardHeader className="pb-2"><CardTitle className="text-base">Supervisor/Manager Route</CardTitle></CardHeader>
-                    <CardContent className="text-xs space-y-1">
+                    </div>
+                  </div>
+                  <div className="rounded border border-elec-yellow/10 bg-elec-dark/40 p-3">
+                    <div className="text-base font-medium mb-1">Supervisor/Manager Route</div>
+                    <div className="text-xs space-y-1">
                       <div>Approved/Technician → Chargehand → Site Supervisor → Manager</div>
                       <div className="text-muted-foreground">Add leadership (SSSTS/SMSTS/IOSH) and project delivery experience.</div>
-                    </CardContent>
-                  </Card>
+                    </div>
+                  </div>
                 </div>
               </MobileAccordionContent>
             </MobileAccordionItem>
@@ -279,28 +273,28 @@ const JIBGradingScheme = () => {
               <MobileAccordionTrigger icon={<Clock className="h-4 w-4 text-elec-yellow" />}>CPD & Renewals</MobileAccordionTrigger>
               <MobileAccordionContent>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-                  <Card className="border-elec-yellow/10 bg-elec-dark/40">
-                    <CardHeader className="pb-2"><CardTitle className="text-base">ECS Renewal</CardTitle></CardHeader>
-                    <CardContent className="text-xs space-y-1">
+                  <div className="rounded border border-elec-yellow/10 bg-elec-dark/40 p-3">
+                    <div className="text-base font-medium mb-1">ECS Renewal</div>
+                    <div className="text-xs space-y-1">
                       <div className="flex items-center gap-2"><Shield className="h-3 w-3 text-elec-yellow" /> Renew every 3 years</div>
                       <div>• Current H&S assessment</div>
                       <div>• Up‑to‑date qualifications</div>
-                    </CardContent>
-                  </Card>
-                  <Card className="border-elec-yellow/10 bg-elec-dark/40">
-                    <CardHeader className="pb-2"><CardTitle className="text-base">BS 7671 Updates</CardTitle></CardHeader>
-                    <CardContent className="text-xs space-y-1">
+                    </div>
+                  </div>
+                  <div className="rounded border border-elec-yellow/10 bg-elec-dark/40 p-3">
+                    <div className="text-base font-medium mb-1">BS 7671 Updates</div>
+                    <div className="text-xs space-y-1">
                       <div>• Keep current with 18th Edition (A2:2022) and amendments</div>
                       <div>• CPD on changes and application</div>
-                    </CardContent>
-                  </Card>
-                  <Card className="border-elec-yellow/10 bg-elec-dark/40">
-                    <CardHeader className="pb-2"><CardTitle className="text-base">Professional CPD</CardTitle></CardHeader>
-                    <CardContent className="text-xs space-y-1">
+                    </div>
+                  </div>
+                  <div className="rounded border border-elec-yellow/10 bg-elec-dark/40 p-3">
+                    <div className="text-base font-medium mb-1">Professional CPD</div>
+                    <div className="text-xs space-y-1">
                       <div>• Testing (2391), EV, Solar, Fire/Alarm, BMS</div>
                       <div>• Scheme assessments (NICEIC/NAPIT) if contracting</div>
-                    </CardContent>
-                  </Card>
+                    </div>
+                  </div>
                 </div>
               </MobileAccordionContent>
             </MobileAccordionItem>
@@ -368,18 +362,14 @@ const JIBGradingScheme = () => {
                 <div className="text-xs space-y-2">
                   <p className="text-muted-foreground">SJIB mirrors JIB grading for Scotland. Typical mappings:</p>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    <Card className="border-elec-yellow/10 bg-elec-dark/40">
-                      <CardContent className="p-3">
-                        <div className="font-medium">JIB Electrician ⇄ SJIB Electrician</div>
-                        <div className="text-muted-foreground">NVQ3 + AM2 + 18th Edition</div>
-                      </CardContent>
-                    </Card>
-                    <Card className="border-elec-yellow/10 bg-elec-dark/40">
-                      <CardContent className="p-3">
-                        <div className="font-medium">JIB Approved ⇄ SJIB Approved</div>
-                        <div className="text-muted-foreground">Add 2391 and experience</div>
-                      </CardContent>
-                    </Card>
+                    <div className="rounded border border-elec-yellow/10 bg-elec-dark/40 p-3">
+                      <div className="font-medium">JIB Electrician ⇄ SJIB Electrician</div>
+                      <div className="text-muted-foreground">NVQ3 + AM2 + 18th Edition</div>
+                    </div>
+                    <div className="rounded border border-elec-yellow/10 bg-elec-dark/40 p-3">
+                      <div className="font-medium">JIB Approved ⇄ SJIB Approved</div>
+                      <div className="text-muted-foreground">Add 2391 and experience</div>
+                    </div>
                   </div>
                 </div>
               </MobileAccordionContent>
