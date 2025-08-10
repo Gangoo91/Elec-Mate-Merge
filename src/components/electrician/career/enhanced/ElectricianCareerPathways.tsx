@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Target, Brain, TrendingUp, BarChart3, Users, Eye, Clock, Award, Briefcase, MapPin } from "lucide-react";
 import { DropdownTabs, DropdownTab } from "@/components/ui/dropdown-tabs";
+import { MobileAccordion, MobileAccordionItem, MobileAccordionTrigger, MobileAccordionContent } from "@/components/ui/mobile-accordion";
 import { careerPaths } from "../../../apprentice/career/careerPathsData";
 import CareerPathCard from "../../../apprentice/career/CareerPathCard";
 import EnhancedCareerOverview from "../../../apprentice/career/enhanced/EnhancedCareerOverview";
@@ -13,7 +14,7 @@ import JIBGradingScheme from "../../../apprentice/career/JIBGradingScheme";
 import SkillsDevelopmentMatrix from "../../../apprentice/career/enhanced/SkillsDevelopmentMatrix";
 import ProfessionalDevelopmentStrategy from "../../../apprentice/career/enhanced/ProfessionalDevelopmentStrategy";
 import IndustryInsightsAnalysis from "../../../apprentice/career/enhanced/IndustryInsightsAnalysis";
-import { Link } from "react-router-dom";
+
 
 const ElectricianCareerPathways = () => {
   const [selectedPath, setSelectedPath] = useState<string | null>(null);
@@ -180,33 +181,125 @@ const ElectricianCareerPathways = () => {
       value: "sectors",
       label: "Work Sectors",
       icon: Briefcase,
-      content: <UKWorkSectors />
+      content: (
+        <div className="space-y-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            <div className="rounded-lg border border-elec-yellow/20 bg-elec-gray/50 p-3 text-center">
+              <div className="text-elec-yellow text-lg font-semibold">Sectors</div>
+              <div className="text-xs text-muted-foreground">UK coverage</div>
+            </div>
+            <div className="rounded-lg border border-elec-yellow/20 bg-elec-gray/50 p-3 text-center">
+              <div className="text-elec-yellow text-lg font-semibold">Rates</div>
+              <div className="text-xs text-muted-foreground">Typical day rates</div>
+            </div>
+            <div className="rounded-lg border border-elec-yellow/20 bg-elec-gray/50 p-3 text-center">
+              <div className="text-elec-yellow text-lg font-semibold">Demand</div>
+              <div className="text-xs text-muted-foreground">Current market</div>
+            </div>
+            <div className="rounded-lg border border-elec-yellow/20 bg-elec-gray/50 p-3 text-center">
+              <div className="text-elec-yellow text-lg font-semibold">Skills</div>
+              <div className="text-xs text-muted-foreground">In-demand</div>
+            </div>
+          </div>
+          <MobileAccordion type="single" collapsible className="w-full">
+            <MobileAccordionItem value="sectors-explore">
+              <MobileAccordionTrigger className="bg-elec-gray border border-elec-yellow/20 rounded-lg px-4">
+                Explore sectors
+              </MobileAccordionTrigger>
+              <MobileAccordionContent className="bg-elec-gray border-x border-b border-elec-yellow/20 rounded-b-lg p-3">
+                <UKWorkSectors />
+              </MobileAccordionContent>
+            </MobileAccordionItem>
+          </MobileAccordion>
+        </div>
+      )
     },
     {
       value: "regions",
       label: "Regional Markets",
       icon: MapPin,
-      content: <UKRegionalJobMarkets />
+      content: (
+        <div className="space-y-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            <div className="rounded-lg border border-elec-yellow/20 bg-elec-gray/50 p-3 text-center">
+              <div className="text-elec-yellow text-lg font-semibold">Regions</div>
+              <div className="text-xs text-muted-foreground">UK coverage</div>
+            </div>
+            <div className="rounded-lg border border-elec-yellow/20 bg-elec-gray/50 p-3 text-center">
+              <div className="text-elec-yellow text-lg font-semibold">Rates</div>
+              <div className="text-xs text-muted-foreground">Highest areas</div>
+            </div>
+            <div className="rounded-lg border border-elec-yellow/20 bg-elec-gray/50 p-3 text-center">
+              <div className="text-elec-yellow text-lg font-semibold">Demand</div>
+              <div className="text-xs text-muted-foreground">Current market</div>
+            </div>
+            <div className="rounded-lg border border-elec-yellow/20 bg-elec-gray/50 p-3 text-center">
+              <div className="text-elec-yellow text-lg font-semibold">Starters</div>
+              <div className="text-xs text-muted-foreground">Best regions</div>
+            </div>
+          </div>
+          <MobileAccordion type="single" collapsible className="w-full">
+            <MobileAccordionItem value="regions-overview">
+              <MobileAccordionTrigger className="bg-elec-gray border border-elec-yellow/20 rounded-lg px-4">
+                Explore regions
+              </MobileAccordionTrigger>
+              <MobileAccordionContent className="bg-elec-gray border-x border-b border-elec-yellow/20 rounded-b-lg p-3">
+                <UKRegionalJobMarkets />
+              </MobileAccordionContent>
+            </MobileAccordionItem>
+          </MobileAccordion>
+        </div>
+      )
     },
     {
       value: "paths",
       label: "Career Paths",
       icon: TrendingUp,
       content: (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {careerPaths.map((path) => (
-            <div key={path.id} onClick={() => setSelectedPath(path.id.toString())} className="cursor-pointer">
-              <CareerPathCard 
-                title={path.title}
-                requirements={path.requirements}
-                description={path.description}
-                icon={path.icon}
-                skills={path.skills}
-                salaryRange={path.salaryRange}
-                timeToAchieve={path.timeToAchieve}
-              />
+        <div className="space-y-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            <div className="rounded-lg border border-elec-yellow/20 bg-elec-gray/50 p-3 text-center">
+              <div className="text-elec-yellow text-lg font-semibold">Total paths</div>
+              <div className="text-xs text-muted-foreground">{careerPaths.length}</div>
             </div>
-          ))}
+            <div className="rounded-lg border border-elec-yellow/20 bg-elec-gray/50 p-3 text-center">
+              <div className="text-elec-yellow text-lg font-semibold">Fastest route</div>
+              <div className="text-xs text-muted-foreground">~1–2 yrs</div>
+            </div>
+            <div className="rounded-lg border border-elec-yellow/20 bg-elec-gray/50 p-3 text-center">
+              <div className="text-elec-yellow text-lg font-semibold">Top earnings</div>
+              <div className="text-xs text-muted-foreground">£80k+</div>
+            </div>
+            <div className="rounded-lg border border-elec-yellow/20 bg-elec-gray/50 p-3 text-center">
+              <div className="text-elec-yellow text-lg font-semibold">Popular</div>
+              <div className="text-xs text-muted-foreground">QS, Specialist</div>
+            </div>
+          </div>
+
+          <MobileAccordion type="single" collapsible className="w-full">
+            <MobileAccordionItem value="paths-browse">
+              <MobileAccordionTrigger className="bg-elec-gray border border-elec-yellow/20 rounded-lg px-4">
+                Browse career paths
+              </MobileAccordionTrigger>
+              <MobileAccordionContent className="bg-elec-gray border-x border-b border-elec-yellow/20 rounded-b-lg p-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {careerPaths.map((path) => (
+                    <div key={path.id} onClick={() => setSelectedPath(path.id.toString())} className="cursor-pointer">
+                      <CareerPathCard 
+                        title={path.title}
+                        requirements={path.requirements}
+                        description={path.description}
+                        icon={path.icon}
+                        skills={path.skills}
+                        salaryRange={path.salaryRange}
+                        timeToAchieve={path.timeToAchieve}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </MobileAccordionContent>
+            </MobileAccordionItem>
+          </MobileAccordion>
         </div>
       )
     }
@@ -223,11 +316,6 @@ const ElectricianCareerPathways = () => {
           Comprehensive career development framework including skills matrices, professional development strategies, 
           industry insights, and progression pathways for electrical professionals in the UK
         </p>
-        <Link to="/electrician/career-progression">
-          <Button variant="outline" size="sm" className="flex items-center gap-2">
-            <ArrowLeft className="h-4 w-4" /> Back to Career Sections
-          </Button>
-        </Link>
       </div>
 
       <DropdownTabs 
