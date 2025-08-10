@@ -90,40 +90,27 @@ const JIBGradingScheme = () => {
           </p>
         </CardHeader>
         <CardContent>
-          {/* Overview */}
-          <div className="rounded border border-elec-yellow/10 bg-elec-dark/30 mb-6 p-4">
-            <h3 className="font-semibold text-elec-yellow mb-2">What is the JIB?</h3>
-            <p className="text-sm text-muted-foreground mb-3">
-              The Joint Industry Board for the Electrical Contracting Industry (JIB) is the body that sets employment,
-              training and grading standards for electricians in the UK. It operates the ECS (Electrotechnical Certification Scheme)
-              card system that provides industry-wide recognition of skills and qualifications.
-            </p>
-            {/* 2x2 metrics grid with coloured icons (stays 2 columns on all breakpoints) */}
-            <div className="grid grid-cols-2 gap-3 text-sm">
-              <div className="text-center p-3 rounded border border-elec-yellow/10 bg-elec-dark/40">
-                <div className="font-semibold flex items-center justify-center gap-2">
-                  <Award className="h-4 w-4 text-purple-400" /> 6 Grades
-                </div>
-                <div className="text-xs text-muted-foreground">Clear progression pathway</div>
-              </div>
-              <div className="text-center p-3 rounded border border-elec-yellow/10 bg-elec-dark/40">
-                <div className="font-semibold flex items-center justify-center gap-2">
-                  <Clock className="h-4 w-4 text-elec-yellow" /> 4–5 yrs
-                </div>
-                <div className="text-xs text-muted-foreground">Typical time to Gold Card</div>
-              </div>
-              <div className="text-center p-3 rounded border border-elec-yellow/10 bg-elec-dark/40">
-                <div className="font-semibold flex items-center justify-center gap-2">
-                  <Shield className="h-4 w-4 text-green-400" /> 3‑year cycle
-                </div>
-                <div className="text-xs text-muted-foreground">ECS card renewal</div>
-              </div>
-              <div className="text-center p-3 rounded border border-elec-yellow/10 bg-elec-dark/40">
-                <div className="font-semibold flex items-center justify-center gap-2">
-                  <Briefcase className="h-4 w-4 text-blue-400" /> UK‑wide
-                </div>
-                <div className="text-xs text-muted-foreground">Employer recognition</div>
-              </div>
+          {/* Top metrics grid: 2x2 on mobile, 4 cols on desktop; square tiles with coloured icons */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+            <div className="aspect-square rounded-lg border border-elec-yellow/10 bg-elec-dark/40 p-3 flex flex-col items-center justify-center text-center">
+              <Award className="h-6 w-6 text-purple-400" aria-hidden="true" />
+              <div className="mt-2 font-semibold text-sm">6 Grades</div>
+              <div className="text-[11px] text-muted-foreground">Progression pathway</div>
+            </div>
+            <div className="aspect-square rounded-lg border border-elec-yellow/10 bg-elec-dark/40 p-3 flex flex-col items-center justify-center text-center">
+              <Clock className="h-6 w-6 text-elec-yellow" aria-hidden="true" />
+              <div className="mt-2 font-semibold text-sm">4–5 yrs</div>
+              <div className="text-[11px] text-muted-foreground">To Gold Card</div>
+            </div>
+            <div className="aspect-square rounded-lg border border-elec-yellow/10 bg-elec-dark/40 p-3 flex flex-col items-center justify-center text-center">
+              <Shield className="h-6 w-6 text-green-400" aria-hidden="true" />
+              <div className="mt-2 font-semibold text-sm">3‑year</div>
+              <div className="text-[11px] text-muted-foreground">ECS renewal</div>
+            </div>
+            <div className="aspect-square rounded-lg border border-elec-yellow/10 bg-elec-dark/40 p-3 flex flex-col items-center justify-center text-center">
+              <Briefcase className="h-6 w-6 text-blue-400" aria-hidden="true" />
+              <div className="mt-2 font-semibold text-sm">UK‑wide</div>
+              <div className="text-[11px] text-muted-foreground">Employer recognition</div>
             </div>
           </div>
 
