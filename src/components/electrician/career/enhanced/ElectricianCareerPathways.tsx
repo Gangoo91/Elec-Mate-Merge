@@ -13,6 +13,7 @@ import JIBGradingScheme from "../../../apprentice/career/JIBGradingScheme";
 import SkillsDevelopmentMatrix from "../../../apprentice/career/enhanced/SkillsDevelopmentMatrix";
 import ProfessionalDevelopmentStrategy from "../../../apprentice/career/enhanced/ProfessionalDevelopmentStrategy";
 import IndustryInsightsAnalysis from "../../../apprentice/career/enhanced/IndustryInsightsAnalysis";
+import { Link } from "react-router-dom";
 
 const ElectricianCareerPathways = () => {
   const [selectedPath, setSelectedPath] = useState<string | null>(null);
@@ -213,15 +214,20 @@ const ElectricianCareerPathways = () => {
 
   return (
     <div className="max-w-6xl mx-auto space-y-8 animate-fade-in">
-      <div className="flex flex-col items-center justify-center mb-6">
-        <h1 className="text-3xl font-bold tracking-tight mb-4 flex items-center gap-3">
-          <TrendingUp className="h-8 w-8 text-elec-yellow" />
+      <div className="flex flex-col items-center justify-center mb-4">
+        <h2 className="text-xl sm:text-2xl font-semibold tracking-tight mb-2 flex items-center gap-2">
+          <TrendingUp className="h-6 w-6 text-elec-yellow" />
           UK Electrical Career Pathways
-        </h1>
-        <p className="text-muted-foreground text-center max-w-3xl mb-4">
+        </h2>
+        <p className="text-sm text-muted-foreground text-center max-w-3xl mb-3">
           Comprehensive career development framework including skills matrices, professional development strategies, 
           industry insights, and progression pathways for electrical professionals in the UK
         </p>
+        <Link to="/electrician/career-progression">
+          <Button variant="outline" size="sm" className="flex items-center gap-2">
+            <ArrowLeft className="h-4 w-4" /> Back to Career Sections
+          </Button>
+        </Link>
       </div>
 
       <DropdownTabs 

@@ -46,15 +46,7 @@ const CareerProgression = () => {
         <p className="text-sm sm:text-base text-muted-foreground">
           Advanced career development resources for qualified electricians
         </p>
-        {activeSection ? (
-          <Button 
-            variant="outline" 
-            className="flex items-center gap-2 w-full sm:w-auto" 
-            onClick={handleBackToSections}
-          >
-            <ArrowLeft className="h-4 w-4" /> Back to Career Sections
-          </Button>
-        ) : (
+        {!activeSection && (
           <Link to="/electrician" className="w-full sm:w-auto">
             <Button variant="outline" className="flex items-center gap-2 w-full">
               <ArrowLeft className="h-4 w-4" /> Back to Electrical Hub
