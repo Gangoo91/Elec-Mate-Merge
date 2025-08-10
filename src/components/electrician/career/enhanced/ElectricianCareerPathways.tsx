@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Target, Brain, TrendingUp, BarChart3, Eye, Clock, Award, MapPin } from "lucide-react";
+import { ArrowLeft, Target, Brain, TrendingUp, BarChart3, Eye, Clock, Award, MapPin, PoundSterling, GraduationCap, ShieldCheck, Building, Briefcase, Home } from "lucide-react";
 import { DropdownTabs, DropdownTab } from "@/components/ui/dropdown-tabs";
 import { MobileAccordion, MobileAccordionItem, MobileAccordionTrigger, MobileAccordionContent } from "@/components/ui/mobile-accordion";
 import { careerPaths } from "../../../apprentice/career/careerPathsData";
@@ -208,6 +208,120 @@ const ElectricianCareerPathways = () => {
               </MobileAccordionTrigger>
               <MobileAccordionContent className="bg-elec-gray border-x border-b border-elec-yellow/20 rounded-b-lg p-3">
                 <UKRegionalJobMarkets />
+              </MobileAccordionContent>
+            </MobileAccordionItem>
+
+            <MobileAccordionItem value="regions-wage-bands">
+              <MobileAccordionTrigger icon={<PoundSterling className="h-5 w-5 text-green-400" />} className="bg-elec-gray border border-elec-yellow/20 rounded-lg px-4 py-4">
+                JIB wage bands & allowances
+              </MobileAccordionTrigger>
+              <MobileAccordionContent className="bg-elec-gray border-x border-b border-elec-yellow/20 rounded-b-lg p-3 text-sm">
+                <div className="space-y-3">
+                  <p className="text-muted-foreground text-xs">Reference only — always check the latest JIB rate sheets and company agreements.</p>
+                  <ul className="list-disc pl-5 space-y-1 text-xs">
+                    <li>Grades: Electrician, Approved Electrician, Technician — check JIB grade alignment.</li>
+                    <li>Typical additions: travel time, lodge, overtime bands, shift premia (per agreement).</li>
+                    <li>Sources: JIB, NAECI, company rate cards; verify regional uplifts (e.g. London weighting).</li>
+                  </ul>
+                </div>
+              </MobileAccordionContent>
+            </MobileAccordionItem>
+
+            <MobileAccordionItem value="regions-hotspots">
+              <MobileAccordionTrigger icon={<TrendingUp className="h-5 w-5 text-orange-400" />} className="bg-elec-gray border border-elec-yellow/20 rounded-lg px-4 py-4">
+                Demand hotspots & top cities
+              </MobileAccordionTrigger>
+              <MobileAccordionContent className="bg-elec-gray border-x border-b border-elec-yellow/20 rounded-b-lg p-3 text-sm">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                  <div>
+                    <h4 className="text-elec-yellow font-medium mb-2">High demand</h4>
+                    <ul className="space-y-1 text-muted-foreground">
+                      <li>London & South East — commercial fit‑out, data centres, EV charging</li>
+                      <li>Midlands — manufacturing, logistics hubs, renewables</li>
+                      <li>North West & North East — infrastructure, utilities, rail</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h4 className="text-elec-yellow font-medium mb-2">Top cities</h4>
+                    <ul className="space-y-1 text-muted-foreground">
+                      <li>London, Birmingham, Manchester, Leeds, Bristol, Glasgow</li>
+                    </ul>
+                  </div>
+                </div>
+              </MobileAccordionContent>
+            </MobileAccordionItem>
+
+            <MobileAccordionItem value="regions-apprenticeships">
+              <MobileAccordionTrigger icon={<GraduationCap className="h-5 w-5 text-blue-400" />} className="bg-elec-gray border border-elec-yellow/20 rounded-lg px-4 py-4">
+                Apprenticeships & providers
+              </MobileAccordionTrigger>
+              <MobileAccordionContent className="bg-elec-gray border-x border-b border-elec-yellow/20 rounded-b-lg p-3 text-sm">
+                <ul className="list-disc pl-5 space-y-1 text-xs text-muted-foreground">
+                  <li>National: JTL Training, City & Guilds centres, EAL approved centres</li>
+                  <li>Lookup: local colleges, group training associations, employer academies</li>
+                  <li>Tip: match provider to pathway (install, maintenance, data, renewables)</li>
+                </ul>
+              </MobileAccordionContent>
+            </MobileAccordionItem>
+
+            <MobileAccordionItem value="regions-cost-of-living">
+              <MobileAccordionTrigger icon={<Home className="h-5 w-5 text-yellow-400" />} className="bg-elec-gray border border-elec-yellow/20 rounded-lg px-4 py-4">
+                Cost of living & travel
+              </MobileAccordionTrigger>
+              <MobileAccordionContent className="bg-elec-gray border-x border-b border-elec-yellow/20 rounded-b-lg p-3 text-sm">
+                <ul className="list-disc pl-5 space-y-1 text-xs text-muted-foreground">
+                  <li>Balance day‑rate vs rent/lodging; check weekly lodge rates near sites</li>
+                  <li>Transport: rail season tickets, road tolls, ULEZ/CAZ charges may apply</li>
+                  <li>Travel time policies differ — confirm with employer or main contractor</li>
+                </ul>
+              </MobileAccordionContent>
+            </MobileAccordionItem>
+
+            <MobileAccordionItem value="regions-compliance">
+              <MobileAccordionTrigger icon={<ShieldCheck className="h-5 w-5 text-green-400" />} className="bg-elec-gray border border-elec-yellow/20 rounded-lg px-4 py-4">
+                Compliance & best practice
+              </MobileAccordionTrigger>
+              <MobileAccordionContent className="bg-elec-gray border-x border-b border-elec-yellow/20 rounded-b-lg p-3 text-sm">
+                <ul className="list-disc pl-5 space-y-1 text-xs text-muted-foreground">
+                  <li>BS 7671 (18th Edition) — ensure latest Amendment is applied</li>
+                  <li>Part P (England & Wales), Scottish Building Standards, Building Regs (NI)</li>
+                  <li>Certification schemes: NICEIC, NAPIT, SELECT, ECA — scope varies by region</li>
+                </ul>
+              </MobileAccordionContent>
+            </MobileAccordionItem>
+
+            <MobileAccordionItem value="regions-employers-projects">
+              <MobileAccordionTrigger icon={<Building className="h-5 w-5 text-purple-400" />} className="bg-elec-gray border border-elec-yellow/20 rounded-lg px-4 py-4">
+                Key employers & major projects
+              </MobileAccordionTrigger>
+              <MobileAccordionContent className="bg-elec-gray border-x border-b border-elec-yellow/20 rounded-b-lg p-3 text-sm">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                  <div>
+                    <h4 className="text-elec-yellow font-medium mb-2">Employers</h4>
+                    <ul className="space-y-1 text-muted-foreground">
+                      <li>Tier‑1 M&E contractors, FM providers, utilities, rail, data centres</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h4 className="text-elec-yellow font-medium mb-2">Projects</h4>
+                    <ul className="space-y-1 text-muted-foreground">
+                      <li>Hospitals, airports, commercial fit‑outs, energy & grid upgrades</li>
+                    </ul>
+                  </div>
+                </div>
+              </MobileAccordionContent>
+            </MobileAccordionItem>
+
+            <MobileAccordionItem value="regions-agencies">
+              <MobileAccordionTrigger icon={<Briefcase className="h-5 w-5 text-pink-400" />} className="bg-elec-gray border border-elec-yellow/20 rounded-lg px-4 py-4">
+                Agencies & job boards
+              </MobileAccordionTrigger>
+              <MobileAccordionContent className="bg-elec-gray border-x border-b border-elec-yellow/20 rounded-b-lg p-3 text-sm">
+                <ul className="list-disc pl-5 space-y-1 text-xs text-muted-foreground">
+                  <li>Specialist trades recruiters; verify JIB alignment and day‑rate structure</li>
+                  <li>Use filters by region, sector, and certification requirements</li>
+                  <li>Keep ECS card, AM2, 2391, EV/solar tickets visible on profile</li>
+                </ul>
               </MobileAccordionContent>
             </MobileAccordionItem>
           </MobileAccordion>
