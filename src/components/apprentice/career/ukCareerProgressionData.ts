@@ -337,7 +337,7 @@ export const ukCareerLevels: UKCareerLevel[] = [
     prerequisites: [
       { name: "Business setup", mandatory: true },
       { name: "Public liability & professional indemnity insurance", mandatory: true },
-      { name: "Certification scheme membership (NICEIC/NAPIT)", mandatory: recommended }
+      { name: "Certification scheme membership (NICEIC/NAPIT)", mandatory: false }
     ],
     day_rates: { employed: "N/A", contractor: "£200–£450+/day" },
     cpd: { interval: "Annual", requirements: ["Scheme assessment", "Regulatory updates", "Accounts & H&S compliance"] },
