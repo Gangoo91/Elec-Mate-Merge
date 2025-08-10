@@ -9,7 +9,12 @@ import {
   Target,
   Clock,
   Building,
-  DollarSign
+  DollarSign,
+  Scale,
+  Users,
+  ClipboardList,
+  Percent,
+  Receipt
 } from "lucide-react";
 import { Helmet } from "react-helmet";
 
@@ -61,6 +66,42 @@ const BusinessCalculators = () => {
       id: "tax-estimator",
       title: "Tax & NI Estimator",
       icon: <PoundSterling className="h-12 w-12 text-elec-yellow" />,
+      status: "available"
+    },
+    {
+      id: "break-even",
+      title: "Break-even & Margin Guard",
+      icon: <Scale className="h-12 w-12 text-elec-yellow" />,
+      status: "available"
+    },
+    {
+      id: "staff-cost",
+      title: "Fully Loaded Staff Cost",
+      icon: <Users className="h-12 w-12 text-elec-yellow" />,
+      status: "available"
+    },
+    {
+      id: "quote-variance",
+      title: "Quote vs Actual Tracker",
+      icon: <ClipboardList className="h-12 w-12 text-elec-yellow" />,
+      status: "available"
+    },
+    {
+      id: "minimum-charge",
+      title: "Minimum Charge & First Hour",
+      icon: <PoundSterling className="h-12 w-12 text-elec-yellow" />,
+      status: "available"
+    },
+    {
+      id: "vat-scheme",
+      title: "VAT Scheme Comparison",
+      icon: <Percent className="h-12 w-12 text-elec-yellow" />,
+      status: "available"
+    },
+    {
+      id: "cis-drc",
+      title: "CIS & DRC Helper (UK)",
+      icon: <Receipt className="h-12 w-12 text-elec-yellow" />,
       status: "available"
     }
   ];

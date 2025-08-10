@@ -42,6 +42,12 @@ import TaxNIEstimator from "@/pages/electrician/business-development/tools/TaxNI
 import SupplierMaterials from "@/pages/electrician/SupplierMaterials";
 import CategoryMaterials from "@/pages/electrician/CategoryMaterials";
 import MaterialsSlugRedirect from "@/pages/electrician/MaterialsSlugRedirect";
+import BreakEvenCalculator from "@/pages/electrician/business-development/tools/BreakEvenCalculator";
+import StaffCostCalculator from "@/pages/electrician/business-development/tools/StaffCostCalculator";
+import QuoteVarianceTracker from "@/pages/electrician/business-development/tools/QuoteVarianceTracker";
+import MinimumChargeCalculator from "@/pages/electrician/business-development/tools/MinimumChargeCalculator";
+import VATSchemeComparison from "@/pages/electrician/business-development/tools/VATSchemeComparison";
+import CISDRCHelper from "@/pages/electrician/business-development/tools/CISDRCHelper";
 
 const ElectricianHubRoutes = () => (
   <Routes>
@@ -92,6 +98,12 @@ const ElectricianHubRoutes = () => (
     <Route path="business-development/tools/hourly-rate" element={<HourlyRateCalculator />} />
     <Route path="business-development/tools/capacity-planner" element={<CapacityPlanningTool />} />
     <Route path="business-development/tools/tax-estimator" element={<TaxNIEstimator />} />
+    <Route path="business-development/tools/break-even" element={<BreakEvenCalculator />} />
+    <Route path="business-development/tools/staff-cost" element={<StaffCostCalculator />} />
+    <Route path="business-development/tools/quote-variance" element={<QuoteVarianceTracker />} />
+    <Route path="business-development/tools/minimum-charge" element={<MinimumChargeCalculator />} />
+    <Route path="business-development/tools/vat-scheme" element={<VATSchemeComparison />} />
+    <Route path="business-development/tools/cis-drc" element={<CISDRCHelper />} />
   </Routes>
 );
 
