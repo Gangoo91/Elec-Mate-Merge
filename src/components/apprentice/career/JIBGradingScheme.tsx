@@ -99,30 +99,31 @@ const JIBGradingScheme = () => {
                 training and grading standards for electricians in the UK. It operates the ECS (Electrotechnical Certification Scheme)
                 card system that provides industry-wide recognition of skills and qualifications.
               </p>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
-                <div className="text-center p-3 bg-elec-yellow/10 rounded">
-                  <div className="text-elec-yellow font-semibold flex items-center justify-center gap-2">
-                    <Award className="h-4 w-4" /> 6 Grades
+              {/* 2x2 metrics grid with coloured icons (stays 2 columns on all breakpoints) */}
+              <div className="grid grid-cols-2 gap-3 text-sm">
+                <div className="text-center p-3 rounded border border-elec-yellow/10 bg-elec-dark/40">
+                  <div className="font-semibold flex items-center justify-center gap-2">
+                    <Award className="h-4 w-4 text-purple-400" /> 6 Grades
                   </div>
-                  <div className="text-xs">Clear progression pathway</div>
+                  <div className="text-xs text-muted-foreground">Clear progression pathway</div>
                 </div>
-                <div className="text-center p-3 bg-elec-yellow/10 rounded">
-                  <div className="text-elec-yellow font-semibold flex items-center justify-center gap-2">
-                    <Clock className="h-4 w-4" /> 4–5 yrs
+                <div className="text-center p-3 rounded border border-elec-yellow/10 bg-elec-dark/40">
+                  <div className="font-semibold flex items-center justify-center gap-2">
+                    <Clock className="h-4 w-4 text-elec-yellow" /> 4–5 yrs
                   </div>
-                  <div className="text-xs">Typical time to Gold Card</div>
+                  <div className="text-xs text-muted-foreground">Typical time to Gold Card</div>
                 </div>
-                <div className="text-center p-3 bg-elec-yellow/10 rounded">
-                  <div className="text-elec-yellow font-semibold flex items-center justify-center gap-2">
-                    <Shield className="h-4 w-4" /> 3‑year cycle
+                <div className="text-center p-3 rounded border border-elec-yellow/10 bg-elec-dark/40">
+                  <div className="font-semibold flex items-center justify-center gap-2">
+                    <Shield className="h-4 w-4 text-green-400" /> 3‑year cycle
                   </div>
-                  <div className="text-xs">ECS card renewal</div>
+                  <div className="text-xs text-muted-foreground">ECS card renewal</div>
                 </div>
-                <div className="text-center p-3 bg-elec-yellow/10 rounded">
-                  <div className="text-elec-yellow font-semibold flex items-center justify-center gap-2">
-                    <Briefcase className="h-4 w-4" /> UK‑wide
+                <div className="text-center p-3 rounded border border-elec-yellow/10 bg-elec-dark/40">
+                  <div className="font-semibold flex items-center justify-center gap-2">
+                    <Briefcase className="h-4 w-4 text-blue-400" /> UK‑wide
                   </div>
-                  <div className="text-xs">Employer recognition</div>
+                  <div className="text-xs text-muted-foreground">Employer recognition</div>
                 </div>
               </div>
             </CardContent>
@@ -321,6 +322,65 @@ const JIBGradingScheme = () => {
                     <li>• ID and recent photo</li>
                     <li>• CPD record (recommended)</li>
                   </ul>
+                </div>
+              </MobileAccordionContent>
+            </MobileAccordionItem>
+
+            {/* Application process */}
+            <MobileAccordionItem value="apply">
+              <MobileAccordionTrigger icon={<CheckCircle className="h-4 w-4 text-green-400" />}>Application Process (Typical)</MobileAccordionTrigger>
+              <MobileAccordionContent>
+                <ol className="list-decimal pl-5 space-y-2 text-xs">
+                  <li>Confirm eligibility and gather evidence (NVQ, AM2, 18th, references)</li>
+                  <li>Create or log into your MyECS account and start a new application</li>
+                  <li>Upload documents and pay the applicable fee</li>
+                  <li>Book and pass the ECS Health & Safety assessment (if required)</li>
+                  <li>Await verification; your digital ECS card updates first, physical card follows</li>
+                </ol>
+              </MobileAccordionContent>
+            </MobileAccordionItem>
+
+            {/* H&S topics */}
+            <MobileAccordionItem value="hs-topics">
+              <MobileAccordionTrigger icon={<Shield className="h-4 w-4 text-elec-yellow" />}>ECS Health & Safety Test Topics</MobileAccordionTrigger>
+              <MobileAccordionContent>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                  <ul className="space-y-1">
+                    <li>• Site access, permits to work</li>
+                    <li>• Safe isolation and lock-off</li>
+                    <li>• Working at height and manual handling</li>
+                    <li>• Fire safety and emergency procedures</li>
+                  </ul>
+                  <ul className="space-y-1">
+                    <li>• Asbestos awareness & COSHH</li>
+                    <li>• Electrical shock risk and first aid basics</li>
+                    <li>• Environmental considerations</li>
+                    <li>• Reporting near misses and incidents</li>
+                  </ul>
+                </div>
+              </MobileAccordionContent>
+            </MobileAccordionItem>
+
+            {/* SJIB mapping */}
+            <MobileAccordionItem value="sjib">
+              <MobileAccordionTrigger icon={<MapPin className="h-4 w-4 text-blue-400" />}>SJIB Equivalence (Scotland)</MobileAccordionTrigger>
+              <MobileAccordionContent>
+                <div className="text-xs space-y-2">
+                  <p className="text-muted-foreground">SJIB mirrors JIB grading for Scotland. Typical mappings:</p>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <Card className="border-elec-yellow/10 bg-elec-dark/40">
+                      <CardContent className="p-3">
+                        <div className="font-medium">JIB Electrician ⇄ SJIB Electrician</div>
+                        <div className="text-muted-foreground">NVQ3 + AM2 + 18th Edition</div>
+                      </CardContent>
+                    </Card>
+                    <Card className="border-elec-yellow/10 bg-elec-dark/40">
+                      <CardContent className="p-3">
+                        <div className="font-medium">JIB Approved ⇄ SJIB Approved</div>
+                        <div className="text-muted-foreground">Add 2391 and experience</div>
+                      </CardContent>
+                    </Card>
+                  </div>
                 </div>
               </MobileAccordionContent>
             </MobileAccordionItem>
