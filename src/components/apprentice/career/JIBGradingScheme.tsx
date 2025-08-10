@@ -181,6 +181,26 @@ const JIBGradingScheme = () => {
                               </h4>
                               <div className="text-sm text-muted-foreground">{grade.duration}</div>
                             </div>
+                            <div>
+                              <h4 className="text-sm font-medium mb-2 text-elec-yellow flex items-center gap-1">
+                                <Briefcase className="h-3 w-3" /> Typical Responsibilities
+                              </h4>
+                              <div className="space-y-1">
+                                <div className="text-xs">• Install, test and commission electrical circuits</div>
+                                <div className="text-xs">• Read drawings and produce neat, compliant workmanship</div>
+                                <div className="text-xs">• Complete certification and handover documentation</div>
+                              </div>
+                            </div>
+                            <div>
+                              <h4 className="text-sm font-medium mb-2 text-elec-yellow flex items-center gap-1">
+                                <BookOpen className="h-3 w-3" /> Recommended CPD/Courses
+                              </h4>
+                              <div className="space-y-1">
+                                <div className="text-xs">• 18th Edition refreshers and updates</div>
+                                <div className="text-xs">• 2391 Inspection & Testing (for Approved route)</div>
+                                <div className="text-xs">• EV Charging and Solar PV fundamentals</div>
+                              </div>
+                            </div>
                           </div>
                         </div>
                       );
@@ -228,6 +248,28 @@ const JIBGradingScheme = () => {
                             <div className="text-sm text-muted-foreground">{grade.duration}</div>
                           </div>
                         </div>
+                        <div className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-3">
+                          <div>
+                            <h4 className="text-sm font-medium mb-2 text-elec-yellow flex items-center gap-1">
+                              <Briefcase className="h-3 w-3" /> Typical Responsibilities
+                            </h4>
+                            <ul className="text-xs space-y-1">
+                              <li>• Site installation, testing and fault finding</li>
+                              <li>• Documentation and certification</li>
+                              <li>• Mentoring juniors where applicable</li>
+                            </ul>
+                          </div>
+                          <div>
+                            <h4 className="text-sm font-medium mb-2 text-elec-yellow flex items-center gap-1">
+                              <BookOpen className="h-3 w-3" /> Recommended CPD/Courses
+                            </h4>
+                            <ul className="text-xs space-y-1">
+                              <li>• 2391 Inspection & Testing</li>
+                              <li>• EV/Solar manufacturer training</li>
+                              <li>• Leadership (SSSTS) for Supervisor route</li>
+                            </ul>
+                          </div>
+                        </div>
                       </div>
                     ))}
                   </div>
@@ -239,7 +281,7 @@ const JIBGradingScheme = () => {
             <MobileAccordionItem value="ecs">
               <MobileAccordionTrigger className="bg-elec-gray border-elec-yellow/20" icon={<Shield className="h-4 w-4 text-green-400" />}>ECS Cards & Categories</MobileAccordionTrigger>
               <MobileAccordionContent className="bg-elec-gray border-x border-b border-elec-yellow/20 rounded-b-lg p-3">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div className="rounded border border-elec-yellow/20 bg-elec-gray p-3">
                     <div className="text-base font-medium mb-1">Core Electrical</div>
                     <div className="text-sm space-y-2">
@@ -262,6 +304,15 @@ const JIBGradingScheme = () => {
                       <p className="text-xs text-muted-foreground">Specialist routes often require manufacturer or scheme approval.</p>
                     </div>
                   </div>
+                  <div className="rounded border border-elec-yellow/20 bg-elec-gray p-3">
+                    <div className="text-base font-medium mb-1">Application Steps</div>
+                    <div className="text-xs space-y-1">
+                      <div className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-green-400" /> Create MyECS account</div>
+                      <div className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-green-400" /> Upload qualifications & photo ID</div>
+                      <div className="flex items-center gap-2"><Clock className="h-3 w-3 text-elec-yellow" /> Book H&S test (if required)</div>
+                      <div className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-green-400" /> Submit and await verification (3–10 working days)</div>
+                    </div>
+                  </div>
                 </div>
               </MobileAccordionContent>
             </MobileAccordionItem>
@@ -277,6 +328,7 @@ const JIBGradingScheme = () => {
                       <div className="flex items-center gap-2"><Banknote className="h-3 w-3 text-elec-yellow" /> Electrician: £180–£260</div>
                       <div className="flex items-center gap-2"><Banknote className="h-3 w-3 text-elec-yellow" /> Approved: £220–£320</div>
                       <div className="flex items-center gap-2"><Banknote className="h-3 w-3 text-elec-yellow" /> Technician/Supervisor: £260–£400+</div>
+                      <div className="mt-2 text-[11px] text-muted-foreground">Overtime typical: x1.5 (weekday eves), x2 (Sundays/Bank Hols)</div>
                       <p className="text-muted-foreground mt-2">Varies by region, project type and experience.</p>
                     </div>
                   </div>
@@ -286,6 +338,7 @@ const JIBGradingScheme = () => {
                       <div>• Standardised pay scales (check latest JIB agreement)</div>
                       <div>• Overtime, lodge and travel allowances where applicable</div>
                       <div>• Holiday and pension arrangements</div>
+                      <div>• Travel time/uplifts may apply on large sites</div>
                     </div>
                   </div>
                   <div className="rounded border border-elec-yellow/20 bg-elec-gray p-3">
@@ -294,6 +347,7 @@ const JIBGradingScheme = () => {
                       <div className="flex items-center gap-2"><MapPin className="h-3 w-3 text-elec-yellow" /> London & SE tend to command higher rates</div>
                       <div className="flex items-center gap-2"><MapPin className="h-3 w-3 text-elec-yellow" /> Scotland: SJIB equivalent grading and rates</div>
                       <div className="flex items-center gap-2"><MapPin className="h-3 w-3 text-elec-yellow" /> Major projects can offer enhanced uplifts</div>
+                      <div className="text-[11px] text-muted-foreground">Check NAECI/Blue Book for certain industrial sites.</div>
                     </div>
                   </div>
                 </div>
@@ -304,7 +358,7 @@ const JIBGradingScheme = () => {
             <MobileAccordionItem value="pathway">
               <MobileAccordionTrigger className="bg-elec-gray border-elec-yellow/20" icon={<TrendingUp className="h-4 w-4 text-green-400" />}>Upgrade Pathways</MobileAccordionTrigger>
               <MobileAccordionContent className="bg-elec-gray border-x border-b border-elec-yellow/20 rounded-b-lg p-3">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
                   <div className="rounded border border-elec-yellow/20 bg-elec-gray p-3">
                     <div className="text-base font-medium mb-1">Standard Route</div>
                     <div className="text-xs space-y-1">
@@ -317,6 +371,13 @@ const JIBGradingScheme = () => {
                     <div className="text-xs space-y-1">
                       <div>Approved/Technician → Chargehand → Site Supervisor → Manager</div>
                       <div className="text-muted-foreground">Add leadership (SSSTS/SMSTS/IOSH) and project delivery experience.</div>
+                    </div>
+                  </div>
+                  <div className="rounded border border-elec-yellow/20 bg-elec-gray p-3">
+                    <div className="text-base font-medium mb-1">Fast‑Track / APL</div>
+                    <div className="text-xs space-y-1">
+                      <div>Experienced workers scheme with evidence portfolio</div>
+                      <div className="text-muted-foreground">Recognition of prior learning can reduce time to Gold/Approved.</div>
                     </div>
                   </div>
                 </div>
@@ -334,6 +395,7 @@ const JIBGradingScheme = () => {
                       <div className="flex items-center gap-2"><Shield className="h-3 w-3 text-elec-yellow" /> Renew every 3 years</div>
                       <div>• Current H&S assessment</div>
                       <div>• Up‑to‑date qualifications</div>
+                      <div className="text-[11px] text-muted-foreground">Digital card updates first; physical card follows by post.</div>
                     </div>
                   </div>
                   <div className="rounded border border-elec-yellow/20 bg-elec-gray p-3">
@@ -341,6 +403,7 @@ const JIBGradingScheme = () => {
                     <div className="text-xs space-y-1">
                       <div>• Keep current with 18th Edition (A2:2022) and amendments</div>
                       <div>• CPD on changes and application</div>
+                      <div className="text-[11px] text-muted-foreground">Amendments typically every 2–3 years. Stay subscribed.</div>
                     </div>
                   </div>
                   <div className="rounded border border-elec-yellow/20 bg-elec-gray p-3">
@@ -348,6 +411,7 @@ const JIBGradingScheme = () => {
                     <div className="text-xs space-y-1">
                       <div>• Testing (2391), EV, Solar, Fire/Alarm, BMS</div>
                       <div>• Scheme assessments (NICEIC/NAPIT) if contracting</div>
+                      <div className="text-[11px] text-muted-foreground">Recommended: 20–30 hours CPD per year logged in the CPD Tracker.</div>
                     </div>
                   </div>
                 </div>
@@ -358,7 +422,7 @@ const JIBGradingScheme = () => {
             <MobileAccordionItem value="evidence">
               <MobileAccordionTrigger className="bg-elec-gray border-elec-yellow/20" icon={<CheckCircle className="h-4 w-4 text-green-400" />}>Evidence Checklist (Upgrades)</MobileAccordionTrigger>
               <MobileAccordionContent className="bg-elec-gray border-x border-b border-elec-yellow/20 rounded-b-lg p-3">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
                   <ul className="space-y-1">
                     <li>• Level 3 NVQ Diploma (2357/5357)</li>
                     <li>• AM2/AM2S certificate</li>
@@ -370,6 +434,11 @@ const JIBGradingScheme = () => {
                     <li>• ECS H&S assessment</li>
                     <li>• ID and recent photo</li>
                     <li>• CPD record (recommended)</li>
+                  </ul>
+                  <ul className="space-y-1">
+                    <li>• Evidence of design/verification (Technician)</li>
+                    <li>• Manufacturer training certificates (EV/Solar)</li>
+                    <li>• Site supervisor tickets (SSSTS/SMSTS) if applicable</li>
                   </ul>
                 </div>
               </MobileAccordionContent>
@@ -386,6 +455,8 @@ const JIBGradingScheme = () => {
                   <li>Book and pass the ECS Health & Safety assessment (if required)</li>
                   <li>Await verification; your digital ECS card updates first, physical card follows</li>
                 </ol>
+                <p className="mt-2 text-[11px] text-muted-foreground">Typical timeframe: 3–10 working days depending on volume and checks.</p>
+                <p className="text-[11px] text-muted-foreground">Fees vary by card type and renewal vs upgrade.</p>
               </MobileAccordionContent>
             </MobileAccordionItem>
 
@@ -407,6 +478,7 @@ const JIBGradingScheme = () => {
                     <li>• Reporting near misses and incidents</li>
                   </ul>
                 </div>
+                <div className="mt-2 text-[11px] text-muted-foreground">Pass mark typically ~85%. Tip: focus on safe isolation, permits and emergency procedures.</div>
               </MobileAccordionContent>
             </MobileAccordionItem>
 
@@ -426,6 +498,7 @@ const JIBGradingScheme = () => {
                       <div className="text-muted-foreground">Add 2391 and experience</div>
                     </div>
                   </div>
+                  <p className="mt-2 text-[11px] text-muted-foreground">Check SJIB for local rules, evidence and rates which can differ from JIB.</p>
                 </div>
               </MobileAccordionContent>
             </MobileAccordionItem>
@@ -446,6 +519,14 @@ const JIBGradingScheme = () => {
                   <div>
                     <div className="font-medium text-elec-yellow">What about Scotland?</div>
                     <p className="text-xs text-muted-foreground">Scotland follows SJIB which mirrors JIB; check SJIB for local details.</p>
+                  </div>
+                  <div>
+                    <div className="font-medium text-elec-yellow">How long does verification take?</div>
+                    <p className="text-xs text-muted-foreground">Usually 3–10 working days once all evidence is uploaded and validated.</p>
+                  </div>
+                  <div>
+                    <div className="font-medium text-elec-yellow">Do I need a physical card?</div>
+                    <p className="text-xs text-muted-foreground">The digital card is available immediately after approval; physical cards are posted and may take a few days.</p>
                   </div>
                 </div>
               </MobileAccordionContent>
