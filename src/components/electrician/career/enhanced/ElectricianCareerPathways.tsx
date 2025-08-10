@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Target, Brain, TrendingUp, BarChart3, Users, Eye, Clock, Award, Briefcase, MapPin, PoundSterling, ShieldCheck } from "lucide-react";
+import { ArrowLeft, Target, Brain, TrendingUp, BarChart3, Eye, Clock, Award, MapPin } from "lucide-react";
 import { DropdownTabs, DropdownTab } from "@/components/ui/dropdown-tabs";
 import { MobileAccordion, MobileAccordionItem, MobileAccordionTrigger, MobileAccordionContent } from "@/components/ui/mobile-accordion";
 import { careerPaths } from "../../../apprentice/career/careerPathsData";
@@ -9,7 +9,7 @@ import EnhancedCareerOverview from "../../../apprentice/career/enhanced/Enhanced
 import ProgressTracker from "@/components/career/ProgressTracker";
 import UKCareerProgressionTimeline from "../../../apprentice/career/UKCareerProgressionTimeline";
 import UKRegionalJobMarkets from "../../../apprentice/career/UKRegionalJobMarkets";
-import UKWorkSectors from "../../../apprentice/career/UKWorkSectors";
+
 import JIBGradingScheme from "../../../apprentice/career/JIBGradingScheme";
 import SkillsDevelopmentMatrix from "../../../apprentice/career/enhanced/SkillsDevelopmentMatrix";
 import ProfessionalDevelopmentStrategy from "../../../apprentice/career/enhanced/ProfessionalDevelopmentStrategy";
@@ -176,164 +176,6 @@ const ElectricianCareerPathways = () => {
       label: "JIB Grades",
       icon: Award,
       content: <JIBGradingScheme />
-    },
-    {
-      value: "sectors",
-      label: "Work Sectors",
-      icon: Briefcase,
-      content: (
-        <div className="space-y-4">
-          {/* Metrics tiles - match JIB colours and spacing */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-            <div className="rounded-lg border border-elec-yellow/20 bg-elec-gray/50 p-3">
-              <div className="flex items-center gap-2 mb-1">
-                <Briefcase className="h-5 w-5 text-purple-400" />
-                <div className="text-elec-yellow text-base font-semibold">Work sectors</div>
-              </div>
-              <div className="text-xs text-muted-foreground">Domestic, Commercial, Industrial, Specialist</div>
-            </div>
-            <div className="rounded-lg border border-elec-yellow/20 bg-elec-gray/50 p-3">
-              <div className="flex items-center gap-2 mb-1">
-                <Clock className="h-5 w-5 text-elec-yellow" />
-                <div className="text-elec-yellow text-base font-semibold">Typical day rates</div>
-              </div>
-              <div className="text-xs text-muted-foreground">~£150–£450/day (scope & experience)</div>
-            </div>
-            <div className="rounded-lg border border-elec-yellow/20 bg-elec-gray/50 p-3">
-              <div className="flex items-center gap-2 mb-1">
-                <Users className="h-5 w-5 text-green-400" />
-                <div className="text-elec-yellow text-base font-semibold">Market demand</div>
-              </div>
-              <div className="text-xs text-muted-foreground">Testing, EV, Data, Renewables in demand</div>
-            </div>
-            <div className="rounded-lg border border-elec-yellow/20 bg-elec-gray/50 p-3">
-              <div className="flex items-center gap-2 mb-1">
-                <Target className="h-5 w-5 text-blue-400" />
-                <div className="text-elec-yellow text-base font-semibold">Key skills</div>
-              </div>
-              <div className="text-xs text-muted-foreground">I&T (2391), containment, LV design, H&S</div>
-            </div>
-          </div>
-
-          {/* Accordion layout */}
-          <MobileAccordion type="multiple" className="w-full">
-            <MobileAccordionItem value="sectors-explore">
-              <MobileAccordionTrigger icon={<Briefcase className="h-5 w-5 text-purple-400" />} className="bg-elec-gray border border-elec-yellow/20 rounded-lg px-4 py-4">
-                Explore sectors
-              </MobileAccordionTrigger>
-              <MobileAccordionContent className="bg-elec-gray border-x border-b border-elec-yellow/20 rounded-b-lg p-3">
-                <UKWorkSectors />
-              </MobileAccordionContent>
-            </MobileAccordionItem>
-
-            <MobileAccordionItem value="sectors-insights">
-              <MobileAccordionTrigger icon={<BarChart3 className="h-5 w-5 text-blue-400" />} className="bg-elec-gray border border-elec-yellow/20 rounded-lg px-4 py-4">
-                Sector insights & guidance
-              </MobileAccordionTrigger>
-              <MobileAccordionContent className="bg-elec-gray border-x border-b border-elec-yellow/20 rounded-b-lg p-3">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div className="rounded-md border border-elec-yellow/10 bg-elec-dark/40 p-3">
-                    <p className="text-sm font-medium mb-2">High‑growth areas</p>
-                    <ul className="text-sm list-disc pl-4 space-y-1 text-muted-foreground">
-                      <li>EV charge points and renewables integration</li>
-                      <li>Data/comms and smart building systems</li>
-                      <li>Testing, inspection and periodic reports</li>
-                    </ul>
-                  </div>
-                  <div className="rounded-md border border-elec-yellow/10 bg-elec-dark/40 p-3">
-                    <p className="text-sm font-medium mb-2">Progression tips</p>
-                    <ul className="text-sm list-disc pl-4 space-y-1 text-muted-foreground">
-                      <li>Build a portfolio of sector‑specific projects</li>
-                      <li>Maintain CPD aligned to BS 7671 (18th)</li>
-                      <li>Collect references and manufacturer certs</li>
-                    </ul>
-                  </div>
-                </div>
-              </MobileAccordionContent>
-            </MobileAccordionItem>
-
-            <MobileAccordionItem value="sectors-pay">
-              <MobileAccordionTrigger icon={<PoundSterling className="h-5 w-5 text-elec-yellow" />} className="bg-elec-gray border border-elec-yellow/20 rounded-lg px-4 py-4">
-                Pay rates & allowances
-              </MobileAccordionTrigger>
-              <MobileAccordionContent className="bg-elec-gray border-x border-b border-elec-yellow/20 rounded-b-lg p-3">
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
-                  <div className="rounded-md border border-elec-yellow/10 bg-elec-dark/40 p-3">
-                    <p className="font-medium mb-1">Domestic</p>
-                    <p className="text-muted-foreground">£150–£250/day</p>
-                  </div>
-                  <div className="rounded-md border border-elec-yellow/10 bg-elec-dark/40 p-3">
-                    <p className="font-medium mb-1">Commercial</p>
-                    <p className="text-muted-foreground">£180–£350/day</p>
-                  </div>
-                  <div className="rounded-md border border-elec-yellow/10 bg-elec-dark/40 p-3">
-                    <p className="font-medium mb-1">Industrial</p>
-                    <p className="text-muted-foreground">£200–£400/day</p>
-                  </div>
-                  <div className="rounded-md border border-elec-yellow/10 bg-elec-dark/40 p-3">
-                    <p className="font-medium mb-1">Specialist</p>
-                    <p className="text-muted-foreground">£250–£450+/day</p>
-                  </div>
-                </div>
-                <p className="text-xs text-muted-foreground mt-2">Guide only. Varies by region, certs, experience and scope.</p>
-              </MobileAccordionContent>
-            </MobileAccordionItem>
-
-            <MobileAccordionItem value="sectors-compliance">
-              <MobileAccordionTrigger icon={<ShieldCheck className="h-5 w-5 text-purple-400" />} className="bg-elec-gray border border-elec-yellow/20 rounded-lg px-4 py-4">
-                Compliance & best practice
-              </MobileAccordionTrigger>
-              <MobileAccordionContent className="bg-elec-gray border-x border-b border-elec-yellow/20 rounded-b-lg p-3">
-                <ul className="text-sm list-disc pl-4 space-y-1 text-muted-foreground">
-                  <li>BS 7671:2018 (18th Edition) requirements</li>
-                  <li>Building Regs (Part P), Health & Safety, RAMS</li>
-                  <li>ECS/JIB grading, insurance and calibration records</li>
-                </ul>
-              </MobileAccordionContent>
-            </MobileAccordionItem>
-
-            <MobileAccordionItem value="sectors-projects">
-              <MobileAccordionTrigger icon={<Briefcase className="h-5 w-5 text-blue-400" />} className="bg-elec-gray border border-elec-yellow/20 rounded-lg px-4 py-4">
-                Typical projects & clients
-              </MobileAccordionTrigger>
-              <MobileAccordionContent className="bg-elec-gray border-x border-b border-elec-yellow/20 rounded-b-lg p-3">
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
-                  <div className="rounded-md border border-elec-yellow/10 bg-elec-dark/40 p-3">
-                    <p className="font-medium mb-1">Domestic</p>
-                    <p className="text-muted-foreground">Housing associations, landlords</p>
-                  </div>
-                  <div className="rounded-md border border-elec-yellow/10 bg-elec-dark/40 p-3">
-                    <p className="font-medium mb-1">Commercial</p>
-                    <p className="text-muted-foreground">Fit‑outs, retail, offices</p>
-                  </div>
-                  <div className="rounded-md border border-elec-yellow/10 bg-elec-dark/40 p-3">
-                    <p className="font-medium mb-1">Industrial</p>
-                    <p className="text-muted-foreground">Factories, plants, FM</p>
-                  </div>
-                  <div className="rounded-md border border-elec-yellow/10 bg-elec-dark/40 p-3">
-                    <p className="font-medium mb-1">Specialist</p>
-                    <p className="text-muted-foreground">EV, solar, BMS, data</p>
-                  </div>
-                </div>
-              </MobileAccordionContent>
-            </MobileAccordionItem>
-
-            <MobileAccordionItem value="sectors-getting-started">
-              <MobileAccordionTrigger icon={<Target className="h-5 w-5 text-green-400" />} className="bg-elec-gray border border-elec-yellow/20 rounded-lg px-4 py-4">
-                Getting started checklist
-              </MobileAccordionTrigger>
-              <MobileAccordionContent className="bg-elec-gray border-x border-b border-elec-yellow/20 rounded-b-lg p-3">
-                <ul className="text-sm list-disc pl-4 space-y-1 text-muted-foreground">
-                  <li>Update CV with sector‑specific keywords</li>
-                  <li>Refresh I&T kit calibration; add EV/data tools as needed</li>
-                  <li>Collect CSCS/ECS, 18th, 2391, IPAF as relevant</li>
-                  <li>Prepare RAMS templates; maintain job photo portfolio</li>
-                </ul>
-              </MobileAccordionContent>
-            </MobileAccordionItem>
-          </MobileAccordion>
-        </div>
-      )
     },
     {
       value: "regions",
