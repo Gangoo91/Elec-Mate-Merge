@@ -123,7 +123,7 @@ const JIBGradingScheme = () => {
           <MobileAccordion type="multiple" className="space-y-4">
             {/* JIB Grades (moved existing content) */}
             <MobileAccordionItem value="grades">
-              <MobileAccordionTrigger className="bg-elec-gray border-elec-yellow/20" icon={<Award className="h-4 w-4 text-elec-yellow" />}>JIB Grades & Requirements</MobileAccordionTrigger>
+              <MobileAccordionTrigger className="bg-elec-gray border-elec-yellow/20" icon={<Award className="h-4 w-4 text-purple-400" />}>JIB Grades & Requirements</MobileAccordionTrigger>
               <MobileAccordionContent className="bg-elec-gray border-x border-b border-elec-yellow/20 rounded-b-lg p-3">
                 {isMobile ? (
                   <>
@@ -237,7 +237,7 @@ const JIBGradingScheme = () => {
 
             {/* ECS cards */}
             <MobileAccordionItem value="ecs">
-              <MobileAccordionTrigger className="bg-elec-gray border-elec-yellow/20" icon={<Shield className="h-4 w-4 text-elec-yellow" />}>ECS Cards & Categories</MobileAccordionTrigger>
+              <MobileAccordionTrigger className="bg-elec-gray border-elec-yellow/20" icon={<Shield className="h-4 w-4 text-green-400" />}>ECS Cards & Categories</MobileAccordionTrigger>
               <MobileAccordionContent className="bg-elec-gray border-x border-b border-elec-yellow/20 rounded-b-lg p-3">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="rounded border border-elec-yellow/20 bg-elec-gray p-3">
@@ -268,7 +268,7 @@ const JIBGradingScheme = () => {
 
             {/* Pay & allowances */}
             <MobileAccordionItem value="pay">
-              <MobileAccordionTrigger className="bg-elec-gray border-elec-yellow/20" icon={<Briefcase className="h-4 w-4 text-elec-yellow" />}>Pay Rates & Allowances</MobileAccordionTrigger>
+              <MobileAccordionTrigger className="bg-elec-gray border-elec-yellow/20" icon={<Briefcase className="h-4 w-4 text-blue-400" />}>Pay Rates & Allowances</MobileAccordionTrigger>
               <MobileAccordionContent className="bg-elec-gray border-x border-b border-elec-yellow/20 rounded-b-lg p-3">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
                   <div className="rounded border border-elec-yellow/20 bg-elec-gray p-3">
@@ -302,7 +302,7 @@ const JIBGradingScheme = () => {
 
             {/* Upgrade pathway */}
             <MobileAccordionItem value="pathway">
-              <MobileAccordionTrigger className="bg-elec-gray border-elec-yellow/20" icon={<TrendingUp className="h-4 w-4 text-elec-yellow" />}>Upgrade Pathways</MobileAccordionTrigger>
+              <MobileAccordionTrigger className="bg-elec-gray border-elec-yellow/20" icon={<TrendingUp className="h-4 w-4 text-green-400" />}>Upgrade Pathways</MobileAccordionTrigger>
               <MobileAccordionContent className="bg-elec-gray border-x border-b border-elec-yellow/20 rounded-b-lg p-3">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                   <div className="rounded border border-elec-yellow/20 bg-elec-gray p-3">
@@ -377,7 +377,7 @@ const JIBGradingScheme = () => {
 
             {/* Application process */}
             <MobileAccordionItem value="apply">
-              <MobileAccordionTrigger className="bg-elec-gray border-elec-yellow/20" icon={<CheckCircle className="h-4 w-4 text-green-400" />}>Application Process (Typical)</MobileAccordionTrigger>
+              <MobileAccordionTrigger className="bg-elec-gray border-elec-yellow/20" icon={<CheckCircle className="h-4 w-4 text-purple-400" />}>Application Process (Typical)</MobileAccordionTrigger>
               <MobileAccordionContent className="bg-elec-gray border-x border-b border-elec-yellow/20 rounded-b-lg p-3">
                 <ol className="list-decimal pl-5 space-y-2 text-xs">
                   <li>Confirm eligibility and gather evidence (NVQ, AM2, 18th, references)</li>
@@ -391,7 +391,7 @@ const JIBGradingScheme = () => {
 
             {/* H&S topics */}
             <MobileAccordionItem value="hs-topics">
-              <MobileAccordionTrigger className="bg-elec-gray border-elec-yellow/20" icon={<Shield className="h-4 w-4 text-elec-yellow" />}>ECS Health & Safety Test Topics</MobileAccordionTrigger>
+              <MobileAccordionTrigger className="bg-elec-gray border-elec-yellow/20" icon={<Shield className="h-4 w-4 text-blue-400" />}>ECS Health & Safety Test Topics</MobileAccordionTrigger>
               <MobileAccordionContent className="bg-elec-gray border-x border-b border-elec-yellow/20 rounded-b-lg p-3">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
                   <ul className="space-y-1">
@@ -432,7 +432,7 @@ const JIBGradingScheme = () => {
 
             {/* FAQs */}
             <MobileAccordionItem value="faqs">
-              <MobileAccordionTrigger className="bg-elec-gray border-elec-yellow/20" icon={<Users className="h-4 w-4 text-elec-yellow" />}>FAQs</MobileAccordionTrigger>
+              <MobileAccordionTrigger className="bg-elec-gray border-elec-yellow/20" icon={<Users className="h-4 w-4 text-purple-400" />}>FAQs</MobileAccordionTrigger>
               <MobileAccordionContent className="bg-elec-gray border-x border-b border-elec-yellow/20 rounded-b-lg p-3">
                 <div className="space-y-3 text-sm">
                   <div>
