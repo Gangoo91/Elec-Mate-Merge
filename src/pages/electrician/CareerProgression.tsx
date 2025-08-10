@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Helmet } from "react-helmet";
 import { ArrowLeft } from "lucide-react";
@@ -37,16 +36,15 @@ const CareerProgression = () => {
     }
   };
 
-  // Use electrician-specific career sections
-
   return (
     <div className="space-y-8 animate-fade-in px-2 sm:px-0">
-        <Helmet>
-          <title>Electrician Career Progression UK | JIB Timeline & CPD</title>
-          <meta name="description" content="Explore UK electrician career progression: JIB grades, timelines, prerequisites, day rates, CPD, and pathways. BS 7671 18th Edition compliant." />
-          <link rel="canonical" href="/electrician/career-progression" />
-        </Helmet>
-        {/* Header */}
+      <Helmet>
+        <title>Electrician Career Progression UK | JIB Timeline & CPD</title>
+        <meta name="description" content="Explore UK electrician career progression: JIB grades, timelines, prerequisites, day rates, CPD, and pathways. BS 7671 18th Edition compliant." />
+        <link rel="canonical" href="/electrician/career-progression" />
+      </Helmet>
+
+      {/* Header */}
       <div className="space-y-3">
         <h1 className="sr-only">Electrician Career Progression</h1>
         <p className="text-sm sm:text-base text-muted-foreground">
@@ -65,6 +63,8 @@ const CareerProgression = () => {
           </Button>
         )}
       </div>
+
+      {activeSection === null ? (
         <>
           {/* Career Sections Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 max-w-6xl mx-auto">
