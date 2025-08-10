@@ -3,8 +3,13 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { MobileAccordion, MobileAccordionItem, MobileAccordionTrigger, MobileAccordionContent } from "@/components/ui/mobile-accordion";
 import { Award, Clock, BookOpen, CheckCircle, Shield, Briefcase, MapPin, TrendingUp, Users, Banknote } from "lucide-react";
+import { useState } from "react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const JIBGradingScheme = () => {
+  const isMobile = useIsMobile();
+  const [selectedGradeIndex, setSelectedGradeIndex] = useState<number | null>(null);
+
   const jibGrades = [
     {
       grade: "Apprentice",
@@ -120,50 +125,113 @@ const JIBGradingScheme = () => {
             <MobileAccordionItem value="grades">
               <MobileAccordionTrigger icon={<Award className="h-4 w-4 text-elec-yellow" />}>JIB Grades & Requirements</MobileAccordionTrigger>
               <MobileAccordionContent>
-                <div className="space-y-4">
-                  {jibGrades.map((grade, index) => (
-                    <div key={grade.grade} className="rounded border border-elec-yellow/10 bg-elec-dark/50 p-3 md:p-4">
-                      <div className="flex items-center justify-between mb-2">
-                        <div className="text-lg font-semibold text-white">{grade.grade}</div>
-                        <Badge className={grade.color}>Grade {index + 1}</Badge>
-                      </div>
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div>
-                          <h4 className="text-sm font-medium mb-2 text-elec-yellow flex items-center gap-1">
-                            <BookOpen className="h-3 w-3" /> Requirements
-                          </h4>
-                          <div className="space-y-1">
-                            {grade.requirements.map((req, idx) => (
-                              <div key={idx} className="text-xs flex items-start gap-2">
-                                <CheckCircle className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
-                                {req}
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                        <div>
-                          <h4 className="text-sm font-medium mb-2 text-elec-yellow flex items-center gap-1">
-                            <Award className="h-3 w-3" /> Benefits
-                          </h4>
-                          <div className="space-y-1">
-                            {grade.benefits.map((benefit, idx) => (
-                              <div key={idx} className="text-xs flex items-start gap-2">
-                                <div className="w-1 h-1 rounded-full bg-elec-yellow mt-1.5 flex-shrink-0" />
-                                {benefit}
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                        <div>
-                          <h4 className="text-sm font-medium mb-2 text-elec-yellow flex items-center gap-1">
-                            <Clock className="h-3 w-3" /> Duration
-                          </h4>
-                          <div className="text-sm text-muted-foreground">{grade.duration}</div>
-                        </div>
-                      </div>
+                {isMobile ? (
+                  <>
+                    <div className="grid grid-cols-2 gap-3">
+                      {jibGrades.map((grade, index) => (
+                        <button
+                          key={grade.grade}
+                          onClick={() => setSelectedGradeIndex(index)}
+                          className="aspect-square rounded-lg border border-elec-yellow/20 bg-elec-dark/50 p-3 flex flex-col items-center justify-center text-center hover:bg-elec-dark/60 focus:outline-none focus:ring-2 focus:ring-elec-yellow/40"
+                        >
+                          <div className="text-sm font-semibold">{grade.grade}</div>
+                          <Badge className={`mt-1 ${grade.color}`}>Grade {index + 1}</Badge>
+                        </button>
+                      ))}
                     </div>
-                  ))}
-                </div>
+
+                    {selectedGradeIndex !== null && (() => {
+                      const grade = jibGrades[selectedGradeIndex];
+                      return (
+                        <div className="mt-4 rounded border border-elec-yellow/10 bg-elec-dark/50 p-3">
+                          <div className="flex items-center justify-between mb-2">
+                            <div className="text-base font-semibold text-white">{grade.grade}</div>
+                            <Badge className={grade.color}>Grade {selectedGradeIndex + 1}</Badge>
+                          </div>
+                          <div className="space-y-4">
+                            <div>
+                              <h4 className="text-sm font-medium mb-2 text-elec-yellow flex items-center gap-1">
+                                <BookOpen className="h-3 w-3" /> Requirements
+                              </h4>
+                              <div className="space-y-1">
+                                {grade.requirements.map((req, idx) => (
+                                  <div key={idx} className="text-xs flex items-start gap-2">
+                                    <CheckCircle className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
+                                    {req}
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                            <div>
+                              <h4 className="text-sm font-medium mb-2 text-elec-yellow flex items-center gap-1">
+                                <Award className="h-3 w-3" /> Benefits
+                              </h4>
+                              <div className="space-y-1">
+                                {grade.benefits.map((benefit, idx) => (
+                                  <div key={idx} className="text-xs flex items-start gap-2">
+                                    <div className="w-1 h-1 rounded-full bg-elec-yellow mt-1.5 flex-shrink-0" />
+                                    {benefit}
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                            <div>
+                              <h4 className="text-sm font-medium mb-2 text-elec-yellow flex items-center gap-1">
+                                <Clock className="h-3 w-3" /> Duration
+                              </h4>
+                              <div className="text-sm text-muted-foreground">{grade.duration}</div>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })()}
+                  </>
+                ) : (
+                  <div className="space-y-4">
+                    {jibGrades.map((grade, index) => (
+                      <div key={grade.grade} className="rounded border border-elec-yellow/10 bg-elec-dark/50 p-3 md:p-4">
+                        <div className="flex items-center justify-between mb-2">
+                          <div className="text-lg font-semibold text-white">{grade.grade}</div>
+                          <Badge className={grade.color}>Grade {index + 1}</Badge>
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                          <div>
+                            <h4 className="text-sm font-medium mb-2 text-elec-yellow flex items-center gap-1">
+                              <BookOpen className="h-3 w-3" /> Requirements
+                            </h4>
+                            <div className="space-y-1">
+                              {grade.requirements.map((req, idx) => (
+                                <div key={idx} className="text-xs flex items-start gap-2">
+                                  <CheckCircle className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
+                                  {req}
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                          <div>
+                            <h4 className="text-sm font-medium mb-2 text-elec-yellow flex items-center gap-1">
+                              <Award className="h-3 w-3" /> Benefits
+                            </h4>
+                            <div className="space-y-1">
+                              {grade.benefits.map((benefit, idx) => (
+                                <div key={idx} className="text-xs flex items-start gap-2">
+                                  <div className="w-1 h-1 rounded-full bg-elec-yellow mt-1.5 flex-shrink-0" />
+                                  {benefit}
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                          <div>
+                            <h4 className="text-sm font-medium mb-2 text-elec-yellow flex items-center gap-1">
+                              <Clock className="h-3 w-3" /> Duration
+                            </h4>
+                            <div className="text-sm text-muted-foreground">{grade.duration}</div>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </MobileAccordionContent>
             </MobileAccordionItem>
 
