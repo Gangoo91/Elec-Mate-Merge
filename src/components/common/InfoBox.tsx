@@ -23,9 +23,9 @@ const InfoBox: React.FC<InfoBoxProps & { children?: React.ReactNode }> = ({
 
   return (
     <Section aria-label={title} className={cn("mb-4 sm:mb-6", className)}>
-      <Card className="border-elec-yellow/20 bg-elec-dark/40">
+      <Card className="bg-elec-card border-elec-yellow/20">
         <CardHeader className="pb-2 sm:pb-3">
-          <CardTitle className="text-white flex items-center gap-2 text-base sm:text-lg">
+          <CardTitle className="text-elec-light flex items-center gap-2 text-base sm:text-lg">
             {icon}
             {title}
           </CardTitle>
