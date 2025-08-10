@@ -123,8 +123,8 @@ const JIBGradingScheme = () => {
           <MobileAccordion type="multiple" className="space-y-4">
             {/* JIB Grades (moved existing content) */}
             <MobileAccordionItem value="grades">
-              <MobileAccordionTrigger icon={<Award className="h-4 w-4 text-elec-yellow" />}>JIB Grades & Requirements</MobileAccordionTrigger>
-              <MobileAccordionContent>
+              <MobileAccordionTrigger className="bg-elec-gray border-elec-yellow/20" icon={<Award className="h-4 w-4 text-elec-yellow" />}>JIB Grades & Requirements</MobileAccordionTrigger>
+              <MobileAccordionContent className="bg-elec-gray border-x border-b border-elec-yellow/20 rounded-b-lg p-3">
                 {isMobile ? (
                   <>
                     <div className="grid grid-cols-2 gap-3">
@@ -237,8 +237,8 @@ const JIBGradingScheme = () => {
 
             {/* ECS cards */}
             <MobileAccordionItem value="ecs">
-              <MobileAccordionTrigger icon={<Shield className="h-4 w-4 text-elec-yellow" />}>ECS Cards & Categories</MobileAccordionTrigger>
-              <MobileAccordionContent>
+              <MobileAccordionTrigger className="bg-elec-gray border-elec-yellow/20" icon={<Shield className="h-4 w-4 text-elec-yellow" />}>ECS Cards & Categories</MobileAccordionTrigger>
+              <MobileAccordionContent className="bg-elec-gray border-x border-b border-elec-yellow/20 rounded-b-lg p-3">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="rounded border border-elec-yellow/20 bg-elec-gray p-3">
                     <div className="text-base font-medium mb-1">Core Electrical</div>
@@ -268,8 +268,8 @@ const JIBGradingScheme = () => {
 
             {/* Pay & allowances */}
             <MobileAccordionItem value="pay">
-              <MobileAccordionTrigger icon={<Briefcase className="h-4 w-4 text-elec-yellow" />}>Pay Rates & Allowances</MobileAccordionTrigger>
-              <MobileAccordionContent>
+              <MobileAccordionTrigger className="bg-elec-gray border-elec-yellow/20" icon={<Briefcase className="h-4 w-4 text-elec-yellow" />}>Pay Rates & Allowances</MobileAccordionTrigger>
+              <MobileAccordionContent className="bg-elec-gray border-x border-b border-elec-yellow/20 rounded-b-lg p-3">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
                   <div className="rounded border border-elec-yellow/20 bg-elec-gray p-3">
                     <div className="text-base font-medium mb-1">Indicative Day Rates</div>
@@ -302,8 +302,8 @@ const JIBGradingScheme = () => {
 
             {/* Upgrade pathway */}
             <MobileAccordionItem value="pathway">
-              <MobileAccordionTrigger icon={<TrendingUp className="h-4 w-4 text-elec-yellow" />}>Upgrade Pathways</MobileAccordionTrigger>
-              <MobileAccordionContent>
+              <MobileAccordionTrigger className="bg-elec-gray border-elec-yellow/20" icon={<TrendingUp className="h-4 w-4 text-elec-yellow" />}>Upgrade Pathways</MobileAccordionTrigger>
+              <MobileAccordionContent className="bg-elec-gray border-x border-b border-elec-yellow/20 rounded-b-lg p-3">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                   <div className="rounded border border-elec-yellow/20 bg-elec-gray p-3">
                     <div className="text-base font-medium mb-1">Standard Route</div>
@@ -325,8 +325,8 @@ const JIBGradingScheme = () => {
 
             {/* CPD & renewals */}
             <MobileAccordionItem value="cpd">
-              <MobileAccordionTrigger icon={<Clock className="h-4 w-4 text-elec-yellow" />}>CPD & Renewals</MobileAccordionTrigger>
-              <MobileAccordionContent>
+              <MobileAccordionTrigger className="bg-elec-gray border-elec-yellow/20" icon={<Clock className="h-4 w-4 text-elec-yellow" />}>CPD & Renewals</MobileAccordionTrigger>
+              <MobileAccordionContent className="bg-elec-gray border-x border-b border-elec-yellow/20 rounded-b-lg p-3">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
                   <div className="rounded border border-elec-yellow/20 bg-elec-gray p-3">
                     <div className="text-base font-medium mb-1">ECS Renewal</div>
@@ -356,8 +356,8 @@ const JIBGradingScheme = () => {
 
             {/* Evidence checklist */}
             <MobileAccordionItem value="evidence">
-              <MobileAccordionTrigger icon={<CheckCircle className="h-4 w-4 text-green-400" />}>Evidence Checklist (Upgrades)</MobileAccordionTrigger>
-              <MobileAccordionContent>
+              <MobileAccordionTrigger className="bg-elec-gray border-elec-yellow/20" icon={<CheckCircle className="h-4 w-4 text-green-400" />}>Evidence Checklist (Upgrades)</MobileAccordionTrigger>
+              <MobileAccordionContent className="bg-elec-gray border-x border-b border-elec-yellow/20 rounded-b-lg p-3">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
                   <ul className="space-y-1">
                     <li>• Level 3 NVQ Diploma (2357/5357)</li>
@@ -377,8 +377,8 @@ const JIBGradingScheme = () => {
 
             {/* Application process */}
             <MobileAccordionItem value="apply">
-              <MobileAccordionTrigger icon={<CheckCircle className="h-4 w-4 text-green-400" />}>Application Process (Typical)</MobileAccordionTrigger>
-              <MobileAccordionContent>
+              <MobileAccordionTrigger className="bg-elec-gray border-elec-yellow/20" icon={<CheckCircle className="h-4 w-4 text-green-400" />}>Application Process (Typical)</MobileAccordionTrigger>
+              <MobileAccordionContent className="bg-elec-gray border-x border-b border-elec-yellow/20 rounded-b-lg p-3">
                 <ol className="list-decimal pl-5 space-y-2 text-xs">
                   <li>Confirm eligibility and gather evidence (NVQ, AM2, 18th, references)</li>
                   <li>Create or log into your MyECS account and start a new application</li>
@@ -391,8 +391,8 @@ const JIBGradingScheme = () => {
 
             {/* H&S topics */}
             <MobileAccordionItem value="hs-topics">
-              <MobileAccordionTrigger icon={<Shield className="h-4 w-4 text-elec-yellow" />}>ECS Health & Safety Test Topics</MobileAccordionTrigger>
-              <MobileAccordionContent>
+              <MobileAccordionTrigger className="bg-elec-gray border-elec-yellow/20" icon={<Shield className="h-4 w-4 text-elec-yellow" />}>ECS Health & Safety Test Topics</MobileAccordionTrigger>
+              <MobileAccordionContent className="bg-elec-gray border-x border-b border-elec-yellow/20 rounded-b-lg p-3">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
                   <ul className="space-y-1">
                     <li>• Site access, permits to work</li>
@@ -412,8 +412,8 @@ const JIBGradingScheme = () => {
 
             {/* SJIB mapping */}
             <MobileAccordionItem value="sjib">
-              <MobileAccordionTrigger icon={<MapPin className="h-4 w-4 text-blue-400" />}>SJIB Equivalence (Scotland)</MobileAccordionTrigger>
-              <MobileAccordionContent>
+              <MobileAccordionTrigger className="bg-elec-gray border-elec-yellow/20" icon={<MapPin className="h-4 w-4 text-blue-400" />}>SJIB Equivalence (Scotland)</MobileAccordionTrigger>
+              <MobileAccordionContent className="bg-elec-gray border-x border-b border-elec-yellow/20 rounded-b-lg p-3">
                 <div className="text-xs space-y-2">
                   <p className="text-muted-foreground">SJIB mirrors JIB grading for Scotland. Typical mappings:</p>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -432,8 +432,8 @@ const JIBGradingScheme = () => {
 
             {/* FAQs */}
             <MobileAccordionItem value="faqs">
-              <MobileAccordionTrigger icon={<Users className="h-4 w-4 text-elec-yellow" />}>FAQs</MobileAccordionTrigger>
-              <MobileAccordionContent>
+              <MobileAccordionTrigger className="bg-elec-gray border-elec-yellow/20" icon={<Users className="h-4 w-4 text-elec-yellow" />}>FAQs</MobileAccordionTrigger>
+              <MobileAccordionContent className="bg-elec-gray border-x border-b border-elec-yellow/20 rounded-b-lg p-3">
                 <div className="space-y-3 text-sm">
                   <div>
                     <div className="font-medium text-elec-yellow">Is JIB grading mandatory?</div>
