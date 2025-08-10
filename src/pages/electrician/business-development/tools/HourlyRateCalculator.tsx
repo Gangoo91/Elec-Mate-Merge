@@ -332,16 +332,22 @@ const [calculated, setCalculated] = useState(false);
               hint="Billable vs total hours (70-80%)"
             />
             <div className="space-y-4">
-              <h4 className="text-white font-semibold">Options</h4>
-              <div className="grid sm:grid-cols-2 gap-3">
+              <h4 className="text-elec-light font-semibold">Options</h4>
+              <div className="grid sm:grid-cols-2 gap-4 items-end">
                 <div className="space-y-2">
-                  <label className="text-white text-sm font-medium">VAT Registered?</label>
-                  <div className="flex gap-2">
+                  <div className="text-sm font-semibold text-elec-light flex items-center gap-2">
+                    <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
+                    VAT Registered?
+                  </div>
+                  <div className="inline-flex rounded-xl overflow-hidden border border-elec-yellow/30">
                     <Button
                       variant={vatRegistered ? "default" : "outline"}
                       size="sm"
                       onClick={() => setVatRegistered(true)}
-                      className={vatRegistered ? "bg-elec-yellow text-black" : "border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"}
+                      className={
+                        (vatRegistered ? "bg-elec-yellow text-black" : "text-elec-yellow hover:bg-elec-yellow/10") +
+                        " h-14 px-6 rounded-none border-0"
+                      }
                     >
                       Yes
                     </Button>
@@ -349,7 +355,10 @@ const [calculated, setCalculated] = useState(false);
                       variant={!vatRegistered ? "default" : "outline"}
                       size="sm"
                       onClick={() => setVatRegistered(false)}
-                      className={!vatRegistered ? "bg-elec-yellow text-black" : "border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"}
+                      className={
+                        (!vatRegistered ? "bg-elec-yellow text-black" : "text-elec-yellow hover:bg-elec-yellow/10") +
+                        " h-14 px-6 rounded-none border-0"
+                      }
                     >
                       No
                     </Button>
@@ -368,7 +377,8 @@ const [calculated, setCalculated] = useState(false);
                   hint="Applies to rates shown"
                 />
               </div>
-              <div className="grid sm:grid-cols-3 gap-3">
+            </div>
+              <div className="grid sm:grid-cols-3 gap-3 items-end">
                 <MobileInput
                   label="Call-out min hours"
                   type="number"
@@ -391,7 +401,6 @@ const [calculated, setCalculated] = useState(false);
                   hint="e.g. 2.0x"
                 />
               </div>
-            </div>
             <div className="flex flex-wrap gap-3">
               <Button onClick={calculateRate} className="bg-elec-yellow text-black hover:bg-elec-yellow/90">
                 <Calculator className="h-4 w-4 mr-2" />
