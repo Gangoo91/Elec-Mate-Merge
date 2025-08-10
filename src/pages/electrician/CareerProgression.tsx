@@ -1,5 +1,6 @@
 
 import { useState } from "react";
+import { Helmet } from "react-helmet";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -40,7 +41,12 @@ const CareerProgression = () => {
 
   return (
     <div className="space-y-8 animate-fade-in px-2 sm:px-0">
-      {/* Header */}
+        <Helmet>
+          <title>Electrician Career Progression UK | JIB Timeline & CPD</title>
+          <meta name="description" content="Explore UK electrician career progression: JIB grades, timelines, prerequisites, day rates, CPD, and pathways. BS 7671 18th Edition compliant." />
+          <link rel="canonical" href="/electrician/career-progression" />
+        </Helmet>
+        {/* Header */}
       <div className="space-y-3">
         <h1 className="sr-only">Electrician Career Progression</h1>
         <p className="text-sm sm:text-base text-muted-foreground">

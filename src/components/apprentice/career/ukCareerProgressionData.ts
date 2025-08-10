@@ -2,10 +2,12 @@
 export interface UKQualification {
   level: string;
   name: string;
+  code?: string;
   duration: string;
   cost: string;
   awarding_body: string;
   description: string;
+  renewal?: string;
 }
 
 export interface UKCareerLevel {
@@ -22,6 +24,13 @@ export interface UKCareerLevel {
     scotland_wales: string;
   };
   progression_timeline: string;
+  time_to_achieve?: string;
+  prerequisites?: { name: string; code?: string; mandatory?: boolean; awarding_body?: string }[];
+  day_rates?: { employed?: string; contractor?: string };
+  cpd?: { interval?: string; requirements?: string[] };
+  branches?: { id: string; title: string; description: string }[];
+  portfolio_evidence?: string[];
+  regional_notes?: string;
   typical_responsibilities: string[];
   next_steps: string[];
   work_sectors: string[];
@@ -39,6 +48,7 @@ export const ukQualifications: UKQualification[] = [
   {
     level: "Level 3",
     name: "Electrical Installation NVQ Diploma",
+    code: "2357/5357",
     duration: "12-24 months",
     cost: "£4,000-£7,000",
     awarding_body: "City & Guilds, EAL, NICEIC",
@@ -47,6 +57,7 @@ export const ukQualifications: UKQualification[] = [
   {
     level: "Level 3",
     name: "AM2 Assessment",
+    code: "AM2/AM2S",
     duration: "1 day",
     cost: "£400-£600",
     awarding_body: "JIB/ECS",
@@ -55,18 +66,22 @@ export const ukQualifications: UKQualification[] = [
   {
     level: "Level 3",
     name: "18th Edition BS 7671",
+    code: "2382-22",
     duration: "3-5 days",
     cost: "£300-£500",
     awarding_body: "City & Guilds, NICEIC, NAPIT",
-    description: "Wiring regulations qualification"
+    description: "Wiring regulations qualification",
+    renewal: "Stay current with BS 7671 A2:2022 updates"
   },
   {
     level: "Level 3",
     name: "Inspection & Testing (2391)",
+    code: "2391-52",
     duration: "5-10 days",
     cost: "£800-£1,200",
     awarding_body: "City & Guilds, EAL",
-    description: "Initial verification and periodic inspection"
+    description: "Initial verification and periodic inspection",
+    renewal: "Maintain competence through CPD and practice"
   },
   {
     level: "Level 4",
@@ -104,6 +119,17 @@ export const ukCareerLevels: UKCareerLevel[] = [
       scotland_wales: "£14,000 - £20,000"
     },
     progression_timeline: "4 years typical apprenticeship duration",
+    time_to_achieve: "0–4 years",
+    prerequisites: [
+      { name: "ECS Health & Safety Assessment", code: "ECS H&S", mandatory: true, awarding_body: "ECS" },
+      { name: "Level 2 Diploma enrolment", mandatory: true },
+      { name: "BS 7671 awareness (18th Edition)", code: "2382-22", mandatory: false, awarding_body: "City & Guilds" }
+    ],
+    day_rates: { employed: "Apprentice wage (age/year dependent)", contractor: "N/A" },
+    cpd: { interval: "Ongoing", requirements: ["College assignments", "Toolbox talks", "Logbook updates"] },
+    branches: [],
+    portfolio_evidence: ["Supervisor sign-offs", "Site photos with descriptions", "Risk assessments", "College project work"],
+    regional_notes: "Wages vary by region; London weighting may apply",
     typical_responsibilities: [
       "Learning electrical installation basics",
       "Assisting qualified electricians",
@@ -135,6 +161,17 @@ export const ukCareerLevels: UKCareerLevel[] = [
       scotland_wales: "£20,000 - £26,000"
     },
     progression_timeline: "1-2 years between apprentice and approved status",
+    time_to_achieve: "~1–2 years from Apprentice",
+    prerequisites: [
+      { name: "Working towards Level 3 NVQ", code: "2357/5357", mandatory: true },
+      { name: "18th Edition (recommended)", code: "2382-22", mandatory: false },
+      { name: "ECS Health & Safety Assessment", code: "ECS H&S", mandatory: true }
+    ],
+    day_rates: { employed: "£100–£150/day equivalent", contractor: "£120–£180/day" },
+    cpd: { interval: "Ongoing", requirements: ["Toolbox talks", "Manufacturer briefings"] },
+    branches: [],
+    portfolio_evidence: ["Second-fix installations", "Test results witnessed", "RAMS participation"],
+    regional_notes: "Rates vary; London/South East command higher day rates",
     typical_responsibilities: [
       "More complex installation work",
       "Working with minimal supervision",
@@ -167,6 +204,20 @@ export const ukCareerLevels: UKCareerLevel[] = [
       scotland_wales: "£25,000 - £35,000"
     },
     progression_timeline: "Achieved after NVQ3 + AM2 (Gold Card)",
+    time_to_achieve: "Typically 4–7 years total",
+    prerequisites: [
+      { name: "Level 3 NVQ", code: "2357/5357", mandatory: true },
+      { name: "AM2/AM2S practical assessment", code: "AM2/AM2S", mandatory: true, awarding_body: "JIB/ECS" },
+      { name: "18th Edition BS 7671", code: "2382-22", mandatory: true }
+    ],
+    day_rates: { employed: "£150–£220/day equivalent", contractor: "£180–£280/day" },
+    cpd: { interval: "Annual (recommended)", requirements: ["BS 7671 amendment updates", "Manufacturer CPD"] },
+    branches: [
+      { id: "qs", title: "Qualified Supervisor (NICEIC/NAPIT)", description: "Take responsibility for compliance and certification" },
+      { id: "specialist", title: "Specialist Installer (EV/Solar)", description: "Gain 2919 (EV) or 2399 (Solar PV) and focus on renewables" }
+    ],
+    portfolio_evidence: ["EIC/MWC certificates", "Test sheets (initial verification)", "Complex fault rectification write-ups"],
+    regional_notes: "Day rates highest in London/South East; industrial sites often pay premium",
     typical_responsibilities: [
       "Independent electrical work",
       "Testing and certification for own work",
@@ -200,6 +251,19 @@ export const ukCareerLevels: UKCareerLevel[] = [
       scotland_wales: "£26,000 - £36,000"
     },
     progression_timeline: "1-3 years from Electrician with 2391 and experience",
+    time_to_achieve: "~1–3 years from Electrician",
+    prerequisites: [
+      { name: "Inspection & Testing", code: "2391-52", mandatory: true, awarding_body: "City & Guilds/EAL" },
+      { name: "Demonstrable installation/testing experience", mandatory: true }
+    ],
+    day_rates: { employed: "£170–£240/day equivalent", contractor: "£200–£300/day" },
+    cpd: { interval: "Annual", requirements: ["BS 7671 updates", "Scheme technical updates"] },
+    branches: [
+      { id: "tech", title: "Technician (JIB)", description: "Advanced technical responsibilities" },
+      { id: "qs", title: "Qualified Supervisor", description: "Sign-off and compliance lead" }
+    ],
+    portfolio_evidence: ["EICR reports", "Full testing schedules", "Design/calculation examples"],
+    regional_notes: "Industrial/Infrastructure roles often carry higher rates",
     typical_responsibilities: [
       "Independent electrical work",
       "Supervising apprentices and improvers",
@@ -233,6 +297,10 @@ export const ukCareerLevels: UKCareerLevel[] = [
       scotland_wales: "£35,000 - £50,000"
     },
     progression_timeline: "2-4 years from Approved with leadership experience",
+    time_to_achieve: "~2–4 years from Approved",
+    day_rates: { employed: "£220–£320/day equivalent", contractor: "£260–£380/day" },
+    cpd: { interval: "Annual", requirements: ["Management H&S (SMSTS/SSSTS)", "Manufacturer leadership briefings"] },
+    portfolio_evidence: ["Project programmes", "RAMS & permits", "Budget reports", "Team training records"],
     typical_responsibilities: [
       "Managing electrical teams and projects",
       "Budget and resource planning",
@@ -265,6 +333,20 @@ export const ukCareerLevels: UKCareerLevel[] = [
       scotland_wales: "£28,000 - £55,000+"
     },
     progression_timeline: "Can start after approved status with business setup",
+    time_to_achieve: "Varies — depends on business setup",
+    prerequisites: [
+      { name: "Business setup", mandatory: true },
+      { name: "Public liability & professional indemnity insurance", mandatory: true },
+      { name: "Certification scheme membership (NICEIC/NAPIT)", mandatory: recommended }
+    ],
+    day_rates: { employed: "N/A", contractor: "£200–£450+/day" },
+    cpd: { interval: "Annual", requirements: ["Scheme assessment", "Regulatory updates", "Accounts & H&S compliance"] },
+    branches: [
+      { id: "di", title: "Domestic Installer", description: "Part P domestic scope" },
+      { id: "ac", title: "Approved Contractor", description: "Full scope commercial/industrial" }
+    ],
+    portfolio_evidence: ["Client testimonials", "EIC/EICR portfolio", "QMS procedures"],
+    regional_notes: "Rates vary widely by sector, client base and region",
     typical_responsibilities: [
       "Running own electrical business",
       "Client acquisition and management",

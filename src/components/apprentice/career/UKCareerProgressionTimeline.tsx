@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Clock, Trophy, BookOpen, TrendingUp, PoundSterling, MapPin, Users } from "lucide-react";
 import { ukCareerLevels } from "./ukCareerProgressionData";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 const UKCareerProgressionTimeline = () => {
   return (
@@ -41,9 +42,16 @@ const UKCareerProgressionTimeline = () => {
                           <h3 className="text-lg sm:text-xl font-semibold text-white">{level.title}</h3>
                           <p className="text-sm text-elec-yellow">{level.jib_grade} • {level.typical_experience}</p>
                         </div>
-                        <Badge variant="outline" className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30 mx-auto sm:mx-0">
-                          {level.progression_timeline}
-                        </Badge>
+                        <div className="flex gap-2 justify-center sm:justify-end">
+                          <Badge variant="outline" className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30">
+                            {level.progression_timeline}
+                          </Badge>
+                          {level.time_to_achieve && (
+                            <Badge variant="outline" className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30 flex items-center gap-1">
+                              <Clock className="h-3 w-3" /> {level.time_to_achieve}
+                            </Badge>
+                          )}
+                        </div>
                       </div>
                     </div>
                     
@@ -94,9 +102,23 @@ const UKCareerProgressionTimeline = () => {
                           </h4>
                           <div className="space-y-2">
                             {level.key_qualifications.slice(0, 4).map((qual, idx) => (
-                              <div key={idx} className="text-xs">
-                                <span className="text-blue-300 font-medium">{qual.level}</span>
-                                <div className="text-muted-foreground">{qual.name}</div>
+                              <div key={idx} className="text-xs flex items-center justify-between gap-2">
+                                <div>
+                                  <span className="text-blue-300 font-medium">{qual.level}</span>
+                                  <div className="text-muted-foreground">{qual.name}</div>
+                                </div>
+                                {qual.code && (
+                                  <TooltipProvider>
+                                    <Tooltip>
+                                      <TooltipTrigger asChild>
+                                        <Badge variant="outline" className="text-[10px] bg-elec-yellow/5 text-elec-yellow border-elec-yellow/20">{qual.code}</Badge>
+                                      </TooltipTrigger>
+                                      <TooltipContent>
+                                        <span>Qualification code</span>
+                                      </TooltipContent>
+                                    </Tooltip>
+                                  </TooltipProvider>
+                                )}
                               </div>
                             ))}
                             {level.key_qualifications.length > 4 && (
@@ -108,6 +130,68 @@ const UKCareerProgressionTimeline = () => {
                         </CardContent>
                       </Card>
                       
+                      {/* Requirements & CPD */}
+                      {(level.prerequisites || level.day_rates || level.cpd) && (
+                        <Card className="border-elec-yellow/10 bg-elec-dark/50">
+                          <CardContent className="p-4">
+                            <h4 className="text-sm font-medium mb-3 text-elec-yellow flex items-center gap-1">
+                              <BookOpen className="h-3 w-3" />
+                              Requirements & CPD
+                            </h4>
+                            <div className="space-y-3 text-xs">
+                              {level.prerequisites && level.prerequisites.length > 0 && (
+                                <div>
+                                  <p className="text-muted-foreground mb-1">Prerequisites:</p>
+                                  <ul className="space-y-1">
+                                    {level.prerequisites.map((p, i) => (
+                                      <li key={i} className="flex items-start gap-2">
+                                        <div className="w-1 h-1 rounded-full bg-elec-yellow mt-1.5" />
+                                        <span>
+                                          {p.name}
+                                          {p.code && (
+                                            <>
+                                              {" "}
+                                              <Badge variant="outline" className="text-[10px] bg-elec-yellow/5 text-elec-yellow border-elec-yellow/20">{p.code}</Badge>
+                                            </>
+                                          )}
+                                          {p.mandatory ? " • mandatory" : " • recommended"}
+                                        </span>
+                                      </li>
+                                    ))}
+                                  </ul>
+                                </div>
+                              )}
+                              {level.day_rates && (
+                                <div className="flex flex-wrap gap-3">
+                                  {level.day_rates.employed && (
+                                    <Badge variant="outline" className="bg-elec-yellow/5 text-elec-yellow border-elec-yellow/20">Employed: {level.day_rates.employed}</Badge>
+                                  )}
+                                  {level.day_rates.contractor && (
+                                    <Badge variant="outline" className="bg-elec-yellow/5 text-elec-yellow border-elec-yellow/20">Contractor: {level.day_rates.contractor}</Badge>
+                                  )}
+                                </div>
+                              )}
+                              {level.cpd && (
+                                <div>
+                                  <p className="text-muted-foreground mb-1">CPD:</p>
+                                  <p>{level.cpd.interval}</p>
+                                  {level.cpd.requirements && (
+                                    <ul className="mt-1 space-y-1">
+                                      {level.cpd.requirements.map((r, i) => (
+                                        <li key={i} className="flex items-start gap-2">
+                                          <div className="w-1 h-1 rounded-full bg-elec-yellow mt-1.5" />
+                                          {r}
+                                        </li>
+                                      ))}
+                                    </ul>
+                                  )}
+                                </div>
+                              )}
+                            </div>
+                          </CardContent>
+                        </Card>
+                      )}
+
                       {/* Work sectors & opportunities */}
                       <Card className="border-elec-yellow/10 bg-elec-dark/50 lg:col-span-2 xl:col-span-1">
                         <CardContent className="p-4">
@@ -132,16 +216,56 @@ const UKCareerProgressionTimeline = () => {
                                 Career Prospects:
                               </p>
                               <p className="text-xs">
-                                 {level.title.includes("Apprentice") ? "Foundation level with structured learning pathway" :
-                                 level.title.includes("Improver") ? "Developing skills towards full qualification" :
-                                 level.title.includes("Electrician") ? "Fully qualified (Gold Card) with independent working" :
-                                 level.title.includes("Approved") ? "Industry-recognised with testing and certification" :
-                                 "Advanced level with leadership opportunities"}
+                                {level.title.includes("Apprentice") ? "Foundation level with structured learning pathway" :
+                                level.title.includes("Improver") ? "Developing skills towards full qualification" :
+                                level.title.includes("Electrician") ? "Fully qualified (Gold Card) with independent working" :
+                                level.title.includes("Approved") ? "Industry-recognised with testing and certification" :
+                                "Advanced level with leadership opportunities"}
                               </p>
                             </div>
                           </div>
                         </CardContent>
                       </Card>
+
+                      {/* Branches, Portfolio & Regional */}
+                      {(level.branches || level.portfolio_evidence || level.regional_notes) && (
+                        <Card className="border-elec-yellow/10 bg-elec-dark/50">
+                          <CardContent className="p-4">
+                            <h4 className="text-sm font-medium mb-3 text-elec-yellow flex items-center gap-1">
+                              <TrendingUp className="h-3 w-3" />
+                              Progress Options & Evidence
+                            </h4>
+                            <div className="space-y-3 text-xs">
+                              {level.branches && level.branches.length > 0 && (
+                                <div>
+                                  <p className="text-muted-foreground mb-1">Branching Paths:</p>
+                                  <div className="flex flex-wrap gap-2">
+                                    {level.branches.map((b) => (
+                                      <Badge key={b.id} variant="outline" className="bg-elec-yellow/5 text-elec-yellow border-elec-yellow/20">{b.title}</Badge>
+                                    ))}
+                                  </div>
+                                </div>
+                              )}
+                              {level.portfolio_evidence && level.portfolio_evidence.length > 0 && (
+                                <div>
+                                  <p className="text-muted-foreground mb-1">Portfolio Evidence:</p>
+                                  <ul className="space-y-1">
+                                    {level.portfolio_evidence.map((e, i) => (
+                                      <li key={i} className="flex items-start gap-2">
+                                        <div className="w-1 h-1 rounded-full bg-elec-yellow mt-1.5" />
+                                        {e}
+                                      </li>
+                                    ))}
+                                  </ul>
+                                </div>
+                              )}
+                              {level.regional_notes && (
+                                <p className="text-muted-foreground">{level.regional_notes}</p>
+                              )}
+                            </div>
+                          </CardContent>
+                        </Card>
+                      )}
                     </div>
                     
                     {/* Next steps - enhanced */}
