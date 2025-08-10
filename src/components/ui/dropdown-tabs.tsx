@@ -70,7 +70,7 @@ export const DropdownTabs: React.FC<DropdownTabsProps> = ({
             position="popper"
             side="bottom"
             sideOffset={8}
-            className={`z-[100] bg-elec-gray border border-elec-yellow/20 shadow-xl rounded-lg ${isMobile ? 'w-[calc(100vw-2rem)] max-h-[70vh]' : 'max-h-[80vh]'} overflow-y-auto`}
+            className={`${isMobile ? 'w-[calc(100vw-2rem)] max-h-[70vh]' : 'max-h:[80vh]'} bg-elec-gray border border-elec-yellow/20 shadow-xl rounded-lg overflow-y-auto`}
           >
             {tabs.map((tab) => {
               const IconComponent = tab.icon;

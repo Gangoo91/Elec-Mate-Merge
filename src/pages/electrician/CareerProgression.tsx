@@ -59,9 +59,12 @@ const CareerProgression = () => {
             </Button>
           </Link>
         )}
+        {activeSection && (
+          <Button variant="outline" className="flex items-center gap-2 w-full sm:w-auto" onClick={handleBackToSections}>
+            <ArrowLeft className="h-4 w-4" /> Back to Sections
+          </Button>
+        )}
       </div>
-
-      {activeSection === null ? (
         <>
           {/* Career Sections Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 max-w-6xl mx-auto">
