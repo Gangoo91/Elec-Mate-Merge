@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Target, Brain, TrendingUp, BarChart3, Users, Eye, Clock, Award, Briefcase, MapPin } from "lucide-react";
+import { ArrowLeft, Target, Brain, TrendingUp, BarChart3, Users, Eye, Clock, Award, Briefcase, MapPin, PoundSterling, ShieldCheck } from "lucide-react";
 import { DropdownTabs, DropdownTab } from "@/components/ui/dropdown-tabs";
 import { MobileAccordion, MobileAccordionItem, MobileAccordionTrigger, MobileAccordionContent } from "@/components/ui/mobile-accordion";
 import { careerPaths } from "../../../apprentice/career/careerPathsData";
@@ -218,7 +218,7 @@ const ElectricianCareerPathways = () => {
           {/* Accordion layout */}
           <MobileAccordion type="multiple" className="w-full">
             <MobileAccordionItem value="sectors-explore">
-              <MobileAccordionTrigger className="bg-elec-gray border border-elec-yellow/20 rounded-lg px-4">
+              <MobileAccordionTrigger icon={<Briefcase className="h-5 w-5 text-purple-400" />} className="bg-elec-gray border border-elec-yellow/20 rounded-lg px-4 py-4">
                 Explore sectors
               </MobileAccordionTrigger>
               <MobileAccordionContent className="bg-elec-gray border-x border-b border-elec-yellow/20 rounded-b-lg p-3">
@@ -227,7 +227,7 @@ const ElectricianCareerPathways = () => {
             </MobileAccordionItem>
 
             <MobileAccordionItem value="sectors-insights">
-              <MobileAccordionTrigger className="bg-elec-gray border border-elec-yellow/20 rounded-lg px-4">
+              <MobileAccordionTrigger icon={<BarChart3 className="h-5 w-5 text-blue-400" />} className="bg-elec-gray border border-elec-yellow/20 rounded-lg px-4 py-4">
                 Sector insights & guidance
               </MobileAccordionTrigger>
               <MobileAccordionContent className="bg-elec-gray border-x border-b border-elec-yellow/20 rounded-b-lg p-3">
@@ -253,7 +253,7 @@ const ElectricianCareerPathways = () => {
             </MobileAccordionItem>
 
             <MobileAccordionItem value="sectors-pay">
-              <MobileAccordionTrigger className="bg-elec-gray border border-elec-yellow/20 rounded-lg px-4">
+              <MobileAccordionTrigger icon={<PoundSterling className="h-5 w-5 text-elec-yellow" />} className="bg-elec-gray border border-elec-yellow/20 rounded-lg px-4 py-4">
                 Pay rates & allowances
               </MobileAccordionTrigger>
               <MobileAccordionContent className="bg-elec-gray border-x border-b border-elec-yellow/20 rounded-b-lg p-3">
@@ -280,7 +280,7 @@ const ElectricianCareerPathways = () => {
             </MobileAccordionItem>
 
             <MobileAccordionItem value="sectors-compliance">
-              <MobileAccordionTrigger className="bg-elec-gray border border-elec-yellow/20 rounded-lg px-4">
+              <MobileAccordionTrigger icon={<ShieldCheck className="h-5 w-5 text-purple-400" />} className="bg-elec-gray border border-elec-yellow/20 rounded-lg px-4 py-4">
                 Compliance & best practice
               </MobileAccordionTrigger>
               <MobileAccordionContent className="bg-elec-gray border-x border-b border-elec-yellow/20 rounded-b-lg p-3">
@@ -288,6 +288,46 @@ const ElectricianCareerPathways = () => {
                   <li>BS 7671:2018 (18th Edition) requirements</li>
                   <li>Building Regs (Part P), Health & Safety, RAMS</li>
                   <li>ECS/JIB grading, insurance and calibration records</li>
+                </ul>
+              </MobileAccordionContent>
+            </MobileAccordionItem>
+
+            <MobileAccordionItem value="sectors-projects">
+              <MobileAccordionTrigger icon={<Briefcase className="h-5 w-5 text-blue-400" />} className="bg-elec-gray border border-elec-yellow/20 rounded-lg px-4 py-4">
+                Typical projects & clients
+              </MobileAccordionTrigger>
+              <MobileAccordionContent className="bg-elec-gray border-x border-b border-elec-yellow/20 rounded-b-lg p-3">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
+                  <div className="rounded-md border border-elec-yellow/10 bg-elec-dark/40 p-3">
+                    <p className="font-medium mb-1">Domestic</p>
+                    <p className="text-muted-foreground">Housing associations, landlords</p>
+                  </div>
+                  <div className="rounded-md border border-elec-yellow/10 bg-elec-dark/40 p-3">
+                    <p className="font-medium mb-1">Commercial</p>
+                    <p className="text-muted-foreground">Fit‑outs, retail, offices</p>
+                  </div>
+                  <div className="rounded-md border border-elec-yellow/10 bg-elec-dark/40 p-3">
+                    <p className="font-medium mb-1">Industrial</p>
+                    <p className="text-muted-foreground">Factories, plants, FM</p>
+                  </div>
+                  <div className="rounded-md border border-elec-yellow/10 bg-elec-dark/40 p-3">
+                    <p className="font-medium mb-1">Specialist</p>
+                    <p className="text-muted-foreground">EV, solar, BMS, data</p>
+                  </div>
+                </div>
+              </MobileAccordionContent>
+            </MobileAccordionItem>
+
+            <MobileAccordionItem value="sectors-getting-started">
+              <MobileAccordionTrigger icon={<Target className="h-5 w-5 text-green-400" />} className="bg-elec-gray border border-elec-yellow/20 rounded-lg px-4 py-4">
+                Getting started checklist
+              </MobileAccordionTrigger>
+              <MobileAccordionContent className="bg-elec-gray border-x border-b border-elec-yellow/20 rounded-b-lg p-3">
+                <ul className="text-sm list-disc pl-4 space-y-1 text-muted-foreground">
+                  <li>Update CV with sector‑specific keywords</li>
+                  <li>Refresh I&T kit calibration; add EV/data tools as needed</li>
+                  <li>Collect CSCS/ECS, 18th, 2391, IPAF as relevant</li>
+                  <li>Prepare RAMS templates; maintain job photo portfolio</li>
                 </ul>
               </MobileAccordionContent>
             </MobileAccordionItem>
@@ -321,7 +361,7 @@ const ElectricianCareerPathways = () => {
           </div>
           <MobileAccordion type="single" collapsible className="w-full">
             <MobileAccordionItem value="regions-overview">
-              <MobileAccordionTrigger className="bg-elec-gray border border-elec-yellow/20 rounded-lg px-4">
+              <MobileAccordionTrigger icon={<MapPin className="h-5 w-5 text-blue-400" />} className="bg-elec-gray border border-elec-yellow/20 rounded-lg px-4 py-4">
                 Explore regions
               </MobileAccordionTrigger>
               <MobileAccordionContent className="bg-elec-gray border-x border-b border-elec-yellow/20 rounded-b-lg p-3">
@@ -359,7 +399,7 @@ const ElectricianCareerPathways = () => {
 
           <MobileAccordion type="single" collapsible className="w-full">
             <MobileAccordionItem value="paths-browse">
-              <MobileAccordionTrigger className="bg-elec-gray border border-elec-yellow/20 rounded-lg px-4">
+              <MobileAccordionTrigger icon={<TrendingUp className="h-5 w-5 text-elec-yellow" />} className="bg-elec-gray border border-elec-yellow/20 rounded-lg px-4 py-4">
                 Browse career paths
               </MobileAccordionTrigger>
               <MobileAccordionContent className="bg-elec-gray border-x border-b border-elec-yellow/20 rounded-b-lg p-3">
