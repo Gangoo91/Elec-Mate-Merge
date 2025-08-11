@@ -1,12 +1,8 @@
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Target, Brain, TrendingUp, BarChart3, Eye, Clock, Award, MapPin, PoundSterling, GraduationCap, ShieldCheck, Building, Briefcase, Home } from "lucide-react";
+import { Target, Brain, TrendingUp, BarChart3, Eye, Clock, Award, MapPin, PoundSterling, GraduationCap, ShieldCheck, Building, Briefcase, Home } from "lucide-react";
 import { DropdownTabs, DropdownTab } from "@/components/ui/dropdown-tabs";
 import { MobileAccordion, MobileAccordionItem, MobileAccordionTrigger, MobileAccordionContent } from "@/components/ui/mobile-accordion";
-import { careerPaths } from "../../../apprentice/career/careerPathsData";
-import CareerPathCard from "../../../apprentice/career/CareerPathCard";
 import EnhancedCareerOverview from "../../../apprentice/career/enhanced/EnhancedCareerOverview";
-import ProgressTracker from "@/components/career/ProgressTracker";
 import UKCareerProgressionTimeline from "../../../apprentice/career/UKCareerProgressionTimeline";
 import UKRegionalJobMarkets from "../../../apprentice/career/UKRegionalJobMarkets";
 
@@ -17,128 +13,6 @@ import IndustryInsightsAnalysis from "../../../apprentice/career/enhanced/Indust
 
 
 const ElectricianCareerPathways = () => {
-  const [selectedPath, setSelectedPath] = useState<string | null>(null);
-
-  if (selectedPath) {
-    const path = careerPaths.find(p => p.id.toString() === selectedPath);
-    if (!path) return null;
-
-    // Define milestones for each career path
-    const getMilestones = (pathId: string) => {
-      const milestoneMap: Record<string, string[]> = {
-        "1": [
-          "Gain 2+ years post-qualification experience",
-          "Complete Inspection & Testing (2391) qualification",
-          "Register with NICEIC or NAPIT scheme",
-          "Obtain professional indemnity insurance",
-          "Complete first self-certification project"
-        ],
-        "2": [
-          "Complete Level 3 Electrical Installation NVQ",
-          "Pass AM2 practical assessment", 
-          "Achieve 18th Edition BS 7671 certification",
-          "Complete required on-the-job hours",
-          "Register with JIB grading scheme"
-        ],
-        "3": [
-          "Achieve approved electrician status",
-          "Develop business management skills",
-          "Create business plan and financial projections",
-          "Register company and obtain insurances",
-          "Secure first commercial contract"
-        ],
-        "4": [
-          "Obtain relevant higher education qualification",
-          "Develop design software proficiency",
-          "Work towards Chartered Engineer status",
-          "Complete complex engineering project",
-          "Join professional engineering body"
-        ],
-        "5": [
-          "Complete specialist maintenance training",
-          "Gain PLC systems experience",
-          "Master fault diagnosis techniques",
-          "Develop preventative maintenance skills",
-          "Obtain relevant industry certifications"
-        ],
-        "6": [
-          "Achieve advanced certification",
-          "Gain extensive field experience",
-          "Develop regulatory expertise",
-          "Build documentation skills",
-          "Establish professional network"
-        ],
-        "7": [
-          "Gain extensive electrical experience",
-          "Complete management qualifications",
-          "Develop leadership skills",
-          "Build stakeholder management abilities",
-          "Master budgeting and scheduling"
-        ],
-        "8": [
-          "Complete standard electrical qualification",
-          "Choose specialization area",
-          "Complete specialist training courses",
-          "Gain manufacturer certifications",
-          "Build portfolio of specialist projects"
-        ],
-        "10": [
-          "Complete HNC/HND in Electrical Engineering",
-          "Master CAD software proficiency",
-          "Learn design standards and regulations",
-          "Develop load calculation skills",
-          "Build technical drawing expertise"
-        ],
-        "11": [
-          "Achieve advanced electrical qualification",
-          "Complete specialized commissioning training",
-          "Develop system testing skills",
-          "Master troubleshooting techniques",
-          "Build documentation expertise"
-        ],
-        "12": [
-          "Complete Degree in Electrical Engineering",
-          "Gain commissioning experience",
-          "Develop project management skills",
-          "Master control systems knowledge",
-          "Build client management abilities"
-        ]
-      };
-      return milestoneMap[pathId] || [];
-    };
-
-    return (
-      <div className="space-y-6">
-        <div className="flex items-center gap-4">
-          <Button 
-            variant="outline" 
-            size="sm"
-            onClick={() => setSelectedPath(null)}
-            className="flex items-center gap-2"
-          >
-            <ArrowLeft className="h-4 w-4" /> Back to Career Pathways
-          </Button>
-          <h2 className="text-2xl font-semibold">{path.title}</h2>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div className="lg:col-span-2">
-            <CareerPathCard {...path} />
-          </div>
-          <div>
-            <ProgressTracker
-              careerPathId={path.id.toString()}
-              careerPathTitle={path.title}
-              milestones={getMilestones(path.id.toString())}
-              onUpdateProgress={() => {
-                console.log('Progress updated for', path.title);
-              }}
-            />
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   const careerPathwaysTabs: DropdownTab[] = [
     {
@@ -322,58 +196,6 @@ const ElectricianCareerPathways = () => {
                   <li>Use filters by region, sector, and certification requirements</li>
                   <li>Keep ECS card, AM2, 2391, EV/solar tickets visible on profile</li>
                 </ul>
-              </MobileAccordionContent>
-            </MobileAccordionItem>
-          </MobileAccordion>
-        </div>
-      )
-    },
-    {
-      value: "paths",
-      label: "Career Paths",
-      icon: TrendingUp,
-      content: (
-        <div className="space-y-4">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-            <div className="rounded-lg border border-elec-yellow/20 bg-elec-gray/50 p-3 text-center">
-              <div className="text-elec-yellow text-lg font-semibold">Total paths</div>
-              <div className="text-xs text-muted-foreground">{careerPaths.length}</div>
-            </div>
-            <div className="rounded-lg border border-elec-yellow/20 bg-elec-gray/50 p-3 text-center">
-              <div className="text-elec-yellow text-lg font-semibold">Fastest route</div>
-              <div className="text-xs text-muted-foreground">~1–2 yrs</div>
-            </div>
-            <div className="rounded-lg border border-elec-yellow/20 bg-elec-gray/50 p-3 text-center">
-              <div className="text-elec-yellow text-lg font-semibold">Top earnings</div>
-              <div className="text-xs text-muted-foreground">£80k+</div>
-            </div>
-            <div className="rounded-lg border border-elec-yellow/20 bg-elec-gray/50 p-3 text-center">
-              <div className="text-elec-yellow text-lg font-semibold">Popular</div>
-              <div className="text-xs text-muted-foreground">QS, Specialist</div>
-            </div>
-          </div>
-
-          <MobileAccordion type="single" collapsible className="w-full">
-            <MobileAccordionItem value="paths-browse">
-              <MobileAccordionTrigger icon={<TrendingUp className="h-5 w-5 text-elec-yellow" />} className="bg-elec-gray border border-elec-yellow/20 rounded-lg px-4 py-4">
-                Browse career paths
-              </MobileAccordionTrigger>
-              <MobileAccordionContent className="bg-elec-gray border-x border-b border-elec-yellow/20 rounded-b-lg p-3">
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {careerPaths.map((path) => (
-                    <div key={path.id} onClick={() => setSelectedPath(path.id.toString())} className="cursor-pointer">
-                      <CareerPathCard 
-                        title={path.title}
-                        requirements={path.requirements}
-                        description={path.description}
-                        icon={path.icon}
-                        skills={path.skills}
-                        salaryRange={path.salaryRange}
-                        timeToAchieve={path.timeToAchieve}
-                      />
-                    </div>
-                  ))}
-                </div>
               </MobileAccordionContent>
             </MobileAccordionItem>
           </MobileAccordion>
