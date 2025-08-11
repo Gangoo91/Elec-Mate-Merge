@@ -1,75 +1,259 @@
-import React, { useState } from "react";
-import { DropdownTabs, DropdownTab } from "@/components/ui/dropdown-tabs";
+import React, { useState, useMemo } from "react";
+import { DropdownTabs } from "@/components/ui/dropdown-tabs";
 import EnhancedCourseCard from "../../../apprentice/career/courses/EnhancedCourseCard";
 import EnhancedTrainingCenterCard from "../../../apprentice/career/courses/EnhancedTrainingCenterCard";
 import CourseDetailsModal from "../../../apprentice/career/courses/CourseDetailsModal";
 import TrainingCentreDetailsModal from "../../../apprentice/career/courses/TrainingCenterDetailsModal";
-import CourseSearchForm from "../../../apprentice/career/courses/CourseSearchForm";
 import CourseSelectionTips from "../../../apprentice/career/courses/CourseSelectionTips";
 import EmptySearchResults from "../../../apprentice/career/courses/EmptySearchResults";
-import LocationBasedCourseSearch from "../../../apprentice/career/courses/LocationBasedCourseSearch";
 import CourseAnalyticsDashboard from "../../../apprentice/career/courses/CourseAnalyticsDashboard";
-import { useCoursesAndCentres } from "../../../apprentice/career/courses/useCoursesAndCenters";
-import { useLocationBasedCourses } from "../../../apprentice/career/courses/useLocationBasedCourses";
-import { ukLocations } from "../../../apprentice/career/courses/coursesData";
+import EnhancedCourseSearch from "./EnhancedCourseSearch";
+import CourseSorting, { sortOptions } from "./CourseSorting";
+import FeaturedCoursesCarousel from "./FeaturedCoursesCarousel";
+import CourseBookmarkManager, { useBookmarkManager } from "./CourseBookmarkManager";
+import CourseCompareMode, { useCourseComparison } from "./CourseCompareMode";
 import { 
   enhancedCareerCourses, 
-  enhancedTrainingCenters, 
-  courseCategories,
+  enhancedTrainingCenters,
   EnhancedCareerCourse,
   EnhancedTrainingCenter
 } from "../../../apprentice/career/courses/enhancedCoursesData";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { MapPin, X, Filter, TrendingUp, BookOpen, Users } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { BookOpen, Users, Plus, Scale, FileDown } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const ElectricianCareerCourses = () => {
-  const [showLocationSearch, setShowLocationSearch] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState("All Categories");
   const [selectedCourse, setSelectedCourse] = useState<EnhancedCareerCourse | null>(null);
   const [selectedCenter, setSelectedCenter] = useState<EnhancedTrainingCenter | null>(null);
+  const [activeTab, setActiveTab] = useState("courses");
+  const [currentSort, setCurrentSort] = useState("relevance");
+  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
+  const [showBookmarks, setShowBookmarks] = useState(false);
+  const [showComparison, setShowComparison] = useState(false);
   
-  const {
-    activeTab,
-    setActiveTab,
-    resetFilters
-  } = useCoursesAndCentres();
+  const { toast } = useToast();
+  const isMobile = useIsMobile();
+  const { toggleBookmark, isBookmarked } = useBookmarkManager();
+  const { addToComparison, removeFromComparison, isInComparison, selectedCount } = useCourseComparison();
 
-  const {
-    locationState,
-    handleLocationSelect,
-    handleRadiusChange,
-    clearLocation,
-    isLocationFiltered
-  } = useLocationBasedCourses(enhancedCareerCourses, enhancedTrainingCenters);
-
-  // Apply location and category filters
-  const filteredCourses = enhancedCareerCourses.filter(course => {
-    const categoryMatch = selectedCategory === "All Categories" || course.category === selectedCategory;
-    const locationMatch = !isLocationFiltered || course.locations.some(loc => 
-      locationState.location === "All Locations" || loc.includes(locationState.location)
-    );
-    return categoryMatch && locationMatch;
+  // Search and filter state
+  const [filters, setFilters] = useState({
+    searchQuery: "",
+    category: "All Categories",
+    level: "All Levels",
+    location: "All Locations",
+    priceRange: [0, 2000] as [number, number],
+    duration: "Any Duration",
+    industryDemand: "All",
+    format: "All Formats",
+    rating: 0
   });
 
-  const filteredCenters = enhancedTrainingCenters.filter(center => {
-    const locationMatch = !isLocationFiltered || 
-      locationState.location === "All Locations" || 
-      center.location.includes(locationState.location);
-    return locationMatch;
-  });
+  // Enhanced filtering and sorting logic
+  const filteredAndSortedCourses = useMemo(() => {
+    let filtered = enhancedCareerCourses.filter(course => {
+      // Search query filter
+      if (filters.searchQuery) {
+        const query = filters.searchQuery.toLowerCase();
+        const matches = 
+          course.title.toLowerCase().includes(query) ||
+          course.provider.toLowerCase().includes(query) ||
+          course.description.toLowerCase().includes(query) ||
+          course.category.toLowerCase().includes(query);
+        if (!matches) return false;
+      }
 
-  const handleSearchWithLocation = (values: { location: string; searchQuery: string }) => {
-    // Search functionality implementation would go here
-    console.log('Search values:', values);
+      // Category filter
+      if (filters.category !== "All Categories" && course.category !== filters.category) {
+        return false;
+      }
+
+      // Level filter
+      if (filters.level !== "All Levels" && course.level !== filters.level) {
+        return false;
+      }
+
+      // Location filter
+      if (filters.location !== "All Locations") {
+        const hasLocation = course.locations.some(loc => 
+          loc.toLowerCase().includes(filters.location.toLowerCase())
+        );
+        if (!hasLocation) return false;
+      }
+
+      // Price range filter
+      const coursePrice = parseInt(course.price.match(/£(\d+)/)?.[1] || "0");
+      if (coursePrice < filters.priceRange[0] || coursePrice > filters.priceRange[1]) {
+        return false;
+      }
+
+      // Duration filter
+      if (filters.duration !== "Any Duration" && !course.duration.includes(filters.duration)) {
+        return false;
+      }
+
+      // Industry demand filter
+      if (filters.industryDemand !== "All" && course.industryDemand !== filters.industryDemand) {
+        return false;
+      }
+
+      // Format filter
+      if (filters.format !== "All Formats" && !course.format.toLowerCase().includes(filters.format.toLowerCase())) {
+        return false;
+      }
+
+      // Rating filter
+      if (filters.rating > 0 && course.rating < filters.rating) {
+        return false;
+      }
+
+      return true;
+    });
+
+    // Sorting
+    const sortOption = sortOptions.find(opt => opt.key === currentSort);
+    if (sortOption) {
+      filtered.sort((a, b) => {
+        let comparison = 0;
+        
+        switch (sortOption.key) {
+          case "rating":
+            comparison = b.rating - a.rating;
+            break;
+          case "price-low":
+            const priceA = parseInt(a.price.match(/£(\d+)/)?.[1] || "0");
+            const priceB = parseInt(b.price.match(/£(\d+)/)?.[1] || "0");
+            comparison = priceA - priceB;
+            break;
+          case "price-high":
+            const priceA2 = parseInt(a.price.match(/£(\d+)/)?.[1] || "0");
+            const priceB2 = parseInt(b.price.match(/£(\d+)/)?.[1] || "0");
+            comparison = priceB2 - priceA2;
+            break;
+          case "duration":
+            const durationA = parseInt(a.duration.match(/(\d+)/)?.[1] || "0");
+            const durationB = parseInt(b.duration.match(/(\d+)/)?.[1] || "0");
+            comparison = durationA - durationB;
+            break;
+          case "demand":
+            const demandOrder = { "High": 3, "Medium": 2, "Low": 1 };
+            comparison = demandOrder[b.industryDemand as keyof typeof demandOrder] - 
+                        demandOrder[a.industryDemand as keyof typeof demandOrder];
+            break;
+          case "future-proof":
+            comparison = b.futureProofing - a.futureProofing;
+            break;
+          case "title":
+            comparison = a.title.localeCompare(b.title);
+            break;
+          case "provider":
+            comparison = a.provider.localeCompare(b.provider);
+            break;
+          case "next-date":
+            const dateA = new Date(a.nextDates[0]);
+            const dateB = new Date(b.nextDates[0]);
+            comparison = dateA.getTime() - dateB.getTime();
+            break;
+          default: // relevance
+            comparison = (b.rating * b.futureProofing) - (a.rating * a.futureProofing);
+        }
+        
+        return sortOption.direction === "desc" ? comparison : -comparison;
+      });
+    }
+
+    return filtered;
+  }, [filters, currentSort]);
+
+  const filteredCenters = useMemo(() => {
+    return enhancedTrainingCenters.filter(center => {
+      // Location filter
+      if (filters.location !== "All Locations" && 
+          !center.location.toLowerCase().includes(filters.location.toLowerCase())) {
+        return false;
+      }
+      
+      // Search query filter
+      if (filters.searchQuery) {
+        const query = filters.searchQuery.toLowerCase();
+        const matches = 
+          center.name.toLowerCase().includes(query) ||
+          center.location.toLowerCase().includes(query) ||
+          center.specializations.some(spec => spec.toLowerCase().includes(query));
+        if (!matches) return false;
+      }
+
+      return true;
+    });
+  }, [filters]);
+
+  const handleResetFilters = () => {
+    setFilters({
+      searchQuery: "",
+      category: "All Categories",
+      level: "All Levels",
+      location: "All Locations",
+      priceRange: [0, 2000],
+      duration: "Any Duration",
+      industryDemand: "All",
+      format: "All Formats",
+      rating: 0
+    });
   };
 
-  const handleResetAll = () => {
-    resetFilters();
-    clearLocation();
-    setSelectedCategory("All Categories");
-    setShowLocationSearch(false);
+  // PDF Export functionality
+  const exportToPDF = async () => {
+    try {
+      const { jsPDF } = await import('jspdf');
+      const pdf = new jsPDF();
+      
+      pdf.setFontSize(20);
+      pdf.text('Career Course Search Results', 20, 30);
+      
+      pdf.setFontSize(12);
+      let yPosition = 50;
+      
+      filteredAndSortedCourses.slice(0, 10).forEach((course, index) => {
+        if (yPosition > 270) {
+          pdf.addPage();
+          yPosition = 30;
+        }
+        
+        pdf.setFont(undefined, 'bold');
+        pdf.text(`${index + 1}. ${course.title}`, 20, yPosition);
+        yPosition += 10;
+        
+        pdf.setFont(undefined, 'normal');
+        pdf.text(`Provider: ${course.provider}`, 25, yPosition);
+        yPosition += 7;
+        
+        pdf.text(`Duration: ${course.duration} | Level: ${course.level}`, 25, yPosition);
+        yPosition += 7;
+        
+        pdf.text(`Price: ${course.price}`, 25, yPosition);
+        yPosition += 7;
+        
+        pdf.text(`Rating: ${course.rating}/5 | Demand: ${course.industryDemand}`, 25, yPosition);
+        yPosition += 15;
+      });
+      
+      pdf.save('course-search-results.pdf');
+      
+      toast({
+        title: "PDF exported successfully",
+        description: "Your course search results have been saved as PDF.",
+        variant: "success"
+      });
+    } catch (error) {
+      toast({
+        title: "Export failed",
+        description: "There was an error exporting the PDF.",
+        variant: "destructive"
+      });
+    }
   };
 
   const viewCourseDetails = (course: EnhancedCareerCourse) => {
@@ -99,26 +283,38 @@ const ElectricianCareerCourses = () => {
               Comprehensive professional development courses to advance your electrical career in the UK market
             </p>
             
-            <div className="flex gap-2">
+            <div className="flex gap-2 flex-wrap">
               <Button
-                variant={showLocationSearch ? "default" : "outline"}
-                onClick={() => setShowLocationSearch(!showLocationSearch)}
+                variant={showBookmarks ? "default" : "outline"}
+                onClick={() => setShowBookmarks(!showBookmarks)}
                 className="flex items-center gap-2"
               >
-                <MapPin className="h-4 w-4" />
-                Location Search
+                <BookOpen className="h-4 w-4" />
+                {isMobile ? "Saved" : "Saved Courses"}
               </Button>
               
-              {(isLocationFiltered || selectedCategory !== "All Categories" || showLocationSearch) && (
-                <Button
-                  variant="outline"
-                  onClick={handleResetAll}
-                  className="flex items-center gap-2"
-                >
-                  <X className="h-4 w-4" />
-                  Clear Filters
-                </Button>
-              )}
+              <Button
+                variant={showComparison ? "default" : "outline"}
+                onClick={() => setShowComparison(!showComparison)}
+                className="flex items-center gap-2"
+              >
+                <Scale className="h-4 w-4" />
+                {isMobile ? "Compare" : "Compare Courses"}
+                {selectedCount > 0 && (
+                  <Badge variant="secondary" className="ml-1 h-4 px-1">
+                    {selectedCount}
+                  </Badge>
+                )}
+              </Button>
+
+              <Button
+                variant="outline"
+                onClick={exportToPDF}
+                className="flex items-center gap-2"
+              >
+                <FileDown className="h-4 w-4" />
+                {isMobile ? "PDF" : "Export PDF"}
+              </Button>
             </div>
           </div>
         </CardHeader>
@@ -127,102 +323,100 @@ const ElectricianCareerCourses = () => {
       {/* Course Analytics Dashboard */}
       <CourseAnalyticsDashboard />
 
-      {/* Active Filters Display */}
-      {(isLocationFiltered || selectedCategory !== "All Categories") && (
-        <Card className="border-elec-yellow/20 bg-elec-gray/50">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 flex-wrap">
-              <Filter className="h-4 w-4 text-elec-yellow" />
-              <span className="text-sm font-medium">Active Filters:</span>
-              
-              {isLocationFiltered && (
-                <Badge variant="outline" className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30">
-                  {locationState.location} ({locationState.searchRadius} miles)
-                </Badge>
-              )}
-              
-              {selectedCategory !== "All Categories" && (
-                <Badge variant="outline" className="bg-blue-500/10 text-blue-400 border-blue-500/30">
-                  {selectedCategory}
-                </Badge>
-              )}
-              
-              <Badge variant="outline" className="ml-auto">
-                {filteredCourses.length + filteredCenters.length} results
-              </Badge>
-            </div>
-          </CardContent>
-        </Card>
-      )}
+      {/* Featured Courses Carousel */}
+      <FeaturedCoursesCarousel 
+        courses={enhancedCareerCourses} 
+        onViewDetails={viewCourseDetails} 
+      />
 
-      {/* Location-based search */}
-      {showLocationSearch && (
-        <LocationBasedCourseSearch
-          onLocationSelect={handleLocationSelect}
-          onRadiusChange={handleRadiusChange}
-          currentLocation={locationState.location}
-          searchRadius={locationState.searchRadius}
+      {/* Enhanced Search and Filters */}
+      <EnhancedCourseSearch
+        filters={filters}
+        onFiltersChange={setFilters}
+        onReset={handleResetFilters}
+        totalResults={filteredAndSortedCourses.length + filteredCenters.length}
+      />
+
+      {/* Course Comparison Tool */}
+      {showComparison && (
+        <CourseCompareMode
+          courses={enhancedCareerCourses}
+          onViewDetails={viewCourseDetails}
         />
       )}
 
-      {/* Category Filter */}
-      <Card className="border-elec-yellow/20 bg-elec-gray/50">
-        <CardContent className="p-4">
-          <div className="flex items-center gap-3 mb-3">
-            <TrendingUp className="h-4 w-4 text-elec-yellow" />
-            <span className="text-sm font-medium">Filter by Category:</span>
-          </div>
-          <div className="flex flex-wrap gap-2">
-            {courseCategories.map((category) => (
-              <Button
-                key={category}
-                variant={selectedCategory === category ? "default" : "outline"}
-                size="sm"
-                onClick={() => setSelectedCategory(category)}
-                className={selectedCategory === category ? 
-                  "bg-elec-yellow text-elec-dark" : 
-                  "border-elec-yellow/30 hover:bg-elec-yellow/10"
-                }
-              >
-                {category}
-                {category !== "All Categories" && (
-                  <Badge variant="secondary" className="ml-2 h-4 px-1">
-                    {enhancedCareerCourses.filter(c => c.category === category).length}
-                  </Badge>
-                )}
-              </Button>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+      {/* Bookmark Manager */}
+      {showBookmarks && (
+        <CourseBookmarkManager
+          courses={enhancedCareerCourses}
+          onViewDetails={viewCourseDetails}
+        />
+      )}
 
-      {/* Search Form */}
-      <CourseSearchForm 
-        locations={ukLocations} 
-        onSearch={handleSearchWithLocation}
+      {/* Sorting and View Controls */}
+      <CourseSorting
+        currentSort={currentSort}
+        onSortChange={setCurrentSort}
+        totalResults={filteredAndSortedCourses.length}
+        viewMode={viewMode}
+        onViewModeChange={setViewMode}
       />
 
-      {/* Dropdown Navigation */}
+      {/* Main Content Tabs */}
       <DropdownTabs 
         tabs={[
           {
             value: "courses",
-            label: `Courses (${filteredCourses.length})`,
+            label: `Courses (${filteredAndSortedCourses.length})`,
             icon: BookOpen,
             content: (
               <div className="space-y-6">
-                {filteredCourses.length > 0 ? (
-                  <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-                    {filteredCourses.map((course) => (
-                      <EnhancedCourseCard 
-                        key={course.id} 
-                        course={course}
-                        onViewDetails={viewCourseDetails}
-                      />
+                {filteredAndSortedCourses.length > 0 ? (
+                  <div className={viewMode === "grid" ? 
+                    "grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6" : 
+                    "space-y-4"
+                  }>
+                    {filteredAndSortedCourses.map((course) => (
+                      <div key={course.id} className="relative group">
+                        <EnhancedCourseCard 
+                          course={course}
+                          onViewDetails={viewCourseDetails}
+                        />
+                        
+                        {/* Action Buttons Overlay */}
+                        <div className="absolute top-2 right-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => toggleBookmark(course)}
+                            className={`h-8 w-8 p-0 ${isBookmarked(course.id) ? 
+                              'text-elec-yellow hover:text-elec-yellow/80' : 
+                              'text-muted-foreground hover:text-elec-yellow'
+                            }`}
+                            title={isBookmarked(course.id) ? "Remove from saved" : "Save course"}
+                          >
+                            <BookOpen className="h-4 w-4" />
+                          </Button>
+                          
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => addToComparison(course.id)}
+                            className={`h-8 w-8 p-0 ${isInComparison(course.id) ? 
+                              'text-blue-400 hover:text-blue-300' : 
+                              'text-muted-foreground hover:text-blue-400'
+                            }`}
+                            title="Add to comparison"
+                            disabled={selectedCount >= 3 && !isInComparison(course.id)}
+                          >
+                            <Plus className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      </div>
                     ))}
                   </div>
                 ) : (
-                  <EmptySearchResults type="courses" onReset={handleResetAll} />
+                  <EmptySearchResults type="courses" onReset={handleResetFilters} />
                 )}
               </div>
             )
@@ -244,7 +438,7 @@ const ElectricianCareerCourses = () => {
                     ))}
                   </div>
                 ) : (
-                  <EmptySearchResults type="centers" onReset={handleResetAll} />
+                  <EmptySearchResults type="centers" onReset={handleResetFilters} />
                 )}
               </div>
             )
