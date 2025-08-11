@@ -238,7 +238,7 @@ const Subsection1_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
               <li>Appropriate technical knowledge</li>
               <li>Experience with the type of installation</li>
               <li>Understanding of the equipment and hazards involved</li>
-              <li>Ability to recognize limitations of own competence</li>
+              <li>Ability to recognise limitations of own competence</li>
               <li>Knowledge of relevant standards and regulations</li>
               <li>Formal qualifications (NVQs, City & Guilds, etc.)</li>
               <li>Regular updates on new technologies and regulations</li>
@@ -249,7 +249,7 @@ const Subsection1_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
 
           <div className="bg-elec-dark rounded-md p-4 border border-elec-yellow/20 mt-4">
             <h3 className="text-lg font-semibold text-elec-yellow mb-2">Key UK Electrical Qualifications:</h3>
-            <p className="mb-3">Several recognized qualifications demonstrate electrical competence:</p>
+            <p className="mb-3">Several recognised qualifications demonstrate electrical competence:</p>
             
             <div className="space-y-4">
               <div>

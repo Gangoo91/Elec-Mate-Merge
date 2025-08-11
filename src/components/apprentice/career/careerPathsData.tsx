@@ -5,7 +5,7 @@ export const careerPaths = [
   {
     id: "5",
     title: "Maintenance Electrician",
-    requirements: "Level 3 NVQ + specialized maintenance experience",
+    requirements: "Level 3 NVQ + specialised maintenance experience",
     description: "Maintain, troubleshoot, and repair electrical systems in factories, plants, or commercial buildings.",
     icon: <Zap className="h-8 w-8 text-elec-yellow" />,
     skills: ["Fault diagnosis", "Preventative maintenance", "PLC systems", "Industrial standards"],
@@ -28,7 +28,7 @@ export const careerPaths = [
     requirements: "Standard qualification + specialist training",
     description: "Focus on specific areas like renewable energy, electric vehicles, or building management systems.",
     icon: <Briefcase className="h-8 w-8 text-elec-yellow" />,
-    skills: ["Specialized knowledge", "Advanced technologies", "Problem solving", "Consultancy"],
+    skills: ["Specialised knowledge", "Advanced technologies", "Problem solving", "Consultancy"],
     salaryRange: "£30,000 - £40,000",
     timeToAchieve: "4-6 years"
   },
@@ -75,7 +75,7 @@ export const careerPaths = [
   {
     id: "11",
     title: "Commissioning Technician",
-    requirements: "Advanced electrical qualification + specialized commissioning training",
+    requirements: "Advanced electrical qualification + specialised commissioning training",
     description: "Test, verify and commission new electrical systems to ensure they operate according to specification.",
     icon: <Wrench className="h-8 w-8 text-elec-yellow" />,
     skills: ["System testing", "Troubleshooting", "Documentation", "Commissioning procedures"],
@@ -105,7 +105,7 @@ export const careerPaths = [
   {
     id: "3",
     title: "Electrical Contractor",
-    requirements: "Journey-level experience + business license + certification",
+    requirements: "Journey-level experience + business licence + certification",
     description: "Run your own electrical contracting business focusing on residential, commercial, or industrial work.",
     icon: <Building className="h-8 w-8 text-elec-yellow" />,
     skills: ["Business management", "Customer relations", "Estimation", "Financial planning"],

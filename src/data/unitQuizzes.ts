@@ -405,7 +405,7 @@ export const healthAndSafetyQuizzes: UnitQuiz = {
     },
     {
       id: "hs-q36",
-      question: "Which organization enforces health and safety regulations in the UK?",
+      question: "Which organisation enforces health and safety regulations in the UK?",
       options: [
         "Environment Agency",
         "Health and Safety Executive (HSE)",
@@ -647,7 +647,7 @@ export const healthAndSafetyQuizzes: UnitQuiz = {
     },
     {
       id: "hs-q58",
-      question: "Which organization publishes the Wiring Regulations BS 7671?",
+      question: "Which organisation publishes the Wiring Regulations BS 7671?",
       options: [
         "Health and Safety Executive",
         "British Standards Institution",

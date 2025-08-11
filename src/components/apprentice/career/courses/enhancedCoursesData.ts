@@ -60,7 +60,7 @@ export const courseCategories = [
   "Essential Qualifications",
   "Emerging Technologies", 
   "Safety & Compliance",
-  "Specialized Skills",
+  "Specialised Skills",
   "Business & Management"
 ];
 
@@ -142,7 +142,7 @@ export const enhancedCareerCourses: EnhancedCareerCourse[] = [
     id: 3,
     title: "Electric Vehicle Charging Installation",
     provider: "ECA Training",
-    description: "Specialized certification for installing domestic and commercial EV charging points, covering Mode 3 charging systems.",
+    description: "Specialised certification for installing domestic and commercial EV charging points, covering Mode 3 charging systems.",
     duration: "2 days",
     level: "Intermediate",
     price: "£425 - £525",
@@ -222,7 +222,7 @@ export const enhancedCareerCourses: EnhancedCareerCourse[] = [
     nextDates: ["8 June 2025", "10 August 2025", "12 October 2025", "7 December 2025"],
     rating: 4.8,
     locations: ["London", "Manchester", "Birmingham", "Glasgow"],
-    category: "Specialized Skills",
+    category: "Specialised Skills",
     industryDemand: "High",
     futureProofing: 4,
     salaryImpact: "£3,000 - £5,000 annual increase",
@@ -352,7 +352,7 @@ export const courseAnalytics: CourseAnalytics = {
     { name: "Essential Qualifications", count: 45 },
     { name: "Emerging Technologies", count: 28 },
     { name: "Safety & Compliance", count: 35 },
-    { name: "Specialized Skills", count: 25 },
+    { name: "Specialised Skills", count: 25 },
     { name: "Business & Management", count: 17 }
   ]
 };

@@ -124,7 +124,7 @@ const PowerQualityCalculator = () => {
           <CardTitle>Power Quality & THD Calculator</CardTitle>
         </div>
         <CardDescription>
-          Analyze harmonic distortion and calculate Total Harmonic Distortion (THD) for power quality assessment.
+          Analyse harmonic distortion and calculate Total Harmonic Distortion (THD) for power quality assessment.
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -223,7 +223,7 @@ const PowerQualityCalculator = () => {
                 className="sm:flex-1"
               >
                 <Calculator className="h-4 w-4 mr-2" />
-                Analyze Power Quality
+                Analyse Power Quality
               </MobileButton>
               <MobileButton 
                 onClick={reset} 
@@ -308,7 +308,7 @@ const PowerQualityCalculator = () => {
                 </div>
               ) : (
                 <div className="flex items-center justify-center h-full text-muted-foreground">
-                  Enter harmonic current values to analyze power quality
+                  Enter harmonic current values to analyse power quality
                 </div>
               )}
             </div>

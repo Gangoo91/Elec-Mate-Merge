@@ -38,7 +38,7 @@ const TrainingScheduleOptimiser = () => {
       optimalPeriods = ["September-November", "January-March"];
       avoidPeriods = ["June-August"];
       scheduleRecommendations.push("Front-load theoretical training in quieter months");
-      scheduleRecommendations.push("Utilize summer for practical on-site experience");
+      scheduleRecommendations.push("Utilise summer for practical on-site experience");
     } else if (seasonality === "winter-peak") {
       optimalPeriods = ["April-June", "September-October"];
       avoidPeriods = ["November-February"];

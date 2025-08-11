@@ -242,10 +242,10 @@ const EnhancedInstallationTemplates: React.FC<EnhancedInstallationTemplatesProps
         return [
           {
             id: "tier3-datacenter",
-            name: "Tier 3 Data Center",
-            description: "Resilient data center with dual power feeds, N+1 UPS and advanced cooling",
+            name: "Tier 3 Data Centre",
+            description: "Resilient data centre with dual power feeds, N+1 UPS and advanced cooling",
             installationType: "data-center",
-            buildingType: "Data Center",
+            buildingType: "Data Centre",
             size: "large",
             complexity: "specialist",
             totalLoad: 500000,
@@ -253,7 +253,7 @@ const EnhancedInstallationTemplates: React.FC<EnhancedInstallationTemplatesProps
             estimatedCost: "£150,000-£250,000",
             complianceNotes: [
               "TIA-942 Tier 3 compliance",
-              "BS EN 50600 data center standards",
+              "BS EN 50600 data centre standards",
               "ISO 27001 security requirements",
               "ASHRAE thermal guidelines"
             ],

@@ -13,7 +13,7 @@ const DocumentationBestPractices = () => {
         
         <h3 className="font-semibold text-white mt-6 mb-2">Record-Keeping Excellence</h3>
         <ul className="list-disc pl-6 space-y-2 text-muted-foreground mb-6">
-          <li>Use standardized templates for consistency across the organization</li>
+          <li>Use standardised templates for consistency across the organisation</li>
           <li>Implement clear file naming conventions and folder structures</li>
           <li>Schedule regular documentation audits to identify gaps</li>
           <li>Establish a chain of responsibility for document management</li>

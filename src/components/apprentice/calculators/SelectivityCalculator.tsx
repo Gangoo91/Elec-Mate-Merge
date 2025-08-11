@@ -300,7 +300,7 @@ const SelectivityCalculator = () => {
                 </div>
               ) : (
                 <div className="flex items-center justify-center h-full text-muted-foreground">
-                  Configure protection devices to analyze selectivity
+                  Configure protection devices to analyse selectivity
                 </div>
               )}
             </div>

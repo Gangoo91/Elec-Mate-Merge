@@ -11,8 +11,8 @@ export const hazardsSection: SectionData = {
       {
         id: "1",
         title: "Common Workplace Hazards",
-        content: "Electrical work environments contain various hazards that must be recognized and addressed.",
-        keyPoints: ["Identify electrical, physical, and chemical hazards", "Understand hazard risk levels", "Recognize warning signs"]
+        content: "Electrical work environments contain various hazards that must be recognised and addressed.",
+        keyPoints: ["Identify electrical, physical, and chemical hazards", "Understand hazard risk levels", "Recognise warning signs"]
       },
       {
         id: "2",

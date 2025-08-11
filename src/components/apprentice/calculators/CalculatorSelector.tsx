@@ -72,8 +72,8 @@ const CalculatorSelector = ({ calculatorType, setCalculatorType }: CalculatorSel
     { value: "selectivity", label: "Selectivity & Discrimination", category: "Advanced Safety & Analysis" },
     { value: "emergency-lighting", label: "Emergency Lighting Design", category: "Advanced Safety & Analysis" },
     
-    // Specialized Applications
-    { value: "data-centre", label: "Data Centre Calculator", category: "Specialized Applications" },
+    // Specialised Applications
+    { value: "data-centre", label: "Data Centre Calculator", category: "Specialised Applications" },
     
     // Specialist Locations
     { value: "marine-electrical", label: "Marine Electrical", category: "Specialist Locations" },
@@ -98,7 +98,7 @@ const CalculatorSelector = ({ calculatorType, setCalculatorType }: CalculatorSel
     return acc;
   }, {} as Record<string, typeof calculatorOptions>);
 
-  // Define category order for better organization
+  // Define category order for better organisation
   const categoryOrder = [
     "Fundamental",
     "Design & Installation", 
@@ -107,7 +107,7 @@ const CalculatorSelector = ({ calculatorType, setCalculatorType }: CalculatorSel
     "Lighting & Power Systems",
     "Renewable Energy",
     "Advanced Safety & Analysis",
-    "Specialized Applications",
+    "Specialised Applications",
     "Specialist Locations",
     "Tools & Components",
     "Utilities & Cost Analysis"
