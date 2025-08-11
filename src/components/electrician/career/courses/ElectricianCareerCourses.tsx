@@ -6,7 +6,6 @@ import CourseDetailsModal from "../../../apprentice/career/courses/CourseDetails
 import TrainingCentreDetailsModal from "../../../apprentice/career/courses/TrainingCenterDetailsModal";
 import CourseSelectionTips from "../../../apprentice/career/courses/CourseSelectionTips";
 import EmptySearchResults from "../../../apprentice/career/courses/EmptySearchResults";
-import CourseAnalyticsDashboard from "../../../apprentice/career/courses/CourseAnalyticsDashboard";
 import EnhancedCourseSearch from "./EnhancedCourseSearch";
 import CourseSorting, { sortOptions } from "./CourseSorting";
 import FeaturedCoursesCarousel from "./FeaturedCoursesCarousel";
@@ -319,9 +318,6 @@ const ElectricianCareerCourses = () => {
           </div>
         </CardHeader>
       </Card>
-
-      {/* Course Analytics Dashboard */}
-      <CourseAnalyticsDashboard />
 
       {/* Featured Courses Carousel */}
       <FeaturedCoursesCarousel 
