@@ -64,9 +64,9 @@ export const QuoteWizard = () => {
   };
 
   return (
-    <div className="space-y-6">
+    <>
       {/* Progress Bar */}
-      <div className="space-y-4">
+      <div className="px-4 md:px-6 space-y-4">
         <div className="flex items-center justify-between">
           <h2 className="text-xl font-semibold">Create New Quote</h2>
           <span className="text-sm text-muted-foreground">
@@ -112,7 +112,7 @@ export const QuoteWizard = () => {
       </div>
 
       {/* Navigation */}
-      <div className="flex flex-col sm:flex-row justify-between gap-3">
+      <div className="flex flex-col sm:flex-row justify-between gap-3 px-4 md:px-6">
         <Button
           variant="outline"
           onClick={prevStep}
@@ -148,6 +148,6 @@ export const QuoteWizard = () => {
           )}
         </div>
       </div>
-    </div>
+    </>
   );
 };
