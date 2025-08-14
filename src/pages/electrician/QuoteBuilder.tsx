@@ -3,6 +3,8 @@ import { Helmet } from "react-helmet";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Plus, FileText, Clock, CheckCircle, TrendingUp, ArrowLeft } from "lucide-react";
+import { QuoteWizard } from "@/components/electrician/quote-builder/QuoteWizard";
+import React from "react";
 
 const QuoteBuilder = () => {
   const stats = [
@@ -92,23 +94,8 @@ const QuoteBuilder = () => {
           </div>
         </section>
 
-        {/* Quick Actions */}
-        <section aria-labelledby="quick-actions">
-          <h2 id="quick-actions" className="text-lg font-semibold mb-4">Quick Actions</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {quickActions.map((action, index) => (
-              <Card key={index} className="bg-elec-gray border-elec-yellow/20 hover:bg-elec-gray/80 transition-all duration-200 cursor-pointer">
-                <CardHeader className="flex flex-row items-center space-y-0 space-x-4 p-6">
-                  <action.icon className={`h-10 w-10 ${action.action === 'primary' ? 'text-elec-yellow' : 'text-muted-foreground'}`} />
-                  <div>
-                    <CardTitle className="text-lg">{action.title}</CardTitle>
-                    <p className="text-sm text-muted-foreground mt-1">{action.description}</p>
-                  </div>
-                </CardHeader>
-              </Card>
-            ))}
-          </div>
-        </section>
+        {/* New Quote Section */}
+        <QuoteWizard />
 
         {/* Recent Quotes */}
         <section aria-labelledby="recent-quotes">
