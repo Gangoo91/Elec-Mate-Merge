@@ -102,18 +102,14 @@ export const QuoteWizard = () => {
       </div>
 
       {/* Step Content */}
-      <Card className="bg-elec-gray border-elec-yellow/20">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            {React.createElement(steps[currentStep].icon, { className: "h-5 w-5" })}
-            {steps[currentStep].title}
-          </CardTitle>
-          <p className="text-sm text-muted-foreground">{steps[currentStep].description}</p>
-        </CardHeader>
-        <CardContent className="space-y-6">
-          {renderStep()}
-        </CardContent>
-      </Card>
+      <div className="space-y-4">
+        <div className="flex items-center gap-2 px-4 md:px-0">
+          {React.createElement(steps[currentStep].icon, { className: "h-5 w-5" })}
+          <h3 className="text-lg font-semibold">{steps[currentStep].title}</h3>
+        </div>
+        <p className="text-sm text-muted-foreground px-4 md:px-0">{steps[currentStep].description}</p>
+        {renderStep()}
+      </div>
 
       {/* Navigation */}
       <div className="flex flex-col sm:flex-row justify-between gap-3">
