@@ -2,7 +2,7 @@ import React, { useState, useMemo } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { DropdownTabs } from "@/components/ui/dropdown-tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { 
@@ -153,184 +153,189 @@ export const MaterialSearchEnhanced = ({ onAddMaterial }: MaterialSearchEnhanced
         </div>
       </div>
 
-      <Tabs defaultValue="search" className="w-full">
-        <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="search" className="flex items-center gap-2">
-            <Search className="h-4 w-4" />
-            Search
-          </TabsTrigger>
-          <TabsTrigger value="popular" className="flex items-center gap-2">
-            <TrendingUp className="h-4 w-4" />
-            Popular
-          </TabsTrigger>
-          <TabsTrigger value="combinations" className="flex items-center gap-2">
-            <Package className="h-4 w-4" />
-            Job Kits
-          </TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="search" className="space-y-4">
-          {selectedMaterial ? (
-            <div className="space-y-4">
-              <Button
-                variant="ghost"
-                onClick={() => setSelectedMaterial(null)}
-                className="text-elec-yellow hover:text-elec-dark hover:bg-elec-yellow"
-              >
-                ← Back to Results
-              </Button>
-              <SmartPricingWidget
-                material={selectedMaterial}
-                quantity={quantity}
-                onQuantityChange={setQuantity}
-                onAddToQuote={(material, qty, pricing) => {
-                  onAddMaterial(material, qty, pricing);
-                  setSelectedMaterial(null);
-                }}
-              />
-            </div>
-          ) : (
-            <div className="grid gap-4 max-h-96 overflow-y-auto">
-              {filteredMaterials.map(material => (
-                <Card
-                  key={material.id}
-                  className="bg-card/50 border-elec-yellow/20 cursor-pointer hover:border-elec-yellow/40 transition-colors"
-                  onClick={() => setSelectedMaterial(material)}
+      <DropdownTabs
+        tabs={[
+          {
+            value: "search",
+            label: "Search",
+            icon: Search,
+            content: selectedMaterial ? (
+              <div className="space-y-4">
+                <Button
+                  variant="ghost"
+                  onClick={() => setSelectedMaterial(null)}
+                  className="text-elec-yellow hover:text-elec-dark hover:bg-elec-yellow"
                 >
-                  <CardContent className="p-4">
-                    <div className="flex justify-between items-start">
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2 mb-1">
-                          <h4 className="font-medium text-white">{material.name}</h4>
-                          {material.isFavourite && (
-                            <Star className="h-4 w-4 text-yellow-400 fill-current" />
-                          )}
+                  ← Back to Results
+                </Button>
+                <SmartPricingWidget
+                  material={selectedMaterial}
+                  quantity={quantity}
+                  onQuantityChange={setQuantity}
+                  onAddToQuote={(material, qty, pricing) => {
+                    onAddMaterial(material, qty, pricing);
+                    setSelectedMaterial(null);
+                  }}
+                />
+              </div>
+            ) : (
+              <div className="grid gap-4 max-h-96 overflow-y-auto">
+                {filteredMaterials.map(material => (
+                  <Card
+                    key={material.id}
+                    className="bg-card/50 border-elec-yellow/20 cursor-pointer hover:border-elec-yellow/40 transition-colors"
+                    onClick={() => setSelectedMaterial(material)}
+                  >
+                    <CardContent className="p-4">
+                      <div className="flex justify-between items-start">
+                        <div className="flex-1">
+                          <div className="flex items-center gap-2 mb-1">
+                            <h4 className="font-medium text-white">{material.name}</h4>
+                            {material.isFavourite && (
+                              <Star className="h-4 w-4 text-yellow-400 fill-current" />
+                            )}
+                          </div>
+                          <div className="flex items-center gap-2 text-sm text-elec-light/80">
+                            <span>{material.brand}</span>
+                            <span>•</span>
+                            <span>{material.code}</span>
+                            <span>•</span>
+                            <span className="capitalize">{material.category}</span>
+                          </div>
+                          <div className="flex items-center gap-2 mt-2">
+                            <Badge className={getConfidenceBadgeColor(material.confidenceLevel)}>
+                              {material.confidenceLevel}
+                            </Badge>
+                            <div className="flex items-center gap-1 text-xs text-elec-light/60">
+                              <Clock className="h-3 w-3" />
+                              {material.estimatedInstallTime}min
+                            </div>
+                          </div>
                         </div>
-                        <div className="flex items-center gap-2 text-sm text-elec-light/80">
-                          <span>{material.brand}</span>
-                          <span>•</span>
-                          <span>{material.code}</span>
-                          <span>•</span>
-                          <span className="capitalize">{material.category}</span>
-                        </div>
-                        <div className="flex items-center gap-2 mt-2">
-                          <Badge className={getConfidenceBadgeColor(material.confidenceLevel)}>
-                            {material.confidenceLevel}
-                          </Badge>
-                          <div className="flex items-center gap-1 text-xs text-elec-light/60">
-                            <Clock className="h-3 w-3" />
-                            {material.estimatedInstallTime}min
+                        <div className="text-right">
+                          <div className="text-lg font-bold text-elec-yellow">
+                            £{material.defaultPrice.toFixed(2)}
+                          </div>
+                          <div className="text-xs text-elec-light/60">
+                            per {material.unit}
                           </div>
                         </div>
                       </div>
-                      <div className="text-right">
-                        <div className="text-lg font-bold text-elec-yellow">
-                          £{material.defaultPrice.toFixed(2)}
-                        </div>
-                        <div className="text-xs text-elec-light/60">
-                          per {material.unit}
-                        </div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          )}
-        </TabsContent>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            )
+          },
+          {
+            value: "popular",
+            label: "Popular",
+            icon: TrendingUp,
+            content: (
+              <div className="space-y-4">
+                <p className="text-sm text-elec-light/80">Most frequently used materials in quotes</p>
+                <div className="grid gap-4">
+                  {enhancedMaterials
+                    .filter(m => ['socket-13a-dp', 'cable-te-2.5', 'mcb-32a-b', 'led-downlight-fire'].includes(m.id))
+                    .map(material => (
+                      <Card
+                        key={material.id}
+                        className="bg-card/50 border-elec-yellow/20 cursor-pointer hover:border-elec-yellow/40"
+                        onClick={() => setSelectedMaterial(material)}
+                      >
+                        <CardContent className="p-4">
+                          <div className="flex justify-between items-center">
+                            <div>
+                              <h4 className="font-medium text-white">{material.name}</h4>
+                              <p className="text-sm text-elec-light/80">{material.brand}</p>
+                            </div>
+                            <div className="text-lg font-bold text-elec-yellow">
+                              £{material.defaultPrice.toFixed(2)}
+                            </div>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))}
+                </div>
+              </div>
+            )
+          },
+          {
+            value: "combinations",
+            label: "Job Kits",
+            icon: Package,
+            content: (
+              <div className="space-y-4">
+                <p className="text-sm text-elec-light/80">Pre-configured material packages for common jobs</p>
+                <div className="grid gap-4">
+                  <Card className="bg-card/50 border-elec-yellow/20">
+                    <CardHeader className="pb-3">
+                      <CardTitle className="flex items-center gap-2 text-white">
+                        <Home className="h-5 w-5 text-elec-yellow" />
+                        Kitchen Rewire Package
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-sm text-elec-light/80 mb-3">
+                        Complete materials for typical kitchen rewire (12 sockets, 8 downlights)
+                      </p>
+                      <Button
+                        onClick={() => handleQuickAddCombination("kitchen_rewire")}
+                        className="w-full bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
+                      >
+                        Add Kitchen Package
+                      </Button>
+                    </CardContent>
+                  </Card>
 
-        <TabsContent value="popular" className="space-y-4">
-          <p className="text-sm text-elec-light/80">Most frequently used materials in quotes</p>
-          <div className="grid gap-4">
-            {enhancedMaterials
-              .filter(m => ['socket-13a-dp', 'cable-te-2.5', 'mcb-32a-b', 'led-downlight-fire'].includes(m.id))
-              .map(material => (
-                <Card
-                  key={material.id}
-                  className="bg-card/50 border-elec-yellow/20 cursor-pointer hover:border-elec-yellow/40"
-                  onClick={() => setSelectedMaterial(material)}
-                >
-                  <CardContent className="p-4">
-                    <div className="flex justify-between items-center">
-                      <div>
-                        <h4 className="font-medium text-white">{material.name}</h4>
-                        <p className="text-sm text-elec-light/80">{material.brand}</p>
-                      </div>
-                      <div className="text-lg font-bold text-elec-yellow">
-                        £{material.defaultPrice.toFixed(2)}
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-          </div>
-        </TabsContent>
+                  <Card className="bg-card/50 border-elec-yellow/20">
+                    <CardHeader className="pb-3">
+                      <CardTitle className="flex items-center gap-2 text-white">
+                        <Zap className="h-5 w-5 text-elec-yellow" />
+                        Living Room Lighting
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-sm text-elec-light/80 mb-3">
+                        6 fire-rated downlights with switching and circuit protection
+                      </p>
+                      <Button
+                        onClick={() => handleQuickAddCombination("living_room_lighting")}
+                        className="w-full bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
+                      >
+                        Add Lighting Package
+                      </Button>
+                    </CardContent>
+                  </Card>
 
-        <TabsContent value="combinations" className="space-y-4">
-          <p className="text-sm text-elec-light/80">Pre-configured material packages for common jobs</p>
-          <div className="grid gap-4">
-            <Card className="bg-card/50 border-elec-yellow/20">
-              <CardHeader className="pb-3">
-                <CardTitle className="flex items-center gap-2 text-white">
-                  <Home className="h-5 w-5 text-elec-yellow" />
-                  Kitchen Rewire Package
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-elec-light/80 mb-3">
-                  Complete materials for typical kitchen rewire (12 sockets, 8 downlights)
-                </p>
-                <Button
-                  onClick={() => handleQuickAddCombination("kitchen_rewire")}
-                  className="w-full bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
-                >
-                  Add Kitchen Package
-                </Button>
-              </CardContent>
-            </Card>
+                  <Card className="bg-card/50 border-elec-yellow/20">
+                    <CardHeader className="pb-3">
+                      <CardTitle className="flex items-center gap-2 text-white">
+                        <Settings className="h-5 w-5 text-elec-yellow" />
+                        Garage Supply
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-sm text-elec-light/80 mb-3">
+                        Sub-main supply to garage with distribution board
+                      </p>
+                      <Button
+                        onClick={() => handleQuickAddCombination("garage_supply")}
+                        className="w-full bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
+                      >
+                        Add Garage Package
+                      </Button>
+                    </CardContent>
+                  </Card>
+                </div>
+              </div>
+            )
+          }
+        ]}
+        defaultValue="search"
+        placeholder="Select option"
+      />
 
-            <Card className="bg-card/50 border-elec-yellow/20">
-              <CardHeader className="pb-3">
-                <CardTitle className="flex items-center gap-2 text-white">
-                  <Zap className="h-5 w-5 text-elec-yellow" />
-                  Living Room Lighting
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-elec-light/80 mb-3">
-                  6 fire-rated downlights with switching and circuit protection
-                </p>
-                <Button
-                  onClick={() => handleQuickAddCombination("living_room_lighting")}
-                  className="w-full bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
-                >
-                  Add Lighting Package
-                </Button>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-card/50 border-elec-yellow/20">
-              <CardHeader className="pb-3">
-                <CardTitle className="flex items-center gap-2 text-white">
-                  <Settings className="h-5 w-5 text-elec-yellow" />
-                  Garage Supply
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-elec-light/80 mb-3">
-                  Sub-main supply to garage with distribution board
-                </p>
-                <Button
-                  onClick={() => handleQuickAddCombination("garage_supply")}
-                  className="w-full bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
-                >
-                  Add Garage Package
-                </Button>
-              </CardContent>
-            </Card>
-          </div>
-        </TabsContent>
-      </Tabs>
     </div>
   );
 };
