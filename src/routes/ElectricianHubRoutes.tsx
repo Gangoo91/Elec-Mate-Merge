@@ -48,6 +48,7 @@ import QuoteVarianceTracker from "@/pages/electrician/business-development/tools
 import MinimumChargeCalculator from "@/pages/electrician/business-development/tools/MinimumChargeCalculator";
 import VATSchemeComparison from "@/pages/electrician/business-development/tools/VATSchemeComparison";
 import CISDRCHelper from "@/pages/electrician/business-development/tools/CISDRCHelper";
+import QuoteBuilder from "@/pages/electrician/QuoteBuilder";
 
 const ElectricianHubRoutes = () => (
   <Routes>
@@ -79,6 +80,7 @@ const ElectricianHubRoutes = () => (
     
     {/* Business Routes */}
     <Route path="business" element={<BusinessHub />} />
+    <Route path="quote-builder" element={<QuoteBuilder />} />
     {/* Business Development Routes */}
     <Route path="business-development" element={<BusinessDevelopment />} />
     <Route path="business-development/startup" element={<BusinessStartup />} />

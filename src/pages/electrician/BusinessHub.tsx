@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
-import { Briefcase, Settings as Cog, Calculator, ArrowLeft } from "lucide-react";
+import { Briefcase, Settings as Cog, Calculator, ArrowLeft, FileText } from "lucide-react";
 
 const BusinessHub = () => {
   const cards = [
@@ -14,15 +14,21 @@ const BusinessHub = () => {
     },
     {
       id: 2,
-      title: "Run the Business",
-      icon: Cog,
-      link: "/electrician-tools/admin",
+      title: "Quote Builder",
+      icon: FileText,
+      link: "/electrician/quote-builder",
     },
     {
       id: 3,
       title: "Business Calculators",
       icon: Calculator,
       link: "/electrician/business-development/tools",
+    },
+    {
+      id: 4,
+      title: "Run the Business",
+      icon: Cog,
+      link: "/electrician-tools/admin",
     },
   ];
 
@@ -34,7 +40,7 @@ const BusinessHub = () => {
         <title>Business Hub for Electricians | Start & Run</title>
         <meta
           name="description"
-          content="All business tools for UK electricians in one place — start, run and grow your electrical business. Access development guides and admin tools."
+          content="All business tools for UK electricians in one place — start, run and grow your electrical business. Create quotes, access development guides and admin tools."
         />
         <link rel="canonical" href={canonical} />
       </Helmet>
