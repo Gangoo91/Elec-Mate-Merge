@@ -116,19 +116,23 @@ export const QuoteWizard = () => {
       </Card>
 
       {/* Navigation */}
-      <div className="flex justify-between">
+      <div className="flex flex-col sm:flex-row justify-between gap-3">
         <Button
           variant="outline"
           onClick={prevStep}
           disabled={currentStep === 0}
-          className="flex items-center gap-2"
+          className="flex items-center justify-center gap-2 w-full sm:w-auto"
         >
           <ArrowLeft className="h-4 w-4" />
           Previous
         </Button>
         
-        <div className="flex gap-2">
-          <Button variant="outline" onClick={resetQuote}>
+        <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+          <Button 
+            variant="outline" 
+            onClick={resetQuote}
+            className="w-full sm:w-auto"
+          >
             Start Over
           </Button>
           
@@ -136,13 +140,13 @@ export const QuoteWizard = () => {
             <Button
               onClick={nextStep}
               disabled={!canProceed()}
-              className="flex items-center gap-2 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
+              className="flex items-center justify-center gap-2 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 w-full sm:w-auto"
             >
               Next
               <ArrowRight className="h-4 w-4" />
             </Button>
           ) : (
-            <Button className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90">
+            <Button className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 w-full sm:w-auto">
               Generate Quote
             </Button>
           )}
