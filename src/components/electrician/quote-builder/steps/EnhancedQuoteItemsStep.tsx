@@ -258,12 +258,14 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove }: Enh
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Category Selection */}
+            <div className="space-y-2">
+              <Label htmlFor="category" className="text-sm font-medium">Category</Label>
               <Select value={newItem.category} onValueChange={handleCategoryChange}>
-                <SelectTrigger>
+                <SelectTrigger className="h-12">
                   <SelectValue placeholder="Select category" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="z-50 bg-background border shadow-lg">
                   <SelectItem value="labour">
                     <div className="flex items-center gap-2">
                       <Wrench className="h-4 w-4" />
@@ -284,15 +286,18 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove }: Enh
                   </SelectItem>
                 </SelectContent>
               </Select>
+            </div>
 
-              {/* Labour specific fields */}
-              {newItem.category === "labour" && (
-                <>
+            {/* Labour specific fields */}
+            {newItem.category === "labour" && (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="workerType" className="text-sm font-medium">Worker Type</Label>
                   <Select value={newItem.workerType} onValueChange={handleWorkerTypeChange}>
-                    <SelectTrigger>
+                    <SelectTrigger className="h-12">
                       <SelectValue placeholder="Select worker type" />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className="z-50 bg-background border shadow-lg">
                       {workerTypes.map(worker => (
                         <SelectItem key={worker.id} value={worker.id}>
                           <div className="flex flex-col">
@@ -303,39 +308,47 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove }: Enh
                       ))}
                     </SelectContent>
                   </Select>
+                </div>
 
-                  <div>
-                    <Label>Hours</Label>
-                    <Input
-                      type="number"
-                      step="0.5"
-                      value={newItem.hours || ""}
-                      onChange={(e) => handleHoursChange(parseFloat(e.target.value) || 0)}
-                      placeholder="Hours"
-                    />
-                  </div>
-                </>
-              )}
+                <div className="space-y-2">
+                  <Label htmlFor="hours" className="text-sm font-medium">Hours</Label>
+                  <Input
+                    id="hours"
+                    type="number"
+                    step="0.5"
+                    className="h-12"
+                    value={newItem.hours || ""}
+                    onChange={(e) => handleHoursChange(parseFloat(e.target.value) || 0)}
+                    placeholder="Hours"
+                  />
+                </div>
+              </div>
+            )}
 
-              {/* Materials specific fields */}
-              {newItem.category === "materials" && (
-                <>
+            {/* Materials specific fields */}
+            {newItem.category === "materials" && (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="materialCategory" className="text-sm font-medium">Material Category</Label>
                   <Select value={newItem.subcategory} onValueChange={(value) => setNewItem(prev => ({ ...prev, subcategory: value }))}>
-                    <SelectTrigger>
+                    <SelectTrigger className="h-12">
                       <SelectValue placeholder="Select category" />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className="z-50 bg-background border shadow-lg">
                       {materialCategories.map(cat => (
                         <SelectItem key={cat.id} value={cat.id}>{cat.name}</SelectItem>
                       ))}
                     </SelectContent>
                   </Select>
+                </div>
 
+                <div className="space-y-2">
+                  <Label htmlFor="material" className="text-sm font-medium">Material</Label>
                   <Select value={newItem.materialCode} onValueChange={handleMaterialSelect}>
-                    <SelectTrigger>
+                    <SelectTrigger className="h-12">
                       <SelectValue placeholder="Select material" />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className="z-50 bg-background border shadow-lg">
                       {commonMaterials
                         .filter(m => !newItem.subcategory || m.category === newItem.subcategory)
                         .map(material => (
@@ -348,28 +361,34 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove }: Enh
                       ))}
                     </SelectContent>
                   </Select>
-                </>
-              )}
+                </div>
+              </div>
+            )}
 
-              {/* Equipment specific fields */}
-              {newItem.category === "equipment" && (
-                <>
+            {/* Equipment specific fields */}
+            {newItem.category === "equipment" && (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="equipmentCategory" className="text-sm font-medium">Equipment Category</Label>
                   <Select value={newItem.subcategory} onValueChange={(value) => setNewItem(prev => ({ ...prev, subcategory: value }))}>
-                    <SelectTrigger>
+                    <SelectTrigger className="h-12">
                       <SelectValue placeholder="Select category" />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className="z-50 bg-background border shadow-lg">
                       {equipmentCategories.map(cat => (
                         <SelectItem key={cat.id} value={cat.id}>{cat.name}</SelectItem>
                       ))}
                     </SelectContent>
                   </Select>
+                </div>
 
+                <div className="space-y-2">
+                  <Label htmlFor="equipment" className="text-sm font-medium">Equipment</Label>
                   <Select value={newItem.equipmentCode} onValueChange={handleEquipmentSelect}>
-                    <SelectTrigger>
+                    <SelectTrigger className="h-12">
                       <SelectValue placeholder="Select equipment" />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className="z-50 bg-background border shadow-lg">
                       {commonEquipment
                         .filter(e => !newItem.subcategory || e.category === newItem.subcategory)
                         .map(equipment => (
@@ -382,25 +401,32 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove }: Enh
                       ))}
                     </SelectContent>
                   </Select>
-                </>
-              )}
-            </div>
+                </div>
+              </div>
+            )}
 
             {/* Common fields */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-              <div className="md:col-span-2">
-                <Label>Description</Label>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="md:col-span-1 space-y-2">
+                <Label htmlFor="description" className="text-sm font-medium">Description</Label>
                 <Input
+                  id="description"
+                  className="h-12"
                   value={newItem.description}
                   onChange={(e) => setNewItem(prev => ({ ...prev, description: e.target.value }))}
                   placeholder="Item description"
                 />
               </div>
 
-              <div>
-                <Label>Quantity</Label>
+              <div className="space-y-2">
+                <Label htmlFor="quantity" className="text-sm font-medium">
+                  {newItem.category === "labour" ? "Hours" : "Quantity"}
+                </Label>
                 <Input
+                  id="quantity"
                   type="number"
+                  step={newItem.category === "labour" ? "0.5" : "1"}
+                  className="h-12"
                   value={newItem.category === "labour" ? newItem.hours : newItem.quantity}
                   onChange={(e) => {
                     const value = parseFloat(e.target.value) || 1;
@@ -410,15 +436,19 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove }: Enh
                       setNewItem(prev => ({ ...prev, quantity: value }));
                     }
                   }}
-                  placeholder="Qty"
+                  placeholder={newItem.category === "labour" ? "Hours" : "Qty"}
                 />
               </div>
 
-              <div>
-                <Label>Unit Price (£)</Label>
+              <div className="space-y-2">
+                <Label htmlFor="unitPrice" className="text-sm font-medium">
+                  Unit Price (£)
+                </Label>
                 <Input
+                  id="unitPrice"
                   type="number"
                   step="0.01"
+                  className="h-12"
                   value={newItem.unitPrice || ""}
                   onChange={(e) => setNewItem(prev => ({ ...prev, unitPrice: parseFloat(e.target.value) || 0 }))}
                   placeholder="Price"
