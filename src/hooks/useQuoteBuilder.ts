@@ -15,7 +15,12 @@ export const useQuoteBuilder = () => {
   const [currentStep, setCurrentStep] = useState(0);
 
   const updateClient = useCallback((client: QuoteClient) => {
-    setQuote(prev => ({ ...prev, client, updatedAt: new Date() }));
+    console.log('updateClient called with:', client);
+    setQuote(prev => {
+      const updated = { ...prev, client, updatedAt: new Date() };
+      console.log('Quote updated to:', updated);
+      return updated;
+    });
   }, []);
 
   const updateSettings = useCallback((settings: QuoteSettings) => {

@@ -31,9 +31,14 @@ export const QuoteWizard = () => {
   } = useQuoteBuilder();
 
   const canProceed = () => {
+    console.log('Checking canProceed for step:', currentStep);
+    console.log('Current quote:', quote);
+    
     switch (currentStep) {
       case 0:
-        return quote.client?.name && quote.client?.email && quote.client?.phone && quote.client?.address && quote.client?.postcode;
+        const clientValid = quote.client?.name && quote.client?.email && quote.client?.phone && quote.client?.address && quote.client?.postcode;
+        console.log('Client valid:', clientValid, quote.client);
+        return clientValid;
       case 1:
         return quote.items && quote.items.length > 0;
       case 2:
