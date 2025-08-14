@@ -6,6 +6,43 @@ export interface QuoteItem {
   unitPrice: number;
   totalPrice: number;
   category: 'labour' | 'materials' | 'equipment';
+  subcategory?: string;
+  workerType?: string;
+  hours?: number;
+  hourlyRate?: number;
+  materialCode?: string;
+  equipmentCode?: string;
+  notes?: string;
+}
+
+export interface WorkerType {
+  id: string;
+  name: string;
+  category: string;
+  defaultHourlyRate: number;
+  description: string;
+}
+
+export interface MaterialItem {
+  id: string;
+  name: string;
+  category: string;
+  subcategory: string;
+  unit: string;
+  defaultPrice: number;
+  supplier?: string;
+  code?: string;
+}
+
+export interface EquipmentItem {
+  id: string;
+  name: string;
+  category: string;
+  unit: string;
+  dailyRate: number;
+  weeklyRate: number;
+  monthlyRate: number;
+  description: string;
 }
 
 export interface QuoteClient {

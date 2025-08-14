@@ -5,7 +5,7 @@ import { Progress } from "@/components/ui/progress";
 import { ArrowLeft, ArrowRight, User, Settings, FileText, Calculator } from "lucide-react";
 import { useQuoteBuilder } from "@/hooks/useQuoteBuilder";
 import { ClientDetailsStep } from "./steps/ClientDetailsStep";
-import { QuoteItemsStep } from "./steps/QuoteItemsStep";
+import { EnhancedQuoteItemsStep } from "./steps/EnhancedQuoteItemsStep";
 import { QuoteSettingsStep } from "./steps/QuoteSettingsStep";
 import { QuoteReviewStep } from "./steps/QuoteReviewStep";
 
@@ -53,7 +53,7 @@ export const QuoteWizard = () => {
       case 0:
         return <ClientDetailsStep client={quote.client} onUpdate={updateClient} />;
       case 1:
-        return <QuoteItemsStep items={quote.items || []} onAdd={addItem} onUpdate={updateItem} onRemove={removeItem} />;
+        return <EnhancedQuoteItemsStep items={quote.items || []} onAdd={addItem} onUpdate={updateItem} onRemove={removeItem} />;
       case 2:
         return <QuoteSettingsStep settings={quote.settings} onUpdate={updateSettings} />;
       case 3:
