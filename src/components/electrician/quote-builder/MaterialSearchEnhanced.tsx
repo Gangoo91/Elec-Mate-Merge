@@ -17,7 +17,7 @@ import {
   Settings
 } from "lucide-react";
 import { enhancedMaterials, materialCombinations, EnhancedMaterialItem } from "@/data/electrician/enhancedPricingData";
-import SmartPricingWidget from "./SmartPricingWidget";
+
 
 interface MaterialSearchEnhancedProps {
   onAddMaterial: (material: EnhancedMaterialItem, quantity: number, pricing: any) => void;
@@ -28,8 +28,6 @@ export const MaterialSearchEnhanced = ({ onAddMaterial }: MaterialSearchEnhanced
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [sortBy, setSortBy] = useState("name");
   const [showFavourites, setShowFavourites] = useState(false);
-  const [selectedMaterial, setSelectedMaterial] = useState<EnhancedMaterialItem | null>(null);
-  const [quantity, setQuantity] = useState(1);
 
   // Get unique categories
   const categories = useMemo(() => {
@@ -159,32 +157,20 @@ export const MaterialSearchEnhanced = ({ onAddMaterial }: MaterialSearchEnhanced
             value: "search",
             label: "Search",
             icon: Search,
-            content: selectedMaterial ? (
-              <div className="space-y-4">
-                <Button
-                  variant="ghost"
-                  onClick={() => setSelectedMaterial(null)}
-                  className="text-elec-yellow hover:text-elec-dark hover:bg-elec-yellow"
-                >
-                  ← Back to Results
-                </Button>
-                <SmartPricingWidget
-                  material={selectedMaterial}
-                  quantity={quantity}
-                  onQuantityChange={setQuantity}
-                  onAddToQuote={(material, qty, pricing) => {
-                    onAddMaterial(material, qty, pricing);
-                    setSelectedMaterial(null);
-                  }}
-                />
-              </div>
-            ) : (
+            content: (
               <div className="space-y-4 pb-4">
                 {filteredMaterials.map(material => (
                   <Card
                     key={material.id}
                     className="bg-card/50 border-elec-yellow/20 cursor-pointer hover:border-elec-yellow/40 transition-colors"
-                    onClick={() => setSelectedMaterial(material)}
+                    onClick={() => {
+                      const pricing = {
+                        unitPrice: material.defaultPrice,
+                        total: material.defaultPrice * 1.2,
+                        quantity: 1
+                      };
+                      onAddMaterial(material, 1, pricing);
+                    }}
                   >
                     <CardContent className="p-6">
                       <div className="space-y-4">
@@ -244,7 +230,14 @@ export const MaterialSearchEnhanced = ({ onAddMaterial }: MaterialSearchEnhanced
                       <Card
                         key={material.id}
                         className="bg-card/50 border-elec-yellow/20 cursor-pointer hover:border-elec-yellow/40"
-                        onClick={() => setSelectedMaterial(material)}
+                        onClick={() => {
+                          const pricing = {
+                            unitPrice: material.defaultPrice,
+                            total: material.defaultPrice * 1.2,
+                            quantity: 1
+                          };
+                          onAddMaterial(material, 1, pricing);
+                        }}
                       >
                         <CardContent className="p-4">
                           <div className="flex justify-between items-center">
