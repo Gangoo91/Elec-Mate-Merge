@@ -33,8 +33,12 @@ export const ClientDetailsStep = ({ client, onUpdate }: ClientDetailsStepProps) 
 
   useEffect(() => {
     const subscription = form.watch((value) => {
-      const isValid = form.formState.isValid;
-      if (isValid && value.name && value.email && value.phone && value.address && value.postcode) {
+      console.log('Form values:', value);
+      console.log('Form valid:', form.formState.isValid);
+      
+      // Always update if all required fields have values, regardless of validation state
+      if (value.name && value.email && value.phone && value.address && value.postcode) {
+        console.log('Updating client with:', value);
         onUpdate(value as QuoteClient);
       }
     });
