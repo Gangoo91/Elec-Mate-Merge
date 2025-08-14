@@ -7,7 +7,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
-import { Plus, Trash2, Wrench, Package, Zap, Clock, Users, FileText, Copy } from "lucide-react";
+import { Plus, Trash2, Wrench, Package, Zap, Clock, Users, FileText, Copy, Calculator } from "lucide-react";
 import { QuoteItem, JobTemplate } from "@/types/quote";
 import { JobTemplates } from "../JobTemplates";
 import { 
@@ -18,6 +18,8 @@ import {
   commonEquipment,
   labourPresets
 } from "@/data/electrician/presetData";
+import { enhancedMaterials, EnhancedMaterialItem } from "@/data/electrician/enhancedPricingData";
+import MaterialSearchEnhanced from "../MaterialSearchEnhanced";
 
 interface EnhancedQuoteItemsStepProps {
   items: QuoteItem[];
@@ -195,9 +197,28 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove }: Enh
 
   const total = items.reduce((sum, item) => sum + item.totalPrice, 0);
 
+  // Handler for enhanced materials
+  const handleEnhancedMaterialAdd = (material: EnhancedMaterialItem, quantity: number, pricing: any) => {
+    const itemToAdd = {
+      description: material.name,
+      quantity,
+      unit: material.unit,
+      unitPrice: pricing.unitPrice,
+      category: "materials" as const,
+      subcategory: material.subcategory,
+      materialCode: material.code || material.id,
+      notes: `${material.brand} - ${material.priceSource}`
+    };
+    onAdd(itemToAdd);
+  };
+
   return (
-    <Tabs defaultValue="quick" className="space-y-6">
-      <TabsList className="grid w-full grid-cols-4">
+    <Tabs defaultValue="enhanced" className="space-y-6">
+      <TabsList className="grid w-full grid-cols-5">
+        <TabsTrigger value="enhanced" className="flex items-center gap-2">
+          <Calculator className="h-4 w-4" />
+          Smart Pricing
+        </TabsTrigger>
         <TabsTrigger value="quick" className="flex items-center gap-2">
           <Clock className="h-4 w-4" />
           Quick Add
@@ -215,6 +236,23 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove }: Enh
           Labour Presets
         </TabsTrigger>
       </TabsList>
+
+      <TabsContent value="enhanced" className="space-y-6">
+        <Card className="bg-card border-primary/20">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Calculator className="h-5 w-5" />
+              Enhanced Materials Pricing
+            </CardTitle>
+            <p className="text-sm text-muted-foreground">
+              Smart pricing with quantity discounts, waste factors, and regional adjustments
+            </p>
+          </CardHeader>
+          <CardContent>
+            <MaterialSearchEnhanced onAddMaterial={handleEnhancedMaterialAdd} />
+          </CardContent>
+        </Card>
+      </TabsContent>
 
       <TabsContent value="templates">
         <JobTemplates onSelectTemplate={handleTemplateSelect} />

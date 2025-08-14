@@ -1,0 +1,338 @@
+import React, { useState, useMemo } from "react";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { 
+  Search, 
+  Star, 
+  Clock, 
+  Filter,
+  TrendingUp,
+  Package,
+  Zap,
+  Home,
+  Settings
+} from "lucide-react";
+import { enhancedMaterials, materialCombinations, EnhancedMaterialItem } from "@/data/electrician/enhancedPricingData";
+import SmartPricingWidget from "./SmartPricingWidget";
+
+interface MaterialSearchEnhancedProps {
+  onAddMaterial: (material: EnhancedMaterialItem, quantity: number, pricing: any) => void;
+}
+
+export const MaterialSearchEnhanced = ({ onAddMaterial }: MaterialSearchEnhancedProps) => {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [sortBy, setSortBy] = useState("name");
+  const [showFavourites, setShowFavourites] = useState(false);
+  const [selectedMaterial, setSelectedMaterial] = useState<EnhancedMaterialItem | null>(null);
+  const [quantity, setQuantity] = useState(1);
+
+  // Get unique categories
+  const categories = useMemo(() => {
+    const cats = new Set(enhancedMaterials.map(m => m.category));
+    return Array.from(cats);
+  }, []);
+
+  // Filter and sort materials
+  const filteredMaterials = useMemo(() => {
+    let filtered = enhancedMaterials.filter(material => {
+      const matchesSearch = material.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                           material.code?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                           material.brand?.toLowerCase().includes(searchTerm.toLowerCase());
+      
+      const matchesCategory = selectedCategory === "all" || material.category === selectedCategory;
+      const matchesFavourites = !showFavourites || material.isFavourite;
+      
+      return matchesSearch && matchesCategory && matchesFavourites;
+    });
+
+    // Sort materials
+    filtered.sort((a, b) => {
+      switch (sortBy) {
+        case "price":
+          return a.defaultPrice - b.defaultPrice;
+        case "price-desc":
+          return b.defaultPrice - a.defaultPrice;
+        case "category":
+          return a.category.localeCompare(b.category);
+        case "confidence":
+          const confidenceOrder = { high: 3, medium: 2, low: 1 };
+          return confidenceOrder[b.confidenceLevel] - confidenceOrder[a.confidenceLevel];
+        default:
+          return a.name.localeCompare(b.name);
+      }
+    });
+
+    return filtered;
+  }, [searchTerm, selectedCategory, sortBy, showFavourites]);
+
+  const handleQuickAddCombination = (combinationKey: string) => {
+    const combination = materialCombinations[combinationKey as keyof typeof materialCombinations];
+    
+    combination.forEach(item => {
+      const material = enhancedMaterials.find(m => m.id === item.id);
+      if (material) {
+        // Calculate pricing for this quantity
+        const pricing = {
+          unitPrice: material.defaultPrice,
+          total: material.defaultPrice * item.quantity * 1.2, // Quick estimate with VAT
+          quantity: item.quantity
+        };
+        onAddMaterial(material, item.quantity, pricing);
+      }
+    });
+  };
+
+  const getConfidenceBadgeColor = (level: string) => {
+    switch (level) {
+      case 'high': return 'bg-green-500/20 text-green-300';
+      case 'medium': return 'bg-yellow-500/20 text-yellow-300';
+      case 'low': return 'bg-red-500/20 text-red-300';
+      default: return 'bg-gray-500/20 text-gray-300';
+    }
+  };
+
+  return (
+    <div className="space-y-6">
+      {/* Search and Filters */}
+      <div className="space-y-4">
+        <div className="flex items-center gap-2">
+          <div className="relative flex-1">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-elec-light/60" />
+            <Input
+              placeholder="Search materials, codes, or brands..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="pl-10"
+            />
+          </div>
+          <Button
+            variant={showFavourites ? "default" : "outline"}
+            size="icon"
+            onClick={() => setShowFavourites(!showFavourites)}
+          >
+            <Star className={`h-4 w-4 ${showFavourites ? 'fill-current' : ''}`} />
+          </Button>
+        </div>
+
+        <div className="flex items-center gap-2 flex-wrap">
+          <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+            <SelectTrigger className="w-40">
+              <SelectValue placeholder="Category" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Categories</SelectItem>
+              {categories.map(cat => (
+                <SelectItem key={cat} value={cat}>
+                  {cat.charAt(0).toUpperCase() + cat.slice(1)}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+
+          <Select value={sortBy} onValueChange={setSortBy}>
+            <SelectTrigger className="w-40">
+              <SelectValue placeholder="Sort by" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="name">Name A-Z</SelectItem>
+              <SelectItem value="price">Price Low-High</SelectItem>
+              <SelectItem value="price-desc">Price High-Low</SelectItem>
+              <SelectItem value="category">Category</SelectItem>
+              <SelectItem value="confidence">Price Confidence</SelectItem>
+            </SelectContent>
+          </Select>
+
+          <Badge variant="outline" className="text-xs">
+            {filteredMaterials.length} items
+          </Badge>
+        </div>
+      </div>
+
+      <Tabs defaultValue="search" className="w-full">
+        <TabsList className="grid w-full grid-cols-3">
+          <TabsTrigger value="search" className="flex items-center gap-2">
+            <Search className="h-4 w-4" />
+            Search
+          </TabsTrigger>
+          <TabsTrigger value="popular" className="flex items-center gap-2">
+            <TrendingUp className="h-4 w-4" />
+            Popular
+          </TabsTrigger>
+          <TabsTrigger value="combinations" className="flex items-center gap-2">
+            <Package className="h-4 w-4" />
+            Job Kits
+          </TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="search" className="space-y-4">
+          {selectedMaterial ? (
+            <div className="space-y-4">
+              <Button
+                variant="ghost"
+                onClick={() => setSelectedMaterial(null)}
+                className="text-elec-yellow hover:text-elec-dark hover:bg-elec-yellow"
+              >
+                ← Back to Results
+              </Button>
+              <SmartPricingWidget
+                material={selectedMaterial}
+                quantity={quantity}
+                onQuantityChange={setQuantity}
+                onAddToQuote={(material, qty, pricing) => {
+                  onAddMaterial(material, qty, pricing);
+                  setSelectedMaterial(null);
+                }}
+              />
+            </div>
+          ) : (
+            <div className="grid gap-4 max-h-96 overflow-y-auto">
+              {filteredMaterials.map(material => (
+                <Card
+                  key={material.id}
+                  className="bg-card/50 border-elec-yellow/20 cursor-pointer hover:border-elec-yellow/40 transition-colors"
+                  onClick={() => setSelectedMaterial(material)}
+                >
+                  <CardContent className="p-4">
+                    <div className="flex justify-between items-start">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-1">
+                          <h4 className="font-medium text-white">{material.name}</h4>
+                          {material.isFavourite && (
+                            <Star className="h-4 w-4 text-yellow-400 fill-current" />
+                          )}
+                        </div>
+                        <div className="flex items-center gap-2 text-sm text-elec-light/80">
+                          <span>{material.brand}</span>
+                          <span>•</span>
+                          <span>{material.code}</span>
+                          <span>•</span>
+                          <span className="capitalize">{material.category}</span>
+                        </div>
+                        <div className="flex items-center gap-2 mt-2">
+                          <Badge className={getConfidenceBadgeColor(material.confidenceLevel)}>
+                            {material.confidenceLevel}
+                          </Badge>
+                          <div className="flex items-center gap-1 text-xs text-elec-light/60">
+                            <Clock className="h-3 w-3" />
+                            {material.estimatedInstallTime}min
+                          </div>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <div className="text-lg font-bold text-elec-yellow">
+                          £{material.defaultPrice.toFixed(2)}
+                        </div>
+                        <div className="text-xs text-elec-light/60">
+                          per {material.unit}
+                        </div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          )}
+        </TabsContent>
+
+        <TabsContent value="popular" className="space-y-4">
+          <p className="text-sm text-elec-light/80">Most frequently used materials in quotes</p>
+          <div className="grid gap-4">
+            {enhancedMaterials
+              .filter(m => ['socket-13a-dp', 'cable-te-2.5', 'mcb-32a-b', 'led-downlight-fire'].includes(m.id))
+              .map(material => (
+                <Card
+                  key={material.id}
+                  className="bg-card/50 border-elec-yellow/20 cursor-pointer hover:border-elec-yellow/40"
+                  onClick={() => setSelectedMaterial(material)}
+                >
+                  <CardContent className="p-4">
+                    <div className="flex justify-between items-center">
+                      <div>
+                        <h4 className="font-medium text-white">{material.name}</h4>
+                        <p className="text-sm text-elec-light/80">{material.brand}</p>
+                      </div>
+                      <div className="text-lg font-bold text-elec-yellow">
+                        £{material.defaultPrice.toFixed(2)}
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+          </div>
+        </TabsContent>
+
+        <TabsContent value="combinations" className="space-y-4">
+          <p className="text-sm text-elec-light/80">Pre-configured material packages for common jobs</p>
+          <div className="grid gap-4">
+            <Card className="bg-card/50 border-elec-yellow/20">
+              <CardHeader className="pb-3">
+                <CardTitle className="flex items-center gap-2 text-white">
+                  <Home className="h-5 w-5 text-elec-yellow" />
+                  Kitchen Rewire Package
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-elec-light/80 mb-3">
+                  Complete materials for typical kitchen rewire (12 sockets, 8 downlights)
+                </p>
+                <Button
+                  onClick={() => handleQuickAddCombination("kitchen_rewire")}
+                  className="w-full bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
+                >
+                  Add Kitchen Package
+                </Button>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-card/50 border-elec-yellow/20">
+              <CardHeader className="pb-3">
+                <CardTitle className="flex items-center gap-2 text-white">
+                  <Zap className="h-5 w-5 text-elec-yellow" />
+                  Living Room Lighting
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-elec-light/80 mb-3">
+                  6 fire-rated downlights with switching and circuit protection
+                </p>
+                <Button
+                  onClick={() => handleQuickAddCombination("living_room_lighting")}
+                  className="w-full bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
+                >
+                  Add Lighting Package
+                </Button>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-card/50 border-elec-yellow/20">
+              <CardHeader className="pb-3">
+                <CardTitle className="flex items-center gap-2 text-white">
+                  <Settings className="h-5 w-5 text-elec-yellow" />
+                  Garage Supply
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-elec-light/80 mb-3">
+                  Sub-main supply to garage with distribution board
+                </p>
+                <Button
+                  onClick={() => handleQuickAddCombination("garage_supply")}
+                  className="w-full bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
+                >
+                  Add Garage Package
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
+        </TabsContent>
+      </Tabs>
+    </div>
+  );
+};
+
+export default MaterialSearchEnhanced;
