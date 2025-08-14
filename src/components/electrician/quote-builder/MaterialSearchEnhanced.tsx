@@ -97,7 +97,7 @@ export const MaterialSearchEnhanced = ({ onAddMaterial }: MaterialSearchEnhanced
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 -mx-4 px-4">{/* Full width on mobile */}
       {/* Search and Filters */}
       <div className="space-y-4">
         <div className="flex items-center gap-2">
@@ -186,38 +186,41 @@ export const MaterialSearchEnhanced = ({ onAddMaterial }: MaterialSearchEnhanced
                     className="bg-card/50 border-elec-yellow/20 cursor-pointer hover:border-elec-yellow/40 transition-colors"
                     onClick={() => setSelectedMaterial(material)}
                   >
-                    <CardContent className="p-4">
-                      <div className="flex justify-between items-start gap-4">
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-center gap-2 mb-1">
-                            <h4 className="font-medium text-white truncate">{material.name}</h4>
+                    <CardContent className="p-6">
+                      <div className="space-y-4">
+                        <div className="flex items-start justify-between gap-4">
+                          <div className="flex items-center gap-2">
+                            <h4 className="text-lg font-semibold text-white">{material.name}</h4>
                             {material.isFavourite && (
-                              <Star className="h-4 w-4 text-yellow-400 fill-current flex-shrink-0" />
+                              <Star className="h-5 w-5 text-yellow-400 fill-current flex-shrink-0" />
                             )}
                           </div>
-                          <div className="flex items-center gap-2 text-sm text-elec-light/80 mb-2 flex-wrap">
-                            <span className="truncate">{material.brand}</span>
-                            <span>•</span>
-                            <span>{material.code}</span>
-                            <span>•</span>
-                            <span className="capitalize">{material.category}</span>
-                          </div>
-                          <div className="flex items-center gap-2 flex-wrap">
-                            <Badge className={getConfidenceBadgeColor(material.confidenceLevel)}>
-                              {material.confidenceLevel}
-                            </Badge>
-                            <div className="flex items-center gap-1 text-xs text-elec-light/60">
-                              <Clock className="h-3 w-3" />
-                              {material.estimatedInstallTime}min
+                          <div className="text-right">
+                            <div className="text-2xl font-bold text-elec-yellow">
+                              £{material.defaultPrice.toFixed(2)}
+                            </div>
+                            <div className="text-sm text-elec-light/60">
+                              per {material.unit}
                             </div>
                           </div>
                         </div>
-                        <div className="text-right flex-shrink-0">
-                          <div className="text-lg font-bold text-elec-yellow">
-                            £{material.defaultPrice.toFixed(2)}
+                        
+                        <div className="space-y-2">
+                          <div className="text-base text-elec-light/90">
+                            <span className="font-medium">{material.brand}</span> • {material.code}
                           </div>
-                          <div className="text-xs text-elec-light/60">
-                            per {material.unit}
+                          <div className="text-sm text-elec-light/70 capitalize">
+                            {material.category}
+                          </div>
+                        </div>
+                        
+                        <div className="flex items-center justify-between">
+                          <Badge className={getConfidenceBadgeColor(material.confidenceLevel)}>
+                            {material.confidenceLevel} confidence
+                          </Badge>
+                          <div className="flex items-center gap-1 text-sm text-elec-light/60">
+                            <Clock className="h-4 w-4" />
+                            {material.estimatedInstallTime}min install
                           </div>
                         </div>
                       </div>
