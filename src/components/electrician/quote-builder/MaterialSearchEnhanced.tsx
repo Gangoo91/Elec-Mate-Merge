@@ -179,48 +179,50 @@ export const MaterialSearchEnhanced = ({ onAddMaterial }: MaterialSearchEnhanced
                 />
               </div>
             ) : (
-              <div className="space-y-4 pb-4">{/* Removed max-h and overflow-y-auto */}
+              <div className="space-y-4 pb-4">
                 {filteredMaterials.map(material => (
-                  <div
+                  <Card
                     key={material.id}
-                    className="bg-card/50 border border-elec-yellow/20 rounded-lg p-4 cursor-pointer hover:border-elec-yellow/40 transition-colors"
+                    className="bg-card/50 border-elec-yellow/20 cursor-pointer hover:border-elec-yellow/40 transition-colors"
                     onClick={() => setSelectedMaterial(material)}
                   >
-                    <div className="flex justify-between items-start gap-4">
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2 mb-1">
-                          <h4 className="font-medium text-white truncate">{material.name}</h4>
-                          {material.isFavourite && (
-                            <Star className="h-4 w-4 text-yellow-400 fill-current flex-shrink-0" />
-                          )}
+                    <CardContent className="p-4">
+                      <div className="flex justify-between items-start gap-4">
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2 mb-1">
+                            <h4 className="font-medium text-white truncate">{material.name}</h4>
+                            {material.isFavourite && (
+                              <Star className="h-4 w-4 text-yellow-400 fill-current flex-shrink-0" />
+                            )}
+                          </div>
+                          <div className="flex items-center gap-2 text-sm text-elec-light/80 mb-2 flex-wrap">
+                            <span className="truncate">{material.brand}</span>
+                            <span>•</span>
+                            <span>{material.code}</span>
+                            <span>•</span>
+                            <span className="capitalize">{material.category}</span>
+                          </div>
+                          <div className="flex items-center gap-2 flex-wrap">
+                            <Badge className={getConfidenceBadgeColor(material.confidenceLevel)}>
+                              {material.confidenceLevel}
+                            </Badge>
+                            <div className="flex items-center gap-1 text-xs text-elec-light/60">
+                              <Clock className="h-3 w-3" />
+                              {material.estimatedInstallTime}min
+                            </div>
+                          </div>
                         </div>
-                        <div className="flex items-center gap-2 text-sm text-elec-light/80 mb-2 flex-wrap">
-                          <span className="truncate">{material.brand}</span>
-                          <span>•</span>
-                          <span>{material.code}</span>
-                          <span>•</span>
-                          <span className="capitalize">{material.category}</span>
-                        </div>
-                        <div className="flex items-center gap-2 flex-wrap">
-                          <Badge className={getConfidenceBadgeColor(material.confidenceLevel)}>
-                            {material.confidenceLevel}
-                          </Badge>
-                          <div className="flex items-center gap-1 text-xs text-elec-light/60">
-                            <Clock className="h-3 w-3" />
-                            {material.estimatedInstallTime}min
+                        <div className="text-right flex-shrink-0">
+                          <div className="text-lg font-bold text-elec-yellow">
+                            £{material.defaultPrice.toFixed(2)}
+                          </div>
+                          <div className="text-xs text-elec-light/60">
+                            per {material.unit}
                           </div>
                         </div>
                       </div>
-                      <div className="text-right flex-shrink-0">
-                        <div className="text-lg font-bold text-elec-yellow">
-                          £{material.defaultPrice.toFixed(2)}
-                        </div>
-                        <div className="text-xs text-elec-light/60">
-                          per {material.unit}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                    </CardContent>
+                  </Card>
                 ))}
               </div>
             )
