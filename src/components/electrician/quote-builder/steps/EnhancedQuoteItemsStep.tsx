@@ -312,15 +312,28 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove }: Enh
 
                 <div className="space-y-2">
                   <Label htmlFor="hours" className="text-sm font-medium">Hours</Label>
-                  <Input
-                    id="hours"
-                    type="number"
-                    step="0.5"
-                    className="h-12"
-                    value={newItem.hours || ""}
-                    onChange={(e) => handleHoursChange(parseFloat(e.target.value) || 0)}
-                    placeholder="Hours"
-                  />
+                  <Select value={newItem.hours.toString()} onValueChange={(value) => handleHoursChange(parseFloat(value))}>
+                    <SelectTrigger className="h-12">
+                      <SelectValue placeholder="Select hours" />
+                    </SelectTrigger>
+                    <SelectContent className="z-50 bg-background border shadow-lg">
+                      <SelectItem value="0.5">0.5 hours</SelectItem>
+                      <SelectItem value="1">1 hour</SelectItem>
+                      <SelectItem value="1.5">1.5 hours</SelectItem>
+                      <SelectItem value="2">2 hours</SelectItem>
+                      <SelectItem value="2.5">2.5 hours</SelectItem>
+                      <SelectItem value="3">3 hours</SelectItem>
+                      <SelectItem value="4">4 hours</SelectItem>
+                      <SelectItem value="5">5 hours</SelectItem>
+                      <SelectItem value="6">6 hours</SelectItem>
+                      <SelectItem value="7">7 hours</SelectItem>
+                      <SelectItem value="8">8 hours</SelectItem>
+                      <SelectItem value="10">10 hours</SelectItem>
+                      <SelectItem value="12">12 hours</SelectItem>
+                      <SelectItem value="16">16 hours</SelectItem>
+                      <SelectItem value="24">24 hours</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
               </div>
             )}
