@@ -179,7 +179,7 @@ export const MaterialSearchEnhanced = ({ onAddMaterial }: MaterialSearchEnhanced
                 />
               </div>
             ) : (
-              <div className="grid gap-4 max-h-96 overflow-y-auto">
+              <div className="space-y-4 pb-4">{/* Removed max-h and overflow-y-auto */}
                 {filteredMaterials.map(material => (
                   <Card
                     key={material.id}
