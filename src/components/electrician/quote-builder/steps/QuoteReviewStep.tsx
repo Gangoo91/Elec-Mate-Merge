@@ -1,13 +1,48 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { User, FileText, Calculator, Package, Wrench, Zap } from "lucide-react";
+import { User, FileText, Calculator, Package, Wrench, Zap, Download, Mail } from "lucide-react";
 import { Quote } from "@/types/quote";
+import { generateQuotePDF } from "../QuotePDFGenerator";
+import { useToast } from "@/hooks/use-toast";
 
 interface QuoteReviewStepProps {
   quote: Partial<Quote>;
 }
 
 export const QuoteReviewStep = ({ quote }: QuoteReviewStepProps) => {
+  const { toast } = useToast();
+
+  const handleDownloadPDF = () => {
+    generateQuotePDF(quote);
+    toast({
+      title: "PDF Generated",
+      description: "Quote PDF has been downloaded successfully.",
+    });
+  };
+
+  const handleEmailQuote = () => {
+    const subject = `Electrical Quote - ${quote.quoteNumber}`;
+    const body = `Dear ${quote.client?.name},
+
+Please find attached your electrical quote for the work discussed.
+
+Quote Number: ${quote.quoteNumber}
+Total Amount: £${(quote.total || 0).toFixed(2)}
+
+This quote is valid for 30 days from the date of issue.
+
+Best regards,
+Your Electrician`;
+
+    const mailtoLink = `mailto:${quote.client?.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.open(mailtoLink);
+    
+    toast({
+      title: "Email Client",
+      description: "Opening email client to send quote.",
+    });
+  };
   const getCategoryIcon = (category: string) => {
     switch (category) {
       case 'labour': return <Wrench className="h-4 w-4" />;
@@ -143,6 +178,19 @@ export const QuoteReviewStep = ({ quote }: QuoteReviewStepProps) => {
           </div>
         </CardContent>
       </Card>
+
+      {/* Quote Actions */}
+      <div className="flex flex-col sm:flex-row gap-4">
+        <Button onClick={handleDownloadPDF} className="flex items-center gap-2 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90">
+          <Download className="h-4 w-4" />
+          Download PDF
+        </Button>
+        
+        <Button onClick={handleEmailQuote} variant="outline" className="flex items-center gap-2">
+          <Mail className="h-4 w-4" />
+          Email to Client
+        </Button>
+      </div>
     </div>
   );
 };

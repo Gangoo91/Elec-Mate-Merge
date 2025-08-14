@@ -33,11 +33,11 @@ export const QuoteWizard = () => {
   const canProceed = () => {
     switch (currentStep) {
       case 0:
-        return quote.client?.name && quote.client?.email && quote.client?.address;
+        return quote.client?.name && quote.client?.email && quote.client?.phone && quote.client?.address && quote.client?.postcode;
       case 1:
         return quote.items && quote.items.length > 0;
       case 2:
-        return quote.settings?.labourRate && quote.settings?.overheadPercentage && quote.settings?.profitMargin;
+        return quote.settings?.labourRate && typeof quote.settings?.overheadPercentage === 'number' && typeof quote.settings?.profitMargin === 'number';
       default:
         return true;
     }

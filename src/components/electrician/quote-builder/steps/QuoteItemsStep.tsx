@@ -3,9 +3,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Plus, Trash2, Wrench, Package, Zap } from "lucide-react";
-import { QuoteItem } from "@/types/quote";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Plus, Trash2, Wrench, Package, Zap, FileText } from "lucide-react";
+import { QuoteItem, JobTemplate } from "@/types/quote";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { JobTemplates } from "../JobTemplates";
 
 interface QuoteItemsStepProps {
   items: QuoteItem[];
@@ -15,6 +17,11 @@ interface QuoteItemsStepProps {
 }
 
 export const QuoteItemsStep = ({ items, onAdd, onUpdate, onRemove }: QuoteItemsStepProps) => {
+  const handleTemplateSelect = (template: JobTemplate) => {
+    template.items.forEach(item => {
+      onAdd(item);
+    });
+  };
   const [newItem, setNewItem] = useState({
     description: "",
     quantity: 1,
@@ -48,7 +55,23 @@ export const QuoteItemsStep = ({ items, onAdd, onUpdate, onRemove }: QuoteItemsS
   const total = items.reduce((sum, item) => sum + item.totalPrice, 0);
 
   return (
-    <div className="space-y-6">
+    <Tabs defaultValue="manual" className="space-y-6">
+      <TabsList className="grid w-full grid-cols-2">
+        <TabsTrigger value="manual" className="flex items-center gap-2">
+          <Plus className="h-4 w-4" />
+          Manual Entry
+        </TabsTrigger>
+        <TabsTrigger value="templates" className="flex items-center gap-2">
+          <FileText className="h-4 w-4" />
+          Job Templates
+        </TabsTrigger>
+      </TabsList>
+
+      <TabsContent value="templates">
+        <JobTemplates onSelectTemplate={handleTemplateSelect} />
+      </TabsContent>
+
+      <TabsContent value="manual" className="space-y-6">
       {/* Add New Item */}
       <Card className="bg-elec-gray/50 border-elec-yellow/20">
         <CardHeader>
@@ -190,6 +213,7 @@ export const QuoteItemsStep = ({ items, onAdd, onUpdate, onRemove }: QuoteItemsS
           </CardContent>
         </Card>
       )}
-    </div>
+      </TabsContent>
+    </Tabs>
   );
 };
