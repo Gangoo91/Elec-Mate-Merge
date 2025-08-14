@@ -327,11 +327,16 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove }: Enh
                       <SelectItem value="5">5 hours</SelectItem>
                       <SelectItem value="6">6 hours</SelectItem>
                       <SelectItem value="7">7 hours</SelectItem>
-                      <SelectItem value="8">8 hours</SelectItem>
+                      <SelectItem value="8">8 hours (1 day)</SelectItem>
                       <SelectItem value="10">10 hours</SelectItem>
                       <SelectItem value="12">12 hours</SelectItem>
-                      <SelectItem value="16">16 hours</SelectItem>
-                      <SelectItem value="24">24 hours</SelectItem>
+                      <SelectItem value="16">16 hours (2 days)</SelectItem>
+                      <SelectItem value="24">24 hours (3 days)</SelectItem>
+                      <SelectItem value="32">32 hours (4 days)</SelectItem>
+                      <SelectItem value="40">40 hours (5 days)</SelectItem>
+                      <SelectItem value="48">48 hours (6 days)</SelectItem>
+                      <SelectItem value="56">56 hours (7 days)</SelectItem>
+                      <SelectItem value="80">80 hours (10 days)</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
