@@ -213,7 +213,7 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove }: Enh
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <DropdownTabs
         tabs={[
           {
@@ -221,20 +221,18 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove }: Enh
             label: "Smart Pricing",
             icon: Calculator,
             content: (
-              <Card className="bg-card border-primary/20">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
+              <div className="w-full bg-card/50 border border-primary/20 rounded-lg p-4">
+                <div className="mb-4">
+                  <h3 className="text-lg font-semibold flex items-center gap-2">
                     <Calculator className="h-5 w-5" />
                     Enhanced Materials Pricing
-                  </CardTitle>
-                  <p className="text-sm text-muted-foreground">
+                  </h3>
+                  <p className="text-sm text-muted-foreground mt-1">
                     Smart pricing with quantity discounts, waste factors, and regional adjustments
                   </p>
-                </CardHeader>
-                <CardContent>
-                  <MaterialSearchEnhanced onAddMaterial={handleEnhancedMaterialAdd} />
-                </CardContent>
-              </Card>
+                </div>
+                <MaterialSearchEnhanced onAddMaterial={handleEnhancedMaterialAdd} />
+              </div>
             )
           },
           {
@@ -242,19 +240,19 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove }: Enh
             label: "Quick Add",
             icon: Clock,
             content: (
-              <Card className="bg-card border-primary/20">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
+              <div className="w-full bg-card/50 border border-primary/20 rounded-lg p-4">
+                <div className="mb-4">
+                  <h3 className="text-lg font-semibold flex items-center gap-2">
                     <Clock className="h-5 w-5" />
                     Quick Add Items
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-6">
+                  </h3>
+                </div>
+                <div className="space-y-4">
                   {/* Category Selection */}
                   <div className="space-y-2">
                     <Label htmlFor="category" className="text-sm font-medium">Category</Label>
                     <Select value={newItem.category} onValueChange={handleCategoryChange}>
-                      <SelectTrigger className="h-12">
+                      <SelectTrigger className="h-12 w-full">
                         <SelectValue placeholder="Select category" />
                       </SelectTrigger>
                       <SelectContent className="z-50 bg-background border shadow-lg">
@@ -282,11 +280,11 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove }: Enh
 
                   {/* Labour specific fields */}
                   {newItem.category === "labour" && (
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 gap-4">
                       <div className="space-y-2">
                         <Label htmlFor="workerType" className="text-sm font-medium">Worker Type</Label>
                         <Select value={newItem.workerType} onValueChange={handleWorkerTypeChange}>
-                          <SelectTrigger className="h-12">
+                          <SelectTrigger className="h-12 w-full">
                             <SelectValue placeholder="Select worker type" />
                           </SelectTrigger>
                           <SelectContent className="z-50 bg-background border shadow-lg">
@@ -305,7 +303,7 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove }: Enh
                       <div className="space-y-2">
                         <Label htmlFor="hours" className="text-sm font-medium">Hours</Label>
                         <Select value={newItem.hours.toString()} onValueChange={(value) => handleHoursChange(parseFloat(value))}>
-                          <SelectTrigger className="h-12">
+                          <SelectTrigger className="h-12 w-full">
                             <SelectValue placeholder="Select hours" />
                           </SelectTrigger>
                           <SelectContent className="z-50 bg-background border shadow-lg">
@@ -418,8 +416,8 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove }: Enh
                   <Button onClick={handleAddItem} className="w-full">
                     Add Item
                   </Button>
-                </CardContent>
-              </Card>
+                </div>
+              </div>
             )
           },
           {

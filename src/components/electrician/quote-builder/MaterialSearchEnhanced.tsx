@@ -121,10 +121,10 @@ export const MaterialSearchEnhanced = ({ onAddMaterial }: MaterialSearchEnhanced
 
         <div className="flex items-center gap-2 flex-wrap">
           <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-            <SelectTrigger className="w-40">
+            <SelectTrigger className="w-full sm:w-40">
               <SelectValue placeholder="Category" />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="z-50 bg-background border shadow-lg">
               <SelectItem value="all">All Categories</SelectItem>
               {categories.map(cat => (
                 <SelectItem key={cat} value={cat}>
@@ -135,10 +135,10 @@ export const MaterialSearchEnhanced = ({ onAddMaterial }: MaterialSearchEnhanced
           </Select>
 
           <Select value={sortBy} onValueChange={setSortBy}>
-            <SelectTrigger className="w-40">
+            <SelectTrigger className="w-full sm:w-40">
               <SelectValue placeholder="Sort by" />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="z-50 bg-background border shadow-lg">
               <SelectItem value="name">Name A-Z</SelectItem>
               <SelectItem value="price">Price Low-High</SelectItem>
               <SelectItem value="price-desc">Price High-Low</SelectItem>
@@ -147,7 +147,7 @@ export const MaterialSearchEnhanced = ({ onAddMaterial }: MaterialSearchEnhanced
             </SelectContent>
           </Select>
 
-          <Badge variant="outline" className="text-xs">
+          <Badge variant="outline" className="text-xs w-full sm:w-auto text-center">
             {filteredMaterials.length} items
           </Badge>
         </div>
