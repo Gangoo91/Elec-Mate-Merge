@@ -52,29 +52,22 @@ const AITooling = () => {
             {toolOptions.map((tool) => {
               const IconComponent = tool.icon;
               return (
-                <Card key={tool.value} className="border-elec-yellow/20 bg-elec-gray hover:bg-elec-gray/90 transition-colors h-full">
-                  <CardHeader className="pb-3 p-4 md:p-6 text-center">
-                    <div className="inline-flex items-center justify-center w-12 h-12 bg-elec-yellow/10 border border-elec-yellow/20 rounded-xl mb-3">
-                      <IconComponent className="h-6 w-6 text-elec-yellow" />
-                    </div>
-                    <CardTitle className="text-base md:text-lg font-medium">
-                      {tool.label}
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-4 p-4 md:p-6 pt-0 text-center">
-                    <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
-                      {tool.description}
-                    </p>
-                    <Button asChild size="default" className="w-full">
-                      <Link 
-                        to={`/electrician-tools/ai-tooling/${tool.value}`}
-                        className="flex items-center justify-center gap-2 text-sm md:text-base"
-                      >
-                        Launch Tool
-                      </Link>
-                    </Button>
-                  </CardContent>
-                </Card>
+                <Link 
+                  key={tool.value} 
+                  to={`/electrician-tools/ai-tooling/${tool.value}`}
+                  className="block"
+                >
+                  <Card className="border-elec-yellow/20 bg-elec-gray hover:bg-elec-gray/90 transition-colors h-full cursor-pointer">
+                    <CardContent className="p-8 text-center flex flex-col items-center justify-center min-h-[200px]">
+                      <div className="mb-6">
+                        <IconComponent className="h-16 w-16 text-elec-yellow" />
+                      </div>
+                      <h3 className="text-xl font-medium text-elec-light">
+                        {tool.label}
+                      </h3>
+                    </CardContent>
+                  </Card>
+                </Link>
               );
             })}
           </div>
