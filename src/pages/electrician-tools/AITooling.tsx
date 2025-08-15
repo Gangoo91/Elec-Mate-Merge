@@ -52,28 +52,25 @@ const AITooling = () => {
             {toolOptions.map((tool) => {
               const IconComponent = tool.icon;
               return (
-                <Card 
+                <Link 
                   key={tool.value} 
-                  className="border-elec-yellow/20 bg-elec-gray hover:bg-elec-gray/90 transition-colors h-full"
+                  to={`/electrician-tools/ai-tooling/${tool.value}`}
+                  className="block"
                 >
-                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 md:pb-3 p-3 md:p-4">
-                    <CardTitle className="text-xs md:text-sm font-medium text-left flex-1 pr-2">{tool.label}</CardTitle>
-                    <div className="h-6 w-6 md:h-7 md:w-7 rounded-md bg-elec-yellow/10 flex items-center justify-center text-elec-yellow flex-shrink-0">
-                      <IconComponent className="h-4 w-4" />
-                    </div>
-                  </CardHeader>
-                  <CardContent className="pt-0 p-3 md:p-4 text-left">
-                    <p className="text-xs md:text-sm text-muted-foreground leading-relaxed mb-4">
-                      {tool.description}
-                    </p>
-                    <Link to={`/electrician-tools/ai-tooling/${tool.value}`}>
-                      <Button size="sm" className="w-full">
-                        Open Tool
-                        <ArrowRight className="ml-2 h-3 w-3" />
-                      </Button>
-                    </Link>
-                  </CardContent>
-                </Card>
+                  <Card className="border-elec-yellow/20 bg-elec-gray hover:bg-elec-gray/90 transition-colors h-full cursor-pointer">
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 md:pb-3 p-3 md:p-4">
+                      <CardTitle className="text-xs md:text-sm font-medium text-left flex-1 pr-2">{tool.label}</CardTitle>
+                      <div className="h-6 w-6 md:h-7 md:w-7 rounded-md bg-elec-yellow/10 flex items-center justify-center text-elec-yellow flex-shrink-0">
+                        <IconComponent className="h-4 w-4" />
+                      </div>
+                    </CardHeader>
+                    <CardContent className="pt-0 p-3 md:p-4 text-left">
+                      <p className="text-xs md:text-sm text-muted-foreground leading-relaxed">
+                        {tool.description}
+                      </p>
+                    </CardContent>
+                  </Card>
+                </Link>
               );
             })}
           </div>
