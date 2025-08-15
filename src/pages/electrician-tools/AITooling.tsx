@@ -48,7 +48,7 @@ const AITooling = () => {
       {/* Tools Grid */}
       <div className="px-4 py-4">
         <div className="max-w-5xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {toolOptions.map((tool) => {
               const IconComponent = tool.icon;
               return (
@@ -58,9 +58,9 @@ const AITooling = () => {
                   className="block"
                 >
                   <Card className="border-elec-yellow/20 bg-elec-gray hover:bg-elec-gray/90 transition-colors h-full cursor-pointer">
-                    <CardContent className="p-8 text-center flex flex-col items-center justify-center min-h-[200px]">
-                      <div className="mb-6">
-                        <IconComponent className="h-16 w-16 text-elec-yellow" />
+                    <CardContent className="p-6 flex items-center gap-6 min-h-[120px]">
+                      <div className="flex-shrink-0">
+                        <IconComponent className="h-12 w-12 text-elec-yellow" />
                       </div>
                       <h3 className="text-xl font-medium text-elec-light">
                         {tool.label}
