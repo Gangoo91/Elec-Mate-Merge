@@ -11,10 +11,10 @@ const AITooling = () => {
     <div className="min-h-screen bg-elec-dark">
       {/* Header Section */}
       <div className="border-b border-elec-gray/20">
-        <div className="px-4 py-6 md:py-8">
+        <div className="px-4 py-4 md:py-6">
           <div className="max-w-7xl mx-auto">
             {/* Navigation */}
-            <div className="flex items-center justify-between mb-8">
+            <div className="flex items-center justify-between mb-4">
               <Link to="/electrician-tools">
                 <Button 
                   variant="outline" 
@@ -28,7 +28,7 @@ const AITooling = () => {
             </div>
 
             {/* Hero Section */}
-            <div className="text-center mb-6">
+            <div className="text-center mb-4">
               <div className="inline-flex items-center justify-center w-14 h-14 bg-elec-yellow/10 border border-elec-yellow/20 rounded-xl mb-4">
                 <Brain className="h-7 w-7 text-elec-yellow" />
               </div>
