@@ -52,24 +52,15 @@ import PowerQualityCalculator from "@/components/apprentice/calculators/PowerQua
 import EmergencyLightingCalculator from "@/components/apprentice/calculators/EmergencyLightingCalculator";
 import SwimmingPoolCalculator from "@/components/apprentice/calculators/SwimmingPoolCalculator";
 import SelectivityCalculator from "@/components/apprentice/calculators/SelectivityCalculator";
-// Missing Renewable Energy Calculators
-import ComingSoonCalculator from "@/components/apprentice/calculators/ComingSoonCalculator";
-import { 
-  Calculator, 
-  Zap, 
-  Database, 
-  Ship, 
-  Sun, 
-  Wind, 
-  Factory, 
-  Lightbulb, 
-  Battery, 
-  Cable, 
-  DollarSign, 
-  Power, 
-  Grid3X3, 
-  Waves 
-} from "lucide-react";
+// Working Renewable Energy Calculators
+import DataCentreCalculator from "@/components/apprentice/calculators/DataCentreCalculator";
+import SolarArrayCalculator from "@/components/apprentice/calculators/SolarArrayCalculator";
+import WindPowerCalculator from "@/components/apprentice/calculators/WindPowerCalculator";
+import MicroHydroCalculator from "@/components/apprentice/calculators/MicroHydroCalculator";
+import GridTieInverterCalculator from "@/components/apprentice/calculators/GridTieInverterCalculator";
+import OffGridSystemCalculator from "@/components/apprentice/calculators/OffGridSystemCalculator";
+import FeedInTariffCalculator from "@/components/apprentice/calculators/FeedInTariffCalculator";
+import MarineElectricalCalculator from "@/components/apprentice/calculators/MarineElectricalCalculator";
 
 const OnJobCalculations = () => {
   const [calculatorType, setCalculatorType] = useState<string>("ohms-law");
@@ -175,25 +166,25 @@ const OnJobCalculations = () => {
         return <SwimmingPoolCalculator />;
       case "selectivity":
         return <SelectivityCalculator />;
-      // Missing Renewable Energy Calculators (using ComingSoonCalculator for now)
+      // Working Renewable Energy Calculators
       case "solar-array":
-        return <ComingSoonCalculator title="Solar Array" description="Calculate optimal solar panel configurations and wiring" icon={Sun} />;
+        return <SolarArrayCalculator />;
       case "wind-power":
-        return <ComingSoonCalculator title="Wind Power" description="Calculate wind turbine electrical requirements" icon={Wind} />;
+        return <WindPowerCalculator />;
       case "grid-tie-inverter":
-        return <ComingSoonCalculator title="Grid-Tie Inverter" description="Size grid-tie inverters for renewable systems" icon={Power} />;
+        return <GridTieInverterCalculator />;
       case "micro-hydro":
-        return <ComingSoonCalculator title="Micro-Hydro Power" description="Calculate micro-hydro electrical generation" icon={Waves} />;
+        return <MicroHydroCalculator />;
       case "off-grid-system":
-        return <ComingSoonCalculator title="Off-Grid System" description="Design complete off-grid electrical systems" icon={Battery} />;
+        return <OffGridSystemCalculator />;
       case "feed-in-tariff":
-        return <ComingSoonCalculator title="Feed-In Tariff" description="Calculate feed-in tariff payments and returns" icon={DollarSign} />;
-      // Missing Specialised Applications
+        return <FeedInTariffCalculator />;
+      // Working Specialised Applications
       case "data-centre":
-        return <ComingSoonCalculator title="Data Centre" description="Calculate data centre electrical loads and cooling" icon={Database} />;
-      // Missing Specialist Locations  
+        return <DataCentreCalculator />;
+      // Working Specialist Locations  
       case "marine-electrical":
-        return <ComingSoonCalculator title="Marine Electrical" description="Marine electrical systems and safety calculations" icon={Ship} />;
+        return <MarineElectricalCalculator />;
       default:
         return <OhmsLawCalculator />;
     }
