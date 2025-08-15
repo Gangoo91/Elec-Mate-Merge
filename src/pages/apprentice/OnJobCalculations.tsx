@@ -3,9 +3,9 @@ import { ArrowLeft } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { useState } from "react";
 import CableSizingCalculator from "@/components/apprentice/calculators/CableSizingCalculator";
-import OhmsLawCalculator from "@/components/electrician-tools/OhmsLawCalculator";
-import VoltageDropCalculator from "@/components/electrician-tools/VoltageDropCalculator";
-import { PowerFactorCalculator } from "@/components/electrician-tools/PowerFactorCalculator";
+import OhmsLawCalculator from "@/components/apprentice/calculators/OhmsLawCalculator";
+import VoltageDropCalculator from "@/components/apprentice/calculators/VoltageDropCalculator";
+import PowerFactorCalculator from "@/components/apprentice/calculators/PowerFactorCalculator";
 import LumenCalculator from "@/components/apprentice/calculators/LumenCalculator";
 import InstrumentationCalculator from "@/components/apprentice/calculators/InstrumentationCalculator";
 import ZsValuesCalculator from "@/components/apprentice/calculators/ZsValuesCalculator";
@@ -25,7 +25,7 @@ import R1R2Calculator from "@/components/apprentice/calculators/R1R2Calculator";
 import PFCCalculator from "@/components/apprentice/calculators/PFCCalculator";
 import RCDDiscriminationCalculator from "@/components/apprentice/calculators/RCDDiscriminationCalculator";
 import CableDeratingCalculator from "@/components/apprentice/calculators/CableDeratingCalculator";
-import LoadCalculator from "@/components/electrician-tools/LoadCalculator";
+import LoadCalculator from "@/components/apprentice/calculators/LoadCalculator";
 // Phase 1 New Calculators
 import EnergyCostCalculator from "@/components/apprentice/calculators/EnergyCostCalculator";
 import UnitConverterCalculator from "@/components/apprentice/calculators/UnitConverterCalculator";
@@ -52,6 +52,24 @@ import PowerQualityCalculator from "@/components/apprentice/calculators/PowerQua
 import EmergencyLightingCalculator from "@/components/apprentice/calculators/EmergencyLightingCalculator";
 import SwimmingPoolCalculator from "@/components/apprentice/calculators/SwimmingPoolCalculator";
 import SelectivityCalculator from "@/components/apprentice/calculators/SelectivityCalculator";
+// Missing Renewable Energy Calculators
+import ComingSoonCalculator from "@/components/apprentice/calculators/ComingSoonCalculator";
+import { 
+  Calculator, 
+  Zap, 
+  Database, 
+  Ship, 
+  Sun, 
+  Wind, 
+  Factory, 
+  Lightbulb, 
+  Battery, 
+  Cable, 
+  DollarSign, 
+  Power, 
+  Grid3X3, 
+  Waves 
+} from "lucide-react";
 
 const OnJobCalculations = () => {
   const [calculatorType, setCalculatorType] = useState<string>("ohms-law");
@@ -157,6 +175,25 @@ const OnJobCalculations = () => {
         return <SwimmingPoolCalculator />;
       case "selectivity":
         return <SelectivityCalculator />;
+      // Missing Renewable Energy Calculators (using ComingSoonCalculator for now)
+      case "solar-array":
+        return <ComingSoonCalculator title="Solar Array" description="Calculate optimal solar panel configurations and wiring" icon={Sun} />;
+      case "wind-power":
+        return <ComingSoonCalculator title="Wind Power" description="Calculate wind turbine electrical requirements" icon={Wind} />;
+      case "grid-tie-inverter":
+        return <ComingSoonCalculator title="Grid-Tie Inverter" description="Size grid-tie inverters for renewable systems" icon={Power} />;
+      case "micro-hydro":
+        return <ComingSoonCalculator title="Micro-Hydro Power" description="Calculate micro-hydro electrical generation" icon={Waves} />;
+      case "off-grid-system":
+        return <ComingSoonCalculator title="Off-Grid System" description="Design complete off-grid electrical systems" icon={Battery} />;
+      case "feed-in-tariff":
+        return <ComingSoonCalculator title="Feed-In Tariff" description="Calculate feed-in tariff payments and returns" icon={DollarSign} />;
+      // Missing Specialised Applications
+      case "data-centre":
+        return <ComingSoonCalculator title="Data Centre" description="Calculate data centre electrical loads and cooling" icon={Database} />;
+      // Missing Specialist Locations  
+      case "marine-electrical":
+        return <ComingSoonCalculator title="Marine Electrical" description="Marine electrical systems and safety calculations" icon={Ship} />;
       default:
         return <OhmsLawCalculator />;
     }
