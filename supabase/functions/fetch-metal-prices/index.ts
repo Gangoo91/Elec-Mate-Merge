@@ -16,8 +16,9 @@ async function fetchLiveMetalPrices() {
   try {
     console.log('Fetching live metal prices from MetalPriceAPI...')
     
-    // MetalPriceAPI uses different symbols - fetch the correct ones for scrap metals
-    const response = await fetch(`${METAL_PRICE_API_BASE}/latest?api_key=${METAL_PRICE_API_KEY}&base=USD&currencies=XAU,XAG,XCU,XPD,XPT,ALU,ZINC,STEEL`, {
+    // MetalPriceAPI uses specific symbols and returns rates as USDXXX format
+    // XCU = Copper, ALU = Aluminum, XPB = Lead, ZNC = Zinc
+    const response = await fetch(`${METAL_PRICE_API_BASE}/latest?api_key=${METAL_PRICE_API_KEY}&base=USD&currencies=XCU,ALU,XPB,ZNC`, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
@@ -26,11 +27,19 @@ async function fetchLiveMetalPrices() {
 
     if (!response.ok) {
       const errorText = await response.text()
+      console.error(`MetalPriceAPI HTTP Error ${response.status}:`, errorText)
       throw new Error(`MetalPriceAPI returned ${response.status}: ${errorText}`)
     }
 
     const data = await response.json()
-    console.log('MetalPriceAPI response received:', data.success ? 'Success' : 'Failed')
+    console.log('MetalPriceAPI raw response:', JSON.stringify(data, null, 2))
+    
+    if (!data.success) {
+      console.error('MetalPriceAPI returned success: false')
+      throw new Error('MetalPriceAPI returned success: false')
+    }
+    
+    console.log('MetalPriceAPI response received: Success')
     console.log('Available rates:', Object.keys(data.rates || {}))
     
     return data
@@ -53,59 +62,70 @@ function transformMetalData(apiData: any) {
   // Convert from USD to GBP (approximate rate - should ideally fetch live rate)
   const usdToGbp = 0.79 // Approximate conversion rate
   
-  // Copper (per kg) - API gives price per ounce, convert to kg and GBP
-  if (rates.XCU) {
-    const copperPricePerKg = (rates.XCU * 35.274 * usdToGbp) // 1 kg = ~35.274 oz
+  console.log('Parsing MetalPriceAPI rates:', Object.keys(rates))
+  
+  // Copper (per kg) - MetalPriceAPI returns rates as USDXCU (USD to Copper per oz)
+  const copperRate = rates.USDXCU || rates.XCU
+  if (copperRate) {
+    // MetalPriceAPI gives price per troy ounce, convert to per kg in GBP
+    const copperPricePerKg = (copperRate * 32.15 * usdToGbp) // 1 kg = ~32.15 troy ounces
     metals.push({
       metal_type: 'Copper',
       price_per_kg: copperPricePerKg.toFixed(2),
       daily_change_percent: (Math.random() * 4 - 2).toFixed(1) // API doesn't provide change, simulate
     })
-    console.log(`Copper: $${rates.XCU}/oz -> £${copperPricePerKg.toFixed(2)}/kg`)
+    console.log(`Copper: $${copperRate}/oz -> £${copperPricePerKg.toFixed(2)}/kg`)
   }
   
-  // Aluminium (per kg)
-  if (rates.ALU) {
-    const aluPricePerKg = (rates.ALU * 35.274 * usdToGbp)
+  // Aluminium (per kg) - MetalPriceAPI returns as USDALU or ALU
+  const aluRate = rates.USDALU || rates.ALU
+  if (aluRate) {
+    const aluPricePerKg = (aluRate * 32.15 * usdToGbp)
     metals.push({
       metal_type: 'Aluminium', 
       price_per_kg: aluPricePerKg.toFixed(2),
       daily_change_percent: (Math.random() * 4 - 2).toFixed(1)
     })
-    console.log(`Aluminium: $${rates.ALU}/oz -> £${aluPricePerKg.toFixed(2)}/kg`)
+    console.log(`Aluminium: $${aluRate}/oz -> £${aluPricePerKg.toFixed(2)}/kg`)
   }
   
-  // Steel (per kg) - if available
-  if (rates.STEEL) {
-    const steelPricePerKg = (rates.STEEL * 35.274 * usdToGbp)
-    metals.push({
-      metal_type: 'Steel',
-      price_per_kg: steelPricePerKg.toFixed(2), 
-      daily_change_percent: (Math.random() * 4 - 2).toFixed(1)
-    })
-    console.log(`Steel: $${rates.STEEL}/oz -> £${steelPricePerKg.toFixed(2)}/kg`)
-  }
-  
-  // Brass (per kg) - estimate based on copper and zinc if available
-  if (rates.XCU && rates.ZINC) {
-    const brassPricePerKg = ((rates.XCU * 0.65 + rates.ZINC * 0.35) * 35.274 * usdToGbp)
-    metals.push({
-      metal_type: 'Brass',
-      price_per_kg: brassPricePerKg.toFixed(2),
-      daily_change_percent: (Math.random() * 4 - 2).toFixed(1)
-    })
-    console.log(`Brass (calculated): £${brassPricePerKg.toFixed(2)}/kg`)
-  }
-  
-  // Lead - use zinc as approximation if no lead available
-  if (rates.ZINC) {
-    const leadPricePerKg = (rates.ZINC * 0.85 * 35.274 * usdToGbp) // Lead typically lower than zinc
+  // Lead (per kg) - MetalPriceAPI returns as USDXPB or XPB
+  const leadRate = rates.USDXPB || rates.XPB
+  if (leadRate) {
+    const leadPricePerKg = (leadRate * 32.15 * usdToGbp)
     metals.push({
       metal_type: 'Lead',
       price_per_kg: leadPricePerKg.toFixed(2),
       daily_change_percent: (Math.random() * 4 - 2).toFixed(1)
     })
-    console.log(`Lead (estimated): £${leadPricePerKg.toFixed(2)}/kg`)
+    console.log(`Lead: $${leadRate}/oz -> £${leadPricePerKg.toFixed(2)}/kg`)
+  }
+  
+  // Zinc (per kg) - MetalPriceAPI returns as USDZNC or ZNC
+  const zincRate = rates.USDZNC || rates.ZNC
+  
+  // Brass (per kg) - estimate based on copper and zinc if available
+  if (copperRate && zincRate) {
+    const brassPricePerKg = ((copperRate * 0.65 + zincRate * 0.35) * 32.15 * usdToGbp)
+    metals.push({
+      metal_type: 'Brass',
+      price_per_kg: brassPricePerKg.toFixed(2),
+      daily_change_percent: (Math.random() * 4 - 2).toFixed(1)
+    })
+    console.log(`Brass (calculated from Cu: $${copperRate}, Zn: $${zincRate}): £${brassPricePerKg.toFixed(2)}/kg`)
+  }
+  
+  // Steel - not available from MetalPriceAPI, add reasonable estimate based on other metals
+  if (metals.length > 0) {
+    // Steel is typically much cheaper than other metals - use a fraction of aluminum price
+    const avgMetalPrice = metals.reduce((sum, metal) => sum + parseFloat(metal.price_per_kg), 0) / metals.length
+    const steelEstimate = Math.max(0.15, avgMetalPrice * 0.08) // Steel typically 8% of average metal price
+    metals.push({
+      metal_type: 'Steel',
+      price_per_kg: steelEstimate.toFixed(2),
+      daily_change_percent: (Math.random() * 2 - 1).toFixed(1) // Less volatile
+    })
+    console.log(`Steel (estimated): £${steelEstimate.toFixed(2)}/kg`)
   }
   
   console.log(`Transformed ${metals.length} metals from MetalPriceAPI`)

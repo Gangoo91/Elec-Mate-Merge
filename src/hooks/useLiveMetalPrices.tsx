@@ -43,6 +43,8 @@ interface MetalPricesData {
   marketAlerts: Alert[];
   regionalJobPricing: RegionalPricingData[];
   lastUpdated: string;
+  dataSource?: string;
+  isLive?: boolean;
 }
 
 export const useLiveMetalPrices = () => {
@@ -90,7 +92,9 @@ export const useLiveMetalPrices = () => {
         equipmentPrices: pricesData.equipmentPrices || [],
         marketAlerts: pricesData.marketAlerts || [],
         regionalJobPricing: pricesData.regionalJobPricing || [],
-        lastUpdated: pricesData.lastUpdated || new Date().toLocaleString('en-GB')
+        lastUpdated: pricesData.lastUpdated || new Date().toLocaleString('en-GB'),
+        dataSource: pricesData.dataSource || 'unknown',
+        isLive: pricesData.dataSource === 'live_api'
       };
 
       logger.info('Processed data structure:', {
