@@ -79,7 +79,7 @@ export const useCableSizing = () => {
       "twin-and-earth": "twin-and-earth",
       "swa": "swa",
       "lsf": "lsf",
-      "armored": "armored",
+      "armored": "swa", // Map armored to SWA as they're similar
       "heat-resistant": "heat-resistant"
     };
     
@@ -249,11 +249,19 @@ export const useCableSizing = () => {
         return c.currentRating[inputs.installationType];
       }));
       
+      // Suggest better cable types for high currents
+      let suggestion = "";
+      if (currentAmp > 50 && inputs.cableType === 'twin-and-earth') {
+        suggestion = " Consider using SWA or single core cables for higher current applications.";
+      } else if (currentAmp > 100 && inputs.cableType !== 'swa') {
+        suggestion = " Consider using SWA (Steel Wire Armoured) cables for very high current applications.";
+      }
+      
       setResult({
         recommendedCable: null,
         alternativeCables: [],
         errors: {
-          current: `Current (${currentAmp}A + 25% safety margin = ${requiredCurrentCapacity.toFixed(1)}A) exceeds maximum rating for ${inputs.cableType} cables (${maxCurrentAvailable}A max)`
+          current: `Current (${currentAmp}A + 25% safety margin = ${requiredCurrentCapacity.toFixed(1)}A) exceeds maximum rating for ${inputs.cableType} cables (${maxCurrentAvailable}A max).${suggestion}`
         }
       });
       return;
