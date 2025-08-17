@@ -1,18 +1,17 @@
 
 import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Users, MapPin, PoundSterling, MessageSquare, Plus } from "lucide-react";
-import { useJobTypes, getJobTypeConfig, type JobAttribute } from "@/hooks/useJobTypes";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Users, Send, MapPin, PoundSterling } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
-import { toast } from "sonner";
+import { useToast } from "@/components/ui/use-toast";
 
 const CommunityPriceSubmission = () => {
-  const { data: jobTypesData } = useJobTypes();
+  const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     jobType: "",
@@ -21,152 +20,99 @@ const CommunityPriceSubmission = () => {
     unit: "per job",
     complexityLevel: "standard",
     notes: "",
-    attributes: {} as Record<string, string | number>
+    // Dynamic attributes for different job types
+    bedrooms: "",
+    propertyType: "",
+    floors: ""
   });
 
-  const selectedJobConfig = getJobTypeConfig(formData.jobType);
-  const jobAttributes = selectedJobConfig?.attributes || [];
+  const jobTypes = [
+    "Socket Installation",
+    "Light Fitting",
+    "Rewire Full House",
+    "Consumer Unit Replacement",
+    "Electrical Inspection",
+    "Fault Finding",
+    "Garden Lighting",
+    "EV Charger Installation",
+    "Smoke Alarm Installation",
+    "Shower Installation"
+  ];
 
-  const handleJobTypeChange = (jobType: string) => {
-    const config = getJobTypeConfig(jobType);
-    setFormData(prev => ({
-      ...prev,
-      jobType,
-      unit: config?.unit || "per job",
-      attributes: {} // Reset attributes when job type changes
-    }));
-  };
+  const units = [
+    "per job",
+    "per point",
+    "per hour",
+    "per day",
+    "per room",
+    "per circuit"
+  ];
 
-  const handleAttributeChange = (attributeKey: string, value: string | number) => {
-    setFormData(prev => ({
-      ...prev,
-      attributes: {
-        ...prev.attributes,
-        [attributeKey]: value
-      }
-    }));
-  };
+  const complexityLevels = [
+    { value: "simple", label: "Simple" },
+    { value: "standard", label: "Standard" },
+    { value: "complex", label: "Complex" }
+  ];
 
-  const renderAttributeField = (attribute: JobAttribute) => {
-    const value = formData.attributes[attribute.key] || "";
-    
-    switch (attribute.type) {
-      case 'select':
-        return (
-          <div key={attribute.key} className="space-y-2">
-            <Label htmlFor={attribute.key}>
-              {attribute.label} {attribute.required && <span className="text-red-500">*</span>}
-            </Label>
-            <Select 
-              value={value as string}
-              onValueChange={(val) => handleAttributeChange(attribute.key, val)}
-            >
-              <SelectTrigger className="bg-elec-dark border-elec-yellow/20 focus:border-elec-yellow text-white h-10">
-                <SelectValue placeholder={`Select ${attribute.label.toLowerCase()}`} />
-              </SelectTrigger>
-              <SelectContent className="bg-elec-dark border-elec-yellow/20 text-white z-50">
-                {attribute.options?.map((option) => (
-                  <SelectItem 
-                    key={option.value} 
-                    value={option.value}
-                    className="hover:bg-elec-yellow/10 focus:bg-elec-yellow/10"
-                  >
-                    {option.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-        );
-      
-      case 'number':
-        return (
-          <div key={attribute.key} className="space-y-2">
-            <Label htmlFor={attribute.key}>
-              {attribute.label} {attribute.unit && `(${attribute.unit})`} {attribute.required && <span className="text-red-500">*</span>}
-            </Label>
-              <Input
-                id={attribute.key}
-                type="number"
-                min={attribute.min}
-                max={attribute.max}
-                value={value}
-                onChange={(e) => handleAttributeChange(attribute.key, parseFloat(e.target.value) || 0)}
-                className="bg-elec-dark border-elec-yellow/20 focus:border-elec-yellow text-white h-10"
-                placeholder={`Enter ${attribute.label.toLowerCase()}`}
-              />
-          </div>
-        );
-      
-      case 'text':
-        return (
-          <div key={attribute.key} className="space-y-2">
-            <Label htmlFor={attribute.key}>
-              {attribute.label} {attribute.required && <span className="text-red-500">*</span>}
-            </Label>
-              <Input
-                id={attribute.key}
-                type="text"
-                value={value}
-                onChange={(e) => handleAttributeChange(attribute.key, e.target.value)}
-                className="bg-elec-dark border-elec-yellow/20 focus:border-elec-yellow text-white h-10"
-                placeholder={`Enter ${attribute.label.toLowerCase()}`}
-              />
-          </div>
-        );
-      
-      default:
-        return null;
-    }
-  };
-
-  const validateForm = () => {
-    if (!formData.jobType || !formData.location || !formData.price) {
-      return false;
-    }
-
-    // Validate required attributes
-    const requiredAttributes = jobAttributes.filter(attr => attr.required);
-    for (const attr of requiredAttributes) {
-      const value = formData.attributes[attr.key];
-      if (!value || (typeof value === 'string' && value.trim() === '')) {
-        return false;
-      }
-    }
-
-    return true;
-  };
+  const propertyTypes = [
+    { value: "terraced", label: "Terraced" },
+    { value: "semi_detached", label: "Semi-detached" },
+    { value: "detached", label: "Detached" },
+    { value: "flat", label: "Flat" },
+    { value: "bungalow", label: "Bungalow" }
+  ];
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!validateForm()) {
-      toast.error("Please fill in all required fields");
+    if (!formData.jobType || !formData.location || !formData.price) {
+      toast({
+        title: "Missing information",
+        description: "Please fill in job type, location, and price",
+        variant: "destructive",
+      });
       return;
     }
 
     setIsSubmitting(true);
-
+    
     try {
-      const { data, error } = await supabase.functions.invoke('submit-community-price', {
+      console.log('Submitting price data:', formData);
+      
+      // Prepare attributes based on job type
+      const attributes: Record<string, string> = {};
+      
+      if (formData.jobType === "Rewire Full House") {
+        if (formData.bedrooms) attributes.bedrooms = formData.bedrooms;
+        if (formData.propertyType) attributes.property_type = formData.propertyType;
+        if (formData.floors) attributes.floors = formData.floors;
+      }
+
+      const response = await supabase.functions.invoke('submit-community-price', {
         body: {
           job_type: formData.jobType,
           location: formData.location,
           price: parseFloat(formData.price),
           unit: formData.unit,
           complexity_level: formData.complexityLevel,
-          notes: formData.notes,
-          attributes: formData.attributes
+          notes: formData.notes || null,
+          attributes
         }
       });
 
-      if (error) throw error;
+      if (response.error) {
+        console.error('Supabase function error:', response.error);
+        throw new Error(response.error.message || 'Failed to submit price');
+      }
 
-      toast.success(
-        data.auto_approved 
-          ? "Price submitted and approved automatically!" 
-          : "Price submitted for review. Thank you for contributing!"
-      );
+      console.log('Submission response:', response.data);
+
+      toast({
+        title: "Price submitted successfully!",
+        description: response.data?.auto_approved 
+          ? "Your price has been approved and added to our database."
+          : "Your price is under review and will be published once approved.",
+      });
 
       // Reset form
       setFormData({
@@ -176,169 +122,208 @@ const CommunityPriceSubmission = () => {
         unit: "per job",
         complexityLevel: "standard",
         notes: "",
-        attributes: {}
+        bedrooms: "",
+        propertyType: "",
+        floors: ""
       });
 
     } catch (error) {
       console.error('Error submitting price:', error);
-      toast.error("Failed to submit price. Please try again.");
+      toast({
+        title: "Failed to submit price",
+        description: error instanceof Error ? error.message : "Please try again later",
+        variant: "destructive",
+      });
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  return (
-    <Card className="border-elec-yellow/20 bg-elec-gray">
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2 text-elec-yellow">
-          <Users className="h-5 w-5" />
-          Submit Community Price
-        </CardTitle>
-      </CardHeader>
-      
-      <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Job Type Selection */}
+  const renderJobSpecificFields = () => {
+    if (formData.jobType === "Rewire Full House") {
+      return (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="space-y-2">
-            <Label htmlFor="jobType">Job Type <span className="text-red-500">*</span></Label>
-            <Select value={formData.jobType} onValueChange={handleJobTypeChange}>
-              <SelectTrigger className="bg-elec-dark border-elec-yellow/20 focus:border-elec-yellow text-white h-10">
-                <SelectValue placeholder="Select job type" />
+            <Label htmlFor="bedrooms">Number of Bedrooms</Label>
+            <Select value={formData.bedrooms} onValueChange={(value) => setFormData(prev => ({...prev, bedrooms: value}))}>
+              <SelectTrigger className="h-10">
+                <SelectValue placeholder="Select..." />
               </SelectTrigger>
-              <SelectContent className="bg-elec-dark border-elec-yellow/20 text-white max-h-[300px] z-50">
-                {jobTypesData?.byCategory && Object.entries(jobTypesData.byCategory).map(([category, jobs]) => (
-                  <div key={category}>
-                    <div className="px-2 py-1 text-xs font-semibold text-elec-yellow bg-elec-yellow/10 sticky top-0">
-                      {category}
-                    </div>
-                    {jobs.map((job) => (
-                      <SelectItem 
-                        key={job.job_type} 
-                        value={job.job_type}
-                        className="hover:bg-elec-yellow/10 focus:bg-elec-yellow/10 pl-6"
-                      >
-                        {job.job_type}
-                      </SelectItem>
-                    ))}
-                  </div>
+              <SelectContent>
+                <SelectItem value="1">1 Bedroom</SelectItem>
+                <SelectItem value="2">2 Bedrooms</SelectItem>
+                <SelectItem value="3">3 Bedrooms</SelectItem>
+                <SelectItem value="4">4 Bedrooms</SelectItem>
+                <SelectItem value="5+">5+ Bedrooms</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="property-type">Property Type</Label>
+            <Select value={formData.propertyType} onValueChange={(value) => setFormData(prev => ({...prev, propertyType: value}))}>
+              <SelectTrigger className="h-10">
+                <SelectValue placeholder="Select..." />
+              </SelectTrigger>
+              <SelectContent>
+                {propertyTypes.map((type) => (
+                  <SelectItem key={type.value} value={type.value}>
+                    {type.label}
+                  </SelectItem>
                 ))}
               </SelectContent>
             </Select>
           </div>
 
-          {/* Dynamic Attributes */}
-          {jobAttributes.length > 0 && (
-            <div className="space-y-4 p-4 border border-elec-yellow/20 rounded-lg bg-elec-yellow/5">
-              <h4 className="text-sm font-medium text-elec-yellow flex items-center gap-2">
-                <Plus className="h-4 w-4" />
-                Job-Specific Details
-              </h4>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {jobAttributes.map(renderAttributeField)}
+          <div className="space-y-2">
+            <Label htmlFor="floors">Number of Floors</Label>
+            <Select value={formData.floors} onValueChange={(value) => setFormData(prev => ({...prev, floors: value}))}>
+              <SelectTrigger className="h-10">
+                <SelectValue placeholder="Select..." />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="1">1 Floor</SelectItem>
+                <SelectItem value="2">2 Floors</SelectItem>
+                <SelectItem value="3">3 Floors</SelectItem>
+                <SelectItem value="4+">4+ Floors</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
+      );
+    }
+    return null;
+  };
+
+  return (
+    <Card className="border-elec-yellow/20 bg-elec-gray">
+      <CardHeader className="pb-4">
+        <CardTitle className="text-lg flex items-center gap-2">
+          <Users className="h-5 w-5 text-elec-yellow" />
+          Community Price Submission
+        </CardTitle>
+        <p className="text-sm text-muted-foreground">
+          Help fellow electricians by sharing recent job prices from your area
+        </p>
+      </CardHeader>
+      
+      <CardContent>
+        <form onSubmit={handleSubmit} className="space-y-6">
+          {/* Job Type and Location Row */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="job-type">Job Type *</Label>
+              <Select value={formData.jobType} onValueChange={(value) => setFormData(prev => ({...prev, jobType: value}))}>
+                <SelectTrigger className="h-10">
+                  <SelectValue placeholder="Select job type..." />
+                </SelectTrigger>
+                <SelectContent>
+                  {jobTypes.map((job) => (
+                    <SelectItem key={job} value={job}>
+                      {job}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="location">Location *</Label>
+              <div className="relative">
+                <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Input
+                  id="location"
+                  placeholder="e.g., Manchester, Bolton, M1 1AA"
+                  value={formData.location}
+                  onChange={(e) => setFormData(prev => ({...prev, location: e.target.value}))}
+                  className="pl-10 h-10"
+                />
               </div>
             </div>
-          )}
-
-          {/* Location */}
-          <div className="space-y-2">
-            <Label htmlFor="location" className="flex items-center gap-2">
-              <MapPin className="h-4 w-4" />
-              Location <span className="text-red-500">*</span>
-            </Label>
-            <Input
-              id="location"
-              value={formData.location}
-              onChange={(e) => setFormData(prev => ({ ...prev, location: e.target.value }))}
-              className="bg-elec-dark border-elec-yellow/20 focus:border-elec-yellow text-white h-10"
-              placeholder="e.g., London, Manchester, Birmingham, etc."
-            />
           </div>
 
-          {/* Price, Unit, and Complexity Level in aligned grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {/* Price, Unit, and Complexity Row - Fixed alignment */}
+          <div className="grid grid-cols-3 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="price" className="flex items-center gap-2">
-                <PoundSterling className="h-4 w-4" />
-                Price <span className="text-red-500">*</span>
-              </Label>
-              <Input
-                id="price"
-                type="number"
-                step="0.01"
-                min="0"
-                value={formData.price}
-                onChange={(e) => setFormData(prev => ({ ...prev, price: e.target.value }))}
-                className="bg-elec-dark border-elec-yellow/20 focus:border-elec-yellow text-white h-10"
-                placeholder="0.00"
-              />
+              <Label htmlFor="price">Price (£) *</Label>
+              <div className="relative">
+                <PoundSterling className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Input
+                  id="price"
+                  type="number"
+                  step="0.01"
+                  placeholder="0.00"
+                  value={formData.price}
+                  onChange={(e) => setFormData(prev => ({...prev, price: e.target.value}))}
+                  className="pl-10 h-10"
+                />
+              </div>
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="unit">Unit</Label>
-              <Select 
-                value={formData.unit} 
-                onValueChange={(value) => setFormData(prev => ({ ...prev, unit: value }))}
-              >
-                <SelectTrigger className="bg-elec-dark border-elec-yellow/20 focus:border-elec-yellow text-white h-10">
+              <Select value={formData.unit} onValueChange={(value) => setFormData(prev => ({...prev, unit: value}))}>
+                <SelectTrigger className="h-10">
                   <SelectValue />
                 </SelectTrigger>
-                <SelectContent className="bg-elec-dark border-elec-yellow/20 text-white z-50">
-                  <SelectItem value="per job">per job</SelectItem>
-                  <SelectItem value="per hour">per hour</SelectItem>
-                  <SelectItem value="per point">per point</SelectItem>
-                  <SelectItem value="per circuit">per circuit</SelectItem>
-                  <SelectItem value="each">each</SelectItem>
+                <SelectContent>
+                  {units.map((unit) => (
+                    <SelectItem key={unit} value={unit}>
+                      {unit}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="complexityLevel">Complexity Level</Label>
-              <Select 
-                value={formData.complexityLevel} 
-                onValueChange={(value) => setFormData(prev => ({ ...prev, complexityLevel: value }))}
-              >
-                <SelectTrigger className="bg-elec-dark border-elec-yellow/20 focus:border-elec-yellow text-white h-10">
+              <Label htmlFor="complexity">Complexity</Label>
+              <Select value={formData.complexityLevel} onValueChange={(value) => setFormData(prev => ({...prev, complexityLevel: value}))}>
+                <SelectTrigger className="h-10">
                   <SelectValue />
                 </SelectTrigger>
-                <SelectContent className="bg-elec-dark border-elec-yellow/20 text-white z-50">
-                  <SelectItem value="basic">Basic</SelectItem>
-                  <SelectItem value="standard">Standard</SelectItem>
-                  <SelectItem value="complex">Complex</SelectItem>
+                <SelectContent>
+                  {complexityLevels.map((level) => (
+                    <SelectItem key={level.value} value={level.value}>
+                      {level.label}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </div>
           </div>
 
+          {/* Job-specific fields */}
+          {renderJobSpecificFields()}
+
           {/* Notes */}
           <div className="space-y-2">
-            <Label htmlFor="notes" className="flex items-center gap-2">
-              <MessageSquare className="h-4 w-4" />
-              Additional Notes (Optional)
-            </Label>
+            <Label htmlFor="notes">Additional Notes (Optional)</Label>
             <Textarea
               id="notes"
+              placeholder="Any additional context about the job, materials used, or special circumstances..."
               value={formData.notes}
-              onChange={(e) => setFormData(prev => ({ ...prev, notes: e.target.value }))}
-              className="bg-elec-dark border-elec-yellow/20 focus:border-elec-yellow text-white resize-none"
-              placeholder="Any additional details about the job, location factors, etc."
-              rows={3}
+              onChange={(e) => setFormData(prev => ({...prev, notes: e.target.value}))}
+              className="min-h-[80px] resize-none"
             />
           </div>
 
+          {/* Submit Button */}
           <Button 
             type="submit" 
-            disabled={isSubmitting || !validateForm()}
+            disabled={isSubmitting || !formData.jobType || !formData.location || !formData.price}
             className="w-full bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
           >
+            <Send className="h-4 w-4 mr-2" />
             {isSubmitting ? "Submitting..." : "Submit Price"}
           </Button>
-        </form>
 
-        <div className="mt-4 text-xs text-muted-foreground bg-elec-yellow/5 p-3 rounded">
-          <strong>Community Guidelines:</strong> Please ensure prices are accurate and reflect current UK market rates. 
-          Submissions are reviewed for quality and may be auto-approved if they fall within reasonable ranges.
-        </div>
+          {/* Disclaimer */}
+          <div className="text-xs text-muted-foreground bg-elec-yellow/5 p-3 rounded-lg">
+            <strong>Privacy Notice:</strong> Submissions are reviewed before publication. 
+            No personal information is stored. Prices help create accurate regional estimates for the community.
+          </div>
+        </form>
       </CardContent>
     </Card>
   );

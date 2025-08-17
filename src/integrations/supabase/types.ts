@@ -1124,6 +1124,72 @@ export type Database = {
           },
         ]
       }
+      price_reports: {
+        Row: {
+          attributes: Json
+          complexity_level: string
+          county: string | null
+          created_at: string
+          currency: string
+          data_source: string
+          id: string
+          ip_address: string | null
+          job_type: string
+          lat: number | null
+          lng: number | null
+          notes: string | null
+          postcode: string | null
+          price: number
+          region: string
+          status: string
+          unit: string
+          updated_at: string
+          user_agent: string | null
+        }
+        Insert: {
+          attributes?: Json
+          complexity_level?: string
+          county?: string | null
+          created_at?: string
+          currency?: string
+          data_source?: string
+          id?: string
+          ip_address?: string | null
+          job_type: string
+          lat?: number | null
+          lng?: number | null
+          notes?: string | null
+          postcode?: string | null
+          price: number
+          region: string
+          status?: string
+          unit?: string
+          updated_at?: string
+          user_agent?: string | null
+        }
+        Update: {
+          attributes?: Json
+          complexity_level?: string
+          county?: string | null
+          created_at?: string
+          currency?: string
+          data_source?: string
+          id?: string
+          ip_address?: string | null
+          job_type?: string
+          lat?: number | null
+          lng?: number | null
+          notes?: string | null
+          postcode?: string | null
+          price?: number
+          region?: string
+          status?: string
+          unit?: string
+          updated_at?: string
+          user_agent?: string | null
+        }
+        Relationships: []
+      }
       pricing_ingest_log: {
         Row: {
           completed_at: string | null
