@@ -63,7 +63,15 @@ const ElectricianRoutes = () => (
     <Route path="schedule" element={<ScheduleManager />} />
     <Route path="business-analytics" element={<BusinessAnalytics />} />
     <Route path="financial-tools" element={<FinancialTools />} />
-    <Route path="career-progression" element={<CareerProgression />} />
+     
+    {/* Old route redirects for compatibility */}
+    <Route path="admin" element={<Navigate to="/electrician/business-admin" replace />} />
+    <Route path="document-templates" element={<Navigate to="/electrician" replace />} />
+    <Route path="management/*" element={<Navigate to="/electrician" replace />} />
+    <Route path="project-management/*" element={<Navigate to="/electrician" replace />} />
+    
+    {/* Trade Essentials redirect */}
+    <Route path="trade-essentials" element={<Navigate to="/electrician" replace />} />
   </Routes>
 );
 

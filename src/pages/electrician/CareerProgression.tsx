@@ -10,7 +10,9 @@ import CareerCourses from "@/components/electrician/career/CareerCourses";
 import EnhancedFurtherEducation from "@/components/electrician/career/EnhancedFurtherEducation";
 import ProfessionalAccreditation from "@/components/electrician/career/ProfessionalAccreditation";
 import CPDTracker from "@/components/electrician/career/CPDTracker";
+import JobVacancies from "@/pages/electrician/JobVacancies";
 import { electricianCareerSections } from "@/components/electrician/career/SectionData";
+import { Briefcase } from "lucide-react";
 
 const CareerProgression = () => {
   const [activeSection, setActiveSection] = useState<string | null>(null);
@@ -31,6 +33,8 @@ const CareerProgression = () => {
         return <ProfessionalAccreditation />;
       case "cpd":
         return <CPDTracker />;
+      case "job-vacancies":
+        return <JobVacancies />;
       default:
         return null;
     }
@@ -76,6 +80,12 @@ const CareerProgression = () => {
                 onClick={() => setActiveSection(section.id)}
               />
             ))}
+            {/* Job Vacancies Card */}
+            <SimpleCareerCard 
+              title="Job Vacancies"
+              icon={<Briefcase className="h-10 w-10 sm:h-12 sm:w-12 text-elec-yellow" />}
+              onClick={() => setActiveSection("job-vacancies")}
+            />
           </div>
 
           {/* Professional Development Stats */}

@@ -1,6 +1,6 @@
 
 import { Route, Routes } from "react-router-dom";
-import TradeEssentials from "@/pages/electrician/TradeEssentials";
+import BusinessAdmin from "@/pages/electrician/BusinessAdmin";
 import SafetyShares from "@/pages/electrician/SafetyShares";
 import MajorProjects from "@/pages/electrician/safety-shares/MajorProjects";
 import SafetyAlerts from "@/pages/electrician/safety-shares/SafetyAlerts";
@@ -58,7 +58,6 @@ const ElectricianHubRoutes = () => (
   <Routes>
     {/* Default route - show Electrical Hub as the main page */}
     <Route index element={<ElectricalHub />} />
-    <Route path="trade-essentials" element={<TradeEssentials />} />
     
     <Route path="job-vacancies" element={<JobVacancies />} />
     <Route path="materials" element={<ElectricalMaterials />} />
@@ -84,6 +83,7 @@ const ElectricianHubRoutes = () => (
     
     {/* Business Routes */}
     <Route path="business" element={<BusinessHub />} />
+    <Route path="business-admin" element={<BusinessAdmin />} />
     <Route path="quote-builder" element={<QuoteBuilder />} />
     {/* Business Development Routes */}
     <Route path="business-development" element={<BusinessDevelopment />} />

@@ -49,9 +49,9 @@ const ElectricalHub = () => {
     },
     {
       id: 7,
-      title: "Trade Essentials",
+      title: "Industry Updates",
       icon: Wrench,
-      link: "/electrician/trade-essentials"
+      link: "/electrician/safety-shares/news"
     },
     {
       id: 8,

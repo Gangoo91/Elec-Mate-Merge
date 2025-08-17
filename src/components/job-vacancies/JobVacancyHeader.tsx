@@ -16,9 +16,9 @@ const JobVacancyHeader = () => {
         </p>
       </div>
       
-      <Link to="/electrician/trade-essentials" className="w-full sm:w-auto">
+      <Link to="/electrician/career-progression" className="w-full sm:w-auto">
         <Button variant="outline" className="flex items-center gap-2">
-          <ArrowLeft className="h-4 w-4" /> Back to Trade Essentials
+          <ArrowLeft className="h-4 w-4" /> Back to Career Progression
         </Button>
       </Link>
     </div>
