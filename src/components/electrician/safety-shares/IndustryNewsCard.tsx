@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
@@ -90,18 +90,17 @@ const IndustryNewsCard = () => {
       article.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       (article.summary && article.summary.toLowerCase().includes(searchTerm.toLowerCase()));
     
-    const matchesSource = !selectedSource || article.source === selectedSource;
+    const matchesSource = !selectedSource || article.regulatory_body === selectedSource;
     
     const matchesBS7671 = !showBS7671Only || 
       article.title.toLowerCase().includes('bs 7671') ||
-      article.title.toLowerCase().includes('wiring regulations') ||
-      (article.tags && article.tags.some((tag: string) => tag.toLowerCase().includes('bs 7671')));
+      article.title.toLowerCase().includes('wiring regulations');
     
     return matchesSearch && matchesSource && matchesBS7671;
   });
 
-  // Get unique sources for filter chips
-  const uniqueSources = Array.from(new Set(newsArticles.map(article => article.source)));
+  // Extract unique sources for filtering
+  const uniqueSources = Array.from(new Set(newsArticles.map(article => article.regulatory_body).filter(Boolean).map((s: string) => s.trim())));
 
   const clearFilters = () => {
     setSearchTerm("");
@@ -144,21 +143,23 @@ const IndustryNewsCard = () => {
 
           {/* Filter Chips */}
           <div className="flex flex-wrap gap-2">
-            {/* Source filters */}
-            {uniqueSources.map((source) => (
-              <Button
-                key={source}
-                variant={selectedSource === source ? "default" : "outline"}
-                size="sm"
-                onClick={() => setSelectedSource(selectedSource === source ? null : source)}
-                className={selectedSource === source 
-                  ? "bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90" 
-                  : "border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
-                }
-              >
-                {source}
-              </Button>
-            ))}
+            <div className="flex flex-wrap gap-2 shrink-0">
+              {uniqueSources.map((source) => (
+                <Button
+                  key={source}
+                  variant={selectedSource === source ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => setSelectedSource(selectedSource === source ? null : source)}
+                  className={`shrink-0 ${
+                    selectedSource === source
+                      ? "bg-elec-yellow text-elec-dark hover:bg-elec-yellow/80"
+                      : "border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+                  }`}
+                >
+                  {source}
+                </Button>
+              ))}
+            </div>
             
             {/* BS 7671 toggle */}
             <Button
@@ -224,7 +225,7 @@ const IndustryNewsCard = () => {
                       <CardTitle className="text-lg leading-tight mb-2">{article.title}</CardTitle>
                       <div className="flex flex-wrap items-center gap-2 text-sm text-gray-400">
                         <Badge variant="secondary" className="bg-elec-yellow/20 text-elec-yellow">
-                          {article.source}
+                          {article.regulatory_body}
                         </Badge>
                         <span>•</span>
                         <span>{format(new Date(article.date_published), 'dd MMM yyyy')}</span>
@@ -261,7 +262,7 @@ const IndustryNewsCard = () => {
                           <DialogDescription className="text-gray-300">
                             <div className="flex flex-wrap items-center gap-2 mt-2">
                               <Badge variant="secondary" className="bg-elec-yellow/20 text-elec-yellow">
-                                {selectedArticle?.source}
+                                {selectedArticle?.regulatory_body}
                               </Badge>
                               <span>Published: {selectedArticle && format(new Date(selectedArticle.date_published), 'dd MMM yyyy')}</span>
                             </div>
@@ -271,19 +272,6 @@ const IndustryNewsCard = () => {
                           {selectedArticle?.content && (
                             <div className="prose prose-invert max-w-none">
                               <p className="whitespace-pre-wrap">{selectedArticle.content}</p>
-                            </div>
-                          )}
-                          {selectedArticle?.source_url && (
-                            <div className="pt-4 border-t border-elec-yellow/20">
-                              <Button
-                                variant="outline"
-                                size="sm"
-                                onClick={() => window.open(selectedArticle.source_url, '_blank')}
-                                className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
-                              >
-                                <ExternalLink className="h-4 w-4 mr-2" />
-                                Visit Source
-                              </Button>
                             </div>
                           )}
                         </div>
@@ -318,52 +306,34 @@ const IndustryNewsCard = () => {
             <div className="animate-spin h-6 w-6 border-2 border-elec-yellow border-t-transparent rounded-full mx-auto"></div>
           </div>
         ) : (
-          <div className="grid gap-3">
+          <div className="grid grid-cols-1 gap-4">
             {majorProjects.slice(0, 3).map((project) => (
-              <Card key={project.id} className="border-elec-yellow/20 bg-elec-gray/50">
-                <CardContent className="p-4">
-                  <div className="flex items-start justify-between gap-4">
-                    <div className="flex-1">
-                      <h3 className="font-medium text-white mb-2">{project.title}</h3>
-                      <div className="flex flex-wrap items-center gap-4 text-sm text-gray-400">
-                        <div className="flex items-center gap-1">
-                          <MapPin className="h-3 w-3" />
-                          {project.location}
-                        </div>
-                        <div className="flex items-center gap-1">
-                          <PoundSterling className="h-3 w-3" />
-                          {project.project_value}
-                        </div>
-                        <div className="flex items-center gap-1">
-                          <Calendar className="h-3 w-3" />
-                          {format(new Date(project.date_awarded), 'MMM yyyy')}
-                        </div>
-                      </div>
-                      <p className="text-sm text-gray-400 mt-1">Awarded to: {project.awarded_to}</p>
-                    </div>
-                    <div className="flex gap-2">
-                      {project.source_url ? (
-                        <Button
-                          size="sm"
-                          variant="outline"
-                          onClick={() => window.open(project.source_url, '_blank')}
-                          className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
-                        >
-                          Apply/Enquire
-                        </Button>
-                      ) : (
-                        <Button
-                          size="sm"
-                          variant="outline"
-                          disabled
-                          className="border-gray-600 text-gray-500"
-                        >
-                          No Link
-                        </Button>
-                      )}
-                    </div>
+              <Card key={project.id} className="border-elec-yellow/20 bg-elec-gray/50 flex flex-col">
+                <CardHeader className="pb-2">
+                  <h3 className="font-medium text-white">{project.title}</h3>
+                </CardHeader>
+                <CardContent className="pt-0 space-y-2 flex-1">
+                  <div className="flex items-center gap-2 text-sm text-gray-400">
+                    <MapPin className="h-4 w-4" />
+                    {project.location}
+                  </div>
+                  <div className="flex items-center gap-2 text-sm text-gray-400">
+                    <PoundSterling className="h-4 w-4" />
+                    {project.project_value}
+                  </div>
+                  <div className="flex items-center gap-2 text-sm text-gray-400">
+                    <Calendar className="h-4 w-4" />
+                    {format(new Date(project.date_awarded), 'MMM yyyy')}
+                  </div>
+                  <div className="text-sm text-gray-400">
+                    Awarded to: <span className="text-white">{project.awarded_to}</span>
                   </div>
                 </CardContent>
+                <CardFooter className="pt-2">
+                  <Button className="w-full border-gray-600 text-gray-500" variant="outline" disabled>
+                    No Link Available
+                  </Button>
+                </CardFooter>
               </Card>
             ))}
           </div>

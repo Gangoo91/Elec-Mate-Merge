@@ -19,7 +19,7 @@ const IndustryNews = () => {
         <meta name="description" content="Latest regulatory updates and compliance information from industry bodies" />
       </Helmet>
       
-      <div className="container mx-auto px-6 py-8 space-y-8 animate-fade-in">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 space-y-8 animate-fade-in">
         {/* Top-left back button */}
         <div className="flex justify-start">
           <Button
