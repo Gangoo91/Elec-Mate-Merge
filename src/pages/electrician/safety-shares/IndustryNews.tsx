@@ -41,9 +41,6 @@ const IndustryNews = () => {
             </div>
             <h1 className="text-3xl font-bold tracking-tight text-elec-yellow">Industry News</h1>
           </div>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            Latest regulatory updates and compliance information from industry bodies
-          </p>
         </div>
 
         <IndustryNewsCard />

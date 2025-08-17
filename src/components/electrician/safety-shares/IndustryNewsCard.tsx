@@ -1,319 +1,388 @@
+
 import { useState, useEffect } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Clock, ExternalLink, Eye, MessageSquare, Bookmark, Search, Filter, TrendingUp, BookmarkCheck, RefreshCw } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { RefreshCw, Search, ExternalLink, Building2, MapPin, Pound, Calendar, Filter, X } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { Loader2 } from "lucide-react";
-
-interface NewsArticle {
-  id: string;
-  title: string;
-  summary: string;
-  content: string;
-  category: string;
-  source: string;
-  date_published: string;
-  view_count: number;
-  average_rating: number;
-  priority?: 'high' | 'medium' | 'low';
-  source_url: string;
-  tags?: string[];
-}
+import { format } from "date-fns";
+import { Link } from "react-router-dom";
 
 const IndustryNewsCard = () => {
-  const [articles, setArticles] = useState<NewsArticle[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [refreshing, setRefreshing] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("all");
-  const [bookmarkedArticles, setBookmarkedArticles] = useState<Set<string>>(new Set());
+  const [selectedSource, setSelectedSource] = useState<string | null>(null);
+  const [showBS7671Only, setShowBS7671Only] = useState(false);
+  const [selectedArticle, setSelectedArticle] = useState<any>(null);
   const { toast } = useToast();
 
-  const fetchArticles = async () => {
-    try {
+  // Fetch industry news
+  const { data: newsArticles = [], isLoading: newsLoading, refetch: refetchNews } = useQuery({
+    queryKey: ['industry-news'],
+    queryFn: async () => {
       const { data, error } = await supabase
         .from('industry_news')
         .select('*')
         .eq('is_active', true)
         .order('date_published', { ascending: false })
         .limit(20);
-
+      
       if (error) throw error;
-      
-      // Map the database fields to our interface
-      const mappedArticles = (data || []).map((item: any) => ({
-        id: item.id,
-        title: item.title,
-        summary: item.summary,
-        content: item.content,
-        category: item.category,
-        source: item.source || item.regulatory_body || 'Unknown',
-        source_url: item.source_url || '#',
-        date_published: item.date_published,
-        view_count: item.view_count || 0,
-        average_rating: Number(item.average_rating) || 0,
-        priority: (item.priority as 'high' | 'medium' | 'low') || 'medium',
-        tags: item.tags || []
-      }));
-      
-      setArticles(mappedArticles);
-    } catch (error) {
-      console.error('Error fetching articles:', error);
-      toast({
-        title: "Error",
-        description: "Failed to load industry news. Please try again.",
-        variant: "destructive",
-      });
-    } finally {
-      setLoading(false);
+      return data || [];
     }
-  };
-
-  const refreshNews = async () => {
-    setRefreshing(true);
-    try {
-      // Call the edge function to fetch new news
-      const { error } = await supabase.functions.invoke('fetch-industry-news');
-      if (error) throw error;
-      
-      // Refetch articles after successful update
-      await fetchArticles();
-      toast({
-        title: "Success",
-        description: "Industry news updated successfully!",
-      });
-    } catch (error) {
-      console.error('Error refreshing news:', error);
-      toast({
-        title: "Error", 
-        description: "Failed to refresh news. Please try again.",
-        variant: "destructive",
-      });
-    } finally {
-      setRefreshing(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchArticles();
-  }, []);
-
-  const categories = ["all", ...Array.from(new Set(articles.map(article => article.category)))];
-
-  const filteredArticles = articles.filter(article => {
-    const matchesSearch = article.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         article.summary.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory = selectedCategory === "all" || article.category === selectedCategory;
-    return matchesSearch && matchesCategory;
   });
 
-  const toggleBookmark = (articleId: string) => {
-    const newBookmarks = new Set(bookmarkedArticles);
-    if (newBookmarks.has(articleId)) {
-      newBookmarks.delete(articleId);
-    } else {
-      newBookmarks.add(articleId);
+  // Fetch major projects
+  const { data: majorProjects = [], isLoading: projectsLoading } = useQuery({
+    queryKey: ['major-projects-preview'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('major_projects')
+        .select('*')
+        .eq('is_active', true)
+        .order('date_awarded', { ascending: false })
+        .limit(5);
+      
+      if (error) throw error;
+      return data || [];
     }
-    setBookmarkedArticles(newBookmarks);
+  });
+
+  // Manual refresh function
+  const handleManualRefresh = async () => {
+    try {
+      // First try to call the Edge Function
+      const { error } = await supabase.functions.invoke('fetch-industry-news');
+      
+      if (error) {
+        console.error('Edge function error:', error);
+        toast({
+          title: "Refresh Info",
+          description: "Refreshing from local database...",
+          duration: 2000,
+        });
+      } else {
+        toast({
+          title: "News Updated",
+          description: "Latest industry news fetched successfully",
+        });
+      }
+      
+      // Always refetch from database
+      await refetchNews();
+    } catch (error) {
+      console.error('Refresh error:', error);
+      toast({
+        title: "Refreshed Locally",
+        description: "Showing latest cached articles",
+        duration: 2000,
+      });
+      await refetchNews();
+    }
   };
 
-  const getCategoryColor = (category: string) => {
-    switch (category.toLowerCase()) {
-      case "regulations": return "bg-red-500/20 text-red-400 border-red-500/30";
-      case "government policy": return "bg-blue-500/20 text-blue-400 border-blue-500/30";
-      case "safety updates": return "bg-orange-500/20 text-orange-400 border-orange-500/30";
-      case "industry updates": return "bg-green-500/20 text-green-400 border-green-500/30";
-      case "technology": return "bg-purple-500/20 text-purple-400 border-purple-500/30";
-      case "guidance": return "bg-cyan-500/20 text-cyan-400 border-cyan-500/30";
-      case "training": return "bg-pink-500/20 text-pink-400 border-pink-500/30";
-      default: return "bg-gray-500/20 text-gray-400 border-gray-500/30";
-    }
-  };
-
-  const getPriorityColor = (priority?: string) => {
-    switch (priority) {
-      case 'high': return 'border-l-red-500';
-      case 'medium': return 'border-l-elec-yellow';
-      case 'low': return 'border-l-green-500';
-      default: return 'border-l-transparent';
-    }
-  };
-
-  const isTrending = (article: NewsArticle) => {
-    // Consider trending if published in last 3 days and has high views or high priority
-    const threeDaysAgo = new Date();
-    threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
-    const publishDate = new Date(article.date_published);
+  // Filter articles
+  const filteredArticles = newsArticles.filter(article => {
+    const matchesSearch = !searchTerm || 
+      article.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (article.summary && article.summary.toLowerCase().includes(searchTerm.toLowerCase()));
     
-    return publishDate > threeDaysAgo && (article.view_count > 1000 || article.priority === 'high');
-  };
+    const matchesSource = !selectedSource || article.source === selectedSource;
+    
+    const matchesBS7671 = !showBS7671Only || 
+      article.title.toLowerCase().includes('bs 7671') ||
+      article.title.toLowerCase().includes('wiring regulations') ||
+      (article.tags && article.tags.some((tag: string) => tag.toLowerCase().includes('bs 7671')));
+    
+    return matchesSearch && matchesSource && matchesBS7671;
+  });
 
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center py-16">
-        <Loader2 className="h-8 w-8 animate-spin text-elec-yellow" />
-        <span className="ml-2 text-muted-foreground">Loading industry news...</span>
-      </div>
-    );
-  }
+  // Get unique sources for filter chips
+  const uniqueSources = Array.from(new Set(newsArticles.map(article => article.source)));
+
+  const clearFilters = () => {
+    setSearchTerm("");
+    setSelectedSource(null);
+    setShowBS7671Only(false);
+  };
 
   return (
     <div className="space-y-6">
       {/* Search and Filter Controls */}
-      <div className="space-y-4">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          <Button 
-            onClick={refreshNews}
-            disabled={refreshing}
-            className="bg-elec-yellow text-black hover:bg-elec-yellow/90 self-start sm:self-auto"
-          >
-            {refreshing ? (
-              <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-            ) : (
+      <Card className="border-elec-yellow/20 bg-elec-gray">
+        <CardHeader className="pb-4">
+          <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Filter className="h-5 w-5 text-elec-yellow" />
+              <CardTitle className="text-lg">Filter News</CardTitle>
+            </div>
+            <Button
+              onClick={handleManualRefresh}
+              variant="outline"
+              size="sm"
+              className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+            >
               <RefreshCw className="h-4 w-4 mr-2" />
-            )}
-            {refreshing ? 'Refreshing...' : 'Refresh News'}
-          </Button>
-        </div>
-
-        <div className="flex flex-col sm:flex-row gap-4">
-          <div className="relative flex-1">
-            <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+              Refresh News
+            </Button>
+          </div>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          {/* Search */}
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
             <Input
               placeholder="Search articles..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10 bg-elec-gray border-elec-yellow/20 text-white placeholder:text-muted-foreground"
+              className="pl-10 bg-elec-dark border-elec-yellow/20 text-white"
             />
           </div>
-          <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-            <SelectTrigger className="w-full sm:w-48 bg-elec-gray border-elec-yellow/20 text-white">
-              <Filter className="h-4 w-4 mr-2" />
-              <SelectValue placeholder="All Categories" />
-            </SelectTrigger>
-            <SelectContent className="bg-elec-gray border-elec-yellow/20">
-              {categories.map((category) => (
-                <SelectItem key={category} value={category} className="text-white">
-                  {category === "all" ? "All Categories" : category}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
 
-        {/* Results Count */}
-        <div className="flex items-center justify-between text-sm text-muted-foreground">
-          <span>{filteredArticles.length} article{filteredArticles.length !== 1 ? 's' : ''} found</span>
-        </div>
-      </div>
+          {/* Filter Chips */}
+          <div className="flex flex-wrap gap-2">
+            {/* Source filters */}
+            {uniqueSources.map((source) => (
+              <Button
+                key={source}
+                variant={selectedSource === source ? "default" : "outline"}
+                size="sm"
+                onClick={() => setSelectedSource(selectedSource === source ? null : source)}
+                className={selectedSource === source 
+                  ? "bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90" 
+                  : "border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+                }
+              >
+                {source}
+              </Button>
+            ))}
+            
+            {/* BS 7671 toggle */}
+            <Button
+              variant={showBS7671Only ? "default" : "outline"}
+              size="sm"
+              onClick={() => setShowBS7671Only(!showBS7671Only)}
+              className={showBS7671Only 
+                ? "bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90" 
+                : "border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+              }
+            >
+              BS 7671 Updates
+            </Button>
 
-      {/* Articles Grid */}
-      <div className="grid gap-6">
-        {filteredArticles.map((article) => (
-          <Card 
-            key={article.id} 
-            className={`border-elec-yellow/20 bg-elec-gray border-l-4 ${getPriorityColor(article.priority)} hover:border-elec-yellow/40 transition-colors`}
-          >
-            <CardHeader className="pb-3">
-              <div className="flex items-start justify-between gap-4">
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 mb-3 flex-wrap">
-                    <Badge className={getCategoryColor(article.category)}>
-                      {article.category}
-                    </Badge>
-                    {isTrending(article) && (
-                      <Badge variant="secondary" className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30">
-                        <TrendingUp className="h-3 w-3 mr-1" />
-                        Trending
-                      </Badge>
-                    )}
-                    <span className="text-sm text-muted-foreground">by {article.source}</span>
-                  </div>
-                  <CardTitle className="text-white text-lg mb-2 leading-tight">
-                    {article.title}
-                  </CardTitle>
-                  <p className="text-gray-300 text-sm leading-relaxed">
-                    {article.summary}
-                  </p>
-                </div>
-                <Button 
-                  size="sm" 
-                  variant="ghost" 
-                  onClick={() => toggleBookmark(article.id)}
-                  className={`shrink-0 ${bookmarkedArticles.has(article.id) ? 'text-elec-yellow' : 'text-muted-foreground'} hover:text-elec-yellow`}
-                >
-                  {bookmarkedArticles.has(article.id) ? (
-                    <BookmarkCheck className="h-4 w-4" />
-                  ) : (
-                    <Bookmark className="h-4 w-4" />
-                  )}
-                </Button>
-              </div>
-            </CardHeader>
+            {/* Clear filters */}
+            {(searchTerm || selectedSource || showBS7671Only) && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={clearFilters}
+                className="text-gray-400 hover:text-white"
+              >
+                <X className="h-4 w-4 mr-1" />
+                Clear
+              </Button>
+            )}
+          </div>
+        </CardContent>
+      </Card>
 
-            <CardContent className="pt-0">
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                <div className="flex items-center gap-4 text-sm text-muted-foreground flex-wrap">
-                  <div className="flex items-center gap-1">
-                    <Clock className="h-4 w-4" />
-                    <span>{new Date(article.date_published).toLocaleDateString('en-GB')}</span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <Eye className="h-4 w-4" />
-                    <span>{article.view_count.toLocaleString()}</span>
-                  </div>
-                  {article.average_rating > 0 && (
-                    <div className="flex items-center gap-1">
-                      <span>★ {article.average_rating.toFixed(1)}</span>
-                    </div>
-                  )}
-                </div>
-                <Button 
-                  size="sm" 
-                  className="bg-elec-yellow text-black hover:bg-elec-yellow/90 self-start sm:self-auto"
-                  onClick={() => window.open(article.source_url, '_blank')}
-                >
-                  <ExternalLink className="h-4 w-4 mr-2" />
-                  Read Article
-                </Button>
-              </div>
+      {/* News Articles */}
+      <div className="space-y-4">
+        <h2 className="text-xl font-semibold text-white">
+          Latest Updates ({filteredArticles.length})
+        </h2>
+        
+        {newsLoading ? (
+          <div className="text-center py-8">
+            <div className="animate-spin h-8 w-8 border-2 border-elec-yellow border-t-transparent rounded-full mx-auto"></div>
+            <p className="text-gray-400 mt-2">Loading latest news...</p>
+          </div>
+        ) : filteredArticles.length === 0 ? (
+          <Card className="border-elec-yellow/20 bg-elec-gray">
+            <CardContent className="text-center py-8">
+              <p className="text-gray-400">No articles match your current filters.</p>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={clearFilters}
+                className="mt-2 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+              >
+                Clear Filters
+              </Button>
             </CardContent>
           </Card>
-        ))}
+        ) : (
+          <div className="grid gap-4">
+            {filteredArticles.map((article) => (
+              <Card key={article.id} className="border-elec-yellow/20 bg-elec-gray hover:border-elec-yellow/40 transition-colors">
+                <CardHeader className="pb-3">
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1">
+                      <CardTitle className="text-lg leading-tight mb-2">{article.title}</CardTitle>
+                      <div className="flex flex-wrap items-center gap-2 text-sm text-gray-400">
+                        <Badge variant="secondary" className="bg-elec-yellow/20 text-elec-yellow">
+                          {article.source}
+                        </Badge>
+                        <span>•</span>
+                        <span>{format(new Date(article.date_published), 'dd MMM yyyy')}</span>
+                        {article.view_count > 0 && (
+                          <>
+                            <span>•</span>
+                            <span>{article.view_count} views</span>
+                          </>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                  {article.summary && (
+                    <CardDescription className="text-gray-300 line-clamp-2">
+                      {article.summary}
+                    </CardDescription>
+                  )}
+                </CardHeader>
+                <CardContent className="pt-0">
+                  <div className="flex gap-2">
+                    <Dialog>
+                      <DialogTrigger asChild>
+                        <Button 
+                          size="sm" 
+                          className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
+                          onClick={() => setSelectedArticle(article)}
+                        >
+                          Read Article
+                        </Button>
+                      </DialogTrigger>
+                      <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto bg-elec-gray border-elec-yellow/20">
+                        <DialogHeader>
+                          <DialogTitle className="text-elec-yellow text-xl">{selectedArticle?.title}</DialogTitle>
+                          <DialogDescription className="text-gray-300">
+                            <div className="flex flex-wrap items-center gap-2 mt-2">
+                              <Badge variant="secondary" className="bg-elec-yellow/20 text-elec-yellow">
+                                {selectedArticle?.source}
+                              </Badge>
+                              <span>Published: {selectedArticle && format(new Date(selectedArticle.date_published), 'dd MMM yyyy')}</span>
+                            </div>
+                          </DialogDescription>
+                        </DialogHeader>
+                        <div className="space-y-4 text-white">
+                          {selectedArticle?.content && (
+                            <div className="prose prose-invert max-w-none">
+                              <p className="whitespace-pre-wrap">{selectedArticle.content}</p>
+                            </div>
+                          )}
+                          {selectedArticle?.source_url && (
+                            <div className="pt-4 border-t border-elec-yellow/20">
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => window.open(selectedArticle.source_url, '_blank')}
+                                className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+                              >
+                                <ExternalLink className="h-4 w-4 mr-2" />
+                                Visit Source
+                              </Button>
+                            </div>
+                          )}
+                        </div>
+                      </DialogContent>
+                    </Dialog>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        )}
       </div>
 
-      {/* Load More */}
-      {filteredArticles.length > 0 && filteredArticles.length >= 20 && (
-        <div className="text-center pt-4">
-          <Button variant="outline" className="border-elec-yellow/30 text-white hover:bg-elec-yellow/10">
-            Load More Articles
-          </Button>
-        </div>
-      )}
-
-      {/* No Results */}
-      {filteredArticles.length === 0 && (
-        <div className="text-center py-12">
-          <div className="w-16 h-16 rounded-full bg-elec-yellow/10 flex items-center justify-center mx-auto mb-4">
-            <Search className="h-8 w-8 text-elec-yellow" />
+      {/* Major Projects Section */}
+      <div className="space-y-4">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center">
+              <Building2 className="h-4 w-4 text-white" />
+            </div>
+            <h2 className="text-xl font-semibold text-white">Major Projects Just Awarded</h2>
           </div>
-          <p className="text-muted-foreground">No articles found matching your search criteria.</p>
-          <Button 
-            variant="ghost" 
-            onClick={() => {
-              setSearchTerm("");
-              setSelectedCategory("all");
-            }}
-            className="mt-2 text-elec-yellow hover:bg-elec-yellow/10"
-          >
-            Clear filters
-          </Button>
+          <Link to="/electrician/safety-shares/projects">
+            <Button variant="outline" size="sm" className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10">
+              View All Projects
+            </Button>
+          </Link>
         </div>
-      )}
+
+        {projectsLoading ? (
+          <div className="text-center py-4">
+            <div className="animate-spin h-6 w-6 border-2 border-elec-yellow border-t-transparent rounded-full mx-auto"></div>
+          </div>
+        ) : (
+          <div className="grid gap-3">
+            {majorProjects.slice(0, 3).map((project) => (
+              <Card key={project.id} className="border-elec-yellow/20 bg-elec-gray/50">
+                <CardContent className="p-4">
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1">
+                      <h3 className="font-medium text-white mb-2">{project.title}</h3>
+                      <div className="flex flex-wrap items-center gap-4 text-sm text-gray-400">
+                        <div className="flex items-center gap-1">
+                          <MapPin className="h-3 w-3" />
+                          {project.location}
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <Pound className="h-3 w-3" />
+                          {project.project_value}
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <Calendar className="h-3 w-3" />
+                          {format(new Date(project.date_awarded), 'MMM yyyy')}
+                        </div>
+                      </div>
+                      <p className="text-sm text-gray-400 mt-1">Awarded to: {project.awarded_to}</p>
+                    </div>
+                    <div className="flex gap-2">
+                      {project.source_url ? (
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => window.open(project.source_url, '_blank')}
+                          className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+                        >
+                          Apply/Enquire
+                        </Button>
+                      ) : (
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          disabled
+                          className="border-gray-600 text-gray-500"
+                        >
+                          No Link
+                        </Button>
+                      )}
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        )}
+
+        <Card className="border-elec-yellow/20 bg-elec-gray/30">
+          <CardContent className="p-4 text-center">
+            <p className="text-gray-400 text-sm mb-3">
+              Stay ahead of the competition - be the first to know about major electrical contracts in the UK
+            </p>
+            <Link to="/electrician/safety-shares/projects">
+              <Button className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90">
+                <Building2 className="h-4 w-4 mr-2" />
+                View All Major Projects
+              </Button>
+            </Link>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 };
