@@ -149,13 +149,13 @@ const CommunityPriceSubmission = () => {
               <SelectTrigger className="h-10">
                 <SelectValue placeholder="Select..." />
               </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="1">1 Bedroom</SelectItem>
-                <SelectItem value="2">2 Bedrooms</SelectItem>
-                <SelectItem value="3">3 Bedrooms</SelectItem>
-                <SelectItem value="4">4 Bedrooms</SelectItem>
-                <SelectItem value="5+">5+ Bedrooms</SelectItem>
-              </SelectContent>
+                <SelectContent className="max-h-[120px] overflow-y-auto bg-elec-dark border-elec-yellow/20 text-white">
+                  <SelectItem value="1" className="focus:bg-elec-yellow/20 focus:text-white">1 Bedroom</SelectItem>
+                  <SelectItem value="2" className="focus:bg-elec-yellow/20 focus:text-white">2 Bedrooms</SelectItem>
+                  <SelectItem value="3" className="focus:bg-elec-yellow/20 focus:text-white">3 Bedrooms</SelectItem>
+                  <SelectItem value="4" className="focus:bg-elec-yellow/20 focus:text-white">4 Bedrooms</SelectItem>
+                  <SelectItem value="5+" className="focus:bg-elec-yellow/20 focus:text-white">5+ Bedrooms</SelectItem>
+                </SelectContent>
             </Select>
           </div>
 
@@ -165,13 +165,13 @@ const CommunityPriceSubmission = () => {
               <SelectTrigger className="h-10">
                 <SelectValue placeholder="Select..." />
               </SelectTrigger>
-              <SelectContent>
-                {propertyTypes.map((type) => (
-                  <SelectItem key={type.value} value={type.value}>
-                    {type.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
+                <SelectContent className="max-h-[120px] overflow-y-auto bg-elec-dark border-elec-yellow/20 text-white">
+                  {propertyTypes.map((type) => (
+                    <SelectItem key={type.value} value={type.value} className="focus:bg-elec-yellow/20 focus:text-white">
+                      {type.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
             </Select>
           </div>
 
@@ -181,12 +181,12 @@ const CommunityPriceSubmission = () => {
               <SelectTrigger className="h-10">
                 <SelectValue placeholder="Select..." />
               </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="1">1 Floor</SelectItem>
-                <SelectItem value="2">2 Floors</SelectItem>
-                <SelectItem value="3">3 Floors</SelectItem>
-                <SelectItem value="4+">4+ Floors</SelectItem>
-              </SelectContent>
+                <SelectContent className="max-h-[120px] overflow-y-auto bg-elec-dark border-elec-yellow/20 text-white">
+                  <SelectItem value="1" className="focus:bg-elec-yellow/20 focus:text-white">1 Floor</SelectItem>
+                  <SelectItem value="2" className="focus:bg-elec-yellow/20 focus:text-white">2 Floors</SelectItem>
+                  <SelectItem value="3" className="focus:bg-elec-yellow/20 focus:text-white">3 Floors</SelectItem>
+                  <SelectItem value="4+" className="focus:bg-elec-yellow/20 focus:text-white">4+ Floors</SelectItem>
+                </SelectContent>
             </Select>
           </div>
         </div>
@@ -217,12 +217,12 @@ const CommunityPriceSubmission = () => {
                 <SelectTrigger className="h-10">
                   <SelectValue placeholder="Select job type..." />
                 </SelectTrigger>
-                <SelectContent>
-                  {jobTypes.map((job) => (
-                    <SelectItem key={job} value={job}>
-                      {job}
-                    </SelectItem>
-                  ))}
+              <SelectContent className="max-h-[200px] overflow-y-auto bg-elec-dark border-elec-yellow/20 text-white">
+                {jobTypes.map((job) => (
+                  <SelectItem key={job} value={job} className="focus:bg-elec-yellow/20 focus:text-white">
+                    {job}
+                  </SelectItem>
+                ))}
                 </SelectContent>
               </Select>
             </div>
@@ -266,12 +266,12 @@ const CommunityPriceSubmission = () => {
                 <SelectTrigger className="h-10">
                   <SelectValue />
                 </SelectTrigger>
-                <SelectContent>
-                  {units.map((unit) => (
-                    <SelectItem key={unit} value={unit}>
-                      {unit}
-                    </SelectItem>
-                  ))}
+              <SelectContent className="max-h-[150px] overflow-y-auto bg-elec-dark border-elec-yellow/20 text-white">
+                {units.map((unit) => (
+                  <SelectItem key={unit} value={unit} className="focus:bg-elec-yellow/20 focus:text-white">
+                    {unit}
+                  </SelectItem>
+                ))}
                 </SelectContent>
               </Select>
             </div>
@@ -282,12 +282,12 @@ const CommunityPriceSubmission = () => {
                 <SelectTrigger className="h-10">
                   <SelectValue />
                 </SelectTrigger>
-                <SelectContent>
-                  {complexityLevels.map((level) => (
-                    <SelectItem key={level.value} value={level.value}>
-                      {level.label}
-                    </SelectItem>
-                  ))}
+              <SelectContent className="max-h-[120px] overflow-y-auto bg-elec-dark border-elec-yellow/20 text-white">
+                {complexityLevels.map((level) => (
+                  <SelectItem key={level.value} value={level.value} className="focus:bg-elec-yellow/20 focus:text-white">
+                    {level.label}
+                  </SelectItem>
+                ))}
                 </SelectContent>
               </Select>
             </div>

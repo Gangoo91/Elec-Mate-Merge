@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import { PoundSterling, ArrowLeft, RefreshCw, Search } from "lucide-react";
 import { useLiveMetalPrices } from "@/hooks/useLiveMetalPrices";
 import { useState, useEffect } from "react";
-import { Card } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
+import { Users } from "lucide-react";
 import { logger } from "@/utils/logger";
 import CompactPricingGrid from "@/components/electrician-pricing/CompactPricingGrid";
 import EnhancedRegionalPricing from "@/components/electrician-pricing/EnhancedRegionalPricing";
@@ -74,18 +75,46 @@ const LivePricing = () => {
           {/* Enhanced Regional Job Pricing */}
           <EnhancedRegionalPricing />
 
-          {/* Community Price Submission - NEW */}
+          {/* Community Price Submission - Enhanced with better instructions */}
           <div data-community-form>
+            <Card className="border-elec-yellow/20 bg-elec-gray mb-4">
+              <CardContent className="p-4">
+                <div className="flex items-center gap-2 mb-2">
+                  <Users className="h-5 w-5 text-elec-yellow" />
+                  <h3 className="font-medium text-white">Share Pricing with Fellow Electricians</h3>
+                </div>
+                <p className="text-sm text-gray-400 mb-3">
+                  Help build the most accurate UK electrical pricing database by sharing recent job quotes from your area. 
+                  Your submissions help fellow electricians stay competitive.
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs text-gray-400">
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
+                    <span>Anonymous submissions</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
+                    <span>Reviewed before publication</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
+                    <span>Builds regional estimates</span>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
             <CommunityPriceSubmission />
           </div>
 
           {/* Compact Pricing Grid */}
           {isLoading ? (
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 h-32">
-              {[1, 2, 3].map((i) => (
-                <div key={i} className="rounded-lg border border-elec-yellow/20 bg-elec-gray animate-pulse h-full" />
-              ))}
-            </div>
+            <Card className="border-elec-yellow/20 bg-elec-gray p-6">
+              <div className="text-center">
+                <div className="animate-spin h-8 w-8 border-2 border-elec-yellow border-t-transparent rounded-full mx-auto mb-4"></div>
+                <p className="text-gray-400">Loading UK metal prices...</p>
+                <p className="text-xs text-gray-500 mt-2">Fetching live pricing data from MetalPriceAPI</p>
+              </div>
+            </Card>
           ) : data ? (
             <>
               <CompactPricingGrid
@@ -97,8 +126,20 @@ const LivePricing = () => {
             </>
           ) : (
             <Card className="p-6 border-elec-yellow/20 bg-elec-gray text-center">
-              <p className="text-muted-foreground mb-4">Could not load UK pricing data</p>
-              <Button onClick={() => refreshPrices(true)} size="sm">Try Again</Button>
+              <div className="space-y-4">
+                <div className="w-12 h-12 bg-orange-500/20 rounded-full flex items-center justify-center mx-auto">
+                  <span className="text-orange-400 text-xl">⚠️</span>
+                </div>
+                <div>
+                  <h3 className="font-medium text-white mb-2">Metal Pricing Temporarily Unavailable</h3>
+                  <p className="text-gray-400 text-sm mb-4">
+                    We're experiencing issues with the live pricing API. This typically resolves within a few minutes.
+                  </p>
+                  <Button onClick={() => refreshPrices(true)} size="sm" className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90">
+                    Try Again
+                  </Button>
+                </div>
+              </div>
             </Card>
           )}
 
@@ -108,18 +149,46 @@ const LivePricing = () => {
           )}
 
           {/* Compact Disclaimer */}
-          <div className="text-xs text-muted-foreground p-3 border border-elec-yellow/20 rounded bg-elec-gray/50">
-            <strong>Disclaimer:</strong> Prices are indicative of UK market rates and may vary by supplier and region. 
-            Always confirm current prices with your local UK supplier before making purchasing decisions.
+          <div className="text-xs text-muted-foreground p-4 border border-elec-yellow/20 rounded bg-elec-gray/50">
+            <div className="mb-3">
+              <strong>Important Disclaimer:</strong> Prices shown are indicative of UK market rates and may vary significantly by supplier, region, and quantity. 
+              Always confirm current prices with your local UK supplier before making purchasing decisions.
+            </div>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-3 border-t border-elec-yellow/10">
+              <div>
+                <h4 className="font-medium text-white text-sm mb-2">For Scrap Metal Sales:</h4>
+                <ul className="text-xs space-y-1 text-gray-400">
+                  <li>• Prices vary by metal grade and condition</li>
+                  <li>• Call ahead to confirm current rates</li>
+                  <li>• Bring ID and proof of ownership</li>
+                  <li>• Higher grades command better prices</li>
+                </ul>
+              </div>
+              <div>
+                <h4 className="font-medium text-white text-sm mb-2">Community Pricing:</h4>
+                <ul className="text-xs space-y-1 text-gray-400">
+                  <li>• Job prices from real UK electricians</li>
+                  <li>• Regional variations included</li>
+                  <li>• Updated with new submissions</li>
+                  <li>• Use as guidance only</li>
+                </ul>
+              </div>
+            </div>
             
             {/* Debug Information */}
             {data && (
-              <div className="mt-2 text-xs opacity-75">
-                <div>API Provider: {data.apiProvider}</div>
-                <div>API Key: ...{data.apiKeySuffix}</div>
-                <div>Tried Live: {data.triedLive ? 'Yes' : 'No'}</div>
-                <div>Data Source: {data.dataSource}</div>
-                {data.liveAttemptError && <div>Live Error: {data.liveAttemptError}</div>}
+              <div className="mt-4 pt-3 border-t border-elec-yellow/10 text-xs opacity-75">
+                <details className="cursor-pointer">
+                  <summary className="font-medium text-gray-400 hover:text-white">Debug Information</summary>
+                  <div className="mt-2 space-y-1">
+                    <div>API Provider: {data.apiProvider}</div>
+                    <div>API Key: ...{data.apiKeySuffix}</div>
+                    <div>Tried Live: {data.triedLive ? 'Yes' : 'No'}</div>
+                    <div>Data Source: {data.dataSource}</div>
+                    {data.liveAttemptError && <div className="text-orange-400">Live Error: {data.liveAttemptError}</div>}
+                  </div>
+                </details>
               </div>
             )}
           </div>
