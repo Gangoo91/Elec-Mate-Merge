@@ -126,7 +126,7 @@ const CommunityPriceSubmission = () => {
               <SelectTrigger>
                 <SelectValue placeholder="Select the type of electrical work" />
               </SelectTrigger>
-              <SelectContent className="max-h-60">
+              <SelectContent className="max-h-60 bg-elec-gray z-50 border-elec-yellow/20">
                 {jobTypesLoading ? (
                   <SelectItem value="loading" disabled>Loading job types...</SelectItem>
                 ) : (

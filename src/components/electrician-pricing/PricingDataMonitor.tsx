@@ -62,31 +62,7 @@ const PricingDataMonitor = ({
 
   return (
     <div className="space-y-4">
-      {/* Community Contribution Banner */}
-      <Card className="border-blue-200 bg-blue-50">
-        <CardContent className="pt-4">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-            <div className="flex items-center gap-3">
-              <Users className="h-5 w-5 text-blue-600 flex-shrink-0" />
-              <div>
-                <h3 className="font-medium text-blue-800">Help Build Accurate UK Pricing</h3>
-                <p className="text-sm text-blue-700">
-                  Share real prices from your area - takes 2 minutes, helps thousands of electricians
-                </p>
-              </div>
-            </div>
-            <Button 
-              onClick={scrollToCommunityForm}
-              className="bg-blue-600 hover:bg-blue-700 text-white flex-shrink-0"
-            >
-              <ArrowDown className="h-4 w-4 mr-2" />
-              Add Your Price
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Existing Data Quality Monitor */}
+      {/* Data Quality Monitor */}
       <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader className="pb-3">
           <CardTitle className="text-lg flex items-center gap-2">
