@@ -26,27 +26,28 @@ const BusinessHub = () => {
     },
     {
       id: 4,
-      title: "Business Admin",
-      icon: Cog,
-      link: "/electrician/business-admin",
-    },
-    {
-      id: 5,
       title: "Materials",
       icon: Package,
       link: "/electrician/materials",
     },
     {
-      id: 6,
+      id: 5,
       title: "Tools",
       icon: Wrench,
       link: "/electrician/tools",
     },
     {
-      id: 7,
+      id: 6,
       title: "Live Pricing",
       icon: PoundSterling,
       link: "/electrician/live-pricing",
+    },
+    {
+      id: 7,
+      title: "Business Admin",
+      icon: Cog,
+      link: "/electrician/business-admin",
+      comingSoon: true,
     },
   ];
 
@@ -86,7 +87,12 @@ const BusinessHub = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6 max-w-7xl mx-auto mt-2">
             {cards.map((c) => (
               <Link to={c.link} key={c.id} className="focus:outline-none hover-scale">
-                <Card className="border-elec-yellow/20 bg-elec-gray h-full hover:bg-elec-gray/80 transition-all duration-200 cursor-pointer">
+                <Card className={`border-elec-yellow/20 bg-elec-gray h-full hover:bg-elec-gray/80 transition-all duration-200 cursor-pointer relative ${c.comingSoon ? 'opacity-75' : ''}`}>
+                  {c.comingSoon && (
+                    <div className="absolute -top-2 -right-2 bg-gradient-to-r from-amber-500 to-orange-500 text-white text-xs font-semibold px-2 py-1 rounded-full shadow-lg z-10">
+                      Coming Soon
+                    </div>
+                  )}
                   <CardHeader className="flex flex-col items-center justify-center text-center py-6 md:py-8">
                     <c.icon className="h-10 w-10 sm:h-12 sm:w-12 mb-3 text-elec-yellow" />
                     <CardTitle className="text-base sm:text-lg leading-tight">{c.title}</CardTitle>
