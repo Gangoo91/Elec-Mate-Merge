@@ -34,9 +34,23 @@ async function fetchLiveMetalPrices() {
     const data = await response.json()
     console.log('MetalPriceAPI raw response:', JSON.stringify(data, null, 2))
     
-    if (!data.success) {
-      console.error('MetalPriceAPI returned success: false')
-      throw new Error('MetalPriceAPI returned success: false')
+    // Check if response has success field or rates directly
+    console.log('Response structure check:')
+    console.log('- Has success field:', 'success' in data)
+    console.log('- Success value:', data.success)
+    console.log('- Has rates field:', 'rates' in data)
+    console.log('- Data keys:', Object.keys(data))
+    
+    // Some APIs don't use success field, check for rates directly
+    if (data.success === false) {
+      console.error('MetalPriceAPI returned success: false, error:', data.error)
+      throw new Error(`MetalPriceAPI error: ${JSON.stringify(data.error)}`)
+    }
+    
+    // If no success field but has rates, consider it successful
+    if (!('success' in data) && data.rates) {
+      console.log('No success field but rates found - treating as successful')
+      data.success = true
     }
     
     console.log('MetalPriceAPI response received: Success')
