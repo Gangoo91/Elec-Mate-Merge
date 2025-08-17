@@ -99,7 +99,13 @@ export const useLiveMetalPrices = () => {
         equipmentPricesCount: processedData.equipmentPrices.length,
         marketAlertsCount: processedData.marketAlerts.length,
         regionalJobPricingCount: processedData.regionalJobPricing.length,
-        lastUpdated: processedData.lastUpdated
+        lastUpdated: processedData.lastUpdated,
+        // Debug: Show metal prices with subItems
+        metalPricesWithSubItems: processedData.metalPrices.filter(p => p.subItems).map(p => ({ 
+          name: p.name, 
+          subItemsCount: p.subItems?.length,
+          subItems: p.subItems?.map(s => s.name)
+        }))
       });
 
       setData(processedData);
