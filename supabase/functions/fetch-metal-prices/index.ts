@@ -170,19 +170,45 @@ serve(async (req) => {
   }
 
   try {
+    // Parse request body to get parameters
+    let forceLive = false;
+    let cacheBuster = '';
+    
+    if (req.method === 'POST') {
+      try {
+        const body = await req.json();
+        forceLive = body.forceLive || false;
+        cacheBuster = body.cacheBuster || '';
+        console.log('Request parameters:', { forceLive, cacheBuster });
+      } catch (e) {
+        console.log('No JSON body or failed to parse, using defaults');
+      }
+    }
+
     // Create Supabase client
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
     const supabase = createClient(supabaseUrl, supabaseKey)
 
+    // Get API key for debug info
+    const apiKey = Deno.env.get('METAL_PRICE_API_KEY')
+    const apiKeySuffix = apiKey ? apiKey.slice(-4) : 'NONE'
+    console.log('API Key suffix:', apiKeySuffix)
+
     console.log('Starting fetch-metal-prices function');
 
+    // Debug fields
+    let triedLive = false;
+    let liveAttemptError = null;
+    
     // Try to fetch live metal prices from MetalPriceAPI first
     let commodityData = []
     let dataSource = 'live_api'
     let lastUpdated = new Date().toISOString()
     
     try {
+      triedLive = true;
+      console.log('Attempting to fetch live data from MetalPriceAPI...')
       const liveApiData = await fetchLiveMetalPrices()
       if (liveApiData && liveApiData.rates) {
         commodityData = transformMetalData(liveApiData)
@@ -207,6 +233,7 @@ serve(async (req) => {
         throw new Error('No valid data from MetalPriceAPI')
       }
     } catch (apiError) {
+      liveAttemptError = apiError.message;
       console.error('MetalPriceAPI failed, falling back to database:', apiError)
       
       // Fallback to database if API fails
@@ -697,7 +724,12 @@ serve(async (req) => {
       regionalJobPricing: regionalPricing || [],
       lastUpdated: formattedLastUpdated,
       dataSource,
-      isLive: dataSource === 'live_api'
+      isLive: dataSource === 'live_api',
+      // Debug information
+      apiProvider: 'metalpriceapi.com',
+      apiKeySuffix,
+      triedLive,
+      liveAttemptError
     }
 
     console.log('Successfully aggregated pricing data:', {
@@ -717,7 +749,10 @@ serve(async (req) => {
       {
         headers: { 
           ...corsHeaders, 
-          'Content-Type': 'application/json' 
+          'Content-Type': 'application/json',
+          'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+          'Pragma': 'no-cache',
+          'Expires': '0'
         },
       },
     )

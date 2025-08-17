@@ -45,6 +45,11 @@ interface MetalPricesData {
   lastUpdated: string;
   dataSource?: string;
   isLive?: boolean;
+  // Debug fields
+  apiProvider?: string;
+  apiKeySuffix?: string;
+  triedLive?: boolean;
+  liveAttemptError?: string | null;
 }
 
 export const useLiveMetalPrices = () => {
@@ -53,14 +58,19 @@ export const useLiveMetalPrices = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchPrices = async () => {
+  const fetchPrices = async (forceLive = false) => {
     setIsLoading(true);
     setError(null);
     
-    logger.info('Starting to fetch metal prices and regional job pricing');
+    logger.info('Starting to fetch metal prices and regional job pricing', { forceLive });
 
     try {
-      const { data: pricesData, error: pricesError } = await supabase.functions.invoke('fetch-metal-prices');
+      const { data: pricesData, error: pricesError } = await supabase.functions.invoke('fetch-metal-prices', {
+        body: {
+          forceLive,
+          cacheBuster: Date.now().toString()
+        }
+      });
 
       if (pricesError) {
         logger.error('Error from fetch-metal-prices function:', pricesError);
@@ -94,7 +104,12 @@ export const useLiveMetalPrices = () => {
         regionalJobPricing: pricesData.regionalJobPricing || [],
         lastUpdated: pricesData.lastUpdated || new Date().toLocaleString('en-GB'),
         dataSource: pricesData.dataSource || 'unknown',
-        isLive: pricesData.dataSource === 'live_api'
+        isLive: pricesData.dataSource === 'live_api',
+        // Include debug info
+        apiProvider: pricesData.apiProvider,
+        apiKeySuffix: pricesData.apiKeySuffix,
+        triedLive: pricesData.triedLive,
+        liveAttemptError: pricesData.liveAttemptError
       };
 
       logger.info('Processed data structure:', {
@@ -133,9 +148,9 @@ export const useLiveMetalPrices = () => {
     fetchPrices();
   }, []);
 
-  const refreshPrices = async () => {
-    logger.info('Refreshing prices manually');
-    const newData = await fetchPrices();
+  const refreshPrices = async (forceLive = true) => {
+    logger.info('Refreshing prices manually', { forceLive });
+    const newData = await fetchPrices(forceLive);
     
     if (newData) {
       logger.info('Prices refreshed successfully');

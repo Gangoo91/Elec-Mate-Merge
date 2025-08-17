@@ -48,7 +48,7 @@ const LivePricing = () => {
                 variant="outline" 
                 size="sm"
                 className="flex items-center gap-1"
-                onClick={refreshPrices}
+                onClick={() => refreshPrices(true)}
                 disabled={isLoading}
               >
                 <RefreshCw className={`h-4 w-4 ${isLoading ? "animate-spin" : ""}`} />
@@ -98,7 +98,7 @@ const LivePricing = () => {
           ) : (
             <Card className="p-6 border-elec-yellow/20 bg-elec-gray text-center">
               <p className="text-muted-foreground mb-4">Could not load UK pricing data</p>
-              <Button onClick={refreshPrices} size="sm">Try Again</Button>
+              <Button onClick={() => refreshPrices(true)} size="sm">Try Again</Button>
             </Card>
           )}
 
@@ -111,6 +111,17 @@ const LivePricing = () => {
           <div className="text-xs text-muted-foreground p-3 border border-elec-yellow/20 rounded bg-elec-gray/50">
             <strong>Disclaimer:</strong> Prices are indicative of UK market rates and may vary by supplier and region. 
             Always confirm current prices with your local UK supplier before making purchasing decisions.
+            
+            {/* Debug Information */}
+            {data && (
+              <div className="mt-2 text-xs opacity-75">
+                <div>API Provider: {data.apiProvider}</div>
+                <div>API Key: ...{data.apiKeySuffix}</div>
+                <div>Tried Live: {data.triedLive ? 'Yes' : 'No'}</div>
+                <div>Data Source: {data.dataSource}</div>
+                {data.liveAttemptError && <div>Live Error: {data.liveAttemptError}</div>}
+              </div>
+            )}
           </div>
         </div>
       </div>
