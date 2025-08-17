@@ -1366,6 +1366,7 @@ export type Database = {
         Row: {
           average_price: number
           complexity_level: string
+          confidence_score: number | null
           county: string | null
           created_at: string
           currency: string
@@ -1384,6 +1385,7 @@ export type Database = {
         Insert: {
           average_price: number
           complexity_level?: string
+          confidence_score?: number | null
           county?: string | null
           created_at?: string
           currency?: string
@@ -1402,6 +1404,7 @@ export type Database = {
         Update: {
           average_price?: number
           complexity_level?: string
+          confidence_score?: number | null
           county?: string | null
           created_at?: string
           currency?: string
