@@ -47,8 +47,8 @@ export const useJobTypes = () => {
         { job_type: 'Electrical Installation Certificate', job_category: 'Testing & Certification', unit: 'per certificate' },
       ];
 
-      // Use database data if available, otherwise use fallback
-      const finalData = data.length > 0 ? data : fallbackData;
+      // Use comprehensive fallback data as primary source
+      const finalData = fallbackData;
 
       // Group by category for better UX
       const grouped = finalData.reduce((acc: Record<string, any[]>, item) => {
