@@ -63,7 +63,6 @@ const jobTypeConfigs: JobTypeConfig[] = [
         { value: '4', label: '4 bedrooms' },
         { value: '5', label: '5+ bedrooms' }
       ], required: true },
-      { key: 'property_size_sqm', label: 'Property size', type: 'number', unit: 'sq metres', min: 30, max: 1000, required: true },
       { key: 'property_type', label: 'Property type', type: 'select', options: [
         { value: 'flat', label: 'Flat/Apartment' },
         { value: 'terraced', label: 'Terraced house' },
@@ -75,6 +74,76 @@ const jobTypeConfigs: JobTypeConfig[] = [
         { value: '1', label: '1 floor' },
         { value: '2', label: '2 floors' },
         { value: '3', label: '3+ floors' }
+      ], required: true }
+    ]
+  },
+  { 
+    job_type: 'Rewire Full Flat', 
+    job_category: 'Installation & Wiring', 
+    unit: 'per job',
+    attributes: [
+      { key: 'bedrooms', label: 'Number of bedrooms', type: 'select', options: [
+        { value: '1', label: '1 bedroom' },
+        { value: '2', label: '2 bedrooms' },
+        { value: '3', label: '3 bedrooms' },
+        { value: '4', label: '4+ bedrooms' }
+      ], required: true },
+      { key: 'floor_level', label: 'Floor level', type: 'select', options: [
+        { value: 'ground', label: 'Ground floor' },
+        { value: 'first', label: '1st floor' },
+        { value: 'second', label: '2nd floor' },
+        { value: 'third_plus', label: '3rd floor+' }
+      ], required: true }
+    ]
+  },
+  { 
+    job_type: 'Kitchen Rewire', 
+    job_category: 'Installation & Wiring', 
+    unit: 'per job',
+    attributes: [
+      { key: 'kitchen_size', label: 'Kitchen size', type: 'select', options: [
+        { value: 'small', label: 'Small (galley/compact)' },
+        { value: 'medium', label: 'Medium (standard)' },
+        { value: 'large', label: 'Large (open plan)' }
+      ], required: true },
+      { key: 'appliances', label: 'Number of appliances', type: 'number', min: 1, max: 15, required: true }
+    ]
+  },
+  { 
+    job_type: 'Bathroom Rewire', 
+    job_category: 'Installation & Wiring', 
+    unit: 'per job',
+    attributes: [
+      { key: 'bathroom_type', label: 'Bathroom type', type: 'select', options: [
+        { value: 'ensuite', label: 'En-suite' },
+        { value: 'family', label: 'Family bathroom' },
+        { value: 'wet_room', label: 'Wet room' }
+      ], required: true },
+      { key: 'electric_shower', label: 'Electric shower circuit?', type: 'select', options: [
+        { value: 'yes', label: 'Yes - included' },
+        { value: 'no', label: 'No electric shower' }
+      ], required: true }
+    ]
+  },
+  { 
+    job_type: 'New Ring Final Circuit', 
+    job_category: 'Installation & Wiring', 
+    unit: 'per circuit',
+    attributes: [
+      { key: 'socket_count', label: 'Number of sockets', type: 'number', min: 1, max: 20, required: true },
+      { key: 'cable_length', label: 'Approximate cable length', type: 'number', unit: 'metres', min: 10, max: 100, required: true }
+    ]
+  },
+  { 
+    job_type: 'New Lighting Circuit', 
+    job_category: 'Installation & Wiring', 
+    unit: 'per circuit',
+    attributes: [
+      { key: 'light_points', label: 'Number of light points', type: 'number', min: 1, max: 25, required: true },
+      { key: 'switching_type', label: 'Switching type', type: 'select', options: [
+        { value: 'standard', label: 'Standard switching' },
+        { value: 'two_way', label: 'Two-way switching' },
+        { value: 'intermediate', label: 'Intermediate switching' }
       ], required: true }
     ]
   },
@@ -143,6 +212,63 @@ const jobTypeConfigs: JobTypeConfig[] = [
     ]
   },
   { 
+    job_type: 'Security Light Installation', 
+    job_category: 'Installation & Wiring', 
+    unit: 'per light',
+    attributes: [
+      { key: 'light_type', label: 'Light type', type: 'select', options: [
+        { value: 'pir_floodlight', label: 'PIR floodlight' },
+        { value: 'security_floodlight', label: 'Security floodlight' },
+        { value: 'wall_light', label: 'Wall-mounted light' }
+      ], required: true },
+      { key: 'cable_length', label: 'Cable run length', type: 'number', unit: 'metres', min: 1, max: 30, required: true }
+    ]
+  },
+  { 
+    job_type: 'Floodlight Installation', 
+    job_category: 'Installation & Wiring', 
+    unit: 'per light',
+    attributes: [
+      { key: 'wattage', label: 'Light wattage', type: 'select', options: [
+        { value: '10w', label: '10W LED' },
+        { value: '20w', label: '20W LED' },
+        { value: '50w', label: '50W LED' },
+        { value: '100w', label: '100W LED' }
+      ], required: true },
+      { key: 'mounting_height', label: 'Mounting height', type: 'select', options: [
+        { value: 'low', label: 'Low (2-3m)' },
+        { value: 'medium', label: 'Medium (3-5m)' },
+        { value: 'high', label: 'High (5m+)' }
+      ], required: true }
+    ]
+  },
+  { 
+    job_type: 'Data Point (Cat6) Installation', 
+    job_category: 'Installation & Wiring', 
+    unit: 'per point',
+    attributes: [
+      { key: 'cable_length', label: 'Cable run length', type: 'number', unit: 'metres', min: 1, max: 100, required: true },
+      { key: 'termination_type', label: 'Termination type', type: 'select', options: [
+        { value: 'rj45_socket', label: 'RJ45 wall socket' },
+        { value: 'patch_panel', label: 'Patch panel' },
+        { value: 'direct_connection', label: 'Direct connection' }
+      ], required: true }
+    ]
+  },
+  { 
+    job_type: 'TV/Aerial Point Installation', 
+    job_category: 'Installation & Wiring', 
+    unit: 'per point',
+    attributes: [
+      { key: 'cable_type', label: 'Cable type', type: 'select', options: [
+        { value: 'coax_rg6', label: 'Coaxial (RG6)' },
+        { value: 'cat6_hdmi', label: 'Cat6 + HDMI' },
+        { value: 'satellite', label: 'Satellite cable' }
+      ], required: true },
+      { key: 'cable_length', label: 'Cable run length', type: 'number', unit: 'metres', min: 1, max: 50, required: true }
+    ]
+  },
+  { 
     job_type: 'Garden Office Supply', 
     job_category: 'Installation & Wiring', 
     unit: 'per job',
@@ -197,6 +323,65 @@ const jobTypeConfigs: JobTypeConfig[] = [
   { job_type: 'Additional Circuit Installation', job_category: 'Consumer Units & Boards', unit: 'per circuit' },
   { job_type: 'RCD Protection Upgrade', job_category: 'Consumer Units & Boards', unit: 'per job' },
   
+  // Repairs & Maintenance
+  { 
+    job_type: 'Socket Replacement', 
+    job_category: 'Repairs & Maintenance', 
+    unit: 'per socket',
+    attributes: [
+      { key: 'socket_type', label: 'Socket type', type: 'select', options: [
+        { value: 'standard', label: 'Standard 13A' },
+        { value: 'usb_socket', label: 'USB charging socket' },
+        { value: 'outdoor', label: 'Outdoor socket' }
+      ], required: true }
+    ]
+  },
+  { 
+    job_type: 'Light Switch Replacement', 
+    job_category: 'Repairs & Maintenance', 
+    unit: 'per switch',
+    attributes: [
+      { key: 'switch_type', label: 'Switch type', type: 'select', options: [
+        { value: 'single', label: 'Single gang' },
+        { value: 'double', label: 'Double gang' },
+        { value: 'dimmer', label: 'Dimmer switch' }
+      ], required: true }
+    ]
+  },
+  { job_type: 'Circuit Breaker Replacement', job_category: 'Repairs & Maintenance', unit: 'per breaker' },
+  { job_type: 'RCD Replacement', job_category: 'Repairs & Maintenance', unit: 'per RCD' },
+  { job_type: 'Power Loss Investigation', job_category: 'Repairs & Maintenance', unit: 'per hour' },
+  { job_type: 'Appliance Repair', job_category: 'Repairs & Maintenance', unit: 'per hour' },
+
+  // Commercial & Industrial
+  { 
+    job_type: 'Emergency Lighting Installation', 
+    job_category: 'Commercial & Industrial', 
+    unit: 'per fitting',
+    attributes: [
+      { key: 'fitting_type', label: 'Fitting type', type: 'select', options: [
+        { value: 'bulkhead', label: 'LED bulkhead' },
+        { value: 'exit_sign', label: 'Exit sign' },
+        { value: 'downlight', label: 'Emergency downlight' }
+      ], required: true }
+    ]
+  },
+  { 
+    job_type: 'Fire Alarm Installation', 
+    job_category: 'Commercial & Industrial', 
+    unit: 'per point',
+    attributes: [
+      { key: 'detector_type', label: 'Detector type', type: 'select', options: [
+        { value: 'smoke', label: 'Smoke detector' },
+        { value: 'heat', label: 'Heat detector' },
+        { value: 'beam', label: 'Beam detector' }
+      ], required: true }
+    ]
+  },
+  { job_type: 'Three-Phase Supply Installation', job_category: 'Commercial & Industrial', unit: 'per job' },
+  { job_type: 'Motor Control Installation', job_category: 'Commercial & Industrial', unit: 'per motor' },
+  { job_type: 'Distribution Board Installation', job_category: 'Commercial & Industrial', unit: 'per board' },
+
   // Testing & Certification
   { 
     job_type: 'EICR Testing', 
@@ -211,8 +396,17 @@ const jobTypeConfigs: JobTypeConfig[] = [
       ], required: true }
     ]
   },
-  { job_type: 'PAT Testing', job_category: 'Testing & Certification', unit: 'per appliance' },
+  { 
+    job_type: 'PAT Testing', 
+    job_category: 'Testing & Certification', 
+    unit: 'per appliance',
+    attributes: [
+      { key: 'appliance_count', label: 'Number of appliances', type: 'number', min: 1, max: 500, required: true }
+    ]
+  },
   { job_type: 'Electrical Installation Certificate', job_category: 'Testing & Certification', unit: 'per certificate' },
+  { job_type: 'Minor Works Certificate', job_category: 'Testing & Certification', unit: 'per certificate' },
+  { job_type: 'Landlord Safety Check', job_category: 'Testing & Certification', unit: 'per property' },
 ];
 
 export const useJobTypes = () => {
