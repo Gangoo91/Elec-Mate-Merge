@@ -206,8 +206,6 @@ serve(async (req) => {
     console.log('Available environment keys containing METAL/API/KEY:', envKeys)
     
     // Log a few other known environment variables to verify environment is working
-    const supabaseUrl = Deno.env.get('SUPABASE_URL');
-    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
     console.log('SUPABASE_URL exists:', !!supabaseUrl)
     console.log('SUPABASE_SERVICE_ROLE_KEY exists:', !!supabaseKey)
     console.log('=== END ENVIRONMENT DEBUG ===')
