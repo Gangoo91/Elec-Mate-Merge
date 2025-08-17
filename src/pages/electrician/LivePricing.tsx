@@ -80,6 +80,9 @@ const LivePricing = () => {
         </div>
       </Card>
 
+      {/* Enhanced Regional Job Pricing */}
+      <EnhancedRegionalPricing />
+
       {/* Compact Pricing Grid */}
       {isLoading ? (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 h-32">
@@ -100,9 +103,6 @@ const LivePricing = () => {
           <Button onClick={refreshPrices} size="sm">Try Again</Button>
         </Card>
       )}
-
-      {/* Enhanced Regional Job Pricing */}
-      <EnhancedRegionalPricing />
 
       {/* Community Price Submission - NEW */}
       <div data-community-form>
