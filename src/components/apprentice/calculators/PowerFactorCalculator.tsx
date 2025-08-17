@@ -1,13 +1,13 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { PlugZap, ArrowLeftRight, Calculator, RotateCcw, Zap } from "lucide-react";
-import { MobileAccordion, MobileAccordionContent, MobileAccordionItem, MobileAccordionTrigger } from "@/components/ui/mobile-accordion";
 import { MobileInput } from "@/components/ui/mobile-input";
-import { MobileSelect, MobileSelectContent, MobileSelectItem, MobileSelectTrigger, MobileSelectValue } from "@/components/ui/mobile-select";
 import { MobileButton } from "@/components/ui/mobile-button";
-import { ResultCard } from "@/components/ui/result-card";
-import { useCalculator } from "./power-factor/useCalculator";
+import { MobileSelect, MobileSelectContent, MobileSelectItem, MobileSelectTrigger, MobileSelectValue } from "@/components/ui/mobile-select";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
+import { PlugZap, Info, Calculator, RotateCcw } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { useCalculator } from "./power-factor/useCalculator";
 
 const PowerFactorCalculator = () => {
   const {
@@ -31,76 +31,20 @@ const PowerFactorCalculator = () => {
     capacitorKVAr
   } = useCalculator();
 
-  const renderCalculationForm = () => {
-    if (calculationMethod === "power") {
-      return (
-        <div className="space-y-4">
-          <MobileInput
-            label="Active Power"
-            type="number"
-            value={activePower}
-            onChange={(e) => setActivePower(e.target.value)}
-            placeholder="Enter active power"
-            unit="W"
-            error={errors.activePower}
-            clearError={() => clearError('activePower')}
-          />
-          <MobileInput
-            label="Apparent Power"
-            type="number"
-            value={apparentPower}
-            onChange={(e) => setApparentPower(e.target.value)}
-            placeholder="Enter apparent power"
-            unit="VA"
-            error={errors.apparentPower}
-            clearError={() => clearError('apparentPower')}
-          />
-        </div>
-      );
-    } else {
-      return (
-        <div className="space-y-4">
-          <MobileInput
-            label="Voltage"
-            type="number"
-            value={voltage}
-            onChange={(e) => setVoltage(e.target.value)}
-            placeholder="Enter voltage"
-            unit="V"
-            error={errors.voltage}
-            clearError={() => clearError('voltage')}
-          />
-          <MobileInput
-            label="Current"
-            type="number"
-            value={current}
-            onChange={(e) => setCurrent(e.target.value)}
-            placeholder="Enter current"
-            unit="A"
-            error={errors.current}
-            clearError={() => clearError('current')}
-          />
-          <MobileInput
-            label="Active Power"
-            type="number"
-            value={activePower}
-            onChange={(e) => setActivePower(e.target.value)}
-            placeholder="Enter active power"
-            unit="W"
-            error={errors.activePower}
-            clearError={() => clearError('activePower')}
-          />
-        </div>
-      );
-    }
+  const getResultStatus = () => {
+    if (powerFactor === null) return "Enter values to calculate";
+    const pf = parseFloat(powerFactor);
+    if (pf >= 0.95) return "Excellent efficiency";
+    if (pf >= 0.85) return "Good efficiency"; 
+    return "Poor efficiency - consider correction";
   };
 
-  const getResultStatus = () => {
-    if (powerFactor === null) return "info";
+  const getResultColor = () => {
+    if (powerFactor === null) return "text-muted-foreground";
     const pf = parseFloat(powerFactor);
-    if (pf >= 0.95) return "success";
-    if (pf >= 0.85) return "warning";
-    return "error";
+    if (pf >= 0.95) return "text-green-400";
+    if (pf >= 0.85) return "text-yellow-400";
+    return "text-red-400";
   };
 
   return (
@@ -114,89 +58,9 @@ const PowerFactorCalculator = () => {
           Calculate power factor from power values or electrical parameters with BS 7671 compliance checking.
         </CardDescription>
       </CardHeader>
-      <CardContent className="space-y-6">
-        {/* Mobile-optimized accordion layout */}
-        <div className="block lg:hidden">
-          <MobileAccordion type="single" collapsible defaultValue="inputs">
-            <MobileAccordionItem value="inputs">
-              <MobileAccordionTrigger icon={<Calculator className="h-4 w-4" />}>
-                Calculation Inputs
-              </MobileAccordionTrigger>
-              <MobileAccordionContent>
-                <div className="space-y-4">
-                  <MobileSelect value={calculationMethod} onValueChange={(value: "power" | "currentVoltage") => setCalculationMethod(value)}>
-                    <MobileSelectTrigger label="Calculation Method">
-                      <MobileSelectValue placeholder="Select calculation method" />
-                    </MobileSelectTrigger>
-                    <MobileSelectContent>
-                      <MobileSelectItem value="power">From Power Values</MobileSelectItem>
-                      <MobileSelectItem value="currentVoltage">From Electrical Parameters</MobileSelectItem>
-                    </MobileSelectContent>
-                  </MobileSelect>
-
-                  {renderCalculationForm()}
-
-                  <div className="flex gap-3 pt-4">
-                    <MobileButton
-                      variant="elec"
-                      size="wide"
-                      onClick={calculatePowerFactor}
-                      icon={<Calculator className="h-4 w-4" />}
-                    >
-                      Calculate
-                    </MobileButton>
-                    <MobileButton
-                      variant="outline"
-                      size="icon"
-                      onClick={resetCalculator}
-                    >
-                      <RotateCcw className="h-4 w-4" />
-                    </MobileButton>
-                  </div>
-                </div>
-              </MobileAccordionContent>
-            </MobileAccordionItem>
-
-            <MobileAccordionItem value="results">
-              <MobileAccordionTrigger icon={<Zap className="h-4 w-4" />}>
-                Results
-              </MobileAccordionTrigger>
-              <MobileAccordionContent>
-                <ResultCard
-                  title="Power Factor"
-                  value={powerFactor}
-                  unit=""
-                  subtitle={powerFactor !== null ? 
-                    `${parseFloat(powerFactor) >= 0.95 ? 'Excellent' : parseFloat(powerFactor) >= 0.85 ? 'Good' : 'Poor'} efficiency` : 
-                    undefined}
-                  status={getResultStatus()}
-                  icon={<PlugZap className="h-6 w-6" />}
-                  isEmpty={powerFactor === null}
-                  emptyMessage="Enter values to calculate power factor"
-                />
-              </MobileAccordionContent>
-            </MobileAccordionItem>
-
-            <MobileAccordionItem value="info">
-              <MobileAccordionTrigger>
-                Information & Standards
-              </MobileAccordionTrigger>
-              <MobileAccordionContent>
-                <Alert className="border-blue-500/20 bg-blue-500/10">
-                  <AlertDescription className="text-blue-200 space-y-2">
-                    <p><strong>Power Factor:</strong> Ratio of active to apparent power (P/S)</p>
-                    <p><strong>BS 7671:</strong> Minimum 0.85 for most installations</p>
-                    <p><strong>Ideal Range:</strong> 0.95-1.0 for optimal efficiency</p>
-                    <p><strong>Low PF Impact:</strong> Increased current, higher losses, penalties</p>
-                  </AlertDescription>
-                </Alert>
-              </MobileAccordionContent>
-            </MobileAccordionItem>
-          </MobileAccordion>
-        </div>
-
-        {/* Desktop layout remains as grid */}
-        <div className="hidden lg:grid lg:grid-cols-2 gap-6">
+      <CardContent>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Input Section */}
           <div className="space-y-4">
             <MobileSelect value={calculationMethod} onValueChange={(value: "power" | "currentVoltage") => setCalculationMethod(value)}>
               <MobileSelectTrigger label="Calculation Method">
@@ -208,58 +72,123 @@ const PowerFactorCalculator = () => {
               </MobileSelectContent>
             </MobileSelect>
 
-            {renderCalculationForm()}
+            {calculationMethod === "power" ? (
+              <>
+                <MobileInput
+                  label="Active Power (W)"
+                  type="number"
+                  value={activePower}
+                  onChange={(e) => setActivePower(e.target.value)}
+                  placeholder="e.g., 2000"
+                  unit="W"
+                  error={errors.activePower}
+                  clearError={() => clearError('activePower')}
+                />
+                <MobileInput
+                  label="Apparent Power (VA)"
+                  type="number"
+                  value={apparentPower}
+                  onChange={(e) => setApparentPower(e.target.value)}
+                  placeholder="e.g., 2300"
+                  unit="VA"
+                  error={errors.apparentPower}
+                  clearError={() => clearError('apparentPower')}
+                />
+              </>
+            ) : (
+              <>
+                <MobileInput
+                  label="Voltage (V)"
+                  type="number"
+                  value={voltage}
+                  onChange={(e) => setVoltage(e.target.value)}
+                  placeholder="e.g., 230"
+                  unit="V"
+                  error={errors.voltage}
+                  clearError={() => clearError('voltage')}
+                />
+                <MobileInput
+                  label="Current (A)"
+                  type="number"
+                  value={current}
+                  onChange={(e) => setCurrent(e.target.value)}
+                  placeholder="e.g., 10"
+                  unit="A"
+                  error={errors.current}
+                  clearError={() => clearError('current')}
+                />
+                <MobileInput
+                  label="Active Power (W)"
+                  type="number"
+                  value={activePower}
+                  onChange={(e) => setActivePower(e.target.value)}
+                  placeholder="e.g., 2000"
+                  unit="W"
+                  error={errors.activePower}
+                  clearError={() => clearError('activePower')}
+                />
+              </>
+            )}
 
-            <div className="flex gap-3 pt-4">
-              <MobileButton
-                variant="elec"
-                size="wide"
-                onClick={calculatePowerFactor}
-                icon={<Calculator className="h-4 w-4" />}
-              >
+            <div className="flex gap-2">
+              <MobileButton onClick={calculatePowerFactor} className="flex-1" variant="elec" icon={<Calculator className="h-4 w-4" />}>
                 Calculate
               </MobileButton>
-              <MobileButton
-                variant="outline"
-                size="icon"
-                onClick={resetCalculator}
-              >
+              <MobileButton variant="elec-outline" onClick={resetCalculator}>
                 <RotateCcw className="h-4 w-4" />
               </MobileButton>
             </div>
           </div>
-          
-          <div className="space-y-4">
-            <ResultCard
-              title="Power Factor"
-              value={powerFactor}
-              unit=""
-              subtitle={powerFactor !== null ? 
-                `${parseFloat(powerFactor) >= 0.95 ? 'Excellent' : parseFloat(powerFactor) >= 0.85 ? 'Good' : 'Poor'} efficiency` : 
-                undefined}
-              status={getResultStatus()}
-              icon={<PlugZap className="h-6 w-6" />}
-              isEmpty={powerFactor === null}
-              emptyMessage="Enter values to calculate power factor"
-            />
 
-            {capacitorKVAr && (
-              <ResultCard
-                title="Recommended Capacitor"
-                value={capacitorKVAr}
-                unit="kVAr"
-                subtitle={`To correct to PF ${targetPF}`}
-                status="info"
-                icon={<Zap className="h-6 w-6" />}
-                isEmpty={false}
-              />
-            )}
-            
+          {/* Result Section */}
+          <div className="space-y-4">
+            <div className="rounded-md bg-elec-dark p-6 min-h-[200px]">
+              {powerFactor ? (
+                <div className="space-y-4">
+                  <div className="text-center">
+                    <h3 className="text-lg font-semibold text-elec-yellow mb-2">Power Factor</h3>
+                    <div className="text-3xl font-mono text-elec-yellow mb-2">
+                      {parseFloat(powerFactor).toFixed(3)}
+                    </div>
+                    <Badge variant="secondary" className={getResultColor()}>
+                      {getResultStatus()}
+                    </Badge>
+                  </div>
+                  
+                  <Separator />
+                  
+                  <div className="space-y-3 text-sm">
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Method:</span>
+                      <span className="text-white">{calculationMethod === 'power' ? 'Power Values' : 'V/I Parameters'}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">BS 7671 Compliance:</span>
+                      <span className={parseFloat(powerFactor) >= 0.85 ? "text-green-400" : "text-red-400"}>
+                        {parseFloat(powerFactor) >= 0.85 ? "✓ Compliant" : "✗ Below minimum"}
+                      </span>
+                    </div>
+                    {capacitorKVAr && targetPF && (
+                      <div className="pt-2 border-t border-elec-yellow/20">
+                        <div className="flex justify-between">
+                          <span className="text-muted-foreground">Correction to {targetPF}:</span>
+                          <span className="font-mono text-elec-yellow">{capacitorKVAr} kVAr</span>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ) : (
+                <div className="flex items-center justify-center h-full text-muted-foreground">
+                  {getResultStatus()}
+                </div>
+              )}
+            </div>
+
             <Alert className="border-blue-500/20 bg-blue-500/10">
-              <AlertDescription className="text-blue-200 space-y-2">
-                <p><strong>Power Factor:</strong> Ratio of active to apparent power (P/S)</p>
-                <p><strong>BS 7671:</strong> Minimum 0.85 for most installations</p>
-                <p><strong>Ideal Range:</strong> 0.95-1.0 for optimal efficiency</p>
+              <Info className="h-4 w-4 text-blue-500" />
+              <AlertDescription className="text-blue-200">
+                Power Factor = Active Power ÷ Apparent Power. BS 7671 requires minimum 0.85 for most installations. Ideal range: 0.95-1.0.
               </AlertDescription>
             </Alert>
           </div>
