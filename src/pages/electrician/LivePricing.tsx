@@ -58,18 +58,9 @@ const LivePricing = () => {
       {/* Compact Scrap Merchant Finder - Always visible */}
       <Card className="border-elec-yellow/20 bg-elec-gray">
         <div className="p-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Search className="h-5 w-5 text-elec-yellow" />
-              <h3 className="font-medium">Find Local Scrap Merchants</h3>
-            </div>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setShowMerchantFinder(false)}
-            >
-              Hide
-            </Button>
+          <div className="flex items-center gap-2">
+            <Search className="h-5 w-5 text-elec-yellow" />
+            <h3 className="font-medium">Find Local Scrap Merchants</h3>
           </div>
           
           <div className="mt-4 pt-4 border-t border-elec-yellow/20">
