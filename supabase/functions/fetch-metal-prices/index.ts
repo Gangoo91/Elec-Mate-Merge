@@ -2,6 +2,9 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 
+// Force redeployment - Version 2.1 - Fix secret propagation issue
+// Updated: 2025-08-17T17:55:00Z
+
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
@@ -190,10 +193,27 @@ serve(async (req) => {
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
     const supabase = createClient(supabaseUrl, supabaseKey)
 
-    // Get API key for debug info
+    // Get API key for debug info with enhanced logging
+    console.log('=== ENVIRONMENT VARIABLE DEBUG ===')
     const apiKey = Deno.env.get('METAL_PRICE_API_KEY')
+    console.log('METAL_PRICE_API_KEY exists:', !!apiKey)
+    console.log('METAL_PRICE_API_KEY length:', apiKey?.length || 0)
+    
+    // Debug: Show all environment variables that might be related
+    const envKeys = Object.keys(Deno.env.toObject()).filter(key => 
+      key.includes('METAL') || key.includes('API') || key.includes('KEY')
+    );
+    console.log('Available environment keys containing METAL/API/KEY:', envKeys)
+    
+    // Log a few other known environment variables to verify environment is working
+    const supabaseUrl = Deno.env.get('SUPABASE_URL');
+    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
+    console.log('SUPABASE_URL exists:', !!supabaseUrl)
+    console.log('SUPABASE_SERVICE_ROLE_KEY exists:', !!supabaseKey)
+    console.log('=== END ENVIRONMENT DEBUG ===')
+    
     const apiKeySuffix = apiKey ? apiKey.slice(-4) : 'NONE'
-    console.log('API Key suffix:', apiKeySuffix)
+    console.log('API Key suffix for display:', apiKeySuffix)
 
     console.log('Starting fetch-metal-prices function');
 
