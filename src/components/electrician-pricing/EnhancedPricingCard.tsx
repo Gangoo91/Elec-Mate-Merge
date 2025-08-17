@@ -74,66 +74,58 @@ const EnhancedPricingCard = ({ pricingData }: EnhancedPricingCardProps) => {
   return (
     <Card className="border-elec-yellow/20 bg-elec-gray hover:bg-elec-gray/80 transition-colors">
       <CardHeader className="pb-3">
-        <div className="flex justify-between items-start">
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2">
           <CardTitle className="text-lg text-elec-yellow">{pricingData.job_type}</CardTitle>
-          {pricingData.is_approximate && (
-            <Badge variant="outline" className="text-xs">
-              <AlertCircle className="h-3 w-3 mr-1" />
-              Estimated
+          <div className="flex gap-2 flex-wrap">
+            <Badge variant={getComplexityColor(pricingData.complexity_level)} className="text-xs">
+              {pricingData.complexity_level}
             </Badge>
-          )}
+            {pricingData.confidence_score && (
+              <Badge variant={getConfidenceColor(pricingData.confidence_score)} className="text-xs">
+                {getConfidenceIcon(pricingData.confidence_score)}
+                {pricingData.confidence_score}% confidence
+              </Badge>
+            )}
+            {pricingData.is_approximate && (
+              <Badge variant="outline" className="text-xs">
+                <AlertCircle className="h-3 w-3 mr-1" />
+                Estimated
+              </Badge>
+            )}
+          </div>
         </div>
-        <div className="flex gap-2 mt-2">
-          <Badge variant={getComplexityColor(pricingData.complexity_level)} className="text-xs">
-            {pricingData.complexity_level}
-          </Badge>
-          {pricingData.confidence_score && (
-            <Badge variant={getConfidenceColor(pricingData.confidence_score)} className="text-xs">
-              {getConfidenceIcon(pricingData.confidence_score)}
-              {pricingData.confidence_score}% confidence
-            </Badge>
-          )}
-        </div>
-      </CardHeader>
-      
-      <CardContent className="space-y-4">
+        
         {/* Location Info */}
-        <div className="text-sm text-muted-foreground">
+        <div className="text-sm text-muted-foreground mt-2">
           <span className="font-medium">{pricingData.region}</span>
           {pricingData.county && <span>, {pricingData.county}</span>}
         </div>
-
-        {/* Price Range */}
-        <div className="space-y-2">
-          <div className="flex items-center justify-between">
-            <span className="text-sm text-muted-foreground">Price Range:</span>
-            <span className="font-semibold">
-              {formatPrice(pricingData.min_price)} - {formatPrice(pricingData.max_price)}
-            </span>
+      </CardHeader>
+      
+      <CardContent className="pt-0">
+        {/* Main Price Display */}
+        <div className="text-center p-4 bg-elec-yellow/10 rounded-lg mb-4">
+          <div className="text-2xl font-bold text-elec-yellow mb-1">
+            {formatPrice(pricingData.average_price)}
           </div>
-          <div className="flex items-center justify-between">
-            <span className="text-sm text-muted-foreground">Average:</span>
-            <span className="font-bold text-elec-yellow text-lg">
-              {formatPrice(pricingData.average_price)}
-            </span>
+          <div className="text-xs text-muted-foreground mb-2">
+            Average {pricingData.unit}
           </div>
-          <div className="text-xs text-muted-foreground text-right">
-            {pricingData.unit}
+          <div className="text-sm text-muted-foreground">
+            Range: {formatPrice(pricingData.min_price)} - {formatPrice(pricingData.max_price)}
           </div>
         </div>
 
-        {/* Data Quality Indicators */}
-        <div className="pt-3 border-t border-elec-yellow/10">
-          <div className="flex items-center justify-between text-xs">
-            <div className="flex items-center gap-1">
-              <Clock className="h-3 w-3" />
-              <Badge variant={freshness.color as any} className="text-xs px-2 py-0">
-                {freshness.text}
-              </Badge>
-            </div>
-            <div className="text-muted-foreground">
-              Source: {pricingData.data_source.replace('_', ' ')}
-            </div>
+        {/* Data Quality Footer */}
+        <div className="flex items-center justify-between text-xs border-t border-elec-yellow/10 pt-3">
+          <div className="flex items-center gap-1">
+            <Clock className="h-3 w-3" />
+            <Badge variant={freshness.color as any} className="text-xs px-2 py-0">
+              {freshness.text}
+            </Badge>
+          </div>
+          <div className="text-muted-foreground">
+            {pricingData.data_source.replace('_', ' ')}
           </div>
         </div>
       </CardContent>

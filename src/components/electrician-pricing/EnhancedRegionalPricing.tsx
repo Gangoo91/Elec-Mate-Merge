@@ -115,8 +115,8 @@ const EnhancedRegionalPricing = () => {
       
       <CardContent className="space-y-4">
         {/* Enhanced Search Interface */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-          <div className="md:col-span-2">
+        <div className="space-y-3">
+          <div>
             <Input
               placeholder="Enter UK location (e.g., Manchester, Birmingham, SW1 2AA)"
               value={searchLocation}
@@ -155,11 +155,11 @@ const EnhancedRegionalPricing = () => {
           </div>
         </div>
 
-        <div className="flex gap-2">
+        <div className="space-y-2">
           <Button 
             onClick={handleSearch} 
             disabled={!searchLocation.trim() || isSearching}
-            className="flex-1"
+            className="w-full"
           >
             {isSearching ? (
               <>
@@ -174,7 +174,7 @@ const EnhancedRegionalPricing = () => {
             )}
           </Button>
           {searchPerformed && (
-            <Button variant="outline" onClick={clearSearch}>
+            <Button variant="outline" onClick={clearSearch} className="w-full">
               Clear
             </Button>
           )}
