@@ -10,6 +10,7 @@ import EnhancedRegionalPricing from "@/components/electrician-pricing/EnhancedRe
 import CompactMarketAlerts from "@/components/electrician-pricing/CompactMarketAlerts";
 import CompactScrapMerchantFinder from "@/components/electrician-pricing/CompactScrapMerchantFinder";
 import PricingDataMonitor from "@/components/electrician-pricing/PricingDataMonitor";
+import CommunityPriceSubmission from "@/components/electrician-pricing/CommunityPriceSubmission";
 
 const LivePricing = () => {
   const { data, isLoading, refreshPrices } = useLiveMetalPrices();
@@ -81,6 +82,11 @@ const LivePricing = () => {
 
       {/* Enhanced Regional Job Pricing */}
       <EnhancedRegionalPricing />
+
+      {/* Community Price Submission - NEW */}
+      <div data-community-form>
+        <CommunityPriceSubmission />
+      </div>
 
       {/* Compact Pricing Grid */}
       {isLoading ? (
