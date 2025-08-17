@@ -92,36 +92,63 @@ serve(async (req) => {
       }
     }
 
-    // If still no results, provide fallback regional data
+    // If still no results, provide fallback using baseline pricing + regional multipliers
     if (results.length === 0) {
-      console.log('No exact matches found, providing fallback data');
+      console.log('No exact matches found, providing fallback data using baseline prices');
       isApproximate = true;
       
-      // Get national average data or most common job types
-      const { data: fallbackData } = await query.limit(10);
-      results = fallbackData || [];
-      
-      // Apply regional multiplier based on location patterns
-      const locationLower = location.toLowerCase();
-      let multiplier = 1.0;
-      
-      if (locationLower.includes('london') || locationLower.includes('se1') || locationLower.includes('sw1')) {
-        multiplier = 1.3; // London premium
-      } else if (locationLower.includes('manchester') || locationLower.includes('birmingham') || locationLower.includes('leeds')) {
-        multiplier = 1.1; // Major cities
-      } else if (locationLower.includes('scotland') || locationLower.includes('wales')) {
-        multiplier = 0.9; // Scotland/Wales adjustment
+      // Get baseline job pricing
+      let baselineQuery = supabase.from('job_pricing_baseline').select('*');
+      if (jobType && jobType !== 'all') {
+        baselineQuery = baselineQuery.ilike('job_type', `%${jobType}%`);
       }
       
-      // Apply multiplier to prices
-      results = results.map(item => ({
-        ...item,
-        min_price: Math.round(item.min_price * multiplier),
-        max_price: Math.round(item.max_price * multiplier),
-        average_price: Math.round(item.average_price * multiplier),
-        id: `approx-${item.id}`, // Mark as approximate
-        region: `${item.region} (Approximate)`,
-        data_source: 'approximate'
+      const { data: baselineData } = await baselineQuery;
+      
+      // Get regional multipliers
+      let multiplier = 1.0;
+      if (geocodeData?.success) {
+        const { region, county } = geocodeData.location;
+        const { data: multiplierData } = await supabase
+          .from('regional_multipliers')
+          .select('*')
+          .or(`region.ilike.%${region}%,county.ilike.%${county}%`)
+          .limit(1);
+        
+        if (multiplierData && multiplierData.length > 0) {
+          multiplier = multiplierData[0].multiplier;
+          console.log(`Using regional multiplier: ${multiplier} for ${region}/${county}`);
+        }
+      } else {
+        // Fallback multiplier based on location text patterns
+        const locationLower = location.toLowerCase();
+        if (locationLower.includes('london') || locationLower.includes('se1') || locationLower.includes('sw1')) {
+          multiplier = 1.45; // London premium
+        } else if (locationLower.includes('manchester') || locationLower.includes('birmingham') || locationLower.includes('leeds')) {
+          multiplier = 1.1; // Major cities
+        } else if (locationLower.includes('scotland') || locationLower.includes('wales')) {
+          multiplier = 0.9; // Scotland/Wales adjustment
+        }
+      }
+      
+      // Transform baseline data to regional format
+      results = (baselineData || []).map(item => ({
+        id: `baseline-${item.id}`,
+        region: geocodeData?.location?.region || 'UK Average',
+        county: geocodeData?.location?.county || null,
+        job_type: item.job_type,
+        job_category: item.job_category,
+        min_price: Math.round(item.base_price * multiplier * 0.8), // -20% for min
+        max_price: Math.round(item.base_price * multiplier * 1.2), // +20% for max
+        average_price: Math.round(item.base_price * multiplier),
+        currency: item.currency,
+        unit: item.unit,
+        complexity_level: item.complexity_level,
+        last_updated: new Date().toISOString(),
+        data_source: 'computed_from_baseline',
+        is_active: true,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString()
       }));
     }
 

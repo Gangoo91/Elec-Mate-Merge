@@ -19,6 +19,28 @@ serve(async (req) => {
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
     const supabase = createClient(supabaseUrl, supabaseKey)
 
+    console.log('Starting fetch-metal-prices function');
+
+    // Fetch live commodity prices from database
+    const { data: commodityData, error: commodityError } = await supabase
+      .from('commodity_prices')
+      .select('*')
+      .order('last_updated', { ascending: false });
+
+    if (commodityError) {
+      console.error('Error fetching commodity prices:', commodityError);
+    }
+
+    // Fetch supplier prices from database
+    const { data: supplierData, error: supplierError } = await supabase
+      .from('supplier_price_snapshots')
+      .select('*')
+      .order('last_updated', { ascending: false });
+
+    if (supplierError) {
+      console.error('Error fetching supplier prices:', supplierError);
+    }
+
     // Fetch regional job pricing data from database
     const { data: regionalPricing, error: pricingError } = await supabase
       .from('regional_job_pricing')
@@ -30,172 +52,85 @@ serve(async (req) => {
       console.error('Error fetching regional pricing:', pricingError)
     }
 
-    // Generate comprehensive UK metal and pricing data
+    console.log(`Fetched ${regionalPricing?.length || 0} regional job pricing records`);
+
+    // Transform commodity data to UI format
+    const metalPrices = (commodityData || []).map((item, index) => ({
+      id: index + 1,
+      name: `${item.metal_type} (per kg)`,
+      value: `£${item.price_per_kg}`,
+      change: item.daily_change_percent ? `${item.daily_change_percent > 0 ? '+' : ''}${item.daily_change_percent}%` : '0%',
+      trend: item.daily_change_percent > 0 ? 'up' as const : item.daily_change_percent < 0 ? 'down' as const : 'neutral' as const
+    }));
+
+    // Transform supplier cable data to UI format
+    const cableData = (supplierData || []).filter(item => item.category === 'Cable');
+    const cablePrices = cableData.map((item, index) => ({
+      id: index + 6,
+      name: item.product_name.includes('(') ? item.product_name : `${item.product_name} (per ${item.unit})`,
+      value: `£${item.price}${item.unit !== 'each' ? '/' + item.unit : ''}`,
+      change: '+2.1%', // Mock change for now - will be calculated from historical data
+      trend: 'up' as const
+    }));
+
+    // Transform supplier equipment data to UI format  
+    const equipmentData = (supplierData || []).filter(item => item.category === 'Equipment');
+    const equipmentPrices = equipmentData.map((item, index) => ({
+      id: index + 11,
+      name: item.product_name,
+      value: `£${item.price}`,
+      change: '+1.5%', // Mock change for now - will be calculated from historical data
+      trend: 'up' as const
+    }));
+
+    // UK Market Alerts
+    const marketAlerts = [
+      {
+        id: 1,
+        message: "Copper prices rising due to global supply constraints - consider bulk purchasing",
+        date: new Date().toLocaleDateString('en-GB'),
+        type: "warning" as const
+      },
+      {
+        id: 2,
+        message: "New BS 7671:2018+A2:2022 compliance requirements affecting equipment pricing",
+        date: new Date().toLocaleDateString('en-GB'),
+        type: "info" as const
+      }
+    ];
+
+    // Determine data freshness
+    const dataSource = commodityData?.[0]?.data_source || 'database';
+    const lastUpdated = commodityData?.[0]?.last_updated || new Date().toISOString();
+    const formattedLastUpdated = new Date(lastUpdated).toLocaleString('en-GB', {
+      timeZone: 'Europe/London',
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+
     const metalPricesData = {
-      metalPrices: [
-        {
-          id: 1,
-          name: "Copper - Bright (per kg)",
-          value: "£7.75",
-          change: "+2.3%",
-          trend: "up" as const
-        },
-        {
-          id: 2,
-          name: "Copper - Clean (per kg)",
-          value: "£7.25",
-          change: "+1.8%",
-          trend: "up" as const
-        },
-        {
-          id: 3,
-          name: "Copper - Mixed (per kg)",
-          value: "£6.85",
-          change: "+1.2%",
-          trend: "up" as const
-        },
-        {
-          id: 4,
-          name: "Copper - Bare Bright (per kg)",
-          value: "£8.10",
-          change: "+2.8%",
-          trend: "up" as const
-        },
-        {
-          id: 5,
-          name: "Aluminium (per kg)",
-          value: "£2.19",
-          change: "+1.5%",
-          trend: "up" as const
-        },
-        {
-          id: 6,
-          name: "Brass (per kg)",
-          value: "£5.12",
-          change: "+0.8%",
-          trend: "up" as const
-        },
-        {
-          id: 7,
-          name: "Lead (per kg)",
-          value: "£1.95",
-          change: "-0.5%",
-          trend: "down" as const
-        },
-        {
-          id: 8,
-          name: "Steel (per kg)",
-          value: "£0.68",
-          change: "-0.3%",
-          trend: "down" as const
-        }
-      ],
-      cablePrices: [
-        {
-          id: 1,
-          name: "Armoured Cable (per m)",
-          value: "£3.45",
-          change: "+1.2%",
-          trend: "up" as const
-        },
-        {
-          id: 2,
-          name: "Twin & Earth 2.5mm (per m)",
-          value: "£1.85",
-          change: "+0.8%",
-          trend: "up" as const
-        },
-        {
-          id: 3,
-          name: "Flex Cable 3-core (per m)",
-          value: "£2.20",
-          change: "+1.0%",
-          trend: "up" as const
-        },
-        {
-          id: 4,
-          name: "Cat6 Data Cable (per m)",
-          value: "£0.75",
-          change: "+0.3%",
-          trend: "up" as const
-        },
-        {
-          id: 5,
-          name: "Fire Resistant Cable (per m)",
-          value: "£4.20",
-          change: "+1.5%",
-          trend: "up" as const
-        }
-      ],
-      equipmentPrices: [
-        {
-          id: 1,
-          name: "Consumer Unit (Avg)",
-          value: "£285",
-          change: "+2.1%",
-          trend: "up" as const
-        },
-        {
-          id: 2,
-          name: "RCD Protection (Avg)",
-          value: "£65",
-          change: "+1.3%",
-          trend: "up" as const
-        },
-        {
-          id: 3,
-          name: "MCB Breakers (Avg)",
-          value: "£15",
-          change: "+0.5%",
-          trend: "up" as const
-        },
-        {
-          id: 4,
-          name: "Socket Outlets (Avg)",
-          value: "£8.50",
-          change: "+0.8%",
-          trend: "up" as const
-        },
-        {
-          id: 5,
-          name: "Light Switches (Avg)",
-          value: "£12",
-          change: "+0.6%",
-          trend: "up" as const
-        }
-      ],
-      marketAlerts: [
-        {
-          id: 1,
-          message: "Copper prices showing strong upward trend due to increased demand in renewable energy sector",
-          date: new Date().toISOString().split('T')[0],
-          type: "info" as const
-        },
-        {
-          id: 2,
-          message: "Supply chain delays affecting cable availability - consider alternative suppliers",
-          date: new Date().toISOString().split('T')[0],
-          type: "warning" as const
-        },
-        {
-          id: 3,
-          message: "New BS 7671:2022 requirements affecting consumer unit specifications",
-          date: new Date().toISOString().split('T')[0],
-          type: "info" as const
-        }
-      ],
+      metalPrices,
+      cablePrices,
+      equipmentPrices,
+      marketAlerts,
       regionalJobPricing: regionalPricing || [],
-      lastUpdated: new Date().toLocaleString('en-GB', {
-        day: '2-digit',
-        month: '2-digit', 
-        year: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit',
-        timeZone: 'Europe/London'
-      })
+      lastUpdated: formattedLastUpdated,
+      dataSource,
+      isLive: dataSource !== 'mock_realistic'
     }
 
-    console.log('UK metal prices and regional job pricing data generated successfully')
+    console.log('Successfully aggregated pricing data:', {
+      metalPricesCount: metalPrices.length,
+      cablePricesCount: cablePrices.length,
+      equipmentPricesCount: equipmentPrices.length,
+      marketAlertsCount: marketAlerts.length,
+      regionalJobPricingCount: regionalPricing?.length || 0,
+      dataSource,
+      lastUpdated: formattedLastUpdated
+    });
 
     return new Response(
       JSON.stringify(metalPricesData),

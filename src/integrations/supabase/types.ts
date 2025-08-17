@@ -116,6 +116,39 @@ export type Database = {
         }
         Relationships: []
       }
+      commodity_prices: {
+        Row: {
+          created_at: string
+          currency: string
+          daily_change_percent: number | null
+          data_source: string
+          id: string
+          last_updated: string
+          metal_type: string
+          price_per_kg: number
+        }
+        Insert: {
+          created_at?: string
+          currency?: string
+          daily_change_percent?: number | null
+          data_source?: string
+          id?: string
+          last_updated?: string
+          metal_type: string
+          price_per_kg: number
+        }
+        Update: {
+          created_at?: string
+          currency?: string
+          daily_change_percent?: number | null
+          data_source?: string
+          id?: string
+          last_updated?: string
+          metal_type?: string
+          price_per_kg?: number
+        }
+        Relationships: []
+      }
       community_stats: {
         Row: {
           active_users: number | null
@@ -614,6 +647,45 @@ export type Database = {
           title?: string
           type?: string
           updated_at?: string
+        }
+        Relationships: []
+      }
+      job_pricing_baseline: {
+        Row: {
+          base_price: number
+          complexity_level: string
+          created_at: string
+          currency: string
+          estimated_hours: number | null
+          id: string
+          job_category: string
+          job_type: string
+          last_updated: string
+          unit: string
+        }
+        Insert: {
+          base_price: number
+          complexity_level?: string
+          created_at?: string
+          currency?: string
+          estimated_hours?: number | null
+          id?: string
+          job_category: string
+          job_type: string
+          last_updated?: string
+          unit?: string
+        }
+        Update: {
+          base_price?: number
+          complexity_level?: string
+          created_at?: string
+          currency?: string
+          estimated_hours?: number | null
+          id?: string
+          job_category?: string
+          job_type?: string
+          last_updated?: string
+          unit?: string
         }
         Relationships: []
       }
@@ -1347,6 +1419,36 @@ export type Database = {
         }
         Relationships: []
       }
+      regional_multipliers: {
+        Row: {
+          cost_of_living_index: number | null
+          county: string | null
+          created_at: string
+          id: string
+          last_updated: string
+          multiplier: number
+          region: string
+        }
+        Insert: {
+          cost_of_living_index?: number | null
+          county?: string | null
+          created_at?: string
+          id?: string
+          last_updated?: string
+          multiplier?: number
+          region: string
+        }
+        Update: {
+          cost_of_living_index?: number | null
+          county?: string | null
+          created_at?: string
+          id?: string
+          last_updated?: string
+          multiplier?: number
+          region?: string
+        }
+        Relationships: []
+      }
       safety_alerts: {
         Row: {
           average_rating: number | null
@@ -1747,6 +1849,48 @@ export type Database = {
           notes?: string | null
           resource_type?: string | null
           user_id?: string
+        }
+        Relationships: []
+      }
+      supplier_price_snapshots: {
+        Row: {
+          category: string
+          created_at: string
+          currency: string
+          data_source: string
+          id: string
+          last_updated: string
+          price: number
+          product_name: string
+          sku: string | null
+          supplier_name: string
+          unit: string
+        }
+        Insert: {
+          category: string
+          created_at?: string
+          currency?: string
+          data_source?: string
+          id?: string
+          last_updated?: string
+          price: number
+          product_name: string
+          sku?: string | null
+          supplier_name: string
+          unit?: string
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          currency?: string
+          data_source?: string
+          id?: string
+          last_updated?: string
+          price?: number
+          product_name?: string
+          sku?: string | null
+          supplier_name?: string
+          unit?: string
         }
         Relationships: []
       }
