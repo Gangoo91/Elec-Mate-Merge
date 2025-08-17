@@ -87,12 +87,23 @@ const LivePricing = () => {
               ))}
             </div>
           ) : data ? (
-            <CompactPricingGrid
-              metalPrices={data.metalPrices}
-              cablePrices={data.cablePrices}
-              equipmentPrices={data.equipmentPrices}
-              lastUpdated={data.lastUpdated}
-            />
+            <>
+              {/* Debug: Show raw data structure */}
+              {process.env.NODE_ENV === 'development' && (
+                <div className="p-4 bg-gray-800 rounded text-xs text-gray-300 overflow-auto max-h-40">
+                  <details>
+                    <summary>Debug: Metal Prices Data</summary>
+                    <pre>{JSON.stringify(data.metalPrices, null, 2)}</pre>
+                  </details>
+                </div>
+              )}
+              <CompactPricingGrid
+                metalPrices={data.metalPrices}
+                cablePrices={data.cablePrices}
+                equipmentPrices={data.equipmentPrices}
+                lastUpdated={data.lastUpdated}
+              />
+            </>
           ) : (
             <Card className="p-6 border-elec-yellow/20 bg-elec-gray text-center">
               <p className="text-muted-foreground mb-4">Could not load UK pricing data</p>
