@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { logger } from "@/utils/logger";
 import CompactPricingGrid from "@/components/electrician-pricing/CompactPricingGrid";
-import SearchDrivenRegionalPricing from "@/components/electrician-pricing/SearchDrivenRegionalPricing";
+import EnhancedRegionalPricing from "@/components/electrician-pricing/EnhancedRegionalPricing";
 import CompactMarketAlerts from "@/components/electrician-pricing/CompactMarketAlerts";
 import CompactScrapMerchantFinder from "@/components/electrician-pricing/CompactScrapMerchantFinder";
 
@@ -34,7 +34,7 @@ const LivePricing = () => {
         </div>
         
         <div className="flex gap-2">
-          <Link to="/electrician/trade-essentials">
+          <Link to="/electrician/business-hub">
             <Button variant="outline" size="sm" className="flex items-center gap-1">
               <ArrowLeft className="h-4 w-4" /> Back
             </Button>
@@ -99,8 +99,8 @@ const LivePricing = () => {
         </Card>
       )}
 
-      {/* Search-Driven Regional Job Pricing */}
-      <SearchDrivenRegionalPricing regionalData={data?.regionalJobPricing || []} />
+      {/* Enhanced Regional Job Pricing */}
+      <EnhancedRegionalPricing />
 
       {/* Compact Market Alerts - Moved to bottom */}
       {data?.marketAlerts && (

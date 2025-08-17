@@ -7,7 +7,7 @@ export type Json =
   | Json[]
 
 export type Database = {
-  // Allows to automatically instanciate createClient with right options
+  // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
     PostgrestVersion: "12.2.3 (519615d)"
@@ -2068,16 +2068,16 @@ export type Database = {
       get_chat_messages_with_upvote_status: {
         Args: { user_id: string }
         Returns: {
-          id: string
+          author_avatar: string
           author_id: string
           author_name: string
-          author_avatar: string
-          content: string
           category: string
-          upvotes: number
+          content: string
           created_at: string
-          updated_at: string
           has_user_upvoted: boolean
+          id: string
+          updated_at: string
+          upvotes: number
         }[]
       }
     }
