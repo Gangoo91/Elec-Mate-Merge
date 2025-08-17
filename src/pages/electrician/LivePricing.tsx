@@ -55,7 +55,7 @@ const LivePricing = () => {
         </div>
       </div>
 
-      {/* Compact Scrap Merchant Finder - Moved to top */}
+      {/* Compact Scrap Merchant Finder - Always visible */}
       <Card className="border-elec-yellow/20 bg-elec-gray">
         <div className="p-4">
           <div className="flex items-center justify-between">
@@ -66,17 +66,15 @@ const LivePricing = () => {
             <Button
               variant="outline"
               size="sm"
-              onClick={() => setShowMerchantFinder(!showMerchantFinder)}
+              onClick={() => setShowMerchantFinder(false)}
             >
-              {showMerchantFinder ? "Hide" : "Search"}
+              Hide
             </Button>
           </div>
           
-          {showMerchantFinder && (
-            <div className="mt-4 pt-4 border-t border-elec-yellow/20">
-              <CompactScrapMerchantFinder />
-            </div>
-          )}
+          <div className="mt-4 pt-4 border-t border-elec-yellow/20">
+            <CompactScrapMerchantFinder />
+          </div>
         </div>
       </Card>
 
