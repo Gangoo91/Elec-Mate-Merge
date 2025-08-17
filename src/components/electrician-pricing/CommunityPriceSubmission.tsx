@@ -242,8 +242,8 @@ const CommunityPriceSubmission = () => {
             </div>
           </div>
 
-          {/* Price, Unit, and Complexity Row - Fixed alignment */}
-          <div className="grid grid-cols-3 gap-4">
+          {/* Price, Unit, and Complexity Row - Responsive stacking */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="space-y-2">
               <Label htmlFor="price">Price (£) *</Label>
               <div className="relative">

@@ -23,6 +23,7 @@ const buttonVariants = cva(
         gold: "bg-elec-yellow text-black hover:bg-elec-yellow/90",
         success: "bg-green-600 text-white hover:bg-green-700",
         yellow: "bg-yellow-500 text-black hover:bg-yellow-600",
+        warning: "bg-orange-500 text-white hover:bg-orange-600",
       },
       size: {
         default: "h-10 px-4 py-2",
