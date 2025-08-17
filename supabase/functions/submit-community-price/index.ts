@@ -13,7 +13,7 @@ serve(async (req) => {
   }
 
   try {
-    const { job_type, location, price, unit, complexity_level, notes } = await req.json();
+    const { job_type, location, price, unit, complexity_level, notes, attributes } = await req.json();
 
     // Validation
     if (!job_type || !location || !price) {
@@ -31,6 +31,7 @@ serve(async (req) => {
     }
 
     console.log(`Processing community price submission: ${job_type} in ${location} for £${price}`);
+    console.log('Attributes received:', attributes);
 
     const supabase = createClient(
       Deno.env.get('SUPABASE_URL') ?? '',
@@ -87,6 +88,9 @@ serve(async (req) => {
       console.log('Could not check baseline for auto-approval:', error);
     }
 
+    // Prepare attributes for storage (ensure it's a valid JSON object)
+    const attributesData = attributes && typeof attributes === 'object' ? attributes : {};
+
     // Insert the submission
     const { error: insertError } = await supabase
       .from('price_reports')
@@ -105,7 +109,8 @@ serve(async (req) => {
         status: autoApprove ? 'approved' : 'pending',
         ip_address: clientIP,
         user_agent: userAgent,
-        data_source: 'user_submission'
+        data_source: 'user_submission',
+        attributes: attributesData
       });
 
     if (insertError) {
@@ -117,6 +122,9 @@ serve(async (req) => {
     }
 
     console.log(`Successfully submitted price report for ${job_type}${autoApprove ? ' (auto-approved)' : ' (pending review)'}`);
+    if (Object.keys(attributesData).length > 0) {
+      console.log('Stored attributes:', attributesData);
+    }
 
     return new Response(
       JSON.stringify({
@@ -124,7 +132,8 @@ serve(async (req) => {
         message: autoApprove 
           ? 'Price submitted and approved automatically'
           : 'Price submitted for review',
-        auto_approved: autoApprove
+        auto_approved: autoApprove,
+        attributes_stored: Object.keys(attributesData).length
       }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
