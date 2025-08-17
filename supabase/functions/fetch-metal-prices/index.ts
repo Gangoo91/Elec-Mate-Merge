@@ -54,14 +54,46 @@ serve(async (req) => {
 
     console.log(`Fetched ${regionalPricing?.length || 0} regional job pricing records`);
 
-    // Transform commodity data to UI format
-    const metalPrices = (commodityData || []).map((item, index) => ({
-      id: index + 1,
-      name: `${item.metal_type} (per kg)`,
-      value: `£${item.price_per_kg}`,
-      change: item.daily_change_percent ? `${item.daily_change_percent > 0 ? '+' : ''}${item.daily_change_percent}%` : '0%',
-      trend: item.daily_change_percent > 0 ? 'up' as const : item.daily_change_percent < 0 ? 'down' as const : 'neutral' as const
-    }));
+    // Transform commodity data to UI format with copper grades
+    const metalPrices = (commodityData || []).map((item, index) => {
+      const basePrice = {
+        id: index + 1,
+        name: `${item.metal_type} (per kg)`,
+        value: `£${item.price_per_kg}`,
+        change: item.daily_change_percent ? `${item.daily_change_percent > 0 ? '+' : ''}${item.daily_change_percent}%` : '0%',
+        trend: item.daily_change_percent > 0 ? 'up' as const : item.daily_change_percent < 0 ? 'down' as const : 'neutral' as const
+      };
+
+      // Add copper grades if this is copper
+      if (item.metal_type.toLowerCase().includes('copper')) {
+        const baseValue = parseFloat(item.price_per_kg);
+        basePrice.subItems = [
+          {
+            id: `${index + 1}-bright`,
+            name: 'Bright Copper Wire',
+            value: `£${(baseValue * 1.15).toFixed(2)}`,
+            change: basePrice.change,
+            trend: basePrice.trend
+          },
+          {
+            id: `${index + 1}-mixed`,
+            name: 'Mixed Copper Cable',
+            value: `£${(baseValue * 0.85).toFixed(2)}`,
+            change: basePrice.change,
+            trend: basePrice.trend
+          },
+          {
+            id: `${index + 1}-dirty`,
+            name: 'Dirty/Greasy Copper',
+            value: `£${(baseValue * 0.65).toFixed(2)}`,
+            change: basePrice.change,
+            trend: basePrice.trend
+          }
+        ];
+      }
+
+      return basePrice;
+    });
 
     // Transform supplier cable data to UI format
     const cableData = (supplierData || []).filter(item => item.category === 'Cable');

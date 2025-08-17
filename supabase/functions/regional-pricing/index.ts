@@ -14,7 +14,7 @@ serve(async (req) => {
   }
 
   try {
-    const { location, jobType } = await req.json();
+    const { location, jobType, minResults = 10, includeEstimates = true } = await req.json();
     
     if (!location) {
       return new Response(
@@ -92,8 +92,26 @@ serve(async (req) => {
       }
     }
 
-    // If still no results, provide fallback using baseline pricing + regional multipliers
-    if (results.length === 0) {
+    // If we have results but not enough, try broader searches
+    if (results.length > 0 && results.length < minResults) {
+      // Get more results from nearby regions or similar job types
+      const { data: broaderData } = await supabase
+        .from('regional_job_pricing')
+        .select('*')
+        .eq('is_active', true)
+        .limit(minResults * 2);
+      
+      if (broaderData) {
+        // Add results that aren't already included
+        const existingIds = new Set(results.map(r => r.id));
+        const additionalResults = broaderData.filter(r => !existingIds.has(r.id));
+        results = [...results, ...additionalResults.slice(0, minResults - results.length)];
+        console.log(`Broadened search to ${results.length} total results`);
+      }
+    }
+
+    // If still no results or we want estimates to reach minResults, provide fallback using baseline pricing + regional multipliers
+    if (results.length === 0 || (includeEstimates && results.length < minResults)) {
       console.log('No exact matches found, providing fallback data using baseline prices');
       isApproximate = true;
       

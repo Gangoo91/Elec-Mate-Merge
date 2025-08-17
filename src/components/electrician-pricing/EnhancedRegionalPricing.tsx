@@ -55,7 +55,9 @@ const EnhancedRegionalPricing = () => {
       const { data, error } = await supabase.functions.invoke('regional-pricing', {
         body: {
           location: searchLocation.trim(),
-          jobType: selectedJobType === 'all' ? null : selectedJobType
+          jobType: selectedJobType === 'all' ? null : selectedJobType,
+          minResults: 10,
+          includeEstimates: true
         }
       });
 
@@ -127,7 +129,7 @@ const EnhancedRegionalPricing = () => {
               <SelectTrigger>
                 <SelectValue placeholder="All job types" />
               </SelectTrigger>
-              <SelectContent className="max-h-60">
+              <SelectContent className="max-h-80 overflow-y-auto bg-elec-dark border-elec-yellow/20 z-[9999]">
                 <SelectItem value="all">All job types</SelectItem>
                 {jobTypesLoading ? (
                   <SelectItem value="loading" disabled>
@@ -137,11 +139,11 @@ const EnhancedRegionalPricing = () => {
                 ) : (
                   jobTypes?.byCategory && Object.entries(jobTypes.byCategory).map(([category, jobs]) => (
                     <div key={category}>
-                      <div className="px-2 py-1 text-xs font-medium text-muted-foreground bg-muted/50">
+                      <div className="px-2 py-1 text-xs font-medium text-elec-yellow/80 bg-elec-gray/30 sticky top-0">
                         {category}
                       </div>
                       {jobs.map((job) => (
-                        <SelectItem key={job.job_type} value={job.job_type}>
+                        <SelectItem key={job.job_type} value={job.job_type} className="hover:bg-elec-yellow/20">
                           {job.job_type}
                         </SelectItem>
                       ))}

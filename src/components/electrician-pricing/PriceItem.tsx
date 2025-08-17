@@ -1,4 +1,6 @@
-import { TrendingUp, TrendingDown, Minus } from "lucide-react";
+import { TrendingUp, TrendingDown, Minus, ChevronDown, ChevronUp } from "lucide-react";
+import { useState } from "react";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 
 interface PriceItemProps {
   name: string;
@@ -6,9 +8,17 @@ interface PriceItemProps {
   change: string;
   trend: "up" | "down" | "neutral";
   isLarge?: boolean;
+  subItems?: Array<{
+    id: string | number;
+    name: string;
+    value: string;
+    change: string;
+    trend: "up" | "down" | "neutral";
+  }>;
 }
 
-const PriceItem = ({ name, value, change, trend, isLarge = false }: PriceItemProps) => {
+const PriceItem = ({ name, value, change, trend, isLarge = false, subItems }: PriceItemProps) => {
+  const [isExpanded, setIsExpanded] = useState(false);
   const getTrendColor = () => {
     switch (trend) {
       case "up": return "text-emerald-400";
@@ -33,27 +43,82 @@ const PriceItem = ({ name, value, change, trend, isLarge = false }: PriceItemPro
     }
   };
 
-  return (
-    <div className={`group flex items-center justify-between p-3 rounded-lg border transition-all duration-200 hover:scale-[1.02] hover:shadow-md ${getTrendBg()}`}>
-      <div className="flex-1 min-w-0">
-        <p className={`${isLarge ? 'text-base' : 'text-sm'} font-medium text-foreground truncate`}>
-          {name}
-        </p>
-      </div>
-      
-      <div className="flex items-center gap-3 ml-3">
-        <span className={`font-bold ${isLarge ? 'text-lg' : 'text-base'} text-elec-yellow`}>
-          {value}
-        </span>
+  if (!subItems || subItems.length === 0) {
+    return (
+      <div className={`group flex items-center justify-between p-3 rounded-lg border transition-all duration-200 hover:scale-[1.02] hover:shadow-md ${getTrendBg()}`}>
+        <div className="flex-1 min-w-0">
+          <p className={`${isLarge ? 'text-base' : 'text-sm'} font-medium text-foreground truncate`}>
+            {name}
+          </p>
+        </div>
         
-        <div className={`flex items-center gap-1 px-2 py-1 rounded-full ${getTrendBg()} ${getTrendColor()}`}>
-          {getTrendIcon()}
-          <span className="text-xs font-medium">
-            {change}
+        <div className="flex items-center gap-3 ml-3">
+          <span className={`font-bold ${isLarge ? 'text-lg' : 'text-base'} text-elec-yellow`}>
+            {value}
           </span>
+          
+          <div className={`flex items-center gap-1 px-2 py-1 rounded-full ${getTrendBg()} ${getTrendColor()}`}>
+            {getTrendIcon()}
+            <span className="text-xs font-medium">
+              {change}
+            </span>
+          </div>
         </div>
       </div>
-    </div>
+    );
+  }
+
+  return (
+    <Collapsible open={isExpanded} onOpenChange={setIsExpanded}>
+      <div className={`rounded-lg border transition-all duration-200 ${getTrendBg()}`}>
+        <CollapsibleTrigger className="w-full">
+          <div className={`group flex items-center justify-between p-3 hover:scale-[1.02] hover:shadow-md transition-all duration-200`}>
+            <div className="flex-1 min-w-0 flex items-center gap-2">
+              <p className={`${isLarge ? 'text-base' : 'text-sm'} font-medium text-foreground truncate`}>
+                {name}
+              </p>
+              {isExpanded ? (
+                <ChevronUp className="h-4 w-4 text-elec-yellow" />
+              ) : (
+                <ChevronDown className="h-4 w-4 text-elec-yellow" />
+              )}
+            </div>
+            
+            <div className="flex items-center gap-3 ml-3">
+              <span className={`font-bold ${isLarge ? 'text-lg' : 'text-base'} text-elec-yellow`}>
+                {value}
+              </span>
+              
+              <div className={`flex items-center gap-1 px-2 py-1 rounded-full ${getTrendBg()} ${getTrendColor()}`}>
+                {getTrendIcon()}
+                <span className="text-xs font-medium">
+                  {change}
+                </span>
+              </div>
+            </div>
+          </div>
+        </CollapsibleTrigger>
+        
+        <CollapsibleContent>
+          <div className="px-3 pb-3 space-y-2">
+            {subItems.map((subItem) => (
+              <div key={subItem.id} className="flex items-center justify-between p-2 rounded bg-elec-dark/50 border border-elec-yellow/10">
+                <span className="text-sm text-foreground/90">{subItem.name}</span>
+                <div className="flex items-center gap-2">
+                  <span className="text-sm font-medium text-elec-yellow">{subItem.value}</span>
+                  <div className={`flex items-center gap-1 px-1.5 py-0.5 rounded-full text-xs ${getTrendBg()}`}>
+                    {subItem.trend === "up" ? <TrendingUp className="h-2.5 w-2.5" /> : 
+                     subItem.trend === "down" ? <TrendingDown className="h-2.5 w-2.5" /> : 
+                     <Minus className="h-2.5 w-2.5" />}
+                    <span className={getTrendColor()}>{subItem.change}</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </CollapsibleContent>
+      </div>
+    </Collapsible>
   );
 };
 

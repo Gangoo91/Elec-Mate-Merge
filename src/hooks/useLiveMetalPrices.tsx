@@ -10,6 +10,7 @@ interface PriceMetric {
   value: string;
   change: string;
   trend: "up" | "down" | "neutral";
+  subItems?: PriceMetric[];
 }
 
 interface Alert {

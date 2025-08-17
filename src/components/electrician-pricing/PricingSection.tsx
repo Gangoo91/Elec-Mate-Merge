@@ -9,6 +9,7 @@ interface PriceMetric {
   value: string;
   change: string;
   trend: "up" | "down" | "neutral";
+  subItems?: PriceMetric[];
 }
 
 interface PricingSectionProps {
@@ -43,14 +44,15 @@ const PricingSection = ({
       </CardHeader>
       
       <CardContent className="space-y-3">
-        {displayPrices.map((price, index) => (
+        {displayPrices.map((price) => (
           <PriceItem
             key={price.id}
             name={price.name}
             value={price.value}
             change={price.change}
             trend={price.trend}
-            isLarge={index === 0 && !isExpanded} // Make first item larger when collapsed
+            subItems={price.subItems}
+            isLarge={!isExpanded} // Make first item larger when collapsed
           />
         ))}
         
