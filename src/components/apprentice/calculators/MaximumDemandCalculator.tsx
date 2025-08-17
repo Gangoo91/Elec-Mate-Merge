@@ -5,8 +5,9 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { TrendingUp, Info, Calculator, RotateCcw, Plus, Trash2 } from "lucide-react";
-import { useState } from "react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { TrendingUp, Info, Calculator, RotateCcw, Plus, Trash2, Zap, AlertTriangle } from "lucide-react";
+import { useState, useEffect } from "react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
 interface Load {
@@ -14,25 +15,42 @@ interface Load {
   name: string;
   power: number;
   diversityFactor: number;
+  loadType: string;
 }
+
+const LOAD_PRESETS = {
+  "lighting": { name: "Lighting", diversityFactor: 0.9 },
+  "socket-outlets": { name: "Socket Outlets", diversityFactor: 0.6 },
+  "cooking": { name: "Cooking Appliances", diversityFactor: 0.6 },
+  "water-heating": { name: "Water Heating", diversityFactor: 1.0 },
+  "space-heating": { name: "Space Heating", diversityFactor: 1.0 },
+  "motors": { name: "Motors", diversityFactor: 0.8 },
+  "immersion": { name: "Immersion Heaters", diversityFactor: 1.0 },
+  "shower": { name: "Electric Showers", diversityFactor: 1.0 },
+  "custom": { name: "Custom Load", diversityFactor: 1.0 }
+} as const;
 
 const MaximumDemandCalculator = () => {
   const [loads, setLoads] = useState<Load[]>([
-    { id: 1, name: "Lighting", power: 0, diversityFactor: 0.9 },
-    { id: 2, name: "Socket Outlets", power: 0, diversityFactor: 0.6 },
+    { id: 1, name: "Lighting", power: 0, diversityFactor: 0.9, loadType: "lighting" },
+    { id: 2, name: "Socket Outlets", power: 0, diversityFactor: 0.6, loadType: "socket-outlets" },
   ]);
   const [result, setResult] = useState<{
     totalConnectedLoad: number;
     maximumDemand: number;
     overallDiversityFactor: number;
+    loadReduction: number;
   } | null>(null);
+  const [errors, setErrors] = useState<{ [key: number]: string }>({});
 
-  const addLoad = () => {
+  const addLoad = (loadType: string = "custom") => {
+    const preset = LOAD_PRESETS[loadType as keyof typeof LOAD_PRESETS];
     const newLoad: Load = {
       id: Date.now(),
-      name: `Load ${loads.length + 1}`,
+      name: preset.name,
       power: 0,
-      diversityFactor: 1.0
+      diversityFactor: preset.diversityFactor,
+      loadType
     };
     setLoads([...loads, newLoad]);
   };
@@ -44,168 +62,287 @@ const MaximumDemandCalculator = () => {
   };
 
   const updateLoad = (id: number, field: keyof Load, value: string | number) => {
-    setLoads(loads.map(load => 
-      load.id === id ? { ...load, [field]: value } : load
-    ));
+    setLoads(loads.map(load => {
+      if (load.id === id) {
+        let updatedLoad = { ...load, [field]: value };
+        
+        // If load type changes, update diversity factor to preset
+        if (field === 'loadType' && typeof value === 'string') {
+          const preset = LOAD_PRESETS[value as keyof typeof LOAD_PRESETS];
+          updatedLoad.diversityFactor = preset.diversityFactor;
+          updatedLoad.name = preset.name;
+        }
+        
+        return updatedLoad;
+      }
+      return load;
+    }));
+    
+    // Clear error for this load
+    if (errors[id]) {
+      setErrors(prev => ({ ...prev, [id]: undefined }));
+    }
   };
 
-  const calculateMaximumDemand = () => {
-    const totalConnectedLoad = loads.reduce((sum, load) => sum + load.power, 0);
-    const maximumDemand = loads.reduce((sum, load) => sum + (load.power * load.diversityFactor), 0);
-    const overallDiversityFactor = totalConnectedLoad > 0 ? maximumDemand / totalConnectedLoad : 0;
-
-    setResult({
-      totalConnectedLoad,
-      maximumDemand,
-      overallDiversityFactor
+  const validateAndCalculate = () => {
+    const newErrors: { [key: number]: string } = {};
+    
+    loads.forEach(load => {
+      if (load.power < 0) {
+        newErrors[load.id] = "Power cannot be negative";
+      } else if (load.power > 1000) {
+        newErrors[load.id] = "Power seems unreasonably high";
+      } else if (load.diversityFactor < 0 || load.diversityFactor > 1) {
+        newErrors[load.id] = "Diversity factor must be between 0 and 1";
+      }
     });
+    
+    setErrors(newErrors);
+    
+    if (Object.keys(newErrors).length === 0) {
+      const totalConnectedLoad = loads.reduce((sum, load) => sum + load.power, 0);
+      const maximumDemand = loads.reduce((sum, load) => sum + (load.power * load.diversityFactor), 0);
+      const overallDiversityFactor = totalConnectedLoad > 0 ? maximumDemand / totalConnectedLoad : 0;
+      const loadReduction = totalConnectedLoad - maximumDemand;
+
+      setResult({
+        totalConnectedLoad,
+        maximumDemand: Math.round(maximumDemand * 100) / 100,
+        overallDiversityFactor: Math.round(overallDiversityFactor * 1000) / 1000,
+        loadReduction: Math.round(loadReduction * 100) / 100
+      });
+    } else {
+      setResult(null);
+    }
   };
 
   const reset = () => {
     setLoads([
-      { id: 1, name: "Lighting", power: 0, diversityFactor: 0.9 },
-      { id: 2, name: "Socket Outlets", power: 0, diversityFactor: 0.6 },
+      { id: 1, name: "Lighting", power: 0, diversityFactor: 0.9, loadType: "lighting" },
+      { id: 2, name: "Socket Outlets", power: 0, diversityFactor: 0.6, loadType: "socket-outlets" },
     ]);
     setResult(null);
+    setErrors({});
   };
+
+  // Auto-calculate when loads change
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (loads.some(load => load.power > 0)) {
+        validateAndCalculate();
+      }
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [loads]);
 
   return (
     <Card className="border-elec-yellow/20 bg-elec-gray">
       <CardHeader>
         <div className="flex items-center gap-2">
-          <TrendingUp className="h-5 w-5 text-elec-yellow" />
+          <Zap className="h-5 w-5 text-elec-yellow" />
           <CardTitle>Maximum Demand Calculator</CardTitle>
+          <Badge variant="outline" className="ml-auto text-xs">
+            BS 7671
+          </Badge>
         </div>
         <CardDescription>
           Calculate maximum demand considering diversity factors for different load types.
         </CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="space-y-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Input Section */}
           <div className="space-y-4">
-            <div className="flex items-center justify-between">
-              <h3 className="text-lg font-semibold">Load Configuration</h3>
-              <Button onClick={addLoad} size="sm" variant="outline">
-                <Plus className="h-4 w-4 mr-1" />
-                Add Load
-              </Button>
+            {/* Stacked Header and Button */}
+            <div className="space-y-3">
+              <h3 className="text-lg font-semibold text-elec-yellow flex items-center gap-2">
+                <Calculator className="h-4 w-4" />
+                Load Configuration
+              </h3>
+              <Select onValueChange={addLoad}>
+                <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
+                  <div className="flex items-center gap-2">
+                    <Plus className="h-4 w-4" />
+                    <SelectValue placeholder="Add Load Type" />
+                  </div>
+                </SelectTrigger>
+                <SelectContent className="bg-elec-dark border-elec-yellow/20 z-50">
+                  <SelectItem value="lighting">Lighting Circuits</SelectItem>
+                  <SelectItem value="socket-outlets">Socket Outlets</SelectItem>
+                  <SelectItem value="cooking">Cooking Appliances</SelectItem>
+                  <SelectItem value="water-heating">Water Heating</SelectItem>
+                  <SelectItem value="space-heating">Space Heating</SelectItem>
+                  <SelectItem value="motors">Motors</SelectItem>
+                  <SelectItem value="immersion">Immersion Heaters</SelectItem>
+                  <SelectItem value="shower">Electric Showers</SelectItem>
+                  <SelectItem value="custom">Custom Load</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
 
             <div className="space-y-3 max-h-96 overflow-y-auto">
               {loads.map((load) => (
-                <div key={load.id} className="p-3 border border-elec-yellow/20 rounded-md bg-elec-dark">
-                  <div className="flex items-center justify-between mb-2">
-                    <Input
-                      value={load.name}
-                      onChange={(e) => updateLoad(load.id, 'name', e.target.value)}
-                      className="flex-1 mr-2 bg-elec-gray border-elec-yellow/20"
-                      placeholder="Load name"
-                    />
-                    {loads.length > 1 && (
-                      <Button 
-                        onClick={() => removeLoad(load.id)} 
-                        size="sm" 
-                        variant="outline"
-                        className="text-red-500 hover:text-red-400"
+                <div key={load.id} className={`p-4 border rounded-lg bg-elec-dark transition-colors ${
+                  errors[load.id] ? 'border-destructive/50' : 'border-elec-yellow/20'
+                }`}>
+                  <div className="space-y-3">
+                    {/* Load Type and Remove Button */}
+                    <div className="flex items-center gap-2">
+                      <Select 
+                        value={load.loadType} 
+                        onValueChange={(value) => updateLoad(load.id, 'loadType', value)}
                       >
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
+                        <SelectTrigger className="flex-1 bg-elec-gray border-elec-yellow/20">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent className="bg-elec-dark border-elec-yellow/20 z-50">
+                          <SelectItem value="lighting">Lighting Circuits</SelectItem>
+                          <SelectItem value="socket-outlets">Socket Outlets</SelectItem>
+                          <SelectItem value="cooking">Cooking Appliances</SelectItem>
+                          <SelectItem value="water-heating">Water Heating</SelectItem>
+                          <SelectItem value="space-heating">Space Heating</SelectItem>
+                          <SelectItem value="motors">Motors</SelectItem>
+                          <SelectItem value="immersion">Immersion Heaters</SelectItem>
+                          <SelectItem value="shower">Electric Showers</SelectItem>
+                          <SelectItem value="custom">Custom Load</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      {loads.length > 1 && (
+                        <Button 
+                          onClick={() => removeLoad(load.id)} 
+                          size="sm" 
+                          variant="outline"
+                          className="text-destructive hover:text-destructive/80"
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      )}
+                    </div>
+
+                    {/* Power and Diversity Factor */}
+                    <div className="grid grid-cols-2 gap-3">
+                      <div>
+                        <Label className="text-xs font-medium text-muted-foreground">Power (kW)</Label>
+                        <Input
+                          type="number"
+                          step="0.1"
+                          min="0"
+                          value={load.power}
+                          onChange={(e) => updateLoad(load.id, 'power', parseFloat(e.target.value) || 0)}
+                          className="bg-elec-gray border-elec-yellow/20 mt-1"
+                          placeholder="0.0"
+                        />
+                      </div>
+                      <div>
+                        <Label className="text-xs font-medium text-muted-foreground">Diversity Factor</Label>
+                        <Input
+                          type="number"
+                          step="0.1"
+                          min="0"
+                          max="1"
+                          value={load.diversityFactor}
+                          onChange={(e) => updateLoad(load.id, 'diversityFactor', parseFloat(e.target.value) || 0)}
+                          className="bg-elec-gray border-elec-yellow/20 mt-1"
+                          placeholder="1.0"
+                        />
+                      </div>
+                    </div>
+
+                    {/* Error Display */}
+                    {errors[load.id] && (
+                      <div className="flex items-center gap-2 text-destructive text-xs">
+                        <AlertTriangle className="h-3 w-3" />
+                        {errors[load.id]}
+                      </div>
                     )}
-                  </div>
-                  <div className="grid grid-cols-2 gap-2">
-                    <div>
-                      <Label className="text-xs">Power (kW)</Label>
-                      <Input
-                        type="number"
-                        value={load.power}
-                        onChange={(e) => updateLoad(load.id, 'power', parseFloat(e.target.value) || 0)}
-                        className="bg-elec-gray border-elec-yellow/20"
-                        placeholder="0"
-                      />
-                    </div>
-                    <div>
-                      <Label className="text-xs">Diversity Factor</Label>
-                      <Input
-                        type="number"
-                        step="0.1"
-                        min="0"
-                        max="1"
-                        value={load.diversityFactor}
-                        onChange={(e) => updateLoad(load.id, 'diversityFactor', parseFloat(e.target.value) || 0)}
-                        className="bg-elec-gray border-elec-yellow/20"
-                        placeholder="1.0"
-                      />
-                    </div>
+
+                    {/* Load Contribution */}
+                    {load.power > 0 && (
+                      <div className="text-xs text-muted-foreground bg-elec-yellow/5 p-2 rounded">
+                        Contribution: {(load.power * load.diversityFactor).toFixed(2)} kW
+                      </div>
+                    )}
                   </div>
                 </div>
               ))}
             </div>
 
-            <div className="flex gap-2 pt-4">
-              <Button onClick={calculateMaximumDemand} className="flex-1 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90">
-                <Calculator className="h-4 w-4 mr-2" />
-                Calculate
-              </Button>
-              <Button variant="outline" onClick={reset}>
-                <RotateCcw className="h-4 w-4" />
-              </Button>
-            </div>
+            <Button variant="outline" onClick={reset} className="w-full">
+              <RotateCcw className="h-4 w-4 mr-2" />
+              Reset Calculator
+            </Button>
           </div>
 
           {/* Result Section */}
           <div className="space-y-4">
-            <div className="rounded-md bg-elec-dark p-6 min-h-[300px]">
+            <div className="bg-elec-dark/50 rounded-lg p-6">
+              <div className="flex items-center gap-2 mb-4">
+                <TrendingUp className="h-5 w-5 text-elec-yellow" />
+                <h3 className="text-lg font-medium text-elec-yellow">Calculation Results</h3>
+                {loads.length > 0 && (
+                  <Badge variant="outline" className="ml-auto text-xs">
+                    {loads.length} Load{loads.length !== 1 ? 's' : ''}
+                  </Badge>
+                )}
+              </div>
+              
               {result ? (
                 <div className="space-y-4">
-                  <div className="text-center">
-                    <h3 className="text-lg font-semibold text-elec-yellow mb-2">Maximum Demand Results</h3>
-                    <Badge variant="secondary" className="mb-4">
-                      {loads.length} Load{loads.length !== 1 ? 's' : ''} Configured
-                    </Badge>
+                  <div className="space-y-3">
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-muted-foreground">Total Connected Load:</span>
+                      <span className="font-semibold text-white">{result.totalConnectedLoad.toFixed(2)} kW</span>
+                    </div>
+                    
+                    <div className="flex justify-between items-center p-3 bg-elec-yellow/10 rounded">
+                      <span className="text-sm font-medium">Maximum Demand:</span>
+                      <span className="text-xl font-bold text-elec-yellow">{result.maximumDemand} kW</span>
+                    </div>
+                    
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-muted-foreground">Overall Diversity Factor:</span>
+                      <span className="font-semibold text-white">{(result.overallDiversityFactor * 100).toFixed(1)}%</span>
+                    </div>
                   </div>
                   
-                  <Separator />
+                  <Separator className="bg-elec-yellow/20" />
                   
-                  <div className="space-y-3 text-sm">
-                    <div>
-                      <span className="text-muted-foreground">Total Connected Load:</span>
-                      <div className="font-mono text-elec-yellow text-lg">{result.totalConnectedLoad.toFixed(2)} kW</div>
+                  <div className="bg-green-500/10 border border-green-500/30 rounded p-3">
+                    <div className="flex items-center gap-2">
+                      <Info className="h-4 w-4 text-green-400" />
+                      <span className="text-sm font-medium text-green-400">Load Reduction:</span>
                     </div>
-                    
-                    <div>
-                      <span className="text-muted-foreground">Maximum Demand:</span>
-                      <div className="font-mono text-elec-yellow text-lg">{result.maximumDemand.toFixed(2)} kW</div>
-                    </div>
-                    
-                    <div>
-                      <span className="text-muted-foreground">Overall Diversity Factor:</span>
-                      <div className="font-mono text-elec-yellow">{result.overallDiversityFactor.toFixed(3)}</div>
-                    </div>
-                    
-                    <Separator />
-                    
-                    <div className="text-xs text-muted-foreground">
-                      <div>Maximum Demand = Σ(Load × Diversity Factor)</div>
-                      <div>Diversity reduces total connected load</div>
-                    </div>
+                    <p className="text-green-300 mt-1">
+                      {result.loadReduction} kW saved ({((result.loadReduction / result.totalConnectedLoad) * 100).toFixed(1)}% reduction)
+                    </p>
+                  </div>
+
+                  <div className="text-xs text-muted-foreground bg-info/5 p-3 rounded">
+                    <div className="font-medium text-info mb-1">Calculation Method:</div>
+                    <div>Maximum Demand = Σ(Load × Diversity Factor)</div>
+                    <div>Diversity accounts for non-simultaneous operation</div>
                   </div>
                 </div>
               ) : (
-                <div className="flex items-center justify-center h-full text-muted-foreground">
-                  Configure loads and diversity factors to calculate maximum demand
+                <div className="text-center py-8">
+                  <Zap className="h-12 w-12 text-muted-foreground mx-auto mb-3" />
+                  <p className="text-muted-foreground">
+                    Add loads and enter power values to see calculation results
+                  </p>
                 </div>
               )}
             </div>
-
-            <Alert className="border-blue-500/20 bg-blue-500/10">
-              <Info className="h-4 w-4 text-blue-500" />
-              <AlertDescription className="text-blue-200">
-                Diversity factors vary by installation type. Typical values: Lighting (0.9), Sockets (0.6), Motors (0.8).
-              </AlertDescription>
-            </Alert>
           </div>
         </div>
+
+        {/* Information Section */}
+        <Alert className="bg-blue-500/10 border-blue-500/30">
+          <Info className="h-4 w-4" />
+          <AlertDescription className="text-blue-300">
+            <strong>BS 7671 Diversity:</strong> Diversity factors account for the statistical probability that not all loads operate simultaneously at full capacity. This enables more economical sizing of cables, switchgear, and distribution equipment while maintaining safety standards per BS 7671:2018+A2:2022.
+          </AlertDescription>
+        </Alert>
       </CardContent>
     </Card>
   );
