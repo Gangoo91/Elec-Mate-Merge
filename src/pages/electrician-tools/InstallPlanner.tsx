@@ -298,13 +298,13 @@ const InstallPlanner = () => {
                 <RotateCcw className="h-5 w-5" /> 
                 Reset Plan
               </Button>
-              <Link to="/electrician-tools" className="w-full sm:w-auto">
+              <Link to="/electrician" className="w-full sm:w-auto">
                 <Button 
                   variant="outline" 
                   className="flex items-center justify-center gap-2 w-full h-12 sm:h-10 text-base font-medium touch-manipulation"
                 >
                   <ArrowLeft className="h-5 w-5" /> 
-                  Back to Tools
+                  Back to Electrical Hub
                 </Button>
               </Link>
             </div>

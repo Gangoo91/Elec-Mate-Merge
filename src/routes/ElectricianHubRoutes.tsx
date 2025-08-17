@@ -49,6 +49,10 @@ import MinimumChargeCalculator from "@/pages/electrician/business-development/to
 import VATSchemeComparison from "@/pages/electrician/business-development/tools/VATSchemeComparison";
 import CISDRCHelper from "@/pages/electrician/business-development/tools/CISDRCHelper";
 import QuoteBuilder from "@/pages/electrician/QuoteBuilder";
+import Calculations from "@/pages/electrician-tools/Calculations";
+import InstallPlanner from "@/pages/electrician-tools/InstallPlanner";
+import InspectionTesting from "@/pages/electrician-tools/InspectionTesting";
+import SiteSafety from "@/pages/electrician-tools/SiteSafety";
 
 const ElectricianHubRoutes = () => (
   <Routes>
@@ -106,6 +110,12 @@ const ElectricianHubRoutes = () => (
     <Route path="business-development/tools/minimum-charge" element={<MinimumChargeCalculator />} />
     <Route path="business-development/tools/vat-scheme" element={<VATSchemeComparison />} />
     <Route path="business-development/tools/cis-drc" element={<CISDRCHelper />} />
+    
+    {/* Core Workshop Tools */}
+    <Route path="calculations" element={<Calculations />} />
+    <Route path="install-planner" element={<InstallPlanner />} />
+    <Route path="inspection-testing" element={<InspectionTesting />} />
+    <Route path="site-safety" element={<SiteSafety />} />
   </Routes>
 );
 

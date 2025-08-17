@@ -12,10 +12,6 @@ import Settings from "@/pages/Settings";
 import Subscriptions from "@/pages/Subscriptions";
 import PaymentSuccess from "@/pages/PaymentSuccess";
 import NotFound from "@/pages/NotFound";
-import ElectricianTools from "@/pages/ElectricianTools";
-
-import Calculations from "@/pages/electrician-tools/Calculations";
-import Admin from "@/pages/electrician-tools/Admin";
 import ApprenticeRoutes from "@/routes/ApprenticeRoutes";
 import ElectricianHubRoutes from "@/routes/ElectricianHubRoutes";
 import ElectricianRoutes from "@/routes/ElectricianRoutes";
@@ -59,7 +55,7 @@ const AppRouter = () => {
         <Route path="mental-health" element={<ApprenticeMentalHealth />} />
         
         {/* Electrician Tools Routes */}
-        <Route path="electrician-tools" element={<ElectricianTools />} />
+        <Route path="electrician-tools" element={<Navigate to="/electrician" replace />} />
         <Route path="electrician-tools/*" element={<ElectricianRoutes />} />
         
         {/* Legacy Materials Routes -> Redirect to canonical electrician paths */}

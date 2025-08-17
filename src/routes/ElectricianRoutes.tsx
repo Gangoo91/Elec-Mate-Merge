@@ -3,17 +3,13 @@ import { Route, Routes } from "react-router-dom";
 
 // Pages
 import AITooling from "@/pages/electrician-tools/AITooling";
-import Admin from "@/pages/electrician-tools/Admin";
 import BusinessManagement from "@/pages/electrician-tools/BusinessManagement";
 import ComplianceManager from "@/pages/electrician-tools/ComplianceManager";
-import Calculations from "@/pages/electrician-tools/Calculations";
+import { Navigate } from "react-router-dom";
 
 import ProjectManagement from "@/pages/electrician-tools/ProjectManagement";
 import ProjectDetails from "@/components/project-management/ProjectDetails";
 import CableSizingCalculator from "@/pages/electrician-tools/cable-sizing";
-import DocumentTemplates from "@/pages/electrician-tools/DocumentTemplates";
-import InstallPlanner from "@/pages/electrician-tools/InstallPlanner";
-import InspectionTesting from "@/pages/electrician-tools/InspectionTesting";
 import EICRReports from "@/pages/electrician-tools/EICRReports";
 import EICRInstallationDetails from "@/pages/electrician-tools/eicr/EICRInstallationDetails";
 import EICRInspectorDetails from "@/pages/electrician-tools/eicr/EICRInspectorDetails";
@@ -26,7 +22,6 @@ import ScheduleManager from "@/pages/electrician-tools/ScheduleManager";
 import BusinessAnalytics from "@/pages/electrician-tools/BusinessAnalytics";
 import FinancialTools from "@/pages/electrician-tools/FinancialTools";
 import CareerProgression from "@/pages/electrician/CareerProgression";
-import SiteSafety from "@/pages/electrician-tools/SiteSafety";
 import EnhancedTestingGrid from "@/components/inspection-testing/schedule-of-results/EnhancedTestingGrid";
 import AssistantPage from "@/pages/electrician-tools/ai-tools/AssistantPage";
 import VisualAnalysisPage from "@/pages/electrician-tools/ai-tools/VisualAnalysisPage";
@@ -38,7 +33,6 @@ import CircuitDesignerPage from "@/pages/electrician-tools/ai-tools/CircuitDesig
 const ElectricianRoutes = () => (
   <Routes>
     <Route index element={<ProjectManagement />} />
-    <Route path="admin" element={<Admin />} />
     <Route path="ai-tooling" element={<AITooling />} />
     <Route path="ai-tooling/assistant" element={<AssistantPage />} />
     <Route path="ai-tooling/visual" element={<VisualAnalysisPage />} />
@@ -47,14 +41,16 @@ const ElectricianRoutes = () => (
     <Route path="ai-tooling/circuit" element={<CircuitDesignerPage />} />
     <Route path="business-management" element={<BusinessManagement />} />
     <Route path="compliance" element={<ComplianceManager />} />
-    <Route path="calculations" element={<Calculations />} />
     <Route path="cable-sizing" element={<CableSizingCalculator />} />
     
-    <Route path="document-templates" element={<DocumentTemplates />} />
+    {/* Redirects to new canonical paths */}
+    <Route path="calculations" element={<Navigate to="/electrician/calculations" replace />} />
+    <Route path="install-planner" element={<Navigate to="/electrician/install-planner" replace />} />
+    <Route path="inspection-testing" element={<Navigate to="/electrician/inspection-testing" replace />} />
+    <Route path="site-safety" element={<Navigate to="/electrician/site-safety" replace />} />
+    
     <Route path="project-management" element={<ProjectManagement />} />
     <Route path="project-management/project/:projectId" element={<ProjectDetails />} />
-    <Route path="install-planner" element={<InstallPlanner />} />
-    <Route path="inspection-testing" element={<InspectionTesting />} />
     <Route path="inspection-testing/enhanced-testing-grid" element={<EnhancedTestingGrid />} />
     <Route path="eicr-reports" element={<EICRReports />} />
     <Route path="eicr/installation-details" element={<EICRInstallationDetails />} />
@@ -68,7 +64,6 @@ const ElectricianRoutes = () => (
     <Route path="business-analytics" element={<BusinessAnalytics />} />
     <Route path="financial-tools" element={<FinancialTools />} />
     <Route path="career-progression" element={<CareerProgression />} />
-    <Route path="site-safety" element={<SiteSafety />} />
   </Routes>
 );
 

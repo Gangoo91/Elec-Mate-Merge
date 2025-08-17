@@ -2,7 +2,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Wrench, LayoutGrid, Heart, Brain, GraduationCap, FileText, Briefcase, ArrowLeft } from "lucide-react";
+import { Wrench, Heart, Brain, GraduationCap, Briefcase, ArrowLeft, Calculator, Zap, MapPin, Shield } from "lucide-react";
 
 const ElectricalHub = () => {
   // Main 2x2 grid - 4 most essential tools for electricians
@@ -15,9 +15,9 @@ const ElectricalHub = () => {
     },
     {
       id: 2,
-      title: "Electrical Workshop",
-      icon: LayoutGrid,
-      link: "/electrician-tools"
+      title: "Electrical Calculations",
+      icon: Calculator,
+      link: "/electrician/calculations"
     },
     {
       id: 3,
@@ -37,12 +37,30 @@ const ElectricalHub = () => {
   const additionalResources = [
     {
       id: 5,
+      title: "Inspection & Testing",
+      icon: Zap,
+      link: "/electrician/inspection-testing"
+    },
+    {
+      id: 6,
+      title: "Install Planner",
+      icon: MapPin,
+      link: "/electrician/install-planner"
+    },
+    {
+      id: 7,
+      title: "Site Safety & RAMS",
+      icon: Shield,
+      link: "/electrician/site-safety"
+    },
+    {
+      id: 8,
       title: "AI Tooling",
       icon: Brain,
       link: "/electrician-tools/ai-tooling"
     },
     {
-      id: 6,
+      id: 9,
       title: "Career Progression", 
       icon: GraduationCap,
       link: "/electrician/career-progression"
@@ -83,7 +101,7 @@ const ElectricalHub = () => {
       {/* Additional Tools Section */}
       <div className="space-y-4">
         <h2 className="text-lg sm:text-xl font-semibold text-center">Additional Tools</h2>
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-4">
           {additionalResources.map((resource) => (
             <Link to={resource.link} key={resource.id} className="focus:outline-none hover-scale">
               <Card className="border-elec-yellow/20 bg-elec-gray h-full hover:bg-elec-gray/80 transition-all duration-200 cursor-pointer">

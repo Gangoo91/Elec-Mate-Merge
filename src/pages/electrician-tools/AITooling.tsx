@@ -15,14 +15,14 @@ const AITooling = () => {
           <div className="max-w-7xl mx-auto">
             {/* Navigation */}
             <div className="flex items-center justify-between mb-4">
-              <Link to="/electrician-tools">
+              <Link to="/electrician">
                 <Button 
                   variant="outline" 
                   size="sm"
                   className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 hover:border-elec-yellow/50"
                 >
                   <ArrowLeft className="mr-2 h-4 w-4" />
-                  Back to Tools
+                  Back to Electrical Hub
                 </Button>
               </Link>
             </div>

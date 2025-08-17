@@ -15,7 +15,7 @@ const InspectionTesting = () => {
   const navigate = useNavigate();
   
   const handleNavigateBack = () => {
-    navigate('/electrician-tools');
+    navigate('/electrician');
   };
   
   return (
@@ -32,7 +32,7 @@ const InspectionTesting = () => {
         </p>
         <Button variant="outline" className="flex items-center gap-2" onClick={handleNavigateBack}>
           <ArrowLeft className="h-4 w-4" />
-          Back to Electrical Workshop
+          Back to Electrical Hub
         </Button>
       </div>
 

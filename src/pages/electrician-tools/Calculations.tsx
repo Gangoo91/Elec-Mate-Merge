@@ -205,9 +205,9 @@ const Calculations = () => {
             Comprehensive electrical calculations for professional work. Industry-standard tools following BS 7671 and UK electrical regulations.
           </p>
         </div>
-        <Link to="/electrician-tools">
+        <Link to="/electrician">
           <Button variant="outline" className="flex items-center gap-2">
-            <ArrowLeft className="h-4 w-4" /> Back to Electrical Tools
+            <ArrowLeft className="h-4 w-4" /> Back to Electrical Hub
           </Button>
         </Link>
       </div>

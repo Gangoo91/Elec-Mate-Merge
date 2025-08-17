@@ -12,11 +12,11 @@ const AIToolingHeader = () => {
           Advanced AI tools to enhance your electrical work efficiency and accuracy.
         </p>
       </div>
-      <Link to="/electrician-tools">
-        <Button variant="outline" className="flex items-center gap-2">
-          <ArrowLeft className="h-4 w-4" /> Back to Tools
-        </Button>
-      </Link>
+        <Link to="/electrician">
+          <Button variant="outline" className="flex items-center gap-2">
+            <ArrowLeft className="h-4 w-4" /> Back to Electrical Hub
+          </Button>
+        </Link>
     </div>
   );
 };

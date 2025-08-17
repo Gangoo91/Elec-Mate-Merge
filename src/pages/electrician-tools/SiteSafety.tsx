@@ -52,7 +52,7 @@ const SiteSafety = () => {
           Comprehensive safety management tools for electrical contractors. Generate RAMS documents, 
           assess risks, and maintain safety compliance on all your projects.
         </p>
-        <BackButton customUrl="/electrician-tools" label="Back to Electrical Workshop" />
+        <BackButton customUrl="/electrician" label="Back to Electrical Hub" />
       </div>
 
       {/* Safety Statistics Overview */}
