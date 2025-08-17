@@ -5,59 +5,59 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Wrench, Heart, Brain, GraduationCap, Briefcase, ArrowLeft, Calculator, Zap, MapPin, Shield } from "lucide-react";
 
 const ElectricalHub = () => {
-  // Main 2x2 grid - 4 most essential tools for electricians
+  // Main 2x2 grid - 4 most frequently used tools for daily electrical work
   const mainResources = [
     {
       id: 1,
-      title: "Trade Essentials",
-      icon: Wrench,
-      link: "/electrician/trade-essentials"
-    },
-    {
-      id: 2,
       title: "Electrical Calculations",
       icon: Calculator,
       link: "/electrician/calculations"
     },
     {
-      id: 3,
-      title: "Mental Health Hub",
-      icon: Heart,
-      link: "/electrician/mental-health"
-    },
-    {
-      id: 4,
-      title: "Business Hub",
-      icon: Briefcase,
-      link: "/electrician/business"
-    }
-  ];
-
-  // Additional tools in smaller grid
-  const additionalResources = [
-    {
-      id: 5,
+      id: 2,
       title: "Inspection & Testing",
       icon: Zap,
       link: "/electrician/inspection-testing"
     },
     {
-      id: 6,
+      id: 3,
       title: "Install Planner",
       icon: MapPin,
       link: "/electrician/install-planner"
     },
     {
-      id: 7,
+      id: 4,
       title: "Site Safety & RAMS",
       icon: Shield,
       link: "/electrician/site-safety"
+    }
+  ];
+
+  // Additional tools - business, development, and reference resources  
+  const additionalResources = [
+    {
+      id: 5,
+      title: "Business Hub",
+      icon: Briefcase,
+      link: "/electrician/business"
     },
     {
-      id: 8,
+      id: 6,
       title: "AI Tooling",
       icon: Brain,
       link: "/electrician-tools/ai-tooling"
+    },
+    {
+      id: 7,
+      title: "Trade Essentials",
+      icon: Wrench,
+      link: "/electrician/trade-essentials"
+    },
+    {
+      id: 8,
+      title: "Mental Health Hub",
+      icon: Heart,
+      link: "/electrician/mental-health"
     },
     {
       id: 9,
@@ -81,9 +81,9 @@ const ElectricalHub = () => {
         </Link>
       </div>
 
-      {/* Main 2x2 Grid - Essential Tools */}
+      {/* Main 2x2 Grid - Core Daily Tools */}
       <div className="space-y-4">
-        <h2 className="text-lg sm:text-xl font-semibold text-center">Essential Tools</h2>
+        <h2 className="text-lg sm:text-xl font-semibold text-center">Core Daily Tools</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6 max-w-4xl mx-auto">
           {mainResources.map((resource) => (
             <Link to={resource.link} key={resource.id} className="focus:outline-none hover-scale">
@@ -98,9 +98,9 @@ const ElectricalHub = () => {
         </div>
       </div>
 
-      {/* Additional Tools Section */}
+      {/* Additional Resources Section */}
       <div className="space-y-4">
-        <h2 className="text-lg sm:text-xl font-semibold text-center">Additional Tools</h2>
+        <h2 className="text-lg sm:text-xl font-semibold text-center">Business & Development</h2>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-4">
           {additionalResources.map((resource) => (
             <Link to={resource.link} key={resource.id} className="focus:outline-none hover-scale">
