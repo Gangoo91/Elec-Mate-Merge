@@ -152,6 +152,15 @@ serve(async (req) => {
       }));
     }
 
+    // Add confidence scores and approximation flags
+    results = results.map(result => ({
+      ...result,
+      confidence_score: result.data_source === 'market_research' ? 85 : 
+                       result.data_source === 'reed_api' ? 90 :
+                       result.data_source === 'computed' ? 60 : 70,
+      is_approximate: result.data_source === 'computed' || result.data_source === 'heuristic'
+    }));
+
     console.log(`Returning ${results.length} pricing results, isApproximate: ${isApproximate}`);
 
     return new Response(
@@ -161,7 +170,10 @@ serve(async (req) => {
         isApproximate,
         location: geocodeData?.location || null,
         searchLocation: location,
-        jobType: jobType || 'all'
+        jobType: jobType || 'all',
+        confidence_notes: results.length > 0 ? 
+          `Data confidence varies by source: Market research (85%), API data (90%), Computed estimates (60%)` :
+          'No data available for this location'
       }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );

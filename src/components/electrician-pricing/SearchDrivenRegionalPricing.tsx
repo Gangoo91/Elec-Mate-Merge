@@ -4,12 +4,13 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { MapPin, Search, Info } from "lucide-react";
+import { MapPin, Search, Info, X } from "lucide-react";
+import EnhancedPricingCard from "./EnhancedPricingCard";
 
 interface RegionalPricingData {
   id: string;
   region: string;
-  county: string;
+  county?: string;
   job_type: string;
   job_category: string;
   min_price: number;
@@ -20,6 +21,8 @@ interface RegionalPricingData {
   complexity_level: string;
   last_updated: string;
   data_source: string;
+  confidence_score?: number;
+  is_approximate?: boolean;
 }
 
 interface SearchDrivenRegionalPricingProps {
@@ -101,6 +104,7 @@ const SearchDrivenRegionalPricing = ({ regionalData }: SearchDrivenRegionalPrici
           </Button>
           {showResults && (
             <Button variant="outline" onClick={clearSearch}>
+              <X className="h-4 w-4 mr-1" />
               Clear
             </Button>
           )}
@@ -114,48 +118,11 @@ const SearchDrivenRegionalPricing = ({ regionalData }: SearchDrivenRegionalPrici
                 Found {filteredData.length} result(s) for "{searchTerm}"
               </p>
               
-              {filteredData.map((item) => (
-                <div 
-                  key={item.id} 
-                  className="p-4 border border-elec-yellow/20 rounded-lg bg-elec-gray/50"
-                >
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                    <div className="flex-1">
-                      <div className="flex flex-wrap items-center gap-2 mb-2">
-                        <h4 className="font-medium">{item.job_type}</h4>
-                        <Badge variant="outline" className={getComplexityColor(item.complexity_level)}>
-                          {item.complexity_level}
-                        </Badge>
-                        <Badge variant="secondary">
-                          {item.job_category}
-                        </Badge>
-                      </div>
-                      
-                      <div className="text-sm text-muted-foreground">
-                        <span className="font-medium">{item.region}</span>
-                        {item.county && ` • ${item.county}`}
-                      </div>
-                      
-                      <div className="flex flex-wrap items-center gap-4 text-sm mt-2">
-                        <span>Range: {formatPrice(item.min_price)} - {formatPrice(item.max_price)}</span>
-                        <span className="text-elec-yellow font-medium">
-                          Avg: {formatPrice(item.average_price)}
-                        </span>
-                        <span>{item.unit}</span>
-                      </div>
-                    </div>
-                    
-                    <div className="text-right">
-                      <div className="text-xl font-bold text-elec-yellow">
-                        {formatPrice(item.average_price)}
-                      </div>
-                      <div className="text-xs text-muted-foreground">
-                        Updated: {new Date(item.last_updated).toLocaleDateString('en-GB')}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
+              <div className="grid gap-4">
+                {filteredData.map((item) => (
+                  <EnhancedPricingCard key={item.id} pricingData={item} />
+                ))}
+              </div>
             </div>
           ) : (
             <div className="text-center py-8 text-muted-foreground">

@@ -1124,6 +1124,39 @@ export type Database = {
           },
         ]
       }
+      pricing_ingest_log: {
+        Row: {
+          completed_at: string | null
+          created_at: string
+          error_message: string | null
+          id: string
+          ingest_type: string
+          notes: string | null
+          records_processed: number
+          status: string
+        }
+        Insert: {
+          completed_at?: string | null
+          created_at?: string
+          error_message?: string | null
+          id?: string
+          ingest_type: string
+          notes?: string | null
+          records_processed?: number
+          status?: string
+        }
+        Update: {
+          completed_at?: string | null
+          created_at?: string
+          error_message?: string | null
+          id?: string
+          ingest_type?: string
+          notes?: string | null
+          records_processed?: number
+          status?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null

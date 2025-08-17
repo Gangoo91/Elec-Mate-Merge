@@ -7,7 +7,14 @@ verify_jwt = false
 [functions.scrape-supplier-products]
 verify_jwt = false
 
-# If you have a fetch-metal-prices function deployed and want it public too,
-# uncomment the block below:
-# [functions.fetch-metal-prices]
-# verify_jwt = false
+[functions.fetch-metal-prices]
+verify_jwt = false
+
+[functions.regional-pricing]
+verify_jwt = false
+
+[functions.geocode-location]
+verify_jwt = false
+
+[functions.nightly-job-pricing-ingest]
+verify_jwt = false
