@@ -158,8 +158,14 @@ function transformMetalData(apiData: any) {
 }
 
 serve(async (req) => {
+  console.log('=== FETCH-METAL-PRICES FUNCTION STARTED ===')
+  console.log('Request method:', req.method)
+  console.log('Request URL:', req.url)
+  console.log('Timestamp:', new Date().toISOString())
+  
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
+    console.log('Handling CORS preflight request')
     return new Response('ok', { headers: corsHeaders })
   }
 
