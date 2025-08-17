@@ -16,12 +16,10 @@ interface PriceMetric {
 
 interface CompactPricingGridProps {
   metalPrices: PriceMetric[];
-  cablePrices: PriceMetric[];
-  equipmentPrices: PriceMetric[];
   lastUpdated: string;
 }
 
-const CompactPricingGrid = ({ metalPrices, cablePrices, equipmentPrices, lastUpdated }: CompactPricingGridProps) => {
+const CompactPricingGrid = ({ metalPrices, lastUpdated }: CompactPricingGridProps) => {
   const [expandedSection, setExpandedSection] = useState<string | null>(null);
 
   const toggleSection = (section: string) => {
@@ -38,8 +36,8 @@ const CompactPricingGrid = ({ metalPrices, cablePrices, equipmentPrices, lastUpd
         </p>
       </div>
 
-      {/* Enhanced Grid Layout */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      {/* Enhanced Grid Layout - Metal Prices Only */}
+      <div className="grid grid-cols-1">
         <PricingSection
           title="Metal Prices"
           icon={<Zap className="h-5 w-5 text-elec-yellow" />}
@@ -47,30 +45,6 @@ const CompactPricingGrid = ({ metalPrices, cablePrices, equipmentPrices, lastUpd
           isExpanded={expandedSection === 'metals'}
           onToggle={() => toggleSection('metals')}
         />
-
-        {cablePrices.length > 0 && (
-          <PricingSection
-            title="Cable Prices"
-            icon={<Cable className="h-5 w-5 text-elec-yellow" />}
-            prices={cablePrices}
-            isExpanded={expandedSection === 'cables'}
-            onToggle={() => toggleSection('cables')}
-            showCompareButton={true}
-            compareCategory="cable"
-          />
-        )}
-
-        {equipmentPrices.length > 0 && (
-          <PricingSection
-            title="Equipment Prices"
-            icon={<Settings className="h-5 w-5 text-elec-yellow" />}
-            prices={equipmentPrices}
-            isExpanded={expandedSection === 'equipment'}
-            onToggle={() => toggleSection('equipment')}
-            showCompareButton={true}
-            compareCategory="equipment"
-          />
-        )}
       </div>
     </div>
   );

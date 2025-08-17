@@ -90,8 +90,6 @@ const LivePricing = () => {
             <>
               <CompactPricingGrid
                 metalPrices={data.metalPrices}
-                cablePrices={data.cablePrices}
-                equipmentPrices={data.equipmentPrices}
                 lastUpdated={data.lastUpdated}
               />
             </>
