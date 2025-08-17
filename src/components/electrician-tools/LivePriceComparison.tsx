@@ -3,12 +3,16 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { TrendingUp, TrendingDown, RefreshCw, ExternalLink, Star } from "lucide-react";
+import { useSearchParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 const LivePriceComparison = () => {
+  const [searchParams] = useSearchParams();
+  const [filteredComparisons, setFilteredComparisons] = useState([]);
   const priceComparisons = [
     {
       tool: "Fluke 1663 Multifunction Tester",
-      category: "Testing Equipment",
+      category: "equipment",
       prices: [
         { supplier: "RS Components", price: "£649.99", originalPrice: "£899.99", discount: "28%", stock: "In Stock", rating: 4.8 },
         { supplier: "City Electrical Factors", price: "£675.00", originalPrice: "£850.00", discount: "21%", stock: "2-3 Days", rating: 4.7 },
@@ -21,7 +25,7 @@ const LivePriceComparison = () => {
     },
     {
       tool: "DeWalt 18V Combi Drill Kit",
-      category: "Power Tools",
+      category: "equipment",
       prices: [
         { supplier: "Toolstation", price: "£149.99", originalPrice: "£199.99", discount: "25%", stock: "In Stock", rating: 4.9 },
         { supplier: "Screwfix", price: "£159.99", originalPrice: "£199.99", discount: "20%", stock: "500+ Stores", rating: 4.8 },
@@ -31,8 +35,32 @@ const LivePriceComparison = () => {
       trend: "up",
       trendPercent: "2.1%",
       lastUpdated: "5 minutes ago"
+    },
+    {
+      tool: "Twin & Earth Cable 2.5mm²",
+      category: "cable",
+      prices: [
+        { supplier: "CEF", price: "£135.00", originalPrice: "£159.99", discount: "16%", stock: "In Stock", rating: 4.8 },
+        { supplier: "RS Components", price: "£142.50", originalPrice: "£165.00", discount: "14%", stock: "Next Day", rating: 4.7 },
+        { supplier: "Screwfix", price: "£149.99", originalPrice: "£169.99", discount: "12%", stock: "Click & Collect", rating: 4.6 }
+      ],
+      trend: "up",
+      trendPercent: "2.1%",
+      lastUpdated: "3 minutes ago"
     }
   ];
+
+  useEffect(() => {
+    const category = searchParams.get('category');
+    if (category) {
+      const filtered = priceComparisons.filter(comp => comp.category === category);
+      setFilteredComparisons(filtered);
+    } else {
+      setFilteredComparisons(priceComparisons);
+    }
+  }, [searchParams]);
+
+  const displayComparisons = filteredComparisons.length > 0 ? filteredComparisons : priceComparisons;
 
   return (
     <div className="space-y-6">
@@ -48,13 +76,13 @@ const LivePriceComparison = () => {
       </div>
       
       <div className="space-y-6">
-        {priceComparisons.map((comparison, index) => (
+        {displayComparisons.map((comparison, index) => (
           <Card key={index} className="border-elec-yellow/20 bg-elec-gray">
             <CardHeader className="pb-3">
               <div className="flex items-center justify-between">
                 <div>
                   <CardTitle className="text-lg text-white">{comparison.tool}</CardTitle>
-                  <p className="text-sm text-elec-yellow">{comparison.category}</p>
+                  <p className="text-sm text-elec-yellow capitalize">{comparison.category} pricing</p>
                 </div>
                 <div className="flex items-center gap-2">
                   <div className={`flex items-center gap-1 text-sm ${

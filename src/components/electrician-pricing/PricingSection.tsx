@@ -1,6 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { ChevronDown, ChevronUp, ExternalLink } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import PriceItem from "./PriceItem";
 
 interface PriceMetric {
@@ -9,6 +10,8 @@ interface PriceMetric {
   value: string;
   change: string;
   trend: "up" | "down" | "neutral";
+  badge?: string;
+  suppliers?: string[];
   subItems?: PriceMetric[];
 }
 
@@ -19,6 +22,8 @@ interface PricingSectionProps {
   isExpanded: boolean;
   onToggle: () => void;
   limit?: number;
+  showCompareButton?: boolean;
+  compareCategory?: string;
 }
 
 const PricingSection = ({ 
@@ -27,10 +32,19 @@ const PricingSection = ({
   prices, 
   isExpanded, 
   onToggle, 
-  limit = 3 
+  limit = 3,
+  showCompareButton = false,
+  compareCategory
 }: PricingSectionProps) => {
+  const navigate = useNavigate();
   const displayPrices = isExpanded ? prices : prices.slice(0, limit);
   const hasMore = prices.length > limit;
+
+  const handleCompareClick = () => {
+    if (compareCategory) {
+      navigate(`/electrician/tools?category=${encodeURIComponent(compareCategory)}`);
+    }
+  };
 
   return (
     <Card className="border-elec-yellow/20 bg-gradient-to-br from-elec-gray to-elec-gray/80 backdrop-blur-sm transition-all duration-300 hover:shadow-lg hover:shadow-elec-yellow/10">
@@ -52,23 +66,38 @@ const PricingSection = ({
             change={price.change}
             trend={price.trend}
             subItems={price.subItems}
-            isLarge={!isExpanded} // Make first item larger when collapsed
+            isLarge={!isExpanded}
+            badge={price.badge}
+            suppliers={price.suppliers}
           />
         ))}
         
-        {hasMore && (
-          <Button
-            variant="ghost"
-            size="sm"
-            className="w-full mt-4 text-sm font-medium text-elec-yellow hover:text-elec-yellow hover:bg-elec-yellow/10 transition-colors"
-            onClick={onToggle}
-          >
-            <div className="flex items-center gap-2">
-              {isExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
-              {isExpanded ? 'Show Less' : `Show All (${prices.length})`}
-            </div>
-          </Button>
-        )}
+        <div className="flex gap-2 mt-4">
+          {hasMore && (
+            <Button
+              variant="ghost"
+              size="sm"
+              className="flex-1 text-sm font-medium text-elec-yellow hover:text-elec-yellow hover:bg-elec-yellow/10 transition-colors"
+              onClick={onToggle}
+            >
+              <div className="flex items-center gap-2">
+                {isExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+                {isExpanded ? 'Show Less' : `Show All (${prices.length})`}
+              </div>
+            </Button>
+          )}
+          {showCompareButton && (
+            <Button
+              variant="outline"
+              size="sm"
+              className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+              onClick={handleCompareClick}
+            >
+              <ExternalLink className="h-4 w-4 mr-1" />
+              Compare Live
+            </Button>
+          )}
+        </div>
       </CardContent>
     </Card>
   );

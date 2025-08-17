@@ -1,6 +1,7 @@
 import { TrendingUp, TrendingDown, Minus, ChevronDown, ChevronUp } from "lucide-react";
 import { useState } from "react";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { Badge } from "@/components/ui/badge";
 
 interface PriceItemProps {
   name: string;
@@ -8,6 +9,8 @@ interface PriceItemProps {
   change: string;
   trend: "up" | "down" | "neutral";
   isLarge?: boolean;
+  badge?: string;
+  suppliers?: string[];
   subItems?: Array<{
     id: string | number;
     name: string;
@@ -17,7 +20,7 @@ interface PriceItemProps {
   }>;
 }
 
-const PriceItem = ({ name, value, change, trend, isLarge = false, subItems }: PriceItemProps) => {
+const PriceItem = ({ name, value, change, trend, isLarge = false, badge, suppliers, subItems }: PriceItemProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const getTrendColor = () => {
     switch (trend) {
@@ -47,9 +50,21 @@ const PriceItem = ({ name, value, change, trend, isLarge = false, subItems }: Pr
     return (
       <div className={`group flex items-center justify-between p-3 rounded-lg border transition-all duration-200 hover:scale-[1.02] hover:shadow-md ${getTrendBg()}`}>
         <div className="flex-1 min-w-0">
-          <p className={`${isLarge ? 'text-base' : 'text-sm'} font-medium text-foreground truncate`}>
-            {name}
-          </p>
+          <div className="flex items-center gap-2">
+            <p className={`${isLarge ? 'text-base' : 'text-sm'} font-medium text-foreground truncate`}>
+              {name}
+            </p>
+            {badge && (
+              <Badge variant="outline" className="text-xs border-elec-yellow/30 text-elec-yellow/80">
+                {badge}
+              </Badge>
+            )}
+          </div>
+          {suppliers && (
+            <p className="text-xs text-muted-foreground mt-1">
+              {suppliers.slice(0, 2).join(', ')}{suppliers.length > 2 ? ` +${suppliers.length - 2} more` : ''}
+            </p>
+          )}
         </div>
         
         <div className="flex items-center gap-3 ml-3">
@@ -74,9 +89,23 @@ const PriceItem = ({ name, value, change, trend, isLarge = false, subItems }: Pr
         <CollapsibleTrigger className="w-full">
           <div className={`group flex items-center justify-between p-3 hover:scale-[1.02] hover:shadow-md transition-all duration-200`}>
             <div className="flex-1 min-w-0 flex items-center gap-2">
-              <p className={`${isLarge ? 'text-base' : 'text-sm'} font-medium text-foreground truncate`}>
-                {name}
-              </p>
+              <div className="flex-1">
+                <div className="flex items-center gap-2">
+                  <p className={`${isLarge ? 'text-base' : 'text-sm'} font-medium text-foreground truncate`}>
+                    {name}
+                  </p>
+                  {badge && (
+                    <Badge variant="outline" className="text-xs border-elec-yellow/30 text-elec-yellow/80">
+                      {badge}
+                    </Badge>
+                  )}
+                </div>
+                {suppliers && (
+                  <p className="text-xs text-muted-foreground mt-1">
+                    {suppliers.slice(0, 2).join(', ')}{suppliers.length > 2 ? ` +${suppliers.length - 2} more` : ''}
+                  </p>
+                )}
+              </div>
               {isExpanded ? (
                 <ChevronUp className="h-4 w-4 text-elec-yellow" />
               ) : (

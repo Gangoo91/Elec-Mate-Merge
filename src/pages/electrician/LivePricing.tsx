@@ -88,15 +88,6 @@ const LivePricing = () => {
             </div>
           ) : data ? (
             <>
-              {/* Debug: Show raw data structure */}
-              {process.env.NODE_ENV === 'development' && (
-                <div className="p-4 bg-gray-800 rounded text-xs text-gray-300 overflow-auto max-h-40">
-                  <details>
-                    <summary>Debug: Metal Prices Data</summary>
-                    <pre>{JSON.stringify(data.metalPrices, null, 2)}</pre>
-                  </details>
-                </div>
-              )}
               <CompactPricingGrid
                 metalPrices={data.metalPrices}
                 cablePrices={data.cablePrices}

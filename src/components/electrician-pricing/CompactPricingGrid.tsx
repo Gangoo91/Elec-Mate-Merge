@@ -9,6 +9,9 @@ interface PriceMetric {
   value: string;
   change: string;
   trend: "up" | "down" | "neutral";
+  badge?: string;
+  suppliers?: string[];
+  subItems?: PriceMetric[];
 }
 
 interface CompactPricingGridProps {
@@ -45,21 +48,29 @@ const CompactPricingGrid = ({ metalPrices, cablePrices, equipmentPrices, lastUpd
           onToggle={() => toggleSection('metals')}
         />
 
-        <PricingSection
-          title="Cable Prices"
-          icon={<Cable className="h-5 w-5 text-elec-yellow" />}
-          prices={cablePrices}
-          isExpanded={expandedSection === 'cables'}
-          onToggle={() => toggleSection('cables')}
-        />
+        {cablePrices.length > 0 && (
+          <PricingSection
+            title="Cable Prices"
+            icon={<Cable className="h-5 w-5 text-elec-yellow" />}
+            prices={cablePrices}
+            isExpanded={expandedSection === 'cables'}
+            onToggle={() => toggleSection('cables')}
+            showCompareButton={true}
+            compareCategory="cable"
+          />
+        )}
 
-        <PricingSection
-          title="Equipment Prices"
-          icon={<Settings className="h-5 w-5 text-elec-yellow" />}
-          prices={equipmentPrices}
-          isExpanded={expandedSection === 'equipment'}
-          onToggle={() => toggleSection('equipment')}
-        />
+        {equipmentPrices.length > 0 && (
+          <PricingSection
+            title="Equipment Prices"
+            icon={<Settings className="h-5 w-5 text-elec-yellow" />}
+            prices={equipmentPrices}
+            isExpanded={expandedSection === 'equipment'}
+            onToggle={() => toggleSection('equipment')}
+            showCompareButton={true}
+            compareCategory="equipment"
+          />
+        )}
       </div>
     </div>
   );
