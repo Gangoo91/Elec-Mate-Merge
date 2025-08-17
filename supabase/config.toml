@@ -21,3 +21,6 @@ verify_jwt = false
 
 [functions.submit-community-price]
 verify_jwt = false
+
+[functions.fetch-industry-news]
+verify_jwt = false

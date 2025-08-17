@@ -1,11 +1,13 @@
-
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Newspaper, Clock, ExternalLink, Eye, MessageSquare, Bookmark, Search, Filter, TrendingUp, BookmarkCheck } from "lucide-react";
+import { Clock, ExternalLink, Eye, MessageSquare, Bookmark, Search, Filter, TrendingUp, BookmarkCheck, RefreshCw } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
+import { Loader2 } from "lucide-react";
 
 interface NewsArticle {
   id: string;
@@ -14,77 +16,91 @@ interface NewsArticle {
   content: string;
   category: string;
   source: string;
-  datePublished: string;
-  readTime: string;
-  views: number;
-  comments: number;
-  imageUrl?: string;
-  trending?: boolean;
+  date_published: string;
+  view_count: number;
+  average_rating: number;
   priority?: 'high' | 'medium' | 'low';
+  source_url: string;
+  tags?: string[];
 }
 
 const IndustryNewsCard = () => {
-  const [articles] = useState<NewsArticle[]>([
-    {
-      id: "1",
-      title: "New BS 7671:2024 Amendment Released",
-      summary: "The latest amendment to the wiring regulations includes important updates for EV charging installations and smart home technology.",
-      content: "The Institution of Engineering and Technology (IET) has released Amendment 1 to BS 7671:2024...",
-      category: "Regulations",
-      source: "IET Wiring Matters",
-      datePublished: "2024-06-14",
-      readTime: "5 min",
-      views: 1247,
-      comments: 23,
-      trending: true,
-      priority: 'high'
-    },
-    {
-      id: "2", 
-      title: "Government Announces £2.5B Investment in Grid Infrastructure",
-      summary: "Major investment package to modernise the UK's electrical grid infrastructure and support renewable energy transition.",
-      content: "The government has announced a comprehensive investment programme...",
-      category: "Government Policy",
-      source: "GOV.UK",
-      datePublished: "2024-06-13",
-      readTime: "7 min",
-      views: 892,
-      comments: 34,
-      priority: 'high'
-    },
-    {
-      id: "3",
-      title: "NICEIC Updates Inspection Procedures",
-      summary: "New guidance on electrical installation inspections following industry feedback and safety concerns.",
-      content: "NICEIC has published updated procedures for electrical installation inspections...",
-      category: "Industry Updates",
-      source: "NICEIC",
-      datePublished: "2024-06-12",
-      readTime: "4 min",
-      views: 567,
-      comments: 12,
-      priority: 'medium'
-    },
-    {
-      id: "4",
-      title: "Skills Shortage Crisis: Industry Response",
-      summary: "Electrical industry leaders discuss strategies to address the growing skills shortage and attract new talent.",
-      content: "Industry representatives met this week to discuss the ongoing skills shortage...",
-      category: "Industry Analysis",
-      source: "Electrical Review",
-      datePublished: "2024-06-11",
-      readTime: "6 min",
-      views: 723,
-      comments: 18,
-      trending: true,
-      priority: 'medium'
-    }
-  ]);
-
+  const [articles, setArticles] = useState<NewsArticle[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [bookmarkedArticles, setBookmarkedArticles] = useState<Set<string>>(new Set());
-  const [viewMode, setViewMode] = useState<'grid' | 'list'>('list');
+  const { toast } = useToast();
+
+  const fetchArticles = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('industry_news')
+        .select('*')
+        .eq('is_active', true)
+        .order('date_published', { ascending: false })
+        .limit(20);
+
+      if (error) throw error;
+      
+      // Map the database fields to our interface
+      const mappedArticles = (data || []).map((item: any) => ({
+        id: item.id,
+        title: item.title,
+        summary: item.summary,
+        content: item.content,
+        category: item.category,
+        source: item.source || item.regulatory_body || 'Unknown',
+        source_url: item.source_url || '#',
+        date_published: item.date_published,
+        view_count: item.view_count || 0,
+        average_rating: Number(item.average_rating) || 0,
+        priority: (item.priority as 'high' | 'medium' | 'low') || 'medium',
+        tags: item.tags || []
+      }));
+      
+      setArticles(mappedArticles);
+    } catch (error) {
+      console.error('Error fetching articles:', error);
+      toast({
+        title: "Error",
+        description: "Failed to load industry news. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const refreshNews = async () => {
+    setRefreshing(true);
+    try {
+      // Call the edge function to fetch new news
+      const { error } = await supabase.functions.invoke('fetch-industry-news');
+      if (error) throw error;
+      
+      // Refetch articles after successful update
+      await fetchArticles();
+      toast({
+        title: "Success",
+        description: "Industry news updated successfully!",
+      });
+    } catch (error) {
+      console.error('Error refreshing news:', error);
+      toast({
+        title: "Error", 
+        description: "Failed to refresh news. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setRefreshing(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchArticles();
+  }, []);
 
   const categories = ["all", ...Array.from(new Set(articles.map(article => article.category)))];
 
@@ -109,8 +125,11 @@ const IndustryNewsCard = () => {
     switch (category.toLowerCase()) {
       case "regulations": return "bg-red-500/20 text-red-400 border-red-500/30";
       case "government policy": return "bg-blue-500/20 text-blue-400 border-blue-500/30";
+      case "safety updates": return "bg-orange-500/20 text-orange-400 border-orange-500/30";
       case "industry updates": return "bg-green-500/20 text-green-400 border-green-500/30";
-      case "industry analysis": return "bg-purple-500/20 text-purple-400 border-purple-500/30";
+      case "technology": return "bg-purple-500/20 text-purple-400 border-purple-500/30";
+      case "guidance": return "bg-cyan-500/20 text-cyan-400 border-cyan-500/30";
+      case "training": return "bg-pink-500/20 text-pink-400 border-pink-500/30";
       default: return "bg-gray-500/20 text-gray-400 border-gray-500/30";
     }
   };
@@ -124,22 +143,43 @@ const IndustryNewsCard = () => {
     }
   };
 
+  const isTrending = (article: NewsArticle) => {
+    // Consider trending if published in last 3 days and has high views or high priority
+    const threeDaysAgo = new Date();
+    threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
+    const publishDate = new Date(article.date_published);
+    
+    return publishDate > threeDaysAgo && (article.view_count > 1000 || article.priority === 'high');
+  };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center py-16">
+        <Loader2 className="h-8 w-8 animate-spin text-elec-yellow" />
+        <span className="ml-2 text-muted-foreground">Loading industry news...</span>
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-6">
-      {/* Enhanced Header with Search and Filters */}
+      {/* Search and Filter Controls */}
       <div className="space-y-4">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          <div>
-            <h2 className="text-2xl font-bold text-white">Industry News</h2>
-            <p className="text-muted-foreground">Latest regulatory updates and industry developments</p>
-          </div>
-          <Button className="bg-elec-yellow text-black hover:bg-elec-yellow/90 self-start sm:self-auto">
-            <Newspaper className="h-4 w-4 mr-2" />
-            Subscribe to News
+          <Button 
+            onClick={refreshNews}
+            disabled={refreshing}
+            className="bg-elec-yellow text-black hover:bg-elec-yellow/90 self-start sm:self-auto"
+          >
+            {refreshing ? (
+              <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+            ) : (
+              <RefreshCw className="h-4 w-4 mr-2" />
+            )}
+            {refreshing ? 'Refreshing...' : 'Refresh News'}
           </Button>
         </div>
 
-        {/* Search and Filter Controls */}
         <div className="flex flex-col sm:flex-row gap-4">
           <div className="relative flex-1">
             <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
@@ -185,7 +225,7 @@ const IndustryNewsCard = () => {
                     <Badge className={getCategoryColor(article.category)}>
                       {article.category}
                     </Badge>
-                    {article.trending && (
+                    {isTrending(article) && (
                       <Badge variant="secondary" className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30">
                         <TrendingUp className="h-3 w-3 mr-1" />
                         Trending
@@ -220,21 +260,23 @@ const IndustryNewsCard = () => {
                 <div className="flex items-center gap-4 text-sm text-muted-foreground flex-wrap">
                   <div className="flex items-center gap-1">
                     <Clock className="h-4 w-4" />
-                    <span>{new Date(article.datePublished).toLocaleDateString('en-GB')}</span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <span>{article.readTime} read</span>
+                    <span>{new Date(article.date_published).toLocaleDateString('en-GB')}</span>
                   </div>
                   <div className="flex items-center gap-1">
                     <Eye className="h-4 w-4" />
-                    <span>{article.views.toLocaleString()}</span>
+                    <span>{article.view_count.toLocaleString()}</span>
                   </div>
-                  <div className="flex items-center gap-1">
-                    <MessageSquare className="h-4 w-4" />
-                    <span>{article.comments}</span>
-                  </div>
+                  {article.average_rating > 0 && (
+                    <div className="flex items-center gap-1">
+                      <span>★ {article.average_rating.toFixed(1)}</span>
+                    </div>
+                  )}
                 </div>
-                <Button size="sm" className="bg-elec-yellow text-black hover:bg-elec-yellow/90 self-start sm:self-auto">
+                <Button 
+                  size="sm" 
+                  className="bg-elec-yellow text-black hover:bg-elec-yellow/90 self-start sm:self-auto"
+                  onClick={() => window.open(article.source_url, '_blank')}
+                >
                   <ExternalLink className="h-4 w-4 mr-2" />
                   Read Article
                 </Button>
@@ -245,7 +287,7 @@ const IndustryNewsCard = () => {
       </div>
 
       {/* Load More */}
-      {filteredArticles.length > 0 && (
+      {filteredArticles.length > 0 && filteredArticles.length >= 20 && (
         <div className="text-center pt-4">
           <Button variant="outline" className="border-elec-yellow/30 text-white hover:bg-elec-yellow/10">
             Load More Articles
