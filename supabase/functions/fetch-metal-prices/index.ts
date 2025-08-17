@@ -8,7 +8,6 @@ const corsHeaders = {
 }
 
 // MetalPriceAPI configuration
-const METAL_PRICE_API_KEY = Deno.env.get('METAL_PRICE_API_KEY')!
 const METAL_PRICE_API_BASE = 'https://api.metalpriceapi.com/v1'
 
 // Function to fetch live metal prices from MetalPriceAPI
@@ -16,9 +15,21 @@ async function fetchLiveMetalPrices() {
   try {
     console.log('Fetching live metal prices from MetalPriceAPI...')
     
+    const METAL_PRICE_API_KEY = Deno.env.get('METAL_PRICE_API_KEY')
+    console.log('API Key check:', METAL_PRICE_API_KEY ? 'Present' : 'Missing')
+    console.log('API Key length:', METAL_PRICE_API_KEY?.length || 0)
+    
+    if (!METAL_PRICE_API_KEY) {
+      console.error('METAL_PRICE_API_KEY environment variable not set')
+      throw new Error('METAL_PRICE_API_KEY environment variable not set')
+    }
+    
+    const apiUrl = `${METAL_PRICE_API_BASE}/latest?api_key=${METAL_PRICE_API_KEY}&base=USD&currencies=XCU,ALU,XPB,ZNC`
+    console.log('Making API call to:', apiUrl.replace(METAL_PRICE_API_KEY, '[REDACTED]'))
+    
     // MetalPriceAPI uses specific symbols and returns rates as USDXXX format
     // XCU = Copper, ALU = Aluminum, XPB = Lead, ZNC = Zinc
-    const response = await fetch(`${METAL_PRICE_API_BASE}/latest?api_key=${METAL_PRICE_API_KEY}&base=USD&currencies=XCU,ALU,XPB,ZNC`, {
+    const response = await fetch(apiUrl, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
