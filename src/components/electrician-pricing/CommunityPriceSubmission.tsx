@@ -61,7 +61,7 @@ const CommunityPriceSubmission = () => {
               value={value as string}
               onValueChange={(val) => handleAttributeChange(attribute.key, val)}
             >
-              <SelectTrigger className="bg-elec-dark border-elec-yellow/20 focus:border-elec-yellow text-white">
+              <SelectTrigger className="bg-elec-dark border-elec-yellow/20 focus:border-elec-yellow text-white h-10">
                 <SelectValue placeholder={`Select ${attribute.label.toLowerCase()}`} />
               </SelectTrigger>
               <SelectContent className="bg-elec-dark border-elec-yellow/20 text-white z-50">
@@ -85,16 +85,16 @@ const CommunityPriceSubmission = () => {
             <Label htmlFor={attribute.key}>
               {attribute.label} {attribute.unit && `(${attribute.unit})`} {attribute.required && <span className="text-red-500">*</span>}
             </Label>
-            <Input
-              id={attribute.key}
-              type="number"
-              min={attribute.min}
-              max={attribute.max}
-              value={value}
-              onChange={(e) => handleAttributeChange(attribute.key, parseFloat(e.target.value) || 0)}
-              className="bg-elec-dark border-elec-yellow/20 focus:border-elec-yellow text-white"
-              placeholder={`Enter ${attribute.label.toLowerCase()}`}
-            />
+              <Input
+                id={attribute.key}
+                type="number"
+                min={attribute.min}
+                max={attribute.max}
+                value={value}
+                onChange={(e) => handleAttributeChange(attribute.key, parseFloat(e.target.value) || 0)}
+                className="bg-elec-dark border-elec-yellow/20 focus:border-elec-yellow text-white h-10"
+                placeholder={`Enter ${attribute.label.toLowerCase()}`}
+              />
           </div>
         );
       
@@ -104,14 +104,14 @@ const CommunityPriceSubmission = () => {
             <Label htmlFor={attribute.key}>
               {attribute.label} {attribute.required && <span className="text-red-500">*</span>}
             </Label>
-            <Input
-              id={attribute.key}
-              type="text"
-              value={value}
-              onChange={(e) => handleAttributeChange(attribute.key, e.target.value)}
-              className="bg-elec-dark border-elec-yellow/20 focus:border-elec-yellow text-white"
-              placeholder={`Enter ${attribute.label.toLowerCase()}`}
-            />
+              <Input
+                id={attribute.key}
+                type="text"
+                value={value}
+                onChange={(e) => handleAttributeChange(attribute.key, e.target.value)}
+                className="bg-elec-dark border-elec-yellow/20 focus:border-elec-yellow text-white h-10"
+                placeholder={`Enter ${attribute.label.toLowerCase()}`}
+              />
           </div>
         );
       
@@ -202,7 +202,7 @@ const CommunityPriceSubmission = () => {
           <div className="space-y-2">
             <Label htmlFor="jobType">Job Type <span className="text-red-500">*</span></Label>
             <Select value={formData.jobType} onValueChange={handleJobTypeChange}>
-              <SelectTrigger className="bg-elec-dark border-elec-yellow/20 focus:border-elec-yellow text-white">
+              <SelectTrigger className="bg-elec-dark border-elec-yellow/20 focus:border-elec-yellow text-white h-10">
                 <SelectValue placeholder="Select job type" />
               </SelectTrigger>
               <SelectContent className="bg-elec-dark border-elec-yellow/20 text-white max-h-[300px] z-50">
@@ -249,13 +249,13 @@ const CommunityPriceSubmission = () => {
               id="location"
               value={formData.location}
               onChange={(e) => setFormData(prev => ({ ...prev, location: e.target.value }))}
-              className="bg-elec-dark border-elec-yellow/20 focus:border-elec-yellow text-white"
+              className="bg-elec-dark border-elec-yellow/20 focus:border-elec-yellow text-white h-10"
               placeholder="e.g., London, Manchester, Birmingham, etc."
             />
           </div>
 
-          {/* Price and Unit */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* Price, Unit, and Complexity Level in aligned grid */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="space-y-2">
               <Label htmlFor="price" className="flex items-center gap-2">
                 <PoundSterling className="h-4 w-4" />
@@ -268,7 +268,7 @@ const CommunityPriceSubmission = () => {
                 min="0"
                 value={formData.price}
                 onChange={(e) => setFormData(prev => ({ ...prev, price: e.target.value }))}
-                className="bg-elec-dark border-elec-yellow/20 focus:border-elec-yellow text-white"
+                className="bg-elec-dark border-elec-yellow/20 focus:border-elec-yellow text-white h-10"
                 placeholder="0.00"
               />
             </div>
@@ -279,7 +279,7 @@ const CommunityPriceSubmission = () => {
                 value={formData.unit} 
                 onValueChange={(value) => setFormData(prev => ({ ...prev, unit: value }))}
               >
-                <SelectTrigger className="bg-elec-dark border-elec-yellow/20 focus:border-elec-yellow text-white">
+                <SelectTrigger className="bg-elec-dark border-elec-yellow/20 focus:border-elec-yellow text-white h-10">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent className="bg-elec-dark border-elec-yellow/20 text-white z-50">
@@ -291,24 +291,23 @@ const CommunityPriceSubmission = () => {
                 </SelectContent>
               </Select>
             </div>
-          </div>
 
-          {/* Complexity Level */}
-          <div className="space-y-2">
-            <Label htmlFor="complexityLevel">Complexity Level</Label>
-            <Select 
-              value={formData.complexityLevel} 
-              onValueChange={(value) => setFormData(prev => ({ ...prev, complexityLevel: value }))}
-            >
-              <SelectTrigger className="bg-elec-dark border-elec-yellow/20 focus:border-elec-yellow text-white">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent className="bg-elec-dark border-elec-yellow/20 text-white z-50">
-                <SelectItem value="basic">Basic</SelectItem>
-                <SelectItem value="standard">Standard</SelectItem>
-                <SelectItem value="complex">Complex</SelectItem>
-              </SelectContent>
-            </Select>
+            <div className="space-y-2">
+              <Label htmlFor="complexityLevel">Complexity Level</Label>
+              <Select 
+                value={formData.complexityLevel} 
+                onValueChange={(value) => setFormData(prev => ({ ...prev, complexityLevel: value }))}
+              >
+                <SelectTrigger className="bg-elec-dark border-elec-yellow/20 focus:border-elec-yellow text-white h-10">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent className="bg-elec-dark border-elec-yellow/20 text-white z-50">
+                  <SelectItem value="basic">Basic</SelectItem>
+                  <SelectItem value="standard">Standard</SelectItem>
+                  <SelectItem value="complex">Complex</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
           </div>
 
           {/* Notes */}
