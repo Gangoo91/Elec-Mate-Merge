@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { RefreshCw, Search, ExternalLink, Building2, MapPin, Pound, Calendar, Filter, X } from "lucide-react";
+import { RefreshCw, Search, ExternalLink, Building2, MapPin, PoundSterling, Calendar, Filter, X } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { format } from "date-fns";
 import { Link } from "react-router-dom";
@@ -331,7 +331,7 @@ const IndustryNewsCard = () => {
                           {project.location}
                         </div>
                         <div className="flex items-center gap-1">
-                          <Pound className="h-3 w-3" />
+                          <PoundSterling className="h-3 w-3" />
                           {project.project_value}
                         </div>
                         <div className="flex items-center gap-1">
