@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { Zap, Search, Download } from "lucide-react";
+import { Zap, Search } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { zsValues, curveTypes, fuseTypes } from "./zs-values/ZsValuesData";
 
@@ -102,27 +102,6 @@ const BS7671ZsLookupCalculator = () => {
     });
   };
 
-  const exportResults = () => {
-    const data = results.length > 0 ? results : complianceCheck?.compliantDevices || [];
-    const csv = [
-      ["Device", "Curve", "Rating", "Max Zs", "Margin"].join(","),
-      ...data.map(item => [
-        item.device,
-        item.curve,
-        item.rating,
-        item.maxZs,
-        item.margin || ""
-      ].join(","))
-    ].join("\n");
-
-    const blob = new Blob([csv], { type: "text/csv" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "bs7671-zs-lookup.csv";
-    a.click();
-    URL.revokeObjectURL(url);
-  };
 
   const resetCalculator = () => {
     setSearchType("device");
@@ -200,13 +179,6 @@ const BS7671ZsLookupCalculator = () => {
               {searchType === "device" ? "Show Values" : "Check Compliance"}
             </Button>
             
-            {(results.length > 0 || complianceCheck) && (
-              <Button variant="outline" onClick={exportResults}>
-                <Download className="mr-2 h-4 w-4" />
-                Export CSV
-              </Button>
-            )}
-            
             <Button variant="outline" onClick={resetCalculator}>
               Reset
             </Button>
@@ -283,7 +255,7 @@ const BS7671ZsLookupCalculator = () => {
                   </table>
                   {complianceCheck.compliantDevices.length > 20 && (
                     <p className="text-xs text-muted-foreground mt-2">
-                      Showing top 20 results. Export CSV for complete list.
+                      Showing top 20 results of {complianceCheck.compliantDevices.length} compliant devices.
                     </p>
                   )}
                 </div>
