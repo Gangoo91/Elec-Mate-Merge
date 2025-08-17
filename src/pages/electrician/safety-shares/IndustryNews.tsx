@@ -8,6 +8,15 @@ import { Button } from "@/components/ui/button";
 const IndustryNews = () => {
   const navigate = useNavigate();
 
+  const handleBackClick = () => {
+    // If there's browser history, go back, otherwise go to safety shares
+    if (window.history.length > 1) {
+      navigate(-1);
+    } else {
+      navigate('/electrician/safety-shares');
+    }
+  };
+
   return (
     <div className="min-h-screen bg-elec-dark text-white">
       <Helmet>
@@ -20,7 +29,7 @@ const IndustryNews = () => {
           <Button
             variant="outline"
             size="sm"
-            onClick={() => navigate(-1)}
+            onClick={handleBackClick}
             className="border-elec-yellow/20 text-elec-yellow hover:bg-elec-yellow/10 hover:border-elec-yellow/40 bg-transparent"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
