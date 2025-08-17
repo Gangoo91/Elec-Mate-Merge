@@ -1,8 +1,7 @@
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { TrendingUp, TrendingDown, Zap, Cable, Settings } from "lucide-react";
+import { Zap, Cable, Settings, Clock } from "lucide-react";
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
+import PricingSection from "./PricingSection";
 
 interface PriceMetric {
   id: number;
@@ -26,115 +25,41 @@ const CompactPricingGrid = ({ metalPrices, cablePrices, equipmentPrices, lastUpd
     setExpandedSection(expandedSection === section ? null : section);
   };
 
-  const renderCompactMetrics = (metrics: PriceMetric[], limit: number = 3) => {
-    const displayMetrics = expandedSection ? metrics : metrics.slice(0, limit);
-    
-    return (
-      <div className="space-y-2">
-        {displayMetrics.map((metric) => (
-          <div key={metric.id} className="flex justify-between items-center text-sm">
-            <span className="truncate flex-1 mr-2">{metric.name}</span>
-            <div className="flex items-center gap-1 min-w-0">
-              <span className="font-medium">{metric.value}</span>
-              <span className={`flex items-center text-xs ${
-                metric.trend === "up" 
-                  ? "text-green-500" 
-                  : metric.trend === "down"
-                    ? "text-red-500"
-                    : "text-gray-400"
-              }`}>
-                {metric.trend === "up" 
-                  ? <TrendingUp className="h-3 w-3" /> 
-                  : metric.trend === "down"
-                    ? <TrendingDown className="h-3 w-3" />
-                    : null
-                }
-                {metric.change}
-              </span>
-            </div>
-          </div>
-        ))}
-      </div>
-    );
-  };
-
   return (
-    <div className="space-y-4">
-      {/* Last Updated Info */}
-      <div className="text-center">
-        <p className="text-sm text-muted-foreground">Last updated: {lastUpdated}</p>
+    <div className="space-y-6">
+      {/* Enhanced Header with Last Updated */}
+      <div className="flex items-center justify-center gap-2 p-4 rounded-lg bg-gradient-to-r from-elec-yellow/5 to-elec-yellow/10 border border-elec-yellow/20">
+        <Clock className="h-4 w-4 text-elec-yellow" />
+        <p className="text-sm font-medium text-foreground">
+          Last updated: <span className="text-elec-yellow">{lastUpdated}</span>
+        </p>
       </div>
 
-      {/* Compact Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-        {/* Metal Prices */}
-        <Card className="border-elec-yellow/20 bg-elec-gray">
-          <CardHeader className="pb-3">
-            <CardTitle className="text-lg flex items-center gap-2">
-              <Zap className="h-5 w-5 text-elec-yellow" />
-              Metal Prices
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="pt-0">
-            {renderCompactMetrics(metalPrices)}
-            {metalPrices.length > 3 && (
-              <Button
-                variant="ghost"
-                size="sm"
-                className="w-full mt-3 text-xs"
-                onClick={() => toggleSection('metals')}
-              >
-                {expandedSection === 'metals' ? 'Show Less' : `Show All (${metalPrices.length})`}
-              </Button>
-            )}
-          </CardContent>
-        </Card>
+      {/* Enhanced Grid Layout */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <PricingSection
+          title="Metal Prices"
+          icon={<Zap className="h-5 w-5 text-elec-yellow" />}
+          prices={metalPrices}
+          isExpanded={expandedSection === 'metals'}
+          onToggle={() => toggleSection('metals')}
+        />
 
-        {/* Cable Prices */}
-        <Card className="border-elec-yellow/20 bg-elec-gray">
-          <CardHeader className="pb-3">
-            <CardTitle className="text-lg flex items-center gap-2">
-              <Cable className="h-5 w-5 text-elec-yellow" />
-              Cable Prices
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="pt-0">
-            {renderCompactMetrics(cablePrices)}
-            {cablePrices.length > 3 && (
-              <Button
-                variant="ghost"
-                size="sm"
-                className="w-full mt-3 text-xs"
-                onClick={() => toggleSection('cables')}
-              >
-                {expandedSection === 'cables' ? 'Show Less' : `Show All (${cablePrices.length})`}
-              </Button>
-            )}
-          </CardContent>
-        </Card>
+        <PricingSection
+          title="Cable Prices"
+          icon={<Cable className="h-5 w-5 text-elec-yellow" />}
+          prices={cablePrices}
+          isExpanded={expandedSection === 'cables'}
+          onToggle={() => toggleSection('cables')}
+        />
 
-        {/* Equipment Prices */}
-        <Card className="border-elec-yellow/20 bg-elec-gray">
-          <CardHeader className="pb-3">
-            <CardTitle className="text-lg flex items-center gap-2">
-              <Settings className="h-5 w-5 text-elec-yellow" />
-              Equipment Prices
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="pt-0">
-            {renderCompactMetrics(equipmentPrices)}
-            {equipmentPrices.length > 3 && (
-              <Button
-                variant="ghost"
-                size="sm"
-                className="w-full mt-3 text-xs"
-                onClick={() => toggleSection('equipment')}
-              >
-                {expandedSection === 'equipment' ? 'Show Less' : `Show All (${equipmentPrices.length})`}
-              </Button>
-            )}
-          </CardContent>
-        </Card>
+        <PricingSection
+          title="Equipment Prices"
+          icon={<Settings className="h-5 w-5 text-elec-yellow" />}
+          prices={equipmentPrices}
+          isExpanded={expandedSection === 'equipment'}
+          onToggle={() => toggleSection('equipment')}
+        />
       </div>
     </div>
   );
