@@ -227,8 +227,8 @@ const EnhancedIndustryNewsCard = () => {
   }
 
   return (
-    <div className="space-y-6">
-      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+    <div className="space-y-4 sm:space-y-6">
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3 sm:gap-4">
         <div>
           <h2 className="text-2xl font-bold text-white">Industry News & Major Projects</h2>
           <p className="text-muted-foreground">Latest electrical industry news with real-time updates from major sources</p>
@@ -265,8 +265,8 @@ const EnhancedIndustryNewsCard = () => {
 
       {/* Enhanced Filters */}
       <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardContent className="p-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <CardContent className="p-3 sm:p-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4">
             <div className="relative">
               <Search className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
               <Input
@@ -306,13 +306,13 @@ const EnhancedIndustryNewsCard = () => {
         </CardContent>
       </Card>
 
-      <div className="grid gap-6">
+      <div className="grid gap-4 sm:gap-6">
         {filteredArticles.map((article) => (
           <Card key={article.id} className="border-elec-yellow/20 bg-elec-gray">
-            <CardHeader className="pb-3">
+            <CardHeader className="pb-2 sm:pb-3">
               <div className="flex items-start justify-between">
                 <div className="flex-1">
-                  <div className="flex items-center gap-2 mb-3">
+                  <div className="flex flex-wrap items-center gap-2 mb-2 sm:mb-3">
                     <Badge className={getCategoryColor(article.category)}>
                       {article.category}
                     </Badge>
@@ -328,10 +328,10 @@ const EnhancedIndustryNewsCard = () => {
                       </div>
                     )}
                   </div>
-                  <CardTitle className="text-white text-lg mb-2">
+                  <CardTitle className="text-white text-base sm:text-lg mb-1 sm:mb-2">
                     {article.title}
                   </CardTitle>
-                  <p className="text-gray-300 text-sm mb-3">
+                  <p className="text-gray-300 text-sm mb-2 sm:mb-3">
                     {article.summary}
                   </p>
                   {article.content && article.content.length > 200 && (
@@ -373,7 +373,7 @@ const EnhancedIndustryNewsCard = () => {
                     </div>
                   )}
                 </div>
-                <div className="flex gap-2">
+                <div className="flex flex-col xs:flex-row gap-2">
                   {article.source_url && (
                     <Button 
                       size="sm" 

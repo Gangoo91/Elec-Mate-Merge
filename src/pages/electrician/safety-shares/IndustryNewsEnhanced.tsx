@@ -19,7 +19,7 @@ const IndustryNewsEnhanced = () => {
         <meta name="description" content="Enhanced electrical industry news with user interactions and filtering" />
       </Helmet>
       
-      <div className="container mx-auto px-6 py-8 space-y-8 animate-fade-in">
+      <div className="container mx-auto px-4 py-4 space-y-4 sm:px-6 sm:py-8 sm:space-y-8 animate-fade-in">
         {/* Top-left back button */}
         <div className="flex justify-start">
           <Button
@@ -34,7 +34,7 @@ const IndustryNewsEnhanced = () => {
         </div>
 
         {/* Centralized title */}
-        <div className="text-center space-y-4">
+        <div className="text-center space-y-2 sm:space-y-4">
           <div className="flex items-center justify-center gap-3">
             <div className="w-12 h-12 rounded-full bg-elec-yellow flex items-center justify-center">
               <Newspaper className="h-6 w-6 text-elec-dark" />
