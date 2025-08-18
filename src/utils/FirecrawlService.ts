@@ -386,4 +386,133 @@ export class FirecrawlService {
     const age = this.getCacheAge();
     return age >= 0 && age < this.CACHE_DURATION;
   }
+
+  // Major Projects specific sources
+  private static majorProjectsSources = [
+    'https://www.contractsfinder.service.gov.uk/Search/Results?&searchType=1&Keywords=electrical&sort=0',
+    'https://www.constructionnews.co.uk/sectors/infrastructure/',
+    'https://www.electricalreview.co.uk/news/',
+    'https://www.gov.uk/government/collections/national-infrastructure-and-construction-pipeline'
+  ];
+
+  static async fetchMajorProjects(): Promise<{ success: boolean; error?: string; data?: any[] }> {
+    const apiKey = this.getApiKey();
+    if (!apiKey) {
+      return { success: false, error: 'API key not found' };
+    }
+
+    try {
+      console.log('Fetching major projects data');
+      if (!this.firecrawlApp) {
+        this.firecrawlApp = new FirecrawlApp({ apiKey });
+      }
+
+      const allProjects: any[] = [];
+
+      for (const source of this.majorProjectsSources) {
+        try {
+          const response = await this.firecrawlApp.scrapeUrl(source, {
+            formats: ['markdown']
+          });
+
+          if (response.success && response.markdown) {
+            // Parse the markdown content to extract project information
+            const projects = this.parseProjectContent(response.markdown, source);
+            allProjects.push(...projects);
+          }
+        } catch (error) {
+          console.warn(`Failed to fetch from ${source}:`, error);
+        }
+      }
+
+      console.log('Fetched major projects:', allProjects.length);
+      return { success: true, data: allProjects };
+    } catch (error) {
+      console.error('Error fetching major projects:', error);
+      return { 
+        success: false, 
+        error: error instanceof Error ? error.message : 'Failed to fetch major projects' 
+      };
+    }
+  }
+
+  private static parseProjectContent(content: string, source: string): any[] {
+    const projects: any[] = [];
+    
+    try {
+      // Split content into potential project sections
+      const sections = content.split(/(?=Contract|Tender|Award|Project|£\d+|Infrastructure)/gi);
+      
+      sections.forEach((section, index) => {
+        const cleanSection = section.trim();
+        if (cleanSection.length < 200) return; // Skip very short sections
+        
+        // Look for electrical keywords to filter relevant projects
+        const electricalKeywords = ['electrical', 'power', 'energy', 'grid', 'cable', 'lighting', 'installation'];
+        const hasElectricalContent = electricalKeywords.some(keyword => 
+          cleanSection.toLowerCase().includes(keyword.toLowerCase())
+        );
+        
+        if (!hasElectricalContent) return;
+        
+        // Extract project information
+        const lines = cleanSection.split('\n').filter(line => line.trim().length > 0);
+        
+        // Try to find title
+        const title = lines.find(line => 
+          line.length > 10 && line.length < 200 && 
+          /project|contract|tender|infrastructure|electrical/gi.test(line)
+        )?.replace(/^#+\s*|\*\*|\*|<[^>]*>/g, '').trim() || 
+        `Electrical Project ${index + 1}`;
+        
+        // Extract value if present
+        const valueMatch = cleanSection.match(/£([\d,]+(?:\.\d+)?[MK]?)/i);
+        const value = valueMatch ? `£${valueMatch[1]}` : undefined;
+        
+        // Extract location if present
+        const locationMatch = cleanSection.match(/(London|Manchester|Birmingham|Leeds|Glasgow|Edinburgh|Cardiff|Belfast|[A-Z][a-z]+ [A-Z][a-z]+, UK)/i);
+        const location = locationMatch ? locationMatch[0] : undefined;
+        
+        // Determine status based on keywords
+        let status = 'tendering';
+        if (/awarded|won|selected/gi.test(cleanSection)) status = 'awarded';
+        if (/progress|ongoing|construction/gi.test(cleanSection)) status = 'in-progress';
+        if (/completed|finished/gi.test(cleanSection)) status = 'completed';
+        
+        // Determine sector
+        let sector = 'Infrastructure';
+        if (/hospital|health|nhs/gi.test(cleanSection)) sector = 'Healthcare';
+        if (/transport|rail|underground|station/gi.test(cleanSection)) sector = 'Transport';
+        if (/wind|solar|renewable|energy/gi.test(cleanSection)) sector = 'Renewable Energy';
+        if (/smart|iot|technology|data/gi.test(cleanSection)) sector = 'Technology';
+        
+        // Create description from first few meaningful lines
+        const description = lines
+          .filter(line => line.length > 30 && line.length < 300)
+          .slice(0, 2)
+          .join(' ')
+          .substring(0, 300) || 'Project details to be confirmed';
+        
+        projects.push({
+          id: `live-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+          title,
+          description,
+          client: 'To be confirmed',
+          location,
+          value,
+          status,
+          sector,
+          publishedDate: new Date().toISOString(),
+          source,
+          isLive: true,
+          scrapedAt: new Date().toISOString()
+        });
+      });
+      
+      return projects.slice(0, 3); // Limit to 3 projects per source
+    } catch (error) {
+      console.error('Error parsing project content:', error);
+      return [];
+    }
+  }
 }

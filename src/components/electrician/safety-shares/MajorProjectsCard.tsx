@@ -1,29 +1,44 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Building2, MapPin, Calendar, PoundSterling, Users, Clock, ExternalLink, Bookmark } from "lucide-react";
+import { Building2, MapPin, Calendar, PoundSterling, Users, Clock, ExternalLink, Bookmark, RefreshCw, AlertCircle, Settings } from "lucide-react";
+import { useToast } from "@/components/ui/use-toast";
+import { FirecrawlService } from '@/utils/FirecrawlService';
+import { ApiKeyDialog } from "@/components/ui/api-key-dialog";
 
 interface MajorProject {
   id: string;
   title: string;
   description: string;
   client: string;
-  location: string;
-  value: string;
-  duration: string;
-  startDate: string;
+  location?: string;
+  value?: string;
+  duration?: string;
+  startDate?: string;
   status: "tendering" | "awarded" | "in-progress" | "completed";
   sector: string;
-  contractorCount: number;
+  contractorCount?: number;
   deadline?: string;
+  publishedDate?: string;
+  source?: string;
+  isLive?: boolean;
+  scrapedAt?: string;
 }
 
 const MajorProjectsCard = () => {
-  const [projects] = useState<MajorProject[]>([
+  const { toast } = useToast();
+  const [projects, setProjects] = useState<MajorProject[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [showApiKeyDialog, setShowApiKeyDialog] = useState(false);
+  const [hasApiKey, setHasApiKey] = useState(false);
+  const [lastUpdated, setLastUpdated] = useState<string | null>(null);
+
+  // Static fallback projects
+  const staticProjects: MajorProject[] = [
     {
-      id: "1",
+      id: "static-1",
       title: "London Underground Station Modernisation",
       description: "Complete electrical system upgrade for 15 underground stations including LED lighting, power distribution, and emergency systems.",
       client: "Transport for London",
@@ -37,7 +52,7 @@ const MajorProjectsCard = () => {
       deadline: "2024-07-15"
     },
     {
-      id: "2",
+      id: "static-2",
       title: "NHS Hospital Electrical Infrastructure",
       description: "New electrical installation for major hospital expansion including critical care units, operating theatres, and backup power systems.",
       client: "NHS Foundation Trust",
@@ -51,7 +66,7 @@ const MajorProjectsCard = () => {
       deadline: "2024-06-30"
     },
     {
-      id: "3",
+      id: "static-3",
       title: "Offshore Wind Farm Grid Connection",
       description: "High voltage transmission infrastructure to connect 800MW offshore wind farm to the national grid.",
       client: "SSE Renewables",
@@ -62,34 +77,80 @@ const MajorProjectsCard = () => {
       status: "awarded",
       sector: "Renewable Energy",
       contractorCount: 25
-    },
-    {
-      id: "4",
-      title: "Smart City Infrastructure Project",
-      description: "Installation of smart lighting, EV charging points, and IoT infrastructure across the city centre.",
-      client: "Birmingham City Council",
-      location: "Birmingham, UK",
-      value: "£28M",
-      duration: "15 months",
-      startDate: "2024-07-01",
-      status: "in-progress",
-      sector: "Smart Infrastructure",
-      contractorCount: 15
-    },
-    {
-      id: "5",
-      title: "Data Centre Electrical Installation",
-      description: "Complete electrical infrastructure for new hyperscale data centre including UPS systems, backup generators, and cooling.",
-      client: "Amazon Web Services",
-      location: "Dublin, Ireland",
-      value: "£95M",
-      duration: "20 months",
-      startDate: "2024-06-01",
-      status: "in-progress",
-      sector: "Technology",
-      contractorCount: 18
     }
-  ]);
+  ];
+
+  useEffect(() => {
+    const apiKey = FirecrawlService.getApiKey();
+    setHasApiKey(!!apiKey);
+    
+    if (apiKey) {
+      fetchMajorProjects();
+    } else {
+      setProjects(staticProjects);
+    }
+  }, []);
+
+  const fetchMajorProjects = async () => {
+    setIsLoading(true);
+    try {
+      const result = await FirecrawlService.fetchMajorProjects();
+      
+      if (result.success && result.data) {
+        const liveProjects = result.data.map((project: any) => ({
+          id: project.id || `live-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+          title: project.title || 'Untitled Project',
+          description: project.description || 'No description available',
+          client: project.client || 'Not specified',
+          location: project.location,
+          value: project.value,
+          duration: project.duration,
+          startDate: project.startDate,
+          status: project.status || 'tendering',
+          sector: project.sector || 'General',
+          deadline: project.deadline,
+          publishedDate: project.publishedDate,
+          source: project.source,
+          isLive: true,
+          scrapedAt: project.scrapedAt
+        }));
+        
+        // Combine live projects with static ones
+        setProjects([...liveProjects, ...staticProjects]);
+        setLastUpdated(new Date().toLocaleTimeString());
+        
+        toast({
+          title: "Projects Updated",
+          description: `Fetched ${liveProjects.length} live projects`,
+          duration: 3000,
+        });
+      } else {
+        setProjects(staticProjects);
+        toast({
+          title: "Using Cached Data",
+          description: result.error || "Unable to fetch live data",
+          variant: "destructive",
+          duration: 3000,
+        });
+      }
+    } catch (error) {
+      setProjects(staticProjects);
+      toast({
+        title: "Error",
+        description: "Failed to fetch live project data",
+        variant: "destructive",
+        duration: 3000,
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleApiKeyConfigured = () => {
+    setHasApiKey(true);
+    setShowApiKeyDialog(false);
+    fetchMajorProjects();
+  };
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -123,17 +184,70 @@ const MajorProjectsCard = () => {
   };
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-2xl font-bold text-white">Major Projects</h2>
-          <p className="text-muted-foreground">Latest electrical infrastructure projects and contract opportunities</p>
+      <div className="space-y-6">
+        <div className="flex items-center justify-between">
+          <div>
+            <h2 className="text-2xl font-bold text-white">Major Projects</h2>
+            <p className="text-muted-foreground">
+              Latest electrical infrastructure projects and contract opportunities
+              {lastUpdated && (
+                <span className="text-xs ml-2">• Updated {lastUpdated}</span>
+              )}
+            </p>
+          </div>
+          <div className="flex gap-2">
+            {!hasApiKey && (
+              <Button 
+                variant="outline" 
+                size="sm"
+                onClick={() => setShowApiKeyDialog(true)}
+                className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+              >
+                <Settings className="h-4 w-4 mr-2" />
+                Setup API
+              </Button>
+            )}
+            {hasApiKey && (
+              <Button 
+                variant="outline" 
+                size="sm"
+                onClick={fetchMajorProjects}
+                disabled={isLoading}
+                className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+              >
+                <RefreshCw className={`h-4 w-4 mr-2 ${isLoading ? 'animate-spin' : ''}`} />
+                Refresh
+              </Button>
+            )}
+            <Button className="bg-elec-yellow text-black hover:bg-elec-yellow/90">
+              <Building2 className="h-4 w-4 mr-2" />
+              Submit Project
+            </Button>
+          </div>
         </div>
-        <Button className="bg-elec-yellow text-black hover:bg-elec-yellow/90">
-          <Building2 className="h-4 w-4 mr-2" />
-          Submit Project
-        </Button>
-      </div>
+
+        {!hasApiKey && (
+          <Card className="border-yellow-500/30 bg-yellow-500/10">
+            <CardContent className="p-4">
+              <div className="flex items-center gap-3">
+                <AlertCircle className="h-5 w-5 text-yellow-500" />
+                <div>
+                  <p className="text-yellow-200 font-medium">Live Data Available</p>
+                  <p className="text-yellow-300/80 text-sm">
+                    Setup Firecrawl API to fetch real-time project data from government tenders and industry sources.
+                  </p>
+                </div>
+                <Button 
+                  size="sm" 
+                  onClick={() => setShowApiKeyDialog(true)}
+                  className="bg-yellow-500 text-black hover:bg-yellow-600 ml-auto"
+                >
+                  Setup Now
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        )}
 
       <div className="grid gap-6">
         {projects.map((project) => (
@@ -148,6 +262,11 @@ const MajorProjectsCard = () => {
                     <Badge className={getSectorColor(project.sector)}>
                       {project.sector}
                     </Badge>
+                    {project.isLive && (
+                      <Badge className="bg-green-500/20 text-green-400 border-green-500/30">
+                        Live
+                      </Badge>
+                    )}
                     {project.deadline && project.status === "tendering" && (
                       <Badge className="bg-red-500/20 text-red-400 border-red-500/30">
                         Deadline: {new Date(project.deadline).toLocaleDateString()}
@@ -172,40 +291,55 @@ const MajorProjectsCard = () => {
 
             <CardContent className="pt-0">
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4 text-sm">
-                <div className="flex items-center gap-2 text-muted-foreground">
-                  <PoundSterling className="h-4 w-4 text-elec-yellow" />
-                  <div>
-                    <div className="text-white font-medium">{project.value}</div>
-                    <div>Contract Value</div>
+                {project.value && (
+                  <div className="flex items-center gap-2 text-muted-foreground">
+                    <PoundSterling className="h-4 w-4 text-elec-yellow" />
+                    <div>
+                      <div className="text-white font-medium">{project.value}</div>
+                      <div>Contract Value</div>
+                    </div>
                   </div>
-                </div>
-                <div className="flex items-center gap-2 text-muted-foreground">
-                  <Clock className="h-4 w-4 text-elec-yellow" />
-                  <div>
-                    <div className="text-white font-medium">{project.duration}</div>
-                    <div>Duration</div>
+                )}
+                {project.duration && (
+                  <div className="flex items-center gap-2 text-muted-foreground">
+                    <Clock className="h-4 w-4 text-elec-yellow" />
+                    <div>
+                      <div className="text-white font-medium">{project.duration}</div>
+                      <div>Duration</div>
+                    </div>
                   </div>
-                </div>
-                <div className="flex items-center gap-2 text-muted-foreground">
-                  <MapPin className="h-4 w-4 text-elec-yellow" />
-                  <div>
-                    <div className="text-white font-medium">{project.location}</div>
-                    <div>Location</div>
+                )}
+                {project.location && (
+                  <div className="flex items-center gap-2 text-muted-foreground">
+                    <MapPin className="h-4 w-4 text-elec-yellow" />
+                    <div>
+                      <div className="text-white font-medium">{project.location}</div>
+                      <div>Location</div>
+                    </div>
                   </div>
-                </div>
-                <div className="flex items-center gap-2 text-muted-foreground">
-                  <Users className="h-4 w-4 text-elec-yellow" />
-                  <div>
-                    <div className="text-white font-medium">{project.contractorCount}</div>
-                    <div>Contractors</div>
+                )}
+                {project.contractorCount && (
+                  <div className="flex items-center gap-2 text-muted-foreground">
+                    <Users className="h-4 w-4 text-elec-yellow" />
+                    <div>
+                      <div className="text-white font-medium">{project.contractorCount}</div>
+                      <div>Contractors</div>
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
 
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2 text-sm text-muted-foreground">
                   <Calendar className="h-4 w-4" />
-                  <span>Start Date: {new Date(project.startDate).toLocaleDateString()}</span>
+                  <span>
+                    {project.startDate 
+                      ? `Start Date: ${new Date(project.startDate).toLocaleDateString()}`
+                      : project.publishedDate 
+                        ? `Published: ${new Date(project.publishedDate).toLocaleDateString()}`
+                        : 'Date not specified'
+                    }
+                  </span>
                 </div>
                 <div className="flex gap-2">
                   {project.status === "tendering" && (
@@ -213,7 +347,12 @@ const MajorProjectsCard = () => {
                       View Tender Details
                     </Button>
                   )}
-                  <Button size="sm" variant="outline" className="border-elec-yellow/30 text-white hover:bg-elec-yellow/10">
+                  <Button 
+                    size="sm" 
+                    variant="outline" 
+                    className="border-elec-yellow/30 text-white hover:bg-elec-yellow/10"
+                    onClick={() => project.source && window.open(project.source, '_blank')}
+                  >
                     <ExternalLink className="h-4 w-4 mr-2" />
                     View Project
                   </Button>
@@ -226,9 +365,15 @@ const MajorProjectsCard = () => {
 
       <div className="text-center pt-4">
         <Button variant="outline" className="border-elec-yellow/30 text-white hover:bg-elec-yellow/10">
-          View All Projects
+          View All Projects ({projects.length})
         </Button>
       </div>
+
+      <ApiKeyDialog
+        open={showApiKeyDialog}
+        onOpenChange={setShowApiKeyDialog}
+        onApiKeyConfigured={handleApiKeyConfigured}
+      />
     </div>
   );
 };
