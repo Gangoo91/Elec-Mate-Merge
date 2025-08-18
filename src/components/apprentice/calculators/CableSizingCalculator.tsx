@@ -5,17 +5,17 @@ import { useCableSizing } from "./cable-sizing/useCableSizing";
 import CableSizingForm from "./cable-sizing/CableSizingInputs";
 import CableSizingResult from "./cable-sizing/CableSizingResult";
 import CableSizingInfo from "./cable-sizing/CableSizingInfo";
-import ValidationIndicator from "./ValidationIndicator";
+import SimpleValidationIndicator from "./SimpleValidationIndicator";
 import CalculationReport from "./CalculationReport";
 import { useToast } from "@/hooks/use-toast";
 import { useEffect, useState } from "react";
-import { CalculatorValidator } from "@/services/calculatorValidation";
+import { SimpleValidator, SimpleValidationResult } from "@/services/simplifiedValidation";
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
 const CableSizingCalculator = () => {
   const { toast } = useToast();
-  const [validation, setValidation] = useState<any>(null);
+  const [validation, setValidation] = useState<SimpleValidationResult | null>(null);
   const [calculationInputs, setCalculationInputs] = useState<any>({});
   const [calculationResults, setCalculationResults] = useState<any>({});
   
@@ -29,81 +29,63 @@ const CableSizingCalculator = () => {
     resetCalculator,
   } = useCableSizing();
 
-  // Enhanced validation when results are available
+  // Enhanced validation with safety factors
   useEffect(() => {
     if (result.recommendedCable && !result.errors) {
-      // Perform comprehensive validation
       const current = parseFloat(inputs.current);
       const length = parseFloat(inputs.length);
-      const voltageDropPercent = parseFloat(inputs.voltageDrop);
-      const voltage = parseFloat(inputs.voltage);
+      // Safely access potentially undefined properties with defaults
+      const ambientTemp = parseFloat((inputs as any).ambientTemp || '30');
+      const cableGrouping = parseInt((inputs as any).cableGrouping || '1');
       
-      // Calculate actual voltage drop
-      const actualVoltageDrop = result.recommendedCable.voltageDropPerAmpereMeter * current * length;
-      
-      // Validate cable sizing
-      const cableSizingValidation = CalculatorValidator.validateCableSizing(
+      // Perform comprehensive safety validation
+      const safetyValidation = SimpleValidator.validateCableSizing(
         current,
         result.recommendedCable.size,
         inputs.installationType,
-        actualVoltageDrop,
+        ambientTemp,
+        cableGrouping,
         length
       );
 
-      // Input validations
-      const currentValidation = CalculatorValidator.validateInputRange(current, 'current');
-      const voltageValidation = CalculatorValidator.validateInputRange(voltage, 'voltage');
-
-      // Combine validations
-      const combinedValidation = {
-        isValid: cableSizingValidation.isValid && currentValidation.isValid && voltageValidation.isValid,
-        errors: [
-          ...cableSizingValidation.errors,
-          ...currentValidation.errors,
-          ...voltageValidation.errors
-        ],
-        warnings: [
-          ...cableSizingValidation.warnings,
-          ...currentValidation.warnings,
-          ...voltageValidation.warnings
-        ],
-        standardsCompliance: {
-          bs7671: cableSizingValidation.standardsCompliance.bs7671 && 
-                  currentValidation.standardsCompliance.bs7671 && 
-                  voltageValidation.standardsCompliance.bs7671,
-          iet: cableSizingValidation.standardsCompliance.iet,
-          safety: cableSizingValidation.standardsCompliance.safety && 
-                  currentValidation.standardsCompliance.safety && 
-                  voltageValidation.standardsCompliance.safety
-        }
-      };
-
-      setValidation(combinedValidation);
+      setValidation(safetyValidation);
       setCalculationInputs({
         current,
         length,
-        voltage,
-        voltageDrop: voltageDropPercent,
+        ambientTemp,
+        cableGrouping,
         installationType: inputs.installationType,
-        cableType: inputs.cableType
+        cableType: inputs.cableType,
+        loadType: (inputs as any).loadType || 'resistive',
+        diversityFactor: parseFloat((inputs as any).diversityFactor || '1.0')
       });
+      
       setCalculationResults({
         recommendedCable: result.recommendedCable.size,
         currentRating: result.recommendedCable.currentRating[inputs.installationType],
-        actualVoltageDrop: actualVoltageDrop,
-        voltageDropPercentage: (actualVoltageDrop / voltage) * 100
+        deratedCurrentRating: result.recommendedCable.currentRating[inputs.installationType] * 
+                             safetyValidation.safetyFactors.temperatureDerating * 
+                             safetyValidation.safetyFactors.groupingFactor,
+        safetyMargin: safetyValidation.safetyFactors.safetyMargin
       });
 
-      if (combinedValidation.isValid && combinedValidation.warnings.length === 0) {
+      // Enhanced toast notifications
+      if (safetyValidation.criticalAlerts.length > 0) {
         toast({
-          title: "Cable Size Calculated",
-          description: `Recommended ${result.recommendedCable.size} cable - BS 7671 compliant`,
-          variant: "default",
+          title: "⚠️ CRITICAL SAFETY ALERT",
+          description: "Serious safety issues detected. Do not proceed with installation.",
+          variant: "destructive",
         });
-      } else if (combinedValidation.warnings.length > 0) {
+      } else if (safetyValidation.warnings.length > 0) {
         toast({
           title: "Cable Size Calculated with Warnings",
-          description: "Please review validation warnings below",
+          description: "Please review safety warnings below",
+          variant: "default",
+        });
+      } else {
+        toast({
+          title: "Cable Size Calculated Safely",
+          description: `Recommended ${result.recommendedCable.size} cable with safety margin ${safetyValidation.safetyFactors.safetyMargin.toFixed(2)}`,
           variant: "default",
         });
       }
@@ -112,10 +94,18 @@ const CableSizingCalculator = () => {
         isValid: false,
         errors: Object.values(result.errors),
         warnings: [],
-        standardsCompliance: {
+        criticalAlerts: [],
+        safetyFactors: {
+          temperatureDerating: 1.0,
+          groupingFactor: 1.0,
+          diversityFactor: 1.0,
+          safetyMargin: 0
+        },
+        complianceChecks: {
           bs7671: false,
           iet: false,
-          safety: false
+          buildingRegs: false,
+          cdm: false
         }
       });
     }
@@ -167,15 +157,15 @@ const CableSizingCalculator = () => {
       <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader>
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Sigma className="h-5 w-5 text-elec-yellow" />
-              <div>
-                <CardTitle>Professional Cable Sizing Calculator</CardTitle>
-                <CardDescription className="mt-1">
-                  Calculate appropriate cable sizes based on current capacity and voltage drop with BS 7671 compliance validation.
-                </CardDescription>
+              <div className="flex items-center gap-2">
+                <Sigma className="h-5 w-5 text-elec-yellow" />
+                <div>
+                  <CardTitle>Cable Sizing Calculator</CardTitle>
+                  <CardDescription className="mt-1">
+                    Professional cable sizing with real-world safety factors, environmental conditions, and BS 7671 compliance validation.
+                  </CardDescription>
+                </div>
               </div>
-            </div>
             <div className="flex gap-2">
               <Button onClick={handleCalculate} className="bg-elec-yellow text-black hover:bg-elec-yellow/90" disabled={!inputs.current || !inputs.length}>
                 <Calculator className="h-4 w-4 mr-2" />
@@ -221,7 +211,7 @@ const CableSizingCalculator = () => {
               inputs={inputs}
               errors={result.errors}
               updateInput={updateInput}
-              setInstallationType={setInstallationType}
+              setInstallationType={(type: string) => setInstallationType(type as any)}
               setCableType={setCableType}
               calculateCableSize={handleCalculate}
               resetCalculator={handleReset}
@@ -243,15 +233,13 @@ const CableSizingCalculator = () => {
         </CardContent>
       </Card>
 
-      {/* Professional Validation Results */}
-      {validation && (
-        <ValidationIndicator validation={validation} calculationType="Cable Sizing" />
-      )}
+      {/* Enhanced Safety Validation Results */}
+      <SimpleValidationIndicator validation={validation} calculationType="Cable Sizing" />
 
-      {/* Comprehensive Calculation Report */}
+      {/* Detailed Calculation Report */}
       {validation && Object.keys(calculationResults).length > 0 && (
         <CalculationReport
-          calculationType="Professional Cable Sizing"
+          calculationType="Enhanced Cable Sizing"
           inputs={calculationInputs}
           results={calculationResults}
           validation={validation}

@@ -8,7 +8,6 @@ import OhmsLawCalculator from "@/components/apprentice/calculators/OhmsLawCalcul
 import VoltageDropCalculator from "@/components/apprentice/calculators/VoltageDropCalculator";
 import PowerFactorCalculator from "@/components/apprentice/calculators/PowerFactorCalculator";
 import CableSizingCalculator from "@/components/apprentice/calculators/CableSizingCalculator";
-import EnhancedCableSizingCalculator from "@/components/apprentice/calculators/EnhancedCableSizingCalculator";
 import LoadCalculator from "@/components/apprentice/calculators/LoadCalculator";
 import AdiabaticCalculator from "@/components/apprentice/calculators/AdiabaticCalculator";
 import ZsValuesCalculator from "@/components/apprentice/calculators/ZsValuesCalculator";

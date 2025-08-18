@@ -45,7 +45,6 @@ import PhaseRotationCalculator from "@/components/apprentice/calculators/PhaseRo
 import BatteryStorageCalculator from "@/components/apprentice/calculators/BatteryStorageCalculator";
 import HeatPumpCalculator from "@/components/apprentice/calculators/HeatPumpCalculator";
 import EVChargingCalculator from "@/components/apprentice/calculators/EVChargingCalculator";
-import EnhancedCableSizingCalculator from "@/components/apprentice/calculators/EnhancedCableSizingCalculator";
 import ArcFlashCalculator from "@/components/apprentice/calculators/ArcFlashCalculator";
 import EVSELoadCalculator from "@/components/apprentice/calculators/EVSELoadCalculator";
 import PowerQualityCalculator from "@/components/apprentice/calculators/PowerQualityCalculator";
@@ -88,7 +87,7 @@ const OnJobCalculations = () => {
       case "power-factor":
         return <PowerFactorCalculator />;
       case "cable-size":
-        return <EnhancedCableSizingCalculator />;
+        return <CableSizingCalculator />;
       case "lumen":
         return <LumenCalculator />;
       case "instrumentation":
