@@ -1,9 +1,11 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Building2, MapPin, Calendar, PoundSterling, Users, Clock, ExternalLink, Bookmark } from "lucide-react";
+import { Building2, MapPin, Calendar, PoundSterling, Users, Clock, ExternalLink, Bookmark, RefreshCw, AlertCircle } from "lucide-react";
+import { FirecrawlService } from "@/utils/FirecrawlService";
+import { useToast } from "@/components/ui/use-toast";
 
 interface MajorProject {
   id: string;
@@ -18,10 +20,18 @@ interface MajorProject {
   sector: string;
   contractorCount: number;
   deadline?: string;
+  source?: string;
 }
 
 const MajorProjectsCard = () => {
-  const [projects] = useState<MajorProject[]>([
+  const [projects, setProjects] = useState<MajorProject[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [lastUpdated, setLastUpdated] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const { toast } = useToast();
+
+  // Default projects as fallback
+  const defaultProjects: MajorProject[] = [
     {
       id: "1",
       title: "London Underground Station Modernisation",
@@ -89,7 +99,78 @@ const MajorProjectsCard = () => {
       sector: "Technology",
       contractorCount: 18
     }
-  ]);
+  ];
+
+  useEffect(() => {
+    // Load default projects initially
+    setProjects(defaultProjects);
+    
+    // Check if there's cached data
+    const cached = localStorage.getItem('majorProjects');
+    const cacheTimestamp = localStorage.getItem('majorProjectsTimestamp');
+    
+    if (cached && cacheTimestamp) {
+      const cacheAge = Date.now() - parseInt(cacheTimestamp);
+      if (cacheAge < 30 * 60 * 1000) { // 30 minutes
+        const cachedProjects = JSON.parse(cached);
+        if (cachedProjects.length > 0) {
+          setProjects(cachedProjects);
+          setLastUpdated(new Date(parseInt(cacheTimestamp)).toLocaleTimeString());
+        }
+      }
+    }
+  }, []);
+
+  const fetchLatestProjects = async () => {
+    const apiKey = FirecrawlService.getApiKey();
+    
+    if (!apiKey) {
+      toast({
+        title: "API Key Required",
+        description: "Please set your Firecrawl API key first to fetch live data.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setLoading(true);
+    setError(null);
+    
+    try {
+      console.log('Fetching latest major projects...');
+      const result = await FirecrawlService.scrapeMajorProjects();
+      
+      if (result.success && result.data?.projects?.length > 0) {
+        const scrapedProjects = result.data.projects;
+        const combinedProjects = [...scrapedProjects, ...defaultProjects].slice(0, 8);
+        
+        setProjects(combinedProjects);
+        setLastUpdated(new Date().toLocaleTimeString());
+        
+        // Cache the results
+        localStorage.setItem('majorProjects', JSON.stringify(combinedProjects));
+        localStorage.setItem('majorProjectsTimestamp', Date.now().toString());
+        
+        toast({
+          title: "Projects Updated",
+          description: `Found ${scrapedProjects.length} new projects from live sources.`,
+        });
+      } else {
+        throw new Error(result.error || 'No projects found');
+      }
+    } catch (error) {
+      console.error('Error fetching projects:', error);
+      setError(error instanceof Error ? error.message : 'Failed to fetch projects');
+      
+      toast({
+        title: "Update Failed",
+        description: "Could not fetch latest projects. Showing cached data.",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -127,12 +208,34 @@ const MajorProjectsCard = () => {
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-2xl font-bold text-white">Major Projects</h2>
-          <p className="text-muted-foreground">Latest electrical infrastructure projects and contract opportunities</p>
+          <div className="flex items-center gap-2">
+            <p className="text-muted-foreground">Latest electrical infrastructure projects and contract opportunities</p>
+            {lastUpdated && (
+              <span className="text-xs text-elec-yellow">Last updated: {lastUpdated}</span>
+            )}
+          </div>
+          {error && (
+            <div className="flex items-center gap-2 mt-1">
+              <AlertCircle className="h-4 w-4 text-red-400" />
+              <span className="text-sm text-red-400">{error}</span>
+            </div>
+          )}
         </div>
-        <Button className="bg-elec-yellow text-black hover:bg-elec-yellow/90">
-          <Building2 className="h-4 w-4 mr-2" />
-          Submit Project
-        </Button>
+        <div className="flex gap-2">
+          <Button 
+            onClick={fetchLatestProjects}
+            disabled={loading}
+            variant="outline"
+            className="border-elec-yellow/30 hover:bg-elec-yellow/10"
+          >
+            <RefreshCw className={`h-4 w-4 mr-2 ${loading ? 'animate-spin' : ''}`} />
+            {loading ? 'Updating...' : 'Refresh Projects'}
+          </Button>
+          <Button className="bg-elec-yellow text-black hover:bg-elec-yellow/90">
+            <Building2 className="h-4 w-4 mr-2" />
+            Submit Project
+          </Button>
+        </div>
       </div>
 
       <div className="grid gap-6">
