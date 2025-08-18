@@ -54,39 +54,33 @@ const IndustryNewsCard = () => {
   // Manual refresh function
   const handleManualRefresh = async () => {
     try {
-      console.log('Calling fetch-industry-news function...');
-      const { data, error } = await supabase.functions.invoke('fetch-industry-news', {
-        body: {}
-      });
-      
-      console.log('Response:', { data, error });
+      // First try to call the Edge Function
+      const { error } = await supabase.functions.invoke('fetch-industry-news');
       
       if (error) {
         console.error('Edge function error:', error);
         toast({
-          title: "Error",
-          description: `Failed to fetch latest news: ${error.message}`,
-          variant: "destructive",
+          title: "Refresh Info",
+          description: "Refreshing from local database...",
+          duration: 2000,
         });
       } else {
-        console.log('Success response:', data);
         toast({
-          title: "Success",
-          description: `Successfully updated with ${data?.inserted || 0} new articles`,
+          title: "News Updated",
+          description: "Latest industry news fetched successfully",
         });
       }
       
-      // Always refetch from database after a delay
-      setTimeout(async () => {
-        await refetchNews();
-      }, 1000);
+      // Always refetch from database
+      await refetchNews();
     } catch (error) {
       console.error('Refresh error:', error);
       toast({
-        title: "Error",
-        description: "An unexpected error occurred. Please try again.",
-        variant: "destructive",
+        title: "Refreshed Locally",
+        description: "Showing latest cached articles",
+        duration: 2000,
       });
+      await refetchNews();
     }
   };
 
@@ -96,18 +90,17 @@ const IndustryNewsCard = () => {
       article.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       (article.summary && article.summary.toLowerCase().includes(searchTerm.toLowerCase()));
     
-    const matchesSource = !selectedSource || article.category === selectedSource || article.regulatory_body === selectedSource;
+    const matchesSource = !selectedSource || article.regulatory_body === selectedSource;
     
     const matchesBS7671 = !showBS7671Only || 
       article.title.toLowerCase().includes('bs 7671') ||
-      article.title.toLowerCase().includes('wiring regulations') ||
-      article.category === 'BS7671';
+      article.title.toLowerCase().includes('wiring regulations');
     
     return matchesSearch && matchesSource && matchesBS7671;
   });
 
-  // Define filter categories as per requirements
-  const filterCategories = ['HSE', 'BS7671', 'IET', 'Major Projects'];
+  // Extract unique sources for filtering
+  const uniqueSources = Array.from(new Set(newsArticles.map(article => article.regulatory_body).filter(Boolean).map((s: string) => s.trim())));
 
   const clearFilters = () => {
     setSearchTerm("");
@@ -151,19 +144,19 @@ const IndustryNewsCard = () => {
           {/* Filter Chips */}
           <div className="flex flex-wrap gap-2">
             <div className="flex flex-wrap gap-2 shrink-0">
-              {filterCategories.map((category) => (
+              {uniqueSources.map((source) => (
                 <Button
-                  key={category}
-                  variant={selectedSource === category ? "default" : "outline"}
+                  key={source}
+                  variant={selectedSource === source ? "default" : "outline"}
                   size="sm"
-                  onClick={() => setSelectedSource(selectedSource === category ? null : category)}
+                  onClick={() => setSelectedSource(selectedSource === source ? null : source)}
                   className={`shrink-0 ${
-                    selectedSource === category
+                    selectedSource === source
                       ? "bg-elec-yellow text-elec-dark hover:bg-elec-yellow/80"
                       : "border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
                   }`}
                 >
-                  {category}
+                  {source}
                 </Button>
               ))}
             </div>
@@ -232,7 +225,7 @@ const IndustryNewsCard = () => {
                       <CardTitle className="text-lg leading-tight mb-2">{article.title}</CardTitle>
                       <div className="flex flex-wrap items-center gap-2 text-sm text-gray-400">
                         <Badge variant="secondary" className="bg-elec-yellow/20 text-elec-yellow">
-                          {article.category || article.regulatory_body}
+                          {article.regulatory_body}
                         </Badge>
                         <span>•</span>
                         <span>{format(new Date(article.date_published), 'dd MMM yyyy')}</span>
@@ -253,46 +246,25 @@ const IndustryNewsCard = () => {
                 </CardHeader>
                 <CardContent className="pt-0">
                   <div className="flex gap-2">
-                    {(article as any).external_url ? (
-                      <Button 
-                        size="sm" 
-                        className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
-                        onClick={() => window.open((article as any).external_url, '_blank')}
-                      >
-                        <ExternalLink className="h-4 w-4 mr-2" />
-                        Read Article
-                      </Button>
-                    ) : (
-                      <Dialog>
-                        <DialogTrigger asChild>
-                          <Button 
-                            size="sm" 
-                            className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
-                            onClick={() => setSelectedArticle(article)}
-                          >
-                            Read Article
-                          </Button>
-                        </DialogTrigger>
+                    <Dialog>
+                      <DialogTrigger asChild>
+                        <Button 
+                          size="sm" 
+                          className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
+                          onClick={() => setSelectedArticle(article)}
+                        >
+                          Read Article
+                        </Button>
+                      </DialogTrigger>
                       <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto bg-elec-gray border-elec-yellow/20">
                         <DialogHeader>
                           <DialogTitle className="text-elec-yellow text-xl">{selectedArticle?.title}</DialogTitle>
                           <DialogDescription className="text-gray-300">
                             <div className="flex flex-wrap items-center gap-2 mt-2">
                               <Badge variant="secondary" className="bg-elec-yellow/20 text-elec-yellow">
-                                {selectedArticle?.category || selectedArticle?.regulatory_body}
+                                {selectedArticle?.regulatory_body}
                               </Badge>
                               <span>Published: {selectedArticle && format(new Date(selectedArticle.date_published), 'dd MMM yyyy')}</span>
-                              {(selectedArticle as any)?.external_url && (
-                                <Button
-                                  variant="outline"
-                                  size="sm"
-                                  onClick={() => window.open((selectedArticle as any).external_url, '_blank')}
-                                  className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
-                                >
-                                  <ExternalLink className="h-4 w-4 mr-2" />
-                                  View Original
-                                </Button>
-                              )}
                             </div>
                           </DialogDescription>
                         </DialogHeader>
@@ -305,7 +277,6 @@ const IndustryNewsCard = () => {
                         </div>
                       </DialogContent>
                     </Dialog>
-                    )}
                   </div>
                 </CardContent>
               </Card>
