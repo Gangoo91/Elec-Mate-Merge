@@ -20,17 +20,17 @@ interface NewsArticle {
   date_published: string;
 }
 
-// Firecrawl API integration
-async function crawlWebsite(url: string): Promise<any[]> {
+// Firecrawl API integration - using scrape instead of crawl for better results
+async function scrapeWebsite(url: string): Promise<any[]> {
   const firecrawlApiKey = Deno.env.get('FIRECRAWL_API_KEY');
   if (!firecrawlApiKey) {
     throw new Error('FIRECRAWL_API_KEY not found');
   }
 
-  console.log(`Starting crawl for: ${url}`);
+  console.log(`Starting scrape for: ${url}`);
   
   try {
-    const crawlResponse = await fetch('https://api.firecrawl.dev/v1/crawl', {
+    const scrapeResponse = await fetch('https://api.firecrawl.dev/v1/scrape', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${firecrawlApiKey}`,
@@ -38,36 +38,30 @@ async function crawlWebsite(url: string): Promise<any[]> {
       },
       body: JSON.stringify({
         url: url,
-        crawlerOptions: {
-          includes: [],
-          excludes: [],
-          generateImgAltText: false,
-          limit: 20
-        },
-        pageOptions: {
-          onlyMainContent: true,
-          includeHtml: false,
-          includeTags: ['title', 'meta', 'article', 'p', 'h1', 'h2', 'h3'],
-          excludeTags: ['nav', 'footer', 'aside', 'script', 'style']
-        }
+        formats: ['markdown'],
+        onlyMainContent: true,
+        includeTags: ['title', 'meta', 'article', 'p', 'h1', 'h2', 'h3'],
+        excludeTags: ['nav', 'footer', 'aside', 'script', 'style']
       })
     });
 
-    if (!crawlResponse.ok) {
-      throw new Error(`Firecrawl API error: ${crawlResponse.status}`);
+    if (!scrapeResponse.ok) {
+      const errorText = await scrapeResponse.text();
+      console.error(`Firecrawl API error: ${scrapeResponse.status} - ${errorText}`);
+      throw new Error(`Firecrawl API error: ${scrapeResponse.status}`);
     }
 
-    const crawlData = await crawlResponse.json();
+    const scrapeData = await scrapeResponse.json();
     
-    if (crawlData.success && crawlData.data) {
-      console.log(`Successfully crawled ${crawlData.data.length} pages from ${url}`);
-      return crawlData.data;
+    if (scrapeData.success && scrapeData.data) {
+      console.log(`Successfully scraped content from ${url}`);
+      return [scrapeData.data]; // Return as array for consistency
     } else {
-      console.error('Crawl failed:', crawlData);
+      console.error('Scrape failed:', scrapeData);
       return [];
     }
   } catch (error) {
-    console.error(`Error crawling ${url}:`, error);
+    console.error(`Error scraping ${url}:`, error);
     return [];
   }
 }
@@ -117,8 +111,8 @@ async function summarizeForElectricians(content: string, title: string): Promise
   }
 }
 
-// Process crawled data into news articles
-async function processFirecrawlData(data: any[], sourceUrl: string): Promise<NewsArticle[]> {
+// Process scraped data into news articles
+async function processScrapedData(data: any, sourceUrl: string): Promise<NewsArticle[]> {
   const articles: NewsArticle[] = [];
   
   // Determine category and regulatory body from source URL
@@ -139,20 +133,16 @@ async function processFirecrawlData(data: any[], sourceUrl: string): Promise<New
     regulatory_body = 'Industry';
   }
 
-  for (const item of data) {
-    if (!item.metadata?.title || !item.markdown) continue;
-    
-    const title = item.metadata.title;
-    const content = item.markdown;
-    const url = item.metadata.sourceURL || sourceUrl;
+  if (data && data.markdown) {
+    const title = data.metadata?.title || 'Latest Update';
+    const content = data.markdown;
+    const url = data.metadata?.sourceURL || sourceUrl;
     
     // Generate AI summary
     const summary = await summarizeForElectricians(content, title);
     
     // Create external ID from URL
-    const external_id = item.metadata.sourceURL ? 
-      item.metadata.sourceURL.split('/').pop() || url : 
-      title.toLowerCase().replace(/[^a-z0-9]/g, '-').substring(0, 50);
+    const external_id = url.split('/').pop() || Date.now().toString();
     
     articles.push({
       title: title.trim(),
@@ -162,7 +152,7 @@ async function processFirecrawlData(data: any[], sourceUrl: string): Promise<New
       category,
       source_url: sourceUrl,
       external_url: url,
-      external_id: `${regulatory_body.toLowerCase()}_${external_id}`,
+      external_id: `${regulatory_body.toLowerCase()}_${external_id}_${Date.now()}`,
       date_published: new Date().toISOString(),
     });
   }
@@ -199,12 +189,12 @@ serve(async (req) => {
       try {
         console.log(`Processing source: ${source.name} - ${source.url}`);
         
-        // Crawl the website
-        const crawlData = await crawlWebsite(source.url);
+        // Scrape the website
+        const scrapeData = await scrapeWebsite(source.url);
         
-        if (crawlData.length > 0) {
-          // Process crawled data into articles
-          const articles = await processFirecrawlData(crawlData, source.url);
+        if (scrapeData.length > 0) {
+          // Process scraped data into articles
+          const articles = await processScrapedData(scrapeData[0], source.url);
           
           // Insert articles with upsert to handle duplicates
           for (const article of articles) {

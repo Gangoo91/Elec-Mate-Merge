@@ -54,33 +54,39 @@ const IndustryNewsCard = () => {
   // Manual refresh function
   const handleManualRefresh = async () => {
     try {
-      // First try to call the Edge Function
-      const { error } = await supabase.functions.invoke('fetch-industry-news');
+      console.log('Calling fetch-industry-news function...');
+      const { data, error } = await supabase.functions.invoke('fetch-industry-news', {
+        body: {}
+      });
+      
+      console.log('Response:', { data, error });
       
       if (error) {
         console.error('Edge function error:', error);
         toast({
-          title: "Refresh Info",
-          description: "Refreshing from local database...",
-          duration: 2000,
+          title: "Error",
+          description: `Failed to fetch latest news: ${error.message}`,
+          variant: "destructive",
         });
       } else {
+        console.log('Success response:', data);
         toast({
-          title: "News Updated",
-          description: "Latest industry news fetched successfully",
+          title: "Success",
+          description: `Successfully updated with ${data?.inserted || 0} new articles`,
         });
       }
       
-      // Always refetch from database
-      await refetchNews();
+      // Always refetch from database after a delay
+      setTimeout(async () => {
+        await refetchNews();
+      }, 1000);
     } catch (error) {
       console.error('Refresh error:', error);
       toast({
-        title: "Refreshed Locally",
-        description: "Showing latest cached articles",
-        duration: 2000,
+        title: "Error",
+        description: "An unexpected error occurred. Please try again.",
+        variant: "destructive",
       });
-      await refetchNews();
     }
   };
 
