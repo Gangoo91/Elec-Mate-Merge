@@ -120,20 +120,22 @@ const IndustryNewsCard = () => {
       {/* Search and Filter Controls */}
       <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader className="pb-4">
-          <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Filter className="h-5 w-5 text-elec-yellow" />
-              <CardTitle className="text-lg">Filter News</CardTitle>
+          <div className="flex flex-col gap-3 sm:gap-4">
+            <div className="flex flex-col xs:flex-row gap-3 xs:items-center xs:justify-between">
+              <div className="flex items-center gap-2">
+                <Filter className="h-5 w-5 text-elec-yellow" />
+                <CardTitle className="text-lg">Filter News</CardTitle>
+              </div>
+              <Button
+                onClick={handleManualRefresh}
+                variant="outline"
+                size="sm"
+                className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 w-full xs:w-auto"
+              >
+                <RefreshCw className="h-4 w-4 mr-2" />
+                Refresh News
+              </Button>
             </div>
-            <Button
-              onClick={handleManualRefresh}
-              variant="outline"
-              size="sm"
-              className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
-            >
-              <RefreshCw className="h-4 w-4 mr-2" />
-              Refresh News
-            </Button>
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -144,20 +146,20 @@ const IndustryNewsCard = () => {
               placeholder="Search articles..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10 bg-elec-dark border-elec-yellow/20 text-white"
+              className="pl-10 bg-elec-dark border-elec-yellow/20 text-white text-base"
             />
           </div>
 
           {/* Filter Chips */}
-          <div className="flex flex-wrap gap-2">
-            <div className="flex flex-wrap gap-2 shrink-0">
+          <div className="space-y-3">
+            <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-2">
               {filterCategories.map((category) => (
                 <Button
                   key={category}
                   variant={selectedSource === category ? "default" : "outline"}
                   size="sm"
                   onClick={() => setSelectedSource(selectedSource === category ? null : category)}
-                  className={`shrink-0 ${
+                  className={`min-h-[44px] text-sm ${
                     selectedSource === category
                       ? "bg-elec-yellow text-elec-dark hover:bg-elec-yellow/80"
                       : "border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
@@ -168,31 +170,33 @@ const IndustryNewsCard = () => {
               ))}
             </div>
             
-            {/* BS 7671 toggle */}
-            <Button
-              variant={showBS7671Only ? "default" : "outline"}
-              size="sm"
-              onClick={() => setShowBS7671Only(!showBS7671Only)}
-              className={showBS7671Only 
-                ? "bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90" 
-                : "border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
-              }
-            >
-              BS 7671 Updates
-            </Button>
-
-            {/* Clear filters */}
-            {(searchTerm || selectedSource || showBS7671Only) && (
+            <div className="flex flex-col xs:flex-row gap-2">
+              {/* BS 7671 toggle */}
               <Button
-                variant="ghost"
+                variant={showBS7671Only ? "default" : "outline"}
                 size="sm"
-                onClick={clearFilters}
-                className="text-gray-400 hover:text-white"
+                onClick={() => setShowBS7671Only(!showBS7671Only)}
+                className={`min-h-[44px] flex-1 xs:flex-none ${showBS7671Only 
+                  ? "bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90" 
+                  : "border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+                }`}
               >
-                <X className="h-4 w-4 mr-1" />
-                Clear
+                BS 7671 Updates
               </Button>
-            )}
+
+              {/* Clear filters */}
+              {(searchTerm || selectedSource || showBS7671Only) && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={clearFilters}
+                  className="text-gray-400 hover:text-white min-h-[44px] flex-1 xs:flex-none"
+                >
+                  <X className="h-4 w-4 mr-1" />
+                  Clear
+                </Button>
+              )}
+            </div>
           </div>
         </CardContent>
       </Card>
