@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { TrendingUp, TrendingDown, Activity, Bell, ExternalLink } from "lucide-react";
-import { Link } from "react-router-dom";
+import SafeLink from "@/components/common/SafeLink";
 
 interface PricingItem {
   id: number;
@@ -166,11 +166,11 @@ const MaterialPricingWidget = () => {
             Set Price Alerts
           </Button>
           
-          <Link to="/electrician/materials-price-tracker" className="block">
+          <SafeLink to="/electrician/live-pricing" className="block">
             <Button variant="outline" size="sm" className="w-full border-elec-yellow/30 text-white hover:bg-elec-yellow/10">
               View Full Price Tracker
             </Button>
-          </Link>
+          </SafeLink>
         </div>
       </CardContent>
     </Card>
