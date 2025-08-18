@@ -228,35 +228,38 @@ const EnhancedIndustryNewsCard = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center justify-between">
-          <div>
-            <h2 className="text-2xl font-bold text-white">Industry News & Major Projects</h2>
-            <p className="text-muted-foreground">Latest electrical industry news with real-time updates from major sources</p>
-          </div>
-          <div className="flex gap-2">
-            <Button 
-              onClick={refreshNews}
-              disabled={isRefreshing}
-              variant="outline"
-              className="border-elec-yellow/30 text-white hover:bg-elec-yellow/10"
-            >
-              <RefreshCcw className={`h-4 w-4 mr-2 ${isRefreshing ? 'animate-spin' : ''}`} />
-              {isRefreshing ? (refreshProgress || 'Refreshing...') : 'Refresh News'}
-            </Button>
-            <Button 
-              onClick={() => setShowApiKeyInput(true)}
-              variant="outline"
-              className="border-elec-yellow/30 text-white hover:bg-elec-yellow/10"
-            >
-              <Settings className="h-4 w-4 mr-2" />
-              API Settings
-            </Button>
-            <Button className="bg-elec-yellow text-black hover:bg-elec-yellow/90">
-              <Newspaper className="h-4 w-4 mr-2" />
-              Subscribe to News
-            </Button>
-          </div>
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+        <div>
+          <h2 className="text-2xl font-bold text-white">Industry News & Major Projects</h2>
+          <p className="text-muted-foreground">Latest electrical industry news with real-time updates from major sources</p>
+          {articles.length > 0 && (
+            <p className="text-sm text-elec-yellow mt-1">
+              {articles.length} articles • Last updated: {new Date().toLocaleTimeString('en-GB')}
+            </p>
+          )}
+        </div>
+        <div className="flex flex-wrap gap-2">
+          <Button 
+            onClick={refreshNews}
+            disabled={isRefreshing}
+            variant="outline"
+            className="border-elec-yellow/30 text-white hover:bg-elec-yellow/10 disabled:opacity-50"
+          >
+            <RefreshCcw className={`h-4 w-4 mr-2 ${isRefreshing ? 'animate-spin' : ''}`} />
+            {isRefreshing ? (refreshProgress || 'Refreshing...') : 'Refresh News'}
+          </Button>
+          <Button 
+            onClick={() => setShowApiKeyInput(true)}
+            variant="outline"
+            className="border-elec-yellow/30 text-white hover:bg-elec-yellow/10"
+          >
+            <Settings className="h-4 w-4 mr-2" />
+            API Settings
+          </Button>
+          <Button className="bg-elec-yellow text-black hover:bg-elec-yellow/90">
+            <Newspaper className="h-4 w-4 mr-2" />
+            Subscribe to News
+          </Button>
         </div>
       </div>
 
