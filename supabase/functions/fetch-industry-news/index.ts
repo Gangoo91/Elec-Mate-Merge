@@ -177,8 +177,8 @@ serve(async (req) => {
       { url: 'https://www.hse.gov.uk/news/', name: 'HSE', category: 'HSE' },
       { url: 'https://www.gov.uk/government/collections/bs-7671', name: 'BS7671', category: 'BS7671' },
       { url: 'https://www.theiet.org/news/', name: 'IET', category: 'IET' },
-      { url: 'https://www.constructionenquirer.com/category/contracts-awarded/', name: 'Major Projects', category: 'Major Projects' },
-      { url: 'https://www.theconstructionindex.co.uk/news/contracts', name: 'Major Projects', category: 'Major Projects' }
+      { url: 'https://www.constructionenquirer.com/category/contracts-awarded/', name: 'Major Projects Just Awarded', category: 'Major Projects' },
+      { url: 'https://www.theconstructionindex.co.uk/news/contracts', name: 'Major Projects Just Awarded', category: 'Major Projects' }
     ];
 
     let totalInserted = 0;
