@@ -36,12 +36,6 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
     }
   }, [user, isLoading, isTrialActive, isSubscribed, isDevelopmentMode, isSubscriptionPage, navigate, toast]);
 
-  // For development purposes, temporarily allow access regardless of auth status
-  // Remove this in production
-  return <>{children}</>;
-  
-  /*
-  // Original protected route logic - uncomment when auth system is fully implemented
   // Redirect to sign in if not logged in
   if (!isLoading && !user) {
     return <Navigate to="/auth/signin" state={{ from: location }} replace />;
@@ -50,9 +44,9 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   // Show loading indicator while checking authentication
   if (isLoading) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-elec-dark">
-        <Loader2 className="h-12 w-12 text-elec-yellow animate-spin" />
-        <p className="mt-4 text-elec-yellow">Loading...</p>
+      <div className="min-h-screen flex flex-col items-center justify-center bg-background">
+        <Loader2 className="h-12 w-12 text-primary animate-spin" />
+        <p className="mt-4 text-foreground">Loading...</p>
       </div>
     );
   }
@@ -64,7 +58,6 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
 
   // Render the protected content if authenticated and can access
   return <>{children}</>;
-  */
 };
 
 export default ProtectedRoute;
