@@ -24,13 +24,12 @@ interface NewsArticle {
   title: string;
   summary: string;
   content: string;
-  source: string;
-  regulatory_body?: string;
+  regulatory_body: string;
   source_url: string;
   external_id: string;
   date_published: string;
   category: string;
-  tags: string[];
+  external_url?: string;
 }
 
 async function scrapeWithFirecrawl(url: string, source: string): Promise<NewsArticle[]> {
@@ -124,13 +123,12 @@ async function scrapeWithFirecrawl(url: string, source: string): Promise<NewsArt
       title: title.trim(),
       summary: enhancedSummary,
       content: content,
-      source: source,
       regulatory_body: regulatoryBody,
       source_url: url,
       external_id: external_id,
-      date_published: new Date().toISOString(),
+      date_published: new Date().toISOString().split('T')[0], // Format as YYYY-MM-DD for date column
       category: category,
-      tags: tags
+      external_url: url
     });
 
     return articles;

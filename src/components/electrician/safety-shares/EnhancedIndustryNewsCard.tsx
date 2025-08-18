@@ -55,47 +55,68 @@ const EnhancedIndustryNewsCard = () => {
     }
   });
 
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const [lastRefresh, setLastRefresh] = useState<Date | null>(null);
+
   // Manual refresh function
   const handleManualRefresh = async () => {
+    if (isRefreshing) return; // Prevent spam clicking
+    
+    setIsRefreshing(true);
+    
     try {
       toast({
-        title: "Fetching Latest News",
-        description: "Updating from industry sources...",
-        duration: 3000,
+        title: "🔄 Fetching Latest News",
+        description: "Scraping from HSE, IET, BS7671 and major projects...",
+        duration: 4000,
       });
 
-      console.log("Starting manual refresh...");
+      console.log("Starting manual refresh with Firecrawl...");
       
       const { data, error } = await supabase.functions.invoke('fetch-industry-news');
       
       if (error) {
         console.error('Edge function error:', error);
         toast({
-          title: "Refresh Complete", 
-          description: "Showing latest cached articles",
-          duration: 3000,
+          title: "⚠️ Partial Update",
+          description: "Some sources may be unavailable. Showing latest cached articles.",
+          duration: 4000,
         });
       } else {
         console.log('Edge function response:', data);
-        toast({
-          title: "News Updated Successfully",
-          description: `Fetched ${data?.inserted || 0} new articles`,
-          variant: "success",
-        });
+        const newCount = data?.inserted || 0;
+        const errorCount = data?.errors || 0;
+        
+        if (newCount > 0) {
+          toast({
+            title: "✅ News Updated Successfully",
+            description: `Added ${newCount} new articles${errorCount > 0 ? ` (${errorCount} source errors)` : ''}`,
+            variant: "success",
+          });
+        } else {
+          toast({
+            title: "📰 No New Articles",
+            description: "All sources up to date. Showing latest content.",
+            duration: 3000,
+          });
+        }
       }
       
       // Always refetch from database to show latest content
       await refetch();
+      setLastRefresh(new Date());
       console.log("Database refetch completed");
       
     } catch (error) {
       console.error('Refresh error:', error);
       toast({
-        title: "Refresh Complete",
-        description: "Showing latest available articles", 
+        title: "🔄 Refresh Complete",
+        description: "Showing latest available articles from cache.", 
         duration: 3000,
       });
       await refetch();
+    } finally {
+      setIsRefreshing(false);
     }
   };
 
@@ -167,14 +188,21 @@ const EnhancedIndustryNewsCard = () => {
           <h2 className="text-2xl font-bold text-white">Enhanced Industry News</h2>
           <p className="text-muted-foreground">Interactive industry news with filtering, ratings, and bookmarking</p>
         </div>
-        <Button
-          onClick={handleManualRefresh}
-          className="bg-elec-yellow text-black hover:bg-elec-yellow/90"
-          disabled={isLoading}
-        >
-          <RefreshCw className={`h-4 w-4 mr-2 ${isLoading ? 'animate-spin' : ''}`} />
-          {isLoading ? 'Refreshing...' : 'Refresh News'}
-        </Button>
+        <div className="flex flex-col items-end gap-2">
+          <Button
+            onClick={handleManualRefresh}
+            className="bg-elec-yellow text-black hover:bg-elec-yellow/90 disabled:opacity-50"
+            disabled={isLoading || isRefreshing}
+          >
+            <RefreshCw className={`h-4 w-4 mr-2 ${(isLoading || isRefreshing) ? 'animate-spin' : ''}`} />
+            {isRefreshing ? 'Fetching...' : isLoading ? 'Loading...' : 'Refresh News'}
+          </Button>
+          {lastRefresh && (
+            <p className="text-xs text-muted-foreground">
+              Last refreshed: {format(lastRefresh, 'HH:mm:ss')}
+            </p>
+          )}
+        </div>
       </div>
 
       {/* Enhanced Filters */}
