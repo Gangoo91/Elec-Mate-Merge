@@ -28,36 +28,50 @@ export class FirecrawlService {
   private static CACHE_DURATION = 30 * 60 * 1000; // 30 minutes
   private static firecrawlApp: FirecrawlApp | null = null;
 
+  // Static categories for filtering
+  static readonly CATEGORIES = {
+    HSE: 'HSE',
+    BS7671: 'BS7671', 
+    IET: 'IET',
+    MAJOR_PROJECTS: 'Major Projects'
+  } as const;
+
   private static newsSources = [
     {
       name: 'HSE Electrical Safety',
       url: 'https://www.hse.gov.uk/electricity/',
       regulatoryBody: 'HSE',
-      category: 'Safety Updates'
+      category: 'HSE'
     },
     {
       name: 'HSE Latest News',
       url: 'https://www.hse.gov.uk/news/',
       regulatoryBody: 'HSE', 
-      category: 'Safety Updates'
+      category: 'HSE'
     },
     {
       name: 'IET BS7671 Updates',
       url: 'https://electrical.theiet.org/bs-7671/updates-to-18th-edition/',
       regulatoryBody: 'IET',
-      category: 'BS7671 Updates'
-    },
-    {
-      name: 'IET Wiring Matters',
-      url: 'https://electrical.theiet.org/wiring-matters/',
-      regulatoryBody: 'IET',
-      category: 'Technical Updates'
+      category: 'BS7671'
     },
     {
       name: 'BS7671 Amendments',
       url: 'https://electrical.theiet.org/bs-7671/',
       regulatoryBody: 'IET',
-      category: 'BS7671 Updates'
+      category: 'BS7671'
+    },
+    {
+      name: 'IET Wiring Matters',
+      url: 'https://electrical.theiet.org/wiring-matters/',
+      regulatoryBody: 'IET',
+      category: 'IET'
+    },
+    {
+      name: 'IET Technical Updates',
+      url: 'https://electrical.theiet.org/wiring-regulations/guidance-notes/',
+      regulatoryBody: 'IET',
+      category: 'IET'
     },
     {
       name: 'UK Government Tenders',

@@ -17,8 +17,7 @@ import { Progress } from "@/components/ui/progress";
 
 const IndustryNewsCard = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedSource, setSelectedSource] = useState<string | null>(null);
-  const [showBS7671Only, setShowBS7671Only] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedArticle, setSelectedArticle] = useState<any>(null);
   const [apiKeyDialogOpen, setApiKeyDialogOpen] = useState(false);
   const [isLiveFetching, setIsLiveFetching] = useState(false);
@@ -120,28 +119,33 @@ const IndustryNewsCard = () => {
     setTimeout(() => handleLiveFetch(), 1000);
   };
 
+  // Static categories for filtering
+  const categories = [
+    { key: 'HSE', label: 'HSE Updates', color: 'bg-red-100 text-red-800 hover:bg-red-200' },
+    { key: 'BS7671', label: 'BS7671 Updates', color: 'bg-blue-100 text-blue-800 hover:bg-blue-200' },
+    { key: 'IET', label: 'IET Technical', color: 'bg-green-100 text-green-800 hover:bg-green-200' },
+    { key: 'Major Projects', label: 'Major Projects', color: 'bg-purple-100 text-purple-800 hover:bg-purple-200' },
+  ];
+
   // Filter articles
   const filteredArticles = newsArticles.filter(article => {
     const matchesSearch = !searchTerm || 
       article.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       (article.summary && article.summary.toLowerCase().includes(searchTerm.toLowerCase()));
     
-    const matchesSource = !selectedSource || article.regulatory_body === selectedSource;
+    const matchesCategory = !selectedCategory || article.category === selectedCategory;
     
-    const matchesBS7671 = !showBS7671Only || 
-      article.title.toLowerCase().includes('bs 7671') ||
-      article.title.toLowerCase().includes('wiring regulations');
-    
-    return matchesSearch && matchesSource && matchesBS7671;
+    return matchesSearch && matchesCategory;
   });
 
-  // Extract unique sources for filtering
-  const uniqueSources = Array.from(new Set(newsArticles.map(article => article.regulatory_body).filter(Boolean).map((s: string) => s.trim())));
+  // Get article count per category
+  const getCategoryCount = (categoryKey: string) => {
+    return newsArticles.filter(article => article.category === categoryKey).length;
+  };
 
   const clearFilters = () => {
     setSearchTerm("");
-    setSelectedSource(null);
-    setShowBS7671Only(false);
+    setSelectedCategory(null);
   };
 
   return (
@@ -201,41 +205,32 @@ const IndustryNewsCard = () => {
             />
           </div>
 
-          {/* Filter Chips */}
+          {/* Static Category Filter Buttons */}
           <div className="flex flex-wrap gap-2">
-            <div className="flex flex-wrap gap-2 shrink-0">
-              {uniqueSources.map((source) => (
+            {categories.map((category) => {
+              const count = getCategoryCount(category.key);
+              const isSelected = selectedCategory === category.key;
+              
+              return (
                 <Button
-                  key={source}
-                  variant={selectedSource === source ? "default" : "outline"}
+                  key={category.key}
+                  variant={isSelected ? "default" : "outline"}
                   size="sm"
-                  onClick={() => setSelectedSource(selectedSource === source ? null : source)}
+                  onClick={() => setSelectedCategory(isSelected ? null : category.key)}
                   className={`shrink-0 ${
-                    selectedSource === source
+                    isSelected
                       ? "bg-elec-yellow text-elec-dark hover:bg-elec-yellow/80"
                       : "border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
                   }`}
+                  disabled={count === 0}
                 >
-                  {source}
+                  {category.label} ({count})
                 </Button>
-              ))}
-            </div>
-            
-            {/* BS 7671 toggle */}
-            <Button
-              variant={showBS7671Only ? "default" : "outline"}
-              size="sm"
-              onClick={() => setShowBS7671Only(!showBS7671Only)}
-              className={showBS7671Only 
-                ? "bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90" 
-                : "border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
-              }
-            >
-              BS 7671 Updates
-            </Button>
+              );
+            })}
 
             {/* Clear filters */}
-            {(searchTerm || selectedSource || showBS7671Only) && (
+            {(searchTerm || selectedCategory) && (
               <Button
                 variant="ghost"
                 size="sm"
@@ -328,10 +323,10 @@ const IndustryNewsCard = () => {
                   <div className="flex items-start justify-between gap-4">
                     <div className="flex-1">
                       <CardTitle className="text-lg leading-tight mb-2">{article.title}</CardTitle>
-                      <div className="flex flex-wrap items-center gap-2 text-sm text-gray-400">
-                        <Badge variant="secondary" className="bg-elec-yellow/20 text-elec-yellow">
-                          {article.regulatory_body}
-                        </Badge>
+                       <div className="flex flex-wrap items-center gap-2 text-sm text-gray-400">
+                         <Badge variant="secondary" className="bg-elec-yellow/20 text-elec-yellow">
+                           {article.category}
+                         </Badge>
                         <span>•</span>
                         <span>{format(new Date(article.date_published), 'dd MMM yyyy')}</span>
                         {article.view_count > 0 && (
@@ -365,10 +360,10 @@ const IndustryNewsCard = () => {
                         <DialogHeader>
                           <DialogTitle className="text-elec-yellow text-xl">{selectedArticle?.title}</DialogTitle>
                           <DialogDescription className="text-gray-300">
-                            <div className="flex flex-wrap items-center gap-2 mt-2">
-                              <Badge variant="secondary" className="bg-elec-yellow/20 text-elec-yellow">
-                                {selectedArticle?.regulatory_body}
-                              </Badge>
+                             <div className="flex flex-wrap items-center gap-2 mt-2">
+                               <Badge variant="secondary" className="bg-elec-yellow/20 text-elec-yellow">
+                                 {selectedArticle?.category}
+                               </Badge>
                               <span>Published: {selectedArticle && format(new Date(selectedArticle.date_published), 'dd MMM yyyy')}</span>
                             </div>
                           </DialogDescription>
