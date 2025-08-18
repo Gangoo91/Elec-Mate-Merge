@@ -7,33 +7,40 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { RefreshCw, Search, ExternalLink, Building2, MapPin, PoundSterling, Calendar, Filter, X } from "lucide-react";
+import { RefreshCw, Search, ExternalLink, Building2, MapPin, PoundSterling, Calendar, Filter, X, Settings } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { format } from "date-fns";
 import { Link } from "react-router-dom";
+import { FirecrawlService } from "@/utils/FirecrawlService";
 
 const IndustryNewsCard = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedSource, setSelectedSource] = useState<string | null>(null);
   const [showBS7671Only, setShowBS7671Only] = useState(false);
   const [selectedArticle, setSelectedArticle] = useState<any>(null);
+  const [showApiKeyInput, setShowApiKeyInput] = useState(false);
+  const [apiKey, setApiKey] = useState("");
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const [refreshProgress, setRefreshProgress] = useState("");
+  const [newsArticles, setNewsArticles] = useState<any[]>([]);
+  const [newsLoading, setNewsLoading] = useState(false);
   const { toast } = useToast();
 
-  // Fetch industry news
-  const { data: newsArticles = [], isLoading: newsLoading, refetch: refetchNews } = useQuery({
-    queryKey: ['industry-news'],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from('industry_news')
-        .select('*')
-        .eq('is_active', true)
-        .order('date_published', { ascending: false })
-        .limit(20);
-      
-      if (error) throw error;
-      return data || [];
+  // Load cached news on component mount
+  useEffect(() => {
+    const cachedNews = FirecrawlService.getCachedNews();
+    if (cachedNews.length > 0) {
+      setNewsArticles(cachedNews);
     }
-  });
+  }, []);
+
+  // Check for existing API key on mount
+  useEffect(() => {
+    const existingKey = FirecrawlService.getApiKey();
+    if (!existingKey) {
+      setShowApiKeyInput(true);
+    }
+  }, []);
 
   // Fetch major projects
   const { data: majorProjects = [], isLoading: projectsLoading } = useQuery({
@@ -51,42 +58,66 @@ const IndustryNewsCard = () => {
     }
   });
 
-  // Manual refresh function
-  const handleManualRefresh = async () => {
-    try {
-      console.log('Calling fetch-industry-news function...');
-      const { data, error } = await supabase.functions.invoke('fetch-industry-news', {
-        body: {}
-      });
-      
-      console.log('Response:', { data, error });
-      
-      if (error) {
-        console.error('Edge function error:', error);
-        toast({
-          title: "Error",
-          description: `Failed to fetch latest news: ${error.message}`,
-          variant: "destructive",
-        });
-      } else {
-        console.log('Success response:', data);
-        toast({
-          title: "Success",
-          description: `Successfully updated with ${data?.inserted || 0} new articles`,
-        });
-      }
-      
-      // Always refetch from database after a delay
-      setTimeout(async () => {
-        await refetchNews();
-      }, 1000);
-    } catch (error) {
-      console.error('Refresh error:', error);
+  // Save API key
+  const handleSaveApiKey = async () => {
+    if (!apiKey.trim()) {
       toast({
         title: "Error",
-        description: "An unexpected error occurred. Please try again.",
+        description: "Please enter a valid API key",
         variant: "destructive",
       });
+      return;
+    }
+
+    FirecrawlService.saveApiKey(apiKey);
+    setShowApiKeyInput(false);
+    setApiKey("");
+    toast({
+      title: "Success",
+      description: "API key saved successfully",
+    });
+  };
+
+  // Fetch news from Firecrawl API
+  const refreshNews = async () => {
+    const existingKey = FirecrawlService.getApiKey();
+    if (!existingKey) {
+      setShowApiKeyInput(true);
+      return;
+    }
+
+    setIsRefreshing(true);
+    setRefreshProgress("");
+    
+    try {
+      // Clear cache before fetching fresh data
+      FirecrawlService.clearCache();
+      
+      const result = await FirecrawlService.fetchNewsDirectly(
+        (message, current, total) => {
+          setRefreshProgress(`${message} (${current}/${total})`);
+        }
+      );
+      
+      if (result.success && result.articles) {
+        setNewsArticles(result.articles);
+        toast({
+          title: "Success",
+          description: `Fetched ${result.articles.length} articles`,
+        });
+      } else {
+        throw new Error(result.error || 'Failed to fetch news');
+      }
+    } catch (error) {
+      console.error('Error fetching news:', error);
+      toast({
+        title: "Error",
+        description: error instanceof Error ? error.message : "Failed to fetch news",
+        variant: "destructive",
+      });
+    } finally {
+      setIsRefreshing(false);
+      setRefreshProgress("");
     }
   };
 
@@ -96,12 +127,12 @@ const IndustryNewsCard = () => {
       article.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       (article.summary && article.summary.toLowerCase().includes(searchTerm.toLowerCase()));
     
-    const matchesSource = !selectedSource || article.category === selectedSource || article.regulatory_body === selectedSource;
+    const matchesSource = !selectedSource || article.source === selectedSource;
     
     const matchesBS7671 = !showBS7671Only || 
       article.title.toLowerCase().includes('bs 7671') ||
       article.title.toLowerCase().includes('wiring regulations') ||
-      article.category === 'BS7671';
+      article.source === 'BS7671';
     
     return matchesSearch && matchesSource && matchesBS7671;
   });
@@ -125,15 +156,27 @@ const IndustryNewsCard = () => {
               <Filter className="h-5 w-5 text-elec-yellow" />
               <CardTitle className="text-lg">Filter News</CardTitle>
             </div>
-            <Button
-              onClick={handleManualRefresh}
-              variant="outline"
-              size="sm"
-              className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
-            >
-              <RefreshCw className="h-4 w-4 mr-2" />
-              Refresh News
-            </Button>
+            <div className="flex gap-2">
+              <Button
+                onClick={refreshNews}
+                variant="outline"
+                size="sm"
+                disabled={isRefreshing}
+                className="border-elec-yellow/30 text-white hover:bg-elec-yellow/10 disabled:opacity-50"
+              >
+                <RefreshCw className={`h-4 w-4 mr-2 ${isRefreshing ? 'animate-spin' : ''}`} />
+                {isRefreshing ? (refreshProgress || 'Fetching') : 'Refresh News'}
+              </Button>
+              <Button 
+                onClick={() => setShowApiKeyInput(true)}
+                variant="outline"
+                size="sm"
+                className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+              >
+                <Settings className="h-4 w-4 mr-2" />
+                API Settings
+              </Button>
+            </div>
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -230,19 +273,13 @@ const IndustryNewsCard = () => {
                   <div className="flex items-start justify-between gap-4">
                     <div className="flex-1">
                       <CardTitle className="text-lg leading-tight mb-2">{article.title}</CardTitle>
-                      <div className="flex flex-wrap items-center gap-2 text-sm text-gray-400">
-                        <Badge variant="secondary" className="bg-elec-yellow/20 text-elec-yellow">
-                          {article.category || article.regulatory_body}
-                        </Badge>
-                        <span>•</span>
-                        <span>{format(new Date(article.date_published), 'dd MMM yyyy')}</span>
-                        {article.view_count > 0 && (
-                          <>
-                            <span>•</span>
-                            <span>{article.view_count} views</span>
-                          </>
-                        )}
-                      </div>
+                       <div className="flex flex-wrap items-center gap-2 text-sm text-gray-400">
+                         <Badge variant="secondary" className="bg-elec-yellow/20 text-elec-yellow">
+                           {article.source}
+                         </Badge>
+                         <span>•</span>
+                         <span>{format(new Date(article.publishedDate), 'dd MMM yyyy')}</span>
+                       </div>
                     </div>
                   </div>
                   {article.summary && (
@@ -252,17 +289,17 @@ const IndustryNewsCard = () => {
                   )}
                 </CardHeader>
                 <CardContent className="pt-0">
-                  <div className="flex gap-2">
-                    {(article as any).external_url ? (
-                      <Button 
-                        size="sm" 
-                        className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
-                        onClick={() => window.open((article as any).external_url, '_blank')}
-                      >
-                        <ExternalLink className="h-4 w-4 mr-2" />
-                        Read Article
-                      </Button>
-                    ) : (
+                   <div className="flex gap-2">
+                     {article.url ? (
+                       <Button 
+                         size="sm" 
+                         className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
+                         onClick={() => window.open(article.url, '_blank')}
+                       >
+                         <ExternalLink className="h-4 w-4 mr-2" />
+                         Read Article
+                       </Button>
+                     ) : (
                       <Dialog>
                         <DialogTrigger asChild>
                           <Button 
@@ -276,25 +313,25 @@ const IndustryNewsCard = () => {
                       <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto bg-elec-gray border-elec-yellow/20">
                         <DialogHeader>
                           <DialogTitle className="text-elec-yellow text-xl">{selectedArticle?.title}</DialogTitle>
-                          <DialogDescription className="text-gray-300">
-                            <div className="flex flex-wrap items-center gap-2 mt-2">
-                              <Badge variant="secondary" className="bg-elec-yellow/20 text-elec-yellow">
-                                {selectedArticle?.category || selectedArticle?.regulatory_body}
-                              </Badge>
-                              <span>Published: {selectedArticle && format(new Date(selectedArticle.date_published), 'dd MMM yyyy')}</span>
-                              {(selectedArticle as any)?.external_url && (
-                                <Button
-                                  variant="outline"
-                                  size="sm"
-                                  onClick={() => window.open((selectedArticle as any).external_url, '_blank')}
-                                  className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
-                                >
-                                  <ExternalLink className="h-4 w-4 mr-2" />
-                                  View Original
-                                </Button>
-                              )}
-                            </div>
-                          </DialogDescription>
+                           <DialogDescription className="text-gray-300">
+                             <div className="flex flex-wrap items-center gap-2 mt-2">
+                               <Badge variant="secondary" className="bg-elec-yellow/20 text-elec-yellow">
+                                 {selectedArticle?.source}
+                               </Badge>
+                               <span>Published: {selectedArticle && format(new Date(selectedArticle.publishedDate), 'dd MMM yyyy')}</span>
+                               {selectedArticle?.url && (
+                                 <Button
+                                   variant="outline"
+                                   size="sm"
+                                   onClick={() => window.open(selectedArticle.url, '_blank')}
+                                   className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+                                 >
+                                   <ExternalLink className="h-4 w-4 mr-2" />
+                                   View Original
+                                 </Button>
+                               )}
+                             </div>
+                           </DialogDescription>
                         </DialogHeader>
                         <div className="space-y-4 text-white">
                           {selectedArticle?.content && (
@@ -313,6 +350,46 @@ const IndustryNewsCard = () => {
           </div>
         )}
       </div>
+
+      {/* API Key Input Modal */}
+      <Dialog open={showApiKeyInput} onOpenChange={setShowApiKeyInput}>
+        <DialogContent className="bg-elec-gray border-elec-yellow/20">
+          <DialogHeader>
+            <DialogTitle className="text-elec-yellow">Configure Firecrawl API Key</DialogTitle>
+            <DialogDescription className="text-gray-300">
+              Enter your Firecrawl API key to fetch live industry news. Get your API key from{' '}
+              <a 
+                href="https://firecrawl.dev" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-elec-yellow hover:underline"
+              >
+                firecrawl.dev
+              </a>
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4">
+            <Input
+              placeholder="fc-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+              value={apiKey}
+              onChange={(e) => setApiKey(e.target.value)}
+              className="bg-elec-dark border-elec-yellow/20 text-white"
+            />
+            <div className="flex gap-2">
+              <Button onClick={handleSaveApiKey} className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90">
+                Save API Key
+              </Button>
+              <Button 
+                variant="outline" 
+                onClick={() => setShowApiKeyInput(false)}
+                className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+              >
+                Cancel
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
 
       {/* Major Projects Section */}
       <div className="space-y-4">
