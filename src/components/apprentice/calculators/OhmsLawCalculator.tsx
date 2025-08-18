@@ -4,18 +4,11 @@ import { MobileInput } from "@/components/ui/mobile-input";
 import { MobileButton } from "@/components/ui/mobile-button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { Zap, Info, Calculator, RotateCcw, Copy, Share2 } from "lucide-react";
-import { useState, useRef } from "react";
+import { Zap, Info, Calculator, RotateCcw } from "lucide-react";
+import { useState } from "react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import CalculationHistory from "./calculation-history/CalculationHistory";
-import QuickCalculationPresets from "./smart-features/QuickCalculationPresets";
-import SmartInputSuggestions from "./smart-features/SmartInputSuggestions";
-import { copyToClipboard } from "@/lib/calc-utils";
-import { useToast } from "@/hooks/use-toast";
 
 const OhmsLawCalculator = () => {
-  const { toast } = useToast();
-  const historyRef = useRef<any>(null);
   const [voltage, setVoltage] = useState<string>("");
   const [current, setCurrent] = useState<string>("");
   const [resistance, setResistance] = useState<string>("");
@@ -66,19 +59,9 @@ const OhmsLawCalculator = () => {
     }
 
     if (Object.keys(calculatedResult).length > 0) {
-      const newResult = {
+      setResult({
         ...calculatedResult,
         calculation
-      };
-      setResult(newResult);
-      
-      // Save to history
-      const inputs = { voltage, current, resistance, power };
-      historyRef.current?.saveCalculation(inputs, newResult, true);
-      
-      toast({
-        title: "Calculation Complete",
-        description: "Ohm's Law values calculated successfully",
       });
     }
   };
@@ -91,114 +74,38 @@ const OhmsLawCalculator = () => {
     setResult(null);
   };
 
-  const handlePresetSelect = (preset: any) => {
-    setVoltage(preset.inputs.voltage || "");
-    setCurrent(preset.inputs.current || ""); 
-    setResistance(preset.inputs.resistance || "");
-    setPower(preset.inputs.power || "");
-    toast({
-      title: "Preset Applied",
-      description: preset.name,
-    });
-  };
-
-  const handleRestoreCalculation = (entry: any) => {
-    setVoltage(entry.inputs.voltage || "");
-    setCurrent(entry.inputs.current || "");
-    setResistance(entry.inputs.resistance || "");
-    setPower(entry.inputs.power || "");
-    setResult(entry.results);
-  };
-
-  const copyResults = async () => {
-    if (!result) return;
-    
-    const text = `Ohm's Law Calculation Results:
-${result.voltage ? `Voltage: ${result.voltage.toFixed(2)} V` : ''}
-${result.current ? `Current: ${result.current.toFixed(2)} A` : ''}
-${result.resistance ? `Resistance: ${result.resistance.toFixed(2)} Ω` : ''}
-${result.power ? `Power: ${result.power.toFixed(2)} W` : ''}
-Formula: ${result.calculation}`;
-    
-    const success = await copyToClipboard(text);
-    toast({
-      title: success ? "Copied!" : "Copy Failed",
-      description: success ? "Results copied to clipboard" : "Please try again",
-      variant: success ? "default" : "destructive",
-    });
-  };
-
-  const shareResults = async () => {
-    if (!result) return;
-    
-    const text = `Ohm's Law Results: V=${result.voltage?.toFixed(2)}V, I=${result.current?.toFixed(2)}A, R=${result.resistance?.toFixed(2)}Ω, P=${result.power?.toFixed(2)}W`;
-    
-    if (navigator.share) {
-      try {
-        await navigator.share({ title: "Ohm's Law Calculation", text });
-      } catch (error) {
-        copyResults();
-      }
-    } else {
-      copyResults();
-    }
-  };
-
   return (
-    <div className="space-y-6">
-      {/* Presets */}
-      <QuickCalculationPresets 
-        calculatorType="ohms-law"
-        onPresetSelect={handlePresetSelect}
-      />
-
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardHeader>
-          <div className="flex items-center gap-2">
-            <Zap className="h-5 w-5 text-elec-yellow" />
-            <CardTitle>Ohm's Law Calculator</CardTitle>
-          </div>
-          <CardDescription>
-            Calculate voltage, current, resistance, or power using Ohm's Law. Enter any two values.
-          </CardDescription>
-        </CardHeader>
+    <Card className="border-elec-yellow/20 bg-elec-gray">
+      <CardHeader>
+        <div className="flex items-center gap-2">
+          <Zap className="h-5 w-5 text-elec-yellow" />
+          <CardTitle>Ohm's Law Calculator</CardTitle>
+        </div>
+        <CardDescription>
+          Calculate voltage, current, resistance, or power using Ohm's Law. Enter any two values.
+        </CardDescription>
+      </CardHeader>
       <CardContent>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Input Section */}
           <div className="space-y-4">
-            <div className="space-y-4">
-              <MobileInput
-                label="Voltage (V)"
-                type="number"
-                value={voltage}
-                onChange={(e) => setVoltage(e.target.value)}
-                placeholder="e.g., 230"
-                unit="V"
-              />
-              <SmartInputSuggestions
-                fieldType="voltage"
-                currentValue={voltage}
-                onSuggestionSelect={setVoltage}
-                calculatorType="ohms-law"
-              />
-            </div>
+            <MobileInput
+              label="Voltage (V)"
+              type="number"
+              value={voltage}
+              onChange={(e) => setVoltage(e.target.value)}
+              placeholder="e.g., 230"
+              unit="V"
+            />
 
-            <div className="space-y-4">
-              <MobileInput
-                label="Current (A)"
-                type="number"
-                value={current}
-                onChange={(e) => setCurrent(e.target.value)}
-                placeholder="e.g., 10"
-                unit="A"
-              />
-              <SmartInputSuggestions
-                fieldType="current"
-                currentValue={current}
-                onSuggestionSelect={setCurrent}
-                calculatorType="ohms-law"
-              />
-            </div>
+            <MobileInput
+              label="Current (A)"
+              type="number"
+              value={current}
+              onChange={(e) => setCurrent(e.target.value)}
+              placeholder="e.g., 10"
+              unit="A"
+            />
 
             <MobileInput
               label="Resistance (Ω)"
@@ -209,22 +116,14 @@ Formula: ${result.calculation}`;
               unit="Ω"
             />
 
-            <div className="space-y-4">
-              <MobileInput
-                label="Power (W)"
-                type="number"
-                value={power}
-                onChange={(e) => setPower(e.target.value)}
-                placeholder="e.g., 2300"
-                unit="W"
-              />
-              <SmartInputSuggestions
-                fieldType="power"
-                currentValue={power}
-                onSuggestionSelect={setPower}
-                calculatorType="ohms-law"
-              />
-            </div>
+            <MobileInput
+              label="Power (W)"
+              type="number"
+              value={power}
+              onChange={(e) => setPower(e.target.value)}
+              placeholder="e.g., 2300"
+              unit="W"
+            />
 
             <div className="flex gap-2">
               <MobileButton onClick={calculateOhmsLaw} className="flex-1" variant="elec" icon={<Calculator className="h-4 w-4" />}>
@@ -270,24 +169,13 @@ Formula: ${result.calculation}`;
                       </div>
                     )}
                     {result.power && (
-                     <div>
-                       <span className="text-muted-foreground">Power:</span>
-                       <div className="font-mono text-elec-yellow">{result.power.toFixed(2)} W</div>
-                     </div>
-                   )}
-                 </div>
-                 
-                 <div className="flex gap-2 mt-4">
-                   <MobileButton onClick={copyResults} variant="elec-outline" size="sm" className="flex-1">
-                     <Copy className="h-4 w-4 mr-2" />
-                     Copy
-                   </MobileButton>
-                   <MobileButton onClick={shareResults} variant="elec-outline" size="sm" className="flex-1">
-                     <Share2 className="h-4 w-4 mr-2" />
-                     Share
-                   </MobileButton>
-                 </div>
-               </div>
+                      <div>
+                        <span className="text-muted-foreground">Power:</span>
+                        <div className="font-mono text-elec-yellow">{result.power.toFixed(2)} W</div>
+                      </div>
+                    )}
+                  </div>
+                </div>
               ) : (
                 <div className="flex items-center justify-center h-full text-muted-foreground">
                   Enter any two values to calculate the others
@@ -305,14 +193,6 @@ Formula: ${result.calculation}`;
         </div>
       </CardContent>
     </Card>
-
-    {/* Calculation History */}
-    <CalculationHistory
-      ref={historyRef}
-      calculatorType="ohms-law"
-      onRestoreCalculation={handleRestoreCalculation}
-    />
-  </div>
   );
 };
 

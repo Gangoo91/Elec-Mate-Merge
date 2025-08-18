@@ -7,15 +7,12 @@ import CableSizingResult from "./cable-sizing/CableSizingResult";
 import CableSizingInfo from "./cable-sizing/CableSizingInfo";
 import ValidationIndicator from "./ValidationIndicator";
 import CalculationReport from "./CalculationReport";
-import { useToast } from "@/hooks/use-toast";
-import { useEffect, useState, useRef } from "react";
+import { useToast } from "@/components/ui/use-toast";
+import { useEffect, useState } from "react";
 import { CalculatorValidator } from "@/services/calculatorValidation";
-import CalculationHistory from "./calculation-history/CalculationHistory";
-import QuickCalculationPresets from "./smart-features/QuickCalculationPresets";
 
 const CableSizingCalculator = () => {
   const { toast } = useToast();
-  const historyRef = useRef<any>(null);
   const [validation, setValidation] = useState<any>(null);
   const [calculationInputs, setCalculationInputs] = useState<any>({});
   const [calculationResults, setCalculationResults] = useState<any>({});
@@ -95,9 +92,6 @@ const CableSizingCalculator = () => {
         voltageDropPercentage: (actualVoltageDrop / voltage) * 100
       });
 
-      // Save to history
-      historyRef.current?.saveCalculation(calculationInputs, calculationResults, combinedValidation.isValid);
-
       if (combinedValidation.isValid && combinedValidation.warnings.length === 0) {
         toast({
           title: "Cable Size Calculated",
@@ -144,40 +138,8 @@ const CableSizingCalculator = () => {
     setCalculationResults({});
   };
 
-  const handlePresetSelect = (preset: any) => {
-    updateInput('current', preset.inputs.current || "");
-    updateInput('length', preset.inputs.length || "");
-    updateInput('voltage', preset.inputs.voltage || "");
-    updateInput('voltageDrop', preset.inputs.voltageDrop || "");
-    setInstallationType(preset.inputs.installationType || "reference-method-c");
-    setCableType(preset.inputs.cableType || "pvc");
-    toast({
-      title: "Preset Applied",
-      description: preset.name,
-    });
-  };
-
-  const handleRestoreCalculation = (entry: any) => {
-    updateInput('current', entry.inputs.current || "");
-    updateInput('length', entry.inputs.length || "");
-    updateInput('voltage', entry.inputs.voltage || "");
-    updateInput('voltageDrop', entry.inputs.voltageDrop || "");
-    setInstallationType(entry.inputs.installationType || "reference-method-c");
-    setCableType(entry.inputs.cableType || "pvc");
-    // Set results if available
-    if (entry.results) {
-      setCalculationResults(entry.results);
-    }
-  };
-
   return (
     <div className="space-y-6">
-      {/* Presets */}
-      <QuickCalculationPresets 
-        calculatorType="cable-size"
-        onPresetSelect={handlePresetSelect}
-      />
-
       <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader>
           <div className="flex items-center gap-2">
@@ -228,13 +190,6 @@ const CableSizingCalculator = () => {
           validation={validation}
         />
       )}
-
-      {/* Calculation History */}
-      <CalculationHistory
-        ref={historyRef}
-        calculatorType="cable-size"
-        onRestoreCalculation={handleRestoreCalculation}
-      />
     </div>
   );
 };

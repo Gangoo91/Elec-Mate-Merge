@@ -31,7 +31,7 @@ import PhaseRotationCalculator from "@/components/apprentice/calculators/PhaseRo
 import PFCCalculator from "@/components/apprentice/calculators/PFCCalculator";
 import RCDTripTimeCalculator from "@/components/apprentice/calculators/RCDTripTimeCalculator";
 import RCDDiscriminationCalculator from "@/components/apprentice/calculators/RCDDiscriminationCalculator";
-import ElectricianLumenCalculator from "@/components/electrician-tools/LumenCalculator";
+import LumenCalculator from "@/components/apprentice/calculators/LumenCalculator";
 import LEDDriverCalculator from "@/components/apprentice/calculators/LEDDriverCalculator";
 import MotorStartingCurrentCalculator from "@/components/apprentice/calculators/MotorStartingCurrentCalculator";
 import TransformerCalculator from "@/components/apprentice/calculators/TransformerCalculator";
@@ -121,7 +121,7 @@ const Calculations = () => {
       
       // Lighting & Power Systems
       case "lumen":
-        return <ElectricianLumenCalculator />;
+        return <LumenCalculator />;
       case "led-driver":
         return <LEDDriverCalculator />;
       case "motor-starting-current":
