@@ -76,6 +76,10 @@ async function scrapeWithFirecrawl(url: string, source: string): Promise<NewsArt
     const content = result.data.markdown;
     const title = result.data.metadata.title || 'No Title';
     
+    // Create a unique external ID based on URL and content hash
+    const contentHash = await hashString(title + content.substring(0, 100));
+    const external_id = `${source.toLowerCase().replace(/\s+/g, '_')}_${contentHash}`;
+    
     // Create summary from content
     const summary = content.length > 500 
       ? content.substring(0, 500) + '...' 
@@ -123,7 +127,7 @@ async function scrapeWithFirecrawl(url: string, source: string): Promise<NewsArt
       source: source,
       regulatory_body: regulatoryBody,
       source_url: url,
-      external_id: `${source.toLowerCase().replace(/\s+/g, '_')}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+      external_id: external_id,
       date_published: new Date().toISOString(),
       category: category,
       tags: tags
@@ -135,6 +139,15 @@ async function scrapeWithFirecrawl(url: string, source: string): Promise<NewsArt
     console.error(`Error scraping ${url} with Firecrawl:`, error);
     return [];
   }
+}
+
+// Simple hash function for creating consistent IDs
+async function hashString(str: string): Promise<string> {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(str);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('').substring(0, 8);
 }
 
 function extractElectricalContext(content: string): string {
@@ -189,26 +202,47 @@ serve(async (req) => {
     for (const sourceData of sources) {
       try {
         console.log(`Processing source: ${sourceData.source} - ${sourceData.url}`);
+        
+        // Check if we already have recent content from this source (within last hour)
+        const { data: recentArticles } = await supabase
+          .from('industry_news')
+          .select('external_id')
+          .eq('regulatory_body', sourceData.source.includes('Major Projects') ? 'Industry' : sourceData.source)
+          .gte('created_at', new Date(Date.now() - 60 * 60 * 1000).toISOString());
+
+        console.log(`Found ${recentArticles?.length || 0} recent articles from ${sourceData.source}`);
+        
         const articles = await scrapeWithFirecrawl(sourceData.url, sourceData.source);
         
-        // Insert articles with upsert to handle duplicates
+        // Insert articles with better duplicate handling
         for (const article of articles) {
           try {
+            // First check if this exact external_id exists
+            const { data: existingArticle } = await supabase
+              .from('industry_news')
+              .select('id')
+              .eq('external_id', article.external_id)
+              .single();
+
+            if (existingArticle) {
+              console.log(`Article already exists with external_id: ${article.external_id}`);
+              continue;
+            }
+
+            // Insert new article
             const { error } = await supabase
               .from('industry_news')
-              .upsert(article, { 
-                onConflict: 'external_id',
-                ignoreDuplicates: false 
-              });
+              .insert(article);
 
             if (error) {
               console.error(`Error inserting article:`, error);
               totalErrors++;
             } else {
+              console.log(`Successfully inserted article: ${article.title.substring(0, 50)}...`);
               totalInserted++;
             }
           } catch (insertError) {
-            console.error(`Error inserting article:`, insertError);
+            console.error(`Error processing article insertion:`, insertError);
             totalErrors++;
           }
         }

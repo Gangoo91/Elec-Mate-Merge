@@ -61,33 +61,39 @@ const EnhancedIndustryNewsCard = () => {
       toast({
         title: "Fetching Latest News",
         description: "Updating from industry sources...",
-        duration: 2000,
+        duration: 3000,
       });
 
-      const { error } = await supabase.functions.invoke('fetch-industry-news');
+      console.log("Starting manual refresh...");
+      
+      const { data, error } = await supabase.functions.invoke('fetch-industry-news');
       
       if (error) {
         console.error('Edge function error:', error);
         toast({
-          title: "Refresh Info", 
-          description: "Refreshing from database...",
-          duration: 2000,
+          title: "Refresh Complete", 
+          description: "Showing latest cached articles",
+          duration: 3000,
         });
       } else {
+        console.log('Edge function response:', data);
         toast({
-          title: "News Updated",
-          description: "Latest industry news fetched successfully",
+          title: "News Updated Successfully",
+          description: `Fetched ${data?.inserted || 0} new articles`,
+          variant: "success",
         });
       }
       
-      // Always refetch from database
+      // Always refetch from database to show latest content
       await refetch();
+      console.log("Database refetch completed");
+      
     } catch (error) {
       console.error('Refresh error:', error);
       toast({
-        title: "Refreshed Locally",
-        description: "Showing latest cached articles", 
-        duration: 2000,
+        title: "Refresh Complete",
+        description: "Showing latest available articles", 
+        duration: 3000,
       });
       await refetch();
     }
