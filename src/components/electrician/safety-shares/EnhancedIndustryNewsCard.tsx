@@ -5,9 +5,9 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Newspaper, Clock, ExternalLink, Eye, MessageSquare, Bookmark, Search, Filter, Star, ThumbsUp, RefreshCcw, Calendar, Link, Globe } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
+import { Newspaper, Clock, ExternalLink, Eye, MessageSquare, Bookmark, Search, Filter, Star, ThumbsUp, RefreshCcw, Calendar, Link, Globe, Settings } from "lucide-react";
 import { toast } from "sonner";
+import { FirecrawlService } from "@/utils/FirecrawlService";
 
 interface NewsArticle {
   id: string;
@@ -31,57 +31,105 @@ const EnhancedIndustryNewsCard = () => {
   const [articles, setArticles] = useState<NewsArticle[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const [refreshProgress, setRefreshProgress] = useState("");
+  const [showApiKeyInput, setShowApiKeyInput] = useState(false);
+  const [apiKey, setApiKey] = useState("");
 
   useEffect(() => {
-    fetchArticles();
+    loadNewsData();
   }, []);
 
-  const fetchArticles = async () => {
+  const loadNewsData = async () => {
+    // First try to load from cache
+    const cachedNews = FirecrawlService.getCachedNews();
+    if (cachedNews && cachedNews.length > 0) {
+      setArticles(cachedNews);
+      setIsLoading(false);
+      return;
+    }
+
+    // If no cache or API key missing, show API key input
+    if (!FirecrawlService.getApiKey()) {
+      setShowApiKeyInput(true);
+      setIsLoading(false);
+      return;
+    }
+
+    // Fetch fresh data
+    await fetchNewsDirectly();
+  };
+
+  const fetchNewsDirectly = async () => {
+    setIsLoading(true);
+    setRefreshProgress("");
+    
     try {
-      const { data, error } = await supabase
-        .from('industry_news')
-        .select('*')
-        .eq('is_active', true)
-        .order('date_published', { ascending: false })
-        .limit(20);
+      const result = await FirecrawlService.fetchNewsDirectly(
+        (message, current, total) => {
+          setRefreshProgress(`${message} (${current}/${total})`);
+        }
+      );
 
-      if (error) {
-        console.error('Error fetching articles:', error);
-        toast.error('Failed to fetch articles');
-        return;
+      if (result.success && result.articles) {
+        setArticles(result.articles);
+        toast.success(`Successfully loaded ${result.articles.length} articles`);
+      } else {
+        toast.error(result.error || 'Failed to fetch news');
+        setShowApiKeyInput(true);
       }
-
-      setArticles(data || []);
     } catch (error) {
-      console.error('Error:', error);
-      toast.error('Failed to fetch articles');
+      console.error('Error fetching news:', error);
+      toast.error('Failed to fetch news');
     } finally {
       setIsLoading(false);
+      setRefreshProgress("");
     }
   };
 
   const refreshNews = async () => {
-    setIsRefreshing(true);
-    try {
-      // Call the edge function to fetch fresh news
-      const { data, error } = await supabase.functions.invoke('fetch-industry-news');
-      
-      if (error) {
-        console.error('Error refreshing news:', error);
-        toast.error('Failed to refresh news');
-        return;
-      }
+    if (!FirecrawlService.getApiKey()) {
+      setShowApiKeyInput(true);
+      return;
+    }
 
-      toast.success(`Refreshed! Found ${data.inserted} new articles`);
-      
-      // Refresh the local data
-      await fetchArticles();
+    setIsRefreshing(true);
+    setRefreshProgress("");
+    
+    try {
+      const result = await FirecrawlService.fetchNewsDirectly(
+        (message, current, total) => {
+          setRefreshProgress(`${message} (${current}/${total})`);
+        }
+      );
+
+      if (result.success && result.articles) {
+        setArticles(result.articles);
+        toast.success(`Refreshed! Found ${result.articles.length} articles`);
+      } else {
+        toast.error(result.error || 'Failed to refresh news');
+      }
     } catch (error) {
-      console.error('Error:', error);
+      console.error('Error refreshing news:', error);
       toast.error('Failed to refresh news');
     } finally {
       setIsRefreshing(false);
+      setRefreshProgress("");
     }
+  };
+
+  const handleSaveApiKey = () => {
+    if (!apiKey.trim()) {
+      toast.error('Please enter a valid API key');
+      return;
+    }
+
+    FirecrawlService.saveApiKey(apiKey.trim());
+    setShowApiKeyInput(false);
+    setApiKey("");
+    toast.success('API key saved successfully');
+    
+    // Immediately fetch news with the new API key
+    fetchNewsDirectly();
   };
 
   const getCategoryColor = (category: string) => {
@@ -95,19 +143,6 @@ const EnhancedIndustryNewsCard = () => {
   };
 
   const handleViewArticle = async (article: NewsArticle) => {
-    // Track view count
-    try {
-      await supabase
-        .from('safety_content_views')
-        .insert({
-          content_type: 'industry_news',
-          content_id: article.id,
-          user_id: null, // Can be null for anonymous views
-        });
-    } catch (error) {
-      console.error('Error tracking view:', error);
-    }
-
     // Open external link if available
     if (article.external_url) {
       window.open(article.external_url, '_blank');
@@ -138,12 +173,54 @@ const EnhancedIndustryNewsCard = () => {
     return matchesSearch && matchesCategory && matchesSource;
   });
 
+  if (showApiKeyInput) {
+    return (
+      <div className="space-y-6">
+        <Card className="border-elec-yellow/20 bg-elec-gray">
+          <CardHeader>
+            <CardTitle className="text-white flex items-center gap-2">
+              <Settings className="h-5 w-5" />
+              Configure Firecrawl API Key
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <p className="text-muted-foreground">
+              To fetch live industry news, please enter your Firecrawl API key. You can get one from{' '}
+              <a href="https://firecrawl.dev" target="_blank" rel="noopener noreferrer" className="text-elec-yellow hover:underline">
+                firecrawl.dev
+              </a>
+            </p>
+            <div className="flex gap-2">
+              <Input
+                type="password"
+                placeholder="Enter your Firecrawl API key..."
+                value={apiKey}
+                onChange={(e) => setApiKey(e.target.value)}
+                className="bg-elec-dark/50 border-elec-yellow/30"
+                onKeyDown={(e) => e.key === 'Enter' && handleSaveApiKey()}
+              />
+              <Button 
+                onClick={handleSaveApiKey}
+                className="bg-elec-yellow text-black hover:bg-elec-yellow/90"
+              >
+                Save & Load News
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
   if (isLoading) {
     return (
       <div className="flex items-center justify-center py-8">
         <div className="text-center">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-elec-yellow mx-auto mb-4"></div>
           <p className="text-muted-foreground">Loading industry news...</p>
+          {refreshProgress && (
+            <p className="text-sm text-elec-yellow mt-2">{refreshProgress}</p>
+          )}
         </div>
       </div>
     );
@@ -165,7 +242,15 @@ const EnhancedIndustryNewsCard = () => {
               className="border-elec-yellow/30 text-white hover:bg-elec-yellow/10"
             >
               <RefreshCcw className={`h-4 w-4 mr-2 ${isRefreshing ? 'animate-spin' : ''}`} />
-              {isRefreshing ? 'Refreshing...' : 'Refresh News'}
+              {isRefreshing ? (refreshProgress || 'Refreshing...') : 'Refresh News'}
+            </Button>
+            <Button 
+              onClick={() => setShowApiKeyInput(true)}
+              variant="outline"
+              className="border-elec-yellow/30 text-white hover:bg-elec-yellow/10"
+            >
+              <Settings className="h-4 w-4 mr-2" />
+              API Settings
             </Button>
             <Button className="bg-elec-yellow text-black hover:bg-elec-yellow/90">
               <Newspaper className="h-4 w-4 mr-2" />
@@ -326,9 +411,10 @@ const EnhancedIndustryNewsCard = () => {
           <Button 
             variant="outline" 
             className="border-elec-yellow/30 text-white hover:bg-elec-yellow/10"
-            onClick={fetchArticles}
+            onClick={refreshNews}
+            disabled={isRefreshing}
           >
-            Load More Articles
+            {isRefreshing ? 'Loading...' : 'Load More Articles'}
           </Button>
         </div>
       )}
