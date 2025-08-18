@@ -1,15 +1,17 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Sigma } from "lucide-react";
+import { Sigma, Calculator, RefreshCw, Zap, AlertCircle, CheckCircle2 } from "lucide-react";
 import { useCableSizing } from "./cable-sizing/useCableSizing";
 import CableSizingForm from "./cable-sizing/CableSizingInputs";
 import CableSizingResult from "./cable-sizing/CableSizingResult";
 import CableSizingInfo from "./cable-sizing/CableSizingInfo";
 import ValidationIndicator from "./ValidationIndicator";
 import CalculationReport from "./CalculationReport";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
 import { useEffect, useState } from "react";
 import { CalculatorValidator } from "@/services/calculatorValidation";
+import { Button } from "@/components/ui/button";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 const CableSizingCalculator = () => {
   const { toast } = useToast();
@@ -120,15 +122,37 @@ const CableSizingCalculator = () => {
   }, [result, inputs, toast]);
 
   const handleCalculate = () => {
-    calculateCableSize();
-    
+    // Basic input validation before calculation
     if (!inputs.current || !inputs.length) {
       toast({
-        title: "Input Required",
-        description: "Please fill in all required fields to calculate cable size.",
+        title: "Missing Required Inputs",
+        description: "Please enter both current and cable length to calculate.",
         variant: "destructive",
       });
+      return;
     }
+
+    const currentValue = parseFloat(inputs.current);
+    const lengthValue = parseFloat(inputs.length);
+
+    if (currentValue <= 0 || lengthValue <= 0) {
+      toast({
+        title: "Invalid Input Values",
+        description: "Current and length must be positive numbers.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (currentValue > 1000) {
+      toast({
+        title: "High Current Warning",
+        description: "Very high current detected. Please verify your calculations.",
+        variant: "default",
+      });
+    }
+
+    calculateCableSize();
   };
 
   const handleReset = () => {
@@ -142,16 +166,57 @@ const CableSizingCalculator = () => {
     <div className="space-y-6">
       <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader>
-          <div className="flex items-center gap-2">
-            <Sigma className="h-5 w-5 text-elec-yellow" />
-            <CardTitle>Cable Sizing Calculator</CardTitle>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Sigma className="h-5 w-5 text-elec-yellow" />
+              <div>
+                <CardTitle>Professional Cable Sizing Calculator</CardTitle>
+                <CardDescription className="mt-1">
+                  Calculate appropriate cable sizes based on current capacity and voltage drop with BS 7671 compliance validation.
+                </CardDescription>
+              </div>
+            </div>
+            <div className="flex gap-2">
+              <Button onClick={handleCalculate} className="bg-elec-yellow text-black hover:bg-elec-yellow/90" disabled={!inputs.current || !inputs.length}>
+                <Calculator className="h-4 w-4 mr-2" />
+                Calculate
+              </Button>
+              <Button variant="outline" onClick={handleReset} className="border-elec-yellow/20 hover:bg-elec-yellow/10">
+                <RefreshCw className="h-4 w-4 mr-2" />
+                Reset
+              </Button>
+            </div>
           </div>
-          <CardDescription>
-            Determine appropriate cable size based on current capacity and voltage drop with BS 7671 validation.
-          </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Show calculation status */}
+          {result.errors && Object.keys(result.errors).length > 0 && (
+            <Alert variant="destructive" className="mb-6 border-red-500/20 bg-red-950/20">
+              <AlertCircle className="h-4 w-4" />
+              <AlertDescription>
+                <div className="font-medium mb-2">Calculation Issues:</div>
+                <ul className="list-disc list-inside space-y-1 text-sm">
+                  {Object.values(result.errors).map((error, index) => (
+                    <li key={index}>{error}</li>
+                  ))}
+                </ul>
+              </AlertDescription>
+            </Alert>
+          )}
+
+          {result.recommendedCable && !result.errors && (
+            <Alert className="mb-6 border-green-500/20 bg-green-950/20">
+              <CheckCircle2 className="h-4 w-4 text-green-500" />
+              <AlertDescription className="text-green-100">
+                <div className="font-medium">Cable Size Calculated Successfully</div>
+                <div className="text-sm text-green-200 mt-1">
+                  Recommended: <span className="font-medium">{result.recommendedCable.size}</span> cable for {inputs.current}A load
+                </div>
+              </AlertDescription>
+            </Alert>
+          )}
+
+          <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
             <CableSizingForm
               inputs={inputs}
               errors={result.errors}
@@ -163,7 +228,7 @@ const CableSizingCalculator = () => {
             />
             
             <div className="flex flex-col space-y-4">
-              <div className="rounded-md bg-elec-dark p-6 flex-grow flex flex-col">
+              <div className="rounded-md bg-elec-dark/50 border border-elec-yellow/10 p-6 flex-grow flex flex-col min-h-[400px]">
                 <CableSizingResult
                   recommendedCable={result.recommendedCable}
                   alternativeCables={result.alternativeCables}
@@ -178,13 +243,15 @@ const CableSizingCalculator = () => {
         </CardContent>
       </Card>
 
-      {/* Validation Results */}
-      <ValidationIndicator validation={validation} calculationType="Cable Sizing" />
+      {/* Professional Validation Results */}
+      {validation && (
+        <ValidationIndicator validation={validation} calculationType="Cable Sizing" />
+      )}
 
-      {/* Calculation Report */}
+      {/* Comprehensive Calculation Report */}
       {validation && Object.keys(calculationResults).length > 0 && (
         <CalculationReport
-          calculationType="Cable Sizing"
+          calculationType="Professional Cable Sizing"
           inputs={calculationInputs}
           results={calculationResults}
           validation={validation}

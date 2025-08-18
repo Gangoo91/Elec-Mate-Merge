@@ -5,15 +5,15 @@ import { useCableSizing } from "./cable-sizing/useCableSizing";
 import EnhancedCableSizingInputs from "./cable-sizing/EnhancedCableSizingInputs";
 import CableSizingResult from "./cable-sizing/CableSizingResult";
 import CableSizingInfo from "./cable-sizing/CableSizingInfo";
-import EnhancedValidationIndicator from "./EnhancedValidationIndicator";
+import SimpleValidationIndicator from "./SimpleValidationIndicator";
 import CalculationReport from "./CalculationReport";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
 import { useEffect, useState } from "react";
-import { SafetyValidator, SafetyValidationResult } from "@/services/safetyValidation";
+import { SimpleValidator, SimpleValidationResult } from "@/services/simplifiedValidation";
 
 const EnhancedCableSizingCalculator = () => {
   const { toast } = useToast();
-  const [validation, setValidation] = useState<SafetyValidationResult | null>(null);
+  const [validation, setValidation] = useState<SimpleValidationResult | null>(null);
   const [calculationInputs, setCalculationInputs] = useState<any>({});
   const [calculationResults, setCalculationResults] = useState<any>({});
   
@@ -37,7 +37,7 @@ const EnhancedCableSizingCalculator = () => {
       const cableGrouping = parseInt((inputs as any).cableGrouping || '1');
       
       // Perform comprehensive safety validation
-      const safetyValidation = SafetyValidator.validateCableSizing(
+      const safetyValidation = SimpleValidator.validateCableSizing(
         current,
         result.recommendedCable.size,
         inputs.installationType,
@@ -169,7 +169,7 @@ const EnhancedCableSizingCalculator = () => {
       </Card>
 
       {/* Enhanced Safety Validation Results */}
-      <EnhancedValidationIndicator validation={validation} calculationType="Cable Sizing" />
+      <SimpleValidationIndicator validation={validation} calculationType="Cable Sizing" />
 
       {/* Detailed Calculation Report */}
       {validation && Object.keys(calculationResults).length > 0 && (
