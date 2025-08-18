@@ -9,7 +9,6 @@ import { useAuth } from "@/contexts/AuthContext";
 import { Card } from "@/components/ui/card";
 import { BookOpen, Clock } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
-import LivePricingWidget from "@/components/electrician-materials/LivePricingWidget";
 
 const Dashboard = () => {
   // Get dashboard data from our data model
@@ -63,11 +62,6 @@ const Dashboard = () => {
 
       {/* Quick Access Section */}
       <DashboardQuickAccess />
-
-      {/* Live Pricing Section */}
-      <div className="max-w-md">
-        <LivePricingWidget />
-      </div>
 
       {/* Overview Cards */}
       <DashboardOverview user={userData} />
