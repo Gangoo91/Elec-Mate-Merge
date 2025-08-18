@@ -65,8 +65,8 @@ const CableSizingForm = ({
         <div>
           <Label htmlFor="installation-type">Installation Method</Label>
           <Select value={inputs.installationType} onValueChange={setInstallationType}>
-            <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
-              <SelectValue placeholder="Select installation method" />
+            <SelectTrigger className="bg-elec-dark border-elec-yellow/20 text-elec-light">
+              <SelectValue placeholder="Select installation method" className="text-elec-light" />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="clipped-direct">Clipped Direct (Reference Method C)</SelectItem>
@@ -81,8 +81,8 @@ const CableSizingForm = ({
         <div>
           <Label htmlFor="cable-type">Cable Type</Label>
           <Select value={inputs.cableType} onValueChange={setCableType}>
-            <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
-              <SelectValue placeholder="Select cable type" />
+            <SelectTrigger className="bg-elec-dark border-elec-yellow/20 text-elec-light">
+              <SelectValue placeholder="Select cable type" className="text-elec-light" />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="pvc-70">PVC 70°C (Standard)</SelectItem>
@@ -143,8 +143,8 @@ const CableSizingForm = ({
         <div>
           <Label htmlFor="load-type">Load Type</Label>
           <Select value={inputs.loadType || 'resistive'} onValueChange={(value) => updateInput('loadType', value)}>
-            <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
-              <SelectValue placeholder="Select load type" />
+            <SelectTrigger className="bg-elec-dark border-elec-yellow/20 text-elec-light">
+              <SelectValue placeholder="Select load type" className="text-elec-light" />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="resistive">Resistive (Heating, Lighting)</SelectItem>
@@ -178,8 +178,8 @@ const CableSizingForm = ({
         <div>
           <Label htmlFor="voltage">System Voltage (V)</Label>
           <Select value={inputs.voltage || '230'} onValueChange={(value) => updateInput('voltage', value)}>
-            <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
-              <SelectValue placeholder="Select voltage" />
+            <SelectTrigger className="bg-elec-dark border-elec-yellow/20 text-elec-light">
+              <SelectValue placeholder="Select voltage" className="text-elec-light" />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="230">230V Single Phase</SelectItem>
