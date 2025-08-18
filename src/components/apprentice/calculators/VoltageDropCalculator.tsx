@@ -5,11 +5,18 @@ import { MobileButton } from "@/components/ui/mobile-button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { MobileSelect, MobileSelectContent, MobileSelectItem, MobileSelectTrigger, MobileSelectValue } from "@/components/ui/mobile-select";
-import { Activity, Info, Calculator, RotateCcw } from "lucide-react";
-import { useState } from "react";
+import { Activity, Info, Calculator, RotateCcw, Copy, Share2 } from "lucide-react";
+import { useState, useRef } from "react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import CalculationHistory from "./calculation-history/CalculationHistory";
+import QuickCalculationPresets from "./smart-features/QuickCalculationPresets";
+import SmartInputSuggestions from "./smart-features/SmartInputSuggestions";
+import { copyToClipboard } from "@/lib/calc-utils";
+import { useToast } from "@/hooks/use-toast";
 
 const VoltageDropCalculator = () => {
+  const { toast } = useToast();
+  const historyRef = useRef<any>(null);
   const [current, setCurrent] = useState<string>("");
   const [length, setLength] = useState<string>("");
   const [cableSize, setCableSize] = useState<string>("");
@@ -51,11 +58,22 @@ const calculateVoltageDrop = () => {
       const percentageDrop = (vdVolts / V) * 100;
       const acceptable = percentageDrop <= limit;
 
-      setResult({
+      const newResult = {
         voltageDrop: vdVolts,
         percentageDrop,
         acceptable,
         limitPercent: limit
+      };
+      setResult(newResult);
+      
+      // Save to history
+      const inputs = { current, length, cableSize, voltage, phase, circuitType };
+      historyRef.current?.saveCalculation(inputs, newResult, acceptable);
+      
+      toast({
+        title: acceptable ? "Calculation Complete" : "Warning: Exceeds Limits",
+        description: `${vdVolts.toFixed(2)}V drop (${percentageDrop.toFixed(2)}%)`,
+        variant: acceptable ? "default" : "destructive",
       });
     }
   };
@@ -70,17 +88,81 @@ const reset = () => {
     setResult(null);
   };
 
+  const handlePresetSelect = (preset: any) => {
+    setCurrent(preset.inputs.current || "");
+    setLength(preset.inputs.length || "");
+    setCableSize(preset.inputs.cableSize || "");
+    setVoltage(preset.inputs.voltage || "230");
+    setPhase(preset.inputs.phase || "single");
+    setCircuitType(preset.inputs.circuitType || "lighting");
+    toast({
+      title: "Preset Applied", 
+      description: preset.name,
+    });
+  };
+
+  const handleRestoreCalculation = (entry: any) => {
+    setCurrent(entry.inputs.current || "");
+    setLength(entry.inputs.length || "");
+    setCableSize(entry.inputs.cableSize || "");
+    setVoltage(entry.inputs.voltage || "230");
+    setPhase(entry.inputs.phase || "single");
+    setCircuitType(entry.inputs.circuitType || "lighting");
+    setResult(entry.results);
+  };
+
+  const copyResults = async () => {
+    if (!result) return;
+    
+    const text = `Voltage Drop Calculation:
+Voltage Drop: ${result.voltageDrop.toFixed(2)} V
+Percentage Drop: ${result.percentageDrop.toFixed(2)}%
+Limit: ${result.limitPercent}%
+Status: ${result.acceptable ? 'ACCEPTABLE' : 'EXCEEDS LIMIT'}
+Terminal Voltage: ${(parseFloat(voltage) - result.voltageDrop).toFixed(2)} V`;
+    
+    const success = await copyToClipboard(text);
+    toast({
+      title: success ? "Copied!" : "Copy Failed",
+      description: success ? "Results copied to clipboard" : "Please try again",
+      variant: success ? "default" : "destructive",
+    });
+  };
+
+  const shareResults = async () => {
+    if (!result) return;
+    
+    const text = `Voltage Drop: ${result.voltageDrop.toFixed(2)}V (${result.percentageDrop.toFixed(2)}%) - ${result.acceptable ? 'OK' : 'FAIL'}`;
+    
+    if (navigator.share) {
+      try {
+        await navigator.share({ title: "Voltage Drop Calculation", text });
+      } catch (error) {
+        copyResults();
+      }
+    } else {
+      copyResults();
+    }
+  };
+
   return (
-    <Card className="border-elec-yellow/20 bg-elec-gray">
-      <CardHeader>
-        <div className="flex items-center gap-2">
-          <Activity className="h-5 w-5 text-elec-yellow" />
-          <CardTitle>Voltage Drop Calculator</CardTitle>
-        </div>
-        <CardDescription>
-          Calculate voltage drop across cable runs according to BS 7671 requirements.
-        </CardDescription>
-      </CardHeader>
+    <div className="space-y-6">
+      {/* Presets */}
+      <QuickCalculationPresets 
+        calculatorType="voltage-drop"
+        onPresetSelect={handlePresetSelect}
+      />
+
+      <Card className="border-elec-yellow/20 bg-elec-gray">
+        <CardHeader>
+          <div className="flex items-center gap-2">
+            <Activity className="h-5 w-5 text-elec-yellow" />
+            <CardTitle>Voltage Drop Calculator</CardTitle>
+          </div>
+          <CardDescription>
+            Calculate voltage drop across cable runs according to BS 7671 requirements.
+          </CardDescription>
+        </CardHeader>
       <CardContent>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Input Section */}
@@ -94,23 +176,39 @@ const reset = () => {
               unit="V"
             />
 
-            <MobileInput
-              label="Load Current (A)"
-              type="number"
-              value={current}
-              onChange={(e) => setCurrent(e.target.value)}
-              placeholder="e.g., 20"
-              unit="A"
-            />
+            <div className="space-y-4">
+              <MobileInput
+                label="Load Current (A)"
+                type="number"
+                value={current}
+                onChange={(e) => setCurrent(e.target.value)}
+                placeholder="e.g., 20"
+                unit="A"
+              />
+              <SmartInputSuggestions
+                fieldType="current"
+                currentValue={current}
+                onSuggestionSelect={setCurrent}
+                calculatorType="voltage-drop"
+              />
+            </div>
 
-            <MobileInput
-              label="Cable Length (m)"
-              type="number"
-              value={length}
-              onChange={(e) => setLength(e.target.value)}
-              placeholder="e.g., 50"
-              unit="m"
-            />
+            <div className="space-y-4">
+              <MobileInput
+                label="Cable Length (m)"
+                type="number"
+                value={length}
+                onChange={(e) => setLength(e.target.value)}
+                placeholder="e.g., 50"
+                unit="m"
+              />
+              <SmartInputSuggestions
+                fieldType="length"
+                currentValue={length}
+                onSuggestionSelect={setLength}
+                calculatorType="voltage-drop"
+              />
+            </div>
 
             <MobileSelect value={cableSize} onValueChange={setCableSize}>
               <MobileSelectTrigger label="Cable Size (mm²)">
@@ -197,12 +295,23 @@ const reset = () => {
                       <div className="font-mono text-elec-yellow">{phase === "single" ? "Single-phase (1φ)" : "Three-phase (3φ)"}</div>
                     </div>
                     
-                    <div>
-                      <span className="text-muted-foreground">Terminal Voltage:</span>
-                      <div className="font-mono text-elec-yellow">{(parseFloat(voltage) - result.voltageDrop).toFixed(2)} V</div>
-                    </div>
-                  </div>
-                </div>
+                     <div>
+                       <span className="text-muted-foreground">Terminal Voltage:</span>
+                       <div className="font-mono text-elec-yellow">{(parseFloat(voltage) - result.voltageDrop).toFixed(2)} V</div>
+                     </div>
+                   </div>
+                   
+                   <div className="flex gap-2 mt-4">
+                     <MobileButton onClick={copyResults} variant="elec-outline" size="sm" className="flex-1">
+                       <Copy className="h-4 w-4 mr-2" />
+                       Copy
+                     </MobileButton>
+                     <MobileButton onClick={shareResults} variant="elec-outline" size="sm" className="flex-1">
+                       <Share2 className="h-4 w-4 mr-2" />
+                       Share
+                     </MobileButton>
+                   </div>
+                 </div>
               ) : (
                 <div className="flex items-center justify-center h-full text-muted-foreground">
                   Enter all values to calculate voltage drop
@@ -220,6 +329,14 @@ const reset = () => {
         </div>
       </CardContent>
     </Card>
+
+    {/* Calculation History */}
+    <CalculationHistory
+      ref={historyRef}
+      calculatorType="voltage-drop"
+      onRestoreCalculation={handleRestoreCalculation}
+    />
+  </div>
   );
 };
 

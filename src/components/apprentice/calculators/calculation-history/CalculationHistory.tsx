@@ -22,10 +22,10 @@ interface CalculationHistoryProps {
   onRestoreCalculation: (entry: CalculationEntry) => void;
 }
 
-const CalculationHistory: React.FC<CalculationHistoryProps> = ({
-  calculatorType,
-  onRestoreCalculation
-}) => {
+const CalculationHistory = React.forwardRef<
+  { saveCalculation: (inputs: any, results: any, isValid: boolean) => void },
+  CalculationHistoryProps
+>(({ calculatorType, onRestoreCalculation }, ref) => {
   const [history, setHistory] = useState<CalculationEntry[]>([]);
   const [showAll, setShowAll] = useState(false);
 
@@ -83,8 +83,8 @@ const CalculationHistory: React.FC<CalculationHistoryProps> = ({
   const displayedHistory = showAll ? history : history.slice(0, 5);
   const bookmarkedHistory = history.filter(entry => entry.isBookmarked);
 
-  // Expose saveCalculation method
-  React.useImperativeHandle(React.createRef(), () => ({
+  // Expose saveCalculation method to parent via ref
+  React.useImperativeHandle(ref, () => ({
     saveCalculation
   }));
 
@@ -190,7 +190,7 @@ const CalculationHistory: React.FC<CalculationHistoryProps> = ({
       </CardContent>
     </Card>
   );
-};
+});
 
 const HistoryEntry: React.FC<{
   entry: CalculationEntry;
@@ -241,6 +241,8 @@ const HistoryEntry: React.FC<{
     </div>
   );
 };
+
+CalculationHistory.displayName = 'CalculationHistory';
 
 export default CalculationHistory;
 export type { CalculationEntry };
