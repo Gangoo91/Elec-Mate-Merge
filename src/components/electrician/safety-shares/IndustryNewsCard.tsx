@@ -90,17 +90,18 @@ const IndustryNewsCard = () => {
       article.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       (article.summary && article.summary.toLowerCase().includes(searchTerm.toLowerCase()));
     
-    const matchesSource = !selectedSource || article.regulatory_body === selectedSource;
+    const matchesSource = !selectedSource || article.category === selectedSource || article.regulatory_body === selectedSource;
     
     const matchesBS7671 = !showBS7671Only || 
       article.title.toLowerCase().includes('bs 7671') ||
-      article.title.toLowerCase().includes('wiring regulations');
+      article.title.toLowerCase().includes('wiring regulations') ||
+      article.category === 'BS7671';
     
     return matchesSearch && matchesSource && matchesBS7671;
   });
 
-  // Extract unique sources for filtering
-  const uniqueSources = Array.from(new Set(newsArticles.map(article => article.regulatory_body).filter(Boolean).map((s: string) => s.trim())));
+  // Define filter categories as per requirements
+  const filterCategories = ['HSE', 'BS7671', 'IET', 'Major Projects'];
 
   const clearFilters = () => {
     setSearchTerm("");
@@ -144,19 +145,19 @@ const IndustryNewsCard = () => {
           {/* Filter Chips */}
           <div className="flex flex-wrap gap-2">
             <div className="flex flex-wrap gap-2 shrink-0">
-              {uniqueSources.map((source) => (
+              {filterCategories.map((category) => (
                 <Button
-                  key={source}
-                  variant={selectedSource === source ? "default" : "outline"}
+                  key={category}
+                  variant={selectedSource === category ? "default" : "outline"}
                   size="sm"
-                  onClick={() => setSelectedSource(selectedSource === source ? null : source)}
+                  onClick={() => setSelectedSource(selectedSource === category ? null : category)}
                   className={`shrink-0 ${
-                    selectedSource === source
+                    selectedSource === category
                       ? "bg-elec-yellow text-elec-dark hover:bg-elec-yellow/80"
                       : "border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
                   }`}
                 >
-                  {source}
+                  {category}
                 </Button>
               ))}
             </div>
@@ -225,7 +226,7 @@ const IndustryNewsCard = () => {
                       <CardTitle className="text-lg leading-tight mb-2">{article.title}</CardTitle>
                       <div className="flex flex-wrap items-center gap-2 text-sm text-gray-400">
                         <Badge variant="secondary" className="bg-elec-yellow/20 text-elec-yellow">
-                          {article.regulatory_body}
+                          {article.category || article.regulatory_body}
                         </Badge>
                         <span>•</span>
                         <span>{format(new Date(article.date_published), 'dd MMM yyyy')}</span>
@@ -246,25 +247,46 @@ const IndustryNewsCard = () => {
                 </CardHeader>
                 <CardContent className="pt-0">
                   <div className="flex gap-2">
-                    <Dialog>
-                      <DialogTrigger asChild>
-                        <Button 
-                          size="sm" 
-                          className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
-                          onClick={() => setSelectedArticle(article)}
-                        >
-                          Read Article
-                        </Button>
-                      </DialogTrigger>
+                    {(article as any).external_url ? (
+                      <Button 
+                        size="sm" 
+                        className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
+                        onClick={() => window.open((article as any).external_url, '_blank')}
+                      >
+                        <ExternalLink className="h-4 w-4 mr-2" />
+                        Read Article
+                      </Button>
+                    ) : (
+                      <Dialog>
+                        <DialogTrigger asChild>
+                          <Button 
+                            size="sm" 
+                            className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
+                            onClick={() => setSelectedArticle(article)}
+                          >
+                            Read Article
+                          </Button>
+                        </DialogTrigger>
                       <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto bg-elec-gray border-elec-yellow/20">
                         <DialogHeader>
                           <DialogTitle className="text-elec-yellow text-xl">{selectedArticle?.title}</DialogTitle>
                           <DialogDescription className="text-gray-300">
                             <div className="flex flex-wrap items-center gap-2 mt-2">
                               <Badge variant="secondary" className="bg-elec-yellow/20 text-elec-yellow">
-                                {selectedArticle?.regulatory_body}
+                                {selectedArticle?.category || selectedArticle?.regulatory_body}
                               </Badge>
                               <span>Published: {selectedArticle && format(new Date(selectedArticle.date_published), 'dd MMM yyyy')}</span>
+                              {(selectedArticle as any)?.external_url && (
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  onClick={() => window.open((selectedArticle as any).external_url, '_blank')}
+                                  className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+                                >
+                                  <ExternalLink className="h-4 w-4 mr-2" />
+                                  View Original
+                                </Button>
+                              )}
                             </div>
                           </DialogDescription>
                         </DialogHeader>
@@ -277,6 +299,7 @@ const IndustryNewsCard = () => {
                         </div>
                       </DialogContent>
                     </Dialog>
+                    )}
                   </div>
                 </CardContent>
               </Card>
