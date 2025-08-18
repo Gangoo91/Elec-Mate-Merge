@@ -1,4 +1,5 @@
 
+import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 
@@ -7,42 +8,29 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 }
 
-interface FirecrawlResponse {
-  success: boolean;
-  data?: {
-    markdown: string;
-    metadata: {
-      title: string;
-      description?: string;
-      publishDate?: string;
-    };
-  };
-  error?: string;
-}
-
 interface NewsArticle {
   title: string;
   summary: string;
   content: string;
   regulatory_body: string;
+  category: string;
   source_url: string;
+  external_url: string;
   external_id: string;
   date_published: string;
-  category: string;
-  external_url?: string;
 }
 
-async function scrapeWithFirecrawl(url: string, source: string): Promise<NewsArticle[]> {
-  console.log(`Starting scrape for: ${url}`);
-  
+// Firecrawl API integration - using scrape instead of crawl for better results
+async function scrapeWebsite(url: string): Promise<any[]> {
   const firecrawlApiKey = Deno.env.get('FIRECRAWL_API_KEY');
   if (!firecrawlApiKey) {
-    console.error('FIRECRAWL_API_KEY not found');
-    return [];
+    throw new Error('FIRECRAWL_API_KEY not found');
   }
 
+  console.log(`Starting scrape for: ${url}`);
+  
   try {
-    const response = await fetch('https://api.firecrawl.dev/v1/scrape', {
+    const scrapeResponse = await fetch('https://api.firecrawl.dev/v1/scrape', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${firecrawlApiKey}`,
@@ -52,124 +40,124 @@ async function scrapeWithFirecrawl(url: string, source: string): Promise<NewsArt
         url: url,
         formats: ['markdown'],
         onlyMainContent: true,
-        includeTags: ['title', 'meta', 'article', 'h1', 'h2', 'h3', 'p'],
-        waitFor: 3000
-      }),
+        includeTags: ['title', 'meta', 'article', 'p', 'h1', 'h2', 'h3'],
+        excludeTags: ['nav', 'footer', 'aside', 'script', 'style']
+      })
     });
 
-    if (!response.ok) {
-      throw new Error(`Firecrawl API error: ${response.status} ${response.statusText}`);
+    if (!scrapeResponse.ok) {
+      const errorText = await scrapeResponse.text();
+      console.error(`Firecrawl API error: ${scrapeResponse.status} - ${errorText}`);
+      throw new Error(`Firecrawl API error: ${scrapeResponse.status}`);
     }
 
-    const result: FirecrawlResponse = await response.json();
+    const scrapeData = await scrapeResponse.json();
     
-    if (!result.success || !result.data) {
-      console.error(`Firecrawl scraping failed for ${url}:`, result.error);
+    if (scrapeData.success && scrapeData.data) {
+      console.log(`Successfully scraped content from ${url}`);
+      return [scrapeData.data]; // Return as array for consistency
+    } else {
+      console.error('Scrape failed:', scrapeData);
       return [];
     }
-
-    console.log(`Successfully scraped content from ${url}`);
-    
-    // Extract content and create articles based on source
-    const articles: NewsArticle[] = [];
-    const content = result.data.markdown;
-    const title = result.data.metadata.title || 'No Title';
-    
-    // Create a unique external ID based on URL and content hash
-    const contentHash = await hashString(title + content.substring(0, 100));
-    const external_id = `${source.toLowerCase().replace(/\s+/g, '_')}_${contentHash}`;
-    
-    // Create summary from content
-    const summary = content.length > 500 
-      ? content.substring(0, 500) + '...' 
-      : content;
-
-    // Enhanced processing for electrical industry content
-    let category = 'general';
-    let regulatoryBody = source;
-    let tags: string[] = [];
-
-    if (source === 'HSE') {
-      category = content.toLowerCase().includes('electrical') ? 'electrical' : 'safety';
-      regulatoryBody = 'HSE';
-      tags = content.toLowerCase().includes('electrical') ? ['Electrical Safety', 'HSE'] : ['Safety', 'HSE'];
-    } else if (source === 'BS7671') {
-      category = 'regulations';
-      regulatoryBody = 'BEIS';
-      tags = ['BS 7671', 'Wiring Regulations', 'Government'];
-    } else if (source === 'IET') {
-      category = content.toLowerCase().includes('bs 7671') || content.toLowerCase().includes('wiring') ? 'regulations' : 'technical';
-      regulatoryBody = 'IET';
-      tags = content.toLowerCase().includes('bs 7671') ? ['BS 7671', 'IET', 'Wiring Regulations'] : ['IET', 'Technical'];
-    } else if (source.includes('Major Projects')) {
-      category = 'Major Projects';
-      regulatoryBody = 'Industry';
-      tags = ['Major Projects', 'Contracts', 'Industry'];
-    }
-
-    // Create electrical industry-focused summary
-    const electricalKeywords = ['electrical', 'bs 7671', 'wiring', 'installation', 'electrical safety', 'regulations', 'compliance'];
-    const isElectricalContent = electricalKeywords.some(keyword => 
-      content.toLowerCase().includes(keyword) || title.toLowerCase().includes(keyword)
-    );
-
-    let enhancedSummary = summary;
-    if (isElectricalContent) {
-      const electricalContext = extractElectricalContext(content);
-      enhancedSummary = electricalContext || summary;
-    }
-
-    articles.push({
-      title: title.trim(),
-      summary: enhancedSummary,
-      content: content,
-      regulatory_body: regulatoryBody,
-      source_url: url,
-      external_id: external_id,
-      date_published: new Date().toISOString().split('T')[0], // Format as YYYY-MM-DD for date column
-      category: category,
-      external_url: url
-    });
-
-    return articles;
-    
   } catch (error) {
-    console.error(`Error scraping ${url} with Firecrawl:`, error);
+    console.error(`Error scraping ${url}:`, error);
     return [];
   }
 }
 
-// Simple hash function for creating consistent IDs
-async function hashString(str: string): Promise<string> {
-  const encoder = new TextEncoder();
-  const data = encoder.encode(str);
-  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('').substring(0, 8);
-}
-
-function extractElectricalContext(content: string): string {
-  // Extract electrician-relevant information from content
-  const sentences = content.split('.').filter(s => s.trim());
-  const relevantSentences = sentences.filter(sentence => {
-    const lower = sentence.toLowerCase();
-    return lower.includes('electrical') || 
-           lower.includes('bs 7671') || 
-           lower.includes('wiring') || 
-           lower.includes('installation') || 
-           lower.includes('safety') || 
-           lower.includes('regulation') ||
-           lower.includes('compliance') ||
-           lower.includes('contract') ||
-           lower.includes('project');
-  });
-
-  if (relevantSentences.length > 0) {
-    const summary = relevantSentences.slice(0, 3).join('. ').trim();
-    return summary.length > 500 ? summary.substring(0, 500) + '...' : summary + '.';
+// AI summarization using OpenAI
+async function summarizeForElectricians(content: string, title: string): Promise<string> {
+  const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
+  if (!openAIApiKey) {
+    console.warn('OpenAI API key not found, using original content');
+    return content.substring(0, 300) + '...';
   }
 
-  return content.substring(0, 500) + '...';
+  try {
+    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${openAIApiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: 'gpt-4o-mini',
+        messages: [
+          {
+            role: 'system',
+            content: 'You are an expert electrical industry analyst. Summarize news articles in exactly 2 sentences for electricians in the UK, focusing on practical implications, regulatory changes, safety updates, or project opportunities. Be concise but informative.'
+          },
+          {
+            role: 'user',
+            content: `Title: ${title}\n\nContent: ${content.substring(0, 2000)}`
+          }
+        ],
+        max_tokens: 150,
+        temperature: 0.3
+      }),
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      return data.choices[0]?.message?.content || content.substring(0, 300) + '...';
+    } else {
+      console.error('OpenAI API error:', response.status);
+      return content.substring(0, 300) + '...';
+    }
+  } catch (error) {
+    console.error('Error summarizing content:', error);
+    return content.substring(0, 300) + '...';
+  }
+}
+
+// Process scraped data into news articles
+async function processScrapedData(data: any, sourceUrl: string): Promise<NewsArticle[]> {
+  const articles: NewsArticle[] = [];
+  
+  // Determine category and regulatory body from source URL
+  let category = 'General';
+  let regulatory_body = 'Unknown';
+  
+  if (sourceUrl.includes('hse.gov.uk')) {
+    category = 'HSE';
+    regulatory_body = 'HSE';
+  } else if (sourceUrl.includes('bs-7671') || sourceUrl.includes('gov.uk')) {
+    category = 'BS7671';
+    regulatory_body = 'BEIS';
+  } else if (sourceUrl.includes('theiet.org')) {
+    category = 'IET';
+    regulatory_body = 'IET';
+  } else if (sourceUrl.includes('constructionenquirer.com') || sourceUrl.includes('theconstructionindex.co.uk')) {
+    category = 'Major Projects';
+    regulatory_body = 'Industry';
+  }
+
+  if (data && data.markdown) {
+    const title = data.metadata?.title || 'Latest Update';
+    const content = data.markdown;
+    const url = data.metadata?.sourceURL || sourceUrl;
+    
+    // Generate AI summary
+    const summary = await summarizeForElectricians(content, title);
+    
+    // Create external ID from URL
+    const external_id = url.split('/').pop() || Date.now().toString();
+    
+    articles.push({
+      title: title.trim(),
+      summary: summary,
+      content: content.substring(0, 2000), // Limit content length
+      regulatory_body,
+      category,
+      source_url: sourceUrl,
+      external_url: url,
+      external_id: `${regulatory_body.toLowerCase()}_${external_id}_${Date.now()}`,
+      date_published: new Date().toISOString(),
+    });
+  }
+  
+  return articles;
 }
 
 serve(async (req) => {
@@ -184,69 +172,55 @@ serve(async (req) => {
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
     const supabase = createClient(supabaseUrl, supabaseKey)
 
-    // Enhanced sources using Firecrawl for better content extraction
+    // Target URLs for specific electrical industry categories only
     const sources = [
-      { url: 'https://www.hse.gov.uk/news/', source: 'HSE' },
-      { url: 'https://www.gov.uk/government/collections/bs-7671', source: 'BS7671' },
-      { url: 'https://www.theiet.org/news/', source: 'IET' },
-      { url: 'https://www.constructionenquirer.com/category/contracts-awarded/', source: 'Major Projects Just Awarded' },
-      { url: 'https://www.theconstructionindex.co.uk/news/contracts', source: 'Major Projects Just Awarded' }
+      { url: 'https://www.hse.gov.uk/news/', name: 'HSE', category: 'HSE' },
+      { url: 'https://www.gov.uk/government/collections/bs-7671', name: 'BS7671', category: 'BS7671' },
+      { url: 'https://www.theiet.org/news/', name: 'IET', category: 'IET' },
+      { url: 'https://www.constructionenquirer.com/category/contracts-awarded/', name: 'Major Projects Just Awarded', category: 'Major Projects' },
+      { url: 'https://www.theconstructionindex.co.uk/news/contracts', name: 'Major Projects Just Awarded', category: 'Major Projects' }
     ];
 
     let totalInserted = 0;
     let totalErrors = 0;
 
-    // Process each source with Firecrawl
-    for (const sourceData of sources) {
+    // Process each source
+    for (const source of sources) {
       try {
-        console.log(`Processing source: ${sourceData.source} - ${sourceData.url}`);
+        console.log(`Processing source: ${source.name} - ${source.url}`);
         
-        // Check if we already have recent content from this source (within last hour)
-        const { data: recentArticles } = await supabase
-          .from('industry_news')
-          .select('external_id')
-          .eq('regulatory_body', sourceData.source.includes('Major Projects') ? 'Industry' : sourceData.source)
-          .gte('created_at', new Date(Date.now() - 60 * 60 * 1000).toISOString());
-
-        console.log(`Found ${recentArticles?.length || 0} recent articles from ${sourceData.source}`);
+        // Scrape the website
+        const scrapeData = await scrapeWebsite(source.url);
         
-        const articles = await scrapeWithFirecrawl(sourceData.url, sourceData.source);
-        
-        // Insert articles with better duplicate handling
-        for (const article of articles) {
-          try {
-            // First check if this exact external_id exists
-            const { data: existingArticle } = await supabase
-              .from('industry_news')
-              .select('id')
-              .eq('external_id', article.external_id)
-              .single();
+        if (scrapeData.length > 0) {
+          // Process scraped data into articles
+          const articles = await processScrapedData(scrapeData[0], source.url);
+          
+          // Insert articles with upsert to handle duplicates
+          for (const article of articles) {
+            try {
+              const { error } = await supabase
+                .from('industry_news')
+                .upsert(article, { 
+                  onConflict: 'external_id',
+                  ignoreDuplicates: false 
+                });
 
-            if (existingArticle) {
-              console.log(`Article already exists with external_id: ${article.external_id}`);
-              continue;
-            }
-
-            // Insert new article
-            const { error } = await supabase
-              .from('industry_news')
-              .insert(article);
-
-            if (error) {
-              console.error(`Error inserting article:`, error);
+              if (error) {
+                console.error(`Error inserting article:`, error);
+                totalErrors++;
+              } else {
+                totalInserted++;
+              }
+            } catch (insertError) {
+              console.error(`Error inserting article:`, insertError);
               totalErrors++;
-            } else {
-              console.log(`Successfully inserted article: ${article.title.substring(0, 50)}...`);
-              totalInserted++;
             }
-          } catch (insertError) {
-            console.error(`Error processing article insertion:`, insertError);
-            totalErrors++;
           }
         }
         
       } catch (sourceError) {
-        console.error(`Error processing source ${sourceData.source}:`, sourceError);
+        console.error(`Error processing source ${source.name}:`, sourceError);
         totalErrors++;
       }
     }
@@ -257,7 +231,8 @@ serve(async (req) => {
       JSON.stringify({ 
         success: true, 
         inserted: totalInserted, 
-        errors: totalErrors 
+        errors: totalErrors,
+        message: `Successfully processed ${totalInserted} articles from industry sources` 
       }),
       {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },

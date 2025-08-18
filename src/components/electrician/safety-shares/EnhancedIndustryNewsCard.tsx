@@ -1,16 +1,13 @@
 
 import { useState, useEffect } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Newspaper, Clock, ExternalLink, Eye, MessageSquare, Bookmark, Search, Filter, Star, ThumbsUp, RefreshCw } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
-import { format } from "date-fns";
+import { Newspaper, Clock, ExternalLink, Eye, MessageSquare, Bookmark, Search, Filter, Star, ThumbsUp, RefreshCcw, Calendar, Link, Globe } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
 interface NewsArticle {
   id: string;
@@ -20,13 +17,10 @@ interface NewsArticle {
   category: string;
   regulatory_body: string;
   date_published: string;
+  external_url: string | null;
+  source_url: string | null;
   view_count: number;
   average_rating: number;
-  external_url?: string;
-  source_url?: string;
-  tags?: string[];
-  created_at: string;
-  updated_at: string;
   is_active: boolean;
 }
 
@@ -34,87 +28,57 @@ const EnhancedIndustryNewsCard = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedSource, setSelectedSource] = useState("all");
-  const [selectedArticle, setSelectedArticle] = useState<NewsArticle | null>(null);
-  const [bookmarkedArticles, setBookmarkedArticles] = useState<Set<string>>(new Set());
-  const [likedArticles, setLikedArticles] = useState<Set<string>>(new Set());
-  const { toast } = useToast();
+  const [articles, setArticles] = useState<NewsArticle[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isRefreshing, setIsRefreshing] = useState(false);
 
-  // Fetch industry news from database
-  const { data: articles = [], isLoading, refetch } = useQuery({
-    queryKey: ['enhanced-industry-news'],
-    queryFn: async () => {
+  useEffect(() => {
+    fetchArticles();
+  }, []);
+
+  const fetchArticles = async () => {
+    try {
       const { data, error } = await supabase
         .from('industry_news')
         .select('*')
         .eq('is_active', true)
         .order('date_published', { ascending: false })
-        .limit(50);
-      
-      if (error) throw error;
-      return data || [];
+        .limit(20);
+
+      if (error) {
+        console.error('Error fetching articles:', error);
+        toast.error('Failed to fetch articles');
+        return;
+      }
+
+      setArticles(data || []);
+    } catch (error) {
+      console.error('Error:', error);
+      toast.error('Failed to fetch articles');
+    } finally {
+      setIsLoading(false);
     }
-  });
+  };
 
-  const [isRefreshing, setIsRefreshing] = useState(false);
-  const [lastRefresh, setLastRefresh] = useState<Date | null>(null);
-
-  // Manual refresh function
-  const handleManualRefresh = async () => {
-    if (isRefreshing) return; // Prevent spam clicking
-    
+  const refreshNews = async () => {
     setIsRefreshing(true);
-    
     try {
-      toast({
-        title: "🔄 Fetching Latest News",
-        description: "Scraping from HSE, IET, BS7671 and major projects...",
-        duration: 4000,
-      });
-
-      console.log("Starting manual refresh with Firecrawl...");
-      
+      // Call the edge function to fetch fresh news
       const { data, error } = await supabase.functions.invoke('fetch-industry-news');
       
       if (error) {
-        console.error('Edge function error:', error);
-        toast({
-          title: "⚠️ Partial Update",
-          description: "Some sources may be unavailable. Showing latest cached articles.",
-          duration: 4000,
-        });
-      } else {
-        console.log('Edge function response:', data);
-        const newCount = data?.inserted || 0;
-        const errorCount = data?.errors || 0;
-        
-        if (newCount > 0) {
-          toast({
-            title: "✅ News Updated Successfully",
-            description: `Added ${newCount} new articles${errorCount > 0 ? ` (${errorCount} source errors)` : ''}`,
-            variant: "success",
-          });
-        } else {
-          toast({
-            title: "📰 No New Articles",
-            description: "All sources up to date. Showing latest content.",
-            duration: 3000,
-          });
-        }
+        console.error('Error refreshing news:', error);
+        toast.error('Failed to refresh news');
+        return;
       }
+
+      toast.success(`Refreshed! Found ${data.inserted} new articles`);
       
-      // Always refetch from database to show latest content
-      await refetch();
-      setLastRefresh(new Date());
-      console.log("Database refetch completed");
-      
+      // Refresh the local data
+      await fetchArticles();
     } catch (error) {
-      console.error('Refresh error:', error);
-      toast({
-        title: "🔄 Refresh Complete",
-        description: "Showing latest available articles from cache.", 
-        duration: 3000,
-      });
-      await refetch();
+      console.error('Error:', error);
+      toast.error('Failed to refresh news');
     } finally {
       setIsRefreshing(false);
     }
@@ -122,37 +86,34 @@ const EnhancedIndustryNewsCard = () => {
 
   const getCategoryColor = (category: string) => {
     switch (category.toLowerCase()) {
-      case "regulations": return "bg-red-500/20 text-red-400 border-red-500/30";
-      case "bs7671": return "bg-red-500/20 text-red-400 border-red-500/30";
-      case "regulatory": return "bg-blue-500/20 text-blue-400 border-blue-500/30";
-      case "safety": return "bg-orange-500/20 text-orange-400 border-orange-500/30";
-      case "electrical": return "bg-yellow-500/20 text-yellow-400 border-yellow-500/30";
-      case "major projects": return "bg-purple-500/20 text-purple-400 border-purple-500/30";
-      case "technical": return "bg-green-500/20 text-green-400 border-green-500/30";
+      case "hse": return "bg-red-500/20 text-red-400 border-red-500/30";
+      case "bs7671": return "bg-blue-500/20 text-blue-400 border-blue-500/30";
       case "iet": return "bg-green-500/20 text-green-400 border-green-500/30";
-      case "hse": return "bg-orange-500/20 text-orange-400 border-orange-500/30";
+      case "major projects": return "bg-purple-500/20 text-purple-400 border-purple-500/30";
       default: return "bg-gray-500/20 text-gray-400 border-gray-500/30";
     }
   };
 
-  const toggleBookmark = (articleId: string) => {
-    setBookmarkedArticles(prev => {
-      const newSet = new Set(prev);
-      if (newSet.has(articleId)) {
-        newSet.delete(articleId);
-      } else {
-        newSet.add(articleId);
-      }
-      return newSet;
-    });
-  };
+  const handleViewArticle = async (article: NewsArticle) => {
+    // Track view count
+    try {
+      await supabase
+        .from('safety_content_views')
+        .insert({
+          content_type: 'industry_news',
+          content_id: article.id,
+          user_id: null, // Can be null for anonymous views
+        });
+    } catch (error) {
+      console.error('Error tracking view:', error);
+    }
 
-  const handleLike = (articleId: string) => {
-    setLikedArticles(prev => {
-      const newSet = new Set(prev);
-      newSet.add(articleId);
-      return newSet;
-    });
+    // Open external link if available
+    if (article.external_url) {
+      window.open(article.external_url, '_blank');
+    } else if (article.source_url) {
+      window.open(article.source_url, '_blank');
+    }
   };
 
   const renderStars = (rating: number) => {
@@ -170,38 +131,47 @@ const EnhancedIndustryNewsCard = () => {
 
   const filteredArticles = articles.filter(article => {
     const matchesSearch = article.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         (article.summary && article.summary.toLowerCase().includes(searchQuery.toLowerCase()));
+                         article.summary.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesCategory = selectedCategory === "all" || article.category.toLowerCase() === selectedCategory.toLowerCase();
     const matchesSource = selectedSource === "all" || article.regulatory_body === selectedSource;
     
     return matchesSearch && matchesCategory && matchesSource;
   });
 
-  // Extract unique categories and sources for filtering
-  const uniqueCategories = Array.from(new Set(articles.map(article => article.category).filter(Boolean)));
-  const uniqueSources = Array.from(new Set(articles.map(article => article.regulatory_body).filter(Boolean)));
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center py-8">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-elec-yellow mx-auto mb-4"></div>
+          <p className="text-muted-foreground">Loading industry news...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-2xl font-bold text-white">Enhanced Industry News</h2>
-          <p className="text-muted-foreground">Interactive industry news with filtering, ratings, and bookmarking</p>
-        </div>
-        <div className="flex flex-col items-end gap-2">
-          <Button
-            onClick={handleManualRefresh}
-            className="bg-elec-yellow text-black hover:bg-elec-yellow/90 disabled:opacity-50"
-            disabled={isLoading || isRefreshing}
-          >
-            <RefreshCw className={`h-4 w-4 mr-2 ${(isLoading || isRefreshing) ? 'animate-spin' : ''}`} />
-            {isRefreshing ? 'Fetching...' : isLoading ? 'Loading...' : 'Refresh News'}
-          </Button>
-          {lastRefresh && (
-            <p className="text-xs text-muted-foreground">
-              Last refreshed: {format(lastRefresh, 'HH:mm:ss')}
-            </p>
-          )}
+        <div className="flex items-center justify-between">
+          <div>
+            <h2 className="text-2xl font-bold text-white">Industry News & Major Projects</h2>
+            <p className="text-muted-foreground">Latest electrical industry news with real-time updates from major sources</p>
+          </div>
+          <div className="flex gap-2">
+            <Button 
+              onClick={refreshNews}
+              disabled={isRefreshing}
+              variant="outline"
+              className="border-elec-yellow/30 text-white hover:bg-elec-yellow/10"
+            >
+              <RefreshCcw className={`h-4 w-4 mr-2 ${isRefreshing ? 'animate-spin' : ''}`} />
+              {isRefreshing ? 'Refreshing...' : 'Refresh News'}
+            </Button>
+            <Button className="bg-elec-yellow text-black hover:bg-elec-yellow/90">
+              <Newspaper className="h-4 w-4 mr-2" />
+              Subscribe to News
+            </Button>
+          </div>
         </div>
       </div>
 
@@ -225,9 +195,10 @@ const EnhancedIndustryNewsCard = () => {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">All Categories</SelectItem>
-                {uniqueCategories.map((category) => (
-                  <SelectItem key={category} value={category}>{category}</SelectItem>
-                ))}
+                <SelectItem value="HSE">HSE Safety</SelectItem>
+                <SelectItem value="BS7671">BS 7671 Updates</SelectItem>
+                <SelectItem value="IET">IET News</SelectItem>
+                <SelectItem value="Major Projects">Major Projects</SelectItem>
               </SelectContent>
             </Select>
             <Select value={selectedSource} onValueChange={setSelectedSource}>
@@ -237,146 +208,130 @@ const EnhancedIndustryNewsCard = () => {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">All Sources</SelectItem>
-                {uniqueSources.map((source) => (
-                  <SelectItem key={source} value={source}>{source}</SelectItem>
-                ))}
+                <SelectItem value="HSE">HSE</SelectItem>
+                <SelectItem value="BEIS">Government (BEIS)</SelectItem>
+                <SelectItem value="IET">Institution of Engineering and Technology</SelectItem>
+                <SelectItem value="Industry">Industry Sources</SelectItem>
               </SelectContent>
             </Select>
           </div>
         </CardContent>
       </Card>
 
-      {isLoading ? (
-        <div className="text-center py-8">
-          <div className="animate-spin h-8 w-8 border-2 border-elec-yellow border-t-transparent rounded-full mx-auto"></div>
-          <p className="text-gray-400 mt-2">Loading enhanced news...</p>
-        </div>
-      ) : (
-        <div className="grid gap-6">
-          {filteredArticles.map((article) => (
-            <Card key={article.id} className="border-elec-yellow/20 bg-elec-gray">
-              <CardHeader className="pb-3">
-                <div className="flex items-start justify-between">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-3">
-                      <Badge className={getCategoryColor(article.category)}>
-                        {article.category}
-                      </Badge>
-                      <span className="text-sm text-muted-foreground">by {article.regulatory_body}</span>
-                      <div className="flex items-center gap-1">
-                        {renderStars(article.average_rating || 0)}
-                        <span className="text-xs text-muted-foreground ml-1">({article.average_rating?.toFixed(1) || '0.0'})</span>
+      <div className="grid gap-6">
+        {filteredArticles.map((article) => (
+          <Card key={article.id} className="border-elec-yellow/20 bg-elec-gray">
+            <CardHeader className="pb-3">
+              <div className="flex items-start justify-between">
+                <div className="flex-1">
+                  <div className="flex items-center gap-2 mb-3">
+                    <Badge className={getCategoryColor(article.category)}>
+                      {article.category}
+                    </Badge>
+                    <span className="text-sm text-muted-foreground">by {article.regulatory_body}</span>
+                    <div className="flex items-center gap-1">
+                      {renderStars(article.average_rating)}
+                      <span className="text-xs text-muted-foreground ml-1">({article.average_rating.toFixed(1)})</span>
+                    </div>
+                    {article.external_url && (
+                      <div className="flex items-center gap-1 text-xs text-elec-yellow">
+                        <Globe className="h-3 w-3" />
+                        <span>External Link</span>
                       </div>
-                      {/* Show category-based tags */}
-                      <Badge variant="outline" className="text-xs border-elec-yellow/30 text-elec-yellow">
-                        {article.category}
-                      </Badge>
-                    </div>
-                    <CardTitle className="text-white text-lg mb-2">
-                      {article.title}
-                    </CardTitle>
-                    <p className="text-gray-300 text-sm line-clamp-2">
-                      {article.summary}
-                    </p>
-                  </div>
-                  <Button 
-                    size="sm" 
-                    variant="ghost" 
-                    onClick={() => toggleBookmark(article.id)}
-                    className={bookmarkedArticles.has(article.id) ? "text-elec-yellow" : "text-gray-400"}
-                  >
-                    <Bookmark className={`h-4 w-4 ${bookmarkedArticles.has(article.id) ? "fill-current" : ""}`} />
-                  </Button>
-                </div>
-              </CardHeader>
-
-              <CardContent className="pt-0">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                    <div className="flex items-center gap-1">
-                      <Clock className="h-4 w-4" />
-                      <span>{format(new Date(article.date_published), 'dd MMM yyyy')}</span>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <Eye className="h-4 w-4" />
-                      <span>{article.view_count || 0}</span>
-                    </div>
-                    <Button
-                      size="sm"
-                      variant="ghost"
-                      onClick={() => handleLike(article.id)}
-                      className={`flex items-center gap-1 p-0 h-auto ${
-                        likedArticles.has(article.id) ? "text-elec-yellow" : "text-muted-foreground hover:text-elec-yellow"
-                      }`}
-                    >
-                      <ThumbsUp className="h-4 w-4" />
-                      <span>{likedArticles.has(article.id) ? '1' : '0'}</span>
-                    </Button>
-                  </div>
-                  <div className="flex gap-2">
-                    <Dialog>
-                      <DialogTrigger asChild>
-                        <Button 
-                          size="sm" 
-                          variant="outline" 
-                          className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
-                          onClick={() => setSelectedArticle(article as NewsArticle)}
-                        >
-                          Read Article
-                        </Button>
-                      </DialogTrigger>
-                      <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto bg-elec-gray border-elec-yellow/20">
-                        <DialogHeader>
-                          <DialogTitle className="text-elec-yellow text-xl">{selectedArticle?.title}</DialogTitle>
-                          <DialogDescription className="text-gray-300">
-                            <div className="flex flex-wrap items-center gap-2 mt-2">
-                              <Badge className={getCategoryColor(selectedArticle?.category || '')}>
-                                {selectedArticle?.category}
-                              </Badge>
-                              <span>Published: {selectedArticle && format(new Date(selectedArticle.date_published), 'dd MMM yyyy')}</span>
-                              <span>•</span>
-                              <span>Source: {selectedArticle?.regulatory_body}</span>
-                            </div>
-                          </DialogDescription>
-                        </DialogHeader>
-                        <div className="space-y-4 text-white">
-                          {selectedArticle?.content && (
-                            <div className="prose prose-invert max-w-none">
-                              <div className="whitespace-pre-wrap">{selectedArticle.content}</div>
-                            </div>
-                          )}
-                        </div>
-                      </DialogContent>
-                    </Dialog>
-                    {(article as any).source_url && (
-                      <Button 
-                        size="sm" 
-                        className="bg-elec-yellow text-black hover:bg-elec-yellow/90"
-                        onClick={() => window.open((article as any).source_url, '_blank')}
-                      >
-                        <ExternalLink className="h-4 w-4 mr-2" />
-                        Source
-                      </Button>
                     )}
                   </div>
+                  <CardTitle className="text-white text-lg mb-2">
+                    {article.title}
+                  </CardTitle>
+                  <p className="text-gray-300 text-sm mb-3">
+                    {article.summary}
+                  </p>
+                  {article.content && article.content.length > 200 && (
+                    <p className="text-gray-400 text-xs line-clamp-2">
+                      {article.content.substring(0, 200)}...
+                    </p>
+                  )}
                 </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      )}
+                <div className="flex flex-col gap-2">
+                  {(article.external_url || article.source_url) && (
+                    <Button 
+                      size="sm" 
+                      variant="ghost" 
+                      className="text-elec-yellow hover:bg-elec-yellow/10"
+                      onClick={() => handleViewArticle(article)}
+                    >
+                      <Link className="h-4 w-4" />
+                    </Button>
+                  )}
+                </div>
+              </div>
+            </CardHeader>
 
-      {filteredArticles.length === 0 && (
-        <div className="text-center py-8 text-muted-foreground">
-          No articles found matching your search criteria.
-        </div>
-      )}
-
-      <div className="text-center pt-4">
-        <Button variant="outline" className="border-elec-yellow/30 text-white hover:bg-elec-yellow/10">
-          Load More Articles
-        </Button>
+            <CardContent className="pt-0">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                  <div className="flex items-center gap-1">
+                    <Calendar className="h-4 w-4" />
+                    <span>{new Date(article.date_published).toLocaleDateString('en-GB')}</span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <Eye className="h-4 w-4" />
+                    <span>{article.view_count}</span>
+                  </div>
+                  {article.source_url && (
+                    <div className="flex items-center gap-1 text-xs">
+                      <Globe className="h-3 w-3" />
+                      <span>Source</span>
+                    </div>
+                  )}
+                </div>
+                <div className="flex gap-2">
+                  {article.source_url && (
+                    <Button 
+                      size="sm" 
+                      variant="outline"
+                      onClick={() => window.open(article.source_url!, '_blank')}
+                      className="border-elec-yellow/30 text-white hover:bg-elec-yellow/10"
+                    >
+                      <Globe className="h-4 w-4 mr-2" />
+                      Source
+                    </Button>
+                  )}
+                  <Button 
+                    size="sm" 
+                    className="bg-elec-yellow text-black hover:bg-elec-yellow/90"
+                    onClick={() => handleViewArticle(article)}
+                    disabled={!article.external_url && !article.source_url}
+                  >
+                    <ExternalLink className="h-4 w-4 mr-2" />
+                    {article.external_url ? 'Read Article' : 'View Source'}
+                  </Button>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        ))}
       </div>
+
+      {filteredArticles.length === 0 && !isLoading && (
+        <div className="text-center py-8 text-muted-foreground">
+          <Newspaper className="h-12 w-12 mx-auto mb-4 text-gray-600" />
+          <p className="text-lg mb-2">No articles found</p>
+          <p className="text-sm">Try adjusting your search criteria or refresh for new content.</p>
+        </div>
+      )}
+
+      {filteredArticles.length > 0 && (
+        <div className="text-center pt-4">
+          <Button 
+            variant="outline" 
+            className="border-elec-yellow/30 text-white hover:bg-elec-yellow/10"
+            onClick={fetchArticles}
+          >
+            Load More Articles
+          </Button>
+        </div>
+      )}
     </div>
   );
 };
