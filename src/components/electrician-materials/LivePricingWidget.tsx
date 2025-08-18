@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import SafeLink from "@/components/common/SafeLink";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { TrendingUp, TrendingDown, RefreshCw } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
@@ -150,9 +150,9 @@ const LivePricingWidget = () => {
               </div>
             ))
           )}
-          <SafeLink to="/electrician/live-pricing" className="block mt-4">
+          <Link to="/electrician/live-pricing" className="block mt-4">
             <Button variant="outline" size="sm" className="w-full">View Full UK Price List</Button>
-          </SafeLink>
+          </Link>
         </div>
       </CardContent>
     </Card>

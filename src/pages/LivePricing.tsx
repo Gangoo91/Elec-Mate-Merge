@@ -2,7 +2,6 @@
 import { Helmet } from "react-helmet";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { PoundSterling, TrendingUp, TrendingDown, Minus } from "lucide-react";
-import BackButton from "@/components/common/BackButton";
 
 const LivePricing = () => {
   const pricingData = [
@@ -66,14 +65,11 @@ const LivePricing = () => {
       </Helmet>
       
       <div className="space-y-8 animate-fade-in">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <div>
-            <h1 className="text-3xl font-bold tracking-tight">Live Pricing</h1>
-            <p className="text-muted-foreground">
-              Real-time pricing updates for materials and services
-            </p>
-          </div>
-          <BackButton customUrl="/electrician" label="Back to Electrical Hub" />
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight">Live Pricing</h1>
+          <p className="text-muted-foreground">
+            Real-time pricing updates for materials and services
+          </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

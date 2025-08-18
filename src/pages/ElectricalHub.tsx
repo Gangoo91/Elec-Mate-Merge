@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Wrench, Heart, Brain, GraduationCap, Briefcase, ArrowLeft, Calculator, Zap, MapPin, Shield } from "lucide-react";
-import LivePricingWidget from "@/components/electrician-materials/LivePricingWidget";
 
 const ElectricalHub = () => {
   // Main 2x2 grid - 4 most frequently used tools for daily electrical work
@@ -97,11 +96,6 @@ const ElectricalHub = () => {
             </Link>
           ))}
         </div>
-      </div>
-
-      {/* Live Pricing Widget */}
-      <div className="max-w-md mx-auto">
-        <LivePricingWidget />
       </div>
 
       {/* Additional Resources Section */}
