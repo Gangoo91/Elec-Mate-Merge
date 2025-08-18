@@ -7,32 +7,46 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { RefreshCw, Search, ExternalLink, Building2, MapPin, PoundSterling, Calendar, Filter, X } from "lucide-react";
+import { RefreshCw, Search, ExternalLink, Building2, MapPin, PoundSterling, Calendar, Filter, X, Key, Wifi, WifiOff } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { format } from "date-fns";
 import { Link } from "react-router-dom";
+import { FirecrawlService } from "@/utils/FirecrawlService";
+import { ApiKeyDialog } from "@/components/ui/api-key-dialog";
+import { Progress } from "@/components/ui/progress";
 
 const IndustryNewsCard = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedSource, setSelectedSource] = useState<string | null>(null);
   const [showBS7671Only, setShowBS7671Only] = useState(false);
   const [selectedArticle, setSelectedArticle] = useState<any>(null);
+  const [apiKeyDialogOpen, setApiKeyDialogOpen] = useState(false);
+  const [isLiveFetching, setIsLiveFetching] = useState(false);
+  const [fetchProgress, setFetchProgress] = useState({ current: 0, total: 0, source: "" });
   const { toast } = useToast();
 
-  // Fetch industry news
+  // Fetch industry news - now using cached articles and live fetching
   const { data: newsArticles = [], isLoading: newsLoading, refetch: refetchNews } = useQuery({
-    queryKey: ['industry-news'],
+    queryKey: ['industry-news-cached'],
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from('industry_news')
-        .select('*')
-        .eq('is_active', true)
-        .order('date_published', { ascending: false })
-        .limit(20);
+      // First, try to get cached articles
+      const cachedArticles = FirecrawlService.getCachedArticles();
       
-      if (error) throw error;
-      return data || [];
-    }
+      // If we have valid cached data, return it
+      if (cachedArticles.length > 0 && FirecrawlService.isCacheValid()) {
+        return cachedArticles;
+      }
+      
+      // If no valid cache and API key is configured, fetch live data
+      if (FirecrawlService.isApiKeyConfigured() && !isLiveFetching) {
+        // Return cached data (even if stale) while we fetch fresh data in background
+        return cachedArticles;
+      }
+      
+      // Fallback to empty array if no API key configured
+      return [];
+    },
+    refetchOnWindowFocus: false,
   });
 
   // Fetch major projects
@@ -51,37 +65,59 @@ const IndustryNewsCard = () => {
     }
   });
 
-  // Manual refresh function
-  const handleManualRefresh = async () => {
+  // Live news fetching function
+  const handleLiveFetch = async () => {
+    if (!FirecrawlService.isApiKeyConfigured()) {
+      setApiKeyDialogOpen(true);
+      return;
+    }
+
+    setIsLiveFetching(true);
+    setFetchProgress({ current: 0, total: 0, source: "" });
+
     try {
-      // First try to call the Edge Function
-      const { error } = await supabase.functions.invoke('fetch-industry-news');
-      
-      if (error) {
-        console.error('Edge function error:', error);
+      const result = await FirecrawlService.fetchLiveNews((progress) => {
+        setFetchProgress(progress);
+      });
+
+      if (result.success) {
         toast({
-          title: "Refresh Info",
-          description: "Refreshing from local database...",
-          duration: 2000,
+          title: "Live News Fetched",
+          description: `Successfully fetched ${result.articlesFound} articles from industry sources`,
+          variant: "success",
         });
+        
+        // Refresh the cached data query
+        await refetchNews();
       } else {
         toast({
-          title: "News Updated",
-          description: "Latest industry news fetched successfully",
+          title: "Fetch Failed",
+          description: result.error || "Failed to fetch live news",
+          variant: "destructive",
         });
       }
-      
-      // Always refetch from database
-      await refetchNews();
     } catch (error) {
-      console.error('Refresh error:', error);
+      console.error('Live fetch error:', error);
       toast({
-        title: "Refreshed Locally",
-        description: "Showing latest cached articles",
-        duration: 2000,
+        title: "Fetch Error",
+        description: "An error occurred while fetching live news",
+        variant: "destructive",
       });
-      await refetchNews();
+    } finally {
+      setIsLiveFetching(false);
+      setFetchProgress({ current: 0, total: 0, source: "" });
     }
+  };
+
+  // Handle API key configuration
+  const handleApiKeyConfigured = () => {
+    toast({
+      title: "API Key Configured",
+      description: "You can now fetch live industry news!",
+      variant: "success",
+    });
+    // Automatically trigger a live fetch after API key is configured
+    setTimeout(() => handleLiveFetch(), 1000);
   };
 
   // Filter articles
@@ -118,15 +154,39 @@ const IndustryNewsCard = () => {
               <Filter className="h-5 w-5 text-elec-yellow" />
               <CardTitle className="text-lg">Filter News</CardTitle>
             </div>
-            <Button
-              onClick={handleManualRefresh}
-              variant="outline"
-              size="sm"
-              className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
-            >
-              <RefreshCw className="h-4 w-4 mr-2" />
-              Refresh News
-            </Button>
+            <div className="flex gap-2">
+              {!FirecrawlService.isApiKeyConfigured() ? (
+                <Button
+                  onClick={() => setApiKeyDialogOpen(true)}
+                  variant="outline"
+                  size="sm"
+                  className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+                >
+                  <Key className="h-4 w-4 mr-2" />
+                  Setup API Key
+                </Button>
+              ) : (
+                <Button
+                  onClick={handleLiveFetch}
+                  variant="outline"
+                  size="sm"
+                  disabled={isLiveFetching}
+                  className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+                >
+                  {isLiveFetching ? (
+                    <>
+                      <Wifi className="h-4 w-4 mr-2 animate-pulse" />
+                      Fetching Live...
+                    </>
+                  ) : (
+                    <>
+                      <Wifi className="h-4 w-4 mr-2" />
+                      Fetch Live News
+                    </>
+                  )}
+                </Button>
+              )}
+            </div>
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -187,8 +247,53 @@ const IndustryNewsCard = () => {
               </Button>
             )}
           </div>
+          
+          {/* Live Fetch Progress */}
+          {isLiveFetching && (
+            <div className="space-y-2">
+              <div className="flex items-center justify-between text-sm">
+                <span className="text-gray-400">Fetching from: {fetchProgress.source}</span>
+                <span className="text-elec-yellow">{fetchProgress.current}/{fetchProgress.total}</span>
+              </div>
+              <Progress 
+                value={(fetchProgress.current / Math.max(fetchProgress.total, 1)) * 100} 
+                className="h-2"
+              />
+            </div>
+          )}
         </CardContent>
       </Card>
+
+      {/* API Key Dialog */}
+      <ApiKeyDialog
+        open={apiKeyDialogOpen}
+        onOpenChange={setApiKeyDialogOpen}
+        onApiKeyConfigured={handleApiKeyConfigured}
+      />
+
+      {/* Cache Status Indicator */}
+      {FirecrawlService.isApiKeyConfigured() && newsArticles.length > 0 && (
+        <div className="flex items-center justify-between text-sm text-gray-400 bg-elec-gray/50 px-4 py-2 rounded-lg border border-elec-yellow/10">
+          <div className="flex items-center gap-2">
+            {FirecrawlService.isCacheValid() ? (
+              <>
+                <Wifi className="h-4 w-4 text-green-400" />
+                <span>Fresh data from live sources</span>
+              </>
+            ) : (
+              <>
+                <WifiOff className="h-4 w-4 text-orange-400" />
+                <span>Cached data (click "Fetch Live News" for fresh updates)</span>
+              </>
+            )}
+          </div>
+          <span>
+            {FirecrawlService.getCacheAge() > 0 && 
+              `Updated ${Math.floor(FirecrawlService.getCacheAge() / (1000 * 60))} min ago`
+            }
+          </span>
+        </div>
+      )}
 
       {/* News Articles */}
       <div className="space-y-4">
