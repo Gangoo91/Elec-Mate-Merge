@@ -2,10 +2,18 @@
 import { Helmet } from "react-helmet";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { AlertTriangle, BookOpen, Newspaper, Building, Shield, Sparkles } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import SampleDataLoader from "@/components/electrician/safety-shares/SampleDataLoader";
 
 const SafetyShares = () => {
+  // Check if router context is available
+  let location;
+  try {
+    location = useLocation();
+  } catch (error) {
+    console.warn('Router context not available in SafetyShares');
+    location = null;
+  }
   const safetyCategories = [
     {
       id: 1,
@@ -89,17 +97,29 @@ const SafetyShares = () => {
                 </CardContent>
                 <CardContent className="pt-0">
                   <div className="flex gap-2">
-                    <Link to={category.link} className="flex-1">
+                    {location ? (
+                      <Link to={category.link} className="flex-1">
+                        <button className="w-full py-2 px-3 text-sm bg-elec-yellow/10 hover:bg-elec-yellow/20 text-elec-yellow border border-elec-yellow/30 rounded transition-colors">
+                          View Standard
+                        </button>
+                      </Link>
+                    ) : (
                       <button className="w-full py-2 px-3 text-sm bg-elec-yellow/10 hover:bg-elec-yellow/20 text-elec-yellow border border-elec-yellow/30 rounded transition-colors">
                         View Standard
                       </button>
-                    </Link>
+                    )}
                     {category.enhancedLink && (
-                      <Link to={category.enhancedLink} className="flex-1">
+                      location ? (
+                        <Link to={category.enhancedLink} className="flex-1">
+                          <button className="w-full py-2 px-3 text-sm bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 rounded transition-colors font-medium">
+                            Enhanced ✨
+                          </button>
+                        </Link>
+                      ) : (
                         <button className="w-full py-2 px-3 text-sm bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 rounded transition-colors font-medium">
                           Enhanced ✨
                         </button>
-                      </Link>
+                      )
                     )}
                   </div>
                 </CardContent>
