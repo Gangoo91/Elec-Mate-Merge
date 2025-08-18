@@ -8,6 +8,8 @@ interface NewsArticle {
   url: string;
   date_published: string;
   regulatory_body: string;
+  category: string;
+  keywords: string[];
   view_count: number;
   is_active: boolean;
 }
@@ -28,24 +30,52 @@ export class FirecrawlService {
 
   private static newsSources = [
     {
-      name: 'IET Wiring Matters',
-      url: 'https://electrical.theiet.org/wiring-matters',
-      regulatoryBody: 'IET'
-    },
-    {
       name: 'HSE Electrical Safety',
-      url: 'https://www.hse.gov.uk/electricity',
-      regulatoryBody: 'HSE'
+      url: 'https://www.hse.gov.uk/electricity/',
+      regulatoryBody: 'HSE',
+      category: 'Safety Updates'
     },
     {
-      name: 'GOV.UK Energy',
-      url: 'https://www.gov.uk/government/organisations/department-for-energy-security-and-net-zero',
-      regulatoryBody: 'GOV.UK'
+      name: 'HSE Latest News',
+      url: 'https://www.hse.gov.uk/news/',
+      regulatoryBody: 'HSE', 
+      category: 'Safety Updates'
     },
     {
-      name: 'NICEIC Technical',
-      url: 'https://www.niceic.com/find-an-installer',
-      regulatoryBody: 'NICEIC'
+      name: 'IET BS7671 Updates',
+      url: 'https://electrical.theiet.org/bs-7671/updates-to-18th-edition/',
+      regulatoryBody: 'IET',
+      category: 'BS7671 Updates'
+    },
+    {
+      name: 'IET Wiring Matters',
+      url: 'https://electrical.theiet.org/wiring-matters/',
+      regulatoryBody: 'IET',
+      category: 'Technical Updates'
+    },
+    {
+      name: 'BS7671 Amendments',
+      url: 'https://electrical.theiet.org/bs-7671/',
+      regulatoryBody: 'IET',
+      category: 'BS7671 Updates'
+    },
+    {
+      name: 'UK Government Tenders',
+      url: 'https://www.find-tender.service.gov.uk/Search/Results?keywords=electrical',
+      regulatoryBody: 'Government',
+      category: 'Major Projects'
+    },
+    {
+      name: 'Construction News Projects',
+      url: 'https://www.constructionnews.co.uk/sectors/infrastructure',
+      regulatoryBody: 'Construction News',
+      category: 'Major Projects'
+    },
+    {
+      name: 'Infrastructure Projects',
+      url: 'https://www.gov.uk/government/collections/infrastructure-and-projects-authority-annual-report',
+      regulatoryBody: 'Government',
+      category: 'Major Projects'
     }
   ];
 
@@ -175,66 +205,124 @@ export class FirecrawlService {
     }
   }
 
-  private static parseScrapedContent(scrapedData: any, source: { name: string; regulatoryBody: string }): Omit<NewsArticle, 'id'>[] {
+  private static parseScrapedContent(scrapedData: any, source: { name: string; regulatoryBody: string; category: string }): Omit<NewsArticle, 'id'>[] {
     const articles: Omit<NewsArticle, 'id'>[] = [];
     
     try {
       const content = scrapedData.markdown || scrapedData.html || '';
       
-      // Simple parsing - look for headings and content blocks
-      const lines = content.split('\n');
-      let currentTitle = '';
-      let currentContent = '';
+      // Enhanced content parsing based on source type
+      let contentSections: string[] = [];
       
-      for (const line of lines) {
-        const trimmedLine = line.trim();
-        
-        // Detect headings that might be article titles
-        if (trimmedLine.match(/^#+\s+/) || trimmedLine.match(/^[A-Z][^.!?]*$/)) {
-          // Save previous article if we have one
-          if (currentTitle && currentContent) {
-            articles.push({
-              title: currentTitle.replace(/^#+\s*/, '').trim(),
-              summary: this.generateSummary(currentContent),
-              content: currentContent.trim(),
-              url: scrapedData.url || '',
-              date_published: new Date().toISOString(),
-              regulatory_body: source.regulatoryBody,
-              view_count: 0,
-              is_active: true
-            });
-          }
-          
-          // Start new article
-          currentTitle = trimmedLine;
-          currentContent = '';
-        } else if (trimmedLine.length > 0) {
-          // Add content to current article
-          currentContent += trimmedLine + ' ';
-        }
+      if (source.regulatoryBody === 'HSE') {
+        // HSE-specific parsing for safety bulletins and updates
+        contentSections = content.split(/(?=Press release|Safety alert|Enforcement notice|Improvement notice)/gi);
+      } else if (source.regulatoryBody === 'IET') {
+        // IET-specific parsing for regulations and technical updates
+        contentSections = content.split(/(?=Amendment|Update|Regulation|BS\s*7671|Wiring)/gi);
+      } else if (source.category === 'Major Projects') {
+        // Project-specific parsing for tenders and awards
+        contentSections = content.split(/(?=Contract|Tender|Award|Project|£\d+)/gi);
+      } else {
+        // Default parsing
+        contentSections = content.split(/\n\n|\n---\n|<hr>|<article/gi);
       }
       
-      // Don't forget the last article
-      if (currentTitle && currentContent) {
+      contentSections.forEach((section: string, index: number) => {
+        const cleanSection = section.trim();
+        if (cleanSection.length < 150) return; // Skip very short sections
+        
+        // Enhanced title extraction
+        const lines = cleanSection.split('\n');
+        let title = '';
+        
+        // Look for specific patterns based on source
+        if (source.regulatoryBody === 'HSE') {
+          const hseTitleMatch = lines.find(line => 
+            /press release|safety alert|enforcement|electrical/gi.test(line) && 
+            line.length > 10 && line.length < 200
+          );
+          title = hseTitleMatch?.replace(/^#+\s*|\*\*|\*|<[^>]*>/g, '').trim() || 
+                  `HSE Safety Update - ${index + 1}`;
+        } else if (source.regulatoryBody === 'IET') {
+          const ietTitleMatch = lines.find(line => 
+            /bs\s*7671|amendment|regulation|update|wiring/gi.test(line) && 
+            line.length > 10 && line.length < 200
+          );
+          title = ietTitleMatch?.replace(/^#+\s*|\*\*|\*|<[^>]*>/g, '').trim() || 
+                  `BS7671/IET Update - ${index + 1}`;
+        } else if (source.category === 'Major Projects') {
+          const projectTitleMatch = lines.find(line => 
+            /contract|tender|award|project|£/gi.test(line) && 
+            line.length > 10 && line.length < 200
+          );
+          title = projectTitleMatch?.replace(/^#+\s*|\*\*|\*|<[^>]*>/g, '').trim() || 
+                  `Major Project Update - ${index + 1}`;
+        } else {
+          const titleMatch = lines.find(line => 
+            line.startsWith('#') || 
+            line.startsWith('**') || 
+            (line.length > 20 && line.length < 200)
+          );
+          title = titleMatch?.replace(/^#+\s*|\*\*|\*|<[^>]*>/g, '').trim() || 
+                  `Update from ${source.name} - ${index + 1}`;
+        }
+        
+        // Content validation - ensure relevance to electrical industry
+        const electricalKeywords = [
+          'electrical', 'electricity', 'bs7671', 'wiring', 'regulation', 'safety', 
+          'cable', 'circuit', 'installation', 'testing', 'inspection', 'pat', 
+          'emergency lighting', 'fire alarm', 'earthing', 'bonding', 'rcbo', 'rcd',
+          'amendment', 'compliance', 'certification', 'qualified electrician',
+          'contract', 'tender', 'infrastructure', 'construction', 'project'
+        ];
+        
+        const hasRelevantContent = electricalKeywords.some(keyword => 
+          cleanSection.toLowerCase().includes(keyword.toLowerCase())
+        );
+        
+        // Skip irrelevant content
+        if (!hasRelevantContent || 
+            title.toLowerCase().includes('cookie') || 
+            title.toLowerCase().includes('navigation') ||
+            title.toLowerCase().includes('search') ||
+            title.toLowerCase().includes('menu')) {
+          return;
+        }
+        
+        // Extract keywords from content
+        const foundKeywords = electricalKeywords.filter(keyword => 
+          cleanSection.toLowerCase().includes(keyword.toLowerCase())
+        );
+        
+        const summary = this.generateSummary(cleanSection);
+        
+        // Enhanced date extraction
+        let publishedDate = new Date().toISOString();
+        const dateMatch = cleanSection.match(/(\d{1,2})\s+(January|February|March|April|May|June|July|August|September|October|November|December)\s+(\d{4})/i);
+        if (dateMatch) {
+          const [, day, month, year] = dateMatch;
+          publishedDate = new Date(`${month} ${day}, ${year}`).toISOString();
+        }
+        
         articles.push({
-          title: currentTitle.replace(/^#+\s*/, '').trim(),
-          summary: this.generateSummary(currentContent),
-          content: currentContent.trim(),
+          title,
+          summary,
+          content: cleanSection,
           url: scrapedData.url || '',
-          date_published: new Date().toISOString(),
+          date_published: publishedDate,
           regulatory_body: source.regulatoryBody,
+          category: source.category,
+          keywords: foundKeywords,
           view_count: 0,
           is_active: true
         });
-      }
+      });
       
-      // Filter out very short or invalid articles
-      return articles.filter(article => 
-        article.title.length > 10 && 
-        article.content.length > 50 &&
-        !article.title.toLowerCase().includes('cookie') &&
-        !article.title.toLowerCase().includes('privacy')
-      );
+      // Sort by relevance (more keywords = higher relevance) and limit results
+      return articles
+        .sort((a, b) => b.keywords.length - a.keywords.length)
+        .slice(0, 4); // Limit to 4 articles per source
       
     } catch (error) {
       console.error('Error parsing scraped content:', error);
@@ -243,10 +331,31 @@ export class FirecrawlService {
   }
 
   private static generateSummary(content: string): string {
-    // Generate a summary from the first few sentences
-    const sentences = content.split(/[.!?]+/).filter(s => s.trim().length > 0);
-    const summary = sentences.slice(0, 2).join('. ').trim();
-    return summary.length > 150 ? summary.substring(0, 147) + '...' : summary + '.';
+    // Clean content first
+    const cleanContent = content
+      .replace(/<[^>]*>/g, ' ') // Remove HTML tags
+      .replace(/\*\*|\*|_|#/g, '') // Remove markdown
+      .replace(/\s+/g, ' ') // Normalize whitespace
+      .trim();
+    
+    const sentences = cleanContent.split(/[.!?]+/).filter(s => s.trim().length > 30);
+    
+    // Prioritize sentences with electrical keywords
+    const electricalKeywords = ['electrical', 'bs7671', 'safety', 'regulation', 'amendment', 'project', 'contract'];
+    const relevantSentences = sentences.filter(sentence => 
+      electricalKeywords.some(keyword => 
+        sentence.toLowerCase().includes(keyword.toLowerCase())
+      )
+    );
+    
+    const sentencesToUse = relevantSentences.length > 0 ? relevantSentences.slice(0, 2) : sentences.slice(0, 2);
+    const summary = sentencesToUse.join('. ').trim();
+    
+    if (summary.length > 200) {
+      return summary.substring(0, 197) + '...';
+    }
+    
+    return summary + (summary.endsWith('.') ? '' : '.');
   }
 
   static isApiKeyConfigured(): boolean {
