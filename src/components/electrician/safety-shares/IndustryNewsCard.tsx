@@ -10,7 +10,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { RefreshCw, Search, ExternalLink, Building2, MapPin, PoundSterling, Calendar, Filter, X, Settings } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { format } from "date-fns";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { FirecrawlService } from "@/utils/FirecrawlService";
 
 const IndustryNewsCard = () => {
@@ -25,11 +25,20 @@ const IndustryNewsCard = () => {
   const [newsArticles, setNewsArticles] = useState<any[]>([]);
   const [newsLoading, setNewsLoading] = useState(false);
   const { toast } = useToast();
+  
+  // Check if router context is available
+  let location;
+  try {
+    location = useLocation();
+  } catch (error) {
+    console.warn('Router context not available');
+    location = null;
+  }
 
   // Load cached news on component mount
   useEffect(() => {
     const cachedNews = FirecrawlService.getCachedNews();
-    if (cachedNews.length > 0) {
+    if (cachedNews && cachedNews.length > 0) {
       setNewsArticles(cachedNews);
     }
   }, []);
@@ -400,11 +409,17 @@ const IndustryNewsCard = () => {
             </div>
             <h2 className="text-xl font-semibold text-white">Major Projects Just Awarded</h2>
           </div>
-          <Link to="/electrician/safety-shares/projects">
+          {location ? (
+            <Link to="/electrician/safety-shares/projects">
+              <Button variant="outline" size="sm" className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10">
+                View All Projects
+              </Button>
+            </Link>
+          ) : (
             <Button variant="outline" size="sm" className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10">
               View All Projects
             </Button>
-          </Link>
+          )}
         </div>
 
         {projectsLoading ? (
@@ -450,12 +465,19 @@ const IndustryNewsCard = () => {
             <p className="text-gray-400 text-sm mb-3">
               Stay ahead of the competition - be the first to know about major electrical contracts in the UK
             </p>
-            <Link to="/electrician/safety-shares/projects">
+            {location ? (
+              <Link to="/electrician/safety-shares/projects">
+                <Button className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90">
+                  <Building2 className="h-4 w-4 mr-2" />
+                  View All Major Projects
+                </Button>
+              </Link>
+            ) : (
               <Button className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90">
                 <Building2 className="h-4 w-4 mr-2" />
                 View All Major Projects
               </Button>
-            </Link>
+            )}
           </CardContent>
         </Card>
       </div>
