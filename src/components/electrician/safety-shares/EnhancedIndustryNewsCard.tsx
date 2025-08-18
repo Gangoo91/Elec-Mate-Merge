@@ -96,6 +96,9 @@ const EnhancedIndustryNewsCard = () => {
     setRefreshProgress("");
     
     try {
+      // Clear cache before fetching fresh data
+      FirecrawlService.clearCache();
+      
       const result = await FirecrawlService.fetchNewsDirectly(
         (message, current, total) => {
           setRefreshProgress(`${message} (${current}/${total})`);
@@ -246,7 +249,7 @@ const EnhancedIndustryNewsCard = () => {
             className="border-elec-yellow/30 text-white hover:bg-elec-yellow/10 disabled:opacity-50"
           >
             <RefreshCcw className={`h-4 w-4 mr-2 ${isRefreshing ? 'animate-spin' : ''}`} />
-            {isRefreshing ? (refreshProgress || 'Refreshing...') : 'Refresh News'}
+            {isRefreshing ? (refreshProgress || 'Fetching') : 'Refresh News'}
           </Button>
           <Button 
             onClick={() => setShowApiKeyInput(true)}
@@ -417,7 +420,7 @@ const EnhancedIndustryNewsCard = () => {
             onClick={refreshNews}
             disabled={isRefreshing}
           >
-            {isRefreshing ? 'Loading...' : 'Load More Articles'}
+            {isRefreshing ? 'Fetching...' : 'Load More Articles'}
           </Button>
         </div>
       )}

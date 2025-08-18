@@ -104,6 +104,15 @@ export class FirecrawlService {
     }
   }
 
+  static clearCache(): void {
+    try {
+      localStorage.removeItem(this.CACHE_KEY);
+      console.log('News cache cleared');
+    } catch (error) {
+      console.warn('Failed to clear news cache:', error);
+    }
+  }
+
   static async fetchNewsDirectly(
     onProgress?: (message: string, current: number, total: number) => void
   ): Promise<{ success: boolean; articles?: ProcessedArticle[]; error?: string }> {
