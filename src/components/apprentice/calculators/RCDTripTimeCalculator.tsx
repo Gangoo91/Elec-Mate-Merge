@@ -121,7 +121,7 @@ const RCDTripTimeCalculator = () => {
               />
             </div>
 
-            <div className="flex gap-2">
+            <div className="flex flex-col gap-2">
               <Button 
                 onClick={calculateTripTime}
                 className="bg-elec-yellow text-black hover:bg-elec-yellow/90"
