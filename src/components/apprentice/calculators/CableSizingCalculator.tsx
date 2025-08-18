@@ -166,16 +166,6 @@ const CableSizingCalculator = () => {
                   </CardDescription>
                 </div>
               </div>
-            <div className="flex gap-2">
-              <Button onClick={handleCalculate} className="bg-elec-yellow text-black hover:bg-elec-yellow/90" disabled={!inputs.current || !inputs.length}>
-                <Calculator className="h-4 w-4 mr-2" />
-                Calculate
-              </Button>
-              <Button variant="outline" onClick={handleReset} className="border-elec-yellow/20 hover:bg-elec-yellow/10">
-                <RefreshCw className="h-4 w-4 mr-2" />
-                Reset
-              </Button>
-            </div>
           </div>
         </CardHeader>
         <CardContent>

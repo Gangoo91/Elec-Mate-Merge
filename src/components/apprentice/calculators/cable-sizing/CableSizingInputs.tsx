@@ -68,7 +68,7 @@ const CableSizingForm = ({
             <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
               <SelectValue placeholder="Select installation method" />
             </SelectTrigger>
-            <SelectContent className="bg-elec-dark border-elec-yellow/20">
+            <SelectContent>
               <SelectItem value="clipped-direct">Clipped Direct (Reference Method C)</SelectItem>
               <SelectItem value="in-conduit">In Conduit/Trunking (Reference Method B)</SelectItem>
               <SelectItem value="buried-direct">Buried Direct (Reference Method D)</SelectItem>
@@ -84,7 +84,7 @@ const CableSizingForm = ({
             <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
               <SelectValue placeholder="Select cable type" />
             </SelectTrigger>
-            <SelectContent className="bg-elec-dark border-elec-yellow/20">
+            <SelectContent>
               <SelectItem value="pvc-70">PVC 70°C (Standard)</SelectItem>
               <SelectItem value="xlpe-90">XLPE 90°C (Enhanced)</SelectItem>
               <SelectItem value="lsf-70">LSF 70°C (Low Smoke)</SelectItem>
@@ -146,7 +146,7 @@ const CableSizingForm = ({
             <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
               <SelectValue placeholder="Select load type" />
             </SelectTrigger>
-            <SelectContent className="bg-elec-dark border-elec-yellow/20">
+            <SelectContent>
               <SelectItem value="resistive">Resistive (Heating, Lighting)</SelectItem>
               <SelectItem value="inductive">Inductive (Motors, Transformers)</SelectItem>
               <SelectItem value="capacitive">Capacitive (Power Factor Correction)</SelectItem>
@@ -181,7 +181,7 @@ const CableSizingForm = ({
             <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
               <SelectValue placeholder="Select voltage" />
             </SelectTrigger>
-            <SelectContent className="bg-elec-dark border-elec-yellow/20">
+            <SelectContent>
               <SelectItem value="230">230V Single Phase</SelectItem>
               <SelectItem value="400">400V Three Phase</SelectItem>
               <SelectItem value="110">110V Site Supply</SelectItem>
