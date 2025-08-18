@@ -172,13 +172,13 @@ serve(async (req) => {
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
     const supabase = createClient(supabaseUrl, supabaseKey)
 
-    // Target URLs for crawling
+    // Target URLs for specific electrical industry categories only
     const sources = [
-      { url: 'https://www.hse.gov.uk/news/', name: 'HSE' },
-      { url: 'https://www.gov.uk/government/collections/bs-7671', name: 'BS7671' },
-      { url: 'https://www.theiet.org/news/', name: 'IET' },
-      { url: 'https://www.constructionenquirer.com/category/contracts-awarded/', name: 'Major Projects' },
-      { url: 'https://www.theconstructionindex.co.uk/news/contracts', name: 'Major Projects' }
+      { url: 'https://www.hse.gov.uk/news/', name: 'HSE', category: 'HSE' },
+      { url: 'https://www.gov.uk/government/collections/bs-7671', name: 'BS7671', category: 'BS7671' },
+      { url: 'https://www.theiet.org/news/', name: 'IET', category: 'IET' },
+      { url: 'https://www.constructionenquirer.com/category/contracts-awarded/', name: 'Major Projects', category: 'Major Projects' },
+      { url: 'https://www.theconstructionindex.co.uk/news/contracts', name: 'Major Projects', category: 'Major Projects' }
     ];
 
     let totalInserted = 0;
