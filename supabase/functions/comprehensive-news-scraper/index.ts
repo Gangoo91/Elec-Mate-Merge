@@ -23,9 +23,8 @@ interface ProcessedArticle {
 interface NewsSource {
   name: string;
   url: string;
-  category: 'HSE' | 'BS7671' | 'IET' | 'Major Projects';
+  category: 'HSE' | 'BS7671' | 'IET';
   regulatory_body: string;
-  scrape_selector?: string;
 }
 
 const NEWS_SOURCES: NewsSource[] = [
@@ -278,8 +277,6 @@ function basicContentParsing(rawContent: string, source: NewsSource): ProcessedA
       sections = rawContent.split(/(?=Press release|Safety alert|Enforcement notice|Improvement notice|News:|Update:)/gi);
     } else if (source.category === 'BS7671' || source.category === 'IET') {
       sections = rawContent.split(/(?=Amendment|Update|Regulation|BS\s*7671|Wiring|Edition|Guidance)/gi);
-    } else if (source.category === 'Major Projects') {
-      sections = rawContent.split(/(?=Contract|Tender|Award|Project|£\d+|Infrastructure|Construction)/gi);
     } else {
       sections = rawContent.split(/\n\n+|\n---+\n/);
     }
@@ -351,10 +348,7 @@ async function extractArticleLinks(rawContent: string, source: NewsSource): Prom
       /https?:\/\/press\.hse\.gov\.uk\/[^\s"'<>]+/gi,
       // IET news articles
       /https?:\/\/theiet\.org\/news\/[^\s"'<>]+/gi,
-      // BS7671 specific articles
       /https?:\/\/electrical\.theiet\.org\/[^\s"'<>]+/gi,
-      // Construction news projects
-      /https?:\/\/constructionnews\.co\.uk\/projects\/[^\s"'<>]+/gi,
       // General article patterns
       /https?:\/\/[^\/\s"'<>]+\/(?:news|press|articles?|updates?)\/[^\s"'<>]+/gi
     ];
@@ -578,108 +572,124 @@ async function scrapeAndProcessSource(source: NewsSource, firecrawl: FirecrawlAp
     return allArticles.slice(0, 5); // Limit total articles per source
 
   } catch (error) {
-    console.error(`Error processing ${source.name}:`, error);
-    // Don't return empty array immediately - try basic fallback
+    console.error(`Error scraping ${source.name}:`, error);
     return [];
   }
 }
 
 serve(async (req) => {
+  // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
 
+  const startTime = Date.now();
+
   try {
     console.log('Starting comprehensive news scraping...');
     
-    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
-    const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
-    const firecrawlApiKey = Deno.env.get('FIRECRAWL_API_KEY')!;
-    
-    if (!firecrawlApiKey) {
-      throw new Error('FIRECRAWL_API_KEY is required');
+    const supabaseUrl = Deno.env.get('SUPABASE_URL');
+    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
+    const firecrawlApiKey = Deno.env.get('FIRECRAWL_API_KEY');
+
+    if (!supabaseUrl || !supabaseKey) {
+      throw new Error('Missing Supabase configuration');
     }
 
-    const supabase = createClient(supabaseUrl, supabaseServiceKey);
+    if (!firecrawlApiKey) {
+      throw new Error('Missing Firecrawl API key');
+    }
+
+    const supabase = createClient(supabaseUrl, supabaseKey);
     const firecrawl = new FirecrawlApp({ apiKey: firecrawlApiKey });
 
+    const allProcessedArticles: ProcessedArticle[] = [];
     let totalProcessed = 0;
     let totalInserted = 0;
-    let errors = 0;
+    let totalErrors = 0;
 
-    // Process sources in batches to avoid rate limits
-    const batchSize = 3;
+    // First, fetch UK Major Projects from ContractsFinder API
+    console.log('Fetching Major Projects from ContractsFinder API...');
+    try {
+      const contractsArticles = await fetchContractFinderProjects();
+      allProcessedArticles.push(...contractsArticles);
+      totalProcessed += contractsArticles.length;
+      console.log(`Added ${contractsArticles.length} contract articles`);
+    } catch (contractError) {
+      console.error('ContractsFinder fetch error:', contractError);
+      totalErrors++;
+    }
+
+    // Process traditional news sources in batches to avoid overwhelming the API
+    const batchSize = 2;
     for (let i = 0; i < NEWS_SOURCES.length; i += batchSize) {
       const batch = NEWS_SOURCES.slice(i, i + batchSize);
-      
       console.log(`Processing batch ${Math.floor(i / batchSize) + 1}/${Math.ceil(NEWS_SOURCES.length / batchSize)}`);
       
+      // Process batch in parallel
       const batchPromises = batch.map(source => scrapeAndProcessSource(source, firecrawl));
-      const batchResults = await Promise.allSettled(batchPromises);
+      const batchResults = await Promise.all(batchPromises);
       
-      for (const result of batchResults) {
-        if (result.status === 'fulfilled') {
-          const articles = result.value;
-          totalProcessed += articles.length;
-          
-          // Insert articles into database
-          for (const article of articles) {
-            try {
-              const { error } = await supabase
-                .from('industry_news')
-                .upsert({
-                  title: article.title,
-                  summary: article.summary,
-                  content: article.content,
-                  regulatory_body: article.regulatory_body,
-                  category: article.category,
-                  external_id: article.external_id,
-                  source_url: article.source_url,
-                  external_url: article.external_url,
-                  date_published: article.date_published,
-                  is_active: true,
-                  view_count: 0,
-                  average_rating: 0
-                }, {
-                  onConflict: 'external_id',
-                  ignoreDuplicates: true
-                });
-
-              if (!error) {
-                totalInserted++;
-              } else {
-                console.error('Database insert error:', error);
-                errors++;
-              }
-            } catch (insertError) {
-              console.error('Insert error:', insertError);
-              errors++;
-            }
-          }
-        } else {
-          console.error('Batch processing error:', result.reason);
-          errors++;
-        }
-      }
+      // Flatten and add to results
+      batchResults.forEach(articles => {
+        allProcessedArticles.push(...articles);
+        totalProcessed += articles.length;
+      });
       
-      // Rate limiting delay between batches
+      // Rate limiting between batches
       if (i + batchSize < NEWS_SOURCES.length) {
         await new Promise(resolve => setTimeout(resolve, 2000));
       }
     }
 
-    console.log(`Scraping complete: ${totalProcessed} processed, ${totalInserted} inserted, ${errors} errors`);
+    // Insert processed articles into Supabase
+    console.log(`Inserting ${allProcessedArticles.length} articles into database...`);
+    
+    for (const article of allProcessedArticles) {
+      try {
+        const { error: insertError } = await supabase
+          .from('industry_news')
+          .upsert({
+            title: article.title,
+            summary: article.summary,
+            content: article.content,
+            category: article.category,
+            regulatory_body: article.regulatory_body,
+            external_id: article.external_id,
+            source_url: article.source_url,
+            external_url: article.external_url,
+            date_published: article.date_published,
+            source_name: article.regulatory_body,
+            relevance_score: 8, // Default high relevance for scraped content
+            content_quality: 7,   // Default good quality
+            is_active: true
+          }, {
+            onConflict: 'external_id'
+          });
+
+        if (insertError) {
+          console.error('Insert error:', insertError);
+          totalErrors++;
+        } else {
+          totalInserted++;
+        }
+      } catch (insertError) {
+        console.error('Database insert error:', insertError);
+        totalErrors++;
+      }
+    }
+
+    const executionTime = Date.now() - startTime;
+    console.log(`Scraping complete: ${totalProcessed} processed, ${totalInserted} inserted, ${totalErrors} errors`);
 
     return new Response(
       JSON.stringify({
         success: true,
-        message: `Successfully processed ${totalProcessed} articles and inserted ${totalInserted} new articles`,
-        stats: {
-          processed: totalProcessed,
-          inserted: totalInserted,
-          errors: errors,
-          sources_checked: NEWS_SOURCES.length
-        }
+        articlesProcessed: totalProcessed,
+        articlesInserted: totalInserted,
+        errors: totalErrors,
+        executionTime,
+        timestamp: new Date().toISOString()
       }),
       {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -691,8 +701,8 @@ serve(async (req) => {
     return new Response(
       JSON.stringify({
         success: false,
-        error: error.message || 'Failed to scrape news sources',
-        details: error instanceof Error ? error.stack : 'Unknown error'
+        error: error.message,
+        timestamp: new Date().toISOString()
       }),
       {
         status: 500,
