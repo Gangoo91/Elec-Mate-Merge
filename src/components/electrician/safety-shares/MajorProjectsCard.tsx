@@ -3,7 +3,8 @@ import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Building2, MapPin, Calendar, PoundSterling, Users, Clock, ExternalLink, Bookmark, RefreshCw } from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Building2, MapPin, Calendar, PoundSterling, Users, Clock, ExternalLink, Bookmark, RefreshCw, Eye } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -190,6 +191,130 @@ const MajorProjectsCard = () => {
 
   // Remove unused handlers
 
+  const handleViewProject = (project: MajorProject) => {
+    const projectUrl = generateProjectUrl(project);
+    window.open(projectUrl, '_blank', 'noopener,noreferrer');
+  };
+
+  const generateProjectUrl = (project: MajorProject): string => {
+    // For static projects, generate appropriate external URLs
+    if (project.id.startsWith('static-')) {
+      if (project.awarded_to?.toLowerCase().includes('transport for london')) {
+        return `https://www.contractsfinder.service.gov.uk/Search/Results?SearchType=1&Keywords=${encodeURIComponent(project.title)}`;
+      }
+      if (project.awarded_to?.toLowerCase().includes('nhs')) {
+        return `https://www.contractsfinder.service.gov.uk/Search/Results?SearchType=1&Keywords=${encodeURIComponent('nhs ' + project.title)}`;
+      }
+      if (project.sector?.toLowerCase().includes('renewable')) {
+        return `https://www.contractsfinder.service.gov.uk/Search/Results?SearchType=1&Keywords=${encodeURIComponent('renewable energy ' + project.title)}`;
+      }
+    }
+    
+    // For database projects, try to construct appropriate URLs
+    return `https://www.contractsfinder.service.gov.uk/Search/Results?SearchType=1&Keywords=${encodeURIComponent(project.title)}`;
+  };
+
+  const ProjectDetailModal = ({ project }: { project: MajorProject }) => (
+    <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+      <DialogHeader>
+        <DialogTitle className="text-xl font-bold text-white">{project.title}</DialogTitle>
+      </DialogHeader>
+      
+      <div className="space-y-6">
+        {/* Status and Sector Badges */}
+        <div className="flex flex-wrap gap-2">
+          <Badge className={getStatusColor(project.status)}>
+            {getStatusText(project.status)}
+          </Badge>
+          {project.sector && (
+            <Badge className={getSectorColor(project.sector)}>
+              {project.sector}
+            </Badge>
+          )}
+        </div>
+
+        {/* Project Summary */}
+        <div>
+          <h3 className="text-lg font-semibold text-white mb-2">Project Overview</h3>
+          <p className="text-gray-300">{project.summary}</p>
+          {project.content && project.content !== project.summary && (
+            <div className="mt-3">
+              <p className="text-gray-300">{project.content}</p>
+            </div>
+          )}
+        </div>
+
+        {/* Project Details Grid */}
+        <div className="grid grid-cols-2 gap-4">
+          <div className="space-y-1">
+            <p className="text-sm text-muted-foreground">Client</p>
+            <p className="text-white font-medium">{project.awarded_to}</p>
+          </div>
+          
+          <div className="space-y-1">
+            <p className="text-sm text-muted-foreground">Contract Value</p>
+            <p className="text-white font-medium">{project.project_value || 'TBC'}</p>
+          </div>
+          
+          <div className="space-y-1">
+            <p className="text-sm text-muted-foreground">Location</p>
+            <p className="text-white font-medium">{project.location || 'UK'}</p>
+          </div>
+          
+          <div className="space-y-1">
+            <p className="text-sm text-muted-foreground">Duration</p>
+            <p className="text-white font-medium">{project.duration || '18 months'}</p>
+          </div>
+          
+          <div className="space-y-1">
+            <p className="text-sm text-muted-foreground">Start Date</p>
+            <p className="text-white font-medium">
+              {project.date_awarded 
+                ? new Date(project.date_awarded).toLocaleDateString('en-GB')
+                : 'TBC'
+              }
+            </p>
+          </div>
+          
+          <div className="space-y-1">
+            <p className="text-sm text-muted-foreground">Estimated Contractors</p>
+            <p className="text-white font-medium">{project.contractorCount || 5}</p>
+          </div>
+        </div>
+
+        {/* Deadline Info */}
+        {project.deadline && getStatusText(project.status) === "Open for Tender" && (
+          <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-lg">
+            <div className="flex items-center gap-2">
+              <Calendar className="h-5 w-5 text-red-400" />
+              <div>
+                <p className="text-red-400 font-medium">Tender Deadline</p>
+                <p className="text-white">{new Date(project.deadline).toLocaleDateString('en-GB')}</p>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Action Buttons */}
+        <div className="flex gap-3 pt-4 border-t border-elec-yellow/20">
+          <Button 
+            onClick={() => handleViewProject(project)}
+            className="bg-elec-yellow text-black hover:bg-elec-yellow/90"
+          >
+            <ExternalLink className="h-4 w-4 mr-2" />
+            View External Project
+          </Button>
+          
+          {getStatusText(project.status) === "Open for Tender" && (
+            <Button variant="outline" className="border-elec-yellow/30 text-elec-yellow">
+              Download Tender Documents
+            </Button>
+          )}
+        </div>
+      </div>
+    </DialogContent>
+  );
+
   const getStatusColor = (status: string) => {
     const statusLower = status.toLowerCase();
     if (statusLower.includes('tender') || statusLower === 'active') return "bg-blue-500/20 text-blue-400 border-blue-500/30";
@@ -354,10 +479,26 @@ const MajorProjectsCard = () => {
                     View Tender Details
                   </Button>
                 )}
+                
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button 
+                      size="sm" 
+                      variant="outline" 
+                      className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 font-medium"
+                    >
+                      <Eye className="h-4 w-4 mr-2" />
+                      View Details
+                    </Button>
+                  </DialogTrigger>
+                  <ProjectDetailModal project={project} />
+                </Dialog>
+                
                 <Button 
                   size="sm" 
                   variant="outline" 
                   className="border-elec-dark bg-elec-dark text-white hover:bg-elec-dark/80 font-medium"
+                  onClick={() => handleViewProject(project)}
                 >
                   <ExternalLink className="h-4 w-4 mr-2" />
                   View Project
