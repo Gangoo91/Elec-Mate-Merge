@@ -23,102 +23,42 @@ interface ProcessedArticle {
 interface NewsSource {
   name: string;
   url: string;
-  category: 'HSE' | 'BS7671' | 'IET' | 'Major Projects' | 'GOV.UK';
+  category: 'HSE' | 'BS7671' | 'IET' | 'Major Projects';
   regulatory_body: string;
   scrape_selector?: string;
 }
 
 const NEWS_SOURCES: NewsSource[] = [
-  // HSE Sources - Using RSS feeds and direct article pages where possible
+  // HSE Source - Using the exact URL requested
   {
-    name: 'HSE Latest Safety Alerts',
-    url: 'https://www.hse.gov.uk/feeds/news-releases.xml',
-    category: 'HSE',
-    regulatory_body: 'Health and Safety Executive'
-  },
-  {
-    name: 'HSE Electrical Guidance',
-    url: 'https://www.hse.gov.uk/electricity/information/regulations.htm',
-    category: 'HSE', 
-    regulatory_body: 'Health and Safety Executive'
-  },
-  {
-    name: 'HSE Work Equipment Safety',
-    url: 'https://www.hse.gov.uk/work-equipment-machinery/electrical-equipment.htm',
+    name: 'HSE Press Releases',
+    url: 'https://press.hse.gov.uk',
     category: 'HSE',
     regulatory_body: 'Health and Safety Executive'
   },
   
-  // IET Sources - More direct content pages
+  // BS7671 Source - Using the exact URL requested
   {
-    name: 'IET Wiring Regulations News',
-    url: 'https://electrical.theiet.org/wiring-regulations/',
+    name: 'BS7671 Wiring Regulations',
+    url: 'https://electrical.theiet.org/bs-7671/',
     category: 'BS7671',
     regulatory_body: 'Institution of Engineering and Technology'
   },
+  
+  // IET Technical Source - Using the exact URL requested
   {
-    name: 'IET 18th Edition Resources',
-    url: 'https://electrical.theiet.org/wiring-regulations/18th-edition/',
-    category: 'BS7671',
-    regulatory_body: 'Institution of Engineering and Technology'
-  },
-  {
-    name: 'IET Professional Development',
-    url: 'https://electrical.theiet.org/professional-development/',
-    category: 'IET',
-    regulatory_body: 'Institution of Engineering and Technology'
-  },
-  {
-    name: 'IET Electrical Installation Work',
-    url: 'https://electrical.theiet.org/installation-work/',
+    name: 'IET Technical News',
+    url: 'https://theiet.org/news/',
     category: 'IET',
     regulatory_body: 'Institution of Engineering and Technology'
   },
   
-  // UK Government Sources
+  // Major Projects Source - Using the exact URL requested
   {
-    name: 'GOV.UK Construction Updates',
-    url: 'https://www.gov.uk/government/news?keywords=electrical+construction&organisations%5B%5D=department-for-business-energy-and-industrial-strategy',
-    category: 'GOV.UK',
-    regulatory_body: 'UK Government'
-  },
-  {
-    name: 'GOV.UK Building Safety',
-    url: 'https://www.gov.uk/government/collections/building-safety',
-    category: 'GOV.UK',
-    regulatory_body: 'UK Government'
-  },
-  {
-    name: 'GOV.UK Energy Policy',
-    url: 'https://www.gov.uk/government/policies/energy-and-climate-change-evidence-and-analysis',
-    category: 'GOV.UK',
-    regulatory_body: 'UK Government'
-  },
-  {
-    name: 'Department for Energy Security',
-    url: 'https://www.gov.uk/government/organisations/department-for-energy-security-and-net-zero/news',
-    category: 'GOV.UK',
-    regulatory_body: 'UK Government'
-  },
-  
-  // Industry Sources
-  {
-    name: 'Electrical Contractors Association',
-    url: 'https://www.eca.co.uk/news',
+    name: 'Construction News Projects',
+    url: 'https://constructionnews.co.uk/projects',
     category: 'Major Projects',
-    regulatory_body: 'ECA'
-  },
-  {
-    name: 'SELECT (Electrical Contractors)',
-    url: 'https://www.select.org.uk/news',
-    category: 'Major Projects',
-    regulatory_body: 'SELECT'
-  },
-  {
-    name: 'NAPIT Updates',
-    url: 'https://www.napit.org.uk/news-and-blogs/news/',
-    category: 'IET',
-    regulatory_body: 'NAPIT'
+    regulatory_body: 'Construction News'
   }
 ];
 

@@ -29,10 +29,10 @@ const EnhancedIndustryNewsCard = () => {
   const [articles, setArticles] = useState<NewsArticle[]>([
     {
       id: "1",
-      title: "New BS 7671:2024 Amendment Released",
-      summary: "The latest amendment to the wiring regulations includes important updates for EV charging installations and smart home technology.",
-      category: "Regulations",
-      source: "IET Wiring Matters",
+      title: "HSE Issues Safety Alert for Electrical Contractors",
+      summary: "New safety guidance issued following recent incidents on construction sites involving electrical work.",
+      category: "HSE Updates",
+      source: "HSE Press Releases",
       datePublished: "2024-06-14",
       readTime: "5 min",
       views: 1247,
@@ -43,10 +43,10 @@ const EnhancedIndustryNewsCard = () => {
     },
     {
       id: "2",
-      title: "Government Announces £2.5B Investment in Grid Infrastructure",
-      summary: "Major investment package to modernise the UK's electrical grid infrastructure and support renewable energy transition.",
-      category: "Government Policy",
-      source: "GOV.UK",
+      title: "BS7671 Amendment 2 Implementation Guide",
+      summary: "Comprehensive guide to implementing the latest BS7671 Amendment 2 requirements for electrical installations.",
+      category: "BS7671 Updates",
+      source: "BS7671 Wiring Regulations",
       datePublished: "2024-06-13",
       readTime: "7 min",
       views: 892,
@@ -57,10 +57,10 @@ const EnhancedIndustryNewsCard = () => {
     },
     {
       id: "3",
-      title: "NICEIC Updates Inspection Procedures",
-      summary: "New guidance on electrical installation inspections following industry feedback and safety concerns.",
-      category: "Industry Updates",
-      source: "NICEIC",
+      title: "IET Announces New Technical Standards",
+      summary: "The Institution of Engineering and Technology releases updated technical standards for electrical installations.",
+      category: "IET Technical",
+      source: "IET Technical News",
       datePublished: "2024-06-12",
       readTime: "4 min",
       views: 567,
@@ -71,10 +71,10 @@ const EnhancedIndustryNewsCard = () => {
     },
     {
       id: "4",
-      title: "Building Safety Act Implementation Update",
-      summary: "Latest government guidance on Building Safety Act compliance for electrical installations in high-rise buildings.",
-      category: "Government Policy",
-      source: "GOV.UK",
+      title: "£500M Infrastructure Project Awarded",
+      summary: "Major electrical infrastructure contract awarded for new smart grid development across Northern England.",
+      category: "Major Projects",
+      source: "Construction News Projects",
       datePublished: "2024-06-11",
       readTime: "6 min",
       views: 743,
@@ -87,10 +87,10 @@ const EnhancedIndustryNewsCard = () => {
 
   const getCategoryColor = (category: string) => {
     switch (category.toLowerCase()) {
-      case "regulations": return "bg-red-500/20 text-red-400 border-red-500/30";
-      case "government policy": return "bg-blue-500/20 text-blue-400 border-blue-500/30";
-      case "industry updates": return "bg-green-500/20 text-green-400 border-green-500/30";
-      case "industry analysis": return "bg-purple-500/20 text-purple-400 border-purple-500/30";
+      case "hse updates": return "bg-red-500/20 text-red-400 border-red-500/30";
+      case "bs7671 updates": return "bg-blue-500/20 text-blue-400 border-blue-500/30";
+      case "iet technical": return "bg-green-500/20 text-green-400 border-green-500/30";
+      case "major projects": return "bg-purple-500/20 text-purple-400 border-purple-500/30";
       default: return "bg-gray-500/20 text-gray-400 border-gray-500/30";
     }
   };
@@ -166,10 +166,10 @@ const EnhancedIndustryNewsCard = () => {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">All Categories</SelectItem>
-                <SelectItem value="Regulations">Regulations</SelectItem>
-                <SelectItem value="Government Policy">Government Policy</SelectItem>
-                <SelectItem value="Industry Updates">Industry Updates</SelectItem>
-                <SelectItem value="Industry Analysis">Industry Analysis</SelectItem>
+                <SelectItem value="HSE Updates">HSE Updates</SelectItem>
+                <SelectItem value="BS7671 Updates">BS7671 Updates</SelectItem>
+                <SelectItem value="IET Technical">IET Technical</SelectItem>
+                <SelectItem value="Major Projects">Major Projects</SelectItem>
               </SelectContent>
             </Select>
             <Select value={selectedSource} onValueChange={setSelectedSource}>
@@ -179,14 +179,10 @@ const EnhancedIndustryNewsCard = () => {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">All Sources</SelectItem>
-                <SelectItem value="IET Wiring Matters">IET Wiring Matters</SelectItem>
-                <SelectItem value="GOV.UK">GOV.UK</SelectItem>
-                <SelectItem value="NICEIC">NICEIC</SelectItem>
-                <SelectItem value="HSE">HSE</SelectItem>
-                <SelectItem value="ECA">ECA</SelectItem>
-                <SelectItem value="SELECT">SELECT</SelectItem>
-                <SelectItem value="NAPIT">NAPIT</SelectItem>
-                <SelectItem value="Electrical Review">Electrical Review</SelectItem>
+                <SelectItem value="HSE Press Releases">HSE Press Releases</SelectItem>
+                <SelectItem value="BS7671 Wiring Regulations">BS7671 Wiring Regulations</SelectItem>
+                <SelectItem value="IET Technical News">IET Technical News</SelectItem>
+                <SelectItem value="Construction News Projects">Construction News Projects</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -253,9 +249,20 @@ const EnhancedIndustryNewsCard = () => {
                     <span>{article.likes}</span>
                   </Button>
                 </div>
-                <Button size="sm" className="bg-elec-yellow text-black hover:bg-elec-yellow/90">
-                  <ExternalLink className="h-4 w-4 mr-2" />
-                  Read Full Article
+                <Button 
+                  size="sm" 
+                  className="bg-elec-yellow text-black hover:bg-elec-yellow/90"
+                  asChild
+                >
+                  <a 
+                    href="#" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2"
+                  >
+                    <ExternalLink className="h-4 w-4" />
+                    Read Full Article
+                  </a>
                 </Button>
               </div>
             </CardContent>

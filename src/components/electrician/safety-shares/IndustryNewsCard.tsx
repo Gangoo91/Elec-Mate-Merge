@@ -111,7 +111,6 @@ const IndustryNewsCard = () => {
     { key: 'HSE', label: 'HSE Updates', color: 'bg-red-100 text-red-800 hover:bg-red-200' },
     { key: 'BS7671', label: 'BS7671 Updates', color: 'bg-blue-100 text-blue-800 hover:bg-blue-200' },
     { key: 'IET', label: 'IET Technical', color: 'bg-green-100 text-green-800 hover:bg-green-200' },
-    { key: 'GOV.UK', label: 'GOV.UK Policy', color: 'bg-indigo-100 text-indigo-800 hover:bg-indigo-200' },
     { key: 'Major Projects', label: 'Major Projects', color: 'bg-purple-100 text-purple-800 hover:bg-purple-200' },
   ];
 
@@ -316,39 +315,58 @@ const IndustryNewsCard = () => {
                   )}
                 </CardHeader>
                 <CardContent className="pt-0">
-                  <div className="flex gap-2">
-                    <Dialog>
-                      <DialogTrigger asChild>
-                        <Button 
-                          size="sm" 
-                          className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
-                          onClick={() => setSelectedArticle(article)}
-                        >
-                          Read Article
-                        </Button>
-                      </DialogTrigger>
-                      <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto bg-elec-gray border-elec-yellow/20">
-                        <DialogHeader>
-                          <DialogTitle className="text-elec-yellow text-xl">{selectedArticle?.title}</DialogTitle>
-                          <DialogDescription className="text-gray-300">
-                             <div className="flex flex-wrap items-center gap-2 mt-2">
-                               <Badge variant="secondary" className="bg-elec-yellow/20 text-elec-yellow">
-                                 {selectedArticle?.category}
-                               </Badge>
-                              <span>Published: {selectedArticle && format(new Date(selectedArticle.date_published), 'dd MMM yyyy')}</span>
-                            </div>
-                          </DialogDescription>
-                        </DialogHeader>
-                        <div className="space-y-4 text-white">
-                          {selectedArticle?.content && (
-                            <div className="prose prose-invert max-w-none">
-                              <p className="whitespace-pre-wrap">{selectedArticle.content}</p>
-                            </div>
-                          )}
-                        </div>
-                      </DialogContent>
-                    </Dialog>
-                  </div>
+                     <div className="flex gap-2">
+                       <Dialog>
+                         <DialogTrigger asChild>
+                           <Button 
+                             size="sm" 
+                             className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
+                             onClick={() => setSelectedArticle(article)}
+                           >
+                             Read Article
+                           </Button>
+                         </DialogTrigger>
+                         <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto bg-elec-gray border-elec-yellow/20">
+                           <DialogHeader>
+                             <DialogTitle className="text-elec-yellow text-xl">{selectedArticle?.title}</DialogTitle>
+                             <DialogDescription className="text-gray-300">
+                                <div className="flex flex-wrap items-center gap-2 mt-2">
+                                  <Badge variant="secondary" className="bg-elec-yellow/20 text-elec-yellow">
+                                    {selectedArticle?.category}
+                                  </Badge>
+                                 <span>Published: {selectedArticle && format(new Date(selectedArticle.date_published), 'dd MMM yyyy')}</span>
+                               </div>
+                             </DialogDescription>
+                           </DialogHeader>
+                           <div className="space-y-4 text-white">
+                             {selectedArticle?.content && (
+                               <div className="prose prose-invert max-w-none">
+                                 <p className="whitespace-pre-wrap">{selectedArticle.content}</p>
+                               </div>
+                             )}
+                           </div>
+                         </DialogContent>
+                       </Dialog>
+                       
+                       {article.url && (
+                         <Button 
+                           size="sm" 
+                           variant="outline"
+                           asChild
+                           className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+                         >
+                           <a 
+                             href={article.url} 
+                             target="_blank" 
+                             rel="noopener noreferrer"
+                             className="flex items-center gap-2"
+                           >
+                             <ExternalLink className="h-4 w-4" />
+                             View Source
+                           </a>
+                         </Button>
+                       )}
+                     </div>
                 </CardContent>
               </Card>
             ))}
