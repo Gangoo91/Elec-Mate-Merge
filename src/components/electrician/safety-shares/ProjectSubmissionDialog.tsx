@@ -54,10 +54,10 @@ export const ProjectSubmissionDialog = ({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!formData.title || !formData.summary || !formData.awarded_to) {
+    if (!formData.title || !formData.summary || !formData.awarded_to || !formData.location || !formData.project_value) {
       toast({
         title: "Missing Information",
-        description: "Please fill in all required fields.",
+        description: "Please fill in all required fields: Title, Summary, Client/Organisation, Location, and Project Value.",
         variant: "destructive",
       });
       return;
@@ -73,7 +73,7 @@ export const ProjectSubmissionDialog = ({
           summary: formData.summary,
           content: formData.content || formData.summary,
           awarded_to: formData.awarded_to,
-          location: formData.location || 'UK',
+          location: formData.location,
           project_value: formData.project_value,
           status: formData.status,
           category: formData.category || 'Infrastructure',
@@ -156,24 +156,26 @@ export const ProjectSubmissionDialog = ({
             </div>
             
             <div className="space-y-2">
-              <Label htmlFor="location">Location</Label>
+              <Label htmlFor="location">Location *</Label>
               <Input
                 id="location"
                 name="location"
                 value={formData.location}
                 onChange={handleChange}
                 placeholder="London, Manchester, etc."
+                required
               />
             </div>
             
             <div className="space-y-2">
-              <Label htmlFor="project_value">Project Value</Label>
+              <Label htmlFor="project_value">Project Value *</Label>
               <Input
                 id="project_value"
                 name="project_value"
                 value={formData.project_value}
                 onChange={handleChange}
-                placeholder="£2.5M, £500K, etc."
+                placeholder="£2.5M, £500K, Not disclosed, etc."
+                required
               />
             </div>
             
