@@ -8,62 +8,95 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-interface Project {
-  title: string;
-  description: string;
-  value: string;
-  location: string;
-  deadline: string;
-  client: string;
-  source: string;
-  external_id: string;
-  url: string;
+interface ProjectData {
   status: string;
-  sector: string;
-  date_awarded?: string;
+  category: string;
+  deadline?: string;
+  title: string;
+  snippet: string;
+  client: string;
+  contractValue: string;
+  duration: string;
+  location: string;
+  contractors?: number;
+  startDate?: string;
+  url: string;
 }
 
-async function scrapeProjectsWithFirecrawl(firecrawlApiKey: string): Promise<Project[]> {
+async function enhancedProjectExtraction(firecrawlApiKey: string, openaiApiKey: string): Promise<ProjectData[]> {
   const firecrawl = new FirecrawlApp({ apiKey: firecrawlApiKey });
-  const projects: Project[] = [];
+  const allProjects: ProjectData[] = [];
 
+  // Comprehensive UK electrical project sources
   const sources = [
     {
       url: 'https://www.contractsfinder.service.gov.uk/Search/Results?SearchType=1&Keywords=electrical',
-      name: 'Contracts Finder',
-      sector: 'Government'
+      name: 'Contracts Finder - Electrical',
+      category: 'Government'
+    },
+    {
+      url: 'https://www.contractsfinder.service.gov.uk/Search/Results?SearchType=1&Keywords=substation',
+      name: 'Contracts Finder - Substation',
+      category: 'Infrastructure'
     },
     {
       url: 'https://www.constructionnews.co.uk/sectors/infrastructure/',
       name: 'Construction News',
-      sector: 'Infrastructure'
+      category: 'Infrastructure'
+    },
+    {
+      url: 'https://www.newcivilengineer.com/latest/infrastructure-news/',
+      name: 'New Civil Engineer',
+      category: 'Infrastructure'
+    },
+    {
+      url: 'https://www.electricalreview.co.uk/news/',
+      name: 'Electrical Review',
+      category: 'Electrical'
+    },
+    {
+      url: 'https://tfl.gov.uk/corporate/procurement-and-commercial/procurement-opportunities',
+      name: 'TfL Procurement',
+      category: 'Transport'
     }
   ];
 
+  console.log(`Starting batch scraping of ${sources.length} sources...`);
+
   for (const source of sources) {
     try {
-      console.log(`Scraping projects from: ${source.url}`);
+      console.log(`Scraping: ${source.name}`);
       
       const scrapeResult = await firecrawl.scrapeUrl(source.url, {
-        formats: ['markdown'],
-        includeTags: ['h1', 'h2', 'h3', 'p', 'div', 'span'],
-        waitFor: 3000
+        formats: ['markdown', 'html'],
+        includeTags: ['h1', 'h2', 'h3', 'h4', 'p', 'div', 'span', 'a', 'li'],
+        waitFor: 3000,
+        extractorOptions: {
+          mode: 'llm-extraction',
+          extractionPrompt: `Extract electrical infrastructure projects, tenders, and contracts from this page. Look for:
+          - Project titles containing: electrical, power, grid, substation, transmission, infrastructure, energy
+          - Contract values in £ (millions/thousands)
+          - Client/authority names
+          - Locations in UK
+          - Tender deadlines or project start dates
+          - Current status (tender, awarded, ongoing)
+          
+          Focus on projects suitable for electrical contractors.`
+        }
       });
 
-      if (!scrapeResult.success) {
-        console.error(`Failed to scrape ${source.name}:`, scrapeResult.error);
-        continue;
+      if (scrapeResult.success && scrapeResult.data?.markdown) {
+        const extractedProjects = await intelligentProjectExtraction(
+          scrapeResult.data.markdown,
+          source,
+          openaiApiKey
+        );
+        
+        console.log(`Extracted ${extractedProjects.length} projects from ${source.name}`);
+        allProjects.push(...extractedProjects);
       }
 
-      const content = scrapeResult.data?.markdown || '';
-      
-      // Enhanced project extraction from scraped content
-      const projectMatches = extractProjectsFromContent(content, source);
-      projects.push(...projectMatches);
-      
-      console.log(`Extracted ${projectMatches.length} projects from ${source.name}`);
-      
-      // Add delay to avoid rate limiting
+      // Rate limiting
       await new Promise(resolve => setTimeout(resolve, 2000));
       
     } catch (error) {
@@ -71,102 +104,174 @@ async function scrapeProjectsWithFirecrawl(firecrawlApiKey: string): Promise<Pro
     }
   }
 
-  return projects;
+  // Deduplicate by title similarity
+  const deduplicatedProjects = deduplicateProjects(allProjects);
+  console.log(`Final count: ${deduplicatedProjects.length} unique projects`);
+  
+  return deduplicatedProjects;
 }
 
-function extractProjectsFromContent(content: string, source: any): Project[] {
-  const projects: Project[] = [];
+async function intelligentProjectExtraction(
+  content: string,
+  source: any,
+  openaiApiKey: string
+): Promise<ProjectData[]> {
+  try {
+    // Use OpenAI to intelligently extract and structure project data
+    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${openaiApiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: 'gpt-4o-mini',
+        messages: [
+          {
+            role: 'system',
+            content: `You are an expert at extracting UK electrical infrastructure project data. Extract projects from web content and return ONLY a valid JSON array. Each project must have this exact structure:
+            {
+              "status": "Open for Tender" | "Contract Awarded" | "In Progress" | "Completed",
+              "category": "Healthcare" | "Energy" | "Transport" | "Infrastructure" | "Education",
+              "deadline": "YYYY-MM-DD" (if tender deadline available),
+              "title": "clear project title",
+              "snippet": "1-2 sentence summary focused on electrical scope",
+              "client": "client/authority name",
+              "contractValue": "£XXM" or "£XXK" or "TBC",
+              "duration": "XX months",
+              "location": "City, UK",
+              "contractors": estimated number,
+              "startDate": "YYYY-MM-DD" (if known),
+              "url": "direct project URL if available, otherwise source URL"
+            }
+            
+            Focus on electrical projects: power systems, substations, grid connections, hospital electrical, transport electrification, renewable energy connections, etc.`
+          },
+          {
+            role: 'user',
+            content: `Extract electrical infrastructure projects from this content. Source: ${source.name}\nContent: ${content.substring(0, 8000)}`
+          }
+        ],
+        max_tokens: 2000,
+        temperature: 0.1
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`OpenAI API error: ${response.status}`);
+    }
+
+    const data = await response.json();
+    const extractedText = data.choices[0]?.message?.content;
+    
+    if (!extractedText) {
+      return [];
+    }
+
+    // Parse JSON response
+    try {
+      const jsonMatch = extractedText.match(/\[[\s\S]*\]/);
+      if (jsonMatch) {
+        const projects = JSON.parse(jsonMatch[0]);
+        return projects.map((p: any) => ({
+          ...p,
+          url: p.url || source.url // Fallback to source URL
+        }));
+      }
+    } catch (parseError) {
+      console.error('Failed to parse OpenAI response:', parseError);
+    }
+
+    return [];
+
+  } catch (error) {
+    console.error('OpenAI extraction error:', error);
+    // Fallback to basic extraction
+    return basicProjectExtraction(content, source);
+  }
+}
+
+function basicProjectExtraction(content: string, source: any): ProjectData[] {
+  const projects: ProjectData[] = [];
   
   // Enhanced regex patterns for electrical projects
-  const titlePatterns = [
-    /(?:electrical|power|grid|energy|infrastructure|substation|transmission)[\w\s]*project/gi,
-    /(?:hospital|school|university|transport|railway|underground)[\w\s]*electrical/gi,
-    /(?:tender|contract|award)[\w\s]*(?:electrical|power|energy)/gi
+  const electricalKeywords = [
+    'electrical', 'power', 'grid', 'substation', 'transmission', 'distribution',
+    'transformer', 'switchgear', 'cable', 'hvdc', 'solar', 'wind', 'renewable'
   ];
-
+  
   const lines = content.split('\n');
-  let currentProject: Partial<Project> = {};
   
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i].trim();
     
-    // Look for project titles
-    for (const pattern of titlePatterns) {
-      const match = line.match(pattern);
-      if (match && line.length > 20 && line.length < 200) {
-        // Found a potential project title
-        const title = line.replace(/^#+\s*/, '').trim();
+    // Look for project titles containing electrical keywords
+    if (line.length > 20 && line.length < 200) {
+      const hasElectricalKeyword = electricalKeywords.some(keyword => 
+        line.toLowerCase().includes(keyword)
+      );
+      
+      if (hasElectricalKeyword && !line.toLowerCase().includes('cookie')) {
+        const contextLines = lines.slice(i, Math.min(i + 5, lines.length)).join(' ');
         
-        if (title && !title.toLowerCase().includes('cookie') && !title.toLowerCase().includes('privacy')) {
-          currentProject = {
-            title,
-            source: source.name,
-            url: source.url,
-            external_id: `${source.name}-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
-            sector: determineSector(title),
-            status: determineStatus(title)
-          };
-          
-          // Look for additional details in nearby lines
-          const contextLines = lines.slice(i, Math.min(i + 10, lines.length));
-          const contextText = contextLines.join(' ');
-          
-          // Extract value
-          const valueMatch = contextText.match(/£([\d,]+(?:\.\d+)?)\s*(?:million|m|k|thousand)?/i);
-          if (valueMatch) {
-            let value = valueMatch[1];
-            const unit = valueMatch[0].toLowerCase();
-            if (unit.includes('million') || unit.includes('m')) {
-              value += 'M';
-            } else if (unit.includes('thousand') || unit.includes('k')) {
-              value += 'K';
-            }
-            currentProject.value = `£${value}`;
-          }
-          
-          // Extract location
-          const locationMatch = contextText.match(/(?:in|at|for|across)\s+([A-Z][a-z]+(?:\s+[A-Z][a-z]*)*(?:\s*,\s*UK)?)/);
-          if (locationMatch) {
-            currentProject.location = locationMatch[1];
-          }
-          
-          // Extract client
-          const clientMatch = contextText.match(/(?:client|awarded to|contractor):\s*([A-Z][^.]*)/i);
-          if (clientMatch) {
-            currentProject.client = clientMatch[1].trim();
-          }
-          
-          // Set defaults
-          currentProject.description = contextText.substring(0, 300).trim() || 'Project details to be confirmed';
-          currentProject.deadline = new Date(Date.now() + 60 * 24 * 60 * 60 * 1000).toISOString();
-          currentProject.date_awarded = new Date().toISOString();
-          
-          if (currentProject.title && currentProject.title.length > 10) {
-            projects.push(currentProject as Project);
-          }
+        // Extract value
+        const valueMatch = contextLines.match(/£([\d,]+(?:\.\d+)?)\s*(?:million|m|k|thousand)?/i);
+        let contractValue = 'TBC';
+        if (valueMatch) {
+          const unit = valueMatch[0].toLowerCase();
+          contractValue = unit.includes('million') || unit.includes('m') 
+            ? `£${valueMatch[1]}M` 
+            : `£${valueMatch[1]}K`;
         }
+        
+        // Extract location
+        const locationMatch = contextLines.match(/(?:in|at|for|across)\s+([A-Z][a-z]+(?:\s+[A-Z][a-z]+)*)/);
+        const location = locationMatch ? `${locationMatch[1]}, UK` : 'UK';
+        
+        projects.push({
+          status: 'Open for Tender',
+          category: determineCategory(line),
+          title: line.replace(/^#+\s*/, '').trim(),
+          snippet: `${line.substring(0, 100)}...`,
+          client: 'TBC',
+          contractValue,
+          duration: '18 months',
+          location,
+          contractors: estimateContractors(contractValue),
+          url: source.url
+        });
       }
     }
   }
   
-  return projects;
+  return projects.slice(0, 3); // Limit basic extraction
 }
 
-function determineSector(title: string): string {
+function determineCategory(title: string): string {
   const titleLower = title.toLowerCase();
-  if (titleLower.includes('hospital') || titleLower.includes('health') || titleLower.includes('nhs')) return 'Healthcare';
-  if (titleLower.includes('transport') || titleLower.includes('railway') || titleLower.includes('underground') || titleLower.includes('station')) return 'Transport';
-  if (titleLower.includes('school') || titleLower.includes('university') || titleLower.includes('education')) return 'Education';
-  if (titleLower.includes('wind') || titleLower.includes('solar') || titleLower.includes('renewable')) return 'Renewable Energy';
-  if (titleLower.includes('data') || titleLower.includes('tech') || titleLower.includes('digital')) return 'Technology';
+  if (titleLower.includes('hospital') || titleLower.includes('health')) return 'Healthcare';
+  if (titleLower.includes('transport') || titleLower.includes('railway') || titleLower.includes('underground')) return 'Transport';
+  if (titleLower.includes('school') || titleLower.includes('university')) return 'Education';
+  if (titleLower.includes('wind') || titleLower.includes('solar') || titleLower.includes('renewable')) return 'Energy';
   return 'Infrastructure';
 }
 
-function determineStatus(title: string): string {
-  const titleLower = title.toLowerCase();
-  if (titleLower.includes('tender') || titleLower.includes('bidding')) return 'active';
-  if (titleLower.includes('awarded') || titleLower.includes('contract')) return 'active';
-  return 'active';
+function estimateContractors(value: string): number {
+  const numValue = parseFloat(value.replace(/[£,KM]/g, ''));
+  if (value.includes('M') && numValue > 50) return 15;
+  if (value.includes('M') && numValue > 20) return 10;
+  if (value.includes('M')) return 8;
+  return 5;
+}
+
+function deduplicateProjects(projects: ProjectData[]): ProjectData[] {
+  const seen = new Set();
+  return projects.filter(project => {
+    const key = project.title.toLowerCase().substring(0, 50);
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
 }
 
 serve(async (req) => {
@@ -175,37 +280,47 @@ serve(async (req) => {
   }
 
   try {
+    const firecrawlApiKey = Deno.env.get('FIRECRAWL_API_KEY');
+    const openaiApiKey = Deno.env.get('OPENAI_API_KEY');
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
-    const firecrawlApiKey = Deno.env.get('FIRECRAWL_API_KEY');
     
     if (!firecrawlApiKey) {
       throw new Error('FIRECRAWL_API_KEY not configured');
     }
+    
+    if (!openaiApiKey) {
+      console.warn('OPENAI_API_KEY not configured, using basic extraction');
+    }
 
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-    console.log('Starting Firecrawl-based project scraping...');
+    console.log('Starting enhanced UK electrical projects extraction...');
     
-    // Use Firecrawl to scrape real-time project data
-    const projects = await scrapeProjectsWithFirecrawl(firecrawlApiKey);
+    const projects = await enhancedProjectExtraction(firecrawlApiKey, openaiApiKey || '');
     
     let totalInserted = 0;
     let errors = 0;
 
+    // Store projects in database
     for (const project of projects) {
       try {
         const { error } = await supabase
           .from('major_projects')
           .upsert({
             title: project.title,
-            summary: project.description,
-            content: project.description,
-            awarded_to: project.client || 'To be confirmed',
-            project_value: project.value || 'TBC',
-            location: project.location || 'UK',
-            status: project.status,
-            date_awarded: project.date_awarded || new Date().toISOString(),
+            summary: project.snippet,
+            content: `${project.snippet}\n\nCategory: ${project.category}\nDuration: ${project.duration}\nContractors: ${project.contractors || 'TBC'}`,
+            awarded_to: project.client,
+            project_value: project.contractValue,
+            location: project.location,
+            status: project.status.toLowerCase().replace(' ', '_'),
+            date_awarded: project.startDate || new Date().toISOString(),
+            category: project.category,
+            electrical_scope: 'General Electrical',
+            source_url: project.url,
+            external_project_url: project.url,
+            tender_deadline: project.deadline || null,
           }, { 
             onConflict: 'title',
             ignoreDuplicates: false 
@@ -214,16 +329,16 @@ serve(async (req) => {
         if (!error) {
           totalInserted++;
         } else {
-          console.error('Error inserting project:', error);
+          console.error('Database insert error:', error);
           errors++;
         }
       } catch (insertError) {
-        console.error('Error processing project:', insertError);
+        console.error('Project processing error:', insertError);
         errors++;
       }
     }
 
-    // Also fetch existing database projects to return
+    // Fetch updated database projects
     const { data: dbProjects, error: dbError } = await supabase
       .from('major_projects')
       .select('*')
@@ -231,29 +346,28 @@ serve(async (req) => {
       .order('created_at', { ascending: false })
       .limit(20);
 
-    if (dbError) {
-      console.error('Error fetching database projects:', dbError);
-    }
-
     return new Response(
       JSON.stringify({
         success: true,
-        message: `Successfully processed ${totalInserted} new projects`,
+        message: `Successfully processed ${totalInserted} UK electrical projects`,
         inserted: totalInserted,
         errors: errors,
+        scrapedProjects: projects.length,
         data: dbProjects || [],
-        scrapedProjects: projects.length
+        projectDetails: projects.slice(0, 5) // Sample for debugging
       }),
       {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       }
     );
+
   } catch (error) {
-    console.error('Error in fetch-projects function:', error);
+    console.error('Enhanced fetch-projects error:', error);
     return new Response(
       JSON.stringify({
         success: false,
-        error: error.message
+        error: error.message,
+        fallback: 'Using static project data'
       }),
       {
         status: 500,

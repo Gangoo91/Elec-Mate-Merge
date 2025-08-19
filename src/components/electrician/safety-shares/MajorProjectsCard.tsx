@@ -19,7 +19,7 @@ interface MajorProject {
   duration?: string;
   date_awarded?: string;
   status: string;
-  sector?: string;
+  category?: string;
   contractorCount?: number;
   deadline?: string;
   view_count?: number;
@@ -27,6 +27,9 @@ interface MajorProject {
   is_active?: boolean;
   created_at?: string;
   updated_at?: string;
+  source_url?: string;
+  external_project_url?: string;
+  tender_deadline?: string;
 }
 
 const MajorProjectsCard = () => {
@@ -35,11 +38,11 @@ const MajorProjectsCard = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [lastUpdated, setLastUpdated] = useState<string | null>(null);
 
-  // Static fallback projects
+  // Enhanced static fallback projects with real URLs
   const staticProjects: MajorProject[] = [
     {
       id: "static-1",
-      title: "London Underground Station Modernisation",
+      title: "London Underground Station Modernisation Programme",
       summary: "Complete electrical system upgrade for 15 underground stations including LED lighting, power distribution, and emergency systems.",
       awarded_to: "Transport for London",
       location: "London, UK",
@@ -47,13 +50,15 @@ const MajorProjectsCard = () => {
       duration: "18 months",
       date_awarded: "2024-09-01",
       status: "active",
-      sector: "Transport",
+      category: "Transport",
       contractorCount: 12,
-      deadline: "2024-07-15"
+      tender_deadline: "2025-02-15",
+      external_project_url: "https://tfl.gov.uk/corporate/procurement-and-commercial/procurement-opportunities",
+      source_url: "https://tfl.gov.uk/corporate/procurement-and-commercial/procurement-opportunities"
     },
     {
-      id: "static-2",
-      title: "NHS Hospital Electrical Infrastructure",
+      id: "static-2", 
+      title: "NHS Hospital Electrical Infrastructure Expansion",
       summary: "New electrical installation for major hospital expansion including critical care units, operating theatres, and backup power systems.",
       awarded_to: "NHS Foundation Trust",
       location: "Manchester, UK",
@@ -61,22 +66,26 @@ const MajorProjectsCard = () => {
       duration: "24 months",
       date_awarded: "2024-08-15",
       status: "active",
-      sector: "Healthcare",
+      category: "Healthcare",
       contractorCount: 8,
-      deadline: "2024-06-30"
+      tender_deadline: "2025-01-30",
+      external_project_url: "https://www.contractsfinder.service.gov.uk/Search/Results?SearchType=1&Keywords=nhs+electrical",
+      source_url: "https://www.contractsfinder.service.gov.uk"
     },
     {
       id: "static-3",
-      title: "Offshore Wind Farm Grid Connection",
+      title: "Offshore Wind Farm Grid Connection Project",
       summary: "High voltage transmission infrastructure to connect 800MW offshore wind farm to the national grid.",
       awarded_to: "SSE Renewables",
-      location: "East Anglia, UK",
+      location: "East Anglia, UK", 
       project_value: "£180M",
       duration: "36 months",
       date_awarded: "2024-10-01",
       status: "awarded",
-      sector: "Renewable Energy",
-      contractorCount: 25
+      category: "Energy",
+      contractorCount: 25,
+      external_project_url: "https://www.sse.com/about-us/investor-centre/debt-investors/procurement/",
+      source_url: "https://www.sse.com"
     }
   ];
 
@@ -106,7 +115,7 @@ const MajorProjectsCard = () => {
         console.error('Scraping error:', scrapeError);
       }
 
-      // Map database projects to component format
+      // Map database projects to component format  
       const mappedProjects: MajorProject[] = (dbProjects || []).map(project => ({
         id: project.id,
         title: project.title,
@@ -117,12 +126,14 @@ const MajorProjectsCard = () => {
         project_value: project.project_value,
         date_awarded: project.date_awarded,
         status: project.status,
-        sector: determineSectorFromContent(project.content || project.summary),
+        category: project.category || determineSectorFromContent(project.content || project.summary),
         view_count: project.view_count,
         average_rating: project.average_rating,
         contractorCount: estimateContractorCount(project.project_value),
         duration: estimateDuration(project.content || project.summary),
-        deadline: estimateDeadline(project.status)
+        tender_deadline: project.tender_deadline,
+        external_project_url: project.external_project_url,
+        source_url: project.source_url
       }));
 
       setProjects(mappedProjects);
@@ -192,26 +203,53 @@ const MajorProjectsCard = () => {
   // Remove unused handlers
 
   const handleViewProject = (project: MajorProject) => {
-    const projectUrl = generateProjectUrl(project);
+    const projectUrl = getProjectUrl(project);
+    
+    // Track view if analytics is available
+    if (project.id && !project.id.startsWith('static-')) {
+      trackProjectView(project.id);
+    }
+    
     window.open(projectUrl, '_blank', 'noopener,noreferrer');
   };
 
-  const generateProjectUrl = (project: MajorProject): string => {
-    // For static projects, generate appropriate external URLs
-    if (project.id.startsWith('static-')) {
-      if (project.awarded_to?.toLowerCase().includes('transport for london')) {
-        return `https://www.contractsfinder.service.gov.uk/Search/Results?SearchType=1&Keywords=${encodeURIComponent(project.title)}`;
-      }
-      if (project.awarded_to?.toLowerCase().includes('nhs')) {
-        return `https://www.contractsfinder.service.gov.uk/Search/Results?SearchType=1&Keywords=${encodeURIComponent('nhs ' + project.title)}`;
-      }
-      if (project.sector?.toLowerCase().includes('renewable')) {
-        return `https://www.contractsfinder.service.gov.uk/Search/Results?SearchType=1&Keywords=${encodeURIComponent('renewable energy ' + project.title)}`;
-      }
+  const getProjectUrl = (project: MajorProject): string => {
+    // Priority 1: Direct external project URL
+    if (project.external_project_url) {
+      return project.external_project_url;
     }
     
-    // For database projects, try to construct appropriate URLs
-    return `https://www.contractsfinder.service.gov.uk/Search/Results?SearchType=1&Keywords=${encodeURIComponent(project.title)}`;
+    // Priority 2: Source URL
+    if (project.source_url) {
+      return project.source_url;
+    }
+    
+    // Priority 3: Static project specific URLs
+    if (project.id.startsWith('static-')) {
+      return project.source_url || generateSearchUrl(project);
+    }
+    
+    // Fallback: Generate search URL
+    return generateSearchUrl(project);
+  };
+
+  const generateSearchUrl = (project: MajorProject): string => {
+    const searchTerm = encodeURIComponent(`${project.title} ${project.awarded_to}`);
+    return `https://www.contractsfinder.service.gov.uk/Search/Results?SearchType=1&Keywords=${searchTerm}`;
+  };
+
+  const trackProjectView = async (projectId: string) => {
+    try {
+      await supabase
+        .from('safety_content_views')
+        .insert({
+          content_type: 'major_projects',
+          content_id: projectId,
+          user_id: null // Anonymous tracking
+        });
+    } catch (error) {
+      console.error('Error tracking view:', error);
+    }
   };
 
   const ProjectDetailModal = ({ project }: { project: MajorProject }) => (
@@ -283,13 +321,13 @@ const MajorProjectsCard = () => {
         </div>
 
         {/* Deadline Info */}
-        {project.deadline && getStatusText(project.status) === "Open for Tender" && (
+        {project.tender_deadline && getStatusText(project.status) === "Open for Tender" && (
           <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-lg">
             <div className="flex items-center gap-2">
               <Calendar className="h-5 w-5 text-red-400" />
               <div>
                 <p className="text-red-400 font-medium">Tender Deadline</p>
-                <p className="text-white">{new Date(project.deadline).toLocaleDateString('en-GB')}</p>
+                <p className="text-white">{new Date(project.tender_deadline).toLocaleDateString('en-GB')}</p>
               </div>
             </div>
           </div>
@@ -302,7 +340,7 @@ const MajorProjectsCard = () => {
             className="bg-elec-yellow text-black hover:bg-elec-yellow/90"
           >
             <ExternalLink className="h-4 w-4 mr-2" />
-            View External Project
+            View Project
           </Button>
           
           {getStatusText(project.status) === "Open for Tender" && (
@@ -387,14 +425,14 @@ const MajorProjectsCard = () => {
                 <Badge className={getStatusColor(project.status)}>
                   {getStatusText(project.status)}
                 </Badge>
-                {project.sector && (
-                  <Badge className={getSectorColor(project.sector)}>
-                    {project.sector}
+                {project.category && (
+                  <Badge className={getSectorColor(project.category)}>
+                    {project.category}
                   </Badge>
                 )}
-                {project.deadline && getStatusText(project.status) === "Open for Tender" && (
+                {project.tender_deadline && getStatusText(project.status) === "Open for Tender" && (
                   <Badge className="bg-red-500/20 text-red-400 border-red-500/30">
-                    Deadline: {new Date(project.deadline).toLocaleDateString('en-GB')}
+                    Deadline: {new Date(project.tender_deadline).toLocaleDateString('en-GB')}
                   </Badge>
                 )}
               </div>
