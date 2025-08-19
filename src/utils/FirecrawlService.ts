@@ -155,7 +155,7 @@ export class FirecrawlService {
       const { data: articles, error: dbError } = await supabase
         .from('industry_news')
         .select('*')
-        .order('date_published', { ascending: false })
+        .order('published_at', { ascending: false })
         .limit(20);
 
       if (dbError) {

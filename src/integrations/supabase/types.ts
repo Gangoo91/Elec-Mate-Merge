@@ -567,12 +567,9 @@ export type Database = {
           content: string
           created_at: string
           date_published: string
-          external_id: string | null
-          external_url: string | null
           id: string
           is_active: boolean
           regulatory_body: string
-          source_url: string | null
           summary: string
           title: string
           updated_at: string
@@ -584,12 +581,9 @@ export type Database = {
           content: string
           created_at?: string
           date_published?: string
-          external_id?: string | null
-          external_url?: string | null
           id?: string
           is_active?: boolean
           regulatory_body: string
-          source_url?: string | null
           summary: string
           title: string
           updated_at?: string
@@ -601,12 +595,9 @@ export type Database = {
           content?: string
           created_at?: string
           date_published?: string
-          external_id?: string | null
-          external_url?: string | null
           id?: string
           is_active?: boolean
           regulatory_body?: string
-          source_url?: string | null
           summary?: string
           title?: string
           updated_at?: string
@@ -747,21 +738,15 @@ export type Database = {
         Row: {
           average_rating: number | null
           awarded_to: string
-          category: string | null
           content: string
           created_at: string
           date_awarded: string
-          electrical_scope: string | null
-          external_project_url: string | null
           id: string
           is_active: boolean
           location: string
           project_value: string
-          source_url: string | null
           status: string
           summary: string
-          technologies: string[] | null
-          tender_deadline: string | null
           title: string
           updated_at: string
           view_count: number | null
@@ -769,21 +754,15 @@ export type Database = {
         Insert: {
           average_rating?: number | null
           awarded_to: string
-          category?: string | null
           content: string
           created_at?: string
           date_awarded?: string
-          electrical_scope?: string | null
-          external_project_url?: string | null
           id?: string
           is_active?: boolean
           location: string
           project_value: string
-          source_url?: string | null
           status?: string
           summary: string
-          technologies?: string[] | null
-          tender_deadline?: string | null
           title: string
           updated_at?: string
           view_count?: number | null
@@ -791,21 +770,15 @@ export type Database = {
         Update: {
           average_rating?: number | null
           awarded_to?: string
-          category?: string | null
           content?: string
           created_at?: string
           date_awarded?: string
-          electrical_scope?: string | null
-          external_project_url?: string | null
           id?: string
           is_active?: boolean
           location?: string
           project_value?: string
-          source_url?: string | null
           status?: string
           summary?: string
-          technologies?: string[] | null
-          tender_deadline?: string | null
           title?: string
           updated_at?: string
           view_count?: number | null
@@ -1948,39 +1921,6 @@ export type Database = {
         }
         Relationships: []
       }
-      security_audit_log: {
-        Row: {
-          action: string
-          created_at: string | null
-          id: string
-          ip_address: unknown | null
-          record_id: string | null
-          table_name: string | null
-          user_agent: string | null
-          user_id: string | null
-        }
-        Insert: {
-          action: string
-          created_at?: string | null
-          id?: string
-          ip_address?: unknown | null
-          record_id?: string | null
-          table_name?: string | null
-          user_agent?: string | null
-          user_id?: string | null
-        }
-        Update: {
-          action?: string
-          created_at?: string | null
-          id?: string
-          ip_address?: unknown | null
-          record_id?: string | null
-          table_name?: string | null
-          user_agent?: string | null
-          user_id?: string | null
-        }
-        Relationships: []
-      }
       study_sessions: {
         Row: {
           activity: string
@@ -2368,66 +2308,7 @@ export type Database = {
       }
     }
     Views: {
-      message_upvote_counts: {
-        Row: {
-          message_id: string | null
-          upvote_count: number | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "global_chat_upvotes_message_id_fkey"
-            columns: ["message_id"]
-            isOneToOne: false
-            referencedRelation: "global_chat_messages"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      public_price_reports: {
-        Row: {
-          approximate_lat: number | null
-          approximate_lng: number | null
-          complexity_level: string | null
-          county: string | null
-          created_at: string | null
-          currency: string | null
-          data_source: string | null
-          id: string | null
-          job_type: string | null
-          price: number | null
-          region: string | null
-          unit: string | null
-        }
-        Insert: {
-          approximate_lat?: never
-          approximate_lng?: never
-          complexity_level?: string | null
-          county?: string | null
-          created_at?: string | null
-          currency?: string | null
-          data_source?: string | null
-          id?: string | null
-          job_type?: string | null
-          price?: number | null
-          region?: string | null
-          unit?: string | null
-        }
-        Update: {
-          approximate_lat?: never
-          approximate_lng?: never
-          complexity_level?: string | null
-          county?: string | null
-          created_at?: string | null
-          currency?: string | null
-          data_source?: string | null
-          id?: string | null
-          job_type?: string | null
-          price?: number | null
-          region?: string | null
-          unit?: string | null
-        }
-        Relationships: []
-      }
+      [_ in never]: never
     }
     Functions: {
       get_chat_messages_with_upvote_status: {
@@ -2444,10 +2325,6 @@ export type Database = {
           updated_at: string
           upvotes: number
         }[]
-      }
-      get_current_user_role: {
-        Args: Record<PropertyKey, never>
-        Returns: string
       }
     }
     Enums: {
