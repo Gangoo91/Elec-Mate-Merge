@@ -563,8 +563,10 @@ export type Database = {
       industry_news: {
         Row: {
           average_rating: number | null
+          canonical_url: string | null
           category: string
           content: string
+          content_hash: string | null
           content_quality: number | null
           created_at: string
           date_published: string
@@ -585,8 +587,10 @@ export type Database = {
         }
         Insert: {
           average_rating?: number | null
+          canonical_url?: string | null
           category: string
           content: string
+          content_hash?: string | null
           content_quality?: number | null
           created_at?: string
           date_published?: string
@@ -607,8 +611,10 @@ export type Database = {
         }
         Update: {
           average_rating?: number | null
+          canonical_url?: string | null
           category?: string
           content?: string
+          content_hash?: string | null
           content_quality?: number | null
           created_at?: string
           date_published?: string
@@ -2445,6 +2451,10 @@ export type Database = {
       }
     }
     Functions: {
+      generate_content_hash: {
+        Args: { content: string; source_url: string; title: string }
+        Returns: string
+      }
       get_chat_messages_with_upvote_status: {
         Args: { user_id: string }
         Returns: {
