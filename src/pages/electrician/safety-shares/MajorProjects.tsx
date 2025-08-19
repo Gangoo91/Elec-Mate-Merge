@@ -14,7 +14,7 @@ const MajorProjects = () => {
       
       <div className="space-y-8 animate-fade-in">
         <div className="flex items-center gap-4">
-          <BackButton customUrl="/electrician/safety-shares" />
+          <BackButton customUrl="/electrician/safety-shares/industry-news" />
           <div className="flex items-center gap-3">
             <div className="w-12 h-12 rounded-full bg-blue-500 flex items-center justify-center">
               <Building2 className="h-6 w-6 text-white" />
