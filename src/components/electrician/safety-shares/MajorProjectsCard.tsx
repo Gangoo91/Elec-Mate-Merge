@@ -7,6 +7,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Building2, MapPin, Calendar, PoundSterling, Users, Clock, ExternalLink, Bookmark, RefreshCw, Eye } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { ProjectSubmissionDialog } from "./ProjectSubmissionDialog";
 
 interface MajorProject {
   id: string;
@@ -37,6 +38,7 @@ const MajorProjectsCard = () => {
   const [projects, setProjects] = useState<MajorProject[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [lastUpdated, setLastUpdated] = useState<string | null>(null);
+  const [isSubmissionDialogOpen, setIsSubmissionDialogOpen] = useState(false);
 
   // Enhanced static fallback projects with real URLs
   const staticProjects: MajorProject[] = [
@@ -413,7 +415,10 @@ const MajorProjectsCard = () => {
               <RefreshCw className={`h-4 w-4 mr-2 ${isLoading ? 'animate-spin' : ''}`} />
               Refresh
             </Button>
-            <Button className="bg-elec-yellow text-black hover:bg-elec-yellow/90">
+            <Button 
+              onClick={() => setIsSubmissionDialogOpen(true)}
+              className="bg-elec-yellow text-black hover:bg-elec-yellow/90"
+            >
               <Building2 className="h-4 w-4 mr-2" />
               Submit Project
             </Button>
@@ -560,6 +565,12 @@ const MajorProjectsCard = () => {
       </div>
 
       {/* API Key dialog removed - now handled automatically */}
+      
+      <ProjectSubmissionDialog
+        open={isSubmissionDialogOpen}
+        onOpenChange={setIsSubmissionDialogOpen}
+        onProjectSubmitted={fetchMajorProjects}
+      />
     </div>
   );
 };
