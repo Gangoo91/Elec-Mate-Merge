@@ -24,3 +24,9 @@ verify_jwt = false
 
 [functions.fetch-industry-news]
 verify_jwt = false
+
+[functions.fetch-news]
+verify_jwt = false
+
+[functions.fetch-projects]
+verify_jwt = false

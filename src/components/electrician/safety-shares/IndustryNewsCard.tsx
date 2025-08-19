@@ -7,19 +7,17 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { RefreshCw, Search, ExternalLink, Building2, MapPin, PoundSterling, Calendar, Filter, X, Key, Wifi, WifiOff } from "lucide-react";
+import { RefreshCw, Search, ExternalLink, Building2, MapPin, PoundSterling, Calendar, Filter, X, Wifi, WifiOff } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { format } from "date-fns";
 import { Link } from "react-router-dom";
 import { FirecrawlService } from "@/utils/FirecrawlService";
-import { ApiKeyDialog } from "@/components/ui/api-key-dialog";
 import { Progress } from "@/components/ui/progress";
 
 const IndustryNewsCard = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedArticle, setSelectedArticle] = useState<any>(null);
-  const [apiKeyDialogOpen, setApiKeyDialogOpen] = useState(false);
   const [isLiveFetching, setIsLiveFetching] = useState(false);
   const [fetchProgress, setFetchProgress] = useState({ current: 0, total: 0, source: "" });
   const { toast } = useToast();
@@ -36,10 +34,13 @@ const IndustryNewsCard = () => {
         return cachedArticles;
       }
       
-      // If no valid cache and API key is configured, fetch live data
-      if (FirecrawlService.isApiKeyConfigured() && !isLiveFetching) {
-        // Return cached data (even if stale) while we fetch fresh data in background
-        return cachedArticles;
+      // If no valid cache, fetch live data automatically
+      if (cachedArticles.length === 0 || !FirecrawlService.isCacheValid()) {
+        if (!isLiveFetching) {
+          // Start background fetch - return empty array for now
+          setTimeout(() => handleLiveFetch(), 100);
+        }
+        return cachedArticles; // Return what we have while fetching
       }
       
       // Fallback to empty array if no API key configured
@@ -66,11 +67,6 @@ const IndustryNewsCard = () => {
 
   // Live news fetching function
   const handleLiveFetch = async () => {
-    if (!FirecrawlService.isApiKeyConfigured()) {
-      setApiKeyDialogOpen(true);
-      return;
-    }
-
     setIsLiveFetching(true);
     setFetchProgress({ current: 0, total: 0, source: "" });
 
@@ -108,16 +104,7 @@ const IndustryNewsCard = () => {
     }
   };
 
-  // Handle API key configuration
-  const handleApiKeyConfigured = () => {
-    toast({
-      title: "API Key Configured",
-      description: "You can now fetch live industry news!",
-      variant: "success",
-    });
-    // Automatically trigger a live fetch after API key is configured
-    setTimeout(() => handleLiveFetch(), 1000);
-  };
+  // Remove unused handlers
 
   // Static categories for filtering
   const categories = [
@@ -159,37 +146,25 @@ const IndustryNewsCard = () => {
               <CardTitle className="text-lg">Filter News</CardTitle>
             </div>
             <div className="flex gap-2">
-              {!FirecrawlService.isApiKeyConfigured() ? (
-                <Button
-                  onClick={() => setApiKeyDialogOpen(true)}
-                  variant="outline"
-                  size="sm"
-                  className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
-                >
-                  <Key className="h-4 w-4 mr-2" />
-                  Setup API Key
-                </Button>
-              ) : (
-                <Button
-                  onClick={handleLiveFetch}
-                  variant="outline"
-                  size="sm"
-                  disabled={isLiveFetching}
-                  className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
-                >
-                  {isLiveFetching ? (
-                    <>
-                      <Wifi className="h-4 w-4 mr-2 animate-pulse" />
-                      Fetching Live...
-                    </>
-                  ) : (
-                    <>
-                      <Wifi className="h-4 w-4 mr-2" />
-                      Fetch Live News
-                    </>
-                  )}
-                </Button>
-              )}
+              <Button
+                onClick={handleLiveFetch}
+                variant="outline"
+                size="sm"
+                disabled={isLiveFetching}
+                className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+              >
+                {isLiveFetching ? (
+                  <>
+                    <Wifi className="h-4 w-4 mr-2 animate-pulse" />
+                    Fetching Live...
+                  </>
+                ) : (
+                  <>
+                    <Wifi className="h-4 w-4 mr-2" />
+                    Fetch Live News
+                  </>
+                )}
+              </Button>
             </div>
           </div>
         </CardHeader>
@@ -259,15 +234,10 @@ const IndustryNewsCard = () => {
         </CardContent>
       </Card>
 
-      {/* API Key Dialog */}
-      <ApiKeyDialog
-        open={apiKeyDialogOpen}
-        onOpenChange={setApiKeyDialogOpen}
-        onApiKeyConfigured={handleApiKeyConfigured}
-      />
+      {/* API key dialog and handlers removed - now automatic */}
 
       {/* Cache Status Indicator */}
-      {FirecrawlService.isApiKeyConfigured() && newsArticles.length > 0 && (
+      {newsArticles.length > 0 && (
         <div className="flex items-center justify-between text-sm text-gray-400 bg-elec-gray/50 px-4 py-2 rounded-lg border border-elec-yellow/10">
           <div className="flex items-center gap-2">
             {FirecrawlService.isCacheValid() ? (

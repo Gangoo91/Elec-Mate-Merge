@@ -3,10 +3,9 @@ import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Building2, MapPin, Calendar, PoundSterling, Users, Clock, ExternalLink, Bookmark, RefreshCw, AlertCircle, Settings } from "lucide-react";
+import { Building2, MapPin, Calendar, PoundSterling, Users, Clock, ExternalLink, Bookmark, RefreshCw } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import { FirecrawlService } from '@/utils/FirecrawlService';
-import { ApiKeyDialog } from "@/components/ui/api-key-dialog";
 
 interface MajorProject {
   id: string;
@@ -31,8 +30,6 @@ const MajorProjectsCard = () => {
   const { toast } = useToast();
   const [projects, setProjects] = useState<MajorProject[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [showApiKeyDialog, setShowApiKeyDialog] = useState(false);
-  const [hasApiKey, setHasApiKey] = useState(false);
   const [lastUpdated, setLastUpdated] = useState<string | null>(null);
 
   // Static fallback projects
@@ -81,14 +78,7 @@ const MajorProjectsCard = () => {
   ];
 
   useEffect(() => {
-    const apiKey = FirecrawlService.getApiKey();
-    setHasApiKey(!!apiKey);
-    
-    if (apiKey) {
-      fetchMajorProjects();
-    } else {
-      setProjects(staticProjects);
-    }
+    fetchMajorProjects();
   }, []);
 
   const fetchMajorProjects = async () => {
@@ -146,11 +136,7 @@ const MajorProjectsCard = () => {
     }
   };
 
-  const handleApiKeyConfigured = () => {
-    setHasApiKey(true);
-    setShowApiKeyDialog(false);
-    fetchMajorProjects();
-  };
+  // Remove unused handlers
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -196,29 +182,16 @@ const MajorProjectsCard = () => {
             </p>
           </div>
           <div className="flex gap-2">
-            {!hasApiKey && (
-              <Button 
-                variant="outline" 
-                size="sm"
-                onClick={() => setShowApiKeyDialog(true)}
-                className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
-              >
-                <Settings className="h-4 w-4 mr-2" />
-                Setup API
-              </Button>
-            )}
-            {hasApiKey && (
-              <Button 
-                variant="outline" 
-                size="sm"
-                onClick={fetchMajorProjects}
-                disabled={isLoading}
-                className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
-              >
-                <RefreshCw className={`h-4 w-4 mr-2 ${isLoading ? 'animate-spin' : ''}`} />
-                Refresh
-              </Button>
-            )}
+            <Button 
+              variant="outline" 
+              size="sm"
+              onClick={fetchMajorProjects}
+              disabled={isLoading}
+              className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+            >
+              <RefreshCw className={`h-4 w-4 mr-2 ${isLoading ? 'animate-spin' : ''}`} />
+              Refresh
+            </Button>
             <Button className="bg-elec-yellow text-black hover:bg-elec-yellow/90">
               <Building2 className="h-4 w-4 mr-2" />
               Submit Project
@@ -226,28 +199,7 @@ const MajorProjectsCard = () => {
           </div>
         </div>
 
-        {!hasApiKey && (
-          <Card className="border-yellow-500/30 bg-yellow-500/10">
-            <CardContent className="p-4">
-              <div className="flex items-center gap-3">
-                <AlertCircle className="h-5 w-5 text-yellow-500" />
-                <div>
-                  <p className="text-yellow-200 font-medium">Live Data Available</p>
-                  <p className="text-yellow-300/80 text-sm">
-                    Setup Firecrawl API to fetch real-time project data from government tenders and industry sources.
-                  </p>
-                </div>
-                <Button 
-                  size="sm" 
-                  onClick={() => setShowApiKeyDialog(true)}
-                  className="bg-yellow-500 text-black hover:bg-yellow-600 ml-auto"
-                >
-                  Setup Now
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-        )}
+        {/* Live data notification removed - now automatic */}
 
       <div className="grid gap-6">
         {projects.map((project) => (
@@ -369,11 +321,7 @@ const MajorProjectsCard = () => {
         </Button>
       </div>
 
-      <ApiKeyDialog
-        open={showApiKeyDialog}
-        onOpenChange={setShowApiKeyDialog}
-        onApiKeyConfigured={handleApiKeyConfigured}
-      />
+      {/* API Key dialog removed - now handled automatically */}
     </div>
   );
 };

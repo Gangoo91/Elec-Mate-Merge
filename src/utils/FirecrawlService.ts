@@ -1,4 +1,4 @@
-import FirecrawlApp from '@mendable/firecrawl-js';
+import { supabase } from '@/integrations/supabase/client';
 
 interface NewsArticle {
   id: string;
@@ -22,11 +22,9 @@ interface CrawlResult {
 }
 
 export class FirecrawlService {
-  private static API_KEY_STORAGE_KEY = 'firecrawl_api_key';
   private static CACHE_KEY = 'cached_news_articles';
   private static CACHE_TIMESTAMP_KEY = 'cached_news_timestamp';
   private static CACHE_DURATION = 30 * 60 * 1000; // 30 minutes
-  private static firecrawlApp: FirecrawlApp | null = null;
 
   // Static categories for filtering
   static readonly CATEGORIES = {
@@ -93,37 +91,7 @@ export class FirecrawlService {
     }
   ];
 
-  static saveApiKey(apiKey: string): void {
-    localStorage.setItem(this.API_KEY_STORAGE_KEY, apiKey);
-    this.firecrawlApp = new FirecrawlApp({ apiKey });
-    console.log('Firecrawl API key saved successfully');
-  }
-
-  static getApiKey(): string | null {
-    return localStorage.getItem(this.API_KEY_STORAGE_KEY);
-  }
-
-  static removeApiKey(): void {
-    localStorage.removeItem(this.API_KEY_STORAGE_KEY);
-    this.firecrawlApp = null;
-  }
-
-  static async testApiKey(apiKey: string): Promise<boolean> {
-    try {
-      console.log('Testing Firecrawl API key...');
-      const testApp = new FirecrawlApp({ apiKey });
-      
-      // Test with a simple scrape
-      const testResult = await testApp.scrapeUrl('https://www.gov.uk', {
-        formats: ['markdown']
-      });
-      
-      return testResult.success;
-    } catch (error) {
-      console.error('Error testing API key:', error);
-      return false;
-    }
-  }
+  // API key management removed - now handled by Supabase edge functions
 
   static getCachedArticles(): NewsArticle[] {
     try {
@@ -157,57 +125,66 @@ export class FirecrawlService {
   }
 
   static async fetchLiveNews(onProgress?: (progress: { current: number; total: number; source: string }) => void): Promise<CrawlResult> {
-    const apiKey = this.getApiKey();
-    if (!apiKey) {
-      return { success: false, error: 'API key not found. Please configure your Firecrawl API key.' };
-    }
-
     try {
-      if (!this.firecrawlApp) {
-        this.firecrawlApp = new FirecrawlApp({ apiKey });
+      console.log('Fetching news via edge function');
+      const { data, error } = await supabase.functions.invoke('fetch-news');
+
+      if (error) {
+        console.error('Error calling fetch-news function:', error);
+        return { 
+          success: false, 
+          error: error.message || 'Failed to fetch news' 
+        };
       }
 
-      const allArticles: NewsArticle[] = [];
-      let articleIdCounter = 1;
-
-      for (let i = 0; i < this.newsSources.length; i++) {
-        const source = this.newsSources[i];
-        
-        onProgress?.({
-          current: i + 1,
-          total: this.newsSources.length,
-          source: source.name
-        });
-
-        try {
-          console.log(`Scraping ${source.name}...`);
-          
-          const result = await this.firecrawlApp.scrapeUrl(source.url, {
-            formats: ['markdown', 'html'],
-            waitFor: 3000
+      // Simulate progress for UI feedback
+      if (onProgress) {
+        for (let i = 1; i <= 3; i++) {
+          onProgress({
+            current: i,
+            total: 3,
+            source: `Source ${i}`
           });
-
-          if (result.success && result.markdown) {
-            // Parse the scraped content to extract articles
-            const articles = this.parseScrapedContent({ markdown: result.markdown, url: source.url }, source);
-            allArticles.push(...articles.map(article => ({
-              ...article,
-              id: `crawl_${articleIdCounter++}_${Date.now()}`
-            })));
-          }
-        } catch (sourceError) {
-          console.warn(`Failed to scrape ${source.name}:`, sourceError);
-          // Continue with other sources
+          await new Promise(resolve => setTimeout(resolve, 500));
         }
       }
 
+      console.log('News fetch successful:', data);
+      
+      // Get latest articles from database for display
+      const { data: articles, error: dbError } = await supabase
+        .from('industry_news')
+        .select('*')
+        .order('published_at', { ascending: false })
+        .limit(20);
+
+      if (dbError) {
+        console.error('Error fetching articles from DB:', dbError);
+        return { success: false, error: 'Failed to fetch articles from database' };
+      }
+
+      // Convert to expected format - using available database fields
+      const formattedArticles: NewsArticle[] = articles?.map(article => ({
+        id: article.id,
+        title: article.title,
+        summary: article.content || '',
+        content: article.content || '',
+        url: '', // URL not stored in current schema
+        date_published: article.created_at || new Date().toISOString(),
+        regulatory_body: article.category || 'Unknown',
+        category: article.category || 'General',
+        keywords: [],
+        view_count: article.view_count || 0,
+        is_active: true
+      })) || [];
+
       // Cache the results
-      this.setCachedArticles(allArticles);
+      this.setCachedArticles(formattedArticles);
 
       return {
         success: true,
-        data: allArticles,
-        articlesFound: allArticles.length
+        data: formattedArticles,
+        articlesFound: formattedArticles.length
       };
 
     } catch (error) {
@@ -373,7 +350,7 @@ export class FirecrawlService {
   }
 
   static isApiKeyConfigured(): boolean {
-    return !!this.getApiKey();
+    return true; // Always true now - handled by edge functions
   }
 
   static getCacheAge(): number {
@@ -396,37 +373,33 @@ export class FirecrawlService {
   ];
 
   static async fetchMajorProjects(): Promise<{ success: boolean; error?: string; data?: any[] }> {
-    const apiKey = this.getApiKey();
-    if (!apiKey) {
-      return { success: false, error: 'API key not found' };
-    }
-
     try {
-      console.log('Fetching major projects data');
-      if (!this.firecrawlApp) {
-        this.firecrawlApp = new FirecrawlApp({ apiKey });
+      console.log('Fetching projects via edge function');
+      const { data, error } = await supabase.functions.invoke('fetch-projects');
+
+      if (error) {
+        console.error('Error calling fetch-projects function:', error);
+        return { 
+          success: false, 
+          error: error.message || 'Failed to fetch projects' 
+        };
       }
 
-      const allProjects: any[] = [];
+      console.log('Projects fetch successful:', data);
+      
+      // Get latest projects from database for display
+      const { data: projects, error: dbError } = await supabase
+        .from('major_projects')
+        .select('*')
+        .order('created_at', { ascending: false })
+        .limit(10);
 
-      for (const source of this.majorProjectsSources) {
-        try {
-          const response = await this.firecrawlApp.scrapeUrl(source, {
-            formats: ['markdown']
-          });
-
-          if (response.success && response.markdown) {
-            // Parse the markdown content to extract project information
-            const projects = this.parseProjectContent(response.markdown, source);
-            allProjects.push(...projects);
-          }
-        } catch (error) {
-          console.warn(`Failed to fetch from ${source}:`, error);
-        }
+      if (dbError) {
+        console.error('Error fetching projects from DB:', dbError);
+        return { success: false, error: 'Failed to fetch projects from database' };
       }
 
-      console.log('Fetched major projects:', allProjects.length);
-      return { success: true, data: allProjects };
+      return { success: true, data: projects || [] };
     } catch (error) {
       console.error('Error fetching major projects:', error);
       return { 
