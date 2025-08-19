@@ -29,38 +29,116 @@ interface NewsSource {
 }
 
 const NEWS_SOURCES: NewsSource[] = [
-  // HSE Source - Using the exact URL requested
+  // HSE Updates - Using the exact URL requested
   {
     name: 'HSE Press Releases',
-    url: 'https://press.hse.gov.uk',
+    url: 'https://press.hse.gov.uk/',
     category: 'HSE',
     regulatory_body: 'Health and Safety Executive'
   },
   
-  // BS7671 Source - Using the exact URL requested
+  // BS7671 Updates - Using the exact URL requested  
   {
     name: 'BS7671 Wiring Regulations',
-    url: 'https://electrical.theiet.org/bs-7671/',
+    url: 'https://electrical.theiet.org/wiring-regulations/',
     category: 'BS7671',
     regulatory_body: 'Institution of Engineering and Technology'
   },
   
-  // IET Technical Source - Using the exact URL requested
+  // IET Updates - Using the exact URL requested
   {
-    name: 'IET Technical News',
-    url: 'https://theiet.org/news/',
+    name: 'IET Technical Updates',
+    url: 'https://electrical.theiet.org/',
     category: 'IET',
     regulatory_body: 'Institution of Engineering and Technology'
-  },
-  
-  // Major Projects Source - Using the exact URL requested
-  {
-    name: 'Construction News Projects',
-    url: 'https://constructionnews.co.uk/projects',
-    category: 'Major Projects',
-    regulatory_body: 'Construction News'
   }
 ];
+
+// Major Projects (UK) - ContractsFinder API integration
+async function fetchContractFinderProjects(): Promise<ProcessedArticle[]> {
+  try {
+    console.log('Fetching UK contracts from ContractsFinder API...');
+    
+    // ContractsFinder API endpoint for electrical/construction contracts
+    const apiUrl = 'https://www.contractsfinder.service.gov.uk/Published/Notices/OCDS/Search' +
+      '?keyword=electrical%20OR%20construction%20OR%20infrastructure%20OR%20power' +
+      '&limit=10' +
+      '&orderBy=publishedDate' +
+      '&orderDirection=desc';
+    
+    const response = await fetch(apiUrl, {
+      headers: {
+        'Accept': 'application/json',
+        'User-Agent': 'Elec-Mate Industry News Scraper'
+      }
+    });
+
+    if (!response.ok) {
+      console.warn(`ContractsFinder API error: ${response.status}`);
+      return [];
+    }
+
+    const data = await response.json();
+    
+    if (!data.releases || !Array.isArray(data.releases)) {
+      console.warn('No valid contract data received');
+      return [];
+    }
+
+    const articles: ProcessedArticle[] = [];
+    
+    for (const contract of data.releases.slice(0, 5)) {
+      try {
+        const tender = contract.tender || {};
+        const title = tender.title || contract.ocid || 'UK Infrastructure Contract';
+        const description = tender.description || contract.description || 'Major infrastructure contract awarded';
+        const value = tender.value?.amount ? `£${(tender.value.amount / 1000000).toFixed(1)}M` : 'Value TBC';
+        const publishDate = contract.date || tender.tenderPeriod?.startDate || new Date().toISOString();
+        
+        // Enhanced content with contract details
+        const content = `
+**Contract Title:** ${title}
+
+**Description:** ${description}
+
+**Contract Value:** ${value}
+
+**Procurement Details:**
+- Contract ID: ${contract.ocid}
+- Publishing Date: ${new Date(publishDate).toLocaleDateString()}
+- Status: ${tender.status || 'Active'}
+
+**Electrical Scope:**
+This major infrastructure project includes significant electrical installation and maintenance work, representing opportunities for UK electrical contractors and the broader construction industry.
+
+**Why This Matters:**
+Major public sector contracts like this drive innovation in electrical installation practices and often set new standards for safety and technical compliance across the industry.
+        `.trim();
+
+        articles.push({
+          title: `${title} - ${value}`,
+          summary: `Major UK infrastructure contract: ${description.substring(0, 150)}...`,
+          content,
+          regulatory_body: 'UK Government - ContractsFinder',
+          category: 'Major Projects',
+          external_id: `contracts-${contract.ocid}-${Date.now()}`,
+          source_url: 'https://www.contractsfinder.service.gov.uk/Search',
+          external_url: `https://www.contractsfinder.service.gov.uk/Notice/${contract.ocid}`,
+          date_published: publishDate
+        });
+      } catch (contractError) {
+        console.warn('Error processing contract:', contractError);
+      }
+    }
+    
+    console.log(`Extracted ${articles.length} contracts from ContractsFinder`);
+    return articles;
+    
+  } catch (error) {
+    console.error('ContractsFinder API error:', error);
+    return [];
+  }
+}
 
 async function intelligentContentParsing(rawContent: string, source: NewsSource): Promise<ProcessedArticle[]> {
   const openAIApiKey = Deno.env.get('OPENAI_API_KEY');

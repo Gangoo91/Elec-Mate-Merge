@@ -565,13 +565,18 @@ export type Database = {
           average_rating: number | null
           category: string
           content: string
+          content_quality: number | null
           created_at: string
           date_published: string
           external_id: string | null
           external_url: string | null
           id: string
           is_active: boolean
+          keywords: string[] | null
+          published_date: string | null
           regulatory_body: string
+          relevance_score: number | null
+          source_name: string | null
           source_url: string | null
           summary: string
           title: string
@@ -582,13 +587,18 @@ export type Database = {
           average_rating?: number | null
           category: string
           content: string
+          content_quality?: number | null
           created_at?: string
           date_published?: string
           external_id?: string | null
           external_url?: string | null
           id?: string
           is_active?: boolean
+          keywords?: string[] | null
+          published_date?: string | null
           regulatory_body: string
+          relevance_score?: number | null
+          source_name?: string | null
           source_url?: string | null
           summary: string
           title: string
@@ -599,13 +609,18 @@ export type Database = {
           average_rating?: number | null
           category?: string
           content?: string
+          content_quality?: number | null
           created_at?: string
           date_published?: string
           external_id?: string | null
           external_url?: string | null
           id?: string
           is_active?: boolean
+          keywords?: string[] | null
+          published_date?: string | null
           regulatory_body?: string
+          relevance_score?: number | null
+          source_name?: string | null
           source_url?: string | null
           summary?: string
           title?: string

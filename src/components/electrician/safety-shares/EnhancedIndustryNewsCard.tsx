@@ -1,11 +1,15 @@
 
 import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Newspaper, Clock, ExternalLink, Eye, MessageSquare, Bookmark, Search, Filter, Star, ThumbsUp } from "lucide-react";
+import { Newspaper, Clock, ExternalLink, Eye, MessageSquare, Bookmark, Search, Filter, Star, ThumbsUp, RefreshCw } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
+import { format } from "date-fns";
 
 interface NewsArticle {
   id: string;
@@ -28,72 +32,80 @@ const EnhancedIndustryNewsCard = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedSource, setSelectedSource] = useState("all");
-  const [articles, setArticles] = useState<NewsArticle[]>([
-    {
-      id: "1",
-      title: "HSE Issues Safety Alert for Electrical Contractors",
-      summary: "New safety guidance issued following recent incidents on construction sites involving electrical work.",
-      category: "HSE Updates",
-      source: "HSE Press Releases",
-      datePublished: "2024-06-14",
-      readTime: "5 min",
-      views: 1247,
-      comments: 23,
-      likes: 78,
-      bookmarked: true,
-      rating: 4.7,
-      external_url: "https://press.hse.gov.uk/2024/electrical-contractor-safety-alert",
-      source_url: "https://press.hse.gov.uk"
+  const [bookmarkedArticles, setBookmarkedArticles] = useState<Set<string>>(new Set());
+  const [likedArticles, setLikedArticles] = useState<Set<string>>(new Set());
+  const { toast } = useToast();
+
+  // Fetch real industry news from Supabase
+  const { data: realArticles = [], isLoading, refetch } = useQuery({
+    queryKey: ['enhanced-industry-news'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('industry_news')
+        .select('*')
+        .eq('is_active', true)
+        .order('date_published', { ascending: false })
+        .limit(50);
+      
+      if (error) {
+        console.error('Error fetching industry news:', error);
+        throw error;
+      }
+      
+      return data || [];
     },
-    {
-      id: "2",
-      title: "BS7671 Amendment 2 Implementation Guide",
-      summary: "Comprehensive guide to implementing the latest BS7671 Amendment 2 requirements for electrical installations.",
-      category: "BS7671 Updates",
-      source: "BS7671 Wiring Regulations",
-      datePublished: "2024-06-13",
-      readTime: "7 min",
-      views: 892,
-      comments: 34,
-      likes: 56,
-      bookmarked: false,
-      rating: 4.5,
-      external_url: "https://electrical.theiet.org/bs-7671/amendment-2-guide",
-      source_url: "https://electrical.theiet.org/bs-7671/"
-    },
-    {
-      id: "3",
-      title: "IET Announces New Technical Standards",
-      summary: "The Institution of Engineering and Technology releases updated technical standards for electrical installations.",
-      category: "IET Technical",
-      source: "IET Technical News",
-      datePublished: "2024-06-12",
-      readTime: "4 min",
-      views: 567,
-      comments: 12,
-      likes: 34,
-      bookmarked: false,
-      rating: 4.3,
-      external_url: "https://theiet.org/news/technical-standards-update",
-      source_url: "https://theiet.org/news/"
-    },
-    {
-      id: "4",
-      title: "£500M Infrastructure Project Awarded",
-      summary: "Major electrical infrastructure contract awarded for new smart grid development across Northern England.",
-      category: "Major Projects",
-      source: "Construction News Projects",
-      datePublished: "2024-06-11",
-      readTime: "6 min",
-      views: 743,
-      comments: 18,
-      likes: 42,
-      bookmarked: true,
-      rating: 4.4,
-      external_url: "https://constructionnews.co.uk/projects/smart-grid-project-500m",
-      source_url: "https://constructionnews.co.uk/projects"
+    refetchOnWindowFocus: false,
+  });
+
+  // Transform real articles to match enhanced interface
+  const articles: NewsArticle[] = realArticles.map(article => ({
+    id: article.id,
+    title: article.title,
+    summary: article.summary,
+    category: article.category,
+    source: article.source_name || article.regulatory_body,
+    datePublished: article.date_published,
+    readTime: `${Math.ceil(article.content.length / 200)} min`, // Estimate read time
+    views: article.view_count || 0,
+    comments: Math.floor(Math.random() * 50), // Mock for now
+    likes: Math.floor(Math.random() * 100), // Mock for now  
+    bookmarked: bookmarkedArticles.has(article.id),
+    rating: article.average_rating || 4.0,
+    external_url: article.external_url,
+    source_url: article.source_url
+  }));
+
+  // Live refresh function
+  const handleRefresh = async () => {
+    try {
+      const { data, error } = await supabase.functions.invoke('comprehensive-news-scraper', {
+        body: { manual: true }
+      });
+
+      if (error) throw error;
+
+      if (data?.success) {
+        toast({
+          title: "Content Refreshed",
+          description: `Successfully fetched ${data.articlesInserted || 0} new articles`,
+        });
+        await refetch();
+      } else {
+        toast({
+          title: "Refresh Failed", 
+          description: data?.error || "Failed to refresh content",
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      console.error('Refresh error:', error);
+      toast({
+        title: "Refresh Error",
+        description: "An error occurred while refreshing content",
+        variant: "destructive",
+      });
     }
-  ]);
+  };
 
   const getCategoryColor = (category: string) => {
     switch (category.toLowerCase()) {
@@ -106,19 +118,28 @@ const EnhancedIndustryNewsCard = () => {
   };
 
   const toggleBookmark = (articleId: string) => {
-    setArticles(prev => prev.map(article => 
-      article.id === articleId 
-        ? { ...article, bookmarked: !article.bookmarked }
-        : article
-    ));
+    setBookmarkedArticles(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(articleId)) {
+        newSet.delete(articleId);
+        toast({ title: "Bookmark removed" });
+      } else {
+        newSet.add(articleId);
+        toast({ title: "Article bookmarked" });
+      }
+      return newSet;
+    });
   };
 
   const handleLike = (articleId: string) => {
-    setArticles(prev => prev.map(article => 
-      article.id === articleId 
-        ? { ...article, likes: article.likes + 1 }
-        : article
-    ));
+    setLikedArticles(prev => {
+      const newSet = new Set(prev);
+      if (!newSet.has(articleId)) {
+        newSet.add(articleId);
+        toast({ title: "Article liked!" });
+      }
+      return newSet;
+    });
   };
 
   const renderStars = (rating: number) => {
@@ -150,10 +171,20 @@ const EnhancedIndustryNewsCard = () => {
           <h2 className="text-2xl font-bold text-white">Enhanced Industry News</h2>
           <p className="text-muted-foreground">Interactive industry news with filtering, ratings, and bookmarking</p>
         </div>
-        <Button className="bg-elec-yellow text-black hover:bg-elec-yellow/90">
-          <Newspaper className="h-4 w-4 mr-2" />
-          Subscribe to News
-        </Button>
+        <div className="flex gap-2">
+          <Button 
+            onClick={handleRefresh}
+            variant="outline"
+            className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+          >
+            <RefreshCw className="h-4 w-4 mr-2" />
+            Refresh
+          </Button>
+          <Button className="bg-elec-yellow text-black hover:bg-elec-yellow/90">
+            <Newspaper className="h-4 w-4 mr-2" />
+            Subscribe to News
+          </Button>
+        </div>
       </div>
 
       {/* Enhanced Filters */}
@@ -176,9 +207,9 @@ const EnhancedIndustryNewsCard = () => {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">All Categories</SelectItem>
-                <SelectItem value="HSE Updates">HSE Updates</SelectItem>
-                <SelectItem value="BS7671 Updates">BS7671 Updates</SelectItem>
-                <SelectItem value="IET Technical">IET Technical</SelectItem>
+                <SelectItem value="HSE">HSE Updates</SelectItem>
+                <SelectItem value="BS7671">BS7671 Updates</SelectItem>
+                <SelectItem value="IET">IET Updates</SelectItem>
                 <SelectItem value="Major Projects">Major Projects</SelectItem>
               </SelectContent>
             </Select>
@@ -199,8 +230,14 @@ const EnhancedIndustryNewsCard = () => {
         </CardContent>
       </Card>
 
-      <div className="grid gap-6">
-        {filteredArticles.map((article) => (
+      {isLoading ? (
+        <div className="text-center py-8">
+          <div className="animate-spin h-8 w-8 border-2 border-elec-yellow border-t-transparent rounded-full mx-auto"></div>
+          <p className="text-gray-400 mt-2">Loading enhanced news...</p>
+        </div>
+      ) : (
+        <div className="grid gap-6">
+          {filteredArticles.map((article) => (
           <Card key={article.id} className="border-elec-yellow/20 bg-elec-gray">
             <CardHeader className="pb-3">
               <div className="flex items-start justify-between">
@@ -238,7 +275,7 @@ const EnhancedIndustryNewsCard = () => {
                 <div className="flex items-center gap-4 text-sm text-muted-foreground">
                   <div className="flex items-center gap-1">
                     <Clock className="h-4 w-4" />
-                    <span>{new Date(article.datePublished).toLocaleDateString()}</span>
+                    <span>{format(new Date(article.datePublished), 'dd MMM yyyy')}</span>
                   </div>
                   <span>{article.readTime} read</span>
                   <div className="flex items-center gap-1">
@@ -262,21 +299,22 @@ const EnhancedIndustryNewsCard = () => {
                 <Button 
                   size="sm" 
                   className="bg-elec-yellow text-black hover:bg-elec-yellow/90"
-                  onClick={() => article.external_url && window.open(article.external_url, '_blank')}
-                  title={article.external_url !== article.source_url ? 
+                  onClick={() => (article.external_url || article.source_url) && window.open(article.external_url || article.source_url, '_blank')}
+                  title={article.external_url ? 
                     "Read the full article" : 
                     "Visit the source website"}
                 >
                   <ExternalLink className="h-4 w-4 mr-2" />
-                  {article.external_url !== article.source_url ? 
+                  {article.external_url ? 
                     "Read Article" : 
                     "View Source"}
                 </Button>
               </div>
             </CardContent>
           </Card>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
 
       {filteredArticles.length === 0 && (
         <div className="text-center py-8 text-muted-foreground">

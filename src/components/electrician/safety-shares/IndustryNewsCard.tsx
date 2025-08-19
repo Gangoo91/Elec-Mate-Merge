@@ -22,29 +22,23 @@ const IndustryNewsCard = () => {
   const [fetchProgress, setFetchProgress] = useState({ current: 0, total: 0, source: "" });
   const { toast } = useToast();
 
-  // Fetch industry news - now using cached articles and live fetching
+  // Fetch industry news directly from Supabase
   const { data: newsArticles = [], isLoading: newsLoading, refetch: refetchNews } = useQuery({
-    queryKey: ['industry-news-cached'],
+    queryKey: ['industry-news'],
     queryFn: async () => {
-      // First, try to get cached articles
-      const cachedArticles = FirecrawlService.getCachedArticles();
+      const { data, error } = await supabase
+        .from('industry_news')
+        .select('*')
+        .eq('is_active', true)
+        .order('date_published', { ascending: false })
+        .limit(50);
       
-      // If we have valid cached data, return it
-      if (cachedArticles.length > 0 && FirecrawlService.isCacheValid()) {
-        return cachedArticles;
+      if (error) {
+        console.error('Error fetching industry news:', error);
+        throw error;
       }
       
-      // If no valid cache, fetch live data automatically
-      if (cachedArticles.length === 0 || !FirecrawlService.isCacheValid()) {
-        if (!isLiveFetching) {
-          // Start background fetch - return empty array for now
-          setTimeout(() => handleLiveFetch(), 100);
-        }
-        return cachedArticles; // Return what we have while fetching
-      }
-      
-      // Fallback to empty array if no API key configured
-      return [];
+      return data || [];
     },
     refetchOnWindowFocus: false,
   });
@@ -65,29 +59,32 @@ const IndustryNewsCard = () => {
     }
   });
 
-  // Live news fetching function
+  // Live news fetching function - now calls Supabase edge function
   const handleLiveFetch = async () => {
     setIsLiveFetching(true);
-    setFetchProgress({ current: 0, total: 0, source: "" });
+    setFetchProgress({ current: 0, total: 4, source: "Initializing..." });
 
     try {
-      const result = await FirecrawlService.fetchLiveNews((progress) => {
-        setFetchProgress(progress);
+      const { data, error } = await supabase.functions.invoke('comprehensive-news-scraper', {
+        body: { manual: true }
       });
 
-      if (result.success) {
+      if (error) {
+        throw error;
+      }
+
+      if (data?.success) {
         toast({
           title: "Live News Fetched",
-          description: `Successfully fetched ${result.articlesFound} articles from industry sources`,
-          variant: "success",
+          description: `Successfully fetched ${data.articlesInserted || 0} new articles from industry sources`,
         });
         
-        // Refresh the cached data query
+        // Refresh the news data
         await refetchNews();
       } else {
         toast({
           title: "Fetch Failed",
-          description: result.error || "Failed to fetch live news",
+          description: data?.error || "Failed to fetch live news",
           variant: "destructive",
         });
       }
@@ -106,11 +103,11 @@ const IndustryNewsCard = () => {
 
   // Remove unused handlers
 
-  // Static categories for filtering
+  // Dynamic categories for filtering based on actual data
   const categories = [
     { key: 'HSE', label: 'HSE Updates', color: 'bg-red-100 text-red-800 hover:bg-red-200' },
     { key: 'BS7671', label: 'BS7671 Updates', color: 'bg-blue-100 text-blue-800 hover:bg-blue-200' },
-    { key: 'IET', label: 'IET Technical', color: 'bg-green-100 text-green-800 hover:bg-green-200' },
+    { key: 'IET', label: 'IET Updates', color: 'bg-green-100 text-green-800 hover:bg-green-200' },
     { key: 'Major Projects', label: 'Major Projects', color: 'bg-purple-100 text-purple-800 hover:bg-purple-200' },
   ];
 
@@ -236,26 +233,15 @@ const IndustryNewsCard = () => {
 
       {/* API key dialog and handlers removed - now automatic */}
 
-      {/* Cache Status Indicator */}
+      {/* Data Status Indicator */}
       {newsArticles.length > 0 && (
         <div className="flex items-center justify-between text-sm text-gray-400 bg-elec-gray/50 px-4 py-2 rounded-lg border border-elec-yellow/10">
           <div className="flex items-center gap-2">
-            {FirecrawlService.isCacheValid() ? (
-              <>
-                <Wifi className="h-4 w-4 text-green-400" />
-                <span>Fresh data from live sources</span>
-              </>
-            ) : (
-              <>
-                <WifiOff className="h-4 w-4 text-orange-400" />
-                <span>Cached data (click "Fetch Live News" for fresh updates)</span>
-              </>
-            )}
+            <Wifi className="h-4 w-4 text-green-400" />
+            <span>Live data from industry sources</span>
           </div>
           <span>
-            {FirecrawlService.getCacheAge() > 0 && 
-              `Updated ${Math.floor(FirecrawlService.getCacheAge() / (1000 * 60))} min ago`
-            }
+            {newsArticles.length} articles available
           </span>
         </div>
       )}
@@ -348,22 +334,22 @@ const IndustryNewsCard = () => {
                          </DialogContent>
                        </Dialog>
                        
-                        {article.external_url && (
-                          <Button
-                            size="sm"
-                            variant="outline"
-                            className="bg-transparent border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
-                            onClick={() => window.open(article.external_url, '_blank')}
-                            title={article.external_url !== article.source_url ? 
-                              "Read the full article" : 
-                              "Visit the source website"}
-                          >
-                            <ExternalLink className="w-4 h-4 mr-2" />
-                            {article.external_url !== article.source_url ? 
-                              "Read Article" : 
-                              "View Source"}
-                          </Button>
-                        )}
+                         {(article.external_url || article.source_url) && (
+                           <Button
+                             size="sm"
+                             variant="outline"
+                             className="bg-transparent border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+                             onClick={() => window.open(article.external_url || article.source_url, '_blank')}
+                             title={article.external_url ? 
+                               "Read the full article" : 
+                               "Visit the source website"}
+                           >
+                             <ExternalLink className="w-4 h-4 mr-2" />
+                             {article.external_url ? 
+                               "Read Article" : 
+                               "View Source"}
+                           </Button>
+                         )}
                      </div>
                 </CardContent>
               </Card>
