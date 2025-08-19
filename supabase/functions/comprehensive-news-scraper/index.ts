@@ -8,6 +8,92 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
+// Enhanced content quality filtering
+function isQualityContent(title: string, content: string, url: string): boolean {
+  const lowQualityIndicators = [
+    'page not found', '404', 'error', 'access denied', 'not available',
+    'coming soon', 'under construction', 'maintenance', 'temporarily unavailable',
+    'cookies', 'privacy policy', 'terms of service', 'javascript required',
+    'enable cookies', 'browser not supported', 'loading', 'please wait'
+  ];
+  
+  const titleLower = title.toLowerCase();
+  const contentLower = content.toLowerCase();
+  
+  // Check for low-quality indicators
+  if (lowQualityIndicators.some(indicator => 
+    titleLower.includes(indicator) || contentLower.includes(indicator)
+  )) {
+    return false;
+  }
+  
+  // Check minimum content requirements
+  if (title.trim().length < 10 || content.trim().length < 100) {
+    return false;
+  }
+  
+  // Check for navigation or boilerplate content
+  if (contentLower.includes('skip to main content') || 
+      contentLower.includes('breadcrumb') ||
+      contentLower.includes('site navigation') ||
+      contentLower.includes('menu') && contentLower.includes('home')) {
+    return false;
+  }
+  
+  return true;
+}
+
+// Generate stable external ID for articles
+function generateExternalId(title: string, sourceUrl: string, category: string, timestamp?: string): string {
+  const cleanTitle = title.toLowerCase()
+    .replace(/[^\w\s]/g, '')
+    .replace(/\s+/g, '_')
+    .substring(0, 50);
+  const sourceIdentifier = new URL(sourceUrl).hostname.replace('www.', '');
+  const timeStamp = timestamp ? new Date(timestamp).getTime() : Date.now();
+  return `${sourceIdentifier}_${category}_${cleanTitle}_${timeStamp}`.toLowerCase();
+}
+
+// Generate content hash for duplicate detection using crypto API
+async function generateContentHash(title: string, sourceUrl: string, content: string): Promise<string> {
+  const combinedContent = title.trim() + '|' + sourceUrl + '|' + content.trim().substring(0, 1000);
+  const encoder = new TextEncoder();
+  const data = encoder.encode(combinedContent);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+// Check for existing articles to prevent duplicates
+async function checkExistingArticles(supabase: any): Promise<Set<string>> {
+  try {
+    const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
+    const { data, error } = await supabase
+      .from('industry_news')
+      .select('external_id, content_hash, title')
+      .gte('created_at', thirtyDaysAgo.toISOString());
+    
+    if (error) {
+      console.error('Error fetching existing articles:', error);
+      return new Set();
+    }
+    
+    const existingIds = new Set<string>();
+    data?.forEach(article => {
+      if (article.external_id) existingIds.add(article.external_id);
+      if (article.content_hash) existingIds.add(article.content_hash);
+      // Also add title for basic duplicate checking
+      if (article.title) existingIds.add(article.title.toLowerCase().trim());
+    });
+    
+    console.log(`Found ${existingIds.size} existing article identifiers for duplicate checking`);
+    return existingIds;
+  } catch (error) {
+    console.error('Error checking existing articles:', error);
+    return new Set();
+  }
+}
+
 interface ProcessedArticle {
   title: string;
   summary: string;
@@ -18,6 +104,7 @@ interface ProcessedArticle {
   source_url: string;
   external_url?: string;
   date_published: string;
+  content_hash?: string;
 }
 
 interface NewsSource {
@@ -114,16 +201,20 @@ This major infrastructure project includes significant electrical installation a
 Major public sector contracts like this drive innovation in electrical installation practices and often set new standards for safety and technical compliance across the industry.
         `.trim();
 
+        const articleTitle = `${title} - ${value}`;
+        const contractUrl = 'https://www.contractsfinder.service.gov.uk/Search';
+        
         articles.push({
-          title: `${title} - ${value}`,
+          title: articleTitle,
           summary: `Major UK infrastructure contract: ${description.substring(0, 150)}...`,
           content,
           regulatory_body: 'UK Government - ContractsFinder',
           category: 'Major Projects',
-          external_id: `contracts-${contract.ocid}-${Date.now()}`,
-          source_url: 'https://www.contractsfinder.service.gov.uk/Search',
+          external_id: generateExternalId(articleTitle, contractUrl, 'Major Projects', publishDate),
+          source_url: contractUrl,
           external_url: `https://www.contractsfinder.service.gov.uk/Notice/${contract.ocid}`,
-          date_published: publishDate
+          date_published: publishDate,
+          content_hash: await generateContentHash(articleTitle, contractUrl, content)
         });
       } catch (contractError) {
         console.warn('Error processing contract:', contractError);
@@ -231,23 +322,38 @@ Return only valid JSON, no other text.`;
         return basicContentParsing(rawContent, source);
       }
 
-      // Convert AI response to ProcessedArticle format
-      const processedArticles: ProcessedArticle[] = parsedArticles
-        .filter(article => article.relevance_score >= 6)
-        .slice(0, 4)
-        .map((article, index) => ({
-          title: article.title || `${source.category} Update ${index + 1}`,
-          summary: article.summary || article.content?.substring(0, 200) + '...',
-          content: article.content || 'Content not available',
+      // Convert AI response to ProcessedArticle format with quality filtering
+      const processedArticles: ProcessedArticle[] = [];
+      
+      for (let index = 0; index < Math.min(parsedArticles.length, 4); index++) {
+        const article = parsedArticles[index];
+        if (article.relevance_score < 6) continue;
+        
+        const title = article.title || `${source.category} Update ${index + 1}`;
+        const content = article.content || 'Content not available';
+        
+        // Apply quality filtering
+        if (!isQualityContent(title, content, source.url)) {
+          continue;
+        }
+        
+        const publishDate = article.date_mentioned ? 
+          new Date(article.date_mentioned).toISOString() : 
+          new Date().toISOString();
+        
+        processedArticles.push({
+          title,
+          summary: article.summary || content.substring(0, 200) + '...',
+          content,
           regulatory_body: source.regulatory_body,
           category: source.category,
-          external_id: `ai-${source.name}-${Date.now()}-${index}`,
+          external_id: generateExternalId(title, source.url, source.category, publishDate),
           source_url: source.url,
           external_url: source.url,
-          date_published: article.date_mentioned ? 
-            new Date(article.date_mentioned).toISOString() : 
-            new Date().toISOString()
-        }));
+          date_published: publishDate,
+          content_hash: await generateContentHash(title, source.url, content)
+        });
+      }
 
       console.log(`AI extracted ${processedArticles.length} articles from ${source.name}`);
       return processedArticles;
@@ -264,7 +370,7 @@ Return only valid JSON, no other text.`;
   }
 }
 
-function basicContentParsing(rawContent: string, source: NewsSource): ProcessedArticle[] {
+async function basicContentParsing(rawContent: string, source: NewsSource): Promise<ProcessedArticle[]> {
   console.log(`Using basic parsing for ${source.name}`);
   
   const articles: ProcessedArticle[] = [];
@@ -315,17 +421,23 @@ function basicContentParsing(rawContent: string, source: NewsSource): ProcessedA
         .substring(0, 200)
         .trim() + '...';
       
-      articles.push({
-        title,
-        summary,
-        content: cleanSection,
-        regulatory_body: source.regulatory_body,
-        category: source.category,
-        external_id: `basic-${source.name}-${Date.now()}-${index}`,
-        source_url: source.url,
-        external_url: source.url,
-        date_published: new Date().toISOString()
-      });
+      // Apply quality filtering before adding
+      if (isQualityContent(title, cleanSection, source.url)) {
+        const publishDate = new Date().toISOString();
+        
+        articles.push({
+          title,
+          summary,
+          content: cleanSection,
+          regulatory_body: source.regulatory_body,
+          category: source.category,
+          external_id: generateExternalId(title, source.url, source.category, publishDate),
+          source_url: source.url,
+          external_url: source.url,
+          date_published: publishDate,
+          content_hash: await generateContentHash(title, source.url, cleanSection)
+        });
+      }
     });
     
     return articles.slice(0, 3);
@@ -441,16 +553,25 @@ async function scrapeIndividualArticle(url: string, source: NewsSource, firecraw
     const summary = paragraphs[0]?.replace(/^#+\s*/, '').substring(0, 200).trim() + '...' || 
                    content.substring(0, 200).trim() + '...';
 
+    // Apply quality filtering
+    if (!isQualityContent(title, content, url)) {
+      console.warn(`Low quality article filtered: ${url}`);
+      return null;
+    }
+    
+    const publishDate = new Date().toISOString();
+    
     return {
       title,
       summary,
       content,
       regulatory_body: source.regulatory_body,
       category: source.category,
-      external_id: `article-${source.name}-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+      external_id: generateExternalId(title, url, source.category, publishDate),
       source_url: source.url,
       external_url: url, // This is the key - individual article URL
-      date_published: new Date().toISOString()
+      date_published: publishDate,
+      content_hash: await generateContentHash(title, url, content)
     };
 
   } catch (error) {
@@ -607,6 +728,10 @@ serve(async (req) => {
     let totalProcessed = 0;
     let totalInserted = 0;
     let totalErrors = 0;
+    
+    // Check existing articles for duplicate prevention
+    console.log('Checking existing articles for duplicate prevention...');
+    const existingArticles = await checkExistingArticles(supabase);
 
     // First, fetch UK Major Projects from ContractsFinder API
     console.log('Fetching Major Projects from ContractsFinder API...');
@@ -642,14 +767,33 @@ serve(async (req) => {
       }
     }
 
-    // Insert processed articles into Supabase
-    console.log(`Inserting ${allProcessedArticles.length} articles into database...`);
+    // Filter out duplicates before insertion
+    console.log(`Filtering ${allProcessedArticles.length} articles for duplicates...`);
+    const uniqueArticles = allProcessedArticles.filter(article => {
+      const isDuplicate = existingArticles.has(article.external_id) || 
+                         (article.content_hash && existingArticles.has(article.content_hash)) ||
+                         existingArticles.has(article.title.toLowerCase().trim());
+      
+      if (isDuplicate) {
+        console.log(`Duplicate article filtered: ${article.title}`);
+        return false;
+      }
+      
+      // Add to existing set to prevent duplicates within this batch
+      existingArticles.add(article.external_id);
+      if (article.content_hash) existingArticles.add(article.content_hash);
+      existingArticles.add(article.title.toLowerCase().trim());
+      
+      return true;
+    });
+
+    console.log(`Inserting ${uniqueArticles.length} unique articles into database (filtered ${allProcessedArticles.length - uniqueArticles.length} duplicates)...`);
     
-    for (const article of allProcessedArticles) {
+    for (const article of uniqueArticles) {
       try {
         const { error: insertError } = await supabase
           .from('industry_news')
-          .upsert({
+          .insert({
             title: article.title,
             summary: article.summary,
             content: article.content,
@@ -662,14 +806,18 @@ serve(async (req) => {
             source_name: article.regulatory_body,
             relevance_score: 8, // Default high relevance for scraped content
             content_quality: 7,   // Default good quality
-            is_active: true
-          }, {
-            onConflict: 'external_id'
+            is_active: true,
+            content_hash: article.content_hash
           });
 
         if (insertError) {
-          console.error('Insert error:', insertError);
-          totalErrors++;
+          // Check if it's a duplicate constraint error
+          if (insertError.code === '23505') {
+            console.log(`Duplicate constraint prevented insertion: ${article.title}`);
+          } else {
+            console.error('Insert error:', insertError);
+            totalErrors++;
+          }
         } else {
           totalInserted++;
         }
