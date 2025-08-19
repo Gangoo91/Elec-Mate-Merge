@@ -67,7 +67,7 @@ const Sidebar = ({ open, setOpen }: SidebarProps) => {
           <Link to="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity" onClick={() => setOpen(false)}>
             <span className="font-bold text-xl">
               <span className="text-elec-yellow">Elec</span>
-              <span>Mate</span>
+              <span className="text-white">Mate</span>
             </span>
           </Link>
           <Button 
