@@ -29,70 +29,76 @@ interface NewsSource {
 }
 
 const NEWS_SOURCES: NewsSource[] = [
-  // HSE Sources
+  // HSE Sources - Using RSS feeds and direct article pages where possible
   {
-    name: 'HSE Electrical Safety',
-    url: 'https://www.hse.gov.uk/electricity/',
+    name: 'HSE Latest Safety Alerts',
+    url: 'https://www.hse.gov.uk/feeds/news-releases.xml',
     category: 'HSE',
     regulatory_body: 'Health and Safety Executive'
   },
   {
-    name: 'HSE Latest News & Updates',
-    url: 'https://www.hse.gov.uk/news/',
+    name: 'HSE Electrical Guidance',
+    url: 'https://www.hse.gov.uk/electricity/information/regulations.htm',
     category: 'HSE', 
     regulatory_body: 'Health and Safety Executive'
   },
   {
-    name: 'HSE Safety Alerts',
-    url: 'https://www.hse.gov.uk/safetybulletins/',
+    name: 'HSE Work Equipment Safety',
+    url: 'https://www.hse.gov.uk/work-equipment-machinery/electrical-equipment.htm',
     category: 'HSE',
     regulatory_body: 'Health and Safety Executive'
   },
   
-  // BS7671 & IET Sources
+  // IET Sources - More direct content pages
   {
-    name: 'IET BS7671 18th Edition Updates',
-    url: 'https://electrical.theiet.org/bs-7671/updates-to-18th-edition/',
+    name: 'IET Wiring Regulations News',
+    url: 'https://electrical.theiet.org/wiring-regulations/',
     category: 'BS7671',
     regulatory_body: 'Institution of Engineering and Technology'
   },
   {
-    name: 'IET Wiring Regulations',
-    url: 'https://electrical.theiet.org/bs-7671/', 
+    name: 'IET 18th Edition Resources',
+    url: 'https://electrical.theiet.org/wiring-regulations/18th-edition/',
     category: 'BS7671',
     regulatory_body: 'Institution of Engineering and Technology'
   },
   {
-    name: 'IET Wiring Matters Magazine',
-    url: 'https://electrical.theiet.org/wiring-matters/',
+    name: 'IET Professional Development',
+    url: 'https://electrical.theiet.org/professional-development/',
     category: 'IET',
     regulatory_body: 'Institution of Engineering and Technology'
   },
   {
-    name: 'IET Technical Updates',
-    url: 'https://electrical.theiet.org/wiring-regulations/guidance-notes/',
+    name: 'IET Electrical Installation Work',
+    url: 'https://electrical.theiet.org/installation-work/',
     category: 'IET',
     regulatory_body: 'Institution of Engineering and Technology'
   },
   
-  // Major Projects Sources
+  // UK Government and Industry Sources
   {
-    name: 'UK Government Tenders - Electrical',
-    url: 'https://www.find-tender.service.gov.uk/Search/Results?keywords=electrical+infrastructure',
+    name: 'GOV.UK Construction Updates',
+    url: 'https://www.gov.uk/government/news?keywords=electrical+construction&organisations%5B%5D=department-for-business-energy-and-industrial-strategy',
     category: 'Major Projects',
     regulatory_body: 'UK Government'
   },
   {
-    name: 'Construction News Infrastructure',
-    url: 'https://www.constructionnews.co.uk/sectors/infrastructure/',
+    name: 'Electrical Contractors Association',
+    url: 'https://www.eca.co.uk/news',
     category: 'Major Projects',
-    regulatory_body: 'Construction Industry'
+    regulatory_body: 'ECA'
   },
   {
-    name: 'Electrical Review News',
-    url: 'https://www.electricalreview.co.uk/news/',
+    name: 'SELECT (Electrical Contractors)',
+    url: 'https://www.select.org.uk/news',
     category: 'Major Projects',
-    regulatory_body: 'Electrical Industry'
+    regulatory_body: 'SELECT'
+  },
+  {
+    name: 'NAPIT Updates',
+    url: 'https://www.napit.org.uk/news-and-blogs/news/',
+    category: 'IET',
+    regulatory_body: 'NAPIT'
   }
 ];
 
@@ -299,11 +305,30 @@ async function scrapeAndProcessSource(source: NewsSource, firecrawl: FirecrawlAp
   try {
     console.log(`Scraping ${source.name}...`);
     
+    // Enhanced scraping configuration for better content extraction
     const scrapeResponse = await firecrawl.scrapeUrl(source.url, {
       formats: ['markdown', 'html'],
       onlyMainContent: true,
-      waitFor: 2000,
-      timeout: 30000
+      waitFor: 3000,
+      timeout: 45000,
+      actions: [
+        {
+          type: 'wait',
+          milliseconds: 2000
+        }
+      ],
+      extractorOptions: {
+        extractionSchema: {
+          articles: {
+            baseSelector: 'article, .news-item, .post, .entry, main',
+            fields: {
+              title: 'h1, h2, h3, .title, .headline',
+              content: '.content, .body, .text, p',
+              date: 'time, .date, .published'
+            }
+          }
+        }
+      }
     });
 
     if (!scrapeResponse.success) {
@@ -313,19 +338,59 @@ async function scrapeAndProcessSource(source: NewsSource, firecrawl: FirecrawlAp
 
     const rawContent = scrapeResponse.data?.markdown || scrapeResponse.data?.html || '';
     
-    if (rawContent.length < 500) {
-      console.warn(`Insufficient content from ${source.url}`);
+    // More lenient content check - but validate quality
+    if (rawContent.length < 200) {
+      console.warn(`Insufficient content from ${source.url}: ${rawContent.length} chars`);
       return [];
     }
 
-    // Use AI-powered parsing
+    // Check for common error indicators
+    const errorIndicators = [
+      'page not found',
+      '404 error',
+      'access denied',
+      'cookies are required',
+      'javascript is required',
+      'please enable javascript',
+      'your browser is not supported'
+    ];
+    
+    const hasErrors = errorIndicators.some(indicator => 
+      rawContent.toLowerCase().includes(indicator.toLowerCase())
+    );
+    
+    if (hasErrors) {
+      console.warn(`Error page detected from ${source.url}`);
+      return [];
+    }
+
+    // Ensure content has electrical relevance
+    const electricalKeywords = [
+      'electrical', 'electricity', 'bs7671', 'wiring', 'regulation', 'safety',
+      'cable', 'circuit', 'installation', 'testing', 'inspection', 'amendment',
+      'compliance', 'certification', 'contractor', 'electrician', 'project',
+      'tender', 'contract', 'infrastructure', 'construction', 'power', 'energy',
+      'hse', 'iet', 'napit', 'niceic', 'select'
+    ];
+    
+    const hasElectricalContent = electricalKeywords.some(keyword => 
+      rawContent.toLowerCase().includes(keyword.toLowerCase())
+    );
+    
+    if (!hasElectricalContent) {
+      console.warn(`No electrical content found from ${source.url}`);
+      return [];
+    }
+
+    // Use AI-powered parsing with improved content
     const articles = await intelligentContentParsing(rawContent, source);
     
-    console.log(`Processed ${articles.length} articles from ${source.name}`);
+    console.log(`Successfully processed ${articles.length} articles from ${source.name}`);
     return articles;
 
   } catch (error) {
     console.error(`Error processing ${source.name}:`, error);
+    // Don't return empty array immediately - try basic fallback
     return [];
   }
 }
