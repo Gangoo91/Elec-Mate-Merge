@@ -31,6 +31,8 @@ interface ScrapedProject {
   status: string;
   external_id: string;
   source_name: string;
+  source_url: string;
+  external_project_url?: string;
 }
 
 // Main handler for the edge function
@@ -138,7 +140,7 @@ async function scrapeSource(source: ScrapingSource) {
     console.log(`Received ${html.length} characters of HTML`);
     
     // Parse projects based on source configuration
-    const projects = await parseProjectsFromHtml(html, source);
+    const projects = await parseProjectsFromHtml(html, source, searchUrl);
     projectsFound = projects.length;
     
     console.log(`Found ${projectsFound} potential projects from ${source.name}`);
@@ -258,16 +260,16 @@ async function fetchWithRetry(url: string, maxRetries = 3): Promise<Response> {
   throw new Error(`Failed to fetch after ${maxRetries} attempts`);
 }
 
-async function parseProjectsFromHtml(html: string, source: ScrapingSource): Promise<ScrapedProject[]> {
+async function parseProjectsFromHtml(html: string, source: ScrapingSource, sourceUrl: string): Promise<ScrapedProject[]> {
   const projects: ScrapedProject[] = [];
   
   try {
     console.log(`Starting to parse HTML for ${source.name}`);
     
     if (source.name === 'Contracts Finder') {
-      await parseContractsFinderProjects(html, projects, source.name);
+      await parseContractsFinderProjects(html, projects, source.name, sourceUrl);
     } else if (source.name === 'Find a Tender') {
-      await parseFindTenderProjects(html, projects, source.name);
+      await parseFindTenderProjects(html, projects, source.name, sourceUrl);
     }
     
     console.log(`Parsed ${projects.length} projects from ${source.name}`);
@@ -279,7 +281,7 @@ async function parseProjectsFromHtml(html: string, source: ScrapingSource): Prom
   return projects;
 }
 
-async function parseContractsFinderProjects(html: string, projects: ScrapedProject[], sourceName: string) {
+async function parseContractsFinderProjects(html: string, projects: ScrapedProject[], sourceName: string, sourceUrl: string) {
   // Look for multiple patterns that might indicate project listings
   const patterns = [
     // Search result items
@@ -295,7 +297,7 @@ async function parseContractsFinderProjects(html: string, projects: ScrapedProje
     console.log(`Found ${matches.length} potential matches with pattern`);
     
     for (const match of matches.slice(0, 15)) { // Limit processing
-      const project = extractProjectFromMatch(match, sourceName, 'contracts-finder');
+      const project = extractProjectFromMatch(match, sourceName, 'contracts-finder', sourceUrl);
       if (project && isElectricalProject(project)) {
         projects.push(project);
       }
@@ -305,7 +307,7 @@ async function parseContractsFinderProjects(html: string, projects: ScrapedProje
   }
 }
 
-async function parseFindTenderProjects(html: string, projects: ScrapedProject[], sourceName: string) {
+async function parseFindTenderProjects(html: string, projects: ScrapedProject[], sourceName: string, sourceUrl: string) {
   // Look for multiple patterns for Find a Tender
   const patterns = [
     /<div[^>]*class="[^"]*tender[^"]*"[^>]*>([\s\S]*?)<\/div>/gi,
@@ -319,7 +321,7 @@ async function parseFindTenderProjects(html: string, projects: ScrapedProject[],
     console.log(`Found ${matches.length} potential matches with pattern`);
     
     for (const match of matches.slice(0, 15)) { // Limit processing
-      const project = extractProjectFromMatch(match, sourceName, 'find-tender');
+      const project = extractProjectFromMatch(match, sourceName, 'find-tender', sourceUrl);
       if (project && isElectricalProject(project)) {
         projects.push(project);
       }
@@ -329,7 +331,7 @@ async function parseFindTenderProjects(html: string, projects: ScrapedProject[],
   }
 }
 
-function extractProjectFromMatch(html: string, sourceName: string, sourceType: string): ScrapedProject | null {
+function extractProjectFromMatch(html: string, sourceName: string, sourceType: string, sourceUrl: string): ScrapedProject | null {
   try {
     // Extract text content from HTML
     const textContent = html.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
@@ -347,6 +349,20 @@ function extractProjectFromMatch(html: string, sourceName: string, sourceType: s
     
     // Extract summary (first portion of text content)
     const summary = textContent.substring(0, 300).trim();
+    
+    // Extract external project URL from HTML links
+    let externalProjectUrl = undefined;
+    const linkMatch = html.match(/<a[^>]*href=["']([^"']+)["'][^>]*>(?:view|details?|more|read\s+more|full\s+details)/i);
+    if (linkMatch) {
+      let url = linkMatch[1];
+      // Make relative URLs absolute
+      if (url.startsWith('/')) {
+        const baseUrl = new URL(sourceUrl);
+        url = `${baseUrl.protocol}//${baseUrl.host}${url}`;
+      }
+      externalProjectUrl = url;
+      console.log(`Found external project URL: ${externalProjectUrl}`);
+    }
     
     // Extract potential value information
     const valuePatterns = [
@@ -398,7 +414,9 @@ function extractProjectFromMatch(html: string, sourceName: string, sourceType: s
       location: location.substring(0, 100), // Limit location length
       status,
       external_id: generateExternalId(title, sourceName),
-      source_name: sourceName
+      source_name: sourceName,
+      source_url: sourceUrl,
+      external_project_url: externalProjectUrl
     };
     
     console.log(`Extracted project: ${title.substring(0, 50)}...`);
@@ -463,7 +481,9 @@ async function saveProject(project: ScrapedProject, sourceName: string): Promise
         project_value: project.project_value,
         location: project.location,
         status: project.status,
-        date_awarded: new Date().toISOString().split('T')[0]
+        date_awarded: new Date().toISOString().split('T')[0],
+        source_url: project.source_url,
+        external_project_url: project.external_project_url
       })
       .select('id')
       .single();
