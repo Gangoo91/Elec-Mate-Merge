@@ -126,8 +126,8 @@ export class FirecrawlService {
 
   static async fetchLiveNews(onProgress?: (progress: { current: number; total: number; source: string }) => void): Promise<CrawlResult> {
     try {
-      console.log('Fetching news via edge function');
-      const { data, error } = await supabase.functions.invoke('fetch-news');
+      console.log('Fetching comprehensive news via enhanced edge function');
+      const { data, error } = await supabase.functions.invoke('comprehensive-news-scraper');
 
       if (error) {
         console.error('Error calling fetch-news function:', error);
@@ -137,15 +137,16 @@ export class FirecrawlService {
         };
       }
 
-      // Simulate progress for UI feedback
+      // Simulate progress for UI feedback - now with real source names
       if (onProgress) {
-        for (let i = 1; i <= 3; i++) {
+        const sources = ['HSE Safety Updates', 'IET BS7671 Changes', 'Major Projects', 'Industry News'];
+        for (let i = 0; i < sources.length; i++) {
           onProgress({
-            current: i,
-            total: 3,
-            source: `Source ${i}`
+            current: i + 1,
+            total: sources.length,
+            source: sources[i]
           });
-          await new Promise(resolve => setTimeout(resolve, 500));
+          await new Promise(resolve => setTimeout(resolve, 800));
         }
       }
 
@@ -163,19 +164,19 @@ export class FirecrawlService {
         return { success: false, error: 'Failed to fetch articles from database' };
       }
 
-      // Convert to expected format - using available database fields
+      // Convert to expected format - using proper database fields
       const formattedArticles: NewsArticle[] = articles?.map(article => ({
         id: article.id,
         title: article.title,
-        summary: article.content || '',
+        summary: article.summary || article.content?.substring(0, 200) + '...' || '',
         content: article.content || '',
-        url: '', // URL not stored in current schema
-        date_published: article.created_at || new Date().toISOString(),
-        regulatory_body: article.category || 'Unknown',
+        url: article.source_url || article.external_url || '',
+        date_published: article.date_published || article.created_at || new Date().toISOString(),
+        regulatory_body: article.regulatory_body || 'Unknown',
         category: article.category || 'General',
-        keywords: [],
+        keywords: [], // Could be extracted from content in future
         view_count: article.view_count || 0,
-        is_active: true
+        is_active: article.is_active !== false
       })) || [];
 
       // Cache the results
