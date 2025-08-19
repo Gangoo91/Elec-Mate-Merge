@@ -428,6 +428,15 @@ const MajorProjectsCard = () => {
               Refresh
             </Button>
             <Button 
+              variant="outline" 
+              size="sm"
+              onClick={() => window.open('/electrician/safety-shares/firecrawl-settings', '_blank')}
+              className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+            >
+              <Building2 className="h-4 w-4 mr-2" />
+              Configure API
+            </Button>
+            <Button 
               onClick={() => setIsSubmissionDialogOpen(true)}
               className="bg-elec-yellow text-black hover:bg-elec-yellow/90"
             >
