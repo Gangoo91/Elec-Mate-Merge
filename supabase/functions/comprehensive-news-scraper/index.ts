@@ -23,7 +23,7 @@ interface ProcessedArticle {
 interface NewsSource {
   name: string;
   url: string;
-  category: 'HSE' | 'BS7671' | 'IET' | 'Major Projects';
+  category: 'HSE' | 'BS7671' | 'IET' | 'Major Projects' | 'GOV.UK';
   regulatory_body: string;
   scrape_selector?: string;
 }
@@ -75,13 +75,33 @@ const NEWS_SOURCES: NewsSource[] = [
     regulatory_body: 'Institution of Engineering and Technology'
   },
   
-  // UK Government and Industry Sources
+  // UK Government Sources
   {
     name: 'GOV.UK Construction Updates',
     url: 'https://www.gov.uk/government/news?keywords=electrical+construction&organisations%5B%5D=department-for-business-energy-and-industrial-strategy',
-    category: 'Major Projects',
+    category: 'GOV.UK',
     regulatory_body: 'UK Government'
   },
+  {
+    name: 'GOV.UK Building Safety',
+    url: 'https://www.gov.uk/government/collections/building-safety',
+    category: 'GOV.UK',
+    regulatory_body: 'UK Government'
+  },
+  {
+    name: 'GOV.UK Energy Policy',
+    url: 'https://www.gov.uk/government/policies/energy-and-climate-change-evidence-and-analysis',
+    category: 'GOV.UK',
+    regulatory_body: 'UK Government'
+  },
+  {
+    name: 'Department for Energy Security',
+    url: 'https://www.gov.uk/government/organisations/department-for-energy-security-and-net-zero/news',
+    category: 'GOV.UK',
+    regulatory_body: 'UK Government'
+  },
+  
+  // Industry Sources
   {
     name: 'Electrical Contractors Association',
     url: 'https://www.eca.co.uk/news',
@@ -364,13 +384,18 @@ async function scrapeAndProcessSource(source: NewsSource, firecrawl: FirecrawlAp
       return [];
     }
 
-    // Ensure content has electrical relevance
+    // Ensure content has electrical relevance - enhanced with government terms
     const electricalKeywords = [
       'electrical', 'electricity', 'bs7671', 'wiring', 'regulation', 'safety',
       'cable', 'circuit', 'installation', 'testing', 'inspection', 'amendment',
       'compliance', 'certification', 'contractor', 'electrician', 'project',
       'tender', 'contract', 'infrastructure', 'construction', 'power', 'energy',
-      'hse', 'iet', 'napit', 'niceic', 'select'
+      'hse', 'iet', 'napit', 'niceic', 'select',
+      // Government and policy terms
+      'building safety', 'policy', 'legislation', 'building regulations',
+      'part p', 'competent person scheme', 'approved document', 'building control',
+      'planning permission', 'net zero', 'decarbonisation', 'green energy',
+      'government tender', 'public sector', 'framework agreement'
     ];
     
     const hasElectricalContent = electricalKeywords.some(keyword => 

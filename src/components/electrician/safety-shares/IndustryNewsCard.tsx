@@ -111,6 +111,7 @@ const IndustryNewsCard = () => {
     { key: 'HSE', label: 'HSE Updates', color: 'bg-red-100 text-red-800 hover:bg-red-200' },
     { key: 'BS7671', label: 'BS7671 Updates', color: 'bg-blue-100 text-blue-800 hover:bg-blue-200' },
     { key: 'IET', label: 'IET Technical', color: 'bg-green-100 text-green-800 hover:bg-green-200' },
+    { key: 'GOV.UK', label: 'GOV.UK Policy', color: 'bg-indigo-100 text-indigo-800 hover:bg-indigo-200' },
     { key: 'Major Projects', label: 'Major Projects', color: 'bg-purple-100 text-purple-800 hover:bg-purple-200' },
   ];
 

@@ -68,6 +68,20 @@ const EnhancedIndustryNewsCard = () => {
       likes: 34,
       bookmarked: false,
       rating: 4.3
+    },
+    {
+      id: "4",
+      title: "Building Safety Act Implementation Update",
+      summary: "Latest government guidance on Building Safety Act compliance for electrical installations in high-rise buildings.",
+      category: "Government Policy",
+      source: "GOV.UK",
+      datePublished: "2024-06-11",
+      readTime: "6 min",
+      views: 743,
+      comments: 18,
+      likes: 42,
+      bookmarked: true,
+      rating: 4.4
     }
   ]);
 
@@ -168,6 +182,10 @@ const EnhancedIndustryNewsCard = () => {
                 <SelectItem value="IET Wiring Matters">IET Wiring Matters</SelectItem>
                 <SelectItem value="GOV.UK">GOV.UK</SelectItem>
                 <SelectItem value="NICEIC">NICEIC</SelectItem>
+                <SelectItem value="HSE">HSE</SelectItem>
+                <SelectItem value="ECA">ECA</SelectItem>
+                <SelectItem value="SELECT">SELECT</SelectItem>
+                <SelectItem value="NAPIT">NAPIT</SelectItem>
                 <SelectItem value="Electrical Review">Electrical Review</SelectItem>
               </SelectContent>
             </Select>
