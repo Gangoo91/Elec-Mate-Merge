@@ -1,6 +1,7 @@
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.45.0';
+import FirecrawlApp from 'https://esm.sh/@mendable/firecrawl-js@1.29.3';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -9,56 +10,120 @@ const corsHeaders = {
 
 interface NewsArticle {
   title: string;
-  link: string;
-  summary: string;
-  publishedDate: string;
+  content: string;
+  url: string;
+  date_published: string;
   source: string;
   external_id: string;
+  category: string;
 }
 
-async function parseRSSFeed(url: string, source: string): Promise<NewsArticle[]> {
+async function scrapeWebsiteContent(url: string, source: string, firecrawlApp: FirecrawlApp): Promise<NewsArticle[]> {
   try {
-    console.log(`Fetching RSS feed from: ${url}`);
-    const response = await fetch(url);
-    const xmlText = await response.text();
+    console.log(`Scraping website: ${url} for ${source}`);
     
+    const scrapeResponse = await firecrawlApp.scrapeUrl(url, {
+      formats: ['markdown'],
+      onlyMainContent: true,
+    });
+
+    if (!scrapeResponse.success) {
+      console.error(`Failed to scrape ${url}:`, scrapeResponse.error);
+      return [];
+    }
+
     const articles: NewsArticle[] = [];
+    const content = scrapeResponse.data?.markdown || '';
     
-    // Parse RSS/Atom feeds with regex
-    const itemPattern = /<(?:item|entry)[\s\S]*?<\/(?:item|entry)>/gi;
-    const items = xmlText.match(itemPattern) || [];
+    if (content.length < 100) {
+      console.warn(`Insufficient content from ${url}`);
+      return [];
+    }
+
+    // Parse content into articles based on source type
+    let contentSections: string[] = [];
     
-    for (const item of items) {
-      const titleMatch = item.match(/<(?:title)(?:[^>]*)>(?:<!\[CDATA\[)?(.*?)(?:\]\]>)?<\/(?:title)>/i);
-      const linkMatch = item.match(/<(?:link)(?:[^>]*)>(?:<!\[CDATA\[)?(.*?)(?:\]\]>)?<\/(?:link)>|<link[^>]*href=["']([^"']*)["']/i);
-      const descriptionMatch = item.match(/<(?:description|summary|content)(?:[^>]*)>(?:<!\[CDATA\[)?([\s\S]*?)(?:\]\]>)?<\/(?:description|summary|content)>/i);
-      const pubDateMatch = item.match(/<(?:pubDate|published|updated)(?:[^>]*)>(?:<!\[CDATA\[)?(.*?)(?:\]\]>)?<\/(?:pubDate|published|updated)>/i);
-      const guidMatch = item.match(/<(?:guid|id)(?:[^>]*)>(?:<!\[CDATA\[)?(.*?)(?:\]\]>)?<\/(?:guid|id)>/i);
-      
-      if (titleMatch && linkMatch) {
-        const title = titleMatch[1]?.replace(/<[^>]*>/g, '').trim() || '';
-        const link = linkMatch[1] || linkMatch[2] || '';
-        const summary = descriptionMatch?.[1]?.replace(/<[^>]*>/g, '').trim() || '';
-        const publishedDate = pubDateMatch?.[1] || new Date().toISOString();
-        const external_id = guidMatch?.[1] || link;
-        
-        if (title && link) {
-          articles.push({
-            title,
-            link,
-            summary: summary.substring(0, 500),
-            publishedDate,
-            source,
-            external_id
-          });
-        }
-      }
+    if (source === 'HSE') {
+      // HSE-specific parsing for safety bulletins and updates
+      contentSections = content.split(/(?=Press release|Safety alert|Enforcement notice|Improvement notice)/gi);
+    } else if (source === 'IET') {
+      // IET-specific parsing for regulations and technical updates
+      contentSections = content.split(/(?=Amendment|Update|Regulation|BS\s*7671|Wiring)/gi);
+    } else {
+      // Default parsing
+      contentSections = content.split(/\n\n|\n---\n/);
     }
     
-    console.log(`Parsed ${articles.length} articles from ${source}`);
-    return articles;
+    contentSections.forEach((section: string, index: number) => {
+      const cleanSection = section.trim();
+      if (cleanSection.length < 150) return; // Skip very short sections
+      
+      // Enhanced title extraction
+      const lines = cleanSection.split('\n');
+      let title = '';
+      
+      if (source === 'HSE') {
+        const hseTitleMatch = lines.find(line => 
+          /press release|safety alert|enforcement|electrical/gi.test(line) && 
+          line.length > 10 && line.length < 200
+        );
+        title = hseTitleMatch?.replace(/^#+\s*|\*\*|\*|<[^>]*>/g, '').trim() || 
+                `HSE Safety Update - ${index + 1}`;
+      } else if (source === 'IET') {
+        const ietTitleMatch = lines.find(line => 
+          /bs\s*7671|amendment|regulation|update|wiring/gi.test(line) && 
+          line.length > 10 && line.length < 200
+        );
+        title = ietTitleMatch?.replace(/^#+\s*|\*\*|\*|<[^>]*>/g, '').trim() || 
+                `BS7671/IET Update - ${index + 1}`;
+      } else {
+        const titleMatch = lines.find(line => 
+          line.startsWith('#') || 
+          line.startsWith('**') || 
+          (line.length > 20 && line.length < 200)
+        );
+        title = titleMatch?.replace(/^#+\s*|\*\*|\*|<[^>]*>/g, '').trim() || 
+                `Update from ${source} - ${index + 1}`;
+      }
+      
+      // Content validation - ensure relevance to electrical industry
+      const electricalKeywords = [
+        'electrical', 'electricity', 'bs7671', 'wiring', 'regulation', 'safety', 
+        'cable', 'circuit', 'installation', 'testing', 'inspection', 'pat', 
+        'amendment', 'compliance', 'certification'
+      ];
+      
+      const hasRelevantContent = electricalKeywords.some(keyword => 
+        cleanSection.toLowerCase().includes(keyword.toLowerCase())
+      );
+      
+      // Skip irrelevant content
+      if (!hasRelevantContent || 
+          title.toLowerCase().includes('cookie') || 
+          title.toLowerCase().includes('navigation') ||
+          title.toLowerCase().includes('search')) {
+        return;
+      }
+      
+      // Generate summary
+      const summary = cleanSection.substring(0, 300).replace(/\n/g, ' ').trim();
+      
+      articles.push({
+        title,
+        content: cleanSection,
+        url,
+        date_published: new Date().toISOString(),
+        source,
+        external_id: `${source}-${Date.now()}-${index}`,
+        category: source
+      });
+    });
+    
+    console.log(`Extracted ${articles.length} articles from ${source}`);
+    return articles.slice(0, 5); // Limit to 5 articles per source
+    
   } catch (error) {
-    console.error(`Error parsing RSS feed from ${source}:`, error);
+    console.error(`Error scraping ${url}:`, error);
     return [];
   }
 }
@@ -71,21 +136,24 @@ serve(async (req) => {
   try {
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+    const firecrawlApiKey = Deno.env.get('FIRECRAWL_API_KEY')!;
+    
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
+    const firecrawlApp = new FirecrawlApp({ apiKey: firecrawlApiKey });
 
-    // RSS feeds to parse
-    const feeds = [
-      { url: 'https://www.theiet.org/rss/engineering-horizons/', source: 'IET' },
-      { url: 'https://www.hse.gov.uk/rss/news.xml', source: 'HSE' },
-      { url: 'https://www.gov.uk/government/news.atom', source: 'GOV.UK' }
+    // News sources to scrape
+    const sources = [
+      { url: 'https://www.hse.gov.uk/electricity/', source: 'HSE' },
+      { url: 'https://electrical.theiet.org/bs-7671/', source: 'IET' },
+      { url: 'https://www.hse.gov.uk/news/', source: 'HSE' }
     ];
 
     let totalInserted = 0;
     let errors = 0;
 
-    for (const feed of feeds) {
+    for (const sourceConfig of sources) {
       try {
-        const articles = await parseRSSFeed(feed.url, feed.source);
+        const articles = await scrapeWebsiteContent(sourceConfig.url, sourceConfig.source, firecrawlApp);
         
         for (const article of articles) {
           try {
@@ -93,11 +161,12 @@ serve(async (req) => {
               .from('industry_news')
               .upsert({
                 title: article.title,
-                content: article.summary,
+                content: article.content,
                 source: article.source,
                 external_id: article.external_id,
-                url: article.link,
-                published_at: new Date(article.publishedDate).toISOString(),
+                url: article.url,
+                date_published: article.date_published,
+                category: article.category,
                 is_breaking: false,
                 view_count: 0,
                 average_rating: 0
@@ -117,8 +186,8 @@ serve(async (req) => {
             errors++;
           }
         }
-      } catch (feedError) {
-        console.error(`Error processing feed ${feed.source}:`, feedError);
+      } catch (sourceError) {
+        console.error(`Error processing source ${sourceConfig.source}:`, sourceError);
         errors++;
       }
     }
