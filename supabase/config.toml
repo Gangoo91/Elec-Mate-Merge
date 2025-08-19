@@ -30,9 +30,3 @@ verify_jwt = false
 
 [functions.fetch-projects]
 verify_jwt = false
-
-[functions.enhanced-projects-scraper]
-verify_jwt = false
-
-[functions.schedule-projects-refresh]
-verify_jwt = false

@@ -27,8 +27,6 @@ interface MajorProject {
   is_active?: boolean;
   created_at?: string;
   updated_at?: string;
-  source_url?: string;
-  external_project_url?: string;
 }
 
 const MajorProjectsCard = () => {
@@ -101,8 +99,8 @@ const MajorProjectsCard = () => {
         console.error('Database error:', dbError);
       }
 
-      // Then trigger enhanced Firecrawl scraping for new data
-      const { data: scrapeResult, error: scrapeError } = await supabase.functions.invoke('enhanced-projects-scraper');
+      // Then trigger Firecrawl scraping for new data
+      const { data: scrapeResult, error: scrapeError } = await supabase.functions.invoke('fetch-projects');
       
       if (scrapeError) {
         console.error('Scraping error:', scrapeError);
@@ -119,25 +117,22 @@ const MajorProjectsCard = () => {
         project_value: project.project_value,
         date_awarded: project.date_awarded,
         status: project.status,
-        sector: project.category || determineSectorFromContent(project.content || project.summary),
+        sector: determineSectorFromContent(project.content || project.summary),
         view_count: project.view_count,
         average_rating: project.average_rating,
         contractorCount: estimateContractorCount(project.project_value),
         duration: estimateDuration(project.content || project.summary),
-        deadline: project.tender_deadline || estimateDeadline(project.status),
-        source_url: project.source_url,
-        external_project_url: project.external_project_url
+        deadline: estimateDeadline(project.status)
       }));
 
       setProjects(mappedProjects);
       setLastUpdated(new Date().toLocaleTimeString());
       
-      const newProjectsCount = scrapeResult?.stats?.scraped || 0;
-      const insertedCount = scrapeResult?.stats?.inserted || 0;
+      const newProjectsCount = scrapeResult?.scrapedProjects || 0;
       
       toast({
         title: "Projects Updated",
-        description: `Showing ${mappedProjects.length} projects (${newProjectsCount} scraped, ${insertedCount} new)`,
+        description: `Showing ${mappedProjects.length} projects${newProjectsCount > 0 ? ` (${newProjectsCount} newly scraped)` : ''}`,
         duration: 3000,
       });
 
@@ -197,31 +192,12 @@ const MajorProjectsCard = () => {
   // Remove unused handlers
 
   const handleViewProject = (project: MajorProject) => {
-    const projectUrl = getProjectUrl(project);
-    if (projectUrl) {
-      window.open(projectUrl, '_blank', 'noopener,noreferrer');
-    } else {
-      toast({
-        title: "No URL Available",
-        description: "Unable to find the original source URL for this project",
-        variant: "destructive",
-        duration: 3000,
-      });
-    }
+    const projectUrl = generateProjectUrl(project);
+    window.open(projectUrl, '_blank', 'noopener,noreferrer');
   };
 
-  const getProjectUrl = (project: MajorProject): string | null => {
-    // Prioritize external project URL (direct link to project details)
-    if (project.external_project_url) {
-      return project.external_project_url;
-    }
-    
-    // Fall back to source URL (listing page where project was found)
-    if (project.source_url) {
-      return project.source_url;
-    }
-    
-    // For static fallback projects, generate appropriate external URLs
+  const generateProjectUrl = (project: MajorProject): string => {
+    // For static projects, generate appropriate external URLs
     if (project.id.startsWith('static-')) {
       if (project.awarded_to?.toLowerCase().includes('transport for london')) {
         return `https://www.contractsfinder.service.gov.uk/Search/Results?SearchType=1&Keywords=${encodeURIComponent(project.title)}`;
@@ -232,10 +208,10 @@ const MajorProjectsCard = () => {
       if (project.sector?.toLowerCase().includes('renewable')) {
         return `https://www.contractsfinder.service.gov.uk/Search/Results?SearchType=1&Keywords=${encodeURIComponent('renewable energy ' + project.title)}`;
       }
-      return `https://www.contractsfinder.service.gov.uk/Search/Results?SearchType=1&Keywords=${encodeURIComponent(project.title)}`;
     }
     
-    return null;
+    // For database projects, try to construct appropriate URLs
+    return `https://www.contractsfinder.service.gov.uk/Search/Results?SearchType=1&Keywords=${encodeURIComponent(project.title)}`;
   };
 
   const ProjectDetailModal = ({ project }: { project: MajorProject }) => (
