@@ -27,37 +27,27 @@ async function enhancedProjectExtraction(firecrawlApiKey: string, openaiApiKey: 
   const firecrawl = new FirecrawlApp({ apiKey: firecrawlApiKey });
   const allProjects: ProjectData[] = [];
 
-  // Comprehensive UK electrical project sources
+  // Enhanced UK electrical project sources
   const sources = [
     {
-      url: 'https://www.contractsfinder.service.gov.uk/Search/Results?SearchType=1&Keywords=electrical',
-      name: 'Contracts Finder - Electrical',
+      url: 'https://www.contractsfinder.service.gov.uk/search/services',
+      name: 'Contracts Finder - Live Opportunities',
       category: 'Government'
     },
     {
-      url: 'https://www.contractsfinder.service.gov.uk/Search/Results?SearchType=1&Keywords=substation',
-      name: 'Contracts Finder - Substation',
-      category: 'Infrastructure'
+      url: 'https://www.electricaltimes.co.uk/news',
+      name: 'Electrical Times News',
+      category: 'Industry News'
     },
     {
-      url: 'https://www.constructionnews.co.uk/sectors/infrastructure/',
-      name: 'Construction News',
-      category: 'Infrastructure'
+      url: 'https://www.theiet.org/publishing/inspec/inspec-direct/news/',
+      name: 'IET Engineering News',
+      category: 'Professional'
     },
     {
-      url: 'https://www.newcivilengineer.com/latest/infrastructure-news/',
-      name: 'New Civil Engineer',
-      category: 'Infrastructure'
-    },
-    {
-      url: 'https://www.electricalreview.co.uk/news/',
-      name: 'Electrical Review',
-      category: 'Electrical'
-    },
-    {
-      url: 'https://tfl.gov.uk/corporate/procurement-and-commercial/procurement-opportunities',
-      name: 'TfL Procurement',
-      category: 'Transport'
+      url: 'https://www.cips.org/supply-management/news/',
+      name: 'Supply Management',
+      category: 'Procurement'
     }
   ];
 
@@ -68,21 +58,9 @@ async function enhancedProjectExtraction(firecrawlApiKey: string, openaiApiKey: 
       console.log(`Scraping: ${source.name}`);
       
       const scrapeResult = await firecrawl.scrapeUrl(source.url, {
-        formats: ['markdown', 'html'],
+        formats: ['markdown'],
         includeTags: ['h1', 'h2', 'h3', 'h4', 'p', 'div', 'span', 'a', 'li'],
-        waitFor: 3000,
-        extractorOptions: {
-          mode: 'llm-extraction',
-          extractionPrompt: `Extract electrical infrastructure projects, tenders, and contracts from this page. Look for:
-          - Project titles containing: electrical, power, grid, substation, transmission, infrastructure, energy
-          - Contract values in £ (millions/thousands)
-          - Client/authority names
-          - Locations in UK
-          - Tender deadlines or project start dates
-          - Current status (tender, awarded, ongoing)
-          
-          Focus on projects suitable for electrical contractors.`
-        }
+        waitFor: 3000
       });
 
       if (scrapeResult.success && scrapeResult.data?.markdown) {
@@ -129,30 +107,39 @@ async function intelligentProjectExtraction(
         messages: [
           {
             role: 'system',
-            content: `You are an expert at extracting UK electrical infrastructure project data. Extract projects from web content and return ONLY a valid JSON array. Each project must have this exact structure:
-            {
-              "status": "Open for Tender" | "Contract Awarded" | "In Progress" | "Completed",
-              "category": "Healthcare" | "Energy" | "Transport" | "Infrastructure" | "Education",
-              "deadline": "YYYY-MM-DD" (if tender deadline available),
-              "title": "clear project title",
-              "snippet": "1-2 sentence summary focused on electrical scope",
-              "client": "client/authority name",
-              "contractValue": "£XXM" or "£XXK" or "TBC",
-              "duration": "XX months",
-              "location": "City, UK",
-              "contractors": estimated number,
-              "startDate": "YYYY-MM-DD" (if known),
-              "url": "direct project URL if available, otherwise source URL"
-            }
-            
-            Focus on electrical projects: power systems, substations, grid connections, hospital electrical, transport electrification, renewable energy connections, etc.`
+            content: `You are an expert at extracting UK electrical infrastructure project data. Extract projects from web content and return ONLY a valid JSON array. Look for:
+
+- Electrical infrastructure projects, tenders, and contracts
+- Projects mentioning: electrical, power, substation, transmission, renewable energy, grid connections
+- UK-based projects only
+- Current or recently awarded contracts
+
+Return ONLY a JSON array with this exact structure (no additional text):
+[
+  {
+    "status": "Open for Tender" | "Contract Awarded" | "In Progress" | "Completed",
+    "category": "Healthcare" | "Energy" | "Transport" | "Infrastructure" | "Education",
+    "deadline": "YYYY-MM-DD" (if tender deadline available),
+    "title": "clear project title (max 100 chars)",
+    "snippet": "1-2 sentence summary focused on electrical scope (max 200 chars)",
+    "client": "client/authority name",
+    "contractValue": "£XXM" or "£XXK" or "TBC",
+    "duration": "XX months",
+    "location": "City, UK",
+    "contractors": 5,
+    "startDate": "YYYY-MM-DD" (if known),
+    "url": "direct project URL if available"
+  }
+]
+
+Focus on real electrical projects with actual values and clients. Ignore general news or non-project content.`
           },
           {
             role: 'user',
             content: `Extract electrical infrastructure projects from this content. Source: ${source.name}\nContent: ${content.substring(0, 8000)}`
           }
         ],
-        max_tokens: 2000,
+        max_tokens: 1500,
         temperature: 0.1
       }),
     });

@@ -115,11 +115,18 @@ const MajorProjectsCard = () => {
         console.error('Database error:', dbError);
       }
 
-      // Then trigger Firecrawl scraping for new data
-      const { data: scrapeResult, error: scrapeError } = await supabase.functions.invoke('fetch-projects');
-      
-      if (scrapeError) {
-        console.error('Scraping error:', scrapeError);
+      // Then trigger Firecrawl scraping for new data (run in background)
+      let scrapeResult = null;
+      try {
+        const { data, error } = await supabase.functions.invoke('fetch-projects');
+        if (error) {
+          console.error('Scraping error:', error);
+        } else {
+          scrapeResult = data;
+          console.log('Scraping success:', data);
+        }
+      } catch (scrapeError) {
+        console.error('Scraping failed:', scrapeError);
       }
 
       // Map database projects to component format  
@@ -143,14 +150,19 @@ const MajorProjectsCard = () => {
         source_url: project.source_url
       }));
 
-      setProjects(mappedProjects);
+      // Use live data if available, otherwise fallback to static projects
+      const finalProjects = mappedProjects.length > 0 ? mappedProjects : staticProjects;
+      setProjects(finalProjects);
       setLastUpdated(new Date().toLocaleTimeString());
       
       const newProjectsCount = scrapeResult?.scrapedProjects || 0;
+      const totalProjects = mappedProjects.length;
       
       toast({
         title: "Projects Updated",
-        description: `Showing ${mappedProjects.length} projects${newProjectsCount > 0 ? ` (${newProjectsCount} newly scraped)` : ''}`,
+        description: totalProjects > 0 
+          ? `Showing ${totalProjects} projects${newProjectsCount > 0 ? ` (${newProjectsCount} newly scraped)` : ''}` 
+          : "Using fallback project data - live scraping in progress",
         duration: 3000,
       });
 
