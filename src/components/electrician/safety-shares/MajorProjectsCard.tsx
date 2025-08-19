@@ -99,7 +99,12 @@ const MajorProjectsCard = () => {
       // First fetch existing database projects
       const { data: dbProjects, error: dbError } = await supabase
         .from('major_projects')
-        .select('*')
+        .select(`
+          id, title, summary, content, awarded_to, location, project_value, 
+          date_awarded, status, category, view_count, average_rating, 
+          is_active, created_at, updated_at, tender_deadline, 
+          source_url, external_project_url
+        `)
         .eq('is_active', true)
         .order('created_at', { ascending: false })
         .limit(20);
@@ -259,14 +264,14 @@ const MajorProjectsCard = () => {
       </DialogHeader>
       
       <div className="space-y-6">
-        {/* Status and Sector Badges */}
+        {/* Status and Category Badges */}
         <div className="flex flex-wrap gap-2">
           <Badge className={getStatusColor(project.status)}>
             {getStatusText(project.status)}
           </Badge>
-          {project.sector && (
-            <Badge className={getSectorColor(project.sector)}>
-              {project.sector}
+          {project.category && (
+            <Badge className={getSectorColor(project.category)}>
+              {project.category}
             </Badge>
           )}
         </div>
@@ -362,11 +367,12 @@ const MajorProjectsCard = () => {
     return "bg-blue-500/20 text-blue-400 border-blue-500/30";
   };
 
-  const getSectorColor = (sector: string) => {
-    if (!sector) return "bg-gray-500/20 text-gray-400 border-gray-500/30";
-    switch (sector.toLowerCase()) {
+  const getSectorColor = (category: string) => {
+    if (!category) return "bg-gray-500/20 text-gray-400 border-gray-500/30";
+    switch (category.toLowerCase()) {
       case "transport": return "bg-purple-500/20 text-purple-400 border-purple-500/30";
       case "healthcare": return "bg-red-500/20 text-red-400 border-red-500/30";
+      case "energy": 
       case "renewable energy": return "bg-green-500/20 text-green-400 border-green-500/30";
       case "infrastructure": return "bg-blue-500/20 text-blue-400 border-blue-500/30";
       case "technology": return "bg-orange-500/20 text-orange-400 border-orange-500/30";
