@@ -348,24 +348,22 @@ const IndustryNewsCard = () => {
                          </DialogContent>
                        </Dialog>
                        
-                       {article.url && (
-                         <Button 
-                           size="sm" 
-                           variant="outline"
-                           asChild
-                           className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
-                         >
-                           <a 
-                             href={article.url} 
-                             target="_blank" 
-                             rel="noopener noreferrer"
-                             className="flex items-center gap-2"
-                           >
-                             <ExternalLink className="h-4 w-4" />
-                             View Source
-                           </a>
-                         </Button>
-                       )}
+                        {article.external_url && (
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            className="bg-transparent border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+                            onClick={() => window.open(article.external_url, '_blank')}
+                            title={article.external_url !== article.source_url ? 
+                              "Read the full article" : 
+                              "Visit the source website"}
+                          >
+                            <ExternalLink className="w-4 h-4 mr-2" />
+                            {article.external_url !== article.source_url ? 
+                              "Read Article" : 
+                              "View Source"}
+                          </Button>
+                        )}
                      </div>
                 </CardContent>
               </Card>

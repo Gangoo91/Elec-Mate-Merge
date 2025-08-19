@@ -20,6 +20,8 @@ interface NewsArticle {
   likes: number;
   bookmarked: boolean;
   rating: number;
+  external_url?: string;
+  source_url?: string;
 }
 
 const EnhancedIndustryNewsCard = () => {
@@ -39,7 +41,9 @@ const EnhancedIndustryNewsCard = () => {
       comments: 23,
       likes: 78,
       bookmarked: true,
-      rating: 4.7
+      rating: 4.7,
+      external_url: "https://press.hse.gov.uk/2024/electrical-contractor-safety-alert",
+      source_url: "https://press.hse.gov.uk"
     },
     {
       id: "2",
@@ -53,7 +57,9 @@ const EnhancedIndustryNewsCard = () => {
       comments: 34,
       likes: 56,
       bookmarked: false,
-      rating: 4.5
+      rating: 4.5,
+      external_url: "https://electrical.theiet.org/bs-7671/amendment-2-guide",
+      source_url: "https://electrical.theiet.org/bs-7671/"
     },
     {
       id: "3",
@@ -67,7 +73,9 @@ const EnhancedIndustryNewsCard = () => {
       comments: 12,
       likes: 34,
       bookmarked: false,
-      rating: 4.3
+      rating: 4.3,
+      external_url: "https://theiet.org/news/technical-standards-update",
+      source_url: "https://theiet.org/news/"
     },
     {
       id: "4",
@@ -81,7 +89,9 @@ const EnhancedIndustryNewsCard = () => {
       comments: 18,
       likes: 42,
       bookmarked: true,
-      rating: 4.4
+      rating: 4.4,
+      external_url: "https://constructionnews.co.uk/projects/smart-grid-project-500m",
+      source_url: "https://constructionnews.co.uk/projects"
     }
   ]);
 
@@ -252,17 +262,15 @@ const EnhancedIndustryNewsCard = () => {
                 <Button 
                   size="sm" 
                   className="bg-elec-yellow text-black hover:bg-elec-yellow/90"
-                  asChild
+                  onClick={() => article.external_url && window.open(article.external_url, '_blank')}
+                  title={article.external_url !== article.source_url ? 
+                    "Read the full article" : 
+                    "Visit the source website"}
                 >
-                  <a 
-                    href="#" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2"
-                  >
-                    <ExternalLink className="h-4 w-4" />
-                    Read Full Article
-                  </a>
+                  <ExternalLink className="h-4 w-4 mr-2" />
+                  {article.external_url !== article.source_url ? 
+                    "Read Article" : 
+                    "View Source"}
                 </Button>
               </div>
             </CardContent>

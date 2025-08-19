@@ -5,7 +5,8 @@ interface NewsArticle {
   title: string;
   summary: string;
   content: string;
-  url: string;
+  external_url: string;
+  source_url?: string;
   date_published: string;
   regulatory_body: string;
   category: string;
@@ -170,7 +171,8 @@ export class FirecrawlService {
         title: article.title,
         summary: article.summary || article.content?.substring(0, 200) + '...' || '',
         content: article.content || '',
-        url: article.source_url || article.external_url || '',
+        external_url: article.external_url || article.source_url || '',
+        source_url: article.source_url,
         date_published: article.date_published || article.created_at || new Date().toISOString(),
         regulatory_body: article.regulatory_body || 'Unknown',
         category: article.category || 'General',
@@ -301,7 +303,8 @@ export class FirecrawlService {
           title,
           summary,
           content: cleanSection,
-          url: scrapedData.url || '',
+          external_url: scrapedData.external_url || scrapedData.url || '',
+          source_url: scrapedData.source_url,
           date_published: publishedDate,
           regulatory_body: source.regulatoryBody,
           category: source.category,

@@ -261,34 +261,142 @@ function basicContentParsing(rawContent: string, source: NewsSource): ProcessedA
   }
 }
 
+async function extractArticleLinks(rawContent: string, source: NewsSource): Promise<string[]> {
+  console.log(`Extracting article links from ${source.name}`);
+  
+  const links: string[] = [];
+  
+  try {
+    // Extract potential article URLs from the content using regex patterns
+    const urlPatterns = [
+      // HSE press releases
+      /https?:\/\/press\.hse\.gov\.uk\/[^\s"'<>]+/gi,
+      // IET news articles
+      /https?:\/\/theiet\.org\/news\/[^\s"'<>]+/gi,
+      // BS7671 specific articles
+      /https?:\/\/electrical\.theiet\.org\/[^\s"'<>]+/gi,
+      // Construction news projects
+      /https?:\/\/constructionnews\.co\.uk\/projects\/[^\s"'<>]+/gi,
+      // General article patterns
+      /https?:\/\/[^\/\s"'<>]+\/(?:news|press|articles?|updates?)\/[^\s"'<>]+/gi
+    ];
+    
+    // Apply all patterns to find URLs
+    urlPatterns.forEach(pattern => {
+      const matches = rawContent.match(pattern) || [];
+      matches.forEach(url => {
+        // Clean up the URL and validate
+        const cleanUrl = url.replace(/['"<>]$/, '').trim();
+        if (cleanUrl && !links.includes(cleanUrl) && 
+            cleanUrl !== source.url && 
+            !cleanUrl.includes('cookie') && 
+            !cleanUrl.includes('privacy') &&
+            cleanUrl.length > source.url.length + 5) {
+          links.push(cleanUrl);
+        }
+      });
+    });
+    
+    // For sources that might not have absolute URLs, try to construct them
+    const relativePatterns = [
+      /href="(\/[^"]*(?:news|press|article|update)[^"]*?)"/gi,
+      /href='(\/[^']*(?:news|press|article|update)[^']*?)'/gi
+    ];
+    
+    relativePatterns.forEach(pattern => {
+      let match;
+      while ((match = pattern.exec(rawContent)) !== null) {
+        const relativePath = match[1];
+        if (relativePath && relativePath.length > 10) {
+          const fullUrl = new URL(relativePath, source.url).toString();
+          if (!links.includes(fullUrl) && fullUrl !== source.url) {
+            links.push(fullUrl);
+          }
+        }
+      }
+    });
+    
+    console.log(`Found ${links.length} potential article links from ${source.name}`);
+    return links.slice(0, 8); // Limit to prevent too many requests
+    
+  } catch (error) {
+    console.error(`Error extracting links from ${source.name}:`, error);
+    return [];
+  }
+}
+
+async function scrapeIndividualArticle(url: string, source: NewsSource, firecrawl: FirecrawlApp): Promise<ProcessedArticle | null> {
+  try {
+    console.log(`Scraping individual article: ${url}`);
+    
+    const scrapeResponse = await firecrawl.scrapeUrl(url, {
+      formats: ['markdown'],
+      onlyMainContent: true,
+      waitFor: 2000,
+      timeout: 30000
+    });
+
+    if (!scrapeResponse.success || !scrapeResponse.data?.markdown) {
+      console.warn(`Failed to scrape article: ${url}`);
+      return null;
+    }
+
+    const content = scrapeResponse.data.markdown;
+    
+    // Basic validation
+    if (content.length < 200) {
+      console.warn(`Article too short: ${url}`);
+      return null;
+    }
+
+    // Extract title (first meaningful heading)
+    const lines = content.split('\n').filter(line => line.trim());
+    const title = lines.find(line => 
+      line.startsWith('#') && 
+      line.length > 10 && 
+      line.length < 150 &&
+      !line.toLowerCase().includes('cookie')
+    )?.replace(/^#+\s*/, '').trim() || 
+    lines.find(line => 
+      line.length > 10 && 
+      line.length < 150 &&
+      !line.toLowerCase().includes('navigation')
+    )?.trim() || 
+    `${source.category} Article`;
+
+    // Generate summary from first paragraph
+    const paragraphs = content.split('\n\n').filter(p => p.trim().length > 50);
+    const summary = paragraphs[0]?.replace(/^#+\s*/, '').substring(0, 200).trim() + '...' || 
+                   content.substring(0, 200).trim() + '...';
+
+    return {
+      title,
+      summary,
+      content,
+      regulatory_body: source.regulatory_body,
+      category: source.category,
+      external_id: `article-${source.name}-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+      source_url: source.url,
+      external_url: url, // This is the key - individual article URL
+      date_published: new Date().toISOString()
+    };
+
+  } catch (error) {
+    console.error(`Error scraping individual article ${url}:`, error);
+    return null;
+  }
+}
+
 async function scrapeAndProcessSource(source: NewsSource, firecrawl: FirecrawlApp): Promise<ProcessedArticle[]> {
   try {
     console.log(`Scraping ${source.name}...`);
     
-    // Enhanced scraping configuration for better content extraction
+    // First, scrape the main category page
     const scrapeResponse = await firecrawl.scrapeUrl(source.url, {
       formats: ['markdown', 'html'],
       onlyMainContent: true,
       waitFor: 3000,
-      timeout: 45000,
-      actions: [
-        {
-          type: 'wait',
-          milliseconds: 2000
-        }
-      ],
-      extractorOptions: {
-        extractionSchema: {
-          articles: {
-            baseSelector: 'article, .news-item, .post, .entry, main',
-            fields: {
-              title: 'h1, h2, h3, .title, .headline',
-              content: '.content, .body, .text, p',
-              date: 'time, .date, .published'
-            }
-          }
-        }
-      }
+      timeout: 45000
     });
 
     if (!scrapeResponse.success) {
@@ -347,11 +455,49 @@ async function scrapeAndProcessSource(source: NewsSource, firecrawl: FirecrawlAp
       return [];
     }
 
-    // Use AI-powered parsing with improved content
-    const articles = await intelligentContentParsing(rawContent, source);
+    // Extract individual article links from the category page
+    const articleLinks = await extractArticleLinks(rawContent, source);
+    console.log(`Found ${articleLinks.length} article links from ${source.name}`);
     
-    console.log(`Successfully processed ${articles.length} articles from ${source.name}`);
-    return articles;
+    const allArticles: ProcessedArticle[] = [];
+    
+    // If we found article links, scrape them individually
+    if (articleLinks.length > 0) {
+      console.log(`Scraping ${articleLinks.length} individual articles from ${source.name}`);
+      
+      // Scrape individual articles with rate limiting
+      for (let i = 0; i < articleLinks.length; i++) {
+        const articleUrl = articleLinks[i];
+        const article = await scrapeIndividualArticle(articleUrl, source, firecrawl);
+        
+        if (article) {
+          allArticles.push(article);
+        }
+        
+        // Rate limiting between individual scrapes
+        if (i < articleLinks.length - 1) {
+          await new Promise(resolve => setTimeout(resolve, 1000));
+        }
+      }
+      
+      console.log(`Successfully scraped ${allArticles.length} individual articles from ${source.name}`);
+    }
+    
+    // If we didn't get enough individual articles, fall back to AI parsing of the category page
+    if (allArticles.length < 2) {
+      console.log(`Falling back to AI parsing for ${source.name} (got ${allArticles.length} individual articles)`);
+      const fallbackArticles = await intelligentContentParsing(rawContent, source);
+      
+      // Merge results, preferring individual articles
+      fallbackArticles.forEach(fallbackArticle => {
+        if (!allArticles.some(existing => existing.title === fallbackArticle.title)) {
+          allArticles.push(fallbackArticle);
+        }
+      });
+    }
+    
+    console.log(`Total processed ${allArticles.length} articles from ${source.name}`);
+    return allArticles.slice(0, 5); // Limit total articles per source
 
   } catch (error) {
     console.error(`Error processing ${source.name}:`, error);
