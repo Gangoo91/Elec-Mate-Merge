@@ -101,8 +101,8 @@ const MajorProjectsCard = () => {
         console.error('Database error:', dbError);
       }
 
-      // Then trigger Firecrawl scraping for new data
-      const { data: scrapeResult, error: scrapeError } = await supabase.functions.invoke('fetch-projects');
+      // Then trigger enhanced Firecrawl scraping for new data
+      const { data: scrapeResult, error: scrapeError } = await supabase.functions.invoke('enhanced-projects-scraper');
       
       if (scrapeError) {
         console.error('Scraping error:', scrapeError);
@@ -119,12 +119,12 @@ const MajorProjectsCard = () => {
         project_value: project.project_value,
         date_awarded: project.date_awarded,
         status: project.status,
-        sector: determineSectorFromContent(project.content || project.summary),
+        sector: project.category || determineSectorFromContent(project.content || project.summary),
         view_count: project.view_count,
         average_rating: project.average_rating,
         contractorCount: estimateContractorCount(project.project_value),
         duration: estimateDuration(project.content || project.summary),
-        deadline: estimateDeadline(project.status),
+        deadline: project.tender_deadline || estimateDeadline(project.status),
         source_url: project.source_url,
         external_project_url: project.external_project_url
       }));
@@ -132,11 +132,12 @@ const MajorProjectsCard = () => {
       setProjects(mappedProjects);
       setLastUpdated(new Date().toLocaleTimeString());
       
-      const newProjectsCount = scrapeResult?.scrapedProjects || 0;
+      const newProjectsCount = scrapeResult?.stats?.scraped || 0;
+      const insertedCount = scrapeResult?.stats?.inserted || 0;
       
       toast({
         title: "Projects Updated",
-        description: `Showing ${mappedProjects.length} projects${newProjectsCount > 0 ? ` (${newProjectsCount} newly scraped)` : ''}`,
+        description: `Showing ${mappedProjects.length} projects (${newProjectsCount} scraped, ${insertedCount} new)`,
         duration: 3000,
       });
 
