@@ -747,9 +747,11 @@ export type Database = {
         Row: {
           average_rating: number | null
           awarded_to: string
+          category: string | null
           content: string
           created_at: string
           date_awarded: string
+          electrical_scope: string | null
           external_project_url: string | null
           id: string
           is_active: boolean
@@ -758,6 +760,8 @@ export type Database = {
           source_url: string | null
           status: string
           summary: string
+          technologies: string[] | null
+          tender_deadline: string | null
           title: string
           updated_at: string
           view_count: number | null
@@ -765,9 +769,11 @@ export type Database = {
         Insert: {
           average_rating?: number | null
           awarded_to: string
+          category?: string | null
           content: string
           created_at?: string
           date_awarded?: string
+          electrical_scope?: string | null
           external_project_url?: string | null
           id?: string
           is_active?: boolean
@@ -776,6 +782,8 @@ export type Database = {
           source_url?: string | null
           status?: string
           summary: string
+          technologies?: string[] | null
+          tender_deadline?: string | null
           title: string
           updated_at?: string
           view_count?: number | null
@@ -783,9 +791,11 @@ export type Database = {
         Update: {
           average_rating?: number | null
           awarded_to?: string
+          category?: string | null
           content?: string
           created_at?: string
           date_awarded?: string
+          electrical_scope?: string | null
           external_project_url?: string | null
           id?: string
           is_active?: boolean
@@ -794,6 +804,8 @@ export type Database = {
           source_url?: string | null
           status?: string
           summary?: string
+          technologies?: string[] | null
+          tender_deadline?: string | null
           title?: string
           updated_at?: string
           view_count?: number | null
