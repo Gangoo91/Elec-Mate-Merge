@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import { Badge } from "@/components/ui/badge";
 import { 
   Select,
   SelectContent,
@@ -13,11 +14,12 @@ import {
 } from "@/components/ui/select";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { CalendarIcon } from "lucide-react";
+import { CalendarIcon, X, LogIn } from "lucide-react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
+import { useAuth } from "@/contexts/AuthContext";
 
 type ProjectSubmissionDialogProps = {
   open: boolean;
@@ -30,8 +32,11 @@ export const ProjectSubmissionDialog = ({
   onOpenChange,
   onProjectSubmitted
 }: ProjectSubmissionDialogProps) => {
+  const { user, isLoading } = useAuth();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [tenderDeadline, setTenderDeadline] = useState<Date>();
+  const [dateAwarded, setDateAwarded] = useState<Date>();
+  const [selectedTechnologies, setSelectedTechnologies] = useState<string[]>([]);
   
   const [formData, setFormData] = useState({
     title: '',
@@ -40,19 +45,71 @@ export const ProjectSubmissionDialog = ({
     awarded_to: '',
     location: '',
     project_value: '',
-    status: 'active',
+    status: 'awarded',
     category: '',
+    electrical_scope: '',
     external_project_url: '',
     source_url: ''
   });
+
+  const electricalScopes = [
+    'General Electrical',
+    'High Voltage',
+    'Low Voltage',
+    'Control Systems',
+    'Emergency Systems',
+    'Renewable Energy Systems',
+    'Data Centre Infrastructure',
+    'Industrial Automation',
+    'Building Management Systems',
+    'Fire Alarm Systems',
+    'Security Systems',
+    'HVAC Controls'
+  ];
+
+  const availableTechnologies = [
+    'LED Lighting',
+    'Smart Building Systems',
+    'Solar/PV Systems',
+    'Battery Storage',
+    'EV Charging',
+    'Building Management Systems',
+    'Fire Alarm Systems',
+    'Security Systems',
+    'HVAC Controls',
+    'Emergency Lighting',
+    'Power Distribution',
+    'Cable Management',
+    'Testing & Commissioning',
+    'Maintenance Systems'
+  ];
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
+  const addTechnology = (tech: string) => {
+    if (!selectedTechnologies.includes(tech)) {
+      setSelectedTechnologies([...selectedTechnologies, tech]);
+    }
+  };
+
+  const removeTechnology = (tech: string) => {
+    setSelectedTechnologies(selectedTechnologies.filter(t => t !== tech));
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!user) {
+      toast({
+        title: "Authentication Required",
+        description: "Please log in to submit projects.",
+        variant: "destructive",
+      });
+      return;
+    }
     
     if (!formData.title || !formData.summary || !formData.awarded_to || !formData.location || !formData.project_value) {
       toast({
@@ -77,10 +134,12 @@ export const ProjectSubmissionDialog = ({
           project_value: formData.project_value,
           status: formData.status,
           category: formData.category || 'Infrastructure',
+          electrical_scope: formData.electrical_scope || 'General Electrical',
+          technologies: selectedTechnologies,
           external_project_url: formData.external_project_url || null,
           source_url: formData.source_url || null,
           tender_deadline: tenderDeadline?.toISOString().split('T')[0] || null,
-          date_awarded: new Date().toISOString().split('T')[0],
+          date_awarded: dateAwarded?.toISOString().split('T')[0] || new Date().toISOString().split('T')[0],
           is_active: true
         });
 
@@ -100,12 +159,15 @@ export const ProjectSubmissionDialog = ({
         awarded_to: '',
         location: '',
         project_value: '',
-        status: 'active',
+        status: 'awarded',
         category: '',
+        electrical_scope: '',
         external_project_url: '',
         source_url: ''
       });
       setTenderDeadline(undefined);
+      setDateAwarded(undefined);
+      setSelectedTechnologies([]);
       
       onOpenChange(false);
       onProjectSubmitted?.();
@@ -121,6 +183,42 @@ export const ProjectSubmissionDialog = ({
       setIsSubmitting(false);
     }
   };
+
+  if (isLoading) {
+    return (
+      <Dialog open={open} onOpenChange={onOpenChange}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle>Loading...</DialogTitle>
+          </DialogHeader>
+          <div className="flex items-center justify-center py-8">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+          </div>
+        </DialogContent>
+      </Dialog>
+    );
+  }
+
+  if (!user) {
+    return (
+      <Dialog open={open} onOpenChange={onOpenChange}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle>Authentication Required</DialogTitle>
+          </DialogHeader>
+          <div className="flex flex-col items-center gap-4 py-8">
+            <LogIn className="h-12 w-12 text-muted-foreground" />
+            <p className="text-center text-muted-foreground">
+              You need to be logged in to submit projects.
+            </p>
+            <Button onClick={() => onOpenChange(false)} className="w-full">
+              Close
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+    );
+  }
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -203,6 +301,25 @@ export const ProjectSubmissionDialog = ({
             </div>
             
             <div className="space-y-2">
+              <Label htmlFor="electrical_scope">Electrical Scope</Label>
+              <Select 
+                value={formData.electrical_scope} 
+                onValueChange={(value) => 
+                  setFormData(prev => ({ ...prev, electrical_scope: value }))
+                }
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Select electrical scope" />
+                </SelectTrigger>
+                <SelectContent>
+                  {electricalScopes.map((scope) => (
+                    <SelectItem key={scope} value={scope}>{scope}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            
+            <div className="space-y-2">
               <Label htmlFor="status">Status</Label>
               <Select 
                 value={formData.status} 
@@ -220,6 +337,33 @@ export const ProjectSubmissionDialog = ({
                   <SelectItem value="completed">Completed</SelectItem>
                 </SelectContent>
               </Select>
+            </div>
+            
+            <div className="space-y-2">
+              <Label>Date Awarded (Optional)</Label>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="outline"
+                    className={cn(
+                      "w-full justify-start text-left font-normal",
+                      !dateAwarded && "text-muted-foreground"
+                    )}
+                  >
+                    <CalendarIcon className="mr-2 h-4 w-4" />
+                    {dateAwarded ? format(dateAwarded, "PPP") : "Pick a date"}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0">
+                  <Calendar
+                    mode="single"
+                    selected={dateAwarded}
+                    onSelect={setDateAwarded}
+                    initialFocus
+                    className="pointer-events-auto"
+                  />
+                </PopoverContent>
+              </Popover>
             </div>
             
             <div className="space-y-2">
@@ -259,6 +403,37 @@ export const ProjectSubmissionDialog = ({
                 placeholder="https://example.com/project-details"
                 type="url"
               />
+            </div>
+          </div>
+          
+          <div className="space-y-2">
+            <Label>Technologies</Label>
+            <div className="space-y-2">
+              <Select onValueChange={addTechnology}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Add technologies" />
+                </SelectTrigger>
+                <SelectContent>
+                  {availableTechnologies
+                    .filter(tech => !selectedTechnologies.includes(tech))
+                    .map((tech) => (
+                      <SelectItem key={tech} value={tech}>{tech}</SelectItem>
+                    ))}
+                </SelectContent>
+              </Select>
+              {selectedTechnologies.length > 0 && (
+                <div className="flex flex-wrap gap-2">
+                  {selectedTechnologies.map((tech) => (
+                    <Badge key={tech} variant="secondary" className="flex items-center gap-1">
+                      {tech}
+                      <X 
+                        className="h-3 w-3 cursor-pointer" 
+                        onClick={() => removeTechnology(tech)}
+                      />
+                    </Badge>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
           
