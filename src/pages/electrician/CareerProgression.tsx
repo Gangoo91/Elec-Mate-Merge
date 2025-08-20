@@ -51,7 +51,7 @@ const CareerProgression = () => {
       {/* Header */}
       <div className="space-y-3">
         <h1 className="sr-only">Electrician Career Progression</h1>
-        <p className="text-sm sm:text-base text-muted-foreground">
+        <p className="text-sm sm:text-base text-muted-foreground px-2.5">
           Advanced career development resources for qualified electricians
         </p>
         {!activeSection && (
