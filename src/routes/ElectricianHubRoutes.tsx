@@ -53,6 +53,9 @@ import Calculations from "@/pages/electrician-tools/Calculations";
 import InstallPlanner from "@/pages/electrician-tools/InstallPlanner";
 import InspectionTesting from "@/pages/electrician-tools/InspectionTesting";
 import SiteSafety from "@/pages/electrician-tools/SiteSafety";
+import ToolCategory from "@/pages/electrician/tools/ToolCategory";
+import ToolSearchPage from "@/pages/electrician/tools/ToolSearch";
+import BuyingGuides from "@/pages/electrician/tools/BuyingGuides";
 
 const ElectricianHubRoutes = () => (
   <Routes>
@@ -65,6 +68,9 @@ const ElectricianHubRoutes = () => (
     <Route path="materials/supplier/:supplierSlug" element={<SupplierMaterials />} />
     <Route path="materials/:slug" element={<MaterialsSlugRedirect />} />
     <Route path="tools" element={<ElectricalTools />} />
+    <Route path="tools/category/:categoryId" element={<ToolCategory />} />
+    <Route path="tools/search" element={<ToolSearchPage />} />
+    <Route path="tools/guides" element={<BuyingGuides />} />
     <Route path="safety-shares" element={<SafetyShares />} />
     <Route path="safety-shares/projects" element={<MajorProjects />} />
     <Route path="safety-shares/alerts" element={<SafetyAlerts />} />

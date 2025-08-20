@@ -3,7 +3,10 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowLeft, Wrench, Search, MapPin, BookOpen, Calculator, FileText, Zap } from "lucide-react";
+import { ArrowLeft, Wrench, Search, MapPin, BookOpen, Calculator, FileText, Zap, Shield, Package } from "lucide-react";
+import { toolCategories, suppliers, buyingGuides } from "@/data/electrician/toolData";
+import ToolCategoryCard from "@/components/electrician-tools/ToolCategoryCard";
+import ToolSearch from "@/components/electrician-tools/ToolSearch";
 
 const ElectricalTools = () => {
   return (
@@ -12,13 +15,13 @@ const ElectricalTools = () => {
         {/* Header */}
         <div className="space-y-4">
           <div className="flex justify-start">
-            <Link to="/electrician/trade-essentials">
+            <Link to="/electrician">
               <Button 
                 variant="outline" 
                 className="bg-elec-gray/50 border-elec-yellow/30 hover:bg-elec-yellow/10 text-white"
               >
                 <ArrowLeft className="mr-2 h-4 w-4" />
-                Back to Trade Essentials
+                Back to Hub
               </Button>
             </Link>
           </div>
@@ -58,246 +61,87 @@ const ElectricalTools = () => {
           <TabsContent value="browse" className="space-y-6">
             {/* Tool Categories */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              <Card className="border-elec-yellow/20 bg-elec-gray/50 hover:bg-elec-gray/70 transition-colors">
-                <CardHeader className="pb-3">
-                  <CardTitle className="flex items-center gap-2 text-lg">
-                    <Wrench className="h-5 w-5 text-elec-yellow" />
-                    Hand Tools
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground mb-3">
-                    Essential hand tools for electrical work
-                  </p>
-                  <Button size="sm" className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90">
-                    Browse Hand Tools
-                  </Button>
-                </CardContent>
-              </Card>
-
-              <Card className="border-elec-yellow/20 bg-elec-gray/50 hover:bg-elec-gray/70 transition-colors">
-                <CardHeader className="pb-3">
-                  <CardTitle className="flex items-center gap-2 text-lg">
-                    <Calculator className="h-5 w-5 text-elec-yellow" />
-                    Test Equipment
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground mb-3">
-                    Testing and measurement equipment
-                  </p>
-                  <Button size="sm" className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90">
-                    Browse Test Equipment
-                  </Button>
-                </CardContent>
-              </Card>
-
-              <Card className="border-elec-yellow/20 bg-elec-gray/50 hover:bg-elec-gray/70 transition-colors">
-                <CardHeader className="pb-3">
-                  <CardTitle className="flex items-center gap-2 text-lg">
-                    <Zap className="h-5 w-5 text-elec-yellow" />
-                    Power Tools
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground mb-3">
-                    Power tools and accessories
-                  </p>
-                  <Button size="sm" className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90">
-                    Browse Power Tools
-                  </Button>
-                </CardContent>
-              </Card>
-
-              <Card className="border-elec-yellow/20 bg-elec-gray/50 hover:bg-elec-gray/70 transition-colors">
-                <CardHeader className="pb-3">
-                  <CardTitle className="flex items-center gap-2 text-lg">
-                    <FileText className="h-5 w-5 text-elec-yellow" />
-                    Safety Equipment
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground mb-3">
-                    PPE and safety equipment
-                  </p>
-                  <Button size="sm" className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90">
-                    Browse Safety Equipment
-                  </Button>
-                </CardContent>
-              </Card>
-
-              <Card className="border-elec-yellow/20 bg-elec-gray/50 hover:bg-elec-gray/70 transition-colors">
-                <CardHeader className="pb-3">
-                  <CardTitle className="flex items-center gap-2 text-lg">
-                    <Wrench className="h-5 w-5 text-elec-yellow" />
-                    Specialist Tools
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground mb-3">
-                    Specialist electrical tools
-                  </p>
-                  <Button size="sm" className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90">
-                    Browse Specialist Tools
-                  </Button>
-                </CardContent>
-              </Card>
-
-              <Card className="border-elec-yellow/20 bg-elec-gray/50 hover:bg-elec-gray/70 transition-colors">
-                <CardHeader className="pb-3">
-                  <CardTitle className="flex items-center gap-2 text-lg">
-                    <Calculator className="h-5 w-5 text-elec-yellow" />
-                    Tool Storage
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground mb-3">
-                    Tool bags, boxes and storage
-                  </p>
-                  <Button size="sm" className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90">
-                    Browse Tool Storage
-                  </Button>
-                </CardContent>
-              </Card>
+              {toolCategories.map((category) => (
+                <ToolCategoryCard key={category.id} category={category} showSearchLink={true} />
+              ))}
             </div>
 
             {/* Search */}
-            <Card className="border-elec-yellow/20 bg-elec-gray/50">
-              <CardHeader>
-                <CardTitle>Quick Search</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="flex gap-2">
-                  <input 
-                    type="text" 
-                    placeholder="Search for tools..." 
-                    className="flex-1 px-3 py-2 rounded border border-elec-yellow/20 bg-elec-dark text-white placeholder:text-gray-400"
-                  />
-                  <Button className="bg-elec-yellow text-black hover:bg-elec-yellow/90">
-                    <Search className="h-4 w-4" />
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
+            <ToolSearch />
+            
+            <div className="text-center">
+              <Link to="/electrician/tools/search">
+                <Button className="bg-elec-yellow text-black hover:bg-elec-yellow/90">
+                  <Search className="h-4 w-4 mr-2" />
+                  Advanced Tool Search
+                </Button>
+              </Link>
+            </div>
           </TabsContent>
 
           <TabsContent value="suppliers" className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <Card className="border-elec-yellow/20 bg-elec-gray/50">
-                <CardHeader>
-                  <CardTitle>Screwfix</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground mb-3">
-                    Trade electrical supplies and tools
-                  </p>
-                  <Button size="sm" className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90">
-                    Visit Screwfix
-                  </Button>
-                </CardContent>
-              </Card>
-
-              <Card className="border-elec-yellow/20 bg-elec-gray/50">
-                <CardHeader>
-                  <CardTitle>RS Components</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground mb-3">
-                    Professional electrical equipment
-                  </p>
-                  <Button size="sm" className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90">
-                    Visit RS Components
-                  </Button>
-                </CardContent>
-              </Card>
-
-              <Card className="border-elec-yellow/20 bg-elec-gray/50">
-                <CardHeader>
-                  <CardTitle>Toolstation</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground mb-3">
-                    Tools and electrical supplies
-                  </p>
-                  <Button size="sm" className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90">
-                    Visit Toolstation
-                  </Button>
-                </CardContent>
-              </Card>
-
-              <Card className="border-elec-yellow/20 bg-elec-gray/50">
-                <CardHeader>
-                  <CardTitle>City Electrical Factors</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground mb-3">
-                    Electrical wholesaler nationwide
-                  </p>
-                  <Button size="sm" className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90">
-                    Visit CEF
-                  </Button>
-                </CardContent>
-              </Card>
+              {Object.entries(suppliers).map(([key, supplier]) => (
+                <Card key={key} className="border-elec-yellow/20 bg-elec-gray/50 hover:bg-elec-gray/70 transition-colors">
+                  <CardHeader>
+                    <CardTitle>{supplier.name}</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-sm text-muted-foreground mb-3">
+                      {supplier.description}
+                    </p>
+                    <div className="space-y-2">
+                      <div className="text-xs text-muted-foreground">
+                        <strong>Delivery:</strong> {supplier.deliveryOptions.join(", ")}
+                      </div>
+                      <div className="text-xs text-muted-foreground">
+                        <strong>Payment:</strong> {supplier.paymentMethods.join(", ")}
+                      </div>
+                    </div>
+                    <Button 
+                      size="sm" 
+                      className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90 mt-3"
+                      onClick={() => window.open(supplier.website, '_blank')}
+                    >
+                      Visit {supplier.name}
+                    </Button>
+                  </CardContent>
+                </Card>
+              ))}
             </div>
           </TabsContent>
 
           <TabsContent value="guides" className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <Card className="border-elec-yellow/20 bg-elec-gray/50">
-                <CardHeader>
-                  <CardTitle>Essential Tool Kit</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground mb-3">
-                    What tools you need to get started as an electrician
-                  </p>
-                  <Button size="sm" className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90">
-                    Read Guide
-                  </Button>
-                </CardContent>
-              </Card>
-
-              <Card className="border-elec-yellow/20 bg-elec-gray/50">
-                <CardHeader>
-                  <CardTitle>Choosing Test Equipment</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground mb-3">
-                    Guide to selecting the right testing equipment
-                  </p>
-                  <Button size="sm" className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90">
-                    Read Guide
-                  </Button>
-                </CardContent>
-              </Card>
-
-              <Card className="border-elec-yellow/20 bg-elec-gray/50">
-                <CardHeader>
-                  <CardTitle>Tool Maintenance</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground mb-3">
-                    Keep your tools in top condition
-                  </p>
-                  <Button size="sm" className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90">
-                    Read Guide
-                  </Button>
-                </CardContent>
-              </Card>
-
-              <Card className="border-elec-yellow/20 bg-elec-gray/50">
-                <CardHeader>
-                  <CardTitle>Budget Tool Shopping</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground mb-3">
-                    Get the best value when buying tools
-                  </p>
-                  <Button size="sm" className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90">
-                    Read Guide
-                  </Button>
-                </CardContent>
-              </Card>
+              {buyingGuides.map((guide) => (
+                <Card key={guide.id} className="border-elec-yellow/20 bg-elec-gray/50 hover:bg-elec-gray/70 transition-colors">
+                  <CardHeader>
+                    <CardTitle>{guide.title}</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-sm text-muted-foreground mb-3">
+                      {guide.description}
+                    </p>
+                    <div className="flex items-center justify-between text-xs mb-3">
+                      <span className="text-muted-foreground">£{guide.estimatedCost.min}-{guide.estimatedCost.max}</span>
+                      <span className="text-muted-foreground">{guide.timeToRead}</span>
+                    </div>
+                    <Link to="/electrician/tools/guides">
+                      <Button size="sm" className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90">
+                        Read Guide
+                      </Button>
+                    </Link>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+            <div className="text-center mt-6">
+              <Link to="/electrician/tools/guides">
+                <Button className="bg-elec-yellow text-black hover:bg-elec-yellow/90">
+                  <BookOpen className="h-4 w-4 mr-2" />
+                  View All Buying Guides
+                </Button>
+              </Link>
             </div>
           </TabsContent>
         </Tabs>
