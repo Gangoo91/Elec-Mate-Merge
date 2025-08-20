@@ -225,41 +225,35 @@ interface NewsSource {
   rssUrl?: string;
 }
 
-// Search-based news sources using Firecrawl Search API
+// Enhanced Firecrawl Search-based news sources with targeted queries
 const SEARCH_SOURCES: NewsSource[] = [
-  // HSE Updates - Target safety alerts and enforcement
+  // HSE Updates - Target real safety alerts and enforcement
   {
-    name: 'HSE Safety Alerts',
-    searchQuery: 'HSE safety alert electrical OR enforcement notice electrical OR electrical hazard warning',
-    domainFilter: 'hse.gov.uk',
+    name: 'HSE Safety Alerts', 
+    searchQuery: 'HSE update (Health and Safety Executive) news, electrical safety alert, enforcement notice',
     category: 'HSE',
     regulatory_body: 'Health and Safety Executive',
-    fallbackUrl: 'https://www.hse.gov.uk/electricity/',
-    rssUrl: 'https://press.hse.gov.uk/feed/'
+    fallbackUrl: 'https://www.hse.gov.uk/electricity/'
   },
   {
     name: 'HSE Press Releases',
-    searchQuery: 'HSE electrical safety OR electricity accident OR electrical regulations UK',
-    domainFilter: 'press.hse.gov.uk',
+    searchQuery: 'HSE electrical safety OR Health Safety Executive electrical OR HSE enforcement electrical',
     category: 'HSE',
     regulatory_body: 'Health and Safety Executive',
-    fallbackUrl: 'https://press.hse.gov.uk/',
-    rssUrl: 'https://press.hse.gov.uk/feed/'
+    fallbackUrl: 'https://press.hse.gov.uk/'
   },
   
-  // BS7671 Updates - Target wiring regulations
+  // BS7671 Updates - Target wiring regulations and amendments
   {
-    name: 'BS7671 Amendments',
-    searchQuery: 'BS7671 amendment OR wiring regulations update OR 18th edition changes',
-    domainFilter: 'theiet.org',
+    name: 'BS7671 Updates',
+    searchQuery: 'BS7671 updates, wiring regulations amendment, 18th edition electrical',
     category: 'BS7671',
     regulatory_body: 'Institution of Engineering and Technology',
     fallbackUrl: 'https://electrical.theiet.org/bs-7671/'
   },
   {
-    name: 'IET Wiring Standards',
+    name: 'IET Wiring Matters',
     searchQuery: 'IET wiring matters OR electrical installation standards OR BS7671 guidance',
-    domainFilter: 'electrical.theiet.org',
     category: 'BS7671',
     regulatory_body: 'Institution of Engineering and Technology',
     fallbackUrl: 'https://electrical.theiet.org/wiring-matters/'
@@ -268,57 +262,46 @@ const SEARCH_SOURCES: NewsSource[] = [
   // IET Technical Updates
   {
     name: 'IET Engineering News',
-    searchQuery: 'IET electrical engineering OR electrical technology news OR engineering innovation',
-    domainFilter: 'eandt.theiet.org',
+    searchQuery: 'IET updates, electrical engineering news, Institution Engineering Technology',
     category: 'IET',
     regulatory_body: 'Institution of Engineering and Technology',
-    fallbackUrl: 'https://eandt.theiet.org/news/',
-    rssUrl: 'https://eandt.theiet.org/news/feed/'
+    fallbackUrl: 'https://eandt.theiet.org/news/'
   },
   
-  // Electrical Safety
-  {
-    name: 'Electrical Safety First',
-    searchQuery: 'electrical safety campaign OR electrical accident prevention OR consumer electrical safety',
-    domainFilter: 'electricalsafetyfirst.org.uk',
-    category: 'Safety',
-    regulatory_body: 'Electrical Safety First',
-    fallbackUrl: 'https://www.electricalsafetyfirst.org.uk/media-centre/'
-  },
-  
-  // Major Projects
+  // Major UK Projects
   {
     name: 'UK Major Projects',
-    searchQuery: 'UK electrical contract awarded OR infrastructure project electrical OR major construction electrical',
+    searchQuery: 'major UK work awarded projects recent news, electrical infrastructure contract',
     category: 'Major Projects',
-    regulatory_body: 'UK Government Contracts'
+    regulatory_body: 'UK Government Contracts',
+    fallbackUrl: 'https://www.contractsfinder.service.gov.uk/Search'
   }
 ];
 
-// Firecrawl Search API integration
+// Enhanced Firecrawl Search API integration matching the exact format from your example
 async function searchWithFirecrawl(source: NewsSource, firecrawlApiKey: string): Promise<ProcessedArticle[]> {
   try {
     console.log(`Searching for: ${source.searchQuery}`);
     
-    const searchParams = new URLSearchParams({
+    const payload = {
       query: source.searchQuery,
-      pageOptions: JSON.stringify({
+      sources: ["news"],
+      limit: source.category === 'Major Projects' ? 8 : 10,
+      scrapeOptions: {
         onlyMainContent: true,
-        includeHtml: false,
-        waitFor: 1000
-      }),
-      searchOptions: JSON.stringify({
-        limit: source.category === 'Major Projects' ? 8 : 5,
-        ...(source.domainFilter && { site: source.domainFilter })
-      })
-    });
+        maxAge: 172800000, // 2 days in milliseconds
+        parsers: ["pdf"],
+        formats: []
+      }
+    };
 
-    const response = await fetch(`https://api.firecrawl.dev/v2/search?${searchParams}`, {
-      method: 'GET',
+    const response = await fetch('https://api.firecrawl.dev/v2/search', {
+      method: 'POST',
       headers: {
         'Authorization': `Bearer ${firecrawlApiKey}`,
         'Content-Type': 'application/json',
-      }
+      },
+      body: JSON.stringify(payload)
     });
 
     if (!response.ok) {
@@ -327,76 +310,117 @@ async function searchWithFirecrawl(source: NewsSource, firecrawlApiKey: string):
     }
 
     const data = await response.json();
-    console.log(`Firecrawl search returned ${data.data?.length || 0} results for ${source.name}`);
+    console.log(`Firecrawl search returned status: ${data.status}, found ${data.news?.length || 0} news results for ${source.name}`);
     
-    if (!data.data || !Array.isArray(data.data)) {
-      console.warn(`No search results from Firecrawl for ${source.name}`);
+    if (!data.news || !Array.isArray(data.news)) {
+      console.warn(`No news results from Firecrawl for ${source.name}`);
       return [];
     }
 
     const articles: ProcessedArticle[] = [];
     
-    for (let i = 0; i < data.data.length; i++) {
-      const result = data.data[i];
+    for (let i = 0; i < Math.min(data.news.length, 5); i++) {
+      const result = data.news[i];
       
       try {
-        const title = result.metadata?.title || result.title || `${source.category} Update ${i + 1}`;
-        const description = result.metadata?.description || result.description || result.excerpt || '';
-        const content = result.markdown || result.content || description;
-        const url = result.url || result.metadata?.sourceURL || source.fallbackUrl || '';
+        const title = result.title || `${source.category} Update ${i + 1}`;
+        const description = result.snippet || '';
+        const url = result.url || source.fallbackUrl || '';
+        const publishDate = result.date ? new Date(result.date).toISOString() : new Date().toISOString();
         
-        // Filter for electrical relevance
+        // Filter for electrical relevance - more permissive for HSE and regulatory sources
         const relevantKeywords = [
           'electrical', 'electricity', 'bs7671', 'wiring', 'regulation', 'safety',
           'cable', 'circuit', 'installation', 'testing', 'inspection', 'amendment',
           'compliance', 'certification', 'contractor', 'electrician', 'hazard',
-          'shock', 'fire', 'switchgear', 'distribution', 'engineering', 'infrastructure'
+          'shock', 'fire', 'switchgear', 'distribution', 'engineering', 'infrastructure',
+          'hse', 'health', 'iet', 'construction', 'building'
         ];
         
-        const textToCheck = `${title} ${description} ${content}`.toLowerCase();
-        const isRelevant = relevantKeywords.some(keyword => textToCheck.includes(keyword));
+        const textToCheck = `${title} ${description}`.toLowerCase();
+        const isRelevant = relevantKeywords.some(keyword => textToCheck.includes(keyword)) || 
+                          source.category === 'HSE' || 
+                          source.category === 'BS7671' || 
+                          source.category === 'IET';
         
-        if (!isRelevant && source.category !== 'Major Projects') {
-          console.log(`Skipping non-electrical result: ${title.substring(0, 50)}...`);
-          continue;
+        if (!isRelevant && source.category === 'Major Projects') {
+          // For major projects, be more selective
+          const projectKeywords = ['electrical', 'power', 'infrastructure', 'construction', 'engineering'];
+          const isProjectRelevant = projectKeywords.some(keyword => textToCheck.includes(keyword));
+          if (!isProjectRelevant) {
+            console.log(`Skipping non-electrical project: ${title.substring(0, 50)}...`);
+            continue;
+          }
         }
         
-        if (!isQualityContent(title, content, url)) {
+        if (!isQualityContent(title, description, url)) {
           continue;
         }
-        
-        // Use published date if available, otherwise current date
-        const publishDate = result.metadata?.publishedTime || 
-                           result.publishedTime || 
-                           new Date().toISOString();
         
         let enhancedContent: string;
         
-        if (source.category === 'Major Projects') {
-          // Special formatting for major projects
+        if (source.category === 'HSE') {
           enhancedContent = `**${title}**
 
-**Description:** ${description}
+${description}
 
-**Project Details:**
-${content.length > 200 ? content.substring(0, 800) + '...' : content}
+**Health and Safety Executive Update**
+
+This is an official HSE update relevant to the electrical industry. HSE provides crucial safety guidance, enforcement notices, and regulatory updates that directly impact electrical contractors, engineers, and safety professionals.
 
 **Why This Matters:**
-This project represents significant opportunities for UK electrical contractors and demonstrates current industry standards and emerging technologies in electrical installations.
+HSE updates help electrical professionals stay compliant with current safety regulations and learn from industry incidents to prevent future accidents.
+
+**Source:** ${source.regulatory_body}
+**Category:** ${source.category}
+**Published:** ${new Date(publishDate).toLocaleDateString()}
+**URL:** ${url}`;
+        } else if (source.category === 'BS7671') {
+          enhancedContent = `**${title}**
+
+${description}
+
+**BS7671 Wiring Regulations Update**
+
+This update relates to the BS7671 Requirements for Electrical Installations (IET Wiring Regulations), the UK standard for electrical installation work.
+
+**Why This Matters:**
+BS7671 compliance is mandatory for all electrical installation work in the UK. Updates and amendments ensure electrical safety and legal compliance.
+
+**Source:** ${source.regulatory_body}
+**Category:** ${source.category}
+**Published:** ${new Date(publishDate).toLocaleDateString()}
+**URL:** ${url}`;
+        } else if (source.category === 'IET') {
+          enhancedContent = `**${title}**
+
+${description}
+
+**Institution of Engineering and Technology Update**
+
+The IET provides professional development, technical guidance, and industry insights for electrical engineers and technicians.
+
+**Why This Matters:**
+IET updates keep electrical professionals informed about technological advances, industry standards, and professional development opportunities.
 
 **Source:** ${source.regulatory_body}
 **Category:** ${source.category}
 **Published:** ${new Date(publishDate).toLocaleDateString()}
 **URL:** ${url}`;
         } else {
-          // Standard content formatting
+          // Standard content formatting for Major Projects and Safety
           enhancedContent = `**${title}**
 
-${content.length > 500 ? content.substring(0, 1500) + '...' : content}
+${description}
+
+**Industry Update**
+
+${description.length > 100 ? 'This update provides valuable insights for electrical industry professionals.' : 'Key information for the electrical industry.'}
 
 **Source:** ${source.regulatory_body}
 **Category:** ${source.category}
-**Published:** ${new Date(publishDate).toLocaleDateString()}`;
+**Published:** ${new Date(publishDate).toLocaleDateString()}
+**URL:** ${url}`;
         }
         
         articles.push({
