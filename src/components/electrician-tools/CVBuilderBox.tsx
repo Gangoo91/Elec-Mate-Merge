@@ -23,32 +23,32 @@ const CVBuilderBox = () => {
           Create professional electrical CVs with intelligent content generation
         </CardDescription>
       </CardHeader>
-      <CardContent>
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <div className="flex-1">
-            <p className="text-sm mb-3">
+      <CardContent className="p-3 sm:p-6">
+        <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-3 sm:gap-4">
+          <div className="flex-1 w-full lg:w-auto">
+            <p className="text-xs sm:text-sm mb-3 leading-relaxed">
               Create a professional CV tailored to electrical job applications with our AI-powered tool. Get intelligent content suggestions, industry-specific templates, and automated content generation.
             </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-gray-400">
+            <div className="grid grid-cols-2 lg:grid-cols-2 gap-1 sm:gap-2 text-xs text-gray-400">
               <div className="flex items-center gap-1">
-                <Wand2 className="h-3 w-3 text-elec-yellow" />
-                Smart CV Wizard
+                <Wand2 className="h-3 w-3 text-elec-yellow flex-shrink-0" />
+                <span className="truncate">Smart CV Wizard</span>
               </div>
               <div className="flex items-center gap-1">
-                <Sparkles className="h-3 w-3 text-elec-yellow" />
-                AI Content Generation
+                <Sparkles className="h-3 w-3 text-elec-yellow flex-shrink-0" />
+                <span className="truncate">AI Content Generation</span>
               </div>
               <div className="flex items-center gap-1">
-                <FileText className="h-3 w-3 text-elec-yellow" />
-                Industry Templates
+                <FileText className="h-3 w-3 text-elec-yellow flex-shrink-0" />
+                <span className="truncate">Industry Templates</span>
               </div>
               <div className="flex items-center gap-1">
-                <FileText className="h-3 w-3 text-elec-yellow" />
-                PDF Export
+                <FileText className="h-3 w-3 text-elec-yellow flex-shrink-0" />
+                <span className="truncate">PDF Export</span>
               </div>
             </div>
           </div>
-          <div className="flex flex-col sm:flex-row gap-2 min-w-fit">
+          <div className="flex flex-col sm:flex-row lg:flex-col xl:flex-row gap-2 w-full sm:w-auto lg:w-full xl:w-auto lg:min-w-fit">
             <Dialog open={isOpen} onOpenChange={setIsOpen}>
               <DialogTrigger asChild>
                 <Button 
