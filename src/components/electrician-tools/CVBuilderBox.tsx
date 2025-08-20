@@ -48,7 +48,7 @@ const CVBuilderBox = () => {
               </div>
             </div>
           </div>
-          <div className="flex flex-col sm:flex-row lg:flex-col xl:flex-row gap-2 w-full sm:w-auto lg:w-full xl:w-auto lg:min-w-fit">
+          <div className="flex flex-col sm:flex-row lg:flex-col xl:flex-row gap-2 w-full lg:min-w-fit">
             <Dialog open={isOpen} onOpenChange={setIsOpen}>
               <DialogTrigger asChild>
                 <Button 
