@@ -2,15 +2,12 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Briefcase, ArrowLeft } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
-const JobVacancyHeader = () => {
-  const navigate = useNavigate();
 
-  const handleBackClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    console.log('Navigating back to career progression');
-    navigate('/electrician/career-progression');
-  };
+interface JobVacancyHeaderProps {
+  onBack?: () => void;
+}
+
+const JobVacancyHeader = ({ onBack }: JobVacancyHeaderProps) => {
 
   return (
     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -24,18 +21,13 @@ const JobVacancyHeader = () => {
         </p>
       </div>
       
-      <Link 
-        to="/electrician/career-progression" 
-        onClick={handleBackClick}
-        className="w-full sm:w-auto"
+      <Button 
+        variant="outline" 
+        className="flex items-center gap-2 hover:bg-elec-yellow hover:text-elec-dark transition-colors w-full sm:w-auto"
+        onClick={onBack}
       >
-        <Button 
-          variant="outline" 
-          className="flex items-center gap-2 hover:bg-elec-yellow hover:text-elec-dark transition-colors"
-        >
-          <ArrowLeft className="h-4 w-4" /> Back to Career Progression
-        </Button>
-      </Link>
+        <ArrowLeft className="h-4 w-4" /> Back to Career Progression
+      </Button>
     </div>
   );
 };

@@ -34,7 +34,7 @@ const CareerProgression = () => {
       case "cpd":
         return <CPDTracker />;
       case "job-vacancies":
-        return <JobVacancies />;
+        return <JobVacancies onBack={handleBackToSections} />;
       default:
         return null;
     }
