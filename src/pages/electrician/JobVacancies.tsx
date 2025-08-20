@@ -101,7 +101,7 @@ const JobVacancies = ({ onBack }: JobVacanciesProps) => {
 
   return (
     <div className="min-h-screen bg-elec-gray">
-      <div className="container mx-auto px-4 py-6 space-y-6 animate-fade-in">
+      <div className="container mx-auto px-4 py-6 space-y-6 animate-fade-in rounded-sm">
         <Helmet>
           <title>UK Electrician Job Vacancies | Mobile Job Search</title>
           <meta name="description" content="Find electrician jobs across the UK with mobile-first search, filters and insights. BS7671-aware." />
