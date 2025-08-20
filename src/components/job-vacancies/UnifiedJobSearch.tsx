@@ -288,7 +288,7 @@ const UnifiedJobSearch = () => {
             Find Your Perfect Electrical Job
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-6">
+        <CardContent className="space-y-6 px-4">
           {/* Primary Search */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6">
             <div className="lg:col-span-5 space-y-2">
