@@ -370,71 +370,61 @@ const IndustryNewsCard = () => {
                          </DialogContent>
                        </Dialog>
                        
-                          {(article.external_url || article.source_url) && (
-                            <Button
-                              size="sm"
-                              variant="outline"
-                              className="bg-transparent border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
-                              onClick={async () => {
-                                const url = article.external_url || article.source_url;
-                                
-                                if (!url) {
-                                  toast({
-                                    title: "No link available",
-                                    description: "This article doesn't have an associated link.",
-                                    variant: "destructive"
-                                  });
-                                  return;
-                                }
+                           {(article.external_url || article.source_url) && (
+                             <Button
+                               size="sm"
+                               variant="outline"
+                               className="bg-transparent border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+                               onClick={() => {
+                                 const url = article.external_url || article.source_url;
+                                 
+                                 if (!url) {
+                                   toast({
+                                     title: "No link available",
+                                     description: "This article doesn't have an associated link.",
+                                     variant: "destructive"
+                                   });
+                                   return;
+                                 }
 
-                                // Validate URL format
-                                if (!url.startsWith('http://') && !url.startsWith('https://')) {
-                                  toast({
-                                    title: "Invalid link format",
-                                    description: "The article link is not properly formatted.",
-                                    variant: "destructive"
-                                  });
-                                  return;
-                                }
+                                 // Clean and validate URL
+                                 let cleanUrl = url.trim();
+                                 
+                                 // Add protocol if missing
+                                 if (!cleanUrl.startsWith('http://') && !cleanUrl.startsWith('https://')) {
+                                   cleanUrl = 'https://' + cleanUrl;
+                                 }
 
-                                try {
-                                  // For ContractsFinder links, provide better user experience
-                                  if (url.includes('contractsfinder.service.gov.uk/Notice/')) {
-                                    toast({
-                                      title: "Opening ContractsFinder",
-                                      description: "Note: Contract links may expire after the tender period ends.",
-                                    });
-                                  }
-                                  
-                                  // Open the link
-                                  window.open(url, '_blank', 'noopener,noreferrer');
-                                  
-                                } catch (error) {
-                                  console.error('Failed to open link:', error);
-                                  toast({
-                                    title: "Unable to open link",
-                                    description: "The article link appears to be invalid or expired. Try visiting the source website instead.",
-                                    variant: "destructive"
-                                  });
-                                  
-                                  // Fallback: try opening the source URL if different
-                                  if (article.source_url && article.source_url !== url) {
-                                    setTimeout(() => {
-                                      window.open(article.source_url, '_blank', 'noopener,noreferrer');
-                                    }, 1000);
-                                  }
-                                }
-                              }}
-                              title={article.external_url ? 
-                                "Read the full article" : 
-                                "Visit the source website"}
-                            >
-                              <ExternalLink className="w-4 h-4 mr-2" />
-                              {article.external_url ? 
-                                "Read Article" : 
-                                "View Source"}
-                            </Button>
-                          )}
+                                 try {
+                                   // Validate URL format
+                                   new URL(cleanUrl);
+                                   
+                                   // Special handling for ContractsFinder links
+                                   if (cleanUrl.includes('contractsfinder.service.gov.uk')) {
+                                     toast({
+                                       title: "Opening Contract Details",
+                                       description: "Contract links may expire after tender period ends.",
+                                     });
+                                   }
+                                   
+                                   // Open the link
+                                   window.open(cleanUrl, '_blank', 'noopener,noreferrer');
+                                   
+                                 } catch (error) {
+                                   console.error('Invalid URL:', cleanUrl, error);
+                                   toast({
+                                     title: "Invalid Link",
+                                     description: "The article link appears to be malformed. Please check the source website directly.",
+                                     variant: "destructive"
+                                   });
+                                 }
+                               }}
+                               title="Open article in new tab"
+                             >
+                               <ExternalLink className="w-4 h-4 mr-2" />
+                               View Article
+                             </Button>
+                           )}
                      </div>
                 </CardContent>
               </Card>
