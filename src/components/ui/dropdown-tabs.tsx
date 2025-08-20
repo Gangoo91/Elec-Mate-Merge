@@ -95,7 +95,7 @@ export const DropdownTabs: React.FC<DropdownTabsProps> = ({
         </Select>
       </div>
 
-      <div className={`w-full animate-fade-in ${isMobile ? 'px-4' : ''}`}>
+      <div className="w-full animate-fade-in">
         {activeTabData?.content}
       </div>
     </div>
