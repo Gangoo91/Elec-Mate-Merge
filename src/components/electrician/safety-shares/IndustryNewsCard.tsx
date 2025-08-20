@@ -108,6 +108,7 @@ const IndustryNewsCard = () => {
     { key: 'HSE', label: 'HSE Updates', color: 'bg-red-100 text-red-800 hover:bg-red-200' },
     { key: 'BS7671', label: 'BS7671 Updates', color: 'bg-blue-100 text-blue-800 hover:bg-blue-200' },
     { key: 'IET', label: 'IET Updates', color: 'bg-green-100 text-green-800 hover:bg-green-200' },
+    { key: 'Safety', label: 'Safety Alerts', color: 'bg-orange-100 text-orange-800 hover:bg-orange-200' },
     { key: 'Major Projects', label: 'Major Projects', color: 'bg-purple-100 text-purple-800 hover:bg-purple-200' },
   ];
 
@@ -334,22 +335,42 @@ const IndustryNewsCard = () => {
                          </DialogContent>
                        </Dialog>
                        
-                         {(article.external_url || article.source_url) && (
-                           <Button
-                             size="sm"
-                             variant="outline"
-                             className="bg-transparent border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
-                             onClick={() => window.open(article.external_url || article.source_url, '_blank')}
-                             title={article.external_url ? 
-                               "Read the full article" : 
-                               "Visit the source website"}
-                           >
-                             <ExternalLink className="w-4 h-4 mr-2" />
-                             {article.external_url ? 
-                               "Read Article" : 
-                               "View Source"}
-                           </Button>
-                         )}
+                          {(article.external_url || article.source_url) && (
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              className="bg-transparent border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+                              onClick={() => {
+                                const url = article.external_url || article.source_url;
+                                // Validate URL before opening
+                                if (url && (url.startsWith('http://') || url.startsWith('https://'))) {
+                                  try {
+                                    window.open(url, '_blank', 'noopener,noreferrer');
+                                  } catch (error) {
+                                    toast({
+                                      title: "Unable to open link",
+                                      description: "The article link appears to be invalid or expired.",
+                                      variant: "destructive"
+                                    });
+                                  }
+                                } else {
+                                  toast({
+                                    title: "Invalid link",
+                                    description: "This article link is not available or has expired.",
+                                    variant: "destructive"
+                                  });
+                                }
+                              }}
+                              title={article.external_url ? 
+                                "Read the full article" : 
+                                "Visit the source website"}
+                            >
+                              <ExternalLink className="w-4 h-4 mr-2" />
+                              {article.external_url ? 
+                                "Read Article" : 
+                                "View Source"}
+                            </Button>
+                          )}
                      </div>
                 </CardContent>
               </Card>

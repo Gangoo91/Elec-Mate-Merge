@@ -218,57 +218,57 @@ async function parseRSSFeed(url: string, source: NewsSource): Promise<ProcessedA
 interface NewsSource {
   name: string;
   url: string;
-  category: 'HSE' | 'BS7671' | 'IET';
+  category: 'HSE' | 'BS7671' | 'IET' | 'Safety';
   regulatory_body: string;
   rssUrl?: string;
   isRss?: boolean;
 }
 
 const NEWS_SOURCES: NewsSource[] = [
-  // HSE Updates - RSS feeds for better structured content
+  // HSE Updates - More reliable sources
   {
     name: 'HSE Press Releases',
-    url: 'https://press.hse.gov.uk/category/press-release/',
-    rssUrl: 'https://press.hse.gov.uk/category/press-release/feed/',
+    url: 'https://press.hse.gov.uk/',
+    rssUrl: 'https://press.hse.gov.uk/feed/',
     category: 'HSE',
     regulatory_body: 'Health and Safety Executive',
     isRss: true
   },
   {
-    name: 'HSE Safety Alerts',
-    url: 'https://www.hse.gov.uk/safetybulletins/',
+    name: 'HSE Safety Bulletins',
+    url: 'https://www.hse.gov.uk/safetybulletins/index.htm',
     category: 'HSE',
     regulatory_body: 'Health and Safety Executive'
   },
   
-  // BS7671 Updates - IET news and updates
+  // BS7671 Updates - IET sources
   {
-    name: 'IET Electrical News',
-    url: 'https://electrical.theiet.org/electrical-news/',
-    rssUrl: 'https://electrical.theiet.org/feeds/electrical-news',
+    name: 'IET Wiring Matters',
+    url: 'https://electrical.theiet.org/wiring-matters/',
     category: 'BS7671',
-    regulatory_body: 'Institution of Engineering and Technology',
-    isRss: true
+    regulatory_body: 'Institution of Engineering and Technology'
   },
   {
-    name: 'IET Technical Updates',
-    url: 'https://electrical.theiet.org/wiring-regulations/',
+    name: 'IET BS7671 Updates',
+    url: 'https://electrical.theiet.org/bs-7671/',
     category: 'BS7671',
     regulatory_body: 'Institution of Engineering and Technology'
   },
   
-  // IET Updates - Professional engineering content
+  // IET Updates - Engineering news
   {
-    name: 'IET Professional Engineering',
-    url: 'https://eandt.theiet.org/technology',
+    name: 'IET Engineering News',
+    url: 'https://eandt.theiet.org/news/',
+    rssUrl: 'https://eandt.theiet.org/news/feed/',
     category: 'IET',
-    regulatory_body: 'Institution of Engineering and Technology'
+    regulatory_body: 'Institution of Engineering and Technology',
+    isRss: true
   },
   {
-    name: 'GOV.UK Electrical Safety',
-    url: 'https://www.gov.uk/government/collections/electrical-safety',
-    category: 'IET',
-    regulatory_body: 'UK Government'
+    name: 'Electrical Safety First',
+    url: 'https://www.electricalsafetyfirst.org.uk/media-centre/',
+    category: 'Safety',
+    regulatory_body: 'Electrical Safety First'
   }
 ];
 

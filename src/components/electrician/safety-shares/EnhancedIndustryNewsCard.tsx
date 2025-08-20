@@ -210,6 +210,7 @@ const EnhancedIndustryNewsCard = () => {
                 <SelectItem value="HSE">HSE Updates</SelectItem>
                 <SelectItem value="BS7671">BS7671 Updates</SelectItem>
                 <SelectItem value="IET">IET Updates</SelectItem>
+                <SelectItem value="Safety">Safety Alerts</SelectItem>
                 <SelectItem value="Major Projects">Major Projects</SelectItem>
               </SelectContent>
             </Select>
@@ -299,7 +300,26 @@ const EnhancedIndustryNewsCard = () => {
                 <Button 
                   size="sm" 
                   className="bg-elec-yellow text-black hover:bg-elec-yellow/90"
-                  onClick={() => (article.external_url || article.source_url) && window.open(article.external_url || article.source_url, '_blank')}
+                  onClick={() => {
+                    const url = article.external_url || article.source_url;
+                    if (url && (url.startsWith('http://') || url.startsWith('https://'))) {
+                      try {
+                        window.open(url, '_blank', 'noopener,noreferrer');
+                      } catch (error) {
+                        toast({
+                          title: "Unable to open link",
+                          description: "The article link appears to be invalid or expired.",
+                          variant: "destructive"
+                        });
+                      }
+                    } else {
+                      toast({
+                        title: "Invalid link",
+                        description: "This article link is not available or has expired.",
+                        variant: "destructive"
+                      });
+                    }
+                  }}
                   title={article.external_url ? 
                     "Read the full article" : 
                     "Visit the source website"}
