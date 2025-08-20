@@ -8,13 +8,12 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-// Enhanced content quality filtering
+// Enhanced content quality filtering - more permissive for regulatory content
 function isQualityContent(title: string, content: string, url: string): boolean {
   const lowQualityIndicators = [
     'page not found', '404', 'error', 'access denied', 'not available',
     'coming soon', 'under construction', 'maintenance', 'temporarily unavailable',
-    'cookies', 'privacy policy', 'terms of service', 'javascript required',
-    'enable cookies', 'browser not supported', 'loading', 'please wait'
+    'javascript required', 'enable javascript', 'browser not supported'
   ];
   
   const titleLower = title.toLowerCase();
@@ -27,20 +26,29 @@ function isQualityContent(title: string, content: string, url: string): boolean 
     return false;
   }
   
-  // Check minimum content requirements
-  if (title.trim().length < 10 || content.trim().length < 100) {
+  // More lenient minimum content requirements for regulatory content
+  if (title.trim().length < 5 || content.trim().length < 50) {
     return false;
   }
   
-  // Check for navigation or boilerplate content
-  if (contentLower.includes('skip to main content') || 
-      contentLower.includes('breadcrumb') ||
-      contentLower.includes('site navigation') ||
-      (contentLower.includes('menu') && contentLower.includes('home'))) {
+  // Skip obvious navigation content but be more permissive
+  if (contentLower.includes('skip to main content') && contentLower.length < 200) {
     return false;
   }
   
-  return true;
+  // Allow content that contains regulatory keywords even if short
+  const regulatoryKeywords = [
+    'safety alert', 'enforcement notice', 'amendment', 'regulation', 'bs7671',
+    'electrical safety', 'hazard', 'warning', 'recall', 'guidance'
+  ];
+  
+  if (regulatoryKeywords.some(keyword => 
+    titleLower.includes(keyword) || contentLower.includes(keyword)
+  )) {
+    return true;
+  }
+  
+  return true; // Be more permissive overall
 }
 
 // Generate stable external ID for articles
@@ -107,20 +115,124 @@ interface ProcessedArticle {
   content_hash?: string;
 }
 
+// RSS Feed parsing function
+async function parseRSSFeed(url: string, source: NewsSource): Promise<ProcessedArticle[]> {
+  try {
+    console.log(`Parsing RSS feed for ${source.name}...`);
+    
+    const response = await fetch(url, {
+      headers: {
+        'User-Agent': 'Elec-Mate Industry News Aggregator',
+        'Accept': 'application/rss+xml, application/xml, text/xml'
+      }
+    });
+
+    if (!response.ok) {
+      console.error(`RSS fetch failed for ${source.name}: ${response.status}`);
+      return [];
+    }
+
+    const xmlText = await response.text();
+    console.log(`Fetched ${xmlText.length} characters from RSS feed`);
+    
+    // Parse RSS/Atom XML manually (simple regex-based parsing)
+    const items: ProcessedArticle[] = [];
+    
+    // Match RSS items or Atom entries
+    const itemMatches = xmlText.match(/<item[\s\S]*?<\/item>|<entry[\s\S]*?<\/entry>/gi);
+    
+    if (!itemMatches) {
+      console.warn(`No RSS items found in ${source.name} feed`);
+      return [];
+    }
+
+    for (let i = 0; i < Math.min(itemMatches.length, 5); i++) {
+      const item = itemMatches[i];
+      
+      try {
+        // Extract title
+        const titleMatch = item.match(/<title[^>]*>(.*?)<\/title>/is);
+        const title = titleMatch ? titleMatch[1].replace(/<!\[CDATA\[(.*?)\]\]>/g, '$1').trim() : `${source.category} Update ${i + 1}`;
+        
+        // Extract description/summary
+        const descMatch = item.match(/<description[^>]*>(.*?)<\/description>|<summary[^>]*>(.*?)<\/summary>/is);
+        const description = descMatch ? (descMatch[1] || descMatch[2]).replace(/<!\[CDATA\[(.*?)\]\]>/g, '$1').replace(/<[^>]*>/g, '').trim() : '';
+        
+        // Extract link
+        const linkMatch = item.match(/<link[^>]*>(.*?)<\/link>|<link[^>]*href="([^"]*)"[^>]*\/>/is);
+        const link = linkMatch ? (linkMatch[1] || linkMatch[2]).trim() : source.url;
+        
+        // Extract publication date
+        const pubDateMatch = item.match(/<pubDate[^>]*>(.*?)<\/pubDate>|<published[^>]*>(.*?)<\/published>/is);
+        const pubDate = pubDateMatch ? (pubDateMatch[1] || pubDateMatch[2]).trim() : new Date().toISOString();
+        
+        // Filter for electrical industry relevance
+        const relevantKeywords = [
+          'electrical', 'electricity', 'bs7671', 'wiring', 'regulation', 'safety',
+          'cable', 'circuit', 'installation', 'testing', 'inspection', 'amendment',
+          'compliance', 'certification', 'contractor', 'electrician', 'hazard',
+          'shock', 'electrocution', 'fire', 'switchgear', 'distribution'
+        ];
+        
+        const content = `${title} ${description}`.toLowerCase();
+        const isRelevant = relevantKeywords.some(keyword => content.includes(keyword));
+        
+        if (!isRelevant) {
+          console.log(`Skipping non-electrical article: ${title.substring(0, 50)}...`);
+          continue;
+        }
+        
+        if (!isQualityContent(title, description, link)) {
+          continue;
+        }
+        
+        const processedDate = new Date(pubDate).toISOString();
+        const articleContent = `**${title}**\n\n${description}\n\nSource: ${source.regulatory_body}\nCategory: ${source.category}\nPublished: ${new Date(processedDate).toLocaleDateString()}`;
+        
+        items.push({
+          title: title.substring(0, 150),
+          summary: description.substring(0, 200) + (description.length > 200 ? '...' : ''),
+          content: articleContent,
+          regulatory_body: source.regulatory_body,
+          category: source.category,
+          external_id: generateExternalId(title, link, source.category, processedDate),
+          source_url: source.url,
+          external_url: link,
+          date_published: processedDate,
+          content_hash: await generateContentHash(title, link, articleContent)
+        });
+      } catch (itemError) {
+        console.warn(`Error parsing RSS item ${i}:`, itemError);
+      }
+    }
+    
+    console.log(`Extracted ${items.length} relevant articles from RSS feed`);
+    return items;
+    
+  } catch (error) {
+    console.error(`RSS parsing error for ${source.name}:`, error);
+    return [];
+  }
+}
+
 interface NewsSource {
   name: string;
   url: string;
   category: 'HSE' | 'BS7671' | 'IET';
   regulatory_body: string;
+  rssUrl?: string;
+  isRss?: boolean;
 }
 
 const NEWS_SOURCES: NewsSource[] = [
-  // HSE Updates - Multiple endpoints for better coverage
+  // HSE Updates - RSS feeds for better structured content
   {
     name: 'HSE Press Releases',
-    url: 'https://press.hse.gov.uk/',
+    url: 'https://press.hse.gov.uk/category/press-release/',
+    rssUrl: 'https://press.hse.gov.uk/category/press-release/feed/',
     category: 'HSE',
-    regulatory_body: 'Health and Safety Executive'
+    regulatory_body: 'Health and Safety Executive',
+    isRss: true
   },
   {
     name: 'HSE Safety Alerts',
@@ -129,32 +241,34 @@ const NEWS_SOURCES: NewsSource[] = [
     regulatory_body: 'Health and Safety Executive'
   },
   
-  // BS7671 Updates - Multiple sources
+  // BS7671 Updates - IET news and updates
   {
-    name: 'BS7671 Wiring Regulations',
+    name: 'IET Electrical News',
+    url: 'https://electrical.theiet.org/electrical-news/',
+    rssUrl: 'https://electrical.theiet.org/feeds/electrical-news',
+    category: 'BS7671',
+    regulatory_body: 'Institution of Engineering and Technology',
+    isRss: true
+  },
+  {
+    name: 'IET Technical Updates',
     url: 'https://electrical.theiet.org/wiring-regulations/',
     category: 'BS7671',
     regulatory_body: 'Institution of Engineering and Technology'
   },
-  {
-    name: 'BS7671 Amendments',
-    url: 'https://electrical.theiet.org/wiring-regulations/bs-7671/',
-    category: 'BS7671',
-    regulatory_body: 'Institution of Engineering and Technology'
-  },
   
-  // IET Updates - Technical content and news
+  // IET Updates - Professional engineering content
   {
-    name: 'IET Electrical News',
-    url: 'https://electrical.theiet.org/electrical-news/',
+    name: 'IET Professional Engineering',
+    url: 'https://eandt.theiet.org/technology',
     category: 'IET',
     regulatory_body: 'Institution of Engineering and Technology'
   },
   {
-    name: 'IET Technical Guidance',
-    url: 'https://electrical.theiet.org/guidance/',
+    name: 'GOV.UK Electrical Safety',
+    url: 'https://www.gov.uk/government/collections/electrical-safety',
     category: 'IET',
-    regulatory_body: 'Institution of Engineering and Technology'
+    regulatory_body: 'UK Government'
   }
 ];
 
@@ -259,48 +373,27 @@ async function intelligentContentParsing(rawContent: string, source: NewsSource)
   try {
     console.log(`Using AI to parse content from ${source.name}`);
     
-    const prompt = `You are an expert UK electrical industry analyst. Extract relevant news articles from the following scraped content from ${source.name} (${source.category}).
+    const prompt = `Extract relevant UK electrical industry news from this content from ${source.name}:
 
-Content to analyze:
-${rawContent.substring(0, 8000)}
+${rawContent.substring(0, 6000)}
 
-Extract 3-5 most relevant electrical industry articles. For each article, provide:
+Find 2-4 electrical industry articles. Return ONLY valid JSON:
 
-1. **Title**: Clear, professional title (max 100 chars)
-2. **Summary**: Key points in 2-3 sentences (max 200 chars) 
-3. **Content**: Full article content with proper paragraphs
-4. **Category**: One of: HSE, BS7671, IET, Major Projects
-5. **Relevance**: Why this is important to UK electricians
-6. **Keywords**: Key electrical terms mentioned
-
-Focus on:
-- Safety updates and alerts
-- BS7671 amendments and guidance
-- New regulations and compliance requirements  
-- Major electrical contracts and projects
-- Technical updates and best practices
-- Industry warnings and recalls
-
-Ignore:
-- General website navigation
-- Cookie policies
-- Unrelated news
-- Marketing content
-
-Format as JSON array:
 [
   {
-    "title": "Article title",
-    "summary": "Brief summary", 
-    "content": "Full detailed content with proper formatting",
+    "title": "Clear article title",
+    "summary": "Brief summary in 1-2 sentences", 
+    "content": "Full article text with context",
     "category": "${source.category}",
-    "keywords": ["keyword1", "keyword2"],
+    "keywords": ["electrical", "safety"],
     "relevance_score": 8,
-    "date_mentioned": "extracted date or null"
+    "date_mentioned": "2024-01-15 or null"
   }
 ]
 
-Return only valid JSON, no other text.`;
+Focus on: safety alerts, BS7671 updates, electrical regulations, industry warnings, technical guidance.
+Ignore: navigation, cookies, unrelated content.
+relevance_score: 6-10 (6=somewhat relevant, 10=very relevant)`;
 
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
@@ -311,16 +404,15 @@ Return only valid JSON, no other text.`;
       body: JSON.stringify({
         model: 'gpt-4o-mini',
         messages: [
-          { role: 'system', content: 'You are an expert UK electrical industry news analyst. Always respond with valid JSON only.' },
           { role: 'user', content: prompt }
         ],
-        max_tokens: 4000,
-        temperature: 0.3,
+        max_tokens: 3000,
+        temperature: 0.2,
       }),
     });
 
     if (!response.ok) {
-      console.error(`OpenAI API error: ${response.status}`);
+      console.error(`OpenAI API error: ${response.status} ${response.statusText}`);
       return basicContentParsing(rawContent, source);
     }
 
@@ -332,45 +424,57 @@ Return only valid JSON, no other text.`;
       return basicContentParsing(rawContent, source);
     }
 
+    console.log('AI Response:', aiResponse.substring(0, 500));
+
     try {
       // Clean the AI response to handle markdown formatting
       let cleanResponse = aiResponse;
-      if (cleanResponse.startsWith('```json')) {
-        cleanResponse = cleanResponse.replace(/```json\s*/g, '').replace(/\s*```$/g, '');
-      }
-      if (cleanResponse.startsWith('```')) {
-        cleanResponse = cleanResponse.replace(/```\s*/g, '').replace(/\s*```$/g, '');
+      if (cleanResponse.includes('```json')) {
+        cleanResponse = cleanResponse.replace(/.*```json\s*/s, '').replace(/\s*```.*$/s, '');
+      } else if (cleanResponse.includes('```')) {
+        cleanResponse = cleanResponse.replace(/.*```\s*/s, '').replace(/\s*```.*$/s, '');
       }
       
       const parsedArticles = JSON.parse(cleanResponse);
       
       if (!Array.isArray(parsedArticles)) {
-        console.error('AI response is not an array');
+        console.error('AI response is not an array, got:', typeof parsedArticles);
         return basicContentParsing(rawContent, source);
       }
 
-      // Convert AI response to ProcessedArticle format with quality filtering
+      // Convert AI response to ProcessedArticle format
       const processedArticles: ProcessedArticle[] = [];
       
       for (let index = 0; index < Math.min(parsedArticles.length, 4); index++) {
         const article = parsedArticles[index];
-        if (article.relevance_score < 6) continue;
         
-        const title = article.title || `${source.category} Update ${index + 1}`;
-        const content = article.content || 'Content not available';
-        
-        // Apply quality filtering
-        if (!isQualityContent(title, content, source.url)) {
+        // Skip low relevance articles
+        if (article.relevance_score && article.relevance_score < 6) {
+          console.log(`Skipping low relevance article: ${article.title}`);
           continue;
         }
         
-        const publishDate = article.date_mentioned ? 
-          new Date(article.date_mentioned).toISOString() : 
-          new Date().toISOString();
+        const title = article.title || `${source.category} Update ${index + 1}`;
+        const content = article.content || article.summary || 'Content not available';
+        
+        // More lenient quality filtering for regulatory content
+        if (title.length < 5 || content.length < 30) {
+          console.log(`Skipping short article: ${title}`);
+          continue;
+        }
+        
+        let publishDate: string;
+        try {
+          publishDate = article.date_mentioned && article.date_mentioned !== 'null' ? 
+            new Date(article.date_mentioned).toISOString() : 
+            new Date().toISOString();
+        } catch {
+          publishDate = new Date().toISOString();
+        }
         
         processedArticles.push({
-          title,
-          summary: article.summary || content.substring(0, 200) + '...',
+          title: title.substring(0, 150),
+          summary: (article.summary || content.substring(0, 200)) + '...',
           content,
           regulatory_body: source.regulatory_body,
           category: source.category,
@@ -387,7 +491,7 @@ Return only valid JSON, no other text.`;
 
     } catch (parseError) {
       console.error('Error parsing AI response:', parseError);
-      console.log('AI Response:', aiResponse ? aiResponse.substring(0, 1000) : 'No response');
+      console.log('Raw AI Response:', aiResponse);
       console.log('Using fallback basic parsing...');
       return basicContentParsing(rawContent, source);
     }
@@ -399,7 +503,7 @@ Return only valid JSON, no other text.`;
 }
 
 async function basicContentParsing(rawContent: string, source: NewsSource): Promise<ProcessedArticle[]> {
-  console.log(`Using basic parsing for ${source.name}`);
+  console.log(`Using fallback basic parsing for ${source.name}`);
   
   const articles: ProcessedArticle[] = [];
   
@@ -408,9 +512,11 @@ async function basicContentParsing(rawContent: string, source: NewsSource): Prom
     let sections: string[] = [];
     
     if (source.category === 'HSE') {
-      sections = rawContent.split(/(?=Press release|Safety alert|Enforcement notice|Improvement notice|News:|Update:)/gi);
-    } else if (source.category === 'BS7671' || source.category === 'IET') {
+      sections = rawContent.split(/(?=Press release|Safety alert|Enforcement notice|News|Alert|Warning)/gi);
+    } else if (source.category === 'BS7671') {
       sections = rawContent.split(/(?=Amendment|Update|Regulation|BS\s*7671|Wiring|Edition|Guidance)/gi);
+    } else if (source.category === 'IET') {
+      sections = rawContent.split(/(?=News|Update|Article|Technology|Engineering|Professional)/gi);
     } else {
       sections = rawContent.split(/\n\n+|\n---+\n/);
     }
@@ -418,13 +524,13 @@ async function basicContentParsing(rawContent: string, source: NewsSource): Prom
     const relevantKeywords = [
       'electrical', 'electricity', 'bs7671', 'wiring', 'regulation', 'safety',
       'cable', 'circuit', 'installation', 'testing', 'inspection', 'amendment',
-      'compliance', 'certification', 'contractor', 'electrician', 'project',
-      'tender', 'contract', 'infrastructure', 'construction', 'power', 'energy'
+      'compliance', 'certification', 'contractor', 'electrician', 'hazard',
+      'shock', 'fire', 'switchgear', 'distribution', 'engineering'
     ];
     
     for (let index = 0; index < sections.length && articles.length < 3; index++) {
       const cleanSection = sections[index].trim();
-      if (cleanSection.length < 200) continue;
+      if (cleanSection.length < 100) continue; // More lenient
       
       // Check relevance
       const hasRelevantContent = relevantKeywords.some(keyword =>
@@ -433,41 +539,45 @@ async function basicContentParsing(rawContent: string, source: NewsSource): Prom
       
       if (!hasRelevantContent) continue;
       
-      // Extract title
+      // Extract title - more flexible
       const lines = cleanSection.split('\n').filter(line => line.trim().length > 0);
-      const title = lines.find(line => 
-        line.length > 10 && line.length < 150 &&
-        !line.toLowerCase().includes('cookie') &&
-        !line.toLowerCase().includes('navigation')
-      )?.replace(/^#+\s*|\*\*|\*|<[^>]*>/g, '').trim() || 
-      `${source.category} Update ${index + 1}`;
+      let title = lines.find(line => 
+        line.length > 5 && line.length < 200 &&
+        !line.toLowerCase().includes('skip to') &&
+        !line.toLowerCase().includes('cookie')
+      )?.replace(/^#+\s*|\*\*|\*|<[^>]*>/g, '').trim();
+      
+      if (!title) {
+        title = `${source.category} Industry Update ${index + 1}`;
+      }
       
       // Generate summary
       const summary = cleanSection
         .replace(/<[^>]*>/g, ' ')
         .replace(/\s+/g, ' ')
-        .substring(0, 200)
+        .substring(0, 150)
         .trim() + '...';
       
-      // Apply quality filtering before adding
-      if (isQualityContent(title, cleanSection, source.url)) {
-        const publishDate = new Date().toISOString();
-        
-        articles.push({
-          title,
-          summary,
-          content: cleanSection,
-          regulatory_body: source.regulatory_body,
-          category: source.category,
-          external_id: generateExternalId(title, source.url, source.category, publishDate),
-          source_url: source.url,
-          external_url: source.url,
-          date_published: publishDate,
-          content_hash: await generateContentHash(title, source.url, cleanSection)
-        });
-      }
+      const publishDate = new Date().toISOString();
+      
+      // Enhanced content with context
+      const enhancedContent = `**${title}**\n\n${cleanSection}\n\n**Source:** ${source.regulatory_body}\n**Category:** ${source.category}\n**Published:** ${new Date().toLocaleDateString()}`;
+      
+      articles.push({
+        title: title.substring(0, 150),
+        summary,
+        content: enhancedContent,
+        regulatory_body: source.regulatory_body,
+        category: source.category,
+        external_id: generateExternalId(title, source.url, source.category, publishDate),
+        source_url: source.url,
+        external_url: source.url,
+        date_published: publishDate,
+        content_hash: await generateContentHash(title, source.url, enhancedContent)
+      });
     }
     
+    console.log(`Basic parsing extracted ${articles.length} articles from ${source.name}`);
     return articles;
     
   } catch (error) {
@@ -478,14 +588,26 @@ async function basicContentParsing(rawContent: string, source: NewsSource): Prom
 
 async function scrapeAndProcessSource(source: NewsSource, firecrawl: FirecrawlApp): Promise<ProcessedArticle[]> {
   try {
-    console.log(`Scraping ${source.name}...`);
+    console.log(`Processing ${source.name}...`);
     
-    // First, scrape the main category page
+    // Try RSS feed first if available
+    if (source.isRss && source.rssUrl) {
+      console.log(`Attempting RSS feed for ${source.name}`);
+      const rssArticles = await parseRSSFeed(source.rssUrl, source);
+      if (rssArticles.length > 0) {
+        console.log(`Successfully got ${rssArticles.length} articles from RSS feed`);
+        return rssArticles;
+      }
+      console.log(`RSS feed failed, falling back to web scraping`);
+    }
+    
+    // Fallback to web scraping
+    console.log(`Web scraping ${source.name}...`);
     const scrapeResponse = await firecrawl.scrapeUrl(source.url, {
       formats: ['markdown'],
       onlyMainContent: true,
-      waitFor: 2000,
-      timeout: 30000
+      waitFor: 3000,
+      timeout: 45000
     });
 
     if (!scrapeResponse.success) {
@@ -493,22 +615,20 @@ async function scrapeAndProcessSource(source: NewsSource, firecrawl: FirecrawlAp
       return [];
     }
 
-    const rawContent = scrapeResponse.markdown;
-    if (!rawContent || rawContent.length < 500) {
-      console.warn(`Insufficient content from ${source.name}`);
+    const rawContent = scrapeResponse.data?.markdown || scrapeResponse.data?.content || '';
+    
+    if (!rawContent || rawContent.length < 100) {
+      console.warn(`No substantial content from ${source.name} (${rawContent.length} chars)`);
       return [];
     }
 
     console.log(`Scraped ${rawContent.length} characters from ${source.name}`);
     
-    // Parse content intelligently
-    const articles = await intelligentContentParsing(rawContent, source);
+    // Use intelligent parsing with AI
+    return await intelligentContentParsing(rawContent, source);
     
-    console.log(`Processed ${articles.length} articles from ${source.name}`);
-    return articles;
-
   } catch (error) {
-    console.error(`Error scraping ${source.name}:`, error);
+    console.error(`Error processing ${source.name}:`, error);
     return [];
   }
 }
