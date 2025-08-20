@@ -3,7 +3,7 @@ import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { corsHeaders } from "../_shared/cors.ts";
 
-const reedApiKey = Deno.env.get('REEDJOB API');
+const reedApiKey = Deno.env.get('REED_API_KEY');
 const adzunaAppId = Deno.env.get('ADZUNA_APP_ID');
 const adzunaAppKey = Deno.env.get('ADZUNA_APP_KEY');
 
@@ -99,9 +99,24 @@ serve(async (req) => {
       );
     }
     
+    // Log job counts by source before deduplication
+    const sourceCounts = allJobs.reduce((acc, job) => {
+      acc[job.source] = (acc[job.source] || 0) + 1;
+      return acc;
+    }, {});
+    console.log(`📊 Jobs by source before deduplication:`, sourceCounts);
+    
     // Deduplicate jobs
     const uniqueJobs = deduplicateJobs(allJobs);
     console.log(`📊 Total: ${allJobs.length} jobs, ${uniqueJobs.length} unique from sources: ${sources.join(', ')}`);
+    
+    // If we have very few results, log the actual jobs for debugging
+    if (uniqueJobs.length < 5) {
+      console.log('⚠️ Low job count detected. Jobs found:');
+      uniqueJobs.forEach((job, index) => {
+        console.log(`${index + 1}. ${job.title} at ${job.company} (${job.source}) - ${job.location}`);
+      });
+    }
     
     // Sort by date (most recent first)
     uniqueJobs.sort((a, b) => {
@@ -468,12 +483,13 @@ function deduplicateJobs(jobs: any[]) {
   const unique = [];
   
   for (const job of jobs) {
-    // Create a more sophisticated deduplication key
-    const titleWords = job.title?.toLowerCase().split(' ').slice(0, 3).join(' ') || '';
-    const companyName = job.company?.toLowerCase().replace(/\s+/g, '') || '';
-    const locationKey = job.location?.toLowerCase().split(',')[0] || '';
+    // Less aggressive deduplication - only filter exact matches
+    const normalizedTitle = job.title?.toLowerCase().replace(/\s+/g, ' ').trim() || '';
+    const normalizedCompany = job.company?.toLowerCase().replace(/\s+/g, ' ').trim() || '';
+    const normalizedLocation = job.location?.toLowerCase().replace(/\s+/g, ' ').trim() || '';
     
-    const key = `${titleWords}-${companyName}-${locationKey}`;
+    // Only consider it a duplicate if title, company AND location are exactly the same
+    const key = `${normalizedTitle}|${normalizedCompany}|${normalizedLocation}`;
     
     if (!seen.has(key)) {
       seen.add(key);
@@ -483,5 +499,6 @@ function deduplicateJobs(jobs: any[]) {
     }
   }
   
+  console.log(`📊 Deduplication: ${jobs.length} jobs → ${unique.length} unique jobs`);
   return unique;
 }
