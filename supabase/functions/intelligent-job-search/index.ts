@@ -60,18 +60,42 @@ serve(async (req) => {
       console.log('⚠️ Adzuna API credentials not available');
     }
     
-    // If no API keys are available
-    if (!reedApiKey && (!adzunaAppId || !adzunaAppKey)) {
-      console.error('🚫 No job search API keys found');
+    // Search Indeed Jobs (RSS)
+    try {
+      console.log('🔍 Attempting Indeed RSS search...');
+      const indeedJobs = await searchIndeedJobs(query, normalizedLocation, filters);
+      allJobs.push(...indeedJobs);
+      sources.push('Indeed');
+      console.log(`✅ Indeed: Found ${indeedJobs.length} jobs`);
+    } catch (error) {
+      console.error('❌ Indeed search failed:', error.message);
+      console.error('Indeed error details:', error);
+    }
+    
+    // Search TotalJobs (RSS)
+    try {
+      console.log('🔍 Attempting TotalJobs RSS search...');
+      const totalJobsJobs = await searchTotalJobs(query, normalizedLocation, filters);
+      allJobs.push(...totalJobsJobs);
+      sources.push('TotalJobs');
+      console.log(`✅ TotalJobs: Found ${totalJobsJobs.length} jobs`);
+    } catch (error) {
+      console.error('❌ TotalJobs search failed:', error.message);
+      console.error('TotalJobs error details:', error);
+    }
+    
+    // Check if we have at least one working source
+    if (allJobs.length === 0 && !reedApiKey && (!adzunaAppId || !adzunaAppKey)) {
+      console.error('🚫 No job search sources returned results');
       return new Response(
         JSON.stringify({ 
-          error: "Job search service temporarily unavailable. Please check API keys configuration.",
+          error: "No job results found. Please try different search terms or check back later.",
           jobs: [],
           totalFound: 0,
           searchQueries: [query],
-          sources: []
+          sources: sources
         }),
-        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
     
@@ -277,6 +301,166 @@ function determineJobType(contractType: string, contractTime: string): string {
   if (contractType === 'contract') return 'Contract';
   if (contractType === 'permanent') return 'Permanent';
   return 'Not specified';
+}
+
+async function searchIndeedJobs(query: string, location: string, filters: any) {
+  try {
+    // Construct Indeed RSS feed URL
+    const params = new URLSearchParams({
+      q: query,
+      l: location || 'UK',
+      sort: 'date',
+      limit: '50'
+    });
+    
+    const rssUrl = `https://www.indeed.co.uk/rss?${params}`;
+    console.log('🔍 Indeed RSS URL:', rssUrl);
+    
+    const response = await fetch(rssUrl);
+    if (!response.ok) {
+      throw new Error(`Indeed RSS fetch failed: ${response.status}`);
+    }
+    
+    const rssText = await response.text();
+    return parseJobRSS(rssText, 'Indeed');
+    
+  } catch (error) {
+    console.error('❌ Indeed RSS error:', error);
+    return [];
+  }
+}
+
+async function searchTotalJobs(query: string, location: string, filters: any) {
+  try {
+    // Construct TotalJobs RSS feed URL
+    const params = new URLSearchParams({
+      keywords: query,
+      location: location || 'UK',
+      sort: 'date'
+    });
+    
+    const rssUrl = `https://www.totaljobs.com/jobs/rss?${params}`;
+    console.log('🔍 TotalJobs RSS URL:', rssUrl);
+    
+    const response = await fetch(rssUrl);
+    if (!response.ok) {
+      throw new Error(`TotalJobs RSS fetch failed: ${response.status}`);
+    }
+    
+    const rssText = await response.text();
+    return parseJobRSS(rssText, 'TotalJobs');
+    
+  } catch (error) {
+    console.error('❌ TotalJobs RSS error:', error);
+    return [];
+  }
+}
+
+function parseJobRSS(rssText: string, source: string) {
+  const jobs = [];
+  
+  try {
+    // Extract job items from RSS
+    const itemRegex = /<item[\s\S]*?<\/item>/gi;
+    const items = rssText.match(itemRegex) || [];
+    
+    for (const item of items.slice(0, 50)) { // Limit to 50 jobs per source
+      const job = extractJobFromRSSItem(item, source);
+      if (job) {
+        jobs.push(job);
+      }
+    }
+    
+  } catch (error) {
+    console.error(`❌ Error parsing ${source} RSS:`, error);
+  }
+  
+  return jobs;
+}
+
+function extractJobFromRSSItem(item: string, source: string) {
+  try {
+    const extractText = (tag: string) => {
+      const match = item.match(new RegExp(`<${tag}[^>]*>([\\s\\S]*?)<\\/${tag}>`, 'i'));
+      return match ? match[1].replace(/<!\[CDATA\[|\]\]>/g, '').trim() : '';
+    };
+    
+    const title = extractText('title');
+    const link = extractText('link');
+    const description = extractText('description');
+    const pubDate = extractText('pubDate');
+    
+    if (!title || !link) return null;
+    
+    // Extract company and location from title or description
+    const { company, location, salary } = extractJobDetails(title, description, source);
+    
+    return {
+      id: `${source.toLowerCase()}-${Buffer.from(link).toString('base64').slice(0, 10)}`,
+      title: cleanText(title),
+      company: company || 'Company not specified',
+      location: location || 'UK',
+      salary,
+      type: extractJobType(title, description),
+      description: cleanText(description).substring(0, 300) + '...',
+      external_url: link,
+      posted_date: pubDate ? new Date(pubDate).toISOString() : new Date().toISOString(),
+      source
+    };
+    
+  } catch (error) {
+    console.error(`❌ Error extracting job from ${source} RSS item:`, error);
+    return null;
+  }
+}
+
+function extractJobDetails(title: string, description: string, source: string) {
+  let company = '';
+  let location = '';
+  let salary = null;
+  
+  const text = `${title} ${description}`;
+  
+  // Extract company name (commonly after "at" or before "-")
+  const companyMatch = title.match(/at\s+([^-,\n]+)|([^-,\n]+)\s*-/i);
+  if (companyMatch) {
+    company = (companyMatch[1] || companyMatch[2]).trim();
+  }
+  
+  // Extract location (UK cities/regions)
+  const locationRegex = /(London|Manchester|Birmingham|Leeds|Liverpool|Sheffield|Bristol|Edinburgh|Glasgow|Cardiff|Belfast|Newcastle|Nottingham|Leicester|Coventry|Bradford|Stoke|Wolverhampton|Plymouth|Derby|Southampton|Portsmouth|Preston|Brighton|Blackpool|Reading|Luton|Northampton|Norwich|Dudley|Aberdeen|Swansea|Middlesbrough|Milton Keynes|Swindon|Crawley|Warrington|Mansfield|Cambridge|Carlisle|Oxford|Gloucester|York|Poole|Exeter|Blackburn|Slough|Basildon|Bournemouth|Peterborough|Burnley|Hastings|Watford|Southend|Rochdale|Rotherham|Oldham|Stockport|Telford|St\. Helens|Wigan|Gillingham|Worcester|Chelmsford|Colchester|Cannock|Nuneaton|Scunthorpe|Redditch|Tynemouth|Eastbourne|Chester|Doncaster|Hartlepool|Chesterfield|Stockton|Barnsley|Grimsby|Maidstone|Darlington|Basingstoke|Shrewsbury|St\. Albans|Stafford|Tamworth|Guildford|Woking|High Wycombe|Stevenage|Worthing|Lancaster|Royal Tunbridge Wells|Aylesbury|Lowestoft|Kettering|Wellingborough|Great Yarmouth|Loughborough|Warwick|Kidderminster|Bridgwater|Folkestone|Runcorn|Rugby|Macclesfield|Salisbury|Crewe|Aldershot|Weymouth|Margate|Newbury|Lincoln|Taunton|Burton|Weston-super-Mare|Eastleigh|Hereford|Bedford|Carlisle|Workington|Barrow|Kendal|Penrith|Whitehaven|Cumbria)/gi;
+  const locationMatch = text.match(locationRegex);
+  if (locationMatch) {
+    location = locationMatch[0];
+  }
+  
+  // Extract salary
+  const salaryRegex = /£[\d,]+(?:\s*-\s*£?[\d,]+)?(?:\s*(?:per\s+)?(?:annum|year|pa|k))?/gi;
+  const salaryMatch = text.match(salaryRegex);
+  if (salaryMatch) {
+    salary = salaryMatch[0];
+  }
+  
+  return { company, location, salary };
+}
+
+function extractJobType(title: string, description: string): string {
+  const text = `${title} ${description}`.toLowerCase();
+  
+  if (text.includes('apprentice')) return 'Apprenticeship';
+  if (text.includes('contract') || text.includes('temporary') || text.includes('temp')) return 'Contract';
+  if (text.includes('part-time') || text.includes('part time')) return 'Part-time';
+  if (text.includes('permanent') || text.includes('full-time') || text.includes('full time')) return 'Full-time';
+  
+  return 'Not specified';
+}
+
+function cleanText(text: string): string {
+  return text
+    .replace(/<[^>]*>/g, '') // Remove HTML tags
+    .replace(/&[a-zA-Z0-9#]+;/g, ' ') // Remove HTML entities
+    .replace(/\s+/g, ' ') // Normalize whitespace
+    .trim();
 }
 
 function deduplicateJobs(jobs: any[]) {
