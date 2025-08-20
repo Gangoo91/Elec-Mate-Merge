@@ -115,26 +115,44 @@ interface NewsSource {
 }
 
 const NEWS_SOURCES: NewsSource[] = [
-  // HSE Updates - Using the exact URL requested
+  // HSE Updates - Multiple endpoints for better coverage
   {
     name: 'HSE Press Releases',
     url: 'https://press.hse.gov.uk/',
     category: 'HSE',
     regulatory_body: 'Health and Safety Executive'
   },
+  {
+    name: 'HSE Safety Alerts',
+    url: 'https://www.hse.gov.uk/safetybulletins/',
+    category: 'HSE',
+    regulatory_body: 'Health and Safety Executive'
+  },
   
-  // BS7671 Updates - Using the exact URL requested  
+  // BS7671 Updates - Multiple sources
   {
     name: 'BS7671 Wiring Regulations',
     url: 'https://electrical.theiet.org/wiring-regulations/',
     category: 'BS7671',
     regulatory_body: 'Institution of Engineering and Technology'
   },
-  
-  // IET Updates - Using the exact URL requested
   {
-    name: 'IET Technical Updates',
-    url: 'https://electrical.theiet.org/',
+    name: 'BS7671 Amendments',
+    url: 'https://electrical.theiet.org/wiring-regulations/bs-7671/',
+    category: 'BS7671',
+    regulatory_body: 'Institution of Engineering and Technology'
+  },
+  
+  // IET Updates - Technical content and news
+  {
+    name: 'IET Electrical News',
+    url: 'https://electrical.theiet.org/electrical-news/',
+    category: 'IET',
+    regulatory_body: 'Institution of Engineering and Technology'
+  },
+  {
+    name: 'IET Technical Guidance',
+    url: 'https://electrical.theiet.org/guidance/',
     category: 'IET',
     regulatory_body: 'Institution of Engineering and Technology'
   }
@@ -315,7 +333,16 @@ Return only valid JSON, no other text.`;
     }
 
     try {
-      const parsedArticles = JSON.parse(aiResponse);
+      // Clean the AI response to handle markdown formatting
+      let cleanResponse = aiResponse;
+      if (cleanResponse.startsWith('```json')) {
+        cleanResponse = cleanResponse.replace(/```json\s*/g, '').replace(/\s*```$/g, '');
+      }
+      if (cleanResponse.startsWith('```')) {
+        cleanResponse = cleanResponse.replace(/```\s*/g, '').replace(/\s*```$/g, '');
+      }
+      
+      const parsedArticles = JSON.parse(cleanResponse);
       
       if (!Array.isArray(parsedArticles)) {
         console.error('AI response is not an array');
@@ -360,7 +387,8 @@ Return only valid JSON, no other text.`;
 
     } catch (parseError) {
       console.error('Error parsing AI response:', parseError);
-      console.log('AI Response:', aiResponse.substring(0, 500));
+      console.log('AI Response:', aiResponse ? aiResponse.substring(0, 1000) : 'No response');
+      console.log('Using fallback basic parsing...');
       return basicContentParsing(rawContent, source);
     }
 
