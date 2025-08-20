@@ -170,15 +170,11 @@ const UnifiedJobSearch = () => {
     setJobs([]);
 
     try {
-      const { data, error } = await supabase.functions.invoke('intelligent-job-search', {
+      const { data, error } = await supabase.functions.invoke('reed-job-listings', {
         body: {
-          query: searchQuery,
-          location: location.trim() || 'UK',
-          filters: {
-            jobType: jobTypeFilter === 'all' ? undefined : jobTypeFilter,
-            salaryRange: salaryFilter === 'all' ? undefined : salaryFilter,
-            experience: experienceFilter === 'all' ? undefined : experienceFilter
-          }
+          keywords: searchQuery,
+          location: location.trim() || undefined,
+          page: 1
         }
       });
 
@@ -233,19 +229,9 @@ const UnifiedJobSearch = () => {
 
       setJobs(jobResults);
 
-      // Display source breakdown in toast
-      const sourceCounts = jobResults.reduce((acc: any, job: Job) => {
-        acc[job.source] = (acc[job.source] || 0) + 1;
-        return acc;
-      }, {});
-      
-      const sourceBreakdown = Object.entries(sourceCounts)
-        .map(([source, count]) => `${source}: ${count}`)
-        .join(', ');
-
       toast({
         title: "Search Complete", 
-        description: `Found ${jobResults.length} jobs (${sourceBreakdown})${searchQuery !== query.trim() ? ` (searched for "${searchQuery}")` : ''}`
+        description: `Found ${jobResults.length} jobs${searchQuery !== query.trim() ? ` (searched for "${searchQuery}")` : ''}`
       });
 
     } catch (error) {
@@ -503,38 +489,24 @@ const UnifiedJobSearch = () => {
                   <CardContent className="p-6">
                     <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between items-center text-center gap-4">
                       <div className="flex-1 space-y-3">
-                         <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between items-center gap-3 w-full">
-                           <div className="text-center sm:text-left">
-                             <div className="flex items-center gap-2 justify-center sm:justify-start mb-2">
-                               <h3 className="text-lg font-semibold text-elec-light group-hover:text-elec-yellow transition-colors line-clamp-2">
-                                 {job.title}
-                               </h3>
-                               <Badge 
-                                 variant="secondary" 
-                                 className={`text-xs px-2 py-1 ${
-                                   job.source === 'Reed' ? 'bg-blue-500/20 text-blue-300' :
-                                   job.source === 'Adzuna' ? 'bg-green-500/20 text-green-300' :
-                                   job.source === 'Indeed' ? 'bg-purple-500/20 text-purple-300' :
-                                   job.source === 'TotalJobs' ? 'bg-orange-500/20 text-orange-300' :
-                                   'bg-elec-yellow/20 text-elec-yellow'
-                                 }`}
-                               >
-                                 {job.source}
-                               </Badge>
-                             </div>
-                             <div className="flex items-center gap-2 mt-1 text-muted-foreground justify-center sm:justify-start">
-                               <Building2 className="h-4 w-4" />
-                               <span>{job.company}</span>
-                             </div>
-                           </div>
-                           
-                           <div className="flex items-center gap-2 bg-elec-yellow/10 px-3 py-1 rounded-full self-center sm:self-auto mt-2 sm:mt-0">
-                             <Zap className="h-4 w-4 text-elec-yellow" />
-                             <span className="text-sm font-semibold text-elec-yellow">
-                               {matchPercentage}% match
-                             </span>
-                           </div>
-                         </div>
+                        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between items-center gap-3 w-full">
+                          <div className="text-center sm:text-left">
+                            <h3 className="text-lg font-semibold text-elec-light group-hover:text-elec-yellow transition-colors line-clamp-2">
+                              {job.title}
+                            </h3>
+                            <div className="flex items-center gap-2 mt-1 text-muted-foreground justify-center sm:justify-start">
+                              <Building2 className="h-4 w-4" />
+                              <span>{job.company}</span>
+                            </div>
+                          </div>
+                          
+                          <div className="flex items-center gap-2 bg-elec-yellow/10 px-3 py-1 rounded-full self-center sm:self-auto mt-2 sm:mt-0">
+                            <Zap className="h-4 w-4 text-elec-yellow" />
+                            <span className="text-sm font-semibold text-elec-yellow">
+                              {matchPercentage}% match
+                            </span>
+                          </div>
+                        </div>
 
                         <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3 text-sm text-muted-foreground">
                           <div className="flex items-center gap-1">
