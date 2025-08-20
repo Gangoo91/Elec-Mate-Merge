@@ -279,7 +279,7 @@ const UnifiedJobSearch = () => {
   return (
     <div className="space-y-6">
       {/* Search Form with Integrated Filters */}
-      <Card className="border-elec-yellow/20 bg-elec-card w-full sm:static sticky top-18 z-40">
+      <Card className="border-elec-yellow/20 bg-elec-card w-full md:static sticky top-[5rem] z-40">
         <CardHeader className="pb-4">
           <CardTitle className="flex items-center gap-3 text-elec-light text-xl">
             <div className="p-2 bg-elec-yellow rounded-lg">
