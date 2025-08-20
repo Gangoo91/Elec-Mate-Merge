@@ -22,7 +22,7 @@ const JobVacancyHeader = ({ onBack }: JobVacancyHeaderProps) => {
       
       <Button 
         variant="outline" 
-        className="hidden flex items-center gap-2 w-full sm:w-auto"
+        className="hidden xl:flex items-center gap-2 w-full sm:w-auto"
         onClick={onBack}
       >
         <ArrowLeft className="h-4 w-4" /> Back to Career Progression
