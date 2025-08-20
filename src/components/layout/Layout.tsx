@@ -23,16 +23,16 @@ const Layout = () => {
   }, [isMobile, sidebarOpen]);
 
   return (
-    <div className="flex min-h-screen bg-elec-dark text-slate-50">
+    <div className="flex h-screen bg-elec-dark text-slate-50">
       {/* Sidebar navigation - mobile-ready */}
       <Sidebar open={sidebarOpen} setOpen={setSidebarOpen} />
 
-      <div className="flex flex-col flex-1 relative overflow-hidden">
+      <div className="flex flex-col flex-1 relative">
         {/* Header with mobile menu toggle */}
         <Header toggleSidebar={toggleSidebar} />
         
-        <main className="flex-1 relative pb-4 md:pb-0 pt-16 overflow-x-hidden">
-          <div className={cn("container mx-auto py-4 md:py-8 px-1.5 md:px-6 lg:px-8 overflow-x-hidden max-w-7xl")}>
+        <main className="flex-1 overflow-y-auto pt-16">
+          <div className={cn("container mx-auto py-4 md:py-8 px-1.5 md:px-6 lg:px-8 max-w-7xl")}>
             <Outlet />
           </div>
         </main>
