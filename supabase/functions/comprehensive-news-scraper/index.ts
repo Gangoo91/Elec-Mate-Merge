@@ -36,7 +36,7 @@ function isQualityContent(title: string, content: string, url: string): boolean 
   if (contentLower.includes('skip to main content') || 
       contentLower.includes('breadcrumb') ||
       contentLower.includes('site navigation') ||
-      contentLower.includes('menu') && contentLower.includes('home')) {
+      (contentLower.includes('menu') && contentLower.includes('home'))) {
     return false;
   }
   
@@ -394,16 +394,16 @@ async function basicContentParsing(rawContent: string, source: NewsSource): Prom
       'tender', 'contract', 'infrastructure', 'construction', 'power', 'energy'
     ];
     
-    sections.forEach((section, index) => {
-      const cleanSection = section.trim();
-      if (cleanSection.length < 200) return;
+    for (let index = 0; index < sections.length && articles.length < 3; index++) {
+      const cleanSection = sections[index].trim();
+      if (cleanSection.length < 200) continue;
       
       // Check relevance
       const hasRelevantContent = relevantKeywords.some(keyword =>
         cleanSection.toLowerCase().includes(keyword.toLowerCase())
       );
       
-      if (!hasRelevantContent) return;
+      if (!hasRelevantContent) continue;
       
       // Extract title
       const lines = cleanSection.split('\n').filter(line => line.trim().length > 0);
@@ -438,145 +438,13 @@ async function basicContentParsing(rawContent: string, source: NewsSource): Prom
           content_hash: await generateContentHash(title, source.url, cleanSection)
         });
       }
-    });
+    }
     
-    return articles.slice(0, 3);
+    return articles;
     
   } catch (error) {
     console.error(`Basic parsing error for ${source.name}:`, error);
     return [];
-  }
-}
-
-async function extractArticleLinks(rawContent: string, source: NewsSource): Promise<string[]> {
-  console.log(`Extracting article links from ${source.name}`);
-  
-  const links: string[] = [];
-  
-  try {
-    // Extract potential article URLs from the content using regex patterns
-    const urlPatterns = [
-      // HSE press releases
-      /https?:\/\/press\.hse\.gov\.uk\/[^\s"'<>]+/gi,
-      // IET news articles
-      /https?:\/\/theiet\.org\/news\/[^\s"'<>]+/gi,
-      /https?:\/\/electrical\.theiet\.org\/[^\s"'<>]+/gi,
-      // General article patterns
-      /https?:\/\/[^\/\s"'<>]+\/(?:news|press|articles?|updates?)\/[^\s"'<>]+/gi
-    ];
-    
-    // Apply all patterns to find URLs
-    urlPatterns.forEach(pattern => {
-      const matches = rawContent.match(pattern) || [];
-      matches.forEach(url => {
-        // Clean up the URL and validate
-        const cleanUrl = url.replace(/['"<>]$/, '').trim();
-        if (cleanUrl && !links.includes(cleanUrl) && 
-            cleanUrl !== source.url && 
-            !cleanUrl.includes('cookie') && 
-            !cleanUrl.includes('privacy') &&
-            cleanUrl.length > source.url.length + 5) {
-          links.push(cleanUrl);
-        }
-      });
-    });
-    
-    // For sources that might not have absolute URLs, try to construct them
-    const relativePatterns = [
-      /href="(\/[^"]*(?:news|press|article|update)[^"]*?)"/gi,
-      /href='(\/[^']*(?:news|press|article|update)[^']*?)'/gi
-    ];
-    
-    relativePatterns.forEach(pattern => {
-      let match;
-      while ((match = pattern.exec(rawContent)) !== null) {
-        const relativePath = match[1];
-        if (relativePath && relativePath.length > 10) {
-          const fullUrl = new URL(relativePath, source.url).toString();
-          if (!links.includes(fullUrl) && fullUrl !== source.url) {
-            links.push(fullUrl);
-          }
-        }
-      }
-    });
-    
-    console.log(`Found ${links.length} potential article links from ${source.name}`);
-    return links.slice(0, 8); // Limit to prevent too many requests
-    
-  } catch (error) {
-    console.error(`Error extracting links from ${source.name}:`, error);
-    return [];
-  }
-}
-
-async function scrapeIndividualArticle(url: string, source: NewsSource, firecrawl: FirecrawlApp): Promise<ProcessedArticle | null> {
-  try {
-    console.log(`Scraping individual article: ${url}`);
-    
-    const scrapeResponse = await firecrawl.scrapeUrl(url, {
-      formats: ['markdown'],
-      onlyMainContent: true,
-      waitFor: 2000,
-      timeout: 30000
-    });
-
-    if (!scrapeResponse.success || !scrapeResponse.data?.markdown) {
-      console.warn(`Failed to scrape article: ${url}`);
-      return null;
-    }
-
-    const content = scrapeResponse.data.markdown;
-    
-    // Basic validation
-    if (content.length < 200) {
-      console.warn(`Article too short: ${url}`);
-      return null;
-    }
-
-    // Extract title (first meaningful heading)
-    const lines = content.split('\n').filter(line => line.trim());
-    const title = lines.find(line => 
-      line.startsWith('#') && 
-      line.length > 10 && 
-      line.length < 150 &&
-      !line.toLowerCase().includes('cookie')
-    )?.replace(/^#+\s*/, '').trim() || 
-    lines.find(line => 
-      line.length > 10 && 
-      line.length < 150 &&
-      !line.toLowerCase().includes('navigation')
-    )?.trim() || 
-    `${source.category} Article`;
-
-    // Generate summary from first paragraph
-    const paragraphs = content.split('\n\n').filter(p => p.trim().length > 50);
-    const summary = paragraphs[0]?.replace(/^#+\s*/, '').substring(0, 200).trim() + '...' || 
-                   content.substring(0, 200).trim() + '...';
-
-    // Apply quality filtering
-    if (!isQualityContent(title, content, url)) {
-      console.warn(`Low quality article filtered: ${url}`);
-      return null;
-    }
-    
-    const publishDate = new Date().toISOString();
-    
-    return {
-      title,
-      summary,
-      content,
-      regulatory_body: source.regulatory_body,
-      category: source.category,
-      external_id: generateExternalId(title, url, source.category, publishDate),
-      source_url: source.url,
-      external_url: url, // This is the key - individual article URL
-      date_published: publishDate,
-      content_hash: await generateContentHash(title, url, content)
-    };
-
-  } catch (error) {
-    console.error(`Error scraping individual article ${url}:`, error);
-    return null;
   }
 }
 
@@ -586,111 +454,30 @@ async function scrapeAndProcessSource(source: NewsSource, firecrawl: FirecrawlAp
     
     // First, scrape the main category page
     const scrapeResponse = await firecrawl.scrapeUrl(source.url, {
-      formats: ['markdown', 'html'],
+      formats: ['markdown'],
       onlyMainContent: true,
-      waitFor: 3000,
-      timeout: 45000
+      waitFor: 2000,
+      timeout: 30000
     });
 
     if (!scrapeResponse.success) {
-      console.error(`Failed to scrape ${source.url}:`, scrapeResponse.error);
+      console.error(`Failed to scrape ${source.name}:`, scrapeResponse.error);
       return [];
     }
 
-    const rawContent = scrapeResponse.data?.markdown || scrapeResponse.data?.html || '';
-    
-    // More lenient content check - but validate quality
-    if (rawContent.length < 200) {
-      console.warn(`Insufficient content from ${source.url}: ${rawContent.length} chars`);
+    const rawContent = scrapeResponse.markdown;
+    if (!rawContent || rawContent.length < 500) {
+      console.warn(`Insufficient content from ${source.name}`);
       return [];
     }
 
-    // Check for common error indicators
-    const errorIndicators = [
-      'page not found',
-      '404 error',
-      'access denied',
-      'cookies are required',
-      'javascript is required',
-      'please enable javascript',
-      'your browser is not supported'
-    ];
+    console.log(`Scraped ${rawContent.length} characters from ${source.name}`);
     
-    const hasErrors = errorIndicators.some(indicator => 
-      rawContent.toLowerCase().includes(indicator.toLowerCase())
-    );
+    // Parse content intelligently
+    const articles = await intelligentContentParsing(rawContent, source);
     
-    if (hasErrors) {
-      console.warn(`Error page detected from ${source.url}`);
-      return [];
-    }
-
-    // Ensure content has electrical relevance - enhanced with government terms
-    const electricalKeywords = [
-      'electrical', 'electricity', 'bs7671', 'wiring', 'regulation', 'safety',
-      'cable', 'circuit', 'installation', 'testing', 'inspection', 'amendment',
-      'compliance', 'certification', 'contractor', 'electrician', 'project',
-      'tender', 'contract', 'infrastructure', 'construction', 'power', 'energy',
-      'hse', 'iet', 'napit', 'niceic', 'select',
-      // Government and policy terms
-      'building safety', 'policy', 'legislation', 'building regulations',
-      'part p', 'competent person scheme', 'approved document', 'building control',
-      'planning permission', 'net zero', 'decarbonisation', 'green energy',
-      'government tender', 'public sector', 'framework agreement'
-    ];
-    
-    const hasElectricalContent = electricalKeywords.some(keyword => 
-      rawContent.toLowerCase().includes(keyword.toLowerCase())
-    );
-    
-    if (!hasElectricalContent) {
-      console.warn(`No electrical content found from ${source.url}`);
-      return [];
-    }
-
-    // Extract individual article links from the category page
-    const articleLinks = await extractArticleLinks(rawContent, source);
-    console.log(`Found ${articleLinks.length} article links from ${source.name}`);
-    
-    const allArticles: ProcessedArticle[] = [];
-    
-    // If we found article links, scrape them individually
-    if (articleLinks.length > 0) {
-      console.log(`Scraping ${articleLinks.length} individual articles from ${source.name}`);
-      
-      // Scrape individual articles with rate limiting
-      for (let i = 0; i < articleLinks.length; i++) {
-        const articleUrl = articleLinks[i];
-        const article = await scrapeIndividualArticle(articleUrl, source, firecrawl);
-        
-        if (article) {
-          allArticles.push(article);
-        }
-        
-        // Rate limiting between individual scrapes
-        if (i < articleLinks.length - 1) {
-          await new Promise(resolve => setTimeout(resolve, 1000));
-        }
-      }
-      
-      console.log(`Successfully scraped ${allArticles.length} individual articles from ${source.name}`);
-    }
-    
-    // If we didn't get enough individual articles, fall back to AI parsing of the category page
-    if (allArticles.length < 2) {
-      console.log(`Falling back to AI parsing for ${source.name} (got ${allArticles.length} individual articles)`);
-      const fallbackArticles = await intelligentContentParsing(rawContent, source);
-      
-      // Merge results, preferring individual articles
-      fallbackArticles.forEach(fallbackArticle => {
-        if (!allArticles.some(existing => existing.title === fallbackArticle.title)) {
-          allArticles.push(fallbackArticle);
-        }
-      });
-    }
-    
-    console.log(`Total processed ${allArticles.length} articles from ${source.name}`);
-    return allArticles.slice(0, 5); // Limit total articles per source
+    console.log(`Processed ${articles.length} articles from ${source.name}`);
+    return articles;
 
   } catch (error) {
     console.error(`Error scraping ${source.name}:`, error);
