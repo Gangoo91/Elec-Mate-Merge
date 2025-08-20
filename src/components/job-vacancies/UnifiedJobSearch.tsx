@@ -494,7 +494,7 @@ const UnifiedJobSearch = () => {
                             <h3 className="text-lg font-semibold text-elec-light group-hover:text-elec-yellow transition-colors line-clamp-2">
                               {job.title}
                             </h3>
-                            <div className="flex items-center gap-2 mt-1 text-muted-foreground justify-center sm:justify-start">
+                            <div className="flex items-center gap-3 mt-1 text-muted-foreground justify-center sm:justify-start">
                               <Building2 className="h-4 w-4" />
                               <span>{job.company}</span>
                             </div>
