@@ -52,7 +52,7 @@ const CVBuilderBox = () => {
             <Dialog open={isOpen} onOpenChange={setIsOpen}>
               <DialogTrigger asChild>
                 <Button 
-                  className="bg-gradient-to-r from-elec-yellow to-yellow-400 text-black hover:from-elec-yellow/90 hover:to-yellow-400/90 justify-start flex-1"
+                  className="bg-gradient-to-r from-elec-yellow to-yellow-400 text-black hover:from-elec-yellow/90 hover:to-yellow-400/90 justify-start flex-1 min-h-10"
                 >
                   <Sparkles className="h-4 w-4 mr-2" /> 
                   Smart CV Wizard
@@ -67,7 +67,7 @@ const CVBuilderBox = () => {
             
             <Button 
               variant="outline" 
-              className="border-elec-yellow/30 hover:bg-elec-yellow/10 justify-start flex-1"
+              className="border-elec-yellow/30 hover:bg-elec-yellow/10 justify-start flex-1 min-h-10"
               onClick={() => {
                 const saved = localStorage.getItem('cvData');
                 if (saved) {
