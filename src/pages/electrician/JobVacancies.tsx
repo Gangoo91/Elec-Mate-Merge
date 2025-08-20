@@ -31,11 +31,7 @@ export interface JobListing {
   aiMatchScore?: number;
 }
 
-interface JobVacanciesProps {
-  onBack?: () => void;
-}
-
-const JobVacancies = ({ onBack }: JobVacanciesProps) => {
+const JobVacancies = () => {
   const { 
     jobs, 
     currentJobs, 
@@ -107,7 +103,7 @@ const JobVacancies = ({ onBack }: JobVacanciesProps) => {
           <meta name="description" content="Find electrician jobs across the UK with mobile-first search, filters and insights. BS7671-aware." />
           <link rel="canonical" href="/electrician/job-vacancies" />
         </Helmet>
-        <JobVacancyHeader onBack={onBack} />
+        <JobVacancyHeader />
 
         <DropdownTabs
           defaultValue="job-search"
