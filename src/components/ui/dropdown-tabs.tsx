@@ -44,7 +44,7 @@ export const DropdownTabs: React.FC<DropdownTabsProps> = ({
 
   return (
     <div className={`w-full space-y-6 ${className}`}>
-      <div className={`flex ${isMobile ? 'px-4' : 'justify-center'}`}>
+      <div className={`flex ${isMobile ? '' : 'justify-center'}`}>
         <Select value={activeTab} onValueChange={handleValueChange}>
           <SelectTrigger className={triggerClassName || defaultTriggerClassName}>
             <SelectValue placeholder={placeholder}>
