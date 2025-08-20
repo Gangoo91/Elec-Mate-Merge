@@ -340,25 +340,54 @@ const IndustryNewsCard = () => {
                               size="sm"
                               variant="outline"
                               className="bg-transparent border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
-                              onClick={() => {
+                              onClick={async () => {
                                 const url = article.external_url || article.source_url;
-                                // Validate URL before opening
-                                if (url && (url.startsWith('http://') || url.startsWith('https://'))) {
-                                  try {
-                                    window.open(url, '_blank', 'noopener,noreferrer');
-                                  } catch (error) {
-                                    toast({
-                                      title: "Unable to open link",
-                                      description: "The article link appears to be invalid or expired.",
-                                      variant: "destructive"
-                                    });
-                                  }
-                                } else {
+                                
+                                if (!url) {
                                   toast({
-                                    title: "Invalid link",
-                                    description: "This article link is not available or has expired.",
+                                    title: "No link available",
+                                    description: "This article doesn't have an associated link.",
                                     variant: "destructive"
                                   });
+                                  return;
+                                }
+
+                                // Validate URL format
+                                if (!url.startsWith('http://') && !url.startsWith('https://')) {
+                                  toast({
+                                    title: "Invalid link format",
+                                    description: "The article link is not properly formatted.",
+                                    variant: "destructive"
+                                  });
+                                  return;
+                                }
+
+                                try {
+                                  // For ContractsFinder links, provide better user experience
+                                  if (url.includes('contractsfinder.service.gov.uk/Notice/')) {
+                                    toast({
+                                      title: "Opening ContractsFinder",
+                                      description: "Note: Contract links may expire after the tender period ends.",
+                                    });
+                                  }
+                                  
+                                  // Open the link
+                                  window.open(url, '_blank', 'noopener,noreferrer');
+                                  
+                                } catch (error) {
+                                  console.error('Failed to open link:', error);
+                                  toast({
+                                    title: "Unable to open link",
+                                    description: "The article link appears to be invalid or expired. Try visiting the source website instead.",
+                                    variant: "destructive"
+                                  });
+                                  
+                                  // Fallback: try opening the source URL if different
+                                  if (article.source_url && article.source_url !== url) {
+                                    setTimeout(() => {
+                                      window.open(article.source_url, '_blank', 'noopener,noreferrer');
+                                    }, 1000);
+                                  }
                                 }
                               }}
                               title={article.external_url ? 
