@@ -103,14 +103,31 @@ const IndustryNewsCard = () => {
 
   // Remove unused handlers
 
-  // Dynamic categories for filtering based on actual data
+  // Dynamic categories based on actual database data with electrical relevance indicators
   const categories = [
-    { key: 'HSE', label: 'HSE Updates', color: 'bg-red-100 text-red-800 hover:bg-red-200' },
-    { key: 'BS7671', label: 'BS7671 Updates', color: 'bg-blue-100 text-blue-800 hover:bg-blue-200' },
-    { key: 'IET', label: 'IET Updates', color: 'bg-green-100 text-green-800 hover:bg-green-200' },
+    { key: 'HSE', label: 'HSE Safety', color: 'bg-red-100 text-red-800 hover:bg-red-200' },
+    { key: 'BS7671', label: 'BS7671 Regs', color: 'bg-blue-100 text-blue-800 hover:bg-blue-200' },
+    { key: 'IET', label: 'IET Technical', color: 'bg-green-100 text-green-800 hover:bg-green-200' },
     { key: 'Safety', label: 'Safety Alerts', color: 'bg-orange-100 text-orange-800 hover:bg-orange-200' },
     { key: 'Major Projects', label: 'Major Projects', color: 'bg-purple-100 text-purple-800 hover:bg-purple-200' },
   ];
+
+  // Check electrical relevance of articles
+  const getElectricalRelevanceScore = (article: any): number => {
+    const text = `${article.title} ${article.summary || ''} ${article.content || ''}`.toLowerCase();
+    const electricalKeywords = [
+      'electrical', 'electricity', 'wiring', 'cable', 'circuit', 'installation',
+      'bs7671', 'regulation', 'safety', 'testing', 'inspection', 'electrician',
+      'power', 'voltage', 'current', 'earthing', 'bonding', 'rcd', 'mcb'
+    ];
+    
+    let score = 0;
+    electricalKeywords.forEach(keyword => {
+      if (text.includes(keyword)) score++;
+    });
+    
+    return Math.min(score, 5); // Cap at 5 for display
+  };
 
   // Filter articles
   const filteredArticles = newsArticles.filter(article => {
@@ -281,18 +298,36 @@ const IndustryNewsCard = () => {
                     <div className="flex-1">
                       <CardTitle className="text-lg leading-tight mb-2">{article.title}</CardTitle>
                        <div className="flex flex-wrap items-center gap-2 text-sm text-gray-400">
-                         <Badge variant="secondary" className="bg-elec-yellow/20 text-elec-yellow">
-                           {article.category}
-                         </Badge>
-                        <span>•</span>
-                        <span>{format(new Date(article.date_published), 'dd MMM yyyy')}</span>
-                        {article.view_count > 0 && (
-                          <>
-                            <span>•</span>
-                            <span>{article.view_count} views</span>
-                          </>
-                        )}
-                      </div>
+                          <Badge variant="secondary" className="bg-elec-yellow/20 text-elec-yellow">
+                            {article.category}
+                          </Badge>
+                          {/* Electrical relevance indicator */}
+                          {(() => {
+                            const relevanceScore = getElectricalRelevanceScore(article);
+                            if (relevanceScore >= 3) {
+                              return (
+                                <Badge variant="outline" className="border-green-500/50 text-green-400 bg-green-500/10">
+                                  High Electrical Relevance
+                                </Badge>
+                              );
+                            } else if (relevanceScore >= 1) {
+                              return (
+                                <Badge variant="outline" className="border-yellow-500/50 text-yellow-400 bg-yellow-500/10">
+                                  Electrical Related
+                                </Badge>
+                              );
+                            }
+                            return null;
+                          })()}
+                         <span>•</span>
+                         <span>{format(new Date(article.date_published), 'dd MMM yyyy')}</span>
+                         {article.view_count > 0 && (
+                           <>
+                             <span>•</span>
+                             <span>{article.view_count} views</span>
+                           </>
+                         )}
+                       </div>
                     </div>
                   </div>
                   {article.summary && (

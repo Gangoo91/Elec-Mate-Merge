@@ -166,16 +166,30 @@ async function parseRSSFeed(url: string, source: NewsSource): Promise<ProcessedA
         const pubDateMatch = item.match(/<pubDate[^>]*>(.*?)<\/pubDate>|<published[^>]*>(.*?)<\/published>/is);
         const pubDate = pubDateMatch ? (pubDateMatch[1] || pubDateMatch[2]).trim() : new Date().toISOString();
         
-        // Filter for electrical industry relevance
-        const relevantKeywords = [
-          'electrical', 'electricity', 'bs7671', 'wiring', 'regulation', 'safety',
-          'cable', 'circuit', 'installation', 'testing', 'inspection', 'amendment',
-          'compliance', 'certification', 'contractor', 'electrician', 'hazard',
-          'shock', 'electrocution', 'fire', 'switchgear', 'distribution'
+        // Enhanced electrical industry relevance filtering
+        const primaryElectricalKeywords = [
+          'electrical', 'electricity', 'bs7671', 'wiring', 'electrician', 'circuit',
+          'installation', 'testing', 'inspection', 'earthing', 'bonding'
+        ];
+        
+        const secondaryElectricalKeywords = [
+          'regulation', 'safety', 'cable', 'amendment', 'compliance', 'certification',
+          'contractor', 'hazard', 'shock', 'electrocution', 'fire', 'switchgear',
+          'distribution', 'power', 'voltage', 'current', 'rcd', 'mcb', 'consumer unit'
         ];
         
         const content = `${title} ${description}`.toLowerCase();
-        const isRelevant = relevantKeywords.some(keyword => content.includes(keyword));
+        
+        // Prioritize content with primary electrical keywords
+        const hasPrimaryKeywords = primaryElectricalKeywords.some(keyword => content.includes(keyword));
+        const hasSecondaryKeywords = secondaryElectricalKeywords.some(keyword => content.includes(keyword));
+        
+        // For RSS feeds from electrical sources (HSE, IET), be more permissive
+        const isFromElectricalSource = source.regulatory_body.includes('HSE') || 
+                                     source.regulatory_body.includes('IET') ||
+                                     source.category === 'BS7671';
+        
+        const isRelevant = hasPrimaryKeywords || (isFromElectricalSource && hasSecondaryKeywords);
         
         if (!isRelevant) {
           console.log(`Skipping non-electrical article: ${title.substring(0, 50)}...`);
@@ -325,18 +339,31 @@ async function searchWithFirecrawl(source: NewsSource, firecrawlApiKey: string):
         const url = result.url || source.fallbackUrl || '';
         const publishDate = result.date ? new Date(result.date).toISOString() : new Date().toISOString();
         
-        // Simple relevance check for electrical industry
-        const relevantKeywords = [
-          'electrical', 'electricity', 'bs7671', 'wiring', 'regulation', 'safety',
-          'cable', 'circuit', 'installation', 'testing', 'inspection', 'amendment',
-          'compliance', 'electrician', 'hse', 'iet', 'engineering'
+        // Enhanced electrical industry relevance check for Firecrawl results
+        const primaryElectricalKeywords = [
+          'electrical', 'electricity', 'bs7671', 'wiring', 'electrician', 'circuit',
+          'installation', 'testing', 'inspection', 'earthing', 'bonding'
+        ];
+        
+        const secondaryElectricalKeywords = [
+          'regulation', 'safety', 'cable', 'amendment', 'compliance', 'certification',
+          'contractor', 'hazard', 'shock', 'electrocution', 'fire', 'switchgear',
+          'distribution', 'power', 'voltage', 'current', 'rcd', 'mcb', 'consumer unit',
+          'hse', 'iet', 'engineering'
         ];
         
         const textToCheck = `${title} ${snippet}`.toLowerCase();
-        const isRelevant = relevantKeywords.some(keyword => textToCheck.includes(keyword)) || 
-                          source.category === 'HSE' || 
-                          source.category === 'BS7671' || 
-                          source.category === 'IET';
+        
+        // Apply stricter filtering for Firecrawl results (they tend to be broader)
+        const hasPrimaryKeywords = primaryElectricalKeywords.some(keyword => textToCheck.includes(keyword));
+        const hasSecondaryKeywords = secondaryElectricalKeywords.some(keyword => textToCheck.includes(keyword));
+        
+        // For specific electrical sources, be more permissive
+        const isFromElectricalSource = source.category === 'HSE' || 
+                                     source.category === 'BS7671' || 
+                                     source.category === 'IET';
+        
+        const isRelevant = hasPrimaryKeywords || (isFromElectricalSource && hasSecondaryKeywords);
         
         if (!isRelevant) {
           console.log(`Skipping non-electrical article: ${title.substring(0, 50)}...`);
@@ -439,10 +466,13 @@ async function fetchContractFinderProjects(): Promise<ProcessedArticle[]> {
 - Status: ${tender.status || 'Active'}
 
 **Electrical Scope:**
-This major infrastructure project includes significant electrical installation and maintenance work, representing opportunities for UK electrical contractors and the broader construction industry.
+This infrastructure project likely includes electrical installation, power distribution, lighting systems, fire safety systems, and compliance with current BS7671 wiring regulations. Opportunities for qualified electrical contractors and specialists.
 
-**Why This Matters:**
-Major public sector contracts like this drive innovation in electrical installation practices and often set new standards for safety and technical compliance across the industry.
+**Industry Impact:**
+- Sets precedent for electrical installation standards
+- Creates employment opportunities for certified electricians
+- Drives adoption of latest safety and technical practices
+- Potential for innovative electrical solutions and technologies
         `.trim();
 
         const articleTitle = `${title} - ${value}`;
