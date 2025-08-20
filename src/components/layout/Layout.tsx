@@ -32,7 +32,7 @@ const Layout = () => {
         <Header toggleSidebar={toggleSidebar} />
         
         <main className="flex-1 relative pb-4 md:pb-0 pt-16 overflow-x-hidden">
-          <div className={cn("container mx-auto py-4 md:py-8 px-4 md:px-6 lg:px-8 overflow-x-hidden max-w-7xl")}>
+          <div className={cn("container mx-auto py-4 md:py-8 px-3 md:px-6 lg:px-8 overflow-x-hidden max-w-7xl")}>
             <Outlet />
           </div>
         </main>
