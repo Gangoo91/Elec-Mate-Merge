@@ -160,7 +160,7 @@ async function parseRSSFeed(url: string, source: NewsSource): Promise<ProcessedA
         
         // Extract link
         const linkMatch = item.match(/<link[^>]*>(.*?)<\/link>|<link[^>]*href="([^"]*)"[^>]*\/>/is);
-        const link = linkMatch ? (linkMatch[1] || linkMatch[2]).trim() : source.url;
+        const link = linkMatch ? (linkMatch[1] || linkMatch[2]).trim() : source.fallbackUrl || '';
         
         // Extract publication date
         const pubDateMatch = item.match(/<pubDate[^>]*>(.*?)<\/pubDate>|<published[^>]*>(.*?)<\/published>/is);
@@ -196,7 +196,7 @@ async function parseRSSFeed(url: string, source: NewsSource): Promise<ProcessedA
           regulatory_body: source.regulatory_body,
           category: source.category,
           external_id: generateExternalId(title, link, source.category, processedDate),
-          source_url: source.url,
+          source_url: source.fallbackUrl || '',
           external_url: link,
           date_published: processedDate,
           content_hash: await generateContentHash(title, link, articleContent)
@@ -217,60 +217,214 @@ async function parseRSSFeed(url: string, source: NewsSource): Promise<ProcessedA
 
 interface NewsSource {
   name: string;
-  url: string;
-  category: 'HSE' | 'BS7671' | 'IET' | 'Safety';
+  searchQuery: string;
+  category: 'HSE' | 'BS7671' | 'IET' | 'Safety' | 'Major Projects';
   regulatory_body: string;
+  domainFilter?: string;
+  fallbackUrl?: string;
   rssUrl?: string;
-  isRss?: boolean;
 }
 
-const NEWS_SOURCES: NewsSource[] = [
-  // HSE Updates - More reliable sources
+// Search-based news sources using Firecrawl Search API
+const SEARCH_SOURCES: NewsSource[] = [
+  // HSE Updates - Target safety alerts and enforcement
   {
-    name: 'HSE Press Releases',
-    url: 'https://press.hse.gov.uk/',
-    rssUrl: 'https://press.hse.gov.uk/feed/',
+    name: 'HSE Safety Alerts',
+    searchQuery: 'HSE safety alert electrical OR enforcement notice electrical OR electrical hazard warning',
+    domainFilter: 'hse.gov.uk',
     category: 'HSE',
     regulatory_body: 'Health and Safety Executive',
-    isRss: true
+    fallbackUrl: 'https://www.hse.gov.uk/electricity/',
+    rssUrl: 'https://press.hse.gov.uk/feed/'
   },
   {
-    name: 'HSE Safety Bulletins',
-    url: 'https://www.hse.gov.uk/safetybulletins/index.htm',
+    name: 'HSE Press Releases',
+    searchQuery: 'HSE electrical safety OR electricity accident OR electrical regulations UK',
+    domainFilter: 'press.hse.gov.uk',
     category: 'HSE',
-    regulatory_body: 'Health and Safety Executive'
+    regulatory_body: 'Health and Safety Executive',
+    fallbackUrl: 'https://press.hse.gov.uk/',
+    rssUrl: 'https://press.hse.gov.uk/feed/'
   },
   
-  // BS7671 Updates - IET sources
+  // BS7671 Updates - Target wiring regulations
   {
-    name: 'IET Wiring Matters',
-    url: 'https://electrical.theiet.org/wiring-matters/',
+    name: 'BS7671 Amendments',
+    searchQuery: 'BS7671 amendment OR wiring regulations update OR 18th edition changes',
+    domainFilter: 'theiet.org',
     category: 'BS7671',
-    regulatory_body: 'Institution of Engineering and Technology'
+    regulatory_body: 'Institution of Engineering and Technology',
+    fallbackUrl: 'https://electrical.theiet.org/bs-7671/'
   },
   {
-    name: 'IET BS7671 Updates',
-    url: 'https://electrical.theiet.org/bs-7671/',
+    name: 'IET Wiring Standards',
+    searchQuery: 'IET wiring matters OR electrical installation standards OR BS7671 guidance',
+    domainFilter: 'electrical.theiet.org',
     category: 'BS7671',
-    regulatory_body: 'Institution of Engineering and Technology'
+    regulatory_body: 'Institution of Engineering and Technology',
+    fallbackUrl: 'https://electrical.theiet.org/wiring-matters/'
   },
   
-  // IET Updates - Engineering news
+  // IET Technical Updates
   {
     name: 'IET Engineering News',
-    url: 'https://eandt.theiet.org/news/',
-    rssUrl: 'https://eandt.theiet.org/news/feed/',
+    searchQuery: 'IET electrical engineering OR electrical technology news OR engineering innovation',
+    domainFilter: 'eandt.theiet.org',
     category: 'IET',
     regulatory_body: 'Institution of Engineering and Technology',
-    isRss: true
+    fallbackUrl: 'https://eandt.theiet.org/news/',
+    rssUrl: 'https://eandt.theiet.org/news/feed/'
   },
+  
+  // Electrical Safety
   {
     name: 'Electrical Safety First',
-    url: 'https://www.electricalsafetyfirst.org.uk/media-centre/',
+    searchQuery: 'electrical safety campaign OR electrical accident prevention OR consumer electrical safety',
+    domainFilter: 'electricalsafetyfirst.org.uk',
     category: 'Safety',
-    regulatory_body: 'Electrical Safety First'
+    regulatory_body: 'Electrical Safety First',
+    fallbackUrl: 'https://www.electricalsafetyfirst.org.uk/media-centre/'
+  },
+  
+  // Major Projects
+  {
+    name: 'UK Major Projects',
+    searchQuery: 'UK electrical contract awarded OR infrastructure project electrical OR major construction electrical',
+    category: 'Major Projects',
+    regulatory_body: 'UK Government Contracts'
   }
 ];
+
+// Firecrawl Search API integration
+async function searchWithFirecrawl(source: NewsSource, firecrawlApiKey: string): Promise<ProcessedArticle[]> {
+  try {
+    console.log(`Searching for: ${source.searchQuery}`);
+    
+    const searchParams = new URLSearchParams({
+      query: source.searchQuery,
+      pageOptions: JSON.stringify({
+        onlyMainContent: true,
+        includeHtml: false,
+        waitFor: 1000
+      }),
+      searchOptions: JSON.stringify({
+        limit: source.category === 'Major Projects' ? 8 : 5,
+        ...(source.domainFilter && { site: source.domainFilter })
+      })
+    });
+
+    const response = await fetch(`https://api.firecrawl.dev/v2/search?${searchParams}`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${firecrawlApiKey}`,
+        'Content-Type': 'application/json',
+      }
+    });
+
+    if (!response.ok) {
+      console.error(`Firecrawl search failed for ${source.name}: ${response.status} ${response.statusText}`);
+      return [];
+    }
+
+    const data = await response.json();
+    console.log(`Firecrawl search returned ${data.data?.length || 0} results for ${source.name}`);
+    
+    if (!data.data || !Array.isArray(data.data)) {
+      console.warn(`No search results from Firecrawl for ${source.name}`);
+      return [];
+    }
+
+    const articles: ProcessedArticle[] = [];
+    
+    for (let i = 0; i < data.data.length; i++) {
+      const result = data.data[i];
+      
+      try {
+        const title = result.metadata?.title || result.title || `${source.category} Update ${i + 1}`;
+        const description = result.metadata?.description || result.description || result.excerpt || '';
+        const content = result.markdown || result.content || description;
+        const url = result.url || result.metadata?.sourceURL || source.fallbackUrl || '';
+        
+        // Filter for electrical relevance
+        const relevantKeywords = [
+          'electrical', 'electricity', 'bs7671', 'wiring', 'regulation', 'safety',
+          'cable', 'circuit', 'installation', 'testing', 'inspection', 'amendment',
+          'compliance', 'certification', 'contractor', 'electrician', 'hazard',
+          'shock', 'fire', 'switchgear', 'distribution', 'engineering', 'infrastructure'
+        ];
+        
+        const textToCheck = `${title} ${description} ${content}`.toLowerCase();
+        const isRelevant = relevantKeywords.some(keyword => textToCheck.includes(keyword));
+        
+        if (!isRelevant && source.category !== 'Major Projects') {
+          console.log(`Skipping non-electrical result: ${title.substring(0, 50)}...`);
+          continue;
+        }
+        
+        if (!isQualityContent(title, content, url)) {
+          continue;
+        }
+        
+        // Use published date if available, otherwise current date
+        const publishDate = result.metadata?.publishedTime || 
+                           result.publishedTime || 
+                           new Date().toISOString();
+        
+        let enhancedContent: string;
+        
+        if (source.category === 'Major Projects') {
+          // Special formatting for major projects
+          enhancedContent = `**${title}**
+
+**Description:** ${description}
+
+**Project Details:**
+${content.length > 200 ? content.substring(0, 800) + '...' : content}
+
+**Why This Matters:**
+This project represents significant opportunities for UK electrical contractors and demonstrates current industry standards and emerging technologies in electrical installations.
+
+**Source:** ${source.regulatory_body}
+**Category:** ${source.category}
+**Published:** ${new Date(publishDate).toLocaleDateString()}
+**URL:** ${url}`;
+        } else {
+          // Standard content formatting
+          enhancedContent = `**${title}**
+
+${content.length > 500 ? content.substring(0, 1500) + '...' : content}
+
+**Source:** ${source.regulatory_body}
+**Category:** ${source.category}
+**Published:** ${new Date(publishDate).toLocaleDateString()}`;
+        }
+        
+        articles.push({
+          title: title.substring(0, 150),
+          summary: description.substring(0, 200) + (description.length > 200 ? '...' : ''),
+          content: enhancedContent,
+          regulatory_body: source.regulatory_body,
+          category: source.category,
+          external_id: generateExternalId(title, url, source.category, publishDate),
+          source_url: source.fallbackUrl || url,
+          external_url: url,
+          date_published: publishDate,
+          content_hash: await generateContentHash(title, url, enhancedContent)
+        });
+        
+      } catch (resultError) {
+        console.warn(`Error processing search result ${i}:`, resultError);
+      }
+    }
+    
+    console.log(`Extracted ${articles.length} articles from Firecrawl search for ${source.name}`);
+    return articles;
+    
+  } catch (error) {
+    console.error(`Firecrawl search error for ${source.name}:`, error);
+    return [];
+  }
+}
 
 // Major Projects (UK) - ContractsFinder API integration
 async function fetchContractFinderProjects(): Promise<ProcessedArticle[]> {
@@ -478,11 +632,11 @@ relevance_score: 6-10 (6=somewhat relevant, 10=very relevant)`;
           content,
           regulatory_body: source.regulatory_body,
           category: source.category,
-          external_id: generateExternalId(title, source.url, source.category, publishDate),
-          source_url: source.url,
-          external_url: source.url,
+          external_id: generateExternalId(title, source.fallbackUrl || '', source.category, publishDate),
+          source_url: source.fallbackUrl || '',
+          external_url: source.fallbackUrl || '',
           date_published: publishDate,
-          content_hash: await generateContentHash(title, source.url, content)
+          content_hash: await generateContentHash(title, source.fallbackUrl || '', content)
         });
       }
 
@@ -569,11 +723,11 @@ async function basicContentParsing(rawContent: string, source: NewsSource): Prom
         content: enhancedContent,
         regulatory_body: source.regulatory_body,
         category: source.category,
-        external_id: generateExternalId(title, source.url, source.category, publishDate),
-        source_url: source.url,
-        external_url: source.url,
-        date_published: publishDate,
-        content_hash: await generateContentHash(title, source.url, enhancedContent)
+          external_id: generateExternalId(title, source.fallbackUrl || '', source.category, publishDate),
+          source_url: source.fallbackUrl || '',
+          external_url: source.fallbackUrl || '',
+          date_published: publishDate,
+          content_hash: await generateContentHash(title, source.fallbackUrl || '', enhancedContent)
       });
     }
     
@@ -591,7 +745,7 @@ async function scrapeAndProcessSource(source: NewsSource, firecrawl: FirecrawlAp
     console.log(`Processing ${source.name}...`);
     
     // Try RSS feed first if available
-    if (source.isRss && source.rssUrl) {
+    if (source.rssUrl) {
       console.log(`Attempting RSS feed for ${source.name}`);
       const rssArticles = await parseRSSFeed(source.rssUrl, source);
       if (rssArticles.length > 0) {
@@ -602,8 +756,13 @@ async function scrapeAndProcessSource(source: NewsSource, firecrawl: FirecrawlAp
     }
     
     // Fallback to web scraping
+    if (!source.fallbackUrl) {
+      console.warn(`No fallback URL available for ${source.name}`);
+      return [];
+    }
+    
     console.log(`Web scraping ${source.name}...`);
-    const scrapeResponse = await firecrawl.scrapeUrl(source.url, {
+    const scrapeResponse = await firecrawl.scrapeUrl(source.fallbackUrl, {
       formats: ['markdown'],
       onlyMainContent: true,
       waitFor: 3000,
@@ -680,14 +839,29 @@ serve(async (req) => {
       totalErrors++;
     }
 
-    // Process traditional news sources in batches to avoid overwhelming the API
+    // Process search-based news sources using Firecrawl Search API
+    console.log('Starting Firecrawl Search API processing...');
     const batchSize = 2;
-    for (let i = 0; i < NEWS_SOURCES.length; i += batchSize) {
-      const batch = NEWS_SOURCES.slice(i, i + batchSize);
-      console.log(`Processing batch ${Math.floor(i / batchSize) + 1}/${Math.ceil(NEWS_SOURCES.length / batchSize)}`);
+    for (let i = 0; i < SEARCH_SOURCES.length; i += batchSize) {
+      const batch = SEARCH_SOURCES.slice(i, i + batchSize);
+      console.log(`Processing search batch ${Math.floor(i / batchSize) + 1}/${Math.ceil(SEARCH_SOURCES.length / batchSize)}`);
       
-      // Process batch in parallel
-      const batchPromises = batch.map(source => scrapeAndProcessSource(source, firecrawl));
+      // Process batch in parallel using Firecrawl Search
+      const batchPromises = batch.map(source => {
+        // First try Firecrawl Search API
+        return searchWithFirecrawl(source, firecrawlApiKey).catch(async (searchError) => {
+          console.error(`Search failed for ${source.name}, trying fallback:`, searchError);
+          
+          // Fallback to RSS feed or skip if search fails
+          if (source.rssUrl) {
+            console.log(`Trying RSS fallback for ${source.name}`);
+            return parseRSSFeed(source.rssUrl, source);
+          }
+          
+          return [];
+        });
+      });
+      
       const batchResults = await Promise.all(batchPromises);
       
       // Flatten and add to results
@@ -696,9 +870,9 @@ serve(async (req) => {
         totalProcessed += articles.length;
       });
       
-      // Rate limiting between batches
-      if (i + batchSize < NEWS_SOURCES.length) {
-        await new Promise(resolve => setTimeout(resolve, 2000));
+      // Rate limiting between batches to respect API limits
+      if (i + batchSize < SEARCH_SOURCES.length) {
+        await new Promise(resolve => setTimeout(resolve, 3000));
       }
     }
 
