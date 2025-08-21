@@ -27,6 +27,8 @@ interface AIGenerationResponse {
 export class AIService {
   private static async callAIAssistant(request: AIGenerationRequest): Promise<AIGenerationResponse> {
     try {
+      console.log(`AI Service: Making request with type: ${request.type}`);
+      
       const { data, error } = await supabase.functions.invoke('electrician-ai-assistant', {
         body: {
           prompt: this.buildPrompt(request),
@@ -39,11 +41,18 @@ export class AIService {
         throw new Error(`AI service error: ${error.message}`);
       }
 
-      if (!data || !data.response) {
-        throw new Error('Invalid response from AI service');
+      console.log('AI Service: Raw response data:', data);
+
+      if (!data) {
+        throw new Error('No response from AI service');
       }
 
-      return this.parseAIResponse(data.response, request.type);
+      // Handle response structure - data.response contains the AI response
+      const responseContent = data.response || data;
+      console.log('AI Service: Response content type:', typeof responseContent);
+      console.log('AI Service: Response content sample:', responseContent?.substring?.(0, 200));
+
+      return this.parseAIResponse(responseContent, request.type);
     } catch (error) {
       console.error('AI Service Error:', error);
       if (error instanceof Error) {
@@ -315,7 +324,7 @@ Return ONLY this exact JSON structure with enhanced content:
   }
 
   static async generateFromRawContent(rawCVData: any): Promise<any> {
-    console.log('Generating from raw content:', rawCVData);
+    console.log('AI Service: Generating from raw content:', rawCVData);
     
     try {
       const response = await this.callAIAssistant({
@@ -323,26 +332,44 @@ Return ONLY this exact JSON structure with enhanced content:
         context: { rawCVData }
       });
       
-      console.log('Raw AI response:', response.content);
+      console.log('AI Service: Raw AI response received:', typeof response.content);
+      console.log('AI Service: Response content preview:', response.content?.substring?.(0, 500));
+      
+      // Handle the response content - it might be a string that needs parsing
+      let contentToParse = response.content;
+      
+      // If the response content is already an object (unlikely but possible), return it directly
+      if (typeof contentToParse === 'object') {
+        console.log('AI Service: Content is already an object, validating structure');
+        return this.validateCVStructure(contentToParse);
+      }
       
       // Sanitize the response to extract JSON
-      const sanitized = this.sanitizeJSONResponse(response.content);
-      console.log('Sanitized response:', sanitized);
+      const sanitized = this.sanitizeJSONResponse(contentToParse);
+      console.log('AI Service: Sanitized response preview:', sanitized.substring(0, 300));
       
       // Try to parse JSON response
-      const parsed = JSON.parse(sanitized);
+      let parsed;
+      try {
+        parsed = JSON.parse(sanitized);
+        console.log('AI Service: Successfully parsed JSON response');
+      } catch (parseError) {
+        console.error('AI Service: JSON parse error:', parseError);
+        console.error('AI Service: Failed to parse content:', sanitized.substring(0, 500));
+        throw new SyntaxError(`Invalid JSON response from AI: ${parseError.message}`);
+      }
       
       // Validate the parsed response structure
       const validated = this.validateCVStructure(parsed);
-      console.log('Validated CV structure:', validated);
+      console.log('AI Service: Successfully validated CV structure');
       
       return validated;
     } catch (error) {
-      console.error('Error in generateFromRawContent:', error);
+      console.error('AI Service: Error in generateFromRawContent:', error);
       
       // Provide more specific error handling
       if (error instanceof SyntaxError) {
-        throw new Error('AI returned invalid response format. Please try again or check your input data.');
+        throw new Error(`AI returned invalid response format: ${error.message}. Please try again or check your input data.`);
       } else if (error.message.includes('AI service error')) {
         throw new Error('AI service is temporarily unavailable. Please try again in a moment.');
       } else {
@@ -352,20 +379,31 @@ Return ONLY this exact JSON structure with enhanced content:
   }
 
   private static sanitizeJSONResponse(response: string): string {
+    console.log('AI Service: Sanitizing JSON response, input type:', typeof response);
+    console.log('AI Service: Input response preview:', response?.substring?.(0, 200));
+    
+    if (typeof response !== 'string') {
+      throw new Error(`Expected string response but got ${typeof response}`);
+    }
+    
     // Remove markdown code blocks if present
-    let sanitized = response.replace(/```json\s*/g, '').replace(/```\s*$/g, '');
+    let sanitized = response.replace(/```json\s*/gi, '').replace(/```\s*$/gm, '');
     
     // Remove any text before the first { and after the last }
     const firstBrace = sanitized.indexOf('{');
     const lastBrace = sanitized.lastIndexOf('}');
     
-    if (firstBrace !== -1 && lastBrace !== -1 && lastBrace > firstBrace) {
-      sanitized = sanitized.substring(firstBrace, lastBrace + 1);
+    if (firstBrace === -1 || lastBrace === -1 || lastBrace <= firstBrace) {
+      console.error('AI Service: No valid JSON braces found in response');
+      throw new Error('No valid JSON structure found in AI response');
     }
+    
+    sanitized = sanitized.substring(firstBrace, lastBrace + 1);
     
     // Clean up extra whitespace and newlines
     sanitized = sanitized.trim();
     
+    console.log('AI Service: Sanitized response preview:', sanitized.substring(0, 200));
     return sanitized;
   }
 

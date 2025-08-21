@@ -330,6 +330,15 @@ serve(async (req) => {
       }
     }
 
+    // Handle CV refinement responses - return raw AI response for JSON parsing
+    if (type === "cv_refinement") {
+      console.log('CV refinement response type detected, returning raw AI response');
+      return new Response(
+        JSON.stringify({ response: aiResponse }),
+        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
     return new Response(
       JSON.stringify({ response: aiResponse }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
