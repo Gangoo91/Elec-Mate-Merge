@@ -12,69 +12,51 @@ const CVBuilderBox = () => {
   const [isEditOpen, setIsEditOpen] = useState(false);
 
   return (
-    <Card className="border-elec-yellow/30 bg-gradient-to-br from-elec-gray via-elec-gray to-elec-gray/95 backdrop-blur-sm shadow-xl hover:shadow-2xl transition-all duration-300 w-full max-w-full relative overflow-hidden">
-      {/* Decorative background elements */}
-      <div className="absolute top-0 right-0 w-32 h-32 bg-elec-yellow/5 rounded-full blur-3xl -translate-y-16 translate-x-16"></div>
-      <div className="absolute bottom-0 left-0 w-24 h-24 bg-elec-yellow/3 rounded-full blur-2xl translate-y-12 -translate-x-12"></div>
-      
-      <CardHeader className="pb-6 relative z-10">
-        <div className="relative mb-3">
-          <div className="flex items-center gap-3">
-            <div className="relative p-2 bg-elec-yellow/10 rounded-lg border border-elec-yellow/20">
-              <FileText className="h-6 w-6 text-elec-yellow" />
-              <Sparkles className="h-3 w-3 text-elec-yellow absolute -top-1 -right-1 animate-pulse" />
-            </div>
-            <div>
-              <CardTitle className="text-xl text-white font-semibold">
-                AI-Powered CV Builder
-              </CardTitle>
-              <CardDescription className="text-muted-foreground/80 mt-1">
-                Create professional electrical CVs with intelligent content generation
-              </CardDescription>
-            </div>
-          </div>
+    <Card className="border-elec-yellow/20 bg-elec-gray w-full max-w-full">
+      <CardHeader className="pb-4">
+        <div className="relative mb-2">
+          <FileText className="h-6 w-6 text-elec-yellow" />
+          <Sparkles className="h-3 w-3 text-elec-yellow absolute -top-1 -right-1" />
         </div>
+        <CardTitle className="text-xl">
+          AI-Powered CV Builder
+        </CardTitle>
+        <CardDescription className="text-muted-foreground/70">
+          Create professional electrical CVs with intelligent content generation
+        </CardDescription>
       </CardHeader>
-      <CardContent className="p-6 sm:p-8 pt-0 relative z-10">
-        <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 sm:gap-8">
+      <CardContent className="p-3 sm:p-6">
+        <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-3 sm:gap-4">
           <div className="flex-1 w-full lg:w-auto">
-            <p className="text-sm mb-6 leading-relaxed text-gray-300 max-w-md">
+            <p className="text-xs sm:text-sm mb-3 leading-relaxed">
               Create a professional CV tailored to electrical job applications with our AI-powered tool. Get intelligent content suggestions, industry-specific templates, and automated content generation.
             </p>
-            <div className="grid grid-cols-2 gap-4 text-sm">
-              <div className="flex items-center gap-3 p-3 bg-elec-yellow/5 rounded-lg border border-elec-yellow/10 hover:bg-elec-yellow/10 transition-colors duration-200">
-                <div className="p-1.5 bg-elec-yellow/20 rounded-md">
-                  <Wand2 className="h-4 w-4 text-elec-yellow" />
-                </div>
-                <span className="text-gray-300 font-medium">Smart CV Wizard</span>
+            <div className="grid grid-cols-2 lg:grid-cols-2 gap-1 sm:gap-2 text-xs text-gray-400">
+              <div className="flex items-center gap-1">
+                <Wand2 className="h-3 w-3 text-elec-yellow flex-shrink-0" />
+                <span className="truncate">Smart CV Wizard</span>
               </div>
-              <div className="flex items-center gap-3 p-3 bg-elec-yellow/5 rounded-lg border border-elec-yellow/10 hover:bg-elec-yellow/10 transition-colors duration-200">
-                <div className="p-1.5 bg-elec-yellow/20 rounded-md">
-                  <Sparkles className="h-4 w-4 text-elec-yellow" />
-                </div>
-                <span className="text-gray-300 font-medium">AI Content Generation</span>
+              <div className="flex items-center gap-1">
+                <Sparkles className="h-3 w-3 text-elec-yellow flex-shrink-0" />
+                <span className="truncate">AI Content Generation</span>
               </div>
-              <div className="flex items-center gap-3 p-3 bg-elec-yellow/5 rounded-lg border border-elec-yellow/10 hover:bg-elec-yellow/10 transition-colors duration-200">
-                <div className="p-1.5 bg-elec-yellow/20 rounded-md">
-                  <FileText className="h-4 w-4 text-elec-yellow" />
-                </div>
-                <span className="text-gray-300 font-medium">Industry Templates</span>
+              <div className="flex items-center gap-1">
+                <FileText className="h-3 w-3 text-elec-yellow flex-shrink-0" />
+                <span className="truncate">Industry Templates</span>
               </div>
-              <div className="flex items-center gap-3 p-3 bg-elec-yellow/5 rounded-lg border border-elec-yellow/10 hover:bg-elec-yellow/10 transition-colors duration-200">
-                <div className="p-1.5 bg-elec-yellow/20 rounded-md">
-                  <FileText className="h-4 w-4 text-elec-yellow" />
-                </div>
-                <span className="text-gray-300 font-medium">PDF Export</span>
+              <div className="flex items-center gap-1">
+                <FileText className="h-3 w-3 text-elec-yellow flex-shrink-0" />
+                <span className="truncate">PDF Export</span>
               </div>
             </div>
           </div>
-          <div className="flex flex-col gap-4 w-full lg:min-w-fit lg:w-64">
+          <div className="flex flex-col sm:flex-row lg:flex-col xl:flex-row gap-3 w-full lg:min-w-fit">
             <Dialog open={isWizardOpen} onOpenChange={setIsWizardOpen}>
               <DialogTrigger asChild>
                 <Button 
-                  className="bg-gradient-to-r from-elec-yellow via-yellow-400 to-elec-yellow text-black hover:from-elec-yellow/90 hover:via-yellow-400/90 hover:to-elec-yellow/90 shadow-lg hover:shadow-xl transition-all duration-300 justify-center min-h-12 font-semibold group"
+                  className="bg-gradient-to-r from-elec-yellow to-yellow-400 text-black hover:from-elec-yellow/90 hover:to-yellow-400/90 justify-start flex-1 min-h-10"
                 >
-                  <Sparkles className="h-5 w-5 mr-3 group-hover:rotate-12 transition-transform duration-300" /> 
+                  <Sparkles className="h-4 w-4 mr-2" /> 
                   Smart CV Wizard
                 </Button>
               </DialogTrigger>
@@ -88,10 +70,10 @@ const CVBuilderBox = () => {
             <Dialog open={isEditOpen} onOpenChange={setIsEditOpen}>
               <Button 
                 variant="outline" 
-                className="border-elec-yellow/40 bg-elec-yellow/5 hover:bg-elec-yellow/15 text-white hover:text-white border-2 shadow-md hover:shadow-lg transition-all duration-300 justify-center min-h-12 font-medium group"
+                className="border-elec-yellow/30 hover:bg-elec-yellow/10 justify-start flex-1 min-h-10"
                 onClick={() => setIsEditOpen(true)}
               >
-                <FileText className="h-5 w-5 mr-3 group-hover:scale-110 transition-transform duration-300" /> 
+                <FileText className="h-4 w-4 mr-2" /> 
                 Edit Existing CV
               </Button>
               <DialogContent className="w-[100vw] h-[100vh] max-w-none max-h-none overflow-hidden p-0 m-0 sm:w-[95vw] sm:max-w-4xl sm:h-[90vh] sm:max-h-[90vh] sm:m-6 sm:rounded-lg">
