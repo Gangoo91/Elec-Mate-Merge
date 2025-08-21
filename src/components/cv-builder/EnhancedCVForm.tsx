@@ -79,7 +79,7 @@ export const EnhancedCVForm: React.FC<EnhancedCVFormProps> = ({ cvData, onChange
   return (
     <div className="space-y-4 sm:space-y-6">
       {/* Tab Navigation */}
-      <div className="bg-elec-card border-2 border-elec-gray/50 rounded-xl p-4 sm:p-6">
+      <div className="border-2 border-elec-gray/50 rounded-xl p-4 sm:p-6">
         <div className="flex items-center gap-2 sm:gap-3 mb-4">
           <div className="min-w-0">
             <h2 className="text-lg sm:text-xl font-semibold text-elec-light">AI-Enhanced CV Builder</h2>
