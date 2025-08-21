@@ -137,40 +137,215 @@ export const ProfessionalCVPreview: React.FC<ProfessionalCVPreviewProps> = ({ cv
           </div>
         )}
 
-        {/* Skills and Certifications */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {cvData.skills.length > 0 && (
-            <div>
-              <h2 className="text-sm font-bold uppercase tracking-wider text-cv-brown mb-4 border-b border-cv-beige pb-1">
-                Skills
-              </h2>
-              <div className="space-y-1">
-                {cvData.skills.map((skill, index) => (
-                  <div key={index} className="flex items-start text-cv-text text-sm">
-                    <span className="text-cv-gold mr-2 mt-1">•</span>
-                    <span>{skill}</span>
+        {/* Professional Skills & Qualifications */}
+        {(cvData.skills.length > 0 || cvData.certifications.length > 0) && (
+          <div className="space-y-8">
+            {/* Core Technical Skills */}
+            {cvData.skills.length > 0 && (
+              <div>
+                <h2 className="text-sm font-bold uppercase tracking-wider text-cv-brown mb-4 border-b border-cv-beige pb-1">
+                  Core Technical Skills
+                </h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {/* Electrical Installation & Maintenance */}
+                  <div>
+                    <h3 className="text-xs font-semibold text-cv-brown mb-2 uppercase tracking-wide">
+                      Installation & Maintenance
+                    </h3>
+                    <div className="space-y-1">
+                      {cvData.skills
+                        .filter(skill => 
+                          skill.toLowerCase().includes('installation') ||
+                          skill.toLowerCase().includes('wiring') ||
+                          skill.toLowerCase().includes('maintenance') ||
+                          skill.toLowerCase().includes('repair') ||
+                          skill.toLowerCase().includes('three phase') ||
+                          skill.toLowerCase().includes('circuit')
+                        )
+                        .map((skill, index) => (
+                          <div key={index} className="flex items-start text-cv-text text-sm">
+                            <span className="text-cv-gold mr-2 mt-1">•</span>
+                            <span>{skill}</span>
+                          </div>
+                        ))}
+                    </div>
                   </div>
-                ))}
-              </div>
-            </div>
-          )}
 
-          {cvData.certifications.length > 0 && (
-            <div>
-              <h2 className="text-sm font-bold uppercase tracking-wider text-cv-brown mb-4 border-b border-cv-beige pb-1">
-                Certifications
-              </h2>
-              <div className="space-y-1">
-                {cvData.certifications.map((cert, index) => (
-                  <div key={index} className="flex items-start text-cv-text text-sm">
-                    <span className="text-cv-gold mr-2 mt-1">•</span>
-                    <span>{cert}</span>
+                  {/* Testing & Compliance */}
+                  <div>
+                    <h3 className="text-xs font-semibold text-cv-brown mb-2 uppercase tracking-wide">
+                      Testing & Compliance
+                    </h3>
+                    <div className="space-y-1">
+                      {cvData.skills
+                        .filter(skill => 
+                          skill.toLowerCase().includes('testing') ||
+                          skill.toLowerCase().includes('inspection') ||
+                          skill.toLowerCase().includes('pat') ||
+                          skill.toLowerCase().includes('bs 7671') ||
+                          skill.toLowerCase().includes('regulation') ||
+                          skill.toLowerCase().includes('fault')
+                        )
+                        .map((skill, index) => (
+                          <div key={index} className="flex items-start text-cv-text text-sm">
+                            <span className="text-cv-gold mr-2 mt-1">•</span>
+                            <span>{skill}</span>
+                          </div>
+                        ))}
+                    </div>
                   </div>
-                ))}
+
+                  {/* Specialised Systems */}
+                  <div>
+                    <h3 className="text-xs font-semibold text-cv-brown mb-2 uppercase tracking-wide">
+                      Specialised Systems
+                    </h3>
+                    <div className="space-y-1">
+                      {cvData.skills
+                        .filter(skill => 
+                          skill.toLowerCase().includes('solar') ||
+                          skill.toLowerCase().includes('cctv') ||
+                          skill.toLowerCase().includes('fire alarm') ||
+                          skill.toLowerCase().includes('emergency lighting') ||
+                          skill.toLowerCase().includes('led') ||
+                          skill.toLowerCase().includes('automation')
+                        )
+                        .map((skill, index) => (
+                          <div key={index} className="flex items-start text-cv-text text-sm">
+                            <span className="text-cv-gold mr-2 mt-1">•</span>
+                            <span>{skill}</span>
+                          </div>
+                        ))}
+                    </div>
+                  </div>
+
+                  {/* Professional Skills */}
+                  <div>
+                    <h3 className="text-xs font-semibold text-cv-brown mb-2 uppercase tracking-wide">
+                      Professional Skills
+                    </h3>
+                    <div className="space-y-1">
+                      {cvData.skills
+                        .filter(skill => 
+                          skill.toLowerCase().includes('health') ||
+                          skill.toLowerCase().includes('safety') ||
+                          skill.toLowerCase().includes('niceic') ||
+                          skill.toLowerCase().includes('customer') ||
+                          skill.toLowerCase().includes('project') ||
+                          skill.toLowerCase().includes('team') ||
+                          !skill.toLowerCase().match(/(installation|wiring|maintenance|repair|three phase|circuit|testing|inspection|pat|bs 7671|regulation|fault|solar|cctv|fire alarm|emergency lighting|led|automation|health|safety|niceic)/)
+                        )
+                        .map((skill, index) => (
+                          <div key={index} className="flex items-start text-cv-text text-sm">
+                            <span className="text-cv-gold mr-2 mt-1">•</span>
+                            <span>{skill}</span>
+                          </div>
+                        ))}
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
-          )}
-        </div>
+            )}
+
+            {/* Certifications & Qualifications */}
+            {cvData.certifications.length > 0 && (
+              <div>
+                <h2 className="text-sm font-bold uppercase tracking-wider text-cv-brown mb-4 border-b border-cv-beige pb-1">
+                  Certifications & Qualifications
+                </h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {/* Core Electrical Qualifications */}
+                  <div>
+                    <h3 className="text-xs font-semibold text-cv-brown mb-2 uppercase tracking-wide">
+                      Electrical Qualifications
+                    </h3>
+                    <div className="space-y-1">
+                      {cvData.certifications
+                        .filter(cert => 
+                          cert.toLowerCase().includes('18th edition') ||
+                          cert.toLowerCase().includes('level 3') ||
+                          cert.toLowerCase().includes('level 2') ||
+                          cert.toLowerCase().includes('city & guilds') ||
+                          cert.toLowerCase().includes('2365') ||
+                          cert.toLowerCase().includes('am2') ||
+                          cert.toLowerCase().includes('electrical installation')
+                        )
+                        .map((cert, index) => (
+                          <div key={index} className="flex items-start text-cv-text text-sm">
+                            <span className="text-cv-gold mr-2 mt-1">•</span>
+                            <span>{cert}</span>
+                          </div>
+                        ))}
+                    </div>
+                  </div>
+
+                  {/* Testing & Inspection Certifications */}
+                  <div>
+                    <h3 className="text-xs font-semibold text-cv-brown mb-2 uppercase tracking-wide">
+                      Testing & Inspection
+                    </h3>
+                    <div className="space-y-1">
+                      {cvData.certifications
+                        .filter(cert => 
+                          cert.toLowerCase().includes('2391') ||
+                          cert.toLowerCase().includes('testing') ||
+                          cert.toLowerCase().includes('inspection') ||
+                          cert.toLowerCase().includes('pat testing')
+                        )
+                        .map((cert, index) => (
+                          <div key={index} className="flex items-start text-cv-text text-sm">
+                            <span className="text-cv-gold mr-2 mt-1">•</span>
+                            <span>{cert}</span>
+                          </div>
+                        ))}
+                    </div>
+                  </div>
+
+                  {/* Professional Memberships */}
+                  <div>
+                    <h3 className="text-xs font-semibold text-cv-brown mb-2 uppercase tracking-wide">
+                      Professional Memberships
+                    </h3>
+                    <div className="space-y-1">
+                      {cvData.certifications
+                        .filter(cert => 
+                          cert.toLowerCase().includes('niceic') ||
+                          cert.toLowerCase().includes('ecs') ||
+                          cert.toLowerCase().includes('cscs') ||
+                          cert.toLowerCase().includes('approved')
+                        )
+                        .map((cert, index) => (
+                          <div key={index} className="flex items-start text-cv-text text-sm">
+                            <span className="text-cv-gold mr-2 mt-1">•</span>
+                            <span>{cert}</span>
+                          </div>
+                        ))}
+                    </div>
+                  </div>
+
+                  {/* Additional Certifications */}
+                  <div>
+                    <h3 className="text-xs font-semibold text-cv-brown mb-2 uppercase tracking-wide">
+                      Additional Certifications
+                    </h3>
+                    <div className="space-y-1">
+                      {cvData.certifications
+                        .filter(cert => 
+                          !cert.toLowerCase().match(/(18th edition|level 3|level 2|city & guilds|2365|am2|electrical installation|2391|testing|inspection|pat testing|niceic|ecs|cscs|approved)/)
+                        )
+                        .map((cert, index) => (
+                          <div key={index} className="flex items-start text-cv-text text-sm">
+                            <span className="text-cv-gold mr-2 mt-1">•</span>
+                            <span>{cert}</span>
+                          </div>
+                        ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
