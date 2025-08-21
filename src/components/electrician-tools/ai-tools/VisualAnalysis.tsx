@@ -526,26 +526,26 @@ const VisualAnalysis = () => {
       <div className="space-y-4 sm:space-y-8">
         {/* Hero Section */}
         <div className="text-center space-y-4 sm:space-y-6">
-          <div className="inline-flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-primary/20 to-accent/20 rounded-2xl border border-primary/30">
-            <Eye className="h-6 w-6 sm:h-8 sm:w-8 text-primary" />
+          <div className="inline-flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-blue-500/30 to-blue-600/30 rounded-2xl border border-blue-400/30">
+            <Eye className="h-6 w-6 sm:h-8 sm:w-8 text-blue-400" />
           </div>
-          <h1 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold text-foreground">
+          <h1 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold text-white">
             Visual Fault Analyser
           </h1>
-          <p className="text-muted-foreground text-sm sm:text-base lg:text-lg max-w-4xl mx-auto">
+          <p className="text-gray-300 text-sm sm:text-base lg:text-lg max-w-4xl mx-auto">
             Upload images of electrical installations for AI-powered safety analysis and BS 7671 18th Edition compliance checking.
             Get detailed fault identification with severity ratings and actionable recommendations.
           </p>
         </div>
 
         {/* Analysis Presets */}
-        <Card className="bg-card border-border max-w-5xl mx-auto">
+        <Card className="bg-gradient-to-r from-neutral-800/50 to-neutral-700/50 border border-neutral-600 max-w-5xl mx-auto">
           <CardHeader className="p-4 sm:p-6">
             <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-              <Settings className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
-              <CardTitle className="text-lg sm:text-xl text-foreground">Analysis Presets</CardTitle>
+              <Settings className="h-4 w-4 sm:h-5 sm:w-5 text-blue-400" />
+              <CardTitle className="text-lg sm:text-xl text-white">Analysis Presets</CardTitle>
             </div>
-            <CardDescription className="text-muted-foreground text-sm sm:text-base">
+            <CardDescription className="text-gray-300 text-sm sm:text-base">
               Choose a preset optimised for your specific inspection type:
             </CardDescription>
           </CardHeader>
@@ -561,8 +561,8 @@ const VisualAnalysis = () => {
                         variant={selectedPreset.name === preset.name ? "default" : "outline"}
                         className={`h-auto p-4 flex flex-col items-start gap-2 ${
                           selectedPreset.name === preset.name 
-                            ? 'bg-primary text-primary-foreground border-primary' 
-                            : 'border-border hover:bg-accent/50'
+                            ? 'bg-blue-600 text-white border-blue-500' 
+                            : 'border-neutral-600 text-gray-300 hover:bg-neutral-700/50'
                         }`}
                         onClick={() => {
                           setSelectedPreset(preset);
@@ -588,13 +588,13 @@ const VisualAnalysis = () => {
         </Card>
 
         {/* Main Analysis Interface */}
-        <Card className="bg-card border-border max-w-5xl mx-auto">
+        <Card className="bg-gradient-to-r from-neutral-800/50 to-neutral-700/50 border border-neutral-600 max-w-5xl mx-auto">
           <CardHeader className="p-4 sm:p-6">
             <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-              <Eye className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
-              <CardTitle className="text-lg sm:text-xl text-foreground">Visual Analysis</CardTitle>
+              <Eye className="h-4 w-4 sm:h-5 sm:w-5 text-blue-400" />
+              <CardTitle className="text-lg sm:text-xl text-white">Visual Analysis</CardTitle>
             </div>
-            <CardDescription className="text-muted-foreground text-sm sm:text-base">
+            <CardDescription className="text-gray-300 text-sm sm:text-base">
               Upload images or capture live photos for intelligent fault detection and safety analysis:
             </CardDescription>
           </CardHeader>
@@ -602,21 +602,21 @@ const VisualAnalysis = () => {
           <CardContent className="p-4 sm:p-6 pt-0 space-y-4 sm:space-y-6">
             {/* Image Upload Area */}
             <div 
-              className="border-2 border-dashed border-border rounded-lg p-6 sm:p-8 text-center space-y-4 hover:border-primary/50 transition-colors"
+              className="border-2 border-dashed border-neutral-600 rounded-lg p-6 sm:p-8 text-center space-y-4 hover:border-blue-400 transition-colors"
               onDrop={handleDrop}
               onDragOver={(e) => e.preventDefault()}
             >
               <div className="flex justify-center">
-                <Upload className="h-8 w-8 sm:h-12 sm:w-12 text-muted-foreground" />
+                <Upload className="h-8 w-8 sm:h-12 sm:w-12 text-gray-400" />
               </div>
               <div>
-                <p className="text-muted-foreground mb-2">Drag and drop images here, or</p>
+                <p className="text-gray-300 mb-2">Drag and drop images here, or</p>
                 <div className="flex gap-2 sm:gap-3 justify-center flex-wrap">
                   <Tooltip>
                     <TooltipTrigger asChild>
                       <Button
                         variant="outline"
-                        className="border-border text-foreground hover:bg-accent/50"
+                        className="border-neutral-600 text-gray-300 hover:bg-neutral-700/50"
                         onClick={() => fileInputRef.current?.click()}
                       >
                         <Upload className="h-4 w-4 mr-2" />
@@ -629,7 +629,7 @@ const VisualAnalysis = () => {
                   </Tooltip>
                   <Button
                     variant="outline"
-                    className="border-border text-foreground hover:bg-accent/50"
+                    className="border-neutral-600 text-gray-300 hover:bg-neutral-700/50"
                     onClick={isCameraActive ? stopCamera : startCamera}
                   >
                     <Camera className="h-4 w-4 mr-2" />
