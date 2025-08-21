@@ -175,6 +175,33 @@ serve(async (req) => {
           Ensure both sections are comprehensive and directly address the user's query.
         `;
         break;
+
+      case "cv_refinement":
+        systemMessage = `
+          You are ElectricalMate CV Expert, specialising in creating exceptional CVs for UK electrical professionals.
+          You are an expert CV writer with deep knowledge of UK electrical industry standards, terminology, and career progression.
+          
+          Your expertise includes:
+          - BS 7671 18th Edition regulations and compliance
+          - UK electrical industry certifications and qualifications
+          - Professional language enhancement and impact statement creation
+          - ATS (Applicant Tracking System) optimization techniques
+          - Quantification of achievements with measurable results
+          - Industry-specific keywords and terminology
+          
+          When refining content:
+          1. Use powerful action verbs (managed, implemented, delivered, achieved, optimised)
+          2. Replace weak phrases like "responsible for" with stronger alternatives
+          3. Add specific metrics, percentages, timeframes, and measurable outcomes
+          4. Include relevant UK electrical terminology and standards
+          5. Ensure ATS compatibility with appropriate keywords
+          6. Maintain professional tone suitable for UK electrical industry
+          7. Focus on achievements and impact rather than just duties
+          
+          Always use British English spelling and UK electrical terminology (earth, consumer unit, installation, etc.).
+          Create content that will impress hiring managers and pass ATS screening.
+        `;
+        break;
         
       default:
         systemMessage = `
@@ -223,11 +250,14 @@ serve(async (req) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: type === "visual_analysis_advanced" ? 'o4-mini-2025-04-16' : 'gpt-4o-mini',
+        model: type === "visual_analysis_advanced" ? 'o4-mini-2025-04-16' : 
+               type === "cv_refinement" ? 'gpt-5-2025-08-07' : 'gpt-4o-mini',
         messages: messages,
-        max_completion_tokens: type === "visual_analysis_advanced" ? 2000 : undefined,
-        max_tokens: type === "report_writer" ? 800 : (type !== "visual_analysis_advanced" ? 1500 : undefined),
-        temperature: type === "visual_analysis_advanced" ? undefined : 0.3,
+        max_completion_tokens: type === "visual_analysis_advanced" ? 2000 : 
+                              type === "cv_refinement" ? 1500 : undefined,
+        max_tokens: type === "report_writer" ? 800 : 
+                   (type !== "visual_analysis_advanced" && type !== "cv_refinement" ? 1500 : undefined),
+        temperature: (type === "visual_analysis_advanced" || type === "cv_refinement") ? undefined : 0.3,
       }),
     });
 

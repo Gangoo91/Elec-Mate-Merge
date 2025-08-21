@@ -2,7 +2,7 @@
 import { supabase } from "@/integrations/supabase/client";
 
 interface AIGenerationRequest {
-  type: 'professional_summary' | 'job_description' | 'skills' | 'achievements' | 'complete_cv';
+  type: 'professional_summary' | 'job_description' | 'skills' | 'achievements' | 'complete_cv' | 'refine_content' | 'optimize_ats' | 'quantify_achievements';
   context: {
     jobTitle?: string;
     company?: string;
@@ -12,6 +12,7 @@ interface AIGenerationRequest {
     personalInfo?: any;
     targetRole?: string;
     previousRoles?: any[];
+    currentContent?: string;
   };
   userInput?: string;
 }
@@ -28,7 +29,7 @@ export class AIService {
       const { data, error } = await supabase.functions.invoke('electrician-ai-assistant', {
         body: {
           prompt: this.buildPrompt(request),
-          type: 'cv_generation'
+          type: 'cv_refinement'
         }
       });
 
@@ -102,6 +103,60 @@ Create 3-5 quantifiable achievements that demonstrate electrical expertise, safe
 
 Create comprehensive CV content including professional summary, enhanced job descriptions, relevant skills, and suggested improvements. Focus on UK electrical industry requirements and best practices.`;
 
+      case 'refine_content':
+        return `Refine and enhance this electrical CV content to make it more professional, impactful, and engaging:
+
+Current Content: "${context.currentContent}"
+Role Context: ${context.jobTitle || 'Electrician'}
+Experience Level: ${context.experience || 'Not specified'}
+Additional Context: ${userInput || 'None'}
+
+Please enhance the content by:
+1. Using stronger action verbs and professional language
+2. Making statements more specific and quantifiable where possible
+3. Improving clarity and readability
+4. Ensuring UK electrical industry terminology is used correctly
+5. Making the content more ATS-friendly with relevant keywords
+6. Maintaining professional tone throughout
+
+Return only the refined content without explanations.`;
+
+      case 'optimize_ats':
+        return `Optimize this electrical CV content for Applicant Tracking Systems (ATS) while maintaining readability:
+
+Current Content: "${context.currentContent}"
+Target Role: ${context.targetRole || context.jobTitle || 'Electrician'}
+Industry Keywords: Electrical installation, BS 7671, 18th Edition, PAT testing, NICEIC, fault finding
+Additional Context: ${userInput || 'None'}
+
+Enhance the content by:
+1. Incorporating relevant electrical industry keywords naturally
+2. Using standard job title variations employers search for
+3. Including technical skills and certifications keywords
+4. Ensuring proper formatting for ATS parsing
+5. Maintaining natural language flow
+6. Adding quantifiable metrics where appropriate
+
+Return the optimized content that will rank well in ATS systems.`;
+
+      case 'quantify_achievements':
+        return `Transform this electrical work content into quantified achievements with measurable impact:
+
+Current Content: "${context.currentContent}"
+Role: ${context.jobTitle || 'Electrician'}
+Company: ${context.company || 'Previous employer'}
+Additional Context: ${userInput || 'None'}
+
+Create specific, quantified achievement statements by:
+1. Adding numbers, percentages, timeframes, and scale
+2. Focusing on measurable business impact
+3. Highlighting safety improvements, cost savings, or efficiency gains
+4. Using STAR method (Situation, Task, Action, Result) structure
+5. Including project scope, team size, or budget figures where relevant
+6. Demonstrating progression and increasing responsibility
+
+Return 3-5 powerful achievement statements with specific metrics.`;
+
       default:
         return `Help improve this CV content: ${userInput}`;
     }
@@ -174,5 +229,32 @@ Create comprehensive CV content including professional summary, enhanced job des
       type: 'complete_cv',
       context
     });
+  }
+
+  static async refineContent(currentContent: string, context: AIGenerationRequest['context'], userInput?: string): Promise<string> {
+    const response = await this.callAIAssistant({
+      type: 'refine_content',
+      context: { ...context, currentContent },
+      userInput
+    });
+    return response.content;
+  }
+
+  static async optimizeForATS(currentContent: string, context: AIGenerationRequest['context'], userInput?: string): Promise<string> {
+    const response = await this.callAIAssistant({
+      type: 'optimize_ats',
+      context: { ...context, currentContent },
+      userInput
+    });
+    return response.content;
+  }
+
+  static async quantifyAchievements(currentContent: string, context: AIGenerationRequest['context'], userInput?: string): Promise<string[]> {
+    const response = await this.callAIAssistant({
+      type: 'quantify_achievements',
+      context: { ...context, currentContent },
+      userInput
+    });
+    return response.content.split('\n').filter(line => line.trim().length > 0);
   }
 }
