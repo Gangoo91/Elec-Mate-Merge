@@ -14,8 +14,24 @@ interface CVPreviewProps {
 export const CVPreview: React.FC<CVPreviewProps> = ({ cvData }) => {
   const formatDate = (dateString: string) => {
     if (!dateString) return '';
+    
+    // Handle YYYY-MM format from month input
+    if (dateString.match(/^\d{4}-\d{2}$/)) {
+      try {
+        const [year, month] = dateString.split('-');
+        const date = new Date(parseInt(year), parseInt(month) - 1);
+        return format(date, 'MMM yyyy');
+      } catch {
+        return dateString;
+      }
+    }
+    
+    // Handle other date formats
     try {
-      const date = new Date(dateString + '-01');
+      const date = new Date(dateString);
+      if (isNaN(date.getTime())) {
+        return dateString;
+      }
       return format(date, 'MMM yyyy');
     } catch {
       return dateString;

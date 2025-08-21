@@ -128,6 +128,7 @@ export const EnhancedExperienceForm: React.FC<EnhancedExperienceFormProps> = ({ 
                   value={exp.startDate}
                   onChange={(e) => updateExperience(exp.id, 'startDate', e.target.value)}
                   className="bg-elec-dark border-elec-yellow/20 text-white"
+                  placeholder="YYYY-MM"
                 />
               </div>
 
@@ -140,6 +141,7 @@ export const EnhancedExperienceForm: React.FC<EnhancedExperienceFormProps> = ({ 
                   onChange={(e) => updateExperience(exp.id, 'endDate', e.target.value)}
                   className="bg-elec-dark border-elec-yellow/20 text-white"
                   disabled={exp.current}
+                  placeholder="YYYY-MM"
                 />
               </div>
 
