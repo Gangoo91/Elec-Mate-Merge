@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 // Form imports
 import { EICRForm, type EICRFormData } from "./forms/EICRForm";
@@ -259,39 +260,50 @@ Please generate a professional RCD test certificate following BS 7671:2018 stand
   };
 
   const handleGenerateReport = async () => {
-    const finalPrompt = buildPromptFromForm();
-    if (!finalPrompt.trim() && !formData) return;
+    if (!selectedTemplate || !formData) {
+      toast({
+        title: "Missing Information",
+        description: "Please select a template and complete the form before generating a report.",
+        variant: "destructive"
+      });
+      return;
+    }
     
     setIsGenerating(true);
     
     try {
-      await new Promise(resolve => setTimeout(resolve, 3000));
-      
-      setGeneratedReport(`
-# ${selectedTemplate ? reportTemplates.find(t => t.id === selectedTemplate)?.name : 'Electrical Report'}
+      console.log('Calling generate-electrical-report function with:', {
+        template: selectedTemplate,
+        formData,
+        additionalNotes: reportPrompt
+      });
 
-## Installation Details
-${finalPrompt}
+      const { data, error } = await supabase.functions.invoke('generate-electrical-report', {
+        body: {
+          template: selectedTemplate,
+          formData: formData,
+          additionalNotes: reportPrompt
+        }
+      });
 
-## Testing Results
-All tests completed successfully and within acceptable parameters.
+      if (error) {
+        console.error('Supabase function error:', error);
+        throw new Error(error.message || 'Failed to generate report');
+      }
 
-## Conclusion
-The electrical installation has been inspected and tested in accordance with BS 7671:2018.
-
----
-*Report generated on ${new Date().toLocaleDateString()}*
-      `);
+      console.log('Report generation successful');
+      setGeneratedReport(data.report);
       
       toast({
         title: "Report Generated",
-        description: "Your electrical report has been generated successfully.",
+        description: "Your professional electrical report has been generated successfully.",
         variant: "success"
       });
     } catch (error) {
+      console.error('Error generating report:', error);
       toast({
         title: "Generation Failed",
-        description: "Failed to generate report. Please try again.",
+        description: error.message || "Failed to generate report. Please try again.",
         variant: "destructive"
       });
     } finally {
@@ -428,7 +440,7 @@ The electrical installation has been inspected and tested in accordance with BS 
                 <Button 
                   className="w-full bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 h-12 text-base font-semibold" 
                   onClick={handleGenerateReport} 
-                  disabled={isGenerating || (!reportPrompt.trim() && !formData)}
+                  disabled={isGenerating || !selectedTemplate || !formData}
                 >
                   {isGenerating ? (
                     <>
