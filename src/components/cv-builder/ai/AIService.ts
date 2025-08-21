@@ -12,8 +12,6 @@ interface AIGenerationRequest {
     personalInfo?: any;
     targetRole?: string;
     previousRoles?: any[];
-    education?: any[];
-    certifications?: string[];
   };
   userInput?: string;
 }
@@ -176,116 +174,5 @@ Create comprehensive CV content including professional summary, enhanced job des
       type: 'complete_cv',
       context
     });
-  }
-
-  // Content Organization Methods
-  static async optimizeContent(cvData: any): Promise<any> {
-    try {
-      // Organize and enhance CV content using AI
-      const response = await this.callAIAssistant({
-        type: 'complete_cv',
-        context: {
-          personalInfo: cvData.personalInfo,
-          experience: cvData.experience,
-          education: cvData.education,
-          skills: cvData.skills,
-          certifications: cvData.certifications,
-          targetRole: 'Electrical Professional'
-        }
-      });
-
-      return this.parseOptimizedContent(response.content, cvData);
-    } catch (error) {
-      console.error('Content optimization error:', error);
-      return cvData; // Return original data if optimization fails
-    }
-  }
-
-  private static parseOptimizedContent(aiContent: string, originalData: any): any {
-    // Parse AI response and merge with original data
-    try {
-      // Extract different sections from AI response
-      const sections = this.extractSections(aiContent);
-      
-      return {
-        personalInfo: {
-          ...originalData.personalInfo,
-          professionalSummary: sections.summary || originalData.personalInfo.professionalSummary
-        },
-        experience: this.enhanceExperience(originalData.experience, sections.experience),
-        education: originalData.education, // Keep original education data
-        skills: this.categorizeSkills(sections.skills || originalData.skills),
-        certifications: originalData.certifications
-      };
-    } catch (error) {
-      console.error('Content parsing error:', error);
-      return originalData;
-    }
-  }
-
-  private static extractSections(content: string): any {
-    const sections: any = {};
-    
-    // Extract professional summary
-    const summaryMatch = content.match(/Professional Summary[:\n]+(.*?)(?=\n\n|\nWork Experience|\nSkills|$)/s);
-    if (summaryMatch) {
-      sections.summary = summaryMatch[1].trim();
-    }
-
-    // Extract skills
-    const skillsMatch = content.match(/Skills[:\n]+(.*?)(?=\n\n|\nWork Experience|\nEducation|$)/s);
-    if (skillsMatch) {
-      const skillsText = skillsMatch[1];
-      sections.skills = skillsText.split(/[,\n•\-\*]/)
-        .map(skill => skill.trim())
-        .filter(skill => skill.length > 0);
-    }
-
-    return sections;
-  }
-
-  private static enhanceExperience(originalExperience: any[], aiExperience?: any[]): any[] {
-    // Enhance job descriptions with AI suggestions while keeping original structure
-    return originalExperience.map((exp, index) => {
-      if (aiExperience && aiExperience[index]) {
-        return {
-          ...exp,
-          description: aiExperience[index].description || exp.description
-        };
-      }
-      return exp;
-    });
-  }
-
-  private static categorizeSkills(skills: string[]): string[] {
-    // Organize skills by priority and category
-    const skillCategories = {
-      electrical: ['wiring', 'electrical', 'power', 'voltage', 'circuit', 'installation', 'maintenance'],
-      software: ['CAD', 'software', 'computer', 'digital', 'programming'],
-      safety: ['safety', 'compliance', 'health', 'regulations', 'testing'],
-      certifications: ['certified', 'qualification', 'license', 'BS 7671']
-    };
-
-    const categorized: string[] = [];
-    const electrical: string[] = [];
-    const software: string[] = [];
-    const safety: string[] = [];
-    const other: string[] = [];
-
-    skills.forEach(skill => {
-      const skillLower = skill.toLowerCase();
-      if (skillCategories.electrical.some(keyword => skillLower.includes(keyword))) {
-        electrical.push(skill);
-      } else if (skillCategories.software.some(keyword => skillLower.includes(keyword))) {
-        software.push(skill);
-      } else if (skillCategories.safety.some(keyword => skillLower.includes(keyword))) {
-        safety.push(skill);
-      } else {
-        other.push(skill);
-      }
-    });
-
-    // Return prioritized order: electrical first, then software, safety, other
-    return [...electrical, ...software, ...safety, ...other];
   }
 }
