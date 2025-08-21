@@ -1,6 +1,7 @@
 import React from "react";
 import { CVData } from "./types";
 import { format } from "date-fns";
+import { formatDescription, formatMarkdownForCV } from "../../utils/markdownUtils";
 
 interface ProfessionalCVPreviewProps {
   cvData: CVData;
@@ -17,13 +18,6 @@ export const ProfessionalCVPreview: React.FC<ProfessionalCVPreviewProps> = ({ cv
     }
   };
 
-  // Convert description to bullet points if it contains sentences
-  const formatDescription = (description: string) => {
-    if (!description) return [];
-    // Split by periods or new lines and filter out empty strings
-    const sentences = description.split(/[.\n]+/).filter(item => item.trim().length > 0);
-    return sentences.map(sentence => sentence.trim());
-  };
 
   return (
     <div className="bg-cv-cream min-h-screen p-8 print:p-6 print:bg-white">
@@ -64,12 +58,7 @@ export const ProfessionalCVPreview: React.FC<ProfessionalCVPreviewProps> = ({ cv
               Personal Profile
             </h2>
             <div className="text-cv-text leading-relaxed space-y-2">
-              {formatDescription(cvData.personalInfo.professionalSummary).map((point, index) => (
-                <div key={index} className="flex items-start">
-                  <span className="text-cv-gold mr-2 mt-1">•</span>
-                  {point}
-                </div>
-              ))}
+              {formatMarkdownForCV(cvData.personalInfo.professionalSummary)}
             </div>
           </div>
         )}
@@ -95,12 +84,7 @@ export const ProfessionalCVPreview: React.FC<ProfessionalCVPreviewProps> = ({ cv
                   </div>
                   {exp.description && (
                     <div className="text-cv-text text-sm leading-relaxed space-y-2 mt-3">
-                      {formatDescription(exp.description).map((point, index) => (
-                        <div key={index} className="flex items-start gap-3">
-                          <span className="text-cv-gold mt-1.5 text-xs">▪</span>
-                          <span className="flex-1 text-justify">{point}</span>
-                        </div>
-                      ))}
+                      {formatDescription(exp.description)}
                     </div>
                   )}
                 </div>
