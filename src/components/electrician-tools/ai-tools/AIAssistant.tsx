@@ -233,11 +233,12 @@ const AIAssistant = () => {
                 searchMode === 'detailed' 
                   ? 'bg-purple-600 hover:bg-purple-700 text-white' 
                   : 'border-neutral-600 text-gray-300 hover:bg-neutral-700/50'
-              } text-xs`}
+              } text-xs px-2 sm:px-3`}
               onClick={() => setSearchMode('detailed')}
             >
-              <BookOpen className="h-3 w-3 mr-1" />
-              Detailed
+              <BookOpen className="h-3 w-3 sm:mr-1" />
+              <span className="hidden sm:inline">Detailed</span>
+              <span className="sm:hidden">Full</span>
             </Button>
             {responseTime && (
               <Badge variant="outline" className="border-neutral-600 text-gray-300 text-xs">
