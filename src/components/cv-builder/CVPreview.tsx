@@ -131,7 +131,7 @@ export const CVPreview: React.FC<CVPreviewProps> = ({ cvData }) => {
         {(cvData.skills.length > 0 || cvData.certifications.length > 0) && <Separator />}
 
         {/* Skills and Certifications */}
-        <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="w-full space-y-6">
           {cvData.skills.length > 0 && (
             <div>
               <h2 className="text-xl font-semibold mb-3 text-gray-900">Skills</h2>
