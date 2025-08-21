@@ -70,6 +70,14 @@ export default {
 				'elec-light': 'hsl(var(--elec-light))',
 				'elec-card': 'hsl(var(--elec-card))',
 				'elec-slate': 'hsl(var(--elec-slate))',
+				
+				// Professional CV colors
+				'cv-cream': 'hsl(var(--cv-cream))',
+				'cv-beige': 'hsl(var(--cv-beige))',
+				'cv-brown': 'hsl(var(--cv-brown))',
+				'cv-gold': 'hsl(var(--cv-gold))',
+				'cv-text': 'hsl(var(--cv-text))',
+				'cv-text-light': 'hsl(var(--cv-text-light))',
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
