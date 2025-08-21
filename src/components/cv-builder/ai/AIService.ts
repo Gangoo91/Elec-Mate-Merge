@@ -81,13 +81,17 @@ Requirements:
 - Keep it brief and impactful - no lengthy descriptions`;
 
       case 'skills':
-        return `Generate a comprehensive list of electrical skills based on:
+        return `Generate relevant electrical skill keywords only based on:
 - Current role: ${context.jobTitle}
 - Experience level: ${context.experience}
 - Existing skills: ${context.skills?.join(', ') || 'None listed'}
 - Additional context: ${userInput || ''}
 
-Provide a mix of technical electrical skills, software/tools, and soft skills relevant to the UK electrical industry. Include specific certifications, testing procedures, and electrical systems knowledge.`;
+IMPORTANT: Return ONLY skill keywords or short phrases (1-3 words each). No descriptions, explanations, or sentences. Format as simple bullet points or comma-separated list.
+
+Examples: "Electrical Installation", "PAT Testing", "18th Edition", "NICEIC Certified", "Fault Finding", "Consumer Units", "Emergency Lighting"
+
+Focus on UK electrical industry terms, certifications, tools, and technical skills.`;
 
       case 'achievements':
         return `Generate professional achievements for an electrical worker:
