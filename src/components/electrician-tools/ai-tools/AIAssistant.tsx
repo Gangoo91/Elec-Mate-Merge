@@ -1,20 +1,18 @@
-import { useState, useRef } from "react";
-import { Sparkles, Loader, Search, BookOpen, Clock, Zap } from "lucide-react";
+import { useState } from "react";
+import { Sparkles, Loader, Search, BookOpen, Eye, EyeOff } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
-import { Badge } from "@/components/ui/badge";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const AIAssistant = () => {
   const [prompt, setPrompt] = useState("");
-  const [response, setResponse] = useState("");
+  const [analysisResult, setAnalysisResult] = useState("");
+  const [regulationsResult, setRegulationsResult] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [responseTime, setResponseTime] = useState<number | null>(null);
-  const [selectedMode, setSelectedMode] = useState<"quick" | "detailed">("quick");
-  const streamRef = useRef<ReadableStreamDefaultReader<Uint8Array> | null>(null);
-  const startTimeRef = useRef<number>(0);
+  const [showResults, setShowResults] = useState(true);
 
   const handleAIQuery = async () => {
     if (prompt.trim() === "") {
@@ -27,120 +25,58 @@ const AIAssistant = () => {
     }
     
     setIsLoading(true);
-    setResponse("");
-    setResponseTime(null);
-    startTimeRef.current = Date.now();
+    setAnalysisResult("");
+    setRegulationsResult("");
     
     try {
-      const response = await fetch(`https://jtwygbeceundfgnkirof.supabase.co/functions/v1/electrician-ai-assistant-stream`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp0d3lnYmVjZXVuZGZnbmtpcm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYyMTc2OTUsImV4cCI6MjA2MTc5MzY5NX0.NgMOzzNkreOiJ2_t_f90NJxIJTcpUninWPYnM7RkrY8`,
-        },
-        body: JSON.stringify({ 
+      const { data, error } = await supabase.functions.invoke('electrician-ai-assistant', {
+        body: { 
           prompt: prompt,
-          mode: selectedMode
-        }),
+          type: "structured_assistant" 
+        },
       });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+      
+      if (error) {
+        throw new Error(error.message || 'Error connecting to the AI assistant');
       }
-
-      const reader = response.body?.getReader();
-      if (!reader) {
-        throw new Error("Failed to get response reader");
+      
+      if (data.error) {
+        throw new Error(data.error);
       }
-
-      streamRef.current = reader;
-      let accumulatedResponse = "";
-      let firstChunkReceived = false;
-
-      try {
-        while (true) {
-          const { done, value } = await reader.read();
-          if (done) break;
-
-          const chunk = new TextDecoder().decode(value);
-          const lines = chunk.split('\n');
-
-          for (const line of lines) {
-            if (line.startsWith('data: ')) {
-              try {
-                const data = JSON.parse(line.slice(6));
-                if (data.content) {
-                  accumulatedResponse += data.content;
-                  setResponse(accumulatedResponse);
-                  
-                  if (!firstChunkReceived) {
-                    firstChunkReceived = true;
-                    const firstChunkTime = Date.now();
-                    console.log(`First chunk received in ${(firstChunkTime - startTimeRef.current) / 1000}s`);
-                  }
-                }
-              } catch (e) {
-                // Skip invalid JSON
-                continue;
-              }
-            }
-          }
+      
+      // Handle both structured and regular responses
+      if (data.analysis && data.regulations) {
+        // Structured response
+        setAnalysisResult(data.analysis);
+        setRegulationsResult(data.regulations);
+      } else if (data.response) {
+        // Fallback to regular response - split into sections
+        const response = data.response;
+        const sections = response.split(/(?=REGULATIONS?:|ANALYSIS:|TECHNICAL|COMPLIANCE)/i);
+        
+        if (sections.length > 1) {
+          setAnalysisResult(sections[0].trim());
+          setRegulationsResult(sections.slice(1).join('\n').trim());
+        } else {
+          // Single response - put in analysis section
+          setAnalysisResult(response);
+          setRegulationsResult("See analysis section for regulation details.");
         }
-
-        const endTime = Date.now();
-        setResponseTime(endTime - startTimeRef.current);
-
-        toast({
-          title: "Search Complete",
-          description: `Response received in ${((endTime - startTimeRef.current) / 1000).toFixed(1)}s`,
-        });
-      } catch (streamError) {
-        console.error('Stream reading error:', streamError);
-        throw new Error("Failed to read response stream");
-      } finally {
-        reader.releaseLock();
-        streamRef.current = null;
+      } else {
+        throw new Error("No valid response received from AI");
       }
-
+      
+      toast({
+        title: "Analysis Complete",
+        description: "AI has provided detailed analysis and regulation guidance.",
+      });
     } catch (error) {
       console.error('AI Query Error:', error);
-      
-      // Fallback to the original non-streaming function
-      try {
-        const { data, error: fallbackError } = await supabase.functions.invoke('electrician-ai-assistant', {
-          body: { 
-            prompt: prompt,
-            type: "structured_assistant" 
-          },
-        });
-        
-        if (fallbackError) throw fallbackError;
-        if (data?.error) throw new Error(data.error);
-        
-        if (data?.analysis) {
-          setResponse(data.analysis);
-        } else if (data?.response) {
-          setResponse(data.response);
-        } else {
-          throw new Error("No valid response received");
-        }
-        
-        const endTime = Date.now();
-        setResponseTime(endTime - startTimeRef.current);
-        
-        toast({
-          title: "Search Complete (Fallback)",
-          description: `Response received in ${((endTime - startTimeRef.current) / 1000).toFixed(1)}s`,
-        });
-        
-      } catch (fallbackError) {
-        console.error('Fallback also failed:', fallbackError);
-        toast({
-          title: "Error",
-          description: "AI assistant is temporarily unavailable. Please try again.",
-          variant: "destructive",
-        });
-      }
+      toast({
+        title: "Error",
+        description: error instanceof Error ? error.message : "Failed to get response from AI assistant",
+        variant: "destructive",
+      });
     } finally {
       setIsLoading(false);
     }
@@ -155,166 +91,107 @@ const AIAssistant = () => {
     "IP rating requirements"
   ];
 
-  const formatResponse = (text: string) => {
-    if (!text) return [];
-    
-    const lines = text.split('\n');
-    return lines.map((line, index) => {
-      const trimmedLine = line.trim();
-      
-      // Headers and important sections
-      if (trimmedLine.match(/^(CALCULATION|SIZING|ASSESSMENT|ANALYSIS|RECOMMENDATION|Formula|Requirements?):/i)) {
-        return (
-          <div key={index} className="text-white font-bold text-base sm:text-lg mt-4 mb-2 border-b border-elec-yellow/30 pb-1">
-            {trimmedLine}
-          </div>
-        );
-      }
-      
-      // Regulation references
-      if (trimmedLine.match(/^(Regulation|BS 7671|IET|Section)/i) || trimmedLine.match(/^\d{3}\.\d/)) {
-        return (
-          <div key={index} className="text-elec-yellow font-semibold text-sm sm:text-base mt-3 mb-1">
-            {trimmedLine}
-          </div>
-        );
-      }
-      
-      // Numbered steps
-      if (trimmedLine.match(/^\d+\./)) {
-        return (
-          <div key={index} className="text-white font-medium text-sm sm:text-base mt-2 mb-1">
-            {trimmedLine}
-          </div>
-        );
-      }
-      
-      // Bullet points
-      if (trimmedLine.startsWith('•') || trimmedLine.startsWith('-')) {
-        return (
-          <div key={index} className="text-gray-200 ml-4 text-sm sm:text-base my-1">
-            {trimmedLine}
-          </div>
-        );
-      }
-      
-      // Empty lines
-      if (trimmedLine === '') {
-        return <div key={index} className="my-2"></div>;
-      }
-      
-      // Regular text
-      return (
-        <div key={index} className="text-gray-100 text-sm sm:text-base leading-relaxed my-1">
-          {trimmedLine}
-        </div>
-      );
-    });
-  };
-
   return (
-    <div className="min-h-screen bg-elec-dark text-white">
-      <div className="max-w-4xl mx-auto p-3 sm:p-6 space-y-4">
+    <div className="min-h-screen bg-neutral-900 text-white">
+      <div className="max-w-6xl mx-auto p-3 sm:p-6 space-y-4 sm:space-y-8">
         {/* Hero Section */}
-        <div className="text-center space-y-3 sm:space-y-4">
-          <div className="inline-flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/30 rounded-2xl border border-elec-yellow/30">
-            <Sparkles className="h-6 w-6 sm:h-8 sm:w-8 text-elec-yellow" />
+        <div className="text-center space-y-4 sm:space-y-6">
+          <div className="inline-flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-purple-500/30 to-purple-600/30 rounded-2xl border border-purple-400/30">
+            <Sparkles className="h-6 w-6 sm:h-8 sm:w-8 text-purple-400" />
           </div>
-          <h1 className="text-xl sm:text-3xl font-bold text-white">
-            AI Assistant
+          <h1 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold text-white">
+            Intelligent Search
           </h1>
-          <p className="text-gray-300 text-sm sm:text-base max-w-2xl mx-auto">
-            Get instant answers about BS7671 electrical regulations
+          <p className="text-gray-300 text-sm sm:text-base lg:text-lg max-w-4xl mx-auto">
+            Ask questions about BS7671 electrical regulations in plain English. Get instant answers with relevant
+            regulations, practical guidance, and safety tips.
           </p>
         </div>
 
-        {/* Search Interface */}
-        <Card className="bg-elec-gray border border-elec-yellow/30">
-          <CardHeader className="p-4 sm:p-6 pb-2">
-            <div className="flex items-center justify-between mb-3">
-              <div className="flex items-center gap-2">
-                <Sparkles className="h-5 w-5 text-elec-yellow" />
-                <CardTitle className="text-lg text-white">Ask a Question</CardTitle>
-              </div>
-              {responseTime && (
-                <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow text-xs">
-                  <Clock className="h-3 w-3 mr-1" />
-                  {(responseTime / 1000).toFixed(1)}s
-                </Badge>
-              )}
+        {/* AI Search Interface Component */}
+        <Card className="bg-gradient-to-r from-neutral-800/50 to-neutral-700/50 border border-neutral-600 max-w-5xl mx-auto">
+          <CardHeader className="p-4 sm:p-6">
+            <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+              <Sparkles className="h-4 w-4 sm:h-5 sm:w-5 text-purple-400" />
+              <CardTitle className="text-lg sm:text-xl text-white">Intelligent Search</CardTitle>
             </div>
+            <CardDescription className="text-gray-300 text-sm sm:text-base">
+              Ask about electrical regulations, testing procedures, or installation requirements:
+            </CardDescription>
           </CardHeader>
           
-          <CardContent className="p-4 sm:p-6 pt-0 space-y-4">
-            {/* Mode Selection */}
-            <div className="flex gap-2">
-              <Button
-                variant={selectedMode === "quick" ? "default" : "outline"}
-                size="sm"
-                onClick={() => setSelectedMode("quick")}
-                className={selectedMode === "quick" 
-                  ? "bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 flex-1" 
-                  : "border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 flex-1"
-                }
-              >
-                <Zap className="h-4 w-4 mr-1" />
-                Quick
-              </Button>
-              <Button
-                variant={selectedMode === "detailed" ? "default" : "outline"}
-                size="sm"
-                onClick={() => setSelectedMode("detailed")}
-                className={selectedMode === "detailed" 
-                  ? "bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 flex-1" 
-                  : "border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 flex-1"
-                }
-              >
-                <BookOpen className="h-4 w-4 mr-1" />
-                Full
-              </Button>
-            </div>
-
+          <CardContent className="p-4 sm:p-6 pt-0 space-y-4 sm:space-y-6">
             {/* Input Area */}
-            <div className="space-y-3">
+            <div className="space-y-3 sm:space-y-4">
               <Textarea
-                placeholder="e.g. 'What are the RCD requirements for bathrooms?' or 'How do I calculate cable sizing?'"
-                className="min-h-[80px] bg-elec-dark border-elec-yellow/30 focus:border-elec-yellow text-white placeholder:text-gray-400 resize-none text-sm sm:text-base"
+                placeholder="e.g. 'What are the RCD requirements for bathrooms?' or 'How do I test earth fault loop impedance?'"
+                className="min-h-[80px] sm:min-h-[100px] bg-neutral-700/50 border-neutral-600 focus:border-purple-400 text-white placeholder:text-gray-400 resize-none text-sm sm:text-base"
                 value={prompt}
                 onChange={(e) => setPrompt(e.target.value)}
               />
               
-              <Button 
-                className="w-full bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 font-medium py-3 h-12" 
-                onClick={handleAIQuery} 
-                disabled={isLoading}
-              >
-                {isLoading ? (
-                  <>
-                    <Loader className="h-5 w-5 mr-2 animate-spin" /> 
-                    Searching...
-                  </>
-                ) : (
-                  <>
-                    <Search className="h-5 w-5 mr-2" />
-                    Get Answer
-                  </>
-                )}
-              </Button>
+              <div className="flex gap-2 sm:gap-3">
+                <Button 
+                  className="flex-1 bg-purple-600 hover:bg-purple-700 text-white font-medium py-2 sm:py-3 h-10 sm:h-12 text-sm sm:text-base" 
+                  onClick={handleAIQuery} 
+                  disabled={isLoading}
+                >
+                  {isLoading ? (
+                    <>
+                      <Loader className="h-4 w-4 sm:h-5 sm:w-5 mr-2 animate-spin" /> 
+                      Search
+                    </>
+                  ) : (
+                    <>
+                      <Search className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
+                      Search
+                    </>
+                  )}
+                </Button>
+                
+                <Button 
+                  variant="outline" 
+                  className="border-neutral-600 text-gray-300 hover:bg-neutral-700/50 px-4 sm:px-6 h-10 sm:h-12 text-sm sm:text-base"
+                  onClick={() => setShowResults(!showResults)}
+                >
+                  {showResults ? <EyeOff className="h-4 w-4 sm:h-5 sm:w-5" /> : <Eye className="h-4 w-4 sm:h-5 sm:w-5" />}
+                  <span className="hidden sm:inline ml-2">
+                    {showResults ? 'Hide' : 'Show'}
+                  </span>
+                </Button>
+              </div>
             </div>
 
-            {/* Quick Examples */}
-            <div className="space-y-3">
-              <h4 className="font-medium text-gray-300 text-sm">Try these:</h4>
-              <div className="grid grid-cols-2 gap-2">
+            {/* Loading State */}
+            {isLoading && (
+              <div className="p-4 sm:p-6 bg-purple-900/30 rounded-lg border border-purple-500/20">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-6 h-6 sm:w-8 sm:h-8 bg-purple-500/20 rounded-full flex items-center justify-center">
+                    <Sparkles className="h-3 w-3 sm:h-4 sm:w-4 text-purple-400" />
+                  </div>
+                  <span className="text-white font-medium text-sm sm:text-base">AI Assistant is thinking...</span>
+                </div>
+                <div className="space-y-2 sm:space-y-3">
+                  <Skeleton className="h-3 sm:h-4 w-full bg-neutral-700/50" />
+                  <Skeleton className="h-3 sm:h-4 w-3/4 bg-neutral-700/50" />
+                  <Skeleton className="h-3 sm:h-4 w-5/6 bg-neutral-700/50" />
+                </div>
+              </div>
+            )}
+
+            {/* Quick Examples Section */}
+            <div className="space-y-3 sm:space-y-4">
+              <h4 className="font-medium text-gray-300 text-sm sm:text-base">Try these questions:</h4>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
                 {exampleQueries.map((query, index) => (
                   <Button
                     key={index}
                     variant="outline"
                     size="sm"
-                    className="border-elec-yellow/20 text-gray-300 hover:bg-elec-yellow/10 hover:border-elec-yellow/40 h-auto py-2 px-3 text-left justify-start text-xs leading-tight"
+                    className="border-neutral-600/50 text-gray-300 hover:bg-neutral-700/50 hover:border-neutral-500 h-auto py-2 sm:py-3 px-3 sm:px-4 text-left justify-start text-xs sm:text-sm"
                     onClick={() => setPrompt(query)}
                   >
-                    <span className="truncate">{query}</span>
+                    {query}
                   </Button>
                 ))}
               </div>
@@ -322,72 +199,127 @@ const AIAssistant = () => {
           </CardContent>
         </Card>
 
-        {/* Loading State */}
-        {isLoading && (
-          <Card className="bg-elec-gray border border-elec-yellow/30">
-            <CardContent className="p-4 sm:p-6">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-8 h-8 bg-elec-yellow/20 rounded-full flex items-center justify-center">
-                  <Sparkles className="h-4 w-4 text-elec-yellow animate-pulse" />
-                </div>
-                <span className="text-white font-medium">AI is thinking...</span>
-              </div>
-              <div className="space-y-3">
-                <div className="h-3 w-full bg-elec-yellow/20 rounded animate-pulse"></div>
-                <div className="h-3 w-3/4 bg-elec-yellow/20 rounded animate-pulse"></div>
-                <div className="h-3 w-5/6 bg-elec-yellow/20 rounded animate-pulse"></div>
-              </div>
-            </CardContent>
-          </Card>
+        {/* Results Grid */}
+        {(analysisResult || regulationsResult) && !isLoading && showResults && (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4 max-w-6xl mx-auto">
+            {/* Analysis Section */}
+            {analysisResult && (
+              <Card className="bg-gradient-to-r from-neutral-800/50 to-neutral-700/50 border border-neutral-600">
+                <CardHeader className="p-3 sm:p-4">
+                  <CardTitle className="text-base sm:text-lg flex items-center gap-2 sm:gap-3 text-white">
+                    <div className="w-6 h-6 sm:w-8 sm:h-8 bg-blue-500/20 rounded-lg flex items-center justify-center">
+                      <Search className="h-3 w-3 sm:h-4 sm:w-4 text-blue-400" />
+                    </div>
+                    Analysis
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="p-3 sm:p-4 pt-0">
+                  <div className="prose prose-invert max-w-none">
+                    <div className="text-xs sm:text-sm text-gray-300 whitespace-pre-wrap leading-relaxed">
+                      {analysisResult.split('\n').map((line, index) => (
+                        <p 
+                          key={index}
+                          className={
+                            line.match(/^(CALCULATION|SIZING|ASSESSMENT|ANALYSIS|RECOMMENDATION):/) ?
+                            'text-blue-400 font-semibold text-sm sm:text-base mt-3 sm:mt-4 mb-1 sm:mb-2 first:mt-0' :
+                            line.endsWith(':') && line.length < 50 ?
+                            'font-medium text-blue-300 mt-2 sm:mt-3 mb-1' :
+                            line.startsWith('•') || line.startsWith('-') ?
+                            'text-gray-300 ml-3 sm:ml-4 my-1' :
+                            line.trim() === '' ? 'my-1 sm:my-2' :
+                            'my-1'
+                          }
+                        >
+                          {line}
+                        </p>
+                      ))}
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
+            {/* Relevant Regulations */}
+            {regulationsResult && (
+              <Card className="bg-gradient-to-r from-neutral-800/50 to-neutral-700/50 border border-neutral-600">
+                <CardHeader className="p-3 sm:p-4">
+                  <CardTitle className="text-base sm:text-lg flex items-center gap-2 sm:gap-3 text-white">
+                    <div className="w-6 h-6 sm:w-8 sm:h-8 bg-purple-500/20 rounded-lg flex items-center justify-center">
+                      <BookOpen className="h-3 w-3 sm:h-4 sm:w-4 text-purple-400" />
+                    </div>
+                    Relevant Regulations
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="p-3 sm:p-4 pt-0">
+                  <div className="prose prose-invert max-w-none">
+                    <div className="text-xs sm:text-sm text-gray-300 whitespace-pre-wrap leading-relaxed">
+                      {regulationsResult.split('\n').map((line, index) => (
+                        <p 
+                          key={index}
+                          className={
+                            line.match(/^(Regulation|BS 7671|IET|Section)/i) ?
+                            'text-purple-400 font-semibold text-sm sm:text-base mt-3 sm:mt-4 mb-1 sm:mb-2 first:mt-0' :
+                            line.match(/^\d{3}\.\d/) ?
+                            'text-purple-400 font-medium mt-2 sm:mt-3 mb-1' :
+                            line.endsWith(':') && line.length < 50 ?
+                            'font-medium text-purple-300 mt-2 sm:mt-3 mb-1' :
+                            line.startsWith('•') || line.startsWith('-') ?
+                            'text-gray-300 ml-3 sm:ml-4 my-1' :
+                            line.trim() === '' ? 'my-1 sm:my-2' :
+                            'my-1'
+                          }
+                        >
+                          {line}
+                        </p>
+                      ))}
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+          </div>
         )}
 
-        {/* Response */}
-        {response && !isLoading && (
-          <Card className="bg-elec-gray border border-elec-yellow/30">
-            <CardHeader className="p-4 sm:p-6 pb-3">
-              <CardTitle className="text-lg flex items-center gap-3 text-white">
-                <div className="w-8 h-8 bg-elec-yellow/20 rounded-lg flex items-center justify-center">
-                  <BookOpen className="h-4 w-4 text-elec-yellow" />
+        {/* Benefits Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 max-w-6xl mx-auto mt-8 sm:mt-12">
+          <Card className="bg-gradient-to-r from-neutral-800/50 to-neutral-700/50 border border-neutral-600">
+            <CardContent className="p-3 sm:p-4">
+              <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3">
+                <div className="w-8 h-8 bg-purple-500/20 rounded-lg flex items-center justify-center">
+                  <Sparkles className="h-4 w-4 text-purple-400" />
                 </div>
-                Answer
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="p-4 sm:p-6 pt-0">
-              <div className="bg-elec-dark rounded-lg p-4 sm:p-6 border border-elec-yellow/20">
-                <div className="space-y-2">
-                  {formatResponse(response)}
-                </div>
+                <h3 className="font-semibold text-white text-sm sm:text-base">Instant Answers</h3>
               </div>
-            </CardContent>
-          </Card>
-        )}
-
-        {/* Info Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-8">
-          <Card className="bg-elec-gray border border-elec-yellow/30">
-            <CardContent className="p-4">
-              <div className="flex items-center gap-3 mb-3">
-                <div className="w-8 h-8 bg-elec-yellow/20 rounded-lg flex items-center justify-center">
-                  <Zap className="h-4 w-4 text-elec-yellow" />
-                </div>
-                <h3 className="font-semibold text-white">Instant Results</h3>
-              </div>
-              <p className="text-gray-300 text-sm">
-                Get immediate answers to electrical regulation questions using advanced AI.
+              <p className="text-gray-300 text-xs sm:text-sm">
+                Get immediate responses to complex electrical regulation questions using advanced AI.
               </p>
             </CardContent>
           </Card>
 
-          <Card className="bg-elec-gray border border-elec-yellow/30">
-            <CardContent className="p-4">
-              <div className="flex items-center gap-3 mb-3">
-                <div className="w-8 h-8 bg-elec-yellow/20 rounded-lg flex items-center justify-center">
-                  <BookOpen className="h-4 w-4 text-elec-yellow" />
+          <Card className="bg-gradient-to-r from-neutral-800/50 to-neutral-700/50 border border-neutral-600">
+            <CardContent className="p-3 sm:p-4">
+              <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3">
+                <div className="w-8 h-8 bg-blue-500/20 rounded-lg flex items-center justify-center">
+                  <BookOpen className="h-4 w-4 text-blue-400" />
                 </div>
-                <h3 className="font-semibold text-white">BS 7671 18th Edition</h3>
+                <h3 className="font-semibold text-white text-sm sm:text-base">BS 7671 Compliant</h3>
               </div>
-              <p className="text-gray-300 text-sm">
-                All responses based on the latest wiring regulations and best practices.
+              <p className="text-gray-300 text-xs sm:text-sm">
+                All responses are based on the latest 18th edition wiring regulations.
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-gradient-to-r from-neutral-800/50 to-neutral-700/50 border border-neutral-600 sm:col-span-2 lg:col-span-1">
+            <CardContent className="p-3 sm:p-4">
+              <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3">
+                <div className="w-8 h-8 bg-yellow-500/20 rounded-lg flex items-center justify-center">
+                  <Search className="h-4 w-4 text-yellow-400" />
+                </div>
+                <h3 className="font-semibold text-white text-sm sm:text-base">Practical Guidance</h3>
+              </div>
+              <p className="text-gray-300 text-xs sm:text-sm">
+                Real-world applications with safety tips and best practices included.
               </p>
             </CardContent>
           </Card>
