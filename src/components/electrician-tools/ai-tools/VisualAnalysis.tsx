@@ -711,12 +711,12 @@ const VisualAnalysis = () => {
             )}
 
             {/* Analysis Settings */}
-            <div className="space-y-4 border border-border rounded-lg p-4">
-              <h3 className="text-lg font-semibold text-foreground">Analysis Settings</h3>
+            <div className="space-y-4 border border-neutral-600 rounded-lg p-4 bg-neutral-800/30">
+              <h3 className="text-lg font-semibold text-white">Analysis Settings</h3>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-foreground">
+                  <label className="text-sm font-medium text-white">
                     Confidence Threshold: {Math.round(confidenceThreshold[0] * 100)}%
                   </label>
                   <Slider
@@ -727,19 +727,20 @@ const VisualAnalysis = () => {
                     step={0.05}
                     className="w-full"
                   />
-                  <p className="text-xs text-muted-foreground">
+                  <p className="text-xs text-gray-300">
                     Higher values show only more confident detections
                   </p>
                 </div>
                 
                 <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <label className="text-sm font-medium text-foreground">Background Removal</label>
+                  <div className="flex items-center justify-between p-3 rounded-lg bg-neutral-700/30 border border-neutral-600">
+                    <label className="text-sm font-medium text-white">Background Removal</label>
                     <Tooltip>
                       <TooltipTrigger asChild>
                         <Switch
                           checked={removeBackground}
                           onCheckedChange={setRemoveBackground}
+                          className={`${removeBackground ? 'bg-blue-600' : 'bg-neutral-600'} transition-colors`}
                         />
                       </TooltipTrigger>
                       <TooltipContent>
@@ -748,13 +749,14 @@ const VisualAnalysis = () => {
                     </Tooltip>
                   </div>
                   
-                  <div className="flex items-center justify-between">
-                    <label className="text-sm font-medium text-foreground">Bounding Boxes</label>
+                  <div className="flex items-center justify-between p-3 rounded-lg bg-neutral-700/30 border border-neutral-600">
+                    <label className="text-sm font-medium text-white">Bounding Boxes</label>
                     <Tooltip>
                       <TooltipTrigger asChild>
                         <Switch
                           checked={showBoundingBoxes}
                           onCheckedChange={setShowBoundingBoxes}
+                          className={`${showBoundingBoxes ? 'bg-blue-600' : 'bg-neutral-600'} transition-colors`}
                         />
                       </TooltipTrigger>
                       <TooltipContent>
@@ -1022,13 +1024,13 @@ const VisualAnalysis = () => {
 
         {/* Example Queries for New Users */}
         {analysisResult === null && images.length === 0 && (
-          <Card className="bg-card border-border max-w-5xl mx-auto">
+          <Card className="bg-gradient-to-r from-neutral-800/50 to-neutral-700/50 border border-neutral-600 max-w-5xl mx-auto">
             <CardHeader className="p-4 sm:p-6">
               <div className="flex items-center gap-2 sm:gap-3">
-                <Sparkles className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
-                <CardTitle className="text-lg sm:text-xl text-foreground">Common Analysis Types</CardTitle>
+                <Sparkles className="h-4 w-4 sm:h-5 sm:w-5 text-yellow-400" />
+                <CardTitle className="text-lg sm:text-xl text-white">Common Analysis Types</CardTitle>
               </div>
-              <CardDescription className="text-muted-foreground">
+              <CardDescription className="text-gray-300">
                 Upload images of these common electrical scenarios for analysis:
               </CardDescription>
             </CardHeader>
@@ -1036,7 +1038,7 @@ const VisualAnalysis = () => {
             <CardContent className="p-4 sm:p-6 pt-0">
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
                 {exampleQueries.map((query, index) => (
-                  <div key={index} className="p-3 border border-border rounded-lg text-sm text-muted-foreground hover:bg-accent/50 transition-colors">
+                  <div key={index} className="p-3 border border-neutral-600 rounded-lg text-sm text-white hover:bg-neutral-700/50 transition-colors">
                     {query}
                   </div>
                 ))}
