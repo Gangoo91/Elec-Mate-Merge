@@ -6,7 +6,6 @@ import { Separator } from "@/components/ui/separator";
 import { Mail, Phone, MapPin, Calendar } from "lucide-react";
 import { CVData } from "./types";
 import { format } from "date-fns";
-import { processCVMarkdown } from "@/utils/cvMarkdownUtils";
 
 interface CVPreviewProps {
   cvData: CVData;
@@ -22,11 +21,6 @@ export const CVPreview: React.FC<CVPreviewProps> = ({ cvData }) => {
       return dateString;
     }
   };
-
-  // Debug logging to identify duplicate rendering
-  React.useEffect(() => {
-    console.log('CVPreview rendered with data:', cvData.personalInfo.fullName);
-  }, [cvData.personalInfo.fullName]);
 
   return (
     <Card className="border-elec-yellow/20 bg-white text-black max-w-4xl mx-auto">
@@ -64,9 +58,9 @@ export const CVPreview: React.FC<CVPreviewProps> = ({ cvData }) => {
         {cvData.personalInfo.professionalSummary && (
           <div>
             <h2 className="text-xl font-semibold mb-3 text-gray-900">Professional Summary</h2>
-            <div className="text-gray-700 leading-relaxed">
-              {processCVMarkdown(cvData.personalInfo.professionalSummary)}
-            </div>
+            <p className="text-gray-700 leading-relaxed">
+              {cvData.personalInfo.professionalSummary}
+            </p>
           </div>
         )}
 
@@ -93,9 +87,9 @@ export const CVPreview: React.FC<CVPreviewProps> = ({ cvData }) => {
                     </div>
                   </div>
                   {exp.description && (
-                    <div className="text-gray-700 text-sm leading-relaxed pl-4 border-l-2 border-gray-200">
-                      {processCVMarkdown(exp.description)}
-                    </div>
+                    <p className="text-gray-700 text-sm leading-relaxed pl-4 border-l-2 border-gray-200">
+                      {exp.description}
+                    </p>
                   )}
                 </div>
               ))}
@@ -134,25 +128,44 @@ export const CVPreview: React.FC<CVPreviewProps> = ({ cvData }) => {
           </div>
         )}
 
-        {cvData.certifications.length > 0 && <Separator />}
+        {(cvData.skills.length > 0 || cvData.certifications.length > 0) && <Separator />}
 
-        {/* Certifications */}
-        {cvData.certifications.length > 0 && (
-          <div>
-            <h2 className="text-xl font-semibold mb-3 text-gray-900">Certifications</h2>
-            <div className="flex flex-wrap gap-2">
-              {cvData.certifications.map((cert, index) => (
-                <Badge
-                  key={index}
-                  variant="secondary"
-                  className="bg-green-100 text-green-800 border-green-200"
-                >
-                  {cert}
-                </Badge>
-              ))}
+        {/* Skills and Certifications */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {cvData.skills.length > 0 && (
+            <div>
+              <h2 className="text-xl font-semibold mb-3 text-gray-900">Skills</h2>
+              <div className="flex flex-wrap gap-2">
+                {cvData.skills.map((skill, index) => (
+                  <Badge
+                    key={index}
+                    variant="secondary"
+                    className="bg-blue-100 text-blue-800 border-blue-200"
+                  >
+                    {skill}
+                  </Badge>
+                ))}
+              </div>
             </div>
-          </div>
-        )}
+          )}
+
+          {cvData.certifications.length > 0 && (
+            <div>
+              <h2 className="text-xl font-semibold mb-3 text-gray-900">Certifications</h2>
+              <div className="flex flex-wrap gap-2">
+                {cvData.certifications.map((cert, index) => (
+                  <Badge
+                    key={index}
+                    variant="secondary"
+                    className="bg-green-100 text-green-800 border-green-200"
+                  >
+                    {cert}
+                  </Badge>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
       </CardContent>
     </Card>
   );

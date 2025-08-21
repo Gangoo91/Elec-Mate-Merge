@@ -64,9 +64,7 @@ export class AIService {
 - Target Role: ${context.targetRole || context.jobTitle || 'Electrician'}
 - Additional context: ${userInput || 'None'}
 
-Write a compelling 3-4 sentence professional summary that highlights their electrical expertise, relevant experience, and career objectives. Use UK electrical terminology and focus on industry-specific skills and qualifications.
-
-IMPORTANT: Write in plain text only. Do not use any markdown formatting, headers, bullet points, or special characters. Keep the text clean and professional for CV use.`;
+Write a compelling 3-4 sentence professional summary that highlights their electrical expertise, relevant experience, and career objectives. Use UK electrical terminology and focus on industry-specific skills and qualifications.`;
 
       case 'job_description':
         return `Generate a detailed job description for this electrical role:
@@ -74,9 +72,7 @@ IMPORTANT: Write in plain text only. Do not use any markdown formatting, headers
 - Company: ${context.company}
 - Industry context: ${userInput || ''}
 
-Include key responsibilities, achievements, and technical skills relevant to UK electrical work. Mention specific electrical systems, regulations (BS 7671), and industry standards where appropriate. 
-
-IMPORTANT: Format as simple bullet points using hyphens (-) or bullet symbols (•). Do not use headers, code blocks, or complex markdown. Keep formatting minimal and professional for CV use.`;
+Include key responsibilities, achievements, and technical skills relevant to UK electrical work. Mention specific electrical systems, regulations (BS 7671), and industry standards where appropriate. Format as bullet points.`;
 
       case 'skills':
         return `Generate a comprehensive list of electrical skills based on:
