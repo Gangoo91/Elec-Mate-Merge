@@ -79,7 +79,7 @@ const CVBuilderBox = () => {
                   Edit Existing CV
                 </Button>
               </DialogTrigger>
-              <DialogContent className="w-[100vw] h-[100vh] max-w-none max-h-none overflow-hidden p-0 m-0 sm:w-[95vw] sm:max-w-6xl sm:h-[90vh] sm:max-h-[90vh] sm:m-6 sm:rounded-lg">
+              <DialogContent className="w-[100vw] h-[100vh] max-w-none max-h-none overflow-hidden p-0 m-0 sm:w-[95vw] sm:max-w-4xl sm:h-[90vh] sm:max-h-[90vh] sm:m-6 sm:rounded-lg">
                 <div className="h-full overflow-y-auto">
                   <EnhancedCVBuilder />
                 </div>
