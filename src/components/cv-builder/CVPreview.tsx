@@ -87,9 +87,11 @@ export const CVPreview: React.FC<CVPreviewProps> = ({ cvData }) => {
                     </div>
                   </div>
                   {exp.description && (
-                    <p className="text-gray-700 text-sm leading-relaxed pl-4 border-l-2 border-gray-200">
-                      {exp.description}
-                    </p>
+                    <div className="text-gray-700 text-sm leading-relaxed pl-4 border-l-2 border-gray-200">
+                      {exp.description.split('\n').map((line, index) => (
+                        <p key={index} className="mb-1">{line}</p>
+                      ))}
+                    </div>
                   )}
                 </div>
               ))}
