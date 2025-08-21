@@ -210,9 +210,9 @@ const AIAssistant = () => {
         </div>
 
         {/* Sticky Search Bar */}
-        <div className="sticky top-3 z-10 bg-neutral-900/95 backdrop-blur-sm border border-neutral-700 rounded-xl p-3 sm:p-4">
+        <div className="sticky top-3 z-10 bg-neutral-900/95 backdrop-blur-sm border border-neutral-700 rounded-xl p-2 sm:p-4">
           {/* Mode Toggle */}
-          <div className="flex gap-2 mb-3">
+          <div className="flex gap-1 sm:gap-2 mb-2 sm:mb-3">
             <Button
               size="sm"
               variant={searchMode === 'quick' ? 'default' : 'outline'}
@@ -220,11 +220,11 @@ const AIAssistant = () => {
                 searchMode === 'quick' 
                   ? 'bg-purple-600 hover:bg-purple-700 text-white' 
                   : 'border-neutral-600 text-gray-300 hover:bg-neutral-700/50'
-              } text-xs`}
+              } text-xs px-2 sm:px-3 h-7 sm:h-8`}
               onClick={() => setSearchMode('quick')}
             >
-              <Zap className="h-3 w-3 mr-1" />
-              Quick
+              <Zap className="h-3 w-3 sm:mr-1" />
+              <span className="hidden xs:inline">Quick</span>
             </Button>
             <Button
               size="sm"
@@ -233,29 +233,29 @@ const AIAssistant = () => {
                 searchMode === 'detailed' 
                   ? 'bg-purple-600 hover:bg-purple-700 text-white' 
                   : 'border-neutral-600 text-gray-300 hover:bg-neutral-700/50'
-              } text-xs px-2 sm:px-3`}
+              } text-xs px-2 sm:px-3 h-7 sm:h-8`}
               onClick={() => setSearchMode('detailed')}
             >
               <BookOpen className="h-3 w-3 sm:mr-1" />
-              <span className="hidden sm:inline">Detailed</span>
-              <span className="sm:hidden">Full</span>
+              <span className="hidden xs:inline">Full</span>
             </Button>
             {responseTime && (
-              <Badge variant="outline" className="border-neutral-600 text-gray-300 text-xs">
-                <Clock className="h-3 w-3 mr-1" />
-                {Math.round(responseTime / 1000)}s
+              <Badge variant="outline" className="border-neutral-600 text-gray-300 text-xs px-1 sm:px-2 h-7 sm:h-8 flex items-center">
+                <Clock className="h-3 w-3 sm:mr-1" />
+                <span className="hidden xs:inline">{Math.round(responseTime / 1000)}s</span>
+                <span className="xs:hidden">{Math.round(responseTime / 1000)}</span>
               </Badge>
             )}
           </div>
 
           {/* Search Input */}
-          <div className="flex gap-2">
+          <div className="flex gap-1 sm:gap-2">
             <Textarea
               placeholder={searchMode === 'quick' 
-                ? "Quick question (e.g. 'RCD bathroom requirements')"
-                : "Detailed question (e.g. 'How do I calculate cable sizing for a 32A circuit?')"
+                ? "Quick question..."
+                : "Detailed question..."
               }
-              className="min-h-[40px] bg-neutral-800 border-neutral-600 focus:border-purple-400 text-white placeholder:text-gray-400 resize-none text-sm"
+              className="min-h-[36px] sm:min-h-[40px] bg-neutral-800 border-neutral-600 focus:border-purple-400 text-white placeholder:text-gray-400 resize-none text-xs sm:text-sm"
               value={prompt}
               onChange={(e) => setPrompt(e.target.value)}
               onKeyDown={(e) => {
@@ -268,29 +268,29 @@ const AIAssistant = () => {
             
             {isLoading ? (
               <Button 
-                className="bg-red-600 hover:bg-red-700 text-white px-3 h-auto"
+                className="bg-red-600 hover:bg-red-700 text-white px-2 sm:px-3 h-9 sm:h-10 w-9 sm:w-auto"
                 onClick={cancelSearch}
               >
-                <X className="h-4 w-4" />
+                <X className="h-3 w-3 sm:h-4 sm:w-4" />
               </Button>
             ) : (
               <Button 
-                className="bg-purple-600 hover:bg-purple-700 text-white px-3 h-auto" 
+                className="bg-purple-600 hover:bg-purple-700 text-white px-2 sm:px-3 h-9 sm:h-10 w-9 sm:w-auto" 
                 onClick={() => handleAIQuery()}
               >
-                <Search className="h-4 w-4" />
+                <Search className="h-3 w-3 sm:h-4 sm:w-4" />
               </Button>
             )}
           </div>
 
           {/* Quick Action Chips */}
-          <div className="flex flex-wrap gap-2 mt-3">
-            {(searchMode === 'quick' ? quickChips : detailedExamples.slice(0, 2)).map((query, index) => (
+          <div className="flex flex-wrap gap-1 sm:gap-2 mt-2 sm:mt-3">
+            {(searchMode === 'quick' ? quickChips.slice(0, 4) : detailedExamples.slice(0, 2)).map((query, index) => (
               <Button
                 key={index}
                 size="sm"
                 variant="outline"
-                className="border-neutral-600/50 text-gray-300 hover:bg-neutral-700/50 text-xs h-7"
+                className="border-neutral-600/50 text-gray-300 hover:bg-neutral-700/50 text-xs h-6 sm:h-7 px-1.5 sm:px-2 truncate max-w-[120px] sm:max-w-none"
                 onClick={() => {
                   setPrompt(query);
                   handleAIQuery(query);
