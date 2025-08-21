@@ -6,7 +6,6 @@ import { Separator } from "@/components/ui/separator";
 import { Mail, Phone, MapPin, Calendar } from "lucide-react";
 import { CVData } from "./types";
 import { format } from "date-fns";
-import { processCVMarkdown } from "@/utils/cvMarkdownProcessor";
 
 interface CVPreviewProps {
   cvData: CVData;
@@ -88,9 +87,9 @@ export const CVPreview: React.FC<CVPreviewProps> = ({ cvData }) => {
                     </div>
                   </div>
                   {exp.description && (
-                    <div className="text-gray-700 text-sm leading-relaxed pl-4 border-l-2 border-gray-200">
-                      {processCVMarkdown(exp.description)}
-                    </div>
+                    <p className="text-gray-700 text-sm leading-relaxed pl-4 border-l-2 border-gray-200">
+                      {exp.description}
+                    </p>
                   )}
                 </div>
               ))}
@@ -132,11 +131,11 @@ export const CVPreview: React.FC<CVPreviewProps> = ({ cvData }) => {
         {(cvData.skills.length > 0 || cvData.certifications.length > 0) && <Separator />}
 
         {/* Skills and Certifications */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-6">
           {cvData.skills.length > 0 && (
             <div>
               <h2 className="text-xl font-semibold mb-3 text-gray-900">Skills</h2>
-              <div className="w-full flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-2">
                 {cvData.skills.map((skill, index) => (
                   <Badge
                     key={index}
