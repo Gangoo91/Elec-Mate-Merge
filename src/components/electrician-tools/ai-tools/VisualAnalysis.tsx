@@ -89,7 +89,7 @@ interface AnalysisPreset {
 const ANALYSIS_PRESETS: AnalysisPreset[] = [
   {
     name: "Consumer Unit Inspection",
-    description: "Focused analysis on distribution boards and consumer units",
+    description: "Distribution boards and consumer units",
     icon: Zap,
     settings: {
       focus_areas: ["consumer_unit", "mcb", "rcd", "main_switch", "labelling"],
@@ -99,7 +99,7 @@ const ANALYSIS_PRESETS: AnalysisPreset[] = [
   },
   {
     name: "Socket & Accessory Check",
-    description: "Detailed inspection of socket outlets and accessories",
+    description: "Socket outlets and accessories",
     icon: Target,
     settings: {
       focus_areas: ["sockets", "switches", "accessories", "cables", "earthing"],
@@ -109,7 +109,7 @@ const ANALYSIS_PRESETS: AnalysisPreset[] = [
   },
   {
     name: "General Safety Survey",
-    description: "Comprehensive safety analysis for all visible installations",
+    description: "Comprehensive safety analysis",
     icon: Eye,
     settings: {
       focus_areas: ["general_safety", "visible_damage", "compliance", "hazards"],
