@@ -10,6 +10,7 @@ import { CVPreview } from "./CVPreview";
 import { SmartCVWizard } from "./ai/SmartCVWizard";
 import { CVData, defaultCVData } from "./types";
 import { generateCVPDF } from "./pdfGenerator";
+import { AIService } from "./ai/AIService";
 import { toast } from "@/hooks/use-toast";
 
 const EnhancedCVBuilder = () => {
@@ -17,6 +18,7 @@ const EnhancedCVBuilder = () => {
   const [activeTab, setActiveTab] = useState("edit");
   const [isGenerating, setIsGenerating] = useState(false);
   const [showWizard, setShowWizard] = useState(false);
+  const [isGeneratingFromRaw, setIsGeneratingFromRaw] = useState(false);
 
   const handleSave = () => {
     localStorage.setItem('cvData', JSON.stringify(cvData));
@@ -77,6 +79,48 @@ const EnhancedCVBuilder = () => {
            cvData.experience.length === 0 && 
            cvData.education.length === 0 && 
            cvData.skills.length === 0;
+  };
+
+  const hasContentForGeneration = () => {
+    return cvData.personalInfo.fullName || 
+           cvData.personalInfo.professionalSummary ||
+           cvData.experience.length > 0 || 
+           cvData.education.length > 0 || 
+           cvData.skills.length > 0 ||
+           cvData.certifications.length > 0;
+  };
+
+  const handleGenerateFromRaw = async () => {
+    setIsGeneratingFromRaw(true);
+    try {
+      const enhancedCV = await AIService.generateFromRawContent(cvData);
+      
+      if (enhancedCV.error) {
+        toast({
+          title: "Generation Warning",
+          description: "CV was generated but may need manual review.",
+          variant: "default"
+        });
+        return;
+      }
+      
+      // Update CV data with enhanced content
+      setCVData(enhancedCV);
+      setActiveTab("preview");
+      
+      toast({
+        title: "Professional Resume Generated",
+        description: "Your raw content has been transformed into a professional resume structure."
+      });
+    } catch (error) {
+      toast({
+        title: "Generation Failed",
+        description: "Failed to generate professional resume. Please try again.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsGeneratingFromRaw(false);
+    }
   };
 
   return (
@@ -143,8 +187,8 @@ const EnhancedCVBuilder = () => {
             </TabsList>
             
             <TabsContent value="edit" className="space-y-6 mt-6">
-              {!isEmptyCV() && (
-                <div className="mb-4">
+              <div className="flex flex-wrap gap-3 mb-4">
+                {!isEmptyCV() && (
                   <Button
                     onClick={() => setShowWizard(true)}
                     variant="outline"
@@ -153,8 +197,18 @@ const EnhancedCVBuilder = () => {
                     <Sparkles className="h-4 w-4 mr-2" />
                     Restart with AI Wizard
                   </Button>
-                </div>
-              )}
+                )}
+                {hasContentForGeneration() && (
+                  <Button
+                    onClick={handleGenerateFromRaw}
+                    disabled={isGeneratingFromRaw}
+                    className="bg-gradient-to-r from-elec-yellow to-yellow-400 text-black hover:from-elec-yellow/90 hover:to-yellow-400/90"
+                  >
+                    <Wand2 className="h-4 w-4 mr-2" />
+                    {isGeneratingFromRaw ? "Generating..." : "Generate Professional Resume"}
+                  </Button>
+                )}
+              </div>
               <CVForm cvData={cvData} onChange={setCVData} />
             </TabsContent>
             

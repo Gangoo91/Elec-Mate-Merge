@@ -2,7 +2,7 @@
 import { supabase } from "@/integrations/supabase/client";
 
 interface AIGenerationRequest {
-  type: 'professional_summary' | 'job_description' | 'skills' | 'achievements' | 'complete_cv' | 'refine_content' | 'optimize_ats' | 'quantify_achievements';
+  type: 'professional_summary' | 'job_description' | 'skills' | 'achievements' | 'complete_cv' | 'refine_content' | 'optimize_ats' | 'quantify_achievements' | 'generate_from_raw';
   context: {
     jobTitle?: string;
     company?: string;
@@ -13,6 +13,7 @@ interface AIGenerationRequest {
     targetRole?: string;
     previousRoles?: any[];
     currentContent?: string;
+    rawCVData?: any;
   };
   userInput?: string;
 }
@@ -157,6 +158,59 @@ Create specific, quantified achievement statements by:
 
 Return 3-5 powerful achievement statements with specific metrics.`;
 
+      case 'generate_from_raw':
+        return `I am providing raw content about my skills, qualifications, and certifications. Please create a professional and well-structured resume from this data. Organize it into standard resume sections such as:
+
+Header (Name, Contact Information – use placeholders if not provided)
+Professional Summary (2–3 lines highlighting my strengths as an electrician)
+Skills (technical skills, regulatory knowledge, software tools, etc.)
+Certifications (e.g., City & Guilds, Wiring Regulations, PAT Testing)
+Work Experience (create a clean section with placeholders if no details are provided)
+Education (use the provided qualifications, and placeholders if needed)
+
+Make sure the formatting is consistent, polished, and easy to read. Keep the tone professional and suitable for job applications. Do not change the meaning of the content but refine the wording so it looks impressive on a resume.
+
+Raw CV Data:
+${JSON.stringify(context.rawCVData, null, 2)}
+
+Return the response in JSON format with the following structure:
+{
+  "personalInfo": {
+    "fullName": "enhanced name or use existing",
+    "email": "enhanced or use existing",
+    "phone": "enhanced or use existing", 
+    "address": "enhanced or use existing",
+    "postcode": "enhanced or use existing",
+    "professionalSummary": "professional 2-3 line summary"
+  },
+  "experience": [
+    {
+      "id": "unique-id",
+      "jobTitle": "enhanced job title",
+      "company": "enhanced company name",
+      "location": "enhanced location",
+      "startDate": "enhanced start date",
+      "endDate": "enhanced end date or Present",
+      "current": boolean,
+      "description": "professional bullet points describing achievements and responsibilities"
+    }
+  ],
+  "education": [
+    {
+      "id": "unique-id",
+      "qualification": "enhanced qualification name",
+      "institution": "enhanced institution name", 
+      "location": "enhanced location",
+      "startDate": "enhanced start date",
+      "endDate": "enhanced end date",
+      "current": boolean,
+      "grade": "enhanced grade if available"
+    }
+  ],
+  "skills": ["enhanced skill 1", "enhanced skill 2", ...],
+  "certifications": ["enhanced certification 1", "enhanced certification 2", ...]
+}`;
+
       default:
         return `Help improve this CV content: ${userInput}`;
     }
@@ -256,5 +310,25 @@ Return 3-5 powerful achievement statements with specific metrics.`;
       userInput
     });
     return response.content.split('\n').filter(line => line.trim().length > 0);
+  }
+
+  static async generateFromRawContent(rawCVData: any): Promise<any> {
+    const response = await this.callAIAssistant({
+      type: 'generate_from_raw',
+      context: { rawCVData }
+    });
+    
+    try {
+      // Try to parse JSON response
+      const parsed = JSON.parse(response.content);
+      return parsed;
+    } catch (error) {
+      // If JSON parsing fails, return a structured response
+      console.warn('Failed to parse JSON response, using content as-is');
+      return {
+        content: response.content,
+        error: 'Failed to parse structured response'
+      };
+    }
   }
 }
