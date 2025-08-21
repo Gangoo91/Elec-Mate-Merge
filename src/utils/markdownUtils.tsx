@@ -195,7 +195,7 @@ const renderHeading = (token: MarkdownToken, index: number): JSX.Element => {
   switch (level) {
     case 1: return <h1 key={index} className={className}>{content}</h1>;
     case 2: return <h2 key={index} className={className}>{content}</h2>;
-    
+    case 3: return <h3 key={index} className={className}>{content}</h3>;
     case 4: return <h4 key={index} className={className}>{content}</h4>;
     case 5: return <h5 key={index} className={className}>{content}</h5>;
     case 6: return <h6 key={index} className={className}>{content}</h6>;
