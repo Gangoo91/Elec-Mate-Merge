@@ -94,11 +94,11 @@ export const ProfessionalCVPreview: React.FC<ProfessionalCVPreviewProps> = ({ cv
                     </div>
                   </div>
                   {exp.description && (
-                    <div className="text-cv-text text-sm leading-relaxed space-y-1 ml-4">
+                    <div className="text-cv-text text-sm leading-relaxed space-y-2 mt-3">
                       {formatDescription(exp.description).map((point, index) => (
-                        <div key={index} className="flex items-start">
-                          <span className="text-cv-gold mr-2 mt-1">•</span>
-                          <span>{point}</span>
+                        <div key={index} className="flex items-start gap-3">
+                          <span className="text-cv-gold mt-1.5 text-xs">▪</span>
+                          <span className="flex-1 text-justify">{point}</span>
                         </div>
                       ))}
                     </div>
