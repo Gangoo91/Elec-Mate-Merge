@@ -92,19 +92,19 @@ const CareerProgression = () => {
 
           {/* Quick Stats */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <Card className="border-elec-yellow/20 bg-elec-gray/50">
+            <Card className="border-elec-yellow/20 bg-elec-gray">
               <CardContent className="p-4 text-centre">
                 <div className="text-2xl font-bold text-elec-yellow">12+</div>
                 <div className="text-sm text-muted-foreground">Career Pathways</div>
               </CardContent>
             </Card>
-            <Card className="border-elec-yellow/20 bg-elec-gray/50">
+            <Card className="border-elec-yellow/20 bg-elec-gray">
               <CardContent className="p-4 text-centre">
                 <div className="text-2xl font-bold text-elec-yellow">50+</div>
                 <div className="text-sm text-muted-foreground">Training Courses</div>
               </CardContent>
             </Card>
-            <Card className="border-elec-yellow/20 bg-elec-gray/50">
+            <Card className="border-elec-yellow/20 bg-elec-gray">
               <CardContent className="p-4 text-centre">
                 <div className="text-2xl font-bold text-elec-yellow">£25k-£80k+</div>
                 <div className="text-sm text-muted-foreground">Salary Range</div>

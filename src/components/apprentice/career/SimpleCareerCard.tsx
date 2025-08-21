@@ -9,7 +9,7 @@ interface SimpleCareerCardProps {
 const SimpleCareerCard = ({ title, icon, onClick }: SimpleCareerCardProps) => {
   return (
     <Card 
-      className="border-elec-yellow/20 bg-elec-gray h-full hover:bg-elec-gray/80 transition-all duration-200 cursor-pointer hover-scale"
+      className="border-elec-yellow/20 bg-elec-gray h-full hover:bg-elec-gray/90 transition-colors duration-200 cursor-pointer hover-scale"
       onClick={onClick}
     >
       <CardHeader className="flex flex-col items-center justify-center text-center py-6 md:py-8">
