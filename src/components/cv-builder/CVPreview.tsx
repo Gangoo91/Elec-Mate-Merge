@@ -23,6 +23,11 @@ export const CVPreview: React.FC<CVPreviewProps> = ({ cvData }) => {
     }
   };
 
+  // Debug logging to identify duplicate rendering
+  React.useEffect(() => {
+    console.log('CVPreview rendered with data:', cvData.personalInfo.fullName);
+  }, [cvData.personalInfo.fullName]);
+
   return (
     <Card className="border-elec-yellow/20 bg-white text-black max-w-4xl mx-auto">
       <CardContent className="p-8 space-y-6">
