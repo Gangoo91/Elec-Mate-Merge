@@ -2,11 +2,11 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Palette, Zap, Briefcase, GraduationCap } from "lucide-react";
+import { Palette, Zap, Briefcase, GraduationCap, Layout } from "lucide-react";
 
 interface CVThemeSelectorProps {
-  selectedTheme: 'modern' | 'professional' | 'electrical';
-  onThemeChange: (theme: 'modern' | 'professional' | 'electrical') => void;
+  selectedTheme: 'modern' | 'professional' | 'electrical' | 'two-column';
+  onThemeChange: (theme: 'modern' | 'professional' | 'electrical' | 'two-column') => void;
 }
 
 export const CVThemeSelector: React.FC<CVThemeSelectorProps> = ({
@@ -37,6 +37,14 @@ export const CVThemeSelector: React.FC<CVThemeSelectorProps> = ({
       icon: <Briefcase className="h-5 w-5" />,
       preview: 'bg-gradient-to-br from-slate-100 to-slate-50 border-slate-200',
       badge: 'bg-slate-100 text-slate-700 border-slate-200'
+    },
+    {
+      id: 'two-column' as const,
+      name: 'Two Column',
+      description: 'Professional sidebar layout matching reference',
+      icon: <Layout className="h-5 w-5" />,
+      preview: 'bg-gradient-to-br from-gray-50 to-white border-gray-200',
+      badge: 'bg-gray-100 text-gray-700 border-gray-200'
     }
   ];
 
@@ -47,7 +55,7 @@ export const CVThemeSelector: React.FC<CVThemeSelectorProps> = ({
         <h3 className="text-lg font-semibold text-elec-light">CV Theme</h3>
       </div>
       
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {themes.map((theme) => (
           <Card
             key={theme.id}
@@ -98,6 +106,7 @@ export const CVThemeSelector: React.FC<CVThemeSelectorProps> = ({
               <li>• <strong>Electrical Pro:</strong> Best for electrical industry positions</li>
               <li>• <strong>Modern:</strong> Great for tech-forward companies</li>
               <li>• <strong>Professional:</strong> Perfect for corporate environments</li>
+              <li>• <strong>Two Column:</strong> Professional layout with sidebar like the reference</li>
             </ul>
           </div>
         </div>

@@ -15,7 +15,7 @@ const SimplifiedCVBuilder = () => {
   const [isGenerating, setIsGenerating] = useState(false);
   const [hasGeneratedCV, setHasGeneratedCV] = useState(false);
   const [showPreview, setShowPreview] = useState(false);
-  const [selectedTheme, setSelectedTheme] = useState<'modern' | 'professional' | 'electrical'>('electrical');
+  const [selectedTheme, setSelectedTheme] = useState<'modern' | 'professional' | 'electrical' | 'two-column'>('electrical');
   const [showThemeSelector, setShowThemeSelector] = useState(false);
 
   const handleWizardComplete = (generatedCVData: CVData) => {
@@ -163,7 +163,7 @@ const SimplifiedCVBuilder = () => {
               onThemeChange={setSelectedTheme}
             />
           )}
-          <EnhancedCVPreview cvData={cvData} theme={selectedTheme} />
+          <CVPreview cvData={cvData} theme={selectedTheme} />
         </CardContent>
       </Card>
     </div>

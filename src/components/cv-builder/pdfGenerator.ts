@@ -3,7 +3,7 @@ import jsPDF from 'jspdf';
 import { CVData } from './types';
 import { format } from 'date-fns';
 
-export const generateCVPDF = async (cvData: CVData, theme: 'modern' | 'professional' | 'electrical' = 'electrical'): Promise<void> => {
+export const generateCVPDF = async (cvData: CVData, theme: 'modern' | 'professional' | 'electrical' | 'two-column' = 'electrical'): Promise<void> => {
   const pdf = new jsPDF('p', 'mm', 'a4');
   const pageWidth = pdf.internal.pageSize.getWidth();
   const margin = 20;
@@ -14,10 +14,11 @@ export const generateCVPDF = async (cvData: CVData, theme: 'modern' | 'professio
   const themeColors = {
     electrical: { primary: [255, 204, 0], accent: [255, 235, 153], text: [51, 51, 51] },
     modern: { primary: [59, 130, 246], accent: [219, 234, 254], text: [51, 51, 51] },
-    professional: { primary: [71, 85, 105], accent: [241, 245, 249], text: [51, 51, 51] }
+    professional: { primary: [71, 85, 105], accent: [241, 245, 249], text: [51, 51, 51] },
+    'two-column': { primary: [255, 204, 0], accent: [255, 235, 153], text: [51, 51, 51] }
   };
   
-  const colors = themeColors[theme];
+  const colors = themeColors[theme] || themeColors.electrical;
 
   const formatDate = (dateString: string) => {
     if (!dateString) return '';
