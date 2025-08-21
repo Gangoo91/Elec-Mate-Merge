@@ -129,48 +129,25 @@ export const CVPreview: React.FC<CVPreviewProps> = ({ cvData }) => {
           </div>
         )}
 
-        {(cvData.skills.length > 0 || cvData.certifications.length > 0) && <Separator />}
+        {cvData.certifications.length > 0 && <Separator />}
 
-        {/* Skills and Certifications */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {cvData.skills.length > 0 && (
-            <div>
-              <h2 className="text-xl font-semibold mb-3 text-gray-900">Skills</h2>
-              <div className="flex flex-wrap gap-3 leading-relaxed">
-                {cvData.skills.map((skill, index) => {
-                  const variants = ['default', 'secondary', 'success', 'warning', 'gold', 'yellow'];
-                  const variant = variants[index % variants.length];
-                  return (
-                    <Badge
-                      key={index}
-                      variant={variant as any}
-                      className="px-3 py-1.5 text-xs font-medium shadow-sm hover:shadow-md transition-shadow duration-200"
-                    >
-                      {skill}
-                    </Badge>
-                  );
-                })}
-              </div>
+        {/* Certifications */}
+        {cvData.certifications.length > 0 && (
+          <div>
+            <h2 className="text-xl font-semibold mb-3 text-gray-900">Certifications</h2>
+            <div className="flex flex-wrap gap-2">
+              {cvData.certifications.map((cert, index) => (
+                <Badge
+                  key={index}
+                  variant="secondary"
+                  className="bg-green-100 text-green-800 border-green-200"
+                >
+                  {cert}
+                </Badge>
+              ))}
             </div>
-          )}
-
-          {cvData.certifications.length > 0 && (
-            <div>
-              <h2 className="text-xl font-semibold mb-3 text-gray-900">Certifications</h2>
-              <div className="flex flex-wrap gap-2">
-                {cvData.certifications.map((cert, index) => (
-                  <Badge
-                    key={index}
-                    variant="secondary"
-                    className="bg-green-100 text-green-800 border-green-200"
-                  >
-                    {cert}
-                  </Badge>
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
+          </div>
+        )}
       </CardContent>
     </Card>
   );
