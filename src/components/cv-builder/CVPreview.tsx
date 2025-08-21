@@ -24,7 +24,7 @@ export const CVPreview: React.FC<CVPreviewProps> = ({ cvData }) => {
   };
 
   return (
-    <div className="light">
+    <div className="cv-light-theme">
       <Card className="border-elec-yellow/20 bg-white text-black max-w-4xl mx-auto">
       <CardContent className="p-8 space-y-6">
         {/* Header */}
