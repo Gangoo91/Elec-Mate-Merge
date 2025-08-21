@@ -117,7 +117,7 @@ export const EnhancedCVForm: React.FC<EnhancedCVFormProps> = ({ cvData, onChange
       </div>
 
       {/* Tab Content */}
-      <div className="bg-elec-gray p-4 sm:p-6 rounded-xl">
+      <div className="bg-elec-gray p-0 rounded-xl">
         {renderTabContent()}
       </div>
     </div>
