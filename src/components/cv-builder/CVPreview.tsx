@@ -6,7 +6,7 @@ import { Separator } from "@/components/ui/separator";
 import { Mail, Phone, MapPin, Calendar } from "lucide-react";
 import { CVData } from "./types";
 import { format } from "date-fns";
-import { processMarkdown } from "@/utils/markdownUtils";
+import { processCVMarkdown } from "@/utils/cvMarkdownUtils";
 
 interface CVPreviewProps {
   cvData: CVData;
@@ -65,7 +65,7 @@ export const CVPreview: React.FC<CVPreviewProps> = ({ cvData }) => {
           <div>
             <h2 className="text-xl font-semibold mb-3 text-gray-900">Professional Summary</h2>
             <div className="text-gray-700 leading-relaxed">
-              {processMarkdown(cvData.personalInfo.professionalSummary)}
+              {processCVMarkdown(cvData.personalInfo.professionalSummary)}
             </div>
           </div>
         )}
@@ -94,7 +94,7 @@ export const CVPreview: React.FC<CVPreviewProps> = ({ cvData }) => {
                   </div>
                   {exp.description && (
                     <div className="text-gray-700 text-sm leading-relaxed pl-4 border-l-2 border-gray-200">
-                      {processMarkdown(exp.description)}
+                      {processCVMarkdown(exp.description)}
                     </div>
                   )}
                 </div>
