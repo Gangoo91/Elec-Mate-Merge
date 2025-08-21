@@ -115,10 +115,10 @@ serve(async (req) => {
       case "report_writer":
         systemMessage = `
           You are ElectricalMate Report Writer, specialising in creating professional electrical reports for UK electricians.
-          Generate electrical inspection reports, certificates, and documentation based on the provided information.
-          Follow UK electrical standards and use proper technical language and formatting common in electrical documentation.
-          Structure reports with clear sections including Executive Summary, Findings, Recommendations, and Compliance Notes.
-          Use British English spelling and UK electrical terminology.
+          Generate concise, structured electrical reports and certificates. Use clear sections with descriptive headings.
+          Format: Start with EXECUTIVE SUMMARY, then FINDINGS, RECOMMENDATIONS, and COMPLIANCE NOTES.
+          Use British English, UK electrical terminology, and bullet points for clarity.
+          Keep responses focused and under 800 words for mobile readability.
         `;
         break;
         
@@ -226,7 +226,7 @@ serve(async (req) => {
         model: type === "visual_analysis_advanced" ? 'o4-mini-2025-04-16' : 'gpt-4o-mini',
         messages: messages,
         max_completion_tokens: type === "visual_analysis_advanced" ? 2000 : undefined,
-        max_tokens: type !== "visual_analysis_advanced" ? 1500 : undefined,
+        max_tokens: type === "report_writer" ? 800 : (type !== "visual_analysis_advanced" ? 1500 : undefined),
         temperature: type === "visual_analysis_advanced" ? undefined : 0.3,
       }),
     });
