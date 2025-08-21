@@ -182,12 +182,12 @@ const renderHeading = (token: MarkdownToken, index: number): JSX.Element => {
   const content = processInlineMarkdown(token.content);
   
   const headingClasses = {
-    1: "text-xl font-bold text-foreground mb-4 mt-6 first:mt-0",
-    2: "text-lg font-semibold text-foreground mb-3 mt-5 first:mt-0",
-    3: "text-base font-semibold text-foreground mb-2 mt-4 first:mt-0",
-    4: "text-sm font-semibold text-foreground mb-2 mt-3 first:mt-0",
-    5: "text-sm font-medium text-foreground mb-1 mt-2 first:mt-0",
-    6: "text-xs font-medium text-foreground mb-1 mt-2 first:mt-0"
+    1: "text-xl font-bold text-gray-900 mb-4 mt-6 first:mt-0",
+    2: "text-lg font-semibold text-gray-900 mb-3 mt-5 first:mt-0",
+    3: "text-base font-semibold text-gray-900 mb-2 mt-4 first:mt-0",
+    4: "text-sm font-semibold text-gray-900 mb-2 mt-3 first:mt-0",
+    5: "text-sm font-medium text-gray-900 mb-1 mt-2 first:mt-0",
+    6: "text-xs font-medium text-gray-900 mb-1 mt-2 first:mt-0"
   };
 
   const className = headingClasses[level as keyof typeof headingClasses] || headingClasses[1];
@@ -205,7 +205,7 @@ const renderHeading = (token: MarkdownToken, index: number): JSX.Element => {
 
 const renderBlockquote = (token: MarkdownToken, index: number): JSX.Element => {
   return (
-    <blockquote key={index} className="border-l-4 border-muted-foreground/30 pl-4 italic text-muted-foreground my-4">
+    <blockquote key={index} className="border-l-4 border-gray-300 pl-4 italic text-gray-600 my-4">
       {processInlineMarkdown(token.content)}
     </blockquote>
   );
@@ -216,7 +216,7 @@ const renderList = (token: MarkdownToken, index: number): JSX.Element => {
   
   if (token.ordered) {
     return (
-      <ol key={index} className="list-decimal list-inside ml-4 space-y-1 text-foreground/90">
+      <ol key={index} className="list-decimal list-inside ml-4 space-y-1 text-gray-700">
         {items.map((item, itemIndex) => (
           <li key={itemIndex} className="leading-relaxed">
             {processInlineMarkdown(item)}
@@ -226,7 +226,7 @@ const renderList = (token: MarkdownToken, index: number): JSX.Element => {
     );
   } else {
     return (
-      <ul key={index} className="list-disc list-inside ml-4 space-y-1 text-foreground/90">
+      <ul key={index} className="list-disc list-inside ml-4 space-y-1 text-gray-700">
         {items.map((item, itemIndex) => (
           <li key={itemIndex} className="leading-relaxed">
             {processInlineMarkdown(item)}
@@ -240,18 +240,18 @@ const renderList = (token: MarkdownToken, index: number): JSX.Element => {
 const renderCodeBlock = (token: MarkdownToken, index: number): JSX.Element => {
   return (
     <pre key={index} className="bg-muted p-3 rounded-md overflow-x-auto text-sm font-mono my-4">
-      <code className="text-foreground">{token.content}</code>
+      <code className="text-gray-900">{token.content}</code>
     </pre>
   );
 };
 
 const renderHorizontalRule = (index: number): JSX.Element => {
-  return <hr key={index} className="border-muted-foreground/30 my-6" />;
+  return <hr key={index} className="border-gray-300 my-6" />;
 };
 
 const renderParagraph = (token: MarkdownToken, index: number): JSX.Element => {
   return (
-    <p key={index} className="text-foreground/90 leading-relaxed mb-2">
+    <p key={index} className="text-gray-700 leading-relaxed mb-2">
       {processInlineMarkdown(token.content)}
     </p>
   );
@@ -268,7 +268,7 @@ const processInlineMarkdown = (text: string): (string | JSX.Element)[] => {
   processedText = processedText.replace(/~~(.*?)~~/g, (match, content) => {
     const placeholder = `__STRIKE_${elementKey}__`;
     elements.push(
-      <span key={`strike-${elementKey}`} className="line-through text-muted-foreground">
+      <span key={`strike-${elementKey}`} className="line-through text-gray-500">
         {content}
       </span>
     );
