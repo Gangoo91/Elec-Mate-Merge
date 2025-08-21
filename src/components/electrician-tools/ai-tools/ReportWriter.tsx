@@ -7,6 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const reportTemplates = [
   { id: "eicr-domestic", label: "EICR - Domestic", prompt: "Create an EICR report for a domestic property. Include installation details, circuit testing results, and any observations found during inspection." },
@@ -22,12 +23,17 @@ const ReportWriter = () => {
   const [reportResult, setReportResult] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
   const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({});
+  const [selectedTemplate, setSelectedTemplate] = useState<string>("");
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  const handleTemplateSelect = (template: typeof reportTemplates[0]) => {
-    setReportPrompt(template.prompt);
-    if (textareaRef.current) {
-      textareaRef.current.focus();
+  const handleTemplateSelect = (templateId: string) => {
+    const template = reportTemplates.find(t => t.id === templateId);
+    if (template) {
+      setReportPrompt(template.prompt);
+      setSelectedTemplate(templateId);
+      if (textareaRef.current) {
+        textareaRef.current.focus();
+      }
     }
   };
 
@@ -164,22 +170,25 @@ const ReportWriter = () => {
             </p>
           </div>
 
-          {/* Quick Templates */}
+          {/* Template Selector */}
           <div className="mb-6">
-            <h3 className="text-sm font-semibold text-white mb-3">Quick Templates:</h3>
-            <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
-              {reportTemplates.map((template) => (
-                <Button
-                  key={template.id}
-                  variant="outline"
-                  size="sm"
-                  className="whitespace-nowrap border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 hover:border-elec-yellow/50 flex-shrink-0"
-                  onClick={() => handleTemplateSelect(template)}
-                >
-                  {template.label}
-                </Button>
-              ))}
-            </div>
+            <label className="text-sm font-semibold text-white mb-3 block">Choose a Template:</label>
+            <Select value={selectedTemplate} onValueChange={handleTemplateSelect}>
+              <SelectTrigger className="w-full bg-elec-gray border-elec-yellow/30 text-white">
+                <SelectValue placeholder="Select a report template..." />
+              </SelectTrigger>
+              <SelectContent className="bg-elec-gray border-elec-yellow/30 z-50">
+                {reportTemplates.map((template) => (
+                  <SelectItem 
+                    key={template.id} 
+                    value={template.id}
+                    className="text-white hover:bg-elec-yellow/10 focus:bg-elec-yellow/10"
+                  >
+                    {template.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
 
           {/* Results Display */}
