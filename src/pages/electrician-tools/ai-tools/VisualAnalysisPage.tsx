@@ -1,30 +1,12 @@
-import { ArrowLeft } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
 import VisualAnalysis from "@/components/electrician-tools/ai-tools/VisualAnalysis";
+import AIToolingHeader from "@/components/electrician-tools/ai-tools/AIToolingHeader";
 
 const VisualAnalysisPage = () => {
   return (
-    <div className="min-h-screen bg-elec-dark">
-      <div className="px-4 py-6">
-        <div className="max-w-4xl mx-auto">
-          {/* Navigation */}
-          <div className="mb-8">
-            <Link to="/electrician-tools/ai-tooling">
-              <Button 
-                variant="outline" 
-                size="sm"
-                className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 hover:border-elec-yellow/50"
-              >
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                Back to AI Tools
-              </Button>
-            </Link>
-          </div>
-
-          {/* Content */}
-          <VisualAnalysis />
-        </div>
+    <div className="min-h-screen bg-neutral-900 text-white">
+      <div className="max-w-6xl mx-auto p-3 sm:p-6 space-y-4 sm:space-y-8">
+        <AIToolingHeader />
+        <VisualAnalysis />
       </div>
     </div>
   );

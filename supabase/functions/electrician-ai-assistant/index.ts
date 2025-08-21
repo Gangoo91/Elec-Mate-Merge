@@ -27,11 +27,11 @@ serve(async (req) => {
     }
 
     const requestBody = await req.json();
-    const { prompt, type = "general" } = requestBody;
+    const { prompt, type = "general", primary_image, additional_images = [], context = {} } = requestBody;
 
-    if (!prompt) {
+    if (!prompt && !primary_image) {
       return new Response(
-        JSON.stringify({ error: "Prompt is required" }),
+        JSON.stringify({ error: "Prompt or primary_image is required" }),
         { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
@@ -57,6 +57,58 @@ serve(async (req) => {
           - Suggest appropriate testing procedures
           
           Use British English spelling (e.g., "colour" not "color", "earth" not "ground") and UK electrical terms.
+        `;
+        break;
+
+      case "visual_analysis_advanced":
+        systemMessage = `
+          You are ElectricalMate Advanced Visual Analyser, specialising in comprehensive analysis of UK electrical installations using image recognition.
+          
+          Analyze the electrical installation/component shown in the image(s) and provide a detailed safety assessment.
+          
+          You must respond with a valid JSON object in this exact format:
+          {
+            "analysis": {
+              "issues": [
+                {
+                  "description": "Detailed description of the issue",
+                  "severity": "low|medium|high|critical",
+                  "confidence": 0.85,
+                  "regulation": "BS 7671 clause reference",
+                  "location": "Specific location if identifiable"
+                }
+              ],
+              "recommendations": [
+                {
+                  "action": "Specific action to take",
+                  "priority": "low|medium|high",
+                  "regulation": "BS 7671 reference",
+                  "cost_estimate": "Estimated cost range"
+                }
+              ],
+              "regulations": [
+                {
+                  "clause": "BS 7671 Section X.X.X",
+                  "description": "What this regulation covers",
+                  "compliance_status": "compliant|non_compliant|requires_inspection"
+                }
+              ],
+              "overall_safety_rating": 7.5,
+              "summary": "Executive summary of findings and overall assessment"
+            }
+          }
+          
+          Focus on:
+          - Visible damage, corrosion, or wear
+          - Improper installations or modifications
+          - Safety hazards and fire risks
+          - BS 7671 compliance issues
+          - Environmental factors affecting safety
+          
+          Use confidence scores from 0.0 to 1.0 based on clarity of visual evidence.
+          Severity levels: low (cosmetic), medium (requires attention), high (safety risk), critical (immediate danger).
+          
+          Always use British English and UK electrical terminology.
         `;
         break;
       
@@ -137,6 +189,33 @@ serve(async (req) => {
     }
 
     console.log(`Sending request to OpenAI API with prompt type: ${type}`);
+    
+    // Prepare messages based on type
+    let messages = [{ role: 'system', content: systemMessage }];
+    
+    if (type === "visual_analysis_advanced" && primary_image) {
+      // Vision analysis with image input
+      const imageUrls = [primary_image, ...additional_images].filter(Boolean);
+      const content = [
+        {
+          type: "text",
+          text: prompt || "Analyze this electrical installation for safety issues, compliance with BS 7671, and provide detailed recommendations."
+        },
+        ...imageUrls.map(url => ({
+          type: "image_url",
+          image_url: {
+            url: url,
+            detail: "high"
+          }
+        }))
+      ];
+      
+      messages.push({ role: 'user', content });
+    } else {
+      // Text-based analysis
+      messages.push({ role: 'user', content: prompt });
+    }
+    
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -144,12 +223,11 @@ serve(async (req) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'gpt-4o-mini',
-        messages: [
-          { role: 'system', content: systemMessage },
-          { role: 'user', content: prompt }
-        ],
-        temperature: 0.3, // Lower temperature for more factual responses
+        model: type === "visual_analysis_advanced" ? 'o4-mini-2025-04-16' : 'gpt-4o-mini',
+        messages: messages,
+        max_completion_tokens: type === "visual_analysis_advanced" ? 2000 : undefined,
+        max_tokens: type !== "visual_analysis_advanced" ? 1500 : undefined,
+        temperature: type === "visual_analysis_advanced" ? undefined : 0.3,
       }),
     });
 
@@ -193,6 +271,22 @@ serve(async (req) => {
         }
       } catch (parseError) {
         console.error('Failed to parse structured response, falling back to regular response:', parseError);
+        // Fall back to regular response format
+      }
+    }
+
+    // Handle visual analysis advanced responses
+    if (type === "visual_analysis_advanced") {
+      try {
+        const parsedResponse = JSON.parse(aiResponse);
+        if (parsedResponse.analysis) {
+          return new Response(
+            JSON.stringify({ analysis: parsedResponse.analysis }),
+            { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+          );
+        }
+      } catch (parseError) {
+        console.error('Failed to parse visual analysis response, falling back to regular response:', parseError);
         // Fall back to regular response format
       }
     }
