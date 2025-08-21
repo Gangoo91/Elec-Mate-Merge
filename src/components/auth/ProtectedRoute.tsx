@@ -21,6 +21,7 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   // Check if user can access the page based on subscription/trial or dev mode
   const canAccess = isSubscribed || isTrialActive || isDevelopmentMode || isSubscriptionPage;
 
+  /*
   useEffect(() => {
     // If authenticated but trial expired and not subscribed, show message
     if (user && !isLoading && !canAccess) {
@@ -35,6 +36,7 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
       }
     }
   }, [user, isLoading, isTrialActive, isSubscribed, isDevelopmentMode, isSubscriptionPage, navigate, toast]);
+  */
 
   // For development purposes, temporarily allow access regardless of auth status
   // Remove this in production
