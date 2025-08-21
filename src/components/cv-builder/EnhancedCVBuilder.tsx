@@ -92,24 +92,29 @@ const EnhancedCVBuilder = () => {
   };
 
   return (
-    <div className="space-y-6">
-      <Card className="border-elec-yellow/20 bg-elec-dark">
-        <CardHeader>
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <FileText className="h-6 w-6 text-elec-yellow" />
+    <div className="min-h-full bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-elec-gray min-h-full flex flex-col border-none shadow-none">
+        <CardHeader className="pb-3 sm:pb-4 border-b border-elec-gray/40 px-3 sm:px-6 pt-3 sm:pt-6">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+            <div className="flex items-center gap-3">
+              <div className="relative">
+                <FileText className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow" />
+                <Sparkles className="h-2 w-2 sm:h-3 sm:w-3 text-elec-yellow absolute -top-1 -right-1" />
+              </div>
               <div>
-                <CardTitle className="text-xl text-white">AI-Powered CV Builder</CardTitle>
-                <p className="text-sm text-gray-400">Create professional electrical CVs with intelligent content generation</p>
+                <CardTitle className="text-elec-light text-lg sm:text-xl">AI-Powered CV Builder</CardTitle>
+                <p className="text-elec-light/60 text-xs sm:text-sm">Create professional electrical CVs with intelligent content generation</p>
               </div>
             </div>
-            <div className="flex gap-2">
+            
+            <div className="flex flex-wrap items-center gap-1 sm:gap-2 w-full sm:w-auto">
               {isEmptyCV() && (
                 <Button
                   onClick={() => setShowWizard(true)}
-                  className="bg-gradient-to-r from-elec-yellow to-yellow-400 text-black hover:from-elec-yellow/90 hover:to-yellow-400/90"
+                  size="sm"
+                  className="bg-gradient-to-r from-elec-yellow to-yellow-400 text-black hover:from-elec-yellow/90 hover:to-yellow-400/90 text-xs sm:text-sm flex-1 sm:flex-none"
                 >
-                  <Sparkles className="h-4 w-4 mr-2" />
+                  <Sparkles className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
                   Smart CV Wizard
                 </Button>
               )}
@@ -117,32 +122,34 @@ const EnhancedCVBuilder = () => {
                 variant="outline"
                 size="sm"
                 onClick={handleSave}
-                className="border-elec-yellow/30 hover:bg-elec-yellow/10"
+                className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 text-xs sm:text-sm flex-1 sm:flex-none"
               >
-                <Save className="h-4 w-4 mr-2" />
+                <Save className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
                 Save
               </Button>
               <Button
                 variant="outline"
                 size="sm"
                 onClick={handleLoad}
-                className="border-elec-yellow/30 hover:bg-elec-yellow/10"
+                className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 text-xs sm:text-sm flex-1 sm:flex-none"
               >
                 Load
               </Button>
               <Button
                 onClick={handleDownload}
                 disabled={isGenerating}
-                className="bg-elec-yellow text-black hover:bg-elec-yellow/90"
+                size="sm"
+                className="bg-elec-yellow text-black hover:bg-elec-yellow/90 text-xs sm:text-sm flex-1 sm:flex-none"
               >
-                <Download className="h-4 w-4 mr-2" />
+                <Download className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
                 {isGenerating ? "Generating..." : "Download PDF"}
               </Button>
             </div>
           </div>
         </CardHeader>
-        <CardContent>
-          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+
+        <CardContent className="flex-1 p-3 sm:p-6">
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full h-full">
             <TabsList className="grid w-full grid-cols-2">
               <TabsTrigger value="edit">
                 <Wand2 className="h-4 w-4 mr-2" />
@@ -160,9 +167,10 @@ const EnhancedCVBuilder = () => {
                   <Button
                     onClick={() => setShowWizard(true)}
                     variant="outline"
-                    className="border-elec-yellow/30 hover:bg-elec-yellow/10"
+                    size="sm"
+                    className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 text-xs sm:text-sm"
                   >
-                    <Sparkles className="h-4 w-4 mr-2" />
+                    <Sparkles className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
                     Restart with AI Wizard
                   </Button>
                 </div>
