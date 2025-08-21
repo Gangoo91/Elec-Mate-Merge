@@ -12,7 +12,7 @@ const CVBuilderBox = () => {
   const [isEditOpen, setIsEditOpen] = useState(false);
 
   return (
-    <Card className="border-elec-yellow/20 bg-elec-gray w-full">
+    <Card className="border-elec-yellow/20 bg-elec-gray w-full max-w-full">
       <CardHeader className="pb-4">
         <div className="relative mb-2">
           <FileText className="h-6 w-6 text-elec-yellow" />
