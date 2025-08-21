@@ -156,10 +156,12 @@ const ReportWriter = () => {
   const reportSections = reportResult ? parseReportSections(reportResult) : [];
 
   return (
-    <div className="min-h-screen bg-elec-dark pb-32">
-      {/* Header */}
-      <div className="px-4 py-6">
-        <div className="max-w-4xl mx-auto">
+    <div className="min-h-screen bg-elec-dark">
+      {/* Main Content */}
+      <div className="pb-40"> {/* Extra padding for sticky composer */}
+        {/* Header */}
+        <div className="px-4 py-6">
+          <div className="max-w-4xl mx-auto">
           <div className="text-center mb-6">
             <div className="flex items-center justify-center gap-2 mb-2">
               <FileText className="h-6 w-6 text-elec-yellow" />
@@ -294,22 +296,23 @@ const ReportWriter = () => {
               </Card>
             </div>
           )}
+          </div>
         </div>
       </div>
 
       {/* Sticky Bottom Composer */}
-      <div className="fixed bottom-0 left-0 right-0 bg-elec-dark border-t border-elec-yellow/20 p-4 safe-area-pb">
+      <div className="fixed bottom-0 left-0 right-0 bg-elec-dark/95 backdrop-blur-sm border-t border-elec-yellow/20 p-4 z-50">
         <div className="max-w-4xl mx-auto">
           <div className="space-y-3">
             <Textarea
               ref={textareaRef}
               placeholder="Describe the electrical work or inspection you need a report for..."
-              className="min-h-[80px] max-h-32 resize-none bg-elec-gray border-elec-yellow/30 text-white placeholder:text-muted-foreground focus:border-elec-yellow/50"
+              className="min-h-[80px] max-h-32 resize-none bg-elec-gray border-elec-yellow/30 text-white placeholder:text-muted-foreground focus:border-elec-yellow/50 focus:ring-1 focus:ring-elec-yellow/50"
               value={reportPrompt}
               onChange={(e) => setReportPrompt(e.target.value)}
             />
             <Button 
-              className="w-full bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 h-12 text-base font-semibold" 
+              className="w-full bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 h-12 text-base font-semibold shadow-lg" 
               onClick={handleGenerateReport} 
               disabled={isGenerating || !reportPrompt.trim()}
             >
