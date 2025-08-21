@@ -137,12 +137,8 @@ export const CVPreview: React.FC<CVPreviewProps> = ({ cvData }) => {
             <div>
               <h2 className="text-xl font-semibold mb-3 text-gray-900">Skills</h2>
               <div className="flex flex-wrap gap-2">
-                {cvData.skills.map((skill, index) => (
-                  <Badge
-                    key={index}
-                    variant="secondary"
-                    className="bg-blue-100 text-blue-800 border-blue-200"
-                  >
+                {cvData.skills.slice(0, 10).map((skill, index) => (
+                  <Badge key={index} variant="outline">
                     {skill}
                   </Badge>
                 ))}
@@ -154,12 +150,8 @@ export const CVPreview: React.FC<CVPreviewProps> = ({ cvData }) => {
             <div>
               <h2 className="text-xl font-semibold mb-3 text-gray-900">Certifications</h2>
               <div className="flex flex-wrap gap-2">
-                {cvData.certifications.map((cert, index) => (
-                  <Badge
-                    key={index}
-                    variant="secondary"
-                    className="bg-green-100 text-green-800 border-green-200"
-                  >
+                {cvData.certifications.slice(0, 10).map((cert, index) => (
+                  <Badge key={index} variant="outline">
                     {cert}
                   </Badge>
                 ))}
