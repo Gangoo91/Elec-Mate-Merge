@@ -136,16 +136,20 @@ export const CVPreview: React.FC<CVPreviewProps> = ({ cvData }) => {
           {cvData.skills.length > 0 && (
             <div>
               <h2 className="text-xl font-semibold mb-3 text-gray-900">Skills</h2>
-              <div className="flex flex-wrap gap-2">
-                {cvData.skills.map((skill, index) => (
-                  <Badge
-                    key={index}
-                    variant="secondary"
-                    className="bg-blue-100 text-blue-800 border-blue-200"
-                  >
-                    {skill}
-                  </Badge>
-                ))}
+              <div className="flex flex-wrap gap-3 leading-relaxed">
+                {cvData.skills.map((skill, index) => {
+                  const variants = ['default', 'secondary', 'success', 'warning', 'gold', 'yellow'];
+                  const variant = variants[index % variants.length];
+                  return (
+                    <Badge
+                      key={index}
+                      variant={variant as any}
+                      className="px-3 py-1.5 text-xs font-medium shadow-sm hover:shadow-md transition-shadow duration-200"
+                    >
+                      {skill}
+                    </Badge>
+                  );
+                })}
               </div>
             </div>
           )}
