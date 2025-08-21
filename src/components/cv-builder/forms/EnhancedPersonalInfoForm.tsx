@@ -55,7 +55,7 @@ export const EnhancedPersonalInfoForm: React.FC<EnhancedPersonalInfoFormProps> =
               type="text"
               value={cvData.personalInfo.fullName}
               onChange={(e) => updatePersonalInfo('fullName', e.target.value)}
-              className="w-full h-12 bg-elec-card border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200 placeholder:text-elec-light/60 text-base font-medium px-4"
+              className="w-full h-12 bg-background border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus-visible:outline-none focus:border-elec-yellow transition-all duration-200 placeholder:text-elec-light/60 text-base font-medium px-4"
               placeholder="Enter your full name"
             />
           </div>
@@ -66,13 +66,13 @@ export const EnhancedPersonalInfoForm: React.FC<EnhancedPersonalInfoFormProps> =
                 <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
                 Email Address *
               </label>
-              <input
-                type="email"
-                value={cvData.personalInfo.email}
-                onChange={(e) => updatePersonalInfo('email', e.target.value)}
-                className="w-full h-12 bg-elec-card border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200 placeholder:text-elec-light/60 text-base font-medium px-4"
-                placeholder="your.email@example.com"
-              />
+               <input
+                 type="email"
+                 value={cvData.personalInfo.email}
+                 onChange={(e) => updatePersonalInfo('email', e.target.value)}
+                 className="w-full h-12 bg-background border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus-visible:outline-none focus:border-elec-yellow transition-all duration-200 placeholder:text-elec-light/60 text-base font-medium px-4"
+                 placeholder="your.email@example.com"
+               />
             </div>
 
             <div className="space-y-3">
@@ -80,13 +80,13 @@ export const EnhancedPersonalInfoForm: React.FC<EnhancedPersonalInfoFormProps> =
                 <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
                 Phone Number *
               </label>
-              <input
-                type="tel"
-                value={cvData.personalInfo.phone}
-                onChange={(e) => updatePersonalInfo('phone', e.target.value)}
-                className="w-full h-12 bg-elec-card border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200 placeholder:text-elec-light/60 text-base font-medium px-4"
-                placeholder="07700 123456"
-              />
+               <input
+                 type="tel"
+                 value={cvData.personalInfo.phone}
+                 onChange={(e) => updatePersonalInfo('phone', e.target.value)}
+                 className="w-full h-12 bg-background border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus-visible:outline-none focus:border-elec-yellow transition-all duration-200 placeholder:text-elec-light/60 text-base font-medium px-4"
+                 placeholder="07700 123456"
+               />
             </div>
           </div>
 
@@ -95,13 +95,13 @@ export const EnhancedPersonalInfoForm: React.FC<EnhancedPersonalInfoFormProps> =
               <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
               Address
             </label>
-            <input
-              type="text"
-              value={cvData.personalInfo.address}
-              onChange={(e) => updatePersonalInfo('address', e.target.value)}
-              className="w-full h-12 bg-elec-card border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200 placeholder:text-elec-light/60 text-base font-medium px-4"
-              placeholder="123 High Street, City"
-            />
+             <input
+               type="text"
+               value={cvData.personalInfo.address}
+               onChange={(e) => updatePersonalInfo('address', e.target.value)}
+               className="w-full h-12 bg-background border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus-visible:outline-none focus:border-elec-yellow transition-all duration-200 placeholder:text-elec-light/60 text-base font-medium px-4"
+               placeholder="123 High Street, City"
+             />
           </div>
 
           <div className="space-y-3">
@@ -109,13 +109,13 @@ export const EnhancedPersonalInfoForm: React.FC<EnhancedPersonalInfoFormProps> =
               <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
               Postcode
             </label>
-            <input
-              type="text"
-              value={cvData.personalInfo.postcode}
-              onChange={(e) => updatePersonalInfo('postcode', e.target.value)}
-              className="w-full h-12 bg-elec-card border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200 placeholder:text-elec-light/60 text-base font-medium px-4"
-              placeholder="SW1A 1AA"
-            />
+             <input
+               type="text"
+               value={cvData.personalInfo.postcode}
+               onChange={(e) => updatePersonalInfo('postcode', e.target.value)}
+               className="w-full h-12 bg-background border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus-visible:outline-none focus:border-elec-yellow transition-all duration-200 placeholder:text-elec-light/60 text-base font-medium px-4"
+               placeholder="SW1A 1AA"
+             />
           </div>
 
           <div className="space-y-4">
@@ -124,13 +124,13 @@ export const EnhancedPersonalInfoForm: React.FC<EnhancedPersonalInfoFormProps> =
                 <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
                 Professional Summary
               </label>
-              <textarea
-                value={cvData.personalInfo.professionalSummary}
-                onChange={(e) => updatePersonalInfo('professionalSummary', e.target.value)}
-                className="w-full h-32 bg-elec-card border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200 placeholder:text-elec-light/60 text-base font-medium p-4 resize-none"
-                placeholder="Brief description of your electrical experience and career goals..."
-                rows={4}
-              />
+               <textarea
+                 value={cvData.personalInfo.professionalSummary}
+                 onChange={(e) => updatePersonalInfo('professionalSummary', e.target.value)}
+                 className="w-full h-32 bg-background border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus-visible:outline-none focus:border-elec-yellow transition-all duration-200 placeholder:text-elec-light/60 text-base font-medium p-4 resize-none"
+                 placeholder="Brief description of your electrical experience and career goals..."
+                 rows={4}
+               />
               <p className="text-xs text-elec-light/70 flex items-center gap-1">
                 <span className="w-1 h-1 bg-elec-yellow/60 rounded-full"></span>
                 Describe your electrical expertise and career objectives
