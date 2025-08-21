@@ -18,6 +18,19 @@ const EnhancedCVBuilder = () => {
   const [isGenerating, setIsGenerating] = useState(false);
   const [showWizard, setShowWizard] = useState(false);
 
+  // Load saved CV data when component mounts
+  React.useEffect(() => {
+    const savedCV = localStorage.getItem('cvData');
+    if (savedCV) {
+      try {
+        const parsedCV = JSON.parse(savedCV);
+        setCVData(parsedCV);
+      } catch (error) {
+        console.error('Error loading saved CV:', error);
+      }
+    }
+  }, []);
+
   const handleSave = () => {
     localStorage.setItem('cvData', JSON.stringify(cvData));
     toast({

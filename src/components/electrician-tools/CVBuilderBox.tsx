@@ -5,9 +5,11 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { FileText, Sparkles, Wand2 } from "lucide-react";
 import SimplifiedCVBuilder from "@/components/cv-builder/SimplifiedCVBuilder";
+import EnhancedCVBuilder from "@/components/cv-builder/EnhancedCVBuilder";
 
 const CVBuilderBox = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isWizardOpen, setIsWizardOpen] = useState(false);
+  const [isEditOpen, setIsEditOpen] = useState(false);
 
   return (
     <Card className="border-elec-yellow/20 bg-elec-gray w-full">
@@ -49,7 +51,8 @@ const CVBuilderBox = () => {
             </div>
           </div>
           <div className="flex flex-col sm:flex-row lg:flex-col xl:flex-row gap-3 w-full lg:min-w-fit">
-            <Dialog open={isOpen} onOpenChange={setIsOpen}>
+            {/* Smart CV Wizard Dialog */}
+            <Dialog open={isWizardOpen} onOpenChange={setIsWizardOpen}>
               <DialogTrigger asChild>
                 <Button 
                   className="bg-gradient-to-r from-elec-yellow to-yellow-400 text-black hover:from-elec-yellow/90 hover:to-yellow-400/90 justify-start flex-1 min-h-10"
@@ -65,21 +68,23 @@ const CVBuilderBox = () => {
               </DialogContent>
             </Dialog>
             
-            <Button 
-              variant="outline" 
-              className="border-elec-yellow/30 hover:bg-elec-yellow/10 justify-start flex-1 min-h-10"
-              onClick={() => {
-                const saved = localStorage.getItem('cvData');
-                if (saved) {
-                  setIsOpen(true);
-                } else {
-                  setIsOpen(true);
-                }
-              }}
-            >
-              <FileText className="h-4 w-4 mr-2" /> 
-              Edit Existing CV
-            </Button>
+            {/* Edit Existing CV Dialog */}
+            <Dialog open={isEditOpen} onOpenChange={setIsEditOpen}>
+              <DialogTrigger asChild>
+                <Button 
+                  variant="outline" 
+                  className="border-elec-yellow/30 hover:bg-elec-yellow/10 justify-start flex-1 min-h-10"
+                >
+                  <FileText className="h-4 w-4 mr-2" /> 
+                  Edit Existing CV
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="w-[100vw] h-[100vh] max-w-none max-h-none overflow-hidden p-0 m-0 sm:w-[95vw] sm:max-w-6xl sm:h-[90vh] sm:max-h-[90vh] sm:m-6 sm:rounded-lg">
+                <div className="h-full overflow-y-auto">
+                  <EnhancedCVBuilder />
+                </div>
+              </DialogContent>
+            </Dialog>
           </div>
         </div>
       </CardContent>
