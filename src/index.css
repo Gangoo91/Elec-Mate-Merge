@@ -139,36 +139,6 @@
     display: none;
   }
   
-  /* Comprehensive light theme override for CV */
-  .cv-light-theme {
-    --background: 0 0% 100% !important;
-    --foreground: 222.2 84% 4.9% !important;
-    --card: 0 0% 100% !important;
-    --card-foreground: 222.2 84% 4.9% !important;
-    --popover: 0 0% 100% !important;
-    --popover-foreground: 222.2 84% 4.9% !important;
-    --muted: 210 40% 96.1% !important;
-    --muted-foreground: 215.4 16.3% 46.9% !important;
-    --accent: 210 40% 96.1% !important;
-    --accent-foreground: 222.2 84% 4.9% !important;
-    --border: 214.3 31.8% 91.4% !important;
-    --input: 214.3 31.8% 91.4% !important;
-    color-scheme: light !important;
-  }
-  
-  /* Force all text elements in CV to use dark colors */
-  .cv-light-theme * {
-    color: inherit !important;
-  }
-  
-  .cv-light-theme .text-foreground {
-    color: hsl(222.2 84% 4.9%) !important;
-  }
-  
-  .cv-light-theme .text-muted-foreground {
-    color: hsl(215.4 16.3% 46.9%) !important;
-  }
-  
   .line-clamp-2 {
     display: -webkit-box;
     -webkit-line-clamp: 2;

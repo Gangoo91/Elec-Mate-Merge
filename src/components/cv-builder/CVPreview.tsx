@@ -24,9 +24,8 @@ export const CVPreview: React.FC<CVPreviewProps> = ({ cvData }) => {
   };
 
   return (
-    <div className="cv-light-theme">
-      <Card className="border-elec-yellow/20 bg-white text-black max-w-4xl mx-auto">
-      <CardContent className="p-8 space-y-6 text-gray-900 [&_*]:text-inherit">
+    <Card className="border-elec-yellow/20 bg-white text-black max-w-4xl mx-auto">
+      <CardContent className="p-8 space-y-6">
         {/* Header */}
         <div className="text-center space-y-2">
           <h1 className="text-3xl font-bold text-gray-900">
@@ -170,6 +169,5 @@ export const CVPreview: React.FC<CVPreviewProps> = ({ cvData }) => {
         </div>
       </CardContent>
     </Card>
-    </div>
   );
 };
