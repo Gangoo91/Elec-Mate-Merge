@@ -32,45 +32,115 @@ const AIAssistant = () => {
     startTimeRef.current = Date.now();
     
     try {
-      const { data, error } = await supabase.functions.invoke('electrician-ai-assistant-stream', {
-        body: { 
+      const response = await fetch(`https://jtwygbeceundfgnkirof.supabase.co/functions/v1/electrician-ai-assistant-stream`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp0d3lnYmVjZXVuZGZnbmtpcm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYyMTc2OTUsImV4cCI6MjA2MTc5MzY5NX0.NgMOzzNkreOiJ2_t_f90NJxIJTcpUninWPYnM7RkrY8`,
+        },
+        body: JSON.stringify({ 
           prompt: prompt,
           mode: selectedMode
-        },
+        }),
       });
 
-      if (error) {
-        throw new Error(error.message || 'Error connecting to the AI assistant');
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      if (data.error) {
-        throw new Error(data.error);
+      const reader = response.body?.getReader();
+      if (!reader) {
+        throw new Error("Failed to get response reader");
       }
 
-      // Handle the response
-      if (data.content) {
-        setResponse(data.content);
-      } else if (data.response) {
-        setResponse(data.response);
-      } else {
-        throw new Error("No valid response received from AI");
+      streamRef.current = reader;
+      let accumulatedResponse = "";
+      let firstChunkReceived = false;
+
+      try {
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+
+          const chunk = new TextDecoder().decode(value);
+          const lines = chunk.split('\n');
+
+          for (const line of lines) {
+            if (line.startsWith('data: ')) {
+              try {
+                const data = JSON.parse(line.slice(6));
+                if (data.content) {
+                  accumulatedResponse += data.content;
+                  setResponse(accumulatedResponse);
+                  
+                  if (!firstChunkReceived) {
+                    firstChunkReceived = true;
+                    const firstChunkTime = Date.now();
+                    console.log(`First chunk received in ${(firstChunkTime - startTimeRef.current) / 1000}s`);
+                  }
+                }
+              } catch (e) {
+                // Skip invalid JSON
+                continue;
+              }
+            }
+          }
+        }
+
+        const endTime = Date.now();
+        setResponseTime(endTime - startTimeRef.current);
+
+        toast({
+          title: "Search Complete",
+          description: `Response received in ${((endTime - startTimeRef.current) / 1000).toFixed(1)}s`,
+        });
+      } catch (streamError) {
+        console.error('Stream reading error:', streamError);
+        throw new Error("Failed to read response stream");
+      } finally {
+        reader.releaseLock();
+        streamRef.current = null;
       }
-
-      const endTime = Date.now();
-      setResponseTime(endTime - startTimeRef.current);
-
-      toast({
-        title: "Search Complete",
-        description: `Response received in ${((endTime - startTimeRef.current) / 1000).toFixed(1)}s`,
-      });
 
     } catch (error) {
       console.error('AI Query Error:', error);
-      toast({
-        title: "Error",
-        description: error instanceof Error ? error.message : "Failed to get response from AI assistant",
-        variant: "destructive",
-      });
+      
+      // Fallback to the original non-streaming function
+      try {
+        const { data, error: fallbackError } = await supabase.functions.invoke('electrician-ai-assistant', {
+          body: { 
+            prompt: prompt,
+            type: "structured_assistant" 
+          },
+        });
+        
+        if (fallbackError) throw fallbackError;
+        if (data?.error) throw new Error(data.error);
+        
+        if (data?.analysis) {
+          setResponse(data.analysis);
+        } else if (data?.response) {
+          setResponse(data.response);
+        } else {
+          throw new Error("No valid response received");
+        }
+        
+        const endTime = Date.now();
+        setResponseTime(endTime - startTimeRef.current);
+        
+        toast({
+          title: "Search Complete (Fallback)",
+          description: `Response received in ${((endTime - startTimeRef.current) / 1000).toFixed(1)}s`,
+        });
+        
+      } catch (fallbackError) {
+        console.error('Fallback also failed:', fallbackError);
+        toast({
+          title: "Error",
+          description: "AI assistant is temporarily unavailable. Please try again.",
+          variant: "destructive",
+        });
+      }
     } finally {
       setIsLoading(false);
     }
