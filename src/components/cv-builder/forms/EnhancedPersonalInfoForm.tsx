@@ -47,8 +47,7 @@ export const EnhancedPersonalInfoForm: React.FC<EnhancedPersonalInfoFormProps> =
         
         <div className="space-y-6">
           <div className="space-y-3">
-            <label className="text-sm font-semibold text-elec-light flex items-center gap-2">
-              <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
+            <label className="text-sm font-semibold text-elec-light">
               Full Name *
             </label>
             <input
@@ -62,8 +61,7 @@ export const EnhancedPersonalInfoForm: React.FC<EnhancedPersonalInfoFormProps> =
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-3">
-              <label className="text-sm font-semibold text-elec-light flex items-center gap-2">
-                <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
+              <label className="text-sm font-semibold text-elec-light">
                 Email Address *
               </label>
                <input
@@ -76,8 +74,7 @@ export const EnhancedPersonalInfoForm: React.FC<EnhancedPersonalInfoFormProps> =
             </div>
 
             <div className="space-y-3">
-              <label className="text-sm font-semibold text-elec-light flex items-center gap-2">
-                <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
+              <label className="text-sm font-semibold text-elec-light">
                 Phone Number *
               </label>
                <input
@@ -91,8 +88,7 @@ export const EnhancedPersonalInfoForm: React.FC<EnhancedPersonalInfoFormProps> =
           </div>
 
           <div className="space-y-3">
-            <label className="text-sm font-semibold text-elec-light flex items-center gap-2">
-              <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
+            <label className="text-sm font-semibold text-elec-light">
               Address
             </label>
              <input
@@ -105,8 +101,7 @@ export const EnhancedPersonalInfoForm: React.FC<EnhancedPersonalInfoFormProps> =
           </div>
 
           <div className="space-y-3">
-            <label className="text-sm font-semibold text-elec-light flex items-center gap-2">
-              <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
+            <label className="text-sm font-semibold text-elec-light">
               Postcode
             </label>
              <input
@@ -120,8 +115,7 @@ export const EnhancedPersonalInfoForm: React.FC<EnhancedPersonalInfoFormProps> =
 
           <div className="space-y-4">
             <div className="space-y-3">
-              <label className="text-sm font-semibold text-elec-light flex items-center gap-2">
-                <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
+              <label className="text-sm font-semibold text-elec-light">
                 Professional Summary
               </label>
                <textarea
