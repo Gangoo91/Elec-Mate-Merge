@@ -159,21 +159,23 @@ Create specific, quantified achievement statements by:
 Return 3-5 powerful achievement statements with specific metrics.`;
 
       case 'generate_from_raw':
-        return `I am providing raw content about my skills, qualifications, and certifications. Please create a professional and well-structured resume from this data. Organize it into standard resume sections such as:
+        return `CRITICAL: You must respond with ONLY valid JSON - no markdown, no explanations, no additional text.
 
-Header (Name, Contact Information – use placeholders if not provided)
-Professional Summary (2–3 lines highlighting my strengths as an electrician)
-Skills (technical skills, regulatory knowledge, software tools, etc.)
-Certifications (e.g., City & Guilds, Wiring Regulations, PAT Testing)
-Work Experience (create a clean section with placeholders if no details are provided)
-Education (use the provided qualifications, and placeholders if needed)
+Transform the provided raw CV data into a professional, well-structured resume using UK electrical industry standards. Enhance the content while preserving all original meaning.
 
-Make sure the formatting is consistent, polished, and easy to read. Keep the tone professional and suitable for job applications. Do not change the meaning of the content but refine the wording so it looks impressive on a resume.
+Requirements:
+- Use British English spelling and electrical terminology (earth, consumer unit, BS 7671)
+- Enhance job titles with proper electrical industry terms
+- Create compelling professional summary highlighting electrical expertise
+- Quantify achievements where possible (projects completed, team sizes, timeframes)
+- Use action verbs: managed, delivered, implemented, achieved, optimised, installed
+- Include relevant electrical certifications and qualifications
+- Ensure content is ATS-optimized with industry keywords
 
 Raw CV Data:
 ${JSON.stringify(context.rawCVData, null, 2)}
 
-Return the response in JSON format with the following structure:
+Return ONLY this exact JSON structure with enhanced content:
 {
   "personalInfo": {
     "fullName": "enhanced name or use existing",
@@ -181,34 +183,34 @@ Return the response in JSON format with the following structure:
     "phone": "enhanced or use existing", 
     "address": "enhanced or use existing",
     "postcode": "enhanced or use existing",
-    "professionalSummary": "professional 2-3 line summary"
+    "professionalSummary": "Professional 2-3 line summary highlighting electrical expertise, experience, and key qualifications"
   },
   "experience": [
     {
       "id": "unique-id",
-      "jobTitle": "enhanced job title",
-      "company": "enhanced company name",
-      "location": "enhanced location",
-      "startDate": "enhanced start date",
-      "endDate": "enhanced end date or Present",
-      "current": boolean,
-      "description": "professional bullet points describing achievements and responsibilities"
+      "jobTitle": "Professional electrical job title",
+      "company": "Company name",
+      "location": "City, UK",
+      "startDate": "MM/YYYY",
+      "endDate": "MM/YYYY or Present",
+      "current": false,
+      "description": "Enhanced bullet points with achievements, quantified results, and technical accomplishments using electrical terminology"
     }
   ],
   "education": [
     {
       "id": "unique-id",
-      "qualification": "enhanced qualification name",
-      "institution": "enhanced institution name", 
-      "location": "enhanced location",
-      "startDate": "enhanced start date",
-      "endDate": "enhanced end date",
-      "current": boolean,
-      "grade": "enhanced grade if available"
+      "qualification": "Enhanced qualification name",
+      "institution": "Institution name", 
+      "location": "City, UK",
+      "startDate": "MM/YYYY",
+      "endDate": "MM/YYYY",
+      "current": false,
+      "grade": "Grade if available"
     }
   ],
-  "skills": ["enhanced skill 1", "enhanced skill 2", ...],
-  "certifications": ["enhanced certification 1", "enhanced certification 2", ...]
+  "skills": ["Electrical Installation", "BS 7671 18th Edition", "PAT Testing", "Fault Finding", "Additional skills..."],
+  "certifications": ["City & Guilds Level 3", "18th Edition Wiring Regulations", "PAT Testing Certification", "Additional certifications..."]
 }`;
 
       default:
@@ -313,22 +315,107 @@ Return the response in JSON format with the following structure:
   }
 
   static async generateFromRawContent(rawCVData: any): Promise<any> {
-    const response = await this.callAIAssistant({
-      type: 'generate_from_raw',
-      context: { rawCVData }
-    });
+    console.log('Generating from raw content:', rawCVData);
     
     try {
+      const response = await this.callAIAssistant({
+        type: 'generate_from_raw',
+        context: { rawCVData }
+      });
+      
+      console.log('Raw AI response:', response.content);
+      
+      // Sanitize the response to extract JSON
+      const sanitized = this.sanitizeJSONResponse(response.content);
+      console.log('Sanitized response:', sanitized);
+      
       // Try to parse JSON response
-      const parsed = JSON.parse(response.content);
-      return parsed;
+      const parsed = JSON.parse(sanitized);
+      
+      // Validate the parsed response structure
+      const validated = this.validateCVStructure(parsed);
+      console.log('Validated CV structure:', validated);
+      
+      return validated;
     } catch (error) {
-      // If JSON parsing fails, return a structured response
-      console.warn('Failed to parse JSON response, using content as-is');
-      return {
-        content: response.content,
-        error: 'Failed to parse structured response'
-      };
+      console.error('Error in generateFromRawContent:', error);
+      
+      // Provide more specific error handling
+      if (error instanceof SyntaxError) {
+        throw new Error('AI returned invalid response format. Please try again or check your input data.');
+      } else if (error.message.includes('AI service error')) {
+        throw new Error('AI service is temporarily unavailable. Please try again in a moment.');
+      } else {
+        throw new Error(`Failed to generate professional resume: ${error.message}`);
+      }
     }
+  }
+
+  private static sanitizeJSONResponse(response: string): string {
+    // Remove markdown code blocks if present
+    let sanitized = response.replace(/```json\s*/g, '').replace(/```\s*$/g, '');
+    
+    // Remove any text before the first { and after the last }
+    const firstBrace = sanitized.indexOf('{');
+    const lastBrace = sanitized.lastIndexOf('}');
+    
+    if (firstBrace !== -1 && lastBrace !== -1 && lastBrace > firstBrace) {
+      sanitized = sanitized.substring(firstBrace, lastBrace + 1);
+    }
+    
+    // Clean up extra whitespace and newlines
+    sanitized = sanitized.trim();
+    
+    return sanitized;
+  }
+
+  private static validateCVStructure(data: any): any {
+    // Ensure the response has the required structure
+    const defaultStructure = {
+      personalInfo: {
+        fullName: "",
+        email: "",
+        phone: "",
+        address: "",
+        postcode: "",
+        professionalSummary: ""
+      },
+      experience: [],
+      education: [],
+      skills: [],
+      certifications: []
+    };
+
+    // Merge with defaults to ensure all required fields exist
+    const validated = {
+      personalInfo: {
+        ...defaultStructure.personalInfo,
+        ...(data.personalInfo || {})
+      },
+      experience: Array.isArray(data.experience) ? data.experience.map((exp: any, index: number) => ({
+        id: exp.id || `exp-${index}-${Date.now()}`,
+        jobTitle: exp.jobTitle || 'Position Title',
+        company: exp.company || 'Company Name',
+        location: exp.location || 'Location',
+        startDate: exp.startDate || '',
+        endDate: exp.endDate || '',
+        current: exp.current || false,
+        description: exp.description || 'Job description and achievements'
+      })) : [],
+      education: Array.isArray(data.education) ? data.education.map((edu: any, index: number) => ({
+        id: edu.id || `edu-${index}-${Date.now()}`,
+        qualification: edu.qualification || 'Qualification',
+        institution: edu.institution || 'Institution',
+        location: edu.location || 'Location',
+        startDate: edu.startDate || '',
+        endDate: edu.endDate || '',
+        current: edu.current || false,
+        grade: edu.grade || ''
+      })) : [],
+      skills: Array.isArray(data.skills) ? data.skills : [],
+      certifications: Array.isArray(data.certifications) ? data.certifications : []
+    };
+
+    return validated;
   }
 }

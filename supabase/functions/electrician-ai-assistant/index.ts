@@ -189,6 +189,15 @@ serve(async (req) => {
           - Quantification of achievements with measurable results
           - Industry-specific keywords and terminology
           
+          CRITICAL INSTRUCTIONS FOR JSON RESPONSES:
+          When a user requests JSON format (as indicated by JSON structure in the prompt), you MUST:
+          1. Return ONLY valid JSON without any markdown formatting
+          2. Do NOT use \`\`\`json code blocks
+          3. Do NOT include any explanatory text before or after the JSON
+          4. Ensure all JSON keys are properly quoted with double quotes
+          5. Ensure all string values are properly escaped
+          6. Test your JSON internally before responding to ensure it's valid
+          
           When refining content:
           1. Use powerful action verbs (managed, implemented, delivered, achieved, optimised)
           2. Replace weak phrases like "responsible for" with stronger alternatives

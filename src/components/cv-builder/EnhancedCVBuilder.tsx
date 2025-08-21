@@ -91,15 +91,40 @@ const EnhancedCVBuilder = () => {
   };
 
   const handleGenerateFromRaw = async () => {
+    if (!hasContentForGeneration()) {
+      toast({
+        title: "Insufficient Content",
+        description: "Please add some personal information, skills, or experience before generating your professional resume.",
+        variant: "destructive"
+      });
+      return;
+    }
+
     setIsGeneratingFromRaw(true);
+    
     try {
+      console.log('Starting CV generation with data:', cvData);
+      
       const enhancedCV = await AIService.generateFromRawContent(cvData);
+      console.log('Generated CV:', enhancedCV);
       
       if (enhancedCV.error) {
         toast({
           title: "Generation Warning",
-          description: "CV was generated but may need manual review.",
+          description: enhancedCV.error || "CV was generated but may need manual review.",
           variant: "default"
+        });
+        return;
+      }
+      
+      // Validate that we have meaningful content
+      if (!enhancedCV.personalInfo?.professionalSummary && 
+          enhancedCV.experience?.length === 0 && 
+          enhancedCV.skills?.length === 0) {
+        toast({
+          title: "Generation Issue",
+          description: "The AI couldn't generate sufficient content. Please add more detailed information and try again.",
+          variant: "destructive"
         });
         return;
       }
@@ -110,12 +135,29 @@ const EnhancedCVBuilder = () => {
       
       toast({
         title: "Professional Resume Generated",
-        description: "Your raw content has been transformed into a professional resume structure."
+        description: "Your content has been enhanced and structured into a professional resume format."
       });
-    } catch (error) {
+      
+    } catch (error: any) {
+      console.error('CV Generation Error:', error);
+      
+      let errorMessage = "Failed to generate professional resume. Please try again.";
+      
+      if (error.message) {
+        if (error.message.includes('invalid response format')) {
+          errorMessage = "AI service returned an invalid format. Please try again or contact support.";
+        } else if (error.message.includes('temporarily unavailable')) {
+          errorMessage = "AI service is currently busy. Please wait a moment and try again.";
+        } else if (error.message.includes('insufficient content')) {
+          errorMessage = "Please add more detailed information about your experience and skills.";
+        } else {
+          errorMessage = error.message;
+        }
+      }
+      
       toast({
         title: "Generation Failed",
-        description: "Failed to generate professional resume. Please try again.",
+        description: errorMessage,
         variant: "destructive"
       });
     } finally {
