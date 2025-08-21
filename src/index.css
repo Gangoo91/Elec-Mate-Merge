@@ -106,7 +106,7 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-elec-dark text-elec-light dark;
   }
   
   .gradient-text {
