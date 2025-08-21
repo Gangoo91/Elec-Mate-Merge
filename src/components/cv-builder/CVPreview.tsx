@@ -136,7 +136,7 @@ export const CVPreview: React.FC<CVPreviewProps> = ({ cvData }) => {
           {cvData.skills.length > 0 && (
             <div>
               <h2 className="text-xl font-semibold mb-3 text-gray-900">Skills</h2>
-              <div className="flex flex-wrap gap-2">
+              <div className="w-full flex flex-wrap gap-2">
                 {cvData.skills.map((skill, index) => (
                   <Badge
                     key={index}
