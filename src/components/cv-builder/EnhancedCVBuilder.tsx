@@ -2,10 +2,9 @@
 import React, { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { FileText, Download, Eye, Save, Wand2, Sparkles } from "lucide-react";
-import { CVForm } from "./CVForm";
+import { FileText, Download, Save, Wand2, Sparkles, Eye } from "lucide-react";
+import { EnhancedCVForm } from "./EnhancedCVForm";
 import { CVPreview } from "./CVPreview";
 import { SmartCVWizard } from "./ai/SmartCVWizard";
 import { CVData, defaultCVData } from "./types";
@@ -14,23 +13,33 @@ import { toast } from "@/hooks/use-toast";
 
 const EnhancedCVBuilder = () => {
   const [cvData, setCVData] = useState<CVData>(defaultCVData);
-  const [activeTab, setActiveTab] = useState("edit");
   const [isGenerating, setIsGenerating] = useState(false);
+  const [showPreview, setShowPreview] = useState(false);
   const [showWizard, setShowWizard] = useState(false);
 
-  // Auto-load saved CV data on mount
+  // Load existing CV data if available
   useEffect(() => {
-    const saved = localStorage.getItem('cvData');
-    if (saved) {
+    const savedCV = localStorage.getItem('cvData');
+    if (savedCV) {
       try {
-        setCVData(JSON.parse(saved));
+        const parsedCV = JSON.parse(savedCV);
+        setCVData(parsedCV);
       } catch (error) {
-        console.error('Error loading saved CV data:', error);
+        console.error('Error loading saved CV:', error);
       }
     }
   }, []);
 
   const handleSave = () => {
+    if (!cvData.personalInfo.fullName) {
+      toast({
+        title: "No CV Data",
+        description: "Please create or edit a CV first before saving.",
+        variant: "destructive"
+      });
+      return;
+    }
+
     localStorage.setItem('cvData', JSON.stringify(cvData));
     toast({
       title: "CV Saved",
@@ -41,11 +50,20 @@ const EnhancedCVBuilder = () => {
   const handleLoad = () => {
     const saved = localStorage.getItem('cvData');
     if (saved) {
-      setCVData(JSON.parse(saved));
-      toast({
-        title: "CV Loaded",
-        description: "Your saved CV has been loaded."
-      });
+      try {
+        const parsedCV = JSON.parse(saved);
+        setCVData(parsedCV);
+        toast({
+          title: "CV Loaded",
+          description: "Your saved CV has been loaded."
+        });
+      } catch (error) {
+        toast({
+          title: "Load Failed",
+          description: "Error loading saved CV data.",
+          variant: "destructive"
+        });
+      }
     } else {
       toast({
         title: "No Saved CV",
@@ -56,17 +74,26 @@ const EnhancedCVBuilder = () => {
   };
 
   const handleDownload = async () => {
+    if (!cvData.personalInfo.fullName) {
+      toast({
+        title: "No CV Data",
+        description: "Please create or edit a CV first before downloading.",
+        variant: "destructive"
+      });
+      return;
+    }
+
     setIsGenerating(true);
     try {
       await generateCVPDF(cvData);
       toast({
         title: "CV Downloaded",
-        description: "Your CV has been generated and downloaded as PDF."
+        description: "Your professional CV has been downloaded as a PDF."
       });
     } catch (error) {
       toast({
         title: "Download Failed",
-        description: "There was an error generating your CV PDF.",
+        description: "There was an error downloading your CV. Please try again.",
         variant: "destructive"
       });
     } finally {
@@ -77,10 +104,13 @@ const EnhancedCVBuilder = () => {
   const handleWizardComplete = (generatedCV: CVData) => {
     setCVData(generatedCV);
     setShowWizard(false);
-    setActiveTab("edit");
+    
+    // Save to localStorage
+    localStorage.setItem('cvData', JSON.stringify(generatedCV));
+    
     toast({
-      title: "Smart CV Created",
-      description: "Your AI-powered CV is ready for review and customisation."
+      title: "CV Generated Successfully",
+      description: "Your professional CV is ready for preview and download."
     });
   };
 
@@ -91,6 +121,65 @@ const EnhancedCVBuilder = () => {
            cvData.skills.length === 0;
   };
 
+  // Preview Mode
+  if (showPreview) {
+    return (
+      <div className="min-h-full bg-elec-gray">
+        <Card className="border-elec-yellow/20 bg-elec-gray min-h-full flex flex-col border-none shadow-none">
+          <CardHeader className="pb-3 sm:pb-4 border-b border-elec-gray/40 px-3 sm:px-6 pt-3 sm:pt-6">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+              <div className="flex items-center gap-3">
+                <div className="relative">
+                  <FileText className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow" />
+                  <Sparkles className="h-2 w-2 sm:h-3 sm:w-3 text-elec-yellow absolute -top-1 -right-1" />
+                </div>
+                <div>
+                  <CardTitle className="text-elec-light text-lg sm:text-xl">CV Preview</CardTitle>
+                  <p className="text-elec-light/60 text-xs sm:text-sm">Your professional CV ready for download</p>
+                </div>
+              </div>
+              
+              <div className="flex flex-wrap items-center gap-1 sm:gap-2 w-full sm:w-auto">
+                <Button
+                  onClick={() => setShowPreview(false)}
+                  variant="outline"
+                  size="sm"
+                  className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 text-xs sm:text-sm flex-1 sm:flex-none"
+                >
+                  <Wand2 className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
+                  Back to Editor
+                </Button>
+                <Button
+                  onClick={handleSave}
+                  variant="outline"
+                  size="sm"
+                  className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 text-xs sm:text-sm flex-1 sm:flex-none"
+                >
+                  <Save className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
+                  Save CV
+                </Button>
+                <Button
+                  onClick={handleDownload}
+                  disabled={isGenerating}
+                  size="sm"
+                  className="bg-elec-yellow text-black hover:bg-elec-yellow/90 text-xs sm:text-sm flex-1 sm:flex-none"
+                >
+                  <Download className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
+                  {isGenerating ? "Generating..." : "Download PDF"}
+                </Button>
+              </div>
+            </div>
+          </CardHeader>
+
+          <CardContent className="flex-1 p-3 sm:p-6">
+            <CVPreview cvData={cvData} />
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
+  // Edit Mode
   return (
     <div className="min-h-full bg-elec-gray">
       <Card className="border-elec-yellow/20 bg-elec-gray min-h-full flex flex-col border-none shadow-none">
@@ -98,12 +187,12 @@ const EnhancedCVBuilder = () => {
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
             <div className="flex items-center gap-3">
               <div className="relative">
-                <FileText className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow" />
+                <Wand2 className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow" />
                 <Sparkles className="h-2 w-2 sm:h-3 sm:w-3 text-elec-yellow absolute -top-1 -right-1" />
               </div>
               <div>
-                <CardTitle className="text-elec-light text-lg sm:text-xl">AI-Powered CV Builder</CardTitle>
-                <p className="text-elec-light/60 text-xs sm:text-sm">Create professional electrical CVs with intelligent content generation</p>
+                <CardTitle className="text-elec-light text-lg sm:text-xl">CV Editor</CardTitle>
+                <p className="text-elec-light/60 text-xs sm:text-sm">Edit and customise your professional CV</p>
               </div>
             </div>
             
@@ -112,25 +201,36 @@ const EnhancedCVBuilder = () => {
                 <Button
                   onClick={() => setShowWizard(true)}
                   size="sm"
-                  className="bg-gradient-to-r from-elec-yellow to-yellow-400 text-black hover:from-elec-yellow/90 hover:to-yellow-400/90 text-xs sm:text-sm flex-1 sm:flex-none"
+                  className="bg-elec-yellow text-black hover:bg-elec-yellow/90 text-xs sm:text-sm flex-1 sm:flex-none"
                 >
                   <Sparkles className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
                   Smart CV Wizard
                 </Button>
               )}
+              {!isEmptyCV() && (
+                <Button
+                  onClick={() => setShowPreview(true)}
+                  variant="outline"
+                  size="sm"
+                  className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 text-xs sm:text-sm flex-1 sm:flex-none"
+                >
+                  <Eye className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
+                  Preview
+                </Button>
+              )}
               <Button
+                onClick={handleSave}
                 variant="outline"
                 size="sm"
-                onClick={handleSave}
                 className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 text-xs sm:text-sm flex-1 sm:flex-none"
               >
                 <Save className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
                 Save
               </Button>
               <Button
+                onClick={handleLoad}
                 variant="outline"
                 size="sm"
-                onClick={handleLoad}
                 className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 text-xs sm:text-sm flex-1 sm:flex-none"
               >
                 Load
@@ -150,39 +250,20 @@ const EnhancedCVBuilder = () => {
 
         <CardContent className="flex-1 p-0">
           <div className="p-3 sm:p-6">
-            <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full h-full">
-              <TabsList className="grid w-full grid-cols-2">
-                <TabsTrigger value="edit">
-                  <Wand2 className="h-4 w-4 mr-2" />
-                  Edit CV
-                </TabsTrigger>
-                <TabsTrigger value="preview">
-                  <Eye className="h-4 w-4 mr-2" />
-                  Preview
-                </TabsTrigger>
-              </TabsList>
-              
-              <TabsContent value="edit" className="space-y-6 mt-6">
-                {!isEmptyCV() && (
-                  <div className="mb-4">
-                    <Button
-                      onClick={() => setShowWizard(true)}
-                      variant="outline"
-                      size="sm"
-                      className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 text-xs sm:text-sm"
-                    >
-                      <Sparkles className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
-                      Restart with AI Wizard
-                    </Button>
-                  </div>
-                )}
-                <CVForm cvData={cvData} onChange={setCVData} />
-              </TabsContent>
-              
-              <TabsContent value="preview" className="mt-6">
-                <CVPreview cvData={cvData} />
-              </TabsContent>
-            </Tabs>
+            {!isEmptyCV() && (
+              <div className="mb-4">
+                <Button
+                  onClick={() => setShowWizard(true)}
+                  variant="outline"
+                  size="sm"
+                  className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 text-xs sm:text-sm"
+                >
+                  <Sparkles className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
+                  Restart with AI Wizard
+                </Button>
+              </div>
+            )}
+            <EnhancedCVForm cvData={cvData} onChange={setCVData} />
           </div>
         </CardContent>
       </Card>
