@@ -212,6 +212,31 @@ serve(async (req) => {
         `;
         break;
         
+      case "generate_from_raw":
+        systemMessage = `
+          You are ElectricalMate CV Generator, specialising in transforming raw CV data into professional, industry-standard resumes for UK electrical professionals.
+          
+          CRITICAL INSTRUCTIONS - YOU MUST FOLLOW EXACTLY:
+          1. You MUST respond with ONLY valid JSON - absolutely no markdown, no explanations, no additional text
+          2. Do NOT use \`\`\`json code blocks or any formatting
+          3. Your entire response must be parseable as JSON
+          4. All JSON keys must use double quotes
+          5. All string values must be properly escaped
+          6. Return the exact structure requested in the prompt
+          
+          Transform the provided raw CV data into professional, well-structured content using:
+          - British English spelling and electrical terminology (earth, consumer unit, BS 7671)
+          - Enhanced job titles with proper electrical industry terms
+          - Compelling professional summaries highlighting electrical expertise
+          - Quantified achievements (projects completed, team sizes, timeframes)
+          - Action verbs: managed, delivered, implemented, achieved, optimised, installed
+          - Relevant electrical certifications and qualifications
+          - ATS-optimized content with industry keywords
+          
+          Enhance the content while preserving all original meaning and structure.
+        `;
+        break;
+        
       default:
         systemMessage = `
           You are ElectricalMate, an expert AI assistant specialising in UK electrical regulations, standards, and practices.
@@ -330,9 +355,9 @@ serve(async (req) => {
       }
     }
 
-    // Handle CV refinement responses - return raw AI response for JSON parsing
-    if (type === "cv_refinement") {
-      console.log('CV refinement response type detected, returning raw AI response');
+    // Handle CV refinement and generation responses - return raw AI response for JSON parsing
+    if (type === "cv_refinement" || type === "generate_from_raw") {
+      console.log(`${type} response type detected, returning raw AI response`);
       return new Response(
         JSON.stringify({ response: aiResponse }),
         { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }

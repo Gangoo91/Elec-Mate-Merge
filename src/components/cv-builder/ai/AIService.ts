@@ -32,7 +32,7 @@ export class AIService {
       const { data, error } = await supabase.functions.invoke('electrician-ai-assistant', {
         body: {
           prompt: this.buildPrompt(request),
-          type: 'cv_refinement'
+          type: request.type
         }
       });
 
