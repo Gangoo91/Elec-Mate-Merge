@@ -67,12 +67,19 @@ export class AIService {
 Write a compelling 3-4 sentence professional summary that highlights their electrical expertise, relevant experience, and career objectives. Use UK electrical terminology and focus on industry-specific skills and qualifications.`;
 
       case 'job_description':
-        return `Generate a detailed job description for this electrical role:
+        return `Write a compelling CV work experience description for MY role as:
 - Job Title: ${context.jobTitle}
 - Company: ${context.company}
-- Industry context: ${userInput || ''}
+- Additional context: ${userInput || ''}
 
-Include key responsibilities, achievements, and technical skills relevant to UK electrical work. Mention specific electrical systems, regulations (BS 7671), and industry standards where appropriate. Format as bullet points.`;
+Write from first-person perspective describing MY achievements, responsibilities, and contributions in this role. Focus on:
+- Personal accomplishments and quantifiable results
+- Specific electrical projects I worked on
+- Technical expertise I demonstrated
+- Compliance with UK regulations (BS 7671) I ensured
+- Problem-solving and leadership examples
+
+Use action-oriented language (implemented, managed, achieved, designed, etc.) and format as professional bullet points suitable for a CV. This is for MY personal resume, not a job posting.`;
 
       case 'skills':
         return `Generate a comprehensive list of electrical skills based on:
