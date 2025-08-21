@@ -44,15 +44,31 @@ export const EVChargerForm = ({ onFormChange }: EVChargerFormProps) => {
   const chargerTypeOptions = [
     { value: "type-1", label: "Type 1 (5-pin)" },
     { value: "type-2", label: "Type 2 (7-pin)" },
-    { value: "3-pin", label: "3-pin domestic socket" },
-    { value: "commando", label: "Commando socket" }
+    { value: "3-pin", label: "3-pin Domestic Socket" },
+    { value: "commando", label: "Commando Socket" }
   ];
 
   const locationOptions = [
-    { value: "garage", label: "Garage" },
+    { value: "garage", label: "Internal Garage" },
     { value: "driveway", label: "Driveway" },
     { value: "car-park", label: "Car Park" },
     { value: "public-area", label: "Public Area" }
+  ];
+
+  const powerOptions = [
+    { value: "3kw", label: "3kW (13A Socket)" },
+    { value: "7kw", label: "7kW Single Phase" },
+    { value: "11kw", label: "11kW Three Phase" },
+    { value: "22kw", label: "22kW Three Phase" },
+    { value: "50kw", label: "50kW Rapid DC" },
+    { value: "other", label: "Other Power Rating" }
+  ];
+
+  const earthingOptions = [
+    { value: "tn-c-s", label: "TN-C-S (PME)" },
+    { value: "tn-s", label: "TN-S" },
+    { value: "tt", label: "TT (Earth Electrode)" },
+    { value: "other", label: "Other" }
   ];
 
   const complianceOptions = [
@@ -94,11 +110,12 @@ export const EVChargerForm = ({ onFormChange }: EVChargerFormProps) => {
           options={chargerTypeOptions}
           error={errors.chargerType?.message}
         />
-        <MobileInputWrapper
+        <MobileSelectWrapper
           label="Charger Power"
-          placeholder="e.g., 7kW, 22kW, 3kW"
+          placeholder="Select charger power"
           value={watchedValues.chargerPower || ""}
-          onChange={(value) => setValue("chargerPower", value)}
+          onValueChange={(value) => setValue("chargerPower", value)}
+          options={powerOptions}
           error={errors.chargerPower?.message}
         />
         <MobileSelectWrapper
@@ -109,11 +126,12 @@ export const EVChargerForm = ({ onFormChange }: EVChargerFormProps) => {
           options={locationOptions}
           error={errors.installationLocation?.message}
         />
-        <MobileInputWrapper
+        <MobileSelectWrapper
           label="Earthing Arrangement"
-          placeholder="e.g., TN-C-S, TN-S, TT"
+          placeholder="Select earthing system"
           value={watchedValues.earthingArrangement || ""}
-          onChange={(value) => setValue("earthingArrangement", value)}
+          onValueChange={(value) => setValue("earthingArrangement", value)}
+          options={earthingOptions}
           error={errors.earthingArrangement?.message}
         />
       </div>

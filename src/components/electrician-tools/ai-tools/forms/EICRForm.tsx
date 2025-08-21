@@ -77,6 +77,66 @@ export const EICRForm = ({ onFormChange }: EICRFormProps) => {
     { value: "unsatisfactory", label: "Unsatisfactory" }
   ];
 
+  const earthingOptions = [
+    { value: "tn-c-s", label: "TN-C-S (PME)" },
+    { value: "tn-s", label: "TN-S (Separate Neutral & Earth)" },
+    { value: "tt", label: "TT (Earth Electrode)" },
+    { value: "it", label: "IT (Isolated Terra)" }
+  ];
+
+  const propertyTypeOptions = [
+    { value: "domestic-house", label: "Domestic House" },
+    { value: "flat-apartment", label: "Flat/Apartment" },
+    { value: "commercial-office", label: "Commercial Office" },
+    { value: "retail-shop", label: "Retail Shop" },
+    { value: "industrial-unit", label: "Industrial Unit" },
+    { value: "farm-building", label: "Farm Building" },
+    { value: "other", label: "Other" }
+  ];
+
+  const supplyOptions = [
+    { value: "230v-50hz-1ph", label: "230V 50Hz Single Phase" },
+    { value: "400v-50hz-3ph", label: "400V 50Hz Three Phase" },
+    { value: "110v-50hz-1ph", label: "110V 50Hz Single Phase (Site Supply)" },
+    { value: "other", label: "Other" }
+  ];
+
+  const mainSwitchOptions = [
+    { value: "60a-sp", label: "60A SP" },
+    { value: "80a-dp", label: "80A DP" },
+    { value: "100a-dp", label: "100A DP" },
+    { value: "125a-dp", label: "125A DP" },
+    { value: "160a-dp", label: "160A DP" },
+    { value: "200a-dp", label: "200A DP" },
+    { value: "other", label: "Other" }
+  ];
+
+  const ageOptions = [
+    { value: "0-5-years", label: "0-5 years (Recent)" },
+    { value: "5-10-years", label: "5-10 years" },
+    { value: "10-20-years", label: "10-20 years" },
+    { value: "20-30-years", label: "20-30 years" },
+    { value: "30-years-plus", label: "30+ years (Older installation)" },
+    { value: "unknown", label: "Unknown" }
+  ];
+
+  const extentOptions = [
+    { value: "100-visual-10-test", label: "100% Visual, 10% Testing" },
+    { value: "100-visual-25-test", label: "100% Visual, 25% Testing" },
+    { value: "100-visual-100-test", label: "100% Visual, 100% Testing" },
+    { value: "limited-access", label: "Limited Access - Partial Inspection" },
+    { value: "other", label: "Other (specify in limitations)" }
+  ];
+
+  const qualificationOptions = [
+    { value: "2391", label: "City & Guilds 2391" },
+    { value: "2391-52", label: "City & Guilds 2391-52" },
+    { value: "nvq-level-3", label: "NVQ Level 3 Electrical" },
+    { value: "18th-edition", label: "18th Edition BS 7671" },
+    { value: "am2", label: "AM2 Assessment" },
+    { value: "other", label: "Other Qualification" }
+  ];
+
   return (
     <div className="space-y-6">
       {/* Client Details */}
@@ -119,39 +179,44 @@ export const EICRForm = ({ onFormChange }: EICRFormProps) => {
           onChange={(value) => setValue("installationAddress", value)}
           error={errors.installationAddress?.message}
         />
-        <MobileInputWrapper
+        <MobileSelectWrapper
           label="Installation Description"
-          placeholder="e.g., Domestic dwelling, Commercial office"
+          placeholder="Select property type"
           value={watchedValues.installationDescription || ""}
-          onChange={(value) => setValue("installationDescription", value)}
+          onValueChange={(value) => setValue("installationDescription", value)}
+          options={propertyTypeOptions}
           error={errors.installationDescription?.message}
         />
-        <MobileInputWrapper
+        <MobileSelectWrapper
           label="Estimated Age"
-          placeholder="e.g., 20 years, Recent installation"
+          placeholder="Select installation age"
           value={watchedValues.estimatedAge || ""}
-          onChange={(value) => setValue("estimatedAge", value)}
+          onValueChange={(value) => setValue("estimatedAge", value)}
+          options={ageOptions}
           error={errors.estimatedAge?.message}
         />
-        <MobileInputWrapper
+        <MobileSelectWrapper
           label="Earthing Arrangements"
-          placeholder="e.g., TN-C-S, TN-S, TT"
+          placeholder="Select earthing system"
           value={watchedValues.earthingArrangements || ""}
-          onChange={(value) => setValue("earthingArrangements", value)}
+          onValueChange={(value) => setValue("earthingArrangements", value)}
+          options={earthingOptions}
           error={errors.earthingArrangements?.message}
         />
-        <MobileInputWrapper
+        <MobileSelectWrapper
           label="Supply Characteristics"
-          placeholder="e.g., 230V 50Hz single phase"
+          placeholder="Select supply type"
           value={watchedValues.supplyCharacteristics || ""}
-          onChange={(value) => setValue("supplyCharacteristics", value)}
+          onValueChange={(value) => setValue("supplyCharacteristics", value)}
+          options={supplyOptions}
           error={errors.supplyCharacteristics?.message}
         />
-        <MobileInputWrapper
+        <MobileSelectWrapper
           label="Main Switch Rating"
-          placeholder="e.g., 100A DP"
+          placeholder="Select main switch rating"
           value={watchedValues.mainSwitchRating || ""}
-          onChange={(value) => setValue("mainSwitchRating", value)}
+          onValueChange={(value) => setValue("mainSwitchRating", value)}
+          options={mainSwitchOptions}
           error={errors.mainSwitchRating?.message}
         />
       </div>
@@ -161,11 +226,12 @@ export const EICRForm = ({ onFormChange }: EICRFormProps) => {
         <h3 className="text-lg font-medium text-elec-yellow border-b border-elec-yellow/20 pb-2">
           Inspection Details
         </h3>
-        <MobileInputWrapper
+        <MobileSelectWrapper
           label="Extent of Inspection"
-          placeholder="e.g., 100% visual, 10% testing"
+          placeholder="Select inspection extent"
           value={watchedValues.extentOfInspection || ""}
-          onChange={(value) => setValue("extentOfInspection", value)}
+          onValueChange={(value) => setValue("extentOfInspection", value)}
+          options={extentOptions}
           error={errors.extentOfInspection?.message}
         />
         <div className="space-y-2">
@@ -276,11 +342,12 @@ export const EICRForm = ({ onFormChange }: EICRFormProps) => {
           onChange={(value) => setValue("inspectorName", value)}
           error={errors.inspectorName?.message}
         />
-        <MobileInputWrapper
+        <MobileSelectWrapper
           label="Inspector Qualification"
-          placeholder="e.g., 2391, 18th Edition, AM2"
+          placeholder="Select qualification"
           value={watchedValues.inspectorQualification || ""}
-          onChange={(value) => setValue("inspectorQualification", value)}
+          onValueChange={(value) => setValue("inspectorQualification", value)}
+          options={qualificationOptions}
           error={errors.inspectorQualification?.message}
         />
         <MobileInputWrapper

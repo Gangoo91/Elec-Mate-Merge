@@ -43,21 +43,43 @@ export const ConsumerUnitForm = ({ onFormChange }: ConsumerUnitFormProps) => {
   }, [watch, onFormChange]);
 
   const unitTypeOptions = [
-    { value: "metal", label: "Metal enclosure" },
-    { value: "plastic", label: "Plastic enclosure" },
-    { value: "composite", label: "Composite enclosure" }
+    { value: "metal", label: "Metal Enclosure" },
+    { value: "plastic", label: "Plastic Enclosure" },
+    { value: "composite", label: "Composite Enclosure" }
   ];
 
   const installationTypeOptions = [
     { value: "new-installation", label: "New Installation" },
-    { value: "replacement", label: "Replacement" },
-    { value: "upgrade", label: "Upgrade" }
+    { value: "replacement", label: "Consumer Unit Replacement" },
+    { value: "upgrade", label: "Upgrade/Amendment" }
   ];
 
   const rcdOptions = [
-    { value: "dual-rcd", label: "Dual RCD protection" },
-    { value: "rcbo", label: "RCBO protection" },
-    { value: "none", label: "No RCD protection" }
+    { value: "dual-rcd", label: "Dual RCD Protection" },
+    { value: "rcbo", label: "RCBO Protection" },
+    { value: "none", label: "No RCD Protection" }
+  ];
+
+  const unitMakeOptions = [
+    { value: "hager", label: "Hager" },
+    { value: "schneider", label: "Schneider Electric" },
+    { value: "mk", label: "MK Electric" },
+    { value: "crabtree", label: "Crabtree" },
+    { value: "eaton", label: "Eaton (MEM)" },
+    { value: "contactum", label: "Contactum" },
+    { value: "bg", label: "BG Electrical" },
+    { value: "other", label: "Other Manufacturer" }
+  ];
+
+  const circuitCountOptions = [
+    { value: "6-way", label: "6 Way" },
+    { value: "8-way", label: "8 Way" },
+    { value: "10-way", label: "10 Way" },
+    { value: "12-way", label: "12 Way" },
+    { value: "14-way", label: "14 Way" },
+    { value: "16-way", label: "16 Way" },
+    { value: "18-way", label: "18 Way" },
+    { value: "other", label: "Other Configuration" }
   ];
 
   const complianceOptions = [
@@ -99,11 +121,12 @@ export const ConsumerUnitForm = ({ onFormChange }: ConsumerUnitFormProps) => {
           options={unitTypeOptions}
           error={errors.unitType?.message}
         />
-        <MobileInputWrapper
+        <MobileSelectWrapper
           label="Unit Make"
-          placeholder="e.g., Hager, Schneider, MK"
+          placeholder="Select manufacturer"
           value={watchedValues.unitMake || ""}
-          onChange={(value) => setValue("unitMake", value)}
+          onValueChange={(value) => setValue("unitMake", value)}
+          options={unitMakeOptions}
           error={errors.unitMake?.message}
         />
         <MobileInputWrapper
@@ -121,11 +144,12 @@ export const ConsumerUnitForm = ({ onFormChange }: ConsumerUnitFormProps) => {
           options={installationTypeOptions}
           error={errors.installationType?.message}
         />
-        <MobileInputWrapper
+        <MobileSelectWrapper
           label="Circuit Count"
-          placeholder="e.g., 12 ways, 16 ways"
+          placeholder="Select circuit count"
           value={watchedValues.circuitCount || ""}
-          onChange={(value) => setValue("circuitCount", value)}
+          onValueChange={(value) => setValue("circuitCount", value)}
+          options={circuitCountOptions}
           error={errors.circuitCount?.message}
         />
         <MobileSelectWrapper

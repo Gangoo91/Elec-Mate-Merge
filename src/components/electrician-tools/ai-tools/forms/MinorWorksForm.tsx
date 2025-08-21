@@ -43,6 +43,19 @@ export const MinorWorksForm = ({ onFormChange }: MinorWorksFormProps) => {
     { value: "no", label: "No - Work does not comply" }
   ];
 
+  const circuitTypeOptions = [
+    { value: "ring-final", label: "Ring Final Circuit" },
+    { value: "radial-socket", label: "Radial Socket Circuit" },
+    { value: "lighting", label: "Lighting Circuit" },
+    { value: "cooker", label: "Cooker Circuit" },
+    { value: "shower", label: "Electric Shower Circuit" },
+    { value: "immersion", label: "Immersion Heater Circuit" },
+    { value: "heating", label: "Electric Heating Circuit" },
+    { value: "smoke-alarm", label: "Smoke Alarm Circuit" },
+    { value: "ev-charger", label: "EV Charger Circuit" },
+    { value: "other", label: "Other Circuit Type" }
+  ];
+
   return (
     <div className="space-y-6">
       <div className="space-y-4">
@@ -81,11 +94,12 @@ export const MinorWorksForm = ({ onFormChange }: MinorWorksFormProps) => {
             <p className="text-sm text-red-400">{errors.workDescription.message}</p>
           )}
         </div>
-        <MobileInputWrapper
-          label="Circuit Details"
-          placeholder="e.g., Ring circuit, Lighting circuit"
+        <MobileSelectWrapper
+          label="Circuit Type"
+          placeholder="Select circuit type"
           value={watchedValues.circuitDetails || ""}
-          onChange={(value) => setValue("circuitDetails", value)}
+          onValueChange={(value) => setValue("circuitDetails", value)}
+          options={circuitTypeOptions}
           error={errors.circuitDetails?.message}
         />
         <div className="space-y-2">

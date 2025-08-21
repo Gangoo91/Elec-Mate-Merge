@@ -59,6 +59,16 @@ export const RCDTestForm = ({ onFormChange }: RCDTestFormProps) => {
     { value: "unsatisfactory", label: "Unsatisfactory" }
   ];
 
+  const locationOptions = [
+    { value: "main-board", label: "Main Consumer Unit" },
+    { value: "sub-board", label: "Sub Distribution Board" },
+    { value: "socket-outlet", label: "Socket Outlet RCD" },
+    { value: "standalone", label: "Standalone RCD Unit" },
+    { value: "garage-board", label: "Garage Consumer Unit" },
+    { value: "shed-board", label: "Shed/Outbuilding Board" },
+    { value: "other", label: "Other Location" }
+  ];
+
   return (
     <div className="space-y-6">
       <div className="space-y-4">
@@ -93,11 +103,12 @@ export const RCDTestForm = ({ onFormChange }: RCDTestFormProps) => {
           options={rcdTypeOptions}
           error={errors.rcdType?.message}
         />
-        <MobileInputWrapper
+        <MobileSelectWrapper
           label="RCD Location"
-          placeholder="e.g., Main consumer unit, Garage CU"
+          placeholder="Select RCD location"
           value={watchedValues.rcdLocation || ""}
-          onChange={(value) => setValue("rcdLocation", value)}
+          onValueChange={(value) => setValue("rcdLocation", value)}
+          options={locationOptions}
           error={errors.rcdLocation?.message}
         />
         <MobileSelectWrapper
