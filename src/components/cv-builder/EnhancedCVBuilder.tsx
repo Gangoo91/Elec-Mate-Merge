@@ -148,40 +148,42 @@ const EnhancedCVBuilder = () => {
           </div>
         </CardHeader>
 
-        <CardContent className="flex-1 p-3 sm:p-6">
-          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full h-full">
-            <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="edit">
-                <Wand2 className="h-4 w-4 mr-2" />
-                Edit CV
-              </TabsTrigger>
-              <TabsTrigger value="preview">
-                <Eye className="h-4 w-4 mr-2" />
-                Preview
-              </TabsTrigger>
-            </TabsList>
-            
-            <TabsContent value="edit" className="space-y-6 mt-6">
-              {!isEmptyCV() && (
-                <div className="mb-4">
-                  <Button
-                    onClick={() => setShowWizard(true)}
-                    variant="outline"
-                    size="sm"
-                    className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 text-xs sm:text-sm"
-                  >
-                    <Sparkles className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
-                    Restart with AI Wizard
-                  </Button>
-                </div>
-              )}
-              <CVForm cvData={cvData} onChange={setCVData} />
-            </TabsContent>
-            
-            <TabsContent value="preview" className="mt-6">
-              <CVPreview cvData={cvData} />
-            </TabsContent>
-          </Tabs>
+        <CardContent className="flex-1 p-0">
+          <div className="p-3 sm:p-6">
+            <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full h-full">
+              <TabsList className="grid w-full grid-cols-2">
+                <TabsTrigger value="edit">
+                  <Wand2 className="h-4 w-4 mr-2" />
+                  Edit CV
+                </TabsTrigger>
+                <TabsTrigger value="preview">
+                  <Eye className="h-4 w-4 mr-2" />
+                  Preview
+                </TabsTrigger>
+              </TabsList>
+              
+              <TabsContent value="edit" className="space-y-6 mt-6">
+                {!isEmptyCV() && (
+                  <div className="mb-4">
+                    <Button
+                      onClick={() => setShowWizard(true)}
+                      variant="outline"
+                      size="sm"
+                      className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 text-xs sm:text-sm"
+                    >
+                      <Sparkles className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
+                      Restart with AI Wizard
+                    </Button>
+                  </div>
+                )}
+                <CVForm cvData={cvData} onChange={setCVData} />
+              </TabsContent>
+              
+              <TabsContent value="preview" className="mt-6">
+                <CVPreview cvData={cvData} />
+              </TabsContent>
+            </Tabs>
+          </div>
         </CardContent>
       </Card>
 
