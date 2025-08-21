@@ -39,14 +39,13 @@ export const EnhancedPersonalInfoForm: React.FC<EnhancedPersonalInfoFormProps> =
 
   return (
     <div className="space-y-6">
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardHeader>
-          <CardTitle className="text-white flex items-center gap-2">
-            <Sparkles className="h-5 w-5 text-elec-yellow" />
-            Personal Information
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-6">
+      <div>
+        <h3 className="text-lg font-semibold text-elec-light mb-6 flex items-center gap-2">
+          <Sparkles className="h-5 w-5 text-elec-yellow" />
+          Personal Information
+        </h3>
+        
+        <div className="space-y-6">
           <div className="space-y-3">
             <label className="text-sm font-semibold text-elec-light flex items-center gap-2">
               <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
@@ -145,8 +144,8 @@ export const EnhancedPersonalInfoForm: React.FC<EnhancedPersonalInfoFormProps> =
               currentContent={cvData.personalInfo.professionalSummary}
             />
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     </div>
   );
 };
