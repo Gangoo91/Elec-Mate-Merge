@@ -16,7 +16,7 @@ function App() {
     <BrowserRouter>
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
-          <ThemeProvider defaultTheme="dark" storageKey="elec-ui-theme">
+          <ThemeProvider defaultTheme="light" storageKey="elec-ui-theme">
             <NotificationProvider>
               <TrainingActivityMonitor />
               <AppRouter />
