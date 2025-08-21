@@ -343,10 +343,7 @@ The electrical installation has been inspected and tested in accordance with BS 
                       value={template.id}
                       className="text-white hover:bg-elec-yellow/10 focus:bg-elec-yellow/10"
                     >
-                      <div>
-                        <div className="font-medium">{template.name}</div>
-                        <div className="text-sm text-muted-foreground">{template.description}</div>
-                      </div>
+                      {template.name}
                     </SelectItem>
                   ))}
                 </SelectContent>
