@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { FileText, Download, Save, Wand2, Sparkles } from "lucide-react";
+import { FileText, Download, Save, Wand2, Sparkles, Palette } from "lucide-react";
 import { CVPreview } from "./CVPreview";
+import { EnhancedCVPreview } from "./EnhancedCVPreview";
+import { CVThemeSelector } from "./CVThemeSelector";
 import { SmartCVWizard } from "./ai/SmartCVWizard";
 import { CVData, defaultCVData } from "./types";
 import { generateCVPDF } from "./pdfGenerator";
@@ -13,6 +15,8 @@ const SimplifiedCVBuilder = () => {
   const [isGenerating, setIsGenerating] = useState(false);
   const [hasGeneratedCV, setHasGeneratedCV] = useState(false);
   const [showPreview, setShowPreview] = useState(false);
+  const [selectedTheme, setSelectedTheme] = useState<'modern' | 'professional' | 'electrical'>('electrical');
+  const [showThemeSelector, setShowThemeSelector] = useState(false);
 
   const handleWizardComplete = (generatedCVData: CVData) => {
     setCVData(generatedCVData);
@@ -40,7 +44,7 @@ const SimplifiedCVBuilder = () => {
 
     setIsGenerating(true);
     try {
-      await generateCVPDF(cvData);
+      await generateCVPDF(cvData, selectedTheme);
       toast({
         title: "CV Downloaded",
         description: "Your professional CV has been downloaded as a PDF."
@@ -113,6 +117,15 @@ const SimplifiedCVBuilder = () => {
             
             <div className="flex flex-wrap items-center gap-1 sm:gap-2 w-full sm:w-auto">
               <Button
+                onClick={() => setShowThemeSelector(!showThemeSelector)}
+                variant="outline"
+                size="sm"
+                className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 text-xs sm:text-sm flex-1 sm:flex-none"
+              >
+                <Palette className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
+                Theme
+              </Button>
+              <Button
                 onClick={() => setShowPreview(false)}
                 variant="outline"
                 size="sm"
@@ -143,8 +156,14 @@ const SimplifiedCVBuilder = () => {
           </div>
         </CardHeader>
 
-        <CardContent className="flex-1 p-3 sm:p-6">
-          <CVPreview cvData={cvData} />
+        <CardContent className="flex-1 p-3 sm:p-6 space-y-6">
+          {showThemeSelector && (
+            <CVThemeSelector 
+              selectedTheme={selectedTheme}
+              onThemeChange={setSelectedTheme}
+            />
+          )}
+          <EnhancedCVPreview cvData={cvData} theme={selectedTheme} />
         </CardContent>
       </Card>
     </div>
