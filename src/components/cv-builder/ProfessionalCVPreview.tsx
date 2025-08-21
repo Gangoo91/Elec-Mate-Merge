@@ -67,7 +67,7 @@ export const ProfessionalCVPreview: React.FC<ProfessionalCVPreviewProps> = ({ cv
               {formatDescription(cvData.personalInfo.professionalSummary).map((point, index) => (
                 <div key={index} className="flex items-start">
                   <span className="text-cv-gold mr-2 mt-1">•</span>
-                  <span>{point}</span>
+                  {point}
                 </div>
               ))}
             </div>
