@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -17,6 +17,18 @@ const EnhancedCVBuilder = () => {
   const [activeTab, setActiveTab] = useState("edit");
   const [isGenerating, setIsGenerating] = useState(false);
   const [showWizard, setShowWizard] = useState(false);
+
+  // Auto-load saved CV data on mount
+  useEffect(() => {
+    const saved = localStorage.getItem('cvData');
+    if (saved) {
+      try {
+        setCVData(JSON.parse(saved));
+      } catch (error) {
+        console.error('Error loading saved CV data:', error);
+      }
+    }
+  }, []);
 
   const handleSave = () => {
     localStorage.setItem('cvData', JSON.stringify(cvData));
