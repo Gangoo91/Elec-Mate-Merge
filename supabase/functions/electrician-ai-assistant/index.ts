@@ -175,67 +175,6 @@ serve(async (req) => {
           Ensure both sections are comprehensive and directly address the user's query.
         `;
         break;
-
-      case "cv_refinement":
-        systemMessage = `
-          You are ElectricalMate CV Expert, specialising in creating exceptional CVs for UK electrical professionals.
-          You are an expert CV writer with deep knowledge of UK electrical industry standards, terminology, and career progression.
-          
-          Your expertise includes:
-          - BS 7671 18th Edition regulations and compliance
-          - UK electrical industry certifications and qualifications
-          - Professional language enhancement and impact statement creation
-          - ATS (Applicant Tracking System) optimization techniques
-          - Quantification of achievements with measurable results
-          - Industry-specific keywords and terminology
-          
-          CRITICAL INSTRUCTIONS FOR JSON RESPONSES:
-          When a user requests JSON format (as indicated by JSON structure in the prompt), you MUST:
-          1. Return ONLY valid JSON without any markdown formatting
-          2. Do NOT use \`\`\`json code blocks
-          3. Do NOT include any explanatory text before or after the JSON
-          4. Ensure all JSON keys are properly quoted with double quotes
-          5. Ensure all string values are properly escaped
-          6. Test your JSON internally before responding to ensure it's valid
-          
-          When refining content:
-          1. Use powerful action verbs (managed, implemented, delivered, achieved, optimised)
-          2. Replace weak phrases like "responsible for" with stronger alternatives
-          3. Add specific metrics, percentages, timeframes, and measurable outcomes
-          4. Include relevant UK electrical terminology and standards
-          5. Ensure ATS compatibility with appropriate keywords
-          6. Maintain professional tone suitable for UK electrical industry
-          7. Focus on achievements and impact rather than just duties
-          
-          Always use British English spelling and UK electrical terminology (earth, consumer unit, installation, etc.).
-          Create content that will impress hiring managers and pass ATS screening.
-        `;
-        break;
-        
-      case "generate_from_raw":
-        systemMessage = `
-          You are ElectricalMate CV Generator, specialising in transforming raw CV data into professional, industry-standard resumes for UK electrical professionals.
-          
-          CRITICAL INSTRUCTIONS - YOU MUST FOLLOW EXACTLY:
-          1. You MUST respond with ONLY valid JSON - absolutely no markdown, no explanations, no additional text
-          2. Do NOT use \`\`\`json code blocks or any formatting
-          3. Your entire response must be parseable as JSON
-          4. All JSON keys must use double quotes
-          5. All string values must be properly escaped
-          6. Return the exact structure requested in the prompt
-          
-          Transform the provided raw CV data into professional, well-structured content using:
-          - British English spelling and electrical terminology (earth, consumer unit, BS 7671)
-          - Enhanced job titles with proper electrical industry terms
-          - Compelling professional summaries highlighting electrical expertise
-          - Quantified achievements (projects completed, team sizes, timeframes)
-          - Action verbs: managed, delivered, implemented, achieved, optimised, installed
-          - Relevant electrical certifications and qualifications
-          - ATS-optimized content with industry keywords
-          
-          Enhance the content while preserving all original meaning and structure.
-        `;
-        break;
         
       default:
         systemMessage = `
@@ -284,14 +223,11 @@ serve(async (req) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: type === "visual_analysis_advanced" ? 'o4-mini-2025-04-16' : 
-               type === "cv_refinement" ? 'gpt-5-2025-08-07' : 'gpt-4o-mini',
+        model: type === "visual_analysis_advanced" ? 'o4-mini-2025-04-16' : 'gpt-4o-mini',
         messages: messages,
-        max_completion_tokens: type === "visual_analysis_advanced" ? 2000 : 
-                              type === "cv_refinement" ? 1500 : undefined,
-        max_tokens: type === "report_writer" ? 800 : 
-                   (type !== "visual_analysis_advanced" && type !== "cv_refinement" ? 1500 : undefined),
-        temperature: (type === "visual_analysis_advanced" || type === "cv_refinement") ? undefined : 0.3,
+        max_completion_tokens: type === "visual_analysis_advanced" ? 2000 : undefined,
+        max_tokens: type === "report_writer" ? 800 : (type !== "visual_analysis_advanced" ? 1500 : undefined),
+        temperature: type === "visual_analysis_advanced" ? undefined : 0.3,
       }),
     });
 
@@ -353,15 +289,6 @@ serve(async (req) => {
         console.error('Failed to parse visual analysis response, falling back to regular response:', parseError);
         // Fall back to regular response format
       }
-    }
-
-    // Handle CV refinement and generation responses - return raw AI response for JSON parsing
-    if (type === "cv_refinement" || type === "generate_from_raw") {
-      console.log(`${type} response type detected, returning raw AI response`);
-      return new Response(
-        JSON.stringify({ response: aiResponse }),
-        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
     }
 
     return new Response(

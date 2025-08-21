@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
-import { Wand2, Loader2, Copy, RefreshCw, CheckCircle, Zap, Target, BarChart3 } from "lucide-react";
+import { Wand2, Loader2, Copy, RefreshCw, CheckCircle } from "lucide-react";
 import { AIService } from "./AIService";
 import { toast } from "@/hooks/use-toast";
 
@@ -15,8 +15,6 @@ interface SmartContentAssistantProps {
   placeholder?: string;
   currentContent?: string;
 }
-
-type RefinementMode = 'generate' | 'refine' | 'optimize_ats' | 'quantify';
 
 export const SmartContentAssistant: React.FC<SmartContentAssistantProps> = ({
   type,
@@ -29,7 +27,6 @@ export const SmartContentAssistant: React.FC<SmartContentAssistantProps> = ({
   const [generatedContent, setGeneratedContent] = useState('');
   const [userInput, setUserInput] = useState('');
   const [showGenerated, setShowGenerated] = useState(false);
-  const [refinementMode, setRefinementMode] = useState<RefinementMode>('generate');
 
   const getTypeConfig = () => {
     switch (type) {
@@ -78,44 +75,32 @@ export const SmartContentAssistant: React.FC<SmartContentAssistantProps> = ({
     try {
       let result;
       
-      if (refinementMode === 'refine' && currentContent) {
-        result = await AIService.refineContent(currentContent, context, userInput);
-      } else if (refinementMode === 'optimize_ats' && currentContent) {
-        result = await AIService.optimizeForATS(currentContent, context, userInput);
-      } else if (refinementMode === 'quantify' && currentContent) {
-        const quantifiedResults = await AIService.quantifyAchievements(currentContent, context, userInput);
-        setGeneratedContent(quantifiedResults.join('\n• '));
-        setShowGenerated(true);
-        return;
-      } else {
-        // Original generation logic
-        switch (type) {
-          case 'professional_summary':
-            result = await AIService.generateProfessionalSummary(context, userInput);
-            break;
-          case 'job_description':
-            result = await AIService.generateJobDescription(
-              context.jobTitle || '',
-              context.company || '',
-              userInput
-            );
-            break;
-          case 'skills':
-            result = await AIService.generateSkills(context, userInput);
-            setGeneratedContent(Array.isArray(result) ? result.join(', ') : result);
-            setShowGenerated(true);
-            return;
-          case 'achievements':
-            result = await AIService.generateAchievements(
-              context.jobTitle || '',
-              context.company || '',
-              context.experience || '',
-              userInput
-            );
-            setGeneratedContent(Array.isArray(result) ? result.join('\n• ') : result);
-            setShowGenerated(true);
-            return;
-        }
+      switch (type) {
+        case 'professional_summary':
+          result = await AIService.generateProfessionalSummary(context, userInput);
+          break;
+        case 'job_description':
+          result = await AIService.generateJobDescription(
+            context.jobTitle || '',
+            context.company || '',
+            userInput
+          );
+          break;
+        case 'skills':
+          result = await AIService.generateSkills(context, userInput);
+          setGeneratedContent(Array.isArray(result) ? result.join(', ') : result);
+          setShowGenerated(true);
+          return;
+        case 'achievements':
+          result = await AIService.generateAchievements(
+            context.jobTitle || '',
+            context.company || '',
+            context.experience || '',
+            userInput
+          );
+          setGeneratedContent(Array.isArray(result) ? result.join('\n• ') : result);
+          setShowGenerated(true);
+          return;
       }
       
       setGeneratedContent(result);
@@ -175,99 +160,35 @@ export const SmartContentAssistant: React.FC<SmartContentAssistantProps> = ({
       <CardContent className="space-y-4">
         {!showGenerated ? (
           <>
-            {currentContent && (
-              <div className="space-y-3">
-                <div className="text-xs text-gray-400 mb-2">
-                  Choose how to enhance your content:
-                </div>
-                <div className="grid grid-cols-2 gap-2">
-                  <Button
-                    onClick={() => setRefinementMode('generate')}
-                    variant={refinementMode === 'generate' ? 'default' : 'outline'}
-                    size="sm"
-                    className={refinementMode === 'generate' ? 'bg-elec-yellow text-black' : 'border-elec-yellow/30'}
-                  >
-                    <Wand2 className="h-3 w-3 mr-1" />
-                    Generate New
-                  </Button>
-                  <Button
-                    onClick={() => setRefinementMode('refine')}
-                    variant={refinementMode === 'refine' ? 'default' : 'outline'}
-                    size="sm"
-                    className={refinementMode === 'refine' ? 'bg-elec-yellow text-black' : 'border-elec-yellow/30'}
-                  >
-                    <Zap className="h-3 w-3 mr-1" />
-                    Refine
-                  </Button>
-                  <Button
-                    onClick={() => setRefinementMode('optimize_ats')}
-                    variant={refinementMode === 'optimize_ats' ? 'default' : 'outline'}
-                    size="sm"
-                    className={refinementMode === 'optimize_ats' ? 'bg-elec-yellow text-black' : 'border-elec-yellow/30'}
-                  >
-                    <Target className="h-3 w-3 mr-1" />
-                    ATS Optimize
-                  </Button>
-                  <Button
-                    onClick={() => setRefinementMode('quantify')}
-                    variant={refinementMode === 'quantify' ? 'default' : 'outline'}
-                    size="sm"
-                    className={refinementMode === 'quantify' ? 'bg-elec-yellow text-black' : 'border-elec-yellow/30'}
-                  >
-                    <BarChart3 className="h-3 w-3 mr-1" />
-                    Add Metrics
-                  </Button>
-                </div>
-              </div>
-            )}
-            
             <Textarea
               value={userInput}
               onChange={(e) => setUserInput(e.target.value)}
-              placeholder={
-                refinementMode === 'refine' ? 'Describe specific improvements needed...' :
-                refinementMode === 'optimize_ats' ? 'Target role or keywords to focus on...' :
-                refinementMode === 'quantify' ? 'Mention any numbers, results, or achievements...' :
-                config.placeholder
-              }
+              placeholder={config.placeholder}
               className="bg-elec-dark border-elec-yellow/20 text-white text-sm min-h-20"
             />
             
             <Button
               onClick={handleGenerate}
-              disabled={isGenerating || (refinementMode !== 'generate' && !currentContent)}
+              disabled={isGenerating}
               size="sm"
               className="bg-elec-yellow text-black hover:bg-elec-yellow/90 w-full"
             >
               {isGenerating ? (
                 <>
                   <Loader2 className="h-3 w-3 mr-2 animate-spin" />
-                  {refinementMode === 'refine' ? 'Refining...' :
-                   refinementMode === 'optimize_ats' ? 'Optimizing...' :
-                   refinementMode === 'quantify' ? 'Adding Metrics...' :
-                   'Generating...'}
+                  Generating...
                 </>
               ) : (
                 <>
-                  {refinementMode === 'refine' ? <Zap className="h-3 w-3 mr-2" /> :
-                   refinementMode === 'optimize_ats' ? <Target className="h-3 w-3 mr-2" /> :
-                   refinementMode === 'quantify' ? <BarChart3 className="h-3 w-3 mr-2" /> :
-                   <Wand2 className="h-3 w-3 mr-2" />}
-                  {refinementMode === 'refine' ? 'Refine Content' :
-                   refinementMode === 'optimize_ats' ? 'Optimize for ATS' :
-                   refinementMode === 'quantify' ? 'Add Metrics' :
-                   'Generate Content'}
+                  <Wand2 className="h-3 w-3 mr-2" />
+                  Generate Content
                 </>
               )}
             </Button>
             
-            {currentContent && refinementMode !== 'generate' && (
+            {currentContent && (
               <div className="text-xs text-gray-400">
-                Current content will be enhanced using AI-powered {
-                  refinementMode === 'refine' ? 'professional refinement' :
-                  refinementMode === 'optimize_ats' ? 'ATS optimization' :
-                  'quantification techniques'
-                }
+                Current content will be replaced with AI-generated content
               </div>
             )}
           </>
