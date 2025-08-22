@@ -42,7 +42,7 @@ const CVBuilderBox = () => {
           <span className="text-xs text-muted-foreground">Smart CV Wizard</span>
         </div>
         
-        <div className="flex items-center space-x-3">
+        <div className="flex items-center space-x-2">
           <Sparkles className="h-4 w-4 text-elec-yellow flex-shrink-0" />
           <span className="text-xs text-muted-foreground">AI Content Generation</span>
         </div>
