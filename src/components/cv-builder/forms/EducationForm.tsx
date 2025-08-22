@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -82,7 +81,7 @@ export const EducationForm: React.FC<EducationFormProps> = ({ cvData, onChange }
                   id={`qualification-${edu.id}`}
                   value={edu.qualification}
                   onChange={(e) => updateEducation(edu.id, 'qualification', e.target.value)}
-                  className="bg-elec-dark border-elec-yellow/20 text-white min-h-[48px] mt-2"
+                  className="bg-card border-elec-yellow/20 text-white min-h-[48px] mt-2"
                   placeholder="Level 3 Electrical Installation"
                 />
               </div>
@@ -93,7 +92,7 @@ export const EducationForm: React.FC<EducationFormProps> = ({ cvData, onChange }
                   id={`institution-${edu.id}`}
                   value={edu.institution}
                   onChange={(e) => updateEducation(edu.id, 'institution', e.target.value)}
-                  className="bg-elec-dark border-elec-yellow/20 text-white min-h-[48px] mt-2"
+                  className="bg-card border-elec-yellow/20 text-white min-h-[48px] mt-2"
                   placeholder="Local College"
                 />
               </div>
@@ -104,7 +103,7 @@ export const EducationForm: React.FC<EducationFormProps> = ({ cvData, onChange }
                   id={`location-${edu.id}`}
                   value={edu.location}
                   onChange={(e) => updateEducation(edu.id, 'location', e.target.value)}
-                  className="bg-elec-dark border-elec-yellow/20 text-white min-h-[48px] mt-2"
+                  className="bg-card border-elec-yellow/20 text-white min-h-[48px] mt-2"
                   placeholder="London, UK"
                 />
               </div>
@@ -115,7 +114,7 @@ export const EducationForm: React.FC<EducationFormProps> = ({ cvData, onChange }
                   id={`grade-${edu.id}`}
                   value={edu.grade}
                   onChange={(e) => updateEducation(edu.id, 'grade', e.target.value)}
-                  className="bg-elec-dark border-elec-yellow/20 text-white min-h-[48px] mt-2"
+                  className="bg-card border-elec-yellow/20 text-white min-h-[48px] mt-2"
                   placeholder="Merit / Distinction"
                 />
               </div>
@@ -127,7 +126,7 @@ export const EducationForm: React.FC<EducationFormProps> = ({ cvData, onChange }
                   type="month"
                   value={edu.startDate}
                   onChange={(e) => updateEducation(edu.id, 'startDate', e.target.value)}
-                  className="bg-elec-dark border-elec-yellow/20 text-white min-h-[48px] mt-2"
+                  className="bg-card border-elec-yellow/20 text-white min-h-[48px] mt-2"
                 />
               </div>
 
@@ -138,7 +137,7 @@ export const EducationForm: React.FC<EducationFormProps> = ({ cvData, onChange }
                   type="month"
                   value={edu.endDate}
                   onChange={(e) => updateEducation(edu.id, 'endDate', e.target.value)}
-                  className="bg-elec-dark border-elec-yellow/20 text-white min-h-[48px] mt-2"
+                  className="bg-card border-elec-yellow/20 text-white min-h-[48px] mt-2"
                   disabled={edu.current}
                 />
               </div>

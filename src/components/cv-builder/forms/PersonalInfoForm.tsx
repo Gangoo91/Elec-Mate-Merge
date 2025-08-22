@@ -35,7 +35,7 @@ export const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({ cvData, onCh
               id="fullName"
               value={cvData.personalInfo.fullName}
               onChange={(e) => updatePersonalInfo('fullName', e.target.value)}
-              className="bg-elec-dark border-elec-yellow/20 text-white"
+              className="bg-card border-elec-yellow/20 text-white"
               placeholder="John Smith"
             />
           </div>
@@ -47,7 +47,7 @@ export const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({ cvData, onCh
               type="email"
               value={cvData.personalInfo.email}
               onChange={(e) => updatePersonalInfo('email', e.target.value)}
-              className="bg-elec-dark border-elec-yellow/20 text-white"
+              className="bg-card border-elec-yellow/20 text-white"
               placeholder="john.smith@email.com"
             />
           </div>
@@ -58,7 +58,7 @@ export const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({ cvData, onCh
               id="phone"
               value={cvData.personalInfo.phone}
               onChange={(e) => updatePersonalInfo('phone', e.target.value)}
-              className="bg-elec-dark border-elec-yellow/20 text-white"
+              className="bg-card border-elec-yellow/20 text-white"
               placeholder="07700 123456"
             />
           </div>
@@ -69,7 +69,7 @@ export const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({ cvData, onCh
               id="postcode"
               value={cvData.personalInfo.postcode}
               onChange={(e) => updatePersonalInfo('postcode', e.target.value)}
-              className="bg-elec-dark border-elec-yellow/20 text-white"
+              className="bg-card border-elec-yellow/20 text-white"
               placeholder="SW1A 1AA"
             />
           </div>
@@ -81,7 +81,7 @@ export const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({ cvData, onCh
             id="address"
             value={cvData.personalInfo.address}
             onChange={(e) => updatePersonalInfo('address', e.target.value)}
-            className="bg-elec-dark border-elec-yellow/20 text-white"
+            className="bg-card border-elec-yellow/20 text-white"
             placeholder="123 High Street, London"
           />
         </div>
@@ -92,7 +92,7 @@ export const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({ cvData, onCh
             id="summary"
             value={cvData.personalInfo.professionalSummary}
             onChange={(e) => updatePersonalInfo('professionalSummary', e.target.value)}
-            className="bg-elec-dark border-elec-yellow/20 text-white min-h-24"
+            className="bg-card border-elec-yellow/20 text-white min-h-24"
             placeholder="Brief description of your electrical experience and career goals..."
           />
         </div>

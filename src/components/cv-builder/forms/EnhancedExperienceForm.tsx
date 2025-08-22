@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -93,7 +92,7 @@ export const EnhancedExperienceForm: React.FC<EnhancedExperienceFormProps> = ({ 
                   id={`jobTitle-${exp.id}`}
                   value={exp.jobTitle}
                   onChange={(e) => updateExperience(exp.id, 'jobTitle', e.target.value)}
-                  className="bg-elec-dark border-elec-yellow/20 text-white min-h-[48px] mt-2"
+                  className="bg-card border-elec-yellow/20 text-white min-h-[48px] mt-2"
                   placeholder="Electrical Apprentice"
                 />
               </div>
@@ -104,7 +103,7 @@ export const EnhancedExperienceForm: React.FC<EnhancedExperienceFormProps> = ({ 
                   id={`company-${exp.id}`}
                   value={exp.company}
                   onChange={(e) => updateExperience(exp.id, 'company', e.target.value)}
-                  className="bg-elec-dark border-elec-yellow/20 text-white min-h-[48px] mt-2"
+                  className="bg-card border-elec-yellow/20 text-white min-h-[48px] mt-2"
                   placeholder="ABC Electrical Ltd"
                 />
               </div>
@@ -115,7 +114,7 @@ export const EnhancedExperienceForm: React.FC<EnhancedExperienceFormProps> = ({ 
                   id={`location-${exp.id}`}
                   value={exp.location}
                   onChange={(e) => updateExperience(exp.id, 'location', e.target.value)}
-                  className="bg-elec-dark border-elec-yellow/20 text-white min-h-[48px] mt-2"
+                  className="bg-card border-elec-yellow/20 text-white min-h-[48px] mt-2"
                   placeholder="London, UK"
                 />
               </div>
@@ -127,7 +126,7 @@ export const EnhancedExperienceForm: React.FC<EnhancedExperienceFormProps> = ({ 
                   type="month"
                   value={exp.startDate}
                   onChange={(e) => updateExperience(exp.id, 'startDate', e.target.value)}
-                  className="bg-elec-dark border-elec-yellow/20 text-white min-h-[48px] mt-2"
+                  className="bg-card border-elec-yellow/20 text-white min-h-[48px] mt-2"
                   placeholder="YYYY-MM"
                 />
               </div>
@@ -139,7 +138,7 @@ export const EnhancedExperienceForm: React.FC<EnhancedExperienceFormProps> = ({ 
                   type="month"
                   value={exp.endDate}
                   onChange={(e) => updateExperience(exp.id, 'endDate', e.target.value)}
-                  className="bg-elec-dark border-elec-yellow/20 text-white min-h-[48px] mt-2"
+                  className="bg-card border-elec-yellow/20 text-white min-h-[48px] mt-2"
                   disabled={exp.current}
                   placeholder="YYYY-MM"
                 />
@@ -167,7 +166,7 @@ export const EnhancedExperienceForm: React.FC<EnhancedExperienceFormProps> = ({ 
                   id={`description-${exp.id}`}
                   value={exp.description}
                   onChange={(e) => updateExperience(exp.id, 'description', e.target.value)}
-                  className="bg-elec-dark border-elec-yellow/20 text-white min-h-[48px] mt-2"
+                  className="bg-card border-elec-yellow/20 text-white min-h-[48px] mt-2"
                   placeholder="Describe your key responsibilities, achievements, and skills used..."
                 />
               </div>
