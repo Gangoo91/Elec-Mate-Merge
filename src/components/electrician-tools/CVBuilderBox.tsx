@@ -19,12 +19,12 @@ const CVBuilderBox = () => {
       </div>
       
       {/* Main title */}
-      <h1 className="text-2xl md:text-3xl font-bold text-foreground text-center mb-4">
+      <h1 className="text-[1.5rem] font-bold text-foreground text-center mb-4">
         AI-Powered CV Builder
       </h1>
       
       {/* Subtitle */}
-      <p className="text-lg text-muted-foreground text-center mb-8">
+      <p className="text-[1rem] text-muted-foreground text-center mb-8">
         Create professional electrical CVs with intelligent content generation
       </p>
       
