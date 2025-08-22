@@ -79,7 +79,7 @@ const CVBuilderBox = () => {
         <Dialog open={isEditOpen} onOpenChange={setIsEditOpen}>
           <Button 
             variant="outline" 
-            className="border-border bg-background text-foreground hover:bg-muted px-8 py-3 min-w-48"
+            className="border-elec-yellow bg-background text-foreground hover:bg-muted px-8 py-3 min-w-48"
             onClick={() => setIsEditOpen(true)}
           >
             <FileText className="h-4 w-4 mr-2" /> 
