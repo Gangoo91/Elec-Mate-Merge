@@ -29,7 +29,7 @@ const CVBuilderBox = () => {
       </p>
       
       {/* Description paragraph */}
-      <p className="text-base text-foreground text-center mb-12 max-w-3xl mx-auto leading-relaxed">
+      <p className="text-base text-foreground text-center mb-4 max-w-3xl mx-auto leading-relaxed">
         Create a professional CV tailored to electrical job applications with our AI-powered tool. Get 
         intelligent content suggestions, industry-specific templates, and automated content 
         generation.
