@@ -1,4 +1,3 @@
-import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { corsHeaders } from "../_shared/cors.ts";
 
@@ -22,21 +21,59 @@ serve(async (req) => {
     
     console.log(`Jobs.co.uk URL: ${searchUrl.toString()}`);
 
-    // Fetch Jobs.co.uk page
-    const response = await fetch(searchUrl.toString(), {
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
-      }
-    });
-
-    if (!response.ok) {
-      throw new Error(`Jobs.co.uk API error: ${response.status}`);
+    // Use Firecrawl API for structured data extraction
+    const firecrawlApiKey = Deno.env.get('FIRECRAWL_API_KEY');
+    if (!firecrawlApiKey) {
+      throw new Error('Firecrawl API key not configured');
     }
 
-    const html = await response.text();
-    const jobs = parseJobsCoUkJobs(html);
+    const firecrawlResponse = await fetch('https://api.firecrawl.dev/v2/scrape', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${firecrawlApiKey}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        url: searchUrl.toString(),
+        onlyMainContent: true,
+        maxAge: 172800000,
+        formats: [{
+          type: "json",
+          schema: {
+            title: "JobListings",
+            type: "object",
+            properties: {
+              jobs: {
+                type: "array",
+                items: {
+                  type: "object",
+                  properties: {
+                    jobTitle: { type: "string", description: "The title of the job" },
+                    company: { type: "string", description: "The company offering the job" },
+                    location: { type: "string", description: "The job location" },
+                    employmentType: { type: "string", description: "The contract type (e.g., Full-time, Contract)" },
+                    salary: { type: "string", description: "The salary range for the job" },
+                    postedDate: { type: "string", description: "Information about when the job was posted" },
+                    jobDescription: { type: "string", description: "Short preview/summary of the job description" },
+                    applyUrl: { type: "string", description: "The URL for applying to the job" }
+                  },
+                  required: ["jobTitle", "company", "location"]
+                }
+              }
+            }
+          }
+        }]
+      })
+    });
+
+    if (!firecrawlResponse.ok) {
+      throw new Error(`Firecrawl API error: ${firecrawlResponse.status}`);
+    }
+
+    const firecrawlData = await firecrawlResponse.json();
+    const jobs = processFirecrawlJobs(firecrawlData?.data?.json?.jobs || [], 'Jobs.co.uk');
     
-    console.log(`Retrieved ${jobs.length} jobs from Jobs.co.uk`);
+    console.log(`Retrieved ${jobs.length} jobs from Jobs.co.uk via Firecrawl`);
 
     return new Response(JSON.stringify({
       jobs,
@@ -62,43 +99,21 @@ serve(async (req) => {
   }
 });
 
-function parseJobsCoUkJobs(html: string) {
-  const jobs = [];
-  
-  try {
-    // Extract job listings using regex patterns for Jobs.co.uk structure
-    const jobPattern = /<div[^>]*class="[^"]*job-item[^"]*"[^>]*>[\s\S]*?<h2[^>]*>[\s\S]*?<a[^>]*href="([^"]*)"[^>]*>([^<]+)<\/a>[\s\S]*?<p[^>]*class="[^"]*company[^"]*"[^>]*>([^<]+)<\/p>[\s\S]*?<p[^>]*class="[^"]*location[^"]*"[^>]*>([^<]+)<\/p>/g;
+function processFirecrawlJobs(jobs: any[], source: string) {
+  return jobs.map((job, index) => {
+    const jobId = `${source.toLowerCase().replace('.', '').replace(' ', '')}-${index}-${Date.now()}`;
     
-    let match;
-    let count = 0;
-    while ((match = jobPattern.exec(html)) !== null && count < 20) {
-      const [, url, title, company, location] = match;
-      
-      // Generate unique ID
-      const jobId = `jobscouk-${count}-${Date.now()}`;
-      
-      // Extract salary if available
-      const salaryMatch = html.match(new RegExp(`<a[^>]*href="${url.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}"[\\s\\S]*?<p[^>]*class="[^"]*salary[^"]*"[^>]*>([^<]+)<\/p>`));
-      const salary = salaryMatch ? salaryMatch[1].trim() : null;
-      
-      jobs.push({
-        id: jobId,
-        title: title.trim(),
-        company: company.trim(),
-        location: location.trim(),
-        salary: salary,
-        type: 'Full-time',
-        description: `${title} position at ${company} in ${location}`,
-        external_url: url.startsWith('/') ? `https://www.jobs.co.uk${url}` : url,
-        posted_date: new Date().toISOString(),
-        source: 'Jobs.co.uk'
-      });
-      
-      count++;
-    }
-  } catch (error) {
-    console.error('Error parsing Jobs.co.uk:', error);
-  }
-  
-  return jobs;
+    return {
+      id: jobId,
+      title: job.jobTitle || 'Unknown Position',
+      company: job.company || 'Unknown Company',
+      location: job.location || 'Unknown Location',
+      salary: job.salary || null,
+      type: job.employmentType || 'Full-time',
+      description: job.jobDescription || `${job.jobTitle} position at ${job.company} in ${job.location}`,
+      external_url: job.applyUrl || '#',
+      posted_date: new Date().toISOString(),
+      source: source
+    };
+  }).slice(0, 20); // Limit to 20 jobs
 }
