@@ -42,13 +42,7 @@ const JobVacancies = ({ onBack }: JobVacanciesProps) => {
     isLoading, 
     handleApply, 
     locations,
-    jobTypes,
-    locationFilter,
-    jobTypeFilter,
-    handleLocationChange,
-    handleJobTypeChange,
-    applyFilters,
-    resetFilters
+    jobTypes 
   } = useJobListings();
   
   const [aiMatchedJobs, setAiMatchedJobs] = useState<JobListing[]>([]);
@@ -104,9 +98,6 @@ const JobVacancies = ({ onBack }: JobVacanciesProps) => {
     });
   };
 
-  const handleFiltersChange = () => {
-    applyFilters();
-  };
 
   return (
     <div className="min-h-screen bg-elec-gray rounded-sm">
@@ -135,20 +126,7 @@ const JobVacancies = ({ onBack }: JobVacanciesProps) => {
 
                   {/* Unified Job Search */}
                   <div className="w-full">
-                    <UnifiedJobSearch 
-                      jobs={currentJobs}
-                      isLoading={isLoading}
-                      locations={locations}
-                      jobTypes={jobTypes}
-                      locationFilter={locationFilter}
-                      jobTypeFilter={jobTypeFilter}
-                      onLocationChange={handleLocationChange}
-                      onJobTypeChange={handleJobTypeChange}
-                      onFiltersChange={handleFiltersChange}
-                      resetFilters={resetFilters}
-                      totalJobCount={jobs.length}
-                      onApply={handleApply}
-                    />
+                    <UnifiedJobSearch />
                   </div>
 
                   {/* Job Insights */}
