@@ -56,7 +56,7 @@ const MobileOptimizedInput: React.FC<MobileOptimizedInputProps> = ({
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
           className={cn(
-            "bg-elec-dark border-elec-yellow/20",
+            "bg-card border-elec-yellow/20",
             isMobile && "h-12 text-base",
             touchSupport && "touch-manipulation",
             unit && "pr-12",
