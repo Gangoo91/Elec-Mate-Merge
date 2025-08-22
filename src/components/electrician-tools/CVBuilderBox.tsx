@@ -13,7 +13,7 @@ const CVBuilderBox = () => {
   return (
     <div className="w-full max-w-4xl mx-auto p-8 bg-elec-card border border-elec-yellow/20 rounded-lg">
       {/* Top icons */}
-      <div className="flex justify-between mb-8">
+      <div className="flex justify-between mb-4">
         <FileText className="h-6 w-6 text-elec-yellow" />
         <Sparkles className="h-4 w-4 text-elec-yellow flex-shrink-0" />
       </div>
