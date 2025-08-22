@@ -498,7 +498,7 @@ const JobInsights: React.FC<JobInsightsProps> = ({ jobs, location }) => {
   return (
     <div className="space-y-4">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between mb-4">
-        <div className="flex items-center gap-2">
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-2">
           <BarChart3 className="h-5 w-5 text-elec-yellow" />
           <h3 className="text-lg font-semibold text-elec-light">Market Insights</h3>
           <Badge 
