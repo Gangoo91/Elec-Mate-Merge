@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import { FileText, Sparkles, Wand2 } from "lucide-react";
+import { FileText, Sparkles, Wand2, Star } from "lucide-react";
 import SimplifiedCVBuilder from "@/components/cv-builder/SimplifiedCVBuilder";
 import EnhancedCVBuilder from "@/components/cv-builder/EnhancedCVBuilder";
 
@@ -13,9 +13,10 @@ const CVBuilderBox = () => {
 
   return (
     <div className="w-full max-w-4xl mx-auto p-8 bg-elec-card border border-elec-yellow/20 rounded-lg">
-      {/* Top left icon */}
-      <div className="flex justify-start mb-8">
+      {/* Top icons */}
+      <div className="flex justify-between mb-8">
         <FileText className="h-6 w-6 text-elec-yellow" />
+        <Star className="h-4 w-4 text-elec-yellow" />
       </div>
       
       {/* Main title */}
