@@ -7,9 +7,10 @@ import { CableRecommendation } from "./types";
 interface CableRecommendationsCardProps {
   recommendations: CableRecommendation[];
   onSelectCable?: (cable: CableRecommendation) => void;
+  showNonCompliant?: boolean;
 }
 
-const CableRecommendationsCard = ({ recommendations, onSelectCable }: CableRecommendationsCardProps) => {
+const CableRecommendationsCard = ({ recommendations, onSelectCable, showNonCompliant = false }: CableRecommendationsCardProps) => {
   const getSuitabilityIcon = (suitability: string) => {
     switch (suitability) {
       case "suitable":
@@ -69,8 +70,12 @@ const CableRecommendationsCard = ({ recommendations, onSelectCable }: CableRecom
             <div className="flex flex-col gap-3 mb-3">
               <div className="flex flex-col gap-2">
                 {index === 0 && (
-                  <Badge className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30 w-fit">
-                    RECOMMENDED
+                  <Badge className={`w-fit ${
+                    showNonCompliant || cable.suitability !== "suitable" 
+                      ? "bg-red-500/20 text-red-300 border-red-500/30" 
+                      : "bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30"
+                  }`}>
+                    {showNonCompliant || cable.suitability !== "suitable" ? "NON-COMPLIANT - CLOSEST" : "RECOMMENDED"}
                   </Badge>
                 )}
                 <div className="flex items-center justify-between">

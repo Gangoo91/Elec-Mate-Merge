@@ -24,8 +24,10 @@ const ResultsStep = ({ planData }: ResultsStepProps) => {
 
   // Use the enhanced cable selection engine
   const cableOptions = CableSelectionEngine.calculateCableOptions(planData);
-  const recommendedCable = cableOptions[0];
-  const alternativeCables = cableOptions.slice(1, 4);
+  const suitableCables = cableOptions.filter(cable => cable.suitability === "suitable");
+  const recommendedCable = suitableCables.length > 0 ? suitableCables[0] : null;
+  const closestNonCompliant = suitableCables.length === 0 ? cableOptions[0] : null;
+  const alternativeCables = suitableCables.slice(1, 4);
 
   // Calculate Zs (enhanced calculation)
   const r1r2 = planData.cableLength * (
@@ -102,7 +104,7 @@ const ResultsStep = ({ planData }: ResultsStepProps) => {
     URL.revokeObjectURL(url);
   };
 
-  if (!recommendedCable) {
+  if (!recommendedCable && !closestNonCompliant) {
     return (
       <div className="space-y-6">
         <Alert className="bg-red-500/10 border-red-500/30">
@@ -151,12 +153,22 @@ const ResultsStep = ({ planData }: ResultsStepProps) => {
               
               <div className="p-4 bg-elec-dark/50 rounded border border-elec-yellow/20 text-center">
                 <p className="text-xs text-muted-foreground mb-1">Cable Size</p>
-                <p className="text-lg sm:text-xl font-bold text-green-400">{recommendedCable.size}</p>
+                <p className={`text-lg sm:text-xl font-bold ${recommendedCable ? 'text-green-400' : 'text-red-400'}`}>
+                  {recommendedCable ? recommendedCable.size : (closestNonCompliant ? closestNonCompliant.size : "--")}
+                </p>
+                {!recommendedCable && closestNonCompliant && (
+                  <p className="text-xs text-red-400">NON-COMPLIANT</p>
+                )}
               </div>
 
               <div className="p-4 bg-elec-dark/50 rounded border border-elec-yellow/20 text-center">
                 <p className="text-xs text-muted-foreground mb-1">Voltage Drop</p>
-                <p className="text-lg font-bold text-blue-400">{recommendedCable.voltageDropPercentage.toFixed(1)}%</p>
+                <p className={`text-lg font-bold ${recommendedCable ? 'text-blue-400' : 'text-red-400'}`}>
+                  {recommendedCable ? recommendedCable.voltageDropPercentage.toFixed(1) : (closestNonCompliant ? closestNonCompliant.voltageDropPercentage.toFixed(1) : "--")}%
+                </p>
+                {!recommendedCable && closestNonCompliant && closestNonCompliant.voltageDropPercentage > (planData.loadType === "lighting" ? 3 : 5) && (
+                  <p className="text-xs text-red-400">EXCEEDS LIMIT</p>
+                )}
               </div>
 
               <div className="p-4 bg-elec-dark/50 rounded border border-elec-yellow/20 text-center">
@@ -267,9 +279,22 @@ const ResultsStep = ({ planData }: ResultsStepProps) => {
           </CardContent>
         </Card>
 
+        {/* Non-Compliance Alert */}
+        {!recommendedCable && closestNonCompliant && (
+          <Alert className="bg-red-500/10 border-red-500/30">
+            <XCircle className="h-4 w-4 text-red-300" />
+            <AlertDescription className="text-red-200">
+              <strong>No BS 7671 Compliant Cable Found:</strong> No single cable meets all requirements for this design. 
+              The closest option ({closestNonCompliant.size}) has {closestNonCompliant.voltageDropPercentage.toFixed(2)}% voltage drop, 
+              exceeding the {planData.loadType === "lighting" ? "3%" : "5%"} limit. Consider design modifications.
+            </AlertDescription>
+          </Alert>
+        )}
+
         {/* Cable Recommendations */}
         <CableRecommendationsCard 
-          recommendations={[recommendedCable, ...alternativeCables]}
+          recommendations={recommendedCable ? [recommendedCable, ...alternativeCables] : (closestNonCompliant ? [closestNonCompliant] : [])}
+          showNonCompliant={!recommendedCable}
         />
 
         {/* Suggestions and Compliance - Stacked for Mobile */}

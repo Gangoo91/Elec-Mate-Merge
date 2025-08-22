@@ -234,6 +234,102 @@ export const BS7671_CABLE_DATABASE: Record<string, CableData> = {
     maxLength: 700,
     minBreaker: 40,
     maxBreaker: 100
+  },
+  "50.0mm²": {
+    currentCarryingCapacity: {
+      "clipped-direct": 173,
+      "conduit": 144,
+      "trunking": 156,
+      "ducted": 180,
+      "buried-direct": 207,
+      "tray": 165
+    },
+    voltageDropPerMetre: {
+      copper: 0.93,
+      aluminium: 1.5
+    },
+    resistance: {
+      r1: 0.387,
+      r2: 0.387
+    },
+    cost: "high",
+    availability: "limited",
+    installationComplexity: "complex",
+    maxLength: 1000,
+    minBreaker: 50,
+    maxBreaker: 125
+  },
+  "70.0mm²": {
+    currentCarryingCapacity: {
+      "clipped-direct": 221,
+      "conduit": 184,
+      "trunking": 200,
+      "ducted": 230,
+      "buried-direct": 265,
+      "tray": 210
+    },
+    voltageDropPerMetre: {
+      copper: 0.65,
+      aluminium: 1.1
+    },
+    resistance: {
+      r1: 0.268,
+      r2: 0.268
+    },
+    cost: "high",
+    availability: "limited",
+    installationComplexity: "complex",
+    maxLength: 1500,
+    minBreaker: 63,
+    maxBreaker: 160
+  },
+  "95.0mm²": {
+    currentCarryingCapacity: {
+      "clipped-direct": 268,
+      "conduit": 223,
+      "trunking": 242,
+      "ducted": 280,
+      "buried-direct": 322,
+      "tray": 255
+    },
+    voltageDropPerMetre: {
+      copper: 0.49,
+      aluminium: 0.8
+    },
+    resistance: {
+      r1: 0.193,
+      r2: 0.193
+    },
+    cost: "high",
+    availability: "limited",
+    installationComplexity: "complex",
+    maxLength: 2000,
+    minBreaker: 80,
+    maxBreaker: 200
+  },
+  "120.0mm²": {
+    currentCarryingCapacity: {
+      "clipped-direct": 310,
+      "conduit": 258,
+      "trunking": 280,
+      "ducted": 325,
+      "buried-direct": 374,
+      "tray": 295
+    },
+    voltageDropPerMetre: {
+      copper: 0.39,
+      aluminium: 0.64
+    },
+    resistance: {
+      r1: 0.153,
+      r2: 0.153
+    },
+    cost: "high",
+    availability: "limited",
+    installationComplexity: "complex",
+    maxLength: 2500,
+    minBreaker: 100,
+    maxBreaker: 250
   }
 };
 

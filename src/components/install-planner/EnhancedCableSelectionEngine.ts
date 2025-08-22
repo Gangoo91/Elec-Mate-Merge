@@ -31,30 +31,60 @@ export class EnhancedCableSelectionEngine {
       
       const voltageDropPercentage = (totalVoltageDrop / planData.voltage) * 100;
       
-      // Determine suitability with enhanced checks
+      // Determine suitability with enhanced checks - ALL factors must pass for suitable
       const currentOK = deratedCapacity >= designCurrent * 1.1;
       const voltageDropOK = voltageDropPercentage <= this.getMaxVoltageDropPercentage(planData.loadType);
       const lengthOK = planData.cableLength <= cableData.maxLength;
       const breakerCompatible = this.isBreakingDeviceCompatible(designCurrent, cableData, planData.protectiveDevice);
       
+      // Calculate Zs to check compliance
+      const r1r2 = planData.cableLength * (cableData.resistance.r1 + cableData.resistance.r2) / 1000;
+      const zsValue = planData.ze + r1r2;
+      const maxZs = this.getMaxZs(planData.protectiveDevice, planData.voltage);
+      const zsOK = zsValue <= maxZs;
+      
       let suitability: "suitable" | "marginal" | "unsuitable";
-      if (currentOK && voltageDropOK && lengthOK && breakerCompatible) {
+      let vdSeverity: "ok" | "warning" | "critical" = "ok";
+      
+      // Classify voltage drop severity
+      if (voltageDropPercentage > this.getMaxVoltageDropPercentage(planData.loadType)) {
+        if (voltageDropPercentage > this.getMaxVoltageDropPercentage(planData.loadType) * 1.5) {
+          vdSeverity = "critical";
+        } else {
+          vdSeverity = "warning";
+        }
+      }
+      
+      // Strict suitability: ALL factors must pass for suitable rating
+      if (currentOK && voltageDropOK && lengthOK && breakerCompatible && zsOK) {
         suitability = "suitable";
-      } else if ((currentOK && voltageDropOK) || (currentOK && lengthOK)) {
+      } else if (currentOK && (voltageDropPercentage <= this.getMaxVoltageDropPercentage(planData.loadType) * 1.2) && zsOK) {
         suitability = "marginal";
       } else {
         suitability = "unsuitable";
       }
 
-      // Generate comprehensive notes
+      // Generate comprehensive notes with clear compliance status
       const notes: string[] = [];
-      if (!currentOK) notes.push(`Current capacity insufficient (${deratedCapacity.toFixed(1)}A vs ${(designCurrent * 1.1).toFixed(1)}A required)`);
-      if (!voltageDropOK) notes.push(`Voltage drop exceeds limits (${voltageDropPercentage.toFixed(2)}% vs ${this.getMaxVoltageDropPercentage(planData.loadType)}% max)`);
-      if (!lengthOK) notes.push(`Cable length exceeds recommendations (${planData.cableLength}m vs ${cableData.maxLength}m max)`);
-      if (!breakerCompatible) notes.push(`Protective device rating incompatible with cable capacity`);
+      if (!currentOK) notes.push(`❌ Current capacity insufficient (${deratedCapacity.toFixed(1)}A vs ${(designCurrent * 1.1).toFixed(1)}A required)`);
+      if (!voltageDropOK) {
+        if (vdSeverity === "critical") {
+          notes.push(`❌ CRITICAL: Voltage drop severely exceeds limits (${voltageDropPercentage.toFixed(2)}% vs ${this.getMaxVoltageDropPercentage(planData.loadType)}% max)`);
+        } else {
+          notes.push(`❌ Voltage drop exceeds limits (${voltageDropPercentage.toFixed(2)}% vs ${this.getMaxVoltageDropPercentage(planData.loadType)}% max)`);
+        }
+      }
+      if (!lengthOK) notes.push(`❌ Cable length exceeds recommendations (${planData.cableLength}m vs ${cableData.maxLength}m max)`);
+      if (!breakerCompatible) notes.push(`❌ Protective device rating incompatible with cable capacity`);
+      if (!zsOK) notes.push(`❌ Earth fault loop impedance too high (${zsValue.toFixed(3)}Ω vs ${maxZs.toFixed(3)}Ω max)`);
+      
       if (suitability === "suitable") {
-        notes.push(`Meets all BS7671 requirements with adequate safety margins`);
-        if (isRingCircuit) notes.push(`Ring circuit configuration validated`);
+        notes.push(`✅ Meets all BS7671 requirements with adequate safety margins`);
+        if (isRingCircuit) notes.push(`✅ Ring circuit configuration validated`);
+      } else if (suitability === "marginal") {
+        notes.push(`⚠️ Marginal compliance - review design parameters`);
+      } else {
+        notes.push(`❌ NON-COMPLIANT: Multiple design requirements not met`);
       }
 
       // Calculate protective device rating with BS7671 coordination
@@ -75,15 +105,22 @@ export class EnhancedCableSelectionEngine {
       });
     }
 
-    // Sort by suitability, then by cost-effectiveness
+    // Sort by suitability first, then by voltage drop, then by cost
     return options.sort((a, b) => {
       const suitabilityOrder = { "suitable": 0, "marginal": 1, "unsuitable": 2 };
       const costOrder = { "low": 0, "medium": 1, "high": 2 };
       
+      // Primary: suitability
       if (suitabilityOrder[a.suitability] !== suitabilityOrder[b.suitability]) {
         return suitabilityOrder[a.suitability] - suitabilityOrder[b.suitability];
       }
       
+      // Secondary: within same suitability, sort by voltage drop (lower is better)
+      if (Math.abs(a.voltageDropPercentage - b.voltageDropPercentage) > 0.1) {
+        return a.voltageDropPercentage - b.voltageDropPercentage;
+      }
+      
+      // Tertiary: cost
       return costOrder[a.cost || "medium"] - costOrder[b.cost || "medium"];
     });
   }
@@ -139,15 +176,58 @@ export class EnhancedCableSelectionEngine {
     if (bestOption && bestOption.suitability !== "suitable") {
       const suitableOptions = cableOptions.filter(opt => opt.suitability === "suitable");
       if (suitableOptions.length > 0) {
+        const improvement = bestOption.voltageDropPercentage - suitableOptions[0].voltageDropPercentage;
         suggestions.push({
           type: "cable-upgrade",
-          title: "Cable Upgrade Required for Compliance",
-          description: `Upgrade to ${suitableOptions[0].size} cable to meet BS 7671 current carrying capacity and voltage drop requirements.`,
+          title: "Cable Upgrade Required for BS 7671 Compliance",
+          description: `Upgrade to ${suitableOptions[0].size} cable to meet voltage drop limits. This reduces voltage drop from ${bestOption.voltageDropPercentage.toFixed(2)}% to ${suitableOptions[0].voltageDropPercentage.toFixed(2)}% (improvement: ${improvement.toFixed(2)}%).`,
           impact: "high",
           cost: suitableOptions[0].cost,
           regulation: "BS 7671 Sections 523 & Appendix 4"
         });
+      } else {
+        // No compliant single cable found - suggest alternatives
+        suggestions.push({
+          type: "design-review",
+          title: "Design Review Required - No Single Cable Solution",
+          description: "Consider: 1) Reduce load, 2) Shorten cable run, 3) Use 3-phase supply, 4) Install intermediate distribution board, or 5) Use parallel cable configuration.",
+          impact: "high",
+          regulation: "BS 7671 Section 132.6"
+        });
       }
+    }
+
+    // Voltage drop specific suggestions
+    if (bestOption && bestOption.voltageDropPercentage > this.getMaxVoltageDropPercentage(planData.loadType)) {
+      if (bestOption.voltageDropPercentage > 10) {
+        suggestions.push({
+          type: "voltage-drop",
+          title: "Critical Voltage Drop Issue",
+          description: "Voltage drop is excessive and may cause equipment malfunction. Consider three-phase supply or intermediate distribution board.",
+          impact: "critical",
+          regulation: "BS 7671 Appendix 4"
+        });
+      } else {
+        suggestions.push({
+          type: "voltage-drop", 
+          title: "Increase Conductor Size",
+          description: `Current design results in ${bestOption.voltageDropPercentage.toFixed(2)}% voltage drop. Increase cable size to reduce voltage drop below ${this.getMaxVoltageDropPercentage(planData.loadType)}%.`,
+          impact: "medium",
+          regulation: "BS 7671 Appendix 4"
+        });
+      }
+    }
+
+    // Parallel conductor suggestion for 5-core cables
+    if (planData.cableLength > 100 && planData.totalLoad > 5000) {
+      suggestions.push({
+        type: "parallel-conductors",
+        title: "Advanced: Consider Parallel Conductors",
+        description: "For long runs with high loads, consider using 5-core cable with paralleled L&N conductors to reduce voltage drop. Requires careful calculation and may not be best practice for all installations.",
+        impact: "medium",
+        cost: "medium",
+        regulation: "BS 7671 Section 523.6"
+      });
     }
 
     // Protective device coordination

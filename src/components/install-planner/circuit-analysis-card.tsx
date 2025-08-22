@@ -15,21 +15,13 @@ export const CircuitAnalysisCard: React.FC<CircuitAnalysisCardProps> = ({
   analysis, 
   index 
 }) => {
-  const bestRecommendation = analysis.recommendations[0];
+  // Use same logic as single circuit - only show suitable cables as recommended
+  const suitableCables = analysis.recommendations.filter((rec: any) => rec.suitability === "suitable");
+  const recommendedCable = suitableCables.length > 0 ? suitableCables[0] : null;
+  const closestNonCompliant = suitableCables.length === 0 ? analysis.recommendations[0] : null;
   
-  // Check against BS 7671 voltage drop limit (3% lighting, 5% others)
-  const vdLimit = circuit.loadType === "lighting" ? 3 : 5;
-  let finalRecommendation = bestRecommendation;
-  if (bestRecommendation?.voltageDropPercentage > vdLimit) {
-    const nextSizeUp = analysis.recommendations.find((rec: any) => 
-      rec.voltageDropPercentage <= vdLimit && rec.size !== bestRecommendation.size
-    );
-    if (nextSizeUp) {
-      finalRecommendation = nextSizeUp;
-    }
-  }
-  
-  const isCompliant = finalRecommendation?.suitability === "suitable";
+  const isCompliant = recommendedCable !== null;
+  const finalRecommendation = recommendedCable || closestNonCompliant;
 
   return (
     <ResultCard 
@@ -46,8 +38,8 @@ export const CircuitAnalysisCard: React.FC<CircuitAnalysisCardProps> = ({
             </div>
             <div className="text-right">
               {isCompliant ? 
-                <span className="text-sm text-success">✓ Compliant</span> : 
-                <span className="text-sm text-warning">⚠ Review Required</span>
+                <Badge className="bg-green-500/20 text-green-300 border-green-500/30">✓ BS 7671 Compliant</Badge> : 
+                <Badge className="bg-red-500/20 text-red-300 border-red-500/30">❌ Non-Compliant</Badge>
               }
             </div>
           </div>
@@ -73,10 +65,22 @@ export const CircuitAnalysisCard: React.FC<CircuitAnalysisCardProps> = ({
           </div>
         </div>
 
+        {/* Non-Compliance Warning */}
+        {!isCompliant && closestNonCompliant && (
+          <div className="p-3 bg-red-500/10 border border-red-500/30 rounded">
+            <p className="text-sm text-red-300">
+              <strong>No compliant cable found.</strong> Closest option ({closestNonCompliant.size}) has {closestNonCompliant.voltageDropPercentage.toFixed(2)}% voltage drop, 
+              exceeding BS 7671 limits. Consider design modifications.
+            </p>
+          </div>
+        )}
+
         {/* Cable Recommendation */}
         {finalRecommendation && (
           <div className="space-y-3">
-            <h4 className="font-medium text-primary">Recommended Cable</h4>
+            <h4 className="font-medium text-primary">
+              {isCompliant ? "Recommended Cable" : "Closest Non-Compliant Option"}
+            </h4>
             <div className="space-y-2">
               <div className="flex justify-between items-center p-3 bg-muted/30 rounded">
                 <span className="text-sm text-muted-foreground">Size & Type</span>
@@ -88,7 +92,12 @@ export const CircuitAnalysisCard: React.FC<CircuitAnalysisCardProps> = ({
               </div>
               <div className="flex justify-between items-center p-3 bg-muted/30 rounded">
                 <span className="text-sm text-muted-foreground">Voltage Drop</span>
-                <span className="font-bold text-primary">{finalRecommendation.voltageDropPercentage.toFixed(2)}%</span>
+                <span className={`font-bold ${isCompliant ? 'text-primary' : 'text-red-400'}`}>
+                  {finalRecommendation.voltageDropPercentage.toFixed(2)}%
+                  {!isCompliant && (
+                    <span className="text-xs text-red-400 ml-1">EXCEEDS LIMIT</span>
+                  )}
+                </span>
               </div>
             </div>
           </div>
