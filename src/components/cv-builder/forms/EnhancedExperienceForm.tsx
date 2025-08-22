@@ -73,7 +73,7 @@ export const EnhancedExperienceForm: React.FC<EnhancedExperienceFormProps> = ({ 
       </div>
 
       {cvData.experience.map((exp, index) => (
-        <Card key={exp.id} className="border-elec-yellow/20 bg-card">
+        <Card key={exp.id} className="border-elec-yellow/20 bg-elec-gray">
           <CardHeader className="flex flex-row items-center justify-between">
             <CardTitle className="text-white">Experience {index + 1}</CardTitle>
             <Button
@@ -93,7 +93,7 @@ export const EnhancedExperienceForm: React.FC<EnhancedExperienceFormProps> = ({ 
                   id={`jobTitle-${exp.id}`}
                   value={exp.jobTitle}
                   onChange={(e) => updateExperience(exp.id, 'jobTitle', e.target.value)}
-                  className="bg-card border-elec-yellow/20 text-white min-h-[48px] mt-2"
+                  className="bg-elec-dark border-elec-yellow/20 text-white min-h-[48px] mt-2"
                   placeholder="Electrical Apprentice"
                 />
               </div>
@@ -104,7 +104,7 @@ export const EnhancedExperienceForm: React.FC<EnhancedExperienceFormProps> = ({ 
                   id={`company-${exp.id}`}
                   value={exp.company}
                   onChange={(e) => updateExperience(exp.id, 'company', e.target.value)}
-                  className="bg-card border-elec-yellow/20 text-white min-h-[48px] mt-2"
+                  className="bg-elec-dark border-elec-yellow/20 text-white min-h-[48px] mt-2"
                   placeholder="ABC Electrical Ltd"
                 />
               </div>
@@ -115,7 +115,7 @@ export const EnhancedExperienceForm: React.FC<EnhancedExperienceFormProps> = ({ 
                   id={`location-${exp.id}`}
                   value={exp.location}
                   onChange={(e) => updateExperience(exp.id, 'location', e.target.value)}
-                  className="bg-card border-elec-yellow/20 text-white min-h-[48px] mt-2"
+                  className="bg-elec-dark border-elec-yellow/20 text-white min-h-[48px] mt-2"
                   placeholder="London, UK"
                 />
               </div>
@@ -127,7 +127,7 @@ export const EnhancedExperienceForm: React.FC<EnhancedExperienceFormProps> = ({ 
                   type="month"
                   value={exp.startDate}
                   onChange={(e) => updateExperience(exp.id, 'startDate', e.target.value)}
-                  className="bg-card border-elec-yellow/20 text-white min-h-[48px] mt-2"
+                  className="bg-elec-dark border-elec-yellow/20 text-white min-h-[48px] mt-2"
                   placeholder="YYYY-MM"
                 />
               </div>
@@ -139,7 +139,7 @@ export const EnhancedExperienceForm: React.FC<EnhancedExperienceFormProps> = ({ 
                   type="month"
                   value={exp.endDate}
                   onChange={(e) => updateExperience(exp.id, 'endDate', e.target.value)}
-                  className="bg-card border-elec-yellow/20 text-white min-h-[48px] mt-2"
+                  className="bg-elec-dark border-elec-yellow/20 text-white min-h-[48px] mt-2"
                   disabled={exp.current}
                   placeholder="YYYY-MM"
                 />
@@ -167,7 +167,7 @@ export const EnhancedExperienceForm: React.FC<EnhancedExperienceFormProps> = ({ 
                   id={`description-${exp.id}`}
                   value={exp.description}
                   onChange={(e) => updateExperience(exp.id, 'description', e.target.value)}
-                  className="bg-card border-elec-yellow/20 text-white min-h-[48px] mt-2"
+                  className="bg-elec-dark border-elec-yellow/20 text-white min-h-[48px] mt-2"
                   placeholder="Describe your key responsibilities, achievements, and skills used..."
                 />
               </div>
@@ -190,7 +190,7 @@ export const EnhancedExperienceForm: React.FC<EnhancedExperienceFormProps> = ({ 
       ))}
 
       {cvData.experience.length === 0 && (
-        <Card className="border-elec-yellow/20 bg-card">
+        <Card className="border-elec-yellow/20 bg-elec-gray">
           <CardContent className="text-center py-8">
             <p className="text-gray-400 mb-4">No work experience added yet</p>
             <Button
