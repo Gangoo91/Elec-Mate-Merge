@@ -88,243 +88,354 @@ const JobInsights: React.FC<JobInsightsProps> = ({ jobs, location }) => {
   }, [liveData, jobs, location]);
 
   const generateInsights = () => {
-    if (!jobs.length) return;
-
     const newInsights: JobInsight[] = [];
 
-    // Salary Analysis (basic average for insight card)
-    const baseSalaries = jobs
-      .filter(job => job.salary)
-      .map(job => {
-        const clean = job.salary.replace(/[£$,]/g, '');
-        const nums = clean.match(/\d+/g);
-        if (!nums) return 0;
-        if (nums.length >= 2) return Math.round((parseInt(nums[0]) + parseInt(nums[1])) / 2);
-        return parseInt(nums[0]);
-      })
-      .filter((v) => v > 0);
-
-    if (baseSalaries.length > 0) {
-      const avgSalary = Math.round(baseSalaries.reduce((sum: number, s: number) => sum + s, 0) / baseSalaries.length);
+    // Use live data when available, otherwise fallback to local computation
+    if (liveData && salaryStats.count > 0) {
+      // Average Salary from live data
       newInsights.push({
         id: 'avg-salary',
         type: 'salary',
         title: 'Average Salary',
-        description: `Based on ${baseSalaries.length} job postings`,
-        value: `£${avgSalary.toLocaleString()}`,
+        description: `Based on ${salaryStats.count} market jobs`,
+        value: `£${salaryStats.median.toLocaleString()}`,
         icon: <TrendingUp className="h-4 w-4" />,
         color: 'text-green-400'
       });
-    }
 
-    // Top Companies
-    const companyCounts = jobs.reduce((acc: Record<string, number>, job) => {
-      acc[job.company] = (acc[job.company] || 0) + 1;
-      return acc;
-    }, {} as Record<string, number>);
+      // Most Active Employer from live data
+      if (topCompanies.length > 0) {
+        newInsights.push({
+          id: 'top-company',
+          type: 'trend',
+          title: 'Most Active Employer',
+          description: `${topCompanies[0].count} job postings`,
+          value: topCompanies[0].name,
+          icon: <Building2 className="h-4 w-4" />,
+          color: 'text-elec-yellow'
+        });
+      }
 
-    const topCompany = Object.entries(companyCounts)
-      .sort(([, a], [, b]) => (b as number) - (a as number))[0];
+      // Most Common Type from live data
+      if (jobTypeMix.length > 0) {
+        const totalJobs = jobTypeMix.reduce((sum, type) => sum + type.count, 0);
+        const percentage = Math.round((jobTypeMix[0].count / totalJobs) * 100);
+        newInsights.push({
+          id: 'job-type',
+          type: 'trend',
+          title: 'Most Common Type',
+          description: `${percentage}% of market jobs`,
+          value: jobTypeMix[0].label,
+          icon: <Target className="h-4 w-4" />,
+          color: 'text-blue-400'
+        });
+      }
 
-    if (topCompany) {
+      // Market Activity from live data
+      if (freshness.recent7dPct > 0) {
+        newInsights.push({
+          id: 'recent-activity',
+          type: 'timing',
+          title: 'Market Activity',
+          description: `${freshness.recent7dPct}% posted this week`,
+          value: `Fresh opportunities`,
+          icon: <Clock className="h-4 w-4" />,
+          color: 'text-purple-400'
+        });
+      }
+
+      // Top Skills from live data
+      if (topSkills.length > 0) {
+        newInsights.push({
+          id: 'top-skill',
+          type: 'skill',
+          title: 'Top Skill in Demand',
+          description: `${topSkills[0].count} job postings`,
+          value: topSkills[0].name,
+          icon: <Award className="h-4 w-4" />,
+          color: 'text-pink-400'
+        });
+      }
+
+      // Data Freshness indicator
       newInsights.push({
-        id: 'top-company',
-        type: 'trend',
-        title: 'Most Active Employer',
-        description: `${topCompany[1]} open positions`,
-        value: topCompany[0],
-        icon: <Building2 className="h-4 w-4" />,
-        color: 'text-elec-yellow'
-      });
-    }
-
-    // Job Type Distribution
-    const typeCounts = jobs.reduce((acc: Record<string, number>, job) => {
-      const t = (job.type || 'Unspecified').toString();
-      acc[t] = (acc[t] || 0) + 1;
-      return acc;
-    }, {} as Record<string, number>);
-
-    const topType = Object.entries(typeCounts)
-      .sort(([, a], [, b]) => (b as number) - (a as number))[0];
-
-    if (topType) {
-      const percentage = Math.round(((topType[1] as number) / jobs.length) * 100);
-      newInsights.push({
-        id: 'job-type',
-        type: 'trend',
-        title: 'Most Common Type',
-        description: `${percentage}% of available jobs`,
-        value: topType[0],
-        icon: <Target className="h-4 w-4" />,
-        color: 'text-blue-400'
-      });
-    }
-
-    // Location Hotspots
-    const locationCounts = jobs.reduce((acc: Record<string, number>, job) => {
-      const loc = job.location || 'Unknown';
-      acc[loc] = (acc[loc] || 0) + 1;
-      return acc;
-    }, {} as Record<string, number>);
-
-    const topLocation = Object.entries(locationCounts)
-      .sort(([, a], [, b]) => (b as number) - (a as number))[0];
-
-    if (topLocation && topLocation[0] !== 'Unknown') {
-      newInsights.push({
-        id: 'hot-location',
-        type: 'hotspot',
-        title: 'Job Hotspot',
-        description: `${topLocation[1]} opportunities`,
-        value: topLocation[0],
-        icon: <MapPin className="h-4 w-4" />,
-        color: 'text-orange-400'
-      });
-    }
-
-    // Recent Postings Analysis
-    const now = new Date();
-    const recentJobs = jobs.filter(job => {
-      const postedDate = new Date(job.posted_date);
-      const diffDays = (now.getTime() - postedDate.getTime()) / (1000 * 3600 * 24);
-      return diffDays <= 7;
-    });
-
-    if (recentJobs.length > 0) {
-      const percentage = Math.round((recentJobs.length / jobs.length) * 100);
-      newInsights.push({
-        id: 'recent-activity',
+        id: 'data-freshness',
         type: 'timing',
-        title: 'Market Activity',
-        description: `${percentage}% posted this week`,
-        value: `${recentJobs.length} new jobs`,
-        icon: <Clock className="h-4 w-4" />,
-        color: 'text-purple-400'
+        title: 'Data Freshness',
+        description: 'Market data recency',
+        value: `${freshness.medianDays} days median age`,
+        icon: <Zap className="h-4 w-4" />,
+        color: 'text-cyan-400'
       });
+    } else if (jobs.length > 0) {
+      // Fallback to local computation for jobs data
+      
+      // Salary Analysis (basic average for insight card)
+      const baseSalaries = jobs
+        .filter(job => job.salary)
+        .map(job => {
+          const clean = job.salary.replace(/[£$,]/g, '');
+          const nums = clean.match(/\d+/g);
+          if (!nums) return 0;
+          if (nums.length >= 2) return Math.round((parseInt(nums[0]) + parseInt(nums[1])) / 2);
+          return parseInt(nums[0]);
+        })
+        .filter((v) => v > 0);
+
+      if (baseSalaries.length > 0) {
+        const avgSalary = Math.round(baseSalaries.reduce((sum: number, s: number) => sum + s, 0) / baseSalaries.length);
+        newInsights.push({
+          id: 'avg-salary',
+          type: 'salary',
+          title: 'Average Salary',
+          description: `Based on ${baseSalaries.length} job postings`,
+          value: `£${avgSalary.toLocaleString()}`,
+          icon: <TrendingUp className="h-4 w-4" />,
+          color: 'text-green-400'
+        });
+      }
+
+      // Top Companies
+      const companyCounts = jobs.reduce((acc: Record<string, number>, job) => {
+        acc[job.company] = (acc[job.company] || 0) + 1;
+        return acc;
+      }, {} as Record<string, number>);
+
+      const topCompany = Object.entries(companyCounts)
+        .sort(([, a], [, b]) => (b as number) - (a as number))[0];
+
+      if (topCompany) {
+        newInsights.push({
+          id: 'top-company',
+          type: 'trend',
+          title: 'Most Active Employer',
+          description: `${topCompany[1]} open positions`,
+          value: topCompany[0],
+          icon: <Building2 className="h-4 w-4" />,
+          color: 'text-elec-yellow'
+        });
+      }
+
+      // Job Type Distribution
+      const typeCounts = jobs.reduce((acc: Record<string, number>, job) => {
+        const t = (job.type || 'Unspecified').toString();
+        acc[t] = (acc[t] || 0) + 1;
+        return acc;
+      }, {} as Record<string, number>);
+
+      const topType = Object.entries(typeCounts)
+        .sort(([, a], [, b]) => (b as number) - (a as number))[0];
+
+      if (topType) {
+        const percentage = Math.round(((topType[1] as number) / jobs.length) * 100);
+        newInsights.push({
+          id: 'job-type',
+          type: 'trend',
+          title: 'Most Common Type',
+          description: `${percentage}% of available jobs`,
+          value: topType[0],
+          icon: <Target className="h-4 w-4" />,
+          color: 'text-blue-400'
+        });
+      }
+
+      // Recent Postings Analysis
+      const now = new Date();
+      const recentJobs = jobs.filter(job => {
+        const postedDate = new Date(job.posted_date);
+        const diffDays = (now.getTime() - postedDate.getTime()) / (1000 * 3600 * 24);
+        return diffDays <= 7;
+      });
+
+      if (recentJobs.length > 0) {
+        const percentage = Math.round((recentJobs.length / jobs.length) * 100);
+        newInsights.push({
+          id: 'recent-activity',
+          type: 'timing',
+          title: 'Market Activity',
+          description: `${percentage}% posted this week`,
+          value: `${recentJobs.length} new jobs`,
+          icon: <Clock className="h-4 w-4" />,
+          color: 'text-purple-400'
+        });
+      }
     }
 
-    // Skills & Certs Analysis
-    const skillKeywords = [
-      'testing', 'installation', 'maintenance', 'commissioning',
-      'solar', 'led', 'commercial', 'domestic', 'industrial',
-      'eicr', 'fault finding', 'controls'
-    ];
+    // Location Hotspots (always from local jobs as this is search-specific)
+    if (jobs.length > 0) {
+      const locationCounts = jobs.reduce((acc: Record<string, number>, job) => {
+        const loc = job.location || 'Unknown';
+        acc[loc] = (acc[loc] || 0) + 1;
+        return acc;
+      }, {} as Record<string, number>);
 
-    const certKeywordsMap: Record<string, string> = {
-      'bs 7671': 'BS 7671 (18th Edition)',
-      '18th edition': '18th Edition',
-      '2391': '2391 Testing & Inspection',
-      'ecs': 'ECS',
-      'cscs': 'CSCS',
-      'niceic': 'NICEIC',
-      'napit': 'NAPIT',
-      'ev': 'EV Charging',
-      'solar': 'Solar'
-    };
+      const topLocation = Object.entries(locationCounts)
+        .sort(([, a], [, b]) => (b as number) - (a as number))[0];
 
-    const lowerText = (job: any) => `${job.title} ${job.description}`.toLowerCase();
+      if (topLocation && topLocation[0] !== 'Unknown') {
+        newInsights.push({
+          id: 'hot-location',
+          type: 'hotspot',
+          title: 'Job Hotspot',
+          description: `${topLocation[1]} opportunities`,
+          value: topLocation[0],
+          icon: <MapPin className="h-4 w-4" />,
+          color: 'text-orange-400'
+        });
+      }
+    }
 
-    const skillCounts = skillKeywords.reduce((acc: Record<string, number>, skill) => {
-      const count = jobs.filter(job => lowerText(job).includes(skill)).length;
-      if (count > 0) acc[skill] = count;
-      return acc;
-    }, {} as Record<string, number>);
-
-    const certCounts = Object.keys(certKeywordsMap).reduce((acc: Record<string, number>, key) => {
-      const count = jobs.filter(job => lowerText(job).includes(key)).length;
-      if (count > 0) acc[key] = count;
-      return acc;
-    }, {} as Record<string, number>);
-
-    // Compute Pay Stats (median & quartiles) and buckets
-    if (baseSalaries.length > 0) {
-      const sorted = [...baseSalaries].sort((a, b) => a - b);
-      const n = sorted.length;
-      const median = sorted[Math.floor(n / 2)];
-      const q1 = sorted[Math.floor(n * 0.25)];
-      const q3 = sorted[Math.floor(n * 0.75)];
-      const min = sorted[0];
-      const max = sorted[n - 1];
-      setSalaryStats({ median, q1, q3, min, max, count: n });
-
-      const ranges = [
-        { label: 'Up to £25k', min: 0, max: 25000 },
-        { label: '£25k–£35k', min: 25000, max: 35000 },
-        { label: '£35k–£45k', min: 35000, max: 45000 },
-        { label: '£45k–£60k', min: 45000, max: 60000 },
-        { label: '£60k+', min: 60000, max: Infinity },
+    // Only compute additional data for fallback when no live data
+    if (!liveData) {
+      const now = new Date();
+      
+      // Skills & Certs Analysis
+      const skillKeywords = [
+        'testing', 'installation', 'maintenance', 'commissioning',
+        'solar', 'led', 'commercial', 'domestic', 'industrial',
+        'eicr', 'fault finding', 'controls'
       ];
-      setSalaryBuckets(ranges.map(r => ({
-        label: r.label,
-        count: sorted.filter(v => v >= r.min && v < r.max).length
-      })));
-    } else {
-      setSalaryStats({ median: 0, q1: 0, q3: 0, min: 0, max: 0, count: 0 });
-      setSalaryBuckets([]);
+
+      const certKeywordsMap: Record<string, string> = {
+        'bs 7671': 'BS 7671 (18th Edition)',
+        '18th edition': '18th Edition',
+        '2391': '2391 Testing & Inspection',
+        'ecs': 'ECS',
+        'cscs': 'CSCS',
+        'niceic': 'NICEIC',
+        'napit': 'NAPIT',
+        'ev': 'EV Charging',
+        'solar': 'Solar'
+      };
+
+      const lowerText = (job: any) => `${job.title} ${job.description}`.toLowerCase();
+
+      const skillCounts = skillKeywords.reduce((acc: Record<string, number>, skill) => {
+        const count = jobs.filter(job => lowerText(job).includes(skill)).length;
+        if (count > 0) acc[skill] = count;
+        return acc;
+      }, {} as Record<string, number>);
+
+      const certCounts = Object.keys(certKeywordsMap).reduce((acc: Record<string, number>, key) => {
+        const count = jobs.filter(job => lowerText(job).includes(key)).length;
+        if (count > 0) acc[key] = count;
+        return acc;
+      }, {} as Record<string, number>);
+
+      // Get baseSalaries and companyCounts from local jobs (fallback only)
+      if (jobs.length > 0) {
+        const baseSalaries = jobs
+          .filter(job => job.salary)
+          .map(job => {
+            const clean = job.salary.replace(/[£$,]/g, '');
+            const nums = clean.match(/\d+/g);
+            if (!nums) return 0;
+            if (nums.length >= 2) return Math.round((parseInt(nums[0]) + parseInt(nums[1])) / 2);
+            return parseInt(nums[0]);
+          })
+          .filter((v) => v > 0);
+
+        const companyCounts = jobs.reduce((acc: Record<string, number>, job) => {
+          acc[job.company] = (acc[job.company] || 0) + 1;
+          return acc;
+        }, {} as Record<string, number>);
+
+        const typeCounts = jobs.reduce((acc: Record<string, number>, job) => {
+          const t = (job.type || 'Unspecified').toString();
+          acc[t] = (acc[t] || 0) + 1;
+          return acc;
+        }, {} as Record<string, number>);
+
+        // Compute Pay Stats (median & quartiles) and buckets
+        if (baseSalaries.length > 0) {
+          const sorted = [...baseSalaries].sort((a, b) => a - b);
+          const n = sorted.length;
+          const median = sorted[Math.floor(n / 2)];
+          const q1 = sorted[Math.floor(n * 0.25)];
+          const q3 = sorted[Math.floor(n * 0.75)];
+          const min = sorted[0];
+          const max = sorted[n - 1];
+          setSalaryStats({ median, q1, q3, min, max, count: n });
+
+          const ranges = [
+            { label: 'Up to £25k', min: 0, max: 25000 },
+            { label: '£25k–£35k', min: 25000, max: 35000 },
+            { label: '£35k–£45k', min: 35000, max: 45000 },
+            { label: '£45k–£60k', min: 45000, max: 60000 },
+            { label: '£60k+', min: 60000, max: Infinity },
+          ];
+          setSalaryBuckets(ranges.map(r => ({
+            label: r.label,
+            count: sorted.filter(v => v >= r.min && v < r.max).length
+          })));
+        } else {
+          setSalaryStats({ median: 0, q1: 0, q3: 0, min: 0, max: 0, count: 0 });
+          setSalaryBuckets([]);
+        }
+
+        // Build Job Type Mix array
+        setJobTypeMix(Object.entries(typeCounts).map(([label, count]) => ({ label, count: count as number })));
+
+        // Experience Mix (parsed from text)
+        const expCounters: Record<string, number> = { 'Apprentice/Trainee': 0, 'Entry': 0, 'Mid': 0, 'Senior': 0, 'Unspecified': 0 };
+        jobs.forEach(job => {
+          const t = lowerText(job);
+          if (/(apprentice|trainee)/.test(t)) expCounters['Apprentice/Trainee'] += 1;
+          else if (/(senior|lead|manager)/.test(t)) expCounters['Senior'] += 1;
+          else if (/(mid|intermediate)/.test(t)) expCounters['Mid'] += 1;
+          else if (/(junior|entry)/.test(t)) expCounters['Entry'] += 1;
+          else expCounters['Unspecified'] += 1;
+        });
+        setExperienceMix(Object.entries(expCounters).map(([label, count]) => ({ label, count })));
+
+        // Working Pattern
+        const workCounters: Record<string, number> = { 'Remote': 0, 'Hybrid': 0, 'On-site': 0 };
+        jobs.forEach(job => {
+          const t = lowerText(job);
+          if (/remote/.test(t)) workCounters['Remote'] += 1;
+          else if (/hybrid/.test(t)) workCounters['Hybrid'] += 1;
+          else workCounters['On-site'] += 1;
+        });
+        setWorkingPattern(Object.entries(workCounters).map(([label, count]) => ({ label, count })));
+
+        // Freshness
+        const ages = jobs.map(job => {
+          const d = new Date(job.posted_date);
+          return Math.max(0, Math.round((now.getTime() - d.getTime()) / (1000 * 3600 * 24)));
+        });
+        const agesSorted = [...ages].sort((a, b) => a - b);
+        const medianDays = agesSorted[Math.floor(agesSorted.length / 2)] || 0;
+        const last48h = jobs.filter(job => {
+          const d = new Date(job.posted_date);
+          return (now.getTime() - d.getTime()) <= 48 * 3600 * 1000;
+        }).length;
+        const last7d = jobs.filter(job => {
+          const d = new Date(job.posted_date);
+          return (now.getTime() - d.getTime()) <= 7 * 24 * 3600 * 1000;
+        }).length;
+        setFreshness({
+          last48hPct: Math.round((last48h / jobs.length) * 100),
+          recent7dPct: Math.round((last7d / jobs.length) * 100),
+          medianDays
+        });
+
+        // Top companies list (top 5)
+        const topCompaniesArr = Object.entries(companyCounts)
+          .sort(([, a], [, b]) => (b as number) - (a as number))
+          .slice(0, 5)
+          .map(([name, count]) => ({ name, count: count as number }));
+        setTopCompanies(topCompaniesArr);
+
+        // Set top skills and certs
+        const skillsArr = Object.entries(skillCounts).sort(([, a], [, b]) => (b as number) - (a as number)).slice(0, 6)
+          .map(([name, count]) => ({ name: name.charAt(0).toUpperCase() + name.slice(1), count: count as number }));
+        setTopSkills(skillsArr);
+
+        const certsArr = Object.entries(certCounts).sort(([, a], [, b]) => (b as number) - (a as number)).slice(0, 6)
+          .map(([key, count]) => ({ name: certKeywordsMap[key], count: count as number }));
+        setTopCerts(certsArr);
+      }
     }
-
-    // Build Job Type Mix array
-    setJobTypeMix(Object.entries(typeCounts).map(([label, count]) => ({ label, count: count as number })));
-
-    // Experience Mix (parsed from text)
-    const expCounters: Record<string, number> = { 'Apprentice/Trainee': 0, 'Entry': 0, 'Mid': 0, 'Senior': 0, 'Unspecified': 0 };
-    jobs.forEach(job => {
-      const t = lowerText(job);
-      if (/(apprentice|trainee)/.test(t)) expCounters['Apprentice/Trainee'] += 1;
-      else if (/(senior|lead|manager)/.test(t)) expCounters['Senior'] += 1;
-      else if (/(mid|intermediate)/.test(t)) expCounters['Mid'] += 1;
-      else if (/(junior|entry)/.test(t)) expCounters['Entry'] += 1;
-      else expCounters['Unspecified'] += 1;
-    });
-    setExperienceMix(Object.entries(expCounters).map(([label, count]) => ({ label, count })));
-
-    // Working Pattern
-    const workCounters: Record<string, number> = { 'Remote': 0, 'Hybrid': 0, 'On-site': 0 };
-    jobs.forEach(job => {
-      const t = lowerText(job);
-      if (/remote/.test(t)) workCounters['Remote'] += 1;
-      else if (/hybrid/.test(t)) workCounters['Hybrid'] += 1;
-      else workCounters['On-site'] += 1;
-    });
-    setWorkingPattern(Object.entries(workCounters).map(([label, count]) => ({ label, count })));
-
-    // Freshness
-    const ages = jobs.map(job => {
-      const d = new Date(job.posted_date);
-      return Math.max(0, Math.round((now.getTime() - d.getTime()) / (1000 * 3600 * 24)));
-    });
-    const agesSorted = [...ages].sort((a, b) => a - b);
-    const medianDays = agesSorted[Math.floor(agesSorted.length / 2)] || 0;
-    const last48h = jobs.filter(job => {
-      const d = new Date(job.posted_date);
-      return (now.getTime() - d.getTime()) <= 48 * 3600 * 1000;
-    }).length;
-    const last7d = jobs.filter(job => {
-      const d = new Date(job.posted_date);
-      return (now.getTime() - d.getTime()) <= 7 * 24 * 3600 * 1000;
-    }).length;
-    setFreshness({
-      last48hPct: Math.round((last48h / jobs.length) * 100),
-      recent7dPct: Math.round((last7d / jobs.length) * 100),
-      medianDays
-    });
-
-    // Top companies list (top 5)
-    const topCompaniesArr = Object.entries(companyCounts)
-      .sort(([, a], [, b]) => (b as number) - (a as number))
-      .slice(0, 5)
-      .map(([name, count]) => ({ name, count: count as number }));
-    setTopCompanies(topCompaniesArr);
-
-    // Set top skills and certs
-    const skillsArr = Object.entries(skillCounts).sort(([, a], [, b]) => (b as number) - (a as number)).slice(0, 6)
-      .map(([name, count]) => ({ name: name.charAt(0).toUpperCase() + name.slice(1), count: count as number }));
-    setTopSkills(skillsArr);
-
-    const certsArr = Object.entries(certCounts).sort(([, a], [, b]) => (b as number) - (a as number)).slice(0, 6)
-      .map(([key, count]) => ({ name: certKeywordsMap[key], count: count as number }));
-    setTopCerts(certsArr);
 
     setInsights(newInsights);
   };
