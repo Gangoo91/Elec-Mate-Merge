@@ -61,8 +61,8 @@ export function MobileInputWrapper({
             placeholder={placeholder}
             disabled={disabled}
             className={cn(
-              "h-14 bg-elec-card border-2 border-elec-gray/50 rounded-xl text-elec-light",
-              "hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200",
+              "h-14 bg-elec-card-light border-2 border-elec-gray/50 rounded-xl text-elec-light",
+              "hover:border-elec-yellow/40 focus:border-elec-yellow focus-visible:ring-2 focus-visible:ring-elec-yellow transition-all duration-200",
               "group-hover:shadow-lg group-hover:shadow-elec-yellow/10",
               "placeholder:text-elec-light/60 text-base font-medium",
               icon ? "pl-12" : "pl-4",
