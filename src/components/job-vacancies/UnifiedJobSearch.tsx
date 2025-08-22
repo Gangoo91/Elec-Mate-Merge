@@ -14,7 +14,9 @@ import {
   Loader2,
   AlertCircle,
   PoundSterling,
-  Zap
+  Zap,
+  RefreshCw,
+  Database
 } from "lucide-react";
 import {
   Select,
@@ -26,34 +28,20 @@ import {
 import { toast } from "@/hooks/use-toast";
 import { formatDistanceToNow } from "date-fns";
 import { LocationService } from "@/services/locationService";
-import { supabase } from "@/integrations/supabase/client";
+import { useUnifiedJobSearch, UnifiedJob } from "@/hooks/job-vacancies/useUnifiedJobSearch";
 import SearchError from "./SearchError";
 import { Skeleton } from "@/components/ui/skeleton";
-interface Job {
-  id: string;
-  title: string;
-  company: string;
-  location: string;
-  salary: string | null;
-  type: string;
-  description: string;
-  external_url: string;
-  posted_date: string;
-  source: string;
-}
-
 const UnifiedJobSearch = () => {
   const [query, setQuery] = useState("electrician");
   const [location, setLocation] = useState("Cumbria");
   const [salaryFilter, setSalaryFilter] = useState("all");
   const [jobTypeFilter, setJobTypeFilter] = useState("all");
   const [experienceFilter, setExperienceFilter] = useState("all");
-  const [jobs, setJobs] = useState<Job[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
   const [locationSuggestions, setLocationSuggestions] = useState<string[]>([]);
   const [showLocationSuggestions, setShowLocationSuggestions] = useState(false);
   const [showFilters, setShowFilters] = useState(false);
+
+  const { jobs, loading, error, searchAllJobs, triggerJobUpdate } = useUnifiedJobSearch();
 
   const salaryRanges = [
     { value: "all", label: "All Salaries" },
@@ -103,7 +91,7 @@ const UnifiedJobSearch = () => {
     setShowFilters(false);
   };
 
-  const getMatchPercentage = (job: Job) => {
+  const getMatchPercentage = (job: UnifiedJob) => {
     let score = 60; // Base score for electrical jobs
     
     const title = job.title.toLowerCase();
@@ -127,7 +115,50 @@ const UnifiedJobSearch = () => {
     if (desc.includes('testing')) score += 3;
     if (desc.includes('bs7671')) score += 8;
     
+    // Fresh job bonus
+    if (job.is_fresh) score += 5;
+    
     return Math.min(Math.max(score + Math.floor(Math.random() * 10), 65), 98);
+  };
+
+  const applyFilters = (allJobs: UnifiedJob[]) => {
+    let filteredJobs = allJobs;
+
+    // Apply salary filter
+    if (salaryFilter !== "all") {
+      filteredJobs = filteredJobs.filter((job: UnifiedJob) => {
+        if (!job.salary) return false;
+        const salaryText = job.salary.toLowerCase();
+        const salaryNumbers = salaryText.match(/[\d,]+/g);
+        if (!salaryNumbers) return false;
+        
+        const salary = parseInt(salaryNumbers[0].replace(/,/g, ''));
+        
+        switch (salaryFilter) {
+          case "0-25000":
+            return salary <= 25000;
+          case "25000-35000":
+            return salary >= 25000 && salary <= 35000;
+          case "35000-45000":
+            return salary >= 35000 && salary <= 45000;
+          case "45000-60000":
+            return salary >= 45000 && salary <= 60000;
+          case "60000+":
+            return salary >= 60000;
+          default:
+            return true;
+        }
+      });
+    }
+
+    // Apply job type filter
+    if (jobTypeFilter !== "all") {
+      filteredJobs = filteredJobs.filter((job: UnifiedJob) => 
+        job.type.toLowerCase().includes(jobTypeFilter)
+      );
+    }
+
+    return filteredJobs;
   };
 
   const handleSearch = async () => {
@@ -165,86 +196,7 @@ const UnifiedJobSearch = () => {
       }
     }
 
-    setLoading(true);
-    setError(null);
-    setJobs([]);
-
-    try {
-      const { data, error } = await supabase.functions.invoke('reed-job-listings', {
-        body: {
-          keywords: searchQuery,
-          location: location.trim() || undefined,
-          page: 1
-        }
-      });
-
-      if (error) {
-        throw new Error(error.message || 'Failed to fetch jobs');
-      }
-
-      if (data?.error) {
-        throw new Error(data.error);
-      }
-
-      let jobResults = data.jobs || [];
-      
-      // Apply client-side location filtering
-      if (location.trim() && location.toLowerCase() !== 'uk') {
-        jobResults = LocationService.filterJobsByLocation(jobResults, location, 100);
-      }
-
-      // Apply salary filter
-      if (salaryFilter !== "all") {
-        jobResults = jobResults.filter((job: Job) => {
-          if (!job.salary) return false;
-          const salaryText = job.salary.toLowerCase();
-          const salaryNumbers = salaryText.match(/[\d,]+/g);
-          if (!salaryNumbers) return false;
-          
-          const salary = parseInt(salaryNumbers[0].replace(/,/g, ''));
-          
-          switch (salaryFilter) {
-            case "0-25000":
-              return salary <= 25000;
-            case "25000-35000":
-              return salary >= 25000 && salary <= 35000;
-            case "35000-45000":
-              return salary >= 35000 && salary <= 45000;
-            case "45000-60000":
-              return salary >= 45000 && salary <= 60000;
-            case "60000+":
-              return salary >= 60000;
-            default:
-              return true;
-          }
-        });
-      }
-
-      // Apply job type filter
-      if (jobTypeFilter !== "all") {
-        jobResults = jobResults.filter((job: Job) => 
-          job.type.toLowerCase().includes(jobTypeFilter)
-        );
-      }
-
-      setJobs(jobResults);
-
-      toast({
-        title: "Search Complete", 
-        description: `Found ${jobResults.length} jobs${searchQuery !== query.trim() ? ` (searched for "${searchQuery}")` : ''}`
-      });
-
-    } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : "Please try again";
-      setError(errorMessage);
-      toast({
-        title: "Search Failed",
-        description: errorMessage,
-        variant: "destructive"
-      });
-    } finally {
-      setLoading(false);
-    }
+    await searchAllJobs(searchQuery, location.trim() || undefined);
   };
 
   const handleApply = (jobId: string, url: string) => {
@@ -255,6 +207,13 @@ const UnifiedJobSearch = () => {
       description: "The job application has opened in a new tab. Good luck!"
     });
   };
+
+  const handleRefreshJobs = () => {
+    triggerJobUpdate();
+  };
+
+  // Apply filters to current jobs
+  const filteredJobs = applyFilters(jobs);
 
   const formatDescription = (description: string) => {
     const strippedDescription = description.replace(/<[^>]*>/g, '');
@@ -359,6 +318,16 @@ const UnifiedJobSearch = () => {
               >
                 <Filter className="h-4 w-4 sm:mr-0" />
                 <span className="ml-2 sm:hidden">Filters</span>
+              </Button>
+
+              <Button
+                variant="outline"
+                onClick={handleRefreshJobs}
+                className="h-11 sm:h-12 border-elec-yellow/30 hover:bg-elec-yellow/10 sm:w-auto flex-shrink-0"
+                title="Refresh job database"
+              >
+                <RefreshCw className="h-4 w-4" />
+                <span className="ml-2 sm:hidden">Refresh</span>
               </Button>
             </div>
           </div>
@@ -473,18 +442,26 @@ const UnifiedJobSearch = () => {
         </div>
       )}
 
-      {/* Results */}
-      {jobs.length > 0 && (
+      {/* Job Results */}
+      {filteredJobs.length > 0 && (
         <div className="space-y-4">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 text-center sm:text-left">
+          <div className="flex items-center justify-between flex-wrap gap-2">
             <h3 className="text-lg font-semibold text-elec-light">
-              {jobs.length} Job{jobs.length !== 1 ? "s" : ""} Found
+              Job Results ({filteredJobs.length} jobs found)
             </h3>
-            <div className="text-sm text-muted-foreground">Sorted by relevance</div>
+            <div className="flex gap-2">
+              <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
+                <Database className="h-3 w-3 mr-1" />
+                {jobs.filter(j => j.source !== 'Reed (Live)').length} Database
+              </Badge>
+              <Badge variant="outline" className="border-green-500/30 text-green-400">
+                <Zap className="h-3 w-3 mr-1" />
+                {jobs.filter(j => j.source === 'Reed (Live)').length} Live
+              </Badge>
+            </div>
           </div>
-
-          <div className="grid gap-4">
-            {jobs.map((job) => {
+          
+          <div className="grid gap-4">{filteredJobs.map((job) => {
               const matchPercentage = getMatchPercentage(job);
               
               return (
@@ -503,11 +480,26 @@ const UnifiedJobSearch = () => {
                             </div>
                           </div>
                           
-                          <div className="flex items-center gap-1.5 sm:gap-2 bg-elec-yellow/10 px-2 sm:px-3 py-1 rounded-full self-center md:self-auto mt-1 md:mt-0 shrink-0">
-                            <Zap className="h-3 w-3 sm:h-4 sm:w-4 text-elec-yellow" />
-                            <span className="text-xs sm:text-sm font-semibold text-elec-yellow">
-                              {matchPercentage}% match
-                            </span>
+                          <div className="flex flex-col sm:flex-row items-center gap-2">
+                            <div className="flex items-center gap-1.5 sm:gap-2 bg-elec-yellow/10 px-2 sm:px-3 py-1 rounded-full">
+                              <Zap className="h-3 w-3 sm:h-4 sm:w-4 text-elec-yellow" />
+                              <span className="text-xs sm:text-sm font-semibold text-elec-yellow">
+                                {matchPercentage}% match
+                              </span>
+                            </div>
+                            {job.source && (
+                              <Badge 
+                                variant="outline" 
+                                className={`text-xs ${
+                                  job.is_fresh 
+                                    ? 'border-green-500/30 text-green-400' 
+                                    : 'border-elec-yellow/30 text-elec-yellow'
+                                }`}
+                              >
+                                {job.is_fresh && <Zap className="h-3 w-3 mr-1" />}
+                                {job.source}
+                              </Badge>
+                            )}
                           </div>
                         </div>
 
@@ -561,7 +553,7 @@ const UnifiedJobSearch = () => {
       )}
 
       {/* Empty State */}
-      {!loading && jobs.length === 0 && query && (
+      {!loading && filteredJobs.length === 0 && query && (
         <Card className="border-elec-yellow/20 bg-elec-card">
           <CardContent className="text-center py-12">
             <AlertCircle className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
