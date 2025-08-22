@@ -37,24 +37,24 @@ const CVBuilderBox = () => {
       
       {/* Features grid */}
       <div className="grid grid-cols-2 gap-3 sm:gap-4 mb-4 max-w-lg mx-auto">
-        <div className="flex items-center space-x-2">
-          <Wand2 className="h-4 w-4 text-elec-yellow flex-shrink-0" />
-          <span className="text-xs text-muted-foreground">Smart CV Wizard</span>
+        <div className="flex items-start space-x-2">
+          <Wand2 className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
+          <span className="text-xs text-muted-foreground text-left">Smart CV Wizard</span>
         </div>
         
-        <div className="flex items-center space-x-2">
-          <Sparkles className="h-4 w-4 text-elec-yellow flex-shrink-0" />
-          <span className="text-xs text-muted-foreground">AI Content Generation</span>
+        <div className="flex items-start space-x-2">
+          <Sparkles className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
+          <span className="text-xs text-muted-foreground text-left">AI Content Generation</span>
         </div>
         
-        <div className="flex items-center space-x-2">
-          <FileText className="h-4 w-4 text-elec-yellow flex-shrink-0" />
-          <span className="text-xs text-muted-foreground">Industry Templates</span>
+        <div className="flex items-start space-x-2">
+          <FileText className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
+          <span className="text-xs text-muted-foreground text-left">Industry Templates</span>
         </div>
         
-        <div className="flex items-center space-x-2">
-          <FileText className="h-4 w-4 text-elec-yellow flex-shrink-0" />
-          <span className="text-xs text-muted-foreground">PDF Export</span>
+        <div className="flex items-start space-x-2">
+          <FileText className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
+          <span className="text-xs text-muted-foreground text-left">PDF Export</span>
         </div>
       </div>
       
