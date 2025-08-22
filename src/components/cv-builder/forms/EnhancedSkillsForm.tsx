@@ -52,22 +52,6 @@ export const EnhancedSkillsForm: React.FC<EnhancedSkillsFormProps> = ({ cvData, 
     });
   };
 
-  const handleAISkills = (content: string | string[]) => {
-    if (Array.isArray(content)) {
-      const newSkills = content.filter(skill => !cvData.skills.includes(skill));
-      onChange({
-        ...cvData,
-        skills: [...cvData.skills, ...newSkills]
-      });
-    }
-  };
-
-  const getAIContext = () => ({
-    jobTitle: cvData.experience[0]?.jobTitle || 'Electrician',
-    experience: cvData.experience.length > 0 ? `${cvData.experience.length} roles` : 'Entry level',
-    skills: cvData.skills
-  });
-
   const suggestedSkills = [
     "Electrical Installation", "Wiring", "Testing & Inspection", "PAT Testing",
     "Circuit Design", "Fault Finding", "Health & Safety", "BS 7671 Regulations",
@@ -82,15 +66,34 @@ export const EnhancedSkillsForm: React.FC<EnhancedSkillsFormProps> = ({ cvData, 
     "City & Guilds 2365", "AM2 Assessment", "Level 2 Electrical Installation"
   ];
 
+  const handleAISkillsContent = (content: string | string[]) => {
+    if (Array.isArray(content)) {
+      const newSkills = content.filter(skill => !cvData.skills.includes(skill));
+      onChange({
+        ...cvData,
+        skills: [...cvData.skills, ...newSkills]
+      });
+    }
+  };
+
+  const getAIContext = () => ({
+    jobTitle: cvData.experience[0]?.jobTitle || 'Electrician',
+    experience: cvData.experience.length > 0 ? `${cvData.experience.length} roles` : 'Entry level',
+    currentSkills: cvData.skills,
+    targetRole: cvData.experience[0]?.jobTitle || 'Electrician'
+  });
+
   return (
     <div className="space-y-6">
+      <div className="flex items-center gap-2 mb-6">
+        <Sparkles className="h-5 w-5 text-elec-yellow" />
+        <h3 className="text-lg font-semibold text-white">Skills & Certifications</h3>
+      </div>
+
       {/* Skills Section */}
       <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader>
-          <CardTitle className="text-white flex items-center gap-2">
-            <Sparkles className="h-5 w-5 text-elec-yellow" />
-            Skills
-          </CardTitle>
+          <CardTitle className="text-white">Skills</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="flex gap-2">
@@ -99,7 +102,7 @@ export const EnhancedSkillsForm: React.FC<EnhancedSkillsFormProps> = ({ cvData, 
               onChange={(e) => setNewSkill(e.target.value)}
               onKeyPress={(e) => e.key === 'Enter' && addSkill()}
               placeholder="Add a skill..."
-              className="bg-elec-dark border-elec-yellow/20 text-white min-h-[48px] mt-2"
+              className="bg-card border-elec-yellow/20 text-white min-h-[48px]"
             />
             <Button
               onClick={addSkill}
@@ -107,6 +110,15 @@ export const EnhancedSkillsForm: React.FC<EnhancedSkillsFormProps> = ({ cvData, 
             >
               <Plus className="h-4 w-4" />
             </Button>
+          </div>
+
+          <div className="space-y-4">
+            <SmartContentAssistant
+              type="skills"
+              context={getAIContext()}
+              onContentGenerated={handleAISkillsContent}
+              currentContent={cvData.skills.join(', ')}
+            />
           </div>
 
           {cvData.skills.length > 0 && (
@@ -130,12 +142,6 @@ export const EnhancedSkillsForm: React.FC<EnhancedSkillsFormProps> = ({ cvData, 
               ))}
             </div>
           )}
-
-          <SmartContentAssistant
-            type="skills"
-            context={getAIContext()}
-            onContentGenerated={handleAISkills}
-          />
 
           <div>
             <Label className="text-white text-sm">Suggested Skills:</Label>
@@ -167,10 +173,7 @@ export const EnhancedSkillsForm: React.FC<EnhancedSkillsFormProps> = ({ cvData, 
       {/* Certifications Section */}
       <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader>
-          <CardTitle className="text-white flex items-center gap-2">
-            <Sparkles className="h-5 w-5 text-elec-yellow" />
-            Certifications & Qualifications
-          </CardTitle>
+          <CardTitle className="text-white">Certifications & Qualifications</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="flex gap-2">
@@ -179,7 +182,7 @@ export const EnhancedSkillsForm: React.FC<EnhancedSkillsFormProps> = ({ cvData, 
               onChange={(e) => setNewCertification(e.target.value)}
               onKeyPress={(e) => e.key === 'Enter' && addCertification()}
               placeholder="Add a certification..."
-              className="bg-elec-dark border-elec-yellow/20 text-white min-h-[48px] mt-2"
+              className="bg-card border-elec-yellow/20 text-white min-h-[48px]"
             />
             <Button
               onClick={addCertification}
