@@ -37,23 +37,23 @@ const CVBuilderBox = () => {
       
       {/* Features grid */}
       <div className="grid grid-cols-2 gap-2 mb-4 max-w-lg mx-auto">
-        <div className="flex items-center space-x-3">
-          <Wand2 className="h-5 w-5 text-elec-yellow flex-shrink-0" />
+        <div className="flex items-center space-x-2">
+          <Wand2 className="h-4 w-4 text-elec-yellow flex-shrink-0" />
           <span className="text-xs text-muted-foreground">Smart CV Wizard</span>
         </div>
         
-        <div className="flex items-center space-x-3">
-          <Sparkles className="h-5 w-5 text-elec-yellow flex-shrink-0" />
+        <div className="flex items-center space-x-2">
+          <Sparkles className="h-4 w-4 text-elec-yellow flex-shrink-0" />
           <span className="text-xs text-muted-foreground">AI Content Generation</span>
         </div>
         
-        <div className="flex items-center space-x-3">
-          <FileText className="h-5 w-5 text-elec-yellow flex-shrink-0" />
+        <div className="flex items-center space-x-2">
+          <FileText className="h-4 w-4 text-elec-yellow flex-shrink-0" />
           <span className="text-xs text-muted-foreground">Industry Templates</span>
         </div>
         
-        <div className="flex items-center space-x-3">
-          <FileText className="h-5 w-5 text-elec-yellow flex-shrink-0" />
+        <div className="flex items-center space-x-2">
+          <FileText className="h-4 w-4 text-elec-yellow flex-shrink-0" />
           <span className="text-xs text-muted-foreground">PDF Export</span>
         </div>
       </div>
