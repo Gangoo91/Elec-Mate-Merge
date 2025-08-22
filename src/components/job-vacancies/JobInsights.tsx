@@ -69,9 +69,14 @@ const JobInsights: React.FC<JobInsightsProps> = ({ jobs, location }) => {
     return () => window.removeEventListener('resize', check);
   }, []);
 
-  // Update state when live data changes
+  // Update state and generate insights when live data changes
   useEffect(() => {
     if (liveData) {
+      console.log('🔥 Live data updated:', { 
+        salaryCount: liveData.salaryStats.count,
+        topCompany: liveData.topCompanies[0]?.name,
+        totalJobs: liveData.jobTypeMix.reduce((sum, type) => sum + type.count, 0)
+      });
       setSalaryStats(liveData.salaryStats);
       setSalaryBuckets(liveData.salaryBuckets);
       setJobTypeMix(liveData.jobTypeMix);
@@ -81,93 +86,130 @@ const JobInsights: React.FC<JobInsightsProps> = ({ jobs, location }) => {
       setTopCompanies(liveData.topCompanies);
       setTopSkills(liveData.topSkills);
       setTopCerts(liveData.topCerts);
+      
+      // Generate insights using live data immediately
+      generateInsightsWithLiveData(liveData);
     } else {
+      console.log('📊 Using local computation fallback');
       // Fallback to local computation when no live data
       generateInsights();
     }
   }, [liveData, jobs, location]);
 
-  const generateInsights = () => {
+  // Generate insights specifically using live market data
+  const generateInsightsWithLiveData = (marketData: any) => {
+    console.log('🎯 Generating insights with live data:', { salaryCount: marketData.salaryStats.count });
     const newInsights: JobInsight[] = [];
 
-    // Use live data when available, otherwise fallback to local computation
-    if (liveData && salaryStats.count > 0) {
-      // Average Salary from live data
+    // Average Salary from live data
+    if (marketData.salaryStats.count > 0) {
       newInsights.push({
         id: 'avg-salary',
         type: 'salary',
         title: 'Average Salary',
-        description: `Based on ${salaryStats.count} market jobs`,
-        value: `£${salaryStats.median.toLocaleString()}`,
+        description: `Based on ${marketData.salaryStats.count} market jobs`,
+        value: `£${marketData.salaryStats.median.toLocaleString()}`,
         icon: <TrendingUp className="h-4 w-4" />,
         color: 'text-green-400'
       });
+    }
 
-      // Most Active Employer from live data
-      if (topCompanies.length > 0) {
-        newInsights.push({
-          id: 'top-company',
-          type: 'trend',
-          title: 'Most Active Employer',
-          description: `${topCompanies[0].count} job postings`,
-          value: topCompanies[0].name,
-          icon: <Building2 className="h-4 w-4" />,
-          color: 'text-elec-yellow'
-        });
-      }
-
-      // Most Common Type from live data
-      if (jobTypeMix.length > 0) {
-        const totalJobs = jobTypeMix.reduce((sum, type) => sum + type.count, 0);
-        const percentage = Math.round((jobTypeMix[0].count / totalJobs) * 100);
-        newInsights.push({
-          id: 'job-type',
-          type: 'trend',
-          title: 'Most Common Type',
-          description: `${percentage}% of market jobs`,
-          value: jobTypeMix[0].label,
-          icon: <Target className="h-4 w-4" />,
-          color: 'text-blue-400'
-        });
-      }
-
-      // Market Activity from live data
-      if (freshness.recent7dPct > 0) {
-        newInsights.push({
-          id: 'recent-activity',
-          type: 'timing',
-          title: 'Market Activity',
-          description: `${freshness.recent7dPct}% posted this week`,
-          value: `Fresh opportunities`,
-          icon: <Clock className="h-4 w-4" />,
-          color: 'text-purple-400'
-        });
-      }
-
-      // Top Skills from live data
-      if (topSkills.length > 0) {
-        newInsights.push({
-          id: 'top-skill',
-          type: 'skill',
-          title: 'Top Skill in Demand',
-          description: `${topSkills[0].count} job postings`,
-          value: topSkills[0].name,
-          icon: <Award className="h-4 w-4" />,
-          color: 'text-pink-400'
-        });
-      }
-
-      // Data Freshness indicator
+    // Most Active Employer from live data
+    if (marketData.topCompanies.length > 0) {
       newInsights.push({
-        id: 'data-freshness',
-        type: 'timing',
-        title: 'Data Freshness',
-        description: 'Market data recency',
-        value: `${freshness.medianDays} days median age`,
-        icon: <Zap className="h-4 w-4" />,
-        color: 'text-cyan-400'
+        id: 'top-company',
+        type: 'trend',
+        title: 'Most Active Employer',
+        description: `${marketData.topCompanies[0].count} job postings`,
+        value: marketData.topCompanies[0].name,
+        icon: <Building2 className="h-4 w-4" />,
+        color: 'text-elec-yellow'
       });
-    } else if (jobs.length > 0) {
+    }
+
+    // Most Common Type from live data
+    if (marketData.jobTypeMix.length > 0) {
+      const totalJobs = marketData.jobTypeMix.reduce((sum: any, type: any) => sum + type.count, 0);
+      const percentage = Math.round((marketData.jobTypeMix[0].count / totalJobs) * 100);
+      newInsights.push({
+        id: 'job-type',
+        type: 'trend',
+        title: 'Most Common Type',
+        description: `${percentage}% of market jobs`,
+        value: marketData.jobTypeMix[0].label,
+        icon: <Target className="h-4 w-4" />,
+        color: 'text-blue-400'
+      });
+    }
+
+    // Market Activity from live data
+    if (marketData.freshness.recent7dPct > 0) {
+      newInsights.push({
+        id: 'recent-activity',
+        type: 'timing',
+        title: 'Market Activity',
+        description: `${marketData.freshness.recent7dPct}% posted this week`,
+        value: `Fresh opportunities`,
+        icon: <Clock className="h-4 w-4" />,
+        color: 'text-purple-400'
+      });
+    }
+
+    // Top Skills from live data
+    if (marketData.topSkills.length > 0) {
+      newInsights.push({
+        id: 'top-skill',
+        type: 'skill',
+        title: 'Top Skill in Demand',
+        description: `${marketData.topSkills[0].count} job postings`,
+        value: marketData.topSkills[0].name,
+        icon: <Award className="h-4 w-4" />,
+        color: 'text-pink-400'
+      });
+    }
+
+    // Data Freshness indicator
+    newInsights.push({
+      id: 'data-freshness',
+      type: 'timing',
+      title: 'Data Freshness',
+      description: 'Market data recency',
+      value: `${marketData.freshness.medianDays} days median age`,
+      icon: <Zap className="h-4 w-4" />,
+      color: 'text-cyan-400'
+    });
+
+    // Location Hotspots (always from local jobs as this is search-specific)
+    if (jobs.length > 0) {
+      const locationCounts = jobs.reduce((acc: Record<string, number>, job) => {
+        const loc = job.location || 'Unknown';
+        acc[loc] = (acc[loc] || 0) + 1;
+        return acc;
+      }, {} as Record<string, number>);
+
+      const topLocation = Object.entries(locationCounts)
+        .sort(([, a], [, b]) => (b as number) - (a as number))[0];
+
+      if (topLocation && topLocation[0] !== 'Unknown') {
+        newInsights.push({
+          id: 'hot-location',
+          type: 'hotspot',
+          title: 'Job Hotspot',
+          description: `${topLocation[1]} opportunities`,
+          value: topLocation[0],
+          icon: <MapPin className="h-4 w-4" />,
+          color: 'text-orange-400'
+        });
+      }
+    }
+
+    setInsights(newInsights);
+  };
+
+  const generateInsights = () => {
+    const newInsights: JobInsight[] = [];
+
+    if (jobs.length > 0) {
       // Fallback to local computation for jobs data
       
       // Salary Analysis (basic average for insight card)
