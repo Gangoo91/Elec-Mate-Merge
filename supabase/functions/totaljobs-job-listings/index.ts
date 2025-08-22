@@ -12,14 +12,12 @@ serve(async (req) => {
     
     console.log(`Fetching TotalJobs for: ${keywords} in ${location}`);
     
-    // Build TotalJobs search URL
-    const searchUrl = new URL('https://www.totaljobs.com/jobs');
-    searchUrl.searchParams.set('q', keywords || 'electrician');
-    searchUrl.searchParams.set('l', location);
-    searchUrl.searchParams.set('radius', '25');
-    searchUrl.searchParams.set('s', 'header');
+    // Build TotalJobs search URL with path-based format
+    const encodedKeywords = encodeURIComponent(keywords || 'electrician').replace(/%20/g, '-');
+    const encodedLocation = encodeURIComponent(location).replace(/%20/g, '-');
+    const searchUrl = `https://www.totaljobs.com/jobs/${encodedKeywords}/in-${encodedLocation}?radius=10`;
     
-    console.log(`TotalJobs URL: ${searchUrl.toString()}`);
+    console.log(`TotalJobs URL: ${searchUrl}`);
 
     // Use Firecrawl API for structured data extraction
     const firecrawlApiKey = Deno.env.get('FIRECRAWL_API_KEY');
@@ -34,7 +32,7 @@ serve(async (req) => {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        url: searchUrl.toString(),
+        url: searchUrl,
         onlyMainContent: true,
         maxAge: 172800000,
         formats: [{
