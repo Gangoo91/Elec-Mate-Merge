@@ -19,7 +19,7 @@ const CVBuilderBox = () => {
       </div>
       
       {/* Main title */}
-      <h1 className="text-[1.5rem] font-bold text-foreground text-center mb-4">
+      <h1 className="text-[1.5rem] font-bold text-foreground text-center mb-2">
         AI-Powered CV Builder
       </h1>
       
