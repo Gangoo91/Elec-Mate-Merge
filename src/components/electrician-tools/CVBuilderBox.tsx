@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -29,7 +30,7 @@ const CVBuilderBox = () => {
       </p>
       
       {/* Description paragraph */}
-      <p className="text-base text-foreground text-center mb-4 max-w-3xl mx-auto leading-relaxed">
+      <p className="text-sm text-foreground text-center mb-4 max-w-3xl mx-auto leading-relaxed">
         Create a professional CV tailored to electrical job applications with our AI-powered tool. Get 
         intelligent content suggestions, industry-specific templates, and automated content 
         generation.
