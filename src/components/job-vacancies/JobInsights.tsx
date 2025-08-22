@@ -12,11 +12,13 @@ import {
   Users,
   Target,
   Zap,
-  Building2
+  Building2,
+  Wifi,
+  WifiOff,
+  RefreshCw
 } from "lucide-react";
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid } from "recharts";
-import { toast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
+import { useLiveMarketInsights } from "@/hooks/useLiveMarketInsights";
 
 interface JobInsight {
   id: string;
@@ -36,6 +38,20 @@ interface JobInsightsProps {
 
 const JobInsights: React.FC<JobInsightsProps> = ({ jobs, location }) => {
   const [insights, setInsights] = useState<JobInsight[]>([]);
+  const [isMobile, setIsMobile] = useState(false);
+  
+  // Use live market insights hook
+  const {
+    data: liveData,
+    isLoading: isLiveLoading,
+    isLive,
+    lastUpdated,
+    refreshLive,
+    getDataAge,
+    isDataFresh
+  } = useLiveMarketInsights('electrician', location || 'UK');
+
+  // Local state for live data or fallback to computed data
   const [salaryStats, setSalaryStats] = useState({ median: 0, q1: 0, q3: 0, min: 0, max: 0, count: 0 });
   const [salaryBuckets, setSalaryBuckets] = useState<{ label: string; count: number }[]>([]);
   const [jobTypeMix, setJobTypeMix] = useState<{ label: string; count: number }[]>([]);
@@ -45,8 +61,6 @@ const JobInsights: React.FC<JobInsightsProps> = ({ jobs, location }) => {
   const [topCompanies, setTopCompanies] = useState<{ name: string; count: number }[]>([]);
   const [topSkills, setTopSkills] = useState<{ name: string; count: number }[]>([]);
   const [topCerts, setTopCerts] = useState<{ name: string; count: number }[]>([]);
-  const [isLiveLoading, setIsLiveLoading] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 400);
@@ -55,9 +69,23 @@ const JobInsights: React.FC<JobInsightsProps> = ({ jobs, location }) => {
     return () => window.removeEventListener('resize', check);
   }, []);
 
+  // Update state when live data changes
   useEffect(() => {
-    generateInsights();
-  }, [jobs, location]);
+    if (liveData) {
+      setSalaryStats(liveData.salaryStats);
+      setSalaryBuckets(liveData.salaryBuckets);
+      setJobTypeMix(liveData.jobTypeMix);
+      setExperienceMix(liveData.experienceMix);
+      setWorkingPattern(liveData.workingPattern);
+      setFreshness(liveData.freshness);
+      setTopCompanies(liveData.topCompanies);
+      setTopSkills(liveData.topSkills);
+      setTopCerts(liveData.topCerts);
+    } else {
+      // Fallback to local computation when no live data
+      generateInsights();
+    }
+  }, [liveData, jobs, location]);
 
   const generateInsights = () => {
     if (!jobs.length) return;
@@ -320,39 +348,45 @@ const JobInsights: React.FC<JobInsightsProps> = ({ jobs, location }) => {
         <div className="flex items-center gap-2">
           <BarChart3 className="h-5 w-5 text-elec-yellow" />
           <h3 className="text-lg font-semibold text-elec-light">Market Insights</h3>
-          <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
-            {jobs.length} jobs analysed
+          <Badge 
+            variant="outline" 
+            className={`border-elec-yellow/30 ${isLive ? 'text-green-400 border-green-400/30' : 'text-elec-yellow'}`}
+          >
+            {isLive ? (
+              <div className="flex items-center gap-1">
+                <Wifi className="h-3 w-3" />
+                Live ({liveData?.jobsCount || jobs.length} jobs)
+              </div>
+            ) : (
+              <div className="flex items-center gap-1">
+                <WifiOff className="h-3 w-3" />
+                Local ({jobs.length} jobs)
+              </div>
+            )}
           </Badge>
+          {lastUpdated && (
+            <Badge variant="outline" className="border-muted text-muted-foreground text-xs">
+              {getDataAge()}
+            </Badge>
+          )}
         </div>
-        <Button size="sm" variant="outline" onClick={async () => {
-          setIsLiveLoading(true);
-          try {
-            const { data, error } = await supabase.functions.invoke('market-insights', {
-              body: { keywords: 'electrician', location: location || 'UK' }
-            });
-            if (error) throw new Error(error.message || 'Failed to fetch');
-            if (data?.error) throw new Error(data.error);
-            if (data) {
-              setSalaryStats(data.salaryStats || salaryStats);
-              setSalaryBuckets(data.salaryBuckets || []);
-              setJobTypeMix(data.jobTypeMix || []);
-              setExperienceMix(data.experienceMix || []);
-              setWorkingPattern(data.workingPattern || []);
-              setFreshness(data.freshness || freshness);
-              setTopCompanies(data.topCompanies || []);
-              setTopSkills(data.topSkills || []);
-              setTopCerts(data.topCerts || []);
-              toast({ title: 'Live insights updated' });
-            }
-          } catch (e) {
-            const msg = e instanceof Error ? e.message : 'Please try again';
-            toast({ title: 'Live update failed', description: msg, variant: 'destructive' });
-          } finally {
-            setIsLiveLoading(false);
-          }
-        }} className="border-elec-yellow/30 hover:bg-elec-yellow/10 self-start" disabled={isLiveLoading}>
-          {isLiveLoading ? 'Refreshing…' : 'Live data'}
-        </Button>
+        <div className="flex items-center gap-2">
+          {isLive && !isDataFresh() && (
+            <Badge variant="outline" className="border-amber-400/30 text-amber-400 text-xs">
+              Data may be stale
+            </Badge>
+          )}
+          <Button 
+            size="sm" 
+            variant="outline" 
+            onClick={refreshLive}
+            className="border-elec-yellow/30 hover:bg-elec-yellow/10 self-start" 
+            disabled={isLiveLoading}
+          >
+            <RefreshCw className={`h-3 w-3 mr-1 ${isLiveLoading ? 'animate-spin' : ''}`} />
+            {isLiveLoading ? 'Updating…' : 'Refresh'}
+          </Button>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">

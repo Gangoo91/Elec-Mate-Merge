@@ -36,3 +36,6 @@ verify_jwt = false
 
 [functions.schedule-news-updates]
 verify_jwt = false
+
+[functions.market-insights-scheduler]
+verify_jwt = false

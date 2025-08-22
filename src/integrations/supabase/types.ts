@@ -833,6 +833,39 @@ export type Database = {
         }
         Relationships: []
       }
+      market_insights_cache: {
+        Row: {
+          created_at: string
+          data: Json
+          data_source: string
+          expires_at: string
+          id: string
+          keywords: string
+          last_updated: string
+          location: string
+        }
+        Insert: {
+          created_at?: string
+          data: Json
+          data_source?: string
+          expires_at?: string
+          id?: string
+          keywords: string
+          last_updated?: string
+          location: string
+        }
+        Update: {
+          created_at?: string
+          data?: Json
+          data_source?: string
+          expires_at?: string
+          id?: string
+          keywords?: string
+          last_updated?: string
+          location?: string
+        }
+        Relationships: []
+      }
       mentor_connections: {
         Row: {
           apprentice_id: string
