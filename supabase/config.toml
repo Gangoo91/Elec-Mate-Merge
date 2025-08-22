@@ -39,3 +39,21 @@ verify_jwt = false
 
 [functions.market-insights-scheduler]
 verify_jwt = false
+
+[functions.reed-job-listings]
+verify_jwt = false
+
+[functions.indeed-job-listings]
+verify_jwt = false
+
+[functions.totaljobs-job-listings]
+verify_jwt = false
+
+[functions.cvlibrary-job-listings]
+verify_jwt = false
+
+[functions.jobscouk-job-listings]
+verify_jwt = false
+
+[functions.live-job-aggregator]
+verify_jwt = false

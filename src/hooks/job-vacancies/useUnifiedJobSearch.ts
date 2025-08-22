@@ -53,9 +53,9 @@ export const useUnifiedJobSearch = () => {
     }
   };
 
-  const searchReedJobs = async (keywords: string, location?: string) => {
+  const searchLiveJobs = async (keywords: string, location?: string) => {
     try {
-      const { data, error } = await supabase.functions.invoke('reed-job-listings', {
+      const { data, error } = await supabase.functions.invoke('live-job-aggregator', {
         body: {
           keywords: keywords.trim(),
           location: location?.trim() || undefined,
@@ -66,14 +66,21 @@ export const useUnifiedJobSearch = () => {
       if (error) throw error;
       if (data?.error) throw new Error(data.error);
 
-      return data.jobs?.map((job: any) => ({
-        ...job,
-        source: 'Reed (Live)',
-        is_fresh: true
-      })) || [];
+      return {
+        jobs: data.jobs?.map((job: any) => ({
+          ...job,
+          is_fresh: true
+        })) || [],
+        summary: data.summary,
+        sourceResults: data.sourceResults
+      };
     } catch (error) {
-      console.error('Error searching Reed jobs:', error);
-      return [];
+      console.error('Error searching live jobs:', error);
+      return {
+        jobs: [],
+        summary: null,
+        sourceResults: []
+      };
     }
   };
 
@@ -124,40 +131,22 @@ export const useUnifiedJobSearch = () => {
     setJobs([]);
 
     try {
-      // Step 1: Search database jobs
-      const dbJobs = await searchDatabaseJobs(keywords, location);
-      
-      // Step 2: Check if database is stale and trigger update if needed
-      if (isDatabaseStale(dbJobs)) {
-        triggerJobUpdate();
-      }
+      // Search all job sources live via aggregator
+      const { jobs: liveJobs, summary, sourceResults } = await searchLiveJobs(keywords, location);
 
-      // Step 3: Search Reed API for real-time jobs
-      const reedJobs = await searchReedJobs(keywords, location);
-
-      // Step 4: Combine and deduplicate
-      const allJobs = [...dbJobs, ...reedJobs];
-      const uniqueJobs = removeDuplicates(allJobs);
-
-      // Step 5: Sort by freshness and relevance
-      uniqueJobs.sort((a, b) => {
-        // Fresh jobs first
-        if (a.is_fresh && !b.is_fresh) return -1;
-        if (!a.is_fresh && b.is_fresh) return 1;
-        
-        // Then by posted date
+      // Sort by posted date (newest first)
+      liveJobs.sort((a, b) => {
         return new Date(b.posted_date).getTime() - new Date(a.posted_date).getTime();
       });
 
-      setJobs(uniqueJobs);
+      setJobs(liveJobs);
 
-      const dbCount = dbJobs.length;
-      const reedCount = reedJobs.length;
-      const totalCount = uniqueJobs.length;
+      const successfulSources = sourceResults?.filter(s => s.success).length || 0;
+      const totalSources = sourceResults?.length || 0;
 
       toast({
-        title: "Search Complete",
-        description: `Found ${totalCount} jobs (${dbCount} from database, ${reedCount} live from Reed)`
+        title: "Live Search Complete",
+        description: `Found ${liveJobs.length} jobs from ${successfulSources}/${totalSources} sources: ${sourceResults?.filter(s => s.success).map(s => s.source).join(', ') || 'Reed, Indeed, TotalJobs, CV Library, Jobs.co.uk'}`
       });
 
     } catch (error) {
