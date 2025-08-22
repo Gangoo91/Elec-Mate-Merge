@@ -16,7 +16,7 @@ const CVBuilderBox = () => {
       {/* Top icons */}
       <div className="flex justify-between mb-8">
         <FileText className="h-6 w-6 text-elec-yellow" />
-        <Star className="h-4 w-4 text-elec-yellow" />
+        <Star className="h-4 w-4 text-elec-yellow flex-shrink-0" />
       </div>
       
       {/* Main title */}
