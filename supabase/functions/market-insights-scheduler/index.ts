@@ -185,8 +185,8 @@ const updateMarketInsights = async (keywords: string, location: string) => {
       return false;
     }
 
-    if (!aggregatorResult.success || !aggregatorResult.jobs || aggregatorResult.jobs.length === 0) {
-      console.error('No jobs found from live aggregator');
+    if (!aggregatorResult || !aggregatorResult.jobs || aggregatorResult.jobs.length === 0) {
+      console.error('No jobs found from live aggregator', { aggregatorResult: aggregatorResult });
       return false;
     }
 
