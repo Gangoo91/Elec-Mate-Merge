@@ -99,7 +99,7 @@ export const EnhancedSkillsForm: React.FC<EnhancedSkillsFormProps> = ({ cvData, 
               onChange={(e) => setNewSkill(e.target.value)}
               onKeyPress={(e) => e.key === 'Enter' && addSkill()}
               placeholder="Add a skill..."
-              className="bg-elec-dark border-elec-yellow/20 text-white min-h-[48px] mt-2"
+              className="bg-elec-dark border-elec-yellow/20 text-white"
             />
             <Button
               onClick={addSkill}
@@ -179,7 +179,7 @@ export const EnhancedSkillsForm: React.FC<EnhancedSkillsFormProps> = ({ cvData, 
               onChange={(e) => setNewCertification(e.target.value)}
               onKeyPress={(e) => e.key === 'Enter' && addCertification()}
               placeholder="Add a certification..."
-              className="bg-elec-dark border-elec-yellow/20 text-white min-h-[48px] mt-2"
+              className="bg-elec-dark border-elec-yellow/20 text-white"
             />
             <Button
               onClick={addCertification}
