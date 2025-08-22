@@ -174,41 +174,34 @@ const updateMarketInsights = async (keywords: string, location: string) => {
 
   console.log(`Updating market insights for: ${keywords} in ${location}`);
 
-  const adzunaId = Deno.env.get('ADZUNA_APP_ID');
-  const adzunaKey = Deno.env.get('ADZUNA_APP_KEY');
-  const reedKey = Deno.env.get('REED_API_KEY');
-
-  if (!adzunaId || !adzunaKey || !reedKey) {
-    console.error('Missing API credentials');
-    return false;
-  }
-
   try {
-    // Fetch from APIs
-    const adzunaUrl = `https://api.adzuna.com/v1/api/jobs/gb/search/1?app_id=${adzunaId}&app_key=${adzunaKey}&results_per_page=50&what=${encodeURIComponent(keywords)}&where=${encodeURIComponent(location)}`;
-    
-    const adzunaPromise = fetch(adzunaUrl)
-      .then(r => r.json())
-      .then(parseAdzuna)
-      .catch(e => { console.error('Adzuna error:', e); return []; });
+    // Use the live job aggregator to get jobs from all 5 sources
+    const { data: aggregatorResult, error: aggregatorError } = await supabase.functions.invoke('live-job-aggregator', {
+      body: { keywords, location, page: 1 }
+    });
 
-    const reedPromise = (async () => {
-      const url = `https://www.reed.co.uk/api/1.0/search?keywords=${encodeURIComponent(keywords)}&locationName=${encodeURIComponent(location)}`;
-      const auth = btoa(`${reedKey}:`);
-      const res = await fetch(url, { headers: { Authorization: `Basic ${auth}` } });
-      if (!res.ok) return [];
-      return parseReed(await res.json());
-    })().catch(e => { console.error('Reed error:', e); return []; });
-
-    const [adzuna, reed] = await Promise.all([adzunaPromise, reedPromise]);
-    const jobs = [...adzuna, ...reed];
-
-    if (jobs.length === 0) {
-      console.error('No jobs found from either API');
+    if (aggregatorError) {
+      console.error('Live job aggregator error:', aggregatorError);
       return false;
     }
 
-    console.log(`Found ${jobs.length} jobs (Adzuna: ${adzuna.length}, Reed: ${reed.length})`);
+    if (!aggregatorResult.success || !aggregatorResult.jobs || aggregatorResult.jobs.length === 0) {
+      console.error('No jobs found from live aggregator');
+      return false;
+    }
+
+    // Convert aggregated jobs to UnifiedJob format for metrics calculation
+    const jobs: UnifiedJob[] = aggregatorResult.jobs.map((job: any) => ({
+      title: job.title || '',
+      company: job.company || '',
+      location: job.location || '',
+      salary: job.salary || null,
+      type: job.type || job.employmentType || '',
+      description: job.description || job.jobDescription || '',
+      posted_date: job.posted_date || job.postedDate || new Date().toISOString(),
+    }));
+
+    console.log(`Found ${jobs.length} jobs from live aggregator (${aggregatorResult.summary?.sourceCounts ? Object.entries(aggregatorResult.summary.sourceCounts).map(([source, count]) => `${source}: ${count}`).join(', ') : 'all sources'})`);
 
     // Compute metrics
     const metrics = computeMetrics(jobs);
@@ -220,7 +213,7 @@ const updateMarketInsights = async (keywords: string, location: string) => {
         keywords,
         location,
         data: metrics,
-        data_source: 'live_api',
+        data_source: 'live_aggregator_5_sources',
         last_updated: new Date().toISOString(),
         expires_at: new Date(Date.now() + 30 * 60 * 1000).toISOString() // 30 minutes
       }, {
