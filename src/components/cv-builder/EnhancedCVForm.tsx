@@ -117,13 +117,7 @@ export const EnhancedCVForm: React.FC<EnhancedCVFormProps> = ({ cvData, onChange
       </div>
 
       {/* Tab Content */}
-      <div className="bg-elec-gray p-4 sm:p-6 rounded-xl">
-        <div className="mb-4 sm:mb-6">
-          <h3 className="text-base sm:text-lg font-semibold text-elec-light mb-1 sm:mb-2">
-            {formTabs.find(tab => tab.id === activeTab)?.title}
-          </h3>
-        </div>
-        
+      <div className="bg-elec-gray p-0 rounded-xl">
         {renderTabContent()}
       </div>
     </div>

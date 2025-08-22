@@ -39,99 +39,92 @@ export const EnhancedPersonalInfoForm: React.FC<EnhancedPersonalInfoFormProps> =
 
   return (
     <div className="space-y-6">
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardHeader>
-          <CardTitle className="text-white flex items-center gap-2">
-            <Sparkles className="h-5 w-5 text-elec-yellow" />
-            Personal Information
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-6">
+      <div>
+        <h3 className="text-lg font-semibold text-elec-light mb-6 flex items-center gap-2">
+          <Sparkles className="h-5 w-5 text-elec-yellow" />
+          Personal Information
+        </h3>
+        
+        <div className="space-y-6">
           <div className="space-y-3">
-            <label className="text-sm font-semibold text-elec-light flex items-center gap-2">
-              <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
+            <label className="text-sm font-semibold text-elec-light">
               Full Name *
             </label>
             <input
               type="text"
               value={cvData.personalInfo.fullName}
               onChange={(e) => updatePersonalInfo('fullName', e.target.value)}
-              className="w-full h-12 bg-elec-card border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200 placeholder:text-elec-light/60 text-base font-medium px-4"
+              className="flex min-h-[48px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 mt-2"
               placeholder="Enter your full name"
             />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-3">
-              <label className="text-sm font-semibold text-elec-light flex items-center gap-2">
-                <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
+              <label className="text-sm font-semibold text-elec-light">
                 Email Address *
               </label>
-              <input
-                type="email"
-                value={cvData.personalInfo.email}
-                onChange={(e) => updatePersonalInfo('email', e.target.value)}
-                className="w-full h-12 bg-elec-card border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200 placeholder:text-elec-light/60 text-base font-medium px-4"
-                placeholder="your.email@example.com"
-              />
+               <input
+                 type="email"
+                 value={cvData.personalInfo.email}
+                 onChange={(e) => updatePersonalInfo('email', e.target.value)}
+                 className="flex min-h-[48px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 mt-2"
+                 placeholder="your.email@example.com"
+               />
             </div>
 
             <div className="space-y-3">
-              <label className="text-sm font-semibold text-elec-light flex items-center gap-2">
-                <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
+              <label className="text-sm font-semibold text-elec-light">
                 Phone Number *
               </label>
-              <input
-                type="tel"
-                value={cvData.personalInfo.phone}
-                onChange={(e) => updatePersonalInfo('phone', e.target.value)}
-                className="w-full h-12 bg-elec-card border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200 placeholder:text-elec-light/60 text-base font-medium px-4"
-                placeholder="07700 123456"
-              />
+               <input
+                 type="tel"
+                 value={cvData.personalInfo.phone}
+                 onChange={(e) => updatePersonalInfo('phone', e.target.value)}
+                 className="flex min-h-[48px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 mt-2"
+                 placeholder="07700 123456"
+               />
             </div>
           </div>
 
           <div className="space-y-3">
-            <label className="text-sm font-semibold text-elec-light flex items-center gap-2">
-              <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
+            <label className="text-sm font-semibold text-elec-light">
               Address
             </label>
-            <input
-              type="text"
-              value={cvData.personalInfo.address}
-              onChange={(e) => updatePersonalInfo('address', e.target.value)}
-              className="w-full h-12 bg-elec-card border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200 placeholder:text-elec-light/60 text-base font-medium px-4"
-              placeholder="123 High Street, City"
-            />
+             <input
+               type="text"
+               value={cvData.personalInfo.address}
+               onChange={(e) => updatePersonalInfo('address', e.target.value)}
+               className="flex min-h-[48px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 mt-2"
+               placeholder="123 High Street, City"
+             />
           </div>
 
           <div className="space-y-3">
-            <label className="text-sm font-semibold text-elec-light flex items-center gap-2">
-              <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
+            <label className="text-sm font-semibold text-elec-light">
               Postcode
             </label>
-            <input
-              type="text"
-              value={cvData.personalInfo.postcode}
-              onChange={(e) => updatePersonalInfo('postcode', e.target.value)}
-              className="w-full h-12 bg-elec-card border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200 placeholder:text-elec-light/60 text-base font-medium px-4"
-              placeholder="SW1A 1AA"
-            />
+             <input
+               type="text"
+               value={cvData.personalInfo.postcode}
+               onChange={(e) => updatePersonalInfo('postcode', e.target.value)}
+               className="flex min-h-[48px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 mt-2"
+               placeholder="SW1A 1AA"
+             />
           </div>
 
           <div className="space-y-4">
             <div className="space-y-3">
-              <label className="text-sm font-semibold text-elec-light flex items-center gap-2">
-                <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
+              <label className="text-sm font-semibold text-elec-light">
                 Professional Summary
               </label>
-              <textarea
-                value={cvData.personalInfo.professionalSummary}
-                onChange={(e) => updatePersonalInfo('professionalSummary', e.target.value)}
-                className="w-full h-32 bg-elec-card border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200 placeholder:text-elec-light/60 text-base font-medium p-4 resize-none"
-                placeholder="Brief description of your electrical experience and career goals..."
-                rows={4}
-              />
+               <textarea
+                 value={cvData.personalInfo.professionalSummary}
+                 onChange={(e) => updatePersonalInfo('professionalSummary', e.target.value)}
+                 className="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 resize-none mt-2"
+                 placeholder="Brief description of your electrical experience and career goals..."
+                 rows={4}
+               />
               <p className="text-xs text-elec-light/70 flex items-center gap-1">
                 <span className="w-1 h-1 bg-elec-yellow/60 rounded-full"></span>
                 Describe your electrical expertise and career objectives
@@ -145,8 +138,8 @@ export const EnhancedPersonalInfoForm: React.FC<EnhancedPersonalInfoFormProps> =
               currentContent={cvData.personalInfo.professionalSummary}
             />
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     </div>
   );
 };
