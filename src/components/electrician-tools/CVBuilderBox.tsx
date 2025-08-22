@@ -36,7 +36,7 @@ const CVBuilderBox = () => {
       </p>
       
       {/* Features grid */}
-      <div className="grid grid-cols-2 gap-2 mb-4 max-w-lg mx-auto">
+      <div className="grid grid-cols-2 gap-3 sm:gap-4 mb-4 max-w-lg mx-auto">
         <div className="flex items-center space-x-2">
           <Wand2 className="h-4 w-4 text-elec-yellow flex-shrink-0" />
           <span className="text-xs text-muted-foreground">Smart CV Wizard</span>
