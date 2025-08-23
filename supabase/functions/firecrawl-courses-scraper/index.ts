@@ -49,15 +49,12 @@ serve(async (req) => {
       });
     }
 
-    // Define course websites to scrape with Reed-specific optimizations
+    // Define course websites to scrape
     const courseWebsites = {
       findcourses: `https://www.findcourses.co.uk/search?q=${encodeURIComponent(keywords)}`,
       cityandguilds: 'https://www.cityandguilds.com/qualifications/construction-and-the-built-environment/electrical-installation',
       niceic: 'https://www.niceic.com/find-an-installer/electrical-training-courses',
-      stanmore: 'https://certificates.stanmoreuk.org/Home/Courses/6026646/Electrical-Career-Courses-%26-Training',
-      reed: keywords.toLowerCase().includes('electrical') || keywords.toLowerCase().includes('electrician') 
-        ? 'https://www.reed.co.uk/courses/electrician'
-        : `https://www.reed.co.uk/courses/${encodeURIComponent(keywords.replace(/\s+/g, '-').toLowerCase())}`
+      stanmore: 'https://certificates.stanmoreuk.org/Home/Courses/6026646/Electrical-Career-Courses-%26-Training'
     };
 
     const targetUrl = courseWebsites[source as keyof typeof courseWebsites] || courseWebsites.findcourses;
@@ -72,7 +69,7 @@ serve(async (req) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        url: source === 'reed' ? 'https://www.reed.co.uk/courses/?keywords=Electrical%20Career%20Courses%20%26%20Training' : targetUrl,
+        url: targetUrl,
         onlyMainContent: true,
         maxAge: 172800000,
         parsers: ["pdf"],

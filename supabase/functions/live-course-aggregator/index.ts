@@ -18,11 +18,8 @@ serve(async (req) => {
     
     const supabase = createClient(supabaseUrl, supabaseAnonKey);
     
-    // Fetch from all course sources in parallel with Reed hybrid approach
+    // Fetch from all course sources in parallel (excluding Reed)
     const promises = [
-      supabase.functions.invoke('reed-courses-hybrid', { 
-        body: { keywords, location } 
-      }),
       supabase.functions.invoke('firecrawl-courses-scraper', { 
         body: { keywords, source: 'findcourses' } 
       }),
@@ -43,7 +40,7 @@ serve(async (req) => {
     const sourceResults = [];
     const allCourses = [];
     
-    const sources = ['Reed Hybrid', 'FindCourses', 'City & Guilds', 'NICEIC', 'Stanmore UK'];
+    const sources = ['FindCourses', 'City & Guilds', 'NICEIC', 'Stanmore UK'];
     
     for (let i = 0; i < results.length; i++) {
       const result = results[i];
@@ -89,9 +86,13 @@ serve(async (req) => {
         }
       }
       
-      // Then by source priority (Reed hybrid first)
-      if (a.source === 'Reed Courses' && b.source !== 'Reed Courses') return -1;
-      if (a.source !== 'Reed Courses' && b.source === 'Reed Courses') return 1;
+      // Then by source priority (prioritize established providers)
+      const sourceOrder = ['City & Guilds', 'NICEIC', 'FindCourses', 'Stanmore UK'];
+      const aIndex = sourceOrder.indexOf(a.source || '');
+      const bIndex = sourceOrder.indexOf(b.source || '');
+      if (aIndex !== -1 && bIndex !== -1) {
+        if (aIndex !== bIndex) return aIndex - bIndex;
+      }
       
       // Finally by rating and future-proofing
       const scoreA = (a.rating || 0) * (a.futureProofing || 1);
