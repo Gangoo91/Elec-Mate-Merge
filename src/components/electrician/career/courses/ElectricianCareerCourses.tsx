@@ -269,7 +269,7 @@ const ElectricianCareerCourses = () => {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6 lg:space-y-8 px-2 sm:px-4 lg:px-6">
       {/* Header Section */}
       <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader className="p-4 sm:p-6">
