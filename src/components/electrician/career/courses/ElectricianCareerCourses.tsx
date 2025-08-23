@@ -551,28 +551,6 @@ const ElectricianCareerCourses = () => {
                 )}
               </Button>
 
-              {/* View Mode Toggle */}
-              <div className="flex border border-border rounded-md overflow-hidden">
-                <Button
-                  variant={viewMode === "grid" ? "default" : "ghost"}
-                  size="sm"
-                  onClick={() => setViewMode("grid")}
-                  className="rounded-none border-r border-border"
-                >
-                  <List className="h-4 w-4" />
-                  {!isMobile && " Courses"}
-                </Button>
-                <Button
-                  variant={viewMode === "map" ? "default" : "ghost"}
-                  size="sm"
-                  onClick={() => setViewMode("map")}
-                  className="rounded-none"
-                >
-                  <Map className="h-4 w-4" />
-                  {!isMobile && " Map"}
-                </Button>
-              </div>
-
               <Button
                 variant="outline"
                 onClick={exportToPDF}
@@ -585,6 +563,30 @@ const ElectricianCareerCourses = () => {
           </div>
         </CardHeader>
       </Card>
+
+      {/* View Mode Toggle - Moved below parent */}
+      <div className="mb-4">
+        <div className="flex border border-border rounded-md overflow-hidden w-fit">
+          <Button
+            variant={viewMode === "grid" ? "default" : "ghost"}
+            size="sm"
+            onClick={() => setViewMode("grid")}
+            className="rounded-none border-r border-border"
+          >
+            <List className="h-4 w-4" />
+            {!isMobile && " Courses"}
+          </Button>
+          <Button
+            variant={viewMode === "map" ? "default" : "ghost"}
+            size="sm"
+            onClick={() => setViewMode("map")}
+            className="rounded-none"
+          >
+            <Map className="h-4 w-4" />
+            {!isMobile && " Map"}
+          </Button>
+        </div>
+      </div>
 
       {/* Featured Courses Carousel */}
       {liveCourses.length > 0 && (
