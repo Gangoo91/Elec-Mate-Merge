@@ -19,7 +19,7 @@ import {
   enhancedCareerCourses
 } from "../../../apprentice/career/courses/enhancedCoursesData";
 import LocationBasedCourseSearch from "../../../apprentice/career/courses/LocationBasedCourseSearch";
-import { useLiveCourseSearch } from "@/hooks/useLiveCourseSearch";
+import { useCoursesQuery } from "@/hooks/useCoursesQuery";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -63,20 +63,25 @@ const ElectricianCareerCourses = () => {
   });
 
   // Live course data hook
+  // Use TanStack Query for efficient data fetching and caching
   const {
-    courses: liveCourses,
-    total: liveTotal,
-    summary: liveSummary,
-    isLiveData,
-    loading: isLoadingLive,
-    error: liveError,
-    refreshCourses,
-    isSearching
-  } = useLiveCourseSearch({
-    keywords: filters.searchQuery || "electrical course",
-    location: filters.location === "All Locations" ? "United Kingdom" : filters.location,
-    enableLiveData: true
-  });
+    data: queryResult,
+    isLoading: isLoadingLive,
+    error: queryError,
+    refetch: refreshCourses,
+    isFetching: isSearching,
+    isError
+  } = useCoursesQuery(
+    filters.searchQuery || "electrical course",
+    filters.location === "All Locations" ? "United Kingdom" : filters.location
+  );
+
+  // Extract data from query result with proper typing
+  const liveCourses = queryResult?.courses || [];
+  const liveTotal = queryResult?.total || 0;
+  const liveSummary = queryResult?.summary;
+  const isLiveData = !!queryResult;
+  const liveError = isError ? (queryError?.message || "Failed to fetch course data") : null;
 
   // Location-based distance calculation helper
   const calculateDistance = (lat1: number, lon1: number, lat2: number, lon2: number): number => {
@@ -487,15 +492,41 @@ const ElectricianCareerCourses = () => {
             
             {/* Mobile Action Buttons - Better Touch Targets */}
             <div className="grid grid-cols-2 md:flex md:flex-wrap gap-3 md:gap-2">
-              <Button
-                variant="outline"
-                onClick={refreshCourses}
-                disabled={isSearching}
-                className="flex items-center justify-center gap-2 min-h-[44px] text-sm"
-              >
-                <RefreshCw className={`h-4 w-4 ${isSearching ? 'animate-spin' : ''}`} />
-                {isMobile ? "Refresh" : "Refresh Data"}
-              </Button>
+              {!isLiveData && !isLoadingLive && (
+                <Button
+                  onClick={() => {
+                    toast({
+                      title: "Loading courses",
+                      description: "Fetching the latest course data...",
+                      variant: "default"
+                    });
+                    refreshCourses();
+                  }}
+                  className="bg-elec-yellow text-black hover:bg-elec-yellow/90 flex items-center justify-center gap-2 min-h-[44px] text-sm"
+                >
+                  <BookOpen className="w-4 h-4" />
+                  {isMobile ? "Load" : "Load Courses"}
+                </Button>
+              )}
+              
+              {isLiveData && (
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    toast({
+                      title: "Refreshing courses",
+                      description: "Fetching the latest course data...",
+                      variant: "default"
+                    });
+                    refreshCourses();
+                  }}
+                  disabled={isSearching}
+                  className="flex items-center justify-center gap-2 min-h-[44px] text-sm"
+                >
+                  <RefreshCw className={`h-4 w-4 ${isSearching ? 'animate-spin' : ''}`} />
+                  {isMobile ? "Refresh" : "Refresh Data"}
+                </Button>
+              )}
               
               <Button
                 variant={showBookmarks ? "default" : "outline"}
