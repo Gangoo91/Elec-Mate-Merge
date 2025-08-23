@@ -41,7 +41,7 @@ const CareerProgression = () => {
   };
 
   return (
-    <div className="w-full max-w-none space-y-4 sm:space-y-6 lg:space-y-8 animate-fade-in overflow-x-hidden">
+    <div className="container space-y-4 sm:space-y-6 lg:space-y-8 animate-fade-in overflow-x-hidden p-4 sm:p-6 lg:p-8">
       <Helmet>
         <title>Electrician Career Progression UK | JIB Timeline & CPD</title>
         <meta name="description" content="Explore UK electrician career progression: JIB grades, timelines, prerequisites, day rates, CPD, and pathways. BS 7671 18th Edition compliant." />
@@ -81,7 +81,7 @@ const CareerProgression = () => {
       {activeSection === null ? (
         <div className="space-y-6 sm:space-y-8">
           {/* Career Sections Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3 sm:gap-4 lg:gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6">
             {electricianCareerSections.map((section) => (
               <SimpleCareerCard 
                 key={section.id}
@@ -93,7 +93,7 @@ const CareerProgression = () => {
             {/* Job Vacancies Card */}
             <SimpleCareerCard 
               title="Job Vacancies"
-              icon={<Briefcase className="h-8 w-8 sm:h-10 sm:w-10 lg:h-12 lg:w-12 text-elec-yellow" />}
+              icon={<Briefcase className="h-6 w-6 sm:h-8 sm:w-8 md:h-10 md:w-10 lg:h-12 lg:w-12 text-elec-yellow" />}
               onClick={() => setActiveSection("job-vacancies")}
             />
           </div>
@@ -102,17 +102,17 @@ const CareerProgression = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
             <Card className="border-elec-yellow/20 bg-elec-gray/50">
               <CardContent className="p-3 sm:p-4 text-center">
-                <div className="text-xl sm:text-2xl font-bold text-elec-yellow">10+</div>
+                <div className="text-lg sm:text-xl lg:text-2xl font-bold text-elec-yellow">10+</div>
                 <div className="text-xs sm:text-sm text-muted-foreground">Advanced Pathways</div>
               </CardContent>
             </Card>
             <Card className="border-elec-yellow/20 bg-elec-gray/50">
               <CardContent className="p-3 sm:p-4 text-center">
-                <div className="text-xl sm:text-2xl font-bold text-elec-yellow">30+</div>
+                <div className="text-lg sm:text-xl lg:text-2xl font-bold text-elec-yellow">30+</div>
                 <div className="text-xs sm:text-sm text-muted-foreground">Professional Courses</div>
               </CardContent>
             </Card>
-            <Card className="border-elec-yellow/20 bg-elec-gray/50 sm:col-span-2 lg:col-span-1">
+            <Card className="border-elec-yellow/20 bg-elec-gray/50 col-span-1 sm:col-span-2 lg:col-span-1">
               <CardContent className="p-3 sm:p-4 text-center">
                 <div className="text-lg sm:text-xl lg:text-2xl font-bold text-elec-yellow">£35k-£80k+</div>
                 <div className="text-xs sm:text-sm text-muted-foreground">Professional Range</div>

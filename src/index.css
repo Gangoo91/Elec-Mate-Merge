@@ -152,5 +152,9 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
+  
+  .hover-scale {
+    @apply hover:scale-102 transition-transform duration-200;
+  }
 }
 
