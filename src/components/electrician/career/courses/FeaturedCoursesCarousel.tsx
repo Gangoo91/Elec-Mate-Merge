@@ -94,10 +94,13 @@ const FeaturedCoursesCarousel = ({ courses, onViewDetails }: FeaturedCoursesCaro
       </CardHeader>
 
       <CardContent className="px-2 sm:px-6">
-        <div className="relative overflow-hidden w-full">
+        <div className="relative overflow-hidden w-full min-w-0">
           <div 
-            className="flex transition-transform duration-300 ease-in-out gap-2 sm:gap-4"
-            style={{ transform: `translateX(-${currentIndex * (100 / itemsPerView)}%)` }}
+            className="flex transition-transform duration-300 ease-in-out"
+            style={{ 
+              transform: `translateX(-${currentIndex * 100}%)`,
+              width: `${featuredCourses.length * (100 / itemsPerView)}%`
+            }}
           >
             {featuredCourses.map((course) => {
               const FeatureIcon = getFeatureIcon(course);
@@ -105,7 +108,12 @@ const FeaturedCoursesCarousel = ({ courses, onViewDetails }: FeaturedCoursesCaro
               return (
                 <div
                   key={course.id}
-                  className={`flex-shrink-0 px-1 ${isMobile ? 'w-full' : 'w-1/3'}`}
+                  className="flex-shrink-0"
+                  style={{ 
+                    width: `${100 / featuredCourses.length}%`,
+                    paddingLeft: isMobile ? '4px' : '8px',
+                    paddingRight: isMobile ? '4px' : '8px'
+                  }}
                 >
                   <Card className="border-elec-yellow/30 bg-elec-dark/30 h-full hover:border-elec-yellow/50 transition-all duration-300">
                     <CardHeader className="pb-3">
