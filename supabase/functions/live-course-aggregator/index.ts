@@ -45,124 +45,127 @@ serve(async (req) => {
           formats: [{
             type: "json",
             schema: {
-              type: "object",
-              properties: {
-                category: {
-                  type: "string",
-                  description: "The main category or tag of the course (e.g., Emerging Technologies)"
-                },
-                rating: {
-                  type: "number",
-                  description: "Star rating of the course"
-                },
-                courseTitle: {
-                  type: "string",
-                  description: "Title of the course"
-                },
-                provider: {
-                  type: "string",
-                  description: "Training provider name"
-                },
-                description: {
-                  type: "string",
-                  description: "Short description of the course"
-                },
-                duration: {
-                  type: "string",
-                  description: "Course duration (e.g., 2 days)"
-                },
-                level: {
-                  type: "string",
-                  description: "Course difficulty level (e.g., Intermediate)"
-                },
-                learningMode: {
-                  type: "string",
-                  description: "Learning mode (e.g., Blended learning with hands-on practical sessions)"
-                },
-                futureScope: {
-                  type: "string",
-                  description: "Future career outlook or rating (e.g., Future: 5/5)"
-                },
-                industryDemand: {
-                  type: "string",
-                  description: "Industry demand level (e.g., High)"
-                },
-                salaryImpact: {
-                  type: "object",
-                  properties: {
-                    min: {
-                      type: "number",
-                      description: "Minimum salary impact"
-                    },
-                    max: {
-                      type: "number",
-                      description: "Maximum salary impact"
-                    },
-                    unit: {
-                      type: "string",
-                      description: "Unit (e.g., annual increase)"
+              type: "array",
+              items: {
+                type: "object",
+                properties: {
+                  category: {
+                    type: "string",
+                    description: "The main category or tag of the course (e.g., Emerging Technologies)"
+                  },
+                  rating: {
+                    type: "number",
+                    description: "Star rating of the course"
+                  },
+                  courseTitle: {
+                    type: "string",
+                    description: "Title of the course"
+                  },
+                  provider: {
+                    type: "string",
+                    description: "Training provider name"
+                  },
+                  description: {
+                    type: "string",
+                    description: "Short description of the course"
+                  },
+                  duration: {
+                    type: "string",
+                    description: "Course duration (e.g., 2 days)"
+                  },
+                  level: {
+                    type: "string",
+                    description: "Course difficulty level (e.g., Intermediate)"
+                  },
+                  learningMode: {
+                    type: "string",
+                    description: "Learning mode (e.g., Blended learning with hands-on practical sessions)"
+                  },
+                  futureScope: {
+                    type: "string",
+                    description: "Future career outlook or rating (e.g., Future: 5/5)"
+                  },
+                  industryDemand: {
+                    type: "string",
+                    description: "Industry demand level (e.g., High)"
+                  },
+                  salaryImpact: {
+                    type: "object",
+                    properties: {
+                      min: {
+                        type: "number",
+                        description: "Minimum salary impact"
+                      },
+                      max: {
+                        type: "number",
+                        description: "Maximum salary impact"
+                      },
+                      unit: {
+                        type: "string",
+                        description: "Unit (e.g., annual increase)"
+                      }
                     }
+                  },
+                  careerOutcomes: {
+                    type: "array",
+                    items: {
+                      type: "string"
+                    },
+                    description: "List of career outcomes"
+                  },
+                  locations: {
+                    type: "array",
+                    items: {
+                      type: "string"
+                    },
+                    description: "Available course locations"
+                  },
+                  accreditations: {
+                    type: "array",
+                    items: {
+                      type: "string"
+                    },
+                    description: "List of accreditations"
+                  },
+                  upcomingDates: {
+                    type: "array",
+                    items: {
+                      type: "string",
+                      format: "date"
+                    },
+                    description: "Upcoming course start dates"
+                  },
+                  priceRange: {
+                    type: "string",
+                    description: "Price range of the course (e.g., £425 - £525)"
+                  },
+                  employerSupport: {
+                    type: "boolean",
+                    description: "Whether employer support is available"
+                  },
+                  detailsUrl: {
+                    type: "string",
+                    description: "Direct link to the course details page"
                   }
                 },
-                careerOutcomes: {
-                  type: "array",
-                  items: {
-                    type: "string"
-                  },
-                  description: "List of career outcomes"
-                },
-                locations: {
-                  type: "array",
-                  items: {
-                    type: "string"
-                  },
-                  description: "Available course locations"
-                },
-                accreditations: {
-                  type: "array",
-                  items: {
-                    type: "string"
-                  },
-                  description: "List of accreditations"
-                },
-                upcomingDates: {
-                  type: "array",
-                  items: {
-                    type: "string",
-                    format: "date"
-                  },
-                  description: "Upcoming course start dates"
-                },
-                priceRange: {
-                  type: "string",
-                  description: "Price range of the course (e.g., £425 - £525)"
-                },
-                employerSupport: {
-                  type: "boolean",
-                  description: "Whether employer support is available"
-                },
-                detailsUrl: {
-                  type: "string",
-                  description: "Direct link to the course details page"
-                }
-              },
-              required: [
-                "category",
-                "courseTitle",
-                "provider",
-                "description",
-                "duration",
-                "level",
-                "learningMode",
-                "industryDemand",
-                "salaryImpact",
-                "careerOutcomes",
-                "locations",
-                "accreditations",
-                "upcomingDates",
-                "priceRange",
-                "detailsUrl"
-              ]
+                required: [
+                  "category",
+                  "courseTitle",
+                  "provider",
+                  "description",
+                  "duration",
+                  "level",
+                  "learningMode",
+                  "industryDemand",
+                  "salaryImpact",
+                  "careerOutcomes",
+                  "locations",
+                  "accreditations",
+                  "upcomingDates",
+                  "priceRange",
+                  "detailsUrl"
+                ]
+              }
             }
           }]
         })
