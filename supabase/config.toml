@@ -1,6 +1,9 @@
 
 project_id = "jtwygbeceundfgnkirof"
 
+[functions.find-training-providers]
+verify_jwt = false
+
 [functions.get-google-maps-key]
 verify_jwt = false
 

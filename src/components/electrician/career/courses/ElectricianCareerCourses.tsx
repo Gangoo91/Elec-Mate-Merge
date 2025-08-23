@@ -11,7 +11,6 @@ import CourseSorting, { sortOptions } from "./CourseSorting";
 import FeaturedCoursesCarousel from "./FeaturedCoursesCarousel";
 import CourseBookmarkManager, { useBookmarkManager } from "./CourseBookmarkManager";
 import CourseCompareMode, { useCourseComparison } from "./CourseCompareMode";
-import EnhancedLocationSearch from "./EnhancedLocationSearch";
 import CourseMap from "./CourseMap";
 import GoogleMapsLoader from "../../../job-vacancies/GoogleMapsLoader";
 import { 
@@ -19,12 +18,14 @@ import {
   EnhancedTrainingCenter,
   enhancedCareerCourses
 } from "../../../apprentice/career/courses/enhancedCoursesData";
+import LocationBasedCourseSearch from "../../../apprentice/career/courses/LocationBasedCourseSearch";
 import { useLiveCourseSearch } from "@/hooks/useLiveCourseSearch";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { BookOpen, Users, Plus, Scale, FileDown, RefreshCw, Wifi, WifiOff, Map, List } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 const ElectricianCareerCourses = () => {
@@ -36,6 +37,7 @@ const ElectricianCareerCourses = () => {
   const [showBookmarks, setShowBookmarks] = useState(false);
   const [showComparison, setShowComparison] = useState(false);
   const [selectedCourseId, setSelectedCourseId] = useState<string | null>(null);
+  const [nearbyProviders, setNearbyProviders] = useState<any[]>([]);
   
   // Location-based filtering state
   const [userLocation, setUserLocation] = useState<string | null>(null);
@@ -89,14 +91,80 @@ const ElectricianCareerCourses = () => {
     return R * c;
   };
 
-  // For map view, ensure we always have courses to display
-  const coursesForMap = useMemo(() => {
-    if (liveCourses.length === 0) {
-      console.log('No live courses available, using static data as fallback for map');
-      return enhancedCareerCourses;
+  // Handle nearby providers found from Google Places
+  const handleNearbyProvidersFound = (providers: any[]) => {
+    setNearbyProviders(providers);
+    console.log('Nearby providers found:', providers.length);
+  };
+
+  // Function to search for nearby providers using the edge function
+  const searchNearbyProviders = async () => {
+    if (!userLocation) {
+      toast({
+        title: "Location required",
+        description: "Please set your location first to find nearby training providers",
+        variant: "destructive"
+      });
+      return;
     }
-    return liveCourses;
-  }, [liveCourses]);
+
+    try {
+      console.log('Searching for training providers near:', userLocation);
+      
+      const { data, error } = await supabase.functions.invoke('find-training-providers', {
+        body: { 
+          postcode: userLocation,
+          radius: searchRadius * 1609.34, // Convert miles to meters
+          courseType: 'electrical'
+        }
+      });
+
+      if (error) {
+        console.error('Error finding providers:', error);
+        throw error;
+      }
+
+      if (data?.providers?.length > 0) {
+        handleNearbyProvidersFound(data.providers);
+        toast({
+          title: "Training providers found",
+          description: `Found ${data.providers.length} training providers within ${searchRadius} miles`,
+        });
+      } else {
+        toast({
+          title: "No providers found",
+          description: `No training providers found within ${searchRadius} miles. Try increasing the search radius.`,
+          variant: "destructive"
+        });
+      }
+    } catch (error) {
+      console.error('Error searching for providers:', error);
+      toast({
+        title: "Search failed",
+        description: "Failed to find nearby training providers. Please try again.",
+        variant: "destructive"
+      });
+    }
+  };
+
+  // For map view, combine all course sources
+  const coursesForMap = useMemo(() => {
+    let allCourses = [...liveCourses];
+    
+    // Add nearby providers as courses
+    if (nearbyProviders.length > 0) {
+      allCourses = [...allCourses, ...nearbyProviders];
+    }
+    
+    // Fallback to static data if no other sources
+    if (allCourses.length === 0) {
+      console.log('No live courses or providers available, using static data as fallback for map');
+      allCourses = enhancedCareerCourses;
+    }
+    
+    console.log('Total courses for map:', allCourses.length);
+    return allCourses;
+  }, [liveCourses, nearbyProviders]);
 
   // Enhanced filtering and sorting logic using live data
   const filteredAndSortedCourses = useMemo(() => {
@@ -462,15 +530,28 @@ const ElectricianCareerCourses = () => {
         />
       )}
 
-      {/* Enhanced Location Search */}
-      <EnhancedLocationSearch
-        onLocationSelect={handleLocationSelect}
-        onRadiusChange={handleRadiusChange}
-        onClearLocation={handleClearLocation}
-        currentLocation={userLocation}
-        searchRadius={searchRadius}
-        isActive={!!userLocation}
-      />
+      {/* Enhanced Location Search with Provider Discovery */}
+      <div className="space-y-4">
+        <LocationBasedCourseSearch
+          onLocationSelect={handleLocationSelect}
+          onRadiusChange={handleRadiusChange}
+          currentLocation={userLocation}
+          searchRadius={searchRadius}
+        />
+        
+        {/* Find Nearby Providers - Button to search using Google Places */}
+        {userLocation && (
+          <div className="flex justify-center">
+            <Button
+              onClick={searchNearbyProviders}
+              className="bg-elec-yellow text-black hover:bg-elec-yellow/90"
+              disabled={isLoadingLive}
+            >
+              {isLoadingLive ? "Searching..." : "Find Real Training Providers Nearby"}
+            </Button>
+          </div>
+        )}
+      </div>
 
       {/* Enhanced Search and Filters */}
       <EnhancedCourseSearch
