@@ -178,7 +178,7 @@ const CourseMap: React.FC<CourseMapProps> = ({
     console.log('Created markers for providers:', markerData.length);
   }, [nearbyProviders, selectedCourse, onCourseSelect, userCoordinates]);
 
-  // Handle user location marker and radius circle
+  // Handle user location marker and radius circle with dynamic map fitting
   useEffect(() => {
     if (!googleMapRef.current || !window.google?.maps) return;
 
@@ -220,6 +220,41 @@ const CourseMap: React.FC<CourseMapProps> = ({
         center: userCoordinates,
         radius: searchRadius * 1609.34, // Convert miles to meters
       });
+
+      // Calculate bounds to fit the entire circle within the map
+      const radiusInMeters = searchRadius * 1609.34;
+      const bounds = new window.google.maps.LatLngBounds();
+      
+      // Calculate the approximate bounds of the circle
+      // Using a rough conversion: 1 degree ≈ 111,320 meters at the equator
+      const latOffset = radiusInMeters / 111320;
+      const lngOffset = radiusInMeters / (111320 * Math.cos(userCoordinates.lat * Math.PI / 180));
+      
+      // Extend bounds to include the circle's extent in all directions
+      bounds.extend({
+        lat: userCoordinates.lat - latOffset,
+        lng: userCoordinates.lng - lngOffset
+      });
+      bounds.extend({
+        lat: userCoordinates.lat + latOffset,
+        lng: userCoordinates.lng + lngOffset
+      });
+      
+      // Fit the map to these bounds with padding to ensure circle doesn't touch edges
+      googleMapRef.current.fitBounds(bounds, {
+        top: 50,
+        right: 50,
+        bottom: 50,
+        left: 50
+      });
+      
+      // Set reasonable zoom limits to prevent extreme zoom levels
+      const currentZoom = (googleMapRef.current as any).getZoom();
+      if (currentZoom && currentZoom > 15) {
+        googleMapRef.current.setZoom(15);
+      } else if (currentZoom && currentZoom < 8) {
+        googleMapRef.current.setZoom(8);
+      }
     }
 
     return () => {
