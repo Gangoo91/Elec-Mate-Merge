@@ -185,26 +185,40 @@ serve(async (req) => {
         // Handle both single course object and array of courses
         const coursesArray = Array.isArray(extractedData) ? extractedData : [extractedData];
         
+        // Helper function to extract future proofing rating from futureScope string
+        const extractFutureProofing = (futureScope: string): number => {
+          if (!futureScope) return 3; // Default to 3/5 if not specified
+          const match = futureScope.match(/(\d+)\/5/);
+          return match ? parseInt(match[1]) : 3;
+        };
+
         uniqueCourses = coursesArray.map((course: any) => ({
           id: `reed-${course.courseTitle?.replace(/\s+/g, '-').toLowerCase() || 'unknown'}`,
           title: course.courseTitle || 'Untitled Course',
           provider: course.provider || 'Reed',
-          description: course.description || '',
-          duration: course.duration || 'Not specified',
-          level: course.level || 'Not specified',
+          description: course.description || 'Course description not available',
+          duration: course.duration || 'Duration not specified',
+          level: course.level || 'Level not specified',
           category: course.category || 'Electrical',
           rating: course.rating || 0,
-          learningMode: course.learningMode || 'Not specified',
-          futureScope: course.futureScope || '',
-          industryDemand: course.industryDemand || 'Unknown',
-          salaryImpact: course.salaryImpact || {},
-          careerOutcomes: course.careerOutcomes || [],
-          locations: course.locations || [],
-          accreditations: course.accreditations || [],
-          upcomingDates: course.upcomingDates || [],
-          priceRange: course.priceRange || 'Contact for pricing',
+          format: course.learningMode || 'Format not specified',
+          futureProofing: extractFutureProofing(course.futureScope),
+          industryDemand: course.industryDemand || 'Not specified',
+          salaryImpact: course.salaryImpact?.unit ? 
+            `£${course.salaryImpact.min || 0}-${course.salaryImpact.max || 0} ${course.salaryImpact.unit}` : 
+            'Contact provider for details',
+          careerOutcomes: course.careerOutcomes?.length > 0 ? course.careerOutcomes : ['Contact provider for details'],
+          locations: course.locations?.length > 0 ? course.locations : ['Contact provider for details'],
+          accreditation: course.accreditations?.length > 0 ? course.accreditations : ['Not specified by provider'],
+          nextDates: course.upcomingDates?.length > 0 ? course.upcomingDates : ['Contact provider for dates'],
+          price: course.priceRange || 'Contact for pricing',
           employerSupport: course.employerSupport || false,
           detailsUrl: course.detailsUrl || '',
+          // Additional fields for compatibility
+          prerequisites: ['Not specified by provider'],
+          courseOutline: ['Contact provider for details'],
+          assessmentMethod: ['Contact provider for details'],
+          continuousAssessment: false,
           source: 'Reed',
           isLive: true,
           lastUpdated: new Date().toISOString()
