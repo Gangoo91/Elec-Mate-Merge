@@ -7,17 +7,29 @@ interface TrainingProvider {
   place_id: string;
   name: string;
   vicinity: string;
-  geometry: {
-    location: {
-      lat: number;
-      lng: number;
-    };
+  location: {
+    lat: number;
+    lng: number;
   };
   rating?: number;
   user_ratings_total?: number;
-  types: string[];
-  distance?: number;
+  types?: string[];
+  business_status?: string;
+  price_level?: number;
+  phone?: string;
+  website?: string;
+  opening_hours?: {
+    open_now?: boolean;
+    weekday_text?: string[];
+  };
+  photos?: Array<{
+    photo_reference: string;
+    height: number;
+    width: number;
+  }>;
+  search_context?: string;
   category?: string;
+  distance?: number;
 }
 
 interface CourseMapProps {
@@ -93,11 +105,11 @@ const CourseMap: React.FC<CourseMapProps> = ({
     
     // Create markers for nearby providers - with safety checks
     const providerMarkers = nearbyProviders
-      .filter(provider => provider?.geometry?.location) // Safety filter
+      .filter(provider => provider?.location) // Safety filter
       .map(provider => {
         const position = {
-          lat: provider.geometry.location.lat,
-          lng: provider.geometry.location.lng
+          lat: provider.location.lat,
+          lng: provider.location.lng
         };
         
         const marker = new window.google.maps.Marker({
@@ -125,12 +137,12 @@ const CourseMap: React.FC<CourseMapProps> = ({
     
     // Create marker data for overlay - with safety checks
     const markerData: ProviderMarkerData[] = nearbyProviders
-      .filter(provider => provider?.geometry?.location) // Safety filter
+      .filter(provider => provider?.location) // Safety filter
       .map(provider => ({
         providerId: provider.place_id,
         position: {
-          lat: provider.geometry.location.lat,
-          lng: provider.geometry.location.lng
+          lat: provider.location.lat,
+          lng: provider.location.lng
         },
         provider
       }));

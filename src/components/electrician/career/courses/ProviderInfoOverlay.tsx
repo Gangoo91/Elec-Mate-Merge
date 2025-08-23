@@ -8,17 +8,29 @@ interface TrainingProvider {
   place_id: string;
   name: string;
   vicinity: string;
-  geometry: {
-    location: {
-      lat: number;
-      lng: number;
-    };
+  location: {
+    lat: number;
+    lng: number;
   };
   rating?: number;
   user_ratings_total?: number;
-  types: string[];
-  distance?: number;
+  types?: string[];
+  business_status?: string;
+  price_level?: number;
+  phone?: string;
+  website?: string;
+  opening_hours?: {
+    open_now?: boolean;
+    weekday_text?: string[];
+  };
+  photos?: Array<{
+    photo_reference: string;
+    height: number;
+    width: number;
+  }>;
+  search_context?: string;
   category?: string;
+  distance?: number;
 }
 
 interface ProviderInfoOverlayProps {
@@ -85,6 +97,11 @@ const ProviderInfoOverlay: React.FC<ProviderInfoOverlayProps> = ({
                 {selectedProvider.vicinity}
               </p>
             </div>
+            {selectedProvider.category && (
+              <Badge variant="secondary" className="text-xs mt-1">
+                {selectedProvider.category}
+              </Badge>
+            )}
           </div>
           {onClose && (
             <Button
@@ -116,14 +133,55 @@ const ProviderInfoOverlay: React.FC<ProviderInfoOverlayProps> = ({
           </div>
         )}
 
-        {/* Category/Type */}
-        {selectedProvider.category && (
-          <Badge 
-            variant="outline" 
-            className={`text-xs ${getCategoryColor(selectedProvider.category)}`}
-          >
-            {selectedProvider.category.replace(/_/g, ' ').toUpperCase()}
-          </Badge>
+        {/* Business Status */}
+        {selectedProvider.business_status && (
+          <div className="flex items-center gap-2">
+            <div className={`w-2 h-2 rounded-full ${
+              selectedProvider.business_status === 'OPERATIONAL' ? 'bg-green-500' : 'bg-red-500'
+            }`} />
+            <span className="text-xs text-muted-foreground">
+              {selectedProvider.business_status === 'OPERATIONAL' ? 'Open' : 'Closed'}
+            </span>
+            {selectedProvider.opening_hours?.open_now !== undefined && (
+              <span className="text-xs text-muted-foreground">
+                • {selectedProvider.opening_hours.open_now ? 'Open now' : 'Closed now'}
+              </span>
+            )}
+          </div>
+        )}
+
+        {/* Contact Information */}
+        {selectedProvider.phone && (
+          <div className="flex items-center gap-2">
+            <Phone className="h-3 w-3 text-muted-foreground" />
+            <a 
+              href={`tel:${selectedProvider.phone}`}
+              className="text-xs text-primary hover:underline"
+            >
+              {selectedProvider.phone}
+            </a>
+          </div>
+        )}
+
+        {selectedProvider.website && (
+          <div className="flex items-center gap-2">
+            <Globe className="h-3 w-3 text-muted-foreground" />
+            <a 
+              href={selectedProvider.website}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs text-primary hover:underline truncate"
+            >
+              Visit Website
+            </a>
+          </div>
+        )}
+
+        {/* Search Context */}
+        {selectedProvider.search_context && (
+          <div className="text-xs text-muted-foreground bg-muted/50 p-2 rounded">
+            Found via: {selectedProvider.search_context}
+          </div>
         )}
 
         {/* Distance */}
@@ -134,32 +192,45 @@ const ProviderInfoOverlay: React.FC<ProviderInfoOverlayProps> = ({
         )}
 
         {/* Action Buttons */}
-        <div className="flex gap-2 pt-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => {
-              const query = encodeURIComponent(`${selectedProvider.name} ${selectedProvider.vicinity}`);
-              window.open(`https://www.google.com/search?q=${query}`, '_blank');
-            }}
-            className="flex-1 h-8 text-xs"
-          >
-            <Globe className="h-3 w-3 mr-1" />
-            Search Online
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => {
-              const coords = selectedProvider.geometry.location;
-              const url = `https://www.google.com/maps?q=${coords.lat},${coords.lng}`;
-              window.open(url, '_blank');
-            }}
-            className="flex-1 h-8 text-xs"
-          >
-            <MapPin className="h-3 w-3 mr-1" />
-            Directions
-          </Button>
+        <div className="space-y-2 pt-2">
+          <div className="flex gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => {
+                const query = encodeURIComponent(`${selectedProvider.name} electrical training courses`);
+                window.open(`https://www.google.com/search?q=${query}`, '_blank');
+              }}
+              className="flex-1 h-8 text-xs"
+            >
+              <Globe className="h-3 w-3 mr-1" />
+              Search Courses
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => {
+                const coords = selectedProvider.location;
+                const url = `https://www.google.com/maps?q=${coords.lat},${coords.lng}`;
+                window.open(url, '_blank');
+              }}
+              className="flex-1 h-8 text-xs"
+            >
+              <MapPin className="h-3 w-3 mr-1" />
+              Directions
+            </Button>
+          </div>
+          
+          {selectedProvider.website && (
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={() => window.open(selectedProvider.website, '_blank')}
+              className="w-full h-8 text-xs"
+            >
+              Visit Official Website
+            </Button>
+          )}
         </div>
 
         {userLocation && (

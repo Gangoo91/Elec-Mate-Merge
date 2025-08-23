@@ -48,131 +48,132 @@ serve(async (req) => {
     const location = geoData.results[0].geometry.location;
     console.log(`Geocoded location: ${location.lat}, ${location.lng}`);
 
-    // 2. Get nearby training providers using textsearch API
-    let placesData = null;
+    // 2. Multiple search strategies for comprehensive results
+    let allResults: any[] = [];
     
-    // Primary search - electrical training specific
-    const electricalQuery = `electrical training courses college near ${postcode}`;
-    console.log(`Primary search query: ${electricalQuery}`);
-    
-    let placesRes = await fetch(
-      `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${encodeURIComponent(electricalQuery)}&location=${location.lat},${location.lng}&radius=${radius}&key=${googleApiKey}`
+    const searchQueries = [
+      `City & Guilds electrical training ${postcode}`,
+      `EAL electrical qualifications ${postcode}`,
+      `NICEIC training center ${postcode}`, 
+      `electrical installation courses ${postcode}`,
+      `18th Edition training ${postcode}`,
+      `electrical apprenticeship provider ${postcode}`,
+      `vocational college electrical ${postcode}`,
+      `further education college ${postcode}`,
+      `training college ${postcode}`,
+      `university ${postcode}`
+    ];
+
+    console.log(`Searching with ${searchQueries.length} different queries...`);
+
+    // Execute multiple searches to get comprehensive results
+    for (const query of searchQueries) {
+      try {
+        console.log(`Searching: ${query}`);
+        const placesRes = await fetch(
+          `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${encodeURIComponent(query)}&location=${location.lat},${location.lng}&radius=${radius}&key=${googleApiKey}`
+        );
+        const placesData = await placesRes.json();
+
+        if (placesData.status === 'OK' && placesData.results?.length) {
+          // Add results with search context
+          const resultsWithContext = placesData.results.map((result: any) => ({
+            ...result,
+            search_context: query
+          }));
+          allResults = [...allResults, ...resultsWithContext];
+          console.log(`Found ${placesData.results.length} results for: ${query}`);
+        }
+      } catch (error) {
+        console.warn(`Search failed for query: ${query}`, error);
+      }
+    }
+
+    // Remove duplicates based on place_id
+    const uniqueResults = allResults.filter((result, index, self) => 
+      index === self.findIndex(r => r.place_id === result.place_id)
     );
-    placesData = await placesRes.json();
 
-    // Fallback search if primary search returns no results
-    if (placesData.status === 'ZERO_RESULTS' || !placesData.results?.length) {
-      console.log('Primary search returned no results, trying broader search...');
-      const broadQuery = `training college education near ${postcode}`;
-      console.log(`Fallback search query: ${broadQuery}`);
-      
-      placesRes = await fetch(
-        `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${encodeURIComponent(broadQuery)}&location=${location.lat},${location.lng}&radius=${radius}&key=${googleApiKey}`
-      );
-      placesData = await placesRes.json();
-    }
+    console.log(`Total unique results found: ${uniqueResults.length}`);
 
-    // Second fallback - even broader search
-    if (placesData.status === 'ZERO_RESULTS' || !placesData.results?.length) {
-      console.log('Fallback search returned no results, trying university search...');
-      const universityQuery = `university college ${postcode}`;
-      console.log(`University search query: ${universityQuery}`);
-      
-      placesRes = await fetch(
-        `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${encodeURIComponent(universityQuery)}&location=${location.lat},${location.lng}&radius=${radius}&key=${googleApiKey}`
-      );
-      placesData = await placesRes.json();
-    }
-
-    if (placesData.status !== 'OK' && placesData.status !== 'ZERO_RESULTS') {
-      console.error('Places API error:', placesData);
+    if (!uniqueResults.length) {
       return new Response(
-        JSON.stringify({ error: `Places API error: ${placesData.status}` }),
-        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        JSON.stringify({ error: 'No training providers found in your area. Try expanding your search radius or search in a different location.' }),
+        { 
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          status: 404
+        }
       );
     }
 
-    console.log(`Found ${placesData.results?.length || 0} potential training providers`);
-
-    // 3. Transform into course schema and filter relevant results
-    const results = placesData.results
-      .filter(place => {
-        const name = place.name?.toLowerCase() || '';
-        const types = place.types?.join(' ').toLowerCase() || '';
-        
-        // Filter for educational/training related places
-        return (
-          name.includes('college') ||
-          name.includes('university') ||
-          name.includes('training') ||
-          name.includes('education') ||
-          name.includes('apprentice') ||
-          name.includes('electrical') ||
-          name.includes('technical') ||
-          name.includes('vocational') ||
-          types.includes('school') ||
-          types.includes('university') ||
-          types.includes('establishment')
-        );
-      })
-      .slice(0, 15)
-      .map((place, index) => {
-        // Calculate distance from search location
-        const distance = calculateDistance(
-          location.lat,
-          location.lng,
-          place.geometry.location.lat,
-          place.geometry.location.lng
-        );
-
-        // Infer course category based on place details
-        const inferCategory = (name: string, types: string[]) => {
-          const nameLC = name.toLowerCase();
-          const typesStr = types.join(' ').toLowerCase();
+    // 3. Enrich results with additional details using Place Details API
+    const enrichedProviders = await Promise.all(
+      uniqueResults.slice(0, 20).map(async (place: any) => { // Limit to 20 for performance
+        try {
+          // Get detailed information for each place
+          const detailsRes = await fetch(
+            `https://maps.googleapis.com/maps/api/place/details/json?place_id=${place.place_id}&fields=name,formatted_address,geometry,rating,user_ratings_total,formatted_phone_number,website,opening_hours,business_status,types,price_level,photos&key=${googleApiKey}`
+          );
+          const detailsData = await detailsRes.json();
           
-          if (nameLC.includes('university') || typesStr.includes('university')) {
-            return 'Essential Qualifications';
-          } else if (nameLC.includes('college') || nameLC.includes('technical')) {
-            return 'Specialised Skills';
-          } else if (nameLC.includes('apprentice')) {
-            return 'Business & Management';
-          } else {
-            return 'Safety & Compliance';
+          if (detailsData.status === 'OK' && detailsData.result) {
+            const details = detailsData.result;
+            return {
+              place_id: place.place_id,
+              name: details.name,
+              vicinity: details.formatted_address,
+              location: details.geometry.location,
+              rating: details.rating || 0,
+              user_ratings_total: details.user_ratings_total || 0,
+              types: details.types || [],
+              business_status: details.business_status,
+              price_level: details.price_level,
+              phone: details.formatted_phone_number,
+              website: details.website,
+              opening_hours: details.opening_hours,
+              photos: details.photos?.slice(0, 3), // First 3 photos
+              search_context: place.search_context,
+              category: getCategoryFromTypes(details.types || [])
+            };
           }
-        };
-
+        } catch (error) {
+          console.warn(`Failed to get details for ${place.name}:`, error);
+        }
+        
+        // Fallback to basic info if details API fails
         return {
-          id: `places_${place.place_id}`,
-          category: inferCategory(place.name, place.types || []),
-          rating: place.rating || null,
-          title: `Electrical Training at ${place.name}`,
-          provider: place.name,
-          description: `Training provider offering electrical courses and qualifications. ${place.types ? place.types.join(', ') : 'Educational establishment'}`,
-          duration: "Varies by course",
-          level: "All levels",
-          format: "In-person",
-          nextStartDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], // 30 days from now
-          locations: [place.vicinity || place.formatted_address || 'Location available'],
-          price: "Contact provider for pricing",
-          accreditations: ["Google Verified Place"],
-          external_url: `https://www.google.com/maps/place/?q=place_id:${place.place_id}`,
-          source: 'google_places',
           place_id: place.place_id,
-          google_rating: place.rating,
-          user_ratings_total: place.user_ratings_total,
-          distance_miles: Math.round(distance * 10) / 10,
+          name: place.name,
+          vicinity: place.formatted_address || place.vicinity,
+          location: place.geometry.location,
+          rating: place.rating || 0,
+          user_ratings_total: place.user_ratings_total || 0,
+          types: place.types || [],
           business_status: place.business_status,
-          opening_hours: place.opening_hours,
-          phone: null, // Would need Place Details API for this
-          website: null // Would need Place Details API for this
+          search_context: place.search_context,
+          category: getCategoryFromTypes(place.types || [])
         };
-      });
+      })
+    );
 
-    console.log(`Returning ${results.length} filtered training providers`);
+    // Helper function to categorize providers
+    function getCategoryFromTypes(types: string[]): string {
+      if (types.some(t => t.includes('university'))) return 'University';
+      if (types.some(t => t.includes('school'))) return 'College';
+      if (types.some(t => t.includes('establishment'))) return 'Training Centre';
+      return 'Educational Institution';
+    }
+
+    // Filter out null results and sort by rating
+    const providers = enrichedProviders
+      .filter(p => p !== null)
+      .sort((a, b) => (b.rating || 0) - (a.rating || 0));
+
+    console.log(`Returning ${providers.length} filtered training providers`);
 
     return new Response(
       JSON.stringify({ 
-        providers: results,
+        providers: providers,
         search_location: {
           postcode,
           lat: location.lat,
