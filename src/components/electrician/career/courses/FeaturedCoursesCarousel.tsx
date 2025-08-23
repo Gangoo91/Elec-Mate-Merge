@@ -96,7 +96,7 @@ const FeaturedCoursesCarousel = ({ courses, onViewDetails }: FeaturedCoursesCaro
       <CardContent>
         <div className="relative overflow-hidden">
           <div 
-            className="flex transition-transform duration-300 ease-in-out gap-4"
+            className="flex flex-wrap transition-transform duration-300 ease-in-out gap-4"
             style={{ transform: `translateX(-${currentIndex * (100 / itemsPerView)}%)` }}
           >
             {featuredCourses.map((course) => {
