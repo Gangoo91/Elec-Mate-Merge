@@ -366,6 +366,57 @@ const ElectricianCareerCourses = () => {
     setSelectedCourseId(null);
   };
 
+  const handleMapClick = async (coordinates: google.maps.LatLngLiteral) => {
+    try {
+      console.log('Map clicked at coordinates:', coordinates);
+      
+      // Show immediate feedback
+      toast({
+        title: "Searching training providers",
+        description: "Searching for UK Electrical Career Courses & Training at clicked location...",
+      });
+
+      const { data, error } = await supabase.functions.invoke('find-training-providers', {
+        body: { 
+          lat: coordinates.lat,
+          lng: coordinates.lng,
+          radius: searchRadius * 1609.34, // Convert miles to meters
+          courseType: 'electrical'
+        }
+      });
+
+      if (error) {
+        console.error('Error finding providers:', error);
+        throw error;
+      }
+
+      if (data?.providers?.length > 0) {
+        handleNearbyProvidersFound(data.providers);
+        // Update user coordinates to center on clicked location
+        setUserCoordinates(coordinates);
+        setUserLocation(`${coordinates.lat.toFixed(4)}, ${coordinates.lng.toFixed(4)}`);
+        
+        toast({
+          title: "Training providers found",
+          description: `Found ${data.providers.length} electrical training providers within ${searchRadius} miles of clicked location`,
+        });
+      } else {
+        toast({
+          title: "No providers found",
+          description: `No electrical training providers found within ${searchRadius} miles of clicked location`,
+          variant: "destructive"
+        });
+      }
+    } catch (error) {
+      console.error('Error searching for providers:', error);
+      toast({
+        title: "Search failed",
+        description: "Failed to find nearby training providers. Please try again.",
+        variant: "destructive"
+      });
+    }
+  };
+
   const handleResetFilters = () => {
     setFilters({
       searchQuery: "",
@@ -648,6 +699,7 @@ const ElectricianCareerCourses = () => {
               userCoordinates={userCoordinates}
               searchRadius={searchRadius}
               isLoading={isLoadingLive}
+              onMapClick={handleMapClick}
             />
           </GoogleMapsLoader>
         ) : (

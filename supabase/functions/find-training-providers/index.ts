@@ -12,11 +12,11 @@ serve(async (req) => {
   }
 
   try {
-    const { postcode, radius = 15000, courseType = 'electrical' } = await req.json();
+    const { postcode, radius = 15000, courseType = 'electrical', lat, lng } = await req.json();
     
-    if (!postcode) {
+    if (!postcode && (!lat || !lng)) {
       return new Response(
-        JSON.stringify({ error: "Postcode is required" }),
+        JSON.stringify({ error: "Either postcode or coordinates (lat, lng) are required" }),
         { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
@@ -30,38 +30,50 @@ serve(async (req) => {
       );
     }
 
-    console.log(`Searching for training providers near: ${postcode} within ${radius}m`);
+    let location: { lat: number; lng: number };
+    let searchLocation = '';
 
-    // 1. Convert postcode → lat/lng
-    const geoRes = await fetch(
-      `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(postcode)}&key=${googleApiKey}`
-    );
-    const geoData = await geoRes.json();
-
-    if (!geoData.results?.length) {
-      return new Response(
-        JSON.stringify({ error: "Location not found" }),
-        { status: 404, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+    if (lat && lng) {
+      // Use provided coordinates directly
+      location = { lat, lng };
+      searchLocation = `${lat}, ${lng}`;
+      console.log(`Using provided coordinates: ${lat}, ${lng}`);
+    } else {
+      // Convert postcode → lat/lng
+      console.log(`Searching for training providers near: ${postcode} within ${radius}m`);
+      
+      const geoRes = await fetch(
+        `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(postcode)}&key=${googleApiKey}`
       );
-    }
+      const geoData = await geoRes.json();
 
-    const location = geoData.results[0].geometry.location;
-    console.log(`Geocoded location: ${location.lat}, ${location.lng}`);
+      if (!geoData.results?.length) {
+        return new Response(
+          JSON.stringify({ error: "Location not found" }),
+          { status: 404, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      }
+
+      location = geoData.results[0].geometry.location;
+      searchLocation = postcode;
+      console.log(`Geocoded location: ${location.lat}, ${location.lng}`);
+    }
 
     // 2. Multiple search strategies for comprehensive results
     let allResults: any[] = [];
     
     const searchQueries = [
-      `City & Guilds electrical training ${postcode}`,
-      `EAL electrical qualifications ${postcode}`,
-      `NICEIC training center ${postcode}`, 
-      `electrical installation courses ${postcode}`,
-      `18th Edition training ${postcode}`,
-      `electrical apprenticeship provider ${postcode}`,
-      `vocational college electrical ${postcode}`,
-      `further education college ${postcode}`,
-      `training college ${postcode}`,
-      `university ${postcode}`
+      `UK Electrical Career Courses & Training ${searchLocation}`,
+      `City & Guilds electrical training ${searchLocation}`,
+      `EAL electrical qualifications ${searchLocation}`,
+      `NICEIC training center ${searchLocation}`, 
+      `electrical installation courses ${searchLocation}`,
+      `18th Edition training ${searchLocation}`,
+      `electrical apprenticeship provider ${searchLocation}`,
+      `vocational college electrical ${searchLocation}`,
+      `further education college ${searchLocation}`,
+      `training college ${searchLocation}`,
+      `university ${searchLocation}`
     ];
 
     console.log(`Searching with ${searchQueries.length} different queries...`);
@@ -175,7 +187,8 @@ serve(async (req) => {
       JSON.stringify({ 
         providers: providers,
         search_location: {
-          postcode,
+          postcode: postcode || null,
+          coordinates: { lat: location.lat, lng: location.lng },
           lat: location.lat,
           lng: location.lng,
           radius_km: radius / 1000
