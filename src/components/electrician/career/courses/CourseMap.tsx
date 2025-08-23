@@ -1,7 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import ProviderInfoOverlay from "./ProviderInfoOverlay";
 
 interface TrainingProvider {
   place_id: string;
@@ -244,9 +243,6 @@ const CourseMap: React.FC<CourseMapProps> = ({
     }
   }, [selectedCourse, markers]);
 
-  const getSelectedProvider = () => {
-    return markers.find(marker => marker.providerId === selectedCourse)?.provider;
-  };
 
   if (isLoading) {
     return (
@@ -302,11 +298,6 @@ const CourseMap: React.FC<CourseMapProps> = ({
         </div>
       )}
       
-      <ProviderInfoOverlay 
-        userLocation={userLocation}
-        selectedProvider={getSelectedProvider()}
-        onClose={onCourseDeselect}
-      />
     </Card>
   );
 };
