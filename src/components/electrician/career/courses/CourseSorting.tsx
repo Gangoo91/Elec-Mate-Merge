@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -45,13 +46,14 @@ const CourseSorting = ({
   const currentSortOption = sortOptions.find(option => option.key === currentSort);
 
   return (
-    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 p-4 border border-elec-yellow/20 rounded-lg bg-elec-gray/50">
-      <div className="flex items-center gap-3">
-        <span className="text-sm font-medium">Sort by:</span>
+    <div className="flex flex-col gap-4 p-3 sm:p-4 border border-elec-yellow/20 rounded-lg bg-elec-gray/50">
+      {/* Top row - Sort controls */}
+      <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+        <span className="text-sm font-medium whitespace-nowrap">Sort by:</span>
         
         {/* Desktop: Button Group */}
-        <div className="hidden sm:flex gap-2">
-          {sortOptions.slice(0, 5).map((option) => {
+        <div className="hidden lg:flex gap-2 flex-wrap">
+          {sortOptions.slice(0, 4).map((option) => {
             const Icon = option.icon;
             const isActive = currentSort === option.key;
             
@@ -67,7 +69,8 @@ const CourseSorting = ({
                 }
               >
                 <Icon className="h-3 w-3 mr-1" />
-                {option.label}
+                <span className="hidden xl:inline">{option.label}</span>
+                <span className="xl:hidden">{option.label.split(' ')[0]}</span>
                 {isActive && (
                   <span className="ml-1">
                     {option.direction === "asc" ? 
@@ -82,11 +85,11 @@ const CourseSorting = ({
           
           {/* More Options Dropdown */}
           <Select value={currentSort} onValueChange={onSortChange}>
-            <SelectTrigger className="w-32 bg-background/50">
+            <SelectTrigger className="w-28 bg-background/50">
               <SelectValue placeholder="More..." />
             </SelectTrigger>
             <SelectContent className="bg-popover border-border">
-              {sortOptions.slice(5).map((option) => {
+              {sortOptions.slice(4).map((option) => {
                 const Icon = option.icon;
                 return (
                   <SelectItem key={option.key} value={option.key}>
@@ -101,10 +104,10 @@ const CourseSorting = ({
           </Select>
         </div>
 
-        {/* Mobile: Single Dropdown */}
-        <div className="sm:hidden w-full max-w-xs">
+        {/* Mobile/Tablet: Single Dropdown */}
+        <div className="lg:hidden flex-1 min-w-0">
           <Select value={currentSort} onValueChange={onSortChange}>
-            <SelectTrigger className="bg-background/50">
+            <SelectTrigger className="bg-background/50 w-full">
               <SelectValue placeholder="Select sort option" />
             </SelectTrigger>
             <SelectContent className="bg-popover border-border">
@@ -128,28 +131,31 @@ const CourseSorting = ({
         </div>
       </div>
 
-      <div className="flex items-center gap-3">
-        <Badge variant="outline" className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30">
-          {totalResults} courses
-        </Badge>
-        
-        {currentSortOption && (
-          <div className="hidden sm:flex items-center gap-2 text-sm text-muted-foreground">
-            <span>Sorted by {currentSortOption.label}</span>
-            {currentSortOption.direction === "asc" ? 
-              <ArrowUp className="h-3 w-3" /> : 
-              <ArrowDown className="h-3 w-3" />
-            }
-          </div>
-        )}
+      {/* Bottom row - Results and view controls */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+        <div className="flex items-center gap-3 flex-wrap">
+          <Badge variant="outline" className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30 whitespace-nowrap">
+            {totalResults} courses
+          </Badge>
+          
+          {currentSortOption && (
+            <div className="hidden md:flex items-center gap-2 text-sm text-muted-foreground">
+              <span>Sorted by {currentSortOption.label}</span>
+              {currentSortOption.direction === "asc" ? 
+                <ArrowUp className="h-3 w-3" /> : 
+                <ArrowDown className="h-3 w-3" />
+              }
+            </div>
+          )}
+        </div>
 
         {/* View Mode Toggle */}
-        <div className="flex border border-elec-yellow/20 rounded overflow-hidden">
+        <div className="flex border border-elec-yellow/20 rounded overflow-hidden self-start sm:self-auto">
           <Button
             variant={viewMode === "grid" ? "default" : "ghost"}
             size="sm"
             onClick={() => onViewModeChange("grid")}
-            className={`rounded-none border-none ${
+            className={`rounded-none border-none px-3 ${
               viewMode === "grid" ? 
                 "bg-elec-yellow text-elec-dark" : 
                 "text-elec-yellow hover:bg-elec-yellow/10"
@@ -161,12 +167,13 @@ const CourseSorting = ({
               <div className="bg-current rounded-sm"></div>
               <div className="bg-current rounded-sm"></div>
             </div>
+            <span className="ml-2 hidden sm:inline">Grid</span>
           </Button>
           <Button
             variant={viewMode === "list" ? "default" : "ghost"}
             size="sm"
             onClick={() => onViewModeChange("list")}
-            className={`rounded-none border-none ${
+            className={`rounded-none border-none px-3 ${
               viewMode === "list" ? 
                 "bg-elec-yellow text-elec-dark" : 
                 "text-elec-yellow hover:bg-elec-yellow/10"
@@ -177,6 +184,7 @@ const CourseSorting = ({
               <div className="h-0.5 w-full bg-current rounded-sm"></div>
               <div className="h-0.5 w-full bg-current rounded-sm"></div>
             </div>
+            <span className="ml-2 hidden sm:inline">List</span>
           </Button>
         </div>
       </div>
