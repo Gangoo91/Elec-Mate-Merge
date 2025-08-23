@@ -85,7 +85,7 @@ const ProviderInfoOverlay: React.FC<ProviderInfoOverlayProps> = ({
 
   return (
     <Card className="absolute bottom-4 left-4 w-80 max-w-[calc(100vw-2rem)] bg-background/95 backdrop-blur-sm border border-border/50 shadow-lg z-[1000]">
-      <CardContent className="p-4 space-y-3">
+      <CardContent className="space-y-3">
         <div className="flex items-start justify-between">
           <div className="flex-1 min-w-0">
             <h3 className="font-semibold text-sm leading-tight pr-2">
