@@ -27,23 +27,23 @@ const CourseSearchForm = ({ locations, onSearch }: CourseSearchFormProps) => {
 
   return (
     <Card className="border-elec-yellow/20 bg-elec-gray/80">
-      <CardHeader className="pb-2">
-        <CardTitle className="text-lg">Find Courses & Training Centers</CardTitle>
+      <CardHeader className="pb-2 p-4 sm:p-6">
+        <CardTitle className="text-base sm:text-lg">Find Courses & Training Centers</CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardContent className="p-4 sm:p-6">
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSearch)} className="flex flex-col md:flex-row gap-4">
+          <form onSubmit={form.handleSubmit(onSearch)} className="flex flex-col lg:flex-row gap-3 sm:gap-4">
             <FormField
               control={form.control}
               name="searchQuery"
               render={({ field }) => (
                 <FormItem className="flex-1">
                   <div className="relative">
-                    <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
+                    <Search className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
                     <FormControl>
                       <Input 
                         placeholder="Search courses or centers..." 
-                        className="pl-8"
+                        className="pl-10 h-10"
                         {...field}
                       />
                     </FormControl>
@@ -55,13 +55,13 @@ const CourseSearchForm = ({ locations, onSearch }: CourseSearchFormProps) => {
               control={form.control}
               name="location"
               render={({ field }) => (
-                <FormItem className="w-full md:w-48">
+                <FormItem className="w-full lg:w-48">
                   <Select 
                     onValueChange={field.onChange} 
                     defaultValue={field.value}
                   >
                     <FormControl>
-                      <SelectTrigger className="w-full">
+                      <SelectTrigger className="w-full h-10">
                         <SelectValue placeholder="Location" />
                       </SelectTrigger>
                     </FormControl>
@@ -76,7 +76,7 @@ const CourseSearchForm = ({ locations, onSearch }: CourseSearchFormProps) => {
                 </FormItem>
               )}
             />
-            <Button type="submit" className="bg-elec-yellow text-elec-dark hover:bg-amber-400">
+            <Button type="submit" className="bg-elec-yellow text-elec-dark hover:bg-amber-400 h-10 px-6">
               Search
             </Button>
           </form>

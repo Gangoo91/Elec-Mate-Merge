@@ -106,15 +106,15 @@ const LocationBasedCourseSearch: React.FC<LocationBasedCourseSearchProps> = ({
 
   return (
     <Card className="border-elec-yellow/20 bg-elec-gray/80">
-      <CardHeader className="pb-4">
-        <CardTitle className="text-lg flex items-center gap-2">
+      <CardHeader className="pb-4 p-4 sm:p-6">
+        <CardTitle className="text-base sm:text-lg flex items-center gap-2">
           <MapPin className="h-5 w-5 text-elec-yellow" />
           Find Courses Near You
         </CardTitle>
       </CardHeader>
-      <CardContent className="space-y-4">
+      <CardContent className="space-y-4 p-4 sm:p-6">
         <div className="space-y-2">
-          <Label htmlFor="location-search">Location</Label>
+          <Label htmlFor="location-search" className="text-sm font-medium">Location</Label>
           <div className="flex gap-2">
             <Input
               ref={inputRef}
@@ -123,12 +123,13 @@ const LocationBasedCourseSearch: React.FC<LocationBasedCourseSearchProps> = ({
               value={searchInput}
               onChange={(e) => setSearchInput(e.target.value)}
               onKeyPress={(e) => e.key === 'Enter' && handleManualSearch()}
-              className="flex-1"
+              className="flex-1 h-10"
             />
             <Button 
               onClick={handleManualSearch}
               disabled={isSearching || !searchInput.trim()}
               size="sm"
+              className="h-10 px-3"
             >
               {isSearching ? (
                 <Loader2 className="h-4 w-4 animate-spin" />
@@ -147,15 +148,15 @@ const LocationBasedCourseSearch: React.FC<LocationBasedCourseSearchProps> = ({
         )}
 
         <div className="space-y-2">
-          <Label>Search Radius</Label>
+          <Label className="text-sm font-medium">Search Radius</Label>
           <div className="flex flex-wrap gap-2">
             {radiusOptions.map((radius) => (
               <Badge
                 key={radius}
                 variant={searchRadius === radius ? "default" : "outline"}
-                className={`cursor-pointer transition-colours ${
+                className={`cursor-pointer transition-colors px-3 py-1 text-sm ${
                   searchRadius === radius 
-                    ? "bg-elec-yellow text-elec-dark" 
+                    ? "bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90" 
                     : "border-elec-yellow/30 hover:bg-elec-yellow/10"
                 }`}
                 onClick={() => onRadiusChange(radius)}

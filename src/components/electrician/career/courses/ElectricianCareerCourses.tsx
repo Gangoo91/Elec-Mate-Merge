@@ -272,13 +272,13 @@ const ElectricianCareerCourses = () => {
     <div className="space-y-6">
       {/* Header Section */}
       <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-xl sm:text-2xl">
+        <CardHeader className="p-4 sm:p-6">
+          <CardTitle className="flex items-center gap-2 text-lg sm:text-xl lg:text-2xl">
             <BookOpen className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow" />
             UK Electrical Career Courses & Training
           </CardTitle>
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <p className="text-sm sm:text-base text-muted-foreground">
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+            <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
               Comprehensive professional development courses to advance your electrical career in the UK market
             </p>
             
@@ -286,21 +286,23 @@ const ElectricianCareerCourses = () => {
               <Button
                 variant={showBookmarks ? "default" : "outline"}
                 onClick={() => setShowBookmarks(!showBookmarks)}
-                className="flex items-center gap-2"
+                className="flex items-center gap-2 min-h-[40px] text-xs sm:text-sm px-3 sm:px-4"
               >
                 <BookOpen className="h-4 w-4" />
-                {isMobile ? "Saved" : "Saved Courses"}
+                <span className="hidden xs:inline">{isMobile ? "Saved" : "Saved Courses"}</span>
+                <span className="xs:hidden">Saved</span>
               </Button>
               
               <Button
                 variant={showComparison ? "default" : "outline"}
                 onClick={() => setShowComparison(!showComparison)}
-                className="flex items-center gap-2"
+                className="flex items-center gap-2 min-h-[40px] text-xs sm:text-sm px-3 sm:px-4"
               >
                 <Scale className="h-4 w-4" />
-                {isMobile ? "Compare" : "Compare Courses"}
+                <span className="hidden xs:inline">{isMobile ? "Compare" : "Compare Courses"}</span>
+                <span className="xs:hidden">Compare</span>
                 {selectedCount > 0 && (
-                  <Badge variant="secondary" className="ml-1 h-4 px-1">
+                  <Badge variant="secondary" className="ml-1 h-4 px-1 text-xs">
                     {selectedCount}
                   </Badge>
                 )}
@@ -309,10 +311,11 @@ const ElectricianCareerCourses = () => {
               <Button
                 variant="outline"
                 onClick={exportToPDF}
-                className="flex items-center gap-2"
+                className="flex items-center gap-2 min-h-[40px] text-xs sm:text-sm px-3 sm:px-4"
               >
                 <FileDown className="h-4 w-4" />
-                {isMobile ? "PDF" : "Export PDF"}
+                <span className="hidden xs:inline">{isMobile ? "PDF" : "Export PDF"}</span>
+                <span className="xs:hidden">PDF</span>
               </Button>
             </div>
           </div>
@@ -369,7 +372,7 @@ const ElectricianCareerCourses = () => {
               <div className="space-y-6">
                 {filteredAndSortedCourses.length > 0 ? (
                   <div className={viewMode === "grid" ? 
-                    "grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6" : 
+                    "grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6" : 
                     "space-y-4"
                   }>
                     {filteredAndSortedCourses.map((course) => (
@@ -380,7 +383,7 @@ const ElectricianCareerCourses = () => {
                         />
                         
                         {/* Action Buttons Overlay */}
-                        <div className="absolute top-2 right-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <div className="absolute top-2 right-2 flex gap-1 opacity-0 sm:group-hover:opacity-100 transition-opacity duration-200">
                           <Button
                             variant="ghost"
                             size="sm"
@@ -424,7 +427,7 @@ const ElectricianCareerCourses = () => {
             content: (
               <div className="space-y-6">
                 {filteredCenters.length > 0 ? (
-                  <div className="space-y-6">
+                  <div className="space-y-4 sm:space-y-6">
                     {filteredCenters.map((center) => (
                       <EnhancedTrainingCenterCard 
                         key={center.id} 

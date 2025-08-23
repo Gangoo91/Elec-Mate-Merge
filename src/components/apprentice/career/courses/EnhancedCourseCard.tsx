@@ -36,41 +36,41 @@ const EnhancedCourseCard = ({ course, onViewDetails }: EnhancedCourseCardProps) 
 
   return (
     <Card className="border-elec-yellow/20 bg-elec-gray h-full flex flex-col hover:border-elec-yellow/40 transition-all duration-300">
-      <CardHeader className="pb-3">
+      <CardHeader className="pb-3 p-4 sm:p-6">
         <div className="flex justify-between items-start gap-2 mb-2">
-          <Badge className={`${getCategoryColor(course.category)} text-xs`}>
+          <Badge className={`${getCategoryColor(course.category)} text-xs px-2 py-1`}>
             {course.category}
           </Badge>
-          <div className="flex items-center gap-1 bg-amber-400/20 text-amber-400 px-2 py-1 rounded text-xs">
+          <div className="flex items-center gap-1 bg-amber-400/20 text-amber-400 px-2 py-1 rounded text-xs font-medium">
             <Star className="h-3 w-3 fill-amber-400" />
             <span>{course.rating}</span>
           </div>
         </div>
         
-        <CardTitle className="text-lg leading-tight">{course.title}</CardTitle>
-        <p className="text-sm text-elec-yellow">{course.provider}</p>
+        <CardTitle className="text-base sm:text-lg leading-tight">{course.title}</CardTitle>
+        <p className="text-sm text-elec-yellow font-medium">{course.provider}</p>
       </CardHeader>
       
-      <CardContent className="pt-0 flex-grow flex flex-col space-y-4">
+      <CardContent className="pt-0 p-4 sm:p-6 flex-grow flex flex-col space-y-4">
         <p className="text-sm text-muted-foreground leading-relaxed">{course.description}</p>
         
         {/* Key Metrics Grid */}
-        <div className="grid grid-cols-2 gap-2 text-xs">
+        <div className="grid grid-cols-2 gap-3 text-xs">
           <div className="flex items-center gap-1.5">
             <Clock className="h-3 w-3 text-elec-yellow flex-shrink-0" />
-            <span>{course.duration}</span>
+            <span className="min-w-0 truncate">{course.duration}</span>
           </div>
           <div className="flex items-center gap-1.5">
             <Users className="h-3 w-3 text-elec-yellow flex-shrink-0" />
-            <span>{course.level}</span>
+            <span className="min-w-0 truncate">{course.level}</span>
           </div>
           <div className="flex items-center gap-1.5">
             <BookOpen className="h-3 w-3 text-elec-yellow flex-shrink-0" />
-            <span>{course.format.split(',')[0]}</span>
+            <span className="min-w-0 truncate">{course.format.split(',')[0]}</span>
           </div>
           <div className="flex items-center gap-1.5">
             <TrendingUp className="h-3 w-3 text-elec-yellow flex-shrink-0" />
-            <span>Future: {course.futureProofing}/5</span>
+            <span className="min-w-0 truncate">Future: {course.futureProofing}/5</span>
           </div>
         </div>
 
@@ -116,17 +116,17 @@ const EnhancedCourseCard = ({ course, onViewDetails }: EnhancedCourseCardProps) 
             <span>Available Locations:</span>
           </div>
           <div className="flex flex-wrap gap-1">
-            {course.locations.slice(0, 4).map((location, idx) => (
+            {course.locations.slice(0, 3).map((location, idx) => (
               <span 
                 key={idx} 
-                className="text-xs bg-elec-dark/60 px-2 py-1 rounded-md"
+                className="text-xs bg-elec-dark/60 px-2 py-1 rounded-md break-words"
               >
                 {location}
               </span>
             ))}
-            {course.locations.length > 4 && (
+            {course.locations.length > 3 && (
               <span className="text-xs bg-elec-dark/60 px-2 py-1 rounded-md">
-                +{course.locations.length - 4} more
+                +{course.locations.length - 3} more
               </span>
             )}
           </div>
@@ -176,9 +176,9 @@ const EnhancedCourseCard = ({ course, onViewDetails }: EnhancedCourseCardProps) 
         </div>
 
         {/* Footer */}
-        <div className="flex justify-between items-center mt-auto pt-3 border-t border-elec-yellow/10">
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 mt-auto pt-3 border-t border-elec-yellow/10">
           <div className="space-y-1">
-            <p className="text-xs text-amber-400/80 flex items-center gap-1">
+            <p className="text-sm sm:text-xs text-amber-400/80 flex items-center gap-1 font-medium">
               <PoundSterling className="h-3 w-3" />
               {course.price}
             </p>
@@ -192,7 +192,7 @@ const EnhancedCourseCard = ({ course, onViewDetails }: EnhancedCourseCardProps) 
           <Button 
             variant="outline" 
             size="sm" 
-            className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+            className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 w-full sm:w-auto min-h-[36px]"
             onClick={() => onViewDetails(course)}
           >
             View Details
