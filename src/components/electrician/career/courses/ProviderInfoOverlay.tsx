@@ -168,15 +168,7 @@ const ProviderInfoOverlay: React.FC<ProviderInfoOverlayProps> = ({
 
       {/* Action buttons */}
       <div className="flex gap-2 mb-3">
-        <Button 
-          variant="outline" 
-          size="sm" 
-          onClick={handleGetDirections}
-          className="flex-1 h-7 text-xs border-elec-yellow/30 text-elec-light hover:bg-elec-yellow/10"
-        >
-          <Navigation className="h-3 w-3 mr-1" />
-          Directions
-        </Button>
+        {/* Directions button hidden per user request */}
         
         {selectedProvider.website && (
           <Button 
