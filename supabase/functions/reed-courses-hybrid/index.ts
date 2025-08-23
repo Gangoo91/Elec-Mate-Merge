@@ -154,28 +154,123 @@ async function scrapeReedCourses(keywords: string): Promise<any[]> {
             type: "json",
             schema: {
               type: "object",
-              required: [],
               properties: {
-                courseTitle: { type: "string" },
-                courseCode: { type: "string" },
-                provider: { type: "string" },
-                description: { type: "string" },
-                duration: { type: "string" },
-                level: { type: "string" },
-                rating: { type: "number" },
-                demandTag: { type: "string" },
+                category: {
+                  type: "string",
+                  description: "The main category or tag of the course (e.g., Emerging Technologies)"
+                },
+                rating: {
+                  type: "number",
+                  description: "Star rating of the course"
+                },
+                courseTitle: {
+                  type: "string",
+                  description: "Title of the course"
+                },
+                provider: {
+                  type: "string",
+                  description: "Training provider name"
+                },
+                description: {
+                  type: "string",
+                  description: "Short description of the course"
+                },
+                duration: {
+                  type: "string",
+                  description: "Course duration (e.g., 2 days)"
+                },
+                level: {
+                  type: "string",
+                  description: "Course difficulty level (e.g., Intermediate)"
+                },
+                learningMode: {
+                  type: "string",
+                  description: "Learning mode (e.g., Blended learning with hands-on practical sessions)"
+                },
+                futureScope: {
+                  type: "string",
+                  description: "Future career outlook or rating (e.g., Future: 5/5)"
+                },
+                industryDemand: {
+                  type: "string",
+                  description: "Industry demand level (e.g., High)"
+                },
                 salaryImpact: {
                   type: "object",
-                  required: [],
                   properties: {
-                    min: { type: "number" },
-                    max: { type: "number" },
-                    unit: { type: "string" }
+                    min: {
+                      type: "number",
+                      description: "Minimum salary impact"
+                    },
+                    max: {
+                      type: "number",
+                      description: "Maximum salary impact"
+                    },
+                    unit: {
+                      type: "string",
+                      description: "Unit (e.g., annual increase)"
+                    }
                   }
                 },
-                nextDate: { type: "string" },
-                url: { type: "string" }
-              }
+                careerOutcomes: {
+                  type: "array",
+                  items: {
+                    type: "string"
+                  },
+                  description: "List of career outcomes"
+                },
+                locations: {
+                  type: "array",
+                  items: {
+                    type: "string"
+                  },
+                  description: "Available course locations"
+                },
+                accreditations: {
+                  type: "array",
+                  items: {
+                    type: "string"
+                  },
+                  description: "List of accreditations"
+                },
+                upcomingDates: {
+                  type: "array",
+                  items: {
+                    type: "string",
+                    format: "date"
+                  },
+                  description: "Upcoming course start dates"
+                },
+                priceRange: {
+                  type: "string",
+                  description: "Price range of the course (e.g., £425 - £525)"
+                },
+                employerSupport: {
+                  type: "boolean",
+                  description: "Whether employer support is available"
+                },
+                detailsUrl: {
+                  type: "string",
+                  description: "Direct link to the course details page"
+                }
+              },
+              required: [
+                "category",
+                "courseTitle",
+                "provider",
+                "description",
+                "duration",
+                "level",
+                "learningMode",
+                "industryDemand",
+                "salaryImpact",
+                "careerOutcomes",
+                "locations",
+                "accreditations",
+                "upcomingDates",
+                "priceRange",
+                "detailsUrl"
+              ]
             }
           }
         ]
@@ -207,28 +302,28 @@ async function scrapeReedCourses(keywords: string): Promise<any[]> {
       description: course.description || 'Course details available',
       duration: course.duration || 'Contact provider',
       level: course.level || 'Various levels',
-      price: 'Contact for pricing',
-      format: 'Contact provider',
-      nextDates: course.nextDate ? [course.nextDate] : ['Contact provider'],
+      price: course.priceRange || 'Contact for pricing',
+      format: course.learningMode || 'Contact provider',
+      nextDates: course.upcomingDates && course.upcomingDates.length > 0 ? course.upcomingDates : ['Contact provider'],
       rating: course.rating || 4.3,
-      locations: ['Various locations'],
-      category: 'Professional Development',
-      industryDemand: 'High' as const,
-      futureProofing: 4,
+      locations: course.locations && course.locations.length > 0 ? course.locations : ['Various locations'],
+      category: course.category || 'Professional Development',
+      industryDemand: course.industryDemand || 'High' as const,
+      futureProofing: parseFutureScope(course.futureScope) || 4,
       salaryImpact: course.salaryImpact || 'Contact provider',
-      careerOutcomes: ['Professional certification', 'Career advancement'],
-      accreditation: ['Industry recognised'],
-      employerSupport: true,
+      careerOutcomes: course.careerOutcomes && course.careerOutcomes.length > 0 ? course.careerOutcomes : ['Professional certification', 'Career advancement'],
+      accreditation: course.accreditations && course.accreditations.length > 0 ? course.accreditations : ['Industry recognised'],
+      employerSupport: course.employerSupport !== undefined ? course.employerSupport : true,
       prerequisites: ['Contact provider'],
       courseOutline: ['Contact provider for details'],
       assessmentMethod: 'Contact provider',
       continuousAssessment: false,
-      external_url: course.url || 'https://www.reed.co.uk/courses/?keywords=Electrical%20Career%20Courses%20%26%20Training',
+      external_url: course.detailsUrl || course.url || 'https://www.reed.co.uk/courses/?keywords=Electrical%20Career%20Courses%20%26%20Training',
       source: 'Reed Courses',
       isLive: true,
       relevanceScore: calculateRelevanceScore(course.courseTitle || course.title || '', keywords),
-      courseCode: course.courseCode || null,
-      demandTag: course.demandTag || null
+      learningMode: course.learningMode || null,
+      futureScope: course.futureScope || null
     }));
 
   } catch (error) {
@@ -359,4 +454,23 @@ function removeDuplicatesAndScore(courses: any[], keywords: string): any[] {
   });
   
   return Array.from(seen.values());
+}
+
+function parseFutureScope(futureScope: string = ''): number | null {
+  if (!futureScope) return null;
+  
+  // Extract number from patterns like "Future: 5/5" or "5/5"
+  const match = futureScope.match(/(\d+)\/(\d+)/);
+  if (match) {
+    const [, numerator, denominator] = match;
+    return (parseInt(numerator) / parseInt(denominator)) * 5;
+  }
+  
+  // Look for standalone numbers
+  const numberMatch = futureScope.match(/\d+/);
+  if (numberMatch) {
+    return Math.min(5, parseInt(numberMatch[0]));
+  }
+  
+  return null;
 }
