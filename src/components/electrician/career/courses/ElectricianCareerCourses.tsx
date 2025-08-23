@@ -1,29 +1,41 @@
 import React, { useState, useMemo } from "react";
 import { DropdownTabs } from "@/components/ui/dropdown-tabs";
-import EnhancedCourseSearch from "./EnhancedCourseSearch";
-import FeaturedCoursesCarousel from "./FeaturedCoursesCarousel";
-import GridViewContainer from "./views/GridViewContainer";
-import MapViewContainer from "./views/MapViewContainer";
-import ViewModeToggle from "./shared/ViewModeToggle";
-import LocationSearch from "./shared/LocationSearch";
+import EnhancedCourseCard from "../../../apprentice/career/courses/EnhancedCourseCard";
+import EnhancedTrainingCenterCard from "../../../apprentice/career/courses/EnhancedTrainingCenterCard";
+import CourseDetailsModal from "../../../apprentice/career/courses/CourseDetailsModal";
+import TrainingCentreDetailsModal from "../../../apprentice/career/courses/TrainingCenterDetailsModal";
 import CourseSelectionTips from "../../../apprentice/career/courses/CourseSelectionTips";
+import EmptySearchResults from "../../../apprentice/career/courses/EmptySearchResults";
+import EnhancedCourseSearch from "./EnhancedCourseSearch";
+import CourseSorting, { sortOptions } from "./CourseSorting";
+import FeaturedCoursesCarousel from "./FeaturedCoursesCarousel";
+import CourseBookmarkManager, { useBookmarkManager } from "./CourseBookmarkManager";
+import CourseCompareMode, { useCourseComparison } from "./CourseCompareMode";
+import CourseMap from "./CourseMap";
+import GoogleMapsLoader from "../../../job-vacancies/GoogleMapsLoader";
 import { 
   EnhancedCareerCourse,
   EnhancedTrainingCenter,
   enhancedCareerCourses
 } from "../../../apprentice/career/courses/enhancedCoursesData";
+import LocationBasedCourseSearch from "../../../apprentice/career/courses/LocationBasedCourseSearch";
 import { useLiveCourseSearch } from "@/hooks/useLiveCourseSearch";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { BookOpen, Users, Plus, Scale, Wifi, WifiOff } from "lucide-react";
+import { BookOpen, Users, Plus, Scale, FileDown, RefreshCw, Wifi, WifiOff, Map, List } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 const ElectricianCareerCourses = () => {
+  const [selectedCourse, setSelectedCourse] = useState<EnhancedCareerCourse | null>(null);
+  const [selectedCenter, setSelectedCenter] = useState<EnhancedTrainingCenter | null>(null);
+  const [activeTab, setActiveTab] = useState("courses");
   const [currentSort, setCurrentSort] = useState("relevance");
-  const [viewMode, setViewMode] = useState<"grid" | "map">("grid");
+  const [viewMode, setViewMode] = useState<"grid" | "list" | "map">("grid");
+  const [showBookmarks, setShowBookmarks] = useState(false);
+  const [showComparison, setShowComparison] = useState(false);
   const [selectedCourseId, setSelectedCourseId] = useState<string | null>(null);
   const [nearbyProviders, setNearbyProviders] = useState<any[]>([]);
   
@@ -34,6 +46,8 @@ const ElectricianCareerCourses = () => {
   
   const { toast } = useToast();
   const isMobile = useIsMobile();
+  const { toggleBookmark, isBookmarked } = useBookmarkManager();
+  const { addToComparison, removeFromComparison, isInComparison, selectedCount } = useCourseComparison();
 
   // Search and filter state
   const [filters, setFilters] = useState({
@@ -139,6 +153,141 @@ const ElectricianCareerCourses = () => {
     return nearbyProviders;
   }, [nearbyProviders]);
 
+  // Enhanced filtering and sorting logic using live data
+  const filteredAndSortedCourses = useMemo(() => {
+    let filtered = liveCourses.filter(course => {
+      // Search query filter
+      if (filters.searchQuery) {
+        const query = filters.searchQuery.toLowerCase();
+        const matches = 
+          course.title.toLowerCase().includes(query) ||
+          course.provider.toLowerCase().includes(query) ||
+          course.description.toLowerCase().includes(query) ||
+          course.category.toLowerCase().includes(query);
+        if (!matches) return false;
+      }
+
+      // Category filter
+      if (filters.category !== "All Categories" && course.category !== filters.category) {
+        return false;
+      }
+
+      // Level filter
+      if (filters.level !== "All Levels" && course.level !== filters.level) {
+        return false;
+      }
+
+      // Location filter - now supports both dropdown and radius-based filtering
+      if (filters.location !== "All Locations") {
+        const hasLocation = course.locations.some(loc => 
+          loc.toLowerCase().includes(filters.location.toLowerCase())
+        );
+        if (!hasLocation) return false;
+      }
+
+      // Radius-based location filtering
+      if (userCoordinates && userLocation) {
+        const courseWithinRadius = course.locations.some(location => {
+          // This would need geocoding for precise distance calculation
+          // For now, we'll use a simple text-based proximity check
+          const locationLower = location.toLowerCase();
+          const userLocationLower = userLocation.toLowerCase();
+          
+          // Extract city names for comparison
+          const userCity = userLocationLower.split(',')[0].trim();
+          return locationLower.includes(userCity) || locationLower.includes('online') || locationLower.includes('remote');
+        });
+        
+        if (!courseWithinRadius) return false;
+      }
+
+      // Price range filter
+      const coursePrice = parseInt(course.price.match(/£(\d+)/)?.[1] || "0");
+      if (coursePrice < filters.priceRange[0] || coursePrice > filters.priceRange[1]) {
+        return false;
+      }
+
+      // Duration filter
+      if (filters.duration !== "Any Duration" && !course.duration.includes(filters.duration)) {
+        return false;
+      }
+
+      // Industry demand filter
+      if (filters.industryDemand !== "All" && course.industryDemand !== filters.industryDemand) {
+        return false;
+      }
+
+      // Format filter
+      if (filters.format !== "All Formats" && !course.format.toLowerCase().includes(filters.format.toLowerCase())) {
+        return false;
+      }
+
+      // Rating filter
+      if (filters.rating > 0 && course.rating < filters.rating) {
+        return false;
+      }
+
+      return true;
+    });
+
+    // Sorting
+    const sortOption = sortOptions.find(opt => opt.key === currentSort);
+    if (sortOption) {
+      filtered.sort((a, b) => {
+        let comparison = 0;
+        
+        switch (sortOption.key) {
+          case "rating":
+            comparison = b.rating - a.rating;
+            break;
+          case "price-low":
+            const priceA = parseInt(a.price.match(/£(\d+)/)?.[1] || "0");
+            const priceB = parseInt(b.price.match(/£(\d+)/)?.[1] || "0");
+            comparison = priceA - priceB;
+            break;
+          case "price-high":
+            const priceA2 = parseInt(a.price.match(/£(\d+)/)?.[1] || "0");
+            const priceB2 = parseInt(b.price.match(/£(\d+)/)?.[1] || "0");
+            comparison = priceB2 - priceA2;
+            break;
+          case "duration":
+            const durationA = parseInt(a.duration.match(/(\d+)/)?.[1] || "0");
+            const durationB = parseInt(b.duration.match(/(\d+)/)?.[1] || "0");
+            comparison = durationA - durationB;
+            break;
+          case "demand":
+            const demandOrder = { "High": 3, "Medium": 2, "Low": 1 };
+            comparison = demandOrder[b.industryDemand as keyof typeof demandOrder] - 
+                        demandOrder[a.industryDemand as keyof typeof demandOrder];
+            break;
+          case "future-proof":
+            comparison = b.futureProofing - a.futureProofing;
+            break;
+          case "title":
+            comparison = a.title.localeCompare(b.title);
+            break;
+          case "provider":
+            comparison = a.provider.localeCompare(b.provider);
+            break;
+          case "next-date":
+            const dateA = new Date(a.nextDates[0]);
+            const dateB = new Date(b.nextDates[0]);
+            comparison = dateA.getTime() - dateB.getTime();
+            break;
+          default: // relevance
+            comparison = (b.rating * b.futureProofing) - (a.rating * a.futureProofing);
+        }
+        
+        return sortOption.direction === "desc" ? comparison : -comparison;
+      });
+    }
+
+    return filtered;
+  }, [liveCourses, filters, currentSort]);
+
+  // Remove training centers for electricians - live-only approach
+  const filteredCenters: EnhancedTrainingCenter[] = [];
+
   // Location handling functions
   const handleLocationSelect = (location: string, coordinates?: google.maps.LatLngLiteral) => {
     setUserLocation(location);
@@ -146,7 +295,8 @@ const ElectricianCareerCourses = () => {
     
     toast({
       title: "Location set",
-      description: `Finding courses and providers within ${searchRadius} miles of ${location}`,
+      description: `Filtering courses within ${searchRadius} miles of ${location}`,
+      variant: "success"
     });
   };
 
@@ -156,9 +306,15 @@ const ElectricianCareerCourses = () => {
     if (userLocation) {
       toast({
         title: "Radius updated",
-        description: `Now showing results within ${radius} miles`,
+        description: `Now showing courses within ${radius} miles`,
+        variant: "default"
       });
     }
+  };
+
+  const handleClearLocation = () => {
+    setUserLocation(null);
+    setUserCoordinates(null);
   };
 
   // Handler for when location search triggers provider search
@@ -214,7 +370,7 @@ const ElectricianCareerCourses = () => {
     setFilters({
       searchQuery: "",
       category: "All Categories",
-      level: "All Levels", 
+      level: "All Levels",
       location: "All Locations",
       priceRange: [0, 2000],
       duration: "Any Duration",
@@ -222,14 +378,78 @@ const ElectricianCareerCourses = () => {
       format: "All Formats",
       rating: 0
     });
-    setUserLocation(null);
-    setUserCoordinates(null);
+    handleClearLocation();
+  };
+
+  // PDF Export functionality
+  const exportToPDF = async () => {
+    try {
+      const { jsPDF } = await import('jspdf');
+      const pdf = new jsPDF();
+      
+      pdf.setFontSize(20);
+      pdf.text('Career Course Search Results', 20, 30);
+      
+      pdf.setFontSize(12);
+      let yPosition = 50;
+      
+      filteredAndSortedCourses.slice(0, 10).forEach((course, index) => {
+        if (yPosition > 270) {
+          pdf.addPage();
+          yPosition = 30;
+        }
+        
+        pdf.setFont(undefined, 'bold');
+        pdf.text(`${index + 1}. ${course.title}`, 20, yPosition);
+        yPosition += 10;
+        
+        pdf.setFont(undefined, 'normal');
+        pdf.text(`Provider: ${course.provider}`, 25, yPosition);
+        yPosition += 7;
+        
+        pdf.text(`Duration: ${course.duration} | Level: ${course.level}`, 25, yPosition);
+        yPosition += 7;
+        
+        pdf.text(`Price: ${course.price}`, 25, yPosition);
+        yPosition += 7;
+        
+        pdf.text(`Rating: ${course.rating}/5 | Demand: ${course.industryDemand}`, 25, yPosition);
+        yPosition += 15;
+      });
+      
+      pdf.save('course-search-results.pdf');
+      
+      toast({
+        title: "PDF exported successfully",
+        description: "Your course search results have been saved as PDF.",
+        variant: "success"
+      });
+    } catch (error) {
+      toast({
+        title: "Export failed",
+        description: "There was an error exporting the PDF.",
+        variant: "destructive"
+      });
+    }
+  };
+
+  const viewCourseDetails = (course: EnhancedCareerCourse) => {
+    setSelectedCourse(course);
+  };
+
+  const viewCenterDetails = (center: EnhancedTrainingCenter) => {
+    setSelectedCenter(center);
+  };
+
+  const handleClose = () => {
+    setSelectedCourse(null);
+    setSelectedCenter(null);
   };
 
   return (
     <div className="space-y-6 overflow-x-hidden min-w-0 max-w-full">
-      {/* Header Section */}
-      <Card className="border-elec-yellow/10 bg-elec-card">
+      {/* Header Section - Mobile Optimized */}
+      <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader className="p-4 md:p-6">
           <div className="space-y-4">
             <CardTitle className="flex flex-col sm:flex-row sm:items-center gap-2 text-lg sm:text-xl md:text-2xl">
@@ -264,9 +484,71 @@ const ElectricianCareerCourses = () => {
               )}
             </div>
             
-            {/* View Mode Toggle */}
-            <div className="flex justify-between items-center">
-              <ViewModeToggle viewMode={viewMode} setViewMode={setViewMode} />
+            {/* Mobile Action Buttons - Better Touch Targets */}
+            <div className="grid grid-cols-2 md:flex md:flex-wrap gap-3 md:gap-2">
+              <Button
+                variant="outline"
+                onClick={refreshCourses}
+                disabled={isSearching}
+                className="flex items-center justify-center gap-2 min-h-[44px] text-sm"
+              >
+                <RefreshCw className={`h-4 w-4 ${isSearching ? 'animate-spin' : ''}`} />
+                {isMobile ? "Refresh" : "Refresh Data"}
+              </Button>
+              
+              <Button
+                variant={showBookmarks ? "default" : "outline"}
+                onClick={() => setShowBookmarks(!showBookmarks)}
+                className="flex items-center justify-center gap-2 min-h-[44px] text-sm"
+              >
+                <BookOpen className="h-4 w-4" />
+                {isMobile ? "Saved" : "Saved Courses"}
+              </Button>
+              
+              <Button
+                variant={showComparison ? "default" : "outline"}
+                onClick={() => setShowComparison(!showComparison)}
+                className="flex items-center justify-center gap-2 min-h-[44px] text-sm"
+              >
+                <Scale className="h-4 w-4" />
+                {isMobile ? "Compare" : "Compare Courses"}
+                {selectedCount > 0 && (
+                  <Badge variant="secondary" className="ml-1 h-4 px-1">
+                    {selectedCount}
+                  </Badge>
+                )}
+              </Button>
+
+              {/* View Mode Toggle */}
+              <div className="flex border border-border rounded-md overflow-hidden">
+                <Button
+                  variant={viewMode === "grid" ? "default" : "ghost"}
+                  size="sm"
+                  onClick={() => setViewMode("grid")}
+                  className="rounded-none border-r border-border"
+                >
+                  <List className="h-4 w-4" />
+                  {!isMobile && " Grid"}
+                </Button>
+                <Button
+                  variant={viewMode === "map" ? "default" : "ghost"}
+                  size="sm"
+                  onClick={() => setViewMode("map")}
+                  className="rounded-none"
+                >
+                  <Map className="h-4 w-4" />
+                  {!isMobile && " Map"}
+                </Button>
+              </div>
+
+              <Button
+                variant="outline"
+                onClick={exportToPDF}
+                className="flex items-center justify-center gap-2 min-h-[44px] text-sm"
+              >
+                <FileDown className="h-4 w-4" />
+                {isMobile ? "PDF" : "Export PDF"}
+              </Button>
             </div>
           </div>
         </CardHeader>
@@ -276,58 +558,165 @@ const ElectricianCareerCourses = () => {
       {liveCourses.length > 0 && (
         <FeaturedCoursesCarousel 
           courses={liveCourses.slice(0, 6)} 
-          onViewDetails={() => {}} 
+          onViewDetails={viewCourseDetails} 
         />
       )}
 
-      {/* Location Search */}
-      <LocationSearch
-        userLocation={userLocation}
-        setUserLocation={setUserLocation}
-        userCoordinates={userCoordinates}
-        setUserCoordinates={setUserCoordinates}
-        searchRadius={searchRadius}
-        setSearchRadius={setSearchRadius}
-        onLocationSelect={handleLocationSelect}
-        onRadiusChange={handleRadiusChange}
-        onProviderSearch={handleProviderSearchFromLocation}
-      />
+      {/* Enhanced Location Search with Provider Discovery */}
+      <div className="space-y-4">
+        <LocationBasedCourseSearch
+          onLocationSelect={handleLocationSelect}
+          onRadiusChange={handleRadiusChange}
+          currentLocation={userLocation}
+          searchRadius={searchRadius}
+          onProviderSearch={handleProviderSearchFromLocation}
+        />
+        
+        {/* Find Nearby Providers - Button to search using Google Places */}
+        {userLocation && (
+          <div className="flex justify-center">
+            <Button
+              onClick={searchNearbyProviders}
+              className="bg-elec-yellow text-black hover:bg-elec-yellow/90"
+              disabled={isLoadingLive}
+            >
+              {isLoadingLive ? "Searching..." : "Find Real Training Providers Nearby"}
+            </Button>
+          </div>
+        )}
+      </div>
 
       {/* Enhanced Search and Filters */}
       <EnhancedCourseSearch
         filters={filters}
         onFiltersChange={setFilters}
         onReset={handleResetFilters}
-        totalResults={liveCourses.length}
+        totalResults={filteredAndSortedCourses.length}
         viewMode={viewMode}
       />
 
-      {/* View Content */}
-      {viewMode === "grid" ? (
-        <GridViewContainer
+      {/* Course Comparison Tool */}
+      {showComparison && (
+        <CourseCompareMode
           courses={liveCourses}
-          isLiveData={isLiveData}
-          isLoadingLive={isLoadingLive}
-          liveSummary={liveSummary}
-          liveTotal={liveTotal}
-          refreshCourses={refreshCourses}
-          isSearching={isSearching}
+          onViewDetails={viewCourseDetails}
+        />
+      )}
+
+      {/* Bookmark Manager */}
+      {showBookmarks && (
+        <CourseBookmarkManager
+          courses={liveCourses}
+          onViewDetails={viewCourseDetails}
+        />
+      )}
+
+      {/* Sorting and View Controls */}
+      {viewMode !== "map" && (
+        <CourseSorting
           currentSort={currentSort}
-          setCurrentSort={setCurrentSort}
-          filters={filters}
-          userLocation={userLocation}
-          searchRadius={searchRadius}
+          onSortChange={setCurrentSort}
+          totalResults={filteredAndSortedCourses.length}
+          viewMode={viewMode as "grid" | "list"}
+          onViewModeChange={(mode) => setViewMode(mode as "grid" | "list" | "map")}
         />
-      ) : (
-        <MapViewContainer
-          userLocation={userLocation}
-          userCoordinates={userCoordinates}
-          searchRadius={searchRadius}
-          nearbyProviders={nearbyProviders}
-          setNearbyProviders={setNearbyProviders}
-          selectedCourseId={selectedCourseId}
-          setSelectedCourseId={setSelectedCourseId}
-        />
+      )}
+
+      {/* Main Content */}
+      <div className="space-y-6">
+        <div className="flex items-center gap-2 pb-4 border-b border-border">
+          <BookOpen className="h-5 w-5 text-elec-yellow" />
+          <h2 className="text-lg font-semibold">
+            {viewMode === "map" ? "Course Locations" : "Live Courses"} ({filteredAndSortedCourses.length})
+          </h2>
+          {userLocation && (
+            <Badge variant="outline" className="text-xs">
+              Within {searchRadius} miles of {userLocation.split(',')[0]}
+            </Badge>
+          )}
+        </div>
+        
+        {/* Map View */}
+        {viewMode === "map" ? (
+          <GoogleMapsLoader>
+            <CourseMap 
+              nearbyProviders={providersForMap}
+              selectedCourse={selectedCourseId}
+              onCourseSelect={handleCourseSelect}
+              onCourseDeselect={handleCourseDeselect}
+              userLocation={userLocation}
+              userCoordinates={userCoordinates}
+              searchRadius={searchRadius}
+              isLoading={isLoadingLive}
+            />
+          </GoogleMapsLoader>
+        ) : (
+          /* Grid/List View */
+          <div className="space-y-6">
+            {filteredAndSortedCourses.length > 0 ? (
+              <div className={viewMode === "grid" ? 
+                "grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-6" : 
+                "space-y-3 md:space-y-4"
+              }>
+                {filteredAndSortedCourses.map((course) => (
+                  <div key={course.id} className="relative group">
+                    <EnhancedCourseCard 
+                      course={course}
+                      onViewDetails={viewCourseDetails}
+                    />
+                    
+                    {/* Top Badges Row - Hidden LIVE badge per user request */}
+                    <div className="absolute top-2 left-2 flex flex-wrap gap-1 max-w-[calc(100%-120px)]">
+                      {/* LIVE badge hidden */}
+                    </div>
+                    
+                    {/* Action Buttons - Positioned below rating badge area */}
+                    <div className="absolute top-12 right-2 flex flex-col gap-1 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-200 mt-[10px]">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => toggleBookmark(course)}
+                        className={`min-h-[40px] min-w-[40px] p-0 md:h-8 md:w-8 rounded-full bg-background/80 backdrop-blur-sm border border-border/50 ${isBookmarked(course.id) ? 
+                          'text-elec-yellow hover:text-elec-yellow/80 border-elec-yellow/50' : 
+                          'text-muted-foreground hover:text-elec-yellow hover:border-elec-yellow/50'
+                        }`}
+                        title={isBookmarked(course.id) ? "Remove from saved" : "Save course"}
+                      >
+                        <BookOpen className="h-4 w-4" />
+                      </Button>
+                      
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => addToComparison(course.id)}
+                        className={`min-h-[40px] min-w-[40px] p-0 md:h-8 md:w-8 rounded-full bg-background/80 backdrop-blur-sm border border-border/50 ${isInComparison(course.id) ? 
+                          'text-blue-400 hover:text-blue-300 border-blue-400/50' : 
+                          'text-muted-foreground hover:text-blue-400 hover:border-blue-400/50'
+                        }`}
+                        title="Add to comparison"
+                        disabled={selectedCount >= 3 && !isInComparison(course.id)}
+                      >
+                        <Plus className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <EmptySearchResults type="courses" onReset={handleResetFilters} />
+            )}
+          </div>
+        )}
+      </div>
+      
+      {/* Course Details Modal */}
+      {selectedCourse && (
+        <CourseDetailsModal course={selectedCourse} onClose={handleClose} />
+      )}
+      
+      {/* Training Centre Details Modal */}
+      {selectedCenter && (
+        <TrainingCentreDetailsModal center={selectedCenter} onClose={handleClose} />
       )}
 
       {/* Course Selection Tips */}
