@@ -1,12 +1,27 @@
 import React, { useRef, useEffect, useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import CourseMarker from "./CourseMarker";
-import CourseInfoOverlay from "./CourseInfoOverlay";
-import { EnhancedCareerCourse } from "../../../apprentice/career/courses/enhancedCoursesData";
+import ProviderInfoOverlay from "./ProviderInfoOverlay";
+
+interface TrainingProvider {
+  place_id: string;
+  name: string;
+  vicinity: string;
+  geometry: {
+    location: {
+      lat: number;
+      lng: number;
+    };
+  };
+  rating?: number;
+  user_ratings_total?: number;
+  types: string[];
+  distance?: number;
+  category?: string;
+}
 
 interface CourseMapProps {
-  courses: EnhancedCareerCourse[];
+  nearbyProviders: TrainingProvider[];
   selectedCourse: string | null;
   onCourseSelect: (courseId: string) => void;
   onCourseDeselect?: () => void;
@@ -16,14 +31,14 @@ interface CourseMapProps {
   isLoading: boolean;
 }
 
-interface CourseMarkerData {
-  courseId: string;
+interface ProviderMarkerData {
+  providerId: string;
   position: google.maps.LatLngLiteral;
-  course: EnhancedCareerCourse;
+  provider: TrainingProvider;
 }
 
 const CourseMap: React.FC<CourseMapProps> = ({ 
-  courses, 
+  nearbyProviders, 
   selectedCourse, 
   onCourseSelect, 
   onCourseDeselect,
@@ -34,130 +49,107 @@ const CourseMap: React.FC<CourseMapProps> = ({
 }) => {
   const mapRef = useRef<HTMLDivElement>(null);
   const googleMapRef = useRef<google.maps.Map | null>(null);
-  const [markers, setMarkers] = useState<CourseMarkerData[]>([]);
+  const [markers, setMarkers] = useState<ProviderMarkerData[]>([]);
   const userMarkerRef = useRef<google.maps.Marker | null>(null);
   const radiusCircleRef = useRef<any>(null);
-
-  // Distance calculation helper (Haversine formula)
-  const calculateDistance = (lat1: number, lon1: number, lat2: number, lon2: number): number => {
-    const R = 3959; // Earth's radius in miles
-    const dLat = (lat2 - lat1) * Math.PI / 180;
-    const dLon = (lon2 - lon1) * Math.PI / 180;
-    const a = 
-      Math.sin(dLat/2) * Math.sin(dLat/2) +
-      Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * 
-      Math.sin(dLon/2) * Math.sin(dLon/2);
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-    return R * c;
-  };
+  const providerMarkersRef = useRef<google.maps.Marker[]>([]);
 
   // Debug logging
-  console.log('CourseMap received courses:', courses.length);
+  console.log('CourseMap received providers:', nearbyProviders.length);
   console.log('User coordinates:', userCoordinates);
   console.log('Search radius:', searchRadius);
 
-  // Initialize Google Maps
+  // Initialize Google Maps with optimized settings
   useEffect(() => {
     if (!window.google?.maps || !mapRef.current) return;
     
     try {
       googleMapRef.current = new window.google.maps.Map(mapRef.current, {
-        center: { lat: 54.7023545, lng: -3.2765753 },
-        zoom: 6,
+        center: userCoordinates || { lat: 54.7023545, lng: -3.2765753 },
+        zoom: userCoordinates ? 10 : 6,
+        // Optimized settings to reduce API costs
         mapTypeControl: false,
         streetViewControl: false,
-        fullscreenControl: true,
+        fullscreenControl: false,
         zoomControl: true,
+        scaleControl: false,
+        // Disable auto-loading of extra map types
+        mapTypeId: 'roadmap'
       });
     } catch (error) {
       console.error("Error initializing Google Maps:", error);
     }
-  }, []);
+  }, [userCoordinates]);
 
-  // Geocode course locations and filter by distance
+  // Create markers for Google Places providers (no geocoding needed)
   useEffect(() => {
-    if (!googleMapRef.current || !courses.length || !window.google?.maps) return;
+    if (!googleMapRef.current || !window.google?.maps) return;
     
-    const geocoder = new window.google.maps.Geocoder();
-    const geocodePromises: Promise<CourseMarkerData[]>[] = courses.map(course => 
-      new Promise(resolve => {
-        const locations = course.locations || [];
-        
-        if (locations.length === 0) {
-          resolve([]);
-          return;
-        }
-
-        const locationPromises = locations.map(location => 
-          new Promise<CourseMarkerData | null>(locationResolve => {
-            const cleanLocation = location.includes(',') ? location : `${location}, UK`;
-            
-            geocoder.geocode({ address: cleanLocation }, (results, status) => {
-              if (status === "OK" && results && results[0]) {
-                const position = results[0].geometry.location.toJSON();
-                
-                // Filter by distance if user coordinates are available
-                if (userCoordinates) {
-                  const distance = calculateDistance(
-                    userCoordinates.lat,
-                    userCoordinates.lng,
-                    position.lat,
-                    position.lng
-                  );
-                  
-                  if (distance <= searchRadius) {
-                    locationResolve({ 
-                      courseId: course.id.toString(), 
-                      position, 
-                      course 
-                    });
-                  } else {
-                    locationResolve(null);
-                  }
-                } else {
-                  locationResolve({ 
-                    courseId: course.id.toString(), 
-                    position, 
-                    course 
-                  });
-                }
-              } else {
-                locationResolve(null);
-              }
-            });
-          })
-        );
-
-        Promise.all(locationPromises).then(results => {
-          const validMarkers = results.filter(result => result !== null) as CourseMarkerData[];
-          resolve(validMarkers);
-        });
-      })
-    );
-    
-    Promise.all(geocodePromises).then(results => {
-      const allMarkers = results.flat();
-      console.log('Successfully geocoded markers:', allMarkers.length);
-      console.log('Filtered by distance:', userCoordinates ? `within ${searchRadius} miles` : 'no distance filter');
-      setMarkers(allMarkers);
-      
-      // Handle map centering and bounds
-      if (userCoordinates && googleMapRef.current) {
-        // Center on user location if available
-        googleMapRef.current.setCenter(userCoordinates);
-        googleMapRef.current.setZoom(10);
-      } else if (allMarkers.length > 0 && googleMapRef.current) {
-        // Otherwise fit all markers
-        const bounds = new window.google.maps.LatLngBounds();
-        allMarkers.forEach(marker => {
-          bounds.extend(marker.position);
-        });
-        googleMapRef.current.fitBounds(bounds);
-      }
-    }).catch(error => {
-      console.error('Geocoding error:', error);
+    // Clear existing provider markers
+    providerMarkersRef.current.forEach(marker => {
+      marker.setMap(null);
     });
-  }, [courses, userCoordinates, searchRadius, calculateDistance]);
+    providerMarkersRef.current = [];
+    
+    // Create markers for nearby providers
+    const providerMarkers = nearbyProviders.map(provider => {
+      const position = {
+        lat: provider.geometry.location.lat,
+        lng: provider.geometry.location.lng
+      };
+      
+      const marker = new window.google.maps.Marker({
+        position,
+        map: googleMapRef.current,
+        icon: {
+          path: google.maps.SymbolPath.CIRCLE,
+          fillColor: '#3B82F6',
+          fillOpacity: 0.8,
+          strokeColor: '#FFFFFF',
+          strokeWeight: 2,
+          scale: selectedCourse === provider.place_id ? 12 : 8,
+        } as any,
+        title: `${provider.name} - ${provider.vicinity}`,
+      });
+      
+      marker.addListener('click', () => {
+        onCourseSelect(provider.place_id);
+      });
+      
+      return marker;
+    });
+    
+    providerMarkersRef.current = providerMarkers;
+    
+    // Create marker data for overlay
+    const markerData: ProviderMarkerData[] = nearbyProviders.map(provider => ({
+      providerId: provider.place_id,
+      position: {
+        lat: provider.geometry.location.lat,
+        lng: provider.geometry.location.lng
+      },
+      provider
+    }));
+    
+    setMarkers(markerData);
+    
+    // Handle map centering and bounds
+    if (userCoordinates && googleMapRef.current) {
+      googleMapRef.current.setCenter(userCoordinates);
+      googleMapRef.current.setZoom(11);
+    } else if (nearbyProviders.length > 0 && googleMapRef.current) {
+      const bounds = new window.google.maps.LatLngBounds();
+      nearbyProviders.forEach(provider => {
+        bounds.extend({
+          lat: provider.geometry.location.lat,
+          lng: provider.geometry.location.lng
+        });
+      });
+      googleMapRef.current.fitBounds(bounds);
+    }
+    
+    console.log('Created markers for providers:', nearbyProviders.length);
+  }, [nearbyProviders, selectedCourse, onCourseSelect, userCoordinates]);
 
   // Handle user location marker and radius circle
   useEffect(() => {
@@ -213,19 +205,19 @@ const CourseMap: React.FC<CourseMapProps> = ({
     };
   }, [userCoordinates, searchRadius]);
 
-  // Center map on selected course
+  // Center map on selected provider
   useEffect(() => {
     if (!googleMapRef.current || !selectedCourse) return;
     
-    const selectedMarker = markers.find(marker => marker.courseId === selectedCourse);
+    const selectedMarker = markers.find(marker => marker.providerId === selectedCourse);
     if (selectedMarker && googleMapRef.current) {
       googleMapRef.current.panTo(selectedMarker.position);
-      googleMapRef.current.setZoom(12);
+      googleMapRef.current.setZoom(14);
     }
   }, [selectedCourse, markers]);
 
-  const getSelectedCourse = () => {
-    return markers.find(marker => marker.courseId === selectedCourse)?.course;
+  const getSelectedProvider = () => {
+    return markers.find(marker => marker.providerId === selectedCourse)?.provider;
   };
 
   if (isLoading) {
@@ -241,13 +233,35 @@ const CourseMap: React.FC<CourseMapProps> = ({
       <div ref={mapRef} className="h-full w-full rounded-md overflow-hidden" />
       
       {/* Results info overlay */}
-      {userCoordinates && (
+      {(userCoordinates || nearbyProviders.length > 0) && (
         <div className="absolute top-2 left-2 bg-background/95 backdrop-blur-sm border border-border/50 shadow-lg p-3 rounded-md text-xs z-[1000]">
           <div className="text-sm font-medium text-foreground">
-            {markers.length} course{markers.length !== 1 ? 's' : ''} found
+            {markers.length} training provider{markers.length !== 1 ? 's' : ''} found
           </div>
-          <div className="text-xs text-muted-foreground">
-            Within {searchRadius} miles of your location
+          {userCoordinates && (
+            <div className="text-xs text-muted-foreground">
+              Within {searchRadius} miles of your location
+            </div>
+          )}
+          <div className="text-xs text-muted-foreground mt-1">
+            From Google Places API
+          </div>
+        </div>
+      )}
+      
+      {/* Empty state message */}
+      {nearbyProviders.length === 0 && !isLoading && (
+        <div className="absolute inset-0 flex items-center justify-center bg-background/80 backdrop-blur-sm z-[1000]">
+          <div className="text-center p-6 max-w-md">
+            <div className="text-lg font-medium text-foreground mb-2">
+              No training providers found
+            </div>
+            <div className="text-sm text-muted-foreground mb-4">
+              {userLocation 
+                ? `No electrical training providers found within ${searchRadius} miles of ${userLocation}. Try increasing the search radius or searching a different area.`
+                : "Set your location and search for nearby electrical training providers using the search button above."
+              }
+            </div>
           </div>
         </div>
       )}
@@ -255,26 +269,14 @@ const CourseMap: React.FC<CourseMapProps> = ({
       {/* Debug info overlay */}
       {process.env.NODE_ENV === 'development' && (
         <div className="absolute top-2 right-2 bg-black/80 text-white p-2 rounded text-xs z-[1000]">
-          Courses: {courses.length} | Markers: {markers.length}
+          Providers: {nearbyProviders.length} | Markers: {markers.length}
           {userCoordinates && <div>User: {userCoordinates.lat.toFixed(4)}, {userCoordinates.lng.toFixed(4)}</div>}
         </div>
       )}
       
-      {markers.map((markerData, index) => (
-        <CourseMarker 
-          key={`${markerData.courseId}-${index}`}
-          course={markerData.course}
-          position={markerData.position}
-          map={googleMapRef.current}
-          isSelected={markerData.courseId === selectedCourse}
-          onClick={onCourseSelect}
-        />
-      ))}
-      
-      <CourseInfoOverlay 
+      <ProviderInfoOverlay 
         userLocation={userLocation}
-        selectedCourse={getSelectedCourse()}
-        selectedMarkerPosition={undefined}
+        selectedProvider={getSelectedProvider()}
         onClose={onCourseDeselect}
       />
     </Card>

@@ -147,24 +147,11 @@ const ElectricianCareerCourses = () => {
     }
   };
 
-  // For map view, combine all course sources
-  const coursesForMap = useMemo(() => {
-    let allCourses = [...liveCourses];
-    
-    // Add nearby providers as courses
-    if (nearbyProviders.length > 0) {
-      allCourses = [...allCourses, ...nearbyProviders];
-    }
-    
-    // Fallback to static data if no other sources
-    if (allCourses.length === 0) {
-      console.log('No live courses or providers available, using static data as fallback for map');
-      allCourses = enhancedCareerCourses;
-    }
-    
-    console.log('Total courses for map:', allCourses.length);
-    return allCourses;
-  }, [liveCourses, nearbyProviders]);
+  // For map view, only use Google Places providers (no geocoding needed)
+  const providersForMap = useMemo(() => {
+    console.log('Providers for map:', nearbyProviders.length);
+    return nearbyProviders;
+  }, [nearbyProviders]);
 
   // Enhanced filtering and sorting logic using live data
   const filteredAndSortedCourses = useMemo(() => {
@@ -611,7 +598,7 @@ const ElectricianCareerCourses = () => {
         {viewMode === "map" ? (
           <GoogleMapsLoader>
             <CourseMap 
-              courses={viewMode === "map" ? coursesForMap : filteredAndSortedCourses}
+              nearbyProviders={providersForMap}
               selectedCourse={selectedCourseId}
               onCourseSelect={handleCourseSelect}
               onCourseDeselect={handleCourseDeselect}
