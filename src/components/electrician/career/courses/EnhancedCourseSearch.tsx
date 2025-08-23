@@ -1,13 +1,16 @@
 import React, { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { MobileButton } from "@/components/ui/mobile-button";
+import { MobileInput } from "@/components/ui/mobile-input";
+import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
 import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { 
   Search, Filter, X, MapPin, Calendar, PoundSterling, 
-  Clock, Users, TrendingUp, SlidersHorizontal, Star
+  Clock, Users, TrendingUp, SlidersHorizontal, Star,
+  ChevronDown, ChevronUp
 } from "lucide-react";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
 import { courseCategories } from "@/components/apprentice/career/courses/enhancedCoursesData";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -77,103 +80,159 @@ const EnhancedCourseSearch = ({
 
   return (
     <Card className="border-elec-yellow/20 bg-elec-gray">
-      <CardHeader className="pb-4">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          <CardTitle className="flex items-center gap-2 text-lg">
-            <Search className="h-5 w-5 text-elec-yellow" />
-            Search & Filter Courses
+      <CardHeader className={`${isMobile ? 'pb-3 p-4' : 'pb-4'}`}>
+        <div className={`flex ${isMobile ? 'flex-col gap-3' : 'flex-col sm:flex-row sm:items-center sm:justify-between gap-4'}`}>
+          <CardTitle className={`flex items-center gap-2 ${isMobile ? 'text-base' : 'text-lg'}`}>
+            <Search className={`${isMobile ? 'h-4 w-4' : 'h-5 w-5'} text-elec-yellow`} />
+            {isMobile ? 'Search Courses' : 'Search & Filter Courses'}
           </CardTitle>
-          <div className="flex items-center gap-2">
+          <div className={`flex items-center ${isMobile ? 'justify-between' : 'gap-2'}`}>
             <Badge variant="outline" className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30">
               {totalResults} results
             </Badge>
             {activeFiltersCount > 0 && (
-              <Button variant="outline" size="sm" onClick={onReset}>
-                <X className="h-4 w-4 mr-1" />
-                Clear All ({activeFiltersCount})
-              </Button>
+              <MobileButton 
+                variant="outline" 
+                size={isMobile ? "sm" : "sm"} 
+                onClick={onReset}
+                className={isMobile ? 'h-8 px-2 text-xs' : ''}
+              >
+                <X className="h-3 w-3 mr-1" />
+                Clear {isMobile ? `(${activeFiltersCount})` : `All (${activeFiltersCount})`}
+              </MobileButton>
             )}
           </div>
         </div>
       </CardHeader>
 
-      <CardContent className="space-y-4">
+      <CardContent className={`space-y-${isMobile ? '3' : '4'} ${isMobile ? 'p-4' : ''}`}>
         {/* Search Bar */}
-        <div className="relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-          <Input
+        {isMobile ? (
+          <MobileInput
             placeholder="Search courses, providers, topics..."
             value={filters.searchQuery}
-            onChange={(e) => handleFilterChange("searchQuery", e.target.value)}
-            className="pl-10 bg-background/50"
+            onChange={(value) => handleFilterChange("searchQuery", value)}
           />
-          {filters.searchQuery && (
-            <Button
-              variant="ghost"
-              size="sm"
-              className="absolute right-2 top-1/2 transform -translate-y-1/2 h-6 w-6 p-0"
-              onClick={() => clearFilter("searchQuery")}
-            >
-              <X className="h-3 w-3" />
-            </Button>
-          )}
-        </div>
+        ) : (
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Input
+              placeholder="Search courses, providers, topics..."
+              value={filters.searchQuery}
+              onChange={(e) => handleFilterChange("searchQuery", e.target.value)}
+              className="pl-10 bg-background/50"
+            />
+            {filters.searchQuery && (
+              <MobileButton
+                variant="ghost"
+                size="sm"
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 h-6 w-6 p-0"
+                onClick={() => clearFilter("searchQuery")}
+              >
+                <X className="h-3 w-3" />
+              </MobileButton>
+            )}
+          </div>
+        )}
 
         {/* Quick Filters */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-          <Select value={filters.category} onValueChange={(value) => handleFilterChange("category", value)}>
-            <SelectTrigger className="bg-background/50">
-              <SelectValue placeholder="Category" />
-            </SelectTrigger>
-            <SelectContent className="bg-popover border-border">
-              {courseCategories.map((category) => (
-                <SelectItem key={category} value={category}>
-                  {category}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+        <div className={`grid ${isMobile ? 'grid-cols-1 gap-2' : 'grid-cols-2 sm:grid-cols-4 gap-3'}`}>
+          {isMobile ? (
+            <>
+              <MobileSelectWrapper
+                placeholder="Category"
+                value={filters.category}
+                onValueChange={(value) => handleFilterChange("category", value)}
+                options={courseCategories.map(cat => ({ value: cat, label: cat }))}
+              />
+              <MobileSelectWrapper
+                placeholder="Level"
+                value={filters.level}
+                onValueChange={(value) => handleFilterChange("level", value)}
+                options={[
+                  { value: "All Levels", label: "All Levels" },
+                  { value: "Beginner", label: "Beginner" },
+                  { value: "Intermediate", label: "Intermediate" },
+                  { value: "Advanced", label: "Advanced" }
+                ]}
+              />
+              <MobileSelectWrapper
+                placeholder="Location"
+                value={filters.location}
+                onValueChange={(value) => handleFilterChange("location", value)}
+                options={[
+                  { value: "All Locations", label: "All Locations" },
+                  { value: "London", label: "London" },
+                  { value: "Manchester", label: "Manchester" },
+                  { value: "Birmingham", label: "Birmingham" },
+                  { value: "Glasgow", label: "Glasgow" },
+                  { value: "Cardiff", label: "Cardiff" },
+                  { value: "Online", label: "Online" }
+                ]}
+              />
+            </>
+          ) : (
+            <>
+              <Select value={filters.category} onValueChange={(value) => handleFilterChange("category", value)}>
+                <SelectTrigger className="bg-background/50">
+                  <SelectValue placeholder="Category" />
+                </SelectTrigger>
+                <SelectContent className="bg-popover border-border">
+                  {courseCategories.map((category) => (
+                    <SelectItem key={category} value={category}>
+                      {category}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
 
-          <Select value={filters.level} onValueChange={(value) => handleFilterChange("level", value)}>
-            <SelectTrigger className="bg-background/50">
-              <SelectValue placeholder="Level" />
-            </SelectTrigger>
-            <SelectContent className="bg-popover border-border">
-              <SelectItem value="All Levels">All Levels</SelectItem>
-              <SelectItem value="Beginner">Beginner</SelectItem>
-              <SelectItem value="Intermediate">Intermediate</SelectItem>
-              <SelectItem value="Advanced">Advanced</SelectItem>
-            </SelectContent>
-          </Select>
+              <Select value={filters.level} onValueChange={(value) => handleFilterChange("level", value)}>
+                <SelectTrigger className="bg-background/50">
+                  <SelectValue placeholder="Level" />
+                </SelectTrigger>
+                <SelectContent className="bg-popover border-border">
+                  <SelectItem value="All Levels">All Levels</SelectItem>
+                  <SelectItem value="Beginner">Beginner</SelectItem>
+                  <SelectItem value="Intermediate">Intermediate</SelectItem>
+                  <SelectItem value="Advanced">Advanced</SelectItem>
+                </SelectContent>
+              </Select>
 
-          <Select value={filters.location} onValueChange={(value) => handleFilterChange("location", value)}>
-            <SelectTrigger className="bg-background/50">
-              <SelectValue placeholder="Location" />
-            </SelectTrigger>
-            <SelectContent className="bg-popover border-border">
-              <SelectItem value="All Locations">All Locations</SelectItem>
-              <SelectItem value="London">London</SelectItem>
-              <SelectItem value="Manchester">Manchester</SelectItem>
-              <SelectItem value="Birmingham">Birmingham</SelectItem>
-              <SelectItem value="Glasgow">Glasgow</SelectItem>
-              <SelectItem value="Cardiff">Cardiff</SelectItem>
-              <SelectItem value="Online">Online</SelectItem>
-            </SelectContent>
-          </Select>
+              <Select value={filters.location} onValueChange={(value) => handleFilterChange("location", value)}>
+                <SelectTrigger className="bg-background/50">
+                  <SelectValue placeholder="Location" />
+                </SelectTrigger>
+                <SelectContent className="bg-popover border-border">
+                  <SelectItem value="All Locations">All Locations</SelectItem>
+                  <SelectItem value="London">London</SelectItem>
+                  <SelectItem value="Manchester">Manchester</SelectItem>
+                  <SelectItem value="Birmingham">Birmingham</SelectItem>
+                  <SelectItem value="Glasgow">Glasgow</SelectItem>
+                  <SelectItem value="Cardiff">Cardiff</SelectItem>
+                  <SelectItem value="Online">Online</SelectItem>
+                </SelectContent>
+              </Select>
+            </>
+          )}
 
-          <Button
+          <MobileButton
             variant="outline"
             onClick={() => setShowAdvancedFilters(!showAdvancedFilters)}
-            className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+            className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 flex items-center justify-center gap-2"
           >
-            <SlidersHorizontal className="h-4 w-4 mr-2" />
-            {isMobile ? "More" : "Advanced"}
+            <SlidersHorizontal className="h-4 w-4" />
+            {isMobile ? "Filters" : "Advanced"}
+            {showAdvancedFilters ? (
+              <ChevronUp className="h-3 w-3" />
+            ) : (
+              <ChevronDown className="h-3 w-3" />
+            )}
             {activeFiltersCount > 3 && (
-              <Badge variant="secondary" className="ml-2 h-4 px-1">
+              <Badge variant="secondary" className="ml-1 h-4 px-1 text-xs">
                 {activeFiltersCount - 3}
               </Badge>
             )}
-          </Button>
+          </MobileButton>
         </div>
 
         {/* Advanced Filters */}
@@ -249,8 +308,8 @@ const EnhancedCourseSearch = ({
                 Minimum Rating
               </label>
               <div className="flex gap-2">
-                {[0, 3, 4, 4.5].map((rating) => (
-                  <Button
+                 {[0, 3, 4, 4.5].map((rating) => (
+                  <MobileButton
                     key={rating}
                     variant={filters.rating === rating ? "default" : "outline"}
                     size="sm"
@@ -262,7 +321,7 @@ const EnhancedCourseSearch = ({
                   >
                     {rating === 0 ? "Any" : `${rating}+`}
                     {rating > 0 && <Star className="h-3 w-3 ml-1 fill-current" />}
-                  </Button>
+                  </MobileButton>
                 ))}
               </div>
             </div>
@@ -276,54 +335,54 @@ const EnhancedCourseSearch = ({
               {filters.searchQuery && (
                 <Badge variant="outline" className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30">
                   Search: "{filters.searchQuery}"
-                  <Button
+                  <MobileButton
                     variant="ghost"
                     size="sm"
                     className="ml-1 h-4 w-4 p-0"
                     onClick={() => clearFilter("searchQuery")}
                   >
                     <X className="h-3 w-3" />
-                  </Button>
+                  </MobileButton>
                 </Badge>
               )}
               {filters.category !== "All Categories" && (
                 <Badge variant="outline" className="bg-blue-500/10 text-blue-400 border-blue-500/30">
                   {filters.category}
-                  <Button
+                  <MobileButton
                     variant="ghost"
                     size="sm"
                     className="ml-1 h-4 w-4 p-0"
                     onClick={() => clearFilter("category")}
                   >
                     <X className="h-3 w-3" />
-                  </Button>
+                  </MobileButton>
                 </Badge>
               )}
               {filters.level !== "All Levels" && (
                 <Badge variant="outline" className="bg-green-500/10 text-green-400 border-green-500/30">
                   {filters.level}
-                  <Button
+                  <MobileButton
                     variant="ghost"
                     size="sm"
                     className="ml-1 h-4 w-4 p-0"
                     onClick={() => clearFilter("level")}
                   >
                     <X className="h-3 w-3" />
-                  </Button>
+                  </MobileButton>
                 </Badge>
               )}
               {filters.location !== "All Locations" && (
                 <Badge variant="outline" className="bg-purple-500/10 text-purple-400 border-purple-500/30">
                   <MapPin className="h-3 w-3 mr-1" />
                   {filters.location}
-                  <Button
+                  <MobileButton
                     variant="ghost"
                     size="sm"
                     className="ml-1 h-4 w-4 p-0"
                     onClick={() => clearFilter("location")}
                   >
                     <X className="h-3 w-3" />
-                  </Button>
+                  </MobileButton>
                 </Badge>
               )}
             </div>

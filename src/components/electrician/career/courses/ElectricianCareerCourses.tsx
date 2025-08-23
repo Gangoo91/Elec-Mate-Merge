@@ -20,6 +20,7 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { MobileButton } from "@/components/ui/mobile-button";
 import { BookOpen, Users, Plus, Scale, FileDown } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -269,38 +270,41 @@ const ElectricianCareerCourses = () => {
   };
 
   return (
-    <div className="space-y-4 sm:space-y-6 lg:space-y-8 px-2 sm:px-4 lg:px-6">
+    <div className={`space-y-${isMobile ? '4' : '4 sm:space-y-6 lg:space-y-8'} ${isMobile ? 'px-3' : 'px-2 sm:px-4 lg:px-6'}`}>
       {/* Header Section */}
       <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardHeader className="p-4 sm:p-6">
-          <CardTitle className="flex items-center gap-2 text-lg sm:text-xl lg:text-2xl">
-            <BookOpen className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow" />
-            UK Electrical Career Courses & Training
+        <CardHeader className={`${isMobile ? 'p-4' : 'p-4 sm:p-6'}`}>
+          <CardTitle className={`flex items-center gap-2 ${isMobile ? 'text-base' : 'text-lg sm:text-xl lg:text-2xl'}`}>
+            <BookOpen className={`${isMobile ? 'h-4 w-4' : 'h-5 w-5 sm:h-6 sm:w-6'} text-elec-yellow`} />
+            {isMobile ? 'Career Courses' : 'UK Electrical Career Courses & Training'}
           </CardTitle>
-          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
-            <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-              Comprehensive professional development courses to advance your electrical career in the UK market
+          <div className={`flex ${isMobile ? 'flex-col gap-3' : 'flex-col lg:flex-row lg:items-center lg:justify-between gap-4'}`}>
+            <p className={`${isMobile ? 'text-sm' : 'text-sm sm:text-base'} text-muted-foreground leading-relaxed`}>
+              {isMobile ? 
+                'Professional development courses for electrical careers' : 
+                'Comprehensive professional development courses to advance your electrical career in the UK market'
+              }
             </p>
             
-            <div className="flex gap-2 flex-wrap">
+            <div className={`flex ${isMobile ? 'grid grid-cols-3' : 'flex'} gap-2 ${isMobile ? '' : 'flex-wrap'}`}>
               <Button
                 variant={showBookmarks ? "default" : "outline"}
                 onClick={() => setShowBookmarks(!showBookmarks)}
-                className="flex items-center gap-2 min-h-[40px] text-xs sm:text-sm px-3 sm:px-4"
+                className={`flex items-center gap-2 ${isMobile ? 'min-h-[36px] text-xs px-2' : 'min-h-[40px] text-xs sm:text-sm px-3 sm:px-4'}`}
               >
                 <BookOpen className="h-4 w-4" />
-                <span className="hidden xs:inline">{isMobile ? "Saved" : "Saved Courses"}</span>
-                <span className="xs:hidden">Saved</span>
+                <span className={isMobile ? 'text-xs' : 'hidden xs:inline'}>{isMobile ? "Saved" : "Saved Courses"}</span>
+                {!isMobile && <span className="xs:hidden">Saved</span>}
               </Button>
               
               <Button
                 variant={showComparison ? "default" : "outline"}
                 onClick={() => setShowComparison(!showComparison)}
-                className="flex items-center gap-2 min-h-[40px] text-xs sm:text-sm px-3 sm:px-4"
+                className={`flex items-center gap-2 ${isMobile ? 'min-h-[36px] text-xs px-2' : 'min-h-[40px] text-xs sm:text-sm px-3 sm:px-4'}`}
               >
                 <Scale className="h-4 w-4" />
-                <span className="hidden xs:inline">{isMobile ? "Compare" : "Compare Courses"}</span>
-                <span className="xs:hidden">Compare</span>
+                <span className={isMobile ? 'text-xs' : 'hidden xs:inline'}>{isMobile ? "Compare" : "Compare Courses"}</span>
+                {!isMobile && <span className="xs:hidden">Compare</span>}
                 {selectedCount > 0 && (
                   <Badge variant="secondary" className="ml-1 h-4 px-1 text-xs">
                     {selectedCount}
@@ -311,11 +315,11 @@ const ElectricianCareerCourses = () => {
               <Button
                 variant="outline"
                 onClick={exportToPDF}
-                className="flex items-center gap-2 min-h-[40px] text-xs sm:text-sm px-3 sm:px-4"
+                className={`flex items-center gap-2 ${isMobile ? 'min-h-[36px] text-xs px-2' : 'min-h-[40px] text-xs sm:text-sm px-3 sm:px-4'}`}
               >
                 <FileDown className="h-4 w-4" />
-                <span className="hidden xs:inline">{isMobile ? "PDF" : "Export PDF"}</span>
-                <span className="xs:hidden">PDF</span>
+                <span className={isMobile ? 'text-xs' : 'hidden xs:inline'}>{isMobile ? "PDF" : "Export PDF"}</span>
+                {!isMobile && <span className="xs:hidden">PDF</span>}
               </Button>
             </div>
           </div>
@@ -372,45 +376,68 @@ const ElectricianCareerCourses = () => {
               <div className="space-y-6">
                 {filteredAndSortedCourses.length > 0 ? (
                   <div className={viewMode === "grid" ? 
-                    "grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6" : 
-                    "space-y-4"
+                    `grid ${isMobile ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-2 xl:grid-cols-3'} gap-${isMobile ? '3' : '4 sm:gap-6'}` : 
+                    `space-y-${isMobile ? '3' : '4'}`
                   }>
                     {filteredAndSortedCourses.map((course) => (
-                      <div key={course.id} className="relative group">
+                      <div key={course.id} className="relative">
                         <EnhancedCourseCard 
                           course={course}
                           onViewDetails={viewCourseDetails}
+                          onBookmark={(course) => toggleBookmark(course)}
+                          onShare={(course) => {
+                            // Mobile share functionality
+                            if (navigator.share) {
+                              navigator.share({
+                                title: course.title,
+                                text: course.description,
+                                url: window.location.href
+                              });
+                            } else {
+                              // Fallback copy to clipboard
+                              navigator.clipboard.writeText(window.location.href);
+                              toast({
+                                title: "Link copied",
+                                description: "Course link copied to clipboard"
+                              });
+                            }
+                          }}
+                          onCompare={(course) => addToComparison(course.id)}
+                          isBookmarked={isBookmarked(course.id)}
+                          isInComparison={isInComparison(course.id)}
                         />
                         
-                        {/* Action Buttons Overlay */}
-                        <div className="absolute top-2 right-2 flex gap-1 opacity-0 sm:group-hover:opacity-100 transition-opacity duration-200">
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => toggleBookmark(course)}
-                            className={`h-8 w-8 p-0 ${isBookmarked(course.id) ? 
-                              'text-elec-yellow hover:text-elec-yellow/80' : 
-                              'text-muted-foreground hover:text-elec-yellow'
-                            }`}
-                            title={isBookmarked(course.id) ? "Remove from saved" : "Save course"}
-                          >
-                            <BookOpen className="h-4 w-4" />
-                          </Button>
-                          
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => addToComparison(course.id)}
-                            className={`h-8 w-8 p-0 ${isInComparison(course.id) ? 
-                              'text-blue-400 hover:text-blue-300' : 
-                              'text-muted-foreground hover:text-blue-400'
-                            }`}
-                            title="Add to comparison"
-                            disabled={selectedCount >= 3 && !isInComparison(course.id)}
-                          >
-                            <Plus className="h-4 w-4" />
-                          </Button>
-                        </div>
+                        {/* Desktop Action Buttons Overlay */}
+                        {!isMobile && (
+                          <div className="absolute top-2 right-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => toggleBookmark(course)}
+                              className={`h-8 w-8 p-0 ${isBookmarked(course.id) ? 
+                                'text-elec-yellow hover:text-elec-yellow/80' : 
+                                'text-muted-foreground hover:text-elec-yellow'
+                              }`}
+                              title={isBookmarked(course.id) ? "Remove from saved" : "Save course"}
+                            >
+                              <BookOpen className="h-4 w-4" />
+                            </Button>
+                            
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => addToComparison(course.id)}
+                              className={`h-8 w-8 p-0 ${isInComparison(course.id) ? 
+                                'text-blue-400 hover:text-blue-300' : 
+                                'text-muted-foreground hover:text-blue-400'
+                              }`}
+                              title="Add to comparison"
+                              disabled={selectedCount >= 3 && !isInComparison(course.id)}
+                            >
+                              <Plus className="h-4 w-4" />
+                            </Button>
+                          </div>
+                        )}
                       </div>
                     ))}
                   </div>

@@ -1,20 +1,36 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { MobileButton } from "@/components/ui/mobile-button";
 import { Badge } from "@/components/ui/badge";
 import { 
   Clock, Star, Calendar, MapPin, Users, BookOpen, 
   TrendingUp, PoundSterling, Award, Target, 
-  CheckCircle, AlertCircle, Briefcase, GraduationCap 
+  CheckCircle, AlertCircle, Briefcase, GraduationCap,
+  Heart, Share2, Plus
 } from "lucide-react";
 import { EnhancedCareerCourse } from "./enhancedCoursesData";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface EnhancedCourseCardProps {
   course: EnhancedCareerCourse;
   onViewDetails: (course: EnhancedCareerCourse) => void;
+  onBookmark?: (course: EnhancedCareerCourse) => void;
+  onShare?: (course: EnhancedCareerCourse) => void;
+  onCompare?: (course: EnhancedCareerCourse) => void;
+  isBookmarked?: boolean;
+  isInComparison?: boolean;
 }
 
-const EnhancedCourseCard = ({ course, onViewDetails }: EnhancedCourseCardProps) => {
+const EnhancedCourseCard = ({ 
+  course, 
+  onViewDetails, 
+  onBookmark, 
+  onShare, 
+  onCompare, 
+  isBookmarked = false,
+  isInComparison = false 
+}: EnhancedCourseCardProps) => {
+  const isMobile = useIsMobile();
   const getDemandColor = (demand: string) => {
     switch (demand) {
       case "High": return "bg-green-500/20 text-green-400 border-green-500/30";
@@ -35,11 +51,47 @@ const EnhancedCourseCard = ({ course, onViewDetails }: EnhancedCourseCardProps) 
   };
 
   return (
-    <Card className="border-elec-yellow/20 bg-elec-gray h-full flex flex-col hover:border-elec-yellow/40 transition-all duration-300">
-      <CardHeader className="pb-3 p-4 sm:p-6">
+    <Card className="border-elec-yellow/20 bg-elec-gray h-full flex flex-col hover:border-elec-yellow/40 transition-all duration-300 relative group">
+      {/* Mobile Action Buttons */}
+      {isMobile && (
+        <div className="absolute top-3 right-3 flex gap-1 z-10">
+          {onBookmark && (
+            <MobileButton
+              variant="ghost"
+              size="icon"
+              onClick={(e) => {
+                e.stopPropagation();
+                onBookmark(course);
+              }}
+              className={`h-8 w-8 rounded-full ${
+                isBookmarked 
+                  ? 'bg-elec-yellow/20 text-elec-yellow' 
+                  : 'bg-elec-dark/80 text-muted-foreground hover:text-elec-yellow'
+              }`}
+            >
+              <Heart className={`h-4 w-4 ${isBookmarked ? 'fill-current' : ''}`} />
+            </MobileButton>
+          )}
+          {onShare && (
+            <MobileButton
+              variant="ghost"
+              size="icon"
+              onClick={(e) => {
+                e.stopPropagation();
+                onShare(course);
+              }}
+              className="h-8 w-8 rounded-full bg-elec-dark/80 text-muted-foreground hover:text-blue-400"
+            >
+              <Share2 className="h-4 w-4" />
+            </MobileButton>
+          )}
+        </div>
+      )}
+
+      <CardHeader className={`pb-3 ${isMobile ? 'p-3' : 'p-4 sm:p-6'}`}>
         <div className="flex justify-between items-start gap-2 mb-2">
-          <Badge className={`${getCategoryColor(course.category)} text-xs px-2 py-1`}>
-            {course.category}
+          <Badge className={`${getCategoryColor(course.category)} text-xs ${isMobile ? 'px-1.5 py-0.5' : 'px-2 py-1'}`}>
+            {isMobile ? course.category.split(' ')[0] : course.category}
           </Badge>
           <div className="flex items-center gap-1 bg-amber-400/20 text-amber-400 px-2 py-1 rounded text-xs font-medium">
             <Star className="h-3 w-3 fill-amber-400" />
@@ -47,12 +99,18 @@ const EnhancedCourseCard = ({ course, onViewDetails }: EnhancedCourseCardProps) 
           </div>
         </div>
         
-        <CardTitle className="text-base sm:text-lg leading-tight">{course.title}</CardTitle>
-        <p className="text-sm text-elec-yellow font-medium">{course.provider}</p>
+        <CardTitle className={`${isMobile ? 'text-sm' : 'text-base sm:text-lg'} leading-tight`}>
+          {course.title}
+        </CardTitle>
+        <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-elec-yellow font-medium`}>
+          {course.provider}
+        </p>
       </CardHeader>
       
-      <CardContent className="pt-0 p-4 sm:p-6 flex-grow flex flex-col space-y-4">
-        <p className="text-sm text-muted-foreground leading-relaxed">{course.description}</p>
+      <CardContent className={`pt-0 ${isMobile ? 'p-3' : 'p-4 sm:p-6'} flex-grow flex flex-col ${isMobile ? 'space-y-3' : 'space-y-4'}`}>
+        <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground leading-relaxed ${isMobile ? 'line-clamp-2' : ''}`}>
+          {course.description}
+        </p>
         
         {/* Key Metrics Grid */}
         <div className="grid grid-cols-2 gap-3 text-xs">
@@ -176,27 +234,54 @@ const EnhancedCourseCard = ({ course, onViewDetails }: EnhancedCourseCardProps) 
         </div>
 
         {/* Footer */}
-        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 mt-auto pt-3 border-t border-elec-yellow/10">
+        <div className={`flex ${isMobile ? 'flex-col gap-2' : 'flex-col sm:flex-row sm:justify-between sm:items-center gap-3'} mt-auto pt-3 border-t border-elec-yellow/10`}>
           <div className="space-y-1">
-            <p className="text-sm sm:text-xs text-amber-400/80 flex items-center gap-1 font-medium">
+            <p className={`${isMobile ? 'text-xs' : 'text-sm sm:text-xs'} text-amber-400/80 flex items-center gap-1 font-medium`}>
               <PoundSterling className="h-3 w-3" />
               {course.price}
             </p>
             {course.employerSupport && (
-              <div className="flex items-center gap-1 text-xs text-green-400">
+              <div className={`flex items-center gap-1 ${isMobile ? 'text-xs' : 'text-xs'} text-green-400`}>
                 <Briefcase className="h-3 w-3" />
                 <span>Employer Support</span>
               </div>
             )}
           </div>
-          <Button 
-            variant="outline" 
-            size="sm" 
-            className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 w-full sm:w-auto min-h-[36px]"
-            onClick={() => onViewDetails(course)}
-          >
-            View Details
-          </Button>
+          
+          {isMobile ? (
+            <div className="flex gap-2">
+              <MobileButton 
+                variant="outline" 
+                size={isMobile ? "wide" : "sm"}
+                className="flex-1 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+                onClick={() => onViewDetails(course)}
+              >
+                View Details
+              </MobileButton>
+              {onCompare && (
+                <MobileButton
+                  variant={isInComparison ? "default" : "outline"}
+                  size="icon"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onCompare(course);
+                  }}
+                  className={isInComparison ? "bg-blue-500 text-white" : "border-blue-500/30 text-blue-400 hover:bg-blue-500/10"}
+                >
+                  <Plus className="h-4 w-4" />
+                </MobileButton>
+              )}
+            </div>
+          ) : (
+            <MobileButton 
+              variant="outline" 
+              size="sm" 
+              className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 w-full sm:w-auto min-h-[36px]"
+              onClick={() => onViewDetails(course)}
+            >
+              View Details
+            </MobileButton>
+          )}
         </div>
       </CardContent>
     </Card>
