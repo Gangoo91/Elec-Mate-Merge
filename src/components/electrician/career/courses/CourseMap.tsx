@@ -40,7 +40,7 @@ interface CourseMapProps {
   userCoordinates: google.maps.LatLngLiteral | null;
   searchRadius: number;
   isLoading: boolean;
-  onMapClick?: (coordinates: google.maps.LatLngLiteral) => void;
+  
 }
 
 interface ProviderMarkerData {
@@ -57,8 +57,7 @@ const CourseMap: React.FC<CourseMapProps> = ({
   userLocation,
   userCoordinates, 
   searchRadius,
-  isLoading,
-  onMapClick
+  isLoading
 }) => {
   const mapRef = useRef<HTMLDivElement>(null);
   const googleMapRef = useRef<google.maps.Map | null>(null);
@@ -90,22 +89,10 @@ const CourseMap: React.FC<CourseMapProps> = ({
         mapTypeId: 'roadmap'
       });
 
-      // Add click event listener for map auto-search
-      if (onMapClick && googleMapRef.current) {
-        (googleMapRef.current as any).addListener('click', (event: any) => {
-          if (event.latLng) {
-            const coordinates = {
-              lat: event.latLng.lat(),
-              lng: event.latLng.lng()
-            };
-            onMapClick(coordinates);
-          }
-        });
-      }
     } catch (error) {
       console.error("Error initializing Google Maps:", error);
     }
-  }, [userCoordinates, onMapClick]);
+  }, [userCoordinates]);
 
   // Create markers for Google Places providers (no geocoding needed)
   useEffect(() => {
