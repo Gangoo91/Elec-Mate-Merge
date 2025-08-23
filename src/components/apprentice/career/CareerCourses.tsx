@@ -48,7 +48,7 @@ const CareerCourses = () => {
   // Apply location and category filters
   const filteredCourses = enhancedCareerCourses.filter(course => {
     const categoryMatch = selectedCategory === "All Categories" || course.category === selectedCategory;
-    const locationMatch = !isLocationFiltered || (course.locations || []).some(loc => 
+    const locationMatch = !isLocationFiltered || course.locations.some(loc => 
       locationState.location === "All Locations" || loc.includes(locationState.location)
     );
     return categoryMatch && locationMatch;

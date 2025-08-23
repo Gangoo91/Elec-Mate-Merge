@@ -86,7 +86,7 @@ const TrainingCenterDetailsModal = ({ center, onClose }: TrainingCenterDetailsMo
                 </div>
                 <div className="flex items-center gap-2">
                   <Phone className="h-4 w-4 text-elec-yellow" />
-                  <span className="text-sm">{center.contact.phone}</span>
+                  <span className="text-sm">{center.contact}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Globe className="h-4 w-4 text-elec-yellow" />

@@ -1,357 +1,311 @@
 
+// Course data
 export interface CareerCourse {
-  id: string | number;
+  id: number;
   title: string;
   provider: string;
-  duration: string;
-  mode: string;
-  location: string;
-  price: string;
   description: string;
+  duration: string;
   level: string;
-  category: string;
-  startDate?: string;
-  isLive?: boolean;
-  courseOutline?: string[];
-  prerequisites?: string[];
-  assessmentMethod?: string;
-  continuousAssessment?: boolean;
-  industryDemand?: "High" | "Medium" | "Low" | {
-    level: string;
-    growth: string;
-    description: string;
-  };
-  futureProofing?: string | number;
-  salaryImpact?: string;
-  careerOutcomes?: string[];
-  accreditation?: string[];
-  employerSupport?: boolean;
-  // Additional properties for compatibility
-  format?: string;
-  nextDates?: string[];
-  rating?: number;
-  locations?: string[];
+  price: string;
+  format: string;
+  nextDates: string[];
+  rating: number;
+  locations: string[];
 }
 
-export interface EnhancedCareerCourse extends CareerCourse {
-  // EnhancedCareerCourse can extend CareerCourse with additional properties if needed
-}
-
+// Training center data
 export interface TrainingCenter {
   id: number;
   name: string;
   location: string;
-  rating: number;
+  address: string;
+  contact: string;
   courses: string[];
-  contact: {
-    phone: string;
-    email: string;
-    website: string;
-  };
   facilities: string[];
-  accreditations: string[];
 }
 
+// Available UK locations for filtering
+export const ukLocations = [
+  "All Locations", "London", "Manchester", "Birmingham", "Glasgow", "Edinburgh",
+  "Belfast", "Cardiff", "Newcastle", "Liverpool", "Leeds", "Bristol", "Sheffield", "Online",
+  "Aberdeen", "Southampton", "Nationwide"
+];
+
+// Enhanced industry courses including MEWP, PASMA, etc.
 export const careerCourses: CareerCourse[] = [
   {
     id: 1,
-    title: "Level 2 Diploma in Electrical Installation",
-    provider: "City College Manchester",
-    duration: "18 months",
-    mode: "Full-time",
-    location: "Manchester",
-    price: "£3,500",
-    description: "Comprehensive electrical installation course covering all essential skills for starting your electrical career.",
-    level: "Level 2",
-    category: "Electrical",
-    startDate: "September 2024",
-    isLive: true,
-    courseOutline: [
-      "Health and Safety in Electrical Installation",
-      "Electrical Installation Theory and Technology", 
-      "Installation Methods and Procedures",
-      "Electrical Science and Principles",
-      "Practical Skills Development"
-    ],
-    prerequisites: [
-      "GCSE Maths and English (Grade C/4 or above)",
-      "Basic understanding of electrical principles helpful but not essential"
-    ],
-    assessmentMethod: "Continuous Assessment and Final Practical Exam",
-    continuousAssessment: true,
-    industryDemand: {
-      level: "High",
-      growth: "12% projected growth over next 5 years",
-      description: "Strong demand for qualified electricians across all sectors"
-    },
-    futureProofing: "Excellent - electrical skills remain essential as technology advances",
-    salaryImpact: "£18,000-£25,000 starting salary, progressing to £35,000+ with experience",
-    careerOutcomes: [
-      "Electrical Installation Technician",
-      "Maintenance Electrician", 
-      "Domestic Electrician",
-      "Pathway to Level 3 qualifications"
-    ],
-    accreditation: ["EAL", "City & Guilds", "JTL approved"],
-    employerSupport: true
+    title: "18th Edition Wiring Regulations",
+    provider: "NICEIC",
+    description: "Essential course covering the latest BS7671 electrical regulations for all UK installations.",
+    duration: "3 days",
+    level: "Intermediate",
+    price: "£350 - £450",
+    format: "Classroom and online options",
+    nextDates: ["15 June 2025", "22 July 2025", "18 August 2025"],
+    rating: 4.8,
+    locations: ["London", "Manchester", "Birmingham", "Glasgow"]
   },
   {
     id: 2,
-    title: "Level 3 Advanced Diploma in Electrical Installation",
-    provider: "Birmingham Electrical Training",
-    duration: "24 months",
-    mode: "Part-time",
-    location: "Birmingham",
-    price: "£4,200",
-    description: "Advanced electrical qualification for experienced electricians seeking career progression.",
-    level: "Level 3",
-    category: "Electrical",
-    startDate: "October 2024",
-    isLive: true,
-    courseOutline: [
-      "Advanced Electrical Installation Theory",
-      "Electrical System Design",
-      "Inspection, Testing and Commissioning",
-      "Electrical Fault Diagnosis",
-      "Commercial and Industrial Systems"
-    ],
-    prerequisites: [
-      "Level 2 Electrical Installation qualification",
-      "Minimum 2 years electrical experience",
-      "Current 18th Edition Wiring Regulations certificate"
-    ],
-    assessmentMethod: "Portfolio Assessment and Practical Projects",
-    continuousAssessment: true,
-    industryDemand: {
-      level: "Very High", 
-      growth: "15% projected growth",
-      description: "High demand for advanced electrical technicians"
-    },
-    futureProofing: "Excellent - leads to supervisory and design roles",
-    salaryImpact: "£28,000-£45,000+ depending on specialisation",
-    careerOutcomes: [
-      "Senior Electrician",
-      "Electrical Supervisor",
-      "Electrical Designer", 
-      "Electrical Inspector"
-    ],
-    accreditation: ["EAL Level 3", "NICEIC approved"],
-    employerSupport: true
+    title: "Inspection & Testing",
+    provider: "City & Guilds",
+    description: "Learn how to properly test and verify electrical installations to industry standards.",
+    duration: "5 days",
+    level: "Advanced",
+    price: "£600 - £750",
+    format: "Classroom with practical assessments",
+    nextDates: ["10 June 2025", "14 July 2025", "11 September 2025"],
+    rating: 4.7,
+    locations: ["Cardiff", "Newcastle", "London", "Edinburgh"]
   },
   {
     id: 3,
-    title: "18th Edition Wiring Regulations (BS 7671)",
-    provider: "London Electrical Institute",
+    title: "Electric Vehicle Charging",
+    provider: "ECA",
+    description: "Specialised training for installing and maintaining EV charging points.",
+    duration: "2 days",
+    level: "Intermediate",
+    price: "£375 - £450",
+    format: "Blended learning with practical sessions",
+    nextDates: ["5 June 2025", "3 August 2025", "7 October 2025"],
+    rating: 4.9,
+    locations: ["Bristol", "London", "Manchester", "Leeds"]
+  },
+  {
+    id: 4,
+    title: "MEWP Operator Training (IPAF)",
+    provider: "IPAF Certified",
+    description: "Mobile Elevating Work Platform operation certification, essential for electricians working at height.",
+    duration: "1-2 days",
+    level: "All levels",
+    price: "£200 - £350",
+    format: "Practical training with theory assessment",
+    nextDates: ["8 June 2025", "15 July 2025", "9 September 2025"],
+    rating: 4.8,
+    locations: ["Birmingham", "Manchester", "Bristol", "London", "Glasgow"]
+  },
+  {
+    id: 5,
+    title: "PASMA Towers for Users",
+    provider: "PASMA Accredited",
+    description: "Essential training for safe assembly, dismantling and use of mobile access towers.",
+    duration: "1 day",
+    level: "All levels",
+    price: "£150 - £200",
+    format: "Classroom with practical assessment",
+    nextDates: ["12 June 2025", "21 July 2025", "18 August 2025"],
+    rating: 4.7,
+    locations: ["London", "Liverpool", "Edinburgh", "Cardiff"]
+  },
+  {
+    id: 6,
+    title: "Working at Heights & Harness Safety",
+    provider: "Construction Skills",
+    description: "Critical safety training for electrical work at height including harness use and rescue procedures.",
+    duration: "1 day",
+    level: "All levels",
+    price: "£120 - £180",
+    format: "Practical training with theory components",
+    nextDates: ["20 June 2025", "25 July 2025", "15 September 2025"],
+    rating: 4.9,
+    locations: ["Newcastle", "Sheffield", "London", "Belfast"]
+  },
+  {
+    id: 7,
+    title: "Fire Alarm Systems Installation",
+    provider: "FIA",
+    description: "Comprehensive training on designing, installing and maintaining fire detection systems.",
+    duration: "4 days",
+    level: "Intermediate",
+    price: "£500 - £600",
+    format: "Classroom with practical elements",
+    nextDates: ["8 June 2025", "10 August 2025", "12 October 2025"],
+    rating: 4.8,
+    locations: ["London", "Manchester", "Birmingham", "Glasgow"]
+  },
+  {
+    id: 8,
+    title: "Asbestos Awareness",
+    provider: "UKATA Certified",
+    description: "Critical safety training for identifying and working safely around potential asbestos materials.",
+    duration: "Half day",
+    level: "All levels",
+    price: "£70 - £90",
+    format: "Classroom or online options",
+    nextDates: ["5 June 2025", "10 July 2025", "12 August 2025"],
+    rating: 4.6,
+    locations: ["Online", "London", "Manchester", "Birmingham", "Edinburgh"]
+  },
+  {
+    id: 9,
+    title: "Hazardous Areas & ATEX Training",
+    provider: "CompEx",
+    description: "Specialist training for electricians working in potentially explosive atmospheres and hazardous environments.",
+    duration: "5 days",
+    level: "Advanced",
+    price: "£900 - £1,200",
+    format: "Classroom with practical assessments",
+    nextDates: ["13 June 2025", "18 July 2025", "22 September 2025"],
+    rating: 4.9,
+    locations: ["Aberdeen", "Manchester", "London", "Southampton"]
+  },
+  {
+    id: 10,
+    title: "First Aid at Work",
+    provider: "St John Ambulance",
+    description: "Essential first aid qualification for site workers, covering emergency response procedures.",
     duration: "3 days",
-    mode: "Intensive",
-    location: "London",
-    price: "£450",
-    description: "Essential update course on the latest wiring regulations for all electrical professionals.",
-    level: "Professional",
-    category: "Electrical",
-    startDate: "Next available: 15th January 2024",
-    isLive: true,
-    courseOutline: [
-      "Changes in 18th Edition BS 7671",
-      "New requirements for electrical installations",
-      "Updated inspection and testing procedures",
-      "Practical application of new regulations"
-    ],
-    prerequisites: [
-      "Existing electrical qualification",
-      "Currently working in electrical industry"
-    ],
-    assessmentMethod: "Written examination",
-    continuousAssessment: false,
-    industryDemand: {
-      level: "Essential",
-      growth: "Required for all practicing electricians", 
-      description: "Mandatory update for electrical professionals"
-    },
-    futureProofing: "Essential for continued practice",
-    salaryImpact: "Maintains professional standing and employment eligibility",
-    careerOutcomes: [
-      "Continued electrical practice",
-      "Compliance with current regulations",
-      "Professional development"
-    ],
-    accreditation: ["IET approved", "NICEIC recognised"],
-    employerSupport: true
+    level: "All levels",
+    price: "£250 - £350",
+    format: "Practical training with assessments",
+    nextDates: ["10 June 2025", "15 July 2025", "20 August 2025"],
+    rating: 4.8,
+    locations: ["Nationwide", "London", "Manchester", "Birmingham", "Glasgow", "Bristol"]
+  },
+  {
+    id: 11,
+    title: "Confined Spaces Training",
+    provider: "City & Guilds",
+    description: "Safety training for working in restricted access areas with potential hazards.",
+    duration: "2 days",
+    level: "Intermediate",
+    price: "£350 - £450",
+    format: "Practical exercises with theory components",
+    nextDates: ["22 June 2025", "17 July 2025", "12 September 2025"],
+    rating: 4.7,
+    locations: ["Leeds", "London", "Birmingham", "Newcastle"]
+  },
+  {
+    id: 12,
+    title: "Emergency Lighting Installation & Maintenance",
+    provider: "Industry Qualifications",
+    description: "Specialized certification for installing, testing and maintaining emergency lighting systems.",
+    duration: "2 days",
+    level: "Intermediate",
+    price: "£320 - £400",
+    format: "Classroom with hands-on practice",
+    nextDates: ["8 June 2025", "20 July 2025", "15 September 2025"],
+    rating: 4.6,
+    locations: ["London", "Manchester", "Bristol", "Edinburgh"]
+  },
+  {
+    id: 13,
+    title: "Smart Home/Building Automation Systems",
+    provider: "KNX Association",
+    description: "Modern technology integration training for intelligent building systems installation and programming.",
+    duration: "5 days",
+    level: "Advanced",
+    price: "£850 - £1,200",
+    format: "Classroom with practical programming exercises",
+    nextDates: ["14 June 2025", "19 July 2025", "13 September 2025"],
+    rating: 4.9,
+    locations: ["London", "Manchester", "Bristol"]
+  },
+  {
+    id: 14,
+    title: "Electric Vehicle Charging Installation (Advanced)",
+    provider: "IET Academy",
+    description: "Advanced training for complex EV charging installations including three-phase and commercial systems.",
+    duration: "3 days",
+    level: "Advanced",
+    price: "£550 - £700",
+    format: "Classroom with advanced practical assessments",
+    nextDates: ["24 June 2025", "22 July 2025", "19 September 2025"],
+    rating: 4.8,
+    locations: ["London", "Birmingham", "Manchester", "Glasgow"]
+  },
+  {
+    id: 15,
+    title: "Testing & Inspection Periodic (Advanced)",
+    provider: "NAPIT",
+    description: "Comprehensive training for conducting periodic inspection and testing of electrical installations.",
+    duration: "4 days",
+    level: "Advanced",
+    price: "£650 - £800",
+    format: "Classroom with extensive practical assessment",
+    nextDates: ["18 June 2025", "16 July 2025", "24 September 2025"],
+    rating: 4.7,
+    locations: ["London", "Manchester", "Leeds", "Newcastle", "Cardiff"]
+  },
+  {
+    id: 16,
+    title: "Commercial & Industrial 3-Phase Systems",
+    provider: "ECA",
+    description: "Specialized power systems training for complex commercial and industrial installations.",
+    duration: "4 days",
+    level: "Advanced",
+    price: "£700 - £850",
+    format: "Classroom and practical workshop sessions",
+    nextDates: ["9 June 2025", "21 July 2025", "22 September 2025"],
+    rating: 4.8,
+    locations: ["Birmingham", "London", "Manchester", "Glasgow"]
+  },
+  {
+    id: 17,
+    title: "Data Cabling & Network Infrastructure",
+    provider: "CNet Training",
+    description: "Installation and testing of structured cabling systems for network and communications.",
+    duration: "3 days",
+    level: "Intermediate",
+    price: "£450 - £600",
+    format: "Hands-on practical training with theory",
+    nextDates: ["11 June 2025", "16 July 2025", "23 September 2025"],
+    rating: 4.6,
+    locations: ["London", "Manchester", "Birmingham", "Edinburgh"]
+  },
+  {
+    id: 18,
+    title: "Thermal Imaging/Thermography",
+    provider: "FLIR Training Centre",
+    description: "For preventative maintenance and fault finding using thermal imaging technology.",
+    duration: "2 days",
+    level: "Intermediate",
+    price: "£550 - £700",
+    format: "Hands-on equipment training with analysis techniques",
+    nextDates: ["17 June 2025", "29 July 2025", "25 September 2025"],
+    rating: 4.7,
+    locations: ["London", "Birmingham", "Manchester", "Aberdeen"]
   }
 ];
 
+// Course training centers data
 export const trainingCenters: TrainingCenter[] = [
   {
     id: 1,
-    name: "City College Manchester",
-    location: "Manchester, Greater Manchester",
-    rating: 4.7,
-    courses: ["Level 2 Electrical Installation", "Level 3 Advanced Electrical", "Apprenticeships"],
-    contact: {
-      phone: "0161 957 1600",
-      email: "info@citycollegemanchester.ac.uk",
-      website: "www.citycollegemanchester.ac.uk"
-    },
-    facilities: ["Modern workshops", "Industry-standard equipment", "Library and study areas"],
-    accreditations: ["Ofsted Outstanding", "EAL Centre", "City & Guilds approved"]
+    name: "National Training Centre",
+    location: "London",
+    address: "123 Electrical Way, London, EC1A 1BB",
+    contact: "020 7123 4567",
+    courses: ["18th Edition Wiring Regulations", "Inspection & Testing", "Electric Vehicle Charging", "MEWP Operator Training (IPAF)"],
+    facilities: ["Workshop spaces", "Classroom facilities", "On-site parking", "Refreshments provided"]
   },
   {
     id: 2,
-    name: "Birmingham Electrical Training",
-    location: "Birmingham, West Midlands", 
-    rating: 4.5,
-    courses: ["Level 3 Electrical Installation", "Inspection & Testing", "18th Edition"],
-    contact: {
-      phone: "0121 454 7890",
-      email: "courses@birminghamelectrical.co.uk",
-      website: "www.birminghamelectrical.co.uk"
-    },
-    facilities: ["Specialist electrical labs", "Commercial installation simulators", "Testing equipment"],
-    accreditations: ["NICEIC approved", "EAL registered", "JTL partner"]
+    name: "Northern Electrical Academy",
+    location: "Manchester",
+    address: "45 Power Street, Manchester, M1 2WD",
+    contact: "0161 765 4321",
+    courses: ["PASMA Towers for Users", "Working at Heights & Harness Safety", "18th Edition Wiring Regulations", "MEWP Operator Training (IPAF)"],
+    facilities: ["Mock installation areas", "Computer suite", "Cafeteria", "Free parking"]
   },
   {
     id: 3,
-    name: "London Electrical Institute",
-    location: "London",
-    rating: 4.8,
-    courses: ["18th Edition BS 7671", "PAT Testing", "Emergency Lighting"],
-    contact: {
-      phone: "020 7946 0958",
-      email: "training@londonelectrical.org",
-      website: "www.londonelectrical.org"
-    },
-    facilities: ["Central London location", "Evening and weekend courses", "Online resources"],
-    accreditations: ["IET approved", "City & Guilds centre", "Professional recognition"]
+    name: "Midlands Training Hub",
+    location: "Birmingham",
+    address: "78 Circuit Avenue, Birmingham, B4 6TH",
+    contact: "0121 876 5432",
+    courses: ["Fire Alarm Systems Installation", "18th Edition Wiring Regulations", "MEWP Operator Training (IPAF)"],
+    facilities: ["Practical training areas", "Modern classrooms", "Accommodation available nearby", "Lunch included"]
+  },
+  {
+    id: 4,
+    name: "Scottish Electrical Institute",
+    location: "Glasgow",
+    address: "27 Voltage Road, Glasgow, G1 2BC",
+    contact: "0141 432 1098",
+    courses: ["18th Edition Wiring Regulations", "Inspection & Testing", "MEWP Operator Training (IPAF)", "Fire Alarm Systems Installation"],
+    facilities: ["State-of-the-art equipment", "Small class sizes", "Central location", "Disabled access"]
   }
-];
-
-// UK Locations for dropdown
-export const ukLocations = [
-  "All Locations",
-  "London",
-  "Manchester", 
-  "Birmingham",
-  "Liverpool",
-  "Leeds",
-  "Sheffield",
-  "Bristol",
-  "Glasgow",
-  "Leicester",
-  "Edinburgh",
-  "Cardiff",
-  "Belfast",
-  "Newcastle",
-  "Nottingham",
-  "Portsmouth",
-  "Southampton",
-  "Reading",
-  "Brighton",
-  "Plymouth",
-  "Stoke-on-Trent",
-  "Wolverhampton",
-  "Derby",
-  "Swansea",
-  "Southampton",
-  "Salford",
-  "Aberdeen",
-  "Westminster",
-  "Norwich",
-  "Dundee",
-  "York",
-  "Poole",
-  "Oldham",
-  "Warrington",
-  "Ipswich",
-  "Oxford",
-  "Slough",
-  "Bournemouth",
-  "Telford",
-  "Peterborough",
-  "Bolton",
-  "Blackpool",
-  "Preston",
-  "Luton",
-  "Brent",
-  "Stockport",
-  "Blackburn",
-  "Burnley",
-  "Chelmsford",
-  "Gloucester",
-  "Cambridge",
-  "Exeter",
-  "Scunthorpe",
-  "Guildford",
-  "Watford",
-  "Rotherham",
-  "Exeter",
-  "Basildon",
-  "Harlow",
-  "Redditch",
-  "Shrewsbury",
-  "Woking",
-  "St Albans",
-  "Maidstone",
-  "Warwick",
-  "Stevenage",
-  "Bath",
-  "Chester",
-  "Eastbourne",
-  "Grimsby",
-  "Hastings",
-  "Lincoln",
-  "Middlesbrough",
-  "Darlington",
-  "Mansfield",
-  "Nuneaton",
-  "Corby",
-  "Kidderminster",
-  "Hartlepool",
-  "Carlisle",
-  "Worthing",
-  "Lowestoft",
-  "Rhondda",
-  "Tamworth",
-  "Chatham",
-  "Southend-on-Sea",
-  "Birkenhead",
-  "Great Yarmouth",
-  "Aylesbury",
-  "Taunton",
-  "Chesterfield",
-  "Worcester",
-  "Rugby",
-  "Runcorn",
-  "Macclesfield",
-  "Keighley",
-  "Gloucester",
-  "Bracknell",
-  "Hereford",
-  "Salisbury",
-  "Bangor",
-  "Folkestone",
-  "Lancaster",
-  "Royal Tunbridge Wells",
-  "Weymouth",
-  "Crewe",
-  "Colchester",
-  "Huddersfield",
-  "High Wycombe",
-  "King's Lynn",
-  "Newbury",
-  "Basingstoke",
-  "Burton upon Trent",
-  "Wrexham",
-  "Loughborough",
-  "Kettering",
-  "Scarborough",
-  "Farnborough",
-  "Windsor",
-  "Bridgwater",
-  "Boston",
-  "Margate",
-  "Littlehampton",
-  "Wellingborough",
-  "Crowborough",
-  "Kirkby",
-  "St Helens"
 ];
