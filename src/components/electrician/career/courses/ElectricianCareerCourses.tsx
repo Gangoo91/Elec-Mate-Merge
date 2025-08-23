@@ -626,18 +626,6 @@ const ElectricianCareerCourses = () => {
               onProviderSearch={handleProviderSearchFromLocation}
             />
             
-            {/* Find Nearby Providers - Button to search using Google Places */}
-            {userLocation && (
-              <div className="flex justify-center">
-                <Button
-                  onClick={searchNearbyProviders}
-                  className="bg-elec-yellow text-black hover:bg-elec-yellow/90"
-                  disabled={isLoadingLive}
-                >
-                  {isLoadingLive ? "Searching..." : "Find Real Training Providers Nearby"}
-                </Button>
-              </div>
-            )}
             
             <GoogleMapsLoader>
               <CourseMap 
