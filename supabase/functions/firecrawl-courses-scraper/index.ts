@@ -64,97 +64,48 @@ serve(async (req) => {
     
     console.log('Scraping course data from:', targetUrl);
 
-    // Use Firecrawl to scrape the website
-    const firecrawlResponse = await fetch('https://api.firecrawl.dev/v0/scrape', {
+    // Use Firecrawl v2 API to scrape the website
+    const firecrawlResponse = await fetch('https://api.firecrawl.dev/v2/scrape', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${firecrawlApiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        url: targetUrl,
-        pageOptions: {
-          onlyMainContent: true
-        },
-        extractorOptions: {
-          mode: 'llm-extraction',
-          extractionSchema: {
-            type: "object",
-            properties: {
-              courses: {
-                type: "array",
-                items: {
+        url: source === 'reed' ? 'https://www.reed.co.uk/courses/?keywords=Electrical%20Career%20Courses%20%26%20Training' : targetUrl,
+        onlyMainContent: true,
+        maxAge: 172800000,
+        parsers: ["pdf"],
+        formats: [
+          {
+            type: "json",
+            schema: {
+              type: "object",
+              required: [],
+              properties: {
+                courseTitle: { type: "string" },
+                courseCode: { type: "string" },
+                provider: { type: "string" },
+                description: { type: "string" },
+                duration: { type: "string" },
+                level: { type: "string" },
+                rating: { type: "number" },
+                demandTag: { type: "string" },
+                salaryImpact: {
                   type: "object",
+                  required: [],
                   properties: {
-                    title: { 
-                      type: "string",
-                      description: "The complete course title or qualification name"
-                    },
-                    provider: { 
-                      type: "string",
-                      description: "Training provider, college, or institution name"
-                    },
-                    description: { 
-                      type: "string",
-                      description: "Course overview, content, or learning outcomes"
-                    },
-                    duration: { 
-                      type: "string",
-                      description: "Course length (e.g., '5 days', '12 weeks', '40 hours')"
-                    },
-                    price: { 
-                      type: "string",
-                      description: "Course fee or cost (including currency if shown)"
-                    },
-                    location: { 
-                      type: "string",
-                      description: "Delivery location, city, or 'Online'"
-                    },
-                    level: { 
-                      type: "string",
-                      description: "Qualification level (e.g., 'Level 2', 'Beginner', 'Advanced')"
-                    },
-                    startDate: {
-                      type: "string",
-                      description: "Next start date or availability"
-                    },
-                    accreditation: {
-                      type: "string",
-                      description: "Awarding body or certification type"
-                    }
-                  },
-                  required: ["title", "provider"]
-                }
+                    min: { type: "number" },
+                    max: { type: "number" },
+                    unit: { type: "string" }
+                  }
+                },
+                nextDate: { type: "string" },
+                url: { type: "string" }
               }
-            },
-            required: ["courses"]
-          },
-          extractionPrompt: source === 'reed' 
-            ? `Extract ALL electrical and engineering courses from this Reed.co.uk page. Focus on:
-- Complete course titles including qualifications (Level 1, 2, 3, NVQ, City & Guilds numbers)
-- Training provider names (colleges, academies, training centres)
-- Course descriptions and what's covered
-- Duration (days, weeks, hours, or months)
-- Pricing in GBP (look for £ symbols and "from £" patterns)
-- Delivery locations or online options
-- Course levels and progression paths
-- Start dates and availability
-- Awarding bodies (City & Guilds, EAL, NICEIC, etc.)
-
-Pay special attention to Reed's course listing format and extract comprehensive information.`
-            : `Extract ALL electrical courses, training programs, and qualifications from this page. Look for:
-- Course titles (including electrical installation, wiring, renewable energy, etc.)
-- Training provider names
-- Course descriptions or summaries
-- Duration information (days, weeks, hours)
-- Pricing details
-- Delivery locations or online options
-- Course levels or qualification types
-- Start dates and availability
-- Accreditation details
-
-Return a comprehensive list of all courses found, even if some information is missing.`
-        }
+            }
+          }
+        ]
       }),
     });
 
@@ -173,85 +124,82 @@ Return a comprehensive list of all courses found, even if some information is mi
     }
 
     const firecrawlData = await firecrawlResponse.json();
-    console.log('Firecrawl extraction result:', firecrawlData);
+    console.log('Firecrawl v2 extraction result:', firecrawlData);
 
     let extractedCourses: any[] = [];
     
     try {
-      // Try to parse the extracted data
-      if (firecrawlData.llm_extraction) {
-        const extracted = typeof firecrawlData.llm_extraction === 'string' 
-          ? JSON.parse(firecrawlData.llm_extraction)
-          : firecrawlData.llm_extraction;
+      // Parse v2 API response format
+      if (firecrawlData.success && firecrawlData.data?.extract) {
+        const extractData = firecrawlData.data.extract;
         
-        extractedCourses = extracted.courses || [];
-        console.log(`✅ Extracted ${extractedCourses.length} courses from ${source}`);
-      } else if (firecrawlData.data && firecrawlData.data.llm_extraction) {
-        // Try alternative extraction path
-        const extracted = typeof firecrawlData.data.llm_extraction === 'string' 
-          ? JSON.parse(firecrawlData.data.llm_extraction)
-          : firecrawlData.data.llm_extraction;
+        // Handle both single course and array of courses
+        if (Array.isArray(extractData)) {
+          extractedCourses = extractData;
+        } else if (extractData.courseTitle || extractData.title) {
+          extractedCourses = [extractData];
+        }
         
-        extractedCourses = extracted.courses || [];
-        console.log(`✅ Extracted ${extractedCourses.length} courses from ${source} (alt path)`);
+        console.log(`✅ Extracted ${extractedCourses.length} courses from ${source} using v2 API`);
       }
       
-      // If no courses found, try to extract basic info from content
-      if (extractedCourses.length === 0 && firecrawlData.data?.content) {
-        const content = firecrawlData.data.content;
-        if (content.includes('course') || content.includes('training') || content.includes('electrical')) {
+      // If no courses found, try to extract from markdown content
+      if (extractedCourses.length === 0 && firecrawlData.data?.markdown) {
+        const markdown = firecrawlData.data.markdown;
+        if (markdown.includes('course') || markdown.includes('training') || markdown.includes('electrical')) {
           console.log(`📝 Found content but no structured courses from ${source}, creating fallback course`);
           extractedCourses = [{
-            title: `${keywords} Training`,
+            courseTitle: `${keywords} Training`,
             provider: source.charAt(0).toUpperCase() + source.slice(1),
             description: 'Course information available - visit website for details',
             duration: 'Various durations',
-            price: 'Contact for pricing',
-            location: 'Multiple locations',
             level: 'Various levels'
           }];
         }
       }
       
     } catch (parseError) {
-      console.error('Error parsing extracted course data:', parseError);
+      console.error('Error parsing v2 extracted course data:', parseError);
       extractedCourses = [];
     }
 
     // Transform extracted data with enhanced course scoring
     const courses = extractedCourses.map((course: any, index: number) => {
       // Calculate relevance score for better ranking
-      const titleRelevance = calculateRelevanceScore(course.title || '', keywords);
+      const title = course.courseTitle || course.title || '';
+      const titleRelevance = calculateRelevanceScore(title, keywords);
       const providerRelevance = calculateProviderRelevance(course.provider || '');
       const overallScore = titleRelevance + providerRelevance;
       
       return {
         id: `firecrawl-${source}-${index}`,
-        title: course.title || `${keywords} Course`,
+        title: title || `${keywords} Course`,
         provider: course.provider || source.charAt(0).toUpperCase() + source.slice(1),
         description: course.description || 'Course details available from provider',
         duration: course.duration || 'Contact provider',
         level: course.level || 'Various levels',
-        price: course.price || 'Contact for pricing',
-        format: detectCourseFormat(course.description, course.location),
-        nextDates: course.startDate ? [course.startDate] : ['Contact provider'],
-        rating: 4.2 + (overallScore * 0.3), // Boost rating based on relevance
-        locations: [course.location || 'Various locations'],
+        price: 'Contact for pricing',
+        format: 'Contact provider',
+        nextDates: course.nextDate ? [course.nextDate] : ['Contact provider'],
+        rating: course.rating || (4.2 + (overallScore * 0.3)),
+        locations: ['Various locations'],
         category: 'Professional Development',
         industryDemand: 'High' as const,
-        futureProofing: calculateFutureProofing(course.title, course.description),
-        salaryImpact: 'Contact provider',
+        futureProofing: calculateFutureProofing(title, course.description),
+        salaryImpact: course.salaryImpact || 'Contact provider',
         careerOutcomes: extractCareerOutcomes(course.description),
-        accreditation: course.accreditation ? [course.accreditation] : ['Industry recognised'],
+        accreditation: ['Industry recognised'],
         employerSupport: true,
         prerequisites: ['Contact provider'],
         courseOutline: ['Contact provider for details'],
         assessmentMethod: 'Contact provider',
         continuousAssessment: false,
-        external_url: targetUrl,
+        external_url: course.url || targetUrl,
         source: source.charAt(0).toUpperCase() + source.slice(1),
         isLive: true,
-        relevanceScore: overallScore
+        relevanceScore: overallScore,
+        courseCode: course.courseCode || null,
+        demandTag: course.demandTag || null
       };
     });
 

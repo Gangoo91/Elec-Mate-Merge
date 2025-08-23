@@ -138,51 +138,47 @@ async function scrapeReedCourses(keywords: string): Promise<any[]> {
   console.log('Scraping Reed courses from:', targetUrl);
 
   try {
-    const response = await fetch('https://api.firecrawl.dev/v0/scrape', {
+    const response = await fetch('https://api.firecrawl.dev/v2/scrape', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${firecrawlApiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        url: targetUrl,
-        pageOptions: {
-          onlyMainContent: true
-        },
-        extractorOptions: {
-          mode: 'llm-extraction',
-          extractionSchema: {
-            type: "object",
-            properties: {
-              courses: {
-                type: "array",
-                items: {
+        url: 'https://www.reed.co.uk/courses/?keywords=Electrical%20Career%20Courses%20%26%20Training',
+        onlyMainContent: true,
+        maxAge: 172800000,
+        parsers: ["pdf"],
+        formats: [
+          {
+            type: "json",
+            schema: {
+              type: "object",
+              required: [],
+              properties: {
+                courseTitle: { type: "string" },
+                courseCode: { type: "string" },
+                provider: { type: "string" },
+                description: { type: "string" },
+                duration: { type: "string" },
+                level: { type: "string" },
+                rating: { type: "number" },
+                demandTag: { type: "string" },
+                salaryImpact: {
                   type: "object",
+                  required: [],
                   properties: {
-                    title: { type: "string", description: "Complete course title" },
-                    provider: { type: "string", description: "Training provider name" },
-                    description: { type: "string", description: "Course description" },
-                    duration: { type: "string", description: "Course duration" },
-                    price: { type: "string", description: "Course price in GBP" },
-                    location: { type: "string", description: "Course location" },
-                    level: { type: "string", description: "Course level" },
-                    startDate: { type: "string", description: "Next start date" },
-                    accreditation: { type: "string", description: "Awarding body" }
-                  },
-                  required: ["title", "provider"]
-                }
+                    min: { type: "number" },
+                    max: { type: "number" },
+                    unit: { type: "string" }
+                  }
+                },
+                nextDate: { type: "string" },
+                url: { type: "string" }
               }
             }
-          },
-          extractionPrompt: `Extract ALL electrical courses from this Reed.co.uk courses page. Focus on:
-- Complete course titles with qualification details
-- Training provider names (colleges, academies)
-- Course descriptions and content
-- Duration and pricing in GBP
-- Locations and start dates
-- Qualification levels and awarding bodies
-Extract comprehensive course information from Reed's structured course listings.`
-        }
+          }
+        ]
       }),
     });
 
@@ -193,45 +189,46 @@ Extract comprehensive course information from Reed's structured course listings.
     const data = await response.json();
     let courses: any[] = [];
     
-    if (data.llm_extraction) {
-      const extracted = typeof data.llm_extraction === 'string' 
-        ? JSON.parse(data.llm_extraction)
-        : data.llm_extraction;
-      courses = extracted.courses || [];
-    } else if (data.data?.llm_extraction) {
-      const extracted = typeof data.data.llm_extraction === 'string' 
-        ? JSON.parse(data.data.llm_extraction)
-        : data.data.llm_extraction;
-      courses = extracted.courses || [];
+    if (data.success && data.data?.extract) {
+      const extractData = data.data.extract;
+      
+      // Handle both single course and array of courses
+      if (Array.isArray(extractData)) {
+        courses = extractData;
+      } else if (extractData.courseTitle || extractData.title) {
+        courses = [extractData];
+      }
     }
 
     return courses.map((course: any, index: number) => ({
       id: `reed-firecrawl-${index}`,
-      title: course.title,
-      provider: course.provider,
+      title: course.courseTitle || course.title || 'Electrical Course',
+      provider: course.provider || 'Reed Training Provider',
       description: course.description || 'Course details available',
       duration: course.duration || 'Contact provider',
       level: course.level || 'Various levels',
-      price: course.price || 'Contact for pricing',
-      format: course.location?.toLowerCase().includes('online') ? 'Online' : 'Classroom',
-      nextDates: course.startDate ? [course.startDate] : ['Contact provider'],
-      rating: 4.3,
-      locations: [course.location || 'Various locations'],
+      price: 'Contact for pricing',
+      format: 'Contact provider',
+      nextDates: course.nextDate ? [course.nextDate] : ['Contact provider'],
+      rating: course.rating || 4.3,
+      locations: ['Various locations'],
       category: 'Professional Development',
       industryDemand: 'High' as const,
       futureProofing: 4,
-      salaryImpact: 'Contact provider',
+      salaryImpact: course.salaryImpact || 'Contact provider',
       careerOutcomes: ['Professional certification', 'Career advancement'],
-      accreditation: course.accreditation ? [course.accreditation] : ['Industry recognised'],
+      accreditation: ['Industry recognised'],
       employerSupport: true,
       prerequisites: ['Contact provider'],
       courseOutline: ['Contact provider for details'],
       assessmentMethod: 'Contact provider',
       continuousAssessment: false,
-      external_url: targetUrl,
+      external_url: course.url || 'https://www.reed.co.uk/courses/?keywords=Electrical%20Career%20Courses%20%26%20Training',
       source: 'Reed Courses',
       isLive: true,
-      relevanceScore: calculateRelevanceScore(course.title || '', keywords)
+      relevanceScore: calculateRelevanceScore(course.courseTitle || course.title || '', keywords),
+      courseCode: course.courseCode || null,
+      demandTag: course.demandTag || null
     }));
 
   } catch (error) {
