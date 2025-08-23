@@ -411,17 +411,9 @@ const ElectricianCareerCourses = () => {
                     onViewDetails={viewCourseDetails}
                   />
                   
-                  {/* Top Badges Row - LIVE and Category/Emerging */}
+                  {/* Top Badges Row - Hidden LIVE badge per user request */}
                   <div className="absolute top-2 left-2 flex flex-wrap gap-1 max-w-[calc(100%-120px)]">
-                    {course.isLive && (
-                      <Badge 
-                        variant="secondary" 
-                        className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30 text-xs"
-                      >
-                        <Wifi className="h-3 w-3 mr-1" />
-                        LIVE
-                      </Badge>
-                    )}
+                    {/* LIVE badge hidden */}
                   </div>
                   
                   {/* Action Buttons - Positioned below rating badge area */}
