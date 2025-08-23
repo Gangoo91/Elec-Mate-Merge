@@ -57,3 +57,12 @@ verify_jwt = false
 
 [functions.live-job-aggregator]
 verify_jwt = false
+
+[functions.reed-courses-search]
+verify_jwt = false
+
+[functions.findcourses-scraper]
+verify_jwt = false
+
+[functions.live-course-aggregator]
+verify_jwt = false

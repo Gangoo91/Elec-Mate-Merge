@@ -17,11 +17,12 @@ import {
   EnhancedCareerCourse,
   EnhancedTrainingCenter
 } from "../../../apprentice/career/courses/enhancedCoursesData";
+import { useLiveCourseSearch } from "@/hooks/useLiveCourseSearch";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { MobileButton } from "@/components/ui/mobile-button";
-import { BookOpen, Users, Plus, Scale, FileDown } from "lucide-react";
+import { BookOpen, Users, Plus, Scale, FileDown, RefreshCw } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useIsMobile } from "@/hooks/use-mobile";
 
@@ -39,6 +40,19 @@ const ElectricianCareerCourses = () => {
   const { toggleBookmark, isBookmarked } = useBookmarkManager();
   const { addToComparison, removeFromComparison, isInComparison, selectedCount } = useCourseComparison();
 
+  // Live course data integration
+  const { 
+    courses: liveCourses, 
+    isLoading: isLoadingCourses, 
+    error: courseError,
+    refetch: refetchCourses,
+    hasLiveData,
+    hasCachedData 
+  } = useLiveCourseSearch({
+    keywords: "electrician training courses",
+    location: "United Kingdom"
+  });
+
   // Search and filter state
   const [filters, setFilters] = useState({
     searchQuery: "",
@@ -52,9 +66,12 @@ const ElectricianCareerCourses = () => {
     rating: 0
   });
 
+  // Use live data if available, fallback to static data
+  const coursesToUse = liveCourses.length > 0 ? liveCourses : enhancedCareerCourses;
+
   // Enhanced filtering and sorting logic
   const filteredAndSortedCourses = useMemo(() => {
-    let filtered = enhancedCareerCourses.filter(course => {
+    let filtered = coursesToUse.filter(course => {
       // Search query filter
       if (filters.searchQuery) {
         const query = filters.searchQuery.toLowerCase();
@@ -166,7 +183,7 @@ const ElectricianCareerCourses = () => {
     }
 
     return filtered;
-  }, [filters, currentSort]);
+  }, [filters, currentSort, coursesToUse]);
 
   const filteredCenters = useMemo(() => {
     return enhancedTrainingCenters.filter(center => {
@@ -277,6 +294,11 @@ const ElectricianCareerCourses = () => {
           <CardTitle className={`flex items-center gap-2 ${isMobile ? 'text-base' : 'text-lg sm:text-xl lg:text-2xl'}`}>
             <BookOpen className={`${isMobile ? 'h-4 w-4' : 'h-5 w-5 sm:h-6 sm:w-6'} text-elec-yellow`} />
             {isMobile ? 'Career Courses' : 'UK Electrical Career Courses & Training'}
+            {hasLiveData && (
+              <Badge variant="success" className="ml-2 text-xs">
+                LIVE
+              </Badge>
+            )}
           </CardTitle>
           <div className={`flex ${isMobile ? 'flex-col gap-3' : 'flex-col lg:flex-row lg:items-center lg:justify-between gap-4'}`}>
             <p className={`${isMobile ? 'text-sm' : 'text-sm sm:text-base'} text-muted-foreground leading-relaxed`}>
@@ -284,6 +306,12 @@ const ElectricianCareerCourses = () => {
                 'Professional development courses for electrical careers' : 
                 'Comprehensive professional development courses to advance your electrical career in the UK market'
               }
+              {isLoadingCourses && (
+                <span className="text-elec-yellow ml-2">Loading live courses...</span>
+              )}
+              {courseError && !hasCachedData && (
+                <span className="text-destructive ml-2">Failed to load live courses</span>
+              )}
             </p>
             
             <div className={`flex ${isMobile ? 'grid grid-cols-3' : 'flex'} gap-2 ${isMobile ? '' : 'flex-wrap'}`}>
@@ -321,6 +349,19 @@ const ElectricianCareerCourses = () => {
                 <span className={isMobile ? 'text-xs' : 'hidden xs:inline'}>{isMobile ? "PDF" : "Export PDF"}</span>
                 {!isMobile && <span className="xs:hidden">PDF</span>}
               </Button>
+
+              {hasLiveData && (
+                <Button
+                  variant="outline"
+                  onClick={() => refetchCourses()}
+                  disabled={isLoadingCourses}
+                  className={`flex items-center gap-2 ${isMobile ? 'min-h-[36px] text-xs px-2' : 'min-h-[40px] text-xs sm:text-sm px-3 sm:px-4'}`}
+                >
+                  <RefreshCw className={`h-4 w-4 ${isLoadingCourses ? 'animate-spin' : ''}`} />
+                  <span className={isMobile ? 'text-xs' : 'hidden xs:inline'}>{isMobile ? "Refresh" : "Refresh Data"}</span>
+                  {!isMobile && <span className="xs:hidden">Refresh</span>}
+                </Button>
+              )}
             </div>
           </div>
         </CardHeader>
@@ -328,7 +369,7 @@ const ElectricianCareerCourses = () => {
 
       {/* Featured Courses Carousel */}
       <FeaturedCoursesCarousel 
-        courses={enhancedCareerCourses} 
+        courses={coursesToUse} 
         onViewDetails={viewCourseDetails} 
       />
 
@@ -343,7 +384,7 @@ const ElectricianCareerCourses = () => {
       {/* Course Comparison Tool */}
       {showComparison && (
         <CourseCompareMode
-          courses={enhancedCareerCourses}
+          courses={coursesToUse}
           onViewDetails={viewCourseDetails}
         />
       )}
@@ -351,7 +392,7 @@ const ElectricianCareerCourses = () => {
       {/* Bookmark Manager */}
       {showBookmarks && (
         <CourseBookmarkManager
-          courses={enhancedCareerCourses}
+          courses={coursesToUse}
           onViewDetails={viewCourseDetails}
         />
       )}
