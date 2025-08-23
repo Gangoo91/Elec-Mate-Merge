@@ -18,14 +18,33 @@ const FeaturedCoursesCarousel = ({ courses, onViewDetails }: FeaturedCoursesCaro
   const [currentIndex, setCurrentIndex] = React.useState(0);
   const isMobile = useIsMobile();
 
-  // Filter featured courses (high demand, high rating, emerging tech)
+  // Enhanced filtering for both live and static courses
   const featuredCourses = courses
-    .filter(course => 
-      course.industryDemand === "High" || 
-      course.rating >= 4.8 || 
-      course.category === "Emerging Technologies"
-    )
-    .sort((a, b) => b.rating - a.rating)
+    .filter(course => {
+      // Primary criteria: high demand, high rating, or emerging tech
+      const isPrimary = course.industryDemand === "High" || 
+                       course.rating >= 4.8 || 
+                       course.category === "Emerging Technologies";
+      
+      // Secondary criteria for live courses without full metadata
+      const isLiveRelevant = course.isLive && (
+        course.title?.toLowerCase().includes('18th edition') ||
+        course.title?.toLowerCase().includes('ev') ||
+        course.title?.toLowerCase().includes('electric vehicle') ||
+        course.title?.toLowerCase().includes('solar') ||
+        course.title?.toLowerCase().includes('smart') ||
+        course.title?.toLowerCase().includes('testing') ||
+        course.title?.toLowerCase().includes('inspection')
+      );
+      
+      return isPrimary || isLiveRelevant;
+    })
+    .sort((a, b) => {
+      // Prioritize live courses, then by rating
+      if (a.isLive && !b.isLive) return -1;
+      if (!a.isLive && b.isLive) return 1;
+      return b.rating - a.rating;
+    })
     .slice(0, 6);
 
   const itemsPerView = isMobile ? 1 : 3;
@@ -117,10 +136,17 @@ const FeaturedCoursesCarousel = ({ courses, onViewDetails }: FeaturedCoursesCaro
                   <Card className="border-elec-yellow/30 bg-elec-dark/30 h-full hover:border-elec-yellow/50 transition-all duration-300">
                     <CardHeader className="pb-3">
                       <div className="flex justify-between items-start gap-2 mb-2">
-                        <Badge className={getFeatureColor(course)}>
-                          <FeatureIcon className="h-3 w-3 mr-1" />
-                          {getFeatureLabel(course)}
-                        </Badge>
+                        <div className="flex gap-1">
+                          <Badge className={getFeatureColor(course)}>
+                            <FeatureIcon className="h-3 w-3 mr-1" />
+                            {getFeatureLabel(course)}
+                          </Badge>
+                          {course.isLive && (
+                            <Badge className="bg-green-500/20 text-green-400 border-green-500/30">
+                              Live
+                            </Badge>
+                          )}
+                        </div>
                         <div className="flex items-center gap-1 bg-amber-400/20 text-amber-400 px-2 py-1 rounded text-xs">
                           <Star className="h-3 w-3 fill-amber-400" />
                           <span>{course.rating}</span>
