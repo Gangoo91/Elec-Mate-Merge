@@ -50,14 +50,18 @@ serve(async (req) => {
 
     // 2. Get nearby training providers
     const keywords = [
+      'electrical career courses',
       'electrical training',
       'electrical course',
       'electrical qualification',
+      'electrician certification',
       'apprenticeship',
       'vocational training',
       'electrician course',
-      'city guilds',
-      'electrical college'
+      'city guilds electrical',
+      'electrical college',
+      'electrical academy',
+      'trade training electrical'
     ];
 
     const searchKeyword = keywords.join('|');

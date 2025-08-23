@@ -13,13 +13,15 @@ interface LocationBasedCourseSearchProps {
   onRadiusChange: (radius: number) => void;
   currentLocation: string | null;
   searchRadius: number;
+  onProviderSearch?: (location: string, coordinates: google.maps.LatLngLiteral) => void;
 }
 
 const LocationBasedCourseSearch: React.FC<LocationBasedCourseSearchProps> = ({
   onLocationSelect,
   onRadiusChange,
   currentLocation,
-  searchRadius
+  searchRadius,
+  onProviderSearch
 }) => {
   const [searchInput, setSearchInput] = useState("");
   const [isSearching, setIsSearching] = useState(false);
@@ -46,6 +48,11 @@ const LocationBasedCourseSearch: React.FC<LocationBasedCourseSearchProps> = ({
         const locationName = place.formatted_address || place.name || "";
         onLocationSelect(locationName, coordinates);
         setSearchInput(locationName);
+        
+        // Automatically search for training providers after successful selection
+        if (onProviderSearch) {
+          onProviderSearch(locationName, coordinates);
+        }
       }
     });
 
@@ -83,6 +90,11 @@ const LocationBasedCourseSearch: React.FC<LocationBasedCourseSearchProps> = ({
           lng: result.geometry.location.lng()
         };
         onLocationSelect(result.formatted_address, coordinates);
+        
+        // Automatically search for training providers after successful geocoding
+        if (onProviderSearch) {
+          onProviderSearch(result.formatted_address, coordinates);
+        }
       } else {
         toast({
           title: "Location not found",

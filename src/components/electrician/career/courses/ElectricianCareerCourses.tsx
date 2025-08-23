@@ -317,6 +317,47 @@ const ElectricianCareerCourses = () => {
     setUserCoordinates(null);
   };
 
+  // Handler for when location search triggers provider search
+  const handleProviderSearchFromLocation = async (location: string, coordinates: google.maps.LatLngLiteral) => {
+    try {
+      console.log('Auto-searching for training providers near:', location);
+      
+      const { data, error } = await supabase.functions.invoke('find-training-providers', {
+        body: { 
+          postcode: location,
+          radius: searchRadius * 1609.34, // Convert miles to meters
+          courseType: 'electrical'
+        }
+      });
+
+      if (error) {
+        console.error('Error finding providers:', error);
+        throw error;
+      }
+
+      if (data?.providers?.length > 0) {
+        handleNearbyProvidersFound(data.providers);
+        toast({
+          title: "Training providers found",
+          description: `Found ${data.providers.length} electrical training providers within ${searchRadius} miles`,
+        });
+      } else {
+        toast({
+          title: "No providers found",
+          description: `No electrical training providers found within ${searchRadius} miles. Try increasing the search radius.`,
+          variant: "destructive"
+        });
+      }
+    } catch (error) {
+      console.error('Error searching for providers:', error);
+      toast({
+        title: "Search failed",
+        description: "Failed to find nearby training providers. Please try again.",
+        variant: "destructive"
+      });
+    }
+  };
+
   const handleCourseSelect = (courseId: string) => {
     setSelectedCourseId(courseId);
   };
@@ -528,6 +569,7 @@ const ElectricianCareerCourses = () => {
           onRadiusChange={handleRadiusChange}
           currentLocation={userLocation}
           searchRadius={searchRadius}
+          onProviderSearch={handleProviderSearchFromLocation}
         />
         
         {/* Find Nearby Providers - Button to search using Google Places */}
