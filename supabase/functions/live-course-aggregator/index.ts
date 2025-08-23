@@ -31,6 +31,9 @@ serve(async (req) => {
       }),
       supabase.functions.invoke('firecrawl-courses-scraper', { 
         body: { keywords, source: 'niceic' } 
+      }),
+      supabase.functions.invoke('firecrawl-courses-scraper', { 
+        body: { keywords, source: 'stanmore' } 
       })
     ];
 
@@ -40,7 +43,7 @@ serve(async (req) => {
     const sourceResults = [];
     const allCourses = [];
     
-    const sources = ['Reed', 'FindCourses', 'City & Guilds', 'NICEIC'];
+    const sources = ['Reed', 'FindCourses', 'City & Guilds', 'NICEIC', 'Stanmore UK'];
     
     for (let i = 0; i < results.length; i++) {
       const result = results[i];

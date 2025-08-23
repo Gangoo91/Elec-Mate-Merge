@@ -53,7 +53,8 @@ serve(async (req) => {
     const courseWebsites = {
       findcourses: `https://www.findcourses.co.uk/search?q=${encodeURIComponent(keywords)}`,
       cityandguilds: 'https://www.cityandguilds.com/qualifications/construction-and-the-built-environment/electrical',
-      niceic: 'https://www.niceic.com/training-and-courses'
+      niceic: 'https://www.niceic.com/training-and-courses',
+      stanmore: 'https://certificates.stanmoreuk.org/Home/Courses/6026646/Electrical-Career-Courses-%26-Training'
     };
 
     const targetUrl = courseWebsites[source as keyof typeof courseWebsites] || courseWebsites.findcourses;
