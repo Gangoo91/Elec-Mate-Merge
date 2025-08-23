@@ -560,7 +560,7 @@ const ElectricianCareerCourses = () => {
                   className="rounded-none border-r border-border"
                 >
                   <List className="h-4 w-4" />
-                  {!isMobile && " Grid"}
+                  {!isMobile && " Courses"}
                 </Button>
                 <Button
                   variant={viewMode === "map" ? "default" : "ghost"}
