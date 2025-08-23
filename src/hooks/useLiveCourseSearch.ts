@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
-import { EnhancedCareerCourse, enhancedCareerCourses } from '@/components/apprentice/career/courses/enhancedCoursesData';
+import { EnhancedCareerCourse } from '@/components/apprentice/career/courses/enhancedCoursesData';
 import { useToast } from '@/hooks/use-toast';
 
 interface LiveCourseSearchParams {
@@ -33,8 +33,8 @@ export const useLiveCourseSearch = (params: LiveCourseSearchParams = {}) => {
   const { toast } = useToast();
   
   const [data, setData] = useState<LiveCourseData>({
-    courses: enhancedCareerCourses,
-    total: enhancedCareerCourses.length,
+    courses: [],
+    total: 0,
     isLiveData: false,
     loading: false,
     error: null
@@ -97,13 +97,9 @@ export const useLiveCourseSearch = (params: LiveCourseSearchParams = {}) => {
           source: course.source || 'Live API'
         }));
         
-        // Combine with static courses, prioritizing live data
-        const allCourses = [...liveCourses, ...enhancedCareerCourses];
-        const uniqueCourses = removeDuplicatesByTitle(allCourses);
-        
         setData({
-          courses: uniqueCourses,
-          total: uniqueCourses.length,
+          courses: liveCourses,
+          total: liveCourses.length,
           summary: liveData.summary,
           isLiveData: true,
           loading: false,
