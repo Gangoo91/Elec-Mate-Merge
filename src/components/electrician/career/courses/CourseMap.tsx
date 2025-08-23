@@ -256,22 +256,6 @@ const CourseMap: React.FC<CourseMapProps> = ({
     <Card className="border-elec-yellow/20 bg-elec-gray p-0 relative h-[500px]">
       <div ref={mapRef} className="h-full w-full rounded-md overflow-hidden" />
       
-      {/* Results info overlay */}
-      {(userCoordinates || nearbyProviders.length > 0) && (
-        <div className="absolute top-2 left-2 bg-background/95 backdrop-blur-sm border border-border/50 shadow-lg p-3 rounded-md text-xs z-[1000]">
-          <div className="text-sm font-medium text-foreground">
-            {markers.length} training provider{markers.length !== 1 ? 's' : ''} found
-          </div>
-          {userCoordinates && (
-            <div className="text-xs text-muted-foreground">
-              Within {searchRadius} miles of your location
-            </div>
-          )}
-          <div className="text-xs text-muted-foreground mt-1">
-            From Google Places API
-          </div>
-        </div>
-      )}
       
       {/* Empty state message */}
       {nearbyProviders.length === 0 && !isLoading && (
