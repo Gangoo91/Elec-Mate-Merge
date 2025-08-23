@@ -28,6 +28,7 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useIsMobile } from "@/hooks/use-mobile";
 import CourseGridSkeleton from "./CourseGridSkeleton";
+import { useCareerBookmarks } from "@/hooks/career/useCareerBookmarks";
 
 const ElectricianCareerCourses = () => {
   const [selectedCourse, setSelectedCourse] = useState<EnhancedCareerCourse | null>(null);
@@ -47,7 +48,7 @@ const ElectricianCareerCourses = () => {
   
   const { toast } = useToast();
   const isMobile = useIsMobile();
-  const { toggleBookmark, isBookmarked } = useBookmarkManager();
+  const { toggleBookmark: toggleDatabaseBookmark, isBookmarked: isDatabaseBookmarked } = useCareerBookmarks();
   const { addToComparison, removeFromComparison, isInComparison, selectedCount } = useCourseComparison();
 
   // Search and filter state
@@ -700,12 +701,12 @@ const ElectricianCareerCourses = () => {
                       <Button
                         variant="ghost"
                         size="sm"
-                        onClick={() => toggleBookmark(course)}
-                        className={`min-h-[40px] min-w-[40px] p-0 md:h-8 md:w-8 rounded-full bg-background/80 backdrop-blur-sm border border-border/50 ${isBookmarked(course.id) ? 
+                        onClick={() => toggleDatabaseBookmark(String(course.id))}
+                        className={`min-h-[40px] min-w-[40px] p-0 md:h-8 md:w-8 rounded-full bg-background/80 backdrop-blur-sm border border-border/50 ${isDatabaseBookmarked(String(course.id)) ? 
                           'text-elec-yellow hover:text-elec-yellow/80 border-elec-yellow/50' : 
                           'text-muted-foreground hover:text-elec-yellow hover:border-elec-yellow/50'
                         }`}
-                        title={isBookmarked(course.id) ? "Remove from saved" : "Save course"}
+                        title={isDatabaseBookmarked(String(course.id)) ? "Remove from saved" : "Save course"}
                       >
                         <BookOpen className="h-4 w-4" />
                       </Button>

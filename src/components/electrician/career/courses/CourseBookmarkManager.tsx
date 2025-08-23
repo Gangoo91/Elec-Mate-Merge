@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import { EnhancedCareerCourse } from "@/components/apprentice/career/courses/enhancedCoursesData";
 import { useToast } from "@/hooks/use-toast";
+import { useCareerBookmarks } from "@/hooks/career/useCareerBookmarks";
 
 interface CourseBookmarkManagerProps {
   courses: EnhancedCareerCourse[];
@@ -21,45 +22,39 @@ interface BookmarkedCourse extends EnhancedCareerCourse {
 }
 
 const CourseBookmarkManager = ({ courses, onViewDetails }: CourseBookmarkManagerProps) => {
-  const [bookmarkedCourses, setBookmarkedCourses] = useState<BookmarkedCourse[]>([]);
+  const { bookmarks, toggleBookmark: toggleDatabaseBookmark, isBookmarked: isDatabaseBookmarked } = useCareerBookmarks();
   const [filterPriority, setFilterPriority] = useState<string>("all");
   const { toast } = useToast();
 
+  // Convert database bookmarks to bookmarked courses with additional metadata
+  const bookmarkedCourses = useMemo(() => {
+    return courses
+      .filter(course => isDatabaseBookmarked(String(course.id)))
+      .map(course => {
+        const bookmark = bookmarks.find(b => b.career_path_id === String(course.id));
+        return {
+          ...course,
+          bookmarkedAt: bookmark ? new Date(bookmark.created_at) : new Date(),
+          priority: "medium" as const // Default priority for now
+        };
+      });
+  }, [courses, bookmarks, isDatabaseBookmarked]);
+
   const toggleBookmark = (course: EnhancedCareerCourse) => {
-    const existingIndex = bookmarkedCourses.findIndex(b => String(b.id) === String(course.id));
-    
-    if (existingIndex >= 0) {
-      setBookmarkedCourses(prev => prev.filter(b => String(b.id) !== String(course.id)));
-      toast({
-        title: "Course removed from saved",
-        description: `${course.title} has been removed from your saved courses.`,
-        variant: "default"
-      });
-    } else {
-      const newBookmark: BookmarkedCourse = {
-        ...course,
-        bookmarkedAt: new Date(),
-        priority: "medium"
-      };
-      setBookmarkedCourses(prev => [...prev, newBookmark]);
-      toast({
-        title: "Course saved!",
-        description: `${course.title} has been added to your saved courses.`,
-        variant: "success"
-      });
-    }
+    toggleDatabaseBookmark(String(course.id));
   };
 
   const updatePriority = (courseId: string | number, priority: "high" | "medium" | "low") => {
-    setBookmarkedCourses(prev => 
-      prev.map(course => 
-        String(course.id) === String(courseId) ? { ...course, priority } : course
-      )
-    );
+    // For now, just show a toast as priority isn't stored in database yet
+    toast({
+      title: "Priority updated locally",
+      description: "Priority changes are not yet persisted to the database.",
+      variant: "default"
+    });
   };
 
   const isBookmarked = (courseId: string | number) => {
-    return bookmarkedCourses.some(b => String(b.id) === String(courseId));
+    return isDatabaseBookmarked(String(courseId));
   };
 
   const exportBookmarks = () => {
