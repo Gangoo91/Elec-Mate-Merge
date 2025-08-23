@@ -30,6 +30,10 @@ const CourseMap: React.FC<CourseMapProps> = ({
   const googleMapRef = useRef<google.maps.Map | null>(null);
   const [markers, setMarkers] = useState<CourseMarkerData[]>([]);
 
+  // Debug logging
+  console.log('CourseMap received courses:', courses.length);
+  console.log('Courses data:', courses);
+
   // Initialize Google Maps
   useEffect(() => {
     if (!window.google?.maps || !mapRef.current) return;
@@ -90,6 +94,7 @@ const CourseMap: React.FC<CourseMapProps> = ({
     
     Promise.all(geocodePromises).then(results => {
       const allMarkers = results.flat();
+      console.log('Successfully geocoded markers:', allMarkers.length);
       setMarkers(allMarkers);
       
       if (allMarkers.length > 0 && googleMapRef.current) {
@@ -99,6 +104,8 @@ const CourseMap: React.FC<CourseMapProps> = ({
         });
         googleMapRef.current.fitBounds(bounds);
       }
+    }).catch(error => {
+      console.error('Geocoding error:', error);
     });
   }, [courses]);
 
@@ -128,6 +135,13 @@ const CourseMap: React.FC<CourseMapProps> = ({
   return (
     <Card className="border-elec-yellow/20 bg-elec-gray p-0 relative h-[500px]">
       <div ref={mapRef} className="h-full w-full rounded-md overflow-hidden" />
+      
+      {/* Debug info overlay */}
+      {process.env.NODE_ENV === 'development' && (
+        <div className="absolute top-2 left-2 bg-black/80 text-white p-2 rounded text-xs z-[1000]">
+          Courses: {courses.length} | Markers: {markers.length}
+        </div>
+      )}
       
       {markers.map((markerData, index) => (
         <CourseMarker 

@@ -16,7 +16,8 @@ import CourseMap from "./CourseMap";
 import GoogleMapsLoader from "../../../job-vacancies/GoogleMapsLoader";
 import { 
   EnhancedCareerCourse,
-  EnhancedTrainingCenter
+  EnhancedTrainingCenter,
+  enhancedCareerCourses
 } from "../../../apprentice/career/courses/enhancedCoursesData";
 import { useLiveCourseSearch } from "@/hooks/useLiveCourseSearch";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -87,6 +88,15 @@ const ElectricianCareerCourses = () => {
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
     return R * c;
   };
+
+  // For map view, ensure we always have courses to display
+  const coursesForMap = useMemo(() => {
+    if (liveCourses.length === 0) {
+      console.log('No live courses available, using static data as fallback for map');
+      return enhancedCareerCourses;
+    }
+    return liveCourses;
+  }, [liveCourses]);
 
   // Enhanced filtering and sorting logic using live data
   const filteredAndSortedCourses = useMemo(() => {
@@ -516,7 +526,7 @@ const ElectricianCareerCourses = () => {
         {viewMode === "map" ? (
           <GoogleMapsLoader>
             <CourseMap
-              courses={filteredAndSortedCourses}
+              courses={viewMode === "map" ? coursesForMap : filteredAndSortedCourses}
               selectedCourse={selectedCourseId}
               onCourseSelect={handleCourseSelect}
               userLocation={userLocation}
