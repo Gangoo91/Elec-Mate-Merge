@@ -411,26 +411,28 @@ const ElectricianCareerCourses = () => {
                     onViewDetails={viewCourseDetails}
                   />
                   
-                  {/* Live Data Badge */}
-                  {course.isLive && (
-                    <Badge 
-                      variant="secondary" 
-                      className="absolute top-2 left-2 bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30"
-                    >
-                      <Wifi className="h-3 w-3 mr-1" />
-                      LIVE
-                    </Badge>
-                  )}
+                  {/* Top Badges Row - LIVE and Category/Emerging */}
+                  <div className="absolute top-2 left-2 flex flex-wrap gap-1 max-w-[calc(100%-120px)]">
+                    {course.isLive && (
+                      <Badge 
+                        variant="secondary" 
+                        className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30 text-xs"
+                      >
+                        <Wifi className="h-3 w-3 mr-1" />
+                        LIVE
+                      </Badge>
+                    )}
+                  </div>
                   
-                  {/* Mobile-Friendly Action Buttons */}
-                  <div className="absolute top-2 right-2 flex gap-1 md:opacity-0 md:group-hover:opacity-100 transition-opacity">
+                  {/* Action Buttons - Positioned below rating badge area */}
+                  <div className="absolute top-12 right-2 flex flex-col gap-1 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-200">
                     <Button
                       variant="ghost"
                       size="sm"
                       onClick={() => toggleBookmark(course)}
-                      className={`min-h-[44px] min-w-[44px] p-0 md:h-8 md:w-8 ${isBookmarked(course.id) ? 
-                        'text-elec-yellow hover:text-elec-yellow/80' : 
-                        'text-muted-foreground hover:text-elec-yellow'
+                      className={`min-h-[40px] min-w-[40px] p-0 md:h-8 md:w-8 rounded-full bg-background/80 backdrop-blur-sm border border-border/50 ${isBookmarked(course.id) ? 
+                        'text-elec-yellow hover:text-elec-yellow/80 border-elec-yellow/50' : 
+                        'text-muted-foreground hover:text-elec-yellow hover:border-elec-yellow/50'
                       }`}
                       title={isBookmarked(course.id) ? "Remove from saved" : "Save course"}
                     >
@@ -441,9 +443,9 @@ const ElectricianCareerCourses = () => {
                       variant="ghost"
                       size="sm"
                       onClick={() => addToComparison(course.id)}
-                      className={`min-h-[44px] min-w-[44px] p-0 md:h-8 md:w-8 ${isInComparison(course.id) ? 
-                        'text-blue-400 hover:text-blue-300' : 
-                        'text-muted-foreground hover:text-blue-400'
+                      className={`min-h-[40px] min-w-[40px] p-0 md:h-8 md:w-8 rounded-full bg-background/80 backdrop-blur-sm border border-border/50 ${isInComparison(course.id) ? 
+                        'text-blue-400 hover:text-blue-300 border-blue-400/50' : 
+                        'text-muted-foreground hover:text-blue-400 hover:border-blue-400/50'
                       }`}
                       title="Add to comparison"
                       disabled={selectedCount >= 3 && !isInComparison(course.id)}
