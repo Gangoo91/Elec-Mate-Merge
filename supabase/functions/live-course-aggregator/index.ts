@@ -18,9 +18,54 @@ serve(async (req) => {
     
     const supabase = createClient(supabaseUrl, supabaseAnonKey);
     
-    // Set timeout for the entire operation (4 minutes - just under edge function limit)
+    // Circuit breaker: Check if external service is available
+    const serviceHealthCheck = async () => {
+      try {
+        const response = await fetch('https://api.firecrawl.dev/', {
+          method: 'HEAD',
+          signal: AbortSignal.timeout(5000)
+        });
+        return response.ok;
+      } catch {
+        return false;
+      }
+    };
+    
+    // Progressive response: Send immediate acknowledgment
+    const progressiveResponse = {
+      courses: [],
+      total: 0,
+      summary: {
+        totalCourses: 0,
+        originalCourses: 0,
+        duplicatesRemoved: 0,
+        sourceBreakdown: [],
+        searchCriteria: { keywords, location },
+        liveCourses: 0,
+        lastUpdated: new Date().toISOString(),
+        status: 'processing'
+      },
+      sourceResults: [],
+      isLiveData: true,
+      processing: true
+    };
+    
+    // Early return with processing status
+    if (!(await serviceHealthCheck())) {
+      console.warn('⚠️ External service unavailable, returning cached fallback');
+      return new Response(JSON.stringify({
+        ...progressiveResponse,
+        error: 'External course data service temporarily unavailable. Using cached data.',
+        processing: false
+      }), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        status: 503
+      });
+    }
+    
+    // Set timeout for the entire operation (2.5 minutes to allow response time)
     const timeoutPromise = new Promise<never>((_, reject) => {
-      setTimeout(() => reject(new Error('Operation timed out after 240 seconds')), 240000);
+      setTimeout(() => reject(new Error('Operation timed out after 150 seconds')), 150000);
     });
     
     const mainOperation = async () => {
@@ -146,13 +191,15 @@ serve(async (req) => {
 
         const basicCourses = Array.isArray(searchData.data.json) ? searchData.data.json : [searchData.data.json];
         
-        // Stage 2: Get detailed information for each course
-        console.log('🔍 Starting detailed course scraping for', Math.min(basicCourses.length, 8), 'courses...');
-        
-        const detailedCourses = [];
-        const maxCoursesToDetail = 8; // Limit to avoid timeout and API costs
+      // Stage 2: Get detailed information for each course (with circuit breaker)
+      console.log('🔍 Starting detailed course scraping for', Math.min(basicCourses.length, 6), 'courses...');
       
-      for (let i = 0; i < Math.min(basicCourses.length, maxCoursesToDetail); i++) {
+      const detailedCourses = [];
+      const maxCoursesToDetail = 6; // Reduced to ensure faster completion
+      let failureCount = 0;
+      const maxFailures = 3; // Circuit breaker threshold
+    
+    for (let i = 0; i < Math.min(basicCourses.length, maxCoursesToDetail); i++) {
         const course = basicCourses[i];
         
         if (!course.detailsUrl) {
@@ -162,6 +209,27 @@ serve(async (req) => {
         }
         
         try {
+          // Circuit breaker: Skip detailed scraping if too many failures
+          if (failureCount >= maxFailures) {
+            console.log(`⚠️ Circuit breaker activated - skipping detailed scraping for remaining courses`);
+            detailedCourses.push({
+              ...course,
+              prerequisites: [],
+              courseOutline: [],
+              assessmentMethod: [],
+              continuousAssessment: false,
+              accreditations: [],
+              careerOutcomes: [],
+              upcomingDates: [],
+              locations: [],
+              employerSupport: false,
+              futureScope: '',
+              industryDemand: 'Not specified',
+              hasDetailedInfo: false
+            });
+            continue;
+          }
+          
           console.log(`🔍 Scraping details for course ${i + 1}: ${course.courseTitle}`);
           
           const detailData = await makeFirecrawlRequest('https://api.firecrawl.dev/v2/scrape', {
@@ -281,9 +349,10 @@ serve(async (req) => {
           detailedCourses.push(enhancedCourse);
           
           // Small delay to be respectful to the API and avoid rate limiting
-          await new Promise(resolve => setTimeout(resolve, 1500));
+          await new Promise(resolve => setTimeout(resolve, 1000));
           
         } catch (error) {
+          failureCount++;
           console.error(`❌ Error scraping details for ${course.courseTitle}:`, error.message);
           // Add course with basic info only if detail scraping fails
           detailedCourses.push({

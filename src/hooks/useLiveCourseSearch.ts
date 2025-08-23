@@ -159,19 +159,35 @@ export const useLiveCourseSearch = (params: LiveCourseSearchParams = {}) => {
       // Clear cache by resetting search params
       setLastSearchParams('');
       
-      // Set a timeout for the entire refresh operation
+      // Show progressive loading with immediate feedback
+      toast({
+        title: "Searching for courses",
+        description: "Finding the latest course data...",
+        variant: "default"
+      });
+      
+      // Set a timeout for the entire refresh operation (reduced to 2 minutes)
       const timeoutPromise = new Promise<never>((_, reject) => {
-        setTimeout(() => reject(new Error('Refresh operation timed out')), 180000); // 3 minutes
+        setTimeout(() => reject(new Error('Search taking longer than expected - please try with more specific keywords')), 120000); // 2 minutes
       });
       
       const refreshPromise = async () => {
         // Make the API call with retry logic
         let retryCount = 0;
-        const maxRetries = 2;
+        const maxRetries = 1; // Reduced retries to prevent long waits
         
-        while (retryCount < maxRetries) {
+        while (retryCount <= maxRetries) {
           try {
             console.log(`📡 Making refresh API call (attempt ${retryCount + 1}/${maxRetries + 1})`);
+            
+            // Progressive feedback during long operations
+            if (retryCount > 0) {
+              toast({
+                title: "Retrying search",
+                description: "Previous attempt didn't complete, trying again...",
+                variant: "default"
+              });
+            }
             
             const { data: liveData, error } = await supabase.functions.invoke('live-course-aggregator', {
               body: {
@@ -182,20 +198,32 @@ export const useLiveCourseSearch = (params: LiveCourseSearchParams = {}) => {
             
             if (error) {
               console.error('Refresh API error:', error);
-              throw new Error(error.message || 'API call failed');
+              
+              // Check for specific error types and provide helpful messages
+              if (error.message?.includes('Failed to fetch') || error.message?.includes('fetch')) {
+                throw new Error('Network connection issue - please check your internet connection and try again.');
+              } else if (error.message?.includes('timeout') || error.message?.includes('timed out')) {
+                throw new Error('Search is taking too long - try using more specific keywords like "18th Edition" or "EV charging".');
+              } else if (error.message?.includes('500') || error.message?.includes('502') || error.message?.includes('503')) {
+                throw new Error('Course search service is temporarily busy - please try again in a moment.');
+              }
+              
+              throw new Error(error.message || 'Unable to search for courses right now');
             }
             
+            // Handle service-level errors with better messages
             if (liveData?.error) {
               console.error('Service error:', liveData.error, liveData.technical_error);
               
-              // If it's a timeout or service error, show user-friendly message
               if (liveData.technical_error?.includes('timeout') || liveData.technical_error?.includes('timed out')) {
-                throw new Error('The search is taking longer than expected. Try searching for more specific course terms.');
+                throw new Error('Course search is taking longer than expected. Try searching for specific terms like "electrical training" or "Level 2".');
               } else if (liveData.technical_error?.includes('API key') || liveData.technical_error?.includes('configuration')) {
-                throw new Error('Service temporarily unavailable. Please try again in a few minutes.');
+                throw new Error('Course data service is temporarily unavailable. Please try again in a few minutes.');
+              } else if (liveData.technical_error?.includes('rate limit') || liveData.technical_error?.includes('quota')) {
+                throw new Error('Too many searches right now. Please wait a moment and try again.');
               }
               
-              throw new Error(liveData.error);
+              throw new Error('Unable to fetch course data at the moment. Please try again shortly.');
             }
             
             console.log('✅ Data refreshed successfully:', liveData);
@@ -242,8 +270,9 @@ export const useLiveCourseSearch = (params: LiveCourseSearchParams = {}) => {
               });
               
               toast({
-                title: "Data Refreshed",
-                description: `Found ${liveCourses.length} courses from live search`,
+                title: "Courses found",
+                description: `Successfully loaded ${liveCourses.length} live course${liveCourses.length === 1 ? '' : 's'}`,
+                variant: "success"
               });
             } else {
               setData({
@@ -264,9 +293,9 @@ export const useLiveCourseSearch = (params: LiveCourseSearchParams = {}) => {
             
           } catch (error) {
             retryCount++;
-            if (retryCount < maxRetries) {
-              console.log(`⏳ Retrying refresh in 2 seconds... (${retryCount}/${maxRetries})`);
-              await new Promise(resolve => setTimeout(resolve, 2000));
+            if (retryCount <= maxRetries) {
+              console.log(`⏳ Retrying refresh in 3 seconds... (${retryCount}/${maxRetries + 1})`);
+              await new Promise(resolve => setTimeout(resolve, 3000));
             } else {
               throw error; // Final retry failed
             }
@@ -287,10 +316,11 @@ export const useLiveCourseSearch = (params: LiveCourseSearchParams = {}) => {
         error: errorMessage
       }));
       
+      // Show user-friendly error messages
       toast({
-        title: "Refresh Failed",
+        title: "Search failed",
         description: errorMessage,
-        variant: "destructive",
+        variant: "destructive"
       });
     }
   }, [keywords, location, toast]);
