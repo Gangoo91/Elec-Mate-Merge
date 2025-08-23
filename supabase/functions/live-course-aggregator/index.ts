@@ -18,96 +18,30 @@ serve(async (req) => {
     
     const supabase = createClient(supabaseUrl, supabaseAnonKey);
     
-    // Fetch from all course sources in parallel (excluding Reed)
-    const promises = [
-      supabase.functions.invoke('firecrawl-courses-scraper', { 
-        body: { keywords, source: 'findcourses' } 
-      }),
-      supabase.functions.invoke('firecrawl-courses-scraper', { 
-        body: { keywords, source: 'cityandguilds' } 
-      }),
-      supabase.functions.invoke('firecrawl-courses-scraper', { 
-        body: { keywords, source: 'niceic' } 
-      }),
-      supabase.functions.invoke('firecrawl-courses-scraper', { 
-        body: { keywords, source: 'stanmore' } 
-      })
+    // Live course fetching is disabled
+    console.log('Live course fetching is disabled - returning empty course data');
+    
+    const sourceResults = [
+      {
+        source: 'Live Fetching',
+        courseCount: 0,
+        success: false,
+        error: 'Live course fetching has been disabled',
+        lastUpdated: new Date().toISOString()
+      }
     ];
-
-    const results = await Promise.allSettled(promises);
     
-    // Process results from each source
-    const sourceResults = [];
-    const allCourses = [];
-    
-    const sources = ['FindCourses', 'City & Guilds', 'NICEIC', 'Stanmore UK'];
-    
-    for (let i = 0; i < results.length; i++) {
-      const result = results[i];
-      const sourceName = sources[i];
-      
-      if (result.status === 'fulfilled' && result.value.data) {
-        const { courses = [], total = 0 } = result.value.data;
-        sourceResults.push({
-          source: sourceName,
-          courseCount: courses.length,
-          success: true,
-          error: null,
-          lastUpdated: new Date().toISOString()
-        });
-        allCourses.push(...courses);
-        console.log(`✅ ${sourceName}: ${courses.length} courses`);
-      } else {
-        const error = result.status === 'rejected' ? result.reason?.message : 'Unknown error';
-        sourceResults.push({
-          source: sourceName,
-          courseCount: 0,
-          success: false,
-          error,
-          lastUpdated: new Date().toISOString()
-        });
-        console.log(`❌ ${sourceName}: ${error}`);
-      }
-    }
-
-    // Remove duplicates based on title + provider
-    const uniqueCourses = removeDuplicates(allCourses);
-    
-    // Enhanced sorting with relevance scoring
-    uniqueCourses.sort((a, b) => {
-      // Prioritize live courses
-      if (a.isLive && !b.isLive) return -1;
-      if (!a.isLive && b.isLive) return 1;
-      
-      // Then by relevance score if available
-      if (a.relevanceScore && b.relevanceScore) {
-        if (a.relevanceScore !== b.relevanceScore) {
-          return b.relevanceScore - a.relevanceScore;
-        }
-      }
-      
-      // Then by source priority (prioritize established providers)
-      const sourceOrder = ['City & Guilds', 'NICEIC', 'FindCourses', 'Stanmore UK'];
-      const aIndex = sourceOrder.indexOf(a.source || '');
-      const bIndex = sourceOrder.indexOf(b.source || '');
-      if (aIndex !== -1 && bIndex !== -1) {
-        if (aIndex !== bIndex) return aIndex - bIndex;
-      }
-      
-      // Finally by rating and future-proofing
-      const scoreA = (a.rating || 0) * (a.futureProofing || 1);
-      const scoreB = (b.rating || 0) * (b.futureProofing || 1);
-      return scoreB - scoreA;
-    });
+    const uniqueCourses = [];
 
     const summary = {
-      totalCourses: uniqueCourses.length,
-      originalCourses: allCourses.length,
-      duplicatesRemoved: allCourses.length - uniqueCourses.length,
+      totalCourses: 0,
+      originalCourses: 0,
+      duplicatesRemoved: 0,
       sourceBreakdown: sourceResults,
       searchCriteria: { keywords, location },
-      liveCourses: uniqueCourses.filter(c => c.isLive).length,
-      lastUpdated: new Date().toISOString()
+      liveCourses: 0,
+      lastUpdated: new Date().toISOString(),
+      message: 'Live course fetching has been disabled'
     };
 
     console.log(`📊 Aggregation complete: ${uniqueCourses.length} unique courses from ${sourceResults.filter(s => s.success).length} sources`);
@@ -117,7 +51,7 @@ serve(async (req) => {
       total: uniqueCourses.length,
       summary,
       sourceResults,
-      isLiveData: true
+      isLiveData: false
     }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
@@ -137,15 +71,3 @@ serve(async (req) => {
     });
   }
 });
-
-function removeDuplicates(courses: any[]) {
-  const seen = new Set();
-  return courses.filter(course => {
-    const key = `${course.title?.toLowerCase().trim()}-${course.provider?.toLowerCase().trim()}`;
-    if (seen.has(key)) {
-      return false;
-    }
-    seen.add(key);
-    return true;
-  });
-}
