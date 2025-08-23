@@ -279,7 +279,7 @@ const CourseBookmarkManager = ({ courses, onViewDetails }: CourseBookmarkManager
 
 // Export the bookmark toggle function for use in course cards
 export const useBookmarkManager = () => {
-  const [bookmarkedCourses, setBookmarkedCourses] = useState<number[]>([]);
+  const [bookmarkedCourses, setBookmarkedCourses] = useState<(string | number)[]>([]);
   const { toast } = useToast();
 
   const toggleBookmark = (course: EnhancedCareerCourse) => {
@@ -300,7 +300,7 @@ export const useBookmarkManager = () => {
     }
   };
 
-  const isBookmarked = (courseId: number) => bookmarkedCourses.includes(courseId);
+  const isBookmarked = (courseId: string | number) => bookmarkedCourses.includes(courseId);
 
   return { toggleBookmark, isBookmarked };
 };

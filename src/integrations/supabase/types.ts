@@ -764,6 +764,33 @@ export type Database = {
         }
         Relationships: []
       }
+      live_course_cache: {
+        Row: {
+          course_data: Json
+          created_at: string
+          expires_at: string
+          id: string
+          search_query: string
+          source: string
+        }
+        Insert: {
+          course_data: Json
+          created_at?: string
+          expires_at?: string
+          id?: string
+          search_query: string
+          source: string
+        }
+        Update: {
+          course_data?: Json
+          created_at?: string
+          expires_at?: string
+          id?: string
+          search_query?: string
+          source?: string
+        }
+        Relationships: []
+      }
       major_projects: {
         Row: {
           average_rating: number | null
@@ -2484,6 +2511,10 @@ export type Database = {
       }
     }
     Functions: {
+      cleanup_expired_course_cache: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
       generate_content_hash: {
         Args: { content: string; source_url: string; title: string }
         Returns: string

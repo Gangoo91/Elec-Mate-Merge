@@ -2,7 +2,7 @@
 // Enhanced course data with comprehensive UK electrical industry information
 
 export interface EnhancedCareerCourse {
-  id: number;
+  id: number | string;
   title: string;
   provider: string;
   description: string;
@@ -24,6 +24,9 @@ export interface EnhancedCareerCourse {
   courseOutline: string[];
   assessmentMethod: string;
   continuousAssessment: boolean;
+  isLive?: boolean;
+  external_url?: string;
+  source?: string;
 }
 
 export interface EnhancedTrainingCenter {

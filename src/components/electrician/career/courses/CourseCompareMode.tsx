@@ -47,7 +47,7 @@ const CourseCompareMode = ({ courses, onViewDetails }: CourseCompareModeProps) =
     });
   };
 
-  const removeFromComparison = (courseId: number) => {
+  const removeFromComparison = (courseId: string | number) => {
     setSelectedCourses(prev => prev.filter(c => c.id !== courseId));
   };
 
@@ -56,7 +56,7 @@ const CourseCompareMode = ({ courses, onViewDetails }: CourseCompareModeProps) =
     setShowComparison(false);
   };
 
-  const isSelected = (courseId: number) => {
+  const isSelected = (courseId: string | number) => {
     return selectedCourses.some(c => c.id === courseId);
   };
 
@@ -327,10 +327,10 @@ const CourseCompareMode = ({ courses, onViewDetails }: CourseCompareModeProps) =
 
 // Export hook for use in course cards
 export const useCourseComparison = () => {
-  const [selectedCourses, setSelectedCourses] = useState<number[]>([]);
+  const [selectedCourses, setSelectedCourses] = useState<(string | number)[]>([]);
   const { toast } = useToast();
 
-  const addToComparison = (courseId: number) => {
+  const addToComparison = (courseId: string | number) => {
     if (selectedCourses.length >= 3) {
       toast({
         title: "Comparison limit reached",
@@ -345,11 +345,11 @@ export const useCourseComparison = () => {
     }
   };
 
-  const removeFromComparison = (courseId: number) => {
+  const removeFromComparison = (courseId: string | number) => {
     setSelectedCourses(prev => prev.filter(id => id !== courseId));
   };
 
-  const isInComparison = (courseId: number) => selectedCourses.includes(courseId);
+  const isInComparison = (courseId: string | number) => selectedCourses.includes(courseId);
 
   return { addToComparison, removeFromComparison, isInComparison, selectedCount: selectedCourses.length };
 };

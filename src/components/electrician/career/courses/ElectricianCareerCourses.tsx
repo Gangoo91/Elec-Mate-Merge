@@ -17,10 +17,11 @@ import {
   EnhancedCareerCourse,
   EnhancedTrainingCenter
 } from "../../../apprentice/career/courses/enhancedCoursesData";
+import { useLiveCourseSearch } from "@/hooks/useLiveCourseSearch";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { BookOpen, Users, Plus, Scale, FileDown } from "lucide-react";
+import { BookOpen, Users, Plus, Scale, FileDown, RefreshCw, Wifi, WifiOff } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useIsMobile } from "@/hooks/use-mobile";
 
@@ -51,9 +52,25 @@ const ElectricianCareerCourses = () => {
     rating: 0
   });
 
-  // Enhanced filtering and sorting logic
+  // Live course data hook
+  const {
+    courses: liveCourses,
+    total: liveTotal,
+    summary: liveSummary,
+    isLiveData,
+    loading: isLoadingLive,
+    error: liveError,
+    refreshCourses,
+    isSearching
+  } = useLiveCourseSearch({
+    keywords: filters.searchQuery || "electrical course",
+    location: filters.location === "All Locations" ? "United Kingdom" : filters.location,
+    enableLiveData: true
+  });
+
+  // Enhanced filtering and sorting logic using live data
   const filteredAndSortedCourses = useMemo(() => {
-    let filtered = enhancedCareerCourses.filter(course => {
+    let filtered = liveCourses.filter(course => {
       // Search query filter
       if (filters.searchQuery) {
         const query = filters.searchQuery.toLowerCase();
@@ -165,7 +182,7 @@ const ElectricianCareerCourses = () => {
     }
 
     return filtered;
-  }, [filters, currentSort]);
+  }, [liveCourses, filters, currentSort]);
 
   const filteredCenters = useMemo(() => {
     return enhancedTrainingCenters.filter(center => {
@@ -273,16 +290,46 @@ const ElectricianCareerCourses = () => {
       {/* Header Section */}
       <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-xl sm:text-2xl">
+            <CardTitle className="flex items-center gap-2 text-xl sm:text-2xl">
             <BookOpen className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow" />
             UK Electrical Career Courses & Training
+            {isLiveData && (
+              <Badge variant="secondary" className="ml-2 flex items-center gap-1">
+                <Wifi className="h-3 w-3" />
+                LIVE
+              </Badge>
+            )}
           </CardTitle>
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <p className="text-sm sm:text-base text-muted-foreground">
-              Comprehensive professional development courses to advance your electrical career in the UK market
-            </p>
+            <div className="flex flex-col gap-2">
+              <p className="text-sm sm:text-base text-muted-foreground">
+                Comprehensive professional development courses to advance your electrical career in the UK market
+              </p>
+              {isLiveData && liveSummary && (
+                <p className="text-xs text-elec-yellow">
+                  Live data: {liveSummary.liveCourses} live courses from {liveSummary.sourceBreakdown.filter(s => s.success).length} sources
+                  {liveSummary.lastUpdated && ` • Updated ${new Date(liveSummary.lastUpdated).toLocaleTimeString()}`}
+                </p>
+              )}
+              {!isLiveData && (
+                <p className="text-xs text-muted-foreground flex items-center gap-1">
+                  <WifiOff className="h-3 w-3" />
+                  Showing cached course data
+                </p>
+              )}
+            </div>
             
             <div className="flex gap-2 flex-wrap">
+              <Button
+                variant="outline"
+                onClick={refreshCourses}
+                disabled={isSearching}
+                className="flex items-center gap-2"
+              >
+                <RefreshCw className={`h-4 w-4 ${isSearching ? 'animate-spin' : ''}`} />
+                {isMobile ? "Refresh" : "Refresh Data"}
+              </Button>
+              
               <Button
                 variant={showBookmarks ? "default" : "outline"}
                 onClick={() => setShowBookmarks(!showBookmarks)}
@@ -321,7 +368,7 @@ const ElectricianCareerCourses = () => {
 
       {/* Featured Courses Carousel */}
       <FeaturedCoursesCarousel 
-        courses={enhancedCareerCourses} 
+        courses={liveCourses.slice(0, 6)} 
         onViewDetails={viewCourseDetails} 
       />
 
@@ -336,7 +383,7 @@ const ElectricianCareerCourses = () => {
       {/* Course Comparison Tool */}
       {showComparison && (
         <CourseCompareMode
-          courses={enhancedCareerCourses}
+          courses={liveCourses}
           onViewDetails={viewCourseDetails}
         />
       )}
@@ -344,7 +391,7 @@ const ElectricianCareerCourses = () => {
       {/* Bookmark Manager */}
       {showBookmarks && (
         <CourseBookmarkManager
-          courses={enhancedCareerCourses}
+          courses={liveCourses}
           onViewDetails={viewCourseDetails}
         />
       )}
@@ -378,6 +425,17 @@ const ElectricianCareerCourses = () => {
                           course={course}
                           onViewDetails={viewCourseDetails}
                         />
+                        
+                        {/* Live Data Badge */}
+                        {course.isLive && (
+                          <Badge 
+                            variant="secondary" 
+                            className="absolute top-2 left-2 bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30"
+                          >
+                            <Wifi className="h-3 w-3 mr-1" />
+                            LIVE
+                          </Badge>
+                        )}
                         
                         {/* Action Buttons Overlay */}
                         <div className="absolute top-2 right-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
