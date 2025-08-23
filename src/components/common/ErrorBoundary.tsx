@@ -2,7 +2,7 @@
 import React, { Component, ErrorInfo, ReactNode } from 'react';
 import { Button } from '@/components/ui/button';
 import { RefreshCcw, Home } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import SafeLink from './SafeLink';
 import { logger } from '@/utils/logger';
 
 interface Props {
@@ -64,10 +64,15 @@ class ErrorBoundary extends Component<Props, State> {
               Refresh page
             </Button>
             <Button variant="outline" asChild>
-              <Link to="/dashboard" className="flex items-center gap-2">
+              <SafeLink to="/dashboard" className="flex items-center gap-2" fallback={
+                <button className="flex items-center gap-2" onClick={() => window.location.href = '/dashboard'}>
+                  <Home className="h-4 w-4" />
+                  Go to dashboard
+                </button>
+              }>
                 <Home className="h-4 w-4" />
                 Go to dashboard
-              </Link>
+              </SafeLink>
             </Button>
           </div>
           {process.env.NODE_ENV === 'development' && this.state.error && (
