@@ -18,10 +18,10 @@ serve(async (req) => {
     
     const supabase = createClient(supabaseUrl, supabaseAnonKey);
     
-    // Fetch from all course sources in parallel
+    // Fetch from all course sources in parallel with Reed hybrid approach
     const promises = [
-      supabase.functions.invoke('firecrawl-courses-scraper', { 
-        body: { keywords, source: 'reed' } 
+      supabase.functions.invoke('reed-courses-hybrid', { 
+        body: { keywords, location } 
       }),
       supabase.functions.invoke('firecrawl-courses-scraper', { 
         body: { keywords, source: 'findcourses' } 
@@ -43,7 +43,7 @@ serve(async (req) => {
     const sourceResults = [];
     const allCourses = [];
     
-    const sources = ['Reed', 'FindCourses', 'City & Guilds', 'NICEIC', 'Stanmore UK'];
+    const sources = ['Reed Hybrid', 'FindCourses', 'City & Guilds', 'NICEIC', 'Stanmore UK'];
     
     for (let i = 0; i < results.length; i++) {
       const result = results[i];
@@ -76,13 +76,24 @@ serve(async (req) => {
     // Remove duplicates based on title + provider
     const uniqueCourses = removeDuplicates(allCourses);
     
-    // Sort by rating and future-proofing (live courses first)
+    // Enhanced sorting with relevance scoring
     uniqueCourses.sort((a, b) => {
       // Prioritize live courses
       if (a.isLive && !b.isLive) return -1;
       if (!a.isLive && b.isLive) return 1;
       
-      // Then by rating and future-proofing
+      // Then by relevance score if available
+      if (a.relevanceScore && b.relevanceScore) {
+        if (a.relevanceScore !== b.relevanceScore) {
+          return b.relevanceScore - a.relevanceScore;
+        }
+      }
+      
+      // Then by source priority (Reed hybrid first)
+      if (a.source === 'Reed Courses' && b.source !== 'Reed Courses') return -1;
+      if (a.source !== 'Reed Courses' && b.source === 'Reed Courses') return 1;
+      
+      // Finally by rating and future-proofing
       const scoreA = (a.rating || 0) * (a.futureProofing || 1);
       const scoreB = (b.rating || 0) * (b.futureProofing || 1);
       return scoreB - scoreA;
