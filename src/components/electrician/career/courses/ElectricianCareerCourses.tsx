@@ -92,7 +92,7 @@ const ElectricianCareerCourses = () => {
 
       // Location filter
       if (filters.location !== "All Locations") {
-        const hasLocation = course.locations.some(loc => 
+        const hasLocation = (course.locations || []).some(loc => 
           loc.toLowerCase().includes(filters.location.toLowerCase())
         );
         if (!hasLocation) return false;

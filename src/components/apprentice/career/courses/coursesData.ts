@@ -16,16 +16,21 @@ export interface CareerCourse {
   prerequisites?: string[];
   assessmentMethod?: string;
   continuousAssessment?: boolean;
-  industryDemand?: {
+  industryDemand?: "High" | "Medium" | "Low" | {
     level: string;
     growth: string;
     description: string;
   };
-  futureProofing?: string;
+  futureProofing?: string | number;
   salaryImpact?: string;
   careerOutcomes?: string[];
   accreditation?: string[];
   employerSupport?: boolean;
+  // Additional properties for compatibility
+  format?: string;
+  nextDates?: string[];
+  rating?: number;
+  locations?: string[];
 }
 
 export interface EnhancedCareerCourse extends CareerCourse {
@@ -218,4 +223,135 @@ export const trainingCenters: TrainingCenter[] = [
     facilities: ["Central London location", "Evening and weekend courses", "Online resources"],
     accreditations: ["IET approved", "City & Guilds centre", "Professional recognition"]
   }
+];
+
+// UK Locations for dropdown
+export const ukLocations = [
+  "All Locations",
+  "London",
+  "Manchester", 
+  "Birmingham",
+  "Liverpool",
+  "Leeds",
+  "Sheffield",
+  "Bristol",
+  "Glasgow",
+  "Leicester",
+  "Edinburgh",
+  "Cardiff",
+  "Belfast",
+  "Newcastle",
+  "Nottingham",
+  "Portsmouth",
+  "Southampton",
+  "Reading",
+  "Brighton",
+  "Plymouth",
+  "Stoke-on-Trent",
+  "Wolverhampton",
+  "Derby",
+  "Swansea",
+  "Southampton",
+  "Salford",
+  "Aberdeen",
+  "Westminster",
+  "Norwich",
+  "Dundee",
+  "York",
+  "Poole",
+  "Oldham",
+  "Warrington",
+  "Ipswich",
+  "Oxford",
+  "Slough",
+  "Bournemouth",
+  "Telford",
+  "Peterborough",
+  "Bolton",
+  "Blackpool",
+  "Preston",
+  "Luton",
+  "Brent",
+  "Stockport",
+  "Blackburn",
+  "Burnley",
+  "Chelmsford",
+  "Gloucester",
+  "Cambridge",
+  "Exeter",
+  "Scunthorpe",
+  "Guildford",
+  "Watford",
+  "Rotherham",
+  "Exeter",
+  "Basildon",
+  "Harlow",
+  "Redditch",
+  "Shrewsbury",
+  "Woking",
+  "St Albans",
+  "Maidstone",
+  "Warwick",
+  "Stevenage",
+  "Bath",
+  "Chester",
+  "Eastbourne",
+  "Grimsby",
+  "Hastings",
+  "Lincoln",
+  "Middlesbrough",
+  "Darlington",
+  "Mansfield",
+  "Nuneaton",
+  "Corby",
+  "Kidderminster",
+  "Hartlepool",
+  "Carlisle",
+  "Worthing",
+  "Lowestoft",
+  "Rhondda",
+  "Tamworth",
+  "Chatham",
+  "Southend-on-Sea",
+  "Birkenhead",
+  "Great Yarmouth",
+  "Aylesbury",
+  "Taunton",
+  "Chesterfield",
+  "Worcester",
+  "Rugby",
+  "Runcorn",
+  "Macclesfield",
+  "Keighley",
+  "Gloucester",
+  "Bracknell",
+  "Hereford",
+  "Salisbury",
+  "Bangor",
+  "Folkestone",
+  "Lancaster",
+  "Royal Tunbridge Wells",
+  "Weymouth",
+  "Crewe",
+  "Colchester",
+  "Huddersfield",
+  "High Wycombe",
+  "King's Lynn",
+  "Newbury",
+  "Basingstoke",
+  "Burton upon Trent",
+  "Wrexham",
+  "Loughborough",
+  "Kettering",
+  "Scarborough",
+  "Farnborough",
+  "Windsor",
+  "Bridgwater",
+  "Boston",
+  "Margate",
+  "Littlehampton",
+  "Wellingborough",
+  "Crowborough",
+  "Kirkby",
+  "St Helens"
 ];

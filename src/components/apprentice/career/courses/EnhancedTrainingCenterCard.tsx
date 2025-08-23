@@ -140,7 +140,7 @@ const EnhancedTrainingCenterCard = ({ center, onViewDetails }: EnhancedTrainingC
                 </div>
                 <div className="flex items-center gap-2">
                   <Phone className="h-4 w-4 text-elec-yellow" />
-                  <span className="text-muted-foreground">{center.contact}</span>
+                  <span className="text-muted-foreground">{center.contact.phone}</span>
                 </div>
               </div>
               <div className="space-y-2">

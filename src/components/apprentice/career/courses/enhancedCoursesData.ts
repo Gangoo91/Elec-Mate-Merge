@@ -7,6 +7,8 @@ export interface EnhancedCareerCourse {
   provider: string;
   description: string;
   duration: string;
+  mode: string;
+  location: string;
   level: string;
   price: string;
   format: string;
@@ -34,7 +36,11 @@ export interface EnhancedTrainingCenter {
   name: string;
   location: string;
   address: string;
-  contact: string;
+  contact: {
+    phone: string;
+    email: string;
+    website: string;
+  };
   website: string;
   courses: string[];
   specializations: string[];
@@ -74,6 +80,8 @@ export const enhancedCareerCourses: EnhancedCareerCourse[] = [
     provider: "NICEIC Academy",
     description: "Comprehensive training on the latest IET Wiring Regulations, covering all amendments and updates essential for UK electrical installations.",
     duration: "3 days",
+    mode: "Intensive",
+    location: "London",
     level: "Intermediate",
     price: "£395 - £495",
     format: "Classroom, Online, Blended Learning",
@@ -111,6 +119,8 @@ export const enhancedCareerCourses: EnhancedCareerCourse[] = [
     provider: "City & Guilds Centres",
     description: "Advanced practical training for electrical installation inspection, testing and verification to BS 7671 standards.",
     duration: "5 days",
+    mode: "Full-time",
+    location: "Cardiff",
     level: "Advanced", 
     price: "£695 - £895",
     format: "Classroom with extensive practical assessments",
@@ -147,6 +157,8 @@ export const enhancedCareerCourses: EnhancedCareerCourse[] = [
     provider: "ECA Training",
     description: "Specialised certification for installing domestic and commercial EV charging points, covering Mode 3 charging systems.",
     duration: "2 days",
+    mode: "Part-time",
+    location: "Bristol",
     level: "Intermediate",
     price: "£425 - £525",
     format: "Blended learning with hands-on practical sessions",
@@ -183,6 +195,8 @@ export const enhancedCareerCourses: EnhancedCareerCourse[] = [
     provider: "KNX UK Association",
     description: "Advanced training in intelligent building control systems, IoT integration, and smart home technologies.",
     duration: "5 days",
+    mode: "Full-time",
+    location: "London",
     level: "Advanced",
     price: "£1,295 - £1,595",
     format: "Intensive practical workshop with certification",
@@ -219,6 +233,8 @@ export const enhancedCareerCourses: EnhancedCareerCourse[] = [
     provider: "FIA Training",
     description: "Comprehensive training on fire detection and alarm system design, installation, and maintenance to British Standards.",
     duration: "4 days",
+    mode: "Full-time",
+    location: "London",
     level: "Intermediate",
     price: "£595 - £695",
     format: "Classroom with practical demonstrations",
@@ -255,6 +271,8 @@ export const enhancedCareerCourses: EnhancedCareerCourse[] = [
     provider: "Solar Energy UK",
     description: "Complete training for solar photovoltaic system installation, covering MCS requirements and grid connection procedures.",
     duration: "3 days",
+    mode: "Part-time",
+    location: "Bristol",
     level: "Intermediate",
     price: "£495 - £595",
     format: "Practical rooftop training with classroom theory",
@@ -293,7 +311,11 @@ export const enhancedTrainingCenters: EnhancedTrainingCenter[] = [
     name: "NICEIC Learning & Development",
     location: "London",
     address: "Warwick House, Houghton Hall Park, Houghton Regis, Bedfordshire, LU5 5ZX",
-    contact: "0333 015 6626",
+    contact: {
+      phone: "0333 015 6626",
+      email: "training@niceic.com",
+      website: "www.niceic.com/training"
+    },
     website: "www.niceic.com/training",
     courses: ["18th Edition Wiring Regulations", "Inspection & Testing", "EV Charging Installation"],
     specializations: ["Electrical Safety", "Code Compliance", "Professional Development"],
@@ -311,7 +333,11 @@ export const enhancedTrainingCenters: EnhancedTrainingCenter[] = [
     name: "ECA Training Services",
     location: "London",
     address: "ECA House, Palace Court, London, W2 4HY",
-    contact: "020 7313 4800",
+    contact: {
+      phone: "020 7313 4800",
+      email: "training@eca.co.uk",
+      website: "www.eca.co.uk/training"
+    },
     website: "www.eca.co.uk/training",
     courses: ["EV Charging Installation", "Smart Building Systems", "Energy Efficiency"],
     specializations: ["Emerging Technologies", "Renewable Energy", "Commercial Systems"],
@@ -329,7 +355,11 @@ export const enhancedTrainingCenters: EnhancedTrainingCenter[] = [
     name: "City & Guilds Training Centre",
     location: "Manchester",
     address: "1 Giltspur Street, Manchester, M1 1AA",
-    contact: "0844 543 0000",
+    contact: {
+      phone: "0844 543 0000",
+      email: "enquiries@cityandguilds.com",
+      website: "www.cityandguilds.com"
+    },
     website: "www.cityandguilds.com",
     courses: ["Inspection & Testing", "Fire Alarm Systems", "Industrial Systems"],
     specializations: ["Qualifications", "Assessment", "Quality Assurance"],

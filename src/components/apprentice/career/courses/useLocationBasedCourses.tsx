@@ -90,7 +90,7 @@ export const useLocationBasedCourses = (
 
     return allCourses.filter(course => {
       // Check if course has locations within the radius
-      return course.locations.some(courseLocation => {
+      return (course.locations || [course.location]).some(courseLocation => {
         const courseCoords = getMockCoordinates(courseLocation);
         if (!courseCoords) return false;
 
