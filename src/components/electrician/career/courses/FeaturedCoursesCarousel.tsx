@@ -12,10 +12,9 @@ import { useIsMobile } from "@/hooks/use-mobile";
 interface FeaturedCoursesCarouselProps {
   courses: EnhancedCareerCourse[];
   onViewDetails: (course: EnhancedCareerCourse) => void;
-  viewMode?: "grid" | "list" | "map";
 }
 
-const FeaturedCoursesCarousel = ({ courses, onViewDetails, viewMode = "grid" }: FeaturedCoursesCarouselProps) => {
+const FeaturedCoursesCarousel = ({ courses, onViewDetails }: FeaturedCoursesCarouselProps) => {
   const [currentIndex, setCurrentIndex] = React.useState(0);
   const isMobile = useIsMobile();
 
@@ -81,8 +80,6 @@ const FeaturedCoursesCarousel = ({ courses, onViewDetails, viewMode = "grid" }: 
     return "bg-purple-500/20 text-purple-400 border-purple-500/30";
   };
 
-  // Don't show when map view is active
-  if (viewMode === "map") return null;
   if (featuredCourses.length === 0) return null;
 
   return (
