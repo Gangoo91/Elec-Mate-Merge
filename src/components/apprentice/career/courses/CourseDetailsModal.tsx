@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { CareerCourse, TrainingCenter } from './coursesData';
@@ -16,7 +17,7 @@ const CourseDetailsModal: React.FC<CourseDetailsModalProps> = ({ isOpen, onClose
         <DialogHeader>
           <DialogTitle>{course ? course.title : center ? center.name : 'Details'}</DialogTitle>
           <DialogDescription>
-            {course ? course.description : center ? center.description : 'Learn more about this course or training center.'}
+            {course ? course.description : center ? (center as any).description || 'Learn more about this training center.' : 'Learn more about this course or training center.'}
           </DialogDescription>
         </DialogHeader>
 
@@ -29,7 +30,7 @@ const CourseDetailsModal: React.FC<CourseDetailsModalProps> = ({ isOpen, onClose
                 <p><strong>Provider:</strong> {course.provider}</p>
                 <p><strong>Duration:</strong> {course.duration}</p>
                 <p><strong>Level:</strong> {course.level}</p>
-                <p><strong>Skills Covered:</strong> {course.skills.join(', ')}</p>
+                <p><strong>Skills Covered:</strong> {(course as any).skills ? (course as any).skills.join(', ') : 'Not specified'}</p>
               </div>
             </div>
 
@@ -37,7 +38,7 @@ const CourseDetailsModal: React.FC<CourseDetailsModalProps> = ({ isOpen, onClose
             <div className="hidden border-elec-yellow/20 bg-elec-gray/50 rounded-lg p-4">
               <div className="space-y-2">
                 <h3 className="text-lg font-bold">Locations</h3>
-                {course.locations.length > 0 ? (
+                {course.locations && course.locations.length > 0 ? (
                   <ul>
                     {course.locations.map((location, index) => (
                       <li key={index}>{location}</li>
@@ -59,16 +60,16 @@ const CourseDetailsModal: React.FC<CourseDetailsModalProps> = ({ isOpen, onClose
                 <h3 className="text-lg font-bold">Training Center Information</h3>
                 <p><strong>Address:</strong> {center.address}</p>
                 <p><strong>Contact:</strong> {center.contact}</p>
-                <p><strong>Website:</strong> <a href={center.website} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">{center.website}</a></p>
+                <p><strong>Website:</strong> <a href={(center as any).website || '#'} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">{(center as any).website || 'Not available'}</a></p>
               </div>
             </div>
 
             {/* Courses Offered */}
             <div className="border-t border-elec-yellow/20 pt-4">
               <h3 className="text-lg font-bold">Courses Offered</h3>
-              {center.coursesOffered.length > 0 ? (
+              {(center as any).coursesOffered && (center as any).coursesOffered.length > 0 ? (
                 <ul>
-                  {center.coursesOffered.map((courseName, index) => (
+                  {(center as any).coursesOffered.map((courseName: string, index: number) => (
                     <li key={index}>{courseName}</li>
                   ))}
                 </ul>
