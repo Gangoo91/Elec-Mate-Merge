@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
+import ProviderInfoOverlay from "./ProviderInfoOverlay";
 
 interface TrainingProvider {
   place_id: string;
@@ -65,6 +66,11 @@ const CourseMap: React.FC<CourseMapProps> = ({
   const userMarkerRef = useRef<google.maps.Marker | null>(null);
   const radiusCircleRef = useRef<any>(null);
   const providerMarkersRef = useRef<google.maps.Marker[]>([]);
+
+  // Get selected provider for overlay
+  const selectedProvider = selectedCourse 
+    ? nearbyProviders.find(provider => provider.place_id === selectedCourse)
+    : null;
 
   // Debug logging
   console.log('CourseMap received providers:', nearbyProviders.length);
@@ -296,11 +302,19 @@ const CourseMap: React.FC<CourseMapProps> = ({
         </div>
       )}
       
+      {/* Provider info overlay */}
+      <ProviderInfoOverlay 
+        userLocation={userLocation}
+        selectedProvider={selectedProvider}
+        onClose={onCourseDeselect}
+      />
+
       {/* Debug info overlay */}
       {process.env.NODE_ENV === 'development' && (
         <div className="absolute top-2 right-2 bg-black/80 text-white p-2 rounded text-xs z-[1000]">
           Providers: {nearbyProviders.length} | Markers: {markers.length}
           {userCoordinates && <div>User: {userCoordinates.lat.toFixed(4)}, {userCoordinates.lng.toFixed(4)}</div>}
+          {selectedProvider && <div>Selected: {selectedProvider.name}</div>}
         </div>
       )}
       
