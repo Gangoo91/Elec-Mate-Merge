@@ -91,45 +91,49 @@ const CourseMap: React.FC<CourseMapProps> = ({
     });
     providerMarkersRef.current = [];
     
-    // Create markers for nearby providers
-    const providerMarkers = nearbyProviders.map(provider => {
-      const position = {
-        lat: provider.geometry.location.lat,
-        lng: provider.geometry.location.lng
-      };
-      
-      const marker = new window.google.maps.Marker({
-        position,
-        map: googleMapRef.current,
-        icon: {
-          path: google.maps.SymbolPath.CIRCLE,
-          fillColor: '#3B82F6',
-          fillOpacity: 0.8,
-          strokeColor: '#FFFFFF',
-          strokeWeight: 2,
-          scale: selectedCourse === provider.place_id ? 12 : 8,
-        } as any,
-        title: `${provider.name} - ${provider.vicinity}`,
+    // Create markers for nearby providers - with safety checks
+    const providerMarkers = nearbyProviders
+      .filter(provider => provider?.geometry?.location) // Safety filter
+      .map(provider => {
+        const position = {
+          lat: provider.geometry.location.lat,
+          lng: provider.geometry.location.lng
+        };
+        
+        const marker = new window.google.maps.Marker({
+          position,
+          map: googleMapRef.current,
+          icon: {
+            path: google.maps.SymbolPath.CIRCLE,
+            fillColor: '#3B82F6',
+            fillOpacity: 0.8,
+            strokeColor: '#FFFFFF',
+            strokeWeight: 2,
+            scale: selectedCourse === provider.place_id ? 12 : 8,
+          } as any,
+          title: `${provider.name} - ${provider.vicinity}`,
+        });
+        
+        marker.addListener('click', () => {
+          onCourseSelect(provider.place_id);
+        });
+        
+        return marker;
       });
-      
-      marker.addListener('click', () => {
-        onCourseSelect(provider.place_id);
-      });
-      
-      return marker;
-    });
     
     providerMarkersRef.current = providerMarkers;
     
-    // Create marker data for overlay
-    const markerData: ProviderMarkerData[] = nearbyProviders.map(provider => ({
-      providerId: provider.place_id,
-      position: {
-        lat: provider.geometry.location.lat,
-        lng: provider.geometry.location.lng
-      },
-      provider
-    }));
+    // Create marker data for overlay - with safety checks
+    const markerData: ProviderMarkerData[] = nearbyProviders
+      .filter(provider => provider?.geometry?.location) // Safety filter
+      .map(provider => ({
+        providerId: provider.place_id,
+        position: {
+          lat: provider.geometry.location.lat,
+          lng: provider.geometry.location.lng
+        },
+        provider
+      }));
     
     setMarkers(markerData);
     
@@ -137,18 +141,15 @@ const CourseMap: React.FC<CourseMapProps> = ({
     if (userCoordinates && googleMapRef.current) {
       googleMapRef.current.setCenter(userCoordinates);
       googleMapRef.current.setZoom(11);
-    } else if (nearbyProviders.length > 0 && googleMapRef.current) {
+    } else if (markerData.length > 0 && googleMapRef.current) {
       const bounds = new window.google.maps.LatLngBounds();
-      nearbyProviders.forEach(provider => {
-        bounds.extend({
-          lat: provider.geometry.location.lat,
-          lng: provider.geometry.location.lng
-        });
+      markerData.forEach(marker => {
+        bounds.extend(marker.position);
       });
       googleMapRef.current.fitBounds(bounds);
     }
     
-    console.log('Created markers for providers:', nearbyProviders.length);
+    console.log('Created markers for providers:', markerData.length);
   }, [nearbyProviders, selectedCourse, onCourseSelect, userCoordinates]);
 
   // Handle user location marker and radius circle
