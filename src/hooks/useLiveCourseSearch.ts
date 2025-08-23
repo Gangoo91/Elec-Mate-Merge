@@ -33,6 +33,8 @@ export const useLiveCourseSearch = ({
 }: UseLiveCourseSearchParams = {}) => {
   const [cachedData, setCachedData] = useState<EnhancedCareerCourse[]>([]);
 
+  console.log(`useLiveCourseSearch: enabled=${enabled}, keywords=${keywords}, location=${location}`);
+
   const {
     data,
     isLoading,
@@ -42,22 +44,25 @@ export const useLiveCourseSearch = ({
   } = useQuery({
     queryKey: ['live-courses', keywords, location],
     queryFn: async (): Promise<CourseSearchResponse> => {
-      console.log(`Searching live courses: ${keywords} in ${location}`);
+      console.log(`🚀 Making API call to live-course-aggregator with: ${keywords} in ${location}`);
       
       const { data, error } = await supabase.functions.invoke('live-course-aggregator', {
         body: { keywords, location, page: 1 }
       });
 
+      console.log('🔍 API Response:', { data, error });
+
       if (error) {
-        console.error('Course search error:', error);
+        console.error('❌ Course search error:', error);
         throw new Error(error.message || 'Failed to fetch courses');
       }
 
+      console.log(`✅ Successfully fetched ${data?.courses?.length || 0} courses`);
       return data;
     },
     enabled,
-    staleTime: 5 * 60 * 1000, // 5 minutes
-    gcTime: 10 * 60 * 1000, // 10 minutes
+    staleTime: 1 * 60 * 1000, // 1 minute (reduced for testing)
+    gcTime: 5 * 60 * 1000, // 5 minutes 
     retry: 2
   });
 
