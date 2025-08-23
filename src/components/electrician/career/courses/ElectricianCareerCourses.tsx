@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { DropdownTabs } from "@/components/ui/dropdown-tabs";
 import EnhancedCourseCard from "../../../apprentice/career/courses/EnhancedCourseCard";
 import EnhancedTrainingCenterCard from "../../../apprentice/career/courses/EnhancedTrainingCenterCard";
@@ -82,6 +82,18 @@ const ElectricianCareerCourses = () => {
   const liveSummary = queryResult?.summary;
   const isLiveData = !!queryResult;
   const liveError = isError ? (queryError?.message || "Failed to fetch course data") : null;
+
+  // Auto-load courses when component mounts
+  useEffect(() => {
+    if (!isLiveData && !isLoadingLive && !isError) {
+      toast({
+        title: "Loading courses",
+        description: "Fetching the latest course data...",
+        variant: "default"
+      });
+      refreshCourses();
+    }
+  }, []);
 
   // Location-based distance calculation helper
   const calculateDistance = (lat1: number, lon1: number, lat2: number, lon2: number): number => {
