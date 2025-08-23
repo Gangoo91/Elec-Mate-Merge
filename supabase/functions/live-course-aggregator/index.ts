@@ -30,8 +30,8 @@ serve(async (req) => {
     let uniqueCourses = [];
     
     try {
-      // Firecrawl v2 API call to scrape Reed courses
-      const firecrawlResponse = await fetch('https://api.firecrawl.dev/v2/scrape', {
+      // Stage 1: Get basic course list from search results
+      const searchResponse = await fetch('https://api.firecrawl.dev/v2/scrape', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${firecrawlApiKey}`,
@@ -41,7 +41,6 @@ serve(async (req) => {
           url: "www.reed.co.uk/courses/?keywords=Electrical%20Career%20Courses%20%26%20Training",
           onlyMainContent: true,
           maxAge: 172800000,
-          parsers: ["pdf"],
           formats: [{
             type: "json",
             schema: {
@@ -49,14 +48,6 @@ serve(async (req) => {
               items: {
                 type: "object",
                 properties: {
-                  category: {
-                    type: "string",
-                    description: "The main category or tag of the course (e.g., Emerging Technologies)"
-                  },
-                  rating: {
-                    type: "number",
-                    description: "Star rating of the course"
-                  },
                   courseTitle: {
                     type: "string",
                     description: "Title of the course"
@@ -79,115 +70,28 @@ serve(async (req) => {
                   },
                   learningMode: {
                     type: "string",
-                    description: "Learning mode (e.g., Blended learning with hands-on practical sessions)"
-                  },
-                  futureScope: {
-                    type: "string",
-                    description: "Future career outlook or rating (e.g., Future: 5/5)"
-                  },
-                  industryDemand: {
-                    type: "string",
-                    description: "Industry demand level (e.g., High)"
-                  },
-                  salaryImpact: {
-                    type: "object",
-                    properties: {
-                      min: {
-                        type: "number",
-                        description: "Minimum salary impact"
-                      },
-                      max: {
-                        type: "number",
-                        description: "Maximum salary impact"
-                      },
-                      unit: {
-                        type: "string",
-                        description: "Unit (e.g., annual increase)"
-                      }
-                    }
-                  },
-                  careerOutcomes: {
-                    type: "array",
-                    items: {
-                      type: "string"
-                    },
-                    description: "List of career outcomes"
-                  },
-                  locations: {
-                    type: "array",
-                    items: {
-                      type: "string"
-                    },
-                    description: "Available course locations"
-                  },
-                  accreditations: {
-                    type: "array",
-                    items: {
-                      type: "string"
-                    },
-                    description: "List of accreditations"
-                  },
-                  upcomingDates: {
-                    type: "array",
-                    items: {
-                      type: "string",
-                      format: "date"
-                    },
-                    description: "Upcoming course start dates"
+                    description: "Learning mode (e.g., Online, In-person)"
                   },
                   priceRange: {
                     type: "string",
                     description: "Price range of the course (e.g., £425 - £525)"
                   },
-                  employerSupport: {
-                    type: "boolean",
-                    description: "Whether employer support is available"
-                  },
                   detailsUrl: {
                     type: "string",
                     description: "Direct link to the course details page"
                   },
-                  prerequisites: {
-                    type: "array",
-                    items: {
-                      type: "string"
-                    },
-                    description: "Course prerequisites or entry requirements"
+                  category: {
+                    type: "string",
+                    description: "The main category or tag of the course"
                   },
-                  courseOutline: {
-                    type: "array",
-                    items: {
-                      type: "string"
-                    },
-                    description: "Course modules, topics, or curriculum outline"
-                  },
-                  assessmentMethod: {
-                    type: "array",
-                    items: {
-                      type: "string"
-                    },
-                    description: "Assessment methods (exams, coursework, practical)"
-                  },
-                  continuousAssessment: {
-                    type: "boolean",
-                    description: "Whether course uses continuous assessment"
+                  rating: {
+                    type: "number",
+                    description: "Star rating of the course"
                   }
                 },
                 required: [
-                  "category",
                   "courseTitle",
                   "provider",
-                  "description",
-                  "duration",
-                  "level",
-                  "learningMode",
-                  "industryDemand",
-                  "salaryImpact",
-                  "careerOutcomes",
-                  "locations",
-                  "accreditations",
-                  "upcomingDates",
-                  "priceRange",
                   "detailsUrl"
                 ]
               }
@@ -196,71 +100,253 @@ serve(async (req) => {
         })
       });
 
-      if (!firecrawlResponse.ok) {
-        throw new Error(`Firecrawl API error: ${firecrawlResponse.status} ${firecrawlResponse.statusText}`);
+      if (!searchResponse.ok) {
+        throw new Error(`Firecrawl search API error: ${searchResponse.status} ${searchResponse.statusText}`);
       }
 
-      const firecrawlData = await firecrawlResponse.json();
-      console.log('Firecrawl response received:', JSON.stringify(firecrawlData, null, 2));
+      const searchData = await searchResponse.json();
+      console.log('Basic course search completed, found:', searchData.data?.json?.length || 0, 'courses');
 
-      // Extract courses from Firecrawl response
-      if (firecrawlData.success && firecrawlData.data && firecrawlData.data.json) {
-        const extractedData = firecrawlData.data.json;
+      if (!searchData.success || !searchData.data?.json) {
+        throw new Error('No course data found in search results');
+      }
+
+      const basicCourses = Array.isArray(searchData.data.json) ? searchData.data.json : [searchData.data.json];
+      
+      // Stage 2: Get detailed information for each course
+      console.log('Starting detailed course scraping for', Math.min(basicCourses.length, 8), 'courses...');
+      
+      const detailedCourses = [];
+      const maxCoursesToDetail = 8; // Limit to avoid timeout and API costs
+      
+      for (let i = 0; i < Math.min(basicCourses.length, maxCoursesToDetail); i++) {
+        const course = basicCourses[i];
         
-        // Handle both single course object and array of courses
-        const coursesArray = Array.isArray(extractedData) ? extractedData : [extractedData];
+        if (!course.detailsUrl) {
+          console.log(`⚠️ No details URL for course: ${course.courseTitle}`);
+          detailedCourses.push(course);
+          continue;
+        }
         
-        // Helper function to extract future proofing rating from futureScope string
-        const extractFutureProofing = (futureScope: string): number => {
-          if (!futureScope) return 3; // Default to 3/5 if not specified
-          const match = futureScope.match(/(\d+)\/5/);
-          return match ? parseInt(match[1]) : 3;
-        };
+        try {
+          console.log(`Scraping details for course ${i + 1}: ${course.courseTitle}`);
+          
+          const detailResponse = await fetch('https://api.firecrawl.dev/v2/scrape', {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${firecrawlApiKey}`,
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              url: course.detailsUrl,
+              onlyMainContent: true,
+              maxAge: 172800000,
+              formats: [{
+                type: "json",
+                schema: {
+                  type: "object",
+                  properties: {
+                    prerequisites: {
+                      type: "array",
+                      items: {
+                        type: "string"
+                      },
+                      description: "Course entry requirements, prerequisites, qualifications needed, or experience required"
+                    },
+                    courseOutline: {
+                      type: "array",
+                      items: {
+                        type: "string"
+                      },
+                      description: "Course modules, units, topics, curriculum structure, syllabus, or learning outcomes"
+                    },
+                    assessmentMethod: {
+                      type: "array",
+                      items: {
+                        type: "string"
+                      },
+                      description: "How students are assessed - exams, coursework, assignments, practical assessments, quizzes"
+                    },
+                    continuousAssessment: {
+                      type: "boolean",
+                      description: "Whether the course uses ongoing assessment throughout or final assessment only"
+                    },
+                    accreditations: {
+                      type: "array",
+                      items: {
+                        type: "string"
+                      },
+                      description: "Professional accreditations, certifications, qualifications awarded, or industry recognition"
+                    },
+                    careerOutcomes: {
+                      type: "array",
+                      items: {
+                        type: "string"
+                      },
+                      description: "Career paths, job roles, employment opportunities, or career progression after completion"
+                    },
+                    upcomingDates: {
+                      type: "array",
+                      items: {
+                        type: "string"
+                      },
+                      description: "Upcoming course start dates or next available dates"
+                    },
+                    locations: {
+                      type: "array",
+                      items: {
+                        type: "string"
+                      },
+                      description: "Available course locations or delivery methods"
+                    },
+                    employerSupport: {
+                      type: "boolean",
+                      description: "Whether employer support or funding is available"
+                    },
+                    futureScope: {
+                      type: "string",
+                      description: "Future career outlook or industry growth prospects"
+                    },
+                    industryDemand: {
+                      type: "string",
+                      description: "Industry demand level for skills taught"
+                    },
+                    detailedDescription: {
+                      type: "string",
+                      description: "Complete detailed course description with all information"
+                    }
+                  }
+                }
+              }]
+            })
+          });
 
-        uniqueCourses = coursesArray.map((course: any) => ({
-          id: `reed-${course.courseTitle?.replace(/\s+/g, '-').toLowerCase() || 'unknown'}`,
-          title: course.courseTitle || 'Untitled Course',
-          provider: course.provider || 'Reed',
-          description: course.description || 'Course description not available',
-          duration: course.duration || 'Duration not specified',
-          level: course.level || 'Level not specified',
-          category: course.category || 'Electrical',
-          rating: course.rating || 0,
-          format: course.learningMode || 'Format not specified',
-          futureProofing: extractFutureProofing(course.futureScope),
-          industryDemand: course.industryDemand || 'Not specified',
-          salaryImpact: course.salaryImpact?.unit ? 
-            `£${course.salaryImpact.min || 0}-${course.salaryImpact.max || 0} ${course.salaryImpact.unit}` : 
-            'Contact provider for details',
-          careerOutcomes: course.careerOutcomes?.length > 0 ? course.careerOutcomes : ['Contact provider for details'],
-          locations: course.locations?.length > 0 ? course.locations : ['Contact provider for details'],
-          accreditation: course.accreditations?.length > 0 ? course.accreditations : ['Not specified by provider'],
-          nextDates: course.upcomingDates?.length > 0 ? course.upcomingDates : ['Contact provider for dates'],
-          price: course.priceRange || 'Contact for pricing',
-          employerSupport: course.employerSupport || false,
-          detailsUrl: course.detailsUrl || '',
-          // Additional fields from extracted data or fallbacks
-          prerequisites: course.prerequisites?.length > 0 ? course.prerequisites : ['Not specified by provider'],
-          courseOutline: course.courseOutline?.length > 0 ? course.courseOutline : ['Contact provider for details'],
-          assessmentMethod: course.assessmentMethod?.length > 0 ? course.assessmentMethod : ['Contact provider for details'],
-          continuousAssessment: course.continuousAssessment || false,
-          source: 'Reed',
-          isLive: true,
-          lastUpdated: new Date().toISOString()
-        }));
+          let detailedInfo = {};
+          
+          if (detailResponse.ok) {
+            const detailData = await detailResponse.json();
+            if (detailData.success && detailData.data?.json) {
+              detailedInfo = detailData.data.json;
+              console.log(`✅ Successfully extracted details for: ${course.courseTitle}`);
+            } else {
+              console.log(`⚠️ No detailed data extracted for: ${course.courseTitle}`);
+            }
+          } else {
+            console.log(`❌ Failed to scrape details for: ${course.courseTitle} (${detailResponse.status})`);
+          }
 
-        sourceResults.push({
-          source: 'Reed (Firecrawl)',
-          courseCount: uniqueCourses.length,
-          success: true,
-          error: null,
-          lastUpdated: new Date().toISOString()
+          // Merge basic and detailed information
+          const enhancedCourse = {
+            ...course,
+            prerequisites: detailedInfo.prerequisites || [],
+            courseOutline: detailedInfo.courseOutline || [],
+            assessmentMethod: detailedInfo.assessmentMethod || [],
+            continuousAssessment: detailedInfo.continuousAssessment || false,
+            accreditations: detailedInfo.accreditations || [],
+            careerOutcomes: detailedInfo.careerOutcomes || [],
+            upcomingDates: detailedInfo.upcomingDates || [],
+            locations: detailedInfo.locations || [],
+            employerSupport: detailedInfo.employerSupport || false,
+            futureScope: detailedInfo.futureScope || '',
+            industryDemand: detailedInfo.industryDemand || 'Not specified',
+            description: detailedInfo.detailedDescription || course.description || '',
+            hasDetailedInfo: Object.keys(detailedInfo).length > 0
+          };
+
+          detailedCourses.push(enhancedCourse);
+          
+          // Small delay to be respectful to the API
+          await new Promise(resolve => setTimeout(resolve, 1000));
+          
+        } catch (error) {
+          console.error(`Error scraping details for ${course.courseTitle}:`, error);
+          // Add course with basic info only if detail scraping fails
+          detailedCourses.push({
+            ...course,
+            prerequisites: [],
+            courseOutline: [],
+            assessmentMethod: [],
+            continuousAssessment: false,
+            accreditations: [],
+            careerOutcomes: [],
+            upcomingDates: [],
+            locations: [],
+            employerSupport: false,
+            futureScope: '',
+            industryDemand: 'Not specified',
+            hasDetailedInfo: false
+          });
+        }
+      }
+
+      // Add remaining courses without detailed scraping if we hit the limit
+      for (let i = maxCoursesToDetail; i < basicCourses.length; i++) {
+        const course = basicCourses[i];
+        detailedCourses.push({
+          ...course,
+          prerequisites: [],
+          courseOutline: [],
+          assessmentMethod: [],
+          continuousAssessment: false,
+          accreditations: [],
+          careerOutcomes: [],
+          upcomingDates: [],
+          locations: [],
+          employerSupport: false,
+          futureScope: '',
+          industryDemand: 'Not specified',
+          hasDetailedInfo: false
         });
-
-        console.log(`✅ Reed: ${uniqueCourses.length} courses extracted`);
-      } else {
-        throw new Error('No course data found in Firecrawl response');
       }
+
+      // Helper function to extract future proofing rating from futureScope string
+      const extractFutureProofing = (futureScope: string): number => {
+        if (!futureScope) return 3; // Default to 3/5 if not specified
+        const match = futureScope.match(/(\d+)\/5/);
+        return match ? parseInt(match[1]) : 3;
+      };
+
+      // Map to final format
+      uniqueCourses = detailedCourses.map((course: any) => ({
+        id: `reed-${course.courseTitle?.replace(/\s+/g, '-').toLowerCase() || 'unknown'}`,
+        title: course.courseTitle || 'Untitled Course',
+        provider: course.provider || 'Reed',
+        description: course.description || 'Course description not available',
+        duration: course.duration || 'Duration not specified',
+        level: course.level || 'Level not specified',
+        category: course.category || 'Electrical',
+        rating: course.rating || 0,
+        format: course.learningMode || 'Format not specified',
+        futureProofing: extractFutureProofing(course.futureScope),
+        industryDemand: course.industryDemand || 'Not specified',
+        salaryImpact: 'Contact provider for details', // Not extracting from detail pages
+        careerOutcomes: course.careerOutcomes?.length > 0 ? course.careerOutcomes : ['Contact provider for details'],
+        locations: course.locations?.length > 0 ? course.locations : ['Contact provider for details'],
+        accreditation: course.accreditations?.length > 0 ? course.accreditations : ['Not specified by provider'],
+        nextDates: course.upcomingDates?.length > 0 ? course.upcomingDates : ['Contact provider for dates'],
+        price: course.priceRange || 'Contact for pricing',
+        employerSupport: course.employerSupport || false,
+        detailsUrl: course.detailsUrl || '',
+        // Enhanced fields from detailed scraping
+        prerequisites: course.prerequisites?.length > 0 ? course.prerequisites : ['Not specified by provider'],
+        courseOutline: course.courseOutline?.length > 0 ? course.courseOutline : ['Contact provider for details'],
+        assessmentMethod: course.assessmentMethod?.length > 0 ? course.assessmentMethod : ['Contact provider for details'],
+        continuousAssessment: course.continuousAssessment || false,
+        source: 'Reed',
+        isLive: true,
+        hasDetailedInfo: course.hasDetailedInfo || false,
+        lastUpdated: new Date().toISOString()
+      }));
+
+      sourceResults.push({
+        source: 'Reed (Firecrawl)',
+        courseCount: uniqueCourses.length,
+        success: true,
+        error: null,
+        lastUpdated: new Date().toISOString()
+      });
+
+      console.log(`✅ Reed: ${uniqueCourses.length} courses extracted`);
 
     } catch (error) {
       console.error('Error fetching from Firecrawl:', error);
