@@ -588,23 +588,24 @@ const ElectricianCareerCourses = () => {
         </div>
       </div>
 
-      {/* Featured Courses Carousel */}
-      {liveCourses.length > 0 && (
+      {/* Featured Courses Carousel - Hidden in map view */}
+      {viewMode !== "map" && liveCourses.length > 0 && (
         <FeaturedCoursesCarousel 
           courses={liveCourses.slice(0, 6)} 
           onViewDetails={viewCourseDetails} 
         />
       )}
 
-
-      {/* Enhanced Search and Filters */}
-      <EnhancedCourseSearch
-        filters={filters}
-        onFiltersChange={setFilters}
-        onReset={handleResetFilters}
-        totalResults={filteredAndSortedCourses.length}
-        viewMode={viewMode}
-      />
+      {/* Enhanced Search and Filters - Hidden in map view */}
+      {viewMode !== "map" && (
+        <EnhancedCourseSearch
+          filters={filters}
+          onFiltersChange={setFilters}
+          onReset={handleResetFilters}
+          totalResults={filteredAndSortedCourses.length}
+          viewMode={viewMode}
+        />
+      )}
 
       {/* Course Comparison Tool */}
       {showComparison && (
