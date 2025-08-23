@@ -29,6 +29,7 @@ interface EnhancedCourseSearchProps {
   onFiltersChange: (filters: SearchFilters) => void;
   onReset: () => void;
   totalResults: number;
+  isSearching?: boolean;
   viewMode?: "grid" | "list" | "map";
 }
 
@@ -37,6 +38,7 @@ const EnhancedCourseSearch = ({
   onFiltersChange, 
   onReset, 
   totalResults,
+  isSearching = false,
   viewMode = "grid"
 }: EnhancedCourseSearchProps) => {
   const [showAdvancedFilters, setShowAdvancedFilters] = useState(false);
@@ -103,14 +105,20 @@ const EnhancedCourseSearch = ({
       <CardContent className="space-y-4">
         {/* Search Bar */}
         <div className="relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          <Search className={`absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 ${isSearching ? 'animate-pulse text-elec-yellow' : 'text-muted-foreground'}`} />
           <Input
             placeholder="Search courses, providers, topics..."
             value={filters.searchQuery}
             onChange={(e) => handleFilterChange("searchQuery", e.target.value)}
-            className="pl-10 bg-background/50"
+            className={`pl-10 bg-background/50 ${isSearching ? 'border-elec-yellow/50' : ''}`}
+            disabled={isSearching}
           />
-          {filters.searchQuery && (
+          {isSearching && (
+            <div className="absolute right-8 top-1/2 transform -translate-y-1/2">
+              <div className="animate-spin h-4 w-4 border-2 border-elec-yellow border-t-transparent rounded-full"></div>
+            </div>
+          )}
+          {filters.searchQuery && !isSearching && (
             <Button
               variant="ghost"
               size="sm"

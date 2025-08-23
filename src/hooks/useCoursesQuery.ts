@@ -84,19 +84,19 @@ async function fetchCourses({ keywords, location }: CourseSearchParams): Promise
   }
 }
 
-export function useCoursesQuery(keywords: string = '', location: string = 'United Kingdom') {
+export function useCoursesQuery(keywords: string = '', location: string = 'United Kingdom', enabled: boolean = true) {
   const { toast } = useToast();
   
   const query = useQuery<CourseSearchResult>({
     queryKey: ['courses', keywords, location],
     queryFn: () => fetchCourses({ keywords, location }),
-    staleTime: 1000 * 60 * 10, // 10 minutes
-    gcTime: 1000 * 60 * 30, // 30 minutes cache time
-    enabled: false, // Don't auto-fetch, only when manually triggered
-    retry: 1,
+    staleTime: 1000 * 60 * 5, // 5 minutes
+    gcTime: 1000 * 60 * 15, // 15 minutes cache time
+    enabled: enabled && keywords.trim().length > 0, // Auto-fetch when enabled and keywords exist
+    retry: 2,
     refetchOnWindowFocus: false,
     refetchOnMount: false,
-    refetchOnReconnect: false
+    refetchOnReconnect: true
   });
 
   // Handle success/error notifications

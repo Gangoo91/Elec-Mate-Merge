@@ -20,6 +20,7 @@ import {
 } from "../../../apprentice/career/courses/enhancedCoursesData";
 import LocationBasedCourseSearch from "../../../apprentice/career/courses/LocationBasedCourseSearch";
 import { useCoursesQuery } from "@/hooks/useCoursesQuery";
+import { useDebounce } from "@/hooks/useDebounce";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -64,8 +65,11 @@ const ElectricianCareerCourses = () => {
     rating: 0
   });
 
-  // Live course data hook
-  // Use TanStack Query for efficient data fetching and caching
+  // Debounced search to prevent excessive API calls
+  const debouncedSearchQuery = useDebounce(filters.searchQuery, 500);
+  const debouncedLocation = useDebounce(filters.location, 300);
+
+  // Live course data hook with auto-refetch on filter changes
   const {
     data: queryResult,
     isLoading: isLoadingLive,
@@ -74,8 +78,9 @@ const ElectricianCareerCourses = () => {
     isFetching: isSearching,
     isError
   } = useCoursesQuery(
-    filters.searchQuery || "electrical course",
-    filters.location === "All Locations" ? "United Kingdom" : filters.location
+    debouncedSearchQuery || "electrical course",
+    debouncedLocation === "All Locations" ? "United Kingdom" : debouncedLocation,
+    true // Enable auto-refetch
   );
 
   // Extract data from query result with proper typing
@@ -85,9 +90,16 @@ const ElectricianCareerCourses = () => {
   const isLiveData = !!queryResult;
   const liveError = isError ? (queryError?.message || "Failed to fetch course data") : null;
 
-  // Auto-load courses when component mounts
+  // Auto-refetch courses when debounced search criteria change
   useEffect(() => {
-    if (!isLiveData && !isLoadingLive && !isError) {
+    if (debouncedSearchQuery || debouncedLocation !== "All Locations") {
+      console.log('Triggering course search with:', { debouncedSearchQuery, debouncedLocation });
+    }
+  }, [debouncedSearchQuery, debouncedLocation]);
+
+  // Initial load
+  useEffect(() => {
+    if (!queryResult && !isLoadingLive && !isError) {
       refreshCourses();
     }
   }, []);
@@ -589,13 +601,14 @@ const ElectricianCareerCourses = () => {
 
       {/* Enhanced Search and Filters - Hidden in map view */}
       {viewMode !== "map" && (
-        <EnhancedCourseSearch
-          filters={filters}
-          onFiltersChange={setFilters}
-          onReset={handleResetFilters}
-          totalResults={filteredAndSortedCourses.length}
-          viewMode={viewMode}
-        />
+              <EnhancedCourseSearch 
+                filters={filters}
+                onFiltersChange={setFilters}
+                onReset={handleResetFilters}
+                totalResults={filteredAndSortedCourses.length}
+                isSearching={isSearching}
+                viewMode={viewMode}
+              />
       )}
 
       {/* Course Comparison Tool */}
