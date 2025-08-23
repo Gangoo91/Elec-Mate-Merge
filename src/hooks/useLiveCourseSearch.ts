@@ -151,10 +151,149 @@ export const useLiveCourseSearch = (params: LiveCourseSearchParams = {}) => {
     }
   }, [enableLiveData, lastSearchParams, data.isLiveData, toast]);
 
-  const refreshCourses = useCallback(() => {
-    setLastSearchParams(''); // Reset to force refresh
-    fetchLiveCourses(keywords, location);
-  }, [keywords, location, fetchLiveCourses]);
+  const refreshCourses = useCallback(async () => {
+    console.log('🔄 Refreshing course data...');
+    setData(prev => ({ ...prev, loading: true, error: null }));
+    
+    try {
+      // Clear cache by resetting search params
+      setLastSearchParams('');
+      
+      // Set a timeout for the entire refresh operation
+      const timeoutPromise = new Promise<never>((_, reject) => {
+        setTimeout(() => reject(new Error('Refresh operation timed out')), 180000); // 3 minutes
+      });
+      
+      const refreshPromise = async () => {
+        // Make the API call with retry logic
+        let retryCount = 0;
+        const maxRetries = 2;
+        
+        while (retryCount < maxRetries) {
+          try {
+            console.log(`📡 Making refresh API call (attempt ${retryCount + 1}/${maxRetries + 1})`);
+            
+            const { data: liveData, error } = await supabase.functions.invoke('live-course-aggregator', {
+              body: {
+                keywords: keywords || 'electrical course',
+                location: location || 'United Kingdom'
+              }
+            });
+            
+            if (error) {
+              console.error('Refresh API error:', error);
+              throw new Error(error.message || 'API call failed');
+            }
+            
+            if (liveData?.error) {
+              console.error('Service error:', liveData.error, liveData.technical_error);
+              
+              // If it's a timeout or service error, show user-friendly message
+              if (liveData.technical_error?.includes('timeout') || liveData.technical_error?.includes('timed out')) {
+                throw new Error('The search is taking longer than expected. Try searching for more specific course terms.');
+              } else if (liveData.technical_error?.includes('API key') || liveData.technical_error?.includes('configuration')) {
+                throw new Error('Service temporarily unavailable. Please try again in a few minutes.');
+              }
+              
+              throw new Error(liveData.error);
+            }
+            
+            console.log('✅ Data refreshed successfully:', liveData);
+            
+            if (liveData && liveData.courses && liveData.courses.length > 0) {
+              // Enhanced mapping of live data with intelligent property inference
+              const liveCourses = liveData.courses.map((course: any) => ({
+                ...course,
+                isLive: true,
+                // Ensure all required properties exist with intelligent defaults
+                id: course.id || `live-${Math.random().toString(36).substr(2, 9)}`,
+                title: course.title || 'Course Title Not Available',
+                provider: course.provider || course.organization || 'External Provider',
+                description: course.description || course.summary || 'Course description not available',
+                duration: course.duration || course.length || 'Duration varies',
+                level: course.level || inferLevelFromTitle(course.title) || 'Intermediate',
+                price: course.price || course.cost || 'Contact for pricing',
+                format: course.format || course.delivery_method || 'Mixed delivery',
+                nextDates: course.nextDates || course.start_dates || [getNextCourseDate()],
+                rating: course.rating || generateIntelligentRating(course),
+                locations: course.locations || [course.location] || ['Various UK locations'],
+                category: inferCategoryFromCourse(course),
+                industryDemand: inferIndustryDemand(course),
+                futureProofing: inferFutureProofing(course),
+                salaryImpact: inferSalaryImpact(course),
+                careerOutcomes: course.careerOutcomes || generateCareerOutcomes(course),
+                accreditation: course.accreditation || [],
+                employerSupport: course.employerSupport || true,
+                prerequisites: course.prerequisites || ['Basic electrical knowledge'],
+                courseOutline: course.courseOutline || [],
+                assessmentMethod: course.assessmentMethod || 'Assessment varies',
+                continuousAssessment: course.continuousAssessment || false,
+                external_url: course.external_url || course.url,
+                source: course.source || 'Live API'
+              }));
+              
+              setData({
+                courses: liveCourses,
+                total: liveCourses.length,
+                summary: liveData.summary,
+                isLiveData: true,
+                loading: false,
+                error: null
+              });
+              
+              toast({
+                title: "Data Refreshed",
+                description: `Found ${liveCourses.length} courses from live search`,
+              });
+            } else {
+              setData({
+                courses: [],
+                total: 0,
+                isLiveData: true,
+                loading: false,
+                error: null
+              });
+              
+              toast({
+                title: "No courses found",
+                description: "No live courses found matching your search criteria. Try different keywords.",
+              });
+            }
+            
+            return; // Success, exit retry loop
+            
+          } catch (error) {
+            retryCount++;
+            if (retryCount < maxRetries) {
+              console.log(`⏳ Retrying refresh in 2 seconds... (${retryCount}/${maxRetries})`);
+              await new Promise(resolve => setTimeout(resolve, 2000));
+            } else {
+              throw error; // Final retry failed
+            }
+          }
+        }
+      };
+      
+      // Race the refresh against the timeout
+      await Promise.race([refreshPromise(), timeoutPromise]);
+      
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : "Failed to refresh data";
+      console.error('❌ Refresh failed:', errorMessage);
+      
+      setData(prev => ({
+        ...prev,
+        loading: false,
+        error: errorMessage
+      }));
+      
+      toast({
+        title: "Refresh Failed",
+        description: errorMessage,
+        variant: "destructive",
+      });
+    }
+  }, [keywords, location, toast]);
 
   // Initial load and when search params change
   useEffect(() => {

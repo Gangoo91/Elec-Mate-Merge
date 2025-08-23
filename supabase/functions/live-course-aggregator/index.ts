@@ -14,30 +14,69 @@ serve(async (req) => {
   try {
     const { keywords = "electrical course", location = "United Kingdom" } = await req.json();
     
-    console.log(`Starting live course aggregation for: ${keywords} in ${location}`);
+    console.log(`🚀 Starting live course aggregation for: ${keywords} in ${location}`);
     
     const supabase = createClient(supabaseUrl, supabaseAnonKey);
     
-    // Get Firecrawl API key
-    const firecrawlApiKey = Deno.env.get('FIRECRAWL_API_KEY');
-    if (!firecrawlApiKey) {
-      throw new Error('FIRECRAWL_API_KEY environment variable is required');
-    }
+    // Set timeout for the entire operation (4 minutes - just under edge function limit)
+    const timeoutPromise = new Promise<never>((_, reject) => {
+      setTimeout(() => reject(new Error('Operation timed out after 240 seconds')), 240000);
+    });
     
-    console.log('Fetching courses from Reed using Firecrawl v2 API...');
+    const mainOperation = async () => {
+      // Get Firecrawl API key
+      const firecrawlApiKey = Deno.env.get('FIRECRAWL_API_KEY');
+      if (!firecrawlApiKey) {
+        console.error('❌ FIRECRAWL_API_KEY not found in environment variables');
+        throw new Error('Firecrawl API key not configured - please check Supabase secrets');
+      }
     
-    const sourceResults = [];
-    let uniqueCourses = [];
-    
-    try {
-      // Stage 1: Get basic course list from search results
-      const searchResponse = await fetch('https://api.firecrawl.dev/v2/scrape', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${firecrawlApiKey}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
+      console.log('📡 Fetching courses from Reed using Firecrawl v2 API...');
+      
+      const sourceResults = [];
+      let uniqueCourses = [];
+      
+      // Helper function for API calls with retry logic
+      const makeFirecrawlRequest = async (url: string, body: any, maxRetries = 3) => {
+        let lastError;
+        
+        for (let attempt = 1; attempt <= maxRetries; attempt++) {
+          try {
+            console.log(`📡 Making Firecrawl API call (attempt ${attempt}/${maxRetries})`);
+            
+            const response = await fetch(url, {
+              method: 'POST',
+              headers: {
+                'Authorization': `Bearer ${firecrawlApiKey}`,
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(body)
+            });
+            
+            if (response.ok) {
+              return await response.json();
+            }
+            
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            
+          } catch (error) {
+            lastError = error;
+            console.log(`⚠️ API call attempt ${attempt} failed: ${error.message}`);
+            
+            if (attempt < maxRetries) {
+              const delay = Math.min(1000 * Math.pow(2, attempt - 1), 5000); // Exponential backoff, max 5s
+              console.log(`⏳ Retrying in ${delay}ms...`);
+              await new Promise(resolve => setTimeout(resolve, delay));
+            }
+          }
+        }
+        
+        throw new Error(`Firecrawl API failed after ${maxRetries} attempts: ${lastError.message}`);
+      };
+      
+      try {
+        // Stage 1: Get basic course list from search results
+        const searchData = await makeFirecrawlRequest('https://api.firecrawl.dev/v2/scrape', {
           url: "www.reed.co.uk/courses/?keywords=Electrical%20Career%20Courses%20%26%20Training",
           onlyMainContent: true,
           maxAge: 172800000,
@@ -97,27 +136,21 @@ serve(async (req) => {
               }
             }
           }]
-        })
-      });
+        });
 
-      if (!searchResponse.ok) {
-        throw new Error(`Firecrawl search API error: ${searchResponse.status} ${searchResponse.statusText}`);
-      }
+        console.log('✅ Basic course search completed, found:', searchData.data?.json?.length || 0, 'courses');
 
-      const searchData = await searchResponse.json();
-      console.log('Basic course search completed, found:', searchData.data?.json?.length || 0, 'courses');
+        if (!searchData.success || !searchData.data?.json) {
+          throw new Error('No course data found in search results');
+        }
 
-      if (!searchData.success || !searchData.data?.json) {
-        throw new Error('No course data found in search results');
-      }
-
-      const basicCourses = Array.isArray(searchData.data.json) ? searchData.data.json : [searchData.data.json];
-      
-      // Stage 2: Get detailed information for each course
-      console.log('Starting detailed course scraping for', Math.min(basicCourses.length, 8), 'courses...');
-      
-      const detailedCourses = [];
-      const maxCoursesToDetail = 8; // Limit to avoid timeout and API costs
+        const basicCourses = Array.isArray(searchData.data.json) ? searchData.data.json : [searchData.data.json];
+        
+        // Stage 2: Get detailed information for each course
+        console.log('🔍 Starting detailed course scraping for', Math.min(basicCourses.length, 8), 'courses...');
+        
+        const detailedCourses = [];
+        const maxCoursesToDetail = 8; // Limit to avoid timeout and API costs
       
       for (let i = 0; i < Math.min(basicCourses.length, maxCoursesToDetail); i++) {
         const course = basicCourses[i];
@@ -129,18 +162,12 @@ serve(async (req) => {
         }
         
         try {
-          console.log(`Scraping details for course ${i + 1}: ${course.courseTitle}`);
+          console.log(`🔍 Scraping details for course ${i + 1}: ${course.courseTitle}`);
           
-          const detailResponse = await fetch('https://api.firecrawl.dev/v2/scrape', {
-            method: 'POST',
-            headers: {
-              'Authorization': `Bearer ${firecrawlApiKey}`,
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-              url: course.detailsUrl,
-              onlyMainContent: true,
-              maxAge: 172800000,
+          const detailData = await makeFirecrawlRequest('https://api.firecrawl.dev/v2/scrape', {
+            url: course.detailsUrl,
+            onlyMainContent: true,
+            maxAge: 172800000,
               formats: [{
                 type: "json",
                 schema: {
@@ -222,21 +249,15 @@ serve(async (req) => {
                   }
                 }
               }]
-            })
-          });
+            });
 
           let detailedInfo = {};
           
-          if (detailResponse.ok) {
-            const detailData = await detailResponse.json();
-            if (detailData.success && detailData.data?.json) {
-              detailedInfo = detailData.data.json;
-              console.log(`✅ Successfully extracted details for: ${course.courseTitle}`);
-            } else {
-              console.log(`⚠️ No detailed data extracted for: ${course.courseTitle}`);
-            }
+          if (detailData.success && detailData.data?.json) {
+            detailedInfo = detailData.data.json;
+            console.log(`✅ Successfully extracted details for: ${course.courseTitle}`);
           } else {
-            console.log(`❌ Failed to scrape details for: ${course.courseTitle} (${detailResponse.status})`);
+            console.log(`⚠️ No detailed data extracted for: ${course.courseTitle}`);
           }
 
           // Merge basic and detailed information
@@ -259,11 +280,11 @@ serve(async (req) => {
 
           detailedCourses.push(enhancedCourse);
           
-          // Small delay to be respectful to the API
-          await new Promise(resolve => setTimeout(resolve, 1000));
+          // Small delay to be respectful to the API and avoid rate limiting
+          await new Promise(resolve => setTimeout(resolve, 1500));
           
         } catch (error) {
-          console.error(`Error scraping details for ${course.courseTitle}:`, error);
+          console.error(`❌ Error scraping details for ${course.courseTitle}:`, error.message);
           // Add course with basic info only if detail scraping fails
           detailedCourses.push({
             ...course,
@@ -350,52 +371,78 @@ serve(async (req) => {
         lastUpdated: new Date().toISOString()
       });
 
-      console.log(`✅ Reed: ${uniqueCourses.length} courses extracted`);
+        console.log(`✅ Reed: ${uniqueCourses.length} courses extracted`);
 
-    } catch (error) {
-      console.error('Error fetching from Firecrawl:', error);
-      sourceResults.push({
-        source: 'Reed (Firecrawl)',
-        courseCount: 0,
-        success: false,
-        error: error.message,
-        lastUpdated: new Date().toISOString()
-      });
-    }
+      } catch (error) {
+        console.error('❌ Error fetching from Firecrawl:', error.message);
+        sourceResults.push({
+          source: 'Reed (Firecrawl)',
+          courseCount: 0,
+          success: false,
+          error: error.message,
+          lastUpdated: new Date().toISOString()
+        });
+      }
 
-    const summary = {
-      totalCourses: uniqueCourses.length,
-      originalCourses: uniqueCourses.length,
-      duplicatesRemoved: 0,
-      sourceBreakdown: sourceResults,
-      searchCriteria: { keywords, location },
-      liveCourses: uniqueCourses.filter(c => c.isLive).length,
-      lastUpdated: new Date().toISOString()
+      return {
+        courses: uniqueCourses,
+        total: uniqueCourses.length,
+        summary: {
+          totalCourses: uniqueCourses.length,
+          originalCourses: uniqueCourses.length,
+          duplicatesRemoved: 0,
+          sourceBreakdown: sourceResults,
+          searchCriteria: { keywords, location },
+          liveCourses: uniqueCourses.filter(c => c.isLive).length,
+          lastUpdated: new Date().toISOString()
+        },
+        sourceResults,
+        isLiveData: true
+      };
     };
 
-    console.log(`📊 Aggregation complete: ${uniqueCourses.length} unique courses from ${sourceResults.filter(s => s.success).length} sources`);
+    console.log(`📊 Starting course aggregation with ${keywords} in ${location}...`);
+    
+    // Race the main operation against the timeout
+    const result = await Promise.race([mainOperation(), timeoutPromise]);
 
-    return new Response(JSON.stringify({
-      courses: uniqueCourses,
-      total: uniqueCourses.length,
-      summary,
-      sourceResults,
-      isLiveData: true
-    }), {
+    console.log(`📊 Aggregation complete: ${result.courses.length} unique courses from ${result.sourceResults.filter((s: any) => s.success).length} sources`);
+
+    return new Response(JSON.stringify(result), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
 
   } catch (error) {
-    console.error('Error in live course aggregator:', error);
+    console.error('❌ Error in live course aggregator:', error.message);
+    
+    // Provide more specific error messages
+    let errorMessage = 'An unexpected error occurred while searching for courses';
+    let errorCode = 500;
+    
+    if (error.message.includes('timeout') || error.message.includes('timed out')) {
+      errorMessage = 'The search took too long to complete. Please try again with more specific search terms.';
+      errorCode = 408;
+    } else if (error.message.includes('API key') || error.message.includes('configuration')) {
+      errorMessage = 'Service configuration error. Please try again later.';
+      errorCode = 503;
+    } else if (error.message.includes('Firecrawl') || error.message.includes('API')) {
+      errorMessage = 'External service temporarily unavailable. Please try again in a few minutes.';
+      errorCode = 503;
+    } else if (error.message.includes('Network') || error.message.includes('fetch')) {
+      errorMessage = 'Network connection error. Please check your connection and try again.';
+      errorCode = 503;
+    }
+    
     return new Response(JSON.stringify({ 
-      error: error.message,
+      error: errorMessage,
+      technical_error: error.message,
       courses: [],
       total: 0,
       summary: null,
       sourceResults: [],
       isLiveData: false
     }), {
-      status: 500,
+      status: errorCode,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   }
