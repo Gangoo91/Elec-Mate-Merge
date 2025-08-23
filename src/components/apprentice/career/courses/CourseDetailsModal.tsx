@@ -9,7 +9,8 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { 
   X, MapPin, Clock, Users, BookOpen, TrendingUp, 
   PoundSterling, Award, Target, CheckCircle, 
-  Calendar, Mail, Star, Briefcase, GraduationCap
+  Calendar, Mail, Star, Briefcase, GraduationCap,
+  ExternalLink, Wifi, Database, Shield
 } from "lucide-react";
 import { EnhancedCareerCourse } from "./enhancedCoursesData";
 
@@ -38,6 +39,59 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
     }
   };
 
+  // Enhanced data for live courses with fallbacks
+  const hasValidData = (data: any[] | undefined) => data && data.length > 0;
+  const getDisplayValue = (value: string | undefined, fallback: string) => value || fallback;
+  
+  // Generate smart content for missing data
+  const generateCourseOutline = (title: string) => [
+    "Course fundamentals and overview",
+    "Core principles and regulations",
+    "Practical application techniques",
+    "Assessment and certification",
+    "Industry best practices"
+  ];
+
+  const generateCareerOutcomes = (title: string) => [
+    "Enhanced professional qualifications",
+    "Improved career advancement opportunities",
+    "Access to specialised project work",
+    "Increased earning potential"
+  ];
+
+  const generatePrerequisites = () => [
+    "Basic electrical knowledge recommended",
+    "Valid electrical qualification preferred",
+    "Safety awareness certification"
+  ];
+
+  // Use fallback content for live courses with missing data
+  const displayCourseOutline = hasValidData(course.courseOutline) 
+    ? course.courseOutline 
+    : generateCourseOutline(course.title);
+    
+  const displayCareerOutcomes = hasValidData(course.careerOutcomes) 
+    ? course.careerOutcomes 
+    : generateCareerOutcomes(course.title);
+    
+  const displayPrerequisites = hasValidData(course.prerequisites) 
+    ? course.prerequisites 
+    : generatePrerequisites();
+
+  const displayAccreditations = hasValidData(course.accreditation) 
+    ? course.accreditation 
+    : ["Industry recognised certification"];
+
+  const displayLocations = hasValidData(course.locations) 
+    ? course.locations 
+    : ["Multiple UK locations", "Online delivery available"];
+
+  const displayNextDates = hasValidData(course.nextDates) 
+    ? course.nextDates 
+    : ["Contact provider for available dates"];
+
+  const isLiveCourse = course.isLive || course.source;
+
   return (
     <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
       <div className="bg-elec-dark border border-elec-yellow/20 rounded-lg w-full max-w-5xl max-h-[90vh] overflow-y-auto">
@@ -49,14 +103,39 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
                 <Badge className={`${getCategoryColor(course.category)} text-xs`}>
                   {course.category}
                 </Badge>
+                {isLiveCourse && (
+                  <Badge variant="outline" className="text-xs bg-blue-500/10 text-blue-300 border-blue-500/30 flex items-center gap-1">
+                    <Wifi className="h-3 w-3" />
+                    Live Data
+                  </Badge>
+                )}
                 <div className="flex items-center gap-1 bg-amber-400/20 text-amber-400 px-2 py-1 rounded text-xs">
                   <Star className="h-3 w-3 fill-amber-400" />
                   <span>{course.rating}</span>
                 </div>
               </div>
               <h3 className="text-2xl font-semibold mb-1">{course.title}</h3>
-              <p className="text-elec-yellow text-lg">{course.provider}</p>
+              <div className="flex items-center gap-3">
+                <p className="text-elec-yellow text-lg">{getDisplayValue(course.provider, "Provider TBC")}</p>
+                {course.external_url && (
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+                    onClick={() => window.open(course.external_url, '_blank')}
+                  >
+                    <ExternalLink className="h-3 w-3 mr-1" />
+                    View Provider Site
+                  </Button>
+                )}
+              </div>
               <p className="text-muted-foreground mt-2">{course.description}</p>
+              {isLiveCourse && course.source && (
+                <p className="text-xs text-muted-foreground mt-1 flex items-center gap-1">
+                  <Database className="h-3 w-3" />
+                  Source: {course.source}
+                </p>
+              )}
             </div>
             <Button variant="ghost" size="sm" onClick={onClose}>
               <X className="h-4 w-4" />
@@ -133,7 +212,7 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
               </CardHeader>
               <CardContent>
                 <div className="flex flex-wrap gap-2">
-                  {course.accreditation.map((acc, idx) => (
+                  {displayAccreditations.map((acc, idx) => (
                     <Badge key={idx} variant="outline" className="text-xs bg-blue-500/10 text-blue-300 border-blue-500/30">
                       {acc}
                     </Badge>
@@ -154,7 +233,7 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
               </CardHeader>
               <CardContent>
                 <div className="space-y-2">
-                  {course.courseOutline.map((item, idx) => (
+                  {displayCourseOutline.map((item, idx) => (
                     <div key={idx} className="flex items-start gap-2 text-sm">
                       <CheckCircle className="h-3 w-3 text-green-400 flex-shrink-0 mt-0.5" />
                       <span className="text-muted-foreground">{item}</span>
@@ -173,7 +252,7 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
               </CardHeader>
               <CardContent>
                 <div className="space-y-2">
-                  {course.careerOutcomes.map((outcome, idx) => (
+                  {displayCareerOutcomes.map((outcome, idx) => (
                     <div key={idx} className="flex items-start gap-2 text-sm">
                       <CheckCircle className="h-3 w-3 text-green-400 flex-shrink-0 mt-0.5" />
                       <span className="text-muted-foreground">{outcome}</span>
@@ -213,7 +292,7 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
               </CardHeader>
               <CardContent>
                 <div className="space-y-1">
-                  {course.prerequisites.map((prereq, idx) => (
+                  {displayPrerequisites.map((prereq, idx) => (
                     <div key={idx} className="flex items-center gap-2 text-sm">
                       <div className="w-1 h-1 rounded-full bg-elec-yellow" />
                       <span className="text-muted-foreground">{prereq}</span>
@@ -234,7 +313,7 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
             </CardHeader>
             <CardContent>
               <div className="flex flex-wrap gap-2">
-                {course.locations.map((location, idx) => (
+                {displayLocations.map((location, idx) => (
                   <span 
                     key={idx} 
                     className="text-sm bg-elec-gray/60 px-3 py-1 rounded-md flex items-center gap-1"
@@ -267,11 +346,11 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {course.nextDates.map((date, idx) => (
+                  {displayNextDates.map((date, idx) => (
                     <TableRow key={idx}>
                       <TableCell>{date}</TableCell>
-                      <TableCell>{course.locations[idx % course.locations.length]}</TableCell>
-                      <TableCell>{course.format.split(',')[0]}</TableCell>
+                      <TableCell>{displayLocations[idx % displayLocations.length]}</TableCell>
+                      <TableCell>{getDisplayValue(course.format?.split(',')[0], "To be confirmed")}</TableCell>
                       <TableCell>
                         <span className={`px-2 py-0.5 rounded text-xs ${
                           idx % 3 === 0 ? "bg-red-500/20 text-red-300" : "bg-green-500/20 text-green-300"
@@ -280,9 +359,21 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
                         </span>
                       </TableCell>
                       <TableCell className="text-right">
-                        <Button size="sm" variant="outline" className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10">
-                          Enquire
-                        </Button>
+                        {course.external_url ? (
+                          <Button 
+                            size="sm" 
+                            variant="outline" 
+                            className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+                            onClick={() => window.open(course.external_url, '_blank')}
+                          >
+                            <ExternalLink className="h-3 w-3 mr-1" />
+                            Book Now
+                          </Button>
+                        ) : (
+                          <Button size="sm" variant="outline" className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10">
+                            Enquire
+                          </Button>
+                        )}
                       </TableCell>
                     </TableRow>
                   ))}
@@ -321,7 +412,7 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
                         <SelectValue placeholder="Select location" />
                       </SelectTrigger>
                       <SelectContent>
-                        {course.locations.map((location) => (
+                        {displayLocations.map((location) => (
                           <SelectItem key={location} value={location}>{location}</SelectItem>
                         ))}
                       </SelectContent>
