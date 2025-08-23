@@ -34,6 +34,7 @@ const CourseMarker: React.FC<CourseMarkerProps> = ({
       const color = colors[category as keyof typeof colors] || colors.default;
       const scale = isSelected ? 1.2 : 1;
 
+      // Return a properly typed Symbol for Google Maps
       return {
         path: google.maps.SymbolPath.CIRCLE,
         fillColor: color,
@@ -41,7 +42,7 @@ const CourseMarker: React.FC<CourseMarkerProps> = ({
         strokeColor: '#FFFFFF',
         strokeWeight: 2,
         scale: 8 * scale,
-      };
+      } as any;
     };
 
     if (!markerRef.current) {
