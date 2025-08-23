@@ -48,30 +48,43 @@ serve(async (req) => {
     const location = geoData.results[0].geometry.location;
     console.log(`Geocoded location: ${location.lat}, ${location.lng}`);
 
-    // 2. Get nearby training providers
-    const keywords = [
-      'electrical career courses',
-      'electrical training',
-      'electrical course',
-      'electrical qualification',
-      'electrician certification',
-      'apprenticeship',
-      'vocational training',
-      'electrician course',
-      'city guilds electrical',
-      'electrical college',
-      'electrical academy',
-      'trade training electrical'
-    ];
-
-    const searchKeyword = keywords.join('|');
+    // 2. Get nearby training providers using textsearch API
+    let placesData = null;
     
-    const placesRes = await fetch(
-      `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${location.lat},${location.lng}&radius=${radius}&type=university|school|point_of_interest&keyword=${encodeURIComponent(searchKeyword)}&key=${googleApiKey}`
+    // Primary search - electrical training specific
+    const electricalQuery = `electrical training courses college near ${postcode}`;
+    console.log(`Primary search query: ${electricalQuery}`);
+    
+    let placesRes = await fetch(
+      `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${encodeURIComponent(electricalQuery)}&location=${location.lat},${location.lng}&radius=${radius}&key=${googleApiKey}`
     );
-    const placesData = await placesRes.json();
+    placesData = await placesRes.json();
 
-    if (placesData.status !== 'OK') {
+    // Fallback search if primary search returns no results
+    if (placesData.status === 'ZERO_RESULTS' || !placesData.results?.length) {
+      console.log('Primary search returned no results, trying broader search...');
+      const broadQuery = `training college education near ${postcode}`;
+      console.log(`Fallback search query: ${broadQuery}`);
+      
+      placesRes = await fetch(
+        `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${encodeURIComponent(broadQuery)}&location=${location.lat},${location.lng}&radius=${radius}&key=${googleApiKey}`
+      );
+      placesData = await placesRes.json();
+    }
+
+    // Second fallback - even broader search
+    if (placesData.status === 'ZERO_RESULTS' || !placesData.results?.length) {
+      console.log('Fallback search returned no results, trying university search...');
+      const universityQuery = `university college ${postcode}`;
+      console.log(`University search query: ${universityQuery}`);
+      
+      placesRes = await fetch(
+        `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${encodeURIComponent(universityQuery)}&location=${location.lat},${location.lng}&radius=${radius}&key=${googleApiKey}`
+      );
+      placesData = await placesRes.json();
+    }
+
+    if (placesData.status !== 'OK' && placesData.status !== 'ZERO_RESULTS') {
       console.error('Places API error:', placesData);
       return new Response(
         JSON.stringify({ error: `Places API error: ${placesData.status}` }),
