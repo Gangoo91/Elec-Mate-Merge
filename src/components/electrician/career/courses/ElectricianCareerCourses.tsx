@@ -30,6 +30,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useIsMobile } from "@/hooks/use-mobile";
 import CourseGridSkeleton from "./CourseGridSkeleton";
 import { useCareerBookmarks } from "@/hooks/career/useCareerBookmarks";
+import { parsePrice, parseDuration, parseDate, getNumericRating, getDemandScore, getFutureProofingScore } from "@/utils/courseSorting";
 
 const ElectricianCareerCourses = () => {
   const [selectedCourse, setSelectedCourse] = useState<EnhancedCareerCourse | null>(null);
@@ -256,7 +257,7 @@ const ElectricianCareerCourses = () => {
       return true;
     });
 
-    // Sorting
+    // Sorting with robust data parsing
     const sortOption = sortOptions.find(opt => opt.key === currentSort);
     if (sortOption) {
       filtered.sort((a, b) => {
@@ -264,44 +265,80 @@ const ElectricianCareerCourses = () => {
         
         switch (sortOption.key) {
           case "rating":
-            comparison = b.rating - a.rating;
+            const ratingA = getNumericRating(a.rating);
+            const ratingB = getNumericRating(b.rating);
+            comparison = ratingB - ratingA;
+            // Fallback: if ratings are equal, sort by title
+            if (comparison === 0) comparison = a.title.localeCompare(b.title);
             break;
+            
           case "price-low":
-            const priceA = parseInt(a.price.match(/£(\d+)/)?.[1] || "0");
-            const priceB = parseInt(b.price.match(/£(\d+)/)?.[1] || "0");
+            const priceA = parsePrice(a.price);
+            const priceB = parsePrice(b.price);
             comparison = priceA - priceB;
+            // Fallback: if prices are equal, sort by title
+            if (comparison === 0) comparison = a.title.localeCompare(b.title);
             break;
+            
           case "price-high":
-            const priceA2 = parseInt(a.price.match(/£(\d+)/)?.[1] || "0");
-            const priceB2 = parseInt(b.price.match(/£(\d+)/)?.[1] || "0");
+            const priceA2 = parsePrice(a.price);
+            const priceB2 = parsePrice(b.price);
             comparison = priceB2 - priceA2;
+            // Fallback: if prices are equal, sort by title
+            if (comparison === 0) comparison = a.title.localeCompare(b.title);
             break;
+            
           case "duration":
-            const durationA = parseInt(a.duration.match(/(\d+)/)?.[1] || "0");
-            const durationB = parseInt(b.duration.match(/(\d+)/)?.[1] || "0");
+            const durationA = parseDuration(a.duration);
+            const durationB = parseDuration(b.duration);
             comparison = durationA - durationB;
+            // Fallback: if durations are equal, sort by title
+            if (comparison === 0) comparison = a.title.localeCompare(b.title);
             break;
+            
           case "demand":
-            const demandOrder = { "High": 3, "Medium": 2, "Low": 1 };
-            comparison = demandOrder[b.industryDemand as keyof typeof demandOrder] - 
-                        demandOrder[a.industryDemand as keyof typeof demandOrder];
+            const demandA = getDemandScore(a.industryDemand);
+            const demandB = getDemandScore(b.industryDemand);
+            comparison = demandB - demandA;
+            // Fallback: if demand is equal, sort by rating then title
+            if (comparison === 0) {
+              comparison = getNumericRating(b.rating) - getNumericRating(a.rating);
+              if (comparison === 0) comparison = a.title.localeCompare(b.title);
+            }
             break;
+            
           case "future-proof":
-            comparison = b.futureProofing - a.futureProofing;
+            const futureA = getFutureProofingScore(a.futureProofing);
+            const futureB = getFutureProofingScore(b.futureProofing);
+            comparison = futureB - futureA;
+            // Fallback: if future-proofing is equal, sort by title
+            if (comparison === 0) comparison = a.title.localeCompare(b.title);
             break;
+            
           case "title":
             comparison = a.title.localeCompare(b.title);
             break;
+            
           case "provider":
             comparison = a.provider.localeCompare(b.provider);
+            // Fallback: if providers are equal, sort by title
+            if (comparison === 0) comparison = a.title.localeCompare(b.title);
             break;
+            
           case "next-date":
-            const dateA = new Date(a.nextDates[0]);
-            const dateB = new Date(b.nextDates[0]);
+            const dateA = parseDate(a.nextDates);
+            const dateB = parseDate(b.nextDates);
             comparison = dateA.getTime() - dateB.getTime();
+            // Fallback: if dates are equal, sort by title
+            if (comparison === 0) comparison = a.title.localeCompare(b.title);
             break;
+            
           default: // relevance
-            comparison = (b.rating * b.futureProofing) - (a.rating * a.futureProofing);
+            const relevanceA = getNumericRating(a.rating) * getFutureProofingScore(a.futureProofing);
+            const relevanceB = getNumericRating(b.rating) * getFutureProofingScore(b.futureProofing);
+            comparison = relevanceB - relevanceA;
+            // Fallback: if relevance is equal, sort by title
+            if (comparison === 0) comparison = a.title.localeCompare(b.title);
         }
         
         return sortOption.direction === "desc" ? comparison : -comparison;
