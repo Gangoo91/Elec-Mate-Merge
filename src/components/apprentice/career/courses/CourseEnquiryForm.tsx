@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -118,25 +119,27 @@ export default function CourseEnquiryForm({ course, onSuccess }: CourseEnquiryFo
         </div>
       </div>
       
-      <div className="space-y-2">
-        <Label htmlFor="phone">Phone Number (Optional)</Label>
-        <Input
-          id="phone"
-          type="tel"
-          {...register("phone")}
-          placeholder="Enter your phone number"
-          className="bg-background"
-        />
-      </div>
-      
-      <div className="space-y-2">
-        <Label htmlFor="preferredStartDate">Preferred Start Date</Label>
-        <Input
-          id="preferredStartDate"
-          type="date"
-          {...register("preferredStartDate")}
-          className="bg-background"
-        />
+      <div className="grid grid-cols-2 gap-4">
+        <div className="space-y-2">
+          <Label htmlFor="phone">Phone Number (Optional)</Label>
+          <Input
+            id="phone"
+            type="tel"
+            {...register("phone")}
+            placeholder="Enter your phone number"
+            className="bg-background"
+          />
+        </div>
+        
+        <div className="space-y-2">
+          <Label htmlFor="preferredStartDate">Preferred Start Date</Label>
+          <Input
+            id="preferredStartDate"
+            type="date"
+            {...register("preferredStartDate")}
+            className="bg-background"
+          />
+        </div>
       </div>
       
       <div className="space-y-2">
