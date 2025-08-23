@@ -146,6 +146,31 @@ serve(async (req) => {
                   detailsUrl: {
                     type: "string",
                     description: "Direct link to the course details page"
+                  },
+                  prerequisites: {
+                    type: "array",
+                    items: {
+                      type: "string"
+                    },
+                    description: "Course prerequisites or entry requirements"
+                  },
+                  courseOutline: {
+                    type: "array",
+                    items: {
+                      type: "string"
+                    },
+                    description: "Course modules, topics, or curriculum outline"
+                  },
+                  assessmentMethod: {
+                    type: "array",
+                    items: {
+                      type: "string"
+                    },
+                    description: "Assessment methods (exams, coursework, practical)"
+                  },
+                  continuousAssessment: {
+                    type: "boolean",
+                    description: "Whether course uses continuous assessment"
                   }
                 },
                 required: [
@@ -214,11 +239,11 @@ serve(async (req) => {
           price: course.priceRange || 'Contact for pricing',
           employerSupport: course.employerSupport || false,
           detailsUrl: course.detailsUrl || '',
-          // Additional fields for compatibility
-          prerequisites: ['Not specified by provider'],
-          courseOutline: ['Contact provider for details'],
-          assessmentMethod: ['Contact provider for details'],
-          continuousAssessment: false,
+          // Additional fields from extracted data or fallbacks
+          prerequisites: course.prerequisites?.length > 0 ? course.prerequisites : ['Not specified by provider'],
+          courseOutline: course.courseOutline?.length > 0 ? course.courseOutline : ['Contact provider for details'],
+          assessmentMethod: course.assessmentMethod?.length > 0 ? course.assessmentMethod : ['Contact provider for details'],
+          continuousAssessment: course.continuousAssessment || false,
           source: 'Reed',
           isLive: true,
           lastUpdated: new Date().toISOString()
