@@ -334,6 +334,10 @@ const ElectricianCareerCourses = () => {
     setSelectedCourseId(courseId);
   };
 
+  const handleCourseDeselect = () => {
+    setSelectedCourseId(null);
+  };
+
   const handleResetFilters = () => {
     setFilters({
       searchQuery: "",
@@ -610,6 +614,7 @@ const ElectricianCareerCourses = () => {
               courses={viewMode === "map" ? coursesForMap : filteredAndSortedCourses}
               selectedCourse={selectedCourseId}
               onCourseSelect={handleCourseSelect}
+              onCourseDeselect={handleCourseDeselect}
               userLocation={userLocation}
               isLoading={isLoadingLive}
             />

@@ -9,6 +9,7 @@ interface CourseMapProps {
   courses: EnhancedCareerCourse[];
   selectedCourse: string | null;
   onCourseSelect: (courseId: string) => void;
+  onCourseDeselect?: () => void;
   userLocation: string | null;
   isLoading: boolean;
 }
@@ -23,6 +24,7 @@ const CourseMap: React.FC<CourseMapProps> = ({
   courses, 
   selectedCourse, 
   onCourseSelect, 
+  onCourseDeselect,
   userLocation, 
   isLoading 
 }) => {
@@ -158,6 +160,7 @@ const CourseMap: React.FC<CourseMapProps> = ({
         userLocation={userLocation}
         selectedCourse={getSelectedCourse()}
         selectedMarkerPosition={undefined}
+        onClose={onCourseDeselect}
       />
     </Card>
   );

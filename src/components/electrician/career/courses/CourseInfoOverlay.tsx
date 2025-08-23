@@ -2,19 +2,21 @@ import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { MapPin, Clock, PoundSterling, ExternalLink, Users, Star } from "lucide-react";
+import { MapPin, Clock, PoundSterling, ExternalLink, Users, Star, X } from "lucide-react";
 import { EnhancedCareerCourse } from "../../../apprentice/career/courses/enhancedCoursesData";
 
 interface CourseInfoOverlayProps {
   userLocation: string | null;
   selectedCourse: EnhancedCareerCourse | null | undefined;
   selectedMarkerPosition: google.maps.LatLngLiteral | undefined;
+  onClose?: () => void;
 }
 
 const CourseInfoOverlay: React.FC<CourseInfoOverlayProps> = ({
   userLocation,
   selectedCourse,
-  selectedMarkerPosition
+  selectedMarkerPosition,
+  onClose
 }) => {
   if (!selectedCourse) {
     return (
@@ -58,7 +60,19 @@ const CourseInfoOverlay: React.FC<CourseInfoOverlayProps> = ({
   return (
     <div className="absolute top-4 left-4 right-4 max-w-md pointer-events-auto">
       <Card className="bg-background/95 backdrop-blur-sm border-border/50 shadow-lg">
-        <CardContent className="p-4 space-y-3">
+        <CardContent className="p-4 space-y-3 relative">
+          {/* Close Button */}
+          {onClose && (
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={onClose}
+              className="absolute -top-2 -right-2 h-6 w-6 rounded-full p-0 hover:bg-destructive hover:text-destructive-foreground"
+              aria-label="Close course details"
+            >
+              <X className="h-3 w-3" />
+            </Button>
+          )}
           {/* Course Header */}
           <div className="space-y-2">
             <div className="flex items-start justify-between gap-2">
