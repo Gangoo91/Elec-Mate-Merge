@@ -425,7 +425,7 @@ const ElectricianCareerCourses = () => {
                   </div>
                   
                   {/* Action Buttons - Positioned below rating badge area */}
-                  <div className="absolute top-12 right-2 flex flex-col gap-1 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-200">
+                  <div className="absolute top-12 right-2 flex flex-col gap-1 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-200 mt-[10px]">
                     <Button
                       variant="ghost"
                       size="sm"
