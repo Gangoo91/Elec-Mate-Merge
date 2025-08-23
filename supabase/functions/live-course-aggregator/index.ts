@@ -20,8 +20,8 @@ serve(async (req) => {
     
     // Fetch from all course sources in parallel
     const promises = [
-      supabase.functions.invoke('reed-courses-search', { 
-        body: { keywords, location } 
+      supabase.functions.invoke('firecrawl-courses-scraper', { 
+        body: { keywords, source: 'reed' } 
       }),
       supabase.functions.invoke('firecrawl-courses-scraper', { 
         body: { keywords, source: 'findcourses' } 

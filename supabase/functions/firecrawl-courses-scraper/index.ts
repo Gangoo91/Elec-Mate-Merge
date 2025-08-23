@@ -54,7 +54,8 @@ serve(async (req) => {
       findcourses: `https://www.findcourses.co.uk/search?q=${encodeURIComponent(keywords)}`,
       cityandguilds: 'https://www.cityandguilds.com/qualifications/construction-and-the-built-environment/electrical',
       niceic: 'https://www.niceic.com/training-and-courses',
-      stanmore: 'https://certificates.stanmoreuk.org/Home/Courses/6026646/Electrical-Career-Courses-%26-Training'
+      stanmore: 'https://certificates.stanmoreuk.org/Home/Courses/6026646/Electrical-Career-Courses-%26-Training',
+      reed: `https://www.reed.co.uk/courses/?keywords=${encodeURIComponent(keywords)}`
     };
 
     const targetUrl = courseWebsites[source as keyof typeof courseWebsites] || courseWebsites.findcourses;
