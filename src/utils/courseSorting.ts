@@ -1,22 +1,32 @@
 // Course sorting utilities with robust data parsing
 
 export const parsePrice = (priceString: string): number => {
-  if (!priceString || typeof priceString !== 'string') return 999999; // Sort invalid prices to end
+  if (!priceString || typeof priceString !== 'string') {
+    console.log('⚠️ Invalid price string:', priceString);
+    return 999999; // Sort invalid prices to end
+  }
   
   const str = priceString.toLowerCase();
+  console.log('💰 Parsing price:', priceString);
   
   // Handle "contact for pricing" or similar placeholders
   if (str.includes('contact') || str.includes('call') || str.includes('enquire')) {
+    console.log('📞 Contact for pricing detected');
     return 999999; // Sort to end
   }
   
   // Extract all numbers from the string
   const numbers = priceString.match(/\d+/g);
-  if (!numbers || numbers.length === 0) return 999999;
+  if (!numbers || numbers.length === 0) {
+    console.log('🚫 No numbers found in price string');
+    return 999999;
+  }
   
   // If it's a range (e.g., "£500-£1000"), use the lower bound
   const firstNumber = parseInt(numbers[0]);
-  return isNaN(firstNumber) ? 999999 : firstNumber;
+  const result = isNaN(firstNumber) ? 999999 : firstNumber;
+  console.log('💵 Parsed price result:', result);
+  return result;
 };
 
 export const parseDuration = (durationString: string): number => {
