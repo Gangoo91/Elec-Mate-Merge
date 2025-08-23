@@ -76,6 +76,9 @@ const CourseMap: React.FC<CourseMapProps> = ({
   console.log('CourseMap received providers:', nearbyProviders.length);
   console.log('User coordinates:', userCoordinates);
   console.log('Search radius:', searchRadius);
+  console.log('Selected course ID:', selectedCourse);
+  console.log('Selected provider:', selectedProvider);
+  console.log('All provider IDs:', nearbyProviders.map(p => p.place_id));
 
   // Initialize Google Maps with optimized settings
   useEffect(() => {
@@ -134,6 +137,8 @@ const CourseMap: React.FC<CourseMapProps> = ({
         });
         
         marker.addListener('click', () => {
+          console.log('🔵 Marker clicked for provider:', provider.name, 'ID:', provider.place_id);
+          console.log('🔵 Calling onCourseSelect with ID:', provider.place_id);
           onCourseSelect(provider.place_id);
         });
         

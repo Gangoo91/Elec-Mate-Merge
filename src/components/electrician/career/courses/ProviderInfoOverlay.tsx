@@ -42,6 +42,13 @@ const ProviderInfoOverlay: React.FC<ProviderInfoOverlayProps> = ({
   selectedProvider,
   onClose 
 }) => {
+  // Debug logging for overlay rendering
+  console.log('🎯 ProviderInfoOverlay rendering with:', {
+    hasSelectedProvider: !!selectedProvider,
+    providerName: selectedProvider?.name,
+    userLocation
+  });
+
   if (!selectedProvider) {
     return (
       <div className="absolute bottom-4 right-4 bg-elec-gray/90 backdrop-blur-sm p-4 rounded-lg shadow-lg border border-elec-yellow/30 max-w-[300px] z-[1000]">
