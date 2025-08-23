@@ -188,7 +188,7 @@ export class EnhancedCableSelectionEngine {
       } else {
         // No compliant single cable found - suggest alternatives
         suggestions.push({
-          type: "design-review",
+          type: "cable-upgrade",
           title: "Design Review Required - No Single Cable Solution",
           description: "Consider: 1) Reduce load, 2) Shorten cable run, 3) Use 3-phase supply, 4) Install intermediate distribution board, or 5) Use parallel cable configuration.",
           impact: "high",
@@ -201,15 +201,15 @@ export class EnhancedCableSelectionEngine {
     if (bestOption && bestOption.voltageDropPercentage > this.getMaxVoltageDropPercentage(planData.loadType)) {
       if (bestOption.voltageDropPercentage > 10) {
         suggestions.push({
-          type: "voltage-drop",
+          type: "cable-upgrade",
           title: "Critical Voltage Drop Issue",
           description: "Voltage drop is excessive and may cause equipment malfunction. Consider three-phase supply or intermediate distribution board.",
-          impact: "critical",
+          impact: "high",
           regulation: "BS 7671 Appendix 4"
         });
       } else {
         suggestions.push({
-          type: "voltage-drop", 
+          type: "cable-upgrade", 
           title: "Increase Conductor Size",
           description: `Current design results in ${bestOption.voltageDropPercentage.toFixed(2)}% voltage drop. Increase cable size to reduce voltage drop below ${this.getMaxVoltageDropPercentage(planData.loadType)}%.`,
           impact: "medium",
@@ -221,7 +221,7 @@ export class EnhancedCableSelectionEngine {
     // Parallel conductor suggestion for 5-core cables
     if (planData.cableLength > 100 && planData.totalLoad > 5000) {
       suggestions.push({
-        type: "parallel-conductors",
+        type: "cable-upgrade",
         title: "Advanced: Consider Parallel Conductors",
         description: "For long runs with high loads, consider using 5-core cable with paralleled L&N conductors to reduce voltage drop. Requires careful calculation and may not be best practice for all installations.",
         impact: "medium",

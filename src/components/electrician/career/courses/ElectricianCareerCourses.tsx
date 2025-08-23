@@ -287,24 +287,28 @@ const ElectricianCareerCourses = () => {
 
   return (
     <div className="space-y-6">
-      {/* Header Section */}
+      {/* Header Section - Mobile Optimized */}
       <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-xl sm:text-2xl">
-            <BookOpen className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow" />
-            UK Electrical Career Courses & Training
-            {isLiveData && (
-              <Badge variant="secondary" className="ml-2 flex items-center gap-1">
-                <Wifi className="h-3 w-3" />
-                LIVE
-              </Badge>
-            )}
-          </CardTitle>
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <div className="flex flex-col gap-2">
-              <p className="text-sm sm:text-base text-muted-foreground">
+        <CardHeader className="p-4 md:p-6">
+          <div className="space-y-4">
+            <CardTitle className="flex flex-col sm:flex-row sm:items-center gap-2 text-lg sm:text-xl md:text-2xl">
+              <div className="flex items-center gap-2">
+                <BookOpen className="h-5 w-5 md:h-6 md:w-6 text-elec-yellow" />
+                UK Electrical Career Courses & Training
+              </div>
+              {isLiveData && (
+                <Badge variant="secondary" className="flex items-center gap-1 w-fit">
+                  <Wifi className="h-3 w-3" />
+                  LIVE
+                </Badge>
+              )}
+            </CardTitle>
+            
+            <div className="space-y-3">
+              <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
                 Comprehensive professional development courses to advance your electrical career in the UK market
               </p>
+              
               {isLiveData && liveSummary && (
                 <p className="text-xs text-elec-yellow">
                   Live data: {liveSummary.liveCourses} live courses from {liveSummary.sourceBreakdown.filter(s => s.success).length} sources
@@ -319,12 +323,13 @@ const ElectricianCareerCourses = () => {
               )}
             </div>
             
-            <div className="flex gap-2 flex-wrap">
+            {/* Mobile Action Buttons - Better Touch Targets */}
+            <div className="grid grid-cols-2 md:flex md:flex-wrap gap-3 md:gap-2">
               <Button
                 variant="outline"
                 onClick={refreshCourses}
                 disabled={isSearching}
-                className="flex items-center gap-2"
+                className="flex items-center justify-center gap-2 min-h-[44px] text-sm"
               >
                 <RefreshCw className={`h-4 w-4 ${isSearching ? 'animate-spin' : ''}`} />
                 {isMobile ? "Refresh" : "Refresh Data"}
@@ -333,7 +338,7 @@ const ElectricianCareerCourses = () => {
               <Button
                 variant={showBookmarks ? "default" : "outline"}
                 onClick={() => setShowBookmarks(!showBookmarks)}
-                className="flex items-center gap-2"
+                className="flex items-center justify-center gap-2 min-h-[44px] text-sm"
               >
                 <BookOpen className="h-4 w-4" />
                 {isMobile ? "Saved" : "Saved Courses"}
@@ -342,7 +347,7 @@ const ElectricianCareerCourses = () => {
               <Button
                 variant={showComparison ? "default" : "outline"}
                 onClick={() => setShowComparison(!showComparison)}
-                className="flex items-center gap-2"
+                className="flex items-center justify-center gap-2 min-h-[44px] text-sm"
               >
                 <Scale className="h-4 w-4" />
                 {isMobile ? "Compare" : "Compare Courses"}
@@ -356,7 +361,7 @@ const ElectricianCareerCourses = () => {
               <Button
                 variant="outline"
                 onClick={exportToPDF}
-                className="flex items-center gap-2"
+                className="flex items-center justify-center gap-2 min-h-[44px] text-sm"
               >
                 <FileDown className="h-4 w-4" />
                 {isMobile ? "PDF" : "Export PDF"}
@@ -416,8 +421,8 @@ const ElectricianCareerCourses = () => {
               <div className="space-y-6">
                 {filteredAndSortedCourses.length > 0 ? (
                   <div className={viewMode === "grid" ? 
-                    "grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6" : 
-                    "space-y-4"
+                    "grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-6" : 
+                    "space-y-3 md:space-y-4"
                   }>
                     {filteredAndSortedCourses.map((course) => (
                       <div key={course.id} className="relative group">
@@ -437,13 +442,13 @@ const ElectricianCareerCourses = () => {
                           </Badge>
                         )}
                         
-                        {/* Action Buttons Overlay */}
-                        <div className="absolute top-2 right-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                        {/* Mobile-Friendly Action Buttons */}
+                        <div className="absolute top-2 right-2 flex gap-1 md:opacity-0 md:group-hover:opacity-100 transition-opacity">
                           <Button
                             variant="ghost"
                             size="sm"
                             onClick={() => toggleBookmark(course)}
-                            className={`h-8 w-8 p-0 ${isBookmarked(course.id) ? 
+                            className={`min-h-[44px] min-w-[44px] p-0 md:h-8 md:w-8 ${isBookmarked(course.id) ? 
                               'text-elec-yellow hover:text-elec-yellow/80' : 
                               'text-muted-foreground hover:text-elec-yellow'
                             }`}
@@ -456,7 +461,7 @@ const ElectricianCareerCourses = () => {
                             variant="ghost"
                             size="sm"
                             onClick={() => addToComparison(course.id)}
-                            className={`h-8 w-8 p-0 ${isInComparison(course.id) ? 
+                            className={`min-h-[44px] min-w-[44px] p-0 md:h-8 md:w-8 ${isInComparison(course.id) ? 
                               'text-blue-400 hover:text-blue-300' : 
                               'text-muted-foreground hover:text-blue-400'
                             }`}
@@ -480,9 +485,9 @@ const ElectricianCareerCourses = () => {
             label: `Training Centres (${filteredCenters.length})`,
             icon: Users,
             content: (
-              <div className="space-y-6">
+              <div className="space-y-4 md:space-y-6">
                 {filteredCenters.length > 0 ? (
-                  <div className="space-y-6">
+                  <div className="space-y-4 md:space-y-6">
                     {filteredCenters.map((center) => (
                       <EnhancedTrainingCenterCard 
                         key={center.id} 

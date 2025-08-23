@@ -26,10 +26,10 @@ const CourseBookmarkManager = ({ courses, onViewDetails }: CourseBookmarkManager
   const { toast } = useToast();
 
   const toggleBookmark = (course: EnhancedCareerCourse) => {
-    const existingIndex = bookmarkedCourses.findIndex(b => b.id === course.id);
+    const existingIndex = bookmarkedCourses.findIndex(b => String(b.id) === String(course.id));
     
     if (existingIndex >= 0) {
-      setBookmarkedCourses(prev => prev.filter(b => b.id !== course.id));
+      setBookmarkedCourses(prev => prev.filter(b => String(b.id) !== String(course.id)));
       toast({
         title: "Course removed from saved",
         description: `${course.title} has been removed from your saved courses.`,
@@ -50,16 +50,16 @@ const CourseBookmarkManager = ({ courses, onViewDetails }: CourseBookmarkManager
     }
   };
 
-  const updatePriority = (courseId: number, priority: "high" | "medium" | "low") => {
+  const updatePriority = (courseId: string | number, priority: "high" | "medium" | "low") => {
     setBookmarkedCourses(prev => 
       prev.map(course => 
-        course.id === courseId ? { ...course, priority } : course
+        String(course.id) === String(courseId) ? { ...course, priority } : course
       )
     );
   };
 
-  const isBookmarked = (courseId: number) => {
-    return bookmarkedCourses.some(b => b.id === courseId);
+  const isBookmarked = (courseId: string | number) => {
+    return bookmarkedCourses.some(b => String(b.id) === String(courseId));
   };
 
   const exportBookmarks = () => {

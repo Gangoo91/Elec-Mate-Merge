@@ -43,7 +43,7 @@ const CareerCourses = () => {
     handleRadiusChange,
     clearLocation,
     isLocationFiltered
-  } = useLocationBasedCourses(enhancedCareerCourses, enhancedTrainingCenters);
+  } = useLocationBasedCourses(enhancedCareerCourses as any, enhancedTrainingCenters);
 
   // Apply location and category filters
   const filteredCourses = enhancedCareerCourses.filter(course => {
