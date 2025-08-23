@@ -27,6 +27,7 @@ import { BookOpen, Users, Plus, Scale, FileDown, RefreshCw, Wifi, WifiOff, Map, 
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useIsMobile } from "@/hooks/use-mobile";
+import CourseGridSkeleton from "./CourseGridSkeleton";
 
 const ElectricianCareerCourses = () => {
   const [selectedCourse, setSelectedCourse] = useState<EnhancedCareerCourse | null>(null);
@@ -86,11 +87,6 @@ const ElectricianCareerCourses = () => {
   // Auto-load courses when component mounts
   useEffect(() => {
     if (!isLiveData && !isLoadingLive && !isError) {
-      toast({
-        title: "Loading courses",
-        description: "Fetching the latest course data...",
-        variant: "default"
-      });
       refreshCourses();
     }
   }, []);
@@ -505,14 +501,7 @@ const ElectricianCareerCourses = () => {
             {/* Mobile Action Buttons - Better Touch Targets */}
             <div className="grid grid-cols-2 md:flex md:flex-wrap gap-3 md:gap-2">
               <Button
-                onClick={() => {
-                  toast({
-                    title: isLiveData ? "Refreshing courses" : "Loading courses",
-                    description: "Fetching the latest course data...",
-                    variant: "default"
-                  });
-                  refreshCourses();
-                }}
+                onClick={() => refreshCourses()}
                 disabled={isSearching}
                 className="bg-elec-yellow text-black hover:bg-elec-yellow/90 flex items-center justify-center gap-2 min-h-[44px] text-sm"
               >
@@ -671,7 +660,16 @@ const ElectricianCareerCourses = () => {
         ) : (
           /* Grid/List View */
           <div className="space-y-6">
-            {filteredAndSortedCourses.length > 0 ? (
+            {isLoadingLive && !isLiveData ? (
+              /* Show skeleton loading on initial load */
+              <div className="space-y-4">
+                <div className="text-center py-8">
+                  <h3 className="text-lg font-medium text-elec-yellow mb-2">Finding electrical courses for you...</h3>
+                  <p className="text-sm text-muted-foreground">Searching training providers across the UK</p>
+                </div>
+                <CourseGridSkeleton count={9} />
+              </div>
+            ) : filteredAndSortedCourses.length > 0 ? (
               <div className={viewMode === "grid" ? 
                 "grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-6" : 
                 "space-y-3 md:space-y-4"
@@ -720,6 +718,23 @@ const ElectricianCareerCourses = () => {
                   </div>
                 ))}
               </div>
+            ) : liveError ? (
+              /* Error state with retry option */
+              <Card className="border-destructive/20 bg-destructive/5">
+                <CardContent className="p-6 text-center">
+                  <div className="space-y-4">
+                    <WifiOff className="h-12 w-12 text-destructive mx-auto" />
+                    <div>
+                      <h3 className="text-lg font-medium">Failed to load courses</h3>
+                      <p className="text-sm text-muted-foreground mt-1">{liveError}</p>
+                    </div>
+                    <Button onClick={() => refreshCourses()} variant="outline">
+                      <RefreshCw className="h-4 w-4 mr-2" />
+                      Try Again
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
             ) : (
               <EmptySearchResults type="courses" onReset={handleResetFilters} />
             )}
