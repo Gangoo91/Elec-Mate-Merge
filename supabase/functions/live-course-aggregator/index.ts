@@ -176,8 +176,8 @@ serve(async (req) => {
       console.log('Firecrawl response received:', JSON.stringify(firecrawlData, null, 2));
 
       // Extract courses from Firecrawl response
-      if (firecrawlData.success && firecrawlData.data && firecrawlData.data.extract) {
-        const extractedData = firecrawlData.data.extract;
+      if (firecrawlData.success && firecrawlData.data && firecrawlData.data.json) {
+        const extractedData = firecrawlData.data.json;
         
         // Handle both single course object and array of courses
         const coursesArray = Array.isArray(extractedData) ? extractedData : [extractedData];
