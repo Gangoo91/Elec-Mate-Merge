@@ -6,6 +6,8 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { useToast } from "@/hooks/use-toast";
+import CourseEnquiryForm from "./CourseEnquiryForm";
 import { 
   X, MapPin, Clock, Users, BookOpen, TrendingUp, 
   PoundSterling, Award, Target, CheckCircle, 
@@ -391,43 +393,12 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <form className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium">Full Name</label>
-                    <Input placeholder="Your full name" />
-                  </div>
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium">Email Address</label>
-                    <Input type="email" placeholder="your.email@example.com" />
-                  </div>
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium">Phone Number</label>
-                    <Input placeholder="Your contact number" />
-                  </div>
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium">Preferred Location</label>
-                    <Select>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select location" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {displayLocations.map((location) => (
-                          <SelectItem key={location} value={location}>{location}</SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">Message</label>
-                  <Textarea placeholder="Please tell us about your experience level, preferred dates, or any specific questions about this course..." rows={4} />
-                </div>
-                <Button className="w-full bg-elec-yellow text-elec-dark hover:bg-amber-400">
-                  <Mail className="mr-2 h-4 w-4" />
-                  Submit Course Enquiry
-                </Button>
-              </form>
+              <CourseEnquiryForm 
+                course={course}
+                onSuccess={() => {
+                  // Modal could be closed here if desired
+                }}
+              />
             </CardContent>
           </Card>
         </div>

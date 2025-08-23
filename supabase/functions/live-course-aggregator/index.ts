@@ -190,7 +190,11 @@ serve(async (req) => {
                       items: {
                         type: "string"
                       },
-                      description: "Upcoming course start dates or next available dates"
+                      description: "Available course start dates, intake dates, scheduled sessions, next available dates, course timetable - look for dates in formats like 'January 15, 2024', '15/01/24', 'Next Monday', 'Weekly starts', etc."
+                    },
+                    nextStartDate: {
+                      type: "string",
+                      description: "Next available start date or intake date for this course"
                     },
                     locations: {
                       type: "array",

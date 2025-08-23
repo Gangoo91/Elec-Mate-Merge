@@ -287,6 +287,87 @@ export type Database = {
         }
         Relationships: []
       }
+      course_dates_cache: {
+        Row: {
+          course_id: string
+          created_at: string
+          expires_at: string
+          extracted_dates: Json
+          id: string
+          provider: string
+          source_url: string | null
+        }
+        Insert: {
+          course_id: string
+          created_at?: string
+          expires_at?: string
+          extracted_dates: Json
+          id?: string
+          provider: string
+          source_url?: string | null
+        }
+        Update: {
+          course_id?: string
+          created_at?: string
+          expires_at?: string
+          extracted_dates?: Json
+          id?: string
+          provider?: string
+          source_url?: string | null
+        }
+        Relationships: []
+      }
+      course_enquiries: {
+        Row: {
+          course_id: string
+          course_provider: string
+          course_title: string
+          created_at: string
+          enquirer_email: string
+          enquirer_name: string
+          enquirer_phone: string | null
+          id: string
+          message: string | null
+          preferred_start_date: string | null
+          provider_response: string | null
+          response_received_at: string | null
+          status: string
+          user_id: string | null
+        }
+        Insert: {
+          course_id: string
+          course_provider: string
+          course_title: string
+          created_at?: string
+          enquirer_email: string
+          enquirer_name: string
+          enquirer_phone?: string | null
+          id?: string
+          message?: string | null
+          preferred_start_date?: string | null
+          provider_response?: string | null
+          response_received_at?: string | null
+          status?: string
+          user_id?: string | null
+        }
+        Update: {
+          course_id?: string
+          course_provider?: string
+          course_title?: string
+          created_at?: string
+          enquirer_email?: string
+          enquirer_name?: string
+          enquirer_phone?: string | null
+          id?: string
+          message?: string | null
+          preferred_start_date?: string | null
+          provider_response?: string | null
+          response_received_at?: string | null
+          status?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       evidence_uploads: {
         Row: {
           created_at: string
@@ -2512,6 +2593,10 @@ export type Database = {
     }
     Functions: {
       cleanup_expired_course_cache: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
+      cleanup_expired_course_dates_cache: {
         Args: Record<PropertyKey, never>
         Returns: undefined
       }

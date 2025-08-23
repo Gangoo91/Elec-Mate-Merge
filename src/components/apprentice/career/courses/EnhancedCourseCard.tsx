@@ -199,6 +199,9 @@ const EnhancedCourseCard = ({ course, onViewDetails }: EnhancedCourseCardProps) 
                     +{course.nextDates.length - 3} more
                   </span>
                 )}
+                {(course as any).isLive && (
+                  <Badge variant="secondary" className="text-xs">Live</Badge>
+                )}
               </>
             ) : (
               <span className="text-xs text-muted-foreground italic">
