@@ -52,8 +52,8 @@ serve(async (req) => {
     // Define course websites to scrape
     const courseWebsites = {
       findcourses: `https://www.findcourses.co.uk/search?q=${encodeURIComponent(keywords)}`,
-      cityandguilds: 'https://www.cityandguilds.com/qualifications/construction-and-the-built-environment/electrical',
-      niceic: 'https://www.niceic.com/training-and-courses',
+      cityandguilds: 'https://www.cityandguilds.com/qualifications/construction-and-the-built-environment/electrical-installation',
+      niceic: 'https://www.niceic.com/find-an-installer/electrical-training-courses',
       stanmore: 'https://certificates.stanmoreuk.org/Home/Courses/6026646/Electrical-Career-Courses-%26-Training',
       reed: `https://www.reed.co.uk/courses/?keywords=${encodeURIComponent(keywords)}`
     };
@@ -84,21 +84,51 @@ serve(async (req) => {
                 items: {
                   type: "object",
                   properties: {
-                    title: { type: "string" },
-                    provider: { type: "string" },
-                    description: { type: "string" },
-                    duration: { type: "string" },
-                    price: { type: "string" },
-                    location: { type: "string" },
-                    level: { type: "string" }
+                    title: { 
+                      type: "string",
+                      description: "The full title or name of the course"
+                    },
+                    provider: { 
+                      type: "string",
+                      description: "Training provider, institution, or company offering the course"
+                    },
+                    description: { 
+                      type: "string",
+                      description: "Brief description of what the course covers"
+                    },
+                    duration: { 
+                      type: "string",
+                      description: "How long the course takes (days, weeks, hours)"
+                    },
+                    price: { 
+                      type: "string",
+                      description: "Course cost or fee"
+                    },
+                    location: { 
+                      type: "string",
+                      description: "Where the course is delivered (city, region, or 'online')"
+                    },
+                    level: { 
+                      type: "string",
+                      description: "Course level (beginner, intermediate, advanced, Level 1-3, etc.)"
+                    }
                   },
-                  required: ["title"]
+                  required: ["title", "provider"]
                 }
               }
             },
             required: ["courses"]
           },
-          extractionPrompt: "Extract course information from this page. For each course found, extract the title, provider/institution name, description, duration, price, location, and course level if mentioned."
+          extractionPrompt: `Extract ALL electrical courses, training programs, and qualifications from this page. Look for:
+- Course titles (including electrical installation, wiring, renewable energy, etc.)
+- Training provider names
+- Course descriptions or summaries
+- Duration information (days, weeks, hours)
+- Pricing details
+- Delivery locations or online options
+- Course levels or qualification types
+
+Return a comprehensive list of all courses found, even if some information is missing.`
         }
       }),
     });
@@ -130,19 +160,37 @@ serve(async (req) => {
           : firecrawlData.llm_extraction;
         
         extractedCourses = extracted.courses || [];
+        console.log(`✅ Extracted ${extractedCourses.length} courses from ${source}`);
+      } else if (firecrawlData.data && firecrawlData.data.llm_extraction) {
+        // Try alternative extraction path
+        const extracted = typeof firecrawlData.data.llm_extraction === 'string' 
+          ? JSON.parse(firecrawlData.data.llm_extraction)
+          : firecrawlData.data.llm_extraction;
+        
+        extractedCourses = extracted.courses || [];
+        console.log(`✅ Extracted ${extractedCourses.length} courses from ${source} (alt path)`);
       }
+      
+      // If no courses found, try to extract basic info from content
+      if (extractedCourses.length === 0 && firecrawlData.data?.content) {
+        const content = firecrawlData.data.content;
+        if (content.includes('course') || content.includes('training') || content.includes('electrical')) {
+          console.log(`📝 Found content but no structured courses from ${source}, creating fallback course`);
+          extractedCourses = [{
+            title: `${keywords} Training`,
+            provider: source.charAt(0).toUpperCase() + source.slice(1),
+            description: 'Course information available - visit website for details',
+            duration: 'Various durations',
+            price: 'Contact for pricing',
+            location: 'Multiple locations',
+            level: 'Various levels'
+          }];
+        }
+      }
+      
     } catch (parseError) {
       console.error('Error parsing extracted course data:', parseError);
-      // Fallback to basic course structure
-      extractedCourses = [{
-        title: `${keywords} Training Course`,
-        provider: source.charAt(0).toUpperCase() + source.slice(1),
-        description: 'Live course data available - contact provider for details',
-        duration: 'Contact provider',
-        price: 'Contact for pricing',
-        location: 'Various locations',
-        level: 'Various levels'
-      }];
+      extractedCourses = [];
     }
 
     // Transform extracted data to match our course interface
