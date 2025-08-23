@@ -41,7 +41,7 @@ const CareerProgression = () => {
   };
 
   return (
-    <div className="w-full space-y-4 sm:space-y-6 lg:space-y-8 animate-fade-in overflow-x-hidden">
+    <div className="space-y-8 animate-fade-in px-2 sm:px-0">
       <Helmet>
         <title>Electrician Career Progression UK | JIB Timeline & CPD</title>
         <meta name="description" content="Explore UK electrician career progression: JIB grades, timelines, prerequisites, day rates, CPD, and pathways. BS 7671 18th Edition compliant." />
@@ -49,39 +49,29 @@ const CareerProgression = () => {
       </Helmet>
 
       {/* Header */}
-      <div className="space-y-3 sm:space-y-4">
+      <div className="space-y-3">
         <h1 className="sr-only">Electrician Career Progression</h1>
-        <p className="text-sm sm:text-base text-muted-foreground">
+        <p className="text-sm sm:text-base text-muted-foreground px-2.5">
           Advanced career development resources for qualified electricians
         </p>
-        <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
-          {!activeSection && (
-            <Link to="/electrician" className="w-full sm:w-auto">
-              <Button variant="outline" className="flex items-center gap-2 w-full sm:w-auto">
-                <ArrowLeft className="h-4 w-4" /> 
-                <span className="hidden xs:inline">Back to Electrical Hub</span>
-                <span className="xs:hidden">Back</span>
-              </Button>
-            </Link>
-          )}
-          {activeSection && (
-            <Button 
-              variant="outline" 
-              className="flex items-center gap-2 w-full sm:w-auto" 
-              onClick={handleBackToSections}
-            >
-              <ArrowLeft className="h-4 w-4" /> 
-              <span className="hidden xs:inline">Back to Sections</span>
-              <span className="xs:hidden">Back</span>
+        {!activeSection && (
+          <Link to="/electrician" className="w-full sm:w-auto">
+            <Button variant="outline" className="flex items-center gap-2 w-full">
+              <ArrowLeft className="h-4 w-4" /> Back to Electrical Hub
             </Button>
-          )}
-        </div>
+          </Link>
+        )}
+        {activeSection && (
+          <Button variant="outline" className="flex items-center gap-2 w-full sm:w-auto" onClick={handleBackToSections}>
+            <ArrowLeft className="h-4 w-4" /> Back to Sections
+          </Button>
+        )}
       </div>
 
       {activeSection === null ? (
-        <div className="space-y-6 sm:space-y-8">
+        <>
           {/* Career Sections Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6 w-full max-w-none">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 max-w-6xl mx-auto">
             {electricianCareerSections.map((section) => (
               <SimpleCareerCard 
                 key={section.id}
@@ -93,33 +83,33 @@ const CareerProgression = () => {
             {/* Job Vacancies Card */}
             <SimpleCareerCard 
               title="Job Vacancies"
-              icon={<Briefcase className="h-6 w-6 sm:h-8 sm:w-8 md:h-10 md:w-10 lg:h-12 lg:w-12 text-elec-yellow" />}
+              icon={<Briefcase className="h-10 w-10 sm:h-12 sm:w-12 text-elec-yellow" />}
               onClick={() => setActiveSection("job-vacancies")}
             />
           </div>
 
           {/* Professional Development Stats */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <Card className="border-elec-yellow/20 bg-elec-gray/50">
-              <CardContent className="p-3 sm:p-4 text-center">
-                <div className="text-lg sm:text-xl lg:text-2xl font-bold text-elec-yellow">10+</div>
-                <div className="text-xs sm:text-sm text-muted-foreground">Advanced Pathways</div>
+              <CardContent className="p-4 text-center">
+                <div className="text-2xl font-bold text-elec-yellow">10+</div>
+                <div className="text-sm text-muted-foreground">Advanced Pathways</div>
               </CardContent>
             </Card>
             <Card className="border-elec-yellow/20 bg-elec-gray/50">
-              <CardContent className="p-3 sm:p-4 text-center">
-                <div className="text-lg sm:text-xl lg:text-2xl font-bold text-elec-yellow">30+</div>
-                <div className="text-xs sm:text-sm text-muted-foreground">Professional Courses</div>
+              <CardContent className="p-4 text-center">
+                <div className="text-2xl font-bold text-elec-yellow">30+</div>
+                <div className="text-sm text-muted-foreground">Professional Courses</div>
               </CardContent>
             </Card>
-            <Card className="border-elec-yellow/20 bg-elec-gray/50 col-span-1 sm:col-span-2 lg:col-span-1">
-              <CardContent className="p-3 sm:p-4 text-center">
-                <div className="text-lg sm:text-xl lg:text-2xl font-bold text-elec-yellow">£35k-£80k+</div>
-                <div className="text-xs sm:text-sm text-muted-foreground">Professional Range</div>
+            <Card className="border-elec-yellow/20 bg-elec-gray/50">
+              <CardContent className="p-4 text-center">
+                <div className="text-2xl font-bold text-elec-yellow">£35k-£80k+</div>
+                <div className="text-sm text-muted-foreground">Professional Range</div>
               </CardContent>
             </Card>
           </div>
-        </div>
+        </>
       ) : (
         <div className="space-y-4">
           {renderSectionContent()}

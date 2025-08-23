@@ -1,5 +1,5 @@
 
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import LandingPage from "@/pages/LandingPage";
 import Index from "@/pages/Index";
 import SignIn from "@/pages/auth/SignIn";
@@ -19,6 +19,12 @@ import ApprenticeMentalHealth from "@/pages/apprentice/ApprenticeMentalHealth";
 import RightsAndPay from "@/pages/apprentice/RightsAndPay";
 import NotificationsPage from "@/pages/NotificationsPage";
 
+const LegacyRedirect = ({ from, to }: { from: string; to: string }) => {
+  const location = useLocation();
+  const suffix = location.pathname.startsWith(from) ? location.pathname.slice(from.length) : "";
+  const newPath = `${to}${suffix}${location.search}${location.hash}`;
+  return <Navigate to={newPath} replace />;
+};
 
 const AppRouter = () => {
   return (
@@ -53,12 +59,12 @@ const AppRouter = () => {
         <Route path="electrician-tools/*" element={<ElectricianRoutes />} />
         
         {/* Legacy Materials Routes -> Redirect to canonical electrician paths */}
-        <Route path="materials" element={<Navigate to="/electrician/materials" replace />} />
-        <Route path="materials/*" element={<Navigate to="/electrician/materials" replace />} />
+        <Route path="materials" element={<LegacyRedirect from="/materials" to="/electrician/materials" />} />
+        <Route path="materials/*" element={<LegacyRedirect from="/materials" to="/electrician/materials" />} />
         
         {/* Electrical Hub Routes (legacy -> redirect) */}
-        <Route path="electrical-hub" element={<Navigate to="/electrician" replace />} />
-        <Route path="electrical-hub/*" element={<Navigate to="/electrician" replace />} />
+        <Route path="electrical-hub" element={<LegacyRedirect from="/electrical-hub" to="/electrician" />} />
+        <Route path="electrical-hub/*" element={<LegacyRedirect from="/electrical-hub" to="/electrician" />} />
         {/* Canonical Electrician Hub */}
         <Route path="electrician/*" element={<ElectricianHubRoutes />} />
         

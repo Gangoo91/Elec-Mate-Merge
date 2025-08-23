@@ -16,10 +16,10 @@ interface EnhancedTrainingCenterCardProps {
 const EnhancedTrainingCenterCard = ({ center, onViewDetails }: EnhancedTrainingCenterCardProps) => {
   return (
     <Card className="border-elec-yellow/20 bg-elec-gray hover:border-elec-yellow/40 transition-all duration-300">
-      <CardHeader className="p-4 sm:p-6">
+      <CardHeader>
         <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
           <div className="flex-1">
-            <CardTitle className="text-lg sm:text-xl">{center.name}</CardTitle>
+            <CardTitle className="text-xl">{center.name}</CardTitle>
             <div className="flex items-center gap-2 mt-2">
               <MapPin className="h-4 w-4 text-elec-yellow" />
               <span className="text-sm text-muted-foreground">{center.location}</span>
@@ -32,23 +32,23 @@ const EnhancedTrainingCenterCard = ({ center, onViewDetails }: EnhancedTrainingC
         </div>
       </CardHeader>
       
-      <CardContent className="space-y-4 sm:space-y-6 p-4 sm:p-6">
+      <CardContent className="space-y-6">
         {/* Key Statistics */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div className="text-center space-y-1">
-            <div className="text-base sm:text-lg font-bold text-elec-yellow">{center.establishedYear}</div>
+            <div className="text-lg font-bold text-elec-yellow">{center.establishedYear}</div>
             <div className="text-xs text-muted-foreground">Established</div>
           </div>
           <div className="text-center space-y-1">
-            <div className="text-base sm:text-lg font-bold text-green-400">{center.successRate}%</div>
+            <div className="text-lg font-bold text-green-400">{center.successRate}%</div>
             <div className="text-xs text-muted-foreground">Success Rate</div>
           </div>
           <div className="text-center space-y-1">
-            <div className="text-base sm:text-lg font-bold text-blue-400">{center.employmentRate}%</div>
+            <div className="text-lg font-bold text-blue-400">{center.employmentRate}%</div>
             <div className="text-xs text-muted-foreground">Employment</div>
           </div>
           <div className="text-center space-y-1">
-            <div className="text-base sm:text-lg font-bold text-white">{center.studentCapacity}</div>
+            <div className="text-lg font-bold text-white">{center.studentCapacity}</div>
             <div className="text-xs text-muted-foreground">Capacity</div>
           </div>
         </div>
@@ -132,27 +132,27 @@ const EnhancedTrainingCenterCard = ({ center, onViewDetails }: EnhancedTrainingC
         {/* Contact Information */}
         <Card className="bg-elec-dark/30 border-elec-yellow/10">
           <CardContent className="p-4">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 text-sm">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
               <div className="space-y-2">
-                <div className="flex items-start gap-2">
-                  <MapPin className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span className="text-muted-foreground leading-relaxed">{center.address}</span>
+                <div className="flex items-center gap-2">
+                  <MapPin className="h-4 w-4 text-elec-yellow" />
+                  <span className="text-muted-foreground">{center.address}</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Phone className="h-4 w-4 text-elec-yellow flex-shrink-0" />
+                  <Phone className="h-4 w-4 text-elec-yellow" />
                   <span className="text-muted-foreground">{center.contact}</span>
                 </div>
               </div>
               <div className="space-y-2">
-                <div className="flex items-start gap-2">
-                  <Globe className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span className="text-muted-foreground break-words">{center.website}</span>
+                <div className="flex items-center gap-2">
+                  <Globe className="h-4 w-4 text-elec-yellow" />
+                  <span className="text-muted-foreground">{center.website}</span>
                 </div>
-                <div className="flex justify-start lg:justify-end">
+                <div className="flex justify-end">
                   <Button 
                     variant="outline" 
                     size="sm" 
-                    className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 w-full lg:w-auto min-h-[36px]"
+                    className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
                     onClick={() => onViewDetails(center)}
                   >
                     View Full Details

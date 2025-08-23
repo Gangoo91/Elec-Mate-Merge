@@ -104,11 +104,11 @@ export const CircuitAnalysisCard: React.FC<CircuitAnalysisCardProps> = ({
         )}
 
         {/* Analysis Notes */}
-        {finalRecommendation?.notes?.length > 0 && (
+        {bestRecommendation?.notes?.length > 0 && (
           <div className="space-y-2">
             <h4 className="font-medium text-primary">Notes</h4>
             <div className="space-y-1">
-              {finalRecommendation.notes.map((note: string, noteIndex: number) => (
+              {bestRecommendation.notes.map((note: string, noteIndex: number) => (
                 <div key={noteIndex} className="p-2 bg-amber-500/10 border border-amber-500/30 rounded">
                   <span className="text-sm text-amber-300">• {note}</span>
                 </div>

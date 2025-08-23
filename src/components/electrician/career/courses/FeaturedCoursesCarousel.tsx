@@ -94,16 +94,11 @@ const FeaturedCoursesCarousel = ({ courses, onViewDetails }: FeaturedCoursesCaro
       </CardHeader>
 
       <CardContent>
-        <div className="relative overflow-hidden rounded-lg">
-          <div className="carousel-wrapper touch-manipulation">
-            <div 
-              className={`flex transition-transform duration-300 ease-in-out ${
-                isMobile 
-                  ? 'gap-3 touch-pan-x overscroll-x-contain' 
-                  : 'gap-4'
-              } will-change-transform`}
-              style={{ transform: `translateX(-${currentIndex * (100 / itemsPerView)}%)` }}
-            >
+        <div className="relative overflow-hidden">
+          <div 
+            className="flex transition-transform duration-300 ease-in-out gap-4"
+            style={{ transform: `translateX(-${currentIndex * (100 / itemsPerView)}%)` }}
+          >
             {featuredCourses.map((course) => {
               const FeatureIcon = getFeatureIcon(course);
               
@@ -171,7 +166,6 @@ const FeaturedCoursesCarousel = ({ courses, onViewDetails }: FeaturedCoursesCaro
                 </div>
               );
             })}
-            </div>
           </div>
         </div>
 

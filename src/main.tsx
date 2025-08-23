@@ -10,9 +10,7 @@ if (!rootElement) {
   throw new Error("Root element not found");
 }
 
-const root = createRoot(rootElement);
-
-root.render(
+createRoot(rootElement).render(
   <ErrorBoundary>
     <App />
   </ErrorBoundary>

@@ -1,19 +1,17 @@
 
-import { MobileButton } from "@/components/ui/mobile-button";
-import { MobileInput } from "@/components/ui/mobile-input";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { 
   X, MapPin, Clock, Users, BookOpen, TrendingUp, 
   PoundSterling, Award, Target, CheckCircle, 
-  Calendar, Mail, Star, Briefcase, GraduationCap,
-  ArrowLeft
+  Calendar, Mail, Star, Briefcase, GraduationCap
 } from "lucide-react";
 import { EnhancedCareerCourse } from "./enhancedCoursesData";
-import { useIsMobile } from "@/hooks/use-mobile";
 
 interface CourseDetailsModalProps {
   course: EnhancedCareerCourse;
@@ -21,7 +19,6 @@ interface CourseDetailsModalProps {
 }
 
 const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
-  const isMobile = useIsMobile();
   const getDemandColor = (demand: string) => {
     switch (demand) {
       case "High": return "bg-green-500/20 text-green-400 border-green-500/30";
@@ -42,62 +39,37 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-0 sm:p-4">
-      <div className={`bg-elec-dark border border-elec-yellow/20 ${
-        isMobile 
-          ? 'w-full h-full rounded-none' 
-          : 'rounded-lg w-full max-w-5xl max-h-[90vh]'
-      } overflow-y-auto`}>
-        <div className={`${isMobile ? 'p-4' : 'p-6'} space-y-${isMobile ? '4' : '6'}`}>
+    <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
+      <div className="bg-elec-dark border border-elec-yellow/20 rounded-lg w-full max-w-5xl max-h-[90vh] overflow-y-auto">
+        <div className="p-6 space-y-6">
           {/* Header */}
-          <div className={`flex ${isMobile ? 'flex-col' : 'justify-between items-start'}`}>
-            {isMobile && (
-              <div className="flex items-center justify-between w-full mb-4">
-                <MobileButton variant="ghost" size="icon" onClick={onClose}>
-                  <ArrowLeft className="h-5 w-5" />
-                </MobileButton>
-                <h3 className={`${isMobile ? 'text-lg' : 'text-2xl'} font-semibold text-center flex-1`}>
-                  Course Details
-                </h3>
-                <div className="w-8" /> {/* Spacer for centering */}
-              </div>
-            )}
-            
+          <div className="flex justify-between items-start">
             <div className="flex-1">
-              <div className={`flex items-center ${isMobile ? 'flex-wrap' : ''} gap-2 sm:gap-3 mb-2`}>
-                <Badge className={`${getCategoryColor(course.category)} ${isMobile ? 'text-xs' : 'text-xs'}`}>
-                  {isMobile ? course.category.split(' ')[0] : course.category}
+              <div className="flex items-center gap-3 mb-2">
+                <Badge className={`${getCategoryColor(course.category)} text-xs`}>
+                  {course.category}
                 </Badge>
                 <div className="flex items-center gap-1 bg-amber-400/20 text-amber-400 px-2 py-1 rounded text-xs">
                   <Star className="h-3 w-3 fill-amber-400" />
                   <span>{course.rating}</span>
                 </div>
               </div>
-              <h3 className={`${isMobile ? 'text-xl' : 'text-2xl'} font-semibold mb-1`}>
-                {course.title}
-              </h3>
-              <p className={`text-elec-yellow ${isMobile ? 'text-base' : 'text-lg'}`}>
-                {course.provider}
-              </p>
-              <p className={`text-muted-foreground mt-2 ${isMobile ? 'text-sm' : ''}`}>
-                {course.description}
-              </p>
+              <h3 className="text-2xl font-semibold mb-1">{course.title}</h3>
+              <p className="text-elec-yellow text-lg">{course.provider}</p>
+              <p className="text-muted-foreground mt-2">{course.description}</p>
             </div>
-            
-            {!isMobile && (
-              <MobileButton variant="ghost" size="sm" onClick={onClose}>
-                <X className="h-4 w-4" />
-              </MobileButton>
-            )}
+            <Button variant="ghost" size="sm" onClick={onClose}>
+              <X className="h-4 w-4" />
+            </Button>
           </div>
 
           {/* Key Information Grid */}
-          <div className={`grid ${isMobile ? 'grid-cols-2' : 'grid-cols-2 md:grid-cols-4'} gap-${isMobile ? '3' : '4'}`}>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <Card className="bg-elec-dark/30 border-elec-yellow/10">
-              <CardContent className={`${isMobile ? 'p-3' : 'p-4'} text-center`}>
-                <Clock className={`${isMobile ? 'h-4 w-4' : 'h-5 w-5'} text-elec-yellow mx-auto mb-2`} />
-                <div className={`font-medium ${isMobile ? 'text-sm' : ''}`}>{course.duration}</div>
-                <div className={`${isMobile ? 'text-xs' : 'text-xs'} text-muted-foreground`}>Duration</div>
+              <CardContent className="p-4 text-center">
+                <Clock className="h-5 w-5 text-elec-yellow mx-auto mb-2" />
+                <div className="font-medium">{course.duration}</div>
+                <div className="text-xs text-muted-foreground">Duration</div>
               </CardContent>
             </Card>
             <Card className="bg-elec-dark/30 border-elec-yellow/10">
@@ -308,9 +280,9 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
                         </span>
                       </TableCell>
                       <TableCell className="text-right">
-                        <MobileButton size="sm" variant="outline" className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10">
+                        <Button size="sm" variant="outline" className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10">
                           Enquire
-                        </MobileButton>
+                        </Button>
                       </TableCell>
                     </TableRow>
                   ))}
@@ -329,47 +301,41 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
             </CardHeader>
             <CardContent>
               <form className="space-y-4">
-                <div className={`grid grid-cols-1 ${isMobile ? '' : 'md:grid-cols-2'} gap-4`}>
-                  <MobileInput
-                    label="Full Name"
-                    placeholder="Your full name"
-                    value=""
-                    onChange={() => {}}
-                  />
-                  <MobileInput
-                    label="Email Address"
-                    type="email"
-                    placeholder="your.email@example.com"
-                    value=""
-                    onChange={() => {}}
-                  />
-                  <MobileInput
-                    label="Phone Number"
-                    type="tel"
-                    placeholder="Your contact number"
-                    value=""
-                    onChange={() => {}}
-                  />
-                  <MobileSelectWrapper
-                    label="Preferred Location"
-                    placeholder="Select location"
-                    value=""
-                    onValueChange={() => {}}
-                    options={course.locations.map(location => ({ value: location, label: location }))}
-                  />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium">Full Name</label>
+                    <Input placeholder="Your full name" />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium">Email Address</label>
+                    <Input type="email" placeholder="your.email@example.com" />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium">Phone Number</label>
+                    <Input placeholder="Your contact number" />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium">Preferred Location</label>
+                    <Select>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select location" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {course.locations.map((location) => (
+                          <SelectItem key={location} value={location}>{location}</SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
                 </div>
                 <div className="space-y-2">
                   <label className="text-sm font-medium">Message</label>
-                  <Textarea 
-                    placeholder="Please tell us about your experience level, preferred dates, or any specific questions about this course..." 
-                    rows={isMobile ? 3 : 4}
-                    className="resize-none"
-                  />
+                  <Textarea placeholder="Please tell us about your experience level, preferred dates, or any specific questions about this course..." rows={4} />
                 </div>
-                <MobileButton className="w-full bg-elec-yellow text-elec-dark hover:bg-amber-400">
+                <Button className="w-full bg-elec-yellow text-elec-dark hover:bg-amber-400">
                   <Mail className="mr-2 h-4 w-4" />
                   Submit Course Enquiry
-                </MobileButton>
+                </Button>
               </form>
             </CardContent>
           </Card>
