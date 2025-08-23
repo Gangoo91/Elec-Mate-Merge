@@ -52,7 +52,7 @@ const EnhancedCourseCard = ({ course, onViewDetails }: EnhancedCourseCardProps) 
       </CardHeader>
       
       <CardContent className="pt-0 flex-grow flex flex-col space-y-4">
-        <p className="text-sm text-muted-foreground leading-relaxed line-clamp-4">{course.description}</p>
+        <p className="text-sm text-muted-foreground leading-relaxed line-clamp-4 text-justify">{course.description}</p>
         
         {/* Key Metrics Grid */}
         <div className="grid grid-cols-2 gap-2 text-xs">
