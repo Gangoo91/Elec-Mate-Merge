@@ -131,7 +131,7 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
                   </Button>
                 )}
               </div>
-              <p className="text-muted-foreground mt-2 text-left">{course.description}</p>
+              <p className="text-muted-foreground mt-2 text-justify">{course.description}</p>
               {isLiveCourse && course.source && (
                 <p className="text-xs text-muted-foreground mt-1 flex items-center gap-1">
                   <Database className="h-3 w-3" />
