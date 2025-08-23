@@ -563,29 +563,6 @@ const ElectricianCareerCourses = () => {
         />
       )}
 
-      {/* Enhanced Location Search with Provider Discovery */}
-      <div className="space-y-4">
-        <LocationBasedCourseSearch
-          onLocationSelect={handleLocationSelect}
-          onRadiusChange={handleRadiusChange}
-          currentLocation={userLocation}
-          searchRadius={searchRadius}
-          onProviderSearch={handleProviderSearchFromLocation}
-        />
-        
-        {/* Find Nearby Providers - Button to search using Google Places */}
-        {userLocation && (
-          <div className="flex justify-center">
-            <Button
-              onClick={searchNearbyProviders}
-              className="bg-elec-yellow text-black hover:bg-elec-yellow/90"
-              disabled={isLoadingLive}
-            >
-              {isLoadingLive ? "Searching..." : "Find Real Training Providers Nearby"}
-            </Button>
-          </div>
-        )}
-      </div>
 
       {/* Enhanced Search and Filters */}
       <EnhancedCourseSearch
@@ -639,18 +616,42 @@ const ElectricianCareerCourses = () => {
         
         {/* Map View */}
         {viewMode === "map" ? (
-          <GoogleMapsLoader>
-            <CourseMap 
-              nearbyProviders={providersForMap}
-              selectedCourse={selectedCourseId}
-              onCourseSelect={handleCourseSelect}
-              onCourseDeselect={handleCourseDeselect}
-              userLocation={userLocation}
-              userCoordinates={userCoordinates}
+          <div className="space-y-4">
+            {/* Enhanced Location Search with Provider Discovery - Only in Map View */}
+            <LocationBasedCourseSearch
+              onLocationSelect={handleLocationSelect}
+              onRadiusChange={handleRadiusChange}
+              currentLocation={userLocation}
               searchRadius={searchRadius}
-              isLoading={isLoadingLive}
+              onProviderSearch={handleProviderSearchFromLocation}
             />
-          </GoogleMapsLoader>
+            
+            {/* Find Nearby Providers - Button to search using Google Places */}
+            {userLocation && (
+              <div className="flex justify-center">
+                <Button
+                  onClick={searchNearbyProviders}
+                  className="bg-elec-yellow text-black hover:bg-elec-yellow/90"
+                  disabled={isLoadingLive}
+                >
+                  {isLoadingLive ? "Searching..." : "Find Real Training Providers Nearby"}
+                </Button>
+              </div>
+            )}
+            
+            <GoogleMapsLoader>
+              <CourseMap 
+                nearbyProviders={providersForMap}
+                selectedCourse={selectedCourseId}
+                onCourseSelect={handleCourseSelect}
+                onCourseDeselect={handleCourseDeselect}
+                userLocation={userLocation}
+                userCoordinates={userCoordinates}
+                searchRadius={searchRadius}
+                isLoading={isLoadingLive}
+              />
+            </GoogleMapsLoader>
+          </div>
         ) : (
           /* Grid/List View */
           <div className="space-y-6">
