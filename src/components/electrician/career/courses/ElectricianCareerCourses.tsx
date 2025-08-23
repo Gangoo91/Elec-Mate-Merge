@@ -286,7 +286,7 @@ const ElectricianCareerCourses = () => {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 overflow-x-hidden min-w-0 max-w-full">
       {/* Header Section - Mobile Optimized */}
       <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader className="p-4 md:p-6">

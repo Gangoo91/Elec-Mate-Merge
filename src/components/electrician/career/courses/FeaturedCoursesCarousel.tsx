@@ -94,8 +94,8 @@ const FeaturedCoursesCarousel = ({ courses, onViewDetails }: FeaturedCoursesCaro
         </div>
       </CardHeader>
 
-      <CardContent className="px-2 sm:px-6">
-        <div className="relative overflow-hidden w-full">
+      <CardContent className="px-2 sm:px-6 overflow-hidden">
+        <div className="relative overflow-hidden w-full min-w-0">
           <div 
             className="flex transition-transform duration-300 ease-in-out"
             style={{ 
@@ -109,9 +109,9 @@ const FeaturedCoursesCarousel = ({ courses, onViewDetails }: FeaturedCoursesCaro
               return (
                 <div
                   key={course.id}
-                  className="flex-shrink-0 px-2"
+                  className="flex-shrink-0 px-2 min-w-0"
                   style={{ 
-                    width: `${100 / itemsPerView / totalSlides}%`
+                    width: `${100 / totalSlides}%`
                   }}
                 >
                   <Card className="border-elec-yellow/30 bg-elec-dark/30 h-full hover:border-elec-yellow/50 transition-all duration-300">
