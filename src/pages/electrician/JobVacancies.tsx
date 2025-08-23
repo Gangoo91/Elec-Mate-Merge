@@ -129,7 +129,7 @@ const JobVacancies = ({ onBack }: JobVacanciesProps) => {
                     <UnifiedJobSearch />
                   </div>
 
-                  {/* Job Insights */}
+                  {/* Job Insights - always show when jobs are available */}
                   {jobs.length > 0 && (
                     <JobInsights jobs={jobs} location="" />
                   )}
