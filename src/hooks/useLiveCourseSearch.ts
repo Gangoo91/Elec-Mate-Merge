@@ -325,16 +325,8 @@ export const useLiveCourseSearch = (params: LiveCourseSearchParams = {}) => {
     }
   }, [keywords, location, toast]);
 
-  // Initial load and when search params change
-  useEffect(() => {
-    if (enableLiveData && keywords) {
-      const debounceTimer = setTimeout(() => {
-        fetchLiveCourses(keywords, location);
-      }, 500); // Debounce to avoid too many API calls
-
-      return () => clearTimeout(debounceTimer);
-    }
-  }, [keywords, location, enableLiveData, fetchLiveCourses]);
+  // Remove auto-fetch on mount - only fetch when user explicitly refreshes
+  // Initial load removed - data will only be fetched when user clicks refresh
 
   return {
     ...data,

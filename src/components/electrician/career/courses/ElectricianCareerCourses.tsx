@@ -11,6 +11,9 @@ import CourseSorting, { sortOptions } from "./CourseSorting";
 import FeaturedCoursesCarousel from "./FeaturedCoursesCarousel";
 import CourseBookmarkManager, { useBookmarkManager } from "./CourseBookmarkManager";
 import CourseCompareMode, { useCourseComparison } from "./CourseCompareMode";
+import EnhancedLocationSearch from "./EnhancedLocationSearch";
+import CourseMap from "./CourseMap";
+import GoogleMapsLoader from "../../../job-vacancies/GoogleMapsLoader";
 import { 
   EnhancedCareerCourse,
   EnhancedTrainingCenter
@@ -19,7 +22,7 @@ import { useLiveCourseSearch } from "@/hooks/useLiveCourseSearch";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { BookOpen, Users, Plus, Scale, FileDown, RefreshCw, Wifi, WifiOff } from "lucide-react";
+import { BookOpen, Users, Plus, Scale, FileDown, RefreshCw, Wifi, WifiOff, Map, List } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useIsMobile } from "@/hooks/use-mobile";
 
@@ -28,9 +31,15 @@ const ElectricianCareerCourses = () => {
   const [selectedCenter, setSelectedCenter] = useState<EnhancedTrainingCenter | null>(null);
   const [activeTab, setActiveTab] = useState("courses");
   const [currentSort, setCurrentSort] = useState("relevance");
-  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
+  const [viewMode, setViewMode] = useState<"grid" | "list" | "map">("grid");
   const [showBookmarks, setShowBookmarks] = useState(false);
   const [showComparison, setShowComparison] = useState(false);
+  const [selectedCourseId, setSelectedCourseId] = useState<string | null>(null);
+  
+  // Location-based filtering state
+  const [userLocation, setUserLocation] = useState<string | null>(null);
+  const [userCoordinates, setUserCoordinates] = useState<google.maps.LatLngLiteral | null>(null);
+  const [searchRadius, setSearchRadius] = useState(25);
   
   const { toast } = useToast();
   const isMobile = useIsMobile();
@@ -66,6 +75,19 @@ const ElectricianCareerCourses = () => {
     enableLiveData: true
   });
 
+  // Location-based distance calculation helper
+  const calculateDistance = (lat1: number, lon1: number, lat2: number, lon2: number): number => {
+    const R = 3959; // Earth's radius in miles
+    const dLat = (lat2 - lat1) * Math.PI / 180;
+    const dLon = (lon2 - lon1) * Math.PI / 180;
+    const a = 
+      Math.sin(dLat/2) * Math.sin(dLat/2) +
+      Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * 
+      Math.sin(dLon/2) * Math.sin(dLon/2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    return R * c;
+  };
+
   // Enhanced filtering and sorting logic using live data
   const filteredAndSortedCourses = useMemo(() => {
     let filtered = liveCourses.filter(course => {
@@ -90,12 +112,28 @@ const ElectricianCareerCourses = () => {
         return false;
       }
 
-      // Location filter
+      // Location filter - now supports both dropdown and radius-based filtering
       if (filters.location !== "All Locations") {
         const hasLocation = course.locations.some(loc => 
           loc.toLowerCase().includes(filters.location.toLowerCase())
         );
         if (!hasLocation) return false;
+      }
+
+      // Radius-based location filtering
+      if (userCoordinates && userLocation) {
+        const courseWithinRadius = course.locations.some(location => {
+          // This would need geocoding for precise distance calculation
+          // For now, we'll use a simple text-based proximity check
+          const locationLower = location.toLowerCase();
+          const userLocationLower = userLocation.toLowerCase();
+          
+          // Extract city names for comparison
+          const userCity = userLocationLower.split(',')[0].trim();
+          return locationLower.includes(userCity) || locationLower.includes('online') || locationLower.includes('remote');
+        });
+        
+        if (!courseWithinRadius) return false;
       }
 
       // Price range filter
@@ -185,6 +223,39 @@ const ElectricianCareerCourses = () => {
   // Remove training centers for electricians - live-only approach
   const filteredCenters: EnhancedTrainingCenter[] = [];
 
+  // Location handling functions
+  const handleLocationSelect = (location: string, coordinates?: google.maps.LatLngLiteral) => {
+    setUserLocation(location);
+    setUserCoordinates(coordinates || null);
+    
+    toast({
+      title: "Location set",
+      description: `Filtering courses within ${searchRadius} miles of ${location}`,
+      variant: "success"
+    });
+  };
+
+  const handleRadiusChange = (radius: number) => {
+    setSearchRadius(radius);
+    
+    if (userLocation) {
+      toast({
+        title: "Radius updated",
+        description: `Now showing courses within ${radius} miles`,
+        variant: "default"
+      });
+    }
+  };
+
+  const handleClearLocation = () => {
+    setUserLocation(null);
+    setUserCoordinates(null);
+  };
+
+  const handleCourseSelect = (courseId: string) => {
+    setSelectedCourseId(courseId);
+  };
+
   const handleResetFilters = () => {
     setFilters({
       searchQuery: "",
@@ -197,6 +268,7 @@ const ElectricianCareerCourses = () => {
       format: "All Formats",
       rating: 0
     });
+    handleClearLocation();
   };
 
   // PDF Export functionality
@@ -337,6 +409,28 @@ const ElectricianCareerCourses = () => {
                 )}
               </Button>
 
+              {/* View Mode Toggle */}
+              <div className="flex border border-border rounded-md overflow-hidden">
+                <Button
+                  variant={viewMode === "grid" ? "default" : "ghost"}
+                  size="sm"
+                  onClick={() => setViewMode("grid")}
+                  className="rounded-none border-r border-border"
+                >
+                  <List className="h-4 w-4" />
+                  {!isMobile && " Grid"}
+                </Button>
+                <Button
+                  variant={viewMode === "map" ? "default" : "ghost"}
+                  size="sm"
+                  onClick={() => setViewMode("map")}
+                  className="rounded-none"
+                >
+                  <Map className="h-4 w-4" />
+                  {!isMobile && " Map"}
+                </Button>
+              </div>
+
               <Button
                 variant="outline"
                 onClick={exportToPDF}
@@ -357,6 +451,16 @@ const ElectricianCareerCourses = () => {
           onViewDetails={viewCourseDetails} 
         />
       )}
+
+      {/* Enhanced Location Search */}
+      <EnhancedLocationSearch
+        onLocationSelect={handleLocationSelect}
+        onRadiusChange={handleRadiusChange}
+        onClearLocation={handleClearLocation}
+        currentLocation={userLocation}
+        searchRadius={searchRadius}
+        isActive={!!userLocation}
+      />
 
       {/* Enhanced Search and Filters */}
       <EnhancedCourseSearch
@@ -383,75 +487,98 @@ const ElectricianCareerCourses = () => {
       )}
 
       {/* Sorting and View Controls */}
-      <CourseSorting
-        currentSort={currentSort}
-        onSortChange={setCurrentSort}
-        totalResults={filteredAndSortedCourses.length}
-        viewMode={viewMode}
-        onViewModeChange={setViewMode}
-      />
+      {viewMode !== "map" && (
+        <CourseSorting
+          currentSort={currentSort}
+          onSortChange={setCurrentSort}
+          totalResults={filteredAndSortedCourses.length}
+          viewMode={viewMode as "grid" | "list"}
+          onViewModeChange={(mode) => setViewMode(mode as "grid" | "list" | "map")}
+        />
+      )}
 
-      {/* Main Content - Courses Only */}
+      {/* Main Content */}
       <div className="space-y-6">
         <div className="flex items-center gap-2 pb-4 border-b border-border">
           <BookOpen className="h-5 w-5 text-elec-yellow" />
-          <h2 className="text-lg font-semibold">Live Courses ({filteredAndSortedCourses.length})</h2>
-        </div>
-        
-        <div className="space-y-6">
-          {filteredAndSortedCourses.length > 0 ? (
-            <div className={viewMode === "grid" ? 
-              "grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-6" : 
-              "space-y-3 md:space-y-4"
-            }>
-              {filteredAndSortedCourses.map((course) => (
-                <div key={course.id} className="relative group">
-                  <EnhancedCourseCard 
-                    course={course}
-                    onViewDetails={viewCourseDetails}
-                  />
-                  
-                  {/* Top Badges Row - Hidden LIVE badge per user request */}
-                  <div className="absolute top-2 left-2 flex flex-wrap gap-1 max-w-[calc(100%-120px)]">
-                    {/* LIVE badge hidden */}
-                  </div>
-                  
-                  {/* Action Buttons - Positioned below rating badge area */}
-                  <div className="absolute top-12 right-2 flex flex-col gap-1 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-200 mt-[10px]">
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => toggleBookmark(course)}
-                      className={`min-h-[40px] min-w-[40px] p-0 md:h-8 md:w-8 rounded-full bg-background/80 backdrop-blur-sm border border-border/50 ${isBookmarked(course.id) ? 
-                        'text-elec-yellow hover:text-elec-yellow/80 border-elec-yellow/50' : 
-                        'text-muted-foreground hover:text-elec-yellow hover:border-elec-yellow/50'
-                      }`}
-                      title={isBookmarked(course.id) ? "Remove from saved" : "Save course"}
-                    >
-                      <BookOpen className="h-4 w-4" />
-                    </Button>
-                    
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => addToComparison(course.id)}
-                      className={`min-h-[40px] min-w-[40px] p-0 md:h-8 md:w-8 rounded-full bg-background/80 backdrop-blur-sm border border-border/50 ${isInComparison(course.id) ? 
-                        'text-blue-400 hover:text-blue-300 border-blue-400/50' : 
-                        'text-muted-foreground hover:text-blue-400 hover:border-blue-400/50'
-                      }`}
-                      title="Add to comparison"
-                      disabled={selectedCount >= 3 && !isInComparison(course.id)}
-                    >
-                      <Plus className="h-4 w-4" />
-                    </Button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <EmptySearchResults type="courses" onReset={handleResetFilters} />
+          <h2 className="text-lg font-semibold">
+            {viewMode === "map" ? "Course Locations" : "Live Courses"} ({filteredAndSortedCourses.length})
+          </h2>
+          {userLocation && (
+            <Badge variant="outline" className="text-xs">
+              Within {searchRadius} miles of {userLocation.split(',')[0]}
+            </Badge>
           )}
         </div>
+        
+        {/* Map View */}
+        {viewMode === "map" ? (
+          <GoogleMapsLoader>
+            <CourseMap
+              courses={filteredAndSortedCourses}
+              selectedCourse={selectedCourseId}
+              onCourseSelect={handleCourseSelect}
+              userLocation={userLocation}
+              isLoading={isLoadingLive}
+            />
+          </GoogleMapsLoader>
+        ) : (
+          /* Grid/List View */
+          <div className="space-y-6">
+            {filteredAndSortedCourses.length > 0 ? (
+              <div className={viewMode === "grid" ? 
+                "grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-6" : 
+                "space-y-3 md:space-y-4"
+              }>
+                {filteredAndSortedCourses.map((course) => (
+                  <div key={course.id} className="relative group">
+                    <EnhancedCourseCard 
+                      course={course}
+                      onViewDetails={viewCourseDetails}
+                    />
+                    
+                    {/* Top Badges Row - Hidden LIVE badge per user request */}
+                    <div className="absolute top-2 left-2 flex flex-wrap gap-1 max-w-[calc(100%-120px)]">
+                      {/* LIVE badge hidden */}
+                    </div>
+                    
+                    {/* Action Buttons - Positioned below rating badge area */}
+                    <div className="absolute top-12 right-2 flex flex-col gap-1 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-200 mt-[10px]">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => toggleBookmark(course)}
+                        className={`min-h-[40px] min-w-[40px] p-0 md:h-8 md:w-8 rounded-full bg-background/80 backdrop-blur-sm border border-border/50 ${isBookmarked(course.id) ? 
+                          'text-elec-yellow hover:text-elec-yellow/80 border-elec-yellow/50' : 
+                          'text-muted-foreground hover:text-elec-yellow hover:border-elec-yellow/50'
+                        }`}
+                        title={isBookmarked(course.id) ? "Remove from saved" : "Save course"}
+                      >
+                        <BookOpen className="h-4 w-4" />
+                      </Button>
+                      
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => addToComparison(course.id)}
+                        className={`min-h-[40px] min-w-[40px] p-0 md:h-8 md:w-8 rounded-full bg-background/80 backdrop-blur-sm border border-border/50 ${isInComparison(course.id) ? 
+                          'text-blue-400 hover:text-blue-300 border-blue-400/50' : 
+                          'text-muted-foreground hover:text-blue-400 hover:border-blue-400/50'
+                        }`}
+                        title="Add to comparison"
+                        disabled={selectedCount >= 3 && !isInComparison(course.id)}
+                      >
+                        <Plus className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <EmptySearchResults type="courses" onReset={handleResetFilters} />
+            )}
+          </div>
+        )}
       </div>
       
       {/* Course Details Modal */}
