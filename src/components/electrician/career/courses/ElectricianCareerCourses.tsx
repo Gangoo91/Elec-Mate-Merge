@@ -610,12 +610,14 @@ const ElectricianCareerCourses = () => {
         {/* Map View */}
         {viewMode === "map" ? (
           <GoogleMapsLoader>
-            <CourseMap
+            <CourseMap 
               courses={viewMode === "map" ? coursesForMap : filteredAndSortedCourses}
               selectedCourse={selectedCourseId}
               onCourseSelect={handleCourseSelect}
               onCourseDeselect={handleCourseDeselect}
               userLocation={userLocation}
+              userCoordinates={userCoordinates}
+              searchRadius={searchRadius}
               isLoading={isLoadingLive}
             />
           </GoogleMapsLoader>
