@@ -636,17 +636,19 @@ const ElectricianCareerCourses = () => {
 
       {/* Main Content */}
       <div className="space-y-6">
-        <div className="flex items-center gap-2 pb-4 border-b border-border">
-          <BookOpen className="h-5 w-5 text-elec-yellow" />
-          <h2 className="text-lg font-semibold">
-            {viewMode === "map" ? "Course Locations" : "Live Courses"} ({filteredAndSortedCourses.length})
-          </h2>
-          {userLocation && (
-            <Badge variant="outline" className="text-xs">
-              Within {searchRadius} miles of {userLocation.split(',')[0]}
-            </Badge>
-          )}
-        </div>
+        {viewMode !== "map" && (
+          <div className="flex items-center gap-2 pb-4 border-b border-border">
+            <BookOpen className="h-5 w-5 text-elec-yellow" />
+            <h2 className="text-lg font-semibold">
+              Live Courses ({filteredAndSortedCourses.length})
+            </h2>
+            {userLocation && (
+              <Badge variant="outline" className="text-xs">
+                Within {searchRadius} miles of {userLocation.split(',')[0]}
+              </Badge>
+            )}
+          </div>
+        )}
         
         {/* Map View */}
         {viewMode === "map" ? (
