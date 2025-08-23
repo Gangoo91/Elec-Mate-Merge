@@ -501,7 +501,10 @@ const ElectricianCareerCourses = () => {
             {/* Mobile Action Buttons - Better Touch Targets */}
             <div className="grid grid-cols-2 md:flex md:flex-wrap gap-3 md:gap-2">
               <Button
-                onClick={() => refreshCourses()}
+                onClick={() => {
+                  if (viewMode === "map") setViewMode("grid");
+                  refreshCourses();
+                }}
                 disabled={isSearching}
                 className="bg-elec-yellow text-black hover:bg-elec-yellow/90 flex items-center justify-center gap-2 min-h-[44px] text-sm"
               >
@@ -511,7 +514,10 @@ const ElectricianCareerCourses = () => {
               
               <Button
                 variant={showBookmarks ? "default" : "outline"}
-                onClick={() => setShowBookmarks(!showBookmarks)}
+                onClick={() => {
+                  if (viewMode === "map") setViewMode("grid");
+                  setShowBookmarks(!showBookmarks);
+                }}
                 className="flex items-center justify-center gap-2 min-h-[44px] text-sm"
               >
                 <BookOpen className="h-4 w-4" />
@@ -520,7 +526,10 @@ const ElectricianCareerCourses = () => {
               
               <Button
                 variant={showComparison ? "default" : "outline"}
-                onClick={() => setShowComparison(!showComparison)}
+                onClick={() => {
+                  if (viewMode === "map") setViewMode("grid");
+                  setShowComparison(!showComparison);
+                }}
                 className="flex items-center justify-center gap-2 min-h-[44px] text-sm"
               >
                 <Scale className="h-4 w-4" />
