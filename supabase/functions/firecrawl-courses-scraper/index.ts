@@ -76,29 +76,29 @@ serve(async (req) => {
         },
         extractorOptions: {
           mode: 'llm-extraction',
-          extractionPrompt: `Extract course information from this page. For each course found, extract:
-            - Course title
-            - Provider/institution name
-            - Description (brief)
-            - Duration if mentioned
-            - Price if mentioned
-            - Location if mentioned
-            - Course level if mentioned
-            
-            Return as JSON array with this structure:
-            {
-              "courses": [
-                {
-                  "title": "course title",
-                  "provider": "provider name",
-                  "description": "brief description",
-                  "duration": "duration or 'Contact provider'",
-                  "price": "price or 'Contact for pricing'",
-                  "location": "location or 'Various locations'",
-                  "level": "level or 'Various levels'"
+          extractionSchema: {
+            type: "object",
+            properties: {
+              courses: {
+                type: "array",
+                items: {
+                  type: "object",
+                  properties: {
+                    title: { type: "string" },
+                    provider: { type: "string" },
+                    description: { type: "string" },
+                    duration: { type: "string" },
+                    price: { type: "string" },
+                    location: { type: "string" },
+                    level: { type: "string" }
+                  },
+                  required: ["title"]
                 }
-              ]
-            }`
+              }
+            },
+            required: ["courses"]
+          },
+          extractionPrompt: "Extract course information from this page. For each course found, extract the title, provider/institution name, description, duration, price, location, and course level if mentioned."
         }
       }),
     });

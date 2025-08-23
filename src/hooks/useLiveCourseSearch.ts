@@ -120,32 +120,37 @@ export const useLiveCourseSearch = (params: LiveCourseSearchParams = {}) => {
           });
         }
       } else {
-        // Fallback to static data
-        setData(prev => ({
-          ...prev,
-          courses: enhancedCareerCourses,
-          total: enhancedCareerCourses.length,
-          isLiveData: false,
+        // No live courses found - show empty state
+        setData({
+          courses: [],
+          total: 0,
+          isLiveData: true,
           loading: false,
           error: null
-        }));
+        });
+        
+        toast({
+          title: "No courses found",
+          description: "No live courses found matching your search criteria. Try different keywords.",
+          variant: "default"
+        });
       }
     } catch (error) {
       console.error('Error fetching live course data:', error);
       
-      // Fallback to static data on error
+      // Show error state instead of fallback to static data
       setData({
-        courses: enhancedCareerCourses,
-        total: enhancedCareerCourses.length,
-        isLiveData: false,
+        courses: [],
+        total: 0,
+        isLiveData: true,
         loading: false,
         error: error instanceof Error ? error.message : 'Failed to fetch live data'
       });
 
       toast({
-        title: "Using static course data",
-        description: "Live data temporarily unavailable. Showing cached course information.",
-        variant: "default"
+        title: "Course search failed",
+        description: "Unable to fetch live course data. Please try again later.",
+        variant: "destructive"
       });
     }
   }, [enableLiveData, lastSearchParams, data.isLiveData, toast]);
