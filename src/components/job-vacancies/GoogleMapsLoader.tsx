@@ -22,10 +22,19 @@ const GoogleMapsLoader: React.FC<GoogleMapsLoaderProps> = ({ children }) => {
     }
 
     // Load the Google Maps API
-    const loadGoogleMapsAPI = () => {
-      const apiKey = 'loaded-via-edge-function'; // We'll use the edge function with the API key
+    const loadGoogleMapsAPI = async () => {
+      try {
+        // Fetch the API key from our edge function
+        const response = await fetch('https://jtwygbeceundfgnkirof.supabase.co/functions/v1/get-google-maps-key');
+        const data = await response.json();
+        
+        if (!response.ok || !data.apiKey) {
+          throw new Error(data.error || 'Failed to fetch API key');
+        }
+        
+        const apiKey = data.apiKey;
 
-      // Function to call when script loads
+        // Function to call when script loads
       const onScriptLoad = () => {
         if (window.google?.maps) {
           console.log('Google Maps API loaded successfully');
@@ -62,7 +71,17 @@ const GoogleMapsLoader: React.FC<GoogleMapsLoaderProps> = ({ children }) => {
         });
       };
       
-      document.head.appendChild(script);
+        document.head.appendChild(script);
+      } catch (error) {
+        console.error('Error fetching Google Maps API key:', error);
+        setError('Failed to load Google Maps API. Check your API key configuration.');
+        setApiStatus('REQUEST_DENIED');
+        toast({
+          title: 'Maps API Error',
+          description: 'Could not load the Google Maps API. Location-based features are unavailable.',
+          variant: 'destructive',
+        });
+      }
     };
 
     loadGoogleMapsAPI();

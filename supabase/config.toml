@@ -1,6 +1,9 @@
 
 project_id = "jtwygbeceundfgnkirof"
 
+[functions.get-google-maps-key]
+verify_jwt = false
+
 [functions.find-scrap-merchants]
 verify_jwt = false
 
