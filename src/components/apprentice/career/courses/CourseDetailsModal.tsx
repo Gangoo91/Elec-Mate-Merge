@@ -118,7 +118,7 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
               </div>
               <h3 className="text-2xl font-semibold mb-1">{course.title}</h3>
               <div className="flex items-center gap-3">
-                <p className="text-elec-yellow text-lg text-center">{getDisplayValue(course.provider, "Provider TBC")}</p>
+                <p className="text-elec-yellow text-lg text-center mx-auto">{getDisplayValue(course.provider, "Provider TBC")}</p>
                 {course.external_url && (
                   <Button 
                     variant="outline" 
