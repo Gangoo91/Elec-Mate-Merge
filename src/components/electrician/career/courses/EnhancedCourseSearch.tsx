@@ -29,13 +29,15 @@ interface EnhancedCourseSearchProps {
   onFiltersChange: (filters: SearchFilters) => void;
   onReset: () => void;
   totalResults: number;
+  viewMode?: "grid" | "list" | "map";
 }
 
 const EnhancedCourseSearch = ({ 
   filters, 
   onFiltersChange, 
   onReset, 
-  totalResults 
+  totalResults,
+  viewMode = "grid"
 }: EnhancedCourseSearchProps) => {
   const [showAdvancedFilters, setShowAdvancedFilters] = useState(false);
   const isMobile = useIsMobile();
@@ -74,6 +76,11 @@ const EnhancedCourseSearch = ({
   };
 
   const activeFiltersCount = getActiveFiltersCount();
+
+  // Only show in grid view mode
+  if (viewMode !== "grid") {
+    return null;
+  }
 
   return (
     <Card className="border-elec-yellow/20 bg-elec-gray">

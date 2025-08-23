@@ -468,6 +468,7 @@ const ElectricianCareerCourses = () => {
         onFiltersChange={setFilters}
         onReset={handleResetFilters}
         totalResults={filteredAndSortedCourses.length}
+        viewMode={viewMode}
       />
 
       {/* Course Comparison Tool */}
