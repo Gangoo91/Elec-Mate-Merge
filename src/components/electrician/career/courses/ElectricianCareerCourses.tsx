@@ -492,41 +492,21 @@ const ElectricianCareerCourses = () => {
             
             {/* Mobile Action Buttons - Better Touch Targets */}
             <div className="grid grid-cols-2 md:flex md:flex-wrap gap-3 md:gap-2">
-              {!isLiveData && !isLoadingLive && (
-                <Button
-                  onClick={() => {
-                    toast({
-                      title: "Loading courses",
-                      description: "Fetching the latest course data...",
-                      variant: "default"
-                    });
-                    refreshCourses();
-                  }}
-                  className="bg-elec-yellow text-black hover:bg-elec-yellow/90 flex items-center justify-center gap-2 min-h-[44px] text-sm"
-                >
-                  <BookOpen className="w-4 h-4" />
-                  {isMobile ? "Load" : "Load Courses"}
-                </Button>
-              )}
-              
-              {isLiveData && (
-                <Button
-                  variant="outline"
-                  onClick={() => {
-                    toast({
-                      title: "Refreshing courses",
-                      description: "Fetching the latest course data...",
-                      variant: "default"
-                    });
-                    refreshCourses();
-                  }}
-                  disabled={isSearching}
-                  className="flex items-center justify-center gap-2 min-h-[44px] text-sm"
-                >
-                  <RefreshCw className={`h-4 w-4 ${isSearching ? 'animate-spin' : ''}`} />
-                  {isMobile ? "Refresh" : "Refresh Data"}
-                </Button>
-              )}
+              <Button
+                onClick={() => {
+                  toast({
+                    title: isLiveData ? "Refreshing courses" : "Loading courses",
+                    description: "Fetching the latest course data...",
+                    variant: "default"
+                  });
+                  refreshCourses();
+                }}
+                disabled={isSearching}
+                className="bg-elec-yellow text-black hover:bg-elec-yellow/90 flex items-center justify-center gap-2 min-h-[44px] text-sm"
+              >
+                <RefreshCw className={`h-4 w-4 ${isSearching ? 'animate-spin' : ''}`} />
+                {isMobile ? "Refresh" : "Refresh Data"}
+              </Button>
               
               <Button
                 variant={showBookmarks ? "default" : "outline"}
