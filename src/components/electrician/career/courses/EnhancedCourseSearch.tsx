@@ -77,10 +77,6 @@ const EnhancedCourseSearch = ({
 
   const activeFiltersCount = getActiveFiltersCount();
 
-  // Only show in grid view mode
-  if (viewMode !== "grid") {
-    return null;
-  }
 
   return (
     <Card className="border-elec-yellow/20 bg-elec-gray">
