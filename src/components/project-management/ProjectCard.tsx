@@ -36,85 +36,85 @@ export const ProjectCard = ({ project, onEdit, onDelete, onView }: ProjectCardPr
   };
 
   return (
-    <Card className="h-full border-elec-yellow/20 bg-elec-gray hover:border-elec-yellow/40 hover:shadow-md transition-all relative overflow-hidden">
+    <Card className="min-h-[400px] flex flex-col border-elec-yellow/20 bg-elec-gray hover:border-elec-yellow/40 hover:shadow-md transition-all relative overflow-hidden">
       {/* Progress bar */}
       <div 
         className={`absolute top-0 left-0 h-1 ${progress === 100 ? 'bg-green-500' : 'bg-elec-yellow'}`} 
         style={{ width: `${progress}%` }}
       ></div>
       
-      <CardHeader className="pb-2 space-y-3">
-        <div className="flex justify-between">
+      <CardHeader className="pb-2 space-y-3 flex-shrink-0">
+        <div className="flex items-start justify-between gap-2">
           <Badge className={getStatusColor(project.status)}>
             {project.status.replace("-", " ")}
           </Badge>
-          <div className="flex space-x-1">
-            <Button variant="ghost" size="icon" onClick={(e) => { e.stopPropagation(); onEdit(project.id); }} title="Edit Project">
-              <Edit className="h-4 w-4 text-elec-yellow" />
+          <div className="flex gap-1 sm:gap-1">
+            <Button variant="ghost" size="icon" onClick={(e) => { e.stopPropagation(); onEdit(project.id); }} title="Edit Project" className="h-8 w-8 sm:h-9 sm:w-9">
+              <Edit className="h-3 w-3 sm:h-4 sm:w-4 text-elec-yellow" />
             </Button>
-            <Button variant="ghost" size="icon" onClick={(e) => { e.stopPropagation(); onDelete(project.id); }} title="Delete Project">
-              <Trash2 className="h-4 w-4 text-red-400" />
+            <Button variant="ghost" size="icon" onClick={(e) => { e.stopPropagation(); onDelete(project.id); }} title="Delete Project" className="h-8 w-8 sm:h-9 sm:w-9">
+              <Trash2 className="h-3 w-3 sm:h-4 sm:w-4 text-red-400" />
             </Button>
           </div>
         </div>
-        <CardTitle className="text-xl">{project.name}</CardTitle>
+        <CardTitle className="text-lg sm:text-xl leading-tight break-words">{project.name}</CardTitle>
         <div className="flex items-center text-muted-foreground text-sm">
-          <MapPin className="h-4 w-4 mr-1 text-elec-yellow/80" />
-          {project.clientName}
+          <MapPin className="h-4 w-4 mr-1 text-elec-yellow/80 flex-shrink-0" />
+          <span className="truncate">{project.clientName}</span>
         </div>
       </CardHeader>
       
-      <CardContent className="space-y-4 pb-2">
-        <div className="grid grid-cols-2 gap-2 text-sm">
-          <div className="flex items-center gap-1">
-            <CalendarCheck className="h-3.5 w-3.5 text-elec-yellow/80" />
-            <span className="text-muted-foreground">Start:</span>
-            <span className="ml-1 truncate">{startDate}</span>
+      <CardContent className="space-y-4 pb-2 flex-1 flex flex-col">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+          <div className="flex items-center gap-1 min-w-0">
+            <CalendarCheck className="h-3.5 w-3.5 text-elec-yellow/80 flex-shrink-0" />
+            <span className="text-muted-foreground flex-shrink-0">Start:</span>
+            <span className="ml-1 truncate text-xs sm:text-sm">{startDate}</span>
           </div>
-          <div className="flex items-center gap-1">
-            <CalendarCheck className="h-3.5 w-3.5 text-elec-yellow/80" />
-            <span className="text-muted-foreground">Due:</span>
-            <span className="ml-1 truncate">{dueDate}</span>
+          <div className="flex items-center gap-1 min-w-0">
+            <CalendarCheck className="h-3.5 w-3.5 text-elec-yellow/80 flex-shrink-0" />
+            <span className="text-muted-foreground flex-shrink-0">Due:</span>
+            <span className="ml-1 truncate text-xs sm:text-sm">{dueDate}</span>
           </div>
         </div>
         
-        <div className="grid grid-cols-3 gap-3 pt-1">
-          <div className="bg-elec-dark rounded-md p-2 text-center">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3 pt-1">
+          <div className="bg-elec-dark rounded-md p-2 text-center min-w-0">
             <div className="flex items-center justify-center mb-1">
-              <DollarSign className="h-3.5 w-3.5 text-elec-yellow" />
+              <DollarSign className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-elec-yellow" />
             </div>
             <span className="block text-xs text-muted-foreground">Budget</span>
-            <span className="font-medium">£{project.budget.toLocaleString()}</span>
+            <span className="font-medium text-xs sm:text-sm">£{project.budget.toLocaleString()}</span>
           </div>
           
-          <div className="bg-elec-dark rounded-md p-2 text-center">
+          <div className="bg-elec-dark rounded-md p-2 text-center min-w-0">
             <div className="flex items-center justify-center mb-1">
-              <PieChart className="h-3.5 w-3.5 text-elec-yellow" />
+              <PieChart className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-elec-yellow" />
             </div>
             <span className="block text-xs text-muted-foreground">Materials</span>
-            <span className="font-medium">£{totalMaterialsCost.toLocaleString()}</span>
+            <span className="font-medium text-xs sm:text-sm">£{totalMaterialsCost.toLocaleString()}</span>
           </div>
           
-          <div className="bg-elec-dark rounded-md p-2 text-center">
+          <div className="bg-elec-dark rounded-md p-2 text-center min-w-0 col-span-2 sm:col-span-1">
             <div className="flex items-center justify-center mb-1">
-              <Clock className="h-3.5 w-3.5 text-elec-yellow" />
+              <Clock className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-elec-yellow" />
             </div>
             <span className="block text-xs text-muted-foreground">Labour</span>
-            <span className="font-medium">{totalHours.toFixed(1)}h</span>
+            <span className="font-medium text-xs sm:text-sm">{totalHours.toFixed(1)}h</span>
           </div>
         </div>
         
         {/* Certificate & Invoice Indicators */}
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-1 sm:gap-2 mt-auto">
           {project.certificateType && project.certificateType !== "none" && (
-            <Badge variant={project.certificateIssued ? "default" : "outline"} className="flex items-center gap-1">
+            <Badge variant={project.certificateIssued ? "default" : "outline"} className="flex items-center gap-1 text-xs">
               <FileCheck className="h-3 w-3" />
-              {project.certificateType}
+              <span className="truncate">{project.certificateType}</span>
             </Badge>
           )}
           
           {project.invoiceIssued && (
-            <Badge variant={project.invoicePaid ? "default" : "outline"} className="flex items-center gap-1">
+            <Badge variant={project.invoicePaid ? "default" : "outline"} className="flex items-center gap-1 text-xs">
               <FileText className="h-3 w-3" />
               {project.invoicePaid ? "Paid" : "Invoiced"}
             </Badge>
@@ -122,9 +122,9 @@ export const ProjectCard = ({ project, onEdit, onDelete, onView }: ProjectCardPr
         </div>
       </CardContent>
       
-      <CardFooter className="pt-2">
+      <CardFooter className="pt-2 flex-shrink-0">
         <Button 
-          className="w-full bg-elec-gray border border-elec-yellow/40 hover:bg-elec-yellow hover:text-black transition-all" 
+          className="w-full bg-elec-gray border border-elec-yellow/40 hover:bg-elec-yellow hover:text-black transition-all min-h-[44px]" 
           onClick={() => onView(project.id)}
         >
           View Project
