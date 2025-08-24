@@ -8,6 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { X } from "lucide-react";
 import { Wand2, Loader2, Plus, Target, User, Briefcase, GraduationCap, Wrench } from "lucide-react";
+import { Checkbox } from "@/components/ui/checkbox";
 import { CVData } from "../types";
 import { AIService } from "./AIService";
 import { toast } from "@/hooks/use-toast";
@@ -82,7 +83,9 @@ export const SmartCVWizard: React.FC<SmartCVWizardProps> = ({ onCVGenerated, onC
     workHistory: [] as Array<{
       jobTitle: string;
       company: string;
-      duration: string;
+      startDate: string;
+      endDate: string;
+      current: boolean;
       description: string;
     }>,
     skills: [] as string[],
@@ -156,9 +159,9 @@ export const SmartCVWizard: React.FC<SmartCVWizardProps> = ({ onCVGenerated, onC
             jobTitle: job.jobTitle,
             company: job.company,
             location: '',
-            startDate: '',
-            endDate: '',
-            current: false,
+            startDate: job.startDate,
+            endDate: job.endDate,
+            current: job.current,
             description: enhancedDescription
           };
         })
@@ -245,13 +248,15 @@ export const SmartCVWizard: React.FC<SmartCVWizardProps> = ({ onCVGenerated, onC
       workHistory: [...prev.workHistory, {
         jobTitle: '',
         company: '',
-        duration: '',
+        startDate: '',
+        endDate: '',
+        current: false,
         description: ''
       }]
     }));
   };
 
-  const updateWorkExperience = (index: number, field: string, value: string) => {
+  const updateWorkExperience = (index: number, field: string, value: string | boolean) => {
     setWizardData(prev => ({
       ...prev,
       workHistory: prev.workHistory.map((job, i) => 
@@ -608,13 +613,41 @@ export const SmartCVWizard: React.FC<SmartCVWizardProps> = ({ onCVGenerated, onC
                       placeholder="e.g. ABC Electrical Ltd"
                     />
                   </div>
-                  <MobileInput
-                    label="Duration"
-                    type="text"
-                    value={job.duration}
-                    onChange={(e) => updateWorkExperience(index, 'duration', e.target.value)}
-                    placeholder="e.g. 2 years, Jan 2020 - Present"
-                  />
+                  <div className={`grid gap-4 ${isMobile ? 'grid-cols-1' : 'grid-cols-2'}`}>
+                    <MobileInput
+                      label="Start Date"
+                      type="month"
+                      value={job.startDate}
+                      onChange={(e) => updateWorkExperience(index, 'startDate', e.target.value)}
+                      placeholder="YYYY-MM"
+                    />
+                    <MobileInput
+                      label="End Date"
+                      type="month"
+                      value={job.endDate}
+                      onChange={(e) => updateWorkExperience(index, 'endDate', e.target.value)}
+                      placeholder="YYYY-MM"
+                      disabled={job.current}
+                    />
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Checkbox
+                      id={`current-${index}`}
+                      checked={job.current}
+                      onCheckedChange={(checked) => {
+                        updateWorkExperience(index, 'current', !!checked);
+                        if (checked) {
+                          updateWorkExperience(index, 'endDate', '');
+                        }
+                      }}
+                    />
+                    <label 
+                      htmlFor={`current-${index}`}
+                      className="text-sm font-medium text-elec-light cursor-pointer"
+                    >
+                      Current Position
+                    </label>
+                  </div>
                   <div className="space-y-2">
                     <label className="text-sm font-semibold text-elec-light flex items-center gap-2">
                       <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
