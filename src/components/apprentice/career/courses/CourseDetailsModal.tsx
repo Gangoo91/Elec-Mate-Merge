@@ -22,6 +22,29 @@ interface CourseDetailsModalProps {
 }
 
 const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
+  const { toast } = useToast();
+
+  const handleOpenCourseUrl = () => {
+    if (!course.external_url) {
+      toast({
+        title: "URL Not Available",
+        description: "Course provider URL is not available for this course.",
+        variant: "destructive"
+      });
+      return;
+    }
+    
+    try {
+      window.open(course.external_url, '_blank');
+    } catch (error) {
+      toast({
+        title: "Error Opening URL",
+        description: "Unable to open the course provider's website.",
+        variant: "destructive"
+      });
+    }
+  };
+
   const getDemandColor = (demand: string) => {
     switch (demand) {
       case "High": return "bg-green-500/20 text-green-400 border-green-500/30";
@@ -124,7 +147,7 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
                     variant="outline" 
                     size="sm"
                     className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
-                    onClick={() => window.open(course.external_url, '_blank')}
+                    onClick={handleOpenCourseUrl}
                   >
                     <ExternalLink className="h-3 w-3 mr-1" />
                     View Provider Site
@@ -361,26 +384,16 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
                         </span>
                       </TableCell>
                       <TableCell className="text-right">
-                        {course.external_url ? (
-                          <Button 
-                            size="sm" 
-                            variant="outline" 
-                            className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
-                            onClick={() => window.open(course.external_url, '_blank')}
-                          >
-                            <ExternalLink className="h-3 w-3 mr-1" />
-                            Book Now
-                          </Button>
-                        ) : (
-                          <Button 
-                            size="sm" 
-                            variant="outline" 
-                            className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
-                            onClick={() => window.open(course.external_url, '_blank')}
-                          >
-                            Enquire
-                          </Button>
-                        )}
+                        <Button 
+                          size="sm" 
+                          variant="outline" 
+                          className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+                          onClick={handleOpenCourseUrl}
+                          disabled={!course.external_url}
+                        >
+                          <ExternalLink className="h-3 w-3 mr-1" />
+                          {course.external_url ? "Book Now" : "Contact Provider"}
+                        </Button>
                       </TableCell>
                     </TableRow>
                   ))}
