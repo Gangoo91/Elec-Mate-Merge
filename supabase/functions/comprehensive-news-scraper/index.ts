@@ -9,12 +9,12 @@ const corsHeaders = {
 const URL = "https://api.firecrawl.dev/v2/search";
 
 const QUERIES = [
-  "HSE",
-  "BS7671",
-  "IET",
-  "Major Projects",
+  "HSE updates health and safety executive electrical",
+  "BS7671 updates electrical wiring regulations",
+  "IET updates institution engineering technology electrical",
+  "Major electrical projects UK infrastructure power",
   "BS 7671 Updates",
-  "GOV.UK"
+  "GOV.UK electrical regulations safety"
 ];
 
 // ✅ Map API response into desired schema
