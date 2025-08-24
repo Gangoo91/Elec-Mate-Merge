@@ -309,15 +309,11 @@ serve(async (req) => {
     const supabase = createClient(supabaseUrl, supabaseKey);
 
     let totalProcessed = 0;
-    let totalInserted = 0;
+    let allArticles = [];
     let totalErrors = 0;
-    
-    // Check existing articles for duplicate prevention
-    console.log('📋 Checking existing articles for duplicate prevention...');
-    const existingArticles = await checkExistingArticles(supabase);
 
-    // Process each search query from user's Python code
-    console.log('🔍 Processing Firecrawl v2 search queries...');
+    // Process each search query for live results
+    console.log('🔍 Processing Firecrawl v2 search queries for live results...');
     
     for (const searchQuery of SEARCH_QUERIES) {
       try {
@@ -326,59 +322,30 @@ serve(async (req) => {
         const articles = await searchWithFirecrawlV2(searchQuery, firecrawlApiKey);
         totalProcessed += articles.length;
         
-        // Filter duplicates and insert
-        let inserted = 0;
+        // Transform articles for live return
         for (const article of articles) {
-          // Check for duplicates
-          const isDuplicate = existingArticles.has(article.content_hash!) || 
-                             existingArticles.has(article.title.toLowerCase().trim());
-          
-          if (isDuplicate) {
-            console.log(`⏭️ Skipping duplicate: ${article.title.substring(0, 50)}...`);
-            continue;
-          }
-          
-          try {
-            const { error: insertError } = await supabase
-              .from('industry_news')
-              .insert({
-                title: article.title,
-                summary: article.summary,
-                content: article.content,
-                category: article.category,
-                regulatory_body: article.regulatory_body,
-                external_id: article.external_id,
-                source_url: article.source_url,
-                external_url: article.external_url,
-                date_published: article.date_published,
-                source_name: article.regulatory_body,
-                relevance_score: 8,
-                content_quality: 7,
-                is_active: true,
-                content_hash: article.content_hash
-              });
+          const articleData = {
+            id: `live-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+            title: article.title,
+            summary: article.summary,
+            content: article.content,
+            category: article.category,
+            regulatory_body: article.regulatory_body,
+            external_id: article.external_id,
+            source_url: article.source_url,
+            external_url: article.external_url,
+            date_published: article.date_published,
+            source_name: article.regulatory_body,
+            view_count: 0,
+            average_rating: 0,
+            is_active: true,
+            content_hash: article.content_hash
+          };
 
-            if (insertError) {
-              if (insertError.code === '23505') {
-                console.log(`⏭️ Duplicate constraint: ${article.title.substring(0, 50)}...`);
-              } else {
-                console.error('❌ Insert error:', insertError);
-                totalErrors++;
-              }
-            } else {
-              inserted++;
-              totalInserted++;
-              // Add to existing set to prevent duplicates in same batch
-              existingArticles.add(article.content_hash!);
-              existingArticles.add(article.title.toLowerCase().trim());
-            }
-          } catch (insertError) {
-            console.error('❌ Database error:', insertError);
-            totalErrors++;
-          }
+          allArticles.push(articleData);
         }
         
-        console.log(`✅ ${searchQuery.name}: ${inserted} articles inserted`);
+        console.log(`✅ ${searchQuery.name}: ${articles.length} articles processed`);
         
         // Rate limiting between queries
         await new Promise(resolve => setTimeout(resolve, 2000));
@@ -390,13 +357,14 @@ serve(async (req) => {
     }
 
     const executionTime = Date.now() - startTime;
-    console.log(`\n🎉 Scraping complete: ${totalProcessed} processed, ${totalInserted} inserted, ${totalErrors} errors in ${executionTime}ms`);
+    console.log(`\n🎉 Scraping complete: ${totalProcessed} processed, ${allArticles.length} articles ready, ${totalErrors} errors in ${executionTime}ms`);
 
     return new Response(
       JSON.stringify({
         success: true,
         articlesProcessed: totalProcessed,
-        articlesInserted: totalInserted,
+        articlesReturned: allArticles.length,
+        articles: allArticles,
         errors: totalErrors,
         executionTime,
         timestamp: new Date().toISOString()

@@ -1,353 +1,456 @@
-
-import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Newspaper, Clock, ExternalLink, Eye, MessageSquare, Bookmark, Search, Filter, Star, ThumbsUp, RefreshCw } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
+import { 
+  ArrowLeft, 
+  ExternalLink, 
+  Newspaper, 
+  Search, 
+  Calendar, 
+  Eye, 
+  Star, 
+  RefreshCw,
+  Filter,
+  Bookmark,
+  BookmarkCheck,
+  ThumbsUp,
+  ThumbsDown,
+  Share2
+} from "lucide-react";
+import { useState } from "react";
 import { format } from "date-fns";
+import { supabase } from "@/integrations/supabase/client";
 
 interface NewsArticle {
   id: string;
   title: string;
   summary: string;
-  category: string;
-  source: string;
-  datePublished: string;
-  readTime: string;
-  views: number;
-  comments: number;
-  likes: number;
-  bookmarked: boolean;
-  rating: number;
-  external_url?: string;
+  content: string;
   source_url?: string;
+  date_published: string;
+  view_count?: number;
+  average_rating?: number;
+  category?: string;
+  source_type?: string;
+  source_name?: string;
+}
+
+interface UserInteraction {
+  isBookmarked: boolean;
+  rating: number | null;
+  hasRated: boolean;
 }
 
 const EnhancedIndustryNewsCard = () => {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("all");
-  const [selectedSource, setSelectedSource] = useState("all");
-  const [bookmarkedArticles, setBookmarkedArticles] = useState<Set<string>>(new Set());
-  const [likedArticles, setLikedArticles] = useState<Set<string>>(new Set());
-  const { toast } = useToast();
+  const [selectedArticle, setSelectedArticle] = useState<NewsArticle | null>(null);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState<string>("all");
+  const [sortBy, setSortBy] = useState<string>("date");
+  const [userInteractions, setUserInteractions] = useState<Record<string, UserInteraction>>({});
+  const [articles, setArticles] = useState<NewsArticle[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  // Fetch real industry news from Supabase
-  const { data: realArticles = [], isLoading, refetch } = useQuery({
-    queryKey: ['enhanced-industry-news'],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from('industry_news')
-        .select('*')
-        .eq('is_active', true)
-        .order('date_published', { ascending: false })
-        .limit(50);
+  const fetchLiveNews = async () => {
+    setIsLoading(true);
+    setError(null);
+    
+    try {
+      console.log('Fetching enhanced live industry news...');
+      const { data, error } = await supabase.functions.invoke('comprehensive-news-scraper', {
+        body: { live: true }
+      });
       
       if (error) {
-        console.error('Error fetching industry news:', error);
+        console.error('Error fetching live news:', error);
         throw error;
       }
       
-      return data || [];
-    },
-    refetchOnWindowFocus: false,
+      console.log('Fetched enhanced live articles:', data?.articles?.length);
+      setArticles(data?.articles || []);
+    } catch (err) {
+      console.error('Error:', err);
+      setError(err instanceof Error ? err.message : 'Failed to fetch news');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Get unique categories from articles
+  const uniqueCategories = [...new Set(articles.map(article => article.category).filter(Boolean))];
+
+  // Filter and sort articles
+  const filteredArticles = articles.filter(article => {
+    const matchesSearch = !searchTerm || 
+      article.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (article.summary && article.summary.toLowerCase().includes(searchTerm.toLowerCase()));
+    
+    const matchesCategory = selectedCategory === "all" || article.category === selectedCategory;
+    
+    return matchesSearch && matchesCategory;
   });
 
-  // Transform real articles to match enhanced interface
-  const articles: NewsArticle[] = realArticles.map(article => ({
-    id: article.id,
-    title: article.title,
-    summary: article.summary,
-    category: article.category,
-    source: article.source_name || article.regulatory_body,
-    datePublished: article.date_published,
-    readTime: `${Math.ceil(article.content.length / 200)} min`, // Estimate read time
-    views: article.view_count || 0,
-    comments: Math.floor(Math.random() * 50), // Mock for now
-    likes: Math.floor(Math.random() * 100), // Mock for now  
-    bookmarked: bookmarkedArticles.has(article.id),
-    rating: article.average_rating || 4.0,
-    external_url: article.external_url,
-    source_url: article.source_url
-  }));
-
-  // Live refresh function
-  const handleRefresh = async () => {
-    try {
-      const { data, error } = await supabase.functions.invoke('comprehensive-news-scraper', {
-        body: { manual: true }
-      });
-
-      if (error) throw error;
-
-      if (data?.success) {
-        toast({
-          title: "Content Refreshed",
-          description: `Successfully fetched ${data.articlesInserted || 0} new articles`,
-        });
-        await refetch();
-      } else {
-        toast({
-          title: "Refresh Failed", 
-          description: data?.error || "Failed to refresh content",
-          variant: "destructive",
-        });
-      }
-    } catch (error) {
-      console.error('Refresh error:', error);
-      toast({
-        title: "Refresh Error",
-        description: "An error occurred while refreshing content",
-        variant: "destructive",
-      });
+  const sortedAndFilteredArticles = [...filteredArticles].sort((a, b) => {
+    switch (sortBy) {
+      case "date":
+        return new Date(b.date_published).getTime() - new Date(a.date_published).getTime();
+      case "views":
+        return (b.view_count || 0) - (a.view_count || 0);
+      case "rating":
+        return (b.average_rating || 0) - (a.average_rating || 0);
+      default:
+        return 0;
     }
+  });
+
+  // User interaction handlers
+  const toggleBookmark = (articleId: string) => {
+    setUserInteractions(prev => ({
+      ...prev,
+      [articleId]: {
+        ...prev[articleId],
+        isBookmarked: !prev[articleId]?.isBookmarked
+      }
+    }));
+  };
+
+  const rateArticle = (articleId: string, rating: number) => {
+    setUserInteractions(prev => ({
+      ...prev,
+      [articleId]: {
+        ...prev[articleId],
+        rating,
+        hasRated: true
+      }
+    }));
   };
 
   const getCategoryColor = (category: string) => {
-    switch (category.toLowerCase()) {
-      case "hse updates": return "bg-red-500/20 text-red-400 border-red-500/30";
-      case "bs7671 updates": return "bg-blue-500/20 text-blue-400 border-blue-500/30";
-      case "iet technical": return "bg-green-500/20 text-green-400 border-green-500/30";
-      case "major projects": return "bg-purple-500/20 text-purple-400 border-purple-500/30";
-      default: return "bg-gray-500/20 text-gray-400 border-gray-500/30";
+    switch (category?.toLowerCase()) {
+      case "hse":
+        return "bg-red-500/20 text-red-400 border-red-500/30";
+      case "bs7671":
+        return "bg-blue-500/20 text-blue-400 border-blue-500/30";
+      case "iet":
+        return "bg-green-500/20 text-green-400 border-green-500/30";
+      case "major projects":
+        return "bg-purple-500/20 text-purple-400 border-purple-500/30";
+      default:
+        return "bg-gray-500/20 text-gray-400 border-gray-500/30";
     }
   };
 
-  const toggleBookmark = (articleId: string) => {
-    setBookmarkedArticles(prev => {
-      const newSet = new Set(prev);
-      if (newSet.has(articleId)) {
-        newSet.delete(articleId);
-        toast({ title: "Bookmark removed" });
-      } else {
-        newSet.add(articleId);
-        toast({ title: "Article bookmarked" });
-      }
-      return newSet;
-    });
-  };
+  if (isLoading) {
+    return (
+      <Card className="w-full bg-elec-dark border-elec-yellow/20">
+        <CardHeader>
+          <CardTitle className="text-elec-yellow flex items-center gap-2">
+            <Newspaper className="h-5 w-5" />
+            Enhanced Industry News (Live)
+          </CardTitle>
+          <CardDescription className="text-muted-foreground">
+            Fetching interactive industry news with filtering and user interactions...
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          {[1, 2, 3, 4].map((i) => (
+            <div key={i} className="space-y-2">
+              <Skeleton className="h-4 w-3/4 bg-elec-yellow/10" />
+              <Skeleton className="h-3 w-full bg-elec-yellow/10" />
+              <Skeleton className="h-3 w-1/2 bg-elec-yellow/10" />
+            </div>
+          ))}
+        </CardContent>
+      </Card>
+    );
+  }
 
-  const handleLike = (articleId: string) => {
-    setLikedArticles(prev => {
-      const newSet = new Set(prev);
-      if (!newSet.has(articleId)) {
-        newSet.add(articleId);
-        toast({ title: "Article liked!" });
-      }
-      return newSet;
-    });
-  };
-
-  const renderStars = (rating: number) => {
-    return Array.from({ length: 5 }, (_, i) => (
-      <Star
-        key={i}
-        className={`h-3 w-3 ${
-          i < Math.floor(rating)
-            ? "text-yellow-400 fill-current"
-            : "text-gray-600"
-        }`}
-      />
-    ));
-  };
-
-  const filteredArticles = articles.filter(article => {
-    const matchesSearch = article.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         article.summary.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesCategory = selectedCategory === "all" || article.category === selectedCategory;
-    const matchesSource = selectedSource === "all" || article.source === selectedSource;
-    
-    return matchesSearch && matchesCategory && matchesSource;
-  });
-
-  return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-2xl font-bold text-white">Enhanced Industry News</h2>
-          <p className="text-muted-foreground">Interactive industry news with filtering, ratings, and bookmarking</p>
-        </div>
-        <div className="flex gap-2">
+  if (error) {
+    return (
+      <Card className="w-full bg-elec-dark border-elec-yellow/20">
+        <CardHeader>
+          <CardTitle className="text-elec-yellow flex items-center gap-2">
+            <Newspaper className="h-5 w-5" />
+            Enhanced Industry News (Live)
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="text-red-400">Error loading news: {error}</p>
           <Button 
-            onClick={handleRefresh}
-            variant="outline"
-            className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+            onClick={fetchLiveNews} 
+            className="mt-2 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
           >
             <RefreshCw className="h-4 w-4 mr-2" />
-            Refresh
+            Try Again
           </Button>
-          <Button className="bg-elec-yellow text-black hover:bg-elec-yellow/90">
-            <Newspaper className="h-4 w-4 mr-2" />
-            Subscribe to News
-          </Button>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
+    );
+  }
 
-      {/* Enhanced Filters */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardContent className="p-4">
+  return (
+    <>
+      <Card className="w-full bg-elec-dark border-elec-yellow/20">
+        <CardHeader>
+          <CardTitle className="text-elec-yellow flex items-center gap-2">
+            <Newspaper className="h-5 w-5" />
+            Enhanced Industry News (Live)
+            <Button
+              onClick={fetchLiveNews}
+              variant="outline"
+              size="sm"
+              className="ml-auto border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+            >
+              <RefreshCw className="h-4 w-4" />
+              Fetch News
+            </Button>
+          </CardTitle>
+          <CardDescription className="text-muted-foreground">
+            Live interactive industry news with filtering, ratings, and bookmarking
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          {/* Enhanced Filters */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="relative">
-              <Search className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
-                placeholder="Search news..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 bg-elec-dark/50 border-elec-yellow/30"
+                placeholder="Search articles..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="pl-10 bg-elec-gray/50 border-elec-yellow/20 text-white"
               />
             </div>
+            
             <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-              <SelectTrigger className="bg-elec-dark/50 border-elec-yellow/30">
+              <SelectTrigger className="bg-elec-gray/50 border-elec-yellow/20 text-white">
                 <Filter className="h-4 w-4 mr-2" />
-                <SelectValue placeholder="Filter by category" />
+                <SelectValue placeholder="Category" />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">All Categories</SelectItem>
-                <SelectItem value="HSE">HSE Updates</SelectItem>
-                <SelectItem value="BS7671">BS7671 Updates</SelectItem>
-                <SelectItem value="IET">IET Updates</SelectItem>
-                <SelectItem value="Safety">Safety Alerts</SelectItem>
-                <SelectItem value="Major Projects">Major Projects</SelectItem>
+                {uniqueCategories.map((category) => (
+                  <SelectItem key={category} value={category}>
+                    {category}
+                  </SelectItem>
+                ))}
               </SelectContent>
             </Select>
-            <Select value={selectedSource} onValueChange={setSelectedSource}>
-              <SelectTrigger className="bg-elec-dark/50 border-elec-yellow/30">
-                <Filter className="h-4 w-4 mr-2" />
-                <SelectValue placeholder="Filter by source" />
+
+            <Select value={sortBy} onValueChange={setSortBy}>
+              <SelectTrigger className="bg-elec-gray/50 border-elec-yellow/20 text-white">
+                <SelectValue placeholder="Sort by" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All Sources</SelectItem>
-                <SelectItem value="HSE Press Releases">HSE Press Releases</SelectItem>
-                <SelectItem value="BS7671 Wiring Regulations">BS7671 Wiring Regulations</SelectItem>
-                <SelectItem value="IET Technical News">IET Technical News</SelectItem>
-                <SelectItem value="Construction News Projects">Construction News Projects</SelectItem>
+                <SelectItem value="date">Date</SelectItem>
+                <SelectItem value="views">Views</SelectItem>
+                <SelectItem value="rating">Rating</SelectItem>
               </SelectContent>
             </Select>
           </div>
+
+          {/* Articles List */}
+          {sortedAndFilteredArticles.length === 0 ? (
+            <div className="text-center py-12">
+              <Newspaper className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
+              <p className="text-lg text-muted-foreground mb-2">
+                {articles.length === 0 
+                  ? 'Click "Fetch News" to get the latest industry updates.'
+                  : searchTerm || selectedCategory !== "all" 
+                    ? 'No articles match your filters.' 
+                    : 'No news articles available.'}
+              </p>
+              <p className="text-sm text-muted-foreground">
+                {articles.length > 0 && 'Try adjusting your search terms or category filters.'}
+              </p>
+            </div>
+          ) : (
+            <div className="space-y-6">
+              {sortedAndFilteredArticles.map((article) => (
+                <Card key={article.id} className="border-elec-yellow/20 bg-elec-gray/30">
+                  <CardHeader className="pb-3">
+                    <div className="flex items-start justify-between">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-3">
+                          {article.category && (
+                            <Badge className={getCategoryColor(article.category)}>
+                              {article.category}
+                            </Badge>
+                          )}
+                          {article.source_name && (
+                            <span className="text-sm text-muted-foreground">
+                              by {article.source_name}
+                            </span>
+                          )}
+                          {article.average_rating && article.average_rating > 0 && (
+                            <div className="flex items-center gap-1">
+                              <Star className="h-3 w-3 text-yellow-400 fill-current" />
+                              <span className="text-xs text-muted-foreground">
+                                {article.average_rating.toFixed(1)}
+                              </span>
+                            </div>
+                          )}
+                        </div>
+                        <CardTitle className="text-white text-lg mb-2 cursor-pointer hover:text-elec-yellow"
+                          onClick={() => setSelectedArticle(article)}>
+                          {article.title}
+                        </CardTitle>
+                        {article.summary && (
+                          <p className="text-gray-300 text-sm line-clamp-2">
+                            {article.summary}
+                          </p>
+                        )}
+                      </div>
+                      <Button 
+                        size="sm" 
+                        variant="ghost" 
+                        onClick={() => toggleBookmark(article.id)}
+                        className={userInteractions[article.id]?.isBookmarked ? "text-elec-yellow" : "text-gray-400"}
+                      >
+                        {userInteractions[article.id]?.isBookmarked ? (
+                          <BookmarkCheck className="h-4 w-4 fill-current" />
+                        ) : (
+                          <Bookmark className="h-4 w-4" />
+                        )}
+                      </Button>
+                    </div>
+                  </CardHeader>
+
+                  <CardContent className="pt-0">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                        <span className="flex items-center gap-1">
+                          <Calendar className="h-4 w-4" />
+                          {format(new Date(article.date_published), 'dd MMM yyyy')}
+                        </span>
+                        {article.view_count !== undefined && (
+                          <span className="flex items-center gap-1">
+                            <Eye className="h-4 w-4" />
+                            {article.view_count}
+                          </span>
+                        )}
+                        <div className="flex items-center gap-1">
+                          <ThumbsUp className="h-4 w-4" />
+                          <span>{Math.floor(Math.random() * 50)}</span>
+                        </div>
+                      </div>
+                      <div className="flex gap-2">
+                        <Button 
+                          size="sm" 
+                          variant="outline"
+                          className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+                          onClick={() => setSelectedArticle(article)}
+                        >
+                          Read More
+                        </Button>
+                        {article.source_url && (
+                          <Button 
+                            size="sm" 
+                            className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
+                            onClick={() => window.open(article.source_url, '_blank', 'noopener,noreferrer')}
+                          >
+                            <ExternalLink className="h-4 w-4 mr-2" />
+                            Source
+                          </Button>
+                        )}
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          )}
+
+          {/* Show count */}
+          {articles.length > 0 && (
+            <div className="text-center text-sm text-muted-foreground">
+              Showing {sortedAndFilteredArticles.length} of {articles.length} live articles
+            </div>
+          )}
         </CardContent>
       </Card>
 
-      {isLoading ? (
-        <div className="text-center py-8">
-          <div className="animate-spin h-8 w-8 border-2 border-elec-yellow border-t-transparent rounded-full mx-auto"></div>
-          <p className="text-gray-400 mt-2">Loading enhanced news...</p>
-        </div>
-      ) : (
-        <div className="grid gap-6">
-          {filteredArticles.map((article) => (
-          <Card key={article.id} className="border-elec-yellow/20 bg-elec-gray">
-            <CardHeader className="pb-3">
-              <div className="flex items-start justify-between">
-                <div className="flex-1">
-                  <div className="flex items-center gap-2 mb-3">
-                    <Badge className={getCategoryColor(article.category)}>
-                      {article.category}
-                    </Badge>
-                    <span className="text-sm text-muted-foreground">by {article.source}</span>
-                    <div className="flex items-center gap-1">
-                      {renderStars(article.rating)}
-                      <span className="text-xs text-muted-foreground ml-1">({article.rating})</span>
-                    </div>
-                  </div>
-                  <CardTitle className="text-white text-lg mb-2">
-                    {article.title}
-                  </CardTitle>
-                  <p className="text-gray-300 text-sm">
-                    {article.summary}
-                  </p>
-                </div>
-                <Button 
-                  size="sm" 
-                  variant="ghost" 
-                  onClick={() => toggleBookmark(article.id)}
-                  className={article.bookmarked ? "text-elec-yellow" : "text-gray-400"}
-                >
-                  <Bookmark className={`h-4 w-4 ${article.bookmarked ? "fill-current" : ""}`} />
-                </Button>
+      {/* Article Detail Dialog */}
+      <Dialog open={!!selectedArticle} onOpenChange={() => setSelectedArticle(null)}>
+        <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto bg-elec-dark border-elec-yellow/20">
+          <DialogHeader>
+            <DialogTitle className="text-elec-yellow text-xl">
+              {selectedArticle?.title}
+            </DialogTitle>
+            <DialogDescription className="text-muted-foreground">
+              <div className="flex flex-wrap items-center gap-2 mt-2">
+                {selectedArticle?.category && (
+                  <Badge className={getCategoryColor(selectedArticle.category)}>
+                    {selectedArticle.category}
+                  </Badge>
+                )}
+                <span>
+                  Published: {selectedArticle && format(new Date(selectedArticle.date_published), 'dd MMM yyyy')}
+                </span>
               </div>
-            </CardHeader>
-
-            <CardContent className="pt-0">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                  <div className="flex items-center gap-1">
-                    <Clock className="h-4 w-4" />
-                    <span>{format(new Date(article.datePublished), 'dd MMM yyyy')}</span>
-                  </div>
-                  <span>{article.readTime} read</span>
-                  <div className="flex items-center gap-1">
-                    <Eye className="h-4 w-4" />
-                    <span>{article.views}</span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <MessageSquare className="h-4 w-4" />
-                    <span>{article.comments}</span>
-                  </div>
-                  <Button
-                    size="sm"
-                    variant="ghost"
-                    onClick={() => handleLike(article.id)}
-                    className="flex items-center gap-1 text-muted-foreground hover:text-elec-yellow p-0 h-auto"
-                  >
-                    <ThumbsUp className="h-4 w-4" />
-                    <span>{article.likes}</span>
-                  </Button>
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4 text-white">
+            {selectedArticle?.content && (
+              <div className="prose prose-invert max-w-none">
+                <p className="whitespace-pre-wrap">{selectedArticle.content}</p>
+              </div>
+            )}
+            
+            {/* User interaction buttons */}
+            <div className="flex items-center justify-between border-t border-elec-yellow/20 pt-4">
+              <div className="flex items-center gap-4">
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  onClick={() => selectedArticle && toggleBookmark(selectedArticle.id)}
+                  className={userInteractions[selectedArticle?.id || '']?.isBookmarked ? "text-elec-yellow" : "text-gray-400"}
+                >
+                  {userInteractions[selectedArticle?.id || '']?.isBookmarked ? (
+                    <BookmarkCheck className="h-4 w-4 mr-2 fill-current" />
+                  ) : (
+                    <Bookmark className="h-4 w-4 mr-2" />
+                  )}
+                  {userInteractions[selectedArticle?.id || '']?.isBookmarked ? 'Saved' : 'Save'}
+                </Button>
+                
+                <div className="flex items-center gap-1">
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <Star
+                      key={star}
+                      className={`h-4 w-4 cursor-pointer ${
+                        star <= (userInteractions[selectedArticle?.id || '']?.rating || 0)
+                          ? "text-yellow-400 fill-current"
+                          : "text-gray-600"
+                      }`}
+                      onClick={() => selectedArticle && rateArticle(selectedArticle.id, star)}
+                    />
+                  ))}
                 </div>
-                <Button 
-                  size="sm" 
-                  className="bg-elec-yellow text-black hover:bg-elec-yellow/90"
+              </div>
+              
+              {selectedArticle?.source_url && (
+                <Button
                   onClick={() => {
-                    const url = article.external_url || article.source_url;
-                    if (url && (url.startsWith('http://') || url.startsWith('https://'))) {
-                      try {
-                        window.open(url, '_blank', 'noopener,noreferrer');
-                      } catch (error) {
-                        toast({
-                          title: "Unable to open link",
-                          description: "The article link appears to be invalid or expired.",
-                          variant: "destructive"
-                        });
-                      }
-                    } else {
-                      toast({
-                        title: "Invalid link",
-                        description: "This article link is not available or has expired.",
-                        variant: "destructive"
-                      });
+                    if (selectedArticle.source_url) {
+                      window.open(selectedArticle.source_url, '_blank', 'noopener,noreferrer');
                     }
                   }}
-                  title={article.external_url ? 
-                    "Read the full article" : 
-                    "Visit the source website"}
+                  className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
                 >
                   <ExternalLink className="h-4 w-4 mr-2" />
-                  {article.external_url ? 
-                    "Read Article" : 
-                    "View Source"}
+                  View Source
                 </Button>
-              </div>
-            </CardContent>
-          </Card>
-          ))}
-        </div>
-      )}
-
-      {filteredArticles.length === 0 && (
-        <div className="text-center py-8 text-muted-foreground">
-          No articles found matching your search criteria.
-        </div>
-      )}
-
-      <div className="text-center pt-4">
-        <Button variant="outline" className="border-elec-yellow/30 text-white hover:bg-elec-yellow/10">
-          Load More Articles
-        </Button>
-      </div>
-    </div>
+              )}
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+    </>
   );
 };
 
