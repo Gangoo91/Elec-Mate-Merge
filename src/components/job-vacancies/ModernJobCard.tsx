@@ -51,10 +51,11 @@ const ModernJobCard: React.FC<ModernJobCardProps> = ({
 }) => {
   const isSelected = selectedJob === job.id;
   
-  const formatDescription = (description: string) => {
+  const formatDescription = (description: string, isMobile = false) => {
     const strippedDescription = description.replace(/<[^>]*>?/gm, '');
-    return strippedDescription.length > 150
-      ? strippedDescription.substring(0, 150) + "..."
+    const maxLength = isMobile ? 100 : 150;
+    return strippedDescription.length > maxLength
+      ? strippedDescription.substring(0, maxLength) + "..."
       : strippedDescription;
   };
   
@@ -94,26 +95,30 @@ const ModernJobCard: React.FC<ModernJobCardProps> = ({
       {/* AI Match Score Badge */}
       {aiMatchScore && (
         <div className={cn(
-          "absolute top-4 right-4 px-2 py-1 rounded-full border text-xs font-medium",
+          "absolute top-3 right-3 sm:top-4 sm:right-4 px-2 py-1 rounded-full border text-xs font-medium",
+          "flex items-center gap-1",
           getMatchScoreBg(aiMatchScore)
         )}>
-          <Star className={cn("h-3 w-3 inline mr-1", getMatchScoreColor(aiMatchScore))} />
-          <span className={getMatchScoreColor(aiMatchScore)}>{aiMatchScore}% match</span>
+          <Star className={cn("h-3 w-3", getMatchScoreColor(aiMatchScore))} />
+          <span className={cn("hidden xs:inline", getMatchScoreColor(aiMatchScore))}>{aiMatchScore}% match</span>
+          <span className={cn("xs:hidden", getMatchScoreColor(aiMatchScore))}>{aiMatchScore}%</span>
         </div>
       )}
 
-      <CardContent className="p-6">
+      <CardContent className="p-3 sm:p-4 md:p-6">
         {/* Header */}
-        <div className="flex items-start justify-between gap-4 mb-4">
+        <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 sm:gap-4 mb-4">
           <div className="flex-1 min-w-0">
-            <h3 className="text-lg font-semibold text-elec-light line-clamp-2 group-hover:text-elec-yellow transition-colors">
+            <h3 className="text-base sm:text-lg font-semibold text-elec-light line-clamp-2 group-hover:text-elec-yellow transition-colors">
               {job.title}
             </h3>
-            <div className="flex items-center gap-2 mt-2">
-              <Building2 className="h-4 w-4 text-elec-yellow" />
-              <span className="text-sm text-muted-foreground">{job.company}</span>
+            <div className="flex flex-col sm:flex-row sm:items-center gap-2 mt-2">
+              <div className="flex items-center gap-2">
+                <Building2 className="h-4 w-4 text-elec-yellow" />
+                <span className="text-sm text-muted-foreground">{job.company}</span>
+              </div>
               {job.source && (
-                <Badge variant="outline" className="text-xs border-elec-yellow/30 text-elec-yellow">
+                <Badge variant="outline" className="text-xs border-elec-yellow/30 text-elec-yellow w-fit">
                   {job.source}
                 </Badge>
               )}
@@ -127,7 +132,7 @@ const ModernJobCard: React.FC<ModernJobCardProps> = ({
               size="sm"
               onClick={() => onSave(job.id)}
               className={cn(
-                "h-8 w-8 p-0 transition-colors",
+                "h-10 w-10 sm:h-8 sm:w-8 p-0 transition-colors self-start",
                 isSaved ? "text-red-400 hover:text-red-300" : "text-muted-foreground hover:text-elec-yellow"
               )}
             >
@@ -138,7 +143,7 @@ const ModernJobCard: React.FC<ModernJobCardProps> = ({
 
         {/* Job Details */}
         <div className="space-y-3 mb-4">
-          <div className="flex items-center gap-4 text-sm">
+          <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 text-sm">
             <div className="flex items-center gap-1">
               <MapPin className="h-4 w-4 text-elec-yellow" />
               <span className="text-muted-foreground">
@@ -163,13 +168,13 @@ const ModernJobCard: React.FC<ModernJobCardProps> = ({
         </div>
 
         {/* Description */}
-        <p className="text-sm text-muted-foreground mb-4 line-clamp-3">
+        <p className="text-sm text-muted-foreground mb-4 line-clamp-2 sm:line-clamp-3">
           {formatDescription(job.description)}
         </p>
 
         {/* Footer */}
-        <div className="flex justify-between items-center">
-          <div className="flex items-center gap-4">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-0">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
             <div className="text-xs text-muted-foreground flex items-center gap-1">
               <Clock className="h-3 w-3" />
               <span>Posted {formatDate(job.posted_date)}</span>
@@ -182,11 +187,11 @@ const ModernJobCard: React.FC<ModernJobCardProps> = ({
             )}
           </div>
           
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 w-full sm:w-auto">
             <Button
               variant="ghost"
               size="sm"
-              className="text-muted-foreground hover:text-elec-yellow"
+              className="text-muted-foreground hover:text-elec-yellow h-10 sm:h-8 w-10 sm:w-8 p-0"
             >
               <Eye className="h-4 w-4" />
             </Button>
@@ -194,7 +199,7 @@ const ModernJobCard: React.FC<ModernJobCardProps> = ({
             <Button 
               size="sm" 
               onClick={() => handleApply(job.id, job.external_url)}
-              className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 transition-all duration-200"
+              className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 transition-all duration-200 flex-1 sm:flex-none min-h-[44px] sm:min-h-0"
             >
               Apply <ArrowUpRight className="ml-1 h-3 w-3" />
             </Button>
