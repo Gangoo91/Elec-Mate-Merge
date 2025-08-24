@@ -105,11 +105,18 @@ export const parseDate = (dateString: string | string[]): Date => {
 };
 
 export const getNumericRating = (rating: number | string): number => {
-  if (typeof rating === 'number') return rating;
+  if (typeof rating === 'number') {
+    const result = isNaN(rating) ? 0 : rating;
+    console.log(`⭐ Rating (number): ${rating} -> ${result}`);
+    return result;
+  }
   if (typeof rating === 'string') {
     const parsed = parseFloat(rating);
-    return isNaN(parsed) ? 0 : parsed;
+    const result = isNaN(parsed) ? 0 : parsed;
+    console.log(`⭐ Rating (string): "${rating}" -> ${result}`);
+    return result;
   }
+  console.log('⚠️ Invalid rating value:', rating);
   return 0;
 };
 
@@ -120,17 +127,29 @@ export const getDemandScore = (demand: string): number => {
     "low": 1 
   };
   
-  if (!demand || typeof demand !== 'string') return 0;
+  if (!demand || typeof demand !== 'string') {
+    console.log('⚠️ Invalid demand value:', demand);
+    return 0;
+  }
   
-  const normalised = demand.toLowerCase();
-  return demandOrder[normalised as keyof typeof demandOrder] || 0;
+  const normalised = demand.toLowerCase().trim();
+  const score = demandOrder[normalised as keyof typeof demandOrder] || 0;
+  console.log(`📊 Demand score: "${demand}" -> "${normalised}" -> ${score}`);
+  return score;
 };
 
 export const getFutureProofingScore = (score: number | string): number => {
-  if (typeof score === 'number') return score;
+  if (typeof score === 'number') {
+    const result = isNaN(score) ? 0 : score;
+    console.log(`🔮 Future-proofing (number): ${score} -> ${result}`);
+    return result;
+  }
   if (typeof score === 'string') {
     const parsed = parseFloat(score);
-    return isNaN(parsed) ? 0 : parsed;
+    const result = isNaN(parsed) ? 0 : parsed;
+    console.log(`🔮 Future-proofing (string): "${score}" -> ${result}`);
+    return result;
   }
+  console.log('⚠️ Invalid future-proofing value:', score);
   return 0;
 };
