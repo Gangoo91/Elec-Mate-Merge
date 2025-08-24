@@ -80,30 +80,6 @@ const IndustryNewsCard = () => {
     return matchesSearch && matchesCategory;
   });
 
-  if (isLoading) {
-    return (
-      <Card className="w-full bg-elec-dark border-elec-yellow/20">
-        <CardHeader>
-          <CardTitle className="text-elec-yellow flex items-center gap-2">
-            <Newspaper className="h-5 w-5" />
-            Industry News (Live)
-          </CardTitle>
-          <CardDescription className="text-muted-foreground">
-            Fetching latest regulatory updates and compliance information...
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          {[1, 2, 3].map((i) => (
-            <div key={i} className="space-y-2">
-              <Skeleton className="h-4 w-3/4 bg-elec-yellow/10" />
-              <Skeleton className="h-3 w-full bg-elec-yellow/10" />
-              <Skeleton className="h-3 w-1/2 bg-elec-yellow/10" />
-            </div>
-          ))}
-        </CardContent>
-      </Card>
-    );
-  }
 
   if (error) {
     return (
@@ -137,12 +113,13 @@ const IndustryNewsCard = () => {
             Industry News (Live)
             <Button
               onClick={fetchLiveNews}
+              disabled={isLoading}
               variant="outline"
               size="sm"
-              className="ml-auto border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+              className="ml-auto border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 disabled:opacity-50"
             >
-              <RefreshCw className="h-4 w-4" />
-              Fetch News
+              <RefreshCw className={`h-4 w-4 ${isLoading ? 'animate-spin' : ''}`} />
+              {isLoading ? 'Fetching...' : 'Fetch News'}
             </Button>
           </CardTitle>
           <CardDescription className="text-muted-foreground">
@@ -159,7 +136,8 @@ const IndustryNewsCard = () => {
                 placeholder="Search articles..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 bg-elec-gray/50 border-elec-yellow/20 text-white"
+                disabled={isLoading}
+                className="pl-10 bg-elec-gray/50 border-elec-yellow/20 text-white disabled:opacity-50"
               />
             </div>
 
@@ -170,12 +148,16 @@ const IndustryNewsCard = () => {
                 <div className="flex flex-wrap gap-2 sm:gap-3">
                   <Badge
                     variant={selectedCategory === "" ? "default" : "outline"}
-                    className={`cursor-pointer transition-colors ${
+                    className={`transition-colors ${
+                      isLoading 
+                        ? "opacity-50 cursor-not-allowed" 
+                        : "cursor-pointer"
+                    } ${
                       selectedCategory === ""
                         ? "bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
                         : "border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
                     }`}
-                    onClick={() => setSelectedCategory("")}
+                    onClick={isLoading ? undefined : () => setSelectedCategory("")}
                   >
                     All Categories ({articles.filter(a => !searchTerm || 
                       a.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -186,12 +168,16 @@ const IndustryNewsCard = () => {
                     <Badge
                       key={category}
                       variant={selectedCategory === category ? "default" : "outline"}
-                      className={`cursor-pointer transition-colors ${
+                      className={`transition-colors ${
+                        isLoading 
+                          ? "opacity-50 cursor-not-allowed" 
+                          : "cursor-pointer"
+                      } ${
                         selectedCategory === category
                           ? "bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
                           : "border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
                       }`}
-                      onClick={() => setSelectedCategory(category)}
+                      onClick={isLoading ? undefined : () => setSelectedCategory(category)}
                     >
                       {category} ({getCategoryCount(category)})
                     </Badge>
@@ -202,7 +188,20 @@ const IndustryNewsCard = () => {
           </div>
 
           {/* Articles List */}
-          {filteredArticles.length === 0 ? (
+          {isLoading && articles.length === 0 ? (
+            <div className="space-y-4">
+              <div className="text-center py-4">
+                <p className="text-muted-foreground">Fetching latest articles...</p>
+              </div>
+              {[1, 2, 3].map((i) => (
+                <div key={i} className="space-y-2 p-4 rounded-lg border border-elec-yellow/10 bg-elec-gray/30">
+                  <Skeleton className="h-5 w-3/4 bg-elec-yellow/10" />
+                  <Skeleton className="h-4 w-full bg-elec-yellow/10" />
+                  <Skeleton className="h-3 w-1/2 bg-elec-yellow/10" />
+                </div>
+              ))}
+            </div>
+          ) : filteredArticles.length === 0 ? (
             <div className="text-center py-8">
               <Newspaper className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
               <p className="text-muted-foreground">
