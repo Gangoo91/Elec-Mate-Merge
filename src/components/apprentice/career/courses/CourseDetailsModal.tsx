@@ -384,8 +384,8 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
             </CardContent>
           </Card>
 
-          {/* Contact Form */}
-          <Card className="border-elec-yellow/20 bg-elec-gray/50">
+          {/* Contact Form - Hidden */}
+          <Card className="border-elec-yellow/20 bg-elec-gray/50 hidden">
             <CardHeader className="pb-3">
               <CardTitle className="text-lg flex items-center gap-2">
                 <Mail className="h-4 w-4 text-elec-yellow" />
