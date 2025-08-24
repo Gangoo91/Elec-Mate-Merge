@@ -368,6 +368,36 @@ export type Database = {
         }
         Relationships: []
       }
+      education_market_stats: {
+        Row: {
+          expires_at: string
+          id: string
+          last_updated: string
+          metadata: Json | null
+          source_url: string | null
+          stat_type: string
+          value: string
+        }
+        Insert: {
+          expires_at?: string
+          id?: string
+          last_updated?: string
+          metadata?: Json | null
+          source_url?: string | null
+          stat_type: string
+          value: string
+        }
+        Update: {
+          expires_at?: string
+          id?: string
+          last_updated?: string
+          metadata?: Json | null
+          source_url?: string | null
+          stat_type?: string
+          value?: string
+        }
+        Relationships: []
+      }
       evidence_uploads: {
         Row: {
           created_at: string
@@ -869,6 +899,36 @@ export type Database = {
           id?: string
           search_query?: string
           source?: string
+        }
+        Relationships: []
+      }
+      live_education_cache: {
+        Row: {
+          analytics_data: Json
+          category: string
+          created_at: string
+          education_data: Json
+          expires_at: string
+          id: string
+          search_query: string
+        }
+        Insert: {
+          analytics_data?: Json
+          category: string
+          created_at?: string
+          education_data?: Json
+          expires_at?: string
+          id?: string
+          search_query: string
+        }
+        Update: {
+          analytics_data?: Json
+          category?: string
+          created_at?: string
+          education_data?: Json
+          expires_at?: string
+          id?: string
+          search_query?: string
         }
         Relationships: []
       }
@@ -2597,6 +2657,10 @@ export type Database = {
         Returns: undefined
       }
       cleanup_expired_course_dates_cache: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
+      cleanup_expired_education_cache: {
         Args: Record<PropertyKey, never>
         Returns: undefined
       }

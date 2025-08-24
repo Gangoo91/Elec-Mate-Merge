@@ -1,20 +1,26 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { GraduationCap, ArrowLeft, BookOpen, PoundSterling, Users, Target, Calculator } from "lucide-react";
+import { GraduationCap, ArrowLeft, BookOpen, PoundSterling, Users, Target, Calculator, RefreshCw, Loader2, AlertCircle } from "lucide-react";
 import EducationSearchForm, { SearchFilters } from "../../../apprentice/career/education/EducationSearchForm";
-import EnhancedEducationCard from "../../../apprentice/career/education/EnhancedEducationCard";
-import EducationAnalyticsDashboard from "../../../apprentice/career/education/EducationAnalyticsDashboard";
 import FundingCalculator from "../../../apprentice/career/education/FundingCalculator";
-import { enhancedEducationOptions, EnhancedEducationOption } from "../../../apprentice/career/education/enhancedEducationData";
+import { useLiveEducationData, LiveEducationData } from "@/hooks/useLiveEducationData";
+import LiveEducationAnalyticsDashboard from "./LiveEducationAnalyticsDashboard";
+import LiveEducationCard from "./LiveEducationCard";
 
 const ElectricianFurtherEducation = () => {
-  const [filteredOptions, setFilteredOptions] = useState<EnhancedEducationOption[]>(enhancedEducationOptions);
-  const [selectedOption, setSelectedOption] = useState<EnhancedEducationOption | null>(null);
+  const { educationData, analytics, loading, error, lastUpdated, isFromCache, refreshData } = useLiveEducationData('all');
+  const [filteredOptions, setFilteredOptions] = useState<LiveEducationData[]>([]);
+  const [selectedOption, setSelectedOption] = useState<LiveEducationData | null>(null);
   const [viewMode, setViewMode] = useState<"grid" | "details" | "funding">("grid");
 
+  // Update filtered options when education data changes
+  useEffect(() => {
+    setFilteredOptions(educationData);
+  }, [educationData]);
+
   const handleSearch = (filters: SearchFilters) => {
-    let filtered = enhancedEducationOptions;
+    let filtered = educationData;
 
     // Apply search term filter
     if (filters.searchTerm) {
@@ -61,10 +67,10 @@ const ElectricianFurtherEducation = () => {
   };
 
   const handleReset = () => {
-    setFilteredOptions(enhancedEducationOptions);
+    setFilteredOptions(educationData);
   };
 
-  const handleViewDetails = (option: EnhancedEducationOption) => {
+  const handleViewDetails = (option: LiveEducationData) => {
     setSelectedOption(option);
     setViewMode("details");
   };
@@ -138,7 +144,14 @@ const ElectricianFurtherEducation = () => {
       </div>
 
       {/* Analytics Dashboard */}
-      <EducationAnalyticsDashboard />
+      <LiveEducationAnalyticsDashboard 
+        analytics={analytics} 
+        loading={loading}
+        error={error}
+        lastUpdated={lastUpdated}
+        isFromCache={isFromCache}
+        onRefresh={() => refreshData(true)}
+      />
 
       {/* Action Buttons */}
       <div className="flex flex-wrap gap-2">
@@ -150,7 +163,49 @@ const ElectricianFurtherEducation = () => {
           <Calculator className="mr-2 h-4 w-4" />
           Funding Calculator
         </Button>
+        <Button 
+          onClick={() => refreshData(true)}
+          variant="outline"
+          className="border-elec-yellow/30 hover:bg-elec-yellow/10"
+          disabled={loading}
+        >
+          {loading ? (
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+          ) : (
+            <RefreshCw className="mr-2 h-4 w-4" />
+          )}
+          Refresh Data
+        </Button>
       </div>
+
+      {/* Status Indicators */}
+      {lastUpdated && (
+        <div className="flex items-center gap-4 text-sm text-muted-foreground">
+          <span>
+            Last updated: {new Date(lastUpdated).toLocaleString()}
+          </span>
+          {isFromCache && (
+            <span className="flex items-center gap-1 text-amber-400">
+              <AlertCircle className="h-3 w-3" />
+              Cached data
+            </span>
+          )}
+        </div>
+      )}
+
+      {/* Error Message */}
+      {error && (
+        <Card className="border-red-500/20 bg-red-900/10">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-2 text-red-400">
+              <AlertCircle className="h-4 w-4" />
+              <span className="text-sm">
+                {error} - Showing cached data if available.
+              </span>
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       {/* Search and Filters */}
       <EducationSearchForm onSearch={handleSearch} onReset={handleReset} />
@@ -165,16 +220,26 @@ const ElectricianFurtherEducation = () => {
         </div>
       </div>
 
+      {/* Loading State */}
+      {loading && (
+        <div className="flex items-center justify-center py-12">
+          <Loader2 className="h-8 w-8 animate-spin text-elec-yellow" />
+          <span className="ml-2 text-muted-foreground">Loading live education data...</span>
+        </div>
+      )}
+
       {/* Education Options Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredOptions.map((option) => (
-          <EnhancedEducationCard
-            key={option.id}
-            option={option}
-            onViewDetails={handleViewDetails}
-          />
-        ))}
-      </div>
+      {!loading && (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredOptions.map((option) => (
+            <LiveEducationCard
+              key={option.id}
+              option={option}
+              onViewDetails={handleViewDetails}
+            />
+          ))}
+        </div>
+      )}
 
       {/* Empty State */}
       {filteredOptions.length === 0 && (

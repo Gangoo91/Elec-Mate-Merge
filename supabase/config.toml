@@ -72,3 +72,6 @@ verify_jwt = false
 
 [functions.live-course-aggregator]
 verify_jwt = false
+
+[functions.live-education-aggregator]
+verify_jwt = false
