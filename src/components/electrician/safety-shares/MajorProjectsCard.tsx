@@ -439,9 +439,9 @@ const MajorProjectsCard = () => {
 
         {/* Live data notification removed - now automatic */}
 
-      <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+      <div className="grid gap-4 sm:gap-6 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
         {projects.map((project) => (
-          <Card key={project.id} className="group hover:shadow-lg transition-all duration-300 border border-elec-yellow/10 bg-elec-card hover:border-elec-yellow/20">
+          <Card key={project.id} className="group hover:shadow-lg transition-all duration-300 border border-elec-yellow/10 bg-elec-card hover:border-elec-yellow/20 w-full min-w-0">
             <CardHeader className="pb-4">
               {/* Tags at the top */}
               <div className="flex flex-wrap items-center gap-2 mb-4">
