@@ -297,44 +297,36 @@ const ElectricianCareerCourses = () => {
           case "rating":
             const ratingA = getNumericRating(a.rating);
             const ratingB = getNumericRating(b.rating);
-            comparison = ratingB - ratingA; // Higher ratings first (desc order)
+            comparison = ratingA - ratingB;
             console.log(`Rating sort: ${a.title} (${a.rating}→${ratingA}) vs ${b.title} (${b.rating}→${ratingB}) = ${comparison}`);
             if (comparison === 0) comparison = a.title.localeCompare(b.title);
             break;
             
           case "price":
           case "price-low":
+          case "price-high":
             const priceA = parsePrice(a.price || '');
             const priceB = parsePrice(b.price || '');
-            comparison = priceA - priceB; // Lower prices first
-            console.log(`Price (low) sort: ${a.title} (${a.price}→£${priceA}) vs ${b.title} (${b.price}→£${priceB}) = ${comparison}`);
-            if (comparison === 0) comparison = a.title.localeCompare(b.title);
-            break;
-            
-          case "price-high":
-            const priceA2 = parsePrice(a.price || '');
-            const priceB2 = parsePrice(b.price || '');
-            comparison = priceB2 - priceA2; // Higher prices first
-            console.log(`Price (high) sort: ${a.title} (${a.price}→£${priceA2}) vs ${b.title} (${b.price}→£${priceB2}) = ${comparison}`);
+            comparison = priceA - priceB;
+            console.log(`Price sort: ${a.title} (${a.price}→£${priceA}) vs ${b.title} (${b.price}→£${priceB}) = ${comparison}`);
             if (comparison === 0) comparison = a.title.localeCompare(b.title);
             break;
             
           case "duration":
             const durationA = parseDuration(a.duration || '');
             const durationB = parseDuration(b.duration || '');
-            comparison = durationA - durationB; // Shorter durations first
+            comparison = durationA - durationB;
             console.log(`Duration sort: ${a.title} (${a.duration}→${durationA}w) vs ${b.title} (${b.duration}→${durationB}w) = ${comparison}`);
             if (comparison === 0) comparison = a.title.localeCompare(b.title);
             break;
             
           case "demand":
             const demandA = getDemandScore(a.industryDemand || '');
-            const demandB = getDemandScore(b.industryDemand);
-            comparison = demandB - demandA;
+            const demandB = getDemandScore(b.industryDemand || '');
+            comparison = demandA - demandB;
             console.log(`Demand sort: ${a.title} (${a.industryDemand}→${demandA}) vs ${b.title} (${b.industryDemand}→${demandB}) = ${comparison}`);
-            // Fallback: if demand is equal, sort by rating then title
             if (comparison === 0) {
-              comparison = getNumericRating(b.rating) - getNumericRating(a.rating);
+              comparison = getNumericRating(a.rating) - getNumericRating(b.rating);
               if (comparison === 0) comparison = a.title.localeCompare(b.title);
             }
             break;
@@ -342,9 +334,8 @@ const ElectricianCareerCourses = () => {
           case "future-proof":
             const futureA = getFutureProofingScore(a.futureProofing);
             const futureB = getFutureProofingScore(b.futureProofing);
-            comparison = futureB - futureA;
+            comparison = futureA - futureB;
             console.log(`Future-proof sort: ${a.title} (${a.futureProofing}→${futureA}) vs ${b.title} (${b.futureProofing}→${futureB}) = ${comparison}`);
-            // Fallback: if future-proofing is equal, sort by title
             if (comparison === 0) comparison = a.title.localeCompare(b.title);
             break;
             
@@ -356,7 +347,6 @@ const ElectricianCareerCourses = () => {
           case "provider":
             comparison = a.provider.localeCompare(b.provider);
             console.log(`Provider sort: ${a.provider} vs ${b.provider} = ${comparison}`);
-            // Fallback: if providers are equal, sort by title
             if (comparison === 0) comparison = a.title.localeCompare(b.title);
             break;
             
@@ -365,19 +355,19 @@ const ElectricianCareerCourses = () => {
             const dateB = parseDate(b.nextDates);
             comparison = dateA.getTime() - dateB.getTime();
             console.log(`Date sort: ${a.title} (${a.nextDates}→${dateA}) vs ${b.title} (${b.nextDates}→${dateB}) = ${comparison}`);
-            // Fallback: if dates are equal, sort by title
             if (comparison === 0) comparison = a.title.localeCompare(b.title);
             break;
             
-          default: // relevance
+          default:
             const defaultRelevanceA = getNumericRating(a.rating) * getFutureProofingScore(a.futureProofing);
             const defaultRelevanceB = getNumericRating(b.rating) * getFutureProofingScore(b.futureProofing);
-            comparison = defaultRelevanceB - defaultRelevanceA;
+            comparison = defaultRelevanceA - defaultRelevanceB;
             console.log(`Default relevance sort: ${a.title} (${defaultRelevanceA}) vs ${b.title} (${defaultRelevanceB}) = ${comparison}`);
             if (comparison === 0) comparison = a.title.localeCompare(b.title);
         }
         
-        return sortOption.direction === "asc" ? comparison : -comparison;
+        // Apply sort direction consistently
+        return sortOption.direction === "desc" ? -comparison : comparison;
       });
       
       console.log('✅ Sorted courses:', filtered.slice(0, 3).map(c => c.title));

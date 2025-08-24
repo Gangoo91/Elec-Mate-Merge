@@ -1,9 +1,14 @@
 // Course sorting utilities with robust data parsing
 
-export const parsePrice = (priceString: string): number => {
-  if (!priceString || typeof priceString !== 'string') {
-    console.log('⚠️ Invalid price string:', priceString);
+export const parsePrice = (priceString: string | undefined): number => {
+  if (!priceString) {
+    console.log('⚠️ No price string provided');
     return 999999; // Sort invalid prices to end
+  }
+  
+  if (typeof priceString !== 'string') {
+    console.log('⚠️ Invalid price string type:', typeof priceString, priceString);
+    return 999999;
   }
   
   const str = priceString.toLowerCase();
@@ -29,8 +34,16 @@ export const parsePrice = (priceString: string): number => {
   return result;
 };
 
-export const parseDuration = (durationString: string): number => {
-  if (!durationString || typeof durationString !== 'string') return 999999;
+export const parseDuration = (durationString: string | undefined): number => {
+  if (!durationString) {
+    console.log('⚠️ No duration string provided');
+    return 999999;
+  }
+  
+  if (typeof durationString !== 'string') {
+    console.log('⚠️ Invalid duration string type:', typeof durationString, durationString);
+    return 999999;
+  }
   
   const str = durationString.toLowerCase();
   console.log('🕐 Parsing duration:', durationString);
@@ -104,52 +117,67 @@ export const parseDate = (dateString: string | string[]): Date => {
   return parsedDate;
 };
 
-export const getNumericRating = (rating: number | string): number => {
+export const getNumericRating = (rating: number | string | undefined): number => {
+  if (rating === null || rating === undefined) {
+    console.log('⚠️ No rating value provided');
+    return 0;
+  }
+  
   if (typeof rating === 'number') {
     const result = isNaN(rating) ? 0 : rating;
     console.log(`⭐ Rating (number): ${rating} -> ${result}`);
     return result;
   }
+  
   if (typeof rating === 'string') {
     const parsed = parseFloat(rating);
     const result = isNaN(parsed) ? 0 : parsed;
     console.log(`⭐ Rating (string): "${rating}" -> ${result}`);
     return result;
   }
+  
   console.log('⚠️ Invalid rating value:', rating);
   return 0;
 };
 
-export const getDemandScore = (demand: string): number => {
+export const getDemandScore = (demand: string | undefined): number => {
   const demandOrder = { 
     "high": 3, 
     "medium": 2, 
     "low": 1 
   };
   
-  if (!demand || typeof demand !== 'string') {
-    console.log('⚠️ Invalid demand value:', demand);
+  if (!demand) {
+    console.log('⚠️ No demand value provided');
     return 0;
   }
   
-  const normalised = demand.toLowerCase().trim();
-  const score = demandOrder[normalised as keyof typeof demandOrder] || 0;
-  console.log(`📊 Demand score: "${demand}" -> "${normalised}" -> ${score}`);
+  // Handle both string and potentially other types
+  const demandStr = String(demand).toLowerCase().trim();
+  const score = demandOrder[demandStr as keyof typeof demandOrder] || 0;
+  console.log(`📊 Demand score: "${demand}" -> "${demandStr}" -> ${score}`);
   return score;
 };
 
-export const getFutureProofingScore = (score: number | string): number => {
+export const getFutureProofingScore = (score: number | string | undefined): number => {
+  if (score === null || score === undefined) {
+    console.log('⚠️ No future-proofing value provided');
+    return 0;
+  }
+  
   if (typeof score === 'number') {
     const result = isNaN(score) ? 0 : score;
     console.log(`🔮 Future-proofing (number): ${score} -> ${result}`);
     return result;
   }
+  
   if (typeof score === 'string') {
     const parsed = parseFloat(score);
     const result = isNaN(parsed) ? 0 : parsed;
     console.log(`🔮 Future-proofing (string): "${score}" -> ${result}`);
     return result;
   }
+  
   console.log('⚠️ Invalid future-proofing value:', score);
   return 0;
 };
