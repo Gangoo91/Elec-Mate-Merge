@@ -372,7 +372,12 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
                             Book Now
                           </Button>
                         ) : (
-                          <Button size="sm" variant="outline" className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10">
+                          <Button 
+                            size="sm" 
+                            variant="outline" 
+                            className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+                            onClick={() => window.open(course.external_url, '_blank')}
+                          >
                             Enquire
                           </Button>
                         )}
