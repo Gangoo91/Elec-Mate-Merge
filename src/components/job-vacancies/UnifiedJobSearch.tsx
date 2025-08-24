@@ -473,20 +473,20 @@ const UnifiedJobSearch = () => {
               return (
                 <Card key={job.id} className="border-elec-yellow/20 bg-elec-card hover:border-elec-yellow/40 transition-all duration-200 group">
                   <CardContent className="p-3 sm:p-4 md:p-6">
-                    <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between items-center text-center gap-3 md:gap-4">
-                      <div className="flex-1 space-y-2 md:space-y-3 w-full">
-                        <div className="flex flex-col md:flex-row md:items-start md:justify-between items-center gap-2 md:gap-3 w-full">
-                          <div className="text-center md:text-left w-full md:w-auto">
+                    <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
+                      <div className="flex-1 space-y-3 w-full">
+                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                          <div className="text-left w-full sm:w-auto">
                             <h3 className="text-base sm:text-lg font-semibold text-elec-light group-hover:text-elec-yellow transition-colors line-clamp-2">
                               {job.title}
                             </h3>
-                            <div className="flex items-center gap-2 md:gap-3 mt-1 text-muted-foreground justify-center md:justify-start text-sm">
+                            <div className="flex items-center gap-2 mt-1 text-muted-foreground text-sm">
                               <Building2 className="h-3 w-3 sm:h-4 sm:w-4" />
                               <span className="truncate">{job.company}</span>
                             </div>
                           </div>
                           
-                          <div className="flex flex-col sm:flex-row items-center gap-2">
+                          <div className="flex flex-wrap items-center gap-2 sm:shrink-0">
                             <div className="flex items-center gap-1.5 sm:gap-2 bg-elec-yellow/10 px-2 sm:px-3 py-1 rounded-full">
                               <Zap className="h-3 w-3 sm:h-4 sm:w-4 text-elec-yellow" />
                               <span className="text-xs sm:text-sm font-semibold text-elec-yellow">
@@ -509,7 +509,7 @@ const UnifiedJobSearch = () => {
                           </div>
                         </div>
 
-                        <div className="flex flex-wrap items-center justify-center md:justify-start gap-2 sm:gap-3 text-xs sm:text-sm text-muted-foreground">
+                        <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-xs sm:text-sm text-muted-foreground">
                           <div className="flex items-center gap-1">
                             <MapPin className="h-3 w-3 sm:h-4 sm:w-4" />
                             <span className="truncate max-w-[120px] sm:max-w-none">{job.location}</span>
@@ -535,18 +535,18 @@ const UnifiedJobSearch = () => {
                           </div>
                         </div>
 
-                        <p className="text-muted-foreground text-xs sm:text-sm leading-relaxed line-clamp-2 text-center md:text-left">
+                        <p className="text-muted-foreground text-xs sm:text-sm leading-relaxed line-clamp-2 text-left">
                           {formatDescription(job.description)}
                         </p>
                       </div>
                       
-                      <div className="w-full md:w-auto md:ml-4 lg:ml-6 shrink-0">
+                      <div className="w-full lg:w-auto lg:ml-6 shrink-0">
                         <Button 
                           onClick={() => handleApply(job.id, job.external_url)}
-                          className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 transition-colors w-full md:w-auto min-w-[100px] sm:min-w-[120px] h-9 sm:h-10"
+                          className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 transition-colors w-full lg:w-auto min-w-[120px] h-10 min-h-[44px] lg:min-h-0"
                         >
-                          <ExternalLink className="mr-1 sm:mr-2 h-3 w-3 sm:h-4 sm:w-4" />
-                          <span className="text-xs sm:text-sm">Apply Now</span>
+                          <ExternalLink className="mr-2 h-4 w-4" />
+                          <span>Apply Now</span>
                         </Button>
                       </div>
                     </div>
