@@ -95,10 +95,12 @@ const ElectricianCareerCourses = () => {
   );
 
   // Extract data from query result with proper typing and fallback
-  const liveCourses = queryResult?.courses || (isError ? fallbackElectricalCourses : []);
-  const liveTotal = queryResult?.total || liveCourses.length;
+  const hasLiveCourses = queryResult?.courses && queryResult.courses.length > 0;
+  const shouldUseFallback = isError || !hasLiveCourses;
+  const liveCourses = shouldUseFallback ? fallbackElectricalCourses : queryResult?.courses || [];
+  const liveTotal = liveCourses.length;
   const liveSummary = queryResult?.summary;
-  const isLiveData = !!queryResult && !isError;
+  const isLiveData = hasLiveCourses && !isError;
   const liveError = isError ? (queryError?.message || "Failed to fetch course data") : null;
 
   // Auto-refetch courses when debounced search criteria change  
