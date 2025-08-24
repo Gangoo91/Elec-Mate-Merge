@@ -3,7 +3,6 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { ArrowLeft, ExternalLink, Newspaper, Search, Calendar, Eye, Star, RefreshCw } from "lucide-react";
 import { useState } from "react";
 import { format } from "date-fns";
@@ -19,7 +18,6 @@ interface NewsArticle {
 }
 
 const IndustryNewsCard = () => {
-  const [selectedArticle, setSelectedArticle] = useState<NewsArticle | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [articles, setArticles] = useState<NewsArticle[]>([]);
@@ -105,8 +103,7 @@ const IndustryNewsCard = () => {
   }
 
   return (
-    <>
-      <Card className="w-full bg-elec-dark border-elec-yellow/20">
+    <Card className="w-full bg-elec-dark border-elec-yellow/20">
         <CardHeader>
           <CardTitle className="text-elec-yellow flex items-center gap-2">
             <Newspaper className="h-5 w-5" />
@@ -217,8 +214,7 @@ const IndustryNewsCard = () => {
               {filteredArticles.map((article) => (
                 <div
                   key={article.id}
-                  className="p-4 rounded-lg border border-elec-yellow/10 bg-elec-gray/30 hover:border-elec-yellow/30 transition-colors cursor-pointer"
-                  onClick={() => setSelectedArticle(article)}
+                  className="p-4 rounded-lg border border-elec-yellow/10 bg-elec-gray/30 hover:border-elec-yellow/30 transition-colors"
                 >
                   <div className="flex items-start justify-between gap-4">
                     <div className="flex-1">
@@ -230,18 +226,32 @@ const IndustryNewsCard = () => {
                           {article.snippet}
                         </p>
                       )}
-                      <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
-                        {article.tag && (
-                          <Badge variant="secondary" className="bg-elec-yellow/20 text-elec-yellow">
-                            {article.tag}
-                          </Badge>
-                        )}
-                        <span className="flex items-center gap-1">
-                          <Calendar className="h-3 w-3" />
-                          {article.date && article.date !== "" && !isNaN(new Date(article.date).getTime())
-                            ? format(new Date(article.date), 'dd MMM yyyy')
-                            : 'No date'}
-                        </span>
+                      <div className="flex flex-wrap items-center justify-between gap-2">
+                        <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
+                          {article.tag && (
+                            <Badge variant="secondary" className="bg-elec-yellow/20 text-elec-yellow">
+                              {article.tag}
+                            </Badge>
+                          )}
+                          <span className="flex items-center gap-1">
+                            <Calendar className="h-3 w-3" />
+                            {article.date && article.date !== "" && !isNaN(new Date(article.date).getTime())
+                              ? format(new Date(article.date), 'dd MMM yyyy')
+                              : 'No date'}
+                          </span>
+                        </div>
+                        <Button
+                          onClick={() => {
+                            if (article.url) {
+                              window.open(article.url, '_blank', 'noopener,noreferrer');
+                            }
+                          }}
+                          size="sm"
+                          className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 shrink-0"
+                        >
+                          <ExternalLink className="h-4 w-4 mr-2" />
+                          Read Full Article
+                        </Button>
                       </div>
                     </div>
                   </div>
@@ -258,54 +268,6 @@ const IndustryNewsCard = () => {
           )}
         </CardContent>
       </Card>
-
-      {/* Article Detail Dialog */}
-      <Dialog open={!!selectedArticle} onOpenChange={() => setSelectedArticle(null)}>
-        <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto bg-elec-dark border-elec-yellow/20">
-          <DialogHeader>
-            <DialogTitle className="text-elec-yellow text-xl">
-              {selectedArticle?.title}
-            </DialogTitle>
-            <DialogDescription className="text-muted-foreground">
-              <div className="flex flex-wrap items-center gap-2 mt-2">
-                {selectedArticle?.tag && (
-                  <Badge variant="secondary" className="bg-elec-yellow/20 text-elec-yellow">
-                    {selectedArticle.tag}
-                  </Badge>
-                )}
-                <span>
-                  Published: {selectedArticle && selectedArticle.date && selectedArticle.date !== "" && !isNaN(new Date(selectedArticle.date).getTime())
-                    ? format(new Date(selectedArticle.date), 'dd MMM yyyy')
-                    : 'No date'}
-                </span>
-              </div>
-            </DialogDescription>
-          </DialogHeader>
-          <div className="space-y-4 text-white">
-            {selectedArticle?.snippet && (
-              <div className="prose prose-invert max-w-none">
-                <p className="whitespace-pre-wrap">{selectedArticle.snippet}</p>
-              </div>
-            )}
-            {selectedArticle?.url && (
-              <div className="flex justify-end">
-                <Button
-                  onClick={() => {
-                    if (selectedArticle.url) {
-                      window.open(selectedArticle.url, '_blank', 'noopener,noreferrer');
-                    }
-                  }}
-                  className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
-                >
-                  <ExternalLink className="h-4 w-4 mr-2" />
-                  Read Full Article
-                </Button>
-              </div>
-            )}
-          </div>
-        </DialogContent>
-      </Dialog>
-    </>
   );
 };
 
