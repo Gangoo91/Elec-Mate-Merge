@@ -401,8 +401,8 @@ serve(async (req) => {
       };
 
       // Map to final format
-      uniqueCourses = detailedCourses.map((course: any) => ({
-        id: `reed-${course.courseTitle?.replace(/\s+/g, '-').toLowerCase() || 'unknown'}`,
+      const allCourses = detailedCourses.map((course: any) => ({
+        id: `reed-${course.courseTitle?.replace(/\s+/g, '-').toLowerCase()}-${course.provider?.replace(/\s+/g, '-').toLowerCase() || 'unknown'}`,
         title: course.courseTitle || 'Untitled Course',
         provider: course.provider || 'Reed',
         description: course.description || 'Course description not available',
@@ -432,6 +432,13 @@ serve(async (req) => {
         lastUpdated: new Date().toISOString()
       }));
 
+      // Remove duplicates based on title + provider
+      const originalCount = allCourses.length;
+      uniqueCourses = removeDuplicates(allCourses);
+      const duplicatesRemoved = originalCount - uniqueCourses.length;
+
+      console.log(`📊 Original courses: ${originalCount}, After deduplication: ${uniqueCourses.length}, Duplicates removed: ${duplicatesRemoved}`);
+
       sourceResults.push({
         source: 'Reed (Firecrawl)',
         courseCount: uniqueCourses.length,
@@ -458,8 +465,8 @@ serve(async (req) => {
         total: uniqueCourses.length,
         summary: {
           totalCourses: uniqueCourses.length,
-          originalCourses: uniqueCourses.length,
-          duplicatesRemoved: 0,
+          originalCourses: originalCount || uniqueCourses.length,
+          duplicatesRemoved: duplicatesRemoved || 0,
           sourceBreakdown: sourceResults,
           searchCriteria: { keywords, location },
           liveCourses: uniqueCourses.filter(c => c.isLive).length,
@@ -516,3 +523,26 @@ serve(async (req) => {
     });
   }
 });
+
+// Helper function to remove duplicates based on title + provider
+function removeDuplicates(courses: any[]): any[] {
+  const seen = new Map();
+  return courses.filter(course => {
+    // Create a unique key using title + provider for better deduplication
+    const normalizedTitle = course.title?.toLowerCase().trim().replace(/\s+/g, ' ') || '';
+    const normalizedProvider = course.provider?.toLowerCase().trim().replace(/\s+/g, ' ') || '';
+    const key = `${normalizedTitle}-${normalizedProvider}`;
+    
+    if (seen.has(key)) {
+      // Keep the one with more detailed information
+      const existing = seen.get(key);
+      if (course.hasDetailedInfo && !existing.hasDetailedInfo) {
+        seen.set(key, course);
+        return true;
+      }
+      return false;
+    }
+    seen.set(key, course);
+    return true;
+  });
+}

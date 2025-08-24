@@ -97,9 +97,18 @@ export const useLiveCourseSearch = (params: LiveCourseSearchParams = {}) => {
           source: course.source || 'Live API'
         }));
         
+        
+        // Apply deduplication to live courses
+        const deduplicatedCourses = removeDuplicatesByTitle(liveCourses);
+        const duplicatesRemoved = liveCourses.length - deduplicatedCourses.length;
+        
+        if (duplicatesRemoved > 0) {
+          console.log(`📊 Removed ${duplicatesRemoved} duplicate courses`);
+        }
+        
         setData({
-          courses: liveCourses,
-          total: liveCourses.length,
+          courses: deduplicatedCourses,
+          total: deduplicatedCourses.length,
           summary: liveData.summary,
           isLiveData: true,
           loading: false,
@@ -111,7 +120,7 @@ export const useLiveCourseSearch = (params: LiveCourseSearchParams = {}) => {
         if (liveData.summary && liveData.summary.liveCourses > 0) {
           toast({
             title: "Live course data loaded",
-            description: `Found ${liveData.summary.liveCourses} live courses from ${liveData.summary.sourceBreakdown.filter((s: any) => s.success).length} sources`,
+            description: `Found ${deduplicatedCourses.length} unique courses${duplicatesRemoved > 0 ? ` (${duplicatesRemoved} duplicates removed)` : ''}`,
             variant: "success"
           });
         }
@@ -260,9 +269,17 @@ export const useLiveCourseSearch = (params: LiveCourseSearchParams = {}) => {
                 source: course.source || 'Live API'
               }));
               
+              // Apply deduplication to refreshed courses
+              const deduplicatedCourses = removeDuplicatesByTitle(liveCourses);
+              const duplicatesRemoved = liveCourses.length - deduplicatedCourses.length;
+              
+              if (duplicatesRemoved > 0) {
+                console.log(`🔄 Removed ${duplicatesRemoved} duplicate courses during refresh`);
+              }
+              
               setData({
-                courses: liveCourses,
-                total: liveCourses.length,
+                courses: deduplicatedCourses,
+                total: deduplicatedCourses.length,
                 summary: liveData.summary,
                 isLiveData: true,
                 loading: false,
@@ -271,7 +288,7 @@ export const useLiveCourseSearch = (params: LiveCourseSearchParams = {}) => {
               
               toast({
                 title: "Courses found",
-                description: `Successfully loaded ${liveCourses.length} live course${liveCourses.length === 1 ? '' : 's'}`,
+                description: `Successfully loaded ${deduplicatedCourses.length} unique course${deduplicatedCourses.length === 1 ? '' : 's'}${duplicatesRemoved > 0 ? ` (${duplicatesRemoved} duplicates removed)` : ''}`,
                 variant: "success"
               });
             } else {
@@ -426,11 +443,20 @@ function getNextCourseDate(): string {
 function removeDuplicatesByTitle(courses: EnhancedCareerCourse[]): EnhancedCareerCourse[] {
   const seen = new Map();
   return courses.filter(course => {
-    const key = course.title.toLowerCase().trim();
+    // Create a unique key using title + provider for better deduplication
+    const normalizedTitle = course.title.toLowerCase().trim().replace(/\s+/g, ' ');
+    const normalizedProvider = course.provider.toLowerCase().trim().replace(/\s+/g, ' ');
+    const key = `${normalizedTitle}-${normalizedProvider}`;
+    
     if (seen.has(key)) {
-      // Keep the live version if available
+      // Keep the live version if available, or the one with more details
       const existing = seen.get(key);
       if (course.isLive && !existing.isLive) {
+        seen.set(key, course);
+        return true;
+      }
+      // Keep the one with more detailed information if available
+      if ((course as any).hasDetailedInfo && !(existing as any).hasDetailedInfo) {
         seen.set(key, course);
         return true;
       }
