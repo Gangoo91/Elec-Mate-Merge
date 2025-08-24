@@ -59,6 +59,16 @@ const IndustryNewsCard = () => {
   // Get unique categories from articles
   const uniqueCategories = [...new Set(articles.map(article => article.tag).filter(Boolean))];
 
+  // Count articles per category
+  const getCategoryCount = (category: string) => {
+    return articles.filter(article => 
+      (!searchTerm || 
+        article.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        (article.snippet && article.snippet.toLowerCase().includes(searchTerm.toLowerCase()))
+      ) && article.tag === category
+    ).length;
+  };
+
   // Filter articles based on search and category
   const filteredArticles = articles.filter(article => {
     const matchesSearch = !searchTerm || 
@@ -141,8 +151,9 @@ const IndustryNewsCard = () => {
         </CardHeader>
         <CardContent className="space-y-4">
           {/* Search and Filter Controls */}
-          <div className="flex flex-col sm:flex-row gap-4">
-            <div className="relative flex-1">
+          <div className="space-y-4">
+            {/* Search Input */}
+            <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
                 placeholder="Search articles..."
@@ -151,19 +162,42 @@ const IndustryNewsCard = () => {
                 className="pl-10 bg-elec-gray/50 border-elec-yellow/20 text-white"
               />
             </div>
+
+            {/* Category Filter Buttons */}
             {uniqueCategories.length > 0 && (
-              <select
-                value={selectedCategory}
-                onChange={(e) => setSelectedCategory(e.target.value)}
-                className="px-3 py-2 rounded-md bg-elec-gray/50 border border-elec-yellow/20 text-white"
-              >
-                <option value="">All Categories</option>
-                {uniqueCategories.map((category) => (
-                  <option key={category} value={category}>
-                    {category}
-                  </option>
-                ))}
-              </select>
+              <div className="space-y-2">
+                <p className="text-sm text-muted-foreground">Filter by category:</p>
+                <div className="flex flex-wrap gap-2 sm:gap-3">
+                  <Badge
+                    variant={selectedCategory === "" ? "default" : "outline"}
+                    className={`cursor-pointer transition-colors ${
+                      selectedCategory === ""
+                        ? "bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
+                        : "border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+                    }`}
+                    onClick={() => setSelectedCategory("")}
+                  >
+                    All Categories ({articles.filter(a => !searchTerm || 
+                      a.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                      (a.snippet && a.snippet.toLowerCase().includes(searchTerm.toLowerCase()))
+                    ).length})
+                  </Badge>
+                  {uniqueCategories.map((category) => (
+                    <Badge
+                      key={category}
+                      variant={selectedCategory === category ? "default" : "outline"}
+                      className={`cursor-pointer transition-colors ${
+                        selectedCategory === category
+                          ? "bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
+                          : "border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+                      }`}
+                      onClick={() => setSelectedCategory(category)}
+                    >
+                      {category} ({getCategoryCount(category)})
+                    </Badge>
+                  ))}
+                </div>
+              </div>
             )}
           </div>
 
