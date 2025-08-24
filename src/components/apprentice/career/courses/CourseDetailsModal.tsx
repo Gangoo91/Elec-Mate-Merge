@@ -1,4 +1,5 @@
 
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -7,14 +8,28 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 import CourseEnquiryForm from "./CourseEnquiryForm";
 import { 
   X, MapPin, Clock, Users, BookOpen, TrendingUp, 
   PoundSterling, Award, Target, CheckCircle, 
   Calendar, Mail, Star, Briefcase, GraduationCap,
-  ExternalLink, Wifi, Database, Shield
+  ExternalLink, Wifi, Database, Shield, Phone, Building
 } from "lucide-react";
 import { EnhancedCareerCourse } from "./enhancedCoursesData";
+
+interface ContactInfo {
+  phone?: string;
+  email?: string;
+  address?: string;
+  contactPerson?: string;
+  officeHours?: string;
+  website?: string;
+  socialLinks?: Array<{ platform: string; url: string }>;
+  providerName?: string;
+  description?: string;
+  extractedAt?: string;
+}
 
 interface CourseDetailsModalProps {
   course: EnhancedCareerCourse;
@@ -23,6 +38,48 @@ interface CourseDetailsModalProps {
 
 const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
   const { toast } = useToast();
+  const [contactInfo, setContactInfo] = useState<ContactInfo | null>(null);
+  const [loadingContact, setLoadingContact] = useState(false);
+
+  const fetchContactDetails = async () => {
+    if (!course.external_url || loadingContact) return;
+    
+    setLoadingContact(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('extract-contact-details', {
+        body: { 
+          courseUrl: course.external_url,
+          providerId: course.provider 
+        }
+      });
+
+      if (error) throw error;
+
+      if (data?.success && data?.contactInfo) {
+        setContactInfo(data.contactInfo);
+        toast({
+          title: "Contact Details Found",
+          description: "Successfully extracted provider contact information.",
+          variant: "success"
+        });
+      } else {
+        toast({
+          title: "Contact Details Unavailable",
+          description: "Could not extract contact information from provider's website.",
+          variant: "destructive"
+        });
+      }
+    } catch (error) {
+      console.error('Error fetching contact details:', error);
+      toast({
+        title: "Error",
+        description: "Failed to extract contact details.",
+        variant: "destructive"
+      });
+    } finally {
+      setLoadingContact(false);
+    }
+  };
 
   const handleOpenCourseUrl = () => {
     if (!course.external_url) {
@@ -153,6 +210,17 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
                     View Provider Site
                   </Button>
                 )}
+                
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  className="border-blue-500/30 text-blue-400 hover:bg-blue-500/10"
+                  onClick={fetchContactDetails}
+                  disabled={loadingContact || !course.external_url}
+                >
+                  <Phone className="h-3 w-3 mr-1" />
+                  {loadingContact ? "Getting Contact..." : "Get Contact Details"}
+                </Button>
               </div>
               <p className="text-muted-foreground mt-2 text-justify">{course.description}</p>
               {isLiveCourse && course.source && (
@@ -401,6 +469,79 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
               </Table>
             </CardContent>
           </Card>
+          
+          {/* Contact Information Card */}
+          {contactInfo && (
+            <Card className="bg-gradient-to-br from-slate-900/90 to-slate-800/90 border-slate-700/50">
+              <CardHeader>
+                <CardTitle className="text-white flex items-center gap-2">
+                  <Building className="h-5 w-5 text-blue-400" />
+                  Provider Contact Details
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                {contactInfo.phone && (
+                  <div className="flex items-center gap-3 p-3 bg-slate-800/50 rounded-lg">
+                    <Phone className="h-4 w-4 text-green-400" />
+                    <div>
+                      <p className="text-sm text-slate-400">Phone</p>
+                      <a 
+                        href={`tel:${contactInfo.phone}`}
+                        className="text-white hover:text-green-400 transition-colors"
+                      >
+                        {contactInfo.phone}
+                      </a>
+                    </div>
+                  </div>
+                )}
+                
+                {contactInfo.email && (
+                  <div className="flex items-center gap-3 p-3 bg-slate-800/50 rounded-lg">
+                    <Mail className="h-4 w-4 text-blue-400" />
+                    <div>
+                      <p className="text-sm text-slate-400">Email</p>
+                      <a 
+                        href={`mailto:${contactInfo.email}`}
+                        className="text-white hover:text-blue-400 transition-colors"
+                      >
+                        {contactInfo.email}
+                      </a>
+                    </div>
+                  </div>
+                )}
+                
+                {contactInfo.address && (
+                  <div className="flex items-center gap-3 p-3 bg-slate-800/50 rounded-lg">
+                    <MapPin className="h-4 w-4 text-orange-400" />
+                    <div>
+                      <p className="text-sm text-slate-400">Address</p>
+                      <p className="text-white">{contactInfo.address}</p>
+                    </div>
+                  </div>
+                )}
+                
+                {contactInfo.contactPerson && (
+                  <div className="flex items-center gap-3 p-3 bg-slate-800/50 rounded-lg">
+                    <Users className="h-4 w-4 text-purple-400" />
+                    <div>
+                      <p className="text-sm text-slate-400">Contact Person</p>
+                      <p className="text-white">{contactInfo.contactPerson}</p>
+                    </div>
+                  </div>
+                )}
+                
+                {contactInfo.officeHours && (
+                  <div className="flex items-center gap-3 p-3 bg-slate-800/50 rounded-lg">
+                    <Clock className="h-4 w-4 text-yellow-400" />
+                    <div>
+                      <p className="text-sm text-slate-400">Office Hours</p>
+                      <p className="text-white">{contactInfo.officeHours}</p>
+                    </div>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          )}
 
           {/* Contact Form - Hidden */}
           <Card className="border-elec-yellow/20 bg-elec-gray/50 hidden">
