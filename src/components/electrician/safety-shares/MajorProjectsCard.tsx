@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Building2, MapPin, Calendar, PoundSterling, Users, Clock, ExternalLink, Bookmark, RefreshCw, Eye } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
+import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { ProjectSubmissionDialog } from "./ProjectSubmissionDialog";
 
@@ -35,6 +36,7 @@ interface MajorProject {
 
 const MajorProjectsCard = () => {
   const { toast } = useToast();
+  const navigate = useNavigate();
   const [projects, setProjects] = useState<MajorProject[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [lastUpdated, setLastUpdated] = useState<string | null>(null);
@@ -599,7 +601,11 @@ const MajorProjectsCard = () => {
       </div>
 
       <div className="text-center pt-4">
-        <Button variant="outline" className="border-elec-yellow/30 text-white hover:bg-elec-yellow/10">
+        <Button 
+          variant="outline" 
+          className="border-elec-yellow/30 text-white hover:bg-elec-yellow/10"
+          onClick={() => navigate('/electrician/safety-shares/projects')}
+        >
           View All Projects ({projects.length})
         </Button>
       </div>
