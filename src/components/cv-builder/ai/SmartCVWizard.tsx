@@ -6,7 +6,8 @@ import { MobileInput } from "@/components/ui/mobile-input";
 import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
-import { Wand2, Loader2, Plus, Target, User, Briefcase, GraduationCap } from "lucide-react";
+import { X } from "lucide-react";
+import { Wand2, Loader2, Plus, Target, User, Briefcase, GraduationCap, Wrench } from "lucide-react";
 import { CVData } from "../types";
 import { AIService } from "./AIService";
 import { toast } from "@/hooks/use-toast";
@@ -44,6 +45,12 @@ const wizardSteps: WizardStep[] = [
     icon: <GraduationCap className="h-5 w-5" />
   },
   {
+    id: 'skills',
+    title: 'Skills',
+    description: 'Select your electrical skills and competencies',
+    icon: <Wrench className="h-5 w-5" />
+  },
+  {
     id: 'experience',
     title: 'Experience',
     description: 'Your electrical work history',
@@ -55,6 +62,7 @@ export const SmartCVWizard: React.FC<SmartCVWizardProps> = ({ onCVGenerated, onC
   const [currentStep, setCurrentStep] = useState(0);
   const [isGenerating, setIsGenerating] = useState(false);
   const { isMobile } = useMobileEnhanced();
+  const [newSkill, setNewSkill] = useState("");
   const [wizardData, setWizardData] = useState({
     targetRole: '',
     experienceLevel: '',
@@ -272,6 +280,41 @@ export const SmartCVWizard: React.FC<SmartCVWizardProps> = ({ onCVGenerated, onC
     }));
   };
 
+  const addSkill = () => {
+    if (newSkill.trim() && !wizardData.skills.includes(newSkill.trim())) {
+      setWizardData(prev => ({
+        ...prev,
+        skills: [...prev.skills, newSkill.trim()]
+      }));
+      setNewSkill("");
+    }
+  };
+
+  const removeSkill = (skill: string) => {
+    setWizardData(prev => ({
+      ...prev,
+      skills: prev.skills.filter(s => s !== skill)
+    }));
+  };
+
+  const addSuggestedSkill = (skill: string) => {
+    if (!wizardData.skills.includes(skill)) {
+      setWizardData(prev => ({
+        ...prev,
+        skills: [...prev.skills, skill]
+      }));
+    }
+  };
+
+  const suggestedSkills = [
+    "Electrical Installation", "Wiring", "Testing & Inspection", "PAT Testing",
+    "Circuit Design", "Fault Finding", "Health & Safety", "BS 7671 Regulations",
+    "NICEIC Knowledge", "Solar Panel Installation", "Emergency Lighting",
+    "Fire Alarm Systems", "CCTV Systems", "LED Lighting", "Three Phase Systems",
+    "Motor Control", "PLC Programming", "Electrical Maintenance", "Cable Installation",
+    "Switchboard Installation", "18th Edition", "Electrical Design", "Risk Assessment"
+  ];
+
   const renderStepContent = () => {
     const step = wizardSteps[currentStep];
 
@@ -445,6 +488,79 @@ export const SmartCVWizard: React.FC<SmartCVWizardProps> = ({ onCVGenerated, onC
           </div>
         );
 
+      case 'skills':
+        return (
+          <div className="space-y-6">
+            <div className="flex items-center justify-between">
+              <h4 className="text-lg font-semibold text-elec-light">Skills & Competencies</h4>
+            </div>
+
+            <div className="space-y-4">
+              <div className="flex gap-2">
+                <MobileInput
+                  label=""
+                  type="text"
+                  value={newSkill}
+                  onChange={(e) => setNewSkill(e.target.value)}
+                  onKeyPress={(e) => e.key === 'Enter' && addSkill()}
+                  placeholder="Add a skill..."
+                />
+                <Button
+                  onClick={addSkill}
+                  className="bg-elec-yellow text-black hover:bg-elec-yellow/90 flex-shrink-0"
+                >
+                  <Plus className="h-4 w-4" />
+                </Button>
+              </div>
+
+              {wizardData.skills.length > 0 && (
+                <div className="flex flex-wrap gap-2">
+                  {wizardData.skills.map((skill, index) => (
+                    <Badge
+                      key={index}
+                      variant="secondary"
+                      className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30 pr-1"
+                    >
+                      {skill}
+                      <Button
+                        onClick={() => removeSkill(skill)}
+                        variant="ghost"
+                        size="sm"
+                        className="h-auto p-1 ml-1 hover:bg-red-500/20"
+                      >
+                        <X className="h-3 w-3" />
+                      </Button>
+                    </Badge>
+                  ))}
+                </div>
+              )}
+
+              <div>
+                <label className="text-sm font-semibold text-elec-light flex items-center gap-2 mb-3">
+                  <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
+                  Suggested Skills:
+                </label>
+                <div className="flex flex-wrap gap-2">
+                  {suggestedSkills
+                    .filter(skill => !wizardData.skills.includes(skill))
+                    .slice(0, 12)
+                    .map((skill, index) => (
+                      <Button
+                        key={index}
+                        onClick={() => addSuggestedSkill(skill)}
+                        variant="outline"
+                        size="sm"
+                        className="text-xs border-elec-yellow/30 hover:bg-elec-yellow/10 text-elec-light"
+                      >
+                        + {skill}
+                      </Button>
+                    ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+
       case 'experience':
         return (
           <div className="space-y-6">
@@ -536,6 +652,8 @@ export const SmartCVWizard: React.FC<SmartCVWizardProps> = ({ onCVGenerated, onC
         return wizardData.personalInfo.fullName && wizardData.personalInfo.email;
       case 'qualifications':
         return true; // Qualifications are optional
+      case 'skills':
+        return true; // Skills are optional
       case 'experience':
         return true; // Experience is optional
       default:
