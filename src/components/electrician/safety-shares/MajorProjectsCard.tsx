@@ -1,16 +1,15 @@
 
 import { useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Building2, MapPin, Calendar, PoundSterling, Users, Clock, ExternalLink, Bookmark, RefreshCw, Eye, Building, CalendarCheck, Copy } from "lucide-react";
+import { Building2, MapPin, Calendar, PoundSterling, Users, Clock, ExternalLink, Bookmark, RefreshCw, Eye } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { ProjectSubmissionDialog } from "./ProjectSubmissionDialog";
-import { ProjectSkeletonCard } from "@/components/ui/skeleton-card";
 
 interface MajorProject {
   id: string;
@@ -307,26 +306,6 @@ const MajorProjectsCard = () => {
     }
   };
 
-  const copyToClipboard = async (title: string, url: string) => {
-    try {
-      const textToCopy = `${title}\n${url}`;
-      await navigator.clipboard.writeText(textToCopy);
-      toast({
-        title: "Copied to clipboard",
-        description: "Project details copied successfully",
-        duration: 2000,
-      });
-    } catch (error) {
-      console.error('Failed to copy:', error);
-      toast({
-        title: "Copy failed",
-        description: "Unable to copy to clipboard",
-        variant: "destructive",
-        duration: 2000,
-      });
-    }
-  };
-
   const ProjectDetailModal = ({ project }: { project: MajorProject }) => (
     <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
       <DialogHeader>
@@ -492,74 +471,135 @@ const MajorProjectsCard = () => {
 
         {/* Live data notification removed - now automatic */}
 
-      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6">
-        {isLoading ? (
-          // Show skeleton loading cards
-          Array.from({ length: 6 }, (_, index) => (
-            <ProjectSkeletonCard key={`skeleton-${index}`} />
-          ))
-        ) : (
-          // Show actual project data
-          projects.map((project) => (
-            <Card key={project.id} className="min-h-[400px] flex flex-col border-elec-yellow/20 bg-elec-gray hover:border-elec-yellow/40 hover:shadow-md transition-all">
-              <CardHeader className="pb-3 flex-shrink-0">
-                <CardTitle className="text-base sm:text-lg leading-tight line-clamp-2 break-words">
-                  {project.title}
-                </CardTitle>
-                <p className="text-muted-foreground text-sm line-clamp-3 break-words">
-                  {project.summary}
-                </p>
-              </CardHeader>
+      <div className="grid gap-4 sm:gap-6 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
+        {projects.map((project) => (
+          <Card key={project.id} className="group hover:shadow-lg transition-all duration-300 border border-elec-yellow/10 bg-elec-card hover:border-elec-yellow/20 w-full min-w-0">
+            <CardHeader className="pb-4">
+              {/* Tags at the top */}
+              <div className="flex flex-wrap items-center gap-2 mb-4">
+                <Badge className={getStatusColor(project.status)}>
+                  {getStatusText(project.status)}
+                </Badge>
+                {project.category && (
+                  <Badge className={getSectorColor(project.category)}>
+                    {project.category}
+                  </Badge>
+                )}
+                {project.tender_deadline && getStatusText(project.status) === "Open for Tender" && (
+                  <Badge className="bg-red-500/20 text-red-400 border-red-500/30">
+                    Deadline: {new Date(project.tender_deadline).toLocaleDateString('en-GB')}
+                  </Badge>
+                )}
+              </div>
               
-              <CardContent className="space-y-3 flex-1 flex flex-col">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
-                  <div className="flex items-center gap-1 min-w-0">
-                    <CalendarCheck className="h-3.5 w-3.5 text-elec-yellow/80 flex-shrink-0" />
-                    <span className="text-muted-foreground flex-shrink-0">Value:</span>
-                    <span className="ml-1 font-medium truncate text-xs sm:text-sm">{project.project_value || 'TBC'}</span>
+              {/* Project Title - Bold and centered */}
+              <CardTitle className="text-xl font-bold text-center text-white mb-3 line-clamp-2">
+                {project.title}
+              </CardTitle>
+              
+              {/* Short Description */}
+              <p className="text-gray-300 text-sm text-center mb-3 line-clamp-3">
+                {project.summary}
+              </p>
+              
+              {/* Client */}
+              <div className="text-center mb-4">
+                <span className="text-sm text-muted-foreground">
+                  Client: <span className="text-elec-yellow hover:text-elec-yellow/80 transition-colors cursor-pointer">{project.awarded_to}</span>
+                </span>
+              </div>
+            </CardHeader>
+
+            <CardContent className="pt-0">
+              {/* Key Info Row - 4 icons with labels */}
+              <div className="grid grid-cols-2 gap-4 mb-6">
+                <div className="text-center">
+                  <div className="flex justify-center mb-1">
+                    <PoundSterling className="h-5 w-5 text-elec-yellow" />
                   </div>
-                  <div className="flex items-center gap-1 min-w-0">
-                    <MapPin className="h-3.5 w-3.5 text-elec-yellow/80 flex-shrink-0" />
-                    <span className="text-muted-foreground flex-shrink-0">Location:</span>
-                    <span className="ml-1 truncate text-xs sm:text-sm">{project.location || 'UK'}</span>
-                  </div>
+                  <div className="text-white font-medium text-sm">{project.project_value || 'TBC'}</div>
+                  <div className="text-xs text-muted-foreground">Contract Value</div>
                 </div>
                 
-                <div className="bg-elec-dark rounded-md p-3 flex-1">
-                  <div className="flex items-center gap-2 mb-2">
-                    <Building className="h-4 w-4 text-elec-yellow" />
-                    <span className="text-sm font-medium">Project Details</span>
+                <div className="text-center">
+                  <div className="flex justify-center mb-1">
+                    <Clock className="h-5 w-5 text-elec-yellow" />
                   </div>
-                  <p className="text-xs text-muted-foreground line-clamp-4 break-words">
-                    Client: {project.awarded_to}
-                  </p>
+                  <div className="text-white font-medium text-sm">{project.duration || '18 months'}</div>
+                  <div className="text-xs text-muted-foreground">Duration</div>
                 </div>
-              </CardContent>
+                
+                <div className="text-center">
+                  <div className="flex justify-center mb-1">
+                    <MapPin className="h-5 w-5 text-elec-yellow" />
+                  </div>
+                  <div className="text-white font-medium text-sm">{project.location || 'UK'}</div>
+                  <div className="text-xs text-muted-foreground">Location</div>
+                </div>
+                
+                <div className="text-center">
+                  <div className="flex justify-center mb-1">
+                    <Users className="h-5 w-5 text-elec-yellow" />
+                  </div>
+                  <div className="text-white font-medium text-sm">{project.contractorCount || 5}</div>
+                  <div className="text-xs text-muted-foreground">Contractors</div>
+                </div>
+              </div>
+
+              {/* Bottom Section */}
+              <div className="flex items-center justify-between">
+                {/* Start Date - Bottom left with calendar icon */}
+                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <Calendar className="h-4 w-4" />
+                  <span>
+                    {project.date_awarded 
+                      ? new Date(project.date_awarded).toLocaleDateString('en-GB')
+                      : 'TBC'
+                    }
+                  </span>
+                </div>
+                
+                {/* Bookmark button - Top right */}
+                <Button size="sm" variant="ghost" className="hover:bg-elec-yellow/10">
+                  <Bookmark className="h-4 w-4" />
+                </Button>
+              </div>
               
-              <CardFooter className="flex flex-col sm:flex-row gap-2 pt-0 flex-shrink-0">
+              {/* Action Buttons - Bottom right */}
+              <div className="flex gap-2 mt-4 justify-end">
+                {getStatusText(project.status) === "Open for Tender" && (
+                  <Button size="sm" className="bg-elec-yellow text-black hover:bg-elec-yellow/90 font-medium">
+                    View Tender Details
+                  </Button>
+                )}
+                
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button 
+                      size="sm" 
+                      variant="outline" 
+                      className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 font-medium"
+                    >
+                      <Eye className="h-4 w-4 mr-2" />
+                      View Details
+                    </Button>
+                  </DialogTrigger>
+                  <ProjectDetailModal project={project} />
+                </Dialog>
+                
                 <Button 
-                  variant="outline" 
                   size="sm" 
+                  variant="outline" 
+                  className="border-elec-dark bg-elec-dark text-white hover:bg-elec-dark/80 font-medium"
                   onClick={() => handleViewProject(project)}
-                  className="flex-1 border-elec-yellow/20 hover:border-elec-yellow/40 min-h-[44px]"
                 >
-                  <ExternalLink className="h-3 w-3 mr-1" />
-                  View Details
+                  <ExternalLink className="h-4 w-4 mr-2" />
+                  View Project
                 </Button>
-                <Button 
-                  variant="outline" 
-                  size="sm" 
-                  onClick={() => copyToClipboard(project.title, getProjectUrl(project))}
-                  className="border-elec-yellow/20 hover:border-elec-yellow/40 min-h-[44px] sm:w-auto w-full"
-                  title="Copy project info"
-                >
-                  <Copy className="h-3 w-3 sm:mr-0 mr-1" />
-                  <span className="sm:hidden">Copy Info</span>
-                </Button>
-              </CardFooter>
-            </Card>
-          ))
-        )}
+              </div>
+            </CardContent>
+          </Card>
+        ))}
       </div>
 
       <div className="text-center pt-4">
