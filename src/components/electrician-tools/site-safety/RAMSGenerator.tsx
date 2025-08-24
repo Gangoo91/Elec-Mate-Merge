@@ -126,10 +126,10 @@ const RAMSGenerator = () => {
   };
 
   const getRiskColor = (rating: number) => {
-    if (rating <= 4) return "text-green-400";
-    if (rating <= 9) return "text-yellow-400";
-    if (rating <= 16) return "text-orange-400";
-    return "text-red-400";
+    if (rating <= 4) return "bg-green-500/20 text-green-400 border-green-500/30";
+    if (rating <= 9) return "bg-amber-500/20 text-amber-400 border-amber-500/30";
+    if (rating <= 16) return "bg-orange-500/20 text-orange-400 border-orange-500/30";
+    return "bg-red-500/20 text-red-400 border-red-500/30";
   };
 
   const getRiskLevel = (rating: number) => {
