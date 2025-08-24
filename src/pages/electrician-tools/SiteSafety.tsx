@@ -20,13 +20,6 @@ import EmergencyProcedures from "@/components/electrician-tools/site-safety/Emer
 const SiteSafety = () => {
   const [activeTab, setActiveTab] = useState("rams");
 
-  const safetyStats = [
-    { label: "Active Risk Assessments", value: "12", color: "text-blue-400" },
-    { label: "Method Statements", value: "8", color: "text-green-400" },
-    { label: "Near Miss Reports", value: "3", color: "text-yellow-400" },
-    { label: "Safety Equipment Items", value: "45", color: "text-purple-400" }
-  ];
-
   const tabOptions = [
     { value: "rams", label: "RAMS Generator", icon: FileText },
     { value: "risk-assessment", label: "Risk Assessment", icon: AlertTriangle },
@@ -54,19 +47,6 @@ const SiteSafety = () => {
         </p>
         <BackButton customUrl="/electrician" label="Back to Electrical Hub" />
       </div>
-
-      {/* Safety Statistics Overview */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-        {safetyStats.map((stat, index) => (
-          <Card key={index} className="border-elec-yellow/20 bg-elec-gray/50">
-            <CardContent className="p-4 text-center">
-              <div className={`text-2xl font-bold ${stat.color}`}>{stat.value}</div>
-              <div className="text-sm text-muted-foreground">{stat.label}</div>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
-
       <Tabs defaultValue="rams" value={activeTab} onValueChange={setActiveTab} className="w-full">
         {/* Mobile Dropdown */}
         <div className="lg:hidden mb-6">
