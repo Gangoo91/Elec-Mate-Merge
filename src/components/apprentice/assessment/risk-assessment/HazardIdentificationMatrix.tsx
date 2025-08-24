@@ -4,15 +4,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { AlertTriangle, Zap, HardHat, Flame, Droplets, Wind } from "lucide-react";
-
-interface HazardCategory {
-  id: string;
-  name: string;
-  icon: any;
-  color: string;
-  hazards: string[];
-}
+import { AlertTriangle } from "lucide-react";
+import { hazardCategories, type HazardCategory } from "@/data/hazards";
 
 interface HazardIdentificationMatrixProps {
   onHazardSelected: (hazard: string) => void;
@@ -23,88 +16,7 @@ const HazardIdentificationMatrix = ({ onHazardSelected }: HazardIdentificationMa
   const [customHazard, setCustomHazard] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
 
-  const hazardCategories: HazardCategory[] = [
-    {
-      id: "electrical",
-      name: "Electrical Hazards",
-      icon: Zap,
-      color: "bg-red-500",
-      hazards: [
-        "Live conductors",
-        "Damaged cables/equipment",
-        "Overloaded circuits",
-        "Poor earthing",
-        "Arc flash potential",
-        "Static electricity",
-        "Underground cables",
-        "Overhead power lines"
-      ]
-    },
-    {
-      id: "physical",
-      name: "Physical Hazards",
-      icon: HardHat,
-      color: "bg-orange-500",
-      hazards: [
-        "Working at height",
-        "Confined spaces",
-        "Sharp edges/tools",
-        "Heavy lifting",
-        "Slip/trip hazards",
-        "Falling objects",
-        "Noise exposure",
-        "Vibration"
-      ]
-    },
-    {
-      id: "chemical",
-      name: "Chemical Hazards",
-      icon: Droplets,
-      color: "bg-purple-500",
-      hazards: [
-        "Soldering fumes",
-        "Cable burning",
-        "Cleaning solvents",
-        "Adhesives/sealants",
-        "Insulation materials",
-        "Battery acid",
-        "PCB exposure",
-        "Asbestos (old buildings)"
-      ]
-    },
-    {
-      id: "environmental",
-      name: "Environmental",
-      icon: Wind,
-      color: "bg-green-500",
-      hazards: [
-        "Extreme weather",
-        "Poor lighting",
-        "Temperature extremes",
-        "Wet conditions",
-        "Dust/particles",
-        "Ventilation issues",
-        "Site access issues",
-        "Unstable surfaces"
-      ]
-    },
-    {
-      id: "fire",
-      name: "Fire/Explosion",
-      icon: Flame,
-      color: "bg-red-600",
-      hazards: [
-        "Flammable materials",
-        "Hot work operations",
-        "Electrical faults",
-        "Gas atmospheres",
-        "Combustible dust",
-        "Oxygen enrichment",
-        "Ignition sources",
-        "Emergency egress"
-      ]
-    }
-  ];
+  // hazardCategories is now imported from shared data
 
   const filteredHazards = hazardCategories.map(category => ({
     ...category,

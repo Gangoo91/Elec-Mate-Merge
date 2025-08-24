@@ -8,6 +8,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { AlertTriangle, Plus, Save, Eye, X, Edit3, Shield } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
+import { HazardSelect } from "./common/HazardSelect";
+import { hazardCategories } from "@/data/hazards";
 
 interface RiskFactor {
   id: string;
@@ -30,15 +32,17 @@ const RiskAssessmentBuilder = () => {
     controlMeasures: []
   });
 
-  const riskCategories = [
-    "Electrical Hazards",
-    "Working at Height",
-    "Manual Handling",
-    "Chemical/Substances",
-    "Fire/Explosion",
-    "Environmental",
-    "Equipment/Tools",
-    "Human Factors"
+  const riskCategories = hazardCategories.map(cat => cat.name);
+
+  const hazardTemplates = [
+    { category: "Electrical Hazards", defaultLikelihood: 3, defaultSeverity: 4 },
+    { category: "Working at Height", defaultLikelihood: 2, defaultSeverity: 5 },
+    { category: "Asbestos & Hazardous Materials", defaultLikelihood: 2, defaultSeverity: 5 },
+    { category: "Manual Handling", defaultLikelihood: 3, defaultSeverity: 2 },
+    { category: "Fire & Explosion", defaultLikelihood: 2, defaultSeverity: 4 },
+    { category: "Environmental", defaultLikelihood: 3, defaultSeverity: 2 },
+    { category: "Tools & Equipment", defaultLikelihood: 3, defaultSeverity: 3 },
+    { category: "Human Factors", defaultLikelihood: 4, defaultSeverity: 3 }
   ];
 
   const calculateRiskLevel = (likelihood: number, severity: number) => {
@@ -170,6 +174,35 @@ const RiskAssessmentBuilder = () => {
           <CardContent className="space-y-6">
             {/* Form Fields - Stacked on Mobile */}
             <div className="space-y-4">
+              {/* Hazard Template Selection */}
+              <div>
+                <Label className="text-white text-sm font-medium">Hazard Template (Optional)</Label>
+                <Select 
+                  onValueChange={(value) => {
+                    const template = hazardTemplates.find(t => t.category === value);
+                    if (template) {
+                      setCurrentRisk(prev => ({ 
+                        ...prev, 
+                        category: template.category,
+                        likelihood: template.defaultLikelihood,
+                        severity: template.defaultSeverity
+                      }));
+                    }
+                  }}
+                >
+                  <SelectTrigger className="mt-2 bg-elec-dark/50 border-elec-yellow/20 focus:border-elec-yellow/50">
+                    <SelectValue placeholder="Choose a hazard template for suggested defaults" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-background/95 backdrop-blur-sm border-elec-yellow/20 z-50">
+                    {hazardTemplates.map(template => (
+                      <SelectItem key={template.category} value={template.category}>
+                        {template.category} (L:{template.defaultLikelihood} S:{template.defaultSeverity})
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
               {/* Risk Category */}
               <div>
                 <Label htmlFor="category" className="text-white text-sm font-medium">Risk Category</Label>
@@ -180,7 +213,7 @@ const RiskAssessmentBuilder = () => {
                   <SelectTrigger className="mt-2 bg-elec-dark/50 border-elec-yellow/20 focus:border-elec-yellow/50">
                     <SelectValue placeholder="Select risk category" />
                   </SelectTrigger>
-                  <SelectContent className="bg-elec-dark border-elec-yellow/20">
+                  <SelectContent className="bg-background/95 backdrop-blur-sm border-elec-yellow/20 z-50">
                     {riskCategories.map(category => (
                       <SelectItem key={category} value={category}>{category}</SelectItem>
                     ))}
@@ -188,15 +221,14 @@ const RiskAssessmentBuilder = () => {
                 </Select>
               </div>
 
-              {/* Risk Description */}
+              {/* Hazard Selection */}
               <div>
-                <Label htmlFor="description" className="text-white text-sm font-medium">Risk Description</Label>
-                <Textarea
-                  id="description"
+                <Label className="text-white text-sm font-medium">Specific Hazard</Label>
+                <HazardSelect
                   value={currentRisk.description || ""}
-                  onChange={(e) => setCurrentRisk(prev => ({ ...prev, description: e.target.value }))}
-                  placeholder="Describe the specific risk in detail..."
-                  className="mt-2 bg-elec-dark/50 border-elec-yellow/20 focus:border-elec-yellow/50 min-h-[80px]"
+                  onValueChange={(value) => setCurrentRisk(prev => ({ ...prev, description: value }))}
+                  placeholder="Select or search for specific hazards..."
+                  className="mt-2"
                 />
               </div>
 
@@ -211,7 +243,7 @@ const RiskAssessmentBuilder = () => {
                     <SelectTrigger className="mt-2 bg-elec-dark/50 border-elec-yellow/20 focus:border-elec-yellow/50">
                       <SelectValue placeholder="Select likelihood" />
                     </SelectTrigger>
-                    <SelectContent className="bg-elec-dark border-elec-yellow/20">
+                    <SelectContent className="bg-background/95 backdrop-blur-sm border-elec-yellow/20 z-50">
                       <SelectItem value="1">1 - Very Unlikely</SelectItem>
                       <SelectItem value="2">2 - Unlikely</SelectItem>
                       <SelectItem value="3">3 - Possible</SelectItem>
@@ -229,7 +261,7 @@ const RiskAssessmentBuilder = () => {
                     <SelectTrigger className="mt-2 bg-elec-dark/50 border-elec-yellow/20 focus:border-elec-yellow/50">
                       <SelectValue placeholder="Select severity" />
                     </SelectTrigger>
-                    <SelectContent className="bg-elec-dark border-elec-yellow/20">
+                    <SelectContent className="bg-background/95 backdrop-blur-sm border-elec-yellow/20 z-50">
                       <SelectItem value="1">1 - Negligible</SelectItem>
                       <SelectItem value="2">2 - Minor</SelectItem>
                       <SelectItem value="3">3 - Moderate</SelectItem>

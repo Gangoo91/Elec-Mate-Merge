@@ -5,8 +5,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { FileText, Download, Plus, Trash2 } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Badge } from "@/components/ui/badge";
+import { FileText, Download, Plus, Trash2, Copy } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
+import { HazardSelect } from "./common/HazardSelect";
 
 interface RAMSData {
   projectName: string;
@@ -74,6 +77,25 @@ const RAMSGenerator = () => {
     }));
   };
 
+  const duplicateRisk = (riskId: string) => {
+    const riskToDuplicate = ramsData.risks.find(r => r.id === riskId);
+    if (riskToDuplicate) {
+      const duplicatedRisk = {
+        ...riskToDuplicate,
+        id: Date.now().toString(),
+        hazard: `${riskToDuplicate.hazard} (Copy)`
+      };
+      setRAMSData(prev => ({
+        ...prev,
+        risks: [...prev.risks, duplicatedRisk]
+      }));
+      toast({
+        title: "Risk Duplicated",
+        description: "Risk assessment row has been duplicated successfully"
+      });
+    }
+  };
+
   const updateRisk = (id: string, field: string, value: any) => {
     setRAMSData(prev => ({
       ...prev,
@@ -109,6 +131,30 @@ const RAMSGenerator = () => {
     if (rating <= 9) return "Medium";
     if (rating <= 16) return "High";
     return "Very High";
+  };
+
+  const getLikelihoodDescription = (level: number) => {
+    const descriptions = [
+      "", 
+      "Very Unlikely - Rare occurrence",
+      "Unlikely - Could happen occasionally", 
+      "Possible - Might happen sometimes",
+      "Likely - Will probably happen",
+      "Very Likely - Expected to happen regularly"
+    ];
+    return descriptions[level] || "";
+  };
+
+  const getSeverityDescription = (level: number) => {
+    const descriptions = [
+      "",
+      "Negligible - Minor bruising or discomfort",
+      "Minor - First aid treatment required", 
+      "Moderate - Medical treatment required",
+      "Major - Serious injury, hospitalisation",
+      "Catastrophic - Fatality or permanent disability"
+    ];
+    return descriptions[level] || "";
   };
 
   const generateRAMS = () => {
@@ -233,10 +279,10 @@ const RAMSGenerator = () => {
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 flex-1">
                           <div>
                             <Label className="text-sm">Hazard</Label>
-                            <Input
+                            <HazardSelect
                               value={risk.hazard}
-                              onChange={(e) => updateRisk(risk.id, 'hazard', e.target.value)}
-                              placeholder="Describe the hazard"
+                              onValueChange={(value) => updateRisk(risk.id, 'hazard', value)}
+                              placeholder="Select or search hazards..."
                             />
                           </div>
                           <div>
@@ -248,52 +294,93 @@ const RAMSGenerator = () => {
                             />
                           </div>
                         </div>
-                        <Button
-                          onClick={() => removeRisk(risk.id)}
-                          size="sm"
-                          variant="outline"
-                          className="ml-2"
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </Button>
+                        <div className="flex gap-2 ml-2">
+                          <Button
+                            onClick={() => duplicateRisk(risk.id)}
+                            size="sm"
+                            variant="outline"
+                            title="Duplicate this risk"
+                          >
+                            <Copy className="h-4 w-4" />
+                          </Button>
+                          <Button
+                            onClick={() => removeRisk(risk.id)}
+                            size="sm"
+                            variant="outline"
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        </div>
                       </div>
                       
-                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
                         <div>
-                          <Label className="text-sm">Likelihood (1-5)</Label>
-                          <Input
-                            type="number"
-                            min="1"
-                            max="5"
-                            value={risk.likelihood}
-                            onChange={(e) => updateRisk(risk.id, 'likelihood', parseInt(e.target.value))}
-                          />
+                          <Label className="text-sm">Likelihood</Label>
+                          <Select 
+                            value={risk.likelihood.toString()} 
+                            onValueChange={(value) => updateRisk(risk.id, 'likelihood', parseInt(value))}
+                          >
+                            <SelectTrigger className="bg-background/80 backdrop-blur-sm border-elec-yellow/20">
+                              <SelectValue />
+                            </SelectTrigger>
+                            <SelectContent className="bg-background/95 backdrop-blur-sm border-elec-yellow/20 z-50">
+                              <SelectItem value="1">1 - Very Unlikely</SelectItem>
+                              <SelectItem value="2">2 - Unlikely</SelectItem>
+                              <SelectItem value="3">3 - Possible</SelectItem>
+                              <SelectItem value="4">4 - Likely</SelectItem>
+                              <SelectItem value="5">5 - Very Likely</SelectItem>
+                            </SelectContent>
+                          </Select>
+                          <p className="text-xs text-muted-foreground mt-1">
+                            {getLikelihoodDescription(risk.likelihood)}
+                          </p>
                         </div>
                         <div>
-                          <Label className="text-sm">Severity (1-5)</Label>
-                          <Input
-                            type="number"
-                            min="1"
-                            max="5"
-                            value={risk.severity}
-                            onChange={(e) => updateRisk(risk.id, 'severity', parseInt(e.target.value))}
-                          />
+                          <Label className="text-sm">Severity</Label>
+                          <Select 
+                            value={risk.severity.toString()} 
+                            onValueChange={(value) => updateRisk(risk.id, 'severity', parseInt(value))}
+                          >
+                            <SelectTrigger className="bg-background/80 backdrop-blur-sm border-elec-yellow/20">
+                              <SelectValue />
+                            </SelectTrigger>
+                            <SelectContent className="bg-background/95 backdrop-blur-sm border-elec-yellow/20 z-50">
+                              <SelectItem value="1">1 - Negligible</SelectItem>
+                              <SelectItem value="2">2 - Minor</SelectItem>
+                              <SelectItem value="3">3 - Moderate</SelectItem>
+                              <SelectItem value="4">4 - Major</SelectItem>
+                              <SelectItem value="5">5 - Catastrophic</SelectItem>
+                            </SelectContent>
+                          </Select>
+                          <p className="text-xs text-muted-foreground mt-1">
+                            {getSeverityDescription(risk.severity)}
+                          </p>
                         </div>
                         <div>
                           <Label className="text-sm">Risk Rating</Label>
-                          <div className={`p-2 text-center font-bold ${getRiskColor(risk.riskRating)}`}>
-                            {risk.riskRating} - {getRiskLevel(risk.riskRating)}
+                          <div className="mt-2">
+                            <Badge className={`${getRiskColor(risk.riskRating)} bg-opacity-20 text-sm font-bold`}>
+                              {risk.riskRating} - {getRiskLevel(risk.riskRating)}
+                            </Badge>
                           </div>
                         </div>
                         <div>
-                          <Label className="text-sm">Residual Risk (1-25)</Label>
-                          <Input
-                            type="number"
-                            min="1"
-                            max="25"
-                            value={risk.residualRisk}
-                            onChange={(e) => updateRisk(risk.id, 'residualRisk', parseInt(e.target.value))}
-                          />
+                          <Label className="text-sm">Residual Risk</Label>
+                          <Select 
+                            value={risk.residualRisk.toString()} 
+                            onValueChange={(value) => updateRisk(risk.id, 'residualRisk', parseInt(value))}
+                          >
+                            <SelectTrigger className="bg-background/80 backdrop-blur-sm border-elec-yellow/20">
+                              <SelectValue />
+                            </SelectTrigger>
+                            <SelectContent className="bg-background/95 backdrop-blur-sm border-elec-yellow/20 z-50">
+                              {[1,2,3,4,5,6,7,8,9,10,12,15,16,20,25].map(val => (
+                                <SelectItem key={val} value={val.toString()}>
+                                  {val} - {getRiskLevel(val)}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
                         </div>
                       </div>
                       
