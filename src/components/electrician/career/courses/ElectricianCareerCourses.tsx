@@ -98,10 +98,13 @@ const ElectricianCareerCourses = () => {
     }
   }, [debouncedSearchQuery, debouncedLocation]);
 
-  // Sorting change handler that prevents API calls
+  // Enhanced sorting change handler with forced re-computation
+  const [sortVersion, setSortVersion] = useState(0);
   const handleSortChange = (newSort: string) => {
     console.log('🔀 Changing sort to:', newSort, '(client-side only)');
     setCurrentSort(newSort);
+    setSortVersion(prev => prev + 1); // Force useMemo re-computation
+    console.log('🔄 Sort version bumped to:', sortVersion + 1);
   };
 
   // Initial load
@@ -188,6 +191,7 @@ const ElectricianCareerCourses = () => {
 
   // Enhanced filtering and sorting logic using live data
   const filteredAndSortedCourses = useMemo(() => {
+    console.log('🔄 useMemo recomputing with:', { currentSort, sortVersion, coursesCount: liveCourses.length });
     let filtered = liveCourses.filter(course => {
       // Search query filter
       if (filters.searchQuery) {
@@ -307,8 +311,13 @@ const ElectricianCareerCourses = () => {
           case "price-high":
             const priceA = parsePrice(a.price || '');
             const priceB = parsePrice(b.price || '');
-            comparison = priceA - priceB;
-            console.log(`Price sort: ${a.title} (${a.price}→£${priceA}) vs ${b.title} (${b.price}→£${priceB}) = ${comparison}`);
+            // Handle price-low vs price-high direction
+            if (sortOption.key === "price-high") {
+              comparison = priceB - priceA; // High to low
+            } else {
+              comparison = priceA - priceB; // Low to high
+            }
+            console.log(`💰 Price sort (${sortOption.key}): ${a.title} (${a.price}→£${priceA}) vs ${b.title} (${b.price}→£${priceB}) = ${comparison}`);
             if (comparison === 0) comparison = a.title.localeCompare(b.title);
             break;
             
@@ -387,7 +396,7 @@ const ElectricianCareerCourses = () => {
     }
 
     return filtered;
-  }, [liveCourses, filters, currentSort]);
+  }, [liveCourses, filters, currentSort, sortVersion]);
 
   // Remove training centers for electricians - live-only approach
   const filteredCenters: EnhancedTrainingCenter[] = [];
