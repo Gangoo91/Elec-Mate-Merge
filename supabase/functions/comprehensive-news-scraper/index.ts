@@ -9,34 +9,49 @@ const corsHeaders = {
 const URL = "https://api.firecrawl.dev/v2/search";
 
 const QUERIES = [
-  "HSE updates health and safety executive electrical",
-  "BS7671 updates electrical wiring regulations",
-  "IET updates institution engineering technology electrical",
-  "Major electrical projects UK infrastructure power",
-  "BS 7671 Updates",
-  "GOV.UK electrical regulations safety"
+  "HSE health safety executive electrical UK updates site:hse.gov.uk OR site:gov.uk",
+  "BS7671 electrical wiring regulations UK updates site:theiet.org OR site:gov.uk",
+  "IET institution engineering technology UK electrical updates site:theiet.org",
+  "UK electrical infrastructure projects contracts site:gov.uk OR site:constructionnews.co.uk",
+  "BS 7671 Updates UK electrical regulations site:theiet.org OR site:gov.uk",
+  "GOV.UK electrical safety regulations updates UK site:gov.uk"
 ];
 
 // ✅ Map long queries to clean tags
 const QUERY_TAG_MAP = {
-  "HSE updates health and safety executive electrical": "HSE",
-  "BS7671 updates electrical wiring regulations": "BS7671",
-  "IET updates institution engineering technology electrical": "IET",
-  "Major electrical projects UK infrastructure power": "Major Projects",
-  "BS 7671 Updates": "BS7671",
-  "GOV.UK electrical regulations safety": "GOV.UK"
+  "HSE health safety executive electrical UK updates site:hse.gov.uk OR site:gov.uk": "HSE",
+  "BS7671 electrical wiring regulations UK updates site:theiet.org OR site:gov.uk": "BS7671",
+  "IET institution engineering technology UK electrical updates site:theiet.org": "IET",
+  "UK electrical infrastructure projects contracts site:gov.uk OR site:constructionnews.co.uk": "Major Projects",
+  "BS 7671 Updates UK electrical regulations site:theiet.org OR site:gov.uk": "BS7671",
+  "GOV.UK electrical safety regulations updates UK site:gov.uk": "GOV.UK"
 };
+
+// ✅ Filter for UK-specific content
+function isUKRelevant(article) {
+  const text = `${article.title || ""} ${article.snippet || ""}`.toLowerCase();
+  const ukTerms = ['uk', 'united kingdom', 'britain', 'british', 'england', 'scotland', 'wales', 'northern ireland', 'gov.uk', 'hse.gov.uk', 'theiet.org'];
+  const excludeTerms = ['usa', 'us ', 'america', 'canada', 'australia', 'europe', 'eu ', 'international'];
+  
+  const hasUKTerms = ukTerms.some(term => text.includes(term));
+  const hasExcludeTerms = excludeTerms.some(term => text.includes(term));
+  const isUKDomain = (article.url || "").includes('.gov.uk') || (article.url || "").includes('.co.uk') || (article.url || "").includes('theiet.org');
+  
+  return (hasUKTerms || isUKDomain) && !hasExcludeTerms;
+}
 
 // ✅ Map API response into desired schema
 function normalizeArticles(articles, query) {
   const cleanTag = QUERY_TAG_MAP[query] || query;
-  return articles.map((a) => ({
-    title: a.title || "",
-    url: a.url || "",
-    snippet: a.snippet || "",
-    date: a.date || "",
-    tag: cleanTag
-  }));
+  return articles
+    .filter(isUKRelevant)
+    .map((a) => ({
+      title: a.title || "",
+      url: a.url || "",
+      snippet: a.snippet || "",
+      date: a.date || "",
+      tag: cleanTag
+    }));
 }
 
 async function fetchNews(query) {
