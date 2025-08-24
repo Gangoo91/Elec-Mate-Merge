@@ -204,7 +204,9 @@ const IndustryNewsCard = () => {
                         )}
                         <span className="flex items-center gap-1">
                           <Calendar className="h-3 w-3" />
-                          {format(new Date(article.date_published), 'dd MMM yyyy')}
+                          {article.date_published && article.date_published !== "" 
+                            ? format(new Date(article.date_published), 'dd MMM yyyy')
+                            : 'No date'}
                         </span>
                         {article.view_count !== undefined && (
                           <span className="flex items-center gap-1">
@@ -250,7 +252,9 @@ const IndustryNewsCard = () => {
                   </Badge>
                 )}
                 <span>
-                  Published: {selectedArticle && format(new Date(selectedArticle.date_published), 'dd MMM yyyy')}
+                  Published: {selectedArticle && selectedArticle.date_published && selectedArticle.date_published !== "" 
+                    ? format(new Date(selectedArticle.date_published), 'dd MMM yyyy')
+                    : 'No date'}
                 </span>
               </div>
             </DialogDescription>
