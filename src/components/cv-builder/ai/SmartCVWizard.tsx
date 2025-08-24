@@ -509,6 +509,7 @@ export const SmartCVWizard: React.FC<SmartCVWizardProps> = ({ onCVGenerated, onC
                 </div>
                 <Button
                   onClick={addSkill}
+                  size="lg"
                   className="bg-elec-yellow text-black hover:bg-elec-yellow/90 flex-shrink-0"
                 >
                   <Plus className="h-4 w-4" />
