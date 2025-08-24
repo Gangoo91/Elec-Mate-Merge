@@ -460,6 +460,7 @@ export const SmartCVWizard: React.FC<SmartCVWizardProps> = ({ onCVGenerated, onC
                       value={qual.institution}
                       onChange={(e) => updateQualification(index, 'institution', e.target.value)}
                       placeholder="e.g. City & Guilds, Local College"
+                      className="h-14"
                     />
                     <MobileSelectWrapper
                       label="Year Completed"
