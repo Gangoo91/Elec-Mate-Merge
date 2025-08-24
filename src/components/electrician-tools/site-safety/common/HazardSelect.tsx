@@ -23,13 +23,15 @@ interface HazardSelectProps {
   onValueChange: (value: string) => void;
   placeholder?: string;
   className?: string;
+  showQuickPicks?: boolean;
 }
 
-export function HazardSelect({
-  value,
-  onValueChange,
-  placeholder = "Select or search hazards...",
-  className
+export function HazardSelect({ 
+  value, 
+  onValueChange, 
+  placeholder = "Select hazard...", 
+  className,
+  showQuickPicks = true 
 }: HazardSelectProps) {
   const [open, setOpen] = useState(false);
   const [searchValue, setSearchValue] = useState("");
@@ -50,29 +52,7 @@ export function HazardSelect({
   };
 
   return (
-    <div className={cn("space-y-3", className)}>
-      {/* Quick Pick Common Hazards */}
-      <div>
-        <div className="text-sm font-medium text-muted-foreground mb-2">
-          Quick Pick - Common Hazards:
-        </div>
-        <div className="flex flex-wrap gap-2">
-          {commonHazards.slice(0, 6).map((hazard) => (
-            <Button
-              key={hazard}
-              variant="outline"
-              size="sm"
-              onClick={() => handleSelect(hazard)}
-              className="h-7 text-xs border-elec-yellow/30 hover:bg-elec-yellow/10"
-            >
-              {hazard}
-            </Button>
-          ))}
-        </div>
-      </div>
-
-      {/* Dropdown Selector */}
-      <Popover open={open} onOpenChange={setOpen}>
+    <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button
             variant="outline"
@@ -93,79 +73,70 @@ export function HazardSelect({
           </Button>
         </PopoverTrigger>
         <PopoverContent 
-          className="w-[400px] p-0 bg-background/95 backdrop-blur-sm border-elec-yellow/20" 
+          className="w-full p-0 bg-background/95 backdrop-blur-sm border-elec-yellow/20 z-50" 
           align="start"
-          style={{ zIndex: 9999 }}
+          style={{ width: "var(--radix-popover-trigger-width)" }}
         >
           <Command className="bg-transparent">
             <CommandInput 
               placeholder="Search hazards..." 
-              value={searchValue}
-              onValueChange={setSearchValue}
-              className="border-none focus:ring-0"
+              className="border-none bg-transparent text-foreground"
             />
-            <CommandList className="max-h-[300px]">
+            <CommandList className="max-h-80">
               <CommandEmpty>No hazards found.</CommandEmpty>
               
-              {/* Common Hazards Group */}
-              <CommandGroup heading="Common Hazards">
-                {commonHazards
-                  .filter(hazard => 
-                    hazard.toLowerCase().includes(searchValue.toLowerCase())
-                  )
-                  .map((hazard) => (
+              {/* Quick Pick Common Hazards - Conditional */}
+              {showQuickPicks && (
+                <CommandGroup heading="Quick Pick - Common Hazards">
+                  {commonHazards.map((hazard) => (
                     <CommandItem
-                      key={hazard}
+                      key={`common-${hazard}`}
                       onSelect={() => handleSelect(hazard)}
-                      className="cursor-pointer"
+                      className="cursor-pointer hover:bg-muted/50"
                     >
-                      <Check
-                        className={cn(
-                          "mr-2 h-4 w-4",
-                          value === hazard ? "opacity-100" : "opacity-0"
-                        )}
-                      />
-                      <span className="flex-1">{hazard}</span>
-                      <Badge variant="outline" className="text-xs">
-                        Common
-                      </Badge>
-                    </CommandItem>
-                  ))}
-              </CommandGroup>
-
-              {/* Category Groups */}
-              {hazardCategories.map((category) => {
-                const categoryHazards = category.hazards.filter(hazard =>
-                  hazard.toLowerCase().includes(searchValue.toLowerCase())
-                );
-                
-                if (categoryHazards.length === 0) return null;
-
-                return (
-                  <CommandGroup key={category.id} heading={category.name}>
-                    {categoryHazards.map((hazard) => (
-                      <CommandItem
-                        key={hazard}
-                        onSelect={() => handleSelect(hazard)}
-                        className="cursor-pointer"
-                      >
+                      <div className="flex items-center gap-2">
                         <Check
                           className={cn(
-                            "mr-2 h-4 w-4",
+                            "h-4 w-4",
                             value === hazard ? "opacity-100" : "opacity-0"
                           )}
                         />
-                        <span className="flex-1">{hazard}</span>
-                        <category.icon className={cn("h-3 w-3", category.color)} />
-                      </CommandItem>
-                    ))}
-                  </CommandGroup>
-                );
-              })}
+                        <span className="text-sm font-medium">{hazard}</span>
+                        <Badge variant="secondary" className="ml-auto text-xs">
+                          Common
+                        </Badge>
+                      </div>
+                    </CommandItem>
+                  ))}
+                </CommandGroup>
+              )}
+
+              {/* Hazard Categories */}
+              {hazardCategories.map((category) => (
+                <CommandGroup key={category.id} heading={category.name}>
+                  {category.hazards.map((hazard) => (
+                    <CommandItem
+                      key={hazard}
+                      onSelect={() => handleSelect(hazard)}
+                      className="cursor-pointer hover:bg-muted/50"
+                    >
+                      <div className="flex items-center gap-2 w-full">
+                        <Check
+                          className={cn(
+                            "h-4 w-4",
+                            value === hazard ? "opacity-100" : "opacity-0"
+                          )}
+                        />
+                        <span className="flex-1 text-sm">{hazard}</span>
+                        <category.icon className={cn("h-4 w-4", category.color)} />
+                      </div>
+                    </CommandItem>
+                  ))}
+                </CommandGroup>
+              ))}
             </CommandList>
           </Command>
         </PopoverContent>
       </Popover>
-    </div>
   );
 }

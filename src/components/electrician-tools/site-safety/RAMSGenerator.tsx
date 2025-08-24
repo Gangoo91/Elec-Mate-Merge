@@ -10,6 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { FileText, Download, Plus, Trash2, Copy } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { HazardSelect } from "./common/HazardSelect";
+import { RiskSelect } from "./common/RiskSelect";
 
 interface RAMSData {
   projectName: string;
@@ -110,6 +111,11 @@ const RAMSGenerator = () => {
         return risk;
       })
     }));
+  };
+
+  const updateRiskControlMeasures = (id: string, controlMeasures: string[]) => {
+    const suggestedControls = controlMeasures.join('\n• ');
+    updateRisk(id, 'controls', `• ${suggestedControls}`);
   };
 
   const removeRisk = (id: string) => {
@@ -283,14 +289,17 @@ const RAMSGenerator = () => {
                               value={risk.hazard}
                               onValueChange={(value) => updateRisk(risk.id, 'hazard', value)}
                               placeholder="Select or search hazards..."
+                              showQuickPicks={false}
                             />
                           </div>
                           <div>
-                            <Label className="text-sm">Risk</Label>
-                            <Input
+                            <Label className="text-sm">Risk / Consequence</Label>
+                            <RiskSelect
+                              selectedHazard={risk.hazard}
                               value={risk.risk}
-                              onChange={(e) => updateRisk(risk.id, 'risk', e.target.value)}
-                              placeholder="Potential harm/consequence"
+                              onValueChange={(value) => updateRisk(risk.id, 'risk', value)}
+                              onControlMeasuresChange={(controlMeasures) => updateRiskControlMeasures(risk.id, controlMeasures)}
+                              placeholder="Select potential consequence..."
                             />
                           </div>
                         </div>

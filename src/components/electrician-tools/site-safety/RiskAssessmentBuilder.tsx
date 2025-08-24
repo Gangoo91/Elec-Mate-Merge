@@ -229,6 +229,7 @@ const RiskAssessmentBuilder = () => {
                   onValueChange={(value) => setCurrentRisk(prev => ({ ...prev, description: value }))}
                   placeholder="Select or search for specific hazards..."
                   className="mt-2"
+                  showQuickPicks={false}
                 />
               </div>
 
