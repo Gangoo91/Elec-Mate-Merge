@@ -321,7 +321,7 @@ const ElectricianFurtherEducation = () => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <Card className="border-elec-yellow/20 bg-elec-gray/50">
           <CardContent className="p-4 text-center">
-            <div className="text-2xl font-bold text-elec-yellow">96%</div>
+            <div className="text-2xl font-bold text-elec-yellow">{analytics?.averageEmploymentRate || 96}%</div>
             <div className="text-sm text-muted-foreground">Electrician Employment Rate</div>
           </CardContent>
         </Card>

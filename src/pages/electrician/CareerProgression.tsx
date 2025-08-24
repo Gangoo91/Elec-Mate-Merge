@@ -13,9 +13,11 @@ import CPDTracker from "@/components/electrician/career/CPDTracker";
 import JobVacancies from "@/pages/electrician/JobVacancies";
 import { electricianCareerSections } from "@/components/electrician/career/SectionData";
 import { Briefcase } from "lucide-react";
+import { useLiveMarketData } from "@/hooks/useLiveMarketData";
 
 const CareerProgression = () => {
   const [activeSection, setActiveSection] = useState<string | null>(null);
+  const { marketData } = useLiveMarketData();
   
   const handleBackToSections = () => {
     setActiveSection(null);
@@ -92,19 +94,25 @@ const CareerProgression = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <Card className="border-elec-yellow/20 bg-elec-gray/50">
               <CardContent className="p-4 text-center">
-                <div className="text-2xl font-bold text-elec-yellow">10+</div>
+                <div className="text-2xl font-bold text-elec-yellow">
+                  {marketData?.careerpathways || '12'}+
+                </div>
                 <div className="text-sm text-muted-foreground">Advanced Pathways</div>
               </CardContent>
             </Card>
             <Card className="border-elec-yellow/20 bg-elec-gray/50">
               <CardContent className="p-4 text-center">
-                <div className="text-2xl font-bold text-elec-yellow">30+</div>
+                <div className="text-2xl font-bold text-elec-yellow">
+                  {marketData?.totalCourses || '284'}+
+                </div>
                 <div className="text-sm text-muted-foreground">Professional Courses</div>
               </CardContent>
             </Card>
             <Card className="border-elec-yellow/20 bg-elec-gray/50">
               <CardContent className="p-4 text-center">
-                <div className="text-2xl font-bold text-elec-yellow">£35k-£80k+</div>
+                <div className="text-2xl font-bold text-elec-yellow">
+                  {marketData?.professionalRange || '£35k-£80k+'}
+                </div>
                 <div className="text-sm text-muted-foreground">Professional Range</div>
               </CardContent>
             </Card>
