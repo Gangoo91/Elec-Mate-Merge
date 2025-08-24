@@ -10,16 +10,12 @@ import { format } from "date-fns";
 import { supabase } from "@/integrations/supabase/client";
 
 interface NewsArticle {
-  id: string;
+  id?: string;
   title: string;
-  summary: string;
-  content: string;
-  source_url?: string;
-  date_published: string;
-  view_count?: number;
-  average_rating?: number;
-  category?: string;
-  source_name?: string;
+  url: string;
+  snippet: string;
+  date: string;
+  tag: string;
 }
 
 const IndustryNewsCard = () => {
@@ -46,7 +42,12 @@ const IndustryNewsCard = () => {
       }
       
       console.log('Fetched live articles:', data?.articles?.length);
-      setArticles(data?.articles || []);
+      // Add IDs to articles for React keys
+      const articlesWithIds = (data?.articles || []).map((article, index) => ({
+        ...article,
+        id: `${article.url || article.title}-${index}`
+      }));
+      setArticles(articlesWithIds);
     } catch (err) {
       console.error('Error:', err);
       setError(err instanceof Error ? err.message : 'Failed to fetch news');
@@ -56,15 +57,15 @@ const IndustryNewsCard = () => {
   };
 
   // Get unique categories from articles
-  const uniqueCategories = [...new Set(articles.map(article => article.category).filter(Boolean))];
+  const uniqueCategories = [...new Set(articles.map(article => article.tag).filter(Boolean))];
 
   // Filter articles based on search and category
   const filteredArticles = articles.filter(article => {
     const matchesSearch = !searchTerm || 
       article.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      (article.summary && article.summary.toLowerCase().includes(searchTerm.toLowerCase()));
+      (article.snippet && article.snippet.toLowerCase().includes(searchTerm.toLowerCase()));
     
-    const matchesCategory = !selectedCategory || article.category === selectedCategory;
+    const matchesCategory = !selectedCategory || article.tag === selectedCategory;
     
     return matchesSearch && matchesCategory;
   });
@@ -191,35 +192,23 @@ const IndustryNewsCard = () => {
                       <h3 className="font-semibold text-white mb-2 line-clamp-2">
                         {article.title}
                       </h3>
-                      {article.summary && (
+                      {article.snippet && (
                         <p className="text-sm text-muted-foreground mb-3 line-clamp-2">
-                          {article.summary}
+                          {article.snippet}
                         </p>
                       )}
                       <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
-                        {article.category && (
+                        {article.tag && (
                           <Badge variant="secondary" className="bg-elec-yellow/20 text-elec-yellow">
-                            {article.category}
+                            {article.tag}
                           </Badge>
                         )}
                         <span className="flex items-center gap-1">
                           <Calendar className="h-3 w-3" />
-                          {article.date_published && article.date_published !== "" 
-                            ? format(new Date(article.date_published), 'dd MMM yyyy')
+                          {article.date && article.date !== "" 
+                            ? format(new Date(article.date), 'dd MMM yyyy')
                             : 'No date'}
                         </span>
-                        {article.view_count !== undefined && (
-                          <span className="flex items-center gap-1">
-                            <Eye className="h-3 w-3" />
-                            {article.view_count}
-                          </span>
-                        )}
-                        {article.average_rating !== undefined && article.average_rating > 0 && (
-                          <span className="flex items-center gap-1">
-                            <Star className="h-3 w-3" />
-                            {article.average_rating.toFixed(1)}
-                          </span>
-                        )}
                       </div>
                     </div>
                   </div>
@@ -246,37 +235,37 @@ const IndustryNewsCard = () => {
             </DialogTitle>
             <DialogDescription className="text-muted-foreground">
               <div className="flex flex-wrap items-center gap-2 mt-2">
-                {selectedArticle?.category && (
+                {selectedArticle?.tag && (
                   <Badge variant="secondary" className="bg-elec-yellow/20 text-elec-yellow">
-                    {selectedArticle.category}
+                    {selectedArticle.tag}
                   </Badge>
                 )}
                 <span>
-                  Published: {selectedArticle && selectedArticle.date_published && selectedArticle.date_published !== "" 
-                    ? format(new Date(selectedArticle.date_published), 'dd MMM yyyy')
+                  Published: {selectedArticle && selectedArticle.date && selectedArticle.date !== "" 
+                    ? format(new Date(selectedArticle.date), 'dd MMM yyyy')
                     : 'No date'}
                 </span>
               </div>
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-4 text-white">
-            {selectedArticle?.content && (
+            {selectedArticle?.snippet && (
               <div className="prose prose-invert max-w-none">
-                <p className="whitespace-pre-wrap">{selectedArticle.content}</p>
+                <p className="whitespace-pre-wrap">{selectedArticle.snippet}</p>
               </div>
             )}
-            {selectedArticle?.source_url && (
+            {selectedArticle?.url && (
               <div className="flex justify-end">
                 <Button
                   onClick={() => {
-                    if (selectedArticle.source_url) {
-                      window.open(selectedArticle.source_url, '_blank', 'noopener,noreferrer');
+                    if (selectedArticle.url) {
+                      window.open(selectedArticle.url, '_blank', 'noopener,noreferrer');
                     }
                   }}
                   className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
                 >
                   <ExternalLink className="h-4 w-4 mr-2" />
-                  View Source
+                  Read Full Article
                 </Button>
               </div>
             )}
