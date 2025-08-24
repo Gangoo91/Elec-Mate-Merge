@@ -113,31 +113,60 @@ interface SearchQuery {
   regulatory_body: string;
 }
 
-// Firecrawl v2 Search Queries (matches user's Python code)
+// Schema validation function
+function validateArticleSchema(result: any): boolean {
+  return result && 
+         result.title && result.title.trim() !== "" &&
+         result.url && result.url.trim() !== "" &&
+         result.source && result.source.trim() !== "";
+}
+
+// Normalize result structure with metadata
+function normalizeQueryResult(query: string, results: any[]): any {
+  const filteredResults = results.filter(validateArticleSchema);
+  return {
+    query,
+    fetched_at: new Date().toISOString(),
+    results: filteredResults,
+    validation_stats: {
+      total_found: results.length,
+      schema_valid: filteredResults.length,
+      filtered_out: results.length - filteredResults.length
+    }
+  };
+}
+
+// Updated search queries matching bash script exactly  
 const SEARCH_QUERIES: SearchQuery[] = [
   {
-    name: 'HSE Updates',
-    query: 'HSE update (health and safety executive) site:uk',
+    name: 'HSE',
+    query: 'HSE',
     category: 'HSE',
     regulatory_body: 'Health and Safety Executive'
   },
   {
-    name: 'BS7671 Updates', 
-    query: 'BS7671 updates site:uk',
-    category: 'BS7671',
+    name: 'BS7671',
+    query: 'BS7671',
+    category: 'BS7671', 
     regulatory_body: 'Institution of Engineering and Technology'
   },
   {
-    name: 'IET Updates',
-    query: 'IET updates site:uk', 
-    category: 'IET',
-    regulatory_body: 'Institution of Engineering and Technology'
+    name: 'TET',
+    query: 'TET',
+    category: 'TET',
+    regulatory_body: 'Electrical Testing'
   },
   {
     name: 'Major Projects',
-    query: 'Major projects site:uk',
+    query: 'Major Projects',
     category: 'Major Projects',
     regulatory_body: 'UK Government'
+  },
+  {
+    name: 'BS 7671 Updates',
+    query: 'BS 7671 Updates',
+    category: 'BS7671',
+    regulatory_body: 'Institution of Engineering and Technology'
   }
 ];
 
@@ -162,21 +191,21 @@ function isElectricallyRelevant(title: string, content: string, category: string
   return electricalKeywords.some(keyword => textToCheck.includes(keyword));
 }
 
-// Firecrawl v2 Search API function (matches user's Python code exactly)
+// Enhanced Firecrawl v2 Search API function matching bash script approach
 async function searchWithFirecrawlV2(searchQuery: SearchQuery, firecrawlApiKey: string): Promise<ProcessedArticle[]> {
   try {
-    console.log(`🔎 Searching for: ${searchQuery.query}`);
+    console.log(`🔎 Fetching: ${searchQuery.query}`);
     
-    // Use exact payload format from user's Python code
+    // Exact payload matching bash script
     const payload = {
       query: searchQuery.query,
       sources: ["news"],
       categories: [],
-      tbs: "qdr:w", // last week (changed from 24 hours for better results)
-      limit: 30,
+      tbs: "qdr:w", // last week
+      limit: 10,
       scrapeOptions: {
         onlyMainContent: true,
-        maxAge: 604800000, // 1 week in milliseconds
+        maxAge: 172800000, // 48 hours in milliseconds
         parsers: ["pdf"],
         formats: []
       }
@@ -201,27 +230,39 @@ async function searchWithFirecrawlV2(searchQuery: SearchQuery, firecrawlApiKey: 
 
     const results = await response.json();
     console.log(`📊 Raw API response for ${searchQuery.name}:`, JSON.stringify(results, null, 2));
-    console.log(`✅ Firecrawl search returned: ${results.data?.length || 0} results for ${searchQuery.name}`);
     
     if (!results.data || !Array.isArray(results.data)) {
       console.log(`No results found for ${searchQuery.name}`);
+      console.log(`✅ Firecrawl search returned: 0 results for ${searchQuery.name}`);
       return [];
     }
 
+    // Apply schema validation
+    const validResults = results.data.filter(validateArticleSchema);
+    console.log(`✅ Firecrawl search returned: ${validResults.length} results for ${searchQuery.name}`);
+    console.log(`📊 Schema validation: ${results.data.length} total, ${validResults.length} valid, ${results.data.length - validResults.length} filtered out`);
+
     const articles: ProcessedArticle[] = [];
     
-    // Process search results 
-    for (let i = 0; i < Math.min(results.data.length, 10); i++) {
-      const result = results.data[i];
+    // Process validated results  
+    for (let i = 0; i < Math.min(validResults.length, 10); i++) {
+      const result = validResults[i];
       
       try {
-        const title = result.title || `${searchQuery.category} Update ${i + 1}`;
+        const title = result.title.trim();
         const content = result.description || result.content || '';
-        const url = result.url || '';
+        const url = result.url.trim();
         const publishDate = result.publishedTime ? new Date(result.publishedTime).toISOString() : new Date().toISOString();
         
-        // Check electrical relevance
-        if (!isElectricallyRelevant(title, content, searchQuery.category)) {
+        // Enhanced electrical relevance check for TET category
+        if (searchQuery.category === 'TET') {
+          const tetKeywords = ['testing', 'test', 'inspection', 'certificate', 'calibration', 'measurement', 'pat', 'eicr'];
+          const textToCheck = `${title} ${content}`.toLowerCase();
+          if (!tetKeywords.some(keyword => textToCheck.includes(keyword))) {
+            console.log(`⏭️ Skipping non-TET relevant: ${title.substring(0, 50)}...`);
+            continue;
+          }
+        } else if (!isElectricallyRelevant(title, content, searchQuery.category)) {
           console.log(`⏭️ Skipping non-electrical: ${title.substring(0, 50)}...`);
           continue;
         }
@@ -260,7 +301,7 @@ ${content}
       }
     }
     
-    console.log(`📄 Extracted ${articles.length} relevant articles for ${searchQuery.name}`);
+    console.log(`✅ ${searchQuery.name}: ${articles.length} articles processed`);
     return articles;
     
   } catch (error) {
@@ -309,10 +350,10 @@ serve(async (req) => {
     const supabase = createClient(supabaseUrl, supabaseKey);
 
     let totalProcessed = 0;
-    let allArticles = [];
+    let allNormalizedResults = [];
     let totalErrors = 0;
 
-    // Process each search query for live results
+    // Process each search query for live results  
     console.log('🔍 Processing Firecrawl v2 search queries for live results...');
     
     for (const searchQuery of SEARCH_QUERIES) {
@@ -322,30 +363,28 @@ serve(async (req) => {
         const articles = await searchWithFirecrawlV2(searchQuery, firecrawlApiKey);
         totalProcessed += articles.length;
         
-        // Transform articles for live return
-        for (const article of articles) {
-          const articleData = {
-            id: `live-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
-            title: article.title,
-            summary: article.summary,
-            content: article.content,
-            category: article.category,
-            regulatory_body: article.regulatory_body,
-            external_id: article.external_id,
-            source_url: article.source_url,
-            external_url: article.external_url,
-            date_published: article.date_published,
-            source_name: article.regulatory_body,
-            view_count: 0,
-            average_rating: 0,
-            is_active: true,
-            content_hash: article.content_hash
-          };
+        // Transform articles with normalized structure
+        const normalizedArticles = articles.map(article => ({
+          id: `live-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+          title: article.title,
+          summary: article.summary,
+          content: article.content,
+          category: article.category,
+          regulatory_body: article.regulatory_body,
+          external_id: article.external_id,
+          source_url: article.source_url,
+          external_url: article.external_url,
+          date_published: article.date_published,
+          source_name: article.regulatory_body,
+          view_count: 0,
+          average_rating: 0,
+          is_active: true,
+          content_hash: article.content_hash
+        }));
 
-          allArticles.push(articleData);
-        }
-        
-        console.log(`✅ ${searchQuery.name}: ${articles.length} articles processed`);
+        // Create normalized result matching bash script structure
+        const normalizedResult = normalizeQueryResult(searchQuery.query, normalizedArticles);
+        allNormalizedResults.push(normalizedResult);
         
         // Rate limiting between queries
         await new Promise(resolve => setTimeout(resolve, 2000));
@@ -353,11 +392,18 @@ serve(async (req) => {
       } catch (queryError) {
         console.error(`❌ Error processing ${searchQuery.name}:`, queryError);
         totalErrors++;
+        
+        // Add empty normalized result for failed queries
+        allNormalizedResults.push(normalizeQueryResult(searchQuery.query, []));
       }
     }
 
     const executionTime = Date.now() - startTime;
+    
+    // Flatten all articles from normalized results
+    const allArticles = allNormalizedResults.flatMap(result => result.results);
     console.log(`\n🎉 Scraping complete: ${totalProcessed} processed, ${allArticles.length} articles ready, ${totalErrors} errors in ${executionTime}ms`);
+    console.log(`✅ All validated & normalized results processed`);
 
     return new Response(
       JSON.stringify({
@@ -365,6 +411,12 @@ serve(async (req) => {
         articlesProcessed: totalProcessed,
         articlesReturned: allArticles.length,
         articles: allArticles,
+        normalizedResults: allNormalizedResults,
+        validationSummary: {
+          totalQueries: SEARCH_QUERIES.length,
+          successfulQueries: SEARCH_QUERIES.length - totalErrors,
+          failedQueries: totalErrors
+        },
         errors: totalErrors,
         executionTime,
         timestamp: new Date().toISOString()
