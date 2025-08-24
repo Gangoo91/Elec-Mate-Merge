@@ -27,66 +27,154 @@ async function enhancedProjectExtraction(firecrawlApiKey: string, openaiApiKey: 
   const firecrawl = new FirecrawlApp({ apiKey: firecrawlApiKey });
   const allProjects: ProjectData[] = [];
 
-  // Enhanced UK electrical project sources
-  const sources = [
-    {
-      url: 'https://www.contractsfinder.service.gov.uk/search/services',
-      name: 'Contracts Finder - Live Opportunities',
-      category: 'Government'
-    },
-    {
-      url: 'https://www.electricaltimes.co.uk/news',
-      name: 'Electrical Times News',
-      category: 'Industry News'
-    },
-    {
-      url: 'https://www.theiet.org/publishing/inspec/inspec-direct/news/',
-      name: 'IET Engineering News',
-      category: 'Professional'
-    },
-    {
-      url: 'https://www.cips.org/supply-management/news/',
-      name: 'Supply Management',
-      category: 'Procurement'
-    }
+  console.log('Starting enhanced Firecrawl search strategy...');
+
+  // Enhanced search queries for better UK electrical project coverage
+  const searchQueries = [
+    "UK electrical infrastructure tenders awarded OR open site:gov.uk OR site:constructionnews.co.uk/contracts OR site:ted.europa.eu",
+    "electrical substation construction contracts UK 2024 2025",
+    "renewable energy grid connection projects UK tender",
+    "hospital electrical upgrade contracts UK NHS",
+    "transport electrical infrastructure UK railway underground"
   ];
 
-  console.log(`Starting batch scraping of ${sources.length} sources...`);
+  const searchUrl = "https://api.firecrawl.dev/v2/search";
+  const scrapeUrl = "https://api.firecrawl.dev/v2/scrape";
 
-  for (const source of sources) {
+  for (const query of searchQueries) {
     try {
-      console.log(`Scraping: ${source.name}`);
+      console.log(`Searching for: ${query.substring(0, 50)}...`);
       
-      const scrapeResult = await firecrawl.scrapeUrl(source.url, {
-        formats: ['markdown'],
-        includeTags: ['h1', 'h2', 'h3', 'h4', 'p', 'div', 'span', 'a', 'li'],
-        waitFor: 3000
-      });
+      // Step 1: Search for relevant URLs
+      const searchOptions = {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${firecrawlApiKey}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          query,
+          sources: ["web"],
+          limit: 3, // Increased for better coverage
+        }),
+      };
 
-      if (scrapeResult.success && scrapeResult.data?.markdown) {
-        const extractedProjects = await intelligentProjectExtraction(
-          scrapeResult.data.markdown,
-          source,
-          openaiApiKey
-        );
-        
-        console.log(`Extracted ${extractedProjects.length} projects from ${source.name}`);
-        allProjects.push(...extractedProjects);
+      const searchResponse = await fetch(searchUrl, searchOptions);
+      if (!searchResponse.ok) {
+        throw new Error(`Search API error: ${searchResponse.status}`);
       }
 
-      // Rate limiting
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      const searchData = await searchResponse.json();
       
-    } catch (error) {
-      console.error(`Error scraping ${source.name}:`, error);
+      if (!searchData?.data?.web?.length) {
+        console.log(`No results for query: ${query}`);
+        continue;
+      }
+
+      console.log(`Found ${searchData.data.web.length} URLs for query`);
+
+      // Step 2: Scrape each URL with enhanced schema
+      for (const item of searchData.data.web) {
+        try {
+          const scrapeOptions = {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${firecrawlApiKey}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              url: item.url,
+              onlyMainContent: true,
+              maxAge: 172800000,
+              parsers: ["pdf"],
+              formats: [
+                {
+                  type: "json",
+                  schema: {
+                    type: "object",
+                    properties: {
+                      title: { type: "string" },
+                      description: { type: "string" },
+                      client: { type: "string" },
+                      contract_value: { type: "string" },
+                      duration: { type: "string" },
+                      location: { type: "string" },
+                      contractors: { type: "number" },
+                      start_date: { type: "string" },
+                      deadline: { type: "string" },
+                      url_tender: { type: "string" },
+                      url_project: { type: "string" },
+                      status: { type: "string" },
+                      tender_reference: { type: "string" },
+                      cpv_codes: { type: "string" },
+                      project_stage: { type: "string" },
+                      electrical_scope: { type: "string" },
+                      estimated_contractors: { type: "number" }
+                    },
+                  },
+                },
+              ],
+            }),
+          };
+
+          const response = await fetch(scrapeUrl, scrapeOptions);
+          if (!response.ok) {
+            console.error(`Scrape API error for ${item.url}: ${response.status}`);
+            continue;
+          }
+
+          const data = await response.json();
+          
+          if (data?.data?.json) {
+            // Validate and enhance the extracted data
+            const project = data.data.json;
+            
+            // Data validation and enrichment
+            if (project.title && project.title.length > 10) {
+              const enrichedProject: ProjectData = {
+                status: intelligentStatusDetection(project.status, project.deadline, project.start_date) || "Open for Tender",
+                category: determineCategory(project.title + " " + (project.description || "")),
+                deadline: project.deadline,
+                title: project.title.substring(0, 100),
+                snippet: (project.description || project.title).substring(0, 200),
+                client: project.client || "TBC",
+                contractValue: normalizeContractValue(project.contract_value) || "TBC",
+                duration: project.duration || estimateDurationFromTitle(project.title),
+                location: normalizeLocation(project.location) || "UK",
+                contractors: project.estimated_contractors || estimateContractors(project.contract_value),
+                startDate: project.start_date,
+                url: item.url
+              };
+
+              // Filter out non-UK or non-electrical projects
+              if (isValidElectricalProject(enrichedProject)) {
+                allProjects.push(enrichedProject);
+                console.log(`Added project: ${enrichedProject.title.substring(0, 50)}...`);
+              }
+            }
+          }
+
+          // Rate limiting between scrapes
+          await new Promise(resolve => setTimeout(resolve, 1500));
+
+        } catch (scrapeError) {
+          console.error(`Error scraping ${item.url}:`, scrapeError);
+        }
+      }
+
+      // Rate limiting between search queries
+      await new Promise(resolve => setTimeout(resolve, 3000));
+
+    } catch (searchError) {
+      console.error(`Search error for query "${query}":`, searchError);
     }
   }
 
-  // Deduplicate by title similarity
+  // Deduplicate and filter results
   const deduplicatedProjects = deduplicateProjects(allProjects);
-  console.log(`Final count: ${deduplicatedProjects.length} unique projects`);
+  console.log(`Final count: ${deduplicatedProjects.length} unique projects from ${allProjects.length} total extracted`);
   
-  return deduplicatedProjects;
+  return deduplicatedProjects.slice(0, 15); // Limit to top 15 projects
 }
 
 async function intelligentProjectExtraction(
@@ -253,12 +341,166 @@ function estimateContractors(value: string): number {
 
 function deduplicateProjects(projects: ProjectData[]): ProjectData[] {
   const seen = new Set();
+  const titleSimilarityThreshold = 0.8;
+  
   return projects.filter(project => {
-    const key = project.title.toLowerCase().substring(0, 50);
-    if (seen.has(key)) return false;
-    seen.add(key);
+    const currentTitle = project.title.toLowerCase();
+    
+    // Check against existing titles for similarity
+    for (const existingTitle of seen) {
+      const similarity = calculateStringSimilarity(currentTitle, existingTitle);
+      if (similarity > titleSimilarityThreshold) {
+        return false; // Skip similar project
+      }
+    }
+    
+    seen.add(currentTitle);
     return true;
   });
+}
+
+function calculateStringSimilarity(str1: string, str2: string): number {
+  const longer = str1.length > str2.length ? str1 : str2;
+  const shorter = str1.length > str2.length ? str2 : str1;
+  
+  if (longer.length === 0) return 1.0;
+  
+  const editDistance = levenshteinDistance(longer, shorter);
+  return (longer.length - editDistance) / longer.length;
+}
+
+function levenshteinDistance(str1: string, str2: string): number {
+  const matrix = [];
+  
+  for (let i = 0; i <= str2.length; i++) {
+    matrix[i] = [i];
+  }
+  
+  for (let j = 0; j <= str1.length; j++) {
+    matrix[0][j] = j;
+  }
+  
+  for (let i = 1; i <= str2.length; i++) {
+    for (let j = 1; j <= str1.length; j++) {
+      if (str2.charAt(i - 1) === str1.charAt(j - 1)) {
+        matrix[i][j] = matrix[i - 1][j - 1];
+      } else {
+        matrix[i][j] = Math.min(
+          matrix[i - 1][j - 1] + 1,
+          matrix[i][j - 1] + 1,
+          matrix[i - 1][j] + 1
+        );
+      }
+    }
+  }
+  
+  return matrix[str2.length][str1.length];
+}
+
+function intelligentStatusDetection(status: string, deadline: string, startDate: string): string {
+  if (!status) {
+    // Intelligent status detection based on dates
+    const now = new Date();
+    
+    if (deadline) {
+      const deadlineDate = new Date(deadline);
+      if (deadlineDate > now) {
+        return "Open for Tender";
+      }
+    }
+    
+    if (startDate) {
+      const start = new Date(startDate);
+      if (start > now) {
+        return "Contract Awarded";
+      } else if (start <= now) {
+        return "In Progress";
+      }
+    }
+    
+    return "Open for Tender";
+  }
+  
+  const statusLower = status.toLowerCase();
+  if (statusLower.includes('open') || statusLower.includes('tender')) return "Open for Tender";
+  if (statusLower.includes('award') || statusLower.includes('contract')) return "Contract Awarded";
+  if (statusLower.includes('progress') || statusLower.includes('ongoing')) return "In Progress";
+  if (statusLower.includes('complet')) return "Completed";
+  
+  return status;
+}
+
+function normalizeContractValue(value: string): string {
+  if (!value) return "TBC";
+  
+  // Extract numbers and handle various formats
+  const numMatch = value.match(/[\d,]+\.?\d*/);
+  if (!numMatch) return value;
+  
+  const num = parseFloat(numMatch[0].replace(/,/g, ''));
+  
+  if (value.toLowerCase().includes('million') || value.includes('M')) {
+    return `£${num}M`;
+  } else if (value.toLowerCase().includes('thousand') || value.includes('K')) {
+    return `£${num}K`;
+  } else if (num > 1000000) {
+    return `£${(num / 1000000).toFixed(1)}M`;
+  } else if (num > 1000) {
+    return `£${(num / 1000).toFixed(0)}K`;
+  }
+  
+  return `£${num}`;
+}
+
+function normalizeLocation(location: string): string {
+  if (!location) return "UK";
+  
+  // Ensure UK is mentioned
+  if (!location.toLowerCase().includes('uk') && !location.toLowerCase().includes('united kingdom')) {
+    return `${location}, UK`;
+  }
+  
+  return location;
+}
+
+function estimateDurationFromTitle(title: string): string {
+  const titleLower = title.toLowerCase();
+  
+  if (titleLower.includes('hospital') || titleLower.includes('major')) return "24 months";
+  if (titleLower.includes('upgrade') || titleLower.includes('modernisation')) return "18 months";
+  if (titleLower.includes('installation')) return "12 months";
+  if (titleLower.includes('maintenance')) return "6 months";
+  
+  return "18 months";
+}
+
+function isValidElectricalProject(project: ProjectData): boolean {
+  const searchText = `${project.title} ${project.snippet}`.toLowerCase();
+  
+  // Must contain electrical keywords
+  const electricalKeywords = [
+    'electrical', 'power', 'grid', 'substation', 'transmission', 'distribution',
+    'transformer', 'switchgear', 'cable', 'hvdc', 'solar', 'wind', 'renewable',
+    'lighting', 'wiring', 'installation', 'electrical infrastructure'
+  ];
+  
+  const hasElectricalKeyword = electricalKeywords.some(keyword => 
+    searchText.includes(keyword)
+  );
+  
+  // Must be UK-based
+  const ukKeywords = ['uk', 'united kingdom', 'england', 'scotland', 'wales', 'northern ireland', 'britain'];
+  const hasUkKeyword = ukKeywords.some(keyword => 
+    searchText.includes(keyword) || project.location.toLowerCase().includes(keyword)
+  );
+  
+  // Filter out unwanted content
+  const excludeKeywords = ['cookie', 'privacy', 'terms', 'disclaimer', 'advertisement'];
+  const hasExcludeKeyword = excludeKeywords.some(keyword => 
+    searchText.includes(keyword)
+  );
+  
+  return hasElectricalKeyword && hasUkKeyword && !hasExcludeKeyword && project.title.length >= 20;
 }
 
 serve(async (req) => {
