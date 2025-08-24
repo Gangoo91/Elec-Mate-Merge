@@ -205,7 +205,7 @@ const IndustryNewsCard = () => {
                         )}
                         <span className="flex items-center gap-1">
                           <Calendar className="h-3 w-3" />
-                          {article.date && article.date !== "" 
+                          {article.date && article.date !== "" && !isNaN(new Date(article.date).getTime())
                             ? format(new Date(article.date), 'dd MMM yyyy')
                             : 'No date'}
                         </span>
@@ -241,7 +241,7 @@ const IndustryNewsCard = () => {
                   </Badge>
                 )}
                 <span>
-                  Published: {selectedArticle && selectedArticle.date && selectedArticle.date !== "" 
+                  Published: {selectedArticle && selectedArticle.date && selectedArticle.date !== "" && !isNaN(new Date(selectedArticle.date).getTime())
                     ? format(new Date(selectedArticle.date), 'dd MMM yyyy')
                     : 'No date'}
                 </span>
