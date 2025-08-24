@@ -17,10 +17,32 @@ export interface UnifiedJob {
   is_fresh?: boolean;
 }
 
+export interface JobSourceStatus {
+  source: string;
+  status: 'pending' | 'loading' | 'completed' | 'failed' | 'timeout';
+  jobCount: number;
+  error?: string;
+}
+
+export interface SearchProgress {
+  sources: JobSourceStatus[];
+  totalJobsFound: number;
+  completedSources: number;
+  totalSources: number;
+  isSearching: boolean;
+}
+
 export const useUnifiedJobSearch = () => {
   const [jobs, setJobs] = useState<UnifiedJob[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [searchProgress, setSearchProgress] = useState<SearchProgress>({
+    sources: [],
+    totalJobsFound: 0,
+    completedSources: 0,
+    totalSources: 0,
+    isSearching: false
+  });
 
   const searchDatabaseJobs = async (keywords: string, location?: string) => {
     try {
@@ -53,13 +75,42 @@ export const useUnifiedJobSearch = () => {
     }
   };
 
-  const searchLiveJobs = async (keywords: string, location?: string) => {
+  const searchLiveJobsWithProgress = async (keywords: string, location?: string) => {
     try {
       const { data, error } = await supabase.functions.invoke('live-job-aggregator', {
         body: {
           keywords: keywords.trim(),
           location: location?.trim() || undefined,
-          page: 1
+          page: 1,
+          progressCallback: (progress: any) => {
+            // Update progress state with partial results
+            setSearchProgress(prev => {
+              const updatedSources = prev.sources.map(source => {
+                const update = progress.sources?.find((s: any) => s.source === source.source);
+                return update ? { ...source, ...update } : source;
+              });
+              
+              const totalJobs = updatedSources.reduce((sum, s) => sum + s.jobCount, 0);
+              const completed = updatedSources.filter(s => s.status === 'completed' || s.status === 'failed' || s.status === 'timeout').length;
+              
+              return {
+                ...prev,
+                sources: updatedSources,
+                totalJobsFound: totalJobs,
+                completedSources: completed
+              };
+            });
+
+            // Update jobs with partial results
+            if (progress.partialJobs && progress.partialJobs.length > 0) {
+              setJobs(prevJobs => {
+                const newJobs = progress.partialJobs.filter((newJob: any) => 
+                  !prevJobs.some(existingJob => existingJob.id === newJob.id)
+                );
+                return [...prevJobs, ...newJobs.map((job: any) => ({ ...job, is_fresh: true }))];
+              });
+            }
+          }
         }
       });
 
@@ -129,10 +180,27 @@ export const useUnifiedJobSearch = () => {
     setLoading(true);
     setError(null);
     setJobs([]);
+    
+    // Initialize search progress
+    const initialSources: JobSourceStatus[] = [
+      { source: 'Reed', status: 'pending', jobCount: 0 },
+      { source: 'Indeed', status: 'pending', jobCount: 0 },
+      { source: 'TotalJobs', status: 'pending', jobCount: 0 },
+      { source: 'CV Library', status: 'pending', jobCount: 0 },
+      { source: 'Jobs.co.uk', status: 'pending', jobCount: 0 }
+    ];
+    
+    setSearchProgress({
+      sources: initialSources,
+      totalJobsFound: 0,
+      completedSources: 0,
+      totalSources: initialSources.length,
+      isSearching: true
+    });
 
     try {
-      // Search all job sources live via aggregator
-      const { jobs: liveJobs, summary, sourceResults } = await searchLiveJobs(keywords, location);
+      // Search all job sources live via aggregator with progress tracking
+      const { jobs: liveJobs, summary, sourceResults } = await searchLiveJobsWithProgress(keywords, location);
 
       // Sort by posted date (newest first)
       liveJobs.sort((a, b) => {
@@ -141,15 +209,24 @@ export const useUnifiedJobSearch = () => {
 
       setJobs(liveJobs);
 
+      // Final progress update
+      const completedSources = sourceResults?.filter(s => s.success).length || 0;
+      setSearchProgress(prev => ({
+        ...prev,
+        completedSources: prev.totalSources,
+        isSearching: false
+      }));
+
       const successfulSources = sourceResults?.filter(s => s.success).length || 0;
       const totalSources = sourceResults?.length || 0;
 
       toast({
-        title: "Live Search Complete",
-        description: `Found ${liveJobs.length} jobs from ${successfulSources}/${totalSources} sources: ${sourceResults?.filter(s => s.success).map(s => s.source).join(', ') || 'Reed, Indeed, TotalJobs, CV Library, Jobs.co.uk'}`
+        title: "Search Complete",
+        description: `Found ${liveJobs.length} jobs from ${successfulSources}/${totalSources} sources`
       });
 
     } catch (error) {
+      setSearchProgress(prev => ({ ...prev, isSearching: false }));
       const errorMessage = error instanceof Error ? error.message : "Search failed";
       setError(errorMessage);
       toast({
@@ -166,6 +243,7 @@ export const useUnifiedJobSearch = () => {
     jobs,
     loading,
     error,
+    searchProgress,
     searchAllJobs,
     triggerJobUpdate
   };

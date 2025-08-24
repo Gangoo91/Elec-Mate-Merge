@@ -18,47 +18,98 @@ serve(async (req) => {
     console.log(`Starting live job aggregation for: ${keywords} in ${location}`);
     
     const supabase = createClient(supabaseUrl, supabaseAnonKey);
-    const searchParams = { keywords, location, page };
     
-    // Fetch from all job sources in parallel
-    const promises = [
-      supabase.functions.invoke('reed-job-listings', { body: searchParams }),
-      supabase.functions.invoke('indeed-job-listings', { body: searchParams }),
-      supabase.functions.invoke('totaljobs-job-listings', { body: searchParams }),
-      supabase.functions.invoke('cvlibrary-job-listings', { body: searchParams }),
-      supabase.functions.invoke('jobscouk-job-listings', { body: searchParams })
+    // Define sources with individual timeouts
+    const sources = [
+      { name: 'reed-job-listings', displayName: 'Reed', timeout: 15000 },
+      { name: 'indeed-job-listings', displayName: 'Indeed', timeout: 20000 },
+      { name: 'totaljobs-job-listings', displayName: 'TotalJobs', timeout: 30000 },
+      { name: 'cvlibrary-job-listings', displayName: 'CV Library', timeout: 20000 },
+      { name: 'jobscouk-job-listings', displayName: 'Jobs.co.uk', timeout: 20000 }
     ];
 
-    const results = await Promise.allSettled(promises);
-    
-    // Process results from each source
-    const sourceResults = [];
-    const allJobs = [];
-    
-    for (let i = 0; i < results.length; i++) {
-      const result = results[i];
-      const sources = ['Reed', 'Indeed', 'TotalJobs', 'CV Library', 'Jobs.co.uk'];
-      const sourceName = sources[i];
-      
-      if (result.status === 'fulfilled' && result.value.data) {
-        const { jobs = [], total = 0 } = result.value.data;
-        sourceResults.push({
-          source: sourceName,
+    const allJobs: any[] = [];
+    const sourceResults: any[] = [];
+
+    // Process each source with individual timeout handling
+    const sourcePromises = sources.map(async ({ name, displayName, timeout }) => {
+      try {
+        console.log(`🔍 Fetching from ${displayName}...`);
+        
+        // Create timeout promise
+        const timeoutPromise = new Promise((_, reject) => 
+          setTimeout(() => reject(new Error('Timeout')), timeout)
+        );
+        
+        // Race between actual request and timeout
+        const result = await Promise.race([
+          supabase.functions.invoke(name, {
+            body: { keywords, location, page }
+          }),
+          timeoutPromise
+        ]);
+        
+        const { data, error } = result as any;
+        
+        if (error) {
+          console.log(`❌ ${displayName}: ${error.message}`);
+          return {
+            source: displayName,
+            jobCount: 0,
+            success: false,
+            error: error.message
+          };
+        }
+        
+        const jobs = data?.jobs || [];
+        console.log(`✅ ${displayName}: ${jobs.length} jobs`);
+        
+        return {
+          source: displayName,
           jobCount: jobs.length,
           success: true,
-          error: null
-        });
-        allJobs.push(...jobs);
-        console.log(`✅ ${sourceName}: ${jobs.length} jobs`);
-      } else {
-        const error = result.status === 'rejected' ? result.reason?.message : 'Unknown error';
+          error: null,
+          jobs
+        };
+        
+      } catch (error) {
+        if (error instanceof Error && error.message === 'Timeout') {
+          console.log(`⏱️ ${displayName}: Request timed out after ${timeout}ms`);
+          return {
+            source: displayName,
+            jobCount: 0,
+            success: false,
+            error: `Timed out after ${timeout/1000}s`
+          };
+        } else {
+          console.log(`❌ ${displayName}: Unknown error`);
+          return {
+            source: displayName,
+            jobCount: 0,
+            success: false,
+            error: 'Unknown error'
+          };
+        }
+      }
+    });
+
+    // Wait for all sources to complete (with their individual timeouts)
+    const results = await Promise.allSettled(sourcePromises);
+    
+    // Process results
+    for (const result of results) {
+      if (result.status === 'fulfilled') {
+        const sourceResult = result.value;
         sourceResults.push({
-          source: sourceName,
-          jobCount: 0,
-          success: false,
-          error
+          source: sourceResult.source,
+          jobCount: sourceResult.jobCount,
+          success: sourceResult.success,
+          error: sourceResult.error
         });
-        console.log(`❌ ${sourceName}: ${error}`);
+        
+        if (sourceResult.jobs) {
+          allJobs.push(...sourceResult.jobs);
+        }
       }
     }
 

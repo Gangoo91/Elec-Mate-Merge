@@ -30,6 +30,7 @@ import { formatDistanceToNow } from "date-fns";
 import { LocationService } from "@/services/locationService";
 import { useUnifiedJobSearch, UnifiedJob } from "@/hooks/job-vacancies/useUnifiedJobSearch";
 import SearchError from "./SearchError";
+import JobSourceProgress from "./JobSourceProgress";
 import { Skeleton } from "@/components/ui/skeleton";
 const UnifiedJobSearch = () => {
   const [query, setQuery] = useState("electrician");
@@ -41,7 +42,7 @@ const UnifiedJobSearch = () => {
   const [showLocationSuggestions, setShowLocationSuggestions] = useState(false);
   const [showFilters, setShowFilters] = useState(false);
 
-  const { jobs, loading, error, searchAllJobs, triggerJobUpdate } = useUnifiedJobSearch();
+  const { jobs, loading, error, searchProgress, searchAllJobs, triggerJobUpdate } = useUnifiedJobSearch();
 
   const salaryRanges = [
     { value: "all", label: "All Salaries" },
@@ -421,8 +422,13 @@ const UnifiedJobSearch = () => {
       {/* Error Display */}
       {error && <SearchError error={error} onRetry={() => handleSearch()} />}
 
-      {/* Loading state */}
-      {loading && (
+      {/* Search Progress */}
+      {(searchProgress.isSearching || searchProgress.totalJobsFound > 0) && (
+        <JobSourceProgress searchProgress={searchProgress} />
+      )}
+
+      {/* Loading state with partial results */}
+      {loading && jobs.length === 0 && (
         <div className="grid gap-4">
           {[1,2,3].map((i) => (
             <Card key={i} className="border-elec-yellow/20 bg-elec-card">
@@ -447,7 +453,7 @@ const UnifiedJobSearch = () => {
         <div className="space-y-4">
           <div className="flex items-center justify-between flex-wrap gap-2">
             <h3 className="text-lg font-semibold text-elec-light">
-              Job Results ({filteredJobs.length} jobs found)
+              {searchProgress.isSearching ? 'Partial Results' : 'Job Results'} ({filteredJobs.length} jobs{searchProgress.isSearching ? ' so far' : ' found'})
             </h3>
             <div className="flex gap-2">
               <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
