@@ -497,14 +497,16 @@ export const SmartCVWizard: React.FC<SmartCVWizardProps> = ({ onCVGenerated, onC
 
             <div className="space-y-4">
               <div className="flex gap-2">
-                <MobileInput
-                  label=""
-                  type="text"
-                  value={newSkill}
-                  onChange={(e) => setNewSkill(e.target.value)}
-                  onKeyPress={(e) => e.key === 'Enter' && addSkill()}
-                  placeholder="Add a skill..."
-                />
+                <div className="flex-1">
+                  <MobileInput
+                    label=""
+                    type="text"
+                    value={newSkill}
+                    onChange={(e) => setNewSkill(e.target.value)}
+                    onKeyPress={(e) => e.key === 'Enter' && addSkill()}
+                    placeholder="Add a skill..."
+                  />
+                </div>
                 <Button
                   onClick={addSkill}
                   className="bg-elec-yellow text-black hover:bg-elec-yellow/90 flex-shrink-0"
