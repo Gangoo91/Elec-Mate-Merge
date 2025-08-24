@@ -10,7 +10,8 @@ import EnhancedCourseSearch from "./EnhancedCourseSearch";
 import CourseSorting, { sortOptions } from "./CourseSorting";
 import FeaturedCoursesCarousel from "./FeaturedCoursesCarousel";
 import CourseBookmarkManager, { useBookmarkManager } from "./CourseBookmarkManager";
-import CourseCompareMode, { useCourseComparison } from "./CourseCompareMode";
+import CourseCompareMode from "./CourseCompareMode";
+import { useCourseComparison } from "@/hooks/useCourseComparison";
 import CourseMap from "./CourseMap";
 import GoogleMapsLoader from "../../../job-vacancies/GoogleMapsLoader";
 import { 
@@ -31,6 +32,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import CourseGridSkeleton from "./CourseGridSkeleton";
 import { useCareerBookmarks } from "@/hooks/career/useCareerBookmarks";
 import { parsePrice, parseDuration, parseDate, getNumericRating, getDemandScore, getFutureProofingScore } from "@/utils/courseSorting";
+import { fallbackElectricalCourses } from "@/data/fallbackCourses";
 
 const ElectricianCareerCourses = () => {
   const [selectedCourse, setSelectedCourse] = useState<EnhancedCareerCourse | null>(null);
@@ -51,7 +53,15 @@ const ElectricianCareerCourses = () => {
   const { toast } = useToast();
   const isMobile = useIsMobile();
   const { toggleBookmark: toggleDatabaseBookmark, isBookmarked: isDatabaseBookmarked } = useCareerBookmarks();
-  const { addToComparison, removeFromComparison, isInComparison, selectedCount } = useCourseComparison();
+  const { 
+    addToComparison, 
+    removeFromComparison, 
+    clearComparison,
+    isInComparison, 
+    selectedCount, 
+    selectedCourses,
+    selectedCourseData 
+  } = useCourseComparison();
 
   // Search and filter state
   const [filters, setFilters] = useState({
@@ -84,11 +94,11 @@ const ElectricianCareerCourses = () => {
     true // Enable auto-refetch
   );
 
-  // Extract data from query result with proper typing
-  const liveCourses = queryResult?.courses || [];
-  const liveTotal = queryResult?.total || 0;
+  // Extract data from query result with proper typing and fallback
+  const liveCourses = queryResult?.courses || (isError ? fallbackElectricalCourses : []);
+  const liveTotal = queryResult?.total || liveCourses.length;
   const liveSummary = queryResult?.summary;
-  const isLiveData = !!queryResult;
+  const isLiveData = !!queryResult && !isError;
   const liveError = isError ? (queryError?.message || "Failed to fetch course data") : null;
 
   // Auto-refetch courses when debounced search criteria change  
@@ -703,6 +713,10 @@ const ElectricianCareerCourses = () => {
         <CourseCompareMode
           courses={liveCourses}
           onViewDetails={viewCourseDetails}
+          selectedCourseData={selectedCourseData}
+          onAddToComparison={(course) => addToComparison(course.id, course)}
+          onRemoveFromComparison={removeFromComparison}
+          onClearComparison={clearComparison}
         />
       )}
 
@@ -814,7 +828,7 @@ const ElectricianCareerCourses = () => {
                       <Button
                         variant="ghost"
                         size="sm"
-                        onClick={() => addToComparison(course.id)}
+                        onClick={() => addToComparison(course.id, course)}
                         className={`min-h-[40px] min-w-[40px] p-0 md:h-8 md:w-8 rounded-full bg-background/80 backdrop-blur-sm border border-border/50 ${isInComparison(course.id) ? 
                           'text-blue-400 hover:text-blue-300 border-blue-400/50' : 
                           'text-muted-foreground hover:text-blue-400 hover:border-blue-400/50'

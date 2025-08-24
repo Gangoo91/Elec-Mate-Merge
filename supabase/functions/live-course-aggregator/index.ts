@@ -122,11 +122,13 @@ serve(async (req) => {
       };
       
       try {
-        // Stage 1: Get basic course list from search results
+      // Stage 1: Get basic course list from search results  
+        const searchUrl = `https://www.reed.co.uk/courses/search?keywords=${encodeURIComponent(keywords)}&location=${encodeURIComponent(location)}`;
+        console.log(`🔍 Searching courses at: ${searchUrl}`);
+        
         const searchData = await makeFirecrawlRequest('https://api.firecrawl.dev/v2/scrape', {
-          url: "www.reed.co.uk/courses/?keywords=Electrical%20Career%20Courses%20%26%20Training",
+          url: searchUrl,
           onlyMainContent: true,
-          maxAge: 172800000,
           formats: [{
             type: "json",
             schema: {
