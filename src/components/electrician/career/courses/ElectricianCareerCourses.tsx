@@ -340,8 +340,21 @@ const ElectricianCareerCourses = () => {
             break;
             
           case "title":
-            comparison = a.title.localeCompare(b.title);
-            console.log(`Title sort: ${a.title} vs ${b.title} = ${comparison}`);
+            // Enhanced alphabetical sorting with robust validation
+            const titleA = a.title || '';
+            const titleB = b.title || '';
+            
+            if (!titleA && !titleB) {
+              comparison = 0;
+            } else if (!titleA) {
+              comparison = 1; // Move invalid titles to end
+            } else if (!titleB) {
+              comparison = -1; // Move invalid titles to end
+            } else {
+              comparison = titleA.localeCompare(titleB);
+            }
+            
+            console.log(`📝 Title sort: "${titleA}" vs "${titleB}" = ${comparison}`);
             break;
             
           case "provider":
