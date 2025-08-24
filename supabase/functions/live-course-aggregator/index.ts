@@ -80,6 +80,8 @@ serve(async (req) => {
       
       const sourceResults = [];
       let uniqueCourses = [];
+      let originalCount = 0;
+      let duplicatesRemoved = 0;
       
       // Helper function for API calls with retry logic
       const makeFirecrawlRequest = async (url: string, body: any, maxRetries = 3) => {
@@ -433,9 +435,9 @@ serve(async (req) => {
       }));
 
       // Remove duplicates based on title + provider
-      const originalCount = allCourses.length;
+      originalCount = allCourses.length;
       uniqueCourses = removeDuplicates(allCourses);
-      const duplicatesRemoved = originalCount - uniqueCourses.length;
+      duplicatesRemoved = originalCount - uniqueCourses.length;
 
       console.log(`📊 Original courses: ${originalCount}, After deduplication: ${uniqueCourses.length}, Duplicates removed: ${duplicatesRemoved}`);
 
