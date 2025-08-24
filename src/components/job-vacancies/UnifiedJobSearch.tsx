@@ -467,75 +467,75 @@ const UnifiedJobSearch = () => {
             </div>
           </div>
           
-          <div className="grid gap-4">{filteredJobs.map((job) => {
+          <div className="grid gap-4 overflow-hidden">{filteredJobs.map((job) => {
               const matchPercentage = getMatchPercentage(job);
               
               return (
-                <Card key={job.id} className="border-elec-yellow/20 bg-elec-card hover:border-elec-yellow/40 transition-all duration-200 group">
+                <Card key={job.id} className="border-elec-yellow/20 bg-elec-card hover:border-elec-yellow/40 transition-all duration-200 group overflow-hidden">
                   <CardContent className="p-3 sm:p-4 md:p-6">
-                    <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
-                      <div className="flex-1 space-y-3 w-full">
-                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-                          <div className="text-left w-full sm:w-auto">
+                    <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4 max-w-full min-w-0">
+                      <div className="flex-1 space-y-3 w-full min-w-0">
+                        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
+                          <div className="text-left w-full sm:flex-1 min-w-0">
                             <h3 className="text-base sm:text-lg font-semibold text-elec-light group-hover:text-elec-yellow transition-colors line-clamp-2">
                               {job.title}
                             </h3>
-                            <div className="flex items-center gap-2 mt-1 text-muted-foreground text-sm">
-                              <Building2 className="h-3 w-3 sm:h-4 sm:w-4" />
+                            <div className="flex items-center gap-2 mt-1 text-muted-foreground text-sm min-w-0">
+                              <Building2 className="h-3 w-3 sm:h-4 sm:w-4 shrink-0" />
                               <span className="truncate">{job.company}</span>
                             </div>
                           </div>
                           
                           <div className="flex flex-wrap items-center gap-2 sm:shrink-0">
-                            <div className="flex items-center gap-1.5 sm:gap-2 bg-elec-yellow/10 px-2 sm:px-3 py-1 rounded-full">
+                            <div className="flex items-center gap-1.5 sm:gap-2 bg-elec-yellow/10 px-2 sm:px-3 py-1 rounded-full shrink-0">
                               <Zap className="h-3 w-3 sm:h-4 sm:w-4 text-elec-yellow" />
-                              <span className="text-xs sm:text-sm font-semibold text-elec-yellow">
+                              <span className="text-xs sm:text-sm font-semibold text-elec-yellow whitespace-nowrap">
                                 {matchPercentage}% match
                               </span>
                             </div>
                             {job.source && (
                               <Badge 
                                 variant="outline" 
-                                className={`text-xs ${
+                                className={`text-xs shrink-0 ${
                                   job.is_fresh 
                                     ? 'border-green-500/30 text-green-400' 
                                     : 'border-elec-yellow/30 text-elec-yellow'
                                 }`}
                               >
                                 {job.is_fresh && <Zap className="h-3 w-3 mr-1" />}
-                                {job.source}
+                                <span className="truncate max-w-[60px]">{job.source}</span>
                               </Badge>
                             )}
                           </div>
                         </div>
 
                         <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-xs sm:text-sm text-muted-foreground">
-                          <div className="flex items-center gap-1">
-                            <MapPin className="h-3 w-3 sm:h-4 sm:w-4" />
-                            <span className="truncate max-w-[120px] sm:max-w-none">{job.location}</span>
+                          <div className="flex items-center gap-1 min-w-0">
+                            <MapPin className="h-3 w-3 sm:h-4 sm:w-4 shrink-0" />
+                            <span className="truncate max-w-[100px] sm:max-w-[150px]">{job.location}</span>
                           </div>
                           
-                          <div className="flex items-center gap-1">
+                          <div className="flex items-center gap-1 shrink-0">
                             <Briefcase className="h-3 w-3 sm:h-4 sm:w-4" />
-                            <span>{job.type}</span>
+                            <span className="whitespace-nowrap">{job.type}</span>
                           </div>
                           
                           {formatSalary(job.salary) && (
-                            <div className="flex items-center gap-1">
-                              <PoundSterling className="h-3 w-3 sm:h-4 sm:w-4" />
-                              <span className="font-medium text-elec-yellow truncate">
+                            <div className="flex items-center gap-1 min-w-0">
+                              <PoundSterling className="h-3 w-3 sm:h-4 sm:w-4 shrink-0" />
+                              <span className="font-medium text-elec-yellow truncate max-w-[80px] sm:max-w-[120px]">
                                 {formatSalary(job.salary)}
                               </span>
                             </div>
                           )}
                           
-                          <div className="flex items-center gap-1">
+                          <div className="flex items-center gap-1 shrink-0">
                             <Calendar className="h-3 w-3 sm:h-4 sm:w-4" />
-                            <span className="truncate">{formatDate(job.posted_date)}</span>
+                            <span className="whitespace-nowrap">{formatDate(job.posted_date)}</span>
                           </div>
                         </div>
 
-                        <p className="text-muted-foreground text-xs sm:text-sm leading-relaxed line-clamp-2 text-left">
+                        <p className="text-muted-foreground text-xs sm:text-sm leading-relaxed line-clamp-2 text-left max-w-full overflow-hidden">
                           {formatDescription(job.description)}
                         </p>
                       </div>
@@ -543,7 +543,7 @@ const UnifiedJobSearch = () => {
                       <div className="w-full lg:w-auto lg:ml-6 shrink-0">
                         <Button 
                           onClick={() => handleApply(job.id, job.external_url)}
-                          className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 transition-colors w-full lg:w-auto min-w-[120px] h-10 min-h-[44px] lg:min-h-0"
+                          className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 transition-colors w-full lg:w-auto min-w-[100px] lg:min-w-[120px] h-10 min-h-[44px] lg:min-h-0"
                         >
                           <ExternalLink className="mr-2 h-4 w-4" />
                           <span>Apply Now</span>
