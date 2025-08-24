@@ -542,10 +542,11 @@ Deno.serve(async (req) => {
 
     console.log(`📊 Original courses: ${originalCount}, After deduplication: ${uniqueCourses.length}, Duplicates removed: ${duplicatesRemoved}`);
 
-    // Add fallback data if no courses found
-    if (uniqueCourses.length === 0) {
-      console.log('📚 No courses scraped, adding fallback data...');
+    // Add fallback data if no courses found or if API key is missing
+    if (uniqueCourses.length === 0 || !Deno.env.get('FIRECRAWL_API_KEY')) {
+      console.log('📚 No courses scraped or API key missing, adding fallback data...');
       uniqueCourses = getFallbackEducationData();
+      sourceResults.push('Fallback data: 6 programmes');
     }
 
     // Generate analytics
