@@ -33,27 +33,47 @@ export const parseDuration = (durationString: string): number => {
   if (!durationString || typeof durationString !== 'string') return 999999;
   
   const str = durationString.toLowerCase();
+  console.log('🕐 Parsing duration:', durationString);
   
   // Handle "contact provider" or similar placeholders
   if (str.includes('contact') || str.includes('call') || str.includes('enquire')) {
+    console.log('📞 Contact for duration detected');
     return 999999;
   }
   
-  // Extract number from duration
-  const numberMatch = str.match(/(\d+)/);
-  if (!numberMatch) return 999999;
+  // Extract number from duration (handle decimals too)
+  const numberMatch = str.match(/(\d+(?:\.\d+)?)/);
+  if (!numberMatch) {
+    console.log('🚫 No numbers found in duration string');
+    return 999999;
+  }
   
-  const number = parseInt(numberMatch[1]);
-  if (isNaN(number)) return 999999;
+  const number = parseFloat(numberMatch[1]);
+  if (isNaN(number)) {
+    console.log('🚫 Invalid number in duration');
+    return 999999;
+  }
+  
+  let result: number;
   
   // Convert to weeks for standardisation
-  if (str.includes('day')) return number / 7; // Days to weeks
-  if (str.includes('week')) return number;
-  if (str.includes('month')) return number * 4; // Months to weeks
-  if (str.includes('year')) return number * 52; // Years to weeks
+  if (str.includes('hour')) {
+    result = number / (40 * 7); // Assuming 40 hours per week
+  } else if (str.includes('day')) {
+    result = number / 7; // Days to weeks
+  } else if (str.includes('week')) {
+    result = number;
+  } else if (str.includes('month')) {
+    result = number * 4; // Months to weeks
+  } else if (str.includes('year')) {
+    result = number * 52; // Years to weeks
+  } else {
+    // Default to treating as weeks
+    result = number;
+  }
   
-  // Default to the number as weeks
-  return number;
+  console.log(`⏱️ Parsed duration result: ${durationString} -> ${result} weeks`);
+  return result;
 };
 
 export const parseDate = (dateString: string | string[]): Date => {

@@ -91,12 +91,18 @@ const ElectricianCareerCourses = () => {
   const isLiveData = !!queryResult;
   const liveError = isError ? (queryError?.message || "Failed to fetch course data") : null;
 
-  // Auto-refetch courses when debounced search criteria change
+  // Auto-refetch courses when debounced search criteria change  
   useEffect(() => {
     if (debouncedSearchQuery || debouncedLocation !== "All Locations") {
-      console.log('Triggering course search with:', { debouncedSearchQuery, debouncedLocation });
+      console.log('🔄 Triggering course search with:', { debouncedSearchQuery, debouncedLocation });
     }
   }, [debouncedSearchQuery, debouncedLocation]);
+
+  // Sorting change handler that prevents API calls
+  const handleSortChange = (newSort: string) => {
+    console.log('🔀 Changing sort to:', newSort, '(client-side only)');
+    setCurrentSort(newSort);
+  };
 
   // Initial load
   useEffect(() => {
@@ -361,7 +367,7 @@ const ElectricianCareerCourses = () => {
             if (comparison === 0) comparison = a.title.localeCompare(b.title);
         }
         
-        return sortOption.direction === "desc" ? comparison : -comparison;
+        return sortOption.direction === "asc" ? comparison : -comparison;
       });
       
       console.log('✅ Sorted courses:', filtered.slice(0, 3).map(c => c.title));
@@ -690,7 +696,7 @@ const ElectricianCareerCourses = () => {
       {viewMode !== "map" && (
         <CourseSorting
           currentSort={currentSort}
-          onSortChange={setCurrentSort}
+          onSortChange={handleSortChange}
           totalResults={filteredAndSortedCourses.length}
           viewMode={viewMode as "grid" | "list"}
           onViewModeChange={(mode) => setViewMode(mode as "grid" | "list" | "map")}
