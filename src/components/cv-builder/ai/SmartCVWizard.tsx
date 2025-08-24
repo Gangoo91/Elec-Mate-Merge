@@ -461,12 +461,20 @@ export const SmartCVWizard: React.FC<SmartCVWizardProps> = ({ onCVGenerated, onC
                       onChange={(e) => updateQualification(index, 'institution', e.target.value)}
                       placeholder="e.g. City & Guilds, Local College"
                     />
-                    <MobileInput
+                    <MobileSelectWrapper
                       label="Year Completed"
-                      type="text"
+                      placeholder="Select year"
                       value={qual.year}
-                      onChange={(e) => updateQualification(index, 'year', e.target.value)}
-                      placeholder="e.g. 2024, In Progress"
+                      onValueChange={(value) => updateQualification(index, 'year', value)}
+                      options={(() => {
+                        const currentYear = new Date().getFullYear();
+                        const years = [];
+                        years.push({ value: "in-progress", label: "In Progress" });
+                        for (let year = currentYear + 1; year >= 1980; year--) {
+                          years.push({ value: year.toString(), label: year.toString() });
+                        }
+                        return years;
+                      })()}
                     />
                   </div>
                 </div>
