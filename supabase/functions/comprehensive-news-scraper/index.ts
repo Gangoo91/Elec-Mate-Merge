@@ -17,15 +17,25 @@ const QUERIES = [
   "GOV.UK electrical regulations safety"
 ];
 
+// ✅ Map long queries to clean tags
+const QUERY_TAG_MAP = {
+  "HSE updates health and safety executive electrical": "HSE",
+  "BS7671 updates electrical wiring regulations": "BS7671",
+  "IET updates institution engineering technology electrical": "IET",
+  "Major electrical projects UK infrastructure power": "Major Projects",
+  "BS 7671 Updates": "BS7671",
+  "GOV.UK electrical regulations safety": "GOV.UK"
+};
+
 // ✅ Map API response into desired schema
 function normalizeArticles(articles, query) {
-  console.log(`🔎 Fetching: ${query}`);
+  const cleanTag = QUERY_TAG_MAP[query] || query;
   return articles.map((a) => ({
     title: a.title || "",
     url: a.url || "",
     snippet: a.snippet || "",
     date: a.date || "",
-    tag: query || ""
+    tag: cleanTag
   }));
 }
 
