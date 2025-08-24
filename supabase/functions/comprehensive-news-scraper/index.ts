@@ -172,11 +172,11 @@ async function searchWithFirecrawlV2(searchQuery: SearchQuery, firecrawlApiKey: 
       query: searchQuery.query,
       sources: ["news"],
       categories: [],
-      tbs: "qdr:d", // last 24 hours
+      tbs: "qdr:w", // last week (changed from 24 hours for better results)
       limit: 30,
       scrapeOptions: {
         onlyMainContent: true,
-        maxAge: 172800000,
+        maxAge: 604800000, // 1 week in milliseconds
         parsers: ["pdf"],
         formats: []
       }
@@ -191,12 +191,16 @@ async function searchWithFirecrawlV2(searchQuery: SearchQuery, firecrawlApiKey: 
       body: JSON.stringify(payload)
     });
 
+    console.log(`📡 API Response status: ${response.status} for ${searchQuery.name}`);
+
     if (!response.ok) {
-      console.error(`❌ Firecrawl search failed for ${searchQuery.name}: ${response.status} ${response.statusText}`);
+      const errorText = await response.text();
+      console.error(`❌ Firecrawl search failed for ${searchQuery.name}: ${response.status} ${response.statusText}`, errorText);
       return [];
     }
 
     const results = await response.json();
+    console.log(`📊 Raw API response for ${searchQuery.name}:`, JSON.stringify(results, null, 2));
     console.log(`✅ Firecrawl search returned: ${results.data?.length || 0} results for ${searchQuery.name}`);
     
     if (!results.data || !Array.isArray(results.data)) {
@@ -285,8 +289,22 @@ serve(async (req) => {
     }
 
     if (!firecrawlApiKey) {
-      throw new Error('Missing Firecrawl API key');
+      console.error('❌ FIRECRAWL_API_KEY not found in environment variables');
+      return new Response(
+        JSON.stringify({ 
+          success: false, 
+          error: 'Firecrawl API key not configured. Please add FIRECRAWL_API_KEY to Edge Function secrets.',
+          articlesInserted: 0,
+          errors: 1
+        }),
+        { 
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          status: 500 
+        }
+      );
     }
+    
+    console.log('✅ Firecrawl API key found, proceeding with search...');
 
     const supabase = createClient(supabaseUrl, supabaseKey);
 
