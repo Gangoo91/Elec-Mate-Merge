@@ -95,6 +95,30 @@ const MajorProjectsCard = () => {
     fetchMajorProjects();
   }, []);
 
+  // Validate project data quality
+  const isValidProject = (project: any): boolean => {
+    if (!project.title || !project.summary || !project.awarded_to) return false;
+    
+    // Filter out test data and meaningless entries
+    const title = project.title.toLowerCase();
+    const summary = project.summary.toLowerCase();
+    const awardedTo = project.awarded_to.toLowerCase();
+    
+    // Check for minimum content quality
+    if (project.title.length < 5 || project.summary.length < 10) return false;
+    
+    // Filter out obvious test data patterns
+    const testPatterns = /^[a-z]{1,5}$|^test|^example|^sample/i;
+    if (testPatterns.test(project.title) || testPatterns.test(project.awarded_to)) return false;
+    
+    // Check for meaningful content
+    const hasValidWords = title.includes('electrical') || title.includes('infrastructure') || 
+                         title.includes('project') || title.includes('contract') ||
+                         summary.includes('electrical') || summary.includes('infrastructure');
+    
+    return hasValidWords;
+  };
+
   const fetchMajorProjects = async () => {
     setIsLoading(true);
     try {
@@ -129,8 +153,9 @@ const MajorProjectsCard = () => {
         console.error('Scraping failed:', scrapeError);
       }
 
-      // Map database projects to component format  
-      const mappedProjects: MajorProject[] = (dbProjects || []).map(project => ({
+      // Filter and map database projects to component format  
+      const validDbProjects = (dbProjects || []).filter(isValidProject);
+      const mappedProjects: MajorProject[] = validDbProjects.map(project => ({
         id: project.id,
         title: project.title,
         summary: project.summary,
@@ -150,19 +175,22 @@ const MajorProjectsCard = () => {
         source_url: project.source_url
       }));
 
-      // Use live data if available, otherwise fallback to static projects
+      // Use live data if available and valid, otherwise fallback to static projects
       const finalProjects = mappedProjects.length > 0 ? mappedProjects : staticProjects;
       setProjects(finalProjects);
       setLastUpdated(new Date().toLocaleTimeString());
       
       const newProjectsCount = scrapeResult?.scrapedProjects || 0;
       const totalProjects = mappedProjects.length;
+      const isUsingFallback = mappedProjects.length === 0;
+      
+      console.log(`Projects loaded: ${totalProjects} valid DB projects, ${finalProjects.length} total shown`);
       
       toast({
         title: "Projects Updated",
-        description: totalProjects > 0 
-          ? `Showing ${totalProjects} projects${newProjectsCount > 0 ? ` (${newProjectsCount} newly scraped)` : ''}` 
-          : "Using fallback project data - live scraping in progress",
+        description: isUsingFallback 
+          ? "Showing example projects - live scraping in progress" 
+          : `Showing ${totalProjects} live projects${newProjectsCount > 0 ? ` (${newProjectsCount} newly scraped)` : ''}`,
         duration: 3000,
       });
 
@@ -171,7 +199,7 @@ const MajorProjectsCard = () => {
       setProjects(staticProjects);
       toast({
         title: "Error",
-        description: "Failed to fetch project data, showing fallback data",
+        description: "Failed to fetch project data, showing example projects",
         variant: "destructive",
         duration: 3000,
       });
