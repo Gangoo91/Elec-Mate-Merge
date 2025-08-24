@@ -1,5 +1,6 @@
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -37,9 +38,7 @@ interface MajorProject {
 const MajorProjectsCard = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
-  const [projects, setProjects] = useState<MajorProject[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [lastUpdated, setLastUpdated] = useState<string | null>(null);
+  const queryClient = useQueryClient();
   const [isSubmissionDialogOpen, setIsSubmissionDialogOpen] = useState(false);
 
   // Enhanced static fallback projects with real URLs
@@ -93,10 +92,6 @@ const MajorProjectsCard = () => {
     }
   ];
 
-  useEffect(() => {
-    fetchMajorProjects();
-  }, []);
-
   // Validate project data quality
   const isValidProject = (project: any): boolean => {
     if (!project.title || !project.summary || !project.awarded_to) return false;
@@ -121,8 +116,7 @@ const MajorProjectsCard = () => {
     return hasValidWords;
   };
 
-  const fetchMajorProjects = async () => {
-    setIsLoading(true);
+  const fetchMajorProjects = async (): Promise<MajorProject[]> => {
     try {
       // First fetch existing database projects
       const { data: dbProjects, error: dbError } = await supabase
@@ -179,8 +173,6 @@ const MajorProjectsCard = () => {
 
       // Use live data if available and valid, otherwise fallback to static projects
       const finalProjects = mappedProjects.length > 0 ? mappedProjects : staticProjects;
-      setProjects(finalProjects);
-      setLastUpdated(new Date().toLocaleTimeString());
       
       const newProjectsCount = scrapeResult?.scrapedProjects || 0;
       const totalProjects = mappedProjects.length;
@@ -196,18 +188,31 @@ const MajorProjectsCard = () => {
         duration: 3000,
       });
 
+      return finalProjects;
+
     } catch (error) {
       console.error('Fetch error:', error);
-      setProjects(staticProjects);
       toast({
         title: "Error",
         description: "Failed to fetch project data, showing example projects",
         variant: "destructive",
         duration: 3000,
       });
-    } finally {
-      setIsLoading(false);
+      return staticProjects;
     }
+  };
+
+  // Use React Query for caching
+  const { data: projects = [], isLoading, refetch } = useQuery({
+    queryKey: ['major-projects'],
+    queryFn: fetchMajorProjects,
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    gcTime: 30 * 60 * 1000, // 30 minutes (renamed from cacheTime)
+  });
+
+  const handleRefresh = async () => {
+    await queryClient.invalidateQueries({ queryKey: ['major-projects'] });
+    refetch();
   };
 
   // Helper functions to enrich data
@@ -441,17 +446,14 @@ const MajorProjectsCard = () => {
             <h2 className="text-2xl font-bold text-white">Major Projects</h2>
             <p className="text-muted-foreground">
               Latest electrical infrastructure projects and contract opportunities
-              {lastUpdated && (
-                <span className="text-xs ml-2">• Updated {lastUpdated}</span>
-              )}
             </p>
           </div>
           <div className="flex gap-2">
-            <Button 
-              variant="outline" 
-              size="sm"
-              onClick={fetchMajorProjects}
+            <Button
+              onClick={handleRefresh}
               disabled={isLoading}
+              size="sm"
+              variant="outline"
               className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
             >
               <RefreshCw className={`h-4 w-4 mr-2 ${isLoading ? 'animate-spin' : ''}`} />
@@ -615,7 +617,7 @@ const MajorProjectsCard = () => {
       <ProjectSubmissionDialog
         open={isSubmissionDialogOpen}
         onOpenChange={setIsSubmissionDialogOpen}
-        onProjectSubmitted={fetchMajorProjects}
+        onProjectSubmitted={handleRefresh}
       />
     </div>
   );
