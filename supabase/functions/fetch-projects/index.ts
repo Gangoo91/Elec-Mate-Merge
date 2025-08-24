@@ -55,7 +55,7 @@ async function enhancedProjectExtraction(firecrawlApiKey: string, openaiApiKey: 
         body: JSON.stringify({
           query,
           sources: ["web"],
-          limit: 3, // Increased for better coverage
+          limit: 10, // Updated limit for better coverage
         }),
       };
 
