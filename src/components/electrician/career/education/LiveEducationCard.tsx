@@ -1,3 +1,4 @@
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -58,7 +59,7 @@ const LiveEducationCard = ({ option, onViewDetails }: LiveEducationCardProps) =>
           <div className="flex items-center gap-2">
             <span className="text-lg">{getCategoryIcon(option.category)}</span>
             <Badge variant="outline" className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30 text-xs">
-              {option.level}
+              {option.level || 'Level Not Specified'}
             </Badge>
           </div>
           {isNewIntakeSoon() && (
