@@ -1,7 +1,6 @@
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.45.0';
-import FirecrawlApp from 'https://esm.sh/@mendable/firecrawl-js@1.29.3';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -23,304 +22,167 @@ interface ProjectData {
   url: string;
 }
 
-async function enhancedProjectExtraction(firecrawlApiKey: string, openaiApiKey: string): Promise<ProjectData[]> {
-  const firecrawl = new FirecrawlApp({ apiKey: firecrawlApiKey });
-  const allProjects: ProjectData[] = [];
+// UK Contracts Finder listing URLs for electrical/infrastructure projects
+const listingUrls = [
+  "https://www.contractsfinder.service.gov.uk/Search/Results?search=electrical",
+  "https://www.contractsfinder.service.gov.uk/Search/Results?search=infrastructure",
+  "https://www.contractsfinder.service.gov.uk/Search/Results?search=power",
+  "https://www.contractsfinder.service.gov.uk/Search/Results?search=substation"
+];
 
-  console.log('Starting enhanced Firecrawl search strategy...');
+// Enhanced schema for UK Contracts Finder contract data
+async function scrapeWithSchema(url: string, apiKey: string) {
+  const apiUrl = "https://api.firecrawl.dev/v2/scrape";
 
-  // Enhanced search queries for better UK electrical project coverage
-  const searchQueries = [
-    "UK electrical infrastructure tenders awarded OR open site:gov.uk OR site:constructionnews.co.uk/contracts OR site:ted.europa.eu",
-    "electrical substation construction contracts UK 2024 2025",
-    "renewable energy grid connection projects UK tender",
-    "hospital electrical upgrade contracts UK NHS",
-    "transport electrical infrastructure UK railway underground"
-  ];
-
-  const searchUrl = "https://api.firecrawl.dev/v2/search";
-  const scrapeUrl = "https://api.firecrawl.dev/v2/scrape";
-
-  for (const query of searchQueries) {
-    try {
-      console.log(`Searching for: ${query.substring(0, 50)}...`);
-      
-      // Step 1: Search for relevant URLs
-      const searchOptions = {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${firecrawlApiKey}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          query,
-          sources: ["web"],
-          limit: 10, // Updated limit for better coverage
-        }),
-      };
-
-      const searchResponse = await fetch(searchUrl, searchOptions);
-      if (!searchResponse.ok) {
-        throw new Error(`Search API error: ${searchResponse.status}`);
-      }
-
-      const searchData = await searchResponse.json();
-      
-      if (!searchData?.data?.web?.length) {
-        console.log(`No results for query: ${query}`);
-        continue;
-      }
-
-      console.log(`Found ${searchData.data.web.length} URLs for query`);
-
-      // Step 2: Scrape each URL with enhanced schema
-      for (const item of searchData.data.web) {
-        try {
-          const scrapeOptions = {
-            method: "POST",
-            headers: {
-              Authorization: `Bearer ${firecrawlApiKey}`,
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              url: item.url,
-              onlyMainContent: true,
-              maxAge: 172800000,
-              parsers: ["pdf"],
-              formats: [
-                {
-                  type: "json",
-                  schema: {
-                    type: "object",
-                    properties: {
-                      title: { type: "string" },
-                      description: { type: "string" },
-                      client: { type: "string" },
-                      contract_value: { type: "string" },
-                      duration: { type: "string" },
-                      location: { type: "string" },
-                      contractors: { type: "number" },
-                      start_date: { type: "string" },
-                      deadline: { type: "string" },
-                      url_tender: { type: "string" },
-                      url_project: { type: "string" },
-                      status: { type: "string" },
-                      tender_reference: { type: "string" },
-                      cpv_codes: { type: "string" },
-                      project_stage: { type: "string" },
-                      electrical_scope: { type: "string" },
-                      estimated_contractors: { type: "number" }
-                    },
+  const options = {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      url,
+      onlyMainContent: false,
+      maxAge: 0,
+      parsers: [],
+      formats: [
+        {
+          type: "json",
+          schema: {
+            type: "array",
+            items: {
+              type: "object",
+              properties: {
+                status: { type: "string" },
+                category: { type: "string" },
+                title: { type: "string" },
+                description: { type: "string" },
+                client: { type: "string" },
+                contractValue: { type: "string" },
+                duration: { type: "string" },
+                location: { type: "string" },
+                contractors: { type: "integer" },
+                startDate: { type: "string", format: "date" },
+                deadline: { type: "string", format: "date" },
+                tenderReference: { type: "string" },
+                cpvCodes: { type: "string" },
+                links: {
+                  type: "object",
+                  properties: {
+                    detailsUrl: { type: "string" },
+                    projectUrl: { type: "string" },
                   },
                 },
-              ],
-            }),
-          };
-
-          const response = await fetch(scrapeUrl, scrapeOptions);
-          if (!response.ok) {
-            console.error(`Scrape API error for ${item.url}: ${response.status}`);
-            continue;
-          }
-
-          const data = await response.json();
-          
-          if (data?.data?.json) {
-            // Validate and enhance the extracted data
-            const project = data.data.json;
-            
-            // Data validation and enrichment
-            if (project.title && project.title.length > 10) {
-              const enrichedProject: ProjectData = {
-                status: intelligentStatusDetection(project.status, project.deadline, project.start_date) || "Open for Tender",
-                category: determineCategory(project.title + " " + (project.description || "")),
-                deadline: project.deadline,
-                title: project.title.substring(0, 100),
-                snippet: (project.description || project.title).substring(0, 200),
-                client: project.client || "TBC",
-                contractValue: normalizeContractValue(project.contract_value) || "TBC",
-                duration: project.duration || estimateDurationFromTitle(project.title),
-                location: normalizeLocation(project.location) || "UK",
-                contractors: project.estimated_contractors || estimateContractors(project.contract_value),
-                startDate: project.start_date,
-                url: item.url
-              };
-
-              // Filter out non-UK or non-electrical projects
-              if (isValidElectricalProject(enrichedProject)) {
-                allProjects.push(enrichedProject);
-                console.log(`Added project: ${enrichedProject.title.substring(0, 50)}...`);
-              }
-            }
-          }
-
-          // Rate limiting between scrapes
-          await new Promise(resolve => setTimeout(resolve, 1500));
-
-        } catch (scrapeError) {
-          console.error(`Error scraping ${item.url}:`, scrapeError);
-        }
-      }
-
-      // Rate limiting between search queries
-      await new Promise(resolve => setTimeout(resolve, 3000));
-
-    } catch (searchError) {
-      console.error(`Search error for query "${query}":`, searchError);
-    }
-  }
-
-  // Deduplicate and filter results
-  const deduplicatedProjects = deduplicateProjects(allProjects);
-  console.log(`Final count: ${deduplicatedProjects.length} unique projects from ${allProjects.length} total extracted`);
-  
-  return deduplicatedProjects.slice(0, 15); // Limit to top 15 projects
-}
-
-async function intelligentProjectExtraction(
-  content: string,
-  source: any,
-  openaiApiKey: string
-): Promise<ProjectData[]> {
-  try {
-    // Use OpenAI to intelligently extract and structure project data
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${openaiApiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        model: 'gpt-4o-mini',
-        messages: [
-          {
-            role: 'system',
-            content: `You are an expert at extracting UK electrical infrastructure project data. Extract projects from web content and return ONLY a valid JSON array. Look for:
-
-- Electrical infrastructure projects, tenders, and contracts
-- Projects mentioning: electrical, power, substation, transmission, renewable energy, grid connections
-- UK-based projects only
-- Current or recently awarded contracts
-
-Return ONLY a JSON array with this exact structure (no additional text):
-[
-  {
-    "status": "Open for Tender" | "Contract Awarded" | "In Progress" | "Completed",
-    "category": "Healthcare" | "Energy" | "Transport" | "Infrastructure" | "Education",
-    "deadline": "YYYY-MM-DD" (if tender deadline available),
-    "title": "clear project title (max 100 chars)",
-    "snippet": "1-2 sentence summary focused on electrical scope (max 200 chars)",
-    "client": "client/authority name",
-    "contractValue": "£XXM" or "£XXK" or "TBC",
-    "duration": "XX months",
-    "location": "City, UK",
-    "contractors": 5,
-    "startDate": "YYYY-MM-DD" (if known),
-    "url": "direct project URL if available"
-  }
-]
-
-Focus on real electrical projects with actual values and clients. Ignore general news or non-project content.`
+              },
+              required: ["title", "client", "contractValue", "duration", "location"],
+            },
           },
-          {
-            role: 'user',
-            content: `Extract electrical infrastructure projects from this content. Source: ${source.name}\nContent: ${content.substring(0, 8000)}`
-          }
-        ],
-        max_tokens: 1500,
-        temperature: 0.1
-      }),
-    });
+        },
+      ],
+    }),
+  };
 
-    if (!response.ok) {
-      throw new Error(`OpenAI API error: ${response.status}`);
-    }
-
-    const data = await response.json();
-    const extractedText = data.choices[0]?.message?.content;
-    
-    if (!extractedText) {
-      return [];
-    }
-
-    // Parse JSON response
-    try {
-      const jsonMatch = extractedText.match(/\[[\s\S]*\]/);
-      if (jsonMatch) {
-        const projects = JSON.parse(jsonMatch[0]);
-        return projects.map((p: any) => ({
-          ...p,
-          url: p.url || source.url // Fallback to source URL
-        }));
-      }
-    } catch (parseError) {
-      console.error('Failed to parse OpenAI response:', parseError);
-    }
-
-    return [];
-
-  } catch (error) {
-    console.error('OpenAI extraction error:', error);
-    // Fallback to basic extraction
-    return basicProjectExtraction(content, source);
-  }
+  const res = await fetch(apiUrl, options);
+  return res.json();
 }
 
-function basicProjectExtraction(content: string, source: any): ProjectData[] {
-  const projects: ProjectData[] = [];
+async function enhancedProjectExtraction(firecrawlApiKey: string): Promise<ProjectData[]> {
+  console.log('🚀 Starting UK Contracts Finder extraction...');
+
+  // 1. Scrape all listing pages in parallel (with allSettled)
+  const listingResults = await Promise.allSettled(
+    listingUrls.map(url => scrapeWithSchema(url, firecrawlApiKey))
+  );
+
+  const contractUrls: string[] = [];
+  listingResults.forEach((result, i) => {
+    if (result.status === "fulfilled") {
+      result.value?.data?.json?.forEach((contract: any) => {
+        if (contract.links?.detailsUrl) {
+          contractUrls.push(contract.links.detailsUrl);
+        }
+      });
+    } else {
+      console.error(`❌ Failed listing scrape for ${listingUrls[i]}`, result.reason);
+    }
+  });
+
+  console.log(`📋 Found ${contractUrls.length} valid contracts for detailed scraping`);
+
+  // 2. Scrape all contract details in parallel (with allSettled) 
+  const detailResults = await Promise.allSettled(
+    contractUrls.slice(0, 25).map(async (url) => { // Limit to 25 for performance
+      try {
+        console.log(`🔍 Scraping: ${url}`);
+        const details = await scrapeWithSchema(url, firecrawlApiKey);
+        return details?.data?.json?.[0] || null;
+      } catch (err) {
+        console.error(`❌ Failed for ${url}`, err);
+        return null;
+      }
+    })
+  );
+
+  // 3. Filter and process results
+  const allProjects: ProjectData[] = [];
   
-  // Enhanced regex patterns for electrical projects
+  detailResults.forEach((result) => {
+    if (result.status === "fulfilled" && result.value !== null) {
+      const contract = result.value;
+      
+      // Convert contract data to ProjectData format
+      if (contract.title && isElectricalContract(contract)) {
+        const projectData: ProjectData = {
+          status: normalizeStatus(contract.status) || "Open for Tender",
+          category: determineCategory(contract.title + " " + (contract.description || "")),
+          deadline: contract.deadline,
+          title: contract.title.substring(0, 100),
+          snippet: (contract.description || contract.title).substring(0, 200),
+          client: contract.client || "TBC",
+          contractValue: normalizeContractValue(contract.contractValue) || "TBC",
+          duration: contract.duration || estimateDurationFromTitle(contract.title),
+          location: normalizeLocation(contract.location) || "UK", 
+          contractors: contract.contractors || estimateContractors(contract.contractValue),
+          startDate: contract.startDate,
+          url: contract.links?.projectUrl || contract.links?.detailsUrl || ""
+        };
+
+        allProjects.push(projectData);
+        console.log(`✅ Added contract: ${projectData.title.substring(0, 50)}...`);
+      }
+    }
+  });
+
+  console.log(`🎯 Processed ${allProjects.length} electrical contracts`);
+  return allProjects.slice(0, 15); // Limit to 15 best projects
+}
+
+// Check if contract is electrical/infrastructure related
+function isElectricalContract(contract: any): boolean {
+  const searchText = `${contract.title || ""} ${contract.description || ""}`.toLowerCase();
+  
   const electricalKeywords = [
     'electrical', 'power', 'grid', 'substation', 'transmission', 'distribution',
-    'transformer', 'switchgear', 'cable', 'hvdc', 'solar', 'wind', 'renewable'
+    'transformer', 'switchgear', 'cable', 'hvdc', 'solar', 'wind', 'renewable',
+    'lighting', 'wiring', 'installation', 'electrical infrastructure', 'energy'
   ];
   
-  const lines = content.split('\n');
-  
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i].trim();
-    
-    // Look for project titles containing electrical keywords
-    if (line.length > 20 && line.length < 200) {
-      const hasElectricalKeyword = electricalKeywords.some(keyword => 
-        line.toLowerCase().includes(keyword)
-      );
-      
-      if (hasElectricalKeyword && !line.toLowerCase().includes('cookie')) {
-        const contextLines = lines.slice(i, Math.min(i + 5, lines.length)).join(' ');
-        
-        // Extract value
-        const valueMatch = contextLines.match(/£([\d,]+(?:\.\d+)?)\s*(?:million|m|k|thousand)?/i);
-        let contractValue = 'TBC';
-        if (valueMatch) {
-          const unit = valueMatch[0].toLowerCase();
-          contractValue = unit.includes('million') || unit.includes('m') 
-            ? `£${valueMatch[1]}M` 
-            : `£${valueMatch[1]}K`;
-        }
-        
-        // Extract location
-        const locationMatch = contextLines.match(/(?:in|at|for|across)\s+([A-Z][a-z]+(?:\s+[A-Z][a-z]+)*)/);
-        const location = locationMatch ? `${locationMatch[1]}, UK` : 'UK';
-        
-        projects.push({
-          status: 'Open for Tender',
-          category: determineCategory(line),
-          title: line.replace(/^#+\s*/, '').trim(),
-          snippet: `${line.substring(0, 100)}...`,
-          client: 'TBC',
-          contractValue,
-          duration: '18 months',
-          location,
-          contractors: estimateContractors(contractValue),
-          url: source.url
-        });
-      }
-    }
-  }
-  
-  return projects.slice(0, 3); // Limit basic extraction
+  return electricalKeywords.some(keyword => searchText.includes(keyword));
 }
+
+// Normalize contract status to match database enum
+function normalizeStatus(status: string): string {
+  if (!status) return "Open for Tender";
+  
+  const statusLower = status.toLowerCase();
+  if (statusLower.includes('open') || statusLower.includes('tender')) return "Open for Tender";
+  if (statusLower.includes('award') || statusLower.includes('contract')) return "Contract Awarded"; 
+  if (statusLower.includes('progress') || statusLower.includes('ongoing')) return "In Progress";
+  if (statusLower.includes('complet')) return "Completed";
+  
+  return "Open for Tender";
+}
+
 
 function determineCategory(title: string): string {
   const titleLower = title.toLowerCase();
@@ -510,23 +372,18 @@ serve(async (req) => {
 
   try {
     const firecrawlApiKey = Deno.env.get('FIRECRAWL_API_KEY');
-    const openaiApiKey = Deno.env.get('OPENAI_API_KEY');
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     
     if (!firecrawlApiKey) {
       throw new Error('FIRECRAWL_API_KEY not configured');
     }
-    
-    if (!openaiApiKey) {
-      console.warn('OPENAI_API_KEY not configured, using basic extraction');
-    }
 
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-    console.log('Starting enhanced UK electrical projects extraction...');
+    console.log('🚀 Starting streamlined UK Contracts Finder extraction...');
     
-    const projects = await enhancedProjectExtraction(firecrawlApiKey, openaiApiKey || '');
+    const projects = await enhancedProjectExtraction(firecrawlApiKey);
     
     let totalInserted = 0;
     let errors = 0;
@@ -575,15 +432,18 @@ serve(async (req) => {
       .order('created_at', { ascending: false })
       .limit(20);
 
+    console.log(`✅ Contracts processing complete: ${totalInserted} projects inserted, ${errors} errors`);
+
     return new Response(
       JSON.stringify({
         success: true,
-        message: `Successfully processed ${totalInserted} UK electrical projects`,
+        message: `Successfully processed ${totalInserted} UK electrical contracts from Contracts Finder`,
         inserted: totalInserted,
         errors: errors,
         scrapedProjects: projects.length,
         data: dbProjects || [],
-        projectDetails: projects.slice(0, 5) // Sample for debugging
+        source: 'UK Contracts Finder',
+        executionTime: Date.now()
       }),
       {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -591,12 +451,13 @@ serve(async (req) => {
     );
 
   } catch (error) {
-    console.error('Enhanced fetch-projects error:', error);
+    console.error('❌ Streamlined fetch-projects error:', error);
     return new Response(
       JSON.stringify({
         success: false,
         error: error.message,
-        fallback: 'Using static project data'
+        source: 'UK Contracts Finder (failed)',
+        timestamp: new Date().toISOString()
       }),
       {
         status: 500,
