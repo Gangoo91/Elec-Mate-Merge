@@ -1225,8 +1225,9 @@ Deno.serve(async (req) => {
     console.log('✅ Firecrawl API key found, proceeding with live data aggregation...');
     
     const { searchParams } = new URL(req.url);
-    const category = searchParams.get('category') || 'all';
-    const forceRefresh = searchParams.get('refresh') === 'true';
+    const requestBody = await req.json().catch(() => ({}));
+    const category = requestBody.category || searchParams.get('category') || 'all';
+    const forceRefresh = requestBody.refresh === true || searchParams.get('refresh') === 'true';
     
     // Check cache first (unless force refresh) - only return if it contains actual data
     if (!forceRefresh) {
