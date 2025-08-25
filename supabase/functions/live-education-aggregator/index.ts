@@ -1,5 +1,4 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
-import FirecrawlApp from 'https://esm.sh/@mendable/firecrawl-js@1.29.3';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -238,14 +237,57 @@ const scrapeTradeSkills4U = async (): Promise<EducationData[]> => {
     const searchUrl = 'https://www.tradeskills4u.co.uk/electrical-courses?s=Electrical';
     console.log(`🔍 Searching TradeSkills4U at: ${searchUrl}`);
     
-    const response = await makeFirecrawlRequest(searchUrl, {
-      formats: ['markdown']
-    });
+    const response = await makeFirecrawlV2Request(searchUrl, courseExtractionSchema);
 
-    if (response.success && response.data && response.data.markdown) {
-      console.log('✅ TradeSkills4U: Successfully scraped course data');
+    if (response.success && response.data?.extract && Array.isArray(response.data.extract)) {
+      console.log(`✅ TradeSkills4U: Successfully extracted ${response.data.extract.length} structured courses`);
       
-      // Parse the markdown content to extract course information
+      const courses: EducationData[] = response.data.extract.map((course: any, index: number) => ({
+        id: `ts4u-v2-${Date.now()}-${index}`,
+        title: course.title || `Professional Electrical Course`,
+        institution: course.awardingBody || 'TradeSkills4U',
+        description: course.description || `Professional electrical training course`,
+        level: course.level || 'Professional Certificate',
+        duration: course.duration || '5-10 days',
+        category: 'Professional Training',
+        studyMode: course.studyMode || 'Classroom',
+        locations: course.location ? [course.location] : ['Multiple UK centres'],
+        entryRequirements: ['Basic electrical knowledge or relevant experience'],
+        keyTopics: course.topics || ['18th Edition Regulations', 'Practical Skills', 'Health & Safety', 'Testing & Inspection'],
+        progressionOptions: ['Higher level qualifications', 'Professional certification'],
+        fundingOptions: ['Self-funded', 'Employer sponsored', 'CITB grants'],
+        tuitionFees: course.costRange || '£500 - £1,500',
+        applicationDeadline: 'Book anytime',
+        nextIntake: course.nextIntake || 'Weekly courses available',
+        rating: course.rating || 4.7,
+        employmentRate: course.employmentRate ? parseInt(course.employmentRate.replace('%', '')) : 90,
+        averageStartingSalary: '£22,000 - £30,000',
+        courseUrl: course.url || searchUrl,
+        lastUpdated: new Date().toISOString()
+      }));
+      
+      return courses;
+    }
+    
+    console.log('⚠️ TradeSkills4U: No structured data extracted, trying fallback...');
+    return await scrapeTradeSkills4UFallback(searchUrl);
+  } catch (error) {
+    console.log(`❌ Error scraping TradeSkills4U with v2: ${error.message}`);
+    console.log('⚠️ TradeSkills4U: Trying fallback method...');
+    return await scrapeTradeSkills4UFallback('https://www.tradeskills4u.co.uk/electrical-courses?s=Electrical');
+  }
+};
+
+// Fallback method for TradeSkills4U
+const scrapeTradeSkills4UFallback = async (searchUrl: string): Promise<EducationData[]> => {
+  console.log('🔄 TradeSkills4U Fallback: Using basic markdown parsing...');
+  
+  try {
+    const response = await makeFirecrawlV2Request(searchUrl);
+
+    if (response.success && response.data?.markdown) {
+      console.log('✅ TradeSkills4U Fallback: Successfully scraped course data');
+      
       const markdown = response.data.markdown;
       const courses: EducationData[] = [];
       
@@ -256,7 +298,7 @@ const scrapeTradeSkills4U = async (): Promise<EducationData[]> => {
       // Create course objects from matches
       matches.slice(0, 10).forEach((title: string, index: number) => {
         courses.push({
-          id: `ts4u-${Date.now()}-${index}`,
+          id: `ts4u-fallback-${Date.now()}-${index}`,
           title: title.trim(),
           institution: 'TradeSkills4U',
           description: `Professional electrical training course: ${title.trim()}`,
@@ -283,7 +325,7 @@ const scrapeTradeSkills4U = async (): Promise<EducationData[]> => {
       return courses;
     }
   } catch (error) {
-    console.log(`❌ Error scraping TradeSkills4U: ${error.message}`);
+    console.log(`❌ Error in TradeSkills4U fallback: ${error.message}`);
   }
   
   return [];
