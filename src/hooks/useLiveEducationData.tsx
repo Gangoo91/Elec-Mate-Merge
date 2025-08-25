@@ -58,14 +58,14 @@ export const useLiveEducationData = (category: string = 'all'): UseLiveEducation
   const [lastUpdated, setLastUpdated] = useState<string | null>(null);
   const [isFromCache, setIsFromCache] = useState(false);
 
-  const fetchEducationData = async (forceRefresh: boolean = false) => {
+  const fetchEducationData = async (forceRefresh: boolean = true) => {
     try {
       setLoading(true);
       setError(null);
 
       console.log('🔍 Fetching live education data...');
 
-      // Try to get cached data first
+      // Force refresh by default until live data is working properly
       if (!forceRefresh) {
         const { data: cachedData } = await supabase
           .from('live_education_cache')
