@@ -441,54 +441,219 @@ const scrapeIDPFallback = async (searchUrl: string): Promise<EducationData[]> =>
   return [];
 };
 
-// Scrape National Careers Service using v2 API with schema
+// Scrape National Careers Service using improved two-step approach
 const scrapeNationalCareers = async (): Promise<EducationData[]> => {
   console.log('🏛️ Scraping National Careers Service for electrical courses...');
   
   try {
-    const searchUrl = 'https://nationalcareers.service.gov.uk/find-a-course/page?searchTerm=electrical&distance=25%20miles&town=London&orderByValue=StartDate&startDate=Anytime&courseType=&sectors=&learningMethod=&courseHours=&courseStudyTime=&filterA=true&page=2&D=1&coordinates=&campaignCode=&qualificationLevels=4';
-    console.log(`🔍 Searching National Careers at: ${searchUrl}`);
+    // Step 1: Scrape listing page to extract course URLs
+    const listingUrl = "https://nationalcareers.service.gov.uk/find-a-course/page?searchTerm=electrical";
+    console.log(`📋 Step 1: Scraping listing page for course URLs: ${listingUrl}`);
     
-    const response = await makeFirecrawlV2Request(searchUrl, courseExtractionSchema);
-
-    if (response.success && response.data?.extract && Array.isArray(response.data.extract)) {
-      console.log(`✅ National Careers: Successfully extracted ${response.data.extract.length} structured courses`);
-      
-      const courses: EducationData[] = response.data.extract.map((course: any, index: number) => ({
-        id: `nc-v2-${Date.now()}-${index}`,
-        title: course.title || `Level 4 Electrical Course`,
-        institution: course.awardingBody || 'Government Approved Provider',
-        description: course.description || `Government-funded electrical training programme`,
-        level: course.level || 'Level 4',
-        duration: course.duration || '6-18 months',
-        category: 'Vocational Training',
-        studyMode: course.studyMode || 'Part-time/Flexible',
-        locations: course.location ? [course.location] : ['London & surrounding areas'],
-        entryRequirements: ['Basic education requirements', 'Age 19+ for funding'],
-        keyTopics: course.topics || ['Electrical Installation', 'Health & Safety', 'Industry Standards', 'Practical Skills'],
-        progressionOptions: ['Employment in electrical trades', 'Higher level qualifications', 'Apprenticeships'],
-        fundingOptions: ['Free for eligible learners', 'Advanced Learner Loans', 'Employer funding'],
-        tuitionFees: course.costRange || 'Free for eligible learners',
-        applicationDeadline: 'Rolling admissions',
-        nextIntake: course.nextIntake || 'Multiple start dates',
-        rating: course.rating || 4.3,
-        employmentRate: course.employmentRate ? parseInt(course.employmentRate.replace('%', '')) : 88,
-        averageStartingSalary: '£20,000 - £28,000',
-        courseUrl: course.url || searchUrl,
-        lastUpdated: new Date().toISOString()
-      }));
-      
-      return courses;
+    const listingResponse = await scrapeWithSchemaForListing(listingUrl);
+    
+    if (!listingResponse.success || !listingResponse.data?.json) {
+      console.log('❌ Failed to extract course URLs from listing page');
+      return await scrapeNationalCareersFallback(listingUrl);
     }
+
+    // Extract all course URLs from the listing page
+    const courseUrls: string[] = [];
+    const listingData = listingResponse.data.json;
     
-    console.log('⚠️ National Careers: No structured data extracted, trying fallback method...');
-    return await scrapeNationalCareersFallback(searchUrl);
+    if (Array.isArray(listingData)) {
+      listingData.forEach((course: any) => {
+        if (course.url && typeof course.url === 'string') {
+          courseUrls.push(course.url);
+        }
+      });
+    }
+
+    console.log(`🔍 Found ${courseUrls.length} course URLs from listing page`);
+    
+    if (courseUrls.length === 0) {
+      console.log('⚠️ No course URLs found, falling back to basic scraping');
+      return await scrapeNationalCareersFallback(listingUrl);
+    }
+
+    // Step 2: Scrape each individual course page for detailed information
+    const results: EducationData[] = [];
+    const maxCourses = Math.min(courseUrls.length, 15); // Limit to prevent timeouts
+    
+    console.log(`📚 Step 2: Scraping individual course details (${maxCourses} courses)`);
+    
+    for (let i = 0; i < maxCourses; i++) {
+      const courseUrl = courseUrls[i];
+      console.log(`🔍 Scraping course ${i + 1}/${maxCourses}: ${courseUrl.substring(0, 60)}...`);
+      
+      try {
+        const courseDetails = await scrapeWithSchemaForCourseDetails(courseUrl);
+        
+        if (courseDetails.success && courseDetails.data?.json) {
+          const courseData = Array.isArray(courseDetails.data.json) 
+            ? courseDetails.data.json[0] 
+            : courseDetails.data.json;
+            
+          if (courseData) {
+            const mappedCourse: EducationData = {
+              id: `nc-detailed-${Date.now()}-${i}`,
+              title: courseData.title || `Electrical Course ${i + 1}`,
+              institution: courseData.awardingBody || 'Government Approved Provider',
+              description: courseData.description || 'Government-funded electrical training programme',
+              level: courseData.level || 'Vocational Qualification',
+              duration: courseData.duration || '6-18 months',
+              category: 'Vocational Training',
+              studyMode: courseData.studyMode || 'Part-time/Flexible',
+              locations: courseData.location ? [courseData.location] : ['Multiple UK locations'],
+              entryRequirements: ['Basic education requirements', 'Age 19+ for funding'],
+              keyTopics: Array.isArray(courseData.topics) ? courseData.topics : 
+                        ['Electrical Installation', 'Health & Safety', 'Industry Standards', 'Practical Skills'],
+              progressionOptions: ['Employment in electrical trades', 'Higher level qualifications', 'Apprenticeships'],
+              fundingOptions: ['Free for eligible learners', 'Advanced Learner Loans', 'Employer funding'],
+              tuitionFees: courseData.costRange || 'Free for eligible learners',
+              applicationDeadline: 'Rolling admissions',
+              nextIntake: courseData.nextIntake || 'Multiple start dates',
+              rating: typeof courseData.rating === 'number' ? courseData.rating : 4.3,
+              employmentRate: courseData.employmentRate ? 
+                            (typeof courseData.employmentRate === 'string' ? 
+                             parseInt(courseData.employmentRate.replace('%', '')) : 
+                             courseData.employmentRate) : 88,
+              averageStartingSalary: '£20,000 - £28,000',
+              courseUrl: courseUrl,
+              lastUpdated: new Date().toISOString()
+            };
+            
+            results.push(mappedCourse);
+          }
+        }
+      } catch (error) {
+        console.log(`❌ Failed to scrape course ${i + 1}: ${error.message}`);
+        // Continue with next course instead of failing completely
+      }
+      
+      // Small delay to be respectful to the server
+      if (i < maxCourses - 1) {
+        await new Promise(resolve => setTimeout(resolve, 500));
+      }
+    }
+
+    console.log(`✅ National Careers: Successfully extracted ${results.length} detailed courses`);
+    return results;
     
   } catch (error) {
-    console.log(`❌ Error scraping National Careers with v2: ${error.message}`);
+    console.log(`❌ Error in National Careers two-step scraping: ${error.message}`);
     console.log('⚠️ National Careers: Trying fallback method...');
-    return await scrapeNationalCareersFallback('https://nationalcareers.service.gov.uk/find-a-course/page?searchTerm=electrical&distance=25%20miles&town=London&orderByValue=StartDate&startDate=Anytime&courseType=&sectors=&learningMethod=&courseHours=&courseStudyTime=&filterA=true&page=2&D=1&coordinates=&campaignCode=&qualificationLevels=4');
+    return await scrapeNationalCareersFallback('https://nationalcareers.service.gov.uk/find-a-course/page?searchTerm=electrical');
   }
+};
+
+// Helper function to scrape course listing with URL extraction schema
+const scrapeWithSchemaForListing = async (url: string) => {
+  const listingSchema = {
+    type: "array",
+    items: {
+      type: "object",
+      properties: {
+        title: { type: "string" },
+        url: { type: "string" },
+        provider: { type: "string" },
+        level: { type: "string" }
+      },
+      required: ["title", "url"]
+    }
+  };
+  
+  console.log(`📡 Making Firecrawl v2 API call for listing extraction...`);
+  
+  const requestBody = {
+    url: url,
+    formats: [
+      {
+        type: "json",
+        schema: listingSchema
+      }
+    ],
+    onlyMainContent: false,
+    maxAge: 172800000
+  };
+  
+  const response = await fetch(FIRECRAWL_V2_URL, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${FIRECRAWL_API_KEY}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(requestBody),
+  });
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`HTTP ${response.status}: ${errorText}`);
+  }
+
+  return await response.json();
+};
+
+// Helper function to scrape individual course details with comprehensive schema
+const scrapeWithSchemaForCourseDetails = async (url: string) => {
+  const courseDetailSchema = {
+    type: "object",
+    properties: {
+      level: { type: "string" },
+      title: { type: "string" },
+      awardingBody: { type: "string" },
+      description: { type: "string" },
+      rating: { type: "number" },
+      employmentRate: { type: "string" },
+      duration: { type: "string" },
+      studyMode: { type: "string" },
+      location: { type: "string" },
+      costRange: { type: "string" },
+      nextIntake: { type: "string" },
+      topics: { type: "array", items: { type: "string" } },
+      tags: { type: "array", items: { type: "string" } },
+      enquiryDetails: {
+        type: "object",
+        properties: {
+          contactEmail: { type: "string" },
+          contactPhone: { type: "string" },
+          enquiryUrl: { type: "string" }
+        }
+      }
+    },
+    required: ["title", "level", "awardingBody", "duration", "studyMode", "costRange"]
+  };
+  
+  console.log(`📡 Making Firecrawl v2 API call for course detail extraction...`);
+  
+  const requestBody = {
+    url: url,
+    formats: [
+      {
+        type: "json",
+        schema: courseDetailSchema
+      }
+    ],
+    onlyMainContent: false,
+    maxAge: 172800000,
+    parsers: []
+  };
+  
+  const response = await fetch(FIRECRAWL_V2_URL, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${FIRECRAWL_API_KEY}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(requestBody),
+  });
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`HTTP ${response.status}: ${errorText}`);
+  }
+
+  return await response.json();
 };
 
 // Fallback method for National Careers
@@ -504,36 +669,74 @@ const scrapeNationalCareersFallback = async (searchUrl: string): Promise<Educati
       const markdown = response.data.markdown;
       const courses: EducationData[] = [];
       
-      // Extract government-funded course information
-      const coursePattern = /(Level \d+|NVQ|BTEC|HNC|HND)[\s\w]*[Ee]lectrical[\s\w]*/gi;
-      const matches = markdown.match(coursePattern) || [];
+      // Extract electrical course information with improved patterns
+      const patterns = [
+        /(Level \d+|NVQ|BTEC|HNC|HND|Diploma|Certificate)[\s\w]*[Ee]lectrical[\s\w]*/gi,
+        /[Ee]lectrical[\s\w]*(Level \d+|NVQ|BTEC|HNC|HND|Diploma|Certificate)[\s\w]*/gi,
+        /18th Edition[\s\w]*[Ee]lectrical[\s\w]*/gi,
+        /[Ee]lectrotechnical[\s\w]*/gi
+      ];
       
-      matches.slice(0, 6).forEach((title: string, index: number) => {
+      const allMatches = new Set<string>(); // Use Set to avoid duplicates
+      
+      patterns.forEach(pattern => {
+        const matches = markdown.match(pattern) || [];
+        matches.forEach(match => allMatches.add(match.trim()));
+      });
+      
+      const uniqueMatches = Array.from(allMatches).slice(0, 8); // Limit to 8 courses
+      
+      uniqueMatches.forEach((title: string, index: number) => {
+        // Determine level from title
+        let level = 'Vocational Qualification';
+        let category = 'Vocational Training';
+        let duration = '6-18 months';
+        
+        if (title.includes('Level 4') || title.includes('HNC')) {
+          level = 'Level 4';
+          duration = '12-18 months';
+        } else if (title.includes('Level 3') || title.includes('BTEC')) {
+          level = 'Level 3';
+          duration = '6-12 months';
+        } else if (title.includes('Level 2') || title.includes('NVQ')) {
+          level = 'Level 2';
+          duration = '6-9 months';
+        } else if (title.includes('18th Edition')) {
+          level = 'Regulatory Update';
+          category = 'Professional Development';
+          duration = '3-5 days';
+        }
+        
         courses.push({
           id: `nc-fallback-${Date.now()}-${index}`,
-          title: title.trim(),
+          title: title.length > 80 ? title.substring(0, 80) + '...' : title,
           institution: 'Government Approved Provider',
-          description: `Government-funded electrical training programme`,
-          level: title.includes('Level 4') ? 'Level 4' : title.includes('Level 3') ? 'Level 3' : title.includes('Level 2') ? 'Level 2' : 'Vocational Qualification',
-          duration: '6-18 months',
-          category: 'Vocational Training',
-          studyMode: 'Part-time/Flexible',
-          locations: ['London & surrounding areas'],
-          entryRequirements: ['Basic education requirements', 'Age 19+ for funding'],
-          keyTopics: ['Electrical Installation', 'Health & Safety', 'Industry Standards', 'Practical Skills'],
+          description: `Government-funded electrical training programme focusing on ${level.toLowerCase()} skills and industry standards`,
+          level: level,
+          duration: duration,
+          category: category,
+          studyMode: category === 'Professional Development' ? 'Intensive' : 'Part-time/Flexible',
+          locations: ['Multiple UK locations'],
+          entryRequirements: level === 'Level 2' ? 
+            ['Basic education requirements', 'Age 16+'] : 
+            ['Previous electrical experience recommended', 'Age 19+ for funding'],
+          keyTopics: level === 'Regulatory Update' ? 
+            ['18th Edition Wiring Regulations', 'BS 7671', 'Compliance', 'Safety Standards'] :
+            ['Electrical Installation', 'Health & Safety', 'Industry Standards', 'Practical Skills', 'Testing & Inspection'],
           progressionOptions: ['Employment in electrical trades', 'Higher level qualifications', 'Apprenticeships'],
           fundingOptions: ['Free for eligible learners', 'Advanced Learner Loans', 'Employer funding'],
-          tuitionFees: 'Free for eligible learners',
+          tuitionFees: category === 'Professional Development' ? '£300 - £600' : 'Free for eligible learners',
           applicationDeadline: 'Rolling admissions',
-          nextIntake: 'Multiple start dates',
+          nextIntake: category === 'Professional Development' ? 'Weekly starts' : 'Multiple start dates',
           rating: 4.3,
           employmentRate: 88,
-          averageStartingSalary: '£20,000 - £28,000',
+          averageStartingSalary: category === 'Professional Development' ? '£28,000 - £35,000' : '£20,000 - £28,000',
           courseUrl: searchUrl,
           lastUpdated: new Date().toISOString()
         });
       });
       
+      console.log(`📚 National Careers Fallback: Extracted ${courses.length} courses from markdown`);
       return courses;
     }
   } catch (error) {
