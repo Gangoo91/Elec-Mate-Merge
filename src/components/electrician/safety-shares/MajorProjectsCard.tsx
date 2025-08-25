@@ -566,10 +566,11 @@ const MajorProjectsCard = () => {
               </div>
               
               {/* Action Buttons - Bottom right */}
-              <div className="flex flex-col sm:flex-row gap-2 mt-4 justify-end">
+              <div className="flex flex-col sm:flex-row gap-2 mt-4 w-full sm:justify-end">
                 {getStatusText(project.status) === "Open for Tender" && (
-                  <Button size="sm" className="bg-elec-yellow text-black hover:bg-elec-yellow/90 font-medium">
-                    View Tender Details
+                  <Button size="sm" className="bg-elec-yellow text-black hover:bg-elec-yellow/90 font-medium w-full sm:w-auto text-xs sm:text-sm">
+                    <span className="hidden sm:inline">View Tender Details</span>
+                    <span className="sm:hidden">Tender</span>
                   </Button>
                 )}
                 
@@ -578,10 +579,11 @@ const MajorProjectsCard = () => {
                     <Button 
                       size="sm" 
                       variant="outline" 
-                      className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 font-medium"
+                      className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 font-medium w-full sm:w-auto text-xs sm:text-sm"
                     >
-                      <Eye className="h-4 w-4 mr-2" />
-                      View Details
+                      <Eye className="h-4 w-4 mr-1 sm:mr-2" />
+                      <span className="hidden sm:inline">View Details</span>
+                      <span className="sm:hidden">Details</span>
                     </Button>
                   </DialogTrigger>
                   <ProjectDetailModal project={project} />
@@ -590,11 +592,12 @@ const MajorProjectsCard = () => {
                 <Button 
                   size="sm" 
                   variant="outline" 
-                  className="border-elec-dark bg-elec-dark text-white hover:bg-elec-dark/80 font-medium"
+                  className="border-elec-dark bg-elec-dark text-white hover:bg-elec-dark/80 font-medium w-full sm:w-auto text-xs sm:text-sm"
                   onClick={() => handleViewProject(project)}
                 >
-                  <ExternalLink className="h-4 w-4 mr-2" />
-                  View Project
+                  <ExternalLink className="h-4 w-4 mr-1 sm:mr-2" />
+                  <span className="hidden sm:inline">View Project</span>
+                  <span className="sm:hidden">Project</span>
                 </Button>
               </div>
             </CardContent>
