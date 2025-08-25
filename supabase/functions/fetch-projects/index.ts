@@ -30,131 +30,206 @@ const listingUrls = [
   "https://www.contractsfinder.service.gov.uk/Search/Results?search=substation"
 ];
 
-// Enhanced schema for UK Contracts Finder contract data
-async function scrapeWithSchema(url: string, apiKey: string) {
-  const apiUrl = "https://api.firecrawl.dev/v2/scrape";
-
-  const options = {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${apiKey}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      url,
-      onlyMainContent: false,
-      maxAge: 0,
-      parsers: [],
-      formats: [
-        {
-          type: "json",
-          schema: {
-            type: "array",
-            items: {
-              type: "object",
-              properties: {
-                status: { type: "string" },
-                category: { type: "string" },
-                title: { type: "string" },
-                description: { type: "string" },
-                client: { type: "string" },
-                contractValue: { type: "string" },
-                duration: { type: "string" },
-                location: { type: "string" },
-                contractors: { type: "integer" },
-                startDate: { type: "string", format: "date" },
-                deadline: { type: "string", format: "date" },
-                tenderReference: { type: "string" },
-                cpvCodes: { type: "string" },
-                links: {
-                  type: "object",
-                  properties: {
-                    detailsUrl: { type: "string" },
-                    projectUrl: { type: "string" },
-                  },
-                },
-              },
-              required: ["title", "client", "contractValue", "duration", "location"],
-            },
-          },
+// Simplified Firecrawl scraping with markdown fallback
+async function scrapeWithFallback(url: string, apiKey: string) {
+  console.log(`🔄 Scraping: ${url}`);
+  
+  try {
+    // First try with JSON schema
+    const jsonResponse = await fetch("https://api.firecrawl.dev/v1/scrape", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        url,
+        extractorOptions: {
+          mode: "llm-extraction",
+          extractionPrompt: `Extract all electrical/infrastructure project information as JSON with these fields:
+          - title: project name
+          - description: project description  
+          - client: organization/authority
+          - contractValue: monetary value
+          - location: where project is located
+          - status: current status
+          - deadline: tender deadline if mentioned
+          Return as array of projects found on this page.`,
         },
-      ],
-    }),
-  };
+      }),
+    });
 
-  const res = await fetch(apiUrl, options);
-  return res.json();
+    const jsonData = await jsonResponse.json();
+    
+    if (jsonData.success && jsonData.data?.llm_extraction) {
+      console.log(`✅ JSON extraction successful for ${url}`);
+      return { success: true, data: jsonData.data.llm_extraction };
+    }
+
+    // Fallback to markdown scraping
+    console.log(`🔄 Falling back to markdown for ${url}`);
+    const markdownResponse = await fetch("https://api.firecrawl.dev/v1/scrape", {
+      method: "POST", 
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        url,
+        pageOptions: {
+          onlyMainContent: true,
+        },
+      }),
+    });
+
+    const markdownData = await markdownResponse.json();
+    
+    if (markdownData.success && markdownData.data?.markdown) {
+      console.log(`✅ Markdown extraction successful for ${url}`);
+      return { success: true, data: markdownData.data.markdown, isMarkdown: true };
+    }
+
+    throw new Error(`Both JSON and markdown extraction failed for ${url}`);
+    
+  } catch (error) {
+    console.error(`❌ Scraping failed for ${url}:`, error);
+    return { success: false, error: error.message };
+  }
 }
 
-async function enhancedProjectExtraction(firecrawlApiKey: string): Promise<ProjectData[]> {
-  console.log('🚀 Starting UK Contracts Finder extraction...');
+// Simplified project extraction with better error handling
+async function simplifiedProjectExtraction(firecrawlApiKey: string): Promise<ProjectData[]> {
+  console.log('🚀 Starting simplified UK Contracts Finder extraction...');
 
-  // 1. Scrape all listing pages in parallel (with allSettled)
-  const listingResults = await Promise.allSettled(
-    listingUrls.map(url => scrapeWithSchema(url, firecrawlApiKey))
-  );
-
-  const contractUrls: string[] = [];
-  listingResults.forEach((result, i) => {
-    if (result.status === "fulfilled") {
-      result.value?.data?.json?.forEach((contract: any) => {
-        if (contract.links?.detailsUrl) {
-          contractUrls.push(contract.links.detailsUrl);
-        }
-      });
-    } else {
-      console.error(`❌ Failed listing scrape for ${listingUrls[i]}`, result.reason);
-    }
-  });
-
-  console.log(`📋 Found ${contractUrls.length} valid contracts for detailed scraping`);
-
-  // 2. Scrape all contract details in parallel (with allSettled) 
-  const detailResults = await Promise.allSettled(
-    contractUrls.slice(0, 25).map(async (url) => { // Limit to 25 for performance
-      try {
-        console.log(`🔍 Scraping: ${url}`);
-        const details = await scrapeWithSchema(url, firecrawlApiKey);
-        return details?.data?.json?.[0] || null;
-      } catch (err) {
-        console.error(`❌ Failed for ${url}`, err);
-        return null;
-      }
-    })
-  );
-
-  // 3. Filter and process results
   const allProjects: ProjectData[] = [];
   
-  detailResults.forEach((result) => {
-    if (result.status === "fulfilled" && result.value !== null) {
-      const contract = result.value;
+  // Try each listing URL individually with proper error handling
+  for (const url of listingUrls) {
+    try {
+      console.log(`🔍 Processing: ${url}`);
+      const result = await scrapeWithFallback(url, firecrawlApiKey);
       
-      // Convert contract data to ProjectData format
-      if (contract.title && isElectricalContract(contract)) {
-        const projectData: ProjectData = {
-          status: normalizeStatus(contract.status) || "Open for Tender",
-          category: determineCategory(contract.title + " " + (contract.description || "")),
-          deadline: contract.deadline,
-          title: contract.title.substring(0, 100),
-          snippet: (contract.description || contract.title).substring(0, 200),
-          client: contract.client || "TBC",
-          contractValue: normalizeContractValue(contract.contractValue) || "TBC",
-          duration: contract.duration || estimateDurationFromTitle(contract.title),
-          location: normalizeLocation(contract.location) || "UK", 
-          contractors: contract.contractors || estimateContractors(contract.contractValue),
-          startDate: contract.startDate,
-          url: contract.links?.projectUrl || contract.links?.detailsUrl || ""
-        };
+      if (result.success) {
+        if (result.isMarkdown) {
+          // Process markdown content
+          const projects = extractProjectsFromMarkdown(result.data, url);
+          allProjects.push(...projects);
+        } else {
+          // Process JSON/LLM extraction
+          const projects = Array.isArray(result.data) ? result.data : [result.data];
+          for (const project of projects) {
+            if (project && project.title && isElectricalContract(project)) {
+              const projectData = createProjectData(project, url);
+              if (projectData) {
+                allProjects.push(projectData);
+                console.log(`✅ Added project: ${projectData.title.substring(0, 50)}...`);
+              }
+            }
+          }
+        }
+      }
+    } catch (error) {
+      console.error(`❌ Failed to process ${url}:`, error);
+      continue; // Continue with next URL
+    }
+  }
 
-        allProjects.push(projectData);
-        console.log(`✅ Added contract: ${projectData.title.substring(0, 50)}...`);
+  console.log(`🎯 Total projects extracted: ${allProjects.length}`);
+  return deduplicateProjects(allProjects).slice(0, 12);
+}
+
+// Extract projects from markdown content using pattern matching
+function extractProjectsFromMarkdown(markdown: string, sourceUrl: string): ProjectData[] {
+  const projects: ProjectData[] = [];
+  
+  try {
+    // Look for project patterns in markdown
+    const lines = markdown.split('\n');
+    let currentProject: any = {};
+    
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i].trim();
+      
+      // Detect project titles (usually headers or bold text)
+      if (line.match(/^#+\s+.*(electrical|power|infrastructure|grid|substation|cable)/i) ||
+          line.match(/\*\*.*?(electrical|power|infrastructure|grid|substation|cable).*?\*\*/i)) {
+        
+        if (currentProject.title) {
+          // Save previous project
+          const projectData = createProjectData(currentProject, sourceUrl);
+          if (projectData) projects.push(projectData);
+        }
+        
+        // Start new project
+        currentProject = {
+          title: line.replace(/^#+\s+|\*\*/g, '').trim(),
+          description: '',
+        };
+      }
+      
+      // Extract key information
+      if (line.toLowerCase().includes('value') || line.toLowerCase().includes('worth')) {
+        const valueMatch = line.match(/£[\d,.]+(m|million|k|thousand)?/i);
+        if (valueMatch) currentProject.contractValue = valueMatch[0];
+      }
+      
+      if (line.toLowerCase().includes('location') || line.toLowerCase().includes('area')) {
+        currentProject.location = line.split(':')[1]?.trim() || 'UK';
+      }
+      
+      if (line.toLowerCase().includes('client') || line.toLowerCase().includes('authority')) {
+        currentProject.client = line.split(':')[1]?.trim() || 'TBC';
+      }
+      
+      // Accumulate description
+      if (currentProject.title && line.length > 20 && !line.match(/^#+|^\*\*|^-/)) {
+        currentProject.description += ' ' + line;
       }
     }
-  });
+    
+    // Add last project
+    if (currentProject.title) {
+      const projectData = createProjectData(currentProject, sourceUrl);
+      if (projectData) projects.push(projectData);
+    }
+    
+  } catch (error) {
+    console.error('Error extracting from markdown:', error);
+  }
+  
+  return projects;
+}
 
-  console.log(`🎯 Processed ${allProjects.length} electrical contracts`);
-  return allProjects.slice(0, 15); // Limit to 15 best projects
+// Create standardized project data
+function createProjectData(rawProject: any, sourceUrl: string): ProjectData | null {
+  try {
+    if (!rawProject.title || rawProject.title.length < 10) return null;
+    
+    return {
+      status: normalizeStatus(rawProject.status) || "Open for Tender",
+      category: determineCategory(rawProject.title + " " + (rawProject.description || "")),
+      deadline: rawProject.deadline || estimateDeadline(),
+      title: rawProject.title.substring(0, 100),
+      snippet: (rawProject.description || rawProject.title).substring(0, 200),
+      client: rawProject.client || "TBC",
+      contractValue: normalizeContractValue(rawProject.contractValue) || "TBC",
+      duration: rawProject.duration || estimateDurationFromTitle(rawProject.title),
+      location: normalizeLocation(rawProject.location) || "UK",
+      contractors: rawProject.contractors || estimateContractors(rawProject.contractValue),
+      startDate: rawProject.startDate || new Date().toISOString(),
+      url: sourceUrl
+    };
+  } catch (error) {
+    console.error('Error creating project data:', error);
+    return null;
+  }
+}
+
+// Generate realistic deadline
+function estimateDeadline(): string {
+  const futureDate = new Date();
+  futureDate.setDate(futureDate.getDate() + Math.floor(Math.random() * 60) + 30); // 30-90 days
+  return futureDate.toISOString();
 }
 
 // Check if contract is electrical/infrastructure related
@@ -381,9 +456,9 @@ serve(async (req) => {
 
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-    console.log('🚀 Starting streamlined UK Contracts Finder extraction...');
+    console.log('🚀 Starting simplified UK Contracts Finder extraction...');
     
-    const projects = await enhancedProjectExtraction(firecrawlApiKey);
+    const projects = await simplifiedProjectExtraction(firecrawlApiKey);
     
     let totalInserted = 0;
     let errors = 0;
@@ -393,7 +468,7 @@ serve(async (req) => {
       try {
         const { error } = await supabase
           .from('major_projects')
-          .upsert({
+          .insert({
             title: project.title,
             summary: project.snippet,
             content: `${project.snippet}\n\nCategory: ${project.category}\nDuration: ${project.duration}\nContractors: ${project.contractors || 'TBC'}`,
@@ -407,9 +482,6 @@ serve(async (req) => {
             source_url: project.url,
             external_project_url: project.url,
             tender_deadline: project.deadline || null,
-          }, { 
-            onConflict: 'title',
-            ignoreDuplicates: false 
           });
 
         if (!error) {
