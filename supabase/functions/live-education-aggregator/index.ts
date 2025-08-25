@@ -12,10 +12,9 @@ const supabase = createClient(
   Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
 );
 
-// Initialize Firecrawl
-const firecrawlApp = new FirecrawlApp({ 
-  apiKey: Deno.env.get('FIRECRAWL_API_KEY') ?? '' 
-});
+// Firecrawl v2 API configuration
+const FIRECRAWL_API_KEY = Deno.env.get('FIRECRAWL_API_KEY') ?? '';
+const FIRECRAWL_V2_URL = 'https://api.firecrawl.dev/v2/scrape';
 
 interface EducationData {
   id: string;
@@ -56,27 +55,164 @@ interface MarketStats {
   };
 }
 
-// Helper function for API calls with retry logic
-const makeFirecrawlRequest = async (url: string, options: any, maxRetries = 3) => {
+// Schema for structured data extraction
+const courseExtractionSchema = {
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "level": {
+        "type": "string",
+        "description": "The qualification level of the course (e.g. 'Level 4')."
+      },
+      "title": {
+        "type": "string",
+        "description": "The full name of the course."
+      },
+      "awardingBody": {
+        "type": "string",
+        "description": "The awarding body or institution offering the course (e.g. 'Pearson BTEC')."
+      },
+      "description": {
+        "type": "string",
+        "description": "A short overview of the course."
+      },
+      "rating": {
+        "type": "number",
+        "description": "Average course rating out of 5."
+      },
+      "employmentRate": {
+        "type": "string",
+        "description": "Percentage of students employed after completion (e.g. '88%')."
+      },
+      "duration": {
+        "type": "string",
+        "description": "The length and mode of study (e.g. '2 years part-time')."
+      },
+      "studyMode": {
+        "type": "string",
+        "description": "Mode of study (e.g. 'Part-time', 'Full-time', 'Online')."
+      },
+      "location": {
+        "type": "string",
+        "description": "Where the course is available (e.g. 'Multiple colleges nationwide')."
+      },
+      "costRange": {
+        "type": "string",
+        "description": "Estimated cost range (e.g. '£3,000 - £5,000')."
+      },
+      "nextIntake": {
+        "type": "string",
+        "description": "Next intake month/year (e.g. 'September 2025')."
+      },
+      "topics": {
+        "type": "array",
+        "items": { "type": "string" },
+        "description": "Key topics or modules covered in the course."
+      },
+      "tags": {
+        "type": "array",
+        "items": { "type": "string" },
+        "description": "Extra metadata tags (e.g. 'New Intake Soon', 'Popular')."
+      },
+      "url": {
+        "type": "string",
+        "description": "Link to the official course page."
+      },
+      "lastUpdated": {
+        "type": "string",
+        "format": "date",
+        "description": "The date when this course data was last updated."
+      },
+      "enquiry": {
+        "type": "object",
+        "description": "Details for enquiries or applications.",
+        "properties": {
+          "contactName": {
+            "type": "string",
+            "description": "Name of the contact person or department."
+          },
+          "phone": {
+            "type": "string",
+            "description": "Phone number for enquiries."
+          },
+          "email": {
+            "type": "string",
+            "description": "Email address for enquiries."
+          },
+          "website": {
+            "type": "string",
+            "description": "Direct enquiry or application link."
+          }
+        },
+        "required": ["email", "website"]
+      }
+    },
+    "required": [
+      "title",
+      "level",
+      "awardingBody",
+      "duration",
+      "studyMode",
+      "costRange",
+      "url"
+    ]
+  }
+};
+
+// Direct Firecrawl v2 API call with schema extraction
+const makeFirecrawlV2Request = async (url: string, schema?: any, maxRetries = 3) => {
   for (let attempt = 1; attempt <= maxRetries; attempt++) {
     try {
-      console.log(`📡 Making Firecrawl API call to ${url.substring(0, 60)}... (attempt ${attempt}/${maxRetries})`);
-      console.log(`🔧 Options:`, JSON.stringify(options, null, 2));
+      console.log(`📡 Making Firecrawl v2 API call to ${url.substring(0, 60)}... (attempt ${attempt}/${maxRetries})`);
       
-      const response = await firecrawlApp.scrapeUrl(url, options);
-      console.log(`📋 Response structure:`, Object.keys(response || {}));
+      const requestBody: any = {
+        url: url,
+        formats: ['markdown']
+      };
+
+      if (schema) {
+        requestBody.extract = {
+          schema: schema,
+          systemPrompt: "Extract structured data about electrical engineering and electrical trade courses. Focus on UK-based programmes, qualifications, and training opportunities."
+        };
+        console.log(`🔧 Using structured extraction with schema`);
+      }
+
+      console.log(`🔧 Request body:`, JSON.stringify(requestBody, null, 2));
       
-      if (response && response.success) {
-        console.log(`✅ Firecrawl success! Data available:`, !!response.data);
-        return response;
+      const response = await fetch(FIRECRAWL_V2_URL, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${FIRECRAWL_API_KEY}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestBody),
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.log(`❌ Firecrawl v2 API error (${response.status}): ${errorText}`);
+        throw new Error(`HTTP ${response.status}: ${errorText}`);
+      }
+
+      const result = await response.json();
+      console.log(`📋 Response structure:`, Object.keys(result || {}));
+      
+      if (result.success) {
+        console.log(`✅ Firecrawl v2 success! Data available:`, !!result.data);
+        if (result.data?.extract) {
+          console.log(`🎯 Structured data extracted:`, result.data.extract.length, 'items');
+        }
+        return result;
       } else {
-        console.log(`❌ Firecrawl request failed (attempt ${attempt}):`, response?.error || 'Unknown error');
+        console.log(`❌ Firecrawl v2 request failed (attempt ${attempt}):`, result.error || 'Unknown error');
         if (attempt === maxRetries) {
-          throw new Error(`Failed after ${maxRetries} attempts: ${response?.error || 'Unknown error'}`);
+          throw new Error(`Failed after ${maxRetries} attempts: ${result.error || 'Unknown error'}`);
         }
       }
     } catch (error) {
-      console.log(`❌ Error in Firecrawl request (attempt ${attempt}):`, error.message);
+      console.log(`❌ Error in Firecrawl v2 request (attempt ${attempt}):`, error.message);
       console.log(`🔍 Full error:`, error);
       if (attempt === maxRetries) {
         throw error;
@@ -85,6 +221,13 @@ const makeFirecrawlRequest = async (url: string, options: any, maxRetries = 3) =
       await new Promise(resolve => setTimeout(resolve, 1000 * attempt));
     }
   }
+};
+
+// Legacy fallback function
+const makeFirecrawlRequest = async (url: string, options: any, maxRetries = 3) => {
+  console.log(`⚠️ Using legacy Firecrawl method as fallback for ${url.substring(0, 60)}...`);
+  // This would use the old SDK method if v2 fails
+  return { success: false, error: 'Legacy method disabled in favor of v2' };
 };
 
 // Scrape TradeSkills4U for electrical courses
@@ -146,7 +289,7 @@ const scrapeTradeSkills4U = async (): Promise<EducationData[]> => {
   return [];
 };
 
-// Scrape IDP for electrical engineering courses
+// Scrape IDP for electrical engineering courses using v2 API with schema
 const scrapeIDPCourses = async (): Promise<EducationData[]> => {
   console.log('🎓 Scraping IDP for electrical engineering courses...');
   
@@ -154,12 +297,62 @@ const scrapeIDPCourses = async (): Promise<EducationData[]> => {
     const searchUrl = 'https://www.idp.com/find-a-course/electrical-engineering/all-study-level/united-kingdom/';
     console.log(`🔍 Searching IDP at: ${searchUrl}`);
     
-    const response = await makeFirecrawlRequest(searchUrl, {
-      formats: ['markdown']
-    });
+    const response = await makeFirecrawlV2Request(searchUrl, courseExtractionSchema);
 
-    if (response.success && response.data && response.data.markdown) {
-      console.log('✅ IDP: Successfully scraped course data');
+    if (response.success && response.data?.extract && Array.isArray(response.data.extract)) {
+      console.log(`✅ IDP: Successfully extracted ${response.data.extract.length} structured courses`);
+      
+      const courses: EducationData[] = response.data.extract.map((course: any, index: number) => {
+        const isMaster = course.level?.toLowerCase().includes('master') || course.title?.toLowerCase().includes('master');
+        const isPhD = course.level?.toLowerCase().includes('phd') || course.title?.toLowerCase().includes('phd');
+        
+        return {
+          id: `idp-v2-${Date.now()}-${index}`,
+          title: course.title || `Electrical Engineering Programme`,
+          institution: course.awardingBody || 'UK University',
+          description: course.description || `University degree programme in electrical engineering`,
+          level: course.level || (isPhD ? 'PhD' : isMaster ? "Master's Degree" : "Bachelor's Degree"),
+          duration: course.duration || (isPhD ? '3-4 years' : isMaster ? '1-2 years' : '3-4 years'),
+          category: 'Engineering',
+          studyMode: course.studyMode || 'Full-time',
+          locations: course.location ? [course.location] : ['Various UK universities'],
+          entryRequirements: isMaster ? ['Bachelor degree in engineering'] : ['A-levels in Maths and Physics'],
+          keyTopics: course.topics || ['Circuit Analysis', 'Power Systems', 'Control Systems', 'Electronics'],
+          progressionOptions: ['Graduate engineer roles', 'Chartered Engineer status', 'Further study'],
+          fundingOptions: ['Student Finance England', 'University scholarships', 'Research funding'],
+          tuitionFees: course.costRange || (isMaster ? '£15,000 - £25,000 per year' : '£9,250 per year'),
+          applicationDeadline: 'January 2025',
+          nextIntake: course.nextIntake || 'September 2025',
+          rating: course.rating || 4.5,
+          employmentRate: course.employmentRate ? parseInt(course.employmentRate.replace('%', '')) : 95,
+          averageStartingSalary: isMaster ? '£35,000 - £45,000' : '£28,000 - £35,000',
+          courseUrl: course.url || searchUrl,
+          lastUpdated: new Date().toISOString()
+        };
+      });
+      
+      return courses;
+    }
+    
+    console.log('⚠️ IDP: No structured data extracted, trying fallback method...');
+    return await scrapeIDPFallback(searchUrl);
+    
+  } catch (error) {
+    console.log(`❌ Error scraping IDP with v2: ${error.message}`);
+    console.log('⚠️ IDP: Trying fallback method...');
+    return await scrapeIDPFallback('https://www.idp.com/find-a-course/electrical-engineering/all-study-level/united-kingdom/');
+  }
+};
+
+// Fallback method for IDP
+const scrapeIDPFallback = async (searchUrl: string): Promise<EducationData[]> => {
+  console.log('🔄 IDP Fallback: Using basic markdown parsing...');
+  
+  try {
+    const response = await makeFirecrawlV2Request(searchUrl);
+
+    if (response.success && response.data?.markdown) {
+      console.log('✅ IDP Fallback: Successfully scraped course data');
       
       const markdown = response.data.markdown;
       const courses: EducationData[] = [];
@@ -173,7 +366,7 @@ const scrapeIDPCourses = async (): Promise<EducationData[]> => {
         const isPhD = title.toLowerCase().includes('phd');
         
         courses.push({
-          id: `idp-${Date.now()}-${index}`,
+          id: `idp-fallback-${Date.now()}-${index}`,
           title: title.trim(),
           institution: 'UK University',
           description: `University degree programme in electrical engineering`,
@@ -200,26 +393,71 @@ const scrapeIDPCourses = async (): Promise<EducationData[]> => {
       return courses;
     }
   } catch (error) {
-    console.log(`❌ Error scraping IDP: ${error.message}`);
+    console.log(`❌ Error in IDP fallback: ${error.message}`);
   }
   
   return [];
 };
 
-// Scrape National Careers Service for government courses
+// Scrape National Careers Service using v2 API with schema
 const scrapeNationalCareers = async (): Promise<EducationData[]> => {
   console.log('🏛️ Scraping National Careers Service for electrical courses...');
   
   try {
-    const searchUrl = 'https://nationalcareers.service.gov.uk/find-a-course/page?searchTerm=electrical&distance=10%20miles&town=united%20kingdom&orderByValue=Distance&startDate=Anytime&courseType=&sectors=&learningMethod=&courseHours=&courseStudyTime=&filterA=true&page=1&D=1&coordinates=&campaignCode=&qualificationLevels=';
+    const searchUrl = 'https://nationalcareers.service.gov.uk/find-a-course/page?searchTerm=electrical&distance=25%20miles&town=London&orderByValue=StartDate&startDate=Anytime&courseType=&sectors=&learningMethod=&courseHours=&courseStudyTime=&filterA=true&page=2&D=1&coordinates=&campaignCode=&qualificationLevels=4';
     console.log(`🔍 Searching National Careers at: ${searchUrl}`);
     
-    const response = await makeFirecrawlRequest(searchUrl, {
-      formats: ['markdown']
-    });
+    const response = await makeFirecrawlV2Request(searchUrl, courseExtractionSchema);
 
-    if (response.success && response.data && response.data.markdown) {
-      console.log('✅ National Careers: Successfully scraped course data');
+    if (response.success && response.data?.extract && Array.isArray(response.data.extract)) {
+      console.log(`✅ National Careers: Successfully extracted ${response.data.extract.length} structured courses`);
+      
+      const courses: EducationData[] = response.data.extract.map((course: any, index: number) => ({
+        id: `nc-v2-${Date.now()}-${index}`,
+        title: course.title || `Level 4 Electrical Course`,
+        institution: course.awardingBody || 'Government Approved Provider',
+        description: course.description || `Government-funded electrical training programme`,
+        level: course.level || 'Level 4',
+        duration: course.duration || '6-18 months',
+        category: 'Vocational Training',
+        studyMode: course.studyMode || 'Part-time/Flexible',
+        locations: course.location ? [course.location] : ['London & surrounding areas'],
+        entryRequirements: ['Basic education requirements', 'Age 19+ for funding'],
+        keyTopics: course.topics || ['Electrical Installation', 'Health & Safety', 'Industry Standards', 'Practical Skills'],
+        progressionOptions: ['Employment in electrical trades', 'Higher level qualifications', 'Apprenticeships'],
+        fundingOptions: ['Free for eligible learners', 'Advanced Learner Loans', 'Employer funding'],
+        tuitionFees: course.costRange || 'Free for eligible learners',
+        applicationDeadline: 'Rolling admissions',
+        nextIntake: course.nextIntake || 'Multiple start dates',
+        rating: course.rating || 4.3,
+        employmentRate: course.employmentRate ? parseInt(course.employmentRate.replace('%', '')) : 88,
+        averageStartingSalary: '£20,000 - £28,000',
+        courseUrl: course.url || searchUrl,
+        lastUpdated: new Date().toISOString()
+      }));
+      
+      return courses;
+    }
+    
+    console.log('⚠️ National Careers: No structured data extracted, trying fallback method...');
+    return await scrapeNationalCareersFallback(searchUrl);
+    
+  } catch (error) {
+    console.log(`❌ Error scraping National Careers with v2: ${error.message}`);
+    console.log('⚠️ National Careers: Trying fallback method...');
+    return await scrapeNationalCareersFallback('https://nationalcareers.service.gov.uk/find-a-course/page?searchTerm=electrical&distance=25%20miles&town=London&orderByValue=StartDate&startDate=Anytime&courseType=&sectors=&learningMethod=&courseHours=&courseStudyTime=&filterA=true&page=2&D=1&coordinates=&campaignCode=&qualificationLevels=4');
+  }
+};
+
+// Fallback method for National Careers
+const scrapeNationalCareersFallback = async (searchUrl: string): Promise<EducationData[]> => {
+  console.log('🔄 National Careers Fallback: Using basic markdown parsing...');
+  
+  try {
+    const response = await makeFirecrawlV2Request(searchUrl);
+
+    if (response.success && response.data?.markdown) {
+      console.log('✅ National Careers Fallback: Successfully scraped course data');
       
       const markdown = response.data.markdown;
       const courses: EducationData[] = [];
@@ -230,15 +468,15 @@ const scrapeNationalCareers = async (): Promise<EducationData[]> => {
       
       matches.slice(0, 6).forEach((title: string, index: number) => {
         courses.push({
-          id: `nc-${Date.now()}-${index}`,
+          id: `nc-fallback-${Date.now()}-${index}`,
           title: title.trim(),
           institution: 'Government Approved Provider',
           description: `Government-funded electrical training programme`,
-          level: title.includes('Level 3') ? 'Level 3' : title.includes('Level 2') ? 'Level 2' : 'Vocational Qualification',
+          level: title.includes('Level 4') ? 'Level 4' : title.includes('Level 3') ? 'Level 3' : title.includes('Level 2') ? 'Level 2' : 'Vocational Qualification',
           duration: '6-18 months',
           category: 'Vocational Training',
           studyMode: 'Part-time/Flexible',
-          locations: ['Local training centres'],
+          locations: ['London & surrounding areas'],
           entryRequirements: ['Basic education requirements', 'Age 19+ for funding'],
           keyTopics: ['Electrical Installation', 'Health & Safety', 'Industry Standards', 'Practical Skills'],
           progressionOptions: ['Employment in electrical trades', 'Higher level qualifications', 'Apprenticeships'],
@@ -249,7 +487,7 @@ const scrapeNationalCareers = async (): Promise<EducationData[]> => {
           rating: 4.3,
           employmentRate: 88,
           averageStartingSalary: '£20,000 - £28,000',
-          courseUrl: 'https://nationalcareers.service.gov.uk',
+          courseUrl: searchUrl,
           lastUpdated: new Date().toISOString()
         });
       });
@@ -257,7 +495,7 @@ const scrapeNationalCareers = async (): Promise<EducationData[]> => {
       return courses;
     }
   } catch (error) {
-    console.log(`❌ Error scraping National Careers: ${error.message}`);
+    console.log(`❌ Error in National Careers fallback: ${error.message}`);
   }
   
   return [];
