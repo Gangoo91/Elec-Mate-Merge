@@ -582,7 +582,7 @@ Deno.serve(async (req) => {
     const category = searchParams.get('category') || 'all';
     const forceRefresh = searchParams.get('refresh') === 'true';
     
-    // Check cache first (unless force refresh)
+    // Check cache first (unless force refresh) - only return if it contains actual data
     if (!forceRefresh) {
       console.log('🔍 Checking cached education data...');
       const { data: cachedData } = await supabase
@@ -592,8 +592,9 @@ Deno.serve(async (req) => {
         .gt('expires_at', new Date().toISOString())
         .single();
 
-      if (cachedData) {
-        console.log('✅ Returning cached education data');
+      // Only return cached data if it actually contains education programmes
+      if (cachedData && cachedData.education_data && Array.isArray(cachedData.education_data) && cachedData.education_data.length > 0) {
+        console.log(`✅ Returning cached education data with ${cachedData.education_data.length} programmes`);
         return new Response(
           JSON.stringify({
             success: true,
@@ -607,6 +608,8 @@ Deno.serve(async (req) => {
             headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
           }
         );
+      } else if (cachedData) {
+        console.log('⚠️ Cached data exists but is empty, fetching fresh data...');
       }
     }
 
@@ -643,19 +646,30 @@ Deno.serve(async (req) => {
 
     console.log(`📊 Original courses: ${originalCount}, After deduplication: ${uniqueCourses.length}, Duplicates removed: ${duplicatesRemoved}`);
 
-    // Add fallback data if no courses found or if API key is missing
+    // Ensure we always have data - if no courses found, use fallback
     if (uniqueCourses.length === 0 || !Deno.env.get('FIRECRAWL_API_KEY')) {
-      console.log('📚 No courses scraped or API key missing, adding fallback data...');
+      console.log('📚 No courses scraped or API key missing, using fallback data...');
       uniqueCourses = getFallbackEducationData();
       sourceResults.push('Fallback data: 8 comprehensive UK programmes');
+    }
+
+    // Double-check we have data (safety net)
+    if (uniqueCourses.length === 0) {
+      console.log('🚨 Still no courses found, forcing fallback data to prevent empty results');
+      uniqueCourses = getFallbackEducationData();
+      sourceResults.push('Emergency fallback: 8 UK electrical programmes');
     }
 
     // Generate analytics
     const analytics = generateMarketStats(uniqueCourses);
     
-    // Cache the results
-    await cacheEducationData(category, 'electrical education UK', uniqueCourses, analytics);
-    await cacheMarketStats(analytics);
+    // Only cache if we have actual data (never cache empty results)
+    if (uniqueCourses.length > 0) {
+      await cacheEducationData(category, 'electrical education UK', uniqueCourses, analytics);
+      await cacheMarketStats(analytics);
+    } else {
+      console.log('⚠️ Not caching empty results');
+    }
 
     console.log(`📊 Education aggregation complete: ${uniqueCourses.length} unique courses from ${sourceResults.length} sources`);
 
@@ -679,16 +693,40 @@ Deno.serve(async (req) => {
   } catch (error) {
     console.error('❌ Error in live education aggregator:', error);
     
-    return new Response(
-      JSON.stringify({
-        success: false,
-        error: error.message,
-        timestamp: new Date().toISOString()
-      }),
-      { 
-        status: 500, 
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
-      }
-    );
+    // Even if there's an error, try to return fallback data instead of failing completely
+    try {
+      console.log('🛟 Attempting to return fallback data due to error...');
+      const fallbackCourses = getFallbackEducationData();
+      const fallbackAnalytics = generateMarketStats(fallbackCourses);
+      
+      return new Response(
+        JSON.stringify({
+          success: true,
+          data: fallbackCourses,
+          analytics: fallbackAnalytics,
+          cached: false,
+          sources: ['Emergency fallback: 8 UK electrical programmes'],
+          error: `API Error: ${error.message}`,
+          lastUpdated: new Date().toISOString()
+        }),
+        { 
+          status: 200, 
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+        }
+      );
+    } catch (fallbackError) {
+      console.error('❌ Even fallback data failed:', fallbackError);
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: `Critical error: ${error.message}`,
+          timestamp: new Date().toISOString()
+        }),
+        { 
+          status: 500, 
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+        }
+      );
+    }
   }
 });
