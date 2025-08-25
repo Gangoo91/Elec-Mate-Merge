@@ -9,23 +9,59 @@ const corsHeaders = {
 const URL = "https://api.firecrawl.dev/v2/search";
 
 const QUERIES = [
-  "HSE health safety executive electrical UK updates site:hse.gov.uk OR site:gov.uk",
-  "BS7671 electrical wiring regulations UK updates site:theiet.org OR site:gov.uk",
-  "IET institution engineering technology UK electrical updates site:theiet.org",
-  "UK electrical infrastructure projects contracts site:gov.uk OR site:constructionnews.co.uk",
-  "BS 7671 Updates UK electrical regulations site:theiet.org OR site:gov.uk",
-  "GOV.UK electrical safety regulations updates UK site:gov.uk"
+  "electrical safety news UK 2024 2025 site:hse.gov.uk OR site:constructionnews.co.uk",
+  "BS7671 wiring regulations updates news UK site:theiet.org OR site:electrical-installation.co.uk",
+  "IET electrical engineering news UK updates site:theiet.org OR site:engineeringnews.co.uk",
+  "UK electrical infrastructure contracts awarded 2024 site:constructionnews.co.uk OR site:gov.uk",
+  "electrical regulations changes UK news site:gov.uk OR site:theiet.org",
+  "electrical safety incidents UK news site:hse.gov.uk OR site:constructionnews.co.uk"
 ];
 
 // ✅ Map long queries to clean tags
 const QUERY_TAG_MAP = {
-  "HSE health safety executive electrical UK updates site:hse.gov.uk OR site:gov.uk": "HSE",
-  "BS7671 electrical wiring regulations UK updates site:theiet.org OR site:gov.uk": "BS7671",
-  "IET institution engineering technology UK electrical updates site:theiet.org": "IET",
-  "UK electrical infrastructure projects contracts site:gov.uk OR site:constructionnews.co.uk": "Major Projects",
-  "BS 7671 Updates UK electrical regulations site:theiet.org OR site:gov.uk": "BS7671",
-  "GOV.UK electrical safety regulations updates UK site:gov.uk": "GOV.UK"
+  "electrical safety news UK 2024 2025 site:hse.gov.uk OR site:constructionnews.co.uk": "Safety News",
+  "BS7671 wiring regulations updates news UK site:theiet.org OR site:electrical-installation.co.uk": "BS7671",
+  "IET electrical engineering news UK updates site:theiet.org OR site:engineeringnews.co.uk": "IET",
+  "UK electrical infrastructure contracts awarded 2024 site:constructionnews.co.uk OR site:gov.uk": "Major Projects",
+  "electrical regulations changes UK news site:gov.uk OR site:theiet.org": "Regulations",
+  "electrical safety incidents UK news site:hse.gov.uk OR site:constructionnews.co.uk": "Safety Incidents"
 };
+
+// ✅ Validate date is recent (within last 30 days)
+function isDateRecent(dateStr) {
+  if (!dateStr) return false;
+  
+  try {
+    const articleDate = new Date(dateStr);
+    const thirtyDaysAgo = new Date();
+    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+    
+    return articleDate >= thirtyDaysAgo && articleDate <= new Date();
+  } catch {
+    return false;
+  }
+}
+
+// ✅ Check content quality
+function isQualityContent(article) {
+  const title = article.title || "";
+  const snippet = article.snippet || "";
+  
+  // Filter out generic content
+  const genericTerms = ['home', 'about us', 'contact', 'privacy policy', 'terms', 'cookies'];
+  const isGeneric = genericTerms.some(term => title.toLowerCase().includes(term));
+  
+  // Must have meaningful content
+  const hasContent = title.length > 10 && snippet.length > 20;
+  
+  // Must be news-like content
+  const newsIndicators = ['news', 'update', 'announce', 'report', 'incident', 'regulation', 'standard', 'safety'];
+  const isNewsLike = newsIndicators.some(term => 
+    title.toLowerCase().includes(term) || snippet.toLowerCase().includes(term)
+  );
+  
+  return !isGeneric && hasContent && isNewsLike;
+}
 
 // ✅ Filter for UK-specific content
 function isUKRelevant(article) {
@@ -40,18 +76,21 @@ function isUKRelevant(article) {
   return (hasUKTerms || isUKDomain) && !hasExcludeTerms;
 }
 
-// ✅ Map API response into desired schema
+// ✅ Map API response into desired schema with quality filtering
 function normalizeArticles(articles, query) {
   const cleanTag = QUERY_TAG_MAP[query] || query;
   return articles
     .filter(isUKRelevant)
+    .filter(isQualityContent)
+    .filter(article => isDateRecent(article.date))
     .map((a) => ({
       title: a.title || "",
       url: a.url || "",
       snippet: a.snippet || "",
-      date: a.date || "",
+      date: a.date || new Date().toISOString(), // Fallback to today if no date
       tag: cleanTag
-    }));
+    }))
+    .sort((a, b) => new Date(b.date) - new Date(a.date)); // Sort by newest first
 }
 
 async function fetchNews(query) {
