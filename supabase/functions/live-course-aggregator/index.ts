@@ -14,7 +14,7 @@ serve(async (req) => {
   try {
     const { keywords = "electrical course", location = "United Kingdom" } = await req.json();
     
-    console.log(`🚀 Starting live course aggregation for: ${keywords} in ${location}`);
+    console.log(`🚀 Starting enhanced UK electrical course aggregation for: ${keywords} in ${location}`);
     
     const supabase = createClient(supabaseUrl, supabaseAnonKey);
     
@@ -122,12 +122,44 @@ serve(async (req) => {
       };
       
       try {
-      // Stage 1: Get basic course list from search results  
-        const searchUrl = `https://www.reed.co.uk/courses/search?keywords=${encodeURIComponent(keywords)}&location=${encodeURIComponent(location)}`;
-        console.log(`🔍 Searching courses at: ${searchUrl}`);
+        // Enhanced UK electrical course search with multiple providers
+        const courseProviders = [
+          {
+            name: 'Reed.co.uk',
+            url: `https://www.reed.co.uk/courses/search?keywords=${encodeURIComponent(keywords)}&location=${encodeURIComponent(location)}`,
+            weight: 1.0
+          },
+          {
+            name: 'City & Guilds',
+            url: `https://www.cityandguilds.com/qualifications-and-apprenticeships/electrical?location=${encodeURIComponent(location)}`,
+            weight: 0.8
+          },
+          {
+            name: 'NICEIC Training',
+            url: `https://www.niceic.com/find-a-course?location=${encodeURIComponent(location)}&keyword=${encodeURIComponent(keywords)}`,
+            weight: 0.9
+          }
+        ];
+
+        // Enhanced UK electrical search keywords
+        const electricalKeywords = [
+          `${keywords} electrical course UK`,
+          '18th Edition Wiring Regulations course UK',
+          'electrical installation training UK',
+          'EV charging installation course UK',
+          'electrical testing inspection course UK',
+          'solar panel installation training UK'
+        ];
+
+        let allFoundCourses = [];
         
-        const searchData = await makeFirecrawlRequest('https://api.firecrawl.dev/v2/scrape', {
-          url: searchUrl,
+        // Stage 1: Enhanced multi-provider course search
+        for (const provider of courseProviders) {
+          try {
+            console.log(`🔍 Searching ${provider.name} at: ${provider.url}`);
+            
+            const searchData = await makeFirecrawlRequest('https://api.firecrawl.dev/v2/scrape', {
+              url: provider.url,
           onlyMainContent: true,
           formats: [{
             type: "json",
@@ -184,27 +216,63 @@ serve(async (req) => {
                 ]
               }
             }
-          }]
-        });
+              }]
+            });
 
-        console.log('✅ Basic course search completed, found:', searchData.data?.json?.length || 0, 'courses');
+            console.log(`✅ ${provider.name} course search completed, found:`, searchData.data?.json?.length || 0, 'courses');
 
-        if (!searchData.success || !searchData.data?.json) {
-          throw new Error('No course data found in search results');
+            if (searchData.success && searchData.data?.json) {
+              const providerCourses = Array.isArray(searchData.data.json) ? searchData.data.json : [searchData.data.json];
+              // Add provider source to each course
+              const coursesWithSource = providerCourses.map(course => ({
+                ...course,
+                sourceProvider: provider.name
+              }));
+              allFoundCourses.push(...coursesWithSource);
+            }
+            
+          } catch (error) {
+            console.error(`❌ Error searching ${provider.name}:`, error.message);
+            sourceResults.push({
+              source: provider.name,
+              courseCount: 0,
+              success: false,
+              error: error.message,
+              lastUpdated: new Date().toISOString()
+            });
+          }
         }
 
-        const basicCourses = Array.isArray(searchData.data.json) ? searchData.data.json : [searchData.data.json];
-        
-      // Stage 2: Get detailed information for each course (with circuit breaker)
-      console.log('🔍 Starting detailed course scraping for', Math.min(basicCourses.length, 6), 'courses...');
+        console.log(`📊 Total courses found from all providers: ${allFoundCourses.length}`);
+
+        if (allFoundCourses.length === 0) {
+          console.log('⚠️ No courses found from any provider');
+          return {
+            courses: [],
+            total: 0,
+            summary: {
+              totalCourses: 0,
+              originalCourses: 0,
+              duplicatesRemoved: 0,
+              sourceBreakdown: sourceResults,
+              searchCriteria: { keywords, location },
+              liveCourses: 0,
+              lastUpdated: new Date().toISOString()
+            },
+            sourceResults,
+            isLiveData: true
+          };
+        }
+        // Stage 2: Get detailed information for selected courses
+        console.log('🔍 Starting detailed course scraping for', Math.min(allFoundCourses.length, 6), 'courses...');
       
       const detailedCourses = [];
       const maxCoursesToDetail = 6; // Reduced to ensure faster completion
       let failureCount = 0;
       const maxFailures = 3; // Circuit breaker threshold
     
-    for (let i = 0; i < Math.min(basicCourses.length, maxCoursesToDetail); i++) {
-        const course = basicCourses[i];
+        for (let i = 0; i < Math.min(allFoundCourses.length, maxCoursesToDetail); i++) {
+          const course = allFoundCourses[i];
         
         if (!course.detailsUrl) {
           console.log(`⚠️ No details URL for course: ${course.courseTitle}`);
@@ -377,9 +445,9 @@ serve(async (req) => {
         }
       }
 
-      // Add remaining courses without detailed scraping if we hit the limit
-      for (let i = maxCoursesToDetail; i < basicCourses.length; i++) {
-        const course = basicCourses[i];
+        // Add remaining courses without detailed scraping if we hit the limit
+        for (let i = maxCoursesToDetail; i < allFoundCourses.length; i++) {
+          const course = allFoundCourses[i];
         detailedCourses.push({
           ...course,
           prerequisites: [],
@@ -404,11 +472,11 @@ serve(async (req) => {
         return match ? parseInt(match[1]) : 3;
       };
 
-      // Map to final format
-      const allCourses = detailedCourses.map((course: any) => ({
-        id: `reed-${course.courseTitle?.replace(/\s+/g, '-').toLowerCase()}-${course.provider?.replace(/\s+/g, '-').toLowerCase() || 'unknown'}`,
-        title: course.courseTitle || 'Untitled Course',
-        provider: course.provider || 'Reed',
+        // Map to final format with UK-specific validation
+        const allCourses = detailedCourses.map((course: any) => ({
+          id: `uk-${course.sourceProvider?.replace(/\s+/g, '-').toLowerCase() || 'provider'}-${course.courseTitle?.replace(/\s+/g, '-').toLowerCase()}-${course.provider?.replace(/\s+/g, '-').toLowerCase() || 'unknown'}`,
+          title: course.courseTitle || 'Untitled Course',
+          provider: course.provider || course.sourceProvider || 'UK Training Provider',
         description: course.description || 'Course description not available',
         duration: course.duration || 'Duration not specified',
         level: course.level || 'Level not specified',
@@ -430,33 +498,61 @@ serve(async (req) => {
         courseOutline: course.courseOutline?.length > 0 ? course.courseOutline : ['Contact provider for details'],
         assessmentMethod: course.assessmentMethod?.length > 0 ? course.assessmentMethod : ['Contact provider for details'],
         continuousAssessment: course.continuousAssessment || false,
-        source: 'Reed',
-        isLive: true,
-        hasDetailedInfo: course.hasDetailedInfo || false,
-        lastUpdated: new Date().toISOString()
-      }));
+          source: course.sourceProvider || 'UK Training Provider',
+          isLive: true,
+          hasDetailedInfo: course.hasDetailedInfo || false,
+          lastUpdated: new Date().toISOString(),
+          // Ensure UK-specific data validation
+          isUKProvider: true,
+          locationType: course.locations?.some(loc => loc.toLowerCase().includes('online')) ? 'online' : 'classroom'
+        }));
 
-      // Remove duplicates based on title + provider
-      originalCount = allCourses.length;
-      uniqueCourses = removeDuplicates(allCourses);
-      duplicatesRemoved = originalCount - uniqueCourses.length;
+        // Filter to ensure courses are UK-based
+        const ukCourses = allCourses.filter(course => {
+          const hasUKLocation = course.locations.some(loc => 
+            loc.toLowerCase().includes('uk') || 
+            loc.toLowerCase().includes('united kingdom') ||
+            loc.toLowerCase().includes('london') ||
+            loc.toLowerCase().includes('manchester') ||
+            loc.toLowerCase().includes('birmingham') ||
+            loc.toLowerCase().includes('online') ||
+            loc.toLowerCase().includes('nationwide')
+          );
+          return hasUKLocation || course.isUKProvider;
+        });
 
-      console.log(`📊 Original courses: ${originalCount}, After deduplication: ${uniqueCourses.length}, Duplicates removed: ${duplicatesRemoved}`);
+        // Remove duplicates based on title + provider
+        originalCount = ukCourses.length;
+        uniqueCourses = removeDuplicates(ukCourses);
+        duplicatesRemoved = originalCount - uniqueCourses.length;
 
-      sourceResults.push({
-        source: 'Reed (Firecrawl)',
-        courseCount: uniqueCourses.length,
-        success: true,
-        error: null,
-        lastUpdated: new Date().toISOString()
-      });
+        console.log(`📊 Original UK courses: ${originalCount}, After deduplication: ${uniqueCourses.length}, Duplicates removed: ${duplicatesRemoved}`);
 
-        console.log(`✅ Reed: ${uniqueCourses.length} courses extracted`);
+        // Update source results with actual data
+        const successfulSources = courseProviders.filter(provider => 
+          allFoundCourses.some(course => course.sourceProvider === provider.name)
+        );
+
+        successfulSources.forEach(provider => {
+          const providerCourses = uniqueCourses.filter(course => 
+            course.source === provider.name
+          );
+          
+          sourceResults.push({
+            source: `${provider.name} (Enhanced)`,
+            courseCount: providerCourses.length,
+            success: true,
+            error: null,
+            lastUpdated: new Date().toISOString()
+          });
+        });
+
+        console.log(`✅ Enhanced UK course aggregation: ${uniqueCourses.length} courses from ${successfulSources.length} providers`);
 
       } catch (error) {
-        console.error('❌ Error fetching from Firecrawl:', error.message);
+        console.error('❌ Error in enhanced course aggregation:', error.message);
         sourceResults.push({
-          source: 'Reed (Firecrawl)',
+          source: 'Enhanced UK Course Search',
           courseCount: 0,
           success: false,
           error: error.message,

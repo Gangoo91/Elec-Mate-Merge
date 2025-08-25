@@ -94,11 +94,13 @@ const ElectricianCareerCourses = () => {
     true // Enable auto-refetch
   );
 
-  // Extract data from query result with proper typing and fallback
-  const liveCourses = queryResult?.courses || (isError ? fallbackElectricalCourses : []);
-  const liveTotal = queryResult?.total || liveCourses.length;
+  // Extract data from query result with enhanced fallback logic
+  const hasLiveCourses = queryResult?.courses && queryResult.courses.length > 0;
+  const liveCourses = hasLiveCourses ? queryResult.courses : fallbackElectricalCourses;
+  const liveTotal = hasLiveCourses ? queryResult.total : fallbackElectricalCourses.length;
   const liveSummary = queryResult?.summary;
-  const isLiveData = !!queryResult && !isError;
+  const isLiveData = hasLiveCourses && !isError;
+  const isUsingFallback = !hasLiveCourses;
   const liveError = isError ? (queryError?.message || "Failed to fetch course data") : null;
 
   // Auto-refetch courses when debounced search criteria change  
@@ -596,15 +598,23 @@ const ElectricianCareerCourses = () => {
               
               {isLiveData && liveSummary && (
                 <p className="text-xs text-elec-yellow">
-                  Live data: {liveSummary.liveCourses} live courses from {liveSummary.sourceBreakdown.filter(s => s.success).length} sources
+                  ✅ Live UK data: {liveSummary.liveCourses} courses from {liveSummary.sourceBreakdown.filter(s => s.success).length} providers
                   {liveSummary.lastUpdated && ` • Updated ${new Date(liveSummary.lastUpdated).toLocaleTimeString()}`}
                 </p>
               )}
-              {!isLiveData && (
-                <p className="text-xs text-muted-foreground flex items-center gap-1">
+              {isUsingFallback && (
+                <div className="text-xs text-muted-foreground flex items-center gap-1">
                   <WifiOff className="h-3 w-3" />
-                  Showing cached course data
-                </p>
+                  Showing enhanced course database • 
+                  <Button 
+                    variant="link" 
+                    size="sm" 
+                    onClick={() => refreshCourses()} 
+                    className="p-0 h-auto text-xs underline"
+                  >
+                    Try live search
+                  </Button>
+                </div>
               )}
             </div>
             

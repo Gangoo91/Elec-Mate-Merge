@@ -1,7 +1,9 @@
 import { EnhancedCareerCourse } from "@/components/apprentice/career/courses/enhancedCoursesData";
+import { enhancedFallbackElectricalCourses } from "./enhancedFallbackCourses";
 
-// Fallback electrical courses data for when live API fails
+// Comprehensive fallback electrical courses data for when live API fails
 export const fallbackElectricalCourses: EnhancedCareerCourse[] = [
+  ...enhancedFallbackElectricalCourses,
   {
     id: "fallback-1",
     title: "Level 2 Diploma in Electrical Installations",
