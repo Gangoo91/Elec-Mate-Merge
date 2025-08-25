@@ -58,15 +58,28 @@ export const useLiveEducationData = (category: string = 'all'): UseLiveEducation
   const [lastUpdated, setLastUpdated] = useState<string | null>(null);
   const [isFromCache, setIsFromCache] = useState(false);
 
-  const fetchEducationData = async (forceRefresh: boolean = true) => {
+  const fetchEducationData = async (forceRefresh: boolean = false) => {
     try {
       setLoading(true);
       setError(null);
 
       console.log('🔍 Fetching live education data...');
 
-      // Force refresh by default until live data is working properly
-      if (!forceRefresh) {
+      // Clear cache if force refresh is requested
+      if (forceRefresh) {
+        console.log('🗑️ Clearing cached education data...');
+        const { error: deleteError } = await supabase
+          .from('live_education_cache')
+          .delete()
+          .eq('category', category);
+        
+        if (deleteError) {
+          console.warn('⚠️ Failed to clear cache:', deleteError.message);
+        } else {
+          console.log('✅ Cache cleared successfully');
+        }
+      } else {
+        // Check for valid cached data only if not force refreshing
         const { data: cachedData } = await supabase
           .from('live_education_cache')
           .select('*')
