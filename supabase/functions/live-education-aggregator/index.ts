@@ -60,19 +60,24 @@ interface MarketStats {
 const makeFirecrawlRequest = async (url: string, options: any, maxRetries = 3) => {
   for (let attempt = 1; attempt <= maxRetries; attempt++) {
     try {
-      console.log(`📡 Making Firecrawl API call (attempt ${attempt}/${maxRetries})`);
-      const response = await firecrawlApp.scrapeUrl(url, options);
+      console.log(`📡 Making Firecrawl API call to ${url.substring(0, 60)}... (attempt ${attempt}/${maxRetries})`);
+      console.log(`🔧 Options:`, JSON.stringify(options, null, 2));
       
-      if (response.success) {
+      const response = await firecrawlApp.scrapeUrl(url, options);
+      console.log(`📋 Response structure:`, Object.keys(response || {}));
+      
+      if (response && response.success) {
+        console.log(`✅ Firecrawl success! Data available:`, !!response.data);
         return response;
       } else {
-        console.log(`❌ Firecrawl request failed (attempt ${attempt}): ${response.error}`);
+        console.log(`❌ Firecrawl request failed (attempt ${attempt}):`, response?.error || 'Unknown error');
         if (attempt === maxRetries) {
-          throw new Error(`Failed after ${maxRetries} attempts: ${response.error}`);
+          throw new Error(`Failed after ${maxRetries} attempts: ${response?.error || 'Unknown error'}`);
         }
       }
     } catch (error) {
-      console.log(`❌ Error in Firecrawl request (attempt ${attempt}): ${error.message}`);
+      console.log(`❌ Error in Firecrawl request (attempt ${attempt}):`, error.message);
+      console.log(`🔍 Full error:`, error);
       if (attempt === maxRetries) {
         throw error;
       }
@@ -267,20 +272,7 @@ const scrapeUCASCourses = async (): Promise<EducationData[]> => {
     console.log(`🔍 Searching UCAS at: ${searchUrl}`);
     
     const response = await makeFirecrawlRequest(searchUrl, {
-      formats: ['markdown'],
-      extract: {
-        prompt: `Extract information about electrical engineering, electronic engineering, and electrical courses in the UK. For each course found, extract:
-        - Course title (e.g., "BEng Electrical Engineering")
-        - University/institution name
-        - Course description
-        - Duration (e.g., "3 years", "4 years")
-        - Entry requirements (A-levels, BTECs)
-        - Tuition fees (per year in GBP)
-        - Application deadline
-        - Next intake date (usually September)
-        - Course URL or application link
-        Focus only on electrical, electronic, and power engineering courses.`
-      }
+      formats: ['markdown']
     });
 
     if (response.success && response.data) {
@@ -326,18 +318,7 @@ const scrapeGovEducationData = async (): Promise<EducationData[]> => {
     console.log(`🔍 Searching gov.uk apprenticeships at: ${searchUrl}`);
     
     const response = await makeFirecrawlRequest(searchUrl, {
-      formats: ['markdown'],
-      extract: {
-        prompt: `Extract information about electrical and engineering apprenticeships in the UK. Look for:
-        - Programme names (e.g., "Electrical Installation Apprenticeship")
-        - Duration (years)
-        - Entry requirements (GCSEs)
-        - Salary information (training wages)
-        - Provider/employer information
-        - Application processes and deadlines
-        - Location information
-        Focus specifically on electrical trades, engineering, and related technical apprenticeships.`
-      }
+      formats: ['markdown']
     });
 
     if (response.success && response.data) {
@@ -379,17 +360,7 @@ const scrapeCityGuildsCourses = async (): Promise<EducationData[]> => {
   
   try {
     const response = await makeFirecrawlRequest('https://www.cityandguilds.com/qualifications-and-apprenticeships/building-services-and-construction/electrical', {
-      formats: ['markdown'],
-      extract: {
-        prompt: `Extract electrical qualifications and courses. For each course extract:
-        - Qualification name
-        - Level (1-8)
-        - Duration
-        - Entry requirements
-        - Assessment methods
-        - Career progression
-        - Cost/fees if mentioned`
-      }
+      formats: ['markdown']
     });
 
     if (response.success && response.data) {
