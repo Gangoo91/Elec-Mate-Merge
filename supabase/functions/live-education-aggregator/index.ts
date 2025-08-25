@@ -1005,6 +1005,22 @@ Deno.serve(async (req) => {
   try {
     console.log('🚀 Starting live education data aggregation...');
     
+    // Check if Firecrawl API key is available
+    const firecrawlApiKey = Deno.env.get('FIRECRAWL_API_KEY');
+    if (!firecrawlApiKey) {
+      console.log('❌ FIRECRAWL_API_KEY not found in environment variables');
+      return new Response(JSON.stringify({
+        success: false,
+        error: 'Firecrawl API key not configured. Live data scraping unavailable.',
+        data: getFallbackEducationData(),
+        analytics: generateMarketStats(getFallbackEducationData())
+      }), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      });
+    }
+    
+    console.log('✅ Firecrawl API key found, proceeding with live data aggregation...');
+    
     const { searchParams } = new URL(req.url);
     const category = searchParams.get('category') || 'all';
     const forceRefresh = searchParams.get('refresh') === 'true';
@@ -1041,6 +1057,7 @@ Deno.serve(async (req) => {
     }
 
     console.log('📚 Fetching live education data from multiple sources...');
+    console.log('🔄 Scraping sources: IDP Education, National Careers Service, TradeSkills4U');
     
     const sourceResults = [];
     let allCourses: EducationData[] = [];

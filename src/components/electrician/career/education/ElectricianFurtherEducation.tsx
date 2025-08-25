@@ -174,7 +174,7 @@ const ElectricianFurtherEducation = () => {
           ) : (
             <RefreshCw className="mr-2 h-4 w-4" />
           )}
-          Refresh Data
+          Force Refresh Live Data
         </Button>
       </div>
 
@@ -222,9 +222,14 @@ const ElectricianFurtherEducation = () => {
 
       {/* Loading State */}
       {loading && (
-        <div className="flex items-center justify-center py-12">
+        <div className="flex flex-col items-center justify-center py-12 space-y-4">
           <Loader2 className="h-8 w-8 animate-spin text-elec-yellow" />
-          <span className="ml-2 text-muted-foreground">Loading live education data...</span>
+          <div className="text-center space-y-2">
+            <span className="text-muted-foreground">Scraping live education data...</span>
+            <div className="text-xs text-muted-foreground max-w-md">
+              Fetching latest courses from IDP Education, National Careers Service, and TradeSkills4U
+            </div>
+          </div>
         </div>
       )}
 
