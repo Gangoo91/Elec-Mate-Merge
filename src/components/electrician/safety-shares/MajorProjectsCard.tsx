@@ -566,7 +566,7 @@ const MajorProjectsCard = () => {
               </div>
               
               {/* Action Buttons - Bottom right */}
-              <div className="flex gap-2 mt-4 justify-end">
+              <div className="flex flex-col sm:flex-row gap-2 mt-4 justify-end">
                 {getStatusText(project.status) === "Open for Tender" && (
                   <Button size="sm" className="bg-elec-yellow text-black hover:bg-elec-yellow/90 font-medium">
                     View Tender Details
