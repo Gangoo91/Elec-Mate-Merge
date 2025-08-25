@@ -11,9 +11,8 @@ const supabase = createClient(
   Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
 );
 
-// Firecrawl v2 API configuration
-const FIRECRAWL_API_KEY = Deno.env.get('FIRECRAWL_API_KEY') ?? '';
-const FIRECRAWL_V2_URL = 'https://api.firecrawl.dev/v2/scrape';
+// Firecrawl v2 API configuration  
+const API_KEY = Deno.env.get('FIRECRAWL_API_KEY') ?? '';
 
 interface EducationData {
   id: string;
@@ -54,549 +53,17 @@ interface MarketStats {
   };
 }
 
-// Schema for structured data extraction
+// Listing URLs for two-step scraping approach
+const listingUrls = [
+  "https://www.tradeskills4u.co.uk/electrical-courses?s=Electrical",
+  "https://nationalcareers.service.gov.uk/find-a-course/page?searchTerm=electrical", 
+  "https://www.idp.com/find-a-course/electrical-engineering/all-study-level/united-kingdom/",
+];
+
+// Enhanced schema for structured data extraction with your improved structure
 const courseExtractionSchema = {
-  "type": "array",
-  "items": {
-    "type": "object",
-    "properties": {
-      "level": {
-        "type": "string",
-        "description": "The qualification level of the course (e.g. 'Level 4')."
-      },
-      "title": {
-        "type": "string",
-        "description": "The full name of the course."
-      },
-      "awardingBody": {
-        "type": "string",
-        "description": "The awarding body or institution offering the course (e.g. 'Pearson BTEC')."
-      },
-      "description": {
-        "type": "string",
-        "description": "A short overview of the course."
-      },
-      "rating": {
-        "type": "number",
-        "description": "Average course rating out of 5."
-      },
-      "employmentRate": {
-        "type": "string",
-        "description": "Percentage of students employed after completion (e.g. '88%')."
-      },
-      "duration": {
-        "type": "string",
-        "description": "The length and mode of study (e.g. '2 years part-time')."
-      },
-      "studyMode": {
-        "type": "string",
-        "description": "Mode of study (e.g. 'Part-time', 'Full-time', 'Online')."
-      },
-      "location": {
-        "type": "string",
-        "description": "Where the course is available (e.g. 'Multiple colleges nationwide')."
-      },
-      "costRange": {
-        "type": "string",
-        "description": "Estimated cost range (e.g. '£3,000 - £5,000')."
-      },
-      "nextIntake": {
-        "type": "string",
-        "description": "Next intake month/year (e.g. 'September 2025')."
-      },
-      "topics": {
-        "type": "array",
-        "items": { "type": "string" },
-        "description": "Key topics or modules covered in the course."
-      },
-      "tags": {
-        "type": "array",
-        "items": { "type": "string" },
-        "description": "Extra metadata tags (e.g. 'New Intake Soon', 'Popular')."
-      },
-      "url": {
-        "type": "string",
-        "description": "Link to the official course page."
-      },
-      "lastUpdated": {
-        "type": "string",
-        "format": "date",
-        "description": "The date when this course data was last updated."
-      },
-      "enquiry": {
-        "type": "object",
-        "description": "Details for enquiries or applications.",
-        "properties": {
-          "contactName": {
-            "type": "string",
-            "description": "Name of the contact person or department."
-          },
-          "phone": {
-            "type": "string",
-            "description": "Phone number for enquiries."
-          },
-          "email": {
-            "type": "string",
-            "description": "Email address for enquiries."
-          },
-          "website": {
-            "type": "string",
-            "description": "Direct enquiry or application link."
-          }
-        },
-        "required": ["email", "website"]
-      }
-    },
-    "required": [
-      "title",
-      "level",
-      "awardingBody",
-      "duration",
-      "studyMode",
-      "costRange",
-      "url"
-    ]
-  }
-};
-
-// Direct Firecrawl v2 API call with schema extraction
-const makeFirecrawlV2Request = async (url: string, schema?: any, maxRetries = 3) => {
-  for (let attempt = 1; attempt <= maxRetries; attempt++) {
-    try {
-      console.log(`📡 Making Firecrawl v2 API call to ${url.substring(0, 60)}... (attempt ${attempt}/${maxRetries})`);
-      
-      const requestBody: any = {
-        url: url,
-        formats: ['markdown']
-      };
-
-      if (schema) {
-        requestBody.extract = {
-          schema: schema,
-          systemPrompt: "Extract structured data about electrical engineering and electrical trade courses. Focus on UK-based programmes, qualifications, and training opportunities."
-        };
-        console.log(`🔧 Using structured extraction with schema`);
-      }
-
-      console.log(`🔧 Request body:`, JSON.stringify(requestBody, null, 2));
-      
-      const response = await fetch(FIRECRAWL_V2_URL, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${FIRECRAWL_API_KEY}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(requestBody),
-      });
-
-      if (!response.ok) {
-        const errorText = await response.text();
-        console.log(`❌ Firecrawl v2 API error (${response.status}): ${errorText}`);
-        throw new Error(`HTTP ${response.status}: ${errorText}`);
-      }
-
-      const result = await response.json();
-      console.log(`📋 Response structure:`, Object.keys(result || {}));
-      
-      if (result.success) {
-        console.log(`✅ Firecrawl v2 success! Data available:`, !!result.data);
-        if (result.data?.extract) {
-          console.log(`🎯 Structured data extracted:`, result.data.extract.length, 'items');
-        }
-        return result;
-      } else {
-        console.log(`❌ Firecrawl v2 request failed (attempt ${attempt}):`, result.error || 'Unknown error');
-        if (attempt === maxRetries) {
-          throw new Error(`Failed after ${maxRetries} attempts: ${result.error || 'Unknown error'}`);
-        }
-      }
-    } catch (error) {
-      console.log(`❌ Error in Firecrawl v2 request (attempt ${attempt}):`, error.message);
-      console.log(`🔍 Full error:`, error);
-      if (attempt === maxRetries) {
-        throw error;
-      }
-      // Wait before retry
-      await new Promise(resolve => setTimeout(resolve, 1000 * attempt));
-    }
-  }
-};
-
-// Legacy fallback function
-const makeFirecrawlRequest = async (url: string, options: any, maxRetries = 3) => {
-  console.log(`⚠️ Using legacy Firecrawl method as fallback for ${url.substring(0, 60)}...`);
-  // This would use the old SDK method if v2 fails
-  return { success: false, error: 'Legacy method disabled in favor of v2' };
-};
-
-// Scrape TradeSkills4U for electrical courses
-const scrapeTradeSkills4U = async (): Promise<EducationData[]> => {
-  console.log('🔧 Scraping TradeSkills4U for electrical courses...');
-  
-  try {
-    const searchUrl = 'https://www.tradeskills4u.co.uk/electrical-courses?s=Electrical';
-    console.log(`🔍 Searching TradeSkills4U at: ${searchUrl}`);
-    
-    const response = await makeFirecrawlV2Request(searchUrl, courseExtractionSchema);
-
-    if (response.success && response.data?.extract && Array.isArray(response.data.extract)) {
-      console.log(`✅ TradeSkills4U: Successfully extracted ${response.data.extract.length} structured courses`);
-      
-      const courses: EducationData[] = response.data.extract.map((course: any, index: number) => ({
-        id: `ts4u-v2-${Date.now()}-${index}`,
-        title: course.title || `Professional Electrical Course`,
-        institution: course.awardingBody || 'TradeSkills4U',
-        description: course.description || `Professional electrical training course`,
-        level: course.level || 'Professional Certificate',
-        duration: course.duration || '5-10 days',
-        category: 'Professional Training',
-        studyMode: course.studyMode || 'Classroom',
-        locations: course.location ? [course.location] : ['Multiple UK centres'],
-        entryRequirements: ['Basic electrical knowledge or relevant experience'],
-        keyTopics: course.topics || ['18th Edition Regulations', 'Practical Skills', 'Health & Safety', 'Testing & Inspection'],
-        progressionOptions: ['Higher level qualifications', 'Professional certification'],
-        fundingOptions: ['Self-funded', 'Employer sponsored', 'CITB grants'],
-        tuitionFees: course.costRange || '£500 - £1,500',
-        applicationDeadline: 'Book anytime',
-        nextIntake: course.nextIntake || 'Weekly courses available',
-        rating: course.rating || 4.7,
-        employmentRate: course.employmentRate ? parseInt(course.employmentRate.replace('%', '')) : 90,
-        averageStartingSalary: '£22,000 - £30,000',
-        courseUrl: course.url || searchUrl,
-        lastUpdated: new Date().toISOString()
-      }));
-      
-      return courses;
-    }
-    
-    console.log('⚠️ TradeSkills4U: No structured data extracted, trying fallback...');
-    return await scrapeTradeSkills4UFallback(searchUrl);
-  } catch (error) {
-    console.log(`❌ Error scraping TradeSkills4U with v2: ${error.message}`);
-    console.log('⚠️ TradeSkills4U: Trying fallback method...');
-    return await scrapeTradeSkills4UFallback('https://www.tradeskills4u.co.uk/electrical-courses?s=Electrical');
-  }
-};
-
-// Fallback method for TradeSkills4U
-const scrapeTradeSkills4UFallback = async (searchUrl: string): Promise<EducationData[]> => {
-  console.log('🔄 TradeSkills4U Fallback: Using basic markdown parsing...');
-  
-  try {
-    const response = await makeFirecrawlV2Request(searchUrl);
-
-    if (response.success && response.data?.markdown) {
-      console.log('✅ TradeSkills4U Fallback: Successfully scraped course data');
-      
-      const markdown = response.data.markdown;
-      const courses: EducationData[] = [];
-      
-      // Extract course information from markdown using regex patterns
-      const coursePattern = /(\w+[\w\s&-]*(?:Level \d+|NVQ|City & Guilds|Certificate|Diploma)[\w\s&-]*)/gi;
-      const matches = markdown.match(coursePattern) || [];
-      
-      // Create course objects from matches
-      matches.slice(0, 10).forEach((title: string, index: number) => {
-        courses.push({
-          id: `ts4u-fallback-${Date.now()}-${index}`,
-          title: title.trim(),
-          institution: 'TradeSkills4U',
-          description: `Professional electrical training course: ${title.trim()}`,
-          level: title.includes('Level 3') ? 'Level 3' : title.includes('Level 2') ? 'Level 2' : 'Professional Certificate',
-          duration: '5-10 days',
-          category: 'Professional Training',
-          studyMode: 'Classroom',
-          locations: ['Multiple UK centres'],
-          entryRequirements: ['Basic electrical knowledge or relevant experience'],
-          keyTopics: ['18th Edition Regulations', 'Practical Skills', 'Health & Safety', 'Testing & Inspection'],
-          progressionOptions: ['Higher level qualifications', 'Professional certification'],
-          fundingOptions: ['Self-funded', 'Employer sponsored', 'CITB grants'],
-          tuitionFees: '£500 - £1,500',
-          applicationDeadline: 'Book anytime',
-          nextIntake: 'Weekly courses available',
-          rating: 4.7,
-          employmentRate: 90,
-          averageStartingSalary: '£22,000 - £30,000',
-          courseUrl: searchUrl,
-          lastUpdated: new Date().toISOString()
-        });
-      });
-      
-      return courses;
-    }
-  } catch (error) {
-    console.log(`❌ Error in TradeSkills4U fallback: ${error.message}`);
-  }
-  
-  return [];
-};
-
-// Scrape IDP for electrical engineering courses using v2 API with schema
-const scrapeIDPCourses = async (): Promise<EducationData[]> => {
-  console.log('🎓 Scraping IDP for electrical engineering courses...');
-  
-  try {
-    const searchUrl = 'https://www.idp.com/find-a-course/electrical-engineering/all-study-level/united-kingdom/';
-    console.log(`🔍 Searching IDP at: ${searchUrl}`);
-    
-    const response = await makeFirecrawlV2Request(searchUrl, courseExtractionSchema);
-
-    if (response.success && response.data?.extract && Array.isArray(response.data.extract)) {
-      console.log(`✅ IDP: Successfully extracted ${response.data.extract.length} structured courses`);
-      
-      const courses: EducationData[] = response.data.extract.map((course: any, index: number) => {
-        const isMaster = course.level?.toLowerCase().includes('master') || course.title?.toLowerCase().includes('master');
-        const isPhD = course.level?.toLowerCase().includes('phd') || course.title?.toLowerCase().includes('phd');
-        
-        return {
-          id: `idp-v2-${Date.now()}-${index}`,
-          title: course.title || `Electrical Engineering Programme`,
-          institution: course.awardingBody || 'UK University',
-          description: course.description || `University degree programme in electrical engineering`,
-          level: course.level || (isPhD ? 'PhD' : isMaster ? "Master's Degree" : "Bachelor's Degree"),
-          duration: course.duration || (isPhD ? '3-4 years' : isMaster ? '1-2 years' : '3-4 years'),
-          category: 'Engineering',
-          studyMode: course.studyMode || 'Full-time',
-          locations: course.location ? [course.location] : ['Various UK universities'],
-          entryRequirements: isMaster ? ['Bachelor degree in engineering'] : ['A-levels in Maths and Physics'],
-          keyTopics: course.topics || ['Circuit Analysis', 'Power Systems', 'Control Systems', 'Electronics'],
-          progressionOptions: ['Graduate engineer roles', 'Chartered Engineer status', 'Further study'],
-          fundingOptions: ['Student Finance England', 'University scholarships', 'Research funding'],
-          tuitionFees: course.costRange || (isMaster ? '£15,000 - £25,000 per year' : '£9,250 per year'),
-          applicationDeadline: 'January 2025',
-          nextIntake: course.nextIntake || 'September 2025',
-          rating: course.rating || 4.5,
-          employmentRate: course.employmentRate ? parseInt(course.employmentRate.replace('%', '')) : 95,
-          averageStartingSalary: isMaster ? '£35,000 - £45,000' : '£28,000 - £35,000',
-          courseUrl: course.url || searchUrl,
-          lastUpdated: new Date().toISOString()
-        };
-      });
-      
-      return courses;
-    }
-    
-    console.log('⚠️ IDP: No structured data extracted, trying fallback method...');
-    return await scrapeIDPFallback(searchUrl);
-    
-  } catch (error) {
-    console.log(`❌ Error scraping IDP with v2: ${error.message}`);
-    console.log('⚠️ IDP: Trying fallback method...');
-    return await scrapeIDPFallback('https://www.idp.com/find-a-course/electrical-engineering/all-study-level/united-kingdom/');
-  }
-};
-
-// Fallback method for IDP
-const scrapeIDPFallback = async (searchUrl: string): Promise<EducationData[]> => {
-  console.log('🔄 IDP Fallback: Using basic markdown parsing...');
-  
-  try {
-    const response = await makeFirecrawlV2Request(searchUrl);
-
-    if (response.success && response.data?.markdown) {
-      console.log('✅ IDP Fallback: Successfully scraped course data');
-      
-      const markdown = response.data.markdown;
-      const courses: EducationData[] = [];
-      
-      // Extract university course information
-      const universityPattern = /(Bachelor|Master|PhD)[\s\w]*Electrical[\s\w]*Engineering/gi;
-      const matches = markdown.match(universityPattern) || [];
-      
-      matches.slice(0, 8).forEach((title: string, index: number) => {
-        const isMaster = title.toLowerCase().includes('master');
-        const isPhD = title.toLowerCase().includes('phd');
-        
-        courses.push({
-          id: `idp-fallback-${Date.now()}-${index}`,
-          title: title.trim(),
-          institution: 'UK University',
-          description: `University degree programme in electrical engineering`,
-          level: isPhD ? 'PhD' : isMaster ? "Master's Degree" : "Bachelor's Degree",
-          duration: isPhD ? '3-4 years' : isMaster ? '1-2 years' : '3-4 years',
-          category: 'Engineering',
-          studyMode: 'Full-time',
-          locations: ['Various UK universities'],
-          entryRequirements: isMaster ? ['Bachelor degree in engineering'] : ['A-levels in Maths and Physics'],
-          keyTopics: ['Circuit Analysis', 'Power Systems', 'Control Systems', 'Electronics'],
-          progressionOptions: ['Graduate engineer roles', 'Chartered Engineer status', 'Further study'],
-          fundingOptions: ['Student Finance England', 'University scholarships', 'Research funding'],
-          tuitionFees: isMaster ? '£15,000 - £25,000 per year' : '£9,250 per year',
-          applicationDeadline: 'January 2025',
-          nextIntake: 'September 2025',
-          rating: 4.5,
-          employmentRate: 95,
-          averageStartingSalary: isMaster ? '£35,000 - £45,000' : '£28,000 - £35,000',
-          courseUrl: searchUrl,
-          lastUpdated: new Date().toISOString()
-        });
-      });
-      
-      return courses;
-    }
-  } catch (error) {
-    console.log(`❌ Error in IDP fallback: ${error.message}`);
-  }
-  
-  return [];
-};
-
-// Scrape National Careers Service using improved two-step approach
-const scrapeNationalCareers = async (): Promise<EducationData[]> => {
-  console.log('🏛️ Scraping National Careers Service for electrical courses...');
-  
-  try {
-    // Step 1: Scrape listing page to extract course URLs
-    const listingUrl = "https://nationalcareers.service.gov.uk/find-a-course/page?searchTerm=electrical";
-    console.log(`📋 Step 1: Scraping listing page for course URLs: ${listingUrl}`);
-    
-    const listingResponse = await scrapeWithSchemaForListing(listingUrl);
-    
-    if (!listingResponse.success || !listingResponse.data?.json) {
-      console.log('❌ Failed to extract course URLs from listing page');
-      return await scrapeNationalCareersFallback(listingUrl);
-    }
-
-    // Extract all course URLs from the listing page
-    const courseUrls: string[] = [];
-    const listingData = listingResponse.data.json;
-    
-    if (Array.isArray(listingData)) {
-      listingData.forEach((course: any) => {
-        if (course.url && typeof course.url === 'string') {
-          courseUrls.push(course.url);
-        }
-      });
-    }
-
-    console.log(`🔍 Found ${courseUrls.length} course URLs from listing page`);
-    
-    if (courseUrls.length === 0) {
-      console.log('⚠️ No course URLs found, falling back to basic scraping');
-      return await scrapeNationalCareersFallback(listingUrl);
-    }
-
-    // Step 2: Scrape each individual course page for detailed information
-    const results: EducationData[] = [];
-    const maxCourses = Math.min(courseUrls.length, 15); // Limit to prevent timeouts
-    
-    console.log(`📚 Step 2: Scraping individual course details (${maxCourses} courses)`);
-    
-    for (let i = 0; i < maxCourses; i++) {
-      const courseUrl = courseUrls[i];
-      console.log(`🔍 Scraping course ${i + 1}/${maxCourses}: ${courseUrl.substring(0, 60)}...`);
-      
-      try {
-        const courseDetails = await scrapeWithSchemaForCourseDetails(courseUrl);
-        
-        if (courseDetails.success && courseDetails.data?.json) {
-          const courseData = Array.isArray(courseDetails.data.json) 
-            ? courseDetails.data.json[0] 
-            : courseDetails.data.json;
-            
-          if (courseData) {
-            const mappedCourse: EducationData = {
-              id: `nc-detailed-${Date.now()}-${i}`,
-              title: courseData.title || `Electrical Course ${i + 1}`,
-              institution: courseData.awardingBody || 'Government Approved Provider',
-              description: courseData.description || 'Government-funded electrical training programme',
-              level: courseData.level || 'Vocational Qualification',
-              duration: courseData.duration || '6-18 months',
-              category: 'Vocational Training',
-              studyMode: courseData.studyMode || 'Part-time/Flexible',
-              locations: courseData.location ? [courseData.location] : ['Multiple UK locations'],
-              entryRequirements: ['Basic education requirements', 'Age 19+ for funding'],
-              keyTopics: Array.isArray(courseData.topics) ? courseData.topics : 
-                        ['Electrical Installation', 'Health & Safety', 'Industry Standards', 'Practical Skills'],
-              progressionOptions: ['Employment in electrical trades', 'Higher level qualifications', 'Apprenticeships'],
-              fundingOptions: ['Free for eligible learners', 'Advanced Learner Loans', 'Employer funding'],
-              tuitionFees: courseData.costRange || 'Free for eligible learners',
-              applicationDeadline: 'Rolling admissions',
-              nextIntake: courseData.nextIntake || 'Multiple start dates',
-              rating: typeof courseData.rating === 'number' ? courseData.rating : 4.3,
-              employmentRate: courseData.employmentRate ? 
-                            (typeof courseData.employmentRate === 'string' ? 
-                             parseInt(courseData.employmentRate.replace('%', '')) : 
-                             courseData.employmentRate) : 88,
-              averageStartingSalary: '£20,000 - £28,000',
-              courseUrl: courseUrl,
-              lastUpdated: new Date().toISOString()
-            };
-            
-            results.push(mappedCourse);
-          }
-        }
-      } catch (error) {
-        console.log(`❌ Failed to scrape course ${i + 1}: ${error.message}`);
-        // Continue with next course instead of failing completely
-      }
-      
-      // Small delay to be respectful to the server
-      if (i < maxCourses - 1) {
-        await new Promise(resolve => setTimeout(resolve, 500));
-      }
-    }
-
-    console.log(`✅ National Careers: Successfully extracted ${results.length} detailed courses`);
-    return results;
-    
-  } catch (error) {
-    console.log(`❌ Error in National Careers two-step scraping: ${error.message}`);
-    console.log('⚠️ National Careers: Trying fallback method...');
-    return await scrapeNationalCareersFallback('https://nationalcareers.service.gov.uk/find-a-course/page?searchTerm=electrical');
-  }
-};
-
-// Helper function to scrape course listing with URL extraction schema
-const scrapeWithSchemaForListing = async (url: string) => {
-  const listingSchema = {
-    type: "array",
-    items: {
-      type: "object",
-      properties: {
-        title: { type: "string" },
-        url: { type: "string" },
-        provider: { type: "string" },
-        level: { type: "string" }
-      },
-      required: ["title", "url"]
-    }
-  };
-  
-  console.log(`📡 Making Firecrawl v2 API call for listing extraction...`);
-  
-  const requestBody = {
-    url: url,
-    formats: [
-      {
-        type: "json",
-        schema: listingSchema
-      }
-    ],
-    onlyMainContent: false,
-    maxAge: 172800000
-  };
-  
-  const response = await fetch(FIRECRAWL_V2_URL, {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${FIRECRAWL_API_KEY}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(requestBody),
-  });
-
-  if (!response.ok) {
-    const errorText = await response.text();
-    throw new Error(`HTTP ${response.status}: ${errorText}`);
-  }
-
-  return await response.json();
-};
-
-// Helper function to scrape individual course details with comprehensive schema
-const scrapeWithSchemaForCourseDetails = async (url: string) => {
-  const courseDetailSchema = {
+  type: "array",
+  items: {
     type: "object",
     properties: {
       level: { type: "string" },
@@ -612,272 +79,134 @@ const scrapeWithSchemaForCourseDetails = async (url: string) => {
       nextIntake: { type: "string" },
       topics: { type: "array", items: { type: "string" } },
       tags: { type: "array", items: { type: "string" } },
+      url: { type: "string" },
+      lastUpdated: { type: "string", format: "date" },
       enquiryDetails: {
         type: "object",
         properties: {
           contactEmail: { type: "string" },
           contactPhone: { type: "string" },
-          enquiryUrl: { type: "string" }
-        }
-      }
+          enquiryUrl: { type: "string" },
+        },
+      },
     },
-    required: ["title", "level", "awardingBody", "duration", "studyMode", "costRange"]
-  };
-  
-  console.log(`📡 Making Firecrawl v2 API call for course detail extraction...`);
-  
-  const requestBody = {
-    url: url,
-    formats: [
-      {
-        type: "json",
-        schema: courseDetailSchema
-      }
-    ],
-    onlyMainContent: false,
-    maxAge: 172800000,
-    parsers: []
-  };
-  
-  const response = await fetch(FIRECRAWL_V2_URL, {
-    method: 'POST',
+    required: ["title", "level", "awardingBody", "duration", "studyMode", "costRange", "url"],
+  },
+};
+
+// Improved scraping function using your parallel approach
+async function scrapeWithSchema(url: string) {
+  const apiUrl = "https://api.firecrawl.dev/v2/scrape";
+
+  const options = {
+    method: "POST",
     headers: {
-      'Authorization': `Bearer ${FIRECRAWL_API_KEY}`,
-      'Content-Type': 'application/json',
+      Authorization: `Bearer ${API_KEY}`,
+      "Content-Type": "application/json",
     },
-    body: JSON.stringify(requestBody),
+    body: JSON.stringify({
+      url,
+      onlyMainContent: false,
+      maxAge: 0,
+      parsers: [],
+      formats: [
+        {
+          type: "json",
+          schema: courseExtractionSchema,
+        },
+      ],
+    }),
+  };
+
+  const res = await fetch(apiUrl, options);
+  return res.json();
+}
+
+// Main aggregation function using your improved parallel approach
+async function aggregateEducationData(): Promise<EducationData[]> {
+  console.log('🚀 Starting parallel education data aggregation...');
+  
+  // 1. Scrape all listing pages in parallel (with allSettled)
+  const listingResults = await Promise.allSettled(listingUrls.map(scrapeWithSchema));
+
+  const courseUrls: string[] = [];
+  listingResults.forEach((result, i) => {
+    if (result.status === "fulfilled") {
+      result.value?.data?.json?.forEach((course: any) => {
+        if (course.url) {
+          courseUrls.push(course.url);
+        }
+      });
+    } else {
+      console.error(`❌ Failed listing scrape for ${listingUrls[i]}`, result.reason);
+    }
   });
 
-  if (!response.ok) {
-    const errorText = await response.text();
-    throw new Error(`HTTP ${response.status}: ${errorText}`);
-  }
+  console.log(`📚 Found ${courseUrls.length} valid course URLs`);
 
-  return await response.json();
-};
+  // 2. Scrape all course details in parallel (with allSettled)
+  const detailResults = await Promise.allSettled(
+    courseUrls.map(async (url) => {
+      try {
+        console.log(`🔍 Scraping course details: ${url}`);
+        const details = await scrapeWithSchema(url);
+        return details?.data?.json?.[0] || null;
+      } catch (err) {
+        console.error(`❌ Failed for ${url}`, err);
+        return null;
+      }
+    })
+  );
 
-// Fallback method for National Careers
-const scrapeNationalCareersFallback = async (searchUrl: string): Promise<EducationData[]> => {
-  console.log('🔄 National Careers Fallback: Using basic markdown parsing...');
-  
-  try {
-    const response = await makeFirecrawlV2Request(searchUrl);
+  // 3. Process and transform results
+  const results = detailResults
+    .filter((r) => r.status === "fulfilled" && r.value !== null)
+    .map((r) => r.value);
 
-    if (response.success && response.data?.markdown) {
-      console.log('✅ National Careers Fallback: Successfully scraped course data');
-      
-      const markdown = response.data.markdown;
-      const courses: EducationData[] = [];
-      
-      // Extract electrical course information with improved patterns
-      const patterns = [
-        /(Level \d+|NVQ|BTEC|HNC|HND|Diploma|Certificate)[\s\w]*[Ee]lectrical[\s\w]*/gi,
-        /[Ee]lectrical[\s\w]*(Level \d+|NVQ|BTEC|HNC|HND|Diploma|Certificate)[\s\w]*/gi,
-        /18th Edition[\s\w]*[Ee]lectrical[\s\w]*/gi,
-        /[Ee]lectrotechnical[\s\w]*/gi
-      ];
-      
-      const allMatches = new Set<string>(); // Use Set to avoid duplicates
-      
-      patterns.forEach(pattern => {
-        const matches = markdown.match(pattern) || [];
-        matches.forEach(match => allMatches.add(match.trim()));
-      });
-      
-      const uniqueMatches = Array.from(allMatches).slice(0, 8); // Limit to 8 courses
-      
-      uniqueMatches.forEach((title: string, index: number) => {
-        // Determine level from title
-        let level = 'Vocational Qualification';
-        let category = 'Vocational Training';
-        let duration = '6-18 months';
-        
-        if (title.includes('Level 4') || title.includes('HNC')) {
-          level = 'Level 4';
-          duration = '12-18 months';
-        } else if (title.includes('Level 3') || title.includes('BTEC')) {
-          level = 'Level 3';
-          duration = '6-12 months';
-        } else if (title.includes('Level 2') || title.includes('NVQ')) {
-          level = 'Level 2';
-          duration = '6-9 months';
-        } else if (title.includes('18th Edition')) {
-          level = 'Regulatory Update';
-          category = 'Professional Development';
-          duration = '3-5 days';
-        }
-        
-        courses.push({
-          id: `nc-fallback-${Date.now()}-${index}`,
-          title: title.length > 80 ? title.substring(0, 80) + '...' : title,
-          institution: 'Government Approved Provider',
-          description: `Government-funded electrical training programme focusing on ${level.toLowerCase()} skills and industry standards`,
-          level: level,
-          duration: duration,
-          category: category,
-          studyMode: category === 'Professional Development' ? 'Intensive' : 'Part-time/Flexible',
-          locations: ['Multiple UK locations'],
-          entryRequirements: level === 'Level 2' ? 
-            ['Basic education requirements', 'Age 16+'] : 
-            ['Previous electrical experience recommended', 'Age 19+ for funding'],
-          keyTopics: level === 'Regulatory Update' ? 
-            ['18th Edition Wiring Regulations', 'BS 7671', 'Compliance', 'Safety Standards'] :
-            ['Electrical Installation', 'Health & Safety', 'Industry Standards', 'Practical Skills', 'Testing & Inspection'],
-          progressionOptions: ['Employment in electrical trades', 'Higher level qualifications', 'Apprenticeships'],
-          fundingOptions: ['Free for eligible learners', 'Advanced Learner Loans', 'Employer funding'],
-          tuitionFees: category === 'Professional Development' ? '£300 - £600' : 'Free for eligible learners',
-          applicationDeadline: 'Rolling admissions',
-          nextIntake: category === 'Professional Development' ? 'Weekly starts' : 'Multiple start dates',
-          rating: 4.3,
-          employmentRate: 88,
-          averageStartingSalary: category === 'Professional Development' ? '£28,000 - £35,000' : '£20,000 - £28,000',
-          courseUrl: searchUrl,
-          lastUpdated: new Date().toISOString()
-        });
-      });
-      
-      console.log(`📚 National Careers Fallback: Extracted ${courses.length} courses from markdown`);
-      return courses;
-    }
-  } catch (error) {
-    console.log(`❌ Error in National Careers fallback: ${error.message}`);
-  }
-  
-  return [];
-};
+  const educationData: EducationData[] = results.map((course: any, index: number) => ({
+    id: `parallel-${Date.now()}-${index}`,
+    title: course.title || 'Electrical Course',
+    institution: course.awardingBody || 'UK Institution',
+    description: course.description || 'Professional electrical education programme',
+    level: course.level || 'Certificate',
+    duration: course.duration || '1-2 years',
+    category: 'Electrical',
+    studyMode: course.studyMode || 'Full-time',
+    locations: course.location ? [course.location] : ['UK'],
+    entryRequirements: ['Relevant qualifications or experience'],
+    keyTopics: course.topics || ['Electrical Theory', 'Practical Skills', 'Health & Safety'],
+    progressionOptions: ['Higher qualifications', 'Professional roles'],
+    fundingOptions: ['Student Finance', 'Employer funding', 'Grants'],
+    tuitionFees: course.costRange || 'Contact for pricing',
+    applicationDeadline: 'Various',
+    nextIntake: course.nextIntake || 'September 2025',
+    rating: course.rating || 4.5,
+    employmentRate: course.employmentRate ? parseInt(course.employmentRate.replace('%', '')) : 85,
+    averageStartingSalary: '£25,000 - £35,000',
+    courseUrl: course.url || '',
+    lastUpdated: new Date().toISOString()
+  }));
 
-// Scrape UCAS for electrical engineering courses
-const scrapeUCASCourses = async (): Promise<EducationData[]> => {
-  console.log('🎓 Scraping UCAS for electrical engineering courses...');
-  
-  try {
-    const searchUrl = 'https://www.ucas.com/explore/subjects/engineering/electrical-electronic-engineering';
-    console.log(`🔍 Searching UCAS at: ${searchUrl}`);
+  console.log(`✅ Successfully aggregated ${educationData.length} courses from parallel scraping`);
+  return educationData;
+}
+
+// Clear cached data if refresh parameter is passed
+async function clearCacheIfRequested(category: string, refresh: boolean) {
+  if (refresh) {
+    console.log('🗑️ Force refresh requested - clearing cached data...');
+    const { error } = await supabase
+      .from('live_education_cache')
+      .delete()
+      .eq('category', category);
     
-    const response = await makeFirecrawlRequest(searchUrl, {
-      formats: ['markdown']
-    });
-
-    if (response.success && response.data) {
-      console.log('✅ UCAS: Successfully scraped course data');
-      return response.data.extract?.map((course: any) => ({
-        id: `ucas-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
-        title: course.title || 'Electrical Engineering Course',
-        institution: course.institution || 'UK University',
-        description: course.description || 'Comprehensive electrical engineering programme',
-        level: course.title?.includes('Master') ? 'Master\'s Degree' : 
-               course.title?.includes('Foundation') ? 'Foundation Degree' : 'Bachelor\'s Degree',
-        duration: course.duration || '3-4 years',
-        category: 'Engineering',
-        studyMode: 'Full-time',
-        locations: [course.institution || 'UK'],
-        entryRequirements: course.entryRequirements || ['A-levels in Maths and Science'],
-        keyTopics: ['Circuit Analysis', 'Electronics', 'Power Systems', 'Control Systems'],
-        progressionOptions: ['Graduate Engineer', 'Chartered Engineer'],
-        fundingOptions: ['Student Finance England', 'University Scholarships'],
-        tuitionFees: course.fees || '£9,250 per year',
-        applicationDeadline: course.applicationDeadline || 'January 2025',
-        nextIntake: course.nextIntake || 'September 2025',
-        rating: 4.5,
-        employmentRate: 95,
-        averageStartingSalary: '£28,000 - £35,000',
-        courseUrl: course.url || 'https://www.ucas.com',
-        lastUpdated: new Date().toISOString()
-      })) || [];
+    if (error) {
+      console.warn('⚠️ Failed to clear cache:', error.message);
+    } else {
+      console.log('✅ Cache cleared successfully');
     }
-  } catch (error) {
-    console.log(`❌ Error scraping UCAS: ${error.message}`);
   }
-  
-  return [];
-};
-
-// Scrape government education data
-const scrapeGovEducationData = async (): Promise<EducationData[]> => {
-  console.log('🏛️ Scraping gov.uk for apprenticeship and education data...');
-  
-  try {
-    const searchUrl = 'https://www.findapprenticeship.service.gov.uk/apprenticeships?Keywords=electrical&Location=england&WithinDistance=0&ApprenticeshipLevel=All&PageNumber=1';
-    console.log(`🔍 Searching gov.uk apprenticeships at: ${searchUrl}`);
-    
-    const response = await makeFirecrawlRequest(searchUrl, {
-      formats: ['markdown']
-    });
-
-    if (response.success && response.data) {
-      console.log('✅ Gov.uk: Successfully scraped apprenticeship data');
-      return response.data.extract?.map((course: any) => ({
-        id: `gov-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
-        title: course.title || 'Electrical Apprenticeship',
-        institution: course.provider || 'Approved Training Provider',
-        description: course.description || 'Work-based learning in electrical engineering',
-        level: 'Apprenticeship',
-        duration: course.duration || '3-4 years',
-        category: 'Apprenticeship',
-        studyMode: 'Work-based Learning',
-        locations: ['Multiple UK locations'],
-        entryRequirements: course.entryRequirements || ['GCSEs in Maths and English'],
-        keyTopics: ['Practical Skills', 'Health & Safety', 'Electrical Installation'],
-        progressionOptions: ['Qualified Electrician', 'Further Apprenticeships'],
-        fundingOptions: ['Apprenticeship Levy', 'Government Funding'],
-        tuitionFees: 'Free (Government funded)',
-        applicationDeadline: 'Rolling applications',
-        nextIntake: 'Throughout the year',
-        rating: 4.3,
-        employmentRate: 98,
-        averageStartingSalary: '£18,000 - £25,000 (whilst training)',
-        courseUrl: 'https://www.gov.uk/apply-apprenticeship',
-        lastUpdated: new Date().toISOString()
-      })) || [];
-    }
-  } catch (error) {
-    console.log(`❌ Error scraping gov.uk: ${error.message}`);
-  }
-  
-  return [];
-};
-
-// Scrape City & Guilds for professional courses
-const scrapeCityGuildsCourses = async (): Promise<EducationData[]> => {
-  console.log('🏆 Scraping City & Guilds for electrical courses...');
-  
-  try {
-    const response = await makeFirecrawlRequest('https://www.cityandguilds.com/qualifications-and-apprenticeships/building-services-and-construction/electrical', {
-      formats: ['markdown']
-    });
-
-    if (response.success && response.data) {
-      console.log('✅ City & Guilds: Successfully scraped qualification data');
-      return response.data.extract?.map((course: any) => ({
-        id: `cg-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
-        title: course.name || 'Electrical Installation Qualification',
-        institution: 'City & Guilds',
-        description: course.description || 'Professional electrical qualification',
-        level: course.level ? `Level ${course.level}` : 'Professional Certificate',
-        duration: course.duration || '6-12 months',
-        category: 'Professional Certification',
-        studyMode: 'Part-time',
-        locations: ['UK Training Centres'],
-        entryRequirements: course.entryRequirements || ['Previous electrical experience'],
-        keyTopics: ['18th Edition Regulations', 'Installation Methods', 'Testing & Inspection'],
-        progressionOptions: ['Professional Recognition', 'Higher Level Qualifications'],
-        fundingOptions: ['Advanced Learner Loan', 'Employer Funding'],
-        tuitionFees: course.fees || '£800 - £2,500',
-        applicationDeadline: 'Rolling admissions',
-        nextIntake: 'Monthly intakes',
-        rating: 4.6,
-        employmentRate: 92,
-        averageStartingSalary: '£25,000 - £32,000',
-        courseUrl: 'https://www.cityandguilds.com',
-        lastUpdated: new Date().toISOString()
-      })) || [];
-    }
-  } catch (error) {
-    console.log(`❌ Error scraping City & Guilds: ${error.message}`);
-  }
-  
-  return [];
-};
+}
 
 // Generate market statistics from scraped data
 const generateMarketStats = (courses: EducationData[]): MarketStats => {
@@ -967,48 +296,6 @@ const cacheEducationData = async (category: string, searchQuery: string, courses
   }
 };
 
-// Cache market statistics
-const cacheMarketStats = async (analytics: MarketStats) => {
-  try {
-    console.log('💾 Caching market statistics...');
-    
-    const statsToCache = [
-      { stat_type: 'total_courses', value: analytics.totalCourses.toString() },
-      { stat_type: 'total_providers', value: analytics.totalProviders.toString() },
-      { stat_type: 'average_rating', value: analytics.averageRating.toString() },
-      { stat_type: 'average_employment_rate', value: analytics.averageEmploymentRate.toString() },
-      { stat_type: 'average_starting_salary', value: analytics.averageStartingSalary },
-      { stat_type: 'high_demand_programs', value: analytics.highDemandPrograms.toString() },
-      { stat_type: 'funding_options_available', value: analytics.fundingOptionsAvailable.toString() },
-      { stat_type: 'top_categories', value: JSON.stringify(analytics.topCategories) },
-      { stat_type: 'growth_areas', value: JSON.stringify(analytics.trends.growthAreas) },
-      { stat_type: 'industry_partnerships', value: JSON.stringify(analytics.trends.industryPartnerships) }
-    ];
-
-    // Delete existing stats
-    await supabase
-      .from('education_market_stats')
-      .delete()
-      .neq('id', '00000000-0000-0000-0000-000000000000'); // Delete all
-
-    // Insert new stats
-    const { error } = await supabase
-      .from('education_market_stats')
-      .insert(statsToCache.map(stat => ({
-        ...stat,
-        expires_at: new Date(Date.now() + 60 * 60 * 1000).toISOString() // 1 hour
-      })));
-
-    if (error) {
-      console.error('❌ Error caching market stats:', error);
-    } else {
-      console.log('✅ Market statistics cached successfully');
-    }
-  } catch (error) {
-    console.error('❌ Error caching market stats:', error);
-  }
-};
-
 // Fallback education data when scraping fails
 const getFallbackEducationData = (): EducationData[] => {
   return [
@@ -1037,168 +324,169 @@ const getFallbackEducationData = (): EducationData[] => {
     },
     {
       id: 'fallback-2',
-      title: 'BEng Electrical & Electronic Engineering',
-      institution: 'University of Manchester',
-      description: 'Accredited degree programme covering power systems, electronics, control systems and renewable energy',
+      title: 'BEng Electrical Engineering',
+      institution: 'UK Universities',
+      description: 'Bachelor degree programme in electrical engineering with industry placement opportunities',
       level: "Bachelor's Degree",
-      duration: '3 years',
+      duration: '3-4 years',
       category: 'Engineering',
       studyMode: 'Full-time',
-      locations: ['Manchester'],
-      entryRequirements: ['A-levels: AAB including Maths and Physics'],
-      keyTopics: ['Circuit Analysis', 'Power Systems', 'Digital Electronics', 'Control Engineering', 'Renewable Energy'],
-      progressionOptions: ['MEng degree', 'Graduate engineer roles', 'Chartered Engineer status'],
-      fundingOptions: ['Student Finance England', 'University scholarships', 'Industry sponsorship'],
+      locations: ['Various UK universities'],
+      entryRequirements: ['A-levels in Maths and Physics'],
+      keyTopics: ['Circuit Analysis', 'Power Systems', 'Control Systems', 'Electronics', 'Renewable Energy'],
+      progressionOptions: ['Graduate engineer roles', 'Chartered Engineer status', 'Master degree'],
+      fundingOptions: ['Student Finance England', 'University scholarships'],
       tuitionFees: '£9,250 per year',
       applicationDeadline: 'January 2025',
       nextIntake: 'September 2025',
       rating: 4.5,
       employmentRate: 95,
       averageStartingSalary: '£28,000 - £35,000',
-      courseUrl: 'https://www.manchester.ac.uk',
+      courseUrl: 'https://www.ucas.com',
       lastUpdated: new Date().toISOString()
     },
     {
       id: 'fallback-3',
-      title: 'Electrical Engineering Apprenticeship Level 3',
-      institution: 'Siemens UK',
-      description: 'Work-based apprenticeship combining practical training with academic study in electrical engineering',
-      level: 'Level 3 Apprenticeship',
-      duration: '4 years',
-      category: 'Apprenticeship',
-      studyMode: 'Work-based Learning',
-      locations: ['Multiple UK sites'],
-      entryRequirements: ['5 GCSEs A*-C including Maths, English and Science'],
-      keyTopics: ['Electrical Systems', 'Automation', 'Motor Control', 'Industrial Electronics', 'Project Management'],
-      progressionOptions: ['Higher apprenticeships', 'Engineering technician', 'Degree apprenticeships'],
-      fundingOptions: ['Government funded', 'Apprenticeship levy'],
-      tuitionFees: 'Free (with salary)',
-      applicationDeadline: 'February 2025',
-      nextIntake: 'September 2025',
+      title: '18th Edition Wiring Regulations Course',
+      institution: 'TradeSkills4U',
+      description: 'Essential update course for the latest wiring regulations BS 7671:2018+A2:2022',
+      level: 'Professional Update',
+      duration: '3 days',
+      category: 'Professional Training',
+      studyMode: 'Classroom',
+      locations: ['Multiple UK centres'],
+      entryRequirements: ['Electrical qualification or experience'],
+      keyTopics: ['Latest Regulation Changes', 'Design Requirements', 'Special Locations', 'Certification'],
+      progressionOptions: ['Testing & Inspection courses', 'Advanced electrical qualifications'],
+      fundingOptions: ['Self-funded', 'Employer sponsored', 'CITB grants'],
+      tuitionFees: '£350 - £500',
+      applicationDeadline: 'Book anytime',
+      nextIntake: 'Weekly courses available',
       rating: 4.7,
-      employmentRate: 98,
-      averageStartingSalary: '£18,000 - £25,000 (training salary)',
-      courseUrl: 'https://www.siemens.com/uk',
+      employmentRate: 90,
+      averageStartingSalary: '£22,000 - £30,000',
+      courseUrl: 'https://www.tradeskills4u.co.uk',
       lastUpdated: new Date().toISOString()
     },
     {
       id: 'fallback-4',
-      title: 'HNC Electrical & Electronic Engineering',
-      institution: 'Pearson BTEC',
-      description: 'Higher National Certificate providing foundation knowledge for engineering careers',
-      level: 'Level 4',
-      duration: '2 years part-time',
-      category: 'Higher Education',
-      studyMode: 'Part-time',
-      locations: ['Multiple colleges nationwide'],
-      entryRequirements: ['Level 3 qualification or relevant experience'],
-      keyTopics: ['Engineering Mathematics', 'Circuit Theory', 'Digital Techniques', 'Microprocessors'],
-      progressionOptions: ['HND progression', 'University degree top-up', 'Engineering roles'],
-      fundingOptions: ['Advanced Learner Loan', 'Employer support'],
-      tuitionFees: '£3,000 - £5,000',
-      applicationDeadline: 'August 2025',
-      nextIntake: 'September 2025',
-      rating: 4.3,
-      employmentRate: 88,
-      averageStartingSalary: '£22,000 - £28,000',
-      courseUrl: 'https://qualifications.pearson.com',
+      title: 'Electrical Apprenticeship Level 3',
+      institution: 'National Apprenticeship Service',
+      description: 'Government-approved electrical apprenticeship combining work and study',
+      level: 'Level 3 Apprenticeship',
+      duration: '3-4 years',
+      category: 'Apprenticeship',
+      studyMode: 'Work-based learning',
+      locations: ['Employer premises + college'],
+      entryRequirements: ['GCSEs including Maths and English', 'Employer offer'],
+      keyTopics: ['Electrical Installation', 'Testing & Inspection', 'Health & Safety', 'Customer Service'],
+      progressionOptions: ['Level 4 Higher Apprenticeship', 'Chartered Engineer pathway'],
+      fundingOptions: ['Government funded', 'Apprenticeship levy'],
+      tuitionFees: 'Free to apprentice',
+      applicationDeadline: 'Year-round applications',
+      nextIntake: 'Various start dates',
+      rating: 4.8,
+      employmentRate: 98,
+      averageStartingSalary: '£18,000 - £25,000 (progressing to £30,000+)',
+      courseUrl: 'https://www.gov.uk/apprenticeships',
       lastUpdated: new Date().toISOString()
     },
     {
       id: 'fallback-5',
-      title: 'MEng Electrical Engineering',
-      institution: 'Imperial College London',
-      description: 'Advanced integrated masters degree in electrical engineering with industry placement',
-      level: "Master's Degree",
-      duration: '4 years',
-      category: 'Engineering',
-      studyMode: 'Full-time',
-      locations: ['London'],
-      entryRequirements: ['A-levels: A*A*A including Maths and Physics'],
-      keyTopics: ['Advanced Circuit Design', 'Power Electronics', 'Signal Processing', 'Machine Learning', 'Sustainability'],
-      progressionOptions: ['PhD study', 'Chartered Engineer', 'Technical leadership roles'],
-      fundingOptions: ['Student Finance England', 'Imperial scholarships', 'Industry partnerships'],
-      tuitionFees: '£9,250 per year',
-      applicationDeadline: 'January 2025',
+      title: 'HNC Electrical Engineering',
+      institution: 'Further Education Colleges',
+      description: 'Higher National Certificate in Electrical Engineering for career progression',
+      level: 'Level 4 HNC',
+      duration: '1-2 years',
+      category: 'Higher Education',
+      studyMode: 'Part-time or Full-time',
+      locations: ['FE colleges nationwide'],
+      entryRequirements: ['Level 3 qualification or relevant experience'],
+      keyTopics: ['Engineering Mathematics', 'Circuit Theory', 'Digital Electronics', 'Power Systems'],
+      progressionOptions: ['HND Electrical Engineering', 'University top-up degree', 'Senior technician roles'],
+      fundingOptions: ['Advanced Learner Loan', 'Employer funding'],
+      tuitionFees: '£2,000 - £4,000',
+      applicationDeadline: 'June 2025',
       nextIntake: 'September 2025',
-      rating: 4.8,
-      employmentRate: 98,
-      averageStartingSalary: '£35,000 - £45,000',
-      courseUrl: 'https://www.imperial.ac.uk',
+      rating: 4.4,
+      employmentRate: 93,
+      averageStartingSalary: '£26,000 - £33,000',
+      courseUrl: 'https://www.findacourse.co.uk',
       lastUpdated: new Date().toISOString()
     },
     {
       id: 'fallback-6',
-      title: '18th Edition Wiring Regulations Course',
-      institution: 'EAL',
-      description: 'Essential qualification for all electricians covering current UK wiring regulations',
-      level: 'Level 3',
-      duration: '5 days',
-      category: 'Professional Certification',
-      studyMode: 'Intensive',
-      locations: ['Nationwide training centres'],
-      entryRequirements: ['Working electrical knowledge', 'Level 2 Electrical qualification'],
-      keyTopics: ['BS 7671 Regulations', 'Safety Requirements', 'Installation Methods', 'Inspection & Testing'],
-      progressionOptions: ['Testing & Inspection courses', 'PAT Testing qualification'],
-      fundingOptions: ['Employer funding', 'Self-funded', 'Government voucher schemes'],
-      tuitionFees: '£350 - £450',
-      applicationDeadline: 'Rolling admissions',
-      nextIntake: 'Weekly courses available',
-      rating: 4.5,
-      employmentRate: 100,
-      averageStartingSalary: '£28,000 - £35,000',
-      courseUrl: 'https://www.eal.org.uk',
+      title: 'Renewable Energy Systems Course',
+      institution: 'Green Energy Training',
+      description: 'Specialist course in solar PV, wind, and battery storage systems',
+      level: 'Professional Certificate',
+      duration: '5 days intensive',
+      category: 'Renewable Energy',
+      studyMode: 'Classroom + practical',
+      locations: ['Specialist training centres'],
+      entryRequirements: ['Electrical qualification', 'Basic electrical experience'],
+      keyTopics: ['Solar PV Installation', 'Wind Systems', 'Battery Storage', 'Grid Connection'],
+      progressionOptions: ['MCS accreditation', 'Green technology specialization'],
+      fundingOptions: ['Self-funded', 'Green skills grants', 'Employer funding'],
+      tuitionFees: '£800 - £1,200',
+      applicationDeadline: 'Book anytime',
+      nextIntake: 'Monthly courses',
+      rating: 4.6,
+      employmentRate: 88,
+      averageStartingSalary: '£28,000 - £38,000',
+      courseUrl: 'https://www.greenenergy-training.co.uk',
       lastUpdated: new Date().toISOString()
     },
     {
       id: 'fallback-7',
-      title: 'Renewable Energy Systems HND',
-      institution: 'University of the West of England',
-      description: 'Specialised higher national diploma focusing on sustainable energy technologies',
-      level: 'Level 5',
-      duration: '2 years',
-      category: 'Higher Education',
-      studyMode: 'Full-time',
-      locations: ['Bristol'],
-      entryRequirements: ['HNC Engineering or equivalent', 'Level 3 STEM qualifications'],
-      keyTopics: ['Solar PV Systems', 'Wind Power', 'Battery Storage', 'Grid Integration', 'Energy Management'],
-      progressionOptions: ['BSc top-up year', 'Renewable energy engineer roles', 'Project management'],
-      fundingOptions: ['Advanced Learner Loan', 'University scholarships', 'Green energy bursaries'],
-      tuitionFees: '£5,500 per year',
-      applicationDeadline: 'July 2025',
-      nextIntake: 'September 2025',
-      rating: 4.4,
-      employmentRate: 94,
-      averageStartingSalary: '£26,000 - £34,000',
-      courseUrl: 'https://www.uwe.ac.uk',
+      title: 'EV Charging Point Installation',
+      institution: 'Electric Vehicle Training',
+      description: 'Specialist course for electric vehicle charging infrastructure',
+      level: 'Professional Certificate',
+      duration: '2 days',
+      category: 'Electric Vehicles',
+      studyMode: 'Practical training',
+      locations: ['Training centres nationwide'],
+      entryRequirements: ['18th Edition qualification', '2391 Testing qualification'],
+      keyTopics: ['EV Charging Standards', 'Installation Requirements', 'Safety Procedures', 'Testing'],
+      progressionOptions: ['OLEV approved installer status', 'EV specialization'],
+      fundingOptions: ['Self-funded', 'Employer sponsored'],
+      tuitionFees: '£400 - £600',
+      applicationDeadline: 'Book anytime',
+      nextIntake: 'Weekly courses',
+      rating: 4.5,
+      employmentRate: 85,
+      averageStartingSalary: '£25,000 - £35,000',
+      courseUrl: 'https://www.ev-training.co.uk',
       lastUpdated: new Date().toISOString()
     },
     {
       id: 'fallback-8',
-      title: 'Electrical Engineering Degree Apprenticeship',
-      institution: 'Rolls-Royce',
-      description: 'Level 6 degree apprenticeship combining work experience with university study',
-      level: 'Level 6 Apprenticeship',
-      duration: '5 years',
-      category: 'Apprenticeship',
-      studyMode: 'Work-based Learning',
-      locations: ['Derby', 'Bristol', 'Inchinnan'],
-      entryRequirements: ['A-levels AAB including Maths and Physics', 'Strong technical aptitude'],
-      keyTopics: ['Aerospace Engineering', 'Power Systems', 'Control Systems', 'Materials Science', 'Project Management'],
-      progressionOptions: ['Graduate engineer', 'Chartered Engineer', 'Technical specialist roles'],
-      fundingOptions: ['Government funded', 'Full salary during study'],
-      tuitionFees: 'Free (with competitive salary)',
-      applicationDeadline: 'March 2025',
-      nextIntake: 'September 2025',
-      rating: 4.9,
-      employmentRate: 100,
-      averageStartingSalary: '£25,000 - £30,000 (study period)',
-      courseUrl: 'https://www.rolls-royce.com/careers',
+      title: 'Smart Home Technology Course',
+      institution: 'Digital Home Systems',
+      description: 'Training in home automation, IoT devices, and smart electrical systems',
+      level: 'Professional Certificate',
+      duration: '3 days',
+      category: 'Smart Technology',
+      studyMode: 'Hands-on practical',
+      locations: ['Technology training centres'],
+      entryRequirements: ['Electrical qualification', 'Basic IT knowledge'],
+      keyTopics: ['Home Automation', 'IoT Systems', 'Network Installation', 'Smart Controls'],
+      progressionOptions: ['Smart home specialization', 'IoT system designer'],
+      fundingOptions: ['Self-funded', 'Technology skills grants'],
+      tuitionFees: '£600 - £900',
+      applicationDeadline: 'Book anytime',
+      nextIntake: 'Bi-weekly courses',
+      rating: 4.3,
+      employmentRate: 82,
+      averageStartingSalary: '£26,000 - £36,000',
+      courseUrl: 'https://www.smarthome-training.co.uk',
       lastUpdated: new Date().toISOString()
     }
   ];
 };
 
+// Main serve function
 Deno.serve(async (req) => {
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
@@ -1206,14 +494,14 @@ Deno.serve(async (req) => {
   }
 
   try {
-    console.log('🚀 Starting live education data aggregation...');
-    
-    // Check if Firecrawl API key is available
-    const firecrawlApiKey = Deno.env.get('FIRECRAWL_API_KEY');
-    if (!firecrawlApiKey) {
-      console.log('❌ FIRECRAWL_API_KEY not found in environment variables');
+    console.log('🎓 Live Education Aggregator API called');
+
+    // Check if Firecrawl API key is configured
+    if (!API_KEY) {
+      console.log('⚠️ Firecrawl API key not configured, returning fallback data');
       return new Response(JSON.stringify({
-        success: false,
+        success: true,
+        cached: false,
         error: 'Firecrawl API key not configured. Live data scraping unavailable.',
         data: getFallbackEducationData(),
         analytics: generateMarketStats(getFallbackEducationData())
@@ -1228,6 +516,9 @@ Deno.serve(async (req) => {
     const requestBody = await req.json().catch(() => ({}));
     const category = requestBody.category || searchParams.get('category') || 'all';
     const forceRefresh = requestBody.refresh === true || searchParams.get('refresh') === 'true';
+    
+    // Clear cache if force refresh is requested
+    await clearCacheIfRequested(category, forceRefresh);
     
     // Check cache first (unless force refresh) - only return if it contains actual data
     if (!forceRefresh) {
@@ -1260,31 +551,18 @@ Deno.serve(async (req) => {
       }
     }
 
-    console.log('📚 Fetching live education data from multiple sources...');
-    console.log('🔄 Scraping sources: IDP Education, National Careers Service, TradeSkills4U');
+    console.log('📚 Starting parallel education data aggregation...');
+    console.log('🔄 Using improved parallel scraping approach');
     
     const sourceResults = [];
-    let allCourses: EducationData[] = [];
     let originalCount = 0;
     let duplicatesRemoved = 0;
 
-    // Scrape data from your specified sources first (highest priority)
-    const tradeSkillsCourses = await scrapeTradeSkills4U();
-    if (tradeSkillsCourses.length > 0) {
-      sourceResults.push(`TradeSkills4U: ${tradeSkillsCourses.length} courses`);
-      allCourses.push(...tradeSkillsCourses);
-    }
-
-    const idpCourses = await scrapeIDPCourses();
-    if (idpCourses.length > 0) {
-      sourceResults.push(`IDP Education: ${idpCourses.length} courses`);
-      allCourses.push(...idpCourses);
-    }
-
-    const nationalCareersCourses = await scrapeNationalCareers();
-    if (nationalCareersCourses.length > 0) {
-      sourceResults.push(`National Careers Service: ${nationalCareersCourses.length} courses`);
-      allCourses.push(...nationalCareersCourses);
+    // Use improved parallel aggregation approach
+    let allCourses = await aggregateEducationData();
+    
+    if (allCourses.length > 0) {
+      sourceResults.push(`Parallel scraping: ${allCourses.length} courses from ${listingUrls.length} sources`);
     }
 
     // Remove duplicates
@@ -1295,17 +573,10 @@ Deno.serve(async (req) => {
     console.log(`📊 Original courses: ${originalCount}, After deduplication: ${uniqueCourses.length}, Duplicates removed: ${duplicatesRemoved}`);
 
     // Ensure we always have data - if no courses found, use fallback
-    if (uniqueCourses.length === 0 || !Deno.env.get('FIRECRAWL_API_KEY')) {
-      console.log('📚 No courses scraped or API key missing, using fallback data...');
+    if (uniqueCourses.length === 0) {
+      console.log('📚 No courses scraped, using fallback data...');
       uniqueCourses = getFallbackEducationData();
       sourceResults.push('Fallback data: 8 comprehensive UK programmes');
-    }
-
-    // Double-check we have data (safety net)
-    if (uniqueCourses.length === 0) {
-      console.log('🚨 Still no courses found, forcing fallback data to prevent empty results');
-      uniqueCourses = getFallbackEducationData();
-      sourceResults.push('Emergency fallback: 8 UK electrical programmes');
     }
 
     // Generate analytics
@@ -1314,7 +585,6 @@ Deno.serve(async (req) => {
     // Only cache if we have actual data (never cache empty results)
     if (uniqueCourses.length > 0) {
       await cacheEducationData(category, 'electrical education UK', uniqueCourses, analytics);
-      await cacheMarketStats(analytics);
     } else {
       console.log('⚠️ Not caching empty results');
     }
