@@ -87,19 +87,23 @@ const scrapeUCASCourses = async (): Promise<EducationData[]> => {
   console.log('🎓 Scraping UCAS for electrical engineering courses...');
   
   try {
-    const response = await makeFirecrawlRequest('https://www.ucas.com/search/courses', {
+    const searchUrl = 'https://www.ucas.com/explore/subjects/engineering/electrical-electronic-engineering';
+    console.log(`🔍 Searching UCAS at: ${searchUrl}`);
+    
+    const response = await makeFirecrawlRequest(searchUrl, {
       formats: ['markdown'],
       extract: {
-        prompt: `Extract information about electrical engineering, electronic engineering, and related courses. For each course, extract:
-        - Course title
+        prompt: `Extract information about electrical engineering, electronic engineering, and electrical courses in the UK. For each course found, extract:
+        - Course title (e.g., "BEng Electrical Engineering")
         - University/institution name
         - Course description
-        - Duration
-        - Entry requirements
-        - Tuition fees
+        - Duration (e.g., "3 years", "4 years")
+        - Entry requirements (A-levels, BTECs)
+        - Tuition fees (per year in GBP)
         - Application deadline
-        - Next intake date
-        - Course URL`
+        - Next intake date (usually September)
+        - Course URL or application link
+        Focus only on electrical, electronic, and power engineering courses.`
       }
     });
 
@@ -142,16 +146,21 @@ const scrapeGovEducationData = async (): Promise<EducationData[]> => {
   console.log('🏛️ Scraping gov.uk for apprenticeship and education data...');
   
   try {
-    const response = await makeFirecrawlRequest('https://www.gov.uk/apply-apprenticeship', {
+    const searchUrl = 'https://www.findapprenticeship.service.gov.uk/apprenticeships?Keywords=electrical&Location=england&WithinDistance=0&ApprenticeshipLevel=All&PageNumber=1';
+    console.log(`🔍 Searching gov.uk apprenticeships at: ${searchUrl}`);
+    
+    const response = await makeFirecrawlRequest(searchUrl, {
       formats: ['markdown'],
       extract: {
-        prompt: `Extract information about electrical and engineering apprenticeships. Look for:
-        - Programme names
-        - Duration
-        - Entry requirements
-        - Salary information
-        - Provider information
-        - Application processes`
+        prompt: `Extract information about electrical and engineering apprenticeships in the UK. Look for:
+        - Programme names (e.g., "Electrical Installation Apprenticeship")
+        - Duration (years)
+        - Entry requirements (GCSEs)
+        - Salary information (training wages)
+        - Provider/employer information
+        - Application processes and deadlines
+        - Location information
+        Focus specifically on electrical trades, engineering, and related technical apprenticeships.`
       }
     });
 
@@ -422,7 +431,7 @@ const getFallbackEducationData = (): EducationData[] => {
     {
       id: 'fallback-3',
       title: 'Electrical Engineering Apprenticeship Level 3',
-      institution: 'Siemens',
+      institution: 'Siemens UK',
       description: 'Work-based apprenticeship combining practical training with academic study in electrical engineering',
       level: 'Level 3 Apprenticeship',
       duration: '4 years',
@@ -463,6 +472,98 @@ const getFallbackEducationData = (): EducationData[] => {
       employmentRate: 88,
       averageStartingSalary: '£22,000 - £28,000',
       courseUrl: 'https://qualifications.pearson.com',
+      lastUpdated: new Date().toISOString()
+    },
+    {
+      id: 'fallback-5',
+      title: 'MEng Electrical Engineering',
+      institution: 'Imperial College London',
+      description: 'Advanced integrated masters degree in electrical engineering with industry placement',
+      level: "Master's Degree",
+      duration: '4 years',
+      category: 'Engineering',
+      studyMode: 'Full-time',
+      locations: ['London'],
+      entryRequirements: ['A-levels: A*A*A including Maths and Physics'],
+      keyTopics: ['Advanced Circuit Design', 'Power Electronics', 'Signal Processing', 'Machine Learning', 'Sustainability'],
+      progressionOptions: ['PhD study', 'Chartered Engineer', 'Technical leadership roles'],
+      fundingOptions: ['Student Finance England', 'Imperial scholarships', 'Industry partnerships'],
+      tuitionFees: '£9,250 per year',
+      applicationDeadline: 'January 2025',
+      nextIntake: 'September 2025',
+      rating: 4.8,
+      employmentRate: 98,
+      averageStartingSalary: '£35,000 - £45,000',
+      courseUrl: 'https://www.imperial.ac.uk',
+      lastUpdated: new Date().toISOString()
+    },
+    {
+      id: 'fallback-6',
+      title: '18th Edition Wiring Regulations Course',
+      institution: 'EAL',
+      description: 'Essential qualification for all electricians covering current UK wiring regulations',
+      level: 'Level 3',
+      duration: '5 days',
+      category: 'Professional Certification',
+      studyMode: 'Intensive',
+      locations: ['Nationwide training centres'],
+      entryRequirements: ['Working electrical knowledge', 'Level 2 Electrical qualification'],
+      keyTopics: ['BS 7671 Regulations', 'Safety Requirements', 'Installation Methods', 'Inspection & Testing'],
+      progressionOptions: ['Testing & Inspection courses', 'PAT Testing qualification'],
+      fundingOptions: ['Employer funding', 'Self-funded', 'Government voucher schemes'],
+      tuitionFees: '£350 - £450',
+      applicationDeadline: 'Rolling admissions',
+      nextIntake: 'Weekly courses available',
+      rating: 4.5,
+      employmentRate: 100,
+      averageStartingSalary: '£28,000 - £35,000',
+      courseUrl: 'https://www.eal.org.uk',
+      lastUpdated: new Date().toISOString()
+    },
+    {
+      id: 'fallback-7',
+      title: 'Renewable Energy Systems HND',
+      institution: 'University of the West of England',
+      description: 'Specialised higher national diploma focusing on sustainable energy technologies',
+      level: 'Level 5',
+      duration: '2 years',
+      category: 'Higher Education',
+      studyMode: 'Full-time',
+      locations: ['Bristol'],
+      entryRequirements: ['HNC Engineering or equivalent', 'Level 3 STEM qualifications'],
+      keyTopics: ['Solar PV Systems', 'Wind Power', 'Battery Storage', 'Grid Integration', 'Energy Management'],
+      progressionOptions: ['BSc top-up year', 'Renewable energy engineer roles', 'Project management'],
+      fundingOptions: ['Advanced Learner Loan', 'University scholarships', 'Green energy bursaries'],
+      tuitionFees: '£5,500 per year',
+      applicationDeadline: 'July 2025',
+      nextIntake: 'September 2025',
+      rating: 4.4,
+      employmentRate: 94,
+      averageStartingSalary: '£26,000 - £34,000',
+      courseUrl: 'https://www.uwe.ac.uk',
+      lastUpdated: new Date().toISOString()
+    },
+    {
+      id: 'fallback-8',
+      title: 'Electrical Engineering Degree Apprenticeship',
+      institution: 'Rolls-Royce',
+      description: 'Level 6 degree apprenticeship combining work experience with university study',
+      level: 'Level 6 Apprenticeship',
+      duration: '5 years',
+      category: 'Apprenticeship',
+      studyMode: 'Work-based Learning',
+      locations: ['Derby', 'Bristol', 'Inchinnan'],
+      entryRequirements: ['A-levels AAB including Maths and Physics', 'Strong technical aptitude'],
+      keyTopics: ['Aerospace Engineering', 'Power Systems', 'Control Systems', 'Materials Science', 'Project Management'],
+      progressionOptions: ['Graduate engineer', 'Chartered Engineer', 'Technical specialist roles'],
+      fundingOptions: ['Government funded', 'Full salary during study'],
+      tuitionFees: 'Free (with competitive salary)',
+      applicationDeadline: 'March 2025',
+      nextIntake: 'September 2025',
+      rating: 4.9,
+      employmentRate: 100,
+      averageStartingSalary: '£25,000 - £30,000 (study period)',
+      courseUrl: 'https://www.rolls-royce.com/careers',
       lastUpdated: new Date().toISOString()
     }
   ];
@@ -546,7 +647,7 @@ Deno.serve(async (req) => {
     if (uniqueCourses.length === 0 || !Deno.env.get('FIRECRAWL_API_KEY')) {
       console.log('📚 No courses scraped or API key missing, adding fallback data...');
       uniqueCourses = getFallbackEducationData();
-      sourceResults.push('Fallback data: 6 programmes');
+      sourceResults.push('Fallback data: 8 comprehensive UK programmes');
     }
 
     // Generate analytics
