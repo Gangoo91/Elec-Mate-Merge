@@ -20,7 +20,7 @@ import {
   enhancedCareerCourses
 } from "../../../apprentice/career/courses/enhancedCoursesData";
 import LocationBasedCourseSearch from "../../../apprentice/career/courses/LocationBasedCourseSearch";
-import { useCoursesQuery } from "@/hooks/useCoursesQuery";
+import { useLiveEducationData, LiveEducationData } from "@/hooks/useLiveEducationData";
 import { useDebounce } from "@/hooks/useDebounce";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -80,28 +80,69 @@ const ElectricianCareerCourses = () => {
   const debouncedSearchQuery = useDebounce(filters.searchQuery, 500);
   const debouncedLocation = useDebounce(filters.location, 300);
 
-  // Live course data hook with auto-refetch on filter changes
+  // Live education data hook - unified with further education section
   const {
-    data: queryResult,
-    isLoading: isLoadingLive,
-    error: queryError,
-    refetch: refreshCourses,
-    isFetching: isSearching,
-    isError
-  } = useCoursesQuery(
-    debouncedSearchQuery || "electrical course",
-    debouncedLocation === "All Locations" ? "United Kingdom" : debouncedLocation,
-    true // Enable auto-refetch
-  );
+    educationData,
+    analytics,
+    loading: isLoadingLive,
+    error: liveError,
+    isFromCache,
+    refreshData: refreshCourses
+  } = useLiveEducationData('electrical');
 
-  // Extract data from query result with enhanced fallback logic
-  const hasLiveCourses = queryResult?.courses && queryResult.courses.length > 0;
-  const liveCourses = hasLiveCourses ? queryResult.courses : fallbackElectricalCourses;
-  const liveTotal = hasLiveCourses ? queryResult.total : fallbackElectricalCourses.length;
-  const liveSummary = queryResult?.summary;
-  const isLiveData = hasLiveCourses && !isError;
+  // Convert education data to course format
+  const mapEducationDataToCourse = (education: LiveEducationData): EnhancedCareerCourse => ({
+    id: education.id,
+    title: education.title,
+    provider: education.institution,
+    description: education.description,
+    duration: education.duration,
+    level: education.level,
+    price: education.tuitionFees,
+    format: education.studyMode,
+    nextDates: [education.nextIntake],
+    rating: education.rating,
+    locations: education.locations,
+    category: education.category,
+    industryDemand: mapDemandLevel(education.employmentRate),
+    futureProofing: Math.round(education.employmentRate / 20), // Scale 0-100 to 0-5
+    salaryImpact: education.averageStartingSalary,
+    careerOutcomes: education.progressionOptions,
+    accreditation: education.entryRequirements,
+    employerSupport: true,
+    prerequisites: education.entryRequirements,
+    courseOutline: education.keyTopics,
+    assessmentMethod: 'Assessment varies',
+    continuousAssessment: false,
+    isLive: true,
+    external_url: education.courseUrl,
+    source: 'Live Education API'
+  });
+
+  const mapDemandLevel = (employmentRate: number): "High" | "Medium" | "Low" => {
+    if (employmentRate >= 80) return "High";
+    if (employmentRate >= 60) return "Medium";
+    return "Low";
+  };
+
+  // Extract data with enhanced fallback logic
+  const hasLiveCourses = educationData && educationData.length > 0;
+  const liveCourses = hasLiveCourses ? educationData.map(mapEducationDataToCourse) : fallbackElectricalCourses;
+  const liveTotal = hasLiveCourses ? educationData.length : fallbackElectricalCourses.length;
+  const liveSummary = analytics ? {
+    totalCourses: analytics.totalCourses,
+    liveCourses: analytics.totalCourses,
+    sourceBreakdown: [{
+      source: 'Live Education API',
+      courseCount: analytics.totalCourses,
+      success: true,
+      error: null
+    }],
+    lastUpdated: new Date().toISOString()
+  } : undefined;
+  const isLiveData = hasLiveCourses && !liveError;
   const isUsingFallback = !hasLiveCourses;
-  const liveError = isError ? (queryError?.message || "Failed to fetch course data") : null;
+  const isSearching = isLoadingLive;
 
   // Auto-refetch courses when debounced search criteria change  
   useEffect(() => {
@@ -121,10 +162,10 @@ const ElectricianCareerCourses = () => {
 
   // Initial load
   useEffect(() => {
-    if (!queryResult && !isLoadingLive && !isError) {
+    if (!educationData && !isLoadingLive && !liveError) {
       refreshCourses();
     }
-  }, []);
+  }, [educationData, isLoadingLive, liveError, refreshCourses]);
 
   // Location-based distance calculation helper
   const calculateDistance = (lat1: number, lon1: number, lat2: number, lon2: number): number => {
