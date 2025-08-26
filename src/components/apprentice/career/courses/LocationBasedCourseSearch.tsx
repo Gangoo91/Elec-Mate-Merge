@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { MapPin, Search, Loader2 } from "lucide-react";
+import { MapPin, Search, Loader2, Compass } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/components/ui/use-toast";
 
@@ -13,7 +13,9 @@ interface LocationBasedCourseSearchProps {
   onRadiusChange: (radius: number) => void;
   currentLocation: string | null;
   searchRadius: number;
+  isAutoDetecting?: boolean;
   onProviderSearch?: (location: string, coordinates: google.maps.LatLngLiteral) => void;
+  onUseCurrentLocation?: () => void;
 }
 
 const LocationBasedCourseSearch: React.FC<LocationBasedCourseSearchProps> = ({
@@ -21,7 +23,9 @@ const LocationBasedCourseSearch: React.FC<LocationBasedCourseSearchProps> = ({
   onRadiusChange,
   currentLocation,
   searchRadius,
-  onProviderSearch
+  isAutoDetecting = false,
+  onProviderSearch,
+  onUseCurrentLocation
 }) => {
   const [searchInput, setSearchInput] = useState("");
   const [isSearching, setIsSearching] = useState(false);
@@ -131,15 +135,31 @@ const LocationBasedCourseSearch: React.FC<LocationBasedCourseSearchProps> = ({
             <Input
               ref={inputRef}
               id="location-search"
-              placeholder="Enter your city or postcode..."
+              placeholder={isAutoDetecting ? "Detecting location..." : "Enter your city or postcode..."}
               value={searchInput}
               onChange={(e) => setSearchInput(e.target.value)}
               onKeyPress={(e) => e.key === 'Enter' && handleManualSearch()}
               className="flex-1"
+              disabled={isAutoDetecting}
             />
+            {onUseCurrentLocation && (
+              <Button 
+                onClick={onUseCurrentLocation}
+                disabled={isAutoDetecting}
+                variant="outline"
+                size="sm"
+                className="border-elec-yellow/20"
+              >
+                {isAutoDetecting ? (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                ) : (
+                  <Compass className="h-4 w-4" />
+                )}
+              </Button>
+            )}
             <Button 
               onClick={handleManualSearch}
-              disabled={isSearching || !searchInput.trim()}
+              disabled={isSearching || !searchInput.trim() || isAutoDetecting}
               size="sm"
             >
               {isSearching ? (
@@ -151,9 +171,16 @@ const LocationBasedCourseSearch: React.FC<LocationBasedCourseSearchProps> = ({
           </div>
         </div>
 
-        {currentLocation && (
+        {isAutoDetecting && (
+          <div className="flex items-center gap-2 text-sm text-elec-yellow">
+            <Loader2 className="h-4 w-4 animate-spin" />
+            <span>Detecting your location...</span>
+          </div>
+        )}
+
+        {currentLocation && !isAutoDetecting && (
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
-            <MapPin className="h-4 w-4" />
+            <MapPin className="h-4 w-4 text-elec-yellow" />
             <span>Current location: {currentLocation}</span>
           </div>
         )}

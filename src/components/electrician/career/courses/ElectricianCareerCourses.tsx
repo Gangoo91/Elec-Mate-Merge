@@ -54,6 +54,8 @@ const ElectricianCareerCourses = () => {
   const [userLocation, setUserLocation] = useState<string | null>(null);
   const [userCoordinates, setUserCoordinates] = useState<google.maps.LatLngLiteral | null>(null);
   const [searchRadius, setSearchRadius] = useState(25);
+  const [isAutoDetecting, setIsAutoDetecting] = useState(false);
+  const [autoLocationAttempted, setAutoLocationAttempted] = useState(false);
   
   const { toast } = useToast();
   const isMobile = useIsMobile();
@@ -195,6 +197,91 @@ const ElectricianCareerCourses = () => {
     setNearbyProviders(providers);
     console.log('Nearby providers found:', providers.length);
   };
+
+  // Auto-detect user location when map view is first loaded
+  const handleAutoLocationDetection = () => {
+    if (!window.google?.maps) {
+      toast({
+        title: "Maps Not Ready",
+        description: "Google Maps is still loading. Please try again in a moment.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsAutoDetecting(true);
+    
+    if (!navigator.geolocation) {
+      toast({
+        title: "Not Available",
+        description: "Geolocation is not supported by your browser",
+        variant: "destructive",
+      });
+      setIsAutoDetecting(false);
+      setAutoLocationAttempted(true);
+      return;
+    }
+    
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude, longitude } = position.coords;
+        
+        // Reverse geocode to get readable location
+        const geocoder = new window.google.maps.Geocoder();
+        geocoder.geocode({ location: { lat: latitude, lng: longitude } }, (results, status) => {
+          setIsAutoDetecting(false);
+          setAutoLocationAttempted(true);
+          
+          if (status === "OK" && results && results[0]) {
+            // Extract postcode from address components
+            const postcodeComponent = results[0].address_components.find(
+              component => component.types.includes("postal_code")
+            );
+            
+            const postcode = postcodeComponent ? postcodeComponent.short_name : "";
+            const locality = results[0].formatted_address.split(',')[0];
+            
+            const detectedLocation = postcode ? `${locality}, ${postcode}` : locality;
+            const coordinates = { lat: latitude, lng: longitude };
+            
+            setUserLocation(detectedLocation);
+            setUserCoordinates(coordinates);
+            
+            toast({
+              title: "Location Detected",
+              description: `Using your current location: ${detectedLocation}`,
+            });
+            
+            // Automatically search for providers
+            searchNearbyProviders();
+          } else {
+            toast({
+              title: "Location Error",
+              description: "Could not determine your location. Please enter manually.",
+              variant: "destructive",
+            });
+          }
+        });
+      },
+      (error) => {
+        setIsAutoDetecting(false);
+        setAutoLocationAttempted(true);
+        console.error("Geolocation error:", error);
+        toast({
+          title: "Location Permission",
+          description: "Unable to access your location. Please enter it manually.",
+          variant: "destructive",
+        });
+      }
+    );
+  };
+
+  // Auto-detect location when switching to map view (only once per session)
+  useEffect(() => {
+    if (viewMode === "map" && !autoLocationAttempted && !userLocation && window.google?.maps) {
+      handleAutoLocationDetection();
+    }
+  }, [viewMode, autoLocationAttempted, userLocation]);
 
   // Function to search for nearby providers using the edge function
   const searchNearbyProviders = async () => {
@@ -865,7 +952,9 @@ const ElectricianCareerCourses = () => {
               onRadiusChange={handleRadiusChange}
               currentLocation={userLocation}
               searchRadius={searchRadius}
+              isAutoDetecting={isAutoDetecting}
               onProviderSearch={handleProviderSearchFromLocation}
+              onUseCurrentLocation={handleAutoLocationDetection}
             />
             
             
