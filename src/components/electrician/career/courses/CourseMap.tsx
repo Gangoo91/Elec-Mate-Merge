@@ -265,14 +265,47 @@ const CourseMap: React.FC<CourseMapProps> = ({
     };
   }, [userCoordinates, searchRadius]);
 
-  // Center map on selected provider
+  // Center map on selected provider with smooth animation
   useEffect(() => {
-    if (!googleMapRef.current || !selectedCourse) return;
+    if (!googleMapRef.current || !selectedCourse || !window.google?.maps) return;
     
     const selectedMarker = markers.find(marker => marker.providerId === selectedCourse);
     if (selectedMarker && googleMapRef.current) {
-      googleMapRef.current.panTo(selectedMarker.position);
-      googleMapRef.current.setZoom(14);
+      // Create bounds around the selected provider with buffer for context
+      const bounds = new window.google.maps.LatLngBounds();
+      const position = selectedMarker.position;
+      
+      // Add small buffer around the provider position
+      const bufferLat = 0.002;
+      const bufferLng = 0.002;
+      
+      bounds.extend({
+        lat: position.lat - bufferLat,
+        lng: position.lng - bufferLng
+      });
+      bounds.extend({
+        lat: position.lat + bufferLat,
+        lng: position.lng + bufferLng
+      });
+      
+      // Apply bounds with same padding as location selection
+      googleMapRef.current.fitBounds(bounds, {
+        top: 50,
+        right: 50,
+        bottom: 50,
+        left: 50
+      });
+
+      // Apply same zoom limits as location selection
+      setTimeout(() => {
+        if (!googleMapRef.current) return;
+        const currentZoom = (googleMapRef.current as any).getZoom();
+        if (currentZoom && currentZoom > 15) {
+          googleMapRef.current.setZoom(15);
+        } else if (currentZoom && currentZoom < 8) {
+          googleMapRef.current.setZoom(8);
+        }
+      }, 100);
     }
   }, [selectedCourse, markers]);
 
