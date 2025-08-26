@@ -40,11 +40,57 @@ function isUKRelevant(article) {
   return (hasUKTerms || isUKDomain) && !hasExcludeTerms;
 }
 
+// ✅ Filter for electrical, engineering, tech, and safety related content
+function isIndustryRelevant(article) {
+  const text = `${article.title || ""} ${article.snippet || ""}`.toLowerCase();
+  
+  const industryKeywords = [
+    // Core electrical terms
+    'electrical', 'electrician', 'electric', 'wiring', 'circuit', 'voltage', 'current', 'power',
+    'bs7671', 'bs 7671', 'iee regulations', 'installation', 'testing', 'inspection',
+    'rcd', 'mcb', 'consumer unit', 'earth', 'neutral', 'live', 'volt', 'amp', 'watts',
+    'certification', 'pat testing', 'eicr', 'periodic inspection', 'electrical safety',
+    
+    // Engineering & Technology
+    'engineering', 'engineer', 'technology', 'tech', 'automation', 'control systems',
+    'smart grid', 'smart home', 'digital', 'iot', 'industrial', 'manufacturing',
+    'renewable energy', 'solar', 'wind', 'battery', 'energy storage', 'ev charging',
+    'electric vehicle', 'grid', 'distribution', 'transmission', 'substation',
+    
+    // Health & Safety
+    'safety', 'health', 'hse', 'accident', 'incident', 'risk assessment', 'hazard',
+    'protection', 'ppe', 'training', 'compliance', 'regulation', 'standard',
+    'code of practice', 'guidance', 'alert', 'injury', 'fatality',
+    
+    // Professional & Standards
+    'iet', 'institution', 'niceic', 'napit', 'elecsa', 'stroma', 'schemes',
+    'apprentice', 'apprenticeship', 'qualification', 'course', 'training',
+    'competency', 'skills', 'certification', 'cpr',
+    
+    // Infrastructure & Construction
+    'construction', 'building', 'infrastructure', 'project', 'contract', 'tender',
+    'framework', 'procurement', 'utilities', 'maintenance'
+  ];
+  
+  const irrelevantTerms = [
+    'football', 'rugby', 'cricket', 'tennis', 'sport', 'music', 'celebrity', 'fashion',
+    'entertainment', 'film', 'movie', 'tv show', 'restaurant', 'food', 'recipe',
+    'travel', 'holiday', 'tourism', 'retail', 'shopping', 'weather forecast',
+    'traffic', 'parking', 'restaurant', 'pub', 'bar', 'nightclub'
+  ];
+  
+  const hasIndustryTerms = industryKeywords.some(term => text.includes(term));
+  const hasIrrelevantTerms = irrelevantTerms.some(term => text.includes(term));
+  
+  // Must have industry terms and not have irrelevant terms (unless industry terms override)
+  return hasIndustryTerms && !hasIrrelevantTerms;
+}
+
 // ✅ Map API response into desired schema
 function normalizeArticles(articles, query) {
   const cleanTag = QUERY_TAG_MAP[query] || query;
   return articles
-    .filter(isUKRelevant)
+    .filter(article => isUKRelevant(article) && isIndustryRelevant(article))
     .map((a) => ({
       title: a.title || "",
       url: a.url || "",
