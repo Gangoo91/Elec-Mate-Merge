@@ -27,16 +27,37 @@ const QUERY_TAG_MAP = {
   "GOV.UK electrical safety regulations updates UK site:gov.uk": "GOV.UK"
 };
 
-// ✅ Filter out job sites and job-related URLs
+// ✅ Enhanced job site and URL pattern exclusion
 function isNotJobSite(article) {
   const url = (article.url || "").toLowerCase();
+  const title = (article.title || "").toLowerCase();
+  
+  // Comprehensive job domains and patterns
   const jobDomains = [
     'findajob.dwp.gov.uk', 'jobs.', 'careers.', 'recruitment.', 'indeed.', 'totaljobs.', 
     'reed.co.uk', 'cv-library.', 'jobsite.', 'fish4jobs.', 'jobcentreplus.',
-    'apprenticeships.gov.uk', 'apprenticeship-', '/jobs/', '/careers/', '/vacancies/'
+    'apprenticeships.gov.uk', 'graduatejobs.', 'jobserve.', 'milkround.',
+    'jobstoday.', 'charityjob.', 'prospects.ac.uk', 'jobs.ac.uk'
   ];
   
-  return !jobDomains.some(domain => url.includes(domain));
+  // URL patterns that indicate job listings
+  const jobUrlPatterns = [
+    '/jobs/', '/careers/', '/vacancies/', '/opportunities/', '/positions/',
+    '/apprenticeship-', '/graduate-', '/trainee-', '/job-', '/vacancy-',
+    'job-search', 'career-search', 'apply-now', 'job_id=', 'vacancy_id='
+  ];
+  
+  // Title patterns that indicate job listings
+  const jobTitlePatterns = [
+    'job:', 'vacancy:', 'position:', 'role:', 'apprentice:', 'trainee:',
+    'now hiring', 'we are recruiting', 'job opportunity', 'career opportunity'
+  ];
+  
+  const hasJobDomain = jobDomains.some(domain => url.includes(domain));
+  const hasJobUrlPattern = jobUrlPatterns.some(pattern => url.includes(pattern));
+  const hasJobTitlePattern = jobTitlePatterns.some(pattern => title.includes(pattern));
+  
+  return !hasJobDomain && !hasJobUrlPattern && !hasJobTitlePattern;
 }
 
 // ✅ Filter for UK-specific content
@@ -52,77 +73,112 @@ function isUKRelevant(article) {
   return (hasUKTerms || isUKDomain) && !hasExcludeTerms;
 }
 
-// ✅ Filter out job-related content
+// ✅ Enhanced job content exclusion with weighted scoring
 function isNotJobContent(article) {
   const text = `${article.title || ""} ${article.snippet || ""}`.toLowerCase();
   
-  const jobTerms = [
-    // Salary and compensation
-    '£', 'salary', 'per annum', 'hourly rate', 'daily rate', 'competitive salary',
-    'benefits package', 'pension', 'bonus', 'overtime',
+  // Strong job indicators (immediate exclusion)
+  const strongJobTerms = [
+    // Direct job application terms
+    'apply now', 'send cv', 'submit application', 'apply for this', 'join our team',
+    'we are recruiting', 'we are hiring', 'now hiring', 'seeking candidates',
+    'job reference', 'ref:', 'vacancy ref', 'position ref',
     
-    // Recruitment language
-    'apply', 'cv', 'resume', 'interview', 'position available', 'vacancy',
-    'hiring', 'recruit', 'candidate', 'applicant', 'job description',
-    'we are looking for', 'seeking', 'required:', 'essential:', 'desirable:',
+    // Salary specific
+    '£/hour', '£/day', '£ per hour', '£ per day', 'k per annum', 'k salary',
+    'competitive salary', 'excellent salary', 'attractive salary',
     
-    // Employment types
-    'full-time', 'part-time', 'permanent', 'temporary', 'contract', 'freelance',
-    'immediate start', 'asap', 'start date', 'notice period',
+    // Employment specifics
+    'full time', 'part time', 'permanent role', 'temporary position', 'contract role',
+    'immediate start', 'start asap', 'available immediately', 'notice period',
     
-    // Job-specific terms
-    'job opportunity', 'career opportunity', 'join our team', 'work with us',
-    'application deadline', 'closing date', 'ref:', 'reference:'
+    // Application process
+    'application deadline', 'closing date', 'interview process', 'selection process',
+    'shortlisted candidates', 'successful applicant'
   ];
   
-  return !jobTerms.some(term => text.includes(term));
+  // Moderate job indicators (multiple needed for exclusion)
+  const moderateJobTerms = [
+    'experience required', 'skills required', 'qualifications needed', 'must have',
+    'essential skills', 'desirable skills', 'key responsibilities', 'main duties',
+    'role involves', 'you will be', 'ideal candidate', 'suitable candidate',
+    'career opportunity', 'progression opportunity', 'development opportunity'
+  ];
+  
+  // Count indicators
+  const strongCount = strongJobTerms.filter(term => text.includes(term)).length;
+  const moderateCount = moderateJobTerms.filter(term => text.includes(term)).length;
+  
+  // Exclude if any strong indicators or multiple moderate indicators
+  return strongCount === 0 && moderateCount < 3;
 }
 
-// ✅ Filter for NEWS-focused electrical, engineering, tech, and safety content
+// ✅ Enhanced content classification for legitimate industry news
 function isIndustryRelevant(article) {
   const text = `${article.title || ""} ${article.snippet || ""}`.toLowerCase();
+  const url = (article.url || "").toLowerCase();
   
-  const newsKeywords = [
-    // Core electrical terms - NEWS focused
-    'electrical', 'electric', 'wiring', 'circuit', 'voltage', 'current', 'power',
-    'bs7671', 'bs 7671', 'iee regulations', 'installation', 'testing', 'inspection',
-    'rcd', 'mcb', 'consumer unit', 'electrical safety',
-    
-    // Engineering & Technology - NEWS focused
-    'engineering', 'technology', 'automation', 'control systems',
-    'smart grid', 'smart home', 'digital', 'iot', 'industrial', 'manufacturing',
-    'renewable energy', 'solar', 'wind', 'battery', 'energy storage', 'ev charging',
-    'electric vehicle', 'grid', 'distribution', 'transmission', 'substation',
-    
-    // Health & Safety - NEWS focused
-    'safety', 'health', 'hse', 'accident', 'incident', 'risk assessment', 'hazard',
-    'protection', 'ppe', 'compliance', 'regulation', 'standard',
-    'code of practice', 'guidance', 'alert', 'injury', 'fatality',
-    
-    // Professional & Standards - NEWS focused (removed job terms)
-    'iet', 'institution', 'niceic', 'napit', 'elecsa', 'stroma',
-    'certification', 'cpr',
-    
-    // Infrastructure & Construction - NEWS focused
-    'construction', 'building', 'infrastructure', 'project', 'contract', 'tender',
-    'framework', 'procurement', 'utilities', 'maintenance',
-    
-    // News-specific terms
-    'update', 'announcement', 'new regulation', 'changes to', 'introduced',
-    'published', 'released', 'revised', 'amended', 'consultation'
+  // High-priority news sources (always relevant if from these domains)
+  const trustedNewsSources = [
+    'gov.uk', 'hse.gov.uk', 'theiet.org', 'niceic.com', 'napit.org.uk',
+    'bbc.co.uk/news', 'constructionnews.co.uk', 'electricaltimes.co.uk',
+    'electrical-installation.org', 'voltimum.co.uk'
   ];
   
+  const isTrustedSource = trustedNewsSources.some(domain => url.includes(domain));
+  
+  // Core electrical industry terms (high relevance)
+  const coreElectricalTerms = [
+    'electrical', 'electric', 'wiring', 'circuit', 'voltage', 'current', 'power grid',
+    'bs7671', 'bs 7671', '18th edition', 'iee regulations', 'electrical installation',
+    'rcd', 'mcb', 'rcbo', 'consumer unit', 'electrical safety', 'pat testing',
+    'electrical inspection', 'electrical testing', 'earth bonding', 'electrical fault'
+  ];
+  
+  // Engineering & Technology (medium relevance)
+  const engineeringTerms = [
+    'engineering', 'automation', 'control systems', 'industrial control',
+    'smart grid', 'smart meter', 'digital substation', 'scada', 'plc',
+    'renewable energy', 'solar pv', 'wind turbine', 'battery storage',
+    'ev charging', 'electric vehicle', 'power distribution', 'transmission lines'
+  ];
+  
+  // Health & Safety (high relevance)
+  const safetyTerms = [
+    'electrical safety', 'health and safety', 'hse', 'safety alert', 'safety notice',
+    'electrical accident', 'electrical incident', 'safety regulation', 'compliance',
+    'risk assessment', 'method statement', 'ppe', 'safe isolation',
+    'electrical hazard', 'safety guidance', 'code of practice'
+  ];
+  
+  // News-specific indicators (boost relevance)
+  const newsIndicators = [
+    'new regulation', 'regulation update', 'standard update', 'code change',
+    'announced', 'published', 'released', 'revised', 'amended', 'introduced',
+    'consultation', 'guidance issued', 'alert issued', 'warning issued',
+    'industry update', 'technical bulletin', 'safety bulletin'
+  ];
+  
+  // Calculate relevance score
+  let relevanceScore = 0;
+  
+  if (isTrustedSource) relevanceScore += 3;
+  if (coreElectricalTerms.some(term => text.includes(term))) relevanceScore += 2;
+  if (safetyTerms.some(term => text.includes(term))) relevanceScore += 2;
+  if (engineeringTerms.some(term => text.includes(term))) relevanceScore += 1;
+  if (newsIndicators.some(term => text.includes(term))) relevanceScore += 1;
+  
+  // Exclude non-industry content
   const irrelevantTerms = [
     'football', 'rugby', 'cricket', 'tennis', 'sport', 'music', 'celebrity', 'fashion',
     'entertainment', 'film', 'movie', 'tv show', 'restaurant', 'food', 'recipe',
     'travel', 'holiday', 'tourism', 'retail', 'shopping', 'weather forecast',
-    'traffic', 'parking', 'pub', 'bar', 'nightclub'
+    'local news', 'community news', 'parish council', 'school news'
   ];
   
-  const hasNewsTerms = newsKeywords.some(term => text.includes(term));
   const hasIrrelevantTerms = irrelevantTerms.some(term => text.includes(term));
   
-  return hasNewsTerms && !hasIrrelevantTerms;
+  return relevanceScore >= 2 && !hasIrrelevantTerms;
 }
 
 // ✅ Map API response into desired schema with multi-stage filtering
