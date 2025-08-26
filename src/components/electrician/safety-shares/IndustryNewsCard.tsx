@@ -27,6 +27,7 @@ const IndustryNewsCard = () => {
   const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [sortOption, setSortOption] = useState<string>("random");
 
   const fetchLiveNews = async () => {
     setIsLoading(true);
@@ -71,6 +72,42 @@ const IndustryNewsCard = () => {
     ).length;
   };
 
+  // Parse relative date strings to Date objects for sorting
+  const parseRelativeDate = (dateString: string): Date => {
+    if (!dateString) return new Date();
+    
+    const now = new Date();
+    const lowerDate = dateString.toLowerCase();
+    
+    // Handle "X minutes/hours/days/weeks/months/years ago" format
+    const timeAgoMatch = lowerDate.match(/(\d+)\s*(minute|hour|day|week|month|year)s?\s*ago/);
+    if (timeAgoMatch) {
+      const amount = parseInt(timeAgoMatch[1]);
+      const unit = timeAgoMatch[2];
+      
+      switch (unit) {
+        case 'minute':
+          return new Date(now.getTime() - amount * 60 * 1000);
+        case 'hour':
+          return new Date(now.getTime() - amount * 60 * 60 * 1000);
+        case 'day':
+          return new Date(now.getTime() - amount * 24 * 60 * 60 * 1000);
+        case 'week':
+          return new Date(now.getTime() - amount * 7 * 24 * 60 * 60 * 1000);
+        case 'month':
+          return new Date(now.getTime() - amount * 30 * 24 * 60 * 60 * 1000);
+        case 'year':
+          return new Date(now.getTime() - amount * 365 * 24 * 60 * 60 * 1000);
+        default:
+          return now;
+      }
+    }
+    
+    // Try to parse as regular date
+    const parsedDate = new Date(dateString);
+    return isNaN(parsedDate.getTime()) ? now : parsedDate;
+  };
+
   // Shuffle function to randomize array
   const shuffleArray = <T,>(array: T[]): T[] => {
     const shuffled = [...array];
@@ -81,8 +118,29 @@ const IndustryNewsCard = () => {
     return shuffled;
   };
 
-  // Filter and shuffle articles based on search and category
-  const filteredArticles = shuffleArray(articles.filter(article => {
+  // Sort articles based on selected option
+  const sortArticles = (articles: NewsArticle[]): NewsArticle[] => {
+    switch (sortOption) {
+      case "newest":
+        return [...articles].sort((a, b) => {
+          const dateA = parseRelativeDate(a.date);
+          const dateB = parseRelativeDate(b.date);
+          return dateB.getTime() - dateA.getTime(); // Newest first
+        });
+      case "oldest":
+        return [...articles].sort((a, b) => {
+          const dateA = parseRelativeDate(a.date);
+          const dateB = parseRelativeDate(b.date);
+          return dateA.getTime() - dateB.getTime(); // Oldest first
+        });
+      case "random":
+      default:
+        return shuffleArray(articles);
+    }
+  };
+
+  // Filter and sort articles based on search, category, and sort option
+  const filteredArticles = sortArticles(articles.filter(article => {
     const matchesSearch = !searchTerm || 
       article.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       (article.snippet && article.snippet.toLowerCase().includes(searchTerm.toLowerCase()));
@@ -92,10 +150,10 @@ const IndustryNewsCard = () => {
     return matchesSearch && matchesCategory;
   }));
 
-  // Reset to page 1 when filters change
+  // Reset to page 1 when filters or sort option change
   useEffect(() => {
     setCurrentPage(1);
-  }, [searchTerm, selectedCategory]);
+  }, [searchTerm, selectedCategory, sortOption]);
 
   // Pagination calculations
   const totalPages = itemsPerPage === -1 ? 1 : Math.ceil(filteredArticles.length / itemsPerPage);
@@ -110,6 +168,11 @@ const IndustryNewsCard = () => {
   const handleItemsPerPageChange = (value: string) => {
     const newItemsPerPage = value === "all" ? -1 : parseInt(value);
     setItemsPerPage(newItemsPerPage);
+    setCurrentPage(1);
+  };
+
+  const handleSortChange = (value: string) => {
+    setSortOption(value);
     setCurrentPage(1);
   };
 
@@ -219,25 +282,47 @@ const IndustryNewsCard = () => {
                     </div>
                   </div>
                   
-                  {/* Items Per Page Selector */}
-                  <div className="space-y-2">
-                    <p className="text-sm text-muted-foreground">Articles per page:</p>
-                    <Select 
-                      value={itemsPerPage === -1 ? "all" : itemsPerPage.toString()} 
-                      onValueChange={handleItemsPerPageChange}
-                      disabled={isLoading}
-                    >
-                      <SelectTrigger className="w-32 bg-elec-gray/50 border-elec-yellow/20 text-white">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                        <SelectItem value="5" className="text-white hover:bg-elec-yellow/10">5</SelectItem>
-                        <SelectItem value="10" className="text-white hover:bg-elec-yellow/10">10</SelectItem>
-                        <SelectItem value="20" className="text-white hover:bg-elec-yellow/10">20</SelectItem>
-                        <SelectItem value="50" className="text-white hover:bg-elec-yellow/10">50</SelectItem>
-                        <SelectItem value="all" className="text-white hover:bg-elec-yellow/10">All</SelectItem>
-                      </SelectContent>
-                    </Select>
+                  {/* Sort and Items Per Page Controls */}
+                  <div className="flex flex-col sm:flex-row gap-4">
+                    {/* Sort Options */}
+                    <div className="space-y-2">
+                      <p className="text-sm text-muted-foreground">Sort by:</p>
+                      <Select 
+                        value={sortOption} 
+                        onValueChange={handleSortChange}
+                        disabled={isLoading}
+                      >
+                        <SelectTrigger className="w-36 bg-elec-gray/50 border-elec-yellow/20 text-white">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent className="bg-elec-dark border-elec-yellow/20">
+                          <SelectItem value="random" className="text-white hover:bg-elec-yellow/10">Random</SelectItem>
+                          <SelectItem value="newest" className="text-white hover:bg-elec-yellow/10">Newest First</SelectItem>
+                          <SelectItem value="oldest" className="text-white hover:bg-elec-yellow/10">Oldest First</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    {/* Items Per Page Selector */}
+                    <div className="space-y-2">
+                      <p className="text-sm text-muted-foreground">Articles per page:</p>
+                      <Select 
+                        value={itemsPerPage === -1 ? "all" : itemsPerPage.toString()} 
+                        onValueChange={handleItemsPerPageChange}
+                        disabled={isLoading}
+                      >
+                        <SelectTrigger className="w-32 bg-elec-gray/50 border-elec-yellow/20 text-white">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent className="bg-elec-dark border-elec-yellow/20">
+                          <SelectItem value="5" className="text-white hover:bg-elec-yellow/10">5</SelectItem>
+                          <SelectItem value="10" className="text-white hover:bg-elec-yellow/10">10</SelectItem>
+                          <SelectItem value="20" className="text-white hover:bg-elec-yellow/10">20</SelectItem>
+                          <SelectItem value="50" className="text-white hover:bg-elec-yellow/10">50</SelectItem>
+                          <SelectItem value="all" className="text-white hover:bg-elec-yellow/10">All</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
                   </div>
                 </div>
               </div>
