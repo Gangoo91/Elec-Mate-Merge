@@ -63,7 +63,6 @@ const CourseMap: React.FC<CourseMapProps> = ({
   const mapRef = useRef<HTMLDivElement>(null);
   const googleMapRef = useRef<google.maps.Map | null>(null);
   const [markers, setMarkers] = useState<ProviderMarkerData[]>([]);
-  const [isMapLoaded, setIsMapLoaded] = useState(false);
   const userMarkerRef = useRef<google.maps.Marker | null>(null);
   const radiusCircleRef = useRef<any>(null);
   const providerMarkersRef = useRef<google.maps.Marker[]>([]);
@@ -99,39 +98,10 @@ const CourseMap: React.FC<CourseMapProps> = ({
         mapTypeId: 'roadmap'
       });
 
-      console.log("Map initialized, setting map as loaded");
-
-      // Listen for map to be ready using idle event
-      const idleListener = (window.google.maps.event as any).addListener(googleMapRef.current, 'idle', () => {
-        console.log("Map is idle and ready");
-        setIsMapLoaded(true);
-        (window.google.maps.event as any).removeListener(idleListener);
-      });
-
-      // Simple fallback timeout 
-      const fallbackTimeout = setTimeout(() => {
-        console.log("Map loading timeout reached");
-        setIsMapLoaded(true);
-      }, 3000);
-
-      // If no data to load, mark as ready immediately
-      if (!userCoordinates && nearbyProviders.length === 0) {
-        console.log("No data to load, marking map as ready");
-        setIsMapLoaded(true);
-      }
-
-      return () => {
-        if (idleListener) {
-          (window.google.maps.event as any).removeListener(idleListener);
-        }
-        clearTimeout(fallbackTimeout);
-      };
-
     } catch (error) {
       console.error("Error initializing Google Maps:", error);
-      setIsMapLoaded(true); // Set to true on error to avoid infinite loading
     }
-  }, [userCoordinates]); // Removed isMapLoaded from dependencies to prevent infinite loop
+  }, [userCoordinates]);
 
   // Create markers for Google Places providers (no geocoding needed)
   useEffect(() => {
@@ -405,17 +375,10 @@ const CourseMap: React.FC<CourseMapProps> = ({
   }, [selectedCourse, userCoordinates, searchRadius, markers]);
 
 
-  if (isLoading || !isMapLoaded) {
+  if (isLoading) {
     return (
       <Card className="border-elec-yellow/20 bg-elec-gray p-4 relative h-[500px]">
-        <div className="h-full w-full flex items-center justify-center">
-          <div className="text-center space-y-4">
-            <Skeleton className="h-full w-full absolute inset-0" />
-            <div className="relative z-10 text-sm text-muted-foreground">
-              {isLoading ? "Loading training providers..." : "Initializing map..."}
-            </div>
-          </div>
-        </div>
+        <Skeleton className="h-full w-full" />
       </Card>
     );
   }
