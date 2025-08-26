@@ -63,17 +63,19 @@ serve(async (req) => {
     let allResults: any[] = [];
     
     const searchQueries = [
-      `UK Electrical Career Courses & Training ${searchLocation}`,
-      `City & Guilds electrical training ${searchLocation}`,
-      `EAL electrical qualifications ${searchLocation}`,
-      `NICEIC training center ${searchLocation}`, 
-      `electrical installation courses ${searchLocation}`,
-      `18th Edition training ${searchLocation}`,
-      `electrical apprenticeship provider ${searchLocation}`,
-      `vocational college electrical ${searchLocation}`,
-      `further education college ${searchLocation}`,
-      `training college ${searchLocation}`,
-      `university ${searchLocation}`
+      `"college" electrical training ${searchLocation}`,
+      `"training center" electrical courses ${searchLocation}`,
+      `"training centre" electrical courses ${searchLocation}`,
+      `"learning center" electrical ${searchLocation}`,
+      `"City & Guilds" training center ${searchLocation}`,
+      `"EAL" training center ${searchLocation}`,
+      `"NICEIC Training" ${searchLocation}`,
+      `"Pearson" electrical courses ${searchLocation}`,
+      `"university" electrical engineering ${searchLocation}`,
+      `"further education college" electrical ${searchLocation}`,
+      `"vocational college" electrical ${searchLocation}`,
+      `"institute" electrical training ${searchLocation}`,
+      `"academy" electrical training ${searchLocation}`
     ];
 
     console.log(`Searching with ${searchQueries.length} different queries...`);
@@ -145,7 +147,8 @@ serve(async (req) => {
               opening_hours: details.opening_hours,
               photos: details.photos?.slice(0, 3), // First 3 photos
               search_context: place.search_context,
-              category: getCategoryFromTypes(details.types || [])
+              category: getCategoryFromTypes(details.types || []),
+              quality_score: 0 // Will be calculated later
             };
           }
         } catch (error) {
@@ -163,23 +166,107 @@ serve(async (req) => {
           types: place.types || [],
           business_status: place.business_status,
           search_context: place.search_context,
-          category: getCategoryFromTypes(place.types || [])
+          category: getCategoryFromTypes(place.types || []),
+          quality_score: 0 // Will be calculated later
         };
       })
     );
 
-    // Helper function to categorize providers
-    function getCategoryFromTypes(types: string[]): string {
-      if (types.some(t => t.includes('university'))) return 'University';
-      if (types.some(t => t.includes('school'))) return 'College';
-      if (types.some(t => t.includes('establishment'))) return 'Training Centre';
+    // Helper function to categorize providers and filter out non-educational businesses
+    function getCategoryFromTypes(types: string[]): string | null {
+      // Exclude commercial electrical businesses
+      const commercialTypes = ['electrician', 'contractor', 'plumber', 'home_goods_store', 'store', 'hardware_store', 'general_contractor'];
+      if (types.some(t => commercialTypes.some(ct => t.includes(ct)))) {
+        return null; // Filter out commercial businesses
+      }
+
+      // Educational institution types
+      if (types.some(t => ['university', 'school'].some(et => t.includes(et)))) return 'University';
+      if (types.some(t => ['school', 'secondary_school', 'primary_school'].some(et => t.includes(et)))) return 'College';
+      if (types.some(t => ['establishment', 'point_of_interest'].some(et => t.includes(et)))) return 'Training Centre';
+      
       return 'Educational Institution';
     }
 
-    // Filter out null results and sort by rating
+    // Enhanced filtering for educational institutions
+    function isLegitimateTrainingProvider(place: any): boolean {
+      const name = place.name?.toLowerCase() || '';
+      const address = place.vicinity?.toLowerCase() || '';
+      
+      // Educational keywords that indicate legitimate training providers
+      const educationalKeywords = [
+        'college', 'university', 'training', 'centre', 'center', 'institute', 'academy', 
+        'school', 'education', 'learning', 'campus', 'city & guilds', 'eal', 'niceic training',
+        'pearson', 'btec', 'nvq', 'apprenticeship', 'qualifications'
+      ];
+      
+      // Commercial electrical business patterns to exclude
+      const commercialPatterns = [
+        'electrical services', 'electrical contractor', 'electrical installation', 
+        'electrical repairs', 'electrician', 'electrical solutions', 'electrical maintenance',
+        'electrical testing', 'electrical company', 'electrical ltd', 'electrical limited',
+        'heating', 'plumbing', 'building services', 'property maintenance', 'solar panels'
+      ];
+      
+      // Check if name contains educational keywords
+      const hasEducationalKeywords = educationalKeywords.some(keyword => 
+        name.includes(keyword) || address.includes(keyword)
+      );
+      
+      // Check if name contains commercial patterns to exclude
+      const hasCommercialPatterns = commercialPatterns.some(pattern => 
+        name.includes(pattern) || address.includes(pattern)
+      );
+      
+      // Must have educational keywords and not have commercial patterns
+      return hasEducationalKeywords && !hasCommercialPatterns;
+    }
+
+    // Calculate quality score for ranking
+    function calculateQualityScore(place: any): number {
+      let score = 0;
+      const name = place.name?.toLowerCase() || '';
+      const types = place.types || [];
+      
+      // Higher score for educational institution types
+      if (types.some(t => ['university', 'school'].some(et => t.includes(et)))) score += 50;
+      if (types.some(t => ['establishment', 'point_of_interest'].some(et => t.includes(et)))) score += 30;
+      
+      // Higher score for educational keywords in name
+      const premiumKeywords = ['college', 'university', 'training center', 'training centre', 'institute'];
+      if (premiumKeywords.some(keyword => name.includes(keyword))) score += 40;
+      
+      // Higher score for known training providers
+      const knownProviders = ['city & guilds', 'eal', 'niceic training', 'pearson'];
+      if (knownProviders.some(provider => name.includes(provider))) score += 60;
+      
+      // Rating bonus
+      if (place.rating >= 4.0) score += 20;
+      if (place.rating >= 4.5) score += 10;
+      
+      // Reviews count bonus
+      if (place.user_ratings_total >= 10) score += 10;
+      if (place.user_ratings_total >= 50) score += 10;
+      
+      return score;
+    }
+
+    // Enhanced filtering and scoring
     const providers = enrichedProviders
-      .filter(p => p !== null)
-      .sort((a, b) => (b.rating || 0) - (a.rating || 0));
+      .filter(p => p !== null && p.category !== null) // Filter out commercial businesses
+      .filter(p => isLegitimateTrainingProvider(p)) // Additional validation
+      .map(p => ({
+        ...p,
+        quality_score: calculateQualityScore(p)
+      }))
+      .filter(p => p.quality_score >= 30) // Minimum quality threshold
+      .sort((a, b) => {
+        // Sort by quality score first, then rating
+        if (b.quality_score !== a.quality_score) {
+          return b.quality_score - a.quality_score;
+        }
+        return (b.rating || 0) - (a.rating || 0);
+      });
 
     console.log(`Returning ${providers.length} filtered training providers`);
 
