@@ -123,8 +123,9 @@ async function scrapeWithSchema(url: string) {
 }
 
 // Main aggregation function using your improved parallel approach
-async function aggregateEducationData(): Promise<EducationData[]> {
+async function aggregateEducationData(limit?: number): Promise<EducationData[]> {
   console.log('🚀 Starting parallel education data aggregation...');
+  console.log(`📝 Course limit set to: ${limit || 'unlimited'}`);
   
   // 1. Scrape all listing pages in parallel (with allSettled)
   const listingResults = await Promise.allSettled(listingUrls.map(scrapeWithSchema));
@@ -143,10 +144,14 @@ async function aggregateEducationData(): Promise<EducationData[]> {
   });
 
   console.log(`📚 Found ${courseUrls.length} valid course URLs`);
+  
+  // Apply limit to course URLs if specified
+  const limitedCourseUrls = limit ? courseUrls.slice(0, limit) : courseUrls;
+  console.log(`🎯 Processing ${limitedCourseUrls.length} course URLs (${limit ? 'limited' : 'all available'})`);
 
   // 2. Scrape all course details in parallel (with allSettled)
   const detailResults = await Promise.allSettled(
-    courseUrls.map(async (url) => {
+    limitedCourseUrls.map(async (url) => {
       try {
         console.log(`🔍 Scraping course details: ${url}`);
         const details = await scrapeWithSchema(url);
@@ -516,6 +521,7 @@ Deno.serve(async (req) => {
     const requestBody = await req.json().catch(() => ({}));
     const category = requestBody.category || searchParams.get('category') || 'all';
     const forceRefresh = requestBody.refresh === true || searchParams.get('refresh') === 'true';
+    const limit = requestBody.limit || parseInt(searchParams.get('limit') || '') || undefined;
     
     // Clear cache if force refresh is requested
     await clearCacheIfRequested(category, forceRefresh);
@@ -559,7 +565,7 @@ Deno.serve(async (req) => {
     let duplicatesRemoved = 0;
 
     // Use improved parallel aggregation approach
-    let allCourses = await aggregateEducationData();
+    let allCourses = await aggregateEducationData(limit);
     
     if (allCourses.length > 0) {
       sourceResults.push(`Parallel scraping: ${allCourses.length} courses from ${listingUrls.length} sources`);

@@ -101,7 +101,7 @@ export const useLiveEducationData = (category: string = 'all'): UseLiveEducation
       // Fetch fresh data from edge function
       console.log('📡 Fetching fresh education data from edge function...');
       const { data, error: functionError } = await supabase.functions.invoke('live-education-aggregator', {
-        body: { category, refresh: forceRefresh }
+        body: { category, refresh: forceRefresh, limit: 50 } // Limit to 50 courses for performance
       });
 
       if (functionError) {
