@@ -99,24 +99,24 @@ const CourseMap: React.FC<CourseMapProps> = ({
         mapTypeId: 'roadmap'
       });
 
-      // Listen for map to be fully loaded
-      const idleListener = (googleMapRef.current as any).addListener('idle', () => {
-        if (!isMapLoaded) {
-          setIsMapLoaded(true);
-          (window.google.maps.event as any).removeListener(idleListener);
-        }
+      console.log("Map initialized, waiting for tiles to load...");
+
+      // Listen for map tiles to be fully loaded
+      const tilesLoadedListener = (window.google.maps.event as any).addListener(googleMapRef.current, 'tilesloaded', () => {
+        console.log("Map tiles loaded successfully");
+        setIsMapLoaded(true);
+        (window.google.maps.event as any).removeListener(tilesLoadedListener);
       });
 
-      // Fallback timeout in case map doesn't fire idle event
+      // Fallback timeout in case map doesn't fire tilesloaded event
       const fallbackTimeout = setTimeout(() => {
-        if (!isMapLoaded) {
-          setIsMapLoaded(true);
-        }
-      }, 3000);
+        console.log("Map loading timeout reached, assuming map is ready");
+        setIsMapLoaded(true);
+      }, 5000);
 
       return () => {
-        if (idleListener) {
-          (window.google.maps.event as any).removeListener(idleListener);
+        if (tilesLoadedListener) {
+          (window.google.maps.event as any).removeListener(tilesLoadedListener);
         }
         clearTimeout(fallbackTimeout);
       };
@@ -125,7 +125,7 @@ const CourseMap: React.FC<CourseMapProps> = ({
       console.error("Error initializing Google Maps:", error);
       setIsMapLoaded(true); // Set to true on error to avoid infinite loading
     }
-  }, [userCoordinates, isMapLoaded]);
+  }, [userCoordinates]); // Removed isMapLoaded from dependencies to prevent infinite loop
 
   // Create markers for Google Places providers (no geocoding needed)
   useEffect(() => {
