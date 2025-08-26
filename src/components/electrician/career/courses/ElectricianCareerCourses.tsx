@@ -35,6 +35,15 @@ import CourseGridSkeleton from "./CourseGridSkeleton";
 import { useCareerBookmarks } from "@/hooks/career/useCareerBookmarks";
 import { parsePrice, parseDuration, parseDate, getNumericRating, getDemandScore, getFutureProofingScore } from "@/utils/courseSorting";
 import { fallbackElectricalCourses } from "@/data/fallbackCourses";
+import { 
+  UnifiedCourse, 
+  liveCourseToUnified, 
+  enhancedCourseToUnified,
+  getCourseTitle,
+  getCoursePrice,
+  getCourseFormat,
+  getNextDate
+} from "@/types/unifiedCourse";
 
 const ElectricianCareerCourses = () => {
   const [selectedCourse, setSelectedCourse] = useState<EnhancedCareerCourse | null>(null);
@@ -95,10 +104,14 @@ const ElectricianCareerCourses = () => {
     debouncedLocation === "All Locations" ? "United Kingdom" : debouncedLocation
   );
 
-  // Extract data from live courses hook with enhanced fallback logic
+  // Convert courses to unified format
   const hasLiveCourses = liveCoursesList && liveCoursesList.length > 0;
-  const liveCourses = hasLiveCourses ? liveCoursesList : fallbackElectricalCourses;
-  const liveTotal = hasLiveCourses ? liveCoursesList.length : fallbackElectricalCourses.length;
+  const unifiedCourses: UnifiedCourse[] = hasLiveCourses 
+    ? liveCoursesList.map(liveCourseToUnified)
+    : fallbackElectricalCourses.map(enhancedCourseToUnified);
+  
+  const totalCourses = unifiedCourses.length;
+  const isLoadingCourses = isLoadingLive;
   const isLiveData = hasLiveCourses && !liveError;
   const isUsingFallback = !hasLiveCourses;
 
@@ -186,15 +199,14 @@ const ElectricianCareerCourses = () => {
     return nearbyProviders;
   }, [nearbyProviders]);
 
-  // Enhanced filtering and sorting logic using live data
+  // Enhanced filtering and sorting logic using unified data
   const filteredAndSortedCourses = useMemo(() => {
-    console.log('🔄 useMemo recomputing with:', { currentSort, sortVersion, coursesCount: liveCourses.length });
-    let filtered = liveCourses.filter(course => {
+    console.log('🔄 useMemo recomputing with:', { currentSort, sortVersion, coursesCount: unifiedCourses.length });
+    let filtered = unifiedCourses.filter(course => {
       // Search query filter
       if (filters.searchQuery) {
         const query = filters.searchQuery.toLowerCase();
-        // Handle both LiveCourse and EnhancedCareerCourse interfaces
-        const title = 'courseTitle' in course ? course.courseTitle : course.title;
+        const title = getCourseTitle(course);
         const description = course.description || '';
         const category = course.category || '';
         const provider = course.provider || '';
@@ -241,9 +253,8 @@ const ElectricianCareerCourses = () => {
         if (!courseWithinRadius) return false;
       }
 
-      // Price range filter - handle both interfaces
-      const priceField = 'priceRange' in course ? course.priceRange : course.price;
-      const coursePrice = parseInt(priceField?.match(/£(\d+)/)?.[1] || "0");
+      // Price range filter
+      const coursePrice = parseInt(getCoursePrice(course).match(/£(\d+)/)?.[1] || "0");
       if (coursePrice < filters.priceRange[0] || coursePrice > filters.priceRange[1]) {
         return false;
       }
@@ -253,15 +264,14 @@ const ElectricianCareerCourses = () => {
         return false;
       }
 
-      // Industry demand filter - handle both interfaces
-      const industryDemand = 'industryDemand' in course ? course.industryDemand : undefined;
-      if (filters.industryDemand !== "All" && industryDemand && industryDemand !== filters.industryDemand) {
+      // Industry demand filter
+      if (filters.industryDemand !== "All" && course.industryDemand && course.industryDemand !== filters.industryDemand) {
         return false;
       }
 
-      // Format filter - handle both interfaces
-      const format = 'format' in course ? course.format : course.learningMode;
-      if (filters.format !== "All Formats" && format && !format.toLowerCase().includes(filters.format.toLowerCase())) {
+      // Format filter
+      const format = getCourseFormat(course);
+      if (filters.format !== "All Formats" && !format.toLowerCase().includes(filters.format.toLowerCase())) {
         return false;
       }
 
@@ -277,18 +287,14 @@ const ElectricianCareerCourses = () => {
     const sortOption = sortOptions.find(opt => opt.key === currentSort);
     if (sortOption) {
       console.log('🔄 Sorting by:', currentSort, 'Direction:', sortOption.direction);
-      console.log('📊 Sample course data for sorting:', filtered.slice(0, 2).map(c => {
-        const title = 'courseTitle' in c ? c.courseTitle : c.title;
-        const price = 'priceRange' in c ? c.priceRange : c.price;
-        return {
-          title,
-          price,
-          duration: c.duration,
-          rating: c.rating,
-          industryDemand: 'industryDemand' in c ? c.industryDemand : undefined,
-          futureProofing: 'futureProofing' in c ? c.futureProofing : undefined
-        };
-      }));
+      console.log('📊 Sample course data for sorting:', filtered.slice(0, 2).map(c => ({
+        title: getCourseTitle(c),
+        price: getCoursePrice(c),
+        duration: c.duration,
+        rating: c.rating,
+        industryDemand: c.industryDemand,
+        futureProofing: c.futureProofing
+      })));
       
       filtered.sort((a, b) => {
         // Validate course data before sorting
@@ -301,13 +307,13 @@ const ElectricianCareerCourses = () => {
         
         switch (sortOption.key) {
           case "relevance":
-            const futureProofingA = 'futureProofing' in a ? getFutureProofingScore(a.futureProofing) : 1;
-            const futureProofingB = 'futureProofing' in b ? getFutureProofingScore(b.futureProofing) : 1;
-            const relevanceA = getNumericRating(a.rating) * futureProofingA;
-            const relevanceB = getNumericRating(b.rating) * futureProofingB;
+            const futureProofA = getFutureProofingScore(a.futureProofing || '');
+            const futureProofB = getFutureProofingScore(b.futureProofing || '');
+            const relevanceA = getNumericRating(a.rating) * futureProofA;
+            const relevanceB = getNumericRating(b.rating) * futureProofB;
             comparison = relevanceB - relevanceA;
-            const titleA = 'courseTitle' in a ? a.courseTitle : a.title;
-            const titleB = 'courseTitle' in b ? b.courseTitle : b.title;
+            const titleA = getCourseTitle(a);
+            const titleB = getCourseTitle(b);
             console.log(`Relevance sort: ${titleA} (${relevanceA}) vs ${titleB} (${relevanceB}) = ${comparison}`);
             if (comparison === 0) comparison = titleA.localeCompare(titleB);
             break;
@@ -316,8 +322,8 @@ const ElectricianCareerCourses = () => {
             const ratingA = getNumericRating(a.rating);
             const ratingB = getNumericRating(b.rating);
             comparison = ratingA - ratingB;
-            const titleA2 = 'courseTitle' in a ? a.courseTitle : a.title;
-            const titleB2 = 'courseTitle' in b ? b.courseTitle : b.title;
+            const titleA2 = getCourseTitle(a);
+            const titleB2 = getCourseTitle(b);
             console.log(`Rating sort: ${titleA2} (${a.rating}→${ratingA}) vs ${titleB2} (${b.rating}→${ratingB}) = ${comparison}`);
             if (comparison === 0) comparison = titleA2.localeCompare(titleB2);
             break;
@@ -325,19 +331,17 @@ const ElectricianCareerCourses = () => {
           case "price":
           case "price-low":
           case "price-high":
-            const priceFieldA = 'priceRange' in a ? a.priceRange : a.price;
-            const priceFieldB = 'priceRange' in b ? b.priceRange : b.price;
-            const priceA = parsePrice(priceFieldA || '');
-            const priceB = parsePrice(priceFieldB || '');
+            const priceA = parsePrice(getCoursePrice(a));
+            const priceB = parsePrice(getCoursePrice(b));
             // Handle price-low vs price-high direction
             if (sortOption.key === "price-high") {
               comparison = priceB - priceA; // High to low
             } else {
               comparison = priceA - priceB; // Low to high
             }
-            const titleA3 = 'courseTitle' in a ? a.courseTitle : a.title;
-            const titleB3 = 'courseTitle' in b ? b.courseTitle : b.title;
-            console.log(`💰 Price sort (${sortOption.key}): ${titleA3} (${priceFieldA}→£${priceA}) vs ${titleB3} (${priceFieldB}→£${priceB}) = ${comparison}`);
+            const titleA3 = getCourseTitle(a);
+            const titleB3 = getCourseTitle(b);
+            console.log(`💰 Price sort (${sortOption.key}): ${titleA3} (${getCoursePrice(a)}→£${priceA}) vs ${titleB3} (${getCoursePrice(b)}→£${priceB}) = ${comparison}`);
             if (comparison === 0) comparison = titleA3.localeCompare(titleB3);
             break;
             
@@ -345,21 +349,19 @@ const ElectricianCareerCourses = () => {
             const durationA = parseDuration(a.duration || '');
             const durationB = parseDuration(b.duration || '');
             comparison = durationA - durationB;
-            const titleA4 = 'courseTitle' in a ? a.courseTitle : a.title;
-            const titleB4 = 'courseTitle' in b ? b.courseTitle : b.title;
+            const titleA4 = getCourseTitle(a);
+            const titleB4 = getCourseTitle(b);
             console.log(`Duration sort: ${titleA4} (${a.duration}→${durationA}w) vs ${titleB4} (${b.duration}→${durationB}w) = ${comparison}`);
             if (comparison === 0) comparison = titleA4.localeCompare(titleB4);
             break;
             
           case "demand":
-            const demandA = getDemandScore(('industryDemand' in a ? a.industryDemand : '') || '');
-            const demandB = getDemandScore(('industryDemand' in b ? b.industryDemand : '') || '');
+            const demandA = getDemandScore(a.industryDemand || '');
+            const demandB = getDemandScore(b.industryDemand || '');
             comparison = demandA - demandB;
-            const titleA5 = 'courseTitle' in a ? a.courseTitle : a.title;
-            const titleB5 = 'courseTitle' in b ? b.courseTitle : b.title;
-            const industryDemandA = 'industryDemand' in a ? a.industryDemand : '';
-            const industryDemandB = 'industryDemand' in b ? b.industryDemand : '';
-            console.log(`Demand sort: ${titleA5} (${industryDemandA}→${demandA}) vs ${titleB5} (${industryDemandB}→${demandB}) = ${comparison}`);
+            const titleA5 = getCourseTitle(a);
+            const titleB5 = getCourseTitle(b);
+            console.log(`Demand sort: ${titleA5} (${a.industryDemand}→${demandA}) vs ${titleB5} (${b.industryDemand}→${demandB}) = ${comparison}`);
             if (comparison === 0) {
               comparison = getNumericRating(a.rating) - getNumericRating(b.rating);
               if (comparison === 0) comparison = titleA5.localeCompare(titleB5);
@@ -367,21 +369,19 @@ const ElectricianCareerCourses = () => {
             break;
             
           case "future-proof":
-            const futureA = getFutureProofingScore(('futureProofing' in a ? a.futureProofing : '') || '');
-            const futureB = getFutureProofingScore(('futureProofing' in b ? b.futureProofing : '') || '');
+            const futureA = getFutureProofingScore(a.futureProofing || '');
+            const futureB = getFutureProofingScore(b.futureProofing || '');
             comparison = futureA - futureB;
-            const titleA6 = 'courseTitle' in a ? a.courseTitle : a.title;
-            const titleB6 = 'courseTitle' in b ? b.courseTitle : b.title;
-            const futureProofingA = 'futureProofing' in a ? a.futureProofing : '';
-            const futureProofingB = 'futureProofing' in b ? b.futureProofing : '';
-            console.log(`Future-proof sort: ${titleA6} (${futureProofingA}→${futureA}) vs ${titleB6} (${futureProofingB}→${futureB}) = ${comparison}`);
+            const titleA6 = getCourseTitle(a);
+            const titleB6 = getCourseTitle(b);
+            console.log(`Future-proof sort: ${titleA6} (${a.futureProofing}→${futureA}) vs ${titleB6} (${b.futureProofing}→${futureB}) = ${comparison}`);
             if (comparison === 0) comparison = titleA6.localeCompare(titleB6);
             break;
             
           case "title":
             // Enhanced alphabetical sorting with robust validation
-            const titleA7 = ('courseTitle' in a ? a.courseTitle : a.title) || '';
-            const titleB7 = ('courseTitle' in b ? b.courseTitle : b.title) || '';
+            const titleA7 = getCourseTitle(a);
+            const titleB7 = getCourseTitle(b);
             
             if (!titleA7 && !titleB7) {
               comparison = 0;
@@ -399,31 +399,27 @@ const ElectricianCareerCourses = () => {
           case "provider":
             comparison = a.provider.localeCompare(b.provider);
             console.log(`Provider sort: ${a.provider} vs ${b.provider} = ${comparison}`);
-            const titleA8 = 'courseTitle' in a ? a.courseTitle : a.title;
-            const titleB8 = 'courseTitle' in b ? b.courseTitle : b.title;
+            const titleA8 = getCourseTitle(a);
+            const titleB8 = getCourseTitle(b);
             if (comparison === 0) comparison = titleA8.localeCompare(titleB8);
             break;
             
           case "next-date":
-            const nextDatesA = 'nextDates' in a ? a.nextDates : (a.nextIntakeDate || '');
-            const nextDatesB = 'nextDates' in b ? b.nextDates : (b.nextIntakeDate || '');
-            const dateA = parseDate(nextDatesA);
-            const dateB = parseDate(nextDatesB);
+            const dateA = parseDate(getNextDate(a));
+            const dateB = parseDate(getNextDate(b));
             comparison = dateA.getTime() - dateB.getTime();
-            const titleA9 = 'courseTitle' in a ? a.courseTitle : a.title;
-            const titleB9 = 'courseTitle' in b ? b.courseTitle : b.title;
-            console.log(`Date sort: ${titleA9} (${nextDatesA}→${dateA}) vs ${titleB9} (${nextDatesB}→${dateB}) = ${comparison}`);
+            const titleA9 = getCourseTitle(a);
+            const titleB9 = getCourseTitle(b);
+            console.log(`Date sort: ${titleA9} (${getNextDate(a)}→${dateA}) vs ${titleB9} (${getNextDate(b)}→${dateB}) = ${comparison}`);
             if (comparison === 0) comparison = titleA9.localeCompare(titleB9);
             break;
             
           default:
-            const defaultFutureA = 'futureProofing' in a ? getFutureProofingScore(a.futureProofing) : 1;
-            const defaultFutureB = 'futureProofing' in b ? getFutureProofingScore(b.futureProofing) : 1;
-            const defaultRelevanceA = getNumericRating(a.rating) * defaultFutureA;
-            const defaultRelevanceB = getNumericRating(b.rating) * defaultFutureB;
+            const defaultRelevanceA = getNumericRating(a.rating) * getFutureProofingScore(a.futureProofing || '');
+            const defaultRelevanceB = getNumericRating(b.rating) * getFutureProofingScore(b.futureProofing || '');
             comparison = defaultRelevanceA - defaultRelevanceB;
-            const titleA10 = 'courseTitle' in a ? a.courseTitle : a.title;
-            const titleB10 = 'courseTitle' in b ? b.courseTitle : b.title;
+            const titleA10 = getCourseTitle(a);
+            const titleB10 = getCourseTitle(b);
             console.log(`Default relevance sort: ${titleA10} (${defaultRelevanceA}) vs ${titleB10} (${defaultRelevanceB}) = ${comparison}`);
             if (comparison === 0) comparison = titleA10.localeCompare(titleB10);
         }
@@ -432,11 +428,11 @@ const ElectricianCareerCourses = () => {
         return sortOption.direction === "desc" ? -comparison : comparison;
       });
       
-      console.log('✅ Sorted courses:', filtered.slice(0, 3).map(c => 'courseTitle' in c ? c.courseTitle : c.title));
+      console.log('✅ Sorted courses:', filtered.slice(0, 3).map(c => getCourseTitle(c)));
     }
 
     return filtered;
-  }, [liveCourses, filters, currentSort, sortVersion]);
+  }, [unifiedCourses, filters, currentSort, sortVersion]);
 
   // Remove training centers for electricians - live-only approach
   const filteredCenters: EnhancedTrainingCenter[] = [];
@@ -653,10 +649,10 @@ const ElectricianCareerCourses = () => {
                   if (viewMode === "map") setViewMode("grid");
                   refreshCourses();
                 }}
-                disabled={isSearching}
+                disabled={isLoadingCourses}
                 className="bg-elec-yellow text-black hover:bg-elec-yellow/90 flex items-center justify-center gap-2 min-h-[44px] text-sm"
               >
-                <RefreshCw className={`h-4 w-4 ${isSearching ? 'animate-spin' : ''}`} />
+                <RefreshCw className={`h-4 w-4 ${isLoadingCourses ? 'animate-spin' : ''}`} />
                 {isMobile ? "Refresh" : "Refresh Data"}
               </Button>
               
@@ -727,9 +723,9 @@ const ElectricianCareerCourses = () => {
       </div>
 
       {/* Featured Courses Carousel - Hidden in map view */}
-      {viewMode !== "map" && liveCourses.length > 0 && (
+      {viewMode !== "map" && unifiedCourses.length > 0 && (
         <FeaturedCoursesCarousel 
-          courses={liveCourses.slice(0, 6)} 
+          courses={unifiedCourses.slice(0, 6) as any} 
           onViewDetails={viewCourseDetails} 
         />
       )}
@@ -741,7 +737,7 @@ const ElectricianCareerCourses = () => {
                 onFiltersChange={setFilters}
                 onReset={handleResetFilters}
                 totalResults={filteredAndSortedCourses.length}
-                isSearching={isSearching}
+                isSearching={isLoadingCourses}
                 viewMode={viewMode}
               />
       )}
@@ -749,7 +745,7 @@ const ElectricianCareerCourses = () => {
       {/* Course Comparison Tool */}
       {showComparison && (
         <CourseCompareMode
-          courses={liveCourses}
+          courses={unifiedCourses as any}
           onViewDetails={viewCourseDetails}
           selectedCourseData={selectedCourseData}
           onAddToComparison={(course) => addToComparison(course.id, course)}
@@ -761,7 +757,7 @@ const ElectricianCareerCourses = () => {
       {/* Bookmark Manager */}
       {showBookmarks && (
         <CourseBookmarkManager
-          courses={liveCourses}
+          courses={unifiedCourses as any}
           onViewDetails={viewCourseDetails}
         />
       )}
@@ -822,7 +818,7 @@ const ElectricianCareerCourses = () => {
         ) : (
           /* Grid/List View */
           <div className="space-y-6">
-            {isLoadingLive && !isLiveData ? (
+            {isLoadingCourses && !isLiveData ? (
               /* Show skeleton loading on initial load */
               <div className="space-y-4">
                 <div className="text-center py-8">
@@ -839,7 +835,20 @@ const ElectricianCareerCourses = () => {
                 {filteredAndSortedCourses.map((course) => (
                   <div key={course.id} className="relative group">
                     <EnhancedCourseCard 
-                      course={course}
+                      course={{
+                        ...course,
+                        title: getCourseTitle(course),
+                        price: getCoursePrice(course),
+                        format: getCourseFormat(course),
+                        nextDates: getNextDate(course),
+                        industryDemand: course.industryDemand || 'Medium',
+                        futureProofing: course.futureProofing || 'High',
+                        salaryImpact: undefined,
+                        careerOutcomes: [],
+                        employerSupport: false,
+                        courseOutline: [],
+                        continuousAssessment: false
+                      } as any}
                       onViewDetails={viewCourseDetails}
                     />
                     
@@ -866,7 +875,7 @@ const ElectricianCareerCourses = () => {
                       <Button
                         variant="ghost"
                         size="sm"
-                        onClick={() => addToComparison(course.id, course)}
+                        onClick={() => addToComparison(course.id, course as any)}
                         className={`min-h-[40px] min-w-[40px] p-0 md:h-8 md:w-8 rounded-full bg-background/80 backdrop-blur-sm border border-border/50 ${isInComparison(course.id) ? 
                           'text-blue-400 hover:text-blue-300 border-blue-400/50' : 
                           'text-muted-foreground hover:text-blue-400 hover:border-blue-400/50'
