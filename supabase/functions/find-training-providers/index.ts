@@ -63,19 +63,21 @@ serve(async (req) => {
     let allResults: any[] = [];
     
     const searchQueries = [
-      `"college" electrical training ${searchLocation}`,
-      `"training center" electrical courses ${searchLocation}`,
-      `"training centre" electrical courses ${searchLocation}`,
-      `"learning center" electrical ${searchLocation}`,
-      `"City & Guilds" training center ${searchLocation}`,
-      `"EAL" training center ${searchLocation}`,
-      `"NICEIC Training" ${searchLocation}`,
-      `"Pearson" electrical courses ${searchLocation}`,
-      `"university" electrical engineering ${searchLocation}`,
-      `"further education college" electrical ${searchLocation}`,
-      `"vocational college" electrical ${searchLocation}`,
-      `"institute" electrical training ${searchLocation}`,
-      `"academy" electrical training ${searchLocation}`
+      `"electrical training" courses ${searchLocation}`,
+      `"electrical qualifications" center ${searchLocation}`,
+      `"electrical apprenticeship" training ${searchLocation}`,
+      `"18th Edition" training ${searchLocation}`,
+      `"PAT testing" courses ${searchLocation}`,
+      `"inspection and testing" electrical ${searchLocation}`,
+      `"engineering training" college ${searchLocation}`,
+      `"technical college" electrical ${searchLocation}`,
+      `"engineering college" electrical ${searchLocation}`,
+      `"health and safety training" electrical ${searchLocation}`,
+      `"safety courses" electrical ${searchLocation}`,
+      `"City & Guilds" electrical training ${searchLocation}`,
+      `"EAL" electrical qualifications ${searchLocation}`,
+      `"NICEIC Training" electrical ${searchLocation}`,
+      `"Pearson BTEC" electrical engineering ${searchLocation}`
     ];
 
     console.log(`Searching with ${searchQueries.length} different queries...`);
@@ -188,7 +190,7 @@ serve(async (req) => {
       return 'Educational Institution';
     }
 
-    // Enhanced filtering for educational institutions
+    // Enhanced filtering for electrical/engineering/tech/safety training providers only
     function isLegitimateTrainingProvider(place: any): boolean {
       const name = place.name?.toLowerCase() || '';
       const address = place.vicinity?.toLowerCase() || '';
@@ -198,6 +200,29 @@ serve(async (req) => {
         'college', 'university', 'training', 'centre', 'center', 'institute', 'academy', 
         'school', 'education', 'learning', 'campus', 'city & guilds', 'eal', 'niceic training',
         'pearson', 'btec', 'nvq', 'apprenticeship', 'qualifications'
+      ];
+      
+      // Electrical/Engineering/Tech/Safety specific keywords (MUST have at least one)
+      const relevantSubjectKeywords = [
+        'electrical', 'engineering', 'technical', 'technology', 'tech', 'safety', 
+        'health and safety', 'electrical engineering', 'electronic', 'electronics',
+        '18th edition', 'pat testing', 'inspection', 'testing', 'installation',
+        'wiring', 'circuits', 'renewable energy', 'solar', 'automation',
+        'mechanical engineering', 'civil engineering', 'construction', 'building services'
+      ];
+      
+      // Non-electrical training to exclude
+      const irrelevantSubjects = [
+        'beauty', 'hairdressing', 'cosmetology', 'massage', 'beauty therapy',
+        'language', 'english', 'french', 'spanish', 'german', 'chinese',
+        'business studies', 'management', 'accounting', 'finance', 'marketing',
+        'art', 'design', 'creative', 'music', 'drama', 'dance', 'performing arts',
+        'cooking', 'culinary', 'catering', 'hospitality', 'food',
+        'driving school', 'driving instructor', 'motoring',
+        'fitness', 'personal training', 'gym', 'sports', 'yoga',
+        'childcare', 'nursery', 'early years', 'teaching assistant',
+        'healthcare', 'nursing', 'medical', 'dental', 'pharmacy',
+        'law', 'legal', 'solicitor', 'barrister'
       ];
       
       // Commercial electrical business patterns to exclude
@@ -213,16 +238,26 @@ serve(async (req) => {
         name.includes(keyword) || address.includes(keyword)
       );
       
+      // Check if it's relevant to electrical/engineering/tech/safety
+      const hasRelevantSubject = relevantSubjectKeywords.some(keyword => 
+        name.includes(keyword) || address.includes(keyword)
+      );
+      
+      // Check if it's an irrelevant training provider
+      const hasIrrelevantSubject = irrelevantSubjects.some(subject => 
+        name.includes(subject) || address.includes(subject)
+      );
+      
       // Check if name contains commercial patterns to exclude
       const hasCommercialPatterns = commercialPatterns.some(pattern => 
         name.includes(pattern) || address.includes(pattern)
       );
       
-      // Must have educational keywords and not have commercial patterns
-      return hasEducationalKeywords && !hasCommercialPatterns;
+      // Must have educational keywords AND relevant subject AND not irrelevant AND not commercial
+      return hasEducationalKeywords && hasRelevantSubject && !hasIrrelevantSubject && !hasCommercialPatterns;
     }
 
-    // Calculate quality score for ranking
+    // Calculate quality score for ranking electrical/engineering/tech/safety providers
     function calculateQualityScore(place: any): number {
       let score = 0;
       const name = place.name?.toLowerCase() || '';
@@ -236,9 +271,21 @@ serve(async (req) => {
       const premiumKeywords = ['college', 'university', 'training center', 'training centre', 'institute'];
       if (premiumKeywords.some(keyword => name.includes(keyword))) score += 40;
       
-      // Higher score for known training providers
-      const knownProviders = ['city & guilds', 'eal', 'niceic training', 'pearson'];
+      // Bonus for electrical/engineering specific keywords
+      const electricalKeywords = ['electrical', 'engineering', 'technical', 'technology'];
+      if (electricalKeywords.some(keyword => name.includes(keyword))) score += 30;
+      
+      // Bonus for specific electrical qualifications
+      const qualificationKeywords = ['18th edition', 'pat testing', 'inspection', 'city & guilds', 'eal'];
+      if (qualificationKeywords.some(keyword => name.includes(keyword))) score += 25;
+      
+      // Higher score for known electrical training providers
+      const knownProviders = ['city & guilds', 'eal', 'niceic training', 'pearson', 'btec'];
       if (knownProviders.some(provider => name.includes(provider))) score += 60;
+      
+      // Bonus for engineering colleges/technical colleges
+      const engineeringKeywords = ['engineering college', 'technical college', 'engineering institute'];
+      if (engineeringKeywords.some(keyword => name.includes(keyword))) score += 35;
       
       // Rating bonus
       if (place.rating >= 4.0) score += 20;
