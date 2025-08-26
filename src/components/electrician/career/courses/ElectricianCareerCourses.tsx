@@ -30,6 +30,7 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useIsMobile } from "@/hooks/use-mobile";
 import CourseGridSkeleton from "./CourseGridSkeleton";
+import JobPagination from "../../../job-vacancies/JobPagination";
 import { useCareerBookmarks } from "@/hooks/career/useCareerBookmarks";
 import { parsePrice, parseDuration, parseDate, getNumericRating, getDemandScore, getFutureProofingScore } from "@/utils/courseSorting";
 import { fallbackElectricalCourses } from "@/data/fallbackCourses";
@@ -44,6 +45,10 @@ const ElectricianCareerCourses = () => {
   const [showComparison, setShowComparison] = useState(false);
   const [selectedCourseId, setSelectedCourseId] = useState<string | null>(null);
   const [nearbyProviders, setNearbyProviders] = useState<any[]>([]);
+  
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(1);
+  const coursesPerPage = 10;
   
   // Location-based filtering state
   const [userLocation, setUserLocation] = useState<string | null>(null);
@@ -150,6 +155,11 @@ const ElectricianCareerCourses = () => {
       console.log('🔄 Triggering course search with:', { debouncedSearchQuery, debouncedLocation });
     }
   }, [debouncedSearchQuery, debouncedLocation]);
+
+  // Reset pagination when filters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [filters, debouncedSearchQuery, debouncedLocation]);
 
   // Enhanced sorting change handler with forced re-computation
   const [sortVersion, setSortVersion] = useState(0);
@@ -469,6 +479,22 @@ const ElectricianCareerCourses = () => {
 
     return filtered;
   }, [liveCourses, filters, currentSort, sortVersion]);
+
+  // Pagination calculations
+  const totalPages = Math.ceil(filteredAndSortedCourses.length / coursesPerPage);
+  const indexOfLastCourse = currentPage * coursesPerPage;
+  const indexOfFirstCourse = indexOfLastCourse - coursesPerPage;
+  const currentCourses = filteredAndSortedCourses.slice(indexOfFirstCourse, indexOfLastCourse);
+
+  // Pagination handler
+  const paginate = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+    // Scroll to top of courses section
+    const coursesSection = document.querySelector('[data-courses-section]');
+    if (coursesSection) {
+      coursesSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
 
   // Remove training centers for electricians - live-only approach
   const filteredCenters: EnhancedTrainingCenter[] = [];
@@ -812,11 +838,16 @@ const ElectricianCareerCourses = () => {
       {/* Main Content */}
       <div className="space-y-6">
         {viewMode !== "map" && (
-          <div className="flex items-center gap-2 pb-4 border-b border-border">
+          <div className="flex items-center gap-2 pb-4 border-b border-border" data-courses-section>
             <BookOpen className="h-5 w-5 text-elec-yellow" />
             <h2 className="text-lg font-semibold">
               Live Courses ({filteredAndSortedCourses.length})
             </h2>
+            {filteredAndSortedCourses.length > 0 && (
+              <Badge variant="secondary" className="text-xs">
+                Showing {indexOfFirstCourse + 1}-{Math.min(indexOfLastCourse, filteredAndSortedCourses.length)} of {filteredAndSortedCourses.length}
+              </Badge>
+            )}
             {userLocation && (
               <Badge variant="outline" className="text-xs">
                 Within {searchRadius} miles of {userLocation.split(',')[0]}
@@ -864,11 +895,12 @@ const ElectricianCareerCourses = () => {
                 <CourseGridSkeleton count={9} />
               </div>
             ) : filteredAndSortedCourses.length > 0 ? (
-              <div className={viewMode === "grid" ? 
-                "grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-6" : 
-                "space-y-3 md:space-y-4"
-              }>
-                {filteredAndSortedCourses.map((course) => (
+              <div className="space-y-6">
+                <div className={viewMode === "grid" ? 
+                  "grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-6" : 
+                  "space-y-3 md:space-y-4"
+                }>
+                  {currentCourses.map((course) => (
                   <div key={course.id} className="relative group">
                     <EnhancedCourseCard 
                       course={course}
@@ -910,7 +942,17 @@ const ElectricianCareerCourses = () => {
                       </Button>
                     </div>
                   </div>
-                ))}
+                  ))}
+                </div>
+                
+                {/* Pagination */}
+                {totalPages > 1 && (
+                  <JobPagination
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    paginate={paginate}
+                  />
+                )}
               </div>
             ) : liveError ? (
               /* Error state with retry option */
