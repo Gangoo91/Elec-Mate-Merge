@@ -99,24 +99,30 @@ const CourseMap: React.FC<CourseMapProps> = ({
         mapTypeId: 'roadmap'
       });
 
-      console.log("Map initialized, waiting for tiles to load...");
+      console.log("Map initialized, setting map as loaded");
 
-      // Listen for map tiles to be fully loaded
-      const tilesLoadedListener = (window.google.maps.event as any).addListener(googleMapRef.current, 'tilesloaded', () => {
-        console.log("Map tiles loaded successfully");
+      // Listen for map to be ready using idle event
+      const idleListener = (window.google.maps.event as any).addListener(googleMapRef.current, 'idle', () => {
+        console.log("Map is idle and ready");
         setIsMapLoaded(true);
-        (window.google.maps.event as any).removeListener(tilesLoadedListener);
+        (window.google.maps.event as any).removeListener(idleListener);
       });
 
-      // Fallback timeout in case map doesn't fire tilesloaded event
+      // Simple fallback timeout 
       const fallbackTimeout = setTimeout(() => {
-        console.log("Map loading timeout reached, assuming map is ready");
+        console.log("Map loading timeout reached");
         setIsMapLoaded(true);
-      }, 5000);
+      }, 3000);
+
+      // If no data to load, mark as ready immediately
+      if (!userCoordinates && nearbyProviders.length === 0) {
+        console.log("No data to load, marking map as ready");
+        setIsMapLoaded(true);
+      }
 
       return () => {
-        if (tilesLoadedListener) {
-          (window.google.maps.event as any).removeListener(tilesLoadedListener);
+        if (idleListener) {
+          (window.google.maps.event as any).removeListener(idleListener);
         }
         clearTimeout(fallbackTimeout);
       };
