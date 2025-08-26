@@ -63,6 +63,7 @@ const CourseMap: React.FC<CourseMapProps> = ({
   const mapRef = useRef<HTMLDivElement>(null);
   const googleMapRef = useRef<google.maps.Map | null>(null);
   const [markers, setMarkers] = useState<ProviderMarkerData[]>([]);
+  const [isMapLoaded, setIsMapLoaded] = useState(false);
   const userMarkerRef = useRef<google.maps.Marker | null>(null);
   const radiusCircleRef = useRef<any>(null);
   const providerMarkersRef = useRef<google.maps.Marker[]>([]);
@@ -98,10 +99,33 @@ const CourseMap: React.FC<CourseMapProps> = ({
         mapTypeId: 'roadmap'
       });
 
+      // Listen for map to be fully loaded
+      const idleListener = (googleMapRef.current as any).addListener('idle', () => {
+        if (!isMapLoaded) {
+          setIsMapLoaded(true);
+          (window.google.maps.event as any).removeListener(idleListener);
+        }
+      });
+
+      // Fallback timeout in case map doesn't fire idle event
+      const fallbackTimeout = setTimeout(() => {
+        if (!isMapLoaded) {
+          setIsMapLoaded(true);
+        }
+      }, 3000);
+
+      return () => {
+        if (idleListener) {
+          (window.google.maps.event as any).removeListener(idleListener);
+        }
+        clearTimeout(fallbackTimeout);
+      };
+
     } catch (error) {
       console.error("Error initializing Google Maps:", error);
+      setIsMapLoaded(true); // Set to true on error to avoid infinite loading
     }
-  }, [userCoordinates]);
+  }, [userCoordinates, isMapLoaded]);
 
   // Create markers for Google Places providers (no geocoding needed)
   useEffect(() => {
@@ -375,10 +399,17 @@ const CourseMap: React.FC<CourseMapProps> = ({
   }, [selectedCourse, userCoordinates, searchRadius, markers]);
 
 
-  if (isLoading) {
+  if (isLoading || !isMapLoaded) {
     return (
       <Card className="border-elec-yellow/20 bg-elec-gray p-4 relative h-[500px]">
-        <Skeleton className="h-full w-full" />
+        <div className="h-full w-full flex items-center justify-center">
+          <div className="text-center space-y-4">
+            <Skeleton className="h-full w-full absolute inset-0" />
+            <div className="relative z-10 text-sm text-muted-foreground">
+              {isLoading ? "Loading training providers..." : "Initializing map..."}
+            </div>
+          </div>
+        </div>
       </Card>
     );
   }
