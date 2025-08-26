@@ -237,28 +237,28 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
 
           {/* Key Information Grid */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <Card className="bg-elec-dark/30 border-elec-yellow/10">
+            <Card className="bg-elec-gray border-elec-yellow/10">
               <CardContent className="p-4 text-center">
                 <Clock className="h-5 w-5 text-elec-yellow mx-auto mb-2" />
                 <div className="font-medium">{course.duration}</div>
                 <div className="text-xs text-muted-foreground">Duration</div>
               </CardContent>
             </Card>
-            <Card className="bg-elec-dark/30 border-elec-yellow/10">
+            <Card className="bg-elec-gray border-elec-yellow/10">
               <CardContent className="p-4 text-center">
                 <Users className="h-5 w-5 text-elec-yellow mx-auto mb-2" />
                 <div className="font-medium">{course.level}</div>
                 <div className="text-xs text-muted-foreground">Level</div>
               </CardContent>
             </Card>
-            <Card className="bg-elec-dark/30 border-elec-yellow/10">
+            <Card className="bg-elec-gray border-elec-yellow/10">
               <CardContent className="p-4 text-center">
                 <PoundSterling className="h-5 w-5 text-elec-yellow mx-auto mb-2" />
                 <div className="font-medium text-sm">{course.price}</div>
                 <div className="text-xs text-muted-foreground">Price Range</div>
               </CardContent>
             </Card>
-            <Card className="bg-elec-dark/30 border-elec-yellow/10">
+            <Card className="bg-elec-gray border-elec-yellow/10">
               <CardContent className="p-4 text-center">
                 <TrendingUp className="h-5 w-5 text-elec-yellow mx-auto mb-2" />
                 <div className="font-medium">{course.futureProofing}/5</div>
@@ -269,7 +269,7 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
 
           {/* Industry Information */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <Card className="border-elec-yellow/10 bg-elec-dark/30">
+            <Card className="border-elec-yellow/10 bg-elec-gray">
               <CardHeader className="pb-3">
                 <CardTitle className="text-lg flex items-center gap-2">
                   <TrendingUp className="h-4 w-4 text-elec-yellow" />
@@ -296,7 +296,7 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
               </CardContent>
             </Card>
 
-            <Card className="border-elec-yellow/10 bg-elec-dark/30">
+            <Card className="border-elec-yellow/10 bg-elec-gray">
               <CardHeader className="pb-3">
                 <CardTitle className="text-lg flex items-center gap-2">
                   <Award className="h-4 w-4 text-elec-yellow" />
@@ -317,7 +317,7 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
 
           {/* Course Content */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <Card className="border-elec-yellow/10 bg-elec-dark/30">
+            <Card className="border-elec-yellow/10 bg-elec-gray">
               <CardHeader className="pb-3">
                 <CardTitle className="text-lg flex items-center gap-2">
                   <BookOpen className="h-4 w-4 text-elec-yellow" />
@@ -336,7 +336,7 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
               </CardContent>
             </Card>
 
-            <Card className="border-elec-yellow/10 bg-elec-dark/30">
+            <Card className="border-elec-yellow/10 bg-elec-gray">
               <CardHeader className="pb-3">
                 <CardTitle className="text-lg flex items-center gap-2">
                   <Target className="h-4 w-4 text-elec-yellow" />
@@ -358,7 +358,7 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
 
           {/* Assessment & Prerequisites */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <Card className="border-elec-yellow/10 bg-elec-dark/30">
+            <Card className="border-elec-yellow/10 bg-elec-gray">
               <CardHeader className="pb-3">
                 <CardTitle className="text-lg flex items-center gap-2">
                   <GraduationCap className="h-4 w-4 text-elec-yellow" />
@@ -379,7 +379,7 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
               </CardContent>
             </Card>
 
-            <Card className="border-elec-yellow/10 bg-elec-dark/30">
+            <Card className="border-elec-yellow/10 bg-elec-gray">
               <CardHeader className="pb-3">
                 <CardTitle className="text-lg">Prerequisites</CardTitle>
               </CardHeader>
@@ -397,7 +397,7 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
           </div>
 
           {/* Locations */}
-          <Card className="border-elec-yellow/10 bg-elec-dark/30">
+          <Card className="border-elec-yellow/10 bg-elec-gray">
             <CardHeader className="pb-3">
               <CardTitle className="text-lg flex items-center gap-2">
                 <MapPin className="h-4 w-4 text-elec-yellow" />
@@ -420,7 +420,7 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
           </Card>
 
           {/* Course Dates */}
-          <Card className="border-elec-yellow/10 bg-elec-dark/30">
+          <Card className="border-elec-yellow/10 bg-elec-gray">
             <CardHeader className="pb-3">
               <CardTitle className="text-lg flex items-center gap-2">
                 <Calendar className="h-4 w-4 text-elec-yellow" />
