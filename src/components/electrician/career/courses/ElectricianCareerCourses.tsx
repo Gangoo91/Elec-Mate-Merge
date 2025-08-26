@@ -23,6 +23,7 @@ import LocationBasedCourseSearch from "../../../apprentice/career/courses/Locati
 import { useLiveEducationData, LiveEducationData } from "@/hooks/useLiveEducationData";
 import { useDebounce } from "@/hooks/useDebounce";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useLocationCache } from "@/hooks/useLocationCache";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { BookOpen, Users, Plus, Scale, FileDown, RefreshCw, Wifi, WifiOff, Map, List } from "lucide-react";
@@ -56,6 +57,7 @@ const ElectricianCareerCourses = () => {
   const [searchRadius, setSearchRadius] = useState(25);
   const [isAutoDetecting, setIsAutoDetecting] = useState(false);
   const [autoLocationAttempted, setAutoLocationAttempted] = useState(false);
+  const { reverseGeocodeWithCache, geocodeWithCache } = useLocationCache();
   
   const { toast } = useToast();
   const isMobile = useIsMobile();
@@ -199,81 +201,74 @@ const ElectricianCareerCourses = () => {
   };
 
   // Auto-detect user location when map view is first loaded
-  const handleAutoLocationDetection = () => {
-    if (!window.google?.maps) {
-      toast({
-        title: "Maps Not Ready",
-        description: "Google Maps is still loading. Please try again in a moment.",
-        variant: "destructive",
-      });
-      return;
-    }
-
+  const handleAutoLocationDetection = async () => {
+    if (autoLocationAttempted || isAutoDetecting) return;
+    
     setIsAutoDetecting(true);
-    
-    if (!navigator.geolocation) {
-      toast({
-        title: "Not Available",
-        description: "Geolocation is not supported by your browser",
-        variant: "destructive",
+    setAutoLocationAttempted(true);
+
+    try {
+      const position = await new Promise<GeolocationPosition>((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(resolve, reject, {
+          enableHighAccuracy: true,
+          timeout: 10000,
+          maximumAge: 300000 // 5 minutes
+        });
       });
-      setIsAutoDetecting(false);
-      setAutoLocationAttempted(true);
-      return;
-    }
-    
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        const { latitude, longitude } = position.coords;
-        
-        // Reverse geocode to get readable location
-        const geocoder = new window.google.maps.Geocoder();
-        geocoder.geocode({ location: { lat: latitude, lng: longitude } }, (results, status) => {
-          setIsAutoDetecting(false);
-          setAutoLocationAttempted(true);
-          
-          if (status === "OK" && results && results[0]) {
-            // Extract postcode from address components
-            const postcodeComponent = results[0].address_components.find(
-              component => component.types.includes("postal_code")
-            );
-            
-            const postcode = postcodeComponent ? postcodeComponent.short_name : "";
-            const locality = results[0].formatted_address.split(',')[0];
-            
-            const detectedLocation = postcode ? `${locality}, ${postcode}` : locality;
-            const coordinates = { lat: latitude, lng: longitude };
-            
-            setUserLocation(detectedLocation);
-            setUserCoordinates(coordinates);
-            
+
+      const { latitude, longitude } = position.coords;
+      
+      // Use cached reverse geocoding
+      const locationName = await reverseGeocodeWithCache(latitude, longitude);
+      const coordinates = { lat: latitude, lng: longitude };
+      
+      setUserLocation(locationName);
+      setUserCoordinates(coordinates);
+      
+      toast({
+        title: "Location Detected",
+        description: `Using your current location: ${locationName}`,
+      });
+      
+      // Automatically search for providers
+      searchNearbyProviders();
+      
+    } catch (error) {
+      console.error('Auto-location detection failed:', error);
+      if (error instanceof GeolocationPositionError) {
+        switch (error.code) {
+          case error.PERMISSION_DENIED:
             toast({
-              title: "Location Detected",
-              description: `Using your current location: ${detectedLocation}`,
-            });
-            
-            // Automatically search for providers
-            searchNearbyProviders();
-          } else {
-            toast({
-              title: "Location Error",
-              description: "Could not determine your location. Please enter manually.",
+              title: "Location Permission",
+              description: "Location access denied. Please search manually or enable location permissions.",
               variant: "destructive",
             });
-          }
-        });
-      },
-      (error) => {
-        setIsAutoDetecting(false);
-        setAutoLocationAttempted(true);
-        console.error("Geolocation error:", error);
+            break;
+          case error.POSITION_UNAVAILABLE:
+            toast({
+              title: "Location Unavailable",
+              description: "Location unavailable. Please search manually.",
+              variant: "destructive",
+            });
+            break;
+          case error.TIMEOUT:
+            toast({
+              title: "Location Timeout",
+              description: "Location detection timed out. Please search manually.",
+              variant: "destructive",
+            });
+            break;
+        }
+      } else {
         toast({
-          title: "Location Permission",
-          description: "Unable to access your location. Please enter it manually.",
+          title: "Location Error",
+          description: "Failed to detect location. Please search manually.",
           variant: "destructive",
         });
       }
-    );
+    } finally {
+      setIsAutoDetecting(false);
+    }
   };
 
   // Auto-detect location when switching to map view (only once per session)

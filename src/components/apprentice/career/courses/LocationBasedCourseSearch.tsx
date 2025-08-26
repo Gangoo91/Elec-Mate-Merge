@@ -6,7 +6,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { MapPin, Search, Loader2, Compass } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
+import { useLocationCache } from "@/hooks/useLocationCache";
 
 interface LocationBasedCourseSearchProps {
   onLocationSelect: (location: string, coordinates?: google.maps.LatLngLiteral) => void;
@@ -32,6 +33,7 @@ const LocationBasedCourseSearch: React.FC<LocationBasedCourseSearchProps> = ({
   const autocompleteRef = useRef<google.maps.places.Autocomplete | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
+  const { geocodeWithCache } = useLocationCache();
 
   useEffect(() => {
     if (!window.google?.maps?.places || !inputRef.current) return;
@@ -68,50 +70,37 @@ const LocationBasedCourseSearch: React.FC<LocationBasedCourseSearchProps> = ({
   }, [onLocationSelect]);
 
   const handleManualSearch = async () => {
-    if (!searchInput.trim() || !window.google?.maps) return;
-
+    if (!searchInput.trim()) return;
+    
     setIsSearching(true);
-    const geocoder = new window.google.maps.Geocoder();
-
+    
     try {
-      const results = await new Promise<google.maps.GeocoderResult[]>((resolve, reject) => {
-        geocoder.geocode({ 
-          address: `${searchInput}, UK`,
-          componentRestrictions: { country: 'GB' }
-        }, (results, status) => {
-          if (status === 'OK' && results) {
-            resolve(results);
-          } else {
-            reject(new Error(`Geocoding failed: ${status}`));
-          }
-        });
-      });
+      // Use cached geocoding
+      const result = await geocodeWithCache(searchInput);
+      
+      const coordinates = {
+        lat: result.coordinates.lat,
+        lng: result.coordinates.lng
+      };
 
-      if (results.length > 0) {
-        const result = results[0];
-        const coordinates = {
-          lat: result.geometry.location.lat(),
-          lng: result.geometry.location.lng()
-        };
-        onLocationSelect(result.formatted_address, coordinates);
-        
-        // Automatically search for training providers after successful geocoding
-        if (onProviderSearch) {
-          onProviderSearch(result.formatted_address, coordinates);
-        }
-      } else {
-        toast({
-          title: "Location not found",
-          description: "Please try a different location or be more specific.",
-          variant: "destructive"
-        });
+      onLocationSelect(result.formattedAddress, coordinates);
+      
+      // Automatically search for training providers after successful geocoding
+      if (onProviderSearch) {
+        onProviderSearch(result.formattedAddress, coordinates);
       }
-    } catch (error) {
-      console.error("Geocoding error:", error);
+      
       toast({
-        title: "Search error",
-        description: "Unable to search for location. Please try again.",
-        variant: "destructive"
+        title: "Location found",
+        description: `Found: ${result.formattedAddress}`,
+      });
+      
+    } catch (error) {
+      console.error('Manual search failed:', error);
+      toast({
+        title: "Search failed",
+        description: "Unable to find the location. Please try again.",
+        variant: "destructive",
       });
     } finally {
       setIsSearching(false);

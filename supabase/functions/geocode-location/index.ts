@@ -6,6 +6,54 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
+// In-memory cache for geocoding results
+const geocodeCache = new Map<string, {
+  data: any;
+  timestamp: number;
+  ttl: number;
+}>();
+
+const CACHE_TTL = 60 * 60 * 1000; // 1 hour in milliseconds
+
+const normalizeLocation = (location: string): string => {
+  return location.toLowerCase().trim().replace(/\s+/g, ' ');
+};
+
+const getCachedResult = (location: string) => {
+  const normalized = normalizeLocation(location);
+  const cached = geocodeCache.get(normalized);
+  
+  if (!cached) return null;
+  
+  const now = Date.now();
+  if (now > cached.timestamp + cached.ttl) {
+    geocodeCache.delete(normalized);
+    return null;
+  }
+  
+  console.log(`Cache hit for location: ${location}`);
+  return cached.data;
+};
+
+const setCachedResult = (location: string, data: any) => {
+  const normalized = normalizeLocation(location);
+  geocodeCache.set(normalized, {
+    data,
+    timestamp: Date.now(),
+    ttl: CACHE_TTL
+  });
+  
+  // Clean up old cache entries periodically
+  if (geocodeCache.size > 1000) {
+    const now = Date.now();
+    for (const [key, value] of geocodeCache.entries()) {
+      if (now > value.timestamp + value.ttl) {
+        geocodeCache.delete(key);
+      }
+    }
+  }
+};
+
 serve(async (req) => {
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
@@ -22,6 +70,15 @@ serve(async (req) => {
       );
     }
 
+    // Check cache first
+    const cachedResult = getCachedResult(location);
+    if (cachedResult) {
+      return new Response(
+        JSON.stringify(cachedResult),
+        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
     const googleApiKey = Deno.env.get('GoogleAPI');
     if (!googleApiKey) {
       console.error('Google API key not found');
@@ -31,7 +88,7 @@ serve(async (req) => {
       );
     }
 
-    console.log(`Geocoding location: ${location}`);
+    console.log(`Geocoding location (cache miss): ${location}`);
 
     // Use Google Geocoding API to convert location to coordinates
     const geocodeUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(location)}&region=uk&key=${googleApiKey}`;
@@ -108,17 +165,22 @@ serve(async (req) => {
 
     console.log(`Geocoded successfully: ${location} -> ${lat}, ${lng} (${mappedRegion}, ${county})`);
 
+    const result = {
+      success: true,
+      location: {
+        lat,
+        lng,
+        county,
+        region: mappedRegion,
+        formattedAddress
+      }
+    };
+
+    // Cache the successful result
+    setCachedResult(location, result);
+
     return new Response(
-      JSON.stringify({
-        success: true,
-        location: {
-          lat,
-          lng,
-          county,
-          region: mappedRegion,
-          formattedAddress
-        }
-      }),
+      JSON.stringify(result),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
 
