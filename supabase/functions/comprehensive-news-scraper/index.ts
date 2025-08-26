@@ -27,6 +27,18 @@ const QUERY_TAG_MAP = {
   "GOV.UK electrical safety regulations updates UK site:gov.uk": "GOV.UK"
 };
 
+// ✅ Filter out job sites and job-related URLs
+function isNotJobSite(article) {
+  const url = (article.url || "").toLowerCase();
+  const jobDomains = [
+    'findajob.dwp.gov.uk', 'jobs.', 'careers.', 'recruitment.', 'indeed.', 'totaljobs.', 
+    'reed.co.uk', 'cv-library.', 'jobsite.', 'fish4jobs.', 'jobcentreplus.',
+    'apprenticeships.gov.uk', 'apprenticeship-', '/jobs/', '/careers/', '/vacancies/'
+  ];
+  
+  return !jobDomains.some(domain => url.includes(domain));
+}
+
 // ✅ Filter for UK-specific content
 function isUKRelevant(article) {
   const text = `${article.title || ""} ${article.snippet || ""}`.toLowerCase();
@@ -40,57 +52,89 @@ function isUKRelevant(article) {
   return (hasUKTerms || isUKDomain) && !hasExcludeTerms;
 }
 
-// ✅ Filter for electrical, engineering, tech, and safety related content
+// ✅ Filter out job-related content
+function isNotJobContent(article) {
+  const text = `${article.title || ""} ${article.snippet || ""}`.toLowerCase();
+  
+  const jobTerms = [
+    // Salary and compensation
+    '£', 'salary', 'per annum', 'hourly rate', 'daily rate', 'competitive salary',
+    'benefits package', 'pension', 'bonus', 'overtime',
+    
+    // Recruitment language
+    'apply', 'cv', 'resume', 'interview', 'position available', 'vacancy',
+    'hiring', 'recruit', 'candidate', 'applicant', 'job description',
+    'we are looking for', 'seeking', 'required:', 'essential:', 'desirable:',
+    
+    // Employment types
+    'full-time', 'part-time', 'permanent', 'temporary', 'contract', 'freelance',
+    'immediate start', 'asap', 'start date', 'notice period',
+    
+    // Job-specific terms
+    'job opportunity', 'career opportunity', 'join our team', 'work with us',
+    'application deadline', 'closing date', 'ref:', 'reference:'
+  ];
+  
+  return !jobTerms.some(term => text.includes(term));
+}
+
+// ✅ Filter for NEWS-focused electrical, engineering, tech, and safety content
 function isIndustryRelevant(article) {
   const text = `${article.title || ""} ${article.snippet || ""}`.toLowerCase();
   
-  const industryKeywords = [
-    // Core electrical terms
-    'electrical', 'electrician', 'electric', 'wiring', 'circuit', 'voltage', 'current', 'power',
+  const newsKeywords = [
+    // Core electrical terms - NEWS focused
+    'electrical', 'electric', 'wiring', 'circuit', 'voltage', 'current', 'power',
     'bs7671', 'bs 7671', 'iee regulations', 'installation', 'testing', 'inspection',
-    'rcd', 'mcb', 'consumer unit', 'earth', 'neutral', 'live', 'volt', 'amp', 'watts',
-    'certification', 'pat testing', 'eicr', 'periodic inspection', 'electrical safety',
+    'rcd', 'mcb', 'consumer unit', 'electrical safety',
     
-    // Engineering & Technology
-    'engineering', 'engineer', 'technology', 'tech', 'automation', 'control systems',
+    // Engineering & Technology - NEWS focused
+    'engineering', 'technology', 'automation', 'control systems',
     'smart grid', 'smart home', 'digital', 'iot', 'industrial', 'manufacturing',
     'renewable energy', 'solar', 'wind', 'battery', 'energy storage', 'ev charging',
     'electric vehicle', 'grid', 'distribution', 'transmission', 'substation',
     
-    // Health & Safety
+    // Health & Safety - NEWS focused
     'safety', 'health', 'hse', 'accident', 'incident', 'risk assessment', 'hazard',
-    'protection', 'ppe', 'training', 'compliance', 'regulation', 'standard',
+    'protection', 'ppe', 'compliance', 'regulation', 'standard',
     'code of practice', 'guidance', 'alert', 'injury', 'fatality',
     
-    // Professional & Standards
-    'iet', 'institution', 'niceic', 'napit', 'elecsa', 'stroma', 'schemes',
-    'apprentice', 'apprenticeship', 'qualification', 'course', 'training',
-    'competency', 'skills', 'certification', 'cpr',
+    // Professional & Standards - NEWS focused (removed job terms)
+    'iet', 'institution', 'niceic', 'napit', 'elecsa', 'stroma',
+    'certification', 'cpr',
     
-    // Infrastructure & Construction
+    // Infrastructure & Construction - NEWS focused
     'construction', 'building', 'infrastructure', 'project', 'contract', 'tender',
-    'framework', 'procurement', 'utilities', 'maintenance'
+    'framework', 'procurement', 'utilities', 'maintenance',
+    
+    // News-specific terms
+    'update', 'announcement', 'new regulation', 'changes to', 'introduced',
+    'published', 'released', 'revised', 'amended', 'consultation'
   ];
   
   const irrelevantTerms = [
     'football', 'rugby', 'cricket', 'tennis', 'sport', 'music', 'celebrity', 'fashion',
     'entertainment', 'film', 'movie', 'tv show', 'restaurant', 'food', 'recipe',
     'travel', 'holiday', 'tourism', 'retail', 'shopping', 'weather forecast',
-    'traffic', 'parking', 'restaurant', 'pub', 'bar', 'nightclub'
+    'traffic', 'parking', 'pub', 'bar', 'nightclub'
   ];
   
-  const hasIndustryTerms = industryKeywords.some(term => text.includes(term));
+  const hasNewsTerms = newsKeywords.some(term => text.includes(term));
   const hasIrrelevantTerms = irrelevantTerms.some(term => text.includes(term));
   
-  // Must have industry terms and not have irrelevant terms (unless industry terms override)
-  return hasIndustryTerms && !hasIrrelevantTerms;
+  return hasNewsTerms && !hasIrrelevantTerms;
 }
 
-// ✅ Map API response into desired schema
+// ✅ Map API response into desired schema with multi-stage filtering
 function normalizeArticles(articles, query) {
   const cleanTag = QUERY_TAG_MAP[query] || query;
   return articles
-    .filter(article => isUKRelevant(article) && isIndustryRelevant(article))
+    .filter(article => 
+      isNotJobSite(article) && 
+      isNotJobContent(article) && 
+      isUKRelevant(article) && 
+      isIndustryRelevant(article)
+    )
     .map((a) => ({
       title: a.title || "",
       url: a.url || "",
