@@ -3,10 +3,12 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ArrowLeft, ExternalLink, Newspaper, Search, Calendar, Eye, Star, RefreshCw } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { format } from "date-fns";
 import { supabase } from "@/integrations/supabase/client";
+import NewsPagination from "./NewsPagination";
 
 interface NewsArticle {
   id?: string;
@@ -23,6 +25,8 @@ const IndustryNewsCard = () => {
   const [articles, setArticles] = useState<NewsArticle[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
 
   const fetchLiveNews = async () => {
     setIsLoading(true);
@@ -88,6 +92,27 @@ const IndustryNewsCard = () => {
     return matchesSearch && matchesCategory;
   }));
 
+  // Reset to page 1 when filters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm, selectedCategory]);
+
+  // Pagination calculations
+  const totalPages = itemsPerPage === -1 ? 1 : Math.ceil(filteredArticles.length / itemsPerPage);
+  const startIndex = itemsPerPage === -1 ? 0 : (currentPage - 1) * itemsPerPage;
+  const endIndex = itemsPerPage === -1 ? filteredArticles.length : startIndex + itemsPerPage;
+  const currentArticles = filteredArticles.slice(startIndex, endIndex);
+
+  const handlePageChange = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+  };
+
+  const handleItemsPerPageChange = (value: string) => {
+    const newItemsPerPage = value === "all" ? -1 : parseInt(value);
+    setItemsPerPage(newItemsPerPage);
+    setCurrentPage(1);
+  };
+
 
   if (error) {
     return (
@@ -148,47 +173,72 @@ const IndustryNewsCard = () => {
               />
             </div>
 
-            {/* Category Filter Buttons */}
+            {/* Category Filter Buttons and Items Per Page */}
             {uniqueCategories.length > 0 && (
-              <div className="space-y-2">
-                <p className="text-sm text-muted-foreground">Filter by category:</p>
-                <div className="flex flex-wrap gap-2 sm:gap-3">
-                  <Badge
-                    variant={selectedCategory === "" ? "default" : "outline"}
-                    className={`transition-colors ${
-                      isLoading 
-                        ? "opacity-50 cursor-not-allowed" 
-                        : "cursor-pointer"
-                    } ${
-                      selectedCategory === ""
-                        ? "bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
-                        : "border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
-                    }`}
-                    onClick={isLoading ? undefined : () => setSelectedCategory("")}
-                  >
-                    All Categories ({articles.filter(a => !searchTerm || 
-                      a.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                      (a.snippet && a.snippet.toLowerCase().includes(searchTerm.toLowerCase()))
-                    ).length})
-                  </Badge>
-                  {uniqueCategories.map((category) => (
-                    <Badge
-                      key={category}
-                      variant={selectedCategory === category ? "default" : "outline"}
-                      className={`transition-colors ${
-                        isLoading 
-                          ? "opacity-50 cursor-not-allowed" 
-                          : "cursor-pointer"
-                      } ${
-                        selectedCategory === category
-                          ? "bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
-                          : "border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
-                      }`}
-                      onClick={isLoading ? undefined : () => setSelectedCategory(category)}
+              <div className="space-y-4">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                  <div className="space-y-2">
+                    <p className="text-sm text-muted-foreground">Filter by category:</p>
+                    <div className="flex flex-wrap gap-2 sm:gap-3">
+                      <Badge
+                        variant={selectedCategory === "" ? "default" : "outline"}
+                        className={`transition-colors ${
+                          isLoading 
+                            ? "opacity-50 cursor-not-allowed" 
+                            : "cursor-pointer"
+                        } ${
+                          selectedCategory === ""
+                            ? "bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
+                            : "border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+                        }`}
+                        onClick={isLoading ? undefined : () => setSelectedCategory("")}
+                      >
+                        All Categories ({articles.filter(a => !searchTerm || 
+                          a.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                          (a.snippet && a.snippet.toLowerCase().includes(searchTerm.toLowerCase()))
+                        ).length})
+                      </Badge>
+                      {uniqueCategories.map((category) => (
+                        <Badge
+                          key={category}
+                          variant={selectedCategory === category ? "default" : "outline"}
+                          className={`transition-colors ${
+                            isLoading 
+                              ? "opacity-50 cursor-not-allowed" 
+                              : "cursor-pointer"
+                          } ${
+                            selectedCategory === category
+                              ? "bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
+                              : "border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+                          }`}
+                          onClick={isLoading ? undefined : () => setSelectedCategory(category)}
+                        >
+                          {category} ({getCategoryCount(category)})
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+                  
+                  {/* Items Per Page Selector */}
+                  <div className="space-y-2">
+                    <p className="text-sm text-muted-foreground">Articles per page:</p>
+                    <Select 
+                      value={itemsPerPage === -1 ? "all" : itemsPerPage.toString()} 
+                      onValueChange={handleItemsPerPageChange}
+                      disabled={isLoading}
                     >
-                      {category} ({getCategoryCount(category)})
-                    </Badge>
-                  ))}
+                      <SelectTrigger className="w-32 bg-elec-gray/50 border-elec-yellow/20 text-white">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent className="bg-elec-dark border-elec-yellow/20">
+                        <SelectItem value="5" className="text-white hover:bg-elec-yellow/10">5</SelectItem>
+                        <SelectItem value="10" className="text-white hover:bg-elec-yellow/10">10</SelectItem>
+                        <SelectItem value="20" className="text-white hover:bg-elec-yellow/10">20</SelectItem>
+                        <SelectItem value="50" className="text-white hover:bg-elec-yellow/10">50</SelectItem>
+                        <SelectItem value="all" className="text-white hover:bg-elec-yellow/10">All</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
                 </div>
               </div>
             )}
@@ -221,7 +271,7 @@ const IndustryNewsCard = () => {
             </div>
           ) : (
             <div className="space-y-4">
-              {filteredArticles.map((article) => (
+              {currentArticles.map((article) => (
                 <div
                   key={article.id}
                   className="p-4 rounded-lg border border-elec-yellow/10 bg-elec-gray/30 hover:border-elec-yellow/30 transition-colors"
@@ -270,10 +320,22 @@ const IndustryNewsCard = () => {
             </div>
           )}
 
+          {/* Pagination */}
+          {filteredArticles.length > 0 && itemsPerPage !== -1 && (
+            <NewsPagination 
+              currentPage={currentPage}
+              totalPages={totalPages}
+              paginate={handlePageChange}
+            />
+          )}
+
           {/* Show count */}
           {articles.length > 0 && (
             <div className="text-center text-sm text-muted-foreground">
-              Showing {filteredArticles.length} of {articles.length} articles
+              {itemsPerPage === -1 
+                ? `Showing all ${filteredArticles.length} of ${articles.length} articles`
+                : `Showing ${startIndex + 1}-${Math.min(endIndex, filteredArticles.length)} of ${filteredArticles.length} articles (Page ${currentPage} of ${totalPages})`
+              }
             </div>
           )}
         </CardContent>
