@@ -221,112 +221,145 @@ const IndustryNewsCard = () => {
             Live regulatory updates and compliance information from industry bodies
           </CardDescription>
         </CardHeader>
-        <CardContent className="space-y-4">
-          {/* Search and Filter Controls */}
-          <div className="space-y-4">
-            {/* Search Input */}
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input
-                placeholder="Search articles..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                disabled={isLoading}
-                className="pl-10 bg-elec-gray/50 border-elec-yellow/20 text-white disabled:opacity-50"
-              />
+        <CardContent className="space-y-6">
+          {/* Enhanced Control Panel - Always Visible */}
+          <div className="bg-elec-gray/20 rounded-xl border border-elec-yellow/10 p-6 space-y-6">
+            {/* Search Section */}
+            <div className="space-y-3">
+              <div className="flex items-center gap-2">
+                <Search className="h-4 w-4 text-elec-yellow" />
+                <h3 className="text-sm font-medium text-elec-yellow">Search & Filter</h3>
+              </div>
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Input
+                  placeholder="Search articles by title or content..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  disabled={isLoading}
+                  className="pl-10 bg-elec-dark/60 border-elec-yellow/20 text-white placeholder:text-muted-foreground focus:border-elec-yellow/40 focus:ring-elec-yellow/20 transition-all duration-200 hover:border-elec-yellow/30"
+                />
+              </div>
             </div>
 
-            {/* Category Filter Buttons and Items Per Page */}
-            {uniqueCategories.length > 0 && (
-              <div className="space-y-4">
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                  <div className="space-y-2">
-                    <p className="text-sm text-muted-foreground">Filter by category:</p>
-                    <div className="flex flex-wrap gap-2 sm:gap-3">
-                      <Badge
-                        variant={selectedCategory === "" ? "default" : "outline"}
-                        className={`transition-colors ${
-                          isLoading 
-                            ? "opacity-50 cursor-not-allowed" 
-                            : "cursor-pointer"
-                        } ${
-                          selectedCategory === ""
-                            ? "bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
-                            : "border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
-                        }`}
-                        onClick={isLoading ? undefined : () => setSelectedCategory("")}
-                      >
+            {/* View Options Section */}
+            <div className="space-y-4">
+              <div className="flex items-center gap-2">
+                <Eye className="h-4 w-4 text-elec-yellow" />
+                <h3 className="text-sm font-medium text-elec-yellow">View Options</h3>
+              </div>
+              
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {/* Sort Options */}
+                <div className="space-y-2">
+                  <label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+                    Sort Articles
+                  </label>
+                  <Select 
+                    value={sortOption} 
+                    onValueChange={handleSortChange}
+                    disabled={isLoading}
+                  >
+                    <SelectTrigger className="w-full bg-elec-dark/60 border-elec-yellow/20 text-white hover:border-elec-yellow/30 focus:border-elec-yellow/40 focus:ring-elec-yellow/20 transition-all duration-200">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className="bg-elec-dark border-elec-yellow/30 z-50">
+                      <SelectItem value="random" className="text-white hover:bg-elec-yellow/15 focus:bg-elec-yellow/15">
+                        <div className="flex items-center gap-2">
+                          <RefreshCw className="h-3 w-3" />
+                          Random
+                        </div>
+                      </SelectItem>
+                      <SelectItem value="newest" className="text-white hover:bg-elec-yellow/15 focus:bg-elec-yellow/15">
+                        <div className="flex items-center gap-2">
+                          <Calendar className="h-3 w-3" />
+                          Newest First
+                        </div>
+                      </SelectItem>
+                      <SelectItem value="oldest" className="text-white hover:bg-elec-yellow/15 focus:bg-elec-yellow/15">
+                        <div className="flex items-center gap-2">
+                          <Calendar className="h-3 w-3" />
+                          Oldest First
+                        </div>
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {/* Items Per Page Selector */}
+                <div className="space-y-2">
+                  <label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+                    Articles Per Page
+                  </label>
+                  <Select 
+                    value={itemsPerPage === -1 ? "all" : itemsPerPage.toString()} 
+                    onValueChange={handleItemsPerPageChange}
+                    disabled={isLoading}
+                  >
+                    <SelectTrigger className="w-full bg-elec-dark/60 border-elec-yellow/20 text-white hover:border-elec-yellow/30 focus:border-elec-yellow/40 focus:ring-elec-yellow/20 transition-all duration-200">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className="bg-elec-dark border-elec-yellow/30 z-50">
+                      <SelectItem value="5" className="text-white hover:bg-elec-yellow/15 focus:bg-elec-yellow/15">5 articles</SelectItem>
+                      <SelectItem value="10" className="text-white hover:bg-elec-yellow/15 focus:bg-elec-yellow/15">10 articles</SelectItem>
+                      <SelectItem value="20" className="text-white hover:bg-elec-yellow/15 focus:bg-elec-yellow/15">20 articles</SelectItem>
+                      <SelectItem value="50" className="text-white hover:bg-elec-yellow/15 focus:bg-elec-yellow/15">50 articles</SelectItem>
+                      <SelectItem value="all" className="text-white hover:bg-elec-yellow/15 focus:bg-elec-yellow/15">Show all</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {/* Category Filter */}
+                <div className="space-y-2 sm:col-span-2 lg:col-span-1">
+                  <label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+                    Filter Category
+                  </label>
+                  <Select 
+                    value={selectedCategory} 
+                    onValueChange={setSelectedCategory}
+                    disabled={isLoading}
+                  >
+                    <SelectTrigger className="w-full bg-elec-dark/60 border-elec-yellow/20 text-white hover:border-elec-yellow/30 focus:border-elec-yellow/40 focus:ring-elec-yellow/20 transition-all duration-200">
+                      <SelectValue placeholder="All categories" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-elec-dark border-elec-yellow/30 z-50">
+                      <SelectItem value="" className="text-white hover:bg-elec-yellow/15 focus:bg-elec-yellow/15">
                         All Categories ({articles.filter(a => !searchTerm || 
                           a.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                           (a.snippet && a.snippet.toLowerCase().includes(searchTerm.toLowerCase()))
                         ).length})
-                      </Badge>
+                      </SelectItem>
                       {uniqueCategories.map((category) => (
-                        <Badge
-                          key={category}
-                          variant={selectedCategory === category ? "default" : "outline"}
-                          className={`transition-colors ${
-                            isLoading 
-                              ? "opacity-50 cursor-not-allowed" 
-                              : "cursor-pointer"
-                          } ${
-                            selectedCategory === category
-                              ? "bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
-                              : "border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
-                          }`}
-                          onClick={isLoading ? undefined : () => setSelectedCategory(category)}
-                        >
+                        <SelectItem key={category} value={category} className="text-white hover:bg-elec-yellow/15 focus:bg-elec-yellow/15">
                           {category} ({getCategoryCount(category)})
-                        </Badge>
+                        </SelectItem>
                       ))}
-                    </div>
-                  </div>
-                  
-                  {/* Sort and Items Per Page Controls */}
-                  <div className="flex flex-col sm:flex-row gap-4">
-                    {/* Sort Options */}
-                    <div className="space-y-2">
-                      <p className="text-sm text-muted-foreground">Sort by:</p>
-                      <Select 
-                        value={sortOption} 
-                        onValueChange={handleSortChange}
-                        disabled={isLoading}
-                      >
-                        <SelectTrigger className="w-36 bg-elec-gray/50 border-elec-yellow/20 text-white">
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                          <SelectItem value="random" className="text-white hover:bg-elec-yellow/10">Random</SelectItem>
-                          <SelectItem value="newest" className="text-white hover:bg-elec-yellow/10">Newest First</SelectItem>
-                          <SelectItem value="oldest" className="text-white hover:bg-elec-yellow/10">Oldest First</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-
-                    {/* Items Per Page Selector */}
-                    <div className="space-y-2">
-                      <p className="text-sm text-muted-foreground">Articles per page:</p>
-                      <Select 
-                        value={itemsPerPage === -1 ? "all" : itemsPerPage.toString()} 
-                        onValueChange={handleItemsPerPageChange}
-                        disabled={isLoading}
-                      >
-                        <SelectTrigger className="w-32 bg-elec-gray/50 border-elec-yellow/20 text-white">
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                          <SelectItem value="5" className="text-white hover:bg-elec-yellow/10">5</SelectItem>
-                          <SelectItem value="10" className="text-white hover:bg-elec-yellow/10">10</SelectItem>
-                          <SelectItem value="20" className="text-white hover:bg-elec-yellow/10">20</SelectItem>
-                          <SelectItem value="50" className="text-white hover:bg-elec-yellow/10">50</SelectItem>
-                          <SelectItem value="all" className="text-white hover:bg-elec-yellow/10">All</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                  </div>
+                    </SelectContent>
+                  </Select>
                 </div>
               </div>
-            )}
+            </div>
+
+            {/* Results Summary */}
+            <div className="pt-2 border-t border-elec-yellow/10">
+              <div className="flex items-center justify-between text-sm">
+                <span className="text-muted-foreground">
+                  {isLoading ? (
+                    <div className="flex items-center gap-2">
+                      <RefreshCw className="h-3 w-3 animate-spin" />
+                      Loading articles...
+                    </div>
+                  ) : (
+                    `Showing ${currentArticles.length} of ${filteredArticles.length} article${filteredArticles.length !== 1 ? 's' : ''}`
+                  )}
+                </span>
+                {!isLoading && filteredArticles.length > 0 && (
+                  <span className="text-elec-yellow font-medium">
+                    {itemsPerPage === -1 ? 'All' : `Page ${currentPage} of ${totalPages}`}
+                  </span>
+                )}
+              </div>
+            </div>
           </div>
 
           {/* Articles List */}
