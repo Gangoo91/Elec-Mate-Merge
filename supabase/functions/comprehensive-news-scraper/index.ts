@@ -16,13 +16,22 @@ const electricalKeywords = [
   "UK Government Electrical Regulations and Publications",
 ];
 
+const keywordToShortTag = {
+  "Health and Safety Executive": "HSE",
+  "BS7671 (IET Wiring Regulations)": "BS7671",
+  "Institution of Engineering and Technology": "IET",
+  "Major Engineering and Infrastructure Projects": "Major Projects",
+  "UK Government Electrical Regulations and Publications": "UK Regulations",
+};
+
 function normalizeArticles(articles, query) {
+  const shortTag = keywordToShortTag[query] || query;
   return articles.map((a) => ({
     title: a.title || "",
     url: a.url || "",
     snippet: a.snippet || "",
     date: a.date || "",
-    tag: query || "",
+    tag: shortTag,
   }));
 }
 
