@@ -21,7 +21,7 @@ interface NewsArticle {
 
 const IndustryNewsCard = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState<string>("");
+  const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [articles, setArticles] = useState<NewsArticle[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -145,7 +145,7 @@ const IndustryNewsCard = () => {
       article.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       (article.snippet && article.snippet.toLowerCase().includes(searchTerm.toLowerCase()));
     
-    const matchesCategory = !selectedCategory || article.tag === selectedCategory;
+    const matchesCategory = selectedCategory === "all" || article.tag === selectedCategory;
     
     return matchesSearch && matchesCategory;
   }));
@@ -323,7 +323,7 @@ const IndustryNewsCard = () => {
                       <SelectValue placeholder="All categories" />
                     </SelectTrigger>
                     <SelectContent className="bg-elec-dark border-elec-yellow/30 z-50">
-                      <SelectItem value="" className="text-white hover:bg-elec-yellow/15 focus:bg-elec-yellow/15">
+                      <SelectItem value="all" className="text-white hover:bg-elec-yellow/15 focus:bg-elec-yellow/15">
                         All Categories ({articles.filter(a => !searchTerm || 
                           a.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                           (a.snippet && a.snippet.toLowerCase().includes(searchTerm.toLowerCase()))
