@@ -22,6 +22,8 @@ import {
 import LocationBasedCourseSearch from "../../../apprentice/career/courses/LocationBasedCourseSearch";
 import { useCoursesQuery } from "@/hooks/useCoursesQuery";
 import { useDebounce } from "@/hooks/useDebounce";
+import { useLiveCourses } from "@/hooks/useLiveCourses";
+import LiveCourseCard from "../../../apprentice/career/courses/LiveCourseCard";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -82,33 +84,23 @@ const ElectricianCareerCourses = () => {
 
   // Live course data hook with auto-refetch on filter changes
   const {
-    data: queryResult,
-    isLoading: isLoadingLive,
-    error: queryError,
-    refetch: refreshCourses,
-    isFetching: isSearching,
-    isError
-  } = useCoursesQuery(
+    courses: liveCoursesList,
+    summary: liveSummary,
+    loading: isLoadingLive,
+    error: liveError,
+    refreshCourses,
+    isFromCache
+  } = useLiveCourses(
     debouncedSearchQuery || "electrical course",
-    debouncedLocation === "All Locations" ? "United Kingdom" : debouncedLocation,
-    true // Enable auto-refetch
+    debouncedLocation === "All Locations" ? "United Kingdom" : debouncedLocation
   );
 
-  // Extract data from query result with enhanced fallback logic
-  const hasLiveCourses = queryResult?.courses && queryResult.courses.length > 0;
-  const liveCourses = hasLiveCourses ? queryResult.courses : fallbackElectricalCourses;
-  const liveTotal = hasLiveCourses ? queryResult.total : fallbackElectricalCourses.length;
-  const liveSummary = queryResult?.summary;
-  const isLiveData = hasLiveCourses && !isError;
+  // Extract data from live courses hook with enhanced fallback logic
+  const hasLiveCourses = liveCoursesList && liveCoursesList.length > 0;
+  const liveCourses = hasLiveCourses ? liveCoursesList : fallbackElectricalCourses;
+  const liveTotal = hasLiveCourses ? liveCoursesList.length : fallbackElectricalCourses.length;
+  const isLiveData = hasLiveCourses && !liveError;
   const isUsingFallback = !hasLiveCourses;
-  const liveError = isError ? (queryError?.message || "Failed to fetch course data") : null;
-
-  // Auto-refetch courses when debounced search criteria change  
-  useEffect(() => {
-    if (debouncedSearchQuery || debouncedLocation !== "All Locations") {
-      console.log('🔄 Triggering course search with:', { debouncedSearchQuery, debouncedLocation });
-    }
-  }, [debouncedSearchQuery, debouncedLocation]);
 
   // Enhanced sorting change handler with forced re-computation
   const [sortVersion, setSortVersion] = useState(0);
@@ -118,13 +110,6 @@ const ElectricianCareerCourses = () => {
     setSortVersion(prev => prev + 1); // Force useMemo re-computation
     console.log('🔄 Sort version bumped to:', sortVersion + 1);
   };
-
-  // Initial load
-  useEffect(() => {
-    if (!queryResult && !isLoadingLive && !isError) {
-      refreshCourses();
-    }
-  }, []);
 
   // Location-based distance calculation helper
   const calculateDistance = (lat1: number, lon1: number, lat2: number, lon2: number): number => {
@@ -208,11 +193,17 @@ const ElectricianCareerCourses = () => {
       // Search query filter
       if (filters.searchQuery) {
         const query = filters.searchQuery.toLowerCase();
+        // Handle both LiveCourse and EnhancedCareerCourse interfaces
+        const title = 'courseTitle' in course ? course.courseTitle : course.title;
+        const description = course.description || '';
+        const category = course.category || '';
+        const provider = course.provider || '';
+        
         const matches = 
-          course.title.toLowerCase().includes(query) ||
-          course.provider.toLowerCase().includes(query) ||
-          course.description.toLowerCase().includes(query) ||
-          course.category.toLowerCase().includes(query);
+          title.toLowerCase().includes(query) ||
+          provider.toLowerCase().includes(query) ||
+          description.toLowerCase().includes(query) ||
+          category.toLowerCase().includes(query);
         if (!matches) return false;
       }
 
@@ -250,8 +241,9 @@ const ElectricianCareerCourses = () => {
         if (!courseWithinRadius) return false;
       }
 
-      // Price range filter
-      const coursePrice = parseInt(course.price.match(/£(\d+)/)?.[1] || "0");
+      // Price range filter - handle both interfaces
+      const priceField = 'priceRange' in course ? course.priceRange : course.price;
+      const coursePrice = parseInt(priceField?.match(/£(\d+)/)?.[1] || "0");
       if (coursePrice < filters.priceRange[0] || coursePrice > filters.priceRange[1]) {
         return false;
       }
@@ -261,13 +253,15 @@ const ElectricianCareerCourses = () => {
         return false;
       }
 
-      // Industry demand filter
-      if (filters.industryDemand !== "All" && course.industryDemand !== filters.industryDemand) {
+      // Industry demand filter - handle both interfaces
+      const industryDemand = 'industryDemand' in course ? course.industryDemand : undefined;
+      if (filters.industryDemand !== "All" && industryDemand && industryDemand !== filters.industryDemand) {
         return false;
       }
 
-      // Format filter
-      if (filters.format !== "All Formats" && !course.format.toLowerCase().includes(filters.format.toLowerCase())) {
+      // Format filter - handle both interfaces
+      const format = 'format' in course ? course.format : course.learningMode;
+      if (filters.format !== "All Formats" && format && !format.toLowerCase().includes(filters.format.toLowerCase())) {
         return false;
       }
 
@@ -283,14 +277,18 @@ const ElectricianCareerCourses = () => {
     const sortOption = sortOptions.find(opt => opt.key === currentSort);
     if (sortOption) {
       console.log('🔄 Sorting by:', currentSort, 'Direction:', sortOption.direction);
-      console.log('📊 Sample course data for sorting:', filtered.slice(0, 2).map(c => ({
-        title: c.title,
-        price: c.price,
-        duration: c.duration,
-        rating: c.rating,
-        industryDemand: c.industryDemand,
-        futureProofing: c.futureProofing
-      })));
+      console.log('📊 Sample course data for sorting:', filtered.slice(0, 2).map(c => {
+        const title = 'courseTitle' in c ? c.courseTitle : c.title;
+        const price = 'priceRange' in c ? c.priceRange : c.price;
+        return {
+          title,
+          price,
+          duration: c.duration,
+          rating: c.rating,
+          industryDemand: 'industryDemand' in c ? c.industryDemand : undefined,
+          futureProofing: 'futureProofing' in c ? c.futureProofing : undefined
+        };
+      }));
       
       filtered.sort((a, b) => {
         // Validate course data before sorting
@@ -303,108 +301,138 @@ const ElectricianCareerCourses = () => {
         
         switch (sortOption.key) {
           case "relevance":
-            const relevanceA = getNumericRating(a.rating) * getFutureProofingScore(a.futureProofing);
-            const relevanceB = getNumericRating(b.rating) * getFutureProofingScore(b.futureProofing);
+            const futureProofingA = 'futureProofing' in a ? getFutureProofingScore(a.futureProofing) : 1;
+            const futureProofingB = 'futureProofing' in b ? getFutureProofingScore(b.futureProofing) : 1;
+            const relevanceA = getNumericRating(a.rating) * futureProofingA;
+            const relevanceB = getNumericRating(b.rating) * futureProofingB;
             comparison = relevanceB - relevanceA;
-            console.log(`Relevance sort: ${a.title} (${relevanceA}) vs ${b.title} (${relevanceB}) = ${comparison}`);
-            if (comparison === 0) comparison = a.title.localeCompare(b.title);
+            const titleA = 'courseTitle' in a ? a.courseTitle : a.title;
+            const titleB = 'courseTitle' in b ? b.courseTitle : b.title;
+            console.log(`Relevance sort: ${titleA} (${relevanceA}) vs ${titleB} (${relevanceB}) = ${comparison}`);
+            if (comparison === 0) comparison = titleA.localeCompare(titleB);
             break;
 
           case "rating":
             const ratingA = getNumericRating(a.rating);
             const ratingB = getNumericRating(b.rating);
             comparison = ratingA - ratingB;
-            console.log(`Rating sort: ${a.title} (${a.rating}→${ratingA}) vs ${b.title} (${b.rating}→${ratingB}) = ${comparison}`);
-            if (comparison === 0) comparison = a.title.localeCompare(b.title);
+            const titleA2 = 'courseTitle' in a ? a.courseTitle : a.title;
+            const titleB2 = 'courseTitle' in b ? b.courseTitle : b.title;
+            console.log(`Rating sort: ${titleA2} (${a.rating}→${ratingA}) vs ${titleB2} (${b.rating}→${ratingB}) = ${comparison}`);
+            if (comparison === 0) comparison = titleA2.localeCompare(titleB2);
             break;
             
           case "price":
           case "price-low":
           case "price-high":
-            const priceA = parsePrice(a.price || '');
-            const priceB = parsePrice(b.price || '');
+            const priceFieldA = 'priceRange' in a ? a.priceRange : a.price;
+            const priceFieldB = 'priceRange' in b ? b.priceRange : b.price;
+            const priceA = parsePrice(priceFieldA || '');
+            const priceB = parsePrice(priceFieldB || '');
             // Handle price-low vs price-high direction
             if (sortOption.key === "price-high") {
               comparison = priceB - priceA; // High to low
             } else {
               comparison = priceA - priceB; // Low to high
             }
-            console.log(`💰 Price sort (${sortOption.key}): ${a.title} (${a.price}→£${priceA}) vs ${b.title} (${b.price}→£${priceB}) = ${comparison}`);
-            if (comparison === 0) comparison = a.title.localeCompare(b.title);
+            const titleA3 = 'courseTitle' in a ? a.courseTitle : a.title;
+            const titleB3 = 'courseTitle' in b ? b.courseTitle : b.title;
+            console.log(`💰 Price sort (${sortOption.key}): ${titleA3} (${priceFieldA}→£${priceA}) vs ${titleB3} (${priceFieldB}→£${priceB}) = ${comparison}`);
+            if (comparison === 0) comparison = titleA3.localeCompare(titleB3);
             break;
             
           case "duration":
             const durationA = parseDuration(a.duration || '');
             const durationB = parseDuration(b.duration || '');
             comparison = durationA - durationB;
-            console.log(`Duration sort: ${a.title} (${a.duration}→${durationA}w) vs ${b.title} (${b.duration}→${durationB}w) = ${comparison}`);
-            if (comparison === 0) comparison = a.title.localeCompare(b.title);
+            const titleA4 = 'courseTitle' in a ? a.courseTitle : a.title;
+            const titleB4 = 'courseTitle' in b ? b.courseTitle : b.title;
+            console.log(`Duration sort: ${titleA4} (${a.duration}→${durationA}w) vs ${titleB4} (${b.duration}→${durationB}w) = ${comparison}`);
+            if (comparison === 0) comparison = titleA4.localeCompare(titleB4);
             break;
             
           case "demand":
-            const demandA = getDemandScore(a.industryDemand || '');
-            const demandB = getDemandScore(b.industryDemand || '');
+            const demandA = getDemandScore(('industryDemand' in a ? a.industryDemand : '') || '');
+            const demandB = getDemandScore(('industryDemand' in b ? b.industryDemand : '') || '');
             comparison = demandA - demandB;
-            console.log(`Demand sort: ${a.title} (${a.industryDemand}→${demandA}) vs ${b.title} (${b.industryDemand}→${demandB}) = ${comparison}`);
+            const titleA5 = 'courseTitle' in a ? a.courseTitle : a.title;
+            const titleB5 = 'courseTitle' in b ? b.courseTitle : b.title;
+            const industryDemandA = 'industryDemand' in a ? a.industryDemand : '';
+            const industryDemandB = 'industryDemand' in b ? b.industryDemand : '';
+            console.log(`Demand sort: ${titleA5} (${industryDemandA}→${demandA}) vs ${titleB5} (${industryDemandB}→${demandB}) = ${comparison}`);
             if (comparison === 0) {
               comparison = getNumericRating(a.rating) - getNumericRating(b.rating);
-              if (comparison === 0) comparison = a.title.localeCompare(b.title);
+              if (comparison === 0) comparison = titleA5.localeCompare(titleB5);
             }
             break;
             
           case "future-proof":
-            const futureA = getFutureProofingScore(a.futureProofing);
-            const futureB = getFutureProofingScore(b.futureProofing);
+            const futureA = getFutureProofingScore(('futureProofing' in a ? a.futureProofing : '') || '');
+            const futureB = getFutureProofingScore(('futureProofing' in b ? b.futureProofing : '') || '');
             comparison = futureA - futureB;
-            console.log(`Future-proof sort: ${a.title} (${a.futureProofing}→${futureA}) vs ${b.title} (${b.futureProofing}→${futureB}) = ${comparison}`);
-            if (comparison === 0) comparison = a.title.localeCompare(b.title);
+            const titleA6 = 'courseTitle' in a ? a.courseTitle : a.title;
+            const titleB6 = 'courseTitle' in b ? b.courseTitle : b.title;
+            const futureProofingA = 'futureProofing' in a ? a.futureProofing : '';
+            const futureProofingB = 'futureProofing' in b ? b.futureProofing : '';
+            console.log(`Future-proof sort: ${titleA6} (${futureProofingA}→${futureA}) vs ${titleB6} (${futureProofingB}→${futureB}) = ${comparison}`);
+            if (comparison === 0) comparison = titleA6.localeCompare(titleB6);
             break;
             
           case "title":
             // Enhanced alphabetical sorting with robust validation
-            const titleA = a.title || '';
-            const titleB = b.title || '';
+            const titleA7 = ('courseTitle' in a ? a.courseTitle : a.title) || '';
+            const titleB7 = ('courseTitle' in b ? b.courseTitle : b.title) || '';
             
-            if (!titleA && !titleB) {
+            if (!titleA7 && !titleB7) {
               comparison = 0;
-            } else if (!titleA) {
+            } else if (!titleA7) {
               comparison = 1; // Move invalid titles to end
-            } else if (!titleB) {
+            } else if (!titleB7) {
               comparison = -1; // Move invalid titles to end
             } else {
-              comparison = titleA.localeCompare(titleB);
+              comparison = titleA7.localeCompare(titleB7);
             }
             
-            console.log(`📝 Title sort: "${titleA}" vs "${titleB}" = ${comparison}`);
+            console.log(`📝 Title sort: "${titleA7}" vs "${titleB7}" = ${comparison}`);
             break;
             
           case "provider":
             comparison = a.provider.localeCompare(b.provider);
             console.log(`Provider sort: ${a.provider} vs ${b.provider} = ${comparison}`);
-            if (comparison === 0) comparison = a.title.localeCompare(b.title);
+            const titleA8 = 'courseTitle' in a ? a.courseTitle : a.title;
+            const titleB8 = 'courseTitle' in b ? b.courseTitle : b.title;
+            if (comparison === 0) comparison = titleA8.localeCompare(titleB8);
             break;
             
           case "next-date":
-            const dateA = parseDate(a.nextDates);
-            const dateB = parseDate(b.nextDates);
+            const nextDatesA = 'nextDates' in a ? a.nextDates : (a.nextIntakeDate || '');
+            const nextDatesB = 'nextDates' in b ? b.nextDates : (b.nextIntakeDate || '');
+            const dateA = parseDate(nextDatesA);
+            const dateB = parseDate(nextDatesB);
             comparison = dateA.getTime() - dateB.getTime();
-            console.log(`Date sort: ${a.title} (${a.nextDates}→${dateA}) vs ${b.title} (${b.nextDates}→${dateB}) = ${comparison}`);
-            if (comparison === 0) comparison = a.title.localeCompare(b.title);
+            const titleA9 = 'courseTitle' in a ? a.courseTitle : a.title;
+            const titleB9 = 'courseTitle' in b ? b.courseTitle : b.title;
+            console.log(`Date sort: ${titleA9} (${nextDatesA}→${dateA}) vs ${titleB9} (${nextDatesB}→${dateB}) = ${comparison}`);
+            if (comparison === 0) comparison = titleA9.localeCompare(titleB9);
             break;
             
           default:
-            const defaultRelevanceA = getNumericRating(a.rating) * getFutureProofingScore(a.futureProofing);
-            const defaultRelevanceB = getNumericRating(b.rating) * getFutureProofingScore(b.futureProofing);
+            const defaultFutureA = 'futureProofing' in a ? getFutureProofingScore(a.futureProofing) : 1;
+            const defaultFutureB = 'futureProofing' in b ? getFutureProofingScore(b.futureProofing) : 1;
+            const defaultRelevanceA = getNumericRating(a.rating) * defaultFutureA;
+            const defaultRelevanceB = getNumericRating(b.rating) * defaultFutureB;
             comparison = defaultRelevanceA - defaultRelevanceB;
-            console.log(`Default relevance sort: ${a.title} (${defaultRelevanceA}) vs ${b.title} (${defaultRelevanceB}) = ${comparison}`);
-            if (comparison === 0) comparison = a.title.localeCompare(b.title);
+            const titleA10 = 'courseTitle' in a ? a.courseTitle : a.title;
+            const titleB10 = 'courseTitle' in b ? b.courseTitle : b.title;
+            console.log(`Default relevance sort: ${titleA10} (${defaultRelevanceA}) vs ${titleB10} (${defaultRelevanceB}) = ${comparison}`);
+            if (comparison === 0) comparison = titleA10.localeCompare(titleB10);
         }
         
         // Apply sort direction consistently
         return sortOption.direction === "desc" ? -comparison : comparison;
       });
       
-      console.log('✅ Sorted courses:', filtered.slice(0, 3).map(c => c.title));
+      console.log('✅ Sorted courses:', filtered.slice(0, 3).map(c => 'courseTitle' in c ? c.courseTitle : c.title));
     }
 
     return filtered;
