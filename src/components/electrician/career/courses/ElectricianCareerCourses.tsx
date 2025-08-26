@@ -205,6 +205,25 @@ const ElectricianCareerCourses = () => {
   const filteredAndSortedCourses = useMemo(() => {
     console.log('🔄 useMemo recomputing with:', { currentSort, sortVersion, coursesCount: liveCourses.length });
     let filtered = liveCourses.filter(course => {
+      // Category whitelist filter - only show electrical, engineering, tech, and safety courses
+      const title = course.title.toLowerCase();
+      const description = course.description.toLowerCase();
+      const category = course.category.toLowerCase();
+      const searchText = `${title} ${description} ${category}`;
+      
+      const electricalKeywords = ['electrical', 'electric', 'wiring', '18th edition', 'inspection', 'testing', 'pat testing', 'installation'];
+      const engineeringKeywords = ['engineering', 'engineer', 'technical', 'design', 'construction', 'building'];
+      const techKeywords = ['technology', 'tech', 'digital', 'computer', 'software', 'automation', 'smart', 'iot'];
+      const safetyKeywords = ['safety', 'health', 'risk', 'hazard', 'protection', 'compliance', 'regulation'];
+      
+      const hasElectrical = electricalKeywords.some(keyword => searchText.includes(keyword));
+      const hasEngineering = engineeringKeywords.some(keyword => searchText.includes(keyword));
+      const hasTech = techKeywords.some(keyword => searchText.includes(keyword));
+      const hasSafety = safetyKeywords.some(keyword => searchText.includes(keyword));
+      
+      if (!hasElectrical && !hasEngineering && !hasTech && !hasSafety) {
+        return false;
+      }
       // Search query filter
       if (filters.searchQuery) {
         const query = filters.searchQuery.toLowerCase();

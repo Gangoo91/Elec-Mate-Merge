@@ -141,14 +141,18 @@ serve(async (req) => {
           }
         ];
 
-        // Enhanced UK electrical search keywords
-        const electricalKeywords = [
-          `${keywords} electrical course UK`,
-          '18th Edition Wiring Regulations course UK',
+        // Targeted search keywords for electrical, engineering, tech, and safety
+        const targetedKeywords = [
           'electrical installation training UK',
-          'EV charging installation course UK',
-          'electrical testing inspection course UK',
-          'solar panel installation training UK'
+          'electrical engineering course UK',
+          '18th Edition Wiring Regulations course UK',
+          'engineering certification course UK',
+          'technology training course UK',
+          'safety training course UK',
+          'health safety training UK',
+          'PAT testing course UK',
+          'electrical inspection testing UK',
+          'engineering apprenticeship UK'
         ];
 
         let allFoundCourses = [];
@@ -244,6 +248,32 @@ serve(async (req) => {
         }
 
         console.log(`📊 Total courses found from all providers: ${allFoundCourses.length}`);
+
+        // Filter courses to only include electrical, engineering, tech, and safety related courses
+        const filteredCourses = allFoundCourses.filter(course => {
+          if (!course.courseTitle && !course.description && !course.category) return false;
+          
+          const title = (course.courseTitle || '').toLowerCase();
+          const description = (course.description || '').toLowerCase();
+          const category = (course.category || '').toLowerCase();
+          const searchText = `${title} ${description} ${category}`;
+          
+          // Define keywords for each allowed category
+          const electricalKeywords = ['electrical', 'electric', 'wiring', '18th edition', 'inspection', 'testing', 'pat testing', 'installation'];
+          const engineeringKeywords = ['engineering', 'engineer', 'technical', 'design', 'construction', 'building'];
+          const techKeywords = ['technology', 'tech', 'digital', 'computer', 'software', 'automation', 'smart', 'iot'];
+          const safetyKeywords = ['safety', 'health', 'risk', 'hazard', 'protection', 'compliance', 'regulation'];
+          
+          const hasElectrical = electricalKeywords.some(keyword => searchText.includes(keyword));
+          const hasEngineering = engineeringKeywords.some(keyword => searchText.includes(keyword));
+          const hasTech = techKeywords.some(keyword => searchText.includes(keyword));
+          const hasSafety = safetyKeywords.some(keyword => searchText.includes(keyword));
+          
+          return hasElectrical || hasEngineering || hasTech || hasSafety;
+        });
+        
+        console.log(`🎯 Filtered to relevant courses: ${filteredCourses.length} out of ${allFoundCourses.length}`);
+        allFoundCourses = filteredCourses;
 
         if (allFoundCourses.length === 0) {
           console.log('⚠️ No courses found from any provider');
