@@ -276,6 +276,71 @@ const CourseMap: React.FC<CourseMapProps> = ({
     }
   }, [selectedCourse, markers]);
 
+  // Reset map view when overlay is closed (selectedCourse becomes null)
+  useEffect(() => {
+    if (!googleMapRef.current || !window.google?.maps || selectedCourse !== null) return;
+    
+    // Function to reset map to show full circle and all providers
+    const resetMapToFullView = () => {
+      const bounds = new window.google.maps.LatLngBounds();
+      let hasBounds = false;
+
+      // Include user location if available
+      if (userCoordinates) {
+        bounds.extend(userCoordinates);
+        hasBounds = true;
+
+        // Include the search radius circle perimeter
+        const radiusInMeters = searchRadius * 1609.34;
+        const latOffset = radiusInMeters / 111320;
+        const lngOffset = radiusInMeters / (111320 * Math.cos(userCoordinates.lat * Math.PI / 180));
+        
+        bounds.extend({
+          lat: userCoordinates.lat - latOffset,
+          lng: userCoordinates.lng - lngOffset
+        });
+        bounds.extend({
+          lat: userCoordinates.lat + latOffset,
+          lng: userCoordinates.lng + lngOffset
+        });
+      }
+
+      // Include all provider markers
+      markers.forEach(marker => {
+        bounds.extend(marker.position);
+        hasBounds = true;
+      });
+
+      // Apply bounds with padding
+      if (hasBounds && googleMapRef.current) {
+        googleMapRef.current.fitBounds(bounds, {
+          top: 50,
+          right: 50,
+          bottom: 50,
+          left: 50
+        });
+
+        // Ensure reasonable zoom limits
+        setTimeout(() => {
+          if (!googleMapRef.current) return;
+          const currentZoom = (googleMapRef.current as any).getZoom();
+          if (currentZoom && currentZoom > 15) {
+            googleMapRef.current.setZoom(15);
+          } else if (currentZoom && currentZoom < 8) {
+            googleMapRef.current.setZoom(8);
+          }
+        }, 100);
+      } else if (userCoordinates && googleMapRef.current) {
+        // Fallback to user location if no providers
+        googleMapRef.current.setCenter(userCoordinates);
+        googleMapRef.current.setZoom(11);
+      }
+    };
+
+    // Small delay to ensure smooth transition
+    setTimeout(resetMapToFullView, 100);
+  }, [selectedCourse, userCoordinates, searchRadius, markers]);
+
 
   if (isLoading) {
     return (
