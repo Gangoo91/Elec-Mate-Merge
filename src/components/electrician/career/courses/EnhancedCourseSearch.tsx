@@ -81,216 +81,287 @@ const EnhancedCourseSearch = ({
 
 
   return (
-    <Card className="border-elec-yellow/20 bg-elec-gray">
-      <CardHeader className="pb-4">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          <CardTitle className="flex items-center gap-2 text-lg">
-            <Search className="h-5 w-5 text-elec-yellow" />
-            Search & Filter Courses
-          </CardTitle>
-          <div className="flex items-center gap-2">
-            <Badge variant="outline" className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30">
-              {totalResults} results
-            </Badge>
-            {activeFiltersCount > 0 && (
-              <Button variant="outline" size="sm" onClick={onReset}>
-                <X className="h-4 w-4 mr-1" />
-                Clear All ({activeFiltersCount})
+    <div className="space-y-6">
+      {/* Main Search Section */}
+      <Card className="border-elec-yellow/20 bg-card/95 backdrop-blur-sm">
+        <CardContent className="p-6">
+          {/* Search Bar with Enhanced Styling */}
+          <div className="relative mb-6">
+            <Search className={`absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 ${isSearching ? 'animate-pulse text-elec-yellow' : 'text-muted-foreground'}`} />
+            <Input
+              placeholder="What course are you looking for? e.g. 'Electrical Installation'"
+              value={filters.searchQuery}
+              onChange={(e) => handleFilterChange("searchQuery", e.target.value)}
+              className={`pl-12 pr-12 h-12 text-base bg-background/80 border-2 transition-colors ${isSearching ? 'border-elec-yellow/50' : 'border-border hover:border-elec-yellow/30'}`}
+              disabled={isSearching}
+            />
+            {isSearching && (
+              <div className="absolute right-4 top-1/2 transform -translate-y-1/2">
+                <div className="animate-spin h-5 w-5 border-2 border-elec-yellow border-t-transparent rounded-full"></div>
+              </div>
+            )}
+            {filters.searchQuery && !isSearching && (
+              <Button
+                variant="ghost"
+                size="sm"
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 h-6 w-6 p-0 hover:bg-destructive/10"
+                onClick={() => clearFilter("searchQuery")}
+              >
+                <X className="h-4 w-4" />
               </Button>
             )}
           </div>
-        </div>
-      </CardHeader>
 
-      <CardContent className="space-y-4">
-        {/* Search Bar */}
-        <div className="relative">
-          <Search className={`absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 ${isSearching ? 'animate-pulse text-elec-yellow' : 'text-muted-foreground'}`} />
-          <Input
-            placeholder="Search courses, providers, topics..."
-            value={filters.searchQuery}
-            onChange={(e) => handleFilterChange("searchQuery", e.target.value)}
-            className={`pl-10 bg-background/50 ${isSearching ? 'border-elec-yellow/50' : ''}`}
-            disabled={isSearching}
-          />
-          {isSearching && (
-            <div className="absolute right-8 top-1/2 transform -translate-y-1/2">
-              <div className="animate-spin h-4 w-4 border-2 border-elec-yellow border-t-transparent rounded-full"></div>
+          {/* Filter Controls Row */}
+          <div className="flex flex-col lg:flex-row gap-4 items-start lg:items-center">
+            {/* Primary Filters */}
+            <div className="flex flex-wrap gap-3 flex-1">
+              <div className="min-w-[140px]">
+                <Select value={filters.category} onValueChange={(value) => handleFilterChange("category", value)}>
+                  <SelectTrigger className="h-10 bg-background/80 border-border hover:border-elec-yellow/30 transition-colors">
+                    <SelectValue placeholder="Categories" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-popover/95 backdrop-blur-sm border-border/50 shadow-lg">
+                    {courseCategories.map((category) => (
+                      <SelectItem key={category} value={category} className="hover:bg-elec-yellow/10">
+                        {category}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="min-w-[120px]">
+                <Select value={filters.level} onValueChange={(value) => handleFilterChange("level", value)}>
+                  <SelectTrigger className="h-10 bg-background/80 border-border hover:border-elec-yellow/30 transition-colors">
+                    <SelectValue placeholder="Levels" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-popover/95 backdrop-blur-sm border-border/50 shadow-lg">
+                    <SelectItem value="All Levels">All Levels</SelectItem>
+                    <SelectItem value="Beginner">Beginner</SelectItem>
+                    <SelectItem value="Intermediate">Intermediate</SelectItem>
+                    <SelectItem value="Advanced">Advanced</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="min-w-[140px]">
+                <Select value={filters.location} onValueChange={(value) => handleFilterChange("location", value)}>
+                  <SelectTrigger className="h-10 bg-background/80 border-border hover:border-elec-yellow/30 transition-colors">
+                    <SelectValue placeholder="Locations" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-popover/95 backdrop-blur-sm border-border/50 shadow-lg">
+                    <SelectItem value="All Locations">All Locations</SelectItem>
+                    <SelectItem value="London">London</SelectItem>
+                    <SelectItem value="Manchester">Manchester</SelectItem>
+                    <SelectItem value="Birmingham">Birmingham</SelectItem>
+                    <SelectItem value="Glasgow">Glasgow</SelectItem>
+                    <SelectItem value="Cardiff">Cardiff</SelectItem>
+                    <SelectItem value="Online">Online</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
-          )}
-          {filters.searchQuery && !isSearching && (
-            <Button
-              variant="ghost"
-              size="sm"
-              className="absolute right-2 top-1/2 transform -translate-y-1/2 h-6 w-6 p-0"
-              onClick={() => clearFilter("searchQuery")}
-            >
-              <X className="h-3 w-3" />
-            </Button>
-          )}
-        </div>
 
-        {/* Quick Filters */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-          <Select value={filters.category} onValueChange={(value) => handleFilterChange("category", value)}>
-            <SelectTrigger className="bg-background/50">
-              <SelectValue placeholder="Category" />
-            </SelectTrigger>
-            <SelectContent className="bg-popover border-border">
-              {courseCategories.map((category) => (
-                <SelectItem key={category} value={category}>
-                  {category}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+            {/* Action Buttons */}
+            <div className="flex items-center gap-3">
+              <Button
+                variant="outline"
+                onClick={() => setShowAdvancedFilters(!showAdvancedFilters)}
+                className={`h-10 px-4 border-elec-yellow/40 text-elec-yellow hover:bg-elec-yellow/10 transition-colors ${showAdvancedFilters ? 'bg-elec-yellow/10' : ''}`}
+              >
+                <Filter className="h-4 w-4 mr-2" />
+                {isMobile ? "Filters" : "Advanced Filters"}
+                {activeFiltersCount > 3 && (
+                  <Badge variant="secondary" className="ml-2 h-5 px-2 bg-elec-yellow/20 text-elec-yellow">
+                    {activeFiltersCount - 3}
+                  </Badge>
+                )}
+              </Button>
 
-          <Select value={filters.level} onValueChange={(value) => handleFilterChange("level", value)}>
-            <SelectTrigger className="bg-background/50">
-              <SelectValue placeholder="Level" />
-            </SelectTrigger>
-            <SelectContent className="bg-popover border-border">
-              <SelectItem value="All Levels">All Levels</SelectItem>
-              <SelectItem value="Beginner">Beginner</SelectItem>
-              <SelectItem value="Intermediate">Intermediate</SelectItem>
-              <SelectItem value="Advanced">Advanced</SelectItem>
-            </SelectContent>
-          </Select>
+              {activeFiltersCount > 0 && (
+                <Button 
+                  variant="outline" 
+                  onClick={onReset}
+                  className="h-10 px-4 border-destructive/40 text-destructive hover:bg-destructive/10"
+                >
+                  <X className="h-4 w-4 mr-2" />
+                  Clear ({activeFiltersCount})
+                </Button>
+              )}
 
-          <Select value={filters.location} onValueChange={(value) => handleFilterChange("location", value)}>
-            <SelectTrigger className="bg-background/50">
-              <SelectValue placeholder="Location" />
-            </SelectTrigger>
-            <SelectContent className="bg-popover border-border">
-              <SelectItem value="All Locations">All Locations</SelectItem>
-              <SelectItem value="London">London</SelectItem>
-              <SelectItem value="Manchester">Manchester</SelectItem>
-              <SelectItem value="Birmingham">Birmingham</SelectItem>
-              <SelectItem value="Glasgow">Glasgow</SelectItem>
-              <SelectItem value="Cardiff">Cardiff</SelectItem>
-              <SelectItem value="Online">Online</SelectItem>
-            </SelectContent>
-          </Select>
+              <div className="flex items-center gap-2">
+                <Badge variant="outline" className="h-8 px-3 bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30 font-medium">
+                  {totalResults} courses
+                </Badge>
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
 
-          <Button
-            variant="outline"
-            onClick={() => setShowAdvancedFilters(!showAdvancedFilters)}
-            className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
-          >
-            <SlidersHorizontal className="h-4 w-4 mr-2" />
-            {isMobile ? "More" : "Advanced"}
-            {activeFiltersCount > 3 && (
-              <Badge variant="secondary" className="ml-2 h-4 px-1">
-                {activeFiltersCount - 3}
-              </Badge>
-            )}
-          </Button>
-        </div>
-
-        {/* Advanced Filters */}
-        {showAdvancedFilters && (
-          <div className="border-t border-elec-yellow/10 pt-4 space-y-4">
-            {/* Price Range */}
-            <div className="space-y-2">
+      {/* Advanced Filters Panel */}
+      {showAdvancedFilters && (
+        <Card className="border-elec-yellow/20 bg-card/95 backdrop-blur-sm">
+          <CardHeader className="pb-3">
+            <CardTitle className="text-lg flex items-center gap-2">
+              <SlidersHorizontal className="h-5 w-5 text-elec-yellow" />
+              Advanced Filters
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-6">
+            {/* Price Range Section */}
+            <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <label className="text-sm font-medium flex items-center gap-2">
                   <PoundSterling className="h-4 w-4 text-elec-yellow" />
                   Price Range
                 </label>
-                <span className="text-sm text-muted-foreground">
+                <div className="text-sm font-mono bg-background/80 px-3 py-1 rounded-md border">
                   £{filters.priceRange[0]} - £{filters.priceRange[1]}
-                </span>
+                </div>
               </div>
-              <Slider
-                value={filters.priceRange}
-                onValueChange={(value) => handleFilterChange("priceRange", value)}
-                max={2000}
-                min={0}
-                step={50}
-                className="w-full"
-              />
+              <div className="px-2">
+                <Slider
+                  value={filters.priceRange}
+                  onValueChange={(value) => handleFilterChange("priceRange", value)}
+                  max={2000}
+                  min={0}
+                  step={50}
+                  className="w-full"
+                />
+                <div className="flex justify-between text-xs text-muted-foreground mt-1">
+                  <span>£0</span>
+                  <span>£2,000+</span>
+                </div>
+              </div>
             </div>
 
-            {/* Additional Filters */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              <Select value={filters.duration} onValueChange={(value) => handleFilterChange("duration", value)}>
-                <SelectTrigger className="bg-background/50">
-                  <SelectValue placeholder="Duration" />
-                </SelectTrigger>
-                <SelectContent className="bg-popover border-border">
-                  <SelectItem value="Any Duration">Any Duration</SelectItem>
-                  <SelectItem value="1 day">1 day</SelectItem>
-                  <SelectItem value="2 days">2 days</SelectItem>
-                  <SelectItem value="3 days">3 days</SelectItem>
-                  <SelectItem value="4 days">4 days</SelectItem>
-                  <SelectItem value="5 days">5+ days</SelectItem>
-                </SelectContent>
-              </Select>
+            {/* Additional Filter Options */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="space-y-2">
+                <label className="text-sm font-medium flex items-center gap-2">
+                  <Clock className="h-4 w-4 text-elec-yellow" />
+                  Duration
+                </label>
+                <Select value={filters.duration} onValueChange={(value) => handleFilterChange("duration", value)}>
+                  <SelectTrigger className="bg-background/80 border-border hover:border-elec-yellow/30">
+                    <SelectValue placeholder="Any Duration" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-popover/95 backdrop-blur-sm border-border/50">
+                    <SelectItem value="Any Duration">Any Duration</SelectItem>
+                    <SelectItem value="1 day">1 Day</SelectItem>
+                    <SelectItem value="2 days">2 Days</SelectItem>
+                    <SelectItem value="3 days">3 Days</SelectItem>
+                    <SelectItem value="4 days">4 Days</SelectItem>
+                    <SelectItem value="5 days">5+ Days</SelectItem>
+                    <SelectItem value="1 week">1 Week</SelectItem>
+                    <SelectItem value="2 weeks">2 Weeks</SelectItem>
+                    <SelectItem value="1 month">1 Month+</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
 
-              <Select value={filters.industryDemand} onValueChange={(value) => handleFilterChange("industryDemand", value)}>
-                <SelectTrigger className="bg-background/50">
-                  <SelectValue placeholder="Industry Demand" />
-                </SelectTrigger>
-                <SelectContent className="bg-popover border-border">
-                  <SelectItem value="All">All Demand Levels</SelectItem>
-                  <SelectItem value="High">High Demand</SelectItem>
-                  <SelectItem value="Medium">Medium Demand</SelectItem>
-                  <SelectItem value="Low">Low Demand</SelectItem>
-                </SelectContent>
-              </Select>
+              <div className="space-y-2">
+                <label className="text-sm font-medium flex items-center gap-2">
+                  <TrendingUp className="h-4 w-4 text-elec-yellow" />
+                  Industry Demand
+                </label>
+                <Select value={filters.industryDemand} onValueChange={(value) => handleFilterChange("industryDemand", value)}>
+                  <SelectTrigger className="bg-background/80 border-border hover:border-elec-yellow/30">
+                    <SelectValue placeholder="All Levels" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-popover/95 backdrop-blur-sm border-border/50">
+                    <SelectItem value="All">All Demand Levels</SelectItem>
+                    <SelectItem value="High">High Demand</SelectItem>
+                    <SelectItem value="Medium">Medium Demand</SelectItem>
+                    <SelectItem value="Low">Low Demand</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
 
-              <Select value={filters.format} onValueChange={(value) => handleFilterChange("format", value)}>
-                <SelectTrigger className="bg-background/50">
-                  <SelectValue placeholder="Format" />
-                </SelectTrigger>
-                <SelectContent className="bg-popover border-border">
-                  <SelectItem value="All Formats">All Formats</SelectItem>
-                  <SelectItem value="Classroom">Classroom</SelectItem>
-                  <SelectItem value="Online">Online</SelectItem>
-                  <SelectItem value="Blended">Blended Learning</SelectItem>
-                  <SelectItem value="Practical">Practical</SelectItem>
-                </SelectContent>
-              </Select>
+              <div className="space-y-2">
+                <label className="text-sm font-medium flex items-center gap-2">
+                  <Users className="h-4 w-4 text-elec-yellow" />
+                  Course Format
+                </label>
+                <Select value={filters.format} onValueChange={(value) => handleFilterChange("format", value)}>
+                  <SelectTrigger className="bg-background/80 border-border hover:border-elec-yellow/30">
+                    <SelectValue placeholder="All Formats" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-popover/95 backdrop-blur-sm border-border/50">
+                    <SelectItem value="All Formats">All Formats</SelectItem>
+                    <SelectItem value="Classroom">Classroom</SelectItem>
+                    <SelectItem value="Online">Online</SelectItem>
+                    <SelectItem value="Blended">Blended Learning</SelectItem>
+                    <SelectItem value="Practical">Practical/Hands-on</SelectItem>
+                    <SelectItem value="Workshop">Workshop</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
 
-            {/* Rating Filter */}
-            <div className="space-y-2">
+            {/* Rating Filter Section */}
+            <div className="space-y-3">
               <label className="text-sm font-medium flex items-center gap-2">
-                <Star className="h-4 w-4 text-elec-yellow" />
+                <Star className="h-4 w-4 text-elec-yellow fill-current" />
                 Minimum Rating
               </label>
-              <div className="flex gap-2">
-                {[0, 3, 4, 4.5].map((rating) => (
+              <div className="flex flex-wrap gap-2">
+                {[
+                  { value: 0, label: "Any", description: "All courses" },
+                  { value: 3, label: "3+", description: "Good & above" },
+                  { value: 4, label: "4+", description: "Very good & above" },
+                  { value: 4.5, label: "4.5+", description: "Excellent only" }
+                ].map((rating) => (
                   <Button
-                    key={rating}
-                    variant={filters.rating === rating ? "default" : "outline"}
+                    key={rating.value}
+                    variant={filters.rating === rating.value ? "default" : "outline"}
                     size="sm"
-                    onClick={() => handleFilterChange("rating", rating)}
-                    className={filters.rating === rating ? 
-                      "bg-elec-yellow text-elec-dark" : 
-                      "border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
-                    }
+                    onClick={() => handleFilterChange("rating", rating.value)}
+                    className={`flex items-center gap-1 h-9 px-3 transition-all ${
+                      filters.rating === rating.value ? 
+                        "bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90" : 
+                        "border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 hover:border-elec-yellow/50"
+                    }`}
+                    title={rating.description}
                   >
-                    {rating === 0 ? "Any" : `${rating}+`}
-                    {rating > 0 && <Star className="h-3 w-3 ml-1 fill-current" />}
+                    {rating.label}
+                    {rating.value > 0 && (
+                      <Star className="h-3 w-3 fill-current" />
+                    )}
                   </Button>
                 ))}
               </div>
             </div>
-          </div>
-        )}
+          </CardContent>
+        </Card>
+      )}
 
-        {/* Active Filters Display */}
-        {activeFiltersCount > 0 && (
-          <div className="border-t border-elec-yellow/10 pt-4">
+      {/* Active Filters Display */}
+      {activeFiltersCount > 0 && (
+        <Card className="border-elec-yellow/20 bg-card/95 backdrop-blur-sm">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-3 mb-3">
+              <span className="text-sm font-medium text-muted-foreground">Active Filters:</span>
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                onClick={onReset}
+                className="h-7 px-2 text-xs text-destructive hover:bg-destructive/10"
+              >
+                Clear All
+              </Button>
+            </div>
             <div className="flex flex-wrap gap-2">
               {filters.searchQuery && (
-                <Badge variant="outline" className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30">
-                  Search: "{filters.searchQuery}"
+                <Badge variant="outline" className="h-7 bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30 hover:bg-elec-yellow/20 transition-colors">
+                  <Search className="h-3 w-3 mr-1" />
+                  "{filters.searchQuery}"
                   <Button
                     variant="ghost"
                     size="sm"
-                    className="ml-1 h-4 w-4 p-0"
+                    className="ml-1 h-4 w-4 p-0 hover:bg-elec-yellow/30"
                     onClick={() => clearFilter("searchQuery")}
                   >
                     <X className="h-3 w-3" />
@@ -298,12 +369,13 @@ const EnhancedCourseSearch = ({
                 </Badge>
               )}
               {filters.category !== "All Categories" && (
-                <Badge variant="outline" className="bg-blue-500/10 text-blue-400 border-blue-500/30">
+                <Badge variant="outline" className="h-7 bg-blue-500/10 text-blue-400 border-blue-500/30 hover:bg-blue-500/20 transition-colors">
+                  <Filter className="h-3 w-3 mr-1" />
                   {filters.category}
                   <Button
                     variant="ghost"
                     size="sm"
-                    className="ml-1 h-4 w-4 p-0"
+                    className="ml-1 h-4 w-4 p-0 hover:bg-blue-500/30"
                     onClick={() => clearFilter("category")}
                   >
                     <X className="h-3 w-3" />
@@ -311,12 +383,13 @@ const EnhancedCourseSearch = ({
                 </Badge>
               )}
               {filters.level !== "All Levels" && (
-                <Badge variant="outline" className="bg-green-500/10 text-green-400 border-green-500/30">
+                <Badge variant="outline" className="h-7 bg-green-500/10 text-green-400 border-green-500/30 hover:bg-green-500/20 transition-colors">
+                  <TrendingUp className="h-3 w-3 mr-1" />
                   {filters.level}
                   <Button
                     variant="ghost"
                     size="sm"
-                    className="ml-1 h-4 w-4 p-0"
+                    className="ml-1 h-4 w-4 p-0 hover:bg-green-500/30"
                     onClick={() => clearFilter("level")}
                   >
                     <X className="h-3 w-3" />
@@ -324,24 +397,66 @@ const EnhancedCourseSearch = ({
                 </Badge>
               )}
               {filters.location !== "All Locations" && (
-                <Badge variant="outline" className="bg-purple-500/10 text-purple-400 border-purple-500/30">
+                <Badge variant="outline" className="h-7 bg-purple-500/10 text-purple-400 border-purple-500/30 hover:bg-purple-500/20 transition-colors">
                   <MapPin className="h-3 w-3 mr-1" />
                   {filters.location}
                   <Button
                     variant="ghost"
                     size="sm"
-                    className="ml-1 h-4 w-4 p-0"
+                    className="ml-1 h-4 w-4 p-0 hover:bg-purple-500/30"
                     onClick={() => clearFilter("location")}
                   >
                     <X className="h-3 w-3" />
                   </Button>
                 </Badge>
               )}
+              {(filters.priceRange[0] > 0 || filters.priceRange[1] < 2000) && (
+                <Badge variant="outline" className="h-7 bg-orange-500/10 text-orange-400 border-orange-500/30 hover:bg-orange-500/20 transition-colors">
+                  <PoundSterling className="h-3 w-3 mr-1" />
+                  £{filters.priceRange[0]} - £{filters.priceRange[1]}
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="ml-1 h-4 w-4 p-0 hover:bg-orange-500/30"
+                    onClick={() => clearFilter("priceRange")}
+                  >
+                    <X className="h-3 w-3" />
+                  </Button>
+                </Badge>
+              )}
+              {filters.duration !== "Any Duration" && (
+                <Badge variant="outline" className="h-7 bg-cyan-500/10 text-cyan-400 border-cyan-500/30 hover:bg-cyan-500/20 transition-colors">
+                  <Clock className="h-3 w-3 mr-1" />
+                  {filters.duration}
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="ml-1 h-4 w-4 p-0 hover:bg-cyan-500/30"
+                    onClick={() => clearFilter("duration")}
+                  >
+                    <X className="h-3 w-3" />
+                  </Button>
+                </Badge>
+              )}
+              {filters.rating > 0 && (
+                <Badge variant="outline" className="h-7 bg-amber-500/10 text-amber-400 border-amber-500/30 hover:bg-amber-500/20 transition-colors">
+                  <Star className="h-3 w-3 mr-1 fill-current" />
+                  {filters.rating}+ Stars
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="ml-1 h-4 w-4 p-0 hover:bg-amber-500/30"
+                    onClick={() => clearFilter("rating")}
+                  >
+                    <X className="h-3 w-3" />
+                  </Button>
+                </Badge>
+              )}
             </div>
-          </div>
-        )}
-      </CardContent>
-    </Card>
+          </CardContent>
+        </Card>
+      )}
+    </div>
   );
 };
 
