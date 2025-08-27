@@ -149,6 +149,11 @@ export const processReportMarkdown = (text: string): React.ReactNode => {
   lines.forEach((line, index) => {
     line = line.trim();
     
+    // Skip horizontal rules (lines with only dashes)
+    if (line.match(/^-+$/)) {
+      return;
+    }
+    
     // Handle code blocks
     if (line.startsWith('```')) {
       if (isInCodeBlock) {
