@@ -139,7 +139,7 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
     <Card className="bg-card border-border/30">
       {/* Header */}
       <div className="border-b border-border/20 p-4 sm:p-6">
-        <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between min-w-0 overflow-hidden">
           <div className="flex items-center gap-4">
             <div className="min-w-0 flex-1">
               <h2 className="text-xl font-bold text-foreground">Generated Report</h2>
