@@ -35,8 +35,8 @@ export const processReportMarkdown = (text: string): React.ReactNode => {
                 {currentTable.slice(1).map((row, rowIdx) => (
                   <tr key={rowIdx} className="border-b border-border/20">
                     {row.map((cell, cellIdx) => (
-                      <td key={cellIdx} className="p-2 text-foreground">
-                        {processInlineMarkdown(cell.trim())}
+                      <td key={cellIdx} className="p-2 text-foreground font-normal">
+                        {processInlineMarkdown(cell.trim(), 'paragraph')}
                       </td>
                     ))}
                   </tr>
@@ -55,8 +55,8 @@ export const processReportMarkdown = (text: string): React.ReactNode => {
       elements.push(
         <ul key={`list-${key++}`} className="list-disc list-inside space-y-2 ml-4">
           {currentList.map((item, idx) => (
-            <li key={idx} className="text-foreground">
-              {processInlineMarkdown(item)}
+            <li key={idx} className="text-foreground font-normal">
+              {processInlineMarkdown(item, 'paragraph')}
             </li>
           ))}
         </ul>
@@ -78,7 +78,7 @@ export const processReportMarkdown = (text: string): React.ReactNode => {
     }
   };
 
-  const processInlineMarkdown = (text: string): React.ReactNode => {
+  const processInlineMarkdown = (text: string, context: 'heading' | 'paragraph' = 'paragraph'): React.ReactNode => {
     // Normalize text: trim and normalize spaces
     text = text.trim().replace(/\s+/g, ' ');
     
@@ -139,18 +139,23 @@ export const processReportMarkdown = (text: string): React.ReactNode => {
       return id;
     });
     
-    // Process measurements and values - fix HTML class attribute
+    // Process measurements and values
     currentText = currentText.replace(/(\d+\.?\d*)\s*(Ω|V|A|kW|Hz|mm²?|m)/g, 
       '<span className="font-mono font-semibold text-primary">$1$2</span>'
     );
     
-    // Process bold text **text** - fix HTML class attribute
-    currentText = currentText.replace(/\*\*(.*?)\*\*/g, '<strong className="font-semibold text-primary">$1</strong>');
+    // Process bold text **text** - only apply bold styling in heading context
+    if (context === 'heading') {
+      currentText = currentText.replace(/\*\*(.*?)\*\*/g, '<strong className="font-semibold text-primary">$1</strong>');
+    } else {
+      // In paragraph context, remove bold markers and render as normal text
+      currentText = currentText.replace(/\*\*(.*?)\*\*/g, '$1');
+    }
     
     // Process italic text *text*
     currentText = currentText.replace(/\*(.*?)\*/g, '<em className="italic">$1</em>');
     
-    // Process links [text](url) - fix HTML class attribute
+    // Process links [text](url)
     currentText = currentText.replace(/\[([^\]]+)\]\(([^)]+)\)/g, 
       '<a href="$2" className="text-primary hover:underline font-medium">$1</a>'
     );
@@ -199,7 +204,7 @@ export const processReportMarkdown = (text: string): React.ReactNode => {
     return (
       <div key={`heading-${key++}`} className={`flex items-center ${headingClasses[level] || headingClasses[6]}`}>
         {level <= 3 && icons[level]}
-        {processInlineMarkdown(text)}
+        {processInlineMarkdown(text, 'heading')}
       </div>
     );
   };
@@ -305,8 +310,8 @@ export const processReportMarkdown = (text: string): React.ReactNode => {
         <Card key={`alert-${key++}`} className="bg-red-500/5 border-red-500/20 p-4">
           <div className="flex items-start gap-3 text-left">
             <AlertTriangle className="h-5 w-5 text-red-500 mt-0.5 flex-shrink-0" />
-            <div className="text-foreground text-left">
-              {processInlineMarkdown(line)}
+            <div className="text-foreground text-left font-normal">
+              {processInlineMarkdown(line, 'paragraph')}
             </div>
           </div>
         </Card>
@@ -316,8 +321,8 @@ export const processReportMarkdown = (text: string): React.ReactNode => {
 
     // Regular paragraph
     elements.push(
-      <div key={`p-${key++}`} className="text-foreground leading-relaxed text-left">
-        {processInlineMarkdown(line)}
+      <div key={`p-${key++}`} className="text-foreground leading-relaxed text-left font-normal">
+        {processInlineMarkdown(line, 'paragraph')}
       </div>
     );
   });
