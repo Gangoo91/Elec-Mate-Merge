@@ -1,11 +1,12 @@
 import React, { useState, useRef } from "react";
-import { FileText, Loader, Download, Copy, Check } from "lucide-react";
+import { FileText, Loader } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import GeneratedReportDisplay from "./GeneratedReportDisplay";
 
 // Form imports
 import { EICRForm, type EICRFormData } from "./forms/EICRForm";
@@ -396,32 +397,11 @@ Please generate a professional RCD test certificate following BS 7671:2018 stand
 
             {/* Generated Report Display */}
             {generatedReport && (
-              <Card className="bg-elec-gray border-elec-yellow/30 p-6">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg font-medium text-elec-yellow">Generated Report</h3>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={copyToClipboard}
-                    className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
-                  >
-                    {copied ? (
-                      <>
-                        <Check className="h-4 w-4 mr-2" />
-                        Copied
-                      </>
-                    ) : (
-                      <>
-                        <Copy className="h-4 w-4 mr-2" />
-                        Copy
-                      </>
-                    )}
-                  </Button>
-                </div>
-                <div className="bg-elec-dark/50 rounded-md p-4 whitespace-pre-wrap text-white">
-                  {generatedReport}
-                </div>
-              </Card>
+              <GeneratedReportDisplay
+                report={generatedReport}
+                template={selectedTemplate}
+                onCopy={copyToClipboard}
+              />
             )}
           </div>
 
