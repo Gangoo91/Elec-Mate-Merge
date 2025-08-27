@@ -124,12 +124,12 @@ export const processReportMarkdown = (text: string): React.ReactNode => {
 
   const getHeadingComponent = (level: number, text: string) => {
     const headingClasses = {
-      1: 'text-2xl font-bold text-primary mb-4',
-      2: 'text-xl font-semibold text-primary mb-3',
-      3: 'text-lg font-medium text-primary mb-2',
-      4: 'text-base font-medium text-primary mb-2',
-      5: 'text-sm font-medium text-primary mb-2',
-      6: 'text-sm font-medium text-primary mb-1'
+      1: 'text-2xl font-bold text-primary mb-4 text-center justify-center',
+      2: 'text-xl font-semibold text-primary mb-3 text-left',
+      3: 'text-lg font-medium text-primary mb-2 text-left',
+      4: 'text-base font-medium text-primary mb-2 text-left',
+      5: 'text-sm font-medium text-primary mb-2 text-left',
+      6: 'text-sm font-medium text-primary mb-1 text-left'
     };
 
     const icons = {
@@ -186,7 +186,7 @@ export const processReportMarkdown = (text: string): React.ReactNode => {
       
       if (level === 1) {
         elements.push(
-          <Card key={`header-card-${key++}`} className="bg-primary/5 border-primary/20 p-6 mb-6">
+          <Card key={`header-card-${key++}`} className="bg-primary/5 border-primary/20 p-6 mb-6 text-center">
             {getHeadingComponent(level, text)}
           </Card>
         );
@@ -230,9 +230,9 @@ export const processReportMarkdown = (text: string): React.ReactNode => {
     if (line.toLowerCase().includes('danger') || line.toLowerCase().includes('warning')) {
       elements.push(
         <Card key={`alert-${key++}`} className="bg-red-500/5 border-red-500/20 p-4">
-          <div className="flex items-start gap-3">
+          <div className="flex items-start gap-3 text-left">
             <AlertTriangle className="h-5 w-5 text-red-500 mt-0.5 flex-shrink-0" />
-            <div className="text-foreground">
+            <div className="text-foreground text-left">
               {processInlineMarkdown(line)}
             </div>
           </div>
@@ -243,7 +243,7 @@ export const processReportMarkdown = (text: string): React.ReactNode => {
 
     // Regular paragraph
     elements.push(
-      <div key={`p-${key++}`} className="text-foreground leading-relaxed">
+      <div key={`p-${key++}`} className="text-foreground leading-relaxed text-left">
         {processInlineMarkdown(line)}
       </div>
     );
