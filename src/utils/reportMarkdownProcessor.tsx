@@ -68,15 +68,75 @@ export const processReportMarkdown = (text: string): React.ReactNode => {
 
   const flushFieldGroup = () => {
     if (currentFieldGroup.length > 0) {
+      // Group fields by category for better organization
+      const sections = {
+        'Client Details': [] as { key: string; value: string }[],
+        'Installation Details': [] as { key: string; value: string }[],
+        'Work Details': [] as { key: string; value: string }[],
+        'Testing Results': [] as { key: string; value: string }[],
+        'Inspector Details': [] as { key: string; value: string }[],
+        'Other': [] as { key: string; value: string }[]
+      };
+
+      // Categorize fields based on their keys
+      currentFieldGroup.forEach(field => {
+        const keyLower = field.key.toLowerCase();
+        
+        if (keyLower.includes('client') || keyLower.includes('name') || keyLower.includes('address') || keyLower.includes('phone')) {
+          sections['Client Details'].push(field);
+        } else if (keyLower.includes('installation') || keyLower.includes('supply') || keyLower.includes('earthing') || keyLower.includes('main switch')) {
+          sections['Installation Details'].push(field);
+        } else if (keyLower.includes('work') || keyLower.includes('circuit') || keyLower.includes('description') || keyLower.includes('extent')) {
+          sections['Work Details'].push(field);
+        } else if (keyLower.includes('test') || keyLower.includes('fault') || keyLower.includes('c1') || keyLower.includes('c2') || keyLower.includes('c3') || keyLower.includes('assessment') || keyLower.includes('result')) {
+          sections['Testing Results'].push(field);
+        } else if (keyLower.includes('inspector') || keyLower.includes('tester') || keyLower.includes('installer') || keyLower.includes('qualification') || keyLower.includes('date')) {
+          sections['Inspector Details'].push(field);
+        } else {
+          sections['Other'].push(field);
+        }
+      });
+
       elements.push(
-        <Card key={`fields-${key++}`} className="bg-card/30 border-border/30 py-4 px-6">
-          <div className="space-y-2">
-            {currentFieldGroup.map((field, idx) => (
-              <div key={idx} className="flex flex-col sm:flex-row sm:gap-4">
-                <span className="font-medium text-primary min-w-fit">{field.key}:</span>
-                <span className="text-foreground font-normal">{field.value}</span>
-              </div>
-            ))}
+        <Card key={`fields-${key++}`} className="bg-card/30 border-border/30 overflow-hidden">
+          <div className="bg-primary/5 border-b border-border/20 px-6 py-4">
+            <h3 className="text-lg font-semibold text-primary flex items-center gap-2">
+              <FileText className="h-5 w-5" />
+              Report Information
+            </h3>
+          </div>
+          
+          <div className="p-6">
+            <div className="grid gap-6">
+              {Object.entries(sections).map(([sectionTitle, fields]) => {
+                if (fields.length === 0) return null;
+                
+                return (
+                  <div key={sectionTitle} className="space-y-3">
+                    <div className="flex items-center gap-2 pb-2 border-b border-border/10">
+                      <h4 className="text-sm font-semibold text-primary/80 uppercase tracking-wide">
+                        {sectionTitle}
+                      </h4>
+                    </div>
+                    
+                    <div className="grid gap-3 sm:grid-cols-2">
+                      {fields.map((field, idx) => (
+                        <div key={idx} className="group hover:bg-muted/20 rounded-lg p-3 transition-colors">
+                          <div className="space-y-1">
+                            <dt className="text-sm font-medium text-muted-foreground uppercase tracking-wide">
+                              {field.key}
+                            </dt>
+                            <dd className="text-base font-semibold text-foreground">
+                              {field.value}
+                            </dd>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </Card>
       );
