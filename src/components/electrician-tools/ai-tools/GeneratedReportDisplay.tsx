@@ -140,7 +140,7 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
       {/* Header */}
       <div className="border-b border-border/20 p-6 sm:p-8 bg-card">
         <div className="max-w-5xl mx-auto">
-          <div className="bg-card rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
+          <div className="bg-card rounded-xl transition-all duration-300">
             {/* Header Section */}
             <div className="flex flex-col lg:flex-row lg:items-center gap-6 mb-6">
               <div className="flex items-start gap-4 flex-1">
