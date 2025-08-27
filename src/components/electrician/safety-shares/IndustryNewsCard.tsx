@@ -362,19 +362,27 @@ const IndustryNewsCard = () => {
             </div>
           </div>
 
-          {/* Articles List */}
+          {/* Articles Grid */}
           {isLoading && articles.length === 0 ? (
             <div className="space-y-4">
               <div className="text-center py-4">
                 <p className="text-muted-foreground">Fetching latest articles...</p>
               </div>
-              {[1, 2, 3].map((i) => (
-                <div key={i} className="space-y-2 p-4 rounded-lg border border-elec-yellow/10 bg-elec-gray/30">
-                  <Skeleton className="h-5 w-3/4 bg-elec-yellow/10" />
-                  <Skeleton className="h-4 w-full bg-elec-yellow/10" />
-                  <Skeleton className="h-3 w-1/2 bg-elec-yellow/10" />
-                </div>
-              ))}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {[1, 2, 3].map((i) => (
+                  <Card key={i} className="bg-elec-gray/20 border-elec-yellow/10 overflow-hidden">
+                    <div className="h-48 bg-elec-yellow/5">
+                      <Skeleton className="h-full w-full bg-elec-yellow/10" />
+                    </div>
+                    <CardContent className="p-4 space-y-3">
+                      <Skeleton className="h-5 w-16 bg-elec-yellow/10" />
+                      <Skeleton className="h-6 w-3/4 bg-elec-yellow/10" />
+                      <Skeleton className="h-4 w-full bg-elec-yellow/10" />
+                      <Skeleton className="h-3 w-1/2 bg-elec-yellow/10" />
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
             </div>
           ) : filteredArticles.length === 0 ? (
             <div className="text-center py-8">
@@ -388,50 +396,76 @@ const IndustryNewsCard = () => {
               </p>
             </div>
           ) : (
-            <div className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {currentArticles.map((article) => (
-                <div
+                <Card
                   key={article.id}
-                  className="p-4 rounded-lg border border-elec-yellow/10 bg-elec-gray/30 hover:border-elec-yellow/30 transition-colors"
+                  className="bg-elec-gray/20 border-elec-yellow/10 hover:border-elec-yellow/30 transition-all duration-300 hover:shadow-lg hover:shadow-elec-yellow/5 overflow-hidden group cursor-pointer"
+                  onClick={() => {
+                    if (article.url) {
+                      window.open(article.url, '_blank', 'noopener,noreferrer');
+                    }
+                  }}
                 >
-                  <div className="flex items-start justify-between gap-4">
-                    <div className="flex-1">
-                      <h3 className="font-semibold text-white mb-2 line-clamp-2">
-                        {article.title}
-                      </h3>
-                      {article.snippet && (
-                        <p className="text-sm text-muted-foreground mb-3 line-clamp-2">
-                          {article.snippet}
-                        </p>
-                      )}
-                      <div className="flex flex-wrap items-center justify-between gap-2">
-                        <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
-                          {article.tag && (
-                            <Badge variant="secondary" className="bg-elec-yellow/20 text-elec-yellow">
-                              {article.tag}
-                            </Badge>
-                          )}
-                          <span className="flex items-center gap-1">
-                            <Calendar className="h-3 w-3" />
-                            {article.date || 'Date not available'}
-                          </span>
-                        </div>
-                        <Button
-                          onClick={() => {
-                            if (article.url) {
-                              window.open(article.url, '_blank', 'noopener,noreferrer');
-                            }
-                          }}
-                          size="sm"
-                          className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 shrink-0"
-                        >
-                          <ExternalLink className="h-4 w-4 mr-2" />
-                          Read Full Article
-                        </Button>
-                      </div>
+                  {/* Image Section */}
+                  <div className="relative h-48 bg-gradient-to-br from-elec-yellow/10 via-elec-yellow/5 to-transparent overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-t from-elec-dark/20 to-transparent" />
+                    <div className="absolute top-3 left-3">
+                      <Badge className="bg-elec-yellow text-elec-dark font-semibold">
+                        NEWS
+                      </Badge>
+                    </div>
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <Newspaper className="h-16 w-16 text-elec-yellow/30 group-hover:text-elec-yellow/50 transition-colors" />
                     </div>
                   </div>
-                </div>
+
+                  {/* Content Section */}
+                  <CardContent className="p-4 space-y-3">
+                    {/* Category and Date */}
+                    <div className="flex items-center justify-between text-xs text-muted-foreground">
+                      {article.tag && (
+                        <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
+                          {article.tag}
+                        </Badge>
+                      )}
+                      <span className="flex items-center gap-1">
+                        <Calendar className="h-3 w-3" />
+                        {article.date || 'Recent'}
+                      </span>
+                    </div>
+
+                    {/* Title */}
+                    <h3 className="font-semibold text-white leading-tight line-clamp-2 group-hover:text-elec-yellow/90 transition-colors">
+                      {article.title}
+                    </h3>
+
+                    {/* Snippet */}
+                    {article.snippet && (
+                      <p className="text-sm text-muted-foreground line-clamp-3">
+                        {article.snippet}
+                      </p>
+                    )}
+
+                    {/* Read More Button */}
+                    <div className="pt-2">
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        className="w-full border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 hover:border-elec-yellow/50 transition-all group-hover:bg-elec-yellow group-hover:text-elec-dark"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          if (article.url) {
+                            window.open(article.url, '_blank', 'noopener,noreferrer');
+                          }
+                        }}
+                      >
+                        <ExternalLink className="h-4 w-4 mr-2" />
+                        Read more
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
               ))}
             </div>
           )}
