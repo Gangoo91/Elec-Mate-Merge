@@ -104,15 +104,15 @@ serve(async (req) => {
       );
     }
 
-    const result = geocodeData.results[0];
-    const { lat, lng } = result.geometry.location;
+    const geocodeResult = geocodeData.results[0];
+    const { lat, lng } = geocodeResult.geometry.location;
     
     // Extract county and region from address components
     let county = '';
     let region = '';
-    let formattedAddress = result.formatted_address;
+    let formattedAddress = geocodeResult.formatted_address;
 
-    for (const component of result.address_components) {
+    for (const component of geocodeResult.address_components) {
       const types = component.types;
       
       if (types.includes('administrative_area_level_2')) {
@@ -165,7 +165,7 @@ serve(async (req) => {
 
     console.log(`Geocoded successfully: ${location} -> ${lat}, ${lng} (${mappedRegion}, ${county})`);
 
-    const result = {
+    const responseData = {
       success: true,
       location: {
         lat,
@@ -177,10 +177,10 @@ serve(async (req) => {
     };
 
     // Cache the successful result
-    setCachedResult(location, result);
+    setCachedResult(location, responseData);
 
     return new Response(
-      JSON.stringify(result),
+      JSON.stringify(responseData),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
 
