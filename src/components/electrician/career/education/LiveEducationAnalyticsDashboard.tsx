@@ -7,6 +7,7 @@ import {
   RefreshCw, Loader2, AlertCircle, Clock
 } from "lucide-react";
 import { LiveEducationAnalytics } from "@/hooks/useLiveEducationData";
+import { staticEducationCategories } from "@/data/staticEducationCategories";
 
 interface LiveEducationAnalyticsDashboardProps {
   analytics: LiveEducationAnalytics | null;
@@ -167,14 +168,14 @@ const LiveEducationAnalyticsDashboard = ({
           </Card>
         </div>
 
-        {/* Popular Categories */}
+        {/* Popular Categories - Static Data */}
         <div>
           <h4 className="text-sm font-medium mb-3 text-elec-yellow flex items-center gap-1">
             <Target className="h-4 w-4" />
             Most Popular Education Categories
           </h4>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-            {displayAnalytics.topCategories.map((category, idx) => (
+            {staticEducationCategories.map((category, idx) => (
               <div key={idx} className="flex items-center justify-between p-3 bg-elec-dark/30 rounded-lg border border-elec-yellow/10">
                 <div className="flex items-center gap-2">
                   <Building className="h-3 w-3 text-elec-yellow" />
