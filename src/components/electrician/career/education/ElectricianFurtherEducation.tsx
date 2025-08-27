@@ -1,347 +1,215 @@
-import { useState, useEffect } from "react";
+
+import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { GraduationCap, ArrowLeft, BookOpen, PoundSterling, Users, Target, Calculator, RefreshCw, Loader2, AlertCircle } from "lucide-react";
-import EducationSearchForm, { SearchFilters } from "../../../apprentice/career/education/EducationSearchForm";
-import FundingCalculator from "../../../apprentice/career/education/FundingCalculator";
+import { Badge } from "@/components/ui/badge";
+import { DropdownTabs } from "@/components/ui/dropdown-tabs";
 import { useLiveEducationData, LiveEducationData } from "@/hooks/useLiveEducationData";
-import LiveEducationAnalyticsDashboard from "./LiveEducationAnalyticsDashboard";
+import { 
+  BookOpen, GraduationCap, Award, Users, 
+  TrendingUp, RefreshCw, AlertCircle, Loader2,
+  Filter, Search, MapPin, Clock, PoundSterling,
+  Star, Calendar
+} from "lucide-react";
 import LiveEducationCard from "./LiveEducationCard";
+import CourseDetailsView from "./CourseDetailsView";
 
 const ElectricianFurtherEducation = () => {
-  const { educationData, analytics, loading, error, lastUpdated, isFromCache, refreshData } = useLiveEducationData('all');
-  const [filteredOptions, setFilteredOptions] = useState<LiveEducationData[]>([]);
-  const [selectedOption, setSelectedOption] = useState<LiveEducationData | null>(null);
-  const [viewMode, setViewMode] = useState<"grid" | "details" | "funding">("grid");
+  const { educationData, analytics, loading, error, lastUpdated, isFromCache, refreshData } = useLiveEducationData('electrical');
+  const [selectedCourse, setSelectedCourse] = useState<LiveEducationData | null>(null);
+  const [filter, setFilter] = useState('all');
 
-  // Update filtered options when education data changes
-  useEffect(() => {
-    setFilteredOptions(educationData);
-  }, [educationData]);
-
-  const handleSearch = (filters: SearchFilters) => {
-    let filtered = educationData;
-
-    // Apply search term filter
-    if (filters.searchTerm) {
-      const searchLower = filters.searchTerm.toLowerCase();
-      filtered = filtered.filter(option => 
-        option.title.toLowerCase().includes(searchLower) ||
-        option.institution.toLowerCase().includes(searchLower) ||
-        option.description.toLowerCase().includes(searchLower) ||
-        option.keyTopics.some(topic => topic.toLowerCase().includes(searchLower))
-      );
-    }
-
-    // Apply category filter
-    if (filters.category && filters.category !== "All Categories") {
-      filtered = filtered.filter(option => option.category === filters.category);
-    }
-
-    // Apply study mode filter
-    if (filters.studyMode && filters.studyMode !== "All Study Modes") {
-      filtered = filtered.filter(option => option.studyMode === filters.studyMode);
-    }
-
-    // Apply location filter
-    if (filters.location) {
-      const locationLower = filters.location.toLowerCase();
-      filtered = filtered.filter(option => 
-        option.locations.some(loc => loc.toLowerCase().includes(locationLower))
-      );
-    }
-
-    // Apply level filter
-    if (filters.level) {
-      filtered = filtered.filter(option => option.level === filters.level);
-    }
-
-    // Apply funding type filter
-    if (filters.fundingType) {
-      filtered = filtered.filter(option => 
-        option.fundingOptions.some(funding => funding.includes(filters.fundingType))
-      );
-    }
-
-    setFilteredOptions(filtered);
+  const handleViewDetails = (course: LiveEducationData) => {
+    setSelectedCourse(course);
   };
 
-  const handleReset = () => {
-    setFilteredOptions(educationData);
+  const handleBackToCourses = () => {
+    setSelectedCourse(null);
   };
 
-  const handleViewDetails = (option: LiveEducationData) => {
-    setSelectedOption(option);
-    setViewMode("details");
-  };
+  const filteredData = educationData.filter(course => {
+    if (filter === 'all') return true;
+    if (filter === 'degree') return course.level.toLowerCase().includes('degree');
+    if (filter === 'diploma') return course.level.toLowerCase().includes('diploma');
+    if (filter === 'certificate') return course.level.toLowerCase().includes('certificate');
+    return true;
+  });
 
-  const handleBackToGrid = () => {
-    setSelectedOption(null);
-    setViewMode("grid");
-  };
+  const filterTabs = [
+    {
+      value: 'all',
+      label: 'All Courses',
+      icon: BookOpen,
+      content: null
+    },
+    {
+      value: 'degree',
+      label: 'Degree Programs',
+      icon: GraduationCap,
+      content: null
+    },
+    {
+      value: 'diploma',
+      label: 'Diplomas',
+      icon: Award,
+      content: null
+    },
+    {
+      value: 'certificate',
+      label: 'Certificates',
+      icon: Users,
+      content: null
+    }
+  ];
 
-  const handleShowFundingCalculator = () => {
-    setViewMode("funding");
-  };
-
-  if (viewMode === "funding") {
+  // If a course is selected, show the detailed view
+  if (selectedCourse) {
     return (
-      <div className="space-y-6">
-        <div className="flex items-center gap-4">
-          <Button variant="outline" onClick={handleBackToGrid}>
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Education Options
-          </Button>
+      <CourseDetailsView 
+        course={selectedCourse} 
+        onBack={handleBackToCourses}
+      />
+    );
+  }
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center p-12">
+        <div className="text-center space-y-4">
+          <Loader2 className="h-8 w-8 animate-spin text-elec-yellow mx-auto" />
+          <p className="text-muted-foreground">Loading live education data...</p>
         </div>
-        <FundingCalculator />
       </div>
     );
   }
 
-  if (viewMode === "details" && selectedOption) {
+  if (error) {
     return (
-      <div className="space-y-6">
-        <div className="flex items-center gap-4">
-          <Button variant="outline" onClick={handleBackToGrid}>
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Education Options
-          </Button>
-        </div>
-        
-        <Card className="border-elec-yellow/20 bg-elec-gray">
-          <CardHeader>
-            <CardTitle className="text-2xl">{selectedOption.title}</CardTitle>
-            <p className="text-amber-400">{selectedOption.institution}</p>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            <p className="text-muted-foreground">{selectedOption.description}</p>
-            
-            {/* Detailed information sections would go here */}
-            <div className="text-center py-8">
-              <p className="text-muted-foreground">
-                Detailed view implementation would continue here with comprehensive information,
-                application forms, funding calculators, etc.
-              </p>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+      <Card className="border-red-500/20 bg-red-900/20">
+        <CardContent className="p-6 text-center space-y-4">
+          <AlertCircle className="h-12 w-12 text-red-400 mx-auto" />
+          <div>
+            <h3 className="text-lg font-semibold text-red-400 mb-2">Unable to Load Education Data</h3>
+            <p className="text-red-300 mb-4">{error}</p>
+            <Button 
+              onClick={() => refreshData(true)}
+              variant="outline"
+              className="border-red-400/50 text-red-400 hover:bg-red-400/10"
+            >
+              <RefreshCw className="h-4 w-4 mr-2" />
+              Try Again
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
     );
   }
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
+    <div className="space-y-6 animate-fade-in">
+      {/* Header with Analytics */}
       <div className="space-y-4">
-        <h2 className="text-2xl font-semibold flex items-center gap-2">
-          <GraduationCap className="h-6 w-6 text-elec-yellow" />
-          Further Education for Electricians
-        </h2>
-        <p className="text-muted-foreground">
-          Discover comprehensive educational pathways to advance your electrical career. 
-          From HNC certificates to master's degrees, find the right qualification to achieve your professional goals.
-        </p>
-      </div>
-
-      {/* Analytics Dashboard */}
-      <LiveEducationAnalyticsDashboard 
-        analytics={analytics} 
-        loading={loading}
-        error={error}
-        lastUpdated={lastUpdated}
-        isFromCache={isFromCache}
-        onRefresh={() => refreshData(true)}
-      />
-
-      {/* Action Buttons */}
-      <div className="flex flex-wrap gap-2">
-        <Button 
-          onClick={handleShowFundingCalculator}
-          variant="outline"
-          className="border-elec-yellow/30 hover:bg-elec-yellow/10"
-        >
-          <Calculator className="mr-2 h-4 w-4" />
-          Funding Calculator
-        </Button>
-        <Button 
-          onClick={() => refreshData(true)}
-          variant="outline"
-          className="border-elec-yellow/30 hover:bg-elec-yellow/10"
-          disabled={loading}
-        >
-          {loading ? (
-            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-          ) : (
-            <RefreshCw className="mr-2 h-4 w-4" />
-          )}
-          Force Refresh Live Data
-        </Button>
-      </div>
-
-      {/* Status Indicators */}
-      {lastUpdated && (
-        <div className="flex items-center gap-4 text-sm text-muted-foreground">
-          <span>
-            Last updated: {new Date(lastUpdated).toLocaleString()}
-          </span>
-          {isFromCache && (
-            <span className="flex items-center gap-1 text-amber-400">
-              <AlertCircle className="h-3 w-3" />
-              Cached data
-            </span>
-          )}
-        </div>
-      )}
-
-      {/* Error Message */}
-      {error && (
-        <Card className="border-red-500/20 bg-red-900/10">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 text-red-400">
-              <AlertCircle className="h-4 w-4" />
-              <span className="text-sm">
-                {error} - Showing cached data if available.
-              </span>
-            </div>
-          </CardContent>
-        </Card>
-      )}
-
-      {/* Search and Filters */}
-      <EducationSearchForm onSearch={handleSearch} onReset={handleReset} />
-
-      {/* Results Header */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <h3 className="text-lg font-medium">Available Programmes</h3>
-          <span className="text-sm text-muted-foreground">
-            ({filteredOptions.length} {filteredOptions.length === 1 ? 'result' : 'results'})
-          </span>
-        </div>
-      </div>
-
-      {/* Loading State */}
-      {loading && (
-        <div className="flex flex-col items-center justify-center py-12 space-y-4">
-          <Loader2 className="h-8 w-8 animate-spin text-elec-yellow" />
-          <div className="text-center space-y-2">
-            <span className="text-muted-foreground">Scraping live education data...</span>
-            <div className="text-xs text-muted-foreground max-w-md">
-              Fetching latest courses from IDP Education, National Careers Service, and TradeSkills4U
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Education Options Grid */}
-      {!loading && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredOptions.map((option) => (
-            <LiveEducationCard
-              key={option.id}
-              option={option}
-              onViewDetails={handleViewDetails}
-            />
-          ))}
-        </div>
-      )}
-
-      {/* Empty State */}
-      {filteredOptions.length === 0 && (
-        <Card className="border-elec-yellow/20 bg-elec-gray">
-          <CardContent className="p-8 text-center">
-            <BookOpen className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-            <h3 className="text-lg font-medium mb-2">No programmes found</h3>
-            <p className="text-muted-foreground mb-4">
-              Try adjusting your search criteria or explore different categories.
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+          <div>
+            <h2 className="text-2xl font-bold text-elec-yellow mb-2">
+              Further Education Opportunities
+            </h2>
+            <p className="text-muted-foreground">
+              Live data from UK education providers • {educationData.length} courses available
             </p>
-            <Button variant="outline" onClick={handleReset}>
-              Reset Filters
-            </Button>
+          </div>
+          <Button 
+            variant="outline"
+            onClick={() => refreshData(true)}
+            className="border-elec-yellow/30 hover:bg-elec-yellow/10"
+          >
+            <RefreshCw className="h-4 w-4 mr-2" />
+            Refresh Data
+          </Button>
+        </div>
+
+        {/* Analytics Cards */}
+        {analytics && (
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <Card className="border-elec-yellow/20 bg-elec-gray">
+              <CardContent className="p-4 text-center">
+                <div className="text-2xl font-bold text-elec-yellow">
+                  {analytics.totalCourses}
+                </div>
+                <div className="text-sm text-muted-foreground">Total Courses</div>
+              </CardContent>
+            </Card>
+            <Card className="border-elec-yellow/20 bg-elec-gray">
+              <CardContent className="p-4 text-center">
+                <div className="text-2xl font-bold text-blue-400">
+                  {analytics.totalProviders}
+                </div>
+                <div className="text-sm text-muted-foreground">Providers</div>
+              </CardContent>
+            </Card>
+            <Card className="border-elec-yellow/20 bg-elec-gray">
+              <CardContent className="p-4 text-center">
+                <div className="text-2xl font-bold text-amber-400">
+                  {analytics.averageRating}
+                </div>
+                <div className="text-sm text-muted-foreground">Avg Rating</div>
+              </CardContent>
+            </Card>
+            <Card className="border-elec-yellow/20 bg-elec-gray">
+              <CardContent className="p-4 text-center">
+                <div className="text-2xl font-bold text-green-400">
+                  {analytics.averageEmploymentRate}%
+                </div>
+                <div className="text-sm text-muted-foreground">Employment Rate</div>
+              </CardContent>
+            </Card>
+          </div>
+        )}
+      </div>
+
+      {/* Filter Tabs */}
+      <div className="space-y-4">
+        <DropdownTabs
+          tabs={filterTabs}
+          defaultValue="all"
+          placeholder="Filter by course type"
+          onValueChange={(value) => setFilter(value)}
+          className="mb-6"
+        />
+      </div>
+
+      {/* Course Cards Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {filteredData.map((course, index) => (
+          <LiveEducationCard
+            key={`${course.id}-${index}`}
+            option={course}
+            onViewDetails={handleViewDetails}
+          />
+        ))}
+      </div>
+
+      {filteredData.length === 0 && (
+        <Card className="border-elec-yellow/20 bg-elec-gray">
+          <CardContent className="p-12 text-center">
+            <Search className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+            <h3 className="text-lg font-semibold mb-2">No courses found</h3>
+            <p className="text-muted-foreground">
+              Try adjusting your filter or check back later for new courses.
+            </p>
           </CardContent>
         </Card>
       )}
 
-      {/* Enhanced Funding Information Card */}
-      <Card className="border-elec-yellow/20 bg-elec-gray/50">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-lg">
-            <PoundSterling className="h-5 w-5 text-elec-yellow" />
-            UK Education Funding Support
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <h4 className="font-medium mb-3 text-amber-400">Government Support</h4>
-            <div className="space-y-3 text-sm">
-              <div>
-                <h5 className="font-medium text-white">Advanced Learner Loan (19+)</h5>
-                <p className="text-xs text-muted-foreground mt-1">
-                  Available for Level 3-6 qualifications. No upfront fees, only repay when earning £25,000+. 
-                  9% of income above threshold.
-                </p>
-              </div>
-              <div>
-                <h5 className="font-medium text-white">Student Finance England</h5>
-                <p className="text-xs text-muted-foreground mt-1">
-                  Tuition fee loans up to £9,250 for degrees. Maintenance loans available based on household income. 
-                  Repayment at 9% above £27,295.
-                </p>
-              </div>
-              <div>
-                <h5 className="font-medium text-white">Postgraduate Loan</h5>
-                <p className="text-xs text-muted-foreground mt-1">
-                  Up to £12,167 for Master's study. 6% interest rate. Same repayment terms as undergraduate loans.
-                </p>
-              </div>
-            </div>
-          </div>
-          <div>
-            <h4 className="font-medium mb-3 text-amber-400">Industry & Employer Support</h4>
-            <div className="space-y-3 text-sm">
-              <div>
-                <h5 className="font-medium text-white">Apprenticeship Levy</h5>
-                <p className="text-xs text-muted-foreground mt-1">
-                  Large employers (£3M+ payroll) contribute 0.5% to apprenticeship levy. Can fund degree apprenticeships.
-                </p>
-              </div>
-              <div>
-                <h5 className="font-medium text-white">Professional Body Grants</h5>
-                <p className="text-xs text-muted-foreground mt-1">
-                  IET scholarships (£1,000-£10,000), ECA Educational Trust grants, NECA bursaries for electrical study.
-                </p>
-              </div>
-              <div>
-                <h5 className="font-medium text-white">Career Development Loans</h5>
-                <p className="text-xs text-muted-foreground mt-1">
-                  Bank loans for vocational training. Government pays interest during study and one month after.
-                </p>
-              </div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Quick Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Card className="border-elec-yellow/20 bg-elec-gray/50">
-          <CardContent className="p-4 text-center">
-            <div className="text-2xl font-bold text-elec-yellow">{analytics?.averageEmploymentRate || 96}%</div>
-            <div className="text-sm text-muted-foreground">Electrician Employment Rate</div>
-          </CardContent>
-        </Card>
-        <Card className="border-elec-yellow/20 bg-elec-gray/50">
-          <CardContent className="p-4 text-center">
-            <div className="text-2xl font-bold text-elec-yellow">£15k+</div>
-            <div className="text-sm text-muted-foreground">Average Salary Increase</div>
-          </CardContent>
-        </Card>
-        <Card className="border-elec-yellow/20 bg-elec-gray/50">
-          <CardContent className="p-4 text-center">
-            <div className="text-2xl font-bold text-elec-yellow">82%</div>
-            <div className="text-sm text-muted-foreground">Get Jobs Before Graduating</div>
-          </CardContent>
-        </Card>
+      {/* Data Status */}
+      <div className="flex items-center justify-between text-xs text-muted-foreground pt-4 border-t border-elec-yellow/10">
+        <div className="flex items-center gap-2">
+          <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+          <span>Live data {isFromCache ? '(cached)' : '(fresh)'}</span>
+        </div>
+        {lastUpdated && (
+          <span>Last updated: {new Date(lastUpdated).toLocaleString()}</span>
+        )}
       </div>
     </div>
   );
