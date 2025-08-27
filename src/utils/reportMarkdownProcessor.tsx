@@ -79,47 +79,105 @@ export const processReportMarkdown = (text: string): React.ReactNode => {
   };
 
   const processInlineMarkdown = (text: string): React.ReactNode => {
-    // Process compliance badges
-    text = text.replace(/\[BS 7671[^\]]*\]/g, (match) => 
-      `<span class="inline-flex items-center px-2 py-1 text-xs font-medium bg-primary/10 text-primary rounded-md border border-primary/20">${match}</span>`
-    );
+    // Normalize text: trim and normalize spaces
+    text = text.trim().replace(/\s+/g, ' ');
+    
+    // Return null for empty content
+    if (!text) return null;
+
+    // Store elements with their placeholders
+    const elementMap = new Map<string, React.ReactNode>();
+    let currentText = text;
+    let key = 0;
+
+    // Process compliance badges - replace with React components
+    currentText = currentText.replace(/\[BS 7671[^\]]*\]/g, (match) => {
+      const id = `__BADGE_${key++}__`;
+      elementMap.set(id, 
+        <Badge key={id} variant="outline" className="bg-primary/10 text-primary border-primary/20">
+          {match}
+        </Badge>
+      );
+      return id;
+    });
     
     // Process result badges (PASS/FAIL/SATISFACTORY/UNSATISFACTORY)
-    text = text.replace(/\b(PASS|SATISFACTORY)\b/g, 
-      '<span class="inline-flex items-center px-2 py-1 text-xs font-bold bg-green-500/10 text-green-600 rounded-md border border-green-500/20">$1</span>'
-    );
-    text = text.replace(/\b(FAIL|UNSATISFACTORY|DANGER)\b/g, 
-      '<span class="inline-flex items-center px-2 py-1 text-xs font-bold bg-red-500/10 text-red-600 rounded-md border border-red-500/20">$1</span>'
-    );
+    currentText = currentText.replace(/\b(PASS|SATISFACTORY)\b/g, (match) => {
+      const id = `__SUCCESS_${key++}__`;
+      elementMap.set(id,
+        <Badge key={id} className="bg-green-500/10 text-green-600 border-green-500/20">
+          {match}
+        </Badge>
+      );
+      return id;
+    });
     
-    // Process measurements and values
-    text = text.replace(/(\d+\.?\d*)\s*(Ω|V|A|kW|Hz|mm²?|m)/g, 
-      '<span class="font-mono font-semibold text-primary">$1$2</span>'
-    );
+    currentText = currentText.replace(/\b(FAIL|UNSATISFACTORY|DANGER)\b/g, (match) => {
+      const id = `__ERROR_${key++}__`;
+      elementMap.set(id,
+        <Badge key={id} className="bg-red-500/10 text-red-600 border-red-500/20">
+          {match}
+        </Badge>
+      );
+      return id;
+    });
     
     // Process code classifications (C1, C2, C3, FI)
-    text = text.replace(/\b(C1|C2|C3|FI)\b/g, (match) => {
-      const colors = {
+    currentText = currentText.replace(/\b(C1|C2|C3|FI)\b/g, (match) => {
+      const id = `__CODE_${key++}__`;
+      const colorClasses = {
         'C1': 'bg-red-500/10 text-red-600 border-red-500/20',
         'C2': 'bg-orange-500/10 text-orange-600 border-orange-500/20',
         'C3': 'bg-yellow-500/10 text-yellow-600 border-yellow-500/20',
         'FI': 'bg-blue-500/10 text-blue-600 border-blue-500/20'
       };
-      return `<span class="inline-flex items-center px-2 py-1 text-xs font-bold rounded-md border ${colors[match]}">${match}</span>`;
+      elementMap.set(id,
+        <Badge key={id} className={colorClasses[match]}>
+          {match}
+        </Badge>
+      );
+      return id;
     });
     
-    // Process bold text **text**
-    text = text.replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-primary">$1</strong>');
+    // Process measurements and values - fix HTML class attribute
+    currentText = currentText.replace(/(\d+\.?\d*)\s*(Ω|V|A|kW|Hz|mm²?|m)/g, 
+      '<span className="font-mono font-semibold text-primary">$1$2</span>'
+    );
+    
+    // Process bold text **text** - fix HTML class attribute
+    currentText = currentText.replace(/\*\*(.*?)\*\*/g, '<strong className="font-semibold text-primary">$1</strong>');
     
     // Process italic text *text*
-    text = text.replace(/\*(.*?)\*/g, '<em class="italic">$1</em>');
+    currentText = currentText.replace(/\*(.*?)\*/g, '<em className="italic">$1</em>');
     
-    // Process links [text](url)
-    text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, 
-      '<a href="$2" class="text-primary hover:underline font-medium">$1</a>'
+    // Process links [text](url) - fix HTML class attribute
+    currentText = currentText.replace(/\[([^\]]+)\]\(([^)]+)\)/g, 
+      '<a href="$2" className="text-primary hover:underline font-medium">$1</a>'
     );
 
-    return <span dangerouslySetInnerHTML={{ __html: text }} />;
+    // If we have elements to replace, create a compound component
+    if (elementMap.size > 0) {
+      const parts = currentText.split(/(__\w+_\d+__)/);
+      return (
+        <span>
+          {parts.map((part, idx) => {
+            const elementMatch = part.match(/^__(\w+)_(\d+)__$/);
+            if (elementMatch && elementMap.has(part)) {
+              return elementMap.get(part);
+            }
+            // Only render non-empty text parts
+            return part.trim() ? (
+              <span key={idx} dangerouslySetInnerHTML={{ __html: part }} />
+            ) : null;
+          })}
+        </span>
+      );
+    }
+
+    // For simple text without special elements, validate it's not empty
+    return currentText.trim() ? (
+      <span dangerouslySetInnerHTML={{ __html: currentText }} />
+    ) : null;
   };
 
   const getHeadingComponent = (level: number, text: string) => {
@@ -151,6 +209,11 @@ export const processReportMarkdown = (text: string): React.ReactNode => {
     
     // Skip horizontal rules (lines with only dashes)
     if (line.match(/^-+$/)) {
+      return;
+    }
+    
+    // Skip lines with only special characters or whitespace
+    if (line.match(/^[\s\-_=*#|]+$/)) {
       return;
     }
     
@@ -204,8 +267,9 @@ export const processReportMarkdown = (text: string): React.ReactNode => {
     // Handle tables
     if (line.includes('|')) {
       flushList();
-      const cells = line.split('|').map(cell => cell.trim()).filter(cell => cell);
-      if (cells.length > 0) {
+      const cells = line.split('|').map(cell => cell.trim()).filter(cell => cell && cell.length > 0);
+      // Only add rows with meaningful content
+      if (cells.length > 0 && cells.some(cell => cell.length > 0)) {
         currentTable.push(cells);
       }
       return;
@@ -214,16 +278,22 @@ export const processReportMarkdown = (text: string): React.ReactNode => {
     // Handle bullet points
     if (line.match(/^[-*]\s+/)) {
       flushTable();
-      const listItem = line.replace(/^[-*]\s+/, '');
-      currentList.push(listItem);
+      const listItem = line.replace(/^[-*]\s+/, '').trim();
+      // Only add non-empty list items
+      if (listItem && listItem.length > 0) {
+        currentList.push(listItem);
+      }
       return;
     }
 
     // Handle numbered lists
     if (line.match(/^\d+\.\s+/)) {
       flushTable();
-      const listItem = line.replace(/^\d+\.\s+/, '');
-      currentList.push(listItem);
+      const listItem = line.replace(/^\d+\.\s+/, '').trim();
+      // Only add non-empty list items
+      if (listItem && listItem.length > 0) {
+        currentList.push(listItem);
+      }
       return;
     }
 
