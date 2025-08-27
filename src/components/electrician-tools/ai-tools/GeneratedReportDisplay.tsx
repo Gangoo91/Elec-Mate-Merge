@@ -245,7 +245,7 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
 
       {/* Report Content */}
       <div 
-        className="p-6 bg-elec-dark"
+        className="p-6 bg-card"
         style={{ fontSize: `${zoomLevel}%` }}
       >
         <div className="bg-background/50 rounded-lg border border-border/20 p-6">
