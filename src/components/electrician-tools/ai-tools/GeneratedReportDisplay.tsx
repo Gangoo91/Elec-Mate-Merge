@@ -136,7 +136,7 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
   };
 
   return (
-    <Card className="bg-card border-border/30">
+    <Card className="bg-elec-dark border-border/30">
       {/* Header */}
       <div className="border-b border-border/20 p-6 sm:p-8 bg-card">
         <div className="max-w-5xl mx-auto">
