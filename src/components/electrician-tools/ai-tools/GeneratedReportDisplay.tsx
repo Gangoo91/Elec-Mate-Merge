@@ -148,7 +148,7 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
                   <FileText className="h-6 w-6 text-primary" />
                 </div>
                 <div className="min-w-0 flex-1">
-                  <h2 className="text-2xl font-bold text-foreground mb-2">
+                  <h2 className="text-2xl font-bold text-foreground mb-2 text-left">
                     Generated Report
                   </h2>
                   <div className="flex flex-col sm:flex-row sm:items-center gap-3">
