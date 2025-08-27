@@ -385,12 +385,24 @@ export const processReportMarkdown = (text: string): React.ReactNode => {
       return;
     }
 
-    // Check for field pattern (Field Name: Value)
-    const fieldMatch = line.match(/^([A-Za-z\s]+):\s*(.+)$/);
+    // Check for field pattern (Field Name: Value) - broader pattern
+    const fieldMatch = line.match(/^([A-Za-z\s\-_()]+):\s*(.+)$/);
     if (fieldMatch) {
       flushTable();
       flushList();
+      console.log('Field detected:', fieldMatch[1], ':', fieldMatch[2]);
       const [, key, value] = fieldMatch;
+      currentFieldGroup.push({ key: key.trim(), value: value.trim() });
+      return;
+    }
+
+    // Also check for bullet-like field patterns
+    const bulletFieldMatch = line.match(/^[-*]\s*([A-Za-z\s\-_()]+):\s*(.+)$/);
+    if (bulletFieldMatch) {
+      flushTable();
+      flushList();
+      console.log('Bullet field detected:', bulletFieldMatch[1], ':', bulletFieldMatch[2]);
+      const [, key, value] = bulletFieldMatch;
       currentFieldGroup.push({ key: key.trim(), value: value.trim() });
       return;
     }
