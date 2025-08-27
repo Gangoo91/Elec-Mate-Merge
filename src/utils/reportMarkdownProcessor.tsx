@@ -13,6 +13,7 @@ export const processReportMarkdown = (text: string): React.ReactNode => {
   let key = 0;
   let currentTable: string[][] = [];
   let currentList: string[] = [];
+  let currentFieldGroup: { key: string; value: string }[] = [];
   let isInCodeBlock = false;
   let codeBlockContent = '';
 
@@ -62,6 +63,24 @@ export const processReportMarkdown = (text: string): React.ReactNode => {
         </ul>
       );
       currentList = [];
+    }
+  };
+
+  const flushFieldGroup = () => {
+    if (currentFieldGroup.length > 0) {
+      elements.push(
+        <Card key={`fields-${key++}`} className="bg-card/30 border-border/30 py-4 px-6">
+          <div className="space-y-2">
+            {currentFieldGroup.map((field, idx) => (
+              <div key={idx} className="flex flex-col sm:flex-row sm:gap-4">
+                <span className="font-medium text-primary min-w-fit">{field.key}:</span>
+                <span className="text-foreground font-normal">{field.value}</span>
+              </div>
+            ))}
+          </div>
+        </Card>
+      );
+      currentFieldGroup = [];
     }
   };
 
@@ -230,6 +249,7 @@ export const processReportMarkdown = (text: string): React.ReactNode => {
       } else {
         flushTable();
         flushList();
+        flushFieldGroup();
         isInCodeBlock = true;
       }
       return;
@@ -244,6 +264,7 @@ export const processReportMarkdown = (text: string): React.ReactNode => {
     if (!line) {
       flushTable();
       flushList();
+      flushFieldGroup();
       return;
     }
 
@@ -252,6 +273,7 @@ export const processReportMarkdown = (text: string): React.ReactNode => {
     if (headingMatch) {
       flushTable();
       flushList();
+      flushFieldGroup();
       const level = headingMatch[1].length;
       const text = headingMatch[2];
       
@@ -270,6 +292,7 @@ export const processReportMarkdown = (text: string): React.ReactNode => {
     // Handle tables
     if (line.includes('|')) {
       flushList();
+      flushFieldGroup();
       const cells = line.split('|').map(cell => cell.trim()).filter(cell => cell && cell.length > 0);
       // Only add rows with meaningful content
       if (cells.length > 0 && cells.some(cell => cell.length > 0)) {
@@ -281,6 +304,7 @@ export const processReportMarkdown = (text: string): React.ReactNode => {
     // Handle bullet points
     if (line.match(/^[-*]\s+/)) {
       flushTable();
+      flushFieldGroup();
       const listItem = line.replace(/^[-*]\s+/, '').trim();
       // Only add non-empty list items
       if (listItem && listItem.length > 0) {
@@ -292,6 +316,7 @@ export const processReportMarkdown = (text: string): React.ReactNode => {
     // Handle numbered lists
     if (line.match(/^\d+\.\s+/)) {
       flushTable();
+      flushFieldGroup();
       const listItem = line.replace(/^\d+\.\s+/, '').trim();
       // Only add non-empty list items
       if (listItem && listItem.length > 0) {
@@ -300,9 +325,20 @@ export const processReportMarkdown = (text: string): React.ReactNode => {
       return;
     }
 
+    // Check for field pattern (Field Name: Value)
+    const fieldMatch = line.match(/^([A-Za-z\s]+):\s*(.+)$/);
+    if (fieldMatch) {
+      flushTable();
+      flushList();
+      const [, key, value] = fieldMatch;
+      currentFieldGroup.push({ key: key.trim(), value: value.trim() });
+      return;
+    }
+
     // Flush pending elements
     flushTable();
     flushList();
+    flushFieldGroup();
 
     // Handle special alert boxes
     if (line.toLowerCase().includes('danger') || line.toLowerCase().includes('warning')) {
@@ -330,6 +366,7 @@ export const processReportMarkdown = (text: string): React.ReactNode => {
   // Flush any remaining elements
   flushTable();
   flushList();
+  flushFieldGroup();
   flushCodeBlock();
 
   return (
