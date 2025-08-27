@@ -138,91 +138,106 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
   return (
     <Card className="bg-card border-border/30">
       {/* Header */}
-      <div className="border-b border-border/20 p-4 sm:p-6">
-        <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between min-w-0 overflow-hidden bg-gradient-to-r from-primary/5 to-muted/10 rounded-lg p-4 border border-border/30 shadow-sm animate-fade-in">
-          <div className="flex items-center gap-4">
-            <div className="min-w-0 flex-1">
-              <h2 className="text-xl font-bold text-foreground">Generated Report</h2>
-              <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mt-1">
-                <Badge variant="secondary" className="text-xs w-fit">
-                  {reportTypeMap[template] || template.toUpperCase()}
-                </Badge>
-                <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                  <Calendar className="h-3 w-3" />
-                  {new Date().toLocaleDateString('en-GB')}
+      <div className="border-b border-border/20 p-6 sm:p-8 bg-background">
+        <div className="max-w-5xl mx-auto">
+          <div className="bg-card rounded-xl border border-border/40 shadow-lg p-6 sm:p-8 hover:shadow-xl transition-all duration-300">
+            {/* Header Section */}
+            <div className="flex flex-col lg:flex-row lg:items-center gap-6 mb-6">
+              <div className="flex items-start gap-4 flex-1">
+                <div className="p-3 bg-primary/10 rounded-lg shadow-sm">
+                  <FileText className="h-6 w-6 text-primary" />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <h2 className="text-2xl font-bold text-foreground mb-2">
+                    Generated Report
+                  </h2>
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+                    <Badge 
+                      variant="secondary" 
+                      className="text-sm font-medium bg-primary/10 text-primary border-primary/20 w-fit"
+                    >
+                      {reportTypeMap[template] || template.toUpperCase()}
+                    </Badge>
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <Calendar className="h-4 w-4" />
+                      <span>{new Date().toLocaleDateString('en-GB')}</span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-            <div className="p-3 bg-primary/10 rounded-lg">
-              <FileText className="h-6 w-6 text-primary" />
-            </div>
-          </div>
-          
-          {/* Action Buttons */}
-          <div className="flex items-center gap-2 flex-wrap">
-            <div className="flex items-center gap-1 bg-muted/30 rounded-lg p-1">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => adjustZoom('out')}
-                disabled={zoomLevel <= 80}
-                className="h-8 w-8 p-0 border-0 bg-transparent hover:bg-muted"
-              >
-                <ZoomOut className="h-3 w-3" />
-              </Button>
-              <span className="text-xs text-muted-foreground min-w-[40px] text-center px-2">
-                {zoomLevel}%
-              </span>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => adjustZoom('in')}
-                disabled={zoomLevel >= 150}
-                className="h-8 w-8 p-0 border-0 bg-transparent hover:bg-muted"
-              >
-                <ZoomIn className="h-3 w-3" />
-              </Button>
-            </div>
+
+            <Separator className="my-6" />
             
-            <Separator orientation="vertical" className="h-6 hidden sm:block" />
-            
-            <div className="flex items-center gap-2">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={handleCopy}
-                className="border-primary/30 text-primary hover:bg-primary/10"
-              >
-                {copied ? (
-                  <>
-                    <Check className="h-3 w-3 mr-1" />
-                    <span className="hidden sm:inline">Copied</span>
-                  </>
-                ) : (
-                  <>
-                    <Copy className="h-3 w-3 mr-1" />
-                    <span className="hidden sm:inline">Copy</span>
-                  </>
-                )}
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={handleDownload}
-                className="border-primary/30 text-primary hover:bg-primary/10"
-              >
-                <Download className="h-3 w-3 mr-1" />
-                <span className="hidden sm:inline">Download</span>
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={handlePrint}
-                className="border-primary/30 text-primary hover:bg-primary/10"
-              >
-                <Printer className="h-3 w-3 mr-1" />
-                <span className="hidden sm:inline">Print</span>
-              </Button>
+            {/* Action Bar */}
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              {/* Zoom Controls */}
+              <div className="flex items-center gap-3">
+                <span className="text-sm font-medium text-foreground">Zoom:</span>
+                <div className="flex items-center gap-1 bg-muted/50 rounded-lg p-1 border border-border/30">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => adjustZoom('out')}
+                    disabled={zoomLevel <= 80}
+                    className="h-8 w-8 p-0 hover:bg-muted/80"
+                  >
+                    <ZoomOut className="h-3 w-3" />
+                  </Button>
+                  <span className="text-sm font-medium text-foreground min-w-[50px] text-center px-3">
+                    {zoomLevel}%
+                  </span>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => adjustZoom('in')}
+                    disabled={zoomLevel >= 150}
+                    className="h-8 w-8 p-0 hover:bg-muted/80"
+                  >
+                    <ZoomIn className="h-3 w-3" />
+                  </Button>
+                </div>
+              </div>
+              
+              {/* Action Buttons */}
+              <div className="flex items-center gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleCopy}
+                  className="border-primary/30 text-primary hover:bg-primary/10 hover:border-primary/50 shadow-sm"
+                >
+                  {copied ? (
+                    <>
+                      <Check className="h-4 w-4 mr-2" />
+                      <span>Copied</span>
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="h-4 w-4 mr-2" />
+                      <span>Copy</span>
+                    </>
+                  )}
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleDownload}
+                  className="border-primary/30 text-primary hover:bg-primary/10 hover:border-primary/50 shadow-sm"
+                >
+                  <Download className="h-4 w-4 mr-2" />
+                  <span>Download</span>
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handlePrint}
+                  className="border-primary/30 text-primary hover:bg-primary/10 hover:border-primary/50 shadow-sm"
+                >
+                  <Printer className="h-4 w-4 mr-2" />
+                  <span>Print</span>
+                </Button>
+              </div>
             </div>
           </div>
         </div>
