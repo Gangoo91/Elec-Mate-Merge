@@ -141,9 +141,6 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
       <div className="border-b border-border/20 p-4 sm:p-6">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
           <div className="flex items-center gap-4">
-            <div className="p-3 bg-primary/10 rounded-lg">
-              <FileText className="h-6 w-6 text-primary" />
-            </div>
             <div className="min-w-0 flex-1">
               <h2 className="text-xl font-bold text-foreground">Generated Report</h2>
               <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mt-1">
@@ -155,6 +152,9 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
                   {new Date().toLocaleDateString('en-GB')}
                 </div>
               </div>
+            </div>
+            <div className="p-3 bg-primary/10 rounded-lg">
+              <FileText className="h-6 w-6 text-primary" />
             </div>
           </div>
           
