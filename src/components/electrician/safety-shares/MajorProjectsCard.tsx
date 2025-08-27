@@ -1,253 +1,627 @@
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { useState } from "react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Calendar, MapPin, Building2, PoundSterling, Clock, Users } from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Building2, MapPin, Calendar, PoundSterling, Users, Clock, ExternalLink, Bookmark, RefreshCw, Eye } from "lucide-react";
+import { useToast } from "@/components/ui/use-toast";
+import { useNavigate } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
+import { ProjectSubmissionDialog } from "./ProjectSubmissionDialog";
 
 interface MajorProject {
   id: string;
   title: string;
-  description: string;
-  location: string;
-  value: string;
-  deadline: string;
-  status: "open" | "closing-soon" | "awarded" | "in-progress";
-  contractor?: string;
-  category: string;
-  publishedDate: string;
-  requirements: string[];
+  summary: string;
+  content?: string;
+  awarded_to: string;
+  location?: string;
+  project_value?: string;
+  duration?: string;
+  date_awarded?: string;
+  status: string;
+  category?: string;
+  contractorCount?: number;
+  deadline?: string;
+  view_count?: number;
+  average_rating?: number;
+  is_active?: boolean;
+  created_at?: string;
+  updated_at?: string;
+  source_url?: string;
+  external_project_url?: string;
+  tender_deadline?: string;
 }
 
 const MajorProjectsCard = () => {
-  const projects: MajorProject[] = [
+  const { toast } = useToast();
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const [isSubmissionDialogOpen, setIsSubmissionDialogOpen] = useState(false);
+
+  // Enhanced static fallback projects with real URLs
+  const staticProjects: MajorProject[] = [
     {
-      id: "1",
-      title: "Manchester Hospital Electrical Infrastructure Upgrade",
-      description: "Complete electrical system modernisation including backup power systems, LED lighting conversion, and smart building integration for a 400-bed hospital facility.",
-      location: "Manchester, Greater Manchester",
-      value: "£2.8M - £3.2M",
-      deadline: "2024-03-15",
-      status: "open",
-      category: "Healthcare Infrastructure",
-      publishedDate: "2024-01-20",
-      requirements: [
-        "NICEIC/ECA approved contractor",
-        "Hospital electrical experience required",
-        "24/7 working capabilities",
-        "Minimum £5M annual turnover"
-      ]
+      id: "static-1",
+      title: "London Underground Station Modernisation Programme",
+      summary: "Complete electrical system upgrade for 15 underground stations including LED lighting, power distribution, and emergency systems.",
+      awarded_to: "Transport for London",
+      location: "London, UK",
+      project_value: "£45M",
+      duration: "18 months",
+      date_awarded: "2024-09-01",
+      status: "active",
+      category: "Transport",
+      contractorCount: 12,
+      tender_deadline: "2025-02-15",
+      external_project_url: "https://tfl.gov.uk/corporate/procurement-and-commercial/procurement-opportunities",
+      source_url: "https://tfl.gov.uk/corporate/procurement-and-commercial/procurement-opportunities"
     },
     {
-      id: "2", 
-      title: "Birmingham Metro Extension - Electrical Works Package",
-      description: "Electrical infrastructure for 5km metro line extension including substations, overhead lines, platform lighting, and SCADA systems integration.",
-      location: "Birmingham, West Midlands", 
-      value: "£15M - £18M",
-      deadline: "2024-02-28",
-      status: "closing-soon",
-      category: "Transport Infrastructure",
-      publishedDate: "2023-12-08",
-      requirements: [
-        "Rail electrification experience essential",
-        "Network Rail approved supplier",
-        "HV/EHV competency required",
-        "Minimum 10 years transport sector experience"
-      ]
+      id: "static-2", 
+      title: "NHS Hospital Electrical Infrastructure Expansion",
+      summary: "New electrical installation for major hospital expansion including critical care units, operating theatres, and backup power systems.",
+      awarded_to: "NHS Foundation Trust",
+      location: "Manchester, UK",
+      project_value: "£32M",
+      duration: "24 months",
+      date_awarded: "2024-08-15",
+      status: "active",
+      category: "Healthcare",
+      contractorCount: 8,
+      tender_deadline: "2025-01-30",
+      external_project_url: "https://www.contractsfinder.service.gov.uk/Search/Results?SearchType=1&Keywords=nhs+electrical",
+      source_url: "https://www.contractsfinder.service.gov.uk"
     },
     {
-      id: "3",
-      title: "Thames Estuary Wind Farm - Onshore Connection",
-      description: "132kV onshore electrical infrastructure connecting offshore wind farm to national grid, including new substation and 15km underground cable route.",
-      location: "Kent, South East England",
-      value: "£45M - £52M", 
-      deadline: "2024-04-10",
-      status: "open",
-      category: "Renewable Energy",
-      publishedDate: "2024-01-15",
-      requirements: [
-        "HV underground cable experience",
-        "Environmental impact mitigation",
-        "National Grid connection approval",
-        "Minimum £20M project portfolio"
-      ]
-    },
-    {
-      id: "4",
-      title: "University Campus Smart Grid Implementation",
-      description: "Installation of smart grid technology across 25 buildings including solar integration, battery storage, and intelligent load management systems.",
-      location: "Edinburgh, Scotland",
-      value: "£4.2M - £5.1M",
-      deadline: "2024-01-31",
+      id: "static-3",
+      title: "Offshore Wind Farm Grid Connection Project",
+      summary: "High voltage transmission infrastructure to connect 800MW offshore wind farm to the national grid.",
+      awarded_to: "SSE Renewables",
+      location: "East Anglia, UK", 
+      project_value: "£180M",
+      duration: "36 months",
+      date_awarded: "2024-10-01",
       status: "awarded",
-      contractor: "Scottish Power Networks",
-      category: "Smart Grid Technology",
-      publishedDate: "2023-11-20",
-      requirements: [
-        "Smart grid certification required",
-        "Solar PV integration experience",
-        "Educational sector experience preferred",
-        "Cyber security compliance essential"
-      ]
-    },
-    {
-      id: "5",
-      title: "London Data Centre Electrical Fit-Out",
-      description: "Complete electrical infrastructure for new Tier III data centre including UPS systems, emergency generators, and high-density power distribution.",
-      location: "London, Greater London",
-      value: "£8.5M - £9.8M",
-      deadline: "2024-03-20",
-      status: "in-progress", 
-      contractor: "Crown House Technologies",
-      category: "Data Centre Infrastructure",
-      publishedDate: "2023-10-15",
-      requirements: [
-        "Data centre electrical experience essential",
-        "Uptime Institute certification preferred",
-        "24/7 critical infrastructure experience",
-        "Precision cooling integration capability"
-      ]
+      category: "Energy",
+      contractorCount: 25,
+      external_project_url: "https://www.sse.com/about-us/investor-centre/debt-investors/procurement/",
+      source_url: "https://www.sse.com"
     }
   ];
 
+  // Validate project data quality
+  const isValidProject = (project: any): boolean => {
+    if (!project.title || !project.summary || !project.awarded_to) return false;
+    
+    // Filter out test data and meaningless entries
+    const title = project.title.toLowerCase();
+    const summary = project.summary.toLowerCase();
+    const awardedTo = project.awarded_to.toLowerCase();
+    
+    // Check for minimum content quality
+    if (project.title.length < 5 || project.summary.length < 10) return false;
+    
+    // Filter out obvious test data patterns
+    const testPatterns = /^[a-z]{1,5}$|^test|^example|^sample/i;
+    if (testPatterns.test(project.title) || testPatterns.test(project.awarded_to)) return false;
+    
+    // Check for meaningful content
+    const hasValidWords = title.includes('electrical') || title.includes('infrastructure') || 
+                         title.includes('project') || title.includes('contract') ||
+                         summary.includes('electrical') || summary.includes('infrastructure');
+    
+    return hasValidWords;
+  };
+
+  const fetchMajorProjects = async (): Promise<MajorProject[]> => {
+    try {
+      // First fetch existing database projects
+      const { data: dbProjects, error: dbError } = await supabase
+        .from('major_projects')
+        .select(`
+          id, title, summary, content, awarded_to, location, project_value, 
+          date_awarded, status, category, view_count, average_rating, 
+          is_active, created_at, updated_at, tender_deadline, 
+          source_url, external_project_url
+        `)
+        .eq('is_active', true)
+        .order('created_at', { ascending: false })
+        .limit(20);
+
+      if (dbError) {
+        console.error('Database error:', dbError);
+      }
+
+      // Then trigger Firecrawl scraping for new data (run in background)
+      let scrapeResult = null;
+      try {
+        const { data, error } = await supabase.functions.invoke('fetch-projects');
+        if (error) {
+          console.error('Scraping error:', error);
+        } else {
+          scrapeResult = data;
+          console.log('Scraping success:', data);
+        }
+      } catch (scrapeError) {
+        console.error('Scraping failed:', scrapeError);
+      }
+
+      // Filter and map database projects to component format  
+      const validDbProjects = (dbProjects || []).filter(isValidProject);
+      const mappedProjects: MajorProject[] = validDbProjects.map(project => ({
+        id: project.id,
+        title: project.title,
+        summary: project.summary,
+        content: project.content,
+        awarded_to: project.awarded_to,
+        location: project.location,
+        project_value: project.project_value,
+        date_awarded: project.date_awarded,
+        status: project.status,
+        category: project.category || determineSectorFromContent(project.content || project.summary),
+        view_count: project.view_count,
+        average_rating: project.average_rating,
+        contractorCount: estimateContractorCount(project.project_value),
+        duration: estimateDuration(project.content || project.summary),
+        tender_deadline: project.tender_deadline,
+        external_project_url: project.external_project_url,
+        source_url: project.source_url
+      }));
+
+      // Use live data if available and valid, otherwise fallback to static projects
+      const finalProjects = mappedProjects.length > 0 ? mappedProjects : staticProjects;
+      
+      const newProjectsCount = scrapeResult?.scrapedProjects || 0;
+      const totalProjects = mappedProjects.length;
+      const isUsingFallback = mappedProjects.length === 0;
+      
+      console.log(`Projects loaded: ${totalProjects} valid DB projects, ${finalProjects.length} total shown`);
+      
+      toast({
+        title: "Projects Updated",
+        description: isUsingFallback 
+          ? "Showing example projects - live scraping in progress" 
+          : `Showing ${totalProjects} live projects${newProjectsCount > 0 ? ` (${newProjectsCount} newly scraped)` : ''}`,
+        duration: 3000,
+      });
+
+      return finalProjects;
+
+    } catch (error) {
+      console.error('Fetch error:', error);
+      toast({
+        title: "Error",
+        description: "Failed to fetch project data, showing example projects",
+        variant: "destructive",
+        duration: 3000,
+      });
+      return staticProjects;
+    }
+  };
+
+  // Use React Query for caching
+  const { data: projects = [], isLoading, refetch } = useQuery({
+    queryKey: ['major-projects'],
+    queryFn: fetchMajorProjects,
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    gcTime: 30 * 60 * 1000, // 30 minutes (renamed from cacheTime)
+  });
+
+  const handleRefresh = async () => {
+    await queryClient.invalidateQueries({ queryKey: ['major-projects'] });
+    refetch();
+  };
+
+  // Helper functions to enrich data
+  const determineSectorFromContent = (content: string): string => {
+    if (!content) return 'Infrastructure';
+    const contentLower = content.toLowerCase();
+    if (contentLower.includes('hospital') || contentLower.includes('health')) return 'Healthcare';
+    if (contentLower.includes('transport') || contentLower.includes('railway') || contentLower.includes('underground')) return 'Transport';
+    if (contentLower.includes('school') || contentLower.includes('university')) return 'Education';
+    if (contentLower.includes('wind') || contentLower.includes('renewable') || contentLower.includes('solar')) return 'Renewable Energy';
+    if (contentLower.includes('data') || contentLower.includes('digital')) return 'Technology';
+    return 'Infrastructure';
+  };
+
+  const estimateContractorCount = (value: string | undefined): number => {
+    if (!value) return 5;
+    const numValue = parseFloat(value.replace(/[£,]/g, ''));
+    if (value.includes('billion') || numValue > 1000) return 25;
+    if (value.includes('million') || numValue > 100) return 15;
+    if (numValue > 50) return 10;
+    return 5;
+  };
+
+  const estimateDuration = (content: string): string => {
+    if (!content) return '12 months';
+    const contentLower = content.toLowerCase();
+    if (contentLower.includes('year')) return '24 months';
+    if (contentLower.includes('month')) {
+      const monthMatch = contentLower.match(/(\d+)\s*month/);
+      if (monthMatch) return `${monthMatch[1]} months`;
+    }
+    return '18 months';
+  };
+
+  const estimateDeadline = (status: string): string | undefined => {
+    if (status === 'active' || status.includes('tender')) {
+      return new Date(Date.now() + 45 * 24 * 60 * 60 * 1000).toISOString();
+    }
+    return undefined;
+  };
+
+  // Remove unused handlers
+
+  const handleViewProject = (project: MajorProject) => {
+    const projectUrl = getProjectUrl(project);
+    
+    // Track view if analytics is available
+    if (project.id && !project.id.startsWith('static-')) {
+      trackProjectView(project.id);
+    }
+    
+    window.open(projectUrl, '_blank', 'noopener,noreferrer');
+  };
+
+  const getProjectUrl = (project: MajorProject): string => {
+    // Priority 1: Direct external project URL
+    if (project.external_project_url) {
+      return project.external_project_url;
+    }
+    
+    // Priority 2: Source URL
+    if (project.source_url) {
+      return project.source_url;
+    }
+    
+    // Priority 3: Static project specific URLs
+    if (project.id.startsWith('static-')) {
+      return project.source_url || generateSearchUrl(project);
+    }
+    
+    // Fallback: Generate search URL
+    return generateSearchUrl(project);
+  };
+
+  const generateSearchUrl = (project: MajorProject): string => {
+    const searchTerm = encodeURIComponent(`${project.title} ${project.awarded_to}`);
+    return `https://www.contractsfinder.service.gov.uk/Search/Results?SearchType=1&Keywords=${searchTerm}`;
+  };
+
+  const trackProjectView = async (projectId: string) => {
+    try {
+      await supabase
+        .from('safety_content_views')
+        .insert({
+          content_type: 'major_projects',
+          content_id: projectId,
+          user_id: null // Anonymous tracking
+        });
+    } catch (error) {
+      console.error('Error tracking view:', error);
+    }
+  };
+
+  const ProjectDetailModal = ({ project }: { project: MajorProject }) => (
+    <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+      <DialogHeader>
+        <DialogTitle className="text-xl font-bold text-white">{project.title}</DialogTitle>
+      </DialogHeader>
+      
+      <div className="space-y-6">
+        {/* Status and Category Badges */}
+        <div className="flex flex-wrap gap-2">
+          <Badge className={getStatusColor(project.status)}>
+            {getStatusText(project.status)}
+          </Badge>
+          {project.category && (
+            <Badge className={getSectorColor(project.category)}>
+              {project.category}
+            </Badge>
+          )}
+        </div>
+
+        {/* Project Summary */}
+        <div>
+          <h3 className="text-lg font-semibold text-white mb-2">Project Overview</h3>
+          <p className="text-gray-300">{project.summary}</p>
+          {project.content && project.content !== project.summary && (
+            <div className="mt-3">
+              <p className="text-gray-300">{project.content}</p>
+            </div>
+          )}
+        </div>
+
+        {/* Project Details Grid */}
+        <div className="grid grid-cols-2 gap-4">
+          <div className="space-y-1">
+            <p className="text-sm text-muted-foreground">Client</p>
+            <p className="text-white font-medium">{project.awarded_to}</p>
+          </div>
+          
+          <div className="space-y-1">
+            <p className="text-sm text-muted-foreground">Contract Value</p>
+            <p className="text-white font-medium">{project.project_value || 'TBC'}</p>
+          </div>
+          
+          <div className="space-y-1">
+            <p className="text-sm text-muted-foreground">Location</p>
+            <p className="text-white font-medium">{project.location || 'UK'}</p>
+          </div>
+          
+          <div className="space-y-1">
+            <p className="text-sm text-muted-foreground">Duration</p>
+            <p className="text-white font-medium">{project.duration || '18 months'}</p>
+          </div>
+          
+          <div className="space-y-1">
+            <p className="text-sm text-muted-foreground">Start Date</p>
+            <p className="text-white font-medium">
+              {project.date_awarded 
+                ? new Date(project.date_awarded).toLocaleDateString('en-GB')
+                : 'TBC'
+              }
+            </p>
+          </div>
+          
+          <div className="space-y-1">
+            <p className="text-sm text-muted-foreground">Estimated Contractors</p>
+            <p className="text-white font-medium">{project.contractorCount || 5}</p>
+          </div>
+        </div>
+
+        {/* Deadline Info */}
+        {project.tender_deadline && getStatusText(project.status) === "Open for Tender" && (
+          <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-lg">
+            <div className="flex items-center gap-2">
+              <Calendar className="h-5 w-5 text-red-400" />
+              <div>
+                <p className="text-red-400 font-medium">Tender Deadline</p>
+                <p className="text-white">{new Date(project.tender_deadline).toLocaleDateString('en-GB')}</p>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Action Buttons */}
+        <div className="flex gap-3 pt-4 border-t border-elec-yellow/20">
+          <Button 
+            onClick={() => handleViewProject(project)}
+            className="bg-elec-yellow text-black hover:bg-elec-yellow/90"
+          >
+            <ExternalLink className="h-4 w-4 mr-2" />
+            View Project
+          </Button>
+          
+          {getStatusText(project.status) === "Open for Tender" && (
+            <Button variant="outline" className="border-elec-yellow/30 text-elec-yellow">
+              Download Tender Documents
+            </Button>
+          )}
+        </div>
+      </div>
+    </DialogContent>
+  );
+
   const getStatusColor = (status: string) => {
-    switch (status) {
-      case "open":
-        return "bg-green-500/20 text-green-400 border-green-500/30";
-      case "closing-soon":
-        return "bg-amber-500/20 text-amber-400 border-amber-500/30";
-      case "awarded":
-        return "bg-blue-500/20 text-blue-400 border-blue-500/30";
-      case "in-progress":
-        return "bg-purple-500/20 text-purple-400 border-purple-500/30";
-      default:
-        return "bg-gray-500/20 text-gray-400 border-gray-500/30";
+    const statusLower = status.toLowerCase();
+    if (statusLower.includes('tender') || statusLower === 'active') return "bg-blue-500/20 text-blue-400 border-blue-500/30";
+    if (statusLower.includes('award') || statusLower === 'awarded') return "bg-green-500/20 text-green-400 border-green-500/30";
+    if (statusLower.includes('progress')) return "bg-yellow-500/20 text-yellow-400 border-yellow-500/30";
+    if (statusLower.includes('complet')) return "bg-gray-500/20 text-gray-400 border-gray-500/30";
+    return "bg-blue-500/20 text-blue-400 border-blue-500/30";
+  };
+
+  const getSectorColor = (category: string) => {
+    if (!category) return "bg-gray-500/20 text-gray-400 border-gray-500/30";
+    switch (category.toLowerCase()) {
+      case "transport": return "bg-purple-500/20 text-purple-400 border-purple-500/30";
+      case "healthcare": return "bg-red-500/20 text-red-400 border-red-500/30";
+      case "energy": 
+      case "renewable energy": return "bg-green-500/20 text-green-400 border-green-500/30";
+      case "infrastructure": return "bg-blue-500/20 text-blue-400 border-blue-500/30";
+      case "technology": return "bg-orange-500/20 text-orange-400 border-orange-500/30";
+      case "education": return "bg-indigo-500/20 text-indigo-400 border-indigo-500/30";
+      default: return "bg-gray-500/20 text-gray-400 border-gray-500/30";
     }
   };
 
   const getStatusText = (status: string) => {
-    switch (status) {
-      case "open":
-        return "Open for Applications";
-      case "closing-soon":
-        return "Closing Soon";
-      case "awarded":
-        return "Contract Awarded";
-      case "in-progress":
-        return "Project In Progress";
-      default:
-        return status;
-    }
-  };
-
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-GB', {
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric'
-    });
-  };
-
-  const getDaysUntilDeadline = (deadline: string) => {
-    const today = new Date();
-    const deadlineDate = new Date(deadline);
-    const diffTime = deadlineDate.getTime() - today.getTime();
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    return diffDays;
+    const statusLower = status.toLowerCase();
+    if (statusLower.includes('tender') || statusLower === 'active') return "Open for Tender";
+    if (statusLower.includes('award') || statusLower === 'awarded') return "Contract Awarded";
+    if (statusLower.includes('progress')) return "In Progress";
+    if (statusLower.includes('complet')) return "Completed";
+    return "Active";
   };
 
   return (
-    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <div className="grid gap-6 md:gap-8">
-        {projects.map((project) => {
-          const daysLeft = getDaysUntilDeadline(project.deadline);
-          
-          return (
-            <Card key={project.id} className="border-elec-yellow/20 bg-elec-card hover:border-elec-yellow/40 transition-all duration-300">
-              <CardHeader className="space-y-4">
-                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
-                  <div className="space-y-2 flex-1">
-                    <div className="flex flex-wrap items-center gap-2">
-                      <Badge className={`border ${getStatusColor(project.status)}`}>
-                        {getStatusText(project.status)}
-                      </Badge>
-                      {daysLeft > 0 && daysLeft <= 7 && project.status === "open" && (
-                        <Badge className="bg-red-500/20 text-red-400 border-red-500/30">
-                          {daysLeft} day{daysLeft !== 1 ? 's' : ''} left
-                        </Badge>
-                      )}
-                      <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
-                        {project.category}
-                      </Badge>
-                    </div>
-                    
-                    <CardTitle className="text-xl sm:text-2xl text-white leading-tight">
-                      {project.title}
-                    </CardTitle>
-                  </div>
-                  
-                  <div className="flex items-center gap-2 text-2xl sm:text-3xl font-bold text-elec-yellow">
-                    <PoundSterling className="h-6 w-6 sm:h-8 sm:w-8" />
-                    <span className="text-lg sm:text-xl">{project.value}</span>
-                  </div>
-                </div>
-                
-                <CardDescription className="text-base text-gray-300 leading-relaxed">
-                  {project.description}
-                </CardDescription>
-                
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
-                  <div className="flex items-center gap-2 text-gray-300">
-                    <MapPin className="h-4 w-4 text-elec-yellow flex-shrink-0" />
-                    <span>{project.location}</span>
-                  </div>
-                  
-                  <div className="flex items-center gap-2 text-gray-300">
-                    <Calendar className="h-4 w-4 text-elec-yellow flex-shrink-0" />
-                    <span>Deadline: {formatDate(project.deadline)}</span>
-                  </div>
-                  
-                  <div className="flex items-center gap-2 text-gray-300">
-                    <Clock className="h-4 w-4 text-elec-yellow flex-shrink-0" />
-                    <span>Published: {formatDate(project.publishedDate)}</span>
-                  </div>
-                  
-                  {project.contractor && (
-                    <div className="flex items-center gap-2 text-gray-300 sm:col-span-2 lg:col-span-1">
-                      <Building2 className="h-4 w-4 text-elec-yellow flex-shrink-0" />
-                      <span>Awarded to: {project.contractor}</span>
-                    </div>
-                  )}
-                </div>
-              </CardHeader>
+      <div className="space-y-6">
+        <div className="flex items-center justify-between">
+          <div>
+            <h2 className="text-2xl font-bold text-white">Major Projects</h2>
+            <p className="text-muted-foreground">
+              Latest electrical infrastructure projects and contract opportunities
+            </p>
+          </div>
+          <div className="flex gap-2">
+            <Button
+              onClick={handleRefresh}
+              disabled={isLoading}
+              size="sm"
+              variant="outline"
+              className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+            >
+              <RefreshCw className={`h-4 w-4 mr-2 ${isLoading ? 'animate-spin' : ''}`} />
+              Refresh
+            </Button>
+            <Button 
+              onClick={() => setIsSubmissionDialogOpen(true)}
+              className="bg-elec-yellow text-black hover:bg-elec-yellow/90"
+            >
+              <Building2 className="h-4 w-4 mr-2" />
+              Submit Project
+            </Button>
+          </div>
+        </div>
+
+        {/* Live data notification removed - now automatic */}
+
+      <div className="grid gap-4 sm:gap-6 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
+        {projects.map((project) => (
+          <Card key={project.id} className="group hover:shadow-lg transition-all duration-300 border border-elec-yellow/10 bg-elec-card hover:border-elec-yellow/20 w-full min-w-0">
+            <CardHeader className="pb-4">
+              {/* Tags at the top */}
+              <div className="flex flex-wrap items-center gap-2 mb-4">
+                <Badge className={getStatusColor(project.status)}>
+                  {getStatusText(project.status)}
+                </Badge>
+                {project.category && (
+                  <Badge className={getSectorColor(project.category)}>
+                    {project.category}
+                  </Badge>
+                )}
+                {project.tender_deadline && getStatusText(project.status) === "Open for Tender" && (
+                  <Badge className="bg-red-500/20 text-red-400 border-red-500/30">
+                    Deadline: {new Date(project.tender_deadline).toLocaleDateString('en-GB')}
+                  </Badge>
+                )}
+              </div>
               
-              <CardContent className="space-y-6">
-                <div>
-                  <h4 className="font-semibold text-white mb-3 flex items-center gap-2">
-                    <Users className="h-4 w-4 text-elec-yellow" />
-                    Key Requirements
-                  </h4>
-                  <ul className="space-y-2">
-                    {project.requirements.map((req, index) => (
-                      <li key={index} className="flex items-start gap-2 text-sm text-gray-300">
-                        <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0" />
-                        <span>{req}</span>
-                      </li>
-                    ))}
-                  </ul>
+              {/* Project Title - Bold and centered */}
+              <CardTitle className="text-xl font-bold text-center text-white mb-3 line-clamp-2">
+                {project.title}
+              </CardTitle>
+              
+              {/* Short Description */}
+              <p className="text-gray-300 text-sm text-center mb-3 line-clamp-3">
+                {project.summary}
+              </p>
+              
+              {/* Client */}
+              <div className="text-center mb-4">
+                <span className="text-sm text-muted-foreground">
+                  Client: <span className="text-elec-yellow hover:text-elec-yellow/80 transition-colors cursor-pointer">{project.awarded_to}</span>
+                </span>
+              </div>
+            </CardHeader>
+
+            <CardContent className="pt-0">
+              {/* Key Info Row - 4 icons with labels */}
+              <div className="grid grid-cols-2 gap-4 mb-6">
+                <div className="text-center">
+                  <div className="flex justify-center mb-1">
+                    <PoundSterling className="h-5 w-5 text-elec-yellow" />
+                  </div>
+                  <div className="text-white font-medium text-sm">{project.project_value || 'TBC'}</div>
+                  <div className="text-xs text-muted-foreground">Contract Value</div>
                 </div>
-              </CardContent>
-            </Card>
-          );
-        })}
+                
+                <div className="text-center">
+                  <div className="flex justify-center mb-1">
+                    <Clock className="h-5 w-5 text-elec-yellow" />
+                  </div>
+                  <div className="text-white font-medium text-sm">{project.duration || '18 months'}</div>
+                  <div className="text-xs text-muted-foreground">Duration</div>
+                </div>
+                
+                <div className="text-center">
+                  <div className="flex justify-center mb-1">
+                    <MapPin className="h-5 w-5 text-elec-yellow" />
+                  </div>
+                  <div className="text-white font-medium text-sm">{project.location || 'UK'}</div>
+                  <div className="text-xs text-muted-foreground">Location</div>
+                </div>
+                
+                <div className="text-center">
+                  <div className="flex justify-center mb-1">
+                    <Users className="h-5 w-5 text-elec-yellow" />
+                  </div>
+                  <div className="text-white font-medium text-sm">{project.contractorCount || 5}</div>
+                  <div className="text-xs text-muted-foreground">Contractors</div>
+                </div>
+              </div>
+
+              {/* Bottom Section */}
+              <div className="flex items-center justify-between">
+                {/* Start Date - Bottom left with calendar icon */}
+                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <Calendar className="h-4 w-4" />
+                  <span>
+                    {project.date_awarded 
+                      ? new Date(project.date_awarded).toLocaleDateString('en-GB')
+                      : 'TBC'
+                    }
+                  </span>
+                </div>
+                
+                {/* Bookmark button - Top right */}
+                <Button size="sm" variant="ghost" className="hover:bg-elec-yellow/10">
+                  <Bookmark className="h-4 w-4" />
+                </Button>
+              </div>
+              
+              {/* Action Buttons - Bottom right */}
+              <div className="flex flex-col sm:flex-row gap-2 mt-4 w-full sm:justify-end">
+                {getStatusText(project.status) === "Open for Tender" && (
+                  <Button size="sm" className="bg-elec-yellow text-black hover:bg-elec-yellow/90 font-medium w-full sm:w-auto text-xs sm:text-sm">
+                    <span className="hidden sm:inline">View Tender Details</span>
+                    <span className="sm:hidden">Tender</span>
+                  </Button>
+                )}
+                
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button 
+                      size="sm" 
+                      variant="outline" 
+                      className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 font-medium w-full sm:w-auto text-xs sm:text-sm"
+                    >
+                      <Eye className="h-4 w-4 mr-1 sm:mr-2" />
+                      <span className="hidden sm:inline">View Details</span>
+                      <span className="sm:hidden">Details</span>
+                    </Button>
+                  </DialogTrigger>
+                  <ProjectDetailModal project={project} />
+                </Dialog>
+                
+                <Button 
+                  size="sm" 
+                  variant="outline" 
+                  className="border-elec-dark bg-elec-dark text-white hover:bg-elec-dark/80 font-medium w-full sm:w-auto text-xs sm:text-sm"
+                  onClick={() => handleViewProject(project)}
+                >
+                  <ExternalLink className="h-4 w-4 mr-1 sm:mr-2" />
+                  <span className="hidden sm:inline">View Project</span>
+                  <span className="sm:hidden">Project</span>
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        ))}
       </div>
+
+      <div className="text-center pt-4">
+        <Button 
+          variant="outline" 
+          className="border-elec-yellow/30 text-white hover:bg-elec-yellow/10"
+          onClick={() => navigate('/electrician/safety-shares/projects')}
+        >
+          View All Projects ({projects.length})
+        </Button>
+      </div>
+
+      {/* API Key dialog removed - now handled automatically */}
       
-      <div className="text-center mt-12 py-8 border-t border-elec-yellow/20">
-        <p className="text-muted-foreground mb-4">
-          Want to be notified about new major projects and tender opportunities?
-        </p>
-        <p className="text-sm text-gray-400">
-          Upgrade to Elec-Mate Pro for instant notifications and detailed tender documents
-        </p>
-      </div>
+      <ProjectSubmissionDialog
+        open={isSubmissionDialogOpen}
+        onOpenChange={setIsSubmissionDialogOpen}
+        onProjectSubmitted={handleRefresh}
+      />
     </div>
   );
 };
