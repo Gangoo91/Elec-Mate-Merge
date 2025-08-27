@@ -235,12 +235,10 @@ export const processReportMarkdown = (text: string): React.ReactNode => {
       return;
     }
     
+    
     if (!line) {
       flushTable();
       flushList();
-      if (elements.length > 0) {
-        elements.push(<div key={`spacer-${key++}`} className="h-4" />);
-      }
       return;
     }
 
