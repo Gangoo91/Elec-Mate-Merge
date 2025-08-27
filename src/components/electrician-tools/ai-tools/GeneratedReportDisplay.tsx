@@ -138,16 +138,16 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
   return (
     <Card className="bg-card border-border/30">
       {/* Header */}
-      <div className="border-b border-border/20 p-6">
-        <div className="flex items-center justify-between">
+      <div className="border-b border-border/20 p-4 sm:p-6">
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
           <div className="flex items-center gap-4">
             <div className="p-3 bg-primary/10 rounded-lg">
               <FileText className="h-6 w-6 text-primary" />
             </div>
-            <div>
+            <div className="min-w-0 flex-1">
               <h2 className="text-xl font-bold text-foreground">Generated Report</h2>
-              <div className="flex items-center gap-3 mt-1">
-                <Badge variant="secondary" className="text-xs">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mt-1">
+                <Badge variant="secondary" className="text-xs w-fit">
                   {reportTypeMap[template] || template.toUpperCase()}
                 </Badge>
                 <div className="flex items-center gap-1 text-sm text-muted-foreground">
@@ -159,65 +159,71 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
           </div>
           
           {/* Action Buttons */}
-          <div className="flex items-center gap-2">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => adjustZoom('out')}
-              disabled={zoomLevel <= 80}
-              className="h-8 w-8 p-0"
-            >
-              <ZoomOut className="h-3 w-3" />
-            </Button>
-            <span className="text-xs text-muted-foreground min-w-[40px] text-center">
-              {zoomLevel}%
-            </span>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => adjustZoom('in')}
-              disabled={zoomLevel >= 150}
-              className="h-8 w-8 p-0"
-            >
-              <ZoomIn className="h-3 w-3" />
-            </Button>
-            <Separator orientation="vertical" className="h-6" />
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={handleCopy}
-              className="border-primary/30 text-primary hover:bg-primary/10"
-            >
-              {copied ? (
-                <>
-                  <Check className="h-3 w-3 mr-1" />
-                  Copied
-                </>
-              ) : (
-                <>
-                  <Copy className="h-3 w-3 mr-1" />
-                  Copy
-                </>
-              )}
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={handleDownload}
-              className="border-primary/30 text-primary hover:bg-primary/10"
-            >
-              <Download className="h-3 w-3 mr-1" />
-              Download
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={handlePrint}
-              className="border-primary/30 text-primary hover:bg-primary/10"
-            >
-              <Printer className="h-3 w-3 mr-1" />
-              Print
-            </Button>
+          <div className="flex items-center gap-2 flex-wrap">
+            <div className="flex items-center gap-1 bg-muted/30 rounded-lg p-1">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => adjustZoom('out')}
+                disabled={zoomLevel <= 80}
+                className="h-8 w-8 p-0 border-0 bg-transparent hover:bg-muted"
+              >
+                <ZoomOut className="h-3 w-3" />
+              </Button>
+              <span className="text-xs text-muted-foreground min-w-[40px] text-center px-2">
+                {zoomLevel}%
+              </span>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => adjustZoom('in')}
+                disabled={zoomLevel >= 150}
+                className="h-8 w-8 p-0 border-0 bg-transparent hover:bg-muted"
+              >
+                <ZoomIn className="h-3 w-3" />
+              </Button>
+            </div>
+            
+            <Separator orientation="vertical" className="h-6 hidden sm:block" />
+            
+            <div className="flex items-center gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleCopy}
+                className="border-primary/30 text-primary hover:bg-primary/10"
+              >
+                {copied ? (
+                  <>
+                    <Check className="h-3 w-3 mr-1" />
+                    <span className="hidden sm:inline">Copied</span>
+                  </>
+                ) : (
+                  <>
+                    <Copy className="h-3 w-3 mr-1" />
+                    <span className="hidden sm:inline">Copy</span>
+                  </>
+                )}
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleDownload}
+                className="border-primary/30 text-primary hover:bg-primary/10"
+              >
+                <Download className="h-3 w-3 mr-1" />
+                <span className="hidden sm:inline">Download</span>
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handlePrint}
+                className="border-primary/30 text-primary hover:bg-primary/10"
+              >
+                <Printer className="h-3 w-3 mr-1" />
+                <span className="hidden sm:inline">Print</span>
+              </Button>
+            </div>
           </div>
         </div>
       </div>
