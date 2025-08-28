@@ -89,7 +89,7 @@ export const MarkdownViewer: React.FC<MarkdownViewerProps> = ({
             </th>
           ),
           td: ({ children }) => (
-            <td className="p-2 text-foreground font-normal">
+            <td className="p-2 text-[hsl(var(--text-muted))] font-normal">
               {processElectricalContent(children)}
             </td>
           ),
@@ -107,7 +107,7 @@ export const MarkdownViewer: React.FC<MarkdownViewerProps> = ({
                 <Card className="bg-red-500/5 border-red-500/20 p-4 my-4">
                   <div className="flex items-start gap-3 text-left">
                     <AlertTriangle className="h-5 w-5 text-red-500 mt-0.5 flex-shrink-0" />
-                    <div className="text-foreground text-left font-normal">
+                    <div className="text-[hsl(var(--text-muted))] text-left font-normal">
                       {content}
                     </div>
                   </div>
@@ -116,7 +116,7 @@ export const MarkdownViewer: React.FC<MarkdownViewerProps> = ({
             }
             
             return (
-              <div className="text-foreground leading-relaxed text-left font-normal mb-4">
+              <div className="text-[hsl(var(--text-muted))] leading-relaxed text-left font-normal mb-4">
                 {content}
               </div>
             );
@@ -134,7 +134,7 @@ export const MarkdownViewer: React.FC<MarkdownViewerProps> = ({
             </ol>
           ),
           li: ({ children }) => (
-            <li className="text-foreground font-normal">
+            <li className="text-[hsl(var(--text-muted))] font-normal">
               {processElectricalContent(children)}
             </li>
           ),
@@ -142,7 +142,7 @@ export const MarkdownViewer: React.FC<MarkdownViewerProps> = ({
           // Custom code block styling
           pre: ({ children }) => (
             <Card className="bg-muted/30 border-border/30 p-4 my-4">
-              <pre className="text-sm text-foreground whitespace-pre-wrap font-mono overflow-x-auto">
+              <pre className="text-sm text-[hsl(var(--text-muted))] whitespace-pre-wrap font-mono overflow-x-auto">
                 {children}
               </pre>
             </Card>
@@ -151,7 +151,7 @@ export const MarkdownViewer: React.FC<MarkdownViewerProps> = ({
             // Inline code
             if (!className) {
               return (
-                <code className="bg-muted px-1.5 py-0.5 rounded text-sm font-mono text-foreground">
+                <code className="bg-muted px-1.5 py-0.5 rounded text-sm font-mono text-[hsl(var(--text-muted))]">
                   {children}
                 </code>
               );
@@ -175,7 +175,7 @@ export const MarkdownViewer: React.FC<MarkdownViewerProps> = ({
           // Custom blockquote styling
           blockquote: ({ children }) => (
             <Card className="bg-muted/20 border-l-4 border-primary p-4 my-4">
-              <div className="text-foreground italic">
+              <div className="text-[hsl(var(--text-muted))] italic">
                 {children}
               </div>
             </Card>
@@ -188,7 +188,7 @@ export const MarkdownViewer: React.FC<MarkdownViewerProps> = ({
             </strong>
           ),
           em: ({ children }) => (
-            <em className="italic text-foreground">
+            <em className="italic text-[hsl(var(--text-muted))]">
               {children}
             </em>
           ),
