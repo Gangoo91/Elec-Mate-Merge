@@ -162,35 +162,49 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
       .replace(/`(.*?)`/g, '$1')       // Remove code markers
       .trim();
 
-    // Use jsPDF's built-in text splitting for proper word wrapping
-    const availableWidth = maxWidth - 10; // Leave some space for badges
-    const lines = doc.splitTextToSize(cleanText, availableWidth);
-    
+    const availableWidth = maxWidth - 5; // Reduced margin for more space
+    const lineHeight = 10; // Reduced from 14 to minimize white space
     let currentY = y;
+    
+    // Split text into words for precise width management
+    const words = cleanText.split(/\s+/);
+    let currentLine: string[] = [];
+    let currentLineWidth = 0;
 
-    // Process each line for electrical badges
-    for (const line of lines) {
-      // Split line by spaces to identify electrical badges
-      const words = line.split(' ');
+    const getBadgeInfo = (word: string) => {
+      if (word.match(/^(C1|C2|C3|FI|\d+\.\d*[AΩV]?|\d+[AΩV]|PASS|FAIL|BS\s*7671|✓|✗|\d+mm²?|SATISFACTORY|UNSATISFACTORY|DANGER)$/i)) {
+        return {
+          isBadge: true,
+          width: doc.getTextWidth(word) + 6 + 4 // badge width + padding + spacing
+        };
+      }
+      return {
+        isBadge: false,
+        width: doc.getTextWidth(word)
+      };
+    };
+
+    const renderCurrentLine = () => {
+      if (currentLine.length === 0) return;
+      
       let currentX = x;
-      let currentLineText = '';
-
-      for (let i = 0; i < words.length; i++) {
-        const word = words[i].trim();
+      let textBuffer = '';
+      
+      currentLine.forEach((word, index) => {
+        const { isBadge } = getBadgeInfo(word);
         
-        // Check for electrical badges with more comprehensive pattern
-        if (word.match(/^(C1|C2|C3|FI|\d+\.\d*[AΩV]?|\d+[AΩV]|PASS|FAIL|BS\s*7671|✓|✗|\d+mm²?|SATISFACTORY|UNSATISFACTORY|DANGER)$/i)) {
+        if (isBadge) {
           // Render accumulated text first
-          if (currentLineText.trim()) {
+          if (textBuffer.trim()) {
             doc.setTextColor(0, 0, 0);
             doc.setFont(undefined, 'normal');
             doc.setFontSize(10);
-            doc.text(currentLineText.trim(), currentX, currentY);
-            currentX += doc.getTextWidth(currentLineText.trim()) + 2;
-            currentLineText = '';
+            doc.text(textBuffer.trim(), currentX, currentY);
+            currentX += doc.getTextWidth(textBuffer.trim()) + 2;
+            textBuffer = '';
           }
           
-          // Render electrical badge
+          // Render badge
           const badgeWidth = doc.getTextWidth(word) + 6;
           
           // Determine badge colors
@@ -236,26 +250,48 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
           doc.setFontSize(8);
           doc.text(word, currentX + 3, currentY - 0.5);
           
-          currentX += badgeWidth + 4; // Space after badge
+          currentX += badgeWidth + 4;
         } else {
-          // Accumulate regular text
-          currentLineText += (currentLineText ? ' ' : '') + word;
+          // Add to text buffer
+          textBuffer += (textBuffer ? ' ' : '') + word;
         }
-      }
+      });
       
-      // Render any remaining text on the line
-      if (currentLineText.trim()) {
+      // Render any remaining text
+      if (textBuffer.trim()) {
         doc.setTextColor(0, 0, 0);
         doc.setFont(undefined, 'normal');
         doc.setFontSize(10);
-        doc.text(currentLineText.trim(), currentX, currentY);
+        doc.text(textBuffer.trim(), currentX, currentY);
       }
       
-      // Move to next line with increased spacing for better readability
-      currentY += 14;
-    }
+      currentY += lineHeight;
+      currentLine = [];
+      currentLineWidth = 0;
+    };
+
+    // Process words with width tracking
+    words.forEach((word, index) => {
+      const { width } = getBadgeInfo(word);
+      const spaceWidth = currentLine.length > 0 ? doc.getTextWidth(' ') : 0;
+      
+      // Check if adding this word would exceed available width
+      if (currentLineWidth + spaceWidth + width > availableWidth && currentLine.length > 0) {
+        // Render current line and start new line
+        renderCurrentLine();
+      }
+      
+      // Add word to current line
+      currentLine.push(word);
+      currentLineWidth += spaceWidth + width;
+      
+      // If this is the last word, render the final line
+      if (index === words.length - 1) {
+        renderCurrentLine();
+      }
+    });
     
-    return currentY + 4; // Add some space after the text block
+    return currentY + 2; // Reduced spacing after text block
   };
 
   // Preprocess markdown content to clean up formatting
