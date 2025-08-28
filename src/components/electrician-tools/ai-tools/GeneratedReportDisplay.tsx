@@ -155,126 +155,107 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
   };
 
   const renderTextWithBadges = (doc: jsPDF, text: string, x: number, y: number, maxWidth: number): number => {
-    const { processedText, badges } = processElectricalElementsForPDF(text);
+    // Clean up any remaining markdown syntax
+    let cleanText = text
+      .replace(/\*\*(.*?)\*\*/g, '$1') // Remove bold markers
+      .replace(/\*(.*?)\*/g, '$1')     // Remove italic markers
+      .replace(/`(.*?)`/g, '$1')       // Remove code markers
+      .trim();
+
+    // Use jsPDF's built-in text splitting for proper word wrapping
+    const availableWidth = maxWidth - 10; // Leave some space for badges
+    const lines = doc.splitTextToSize(cleanText, availableWidth);
     
-    // Process bold and italic formatting
-    let finalText = processedText;
-    const formattingInfo: Array<{start: number, end: number, style: 'bold' | 'italic'}> = [];
-    
-    // Find bold text **text**
-    let boldMatch;
-    const boldRegex = /\*\*(.*?)\*\*/g;
-    while ((boldMatch = boldRegex.exec(finalText)) !== null) {
-      formattingInfo.push({
-        start: boldMatch.index,
-        end: boldMatch.index + boldMatch[1].length,
-        style: 'bold'
-      });
-    }
-    finalText = finalText.replace(/\*\*(.*?)\*\*/g, '$1');
-    
-    // Find italic text *text*
-    let italicMatch;
-    const italicRegex = /\*(.*?)\*/g;
-    while ((italicMatch = italicRegex.exec(finalText)) !== null) {
-      formattingInfo.push({
-        start: italicMatch.index,
-        end: italicMatch.index + italicMatch[1].length,
-        style: 'italic'
-      });
-    }
-    finalText = finalText.replace(/\*(.*?)\*/g, '$1');
-    
-    // Split by badge placeholders
-    const parts = finalText.split(/\s*\[(BS7671_BADGE|SUCCESS_BADGE|ERROR_BADGE|CODE_BADGE|MEASUREMENT)\]\s*/);
-    let currentX = x;
-    let badgeIndex = 0;
-    
-    for (let i = 0; i < parts.length; i++) {
-      const part = parts[i];
-      
-      if (['BS7671_BADGE', 'SUCCESS_BADGE', 'ERROR_BADGE', 'CODE_BADGE', 'MEASUREMENT'].includes(part)) {
-        // This is a badge placeholder
-        if (badgeIndex < badges.length) {
-          const badge = badges[badgeIndex];
-          const badgeWidth = doc.getTextWidth(badge.text) + 4;
+    let currentY = y;
+
+    // Process each line for electrical badges
+    for (const line of lines) {
+      // Split line by spaces to identify electrical badges
+      const words = line.split(' ');
+      let currentX = x;
+      let currentLineText = '';
+
+      for (let i = 0; i < words.length; i++) {
+        const word = words[i].trim();
+        
+        // Check for electrical badges with more comprehensive pattern
+        if (word.match(/^(C1|C2|C3|FI|\d+\.\d*[AΩV]?|\d+[AΩV]|PASS|FAIL|BS\s*7671|✓|✗|\d+mm²?|SATISFACTORY|UNSATISFACTORY|DANGER)$/i)) {
+          // Render accumulated text first
+          if (currentLineText.trim()) {
+            doc.setTextColor(0, 0, 0);
+            doc.setFont(undefined, 'normal');
+            doc.setFontSize(10);
+            doc.text(currentLineText.trim(), currentX, currentY);
+            currentX += doc.getTextWidth(currentLineText.trim()) + 2;
+            currentLineText = '';
+          }
           
-          // Badge colors
+          // Render electrical badge
+          const badgeWidth = doc.getTextWidth(word) + 6;
+          
+          // Determine badge colors
           let fillColor: number[], textColor: number[];
-          switch (badge.type) {
-            case 'bs7671':
-              fillColor = [255, 215, 0]; // Yellow
-              textColor = [0, 0, 0];
-              break;
-            case 'success':
-              fillColor = [76, 175, 80]; // Green
-              textColor = [255, 255, 255];
-              break;
-            case 'error':
-              fillColor = [244, 67, 54]; // Red
-              textColor = [255, 255, 255];
-              break;
-            case 'code-c1':
-              fillColor = [244, 67, 54]; // Red
-              textColor = [255, 255, 255];
-              break;
-            case 'code-c2':
-              fillColor = [255, 152, 0]; // Orange
-              textColor = [255, 255, 255];
-              break;
-            case 'code-c3':
-              fillColor = [255, 193, 7]; // Amber
-              textColor = [0, 0, 0];
-              break;
-            case 'code-fi':
-              fillColor = [33, 150, 243]; // Blue
-              textColor = [255, 255, 255];
-              break;
-            case 'measurement':
-              fillColor = [255, 235, 59]; // Light yellow
-              textColor = [0, 0, 0];
-              break;
-            default:
-              fillColor = [224, 224, 224];
-              textColor = [0, 0, 0];
+          if (word.match(/^(C1|DANGER|FAIL|UNSATISFACTORY)$/i)) {
+            fillColor = [244, 67, 54]; // Red
+            textColor = [255, 255, 255];
+          } else if (word.match(/^C2$/i)) {
+            fillColor = [255, 152, 0]; // Orange
+            textColor = [255, 255, 255];
+          } else if (word.match(/^C3$/i)) {
+            fillColor = [255, 193, 7]; // Amber
+            textColor = [0, 0, 0];
+          } else if (word.match(/^FI$/i)) {
+            fillColor = [33, 150, 243]; // Blue
+            textColor = [255, 255, 255];
+          } else if (word.match(/^(PASS|SATISFACTORY|✓)$/i)) {
+            fillColor = [76, 175, 80]; // Green
+            textColor = [255, 255, 255];
+          } else if (word.match(/BS\s*7671/i)) {
+            fillColor = [255, 215, 0]; // Yellow
+            textColor = [0, 0, 0];
+          } else if (word.match(/\d+\.?\d*[AΩV]?|\d+mm²?/i)) {
+            fillColor = [255, 235, 59]; // Light yellow
+            textColor = [0, 0, 0];
+          } else {
+            fillColor = [224, 224, 224]; // Default grey
+            textColor = [0, 0, 0];
           }
           
           // Draw badge background
           doc.setFillColor(fillColor[0], fillColor[1], fillColor[2]);
-          doc.roundedRect(currentX, y - 4, badgeWidth, 6, 1, 1, 'F');
+          doc.roundedRect(currentX, currentY - 4, badgeWidth, 7, 1, 1, 'F');
           
           // Draw badge border
           doc.setDrawColor(fillColor[0] * 0.8, fillColor[1] * 0.8, fillColor[2] * 0.8);
           doc.setLineWidth(0.2);
-          doc.roundedRect(currentX, y - 4, badgeWidth, 6, 1, 1, 'S');
+          doc.roundedRect(currentX, currentY - 4, badgeWidth, 7, 1, 1, 'S');
           
           // Draw badge text
           doc.setTextColor(textColor[0], textColor[1], textColor[2]);
           doc.setFont(undefined, 'bold');
           doc.setFontSize(8);
-          doc.text(badge.text, currentX + 2, y - 0.5);
+          doc.text(word, currentX + 3, currentY - 0.5);
           
-          currentX += badgeWidth + 3;
-          badgeIndex++;
+          currentX += badgeWidth + 4; // Space after badge
+        } else {
+          // Accumulate regular text
+          currentLineText += (currentLineText ? ' ' : '') + word;
         }
-      } else if (part.trim()) {
-        // Regular text
+      }
+      
+      // Render any remaining text on the line
+      if (currentLineText.trim()) {
         doc.setTextColor(0, 0, 0);
         doc.setFont(undefined, 'normal');
         doc.setFontSize(10);
-        
-        // Check if we need to wrap text
-        if (currentX + doc.getTextWidth(part) > x + maxWidth) {
-          y += 6;
-          currentX = x;
-        }
-        
-        doc.text(part, currentX, y);
-        currentX += doc.getTextWidth(part);
+        doc.text(currentLineText.trim(), currentX, currentY);
       }
+      
+      // Move to next line with increased spacing for better readability
+      currentY += 14;
     }
     
-    return y;
+    return currentY + 4; // Add some space after the text block
   };
 
   // Preprocess markdown content to clean up formatting
