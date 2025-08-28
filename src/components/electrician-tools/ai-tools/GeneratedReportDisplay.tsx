@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -16,8 +16,7 @@ import {
 } from 'lucide-react';
 import { MarkdownViewer } from '@/components/ui/MarkdownViewer';
 import { useToast } from '@/hooks/use-toast';
-import jsPDF from 'jspdf';
-import autoTable from 'jspdf-autotable';
+import html2pdf from 'html2pdf.js';
 
 interface GeneratedReportDisplayProps {
   report: string;
@@ -33,6 +32,7 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
   const { toast } = useToast();
   const [copied, setCopied] = useState(false);
   const [zoomLevel, setZoomLevel] = useState(100);
+  const reportRef = useRef<HTMLDivElement>(null);
 
   const reportTypeMap = {
     'eicr': 'EICR - Electrical Installation Condition Report',
@@ -117,349 +117,40 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
     }
   };
 
-  // Function to process electrical elements for PDF
-  const processElectricalElementsForPDF = (text: string): { processedText: string; badges: Array<{text: string, type: string, x: number, width: number}> } => {
-    const badges: Array<{text: string, type: string, x: number, width: number}> = [];
-    let processedText = text;
-    
-    // Process BS 7671 compliance badges
-    processedText = processedText.replace(/(\[BS 7671[^\]]*\])/g, (match) => {
-      badges.push({ text: match, type: 'bs7671', x: 0, width: 0 });
-      return ` [BS7671_BADGE] `;
-    });
-    
-    // Process result badges
-    processedText = processedText.replace(/\b(PASS|SATISFACTORY)\b/g, (match) => {
-      badges.push({ text: match, type: 'success', x: 0, width: 0 });
-      return ` [SUCCESS_BADGE] `;
-    });
-    
-    processedText = processedText.replace(/\b(FAIL|UNSATISFACTORY|DANGER)\b/g, (match) => {
-      badges.push({ text: match, type: 'error', x: 0, width: 0 });
-      return ` [ERROR_BADGE] `;
-    });
-    
-    // Process code classifications
-    processedText = processedText.replace(/\b(C1|C2|C3|FI)\b/g, (match) => {
-      badges.push({ text: match, type: `code-${match.toLowerCase()}`, x: 0, width: 0 });
-      return ` [CODE_BADGE] `;
-    });
-    
-    // Process measurements
-    processedText = processedText.replace(/(\d+\.?\d*)\s*(Ω|V|A|kW|Hz|mm²?|m)\b/g, (match) => {
-      badges.push({ text: match, type: 'measurement', x: 0, width: 0 });
-      return ` [MEASUREMENT] `;
-    });
-    
-    return { processedText, badges };
-  };
+  const generateReportPDF = (): void => {
+    if (!reportRef.current) return;
 
-  const renderTextWithBadges = (doc: jsPDF, text: string, x: number, y: number, maxWidth: number): number => {
-    const { processedText, badges } = processElectricalElementsForPDF(text);
-    
-    // Process bold and italic formatting
-    let finalText = processedText;
-    const formattingInfo: Array<{start: number, end: number, style: 'bold' | 'italic'}> = [];
-    
-    // Find bold text **text**
-    let boldMatch;
-    const boldRegex = /\*\*(.*?)\*\*/g;
-    while ((boldMatch = boldRegex.exec(finalText)) !== null) {
-      formattingInfo.push({
-        start: boldMatch.index,
-        end: boldMatch.index + boldMatch[1].length,
-        style: 'bold'
-      });
-    }
-    finalText = finalText.replace(/\*\*(.*?)\*\*/g, '$1');
-    
-    // Find italic text *text*
-    let italicMatch;
-    const italicRegex = /\*(.*?)\*/g;
-    while ((italicMatch = italicRegex.exec(finalText)) !== null) {
-      formattingInfo.push({
-        start: italicMatch.index,
-        end: italicMatch.index + italicMatch[1].length,
-        style: 'italic'
-      });
-    }
-    finalText = finalText.replace(/\*(.*?)\*/g, '$1');
-    
-    // Split by badge placeholders
-    const parts = finalText.split(/\s*\[(BS7671_BADGE|SUCCESS_BADGE|ERROR_BADGE|CODE_BADGE|MEASUREMENT)\]\s*/);
-    let currentX = x;
-    let badgeIndex = 0;
-    
-    for (let i = 0; i < parts.length; i++) {
-      const part = parts[i];
-      
-      if (['BS7671_BADGE', 'SUCCESS_BADGE', 'ERROR_BADGE', 'CODE_BADGE', 'MEASUREMENT'].includes(part)) {
-        // This is a badge placeholder
-        if (badgeIndex < badges.length) {
-          const badge = badges[badgeIndex];
-          const badgeWidth = doc.getTextWidth(badge.text) + 4;
-          
-          // Badge colors
-          let fillColor: number[], textColor: number[];
-          switch (badge.type) {
-            case 'bs7671':
-              fillColor = [255, 215, 0]; // Yellow
-              textColor = [0, 0, 0];
-              break;
-            case 'success':
-              fillColor = [76, 175, 80]; // Green
-              textColor = [255, 255, 255];
-              break;
-            case 'error':
-              fillColor = [244, 67, 54]; // Red
-              textColor = [255, 255, 255];
-              break;
-            case 'code-c1':
-              fillColor = [244, 67, 54]; // Red
-              textColor = [255, 255, 255];
-              break;
-            case 'code-c2':
-              fillColor = [255, 152, 0]; // Orange
-              textColor = [255, 255, 255];
-              break;
-            case 'code-c3':
-              fillColor = [255, 193, 7]; // Amber
-              textColor = [0, 0, 0];
-              break;
-            case 'code-fi':
-              fillColor = [33, 150, 243]; // Blue
-              textColor = [255, 255, 255];
-              break;
-            case 'measurement':
-              fillColor = [255, 235, 59]; // Light yellow
-              textColor = [0, 0, 0];
-              break;
-            default:
-              fillColor = [224, 224, 224];
-              textColor = [0, 0, 0];
-          }
-          
-          // Draw badge background
-          doc.setFillColor(fillColor[0], fillColor[1], fillColor[2]);
-          doc.roundedRect(currentX, y - 4, badgeWidth, 6, 1, 1, 'F');
-          
-          // Draw badge border
-          doc.setDrawColor(fillColor[0] * 0.8, fillColor[1] * 0.8, fillColor[2] * 0.8);
-          doc.setLineWidth(0.2);
-          doc.roundedRect(currentX, y - 4, badgeWidth, 6, 1, 1, 'S');
-          
-          // Draw badge text
-          doc.setTextColor(textColor[0], textColor[1], textColor[2]);
-          doc.setFont(undefined, 'bold');
-          doc.setFontSize(8);
-          doc.text(badge.text, currentX + 2, y - 0.5);
-          
-          currentX += badgeWidth + 3;
-          badgeIndex++;
-        }
-      } else if (part.trim()) {
-        // Regular text
-        doc.setTextColor(0, 0, 0);
-        doc.setFont(undefined, 'normal');
-        doc.setFontSize(10);
-        
-        // Check if we need to wrap text
-        if (currentX + doc.getTextWidth(part) > x + maxWidth) {
-          y += 6;
-          currentX = x;
-        }
-        
-        doc.text(part, currentX, y);
-        currentX += doc.getTextWidth(part);
+    const currentDate = new Date().toISOString().split('T')[0];
+    const reportType = reportTypeMap[template] || 'Electrical Report';
+    const filename = `${template}-report-${currentDate}.pdf`;
+
+    const options = {
+      margin: 0.5,
+      filename: filename,
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { 
+        scale: 2,
+        useCORS: true,
+        allowTaint: true,
+        backgroundColor: '#ffffff'
+      },
+      jsPDF: { 
+        unit: 'in', 
+        format: 'a4', 
+        orientation: 'portrait',
+        compress: true
       }
-    }
-    
-    return y;
-  };
+    };
 
-  const generateReportPDF = (content: string, reportType: string) => {
-    const doc = new jsPDF();
-    const pageWidth = doc.internal.pageSize.getWidth();
-    const pageHeight = doc.internal.pageSize.getHeight();
-    const margin = 20;
-    const maxWidth = pageWidth - (margin * 2);
-    let yPosition = margin;
-
-    // Header
-    doc.setFontSize(18);
-    doc.setTextColor(47, 47, 47);
-    doc.text(reportType, pageWidth / 2, yPosition, { align: 'center' });
-    yPosition += 15;
-
-    // Date
-    doc.setFontSize(10);
-    doc.setTextColor(100, 100, 100);
-    doc.text(`Generated: ${new Date().toLocaleDateString('en-GB')} at ${new Date().toLocaleTimeString('en-GB')}`, pageWidth / 2, yPosition, { align: 'center' });
-    yPosition += 20;
-
-    // Draw header line
-    doc.setDrawColor(255, 215, 0);
-    doc.setLineWidth(2);
-    doc.line(margin, yPosition, pageWidth - margin, yPosition);
-    yPosition += 15;
-
-    // Process content
-    const lines = content.split('\n');
-    let i = 0;
-
-    while (i < lines.length) {
-      const line = lines[i];
-      
-      // Check if we need a new page
-      if (yPosition > pageHeight - 40) {
-        doc.addPage();
-        yPosition = margin;
-      }
-
-      if (line.trim() === '') {
-        yPosition += 6;
-        i++;
-        continue;
-      }
-
-      // Headers
-      if (line.startsWith('# ')) {
-        doc.setFontSize(16);
-        doc.setFont(undefined, 'bold');
-        doc.setTextColor(255, 215, 0);
-        const text = line.substring(2);
-        doc.text(text, margin, yPosition);
-        yPosition += 20;
-        i++;
-      } else if (line.startsWith('## ')) {
-        doc.setFontSize(14);
-        doc.setFont(undefined, 'bold');
-        doc.setTextColor(255, 215, 0);
-        const text = line.substring(3);
-        doc.text(text, margin, yPosition);
-        yPosition += 15;
-        i++;
-      } else if (line.startsWith('### ')) {
-        doc.setFontSize(12);
-        doc.setFont(undefined, 'bold');
-        doc.setTextColor(255, 215, 0);
-        const text = line.substring(4);
-        doc.text(text, margin, yPosition);
-        yPosition += 12;
-        i++;
-      } else if (line.startsWith('| ') && line.includes('|')) {
-        // Handle table - collect table rows
-        const tableRows = [];
-        let currentLineIndex = i;
-        
-        while (currentLineIndex < lines.length) {
-          const currentLine = lines[currentLineIndex].trim();
-          if (currentLine.startsWith('| ') && currentLine.includes('|')) {
-            const row = currentLine
-              .split('|')
-              .map(cell => cell.trim())
-              .filter(cell => cell !== '');
-            if (row.length > 0 && !currentLine.includes('---')) {
-              // Process electrical elements in table cells
-              const processedRow = row.map(cell => {
-                const { processedText } = processElectricalElementsForPDF(cell);
-                // Clean up badge placeholders for table display
-                return processedText
-                  .replace(/\s*\[(BS7671_BADGE|SUCCESS_BADGE|ERROR_BADGE|CODE_BADGE|MEASUREMENT)\]\s*/g, ' ')
-                  .replace(/\s+/g, ' ')
-                  .trim();
-              });
-              tableRows.push(processedRow);
-            }
-            currentLineIndex++;
-          } else {
-            break;
-          }
-        }
-
-        if (tableRows.length > 0) {
-          const headerRow = tableRows[0];
-          const dataRows = tableRows.slice(1);
-
-          // Check if table fits on current page
-          const estimatedTableHeight = (dataRows.length + 1) * 8 + 20;
-          if (yPosition + estimatedTableHeight > pageHeight - 40) {
-            doc.addPage();
-            yPosition = margin;
-          }
-
-          autoTable(doc, {
-            startY: yPosition,
-            head: [headerRow],
-            body: dataRows,
-            theme: 'grid',
-            headStyles: { 
-              fillColor: [255, 215, 0], 
-              textColor: [0, 0, 0],
-              fontSize: 9,
-              fontStyle: 'bold'
-            },
-            bodyStyles: { 
-              fontSize: 8,
-              textColor: [0, 0, 0]
-            },
-            alternateRowStyles: {
-              fillColor: [248, 248, 248]
-            },
-            margin: { left: margin, right: margin },
-            tableWidth: 'auto',
-            columnStyles: {
-              0: { cellWidth: 'auto' },
-            }
-          });
-
-          yPosition = (doc as any).lastAutoTable.finalY + 10;
-        }
-        
-        i = currentLineIndex;
-      } else if (line.startsWith('- ') || line.startsWith('* ')) {
-        // List items with electrical elements
-        const text = line.substring(2);
-        yPosition = renderTextWithBadges(doc, `• ${text}`, margin + 5, yPosition, maxWidth - 5);
-        yPosition += 8;
-        i++;
-      } else {
-        // Regular text with electrical elements
-        yPosition = renderTextWithBadges(doc, line, margin, yPosition, maxWidth);
-        yPosition += 8;
-        i++;
-      }
-    }
-
-    // Footer
-    const totalPages = doc.internal.pages.length - 1;
-    for (let pageNum = 1; pageNum <= totalPages; pageNum++) {
-      doc.setPage(pageNum);
-      doc.setFontSize(8);
-      doc.setTextColor(100, 100, 100);
-      doc.text(
-        `Page ${pageNum} of ${totalPages} | Generated by ElecConnect AI Report Writer`,
-        pageWidth / 2,
-        pageHeight - 10,
-        { align: 'center' }
-      );
-      doc.text(
-        'All work complies with BS 7671:2018+A2:2022 regulations',
-        pageWidth / 2,
-        pageHeight - 20,
-        { align: 'center' }
-      );
-    }
-
-    return doc;
+    html2pdf()
+      .set(options)
+      .from(reportRef.current)
+      .save();
   };
 
   const handleDownload = () => {
     try {
-      const reportType = reportTypeMap[template] || 'Electrical Report';
-      const pdf = generateReportPDF(report, reportType);
-      const fileName = `${template}-report-${new Date().toISOString().split('T')[0]}.pdf`;
-      pdf.save(fileName);
+      generateReportPDF();
       
       toast({
         title: "Download successful",
@@ -595,7 +286,10 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
         className="p-6 bg-card"
         style={{ fontSize: `${zoomLevel}%` }}
       >
-        <div className="bg-background/50 rounded-lg border border-border/20 p-6">
+        <div 
+          ref={reportRef}
+          className="bg-background/50 rounded-lg border border-border/20 p-6"
+        >
           <MarkdownViewer 
             content={report}
             className="[&>*]:text-left [&_h1]:text-center [&_h1]:mx-auto"
