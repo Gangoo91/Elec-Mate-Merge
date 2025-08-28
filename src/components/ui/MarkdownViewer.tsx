@@ -23,37 +23,37 @@ export const MarkdownViewer: React.FC<MarkdownViewerProps> = ({
         components={{
           // Custom heading styling with electrical theme
           h1: ({ children }) => (
-            <Card className="bg-primary/5 border-primary/20 p-6 mb-6 text-center">
-              <div className="flex items-center justify-center text-xl font-bold text-primary mb-0">
+            <Card className="bg-[hsl(var(--primary-bg-muted))] border-[hsl(var(--primary-muted))]/ 20 p-6 mb-6 text-center">
+              <div className="flex items-center justify-center text-xl font-bold text-[hsl(var(--primary-muted))] mb-0">
                 <FileText className="h-6 w-6 mr-2" />
                 {children}
               </div>
             </Card>
           ),
           h2: ({ children }) => (
-            <div className="flex items-center text-xl font-bold text-primary mb-3 text-left mt-6">
+            <div className="flex items-center text-xl font-bold text-[hsl(var(--primary-muted))] mb-3 text-left mt-6">
               <Info className="h-5 w-5 mr-2" />
               {children}
             </div>
           ),
           h3: ({ children }) => (
-            <div className="flex items-center text-lg font-bold text-primary mb-2 text-left mt-4">
+            <div className="flex items-center text-lg font-bold text-[hsl(var(--primary-muted))] mb-2 text-left mt-4">
               <CheckCircle className="h-4 w-4 mr-2" />
               {children}
             </div>
           ),
           h4: ({ children }) => (
-            <div className="text-base font-bold text-primary mb-2 text-left mt-3">
+            <div className="text-base font-bold text-[hsl(var(--primary-muted))] mb-2 text-left mt-3">
               {children}
             </div>
           ),
           h5: ({ children }) => (
-            <div className="text-sm font-bold text-primary mb-1 text-left mt-2">
+            <div className="text-sm font-bold text-[hsl(var(--primary-subtle))] mb-1 text-left mt-2">
               {children}
             </div>
           ),
           h6: ({ children }) => (
-            <div className="text-sm font-bold text-primary mb-1 text-left mt-2">
+            <div className="text-sm font-bold text-[hsl(var(--primary-subtle))] mb-1 text-left mt-2">
               {children}
             </div>
           ),
@@ -84,7 +84,7 @@ export const MarkdownViewer: React.FC<MarkdownViewerProps> = ({
             </tr>
           ),
           th: ({ children }) => (
-            <th className="text-left p-2 font-semibold text-primary">
+            <th className="text-left p-2 font-semibold text-[hsl(var(--primary-muted))]">
               {children}
             </th>
           ),
@@ -174,7 +174,7 @@ export const MarkdownViewer: React.FC<MarkdownViewerProps> = ({
           
           // Custom blockquote styling
           blockquote: ({ children }) => (
-            <Card className="bg-muted/20 border-l-4 border-primary p-4 my-4">
+            <Card className="bg-muted/20 border-l-4 border-[hsl(var(--primary-muted))] p-4 my-4">
               <div className="text-[hsl(var(--text-muted))] italic">
                 {children}
               </div>
@@ -183,7 +183,7 @@ export const MarkdownViewer: React.FC<MarkdownViewerProps> = ({
           
           // Custom strong/em styling
           strong: ({ children }) => (
-            <strong className="font-semibold text-primary">
+            <strong className="font-semibold text-[hsl(var(--primary-muted))]">
               {processElectricalContent(children)}
             </strong>
           ),
@@ -227,7 +227,7 @@ const processTextForElectricalElements = (text: string): React.ReactNode => {
   remainingText = remainingText.replace(/(\[BS 7671[^\]]*\])/g, (match) => {
     const placeholder = `__BS_BADGE_${key++}__`;
     elements.push(
-      <Badge key={placeholder} variant="outline" className="bg-primary/10 text-primary border-primary/20 mx-1">
+      <Badge key={placeholder} variant="outline" className="bg-[hsl(var(--primary-bg-muted))] text-[hsl(var(--primary-muted))] border-[hsl(var(--primary-muted))]/30 mx-1">
         {match}
       </Badge>
     );
@@ -276,7 +276,7 @@ const processTextForElectricalElements = (text: string): React.ReactNode => {
   remainingText = remainingText.replace(/(\d+\.?\d*)\s*(Ω|V|A|kW|Hz|mm²?|m)\b/g, (match, value, unit) => {
     const placeholder = `__MEASUREMENT_${key++}__`;
     elements.push(
-      <span key={placeholder} className="font-mono font-semibold text-primary">
+      <span key={placeholder} className="font-mono font-semibold text-[hsl(var(--primary-muted))]">
         {value}{unit}
       </span>
     );

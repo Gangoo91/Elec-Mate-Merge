@@ -46,6 +46,11 @@
     /* Muted text colors for comfortable reading */
     --text-muted: 210 40% 82%;
     --text-subtle: 210 30% 75%;
+    
+    /* Softer primary colors for less bright yellow */
+    --primary-muted: 47 85% 42%;
+    --primary-subtle: 47 70% 38%;
+    --primary-bg-muted: 47 80% 15%;
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
@@ -96,6 +101,11 @@
     /* Muted text colors for comfortable reading */
     --text-muted: 210 30% 85%;
     --text-subtle: 210 25% 78%;
+    
+    /* Softer primary colors for less bright yellow */
+    --primary-muted: 47 75% 45%;
+    --primary-subtle: 47 60% 40%;
+    --primary-bg-muted: 47 60% 20%;
     
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
