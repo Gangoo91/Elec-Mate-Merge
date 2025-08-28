@@ -14,7 +14,7 @@ import {
   ZoomIn,
   ZoomOut
 } from 'lucide-react';
-import { processReportMarkdown, ReportHeader } from '@/utils/reportMarkdownProcessor';
+import { MarkdownViewer } from '@/components/ui/MarkdownViewer';
 import { useToast } from '@/hooks/use-toast';
 
 interface GeneratedReportDisplayProps {
@@ -249,9 +249,10 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
         style={{ fontSize: `${zoomLevel}%` }}
       >
         <div className="bg-background/50 rounded-lg border border-border/20 p-6">
-          <div className="prose prose-neutral dark:prose-invert max-w-none text-left [&>*]:text-left [&_h1]:text-center [&_h1]:mx-auto">
-            {processReportMarkdown(report)}
-          </div>
+          <MarkdownViewer 
+            content={report}
+            className="[&>*]:text-left [&_h1]:text-center [&_h1]:mx-auto"
+          />
         </div>
       </div>
 
