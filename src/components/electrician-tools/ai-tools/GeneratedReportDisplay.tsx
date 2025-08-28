@@ -16,6 +16,8 @@ import {
 } from 'lucide-react';
 import { MarkdownViewer } from '@/components/ui/MarkdownViewer';
 import { useToast } from '@/hooks/use-toast';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 
 interface GeneratedReportDisplayProps {
   report: string;
@@ -115,16 +117,189 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
     }
   };
 
+  const generateReportPDF = (content: string, reportType: string) => {
+    const doc = new jsPDF();
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const pageHeight = doc.internal.pageSize.getHeight();
+    const margin = 20;
+    let yPosition = margin;
+
+    // Header
+    doc.setFontSize(18);
+    doc.setTextColor(47, 47, 47);
+    doc.text(reportType, pageWidth / 2, yPosition, { align: 'center' });
+    yPosition += 15;
+
+    // Date
+    doc.setFontSize(10);
+    doc.setTextColor(100, 100, 100);
+    doc.text(`Generated: ${new Date().toLocaleDateString('en-GB')} at ${new Date().toLocaleTimeString('en-GB')}`, pageWidth / 2, yPosition, { align: 'center' });
+    yPosition += 20;
+
+    // Draw header line
+    doc.setDrawColor(255, 215, 0);
+    doc.setLineWidth(2);
+    doc.line(margin, yPosition, pageWidth - margin, yPosition);
+    yPosition += 15;
+
+    // Process content
+    const lines = content.split('\n');
+    doc.setFontSize(10);
+    doc.setTextColor(0, 0, 0);
+
+    for (const line of lines) {
+      // Check if we need a new page
+      if (yPosition > pageHeight - 30) {
+        doc.addPage();
+        yPosition = margin;
+      }
+
+      if (line.trim() === '') {
+        yPosition += 6;
+        continue;
+      }
+
+      // Headers
+      if (line.startsWith('# ')) {
+        doc.setFontSize(16);
+        doc.setFont(undefined, 'bold');
+        doc.setTextColor(47, 47, 47);
+        const text = line.substring(2);
+        doc.text(text, margin, yPosition);
+        yPosition += 20;
+        doc.setFont(undefined, 'normal');
+        doc.setFontSize(10);
+      } else if (line.startsWith('## ')) {
+        doc.setFontSize(14);
+        doc.setFont(undefined, 'bold');
+        doc.setTextColor(47, 47, 47);
+        const text = line.substring(3);
+        doc.text(text, margin, yPosition);
+        yPosition += 15;
+        doc.setFont(undefined, 'normal');
+        doc.setFontSize(10);
+      } else if (line.startsWith('### ')) {
+        doc.setFontSize(12);
+        doc.setFont(undefined, 'bold');
+        doc.setTextColor(47, 47, 47);
+        const text = line.substring(4);
+        doc.text(text, margin, yPosition);
+        yPosition += 12;
+        doc.setFont(undefined, 'normal');
+        doc.setFontSize(10);
+      } else if (line.startsWith('| ')) {
+        // Handle table - collect table rows
+        const tableRows = [];
+        let currentLineIndex = lines.indexOf(line);
+        
+        while (currentLineIndex < lines.length && lines[currentLineIndex].startsWith('| ')) {
+          const row = lines[currentLineIndex]
+            .split('|')
+            .map(cell => cell.trim())
+            .filter(cell => cell !== '');
+          if (row.length > 0) {
+            tableRows.push(row);
+          }
+          currentLineIndex++;
+        }
+
+        if (tableRows.length > 1) {
+          // Skip separator row if it exists
+          const headerRow = tableRows[0];
+          const dataRows = tableRows.slice(tableRows[1].every(cell => cell.match(/^-+$/)) ? 2 : 1);
+
+          if (yPosition + (dataRows.length * 8) > pageHeight - 30) {
+            doc.addPage();
+            yPosition = margin;
+          }
+
+          autoTable(doc, {
+            startY: yPosition,
+            head: [headerRow],
+            body: dataRows,
+            theme: 'grid',
+            headStyles: { 
+              fillColor: [255, 215, 0], 
+              textColor: [0, 0, 0],
+              fontSize: 9,
+              fontStyle: 'bold'
+            },
+            bodyStyles: { 
+              fontSize: 8,
+              textColor: [0, 0, 0]
+            },
+            margin: { left: margin, right: margin },
+            tableWidth: 'auto',
+            columnStyles: {
+              0: { cellWidth: 'auto' },
+            }
+          });
+
+          yPosition = (doc as any).lastAutoTable.finalY + 10;
+        }
+      } else if (line.startsWith('- ') || line.startsWith('* ')) {
+        // List items
+        doc.setTextColor(0, 0, 0);
+        const text = line.substring(2);
+        const splitText = doc.splitTextToSize(text, pageWidth - margin * 2 - 10);
+        doc.text('• ' + splitText[0], margin + 5, yPosition);
+        for (let i = 1; i < splitText.length; i++) {
+          yPosition += 6;
+          doc.text('  ' + splitText[i], margin + 5, yPosition);
+        }
+        yPosition += 8;
+      } else {
+        // Regular text
+        doc.setTextColor(0, 0, 0);
+        const cleanText = line.replace(/\*\*(.*?)\*\*/g, '$1').replace(/\*(.*?)\*/g, '$1');
+        const splitText = doc.splitTextToSize(cleanText, pageWidth - margin * 2);
+        for (const textLine of splitText) {
+          if (yPosition > pageHeight - 30) {
+            doc.addPage();
+            yPosition = margin;
+          }
+          doc.text(textLine, margin, yPosition);
+          yPosition += 6;
+        }
+        yPosition += 4;
+      }
+    }
+
+    // Footer
+    const totalPages = doc.internal.pages.length - 1;
+    for (let i = 1; i <= totalPages; i++) {
+      doc.setPage(i);
+      doc.setFontSize(8);
+      doc.setTextColor(100, 100, 100);
+      doc.text(
+        `Page ${i} of ${totalPages} | Generated by ElecConnect AI Report Writer`,
+        pageWidth / 2,
+        pageHeight - 10,
+        { align: 'center' }
+      );
+    }
+
+    return doc;
+  };
+
   const handleDownload = () => {
-    const blob = new Blob([report], { type: 'text/plain' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `${template}-report-${new Date().toISOString().split('T')[0]}.txt`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
+    try {
+      const reportType = reportTypeMap[template] || 'Electrical Report';
+      const pdf = generateReportPDF(report, reportType);
+      const fileName = `${template}-report-${new Date().toISOString().split('T')[0]}.pdf`;
+      pdf.save(fileName);
+      
+      toast({
+        title: "Download successful",
+        description: "Report has been downloaded as PDF.",
+      });
+    } catch (error) {
+      toast({
+        title: "Download failed",
+        description: "Failed to generate PDF report.",
+        variant: "destructive"
+      });
+    }
   };
 
   const adjustZoom = (direction: 'in' | 'out') => {
