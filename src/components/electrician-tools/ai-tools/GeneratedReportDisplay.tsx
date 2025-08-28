@@ -277,6 +277,18 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
     return y;
   };
 
+  // Preprocess markdown content to clean up formatting
+  const preprocessMarkdown = (content: string): string => {
+    return content
+      .split('\n')
+      .filter(line => {
+        const trimmed = line.trim();
+        // Filter out table separator lines
+        return !(trimmed.match(/^\|\s*[-:]+\s*\|/) || trimmed === '---' || trimmed === '***' || trimmed === '___');
+      })
+      .join('\n');
+  };
+
   const generateReportPDF = (content: string, reportType: string) => {
     const doc = new jsPDF();
     const pageWidth = doc.internal.pageSize.getWidth();
@@ -303,8 +315,9 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
     doc.line(margin, yPosition, pageWidth - margin, yPosition);
     yPosition += 15;
 
-    // Process content
-    const lines = content.split('\n');
+    // Preprocess and split content
+    const processedContent = preprocessMarkdown(content);
+    const lines = processedContent.split('\n');
     let i = 0;
 
     while (i < lines.length) {
@@ -322,7 +335,18 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
         continue;
       }
 
-      // Headers
+      // Handle horizontal rules
+      const trimmed = line.trim();
+      if (trimmed === '---' || trimmed === '***' || trimmed === '___') {
+        doc.setDrawColor(200, 200, 200);
+        doc.setLineWidth(0.5);
+        doc.line(margin, yPosition, pageWidth - margin, yPosition);
+        yPosition += 10;
+        i++;
+        continue;
+      }
+
+      // Headers - all levels
       if (line.startsWith('# ')) {
         doc.setFontSize(16);
         doc.setFont(undefined, 'bold');
@@ -346,6 +370,30 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
         const text = line.substring(4);
         doc.text(text, margin, yPosition);
         yPosition += 12;
+        i++;
+      } else if (line.startsWith('#### ')) {
+        doc.setFontSize(11);
+        doc.setFont(undefined, 'bold');
+        doc.setTextColor(255, 215, 0);
+        const text = line.substring(5);
+        doc.text(text, margin, yPosition);
+        yPosition += 10;
+        i++;
+      } else if (line.startsWith('##### ')) {
+        doc.setFontSize(10);
+        doc.setFont(undefined, 'bold');
+        doc.setTextColor(255, 215, 0);
+        const text = line.substring(6);
+        doc.text(text, margin, yPosition);
+        yPosition += 10;
+        i++;
+      } else if (line.startsWith('###### ')) {
+        doc.setFontSize(10);
+        doc.setFont(undefined, 'bold');
+        doc.setTextColor(255, 215, 0);
+        const text = line.substring(7);
+        doc.text(text, margin, yPosition);
+        yPosition += 10;
         i++;
       } else if (line.startsWith('| ') && line.includes('|')) {
         // Handle table - collect table rows
