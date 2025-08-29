@@ -297,7 +297,7 @@ const UnifiedJobSearch = () => {
               <Button 
                 onClick={handleSearch} 
                 disabled={loading}
-                className="h-11 sm:h-12 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 flex-1 font-semibold transition-all duration-200 min-w-0 overflow-hidden whitespace-nowrap text-ellipsis px-4"
+                className="h-11 sm:h-12 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 flex-1 font-semibold transition-all duration-200 min-w-fit overflow-hidden whitespace-nowrap text-ellipsis px-4"
               >
                 {loading ? (
                   <>
