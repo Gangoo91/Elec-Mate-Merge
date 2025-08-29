@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import JobPagination from "./JobPagination";
 import { 
   Search, 
   MapPin, 
@@ -42,7 +43,7 @@ const UnifiedJobSearch = () => {
   const [showLocationSuggestions, setShowLocationSuggestions] = useState(false);
   const [showFilters, setShowFilters] = useState(false);
 
-  const { jobs, loading, error, searchProgress, searchAllJobs, triggerJobUpdate } = useUnifiedJobSearch();
+  const { jobs, loading, error, searchProgress, searchAllJobs, triggerJobUpdate, currentPage, jobsPerPage, paginate } = useUnifiedJobSearch();
 
   const salaryRanges = [
     { value: "all", label: "All Salaries" },
@@ -90,6 +91,7 @@ const UnifiedJobSearch = () => {
     setJobTypeFilter("all");
     setExperienceFilter("all");
     setShowFilters(false);
+    paginate(1);
   };
 
   const getMatchPercentage = (job: UnifiedJob) => {
@@ -215,6 +217,12 @@ const UnifiedJobSearch = () => {
 
   // Apply filters to current jobs
   const filteredJobs = applyFilters(jobs);
+
+  // Apply pagination
+  const indexOfLastJob = currentPage * jobsPerPage;
+  const indexOfFirstJob = indexOfLastJob - jobsPerPage;
+  const currentJobs = filteredJobs.slice(indexOfFirstJob, indexOfLastJob);
+  const totalPages = Math.ceil(filteredJobs.length / jobsPerPage);
 
   const formatDescription = (description: string) => {
     const strippedDescription = description.replace(/<[^>]*>/g, '');
@@ -453,11 +461,16 @@ const UnifiedJobSearch = () => {
         <div className="space-y-4">
           <div className="flex items-center justify-between flex-wrap gap-2">
             <h3 className="text-lg font-semibold text-elec-light">
-              {searchProgress.isSearching ? 'Partial Results' : 'Job Results'} ({filteredJobs.length} jobs{searchProgress.isSearching ? ' so far' : ' found'})
+              {searchProgress.isSearching ? 'Partial Results' : 'Job Results'} 
+              {filteredJobs.length > 0 && (
+                <span>
+                  (Showing {indexOfFirstJob + 1}-{Math.min(indexOfLastJob, filteredJobs.length)} of {filteredJobs.length} jobs{searchProgress.isSearching ? ' so far' : ''})
+                </span>
+              )}
             </h3>
           </div>
           
-          <div className="grid gap-4 overflow-hidden">{filteredJobs.map((job) => {
+          <div className="grid gap-4 overflow-hidden">{currentJobs.map((job) => {
               const matchPercentage = getMatchPercentage(job);
               
               return (
@@ -545,6 +558,17 @@ const UnifiedJobSearch = () => {
               );
             })}
           </div>
+
+          {/* Pagination */}
+          {filteredJobs.length > jobsPerPage && (
+            <div className="mt-6">
+              <JobPagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                paginate={paginate}
+              />
+            </div>
+          )}
         </div>
       )}
 
