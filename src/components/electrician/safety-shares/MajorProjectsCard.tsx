@@ -441,14 +441,14 @@ const MajorProjectsCard = () => {
 
   return (
       <div className="space-y-6">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <h2 className="text-2xl font-bold text-white">Major Projects</h2>
             <p className="text-muted-foreground">
               Latest electrical infrastructure projects and contract opportunities
             </p>
           </div>
-          <div className="flex gap-2">
+          <div className="flex gap-2 sm:flex-shrink-0">
             <Button
               onClick={handleRefresh}
               disabled={isLoading}
