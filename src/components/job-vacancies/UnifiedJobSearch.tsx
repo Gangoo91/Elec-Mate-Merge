@@ -69,14 +69,14 @@ const UnifiedJobSearch = () => {
 
   return (
     <div className="space-y-6">
-      <Card className="bg-elec-card border-elec-yellow/20">
+      <Card className="bg-elec-card border-elec-yellow/20 max-w-4xl mx-auto">
         <CardHeader className="pb-4">
           <div className="flex items-center gap-2">
             <Search className="h-5 w-5 text-elec-yellow" />
             <CardTitle className="text-lg">Search UK Electrician Jobs</CardTitle>
           </div>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 px-4 sm:px-6">
           {/* Search Form */}
           <div className="w-full">
             <div className="flex flex-col gap-3">
@@ -130,7 +130,7 @@ const UnifiedJobSearch = () => {
                 <button
                   key={index}
                   onClick={() => setKeywords(keyword)}
-                  className="text-xs px-3 py-1 bg-elec-gray hover:bg-elec-yellow/10 border border-elec-yellow/20 rounded-full text-muted-foreground hover:text-elec-yellow transition-colors flex-shrink-0"
+                  className="text-xs px-3 py-1 bg-elec-gray hover:bg-elec-yellow/10 border border-elec-yellow/20 rounded-full text-muted-foreground hover:text-elec-yellow transition-colors flex-shrink-0 max-w-[120px] truncate"
                 >
                   {keyword}
                 </button>
@@ -148,7 +148,7 @@ const UnifiedJobSearch = () => {
                   <Badge 
                     key={index}
                     variant={filter.active ? "default" : "outline"}
-                    className={`cursor-pointer transition-all gap-1 flex-shrink-0 ${
+                    className={`cursor-pointer transition-all gap-1 flex-shrink-0 max-w-[140px] ${
                       filter.active 
                         ? "bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90" 
                         : "border-elec-yellow/30 text-muted-foreground hover:bg-elec-yellow/10 hover:text-elec-yellow"
@@ -183,9 +183,9 @@ const UnifiedJobSearch = () => {
                 className="h-2"
               />
               
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2 max-w-full overflow-hidden">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 max-w-full overflow-hidden">
                 {searchProgress.sources.map((source, index) => (
-                  <div key={index} className="flex items-center gap-2 text-xs min-w-0">
+                  <div key={index} className="flex items-center gap-2 text-xs min-w-0 flex-shrink-0">
                     <div className={`w-2 h-2 rounded-full flex-shrink-0 ${
                       source.status === 'completed' ? 'bg-green-400' :
                       source.status === 'loading' ? 'bg-elec-yellow animate-pulse' :
