@@ -26,6 +26,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useLocationCache } from "@/hooks/useLocationCache";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { BookOpen, Users, Plus, Scale, FileDown, RefreshCw, Wifi, WifiOff, Map, List } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
@@ -883,16 +884,14 @@ const ElectricianCareerCourses = () => {
 
       {/* Enhanced Search and Filters - Hidden in map view */}
       {viewMode !== "map" && (
-              <EnhancedCourseSearch 
-                filters={filters}
-                onFiltersChange={setFilters}
-                onReset={handleResetFilters}
-                totalResults={filteredAndSortedCourses.length}
-                isSearching={isSearching}
-                viewMode={viewMode}
-                coursesPerPage={coursesPerPage}
-                onCoursesPerPageChange={handleCoursesPerPageChange}
-              />
+               <EnhancedCourseSearch 
+                 filters={filters}
+                 onFiltersChange={setFilters}
+                 onReset={handleResetFilters}
+                 totalResults={filteredAndSortedCourses.length}
+                 isSearching={isSearching}
+                 viewMode={viewMode}
+               />
       )}
 
       {/* Course Comparison Tool */}
@@ -929,24 +928,47 @@ const ElectricianCareerCourses = () => {
       {/* Main Content */}
       <div className="space-y-6">
         {viewMode !== "map" && (
-          <div className="flex items-center gap-2 pb-4 border-b border-border" data-courses-section>
-            <BookOpen className="h-5 w-5 text-elec-yellow" />
-            <h2 className="text-lg font-semibold">
-              Live Courses ({filteredAndSortedCourses.length})
-            </h2>
-            {filteredAndSortedCourses.length > 0 && (
-              <Badge variant="secondary" className="text-xs">
-                {coursesPerPage === -1 
-                  ? `${filteredAndSortedCourses.length} courses${isSearching ? ' so far' : ''}` 
-                  : `Showing ${indexOfFirstCourse + 1}-${Math.min(indexOfLastCourse, filteredAndSortedCourses.length)} of ${filteredAndSortedCourses.length}${isSearching ? ' so far' : ''}`
-                }
-              </Badge>
-            )}
-            {userLocation && (
-              <Badge variant="outline" className="text-xs">
-                Within {searchRadius} miles of {userLocation.split(',')[0]}
-              </Badge>
-            )}
+          <div className="flex items-center justify-between pb-4 border-b border-border" data-courses-section>
+            <div className="flex items-center gap-2">
+              <BookOpen className="h-5 w-5 text-elec-yellow" />
+              <h2 className="text-lg font-semibold">
+                Live Courses ({filteredAndSortedCourses.length})
+              </h2>
+              {filteredAndSortedCourses.length > 0 && (
+                <Badge variant="secondary" className="text-xs">
+                  {coursesPerPage === -1 
+                    ? `${filteredAndSortedCourses.length} courses${isSearching ? ' so far' : ''}` 
+                    : `Showing ${indexOfFirstCourse + 1}-${Math.min(indexOfLastCourse, filteredAndSortedCourses.length)} of ${filteredAndSortedCourses.length}${isSearching ? ' so far' : ''}`
+                  }
+                </Badge>
+              )}
+              {userLocation && (
+                <Badge variant="outline" className="text-xs">
+                  Within {searchRadius} miles of {userLocation.split(',')[0]}
+                </Badge>
+              )}
+            </div>
+            
+            {/* Courses Per Page Selector */}
+            <div className="flex items-center gap-2">
+              <span className="text-sm text-muted-foreground">Courses per page:</span>
+              <Select 
+                value={coursesPerPage === -1 ? "all" : coursesPerPage.toString()} 
+                onValueChange={handleCoursesPerPageChange}
+                disabled={isSearching}
+              >
+                <SelectTrigger className="w-auto min-w-[100px] bg-background border-border">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent className="bg-popover border-border">
+                  <SelectItem value="5">5</SelectItem>
+                  <SelectItem value="10">10</SelectItem>
+                  <SelectItem value="20">20</SelectItem>
+                  <SelectItem value="50">50</SelectItem>
+                  <SelectItem value="all">All</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
           </div>
         )}
         
