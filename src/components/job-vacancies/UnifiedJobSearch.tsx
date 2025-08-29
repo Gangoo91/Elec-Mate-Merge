@@ -1,223 +1,171 @@
-
-import { useState } from "react";
-import { Search, MapPin, Briefcase, Calendar, Building2, Users, Clock, Sparkles } from "lucide-react";
-import { Input } from "@/components/ui/input";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { useUnifiedJobSearch } from "@/hooks/job-vacancies/useUnifiedJobSearch";
-import { Progress } from "@/components/ui/progress";
-import JobSearchResults from "./JobSearchResults";
-import { toast } from "@/hooks/use-toast";
+import { Separator } from "@/components/ui/separator";
+import { Search, MapPin, Loader2, Clock, Building2, MapIcon, List } from "lucide-react";
+import { useUnifiedJobSearch, UnifiedJob } from "@/hooks/job-vacancies/useUnifiedJobSearch";
+import JobCard from "./JobCard";
 
 const UnifiedJobSearch = () => {
   const [keywords, setKeywords] = useState("");
   const [location, setLocation] = useState("");
-  const [hasSearched, setHasSearched] = useState(false);
-  
-  const {
-    jobs,
-    loading,
-    error,
-    searchProgress,
-    searchAllJobs,
-    currentPage,
-    jobsPerPage,
-    paginate,
-    changeJobsPerPage
-  } = useUnifiedJobSearch();
+  const { jobs, loading, error, searchProgress, searchAllJobs, triggerJobUpdate, currentPage, jobsPerPage, paginate, changeJobsPerPage } = useUnifiedJobSearch();
+  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
 
-  const handleSearch = async () => {
-    if (!keywords.trim() && !location.trim()) {
-      toast({
-        title: "Search Required",
-        description: "Please enter keywords or location to search for jobs",
-        variant: "destructive"
-      });
-      return;
-    }
-
-    setHasSearched(true);
-    await searchAllJobs(keywords, location);
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    searchAllJobs(keywords, location);
   };
 
-  const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') {
-      handleSearch();
+  const handleViewModeChange = (mode: "grid" | "list") => {
+    setViewMode(mode);
+  };
+
+  const getStatusBadge = (source: any) => {
+    switch (source.status) {
+      case 'pending':
+        return <Badge variant="outline">Pending</Badge>;
+      case 'loading':
+        return <Badge variant="secondary"><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Loading</Badge>;
+      case 'completed':
+        return <Badge className="bg-green-500 text-white">Completed ({source.jobCount})</Badge>;
+      case 'failed':
+        return <Badge variant="destructive">Failed</Badge>;
+      case 'timeout':
+        return <Badge variant="destructive">Timeout</Badge>;
+      default:
+        return <Badge>{source.status}</Badge>;
     }
   };
 
-  const popularKeywords = [
-    "Electrician", "Electrical Engineer", "Maintenance", "Installation", 
-    "Testing", "Commercial", "Domestic", "Industrial", "Apprentice"
-  ];
+  const getJobsToDisplay = () => {
+    if (jobsPerPage === -1) {
+      return jobs;
+    }
+    const startIndex = (currentPage - 1) * jobsPerPage;
+    const endIndex = startIndex + jobsPerPage;
+    return jobs.slice(startIndex, endIndex);
+  };
 
-  const quickFilters = [
-    { label: "Apprenticeships", icon: Users, active: false },
-    { label: "Remote", icon: Building2, active: false },
-    { label: "Full Time", icon: Clock, active: true },
-    { label: "Contract", icon: Briefcase, active: false },
-    { label: "Entry Level", icon: Sparkles, active: false }
-  ];
-
-  const totalJobs = jobs.length;
-  const startIndex = jobsPerPage === -1 ? 0 : (currentPage - 1) * jobsPerPage;
-  const endIndex = jobsPerPage === -1 ? totalJobs : Math.min(startIndex + jobsPerPage, totalJobs);
-  const currentJobs = jobsPerPage === -1 ? jobs : jobs.slice(startIndex, endIndex);
-  const totalPages = jobsPerPage === -1 ? 1 : Math.ceil(totalJobs / jobsPerPage);
+  const displayedJobs = getJobsToDisplay();
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <Card className="bg-elec-card border-elec-yellow/20">
-        <CardHeader className="pb-4">
-          <div className="flex items-center gap-2">
-            <Search className="h-5 w-5 text-elec-yellow" />
-            <CardTitle className="text-lg">Search UK Electrician Jobs</CardTitle>
-          </div>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          {/* Search Form */}
-          <div className="w-full">
-            <div className="flex flex-col gap-3">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <Input
-                  placeholder="Job title, keywords, or company..."
-                  value={keywords}
-                  onChange={(e) => setKeywords(e.target.value)}
-                  onKeyPress={handleKeyPress}
-                  className="pl-10 h-11 sm:h-12 bg-elec-gray border-elec-yellow/30 focus:border-elec-yellow text-white placeholder-muted-foreground"
-                />
-              </div>
-              
-              <div className="relative">
-                <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <Input
-                  placeholder="Location (e.g., London, Manchester, UK)"
-                  value={location}
-                  onChange={(e) => setLocation(e.target.value)}
-                  onKeyPress={handleKeyPress}
-                  className="pl-10 h-11 sm:h-12 bg-elec-gray border-elec-yellow/30 focus:border-elec-yellow text-white placeholder-muted-foreground"
-                />
-              </div>
-              
-              <Button 
-                onClick={handleSearch} 
-                disabled={loading}
-                className="h-11 sm:h-12 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 w-full font-semibold transition-all duration-200"
-              >
-                {loading ? (
-                  <>
-                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-elec-dark mr-2"></div>
-                    Searching...
-                  </>
-                ) : (
-                  <>
-                    <Search className="h-4 w-4 mr-2" />
-                    Search Jobs
-                  </>
-                )}
-              </Button>
+        <div className="p-4">
+          <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+            <div className="flex items-center space-x-2">
+              <Search className="h-4 w-4 text-muted-foreground" />
+              <Input
+                type="text"
+                placeholder="Keywords (e.g., electrician, engineer)"
+                value={keywords}
+                onChange={(e) => setKeywords(e.target.value)}
+                className="flex-1"
+              />
             </div>
-          </div>
-
-          {/* Popular Keywords */}
-          <div className="space-y-2">
-            <p className="text-sm text-muted-foreground">Popular searches:</p>
-            <div className="flex flex-wrap gap-2">
-              {popularKeywords.map((keyword, index) => (
-                <button
-                  key={index}
-                  onClick={() => setKeywords(keyword)}
-                  className="text-xs px-3 py-1 bg-elec-gray hover:bg-elec-yellow/10 border border-elec-yellow/20 rounded-full text-muted-foreground hover:text-elec-yellow transition-colors"
-                >
-                  {keyword}
-                </button>
-              ))}
+            <div className="flex items-center space-x-2">
+              <MapPin className="h-4 w-4 text-muted-foreground" />
+              <Input
+                type="text"
+                placeholder="Location (e.g., London, UK)"
+                value={location}
+                onChange={(e) => setLocation(e.target.value)}
+                className="flex-1"
+              />
             </div>
-          </div>
-
-          {/* Quick Filters */}
-          <div className="space-y-2">
-            <p className="text-sm text-muted-foreground">Quick filters:</p>
-            <div className="flex flex-wrap gap-2">
-              {quickFilters.map((filter, index) => {
-                const IconComponent = filter.icon;
-                return (
-                  <Badge 
-                    key={index}
-                    variant={filter.active ? "default" : "outline"}
-                    className={`cursor-pointer transition-all gap-1 ${
-                      filter.active 
-                        ? "bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90" 
-                        : "border-elec-yellow/30 text-muted-foreground hover:bg-elec-yellow/10 hover:text-elec-yellow"
-                    }`}
-                  >
-                    <IconComponent className="h-3 w-3" />
-                    {filter.label}
-                  </Badge>
-                );
-              })}
-            </div>
-          </div>
-        </CardContent>
+            <Button type="submit" disabled={loading}>
+              {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Search className="mr-2 h-4 w-4" />}
+              Search Jobs
+            </Button>
+          </form>
+        </div>
       </Card>
 
-      {/* Search Progress */}
-      {loading && searchProgress.isSearching && (
+      {searchProgress.isSearching && (
         <Card className="bg-elec-card border-elec-yellow/20">
-          <CardContent className="p-6">
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <h3 className="text-sm font-medium text-elec-light">
-                  Searching job sites... ({searchProgress.completedSources}/{searchProgress.totalSources})
-                </h3>
-                <span className="text-sm text-elec-yellow font-medium">
-                  {searchProgress.totalJobsFound} jobs found
-                </span>
-              </div>
-              
-              <Progress 
-                value={(searchProgress.completedSources / searchProgress.totalSources) * 100} 
-                className="h-2"
-              />
-              
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2">
-                {searchProgress.sources.map((source, index) => (
-                  <div key={index} className="flex items-center gap-2 text-xs">
-                    <div className={`w-2 h-2 rounded-full ${
-                      source.status === 'completed' ? 'bg-green-400' :
-                      source.status === 'loading' ? 'bg-elec-yellow animate-pulse' :
-                      source.status === 'failed' || source.status === 'timeout' ? 'bg-red-400' :
-                      'bg-gray-500'
-                    }`} />
-                    <span className="text-muted-foreground truncate">
-                      {source.source} ({source.jobCount})
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </CardContent>
+          <div className="p-4">
+            <h3 className="text-lg font-semibold">Searching Job Sources...</h3>
+            <Separator className="my-2 bg-elec-yellow/30" />
+            <ul className="space-y-2">
+              {searchProgress.sources.map((source) => (
+                <li key={source.source} className="flex items-center justify-between">
+                  <span>{source.source}</span>
+                  {getStatusBadge(source)}
+                </li>
+              ))}
+            </ul>
+            <Separator className="my-2 bg-elec-yellow/30" />
+            <p>Total Jobs Found: {searchProgress.totalJobsFound}</p>
+          </div>
         </Card>
       )}
 
-      {/* Search Results */}
-      {hasSearched && !loading && (
-        <JobSearchResults
-          jobs={currentJobs}
-          totalJobs={totalJobs}
-          currentPage={currentPage}
-          totalPages={totalPages}
-          jobsPerPage={jobsPerPage}
-          keywords={keywords}
-          location={location}
-          onPageChange={paginate}
-          onJobsPerPageChange={changeJobsPerPage}
-          error={error}
-          loading={loading}
-        />
-      )}
+      <div className="flex items-center justify-between">
+        <h2 className="text-xl font-semibold">
+          {jobs.length} Jobs Found
+        </h2>
+        <div className="flex items-center space-x-2">
+          <Button
+            variant={viewMode === "grid" ? "default" : "outline"}
+            onClick={() => handleViewModeChange("grid")}
+          >
+            <MapIcon className="mr-2 h-4 w-4" /> Grid
+          </Button>
+          <Button
+            variant={viewMode === "list" ? "default" : "outline"}
+            onClick={() => handleViewModeChange("list")}
+          >
+            <List className="mr-2 h-4 w-4" /> List
+          </Button>
+        </div>
+      </div>
+
+      {error && <p className="text-red-500">Error: {error}</p>}
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {displayedJobs.map((job) => (
+          <JobCard key={job.id} job={job} />
+        ))}
+      </div>
+
+      <div className="flex items-center justify-between">
+        <Button
+          onClick={() => paginate(currentPage - 1)}
+          disabled={currentPage === 1}
+          variant="outline"
+        >
+          Previous
+        </Button>
+        <span>Page {currentPage}</span>
+        <Button
+          onClick={() => paginate(currentPage + 1)}
+          disabled={jobsPerPage !== -1 ? currentPage * jobsPerPage >= jobs.length : true}
+          variant="outline"
+        >
+          Next
+        </Button>
+      </div>
+
+      <div className="flex items-center justify-between">
+        <span>Jobs per page:</span>
+        <select
+          value={jobsPerPage}
+          onChange={(e) => changeJobsPerPage(e.target.value)}
+          className="border rounded px-2 py-1"
+        >
+          <option value="10">10</option>
+          <option value="20">20</option>
+          <option value="50">50</option>
+          <option value="-1">All</option>
+        </select>
+      </div>
+
+      <Button onClick={triggerJobUpdate} variant="secondary">
+        Update Job Listings
+      </Button>
     </div>
   );
 };
