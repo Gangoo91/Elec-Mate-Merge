@@ -62,7 +62,7 @@ const LiveEducationAnalyticsDashboard = ({
   return (
     <Card className="border-elec-yellow/20 bg-elec-gray">
       <CardHeader>
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <CardTitle className="flex items-center gap-2 text-lg">
             <TrendingUp className="h-5 w-5 text-elec-yellow" />
             UK Education Market Insights
