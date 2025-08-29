@@ -49,7 +49,7 @@ const ElectricianCareerCourses = () => {
   
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
-  const coursesPerPage = 10;
+  const [coursesPerPage, setCoursesPerPage] = useState(10);
   
   // Location-based filtering state
   const [userLocation, setUserLocation] = useState<string | null>(null);
@@ -164,6 +164,13 @@ const ElectricianCareerCourses = () => {
   useEffect(() => {
     setCurrentPage(1);
   }, [filters, debouncedSearchQuery, debouncedLocation]);
+
+  // Handle courses per page change
+  const handleCoursesPerPageChange = (value: string) => {
+    const newCoursesPerPage = value === "all" ? -1 : parseInt(value);
+    setCoursesPerPage(newCoursesPerPage);
+    setCurrentPage(1); // Reset to first page
+  };
 
   // Enhanced sorting change handler with forced re-computation
   const [sortVersion, setSortVersion] = useState(0);
@@ -563,9 +570,9 @@ const ElectricianCareerCourses = () => {
   }, [liveCourses, filters, currentSort, sortVersion]);
 
   // Pagination calculations
-  const totalPages = Math.ceil(filteredAndSortedCourses.length / coursesPerPage);
-  const indexOfLastCourse = currentPage * coursesPerPage;
-  const indexOfFirstCourse = indexOfLastCourse - coursesPerPage;
+  const totalPages = coursesPerPage === -1 ? 1 : Math.ceil(filteredAndSortedCourses.length / coursesPerPage);
+  const indexOfLastCourse = coursesPerPage === -1 ? filteredAndSortedCourses.length : currentPage * coursesPerPage;
+  const indexOfFirstCourse = coursesPerPage === -1 ? 0 : indexOfLastCourse - coursesPerPage;
   const currentCourses = filteredAndSortedCourses.slice(indexOfFirstCourse, indexOfLastCourse);
 
   // Pagination handler
@@ -883,6 +890,8 @@ const ElectricianCareerCourses = () => {
                 totalResults={filteredAndSortedCourses.length}
                 isSearching={isSearching}
                 viewMode={viewMode}
+                coursesPerPage={coursesPerPage}
+                onCoursesPerPageChange={handleCoursesPerPageChange}
               />
       )}
 
@@ -927,7 +936,10 @@ const ElectricianCareerCourses = () => {
             </h2>
             {filteredAndSortedCourses.length > 0 && (
               <Badge variant="secondary" className="text-xs">
-                Showing {indexOfFirstCourse + 1}-{Math.min(indexOfLastCourse, filteredAndSortedCourses.length)} of {filteredAndSortedCourses.length}
+                {coursesPerPage === -1 
+                  ? `${filteredAndSortedCourses.length} courses${isSearching ? ' so far' : ''}` 
+                  : `Showing ${indexOfFirstCourse + 1}-${Math.min(indexOfLastCourse, filteredAndSortedCourses.length)} of ${filteredAndSortedCourses.length}${isSearching ? ' so far' : ''}`
+                }
               </Badge>
             )}
             {userLocation && (
@@ -1030,7 +1042,7 @@ const ElectricianCareerCourses = () => {
                 </div>
                 
                 {/* Pagination */}
-                {totalPages > 1 && (
+                {filteredAndSortedCourses.length > 0 && coursesPerPage !== -1 && filteredAndSortedCourses.length > coursesPerPage && (
                   <JobPagination
                     currentPage={currentPage}
                     totalPages={totalPages}

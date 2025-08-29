@@ -31,6 +31,8 @@ interface EnhancedCourseSearchProps {
   totalResults: number;
   isSearching?: boolean;
   viewMode?: "grid" | "list" | "map";
+  coursesPerPage?: number;
+  onCoursesPerPageChange?: (value: string) => void;
 }
 
 const EnhancedCourseSearch = ({ 
@@ -39,7 +41,9 @@ const EnhancedCourseSearch = ({
   onReset, 
   totalResults,
   isSearching = false,
-  viewMode = "grid"
+  viewMode = "grid",
+  coursesPerPage = 10,
+  onCoursesPerPageChange
 }: EnhancedCourseSearchProps) => {
   const [showAdvancedFilters, setShowAdvancedFilters] = useState(false);
   const isMobile = useIsMobile();
@@ -186,6 +190,31 @@ const EnhancedCourseSearch = ({
             )}
           </Button>
         </div>
+
+        {/* Courses Per Page Selector */}
+        {onCoursesPerPageChange && (
+          <div className="space-y-2">
+            <label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+              Courses Per Page
+            </label>
+            <Select 
+              value={coursesPerPage === -1 ? "all" : coursesPerPage.toString()} 
+              onValueChange={onCoursesPerPageChange}
+              disabled={isSearching}
+            >
+              <SelectTrigger className="w-full bg-elec-dark/60 border-elec-yellow/20">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent className="bg-elec-dark border-elec-yellow/30">
+                <SelectItem value="5">5 courses</SelectItem>
+                <SelectItem value="10">10 courses</SelectItem>
+                <SelectItem value="20">20 courses</SelectItem>
+                <SelectItem value="50">50 courses</SelectItem>
+                <SelectItem value="all">Show all</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        )}
 
         {/* Advanced Filters */}
         {showAdvancedFilters && (
