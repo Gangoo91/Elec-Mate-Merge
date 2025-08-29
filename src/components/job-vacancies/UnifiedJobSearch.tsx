@@ -7,7 +7,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useUnifiedJobSearch } from "@/hooks/job-vacancies/useUnifiedJobSearch";
 import { Progress } from "@/components/ui/progress";
-import JobSearchResults from "./JobSearchResults";
+import JobGrid from "./JobGrid";
+import JobPagination from "./JobPagination";
 import { toast } from "@/hooks/use-toast";
 
 const UnifiedJobSearch = () => {
@@ -124,12 +125,12 @@ const UnifiedJobSearch = () => {
           {/* Popular Keywords */}
           <div className="space-y-2">
             <p className="text-sm text-muted-foreground">Popular searches:</p>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2 max-w-full overflow-hidden">
               {popularKeywords.map((keyword, index) => (
                 <button
                   key={index}
                   onClick={() => setKeywords(keyword)}
-                  className="text-xs px-3 py-1 bg-elec-gray hover:bg-elec-yellow/10 border border-elec-yellow/20 rounded-full text-muted-foreground hover:text-elec-yellow transition-colors"
+                  className="text-xs px-3 py-1 bg-elec-gray hover:bg-elec-yellow/10 border border-elec-yellow/20 rounded-full text-muted-foreground hover:text-elec-yellow transition-colors flex-shrink-0"
                 >
                   {keyword}
                 </button>
@@ -140,21 +141,21 @@ const UnifiedJobSearch = () => {
           {/* Quick Filters */}
           <div className="space-y-2">
             <p className="text-sm text-muted-foreground">Quick filters:</p>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2 max-w-full overflow-hidden">
               {quickFilters.map((filter, index) => {
                 const IconComponent = filter.icon;
                 return (
                   <Badge 
                     key={index}
                     variant={filter.active ? "default" : "outline"}
-                    className={`cursor-pointer transition-all gap-1 ${
+                    className={`cursor-pointer transition-all gap-1 flex-shrink-0 ${
                       filter.active 
                         ? "bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90" 
                         : "border-elec-yellow/30 text-muted-foreground hover:bg-elec-yellow/10 hover:text-elec-yellow"
                     }`}
                   >
                     <IconComponent className="h-3 w-3" />
-                    {filter.label}
+                    <span className="truncate">{filter.label}</span>
                   </Badge>
                 );
               })}
@@ -182,10 +183,10 @@ const UnifiedJobSearch = () => {
                 className="h-2"
               />
               
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2 max-w-full overflow-hidden">
                 {searchProgress.sources.map((source, index) => (
-                  <div key={index} className="flex items-center gap-2 text-xs">
-                    <div className={`w-2 h-2 rounded-full ${
+                  <div key={index} className="flex items-center gap-2 text-xs min-w-0">
+                    <div className={`w-2 h-2 rounded-full flex-shrink-0 ${
                       source.status === 'completed' ? 'bg-green-400' :
                       source.status === 'loading' ? 'bg-elec-yellow animate-pulse' :
                       source.status === 'failed' || source.status === 'timeout' ? 'bg-red-400' :
@@ -204,19 +205,39 @@ const UnifiedJobSearch = () => {
 
       {/* Search Results */}
       {hasSearched && !loading && (
-        <JobSearchResults
-          jobs={currentJobs}
-          totalJobs={totalJobs}
-          currentPage={currentPage}
-          totalPages={totalPages}
-          jobsPerPage={jobsPerPage}
-          keywords={keywords}
-          location={location}
-          onPageChange={paginate}
-          onJobsPerPageChange={changeJobsPerPage}
-          error={error}
-          loading={loading}
-        />
+        <div className="space-y-4">
+          {error ? (
+            <Card className="bg-elec-card border-red-500/20">
+              <CardContent className="p-6 text-center">
+                <p className="text-red-400">{error}</p>
+              </CardContent>
+            </Card>
+          ) : (
+            <>
+              <JobGrid
+                jobs={currentJobs}
+                selectedJob={null}
+                handleApply={(jobId: string, url: string) => {
+                  window.open(url, '_blank');
+                }}
+                resetFilters={() => {
+                  setKeywords("");
+                  setLocation("");
+                  setHasSearched(false);
+                }}
+                isLoading={loading}
+              />
+              
+              {totalPages > 1 && (
+                <JobPagination
+                  currentPage={currentPage}
+                  totalPages={totalPages}
+                  paginate={paginate}
+                />
+              )}
+            </>
+          )}
+        </div>
       )}
     </div>
   );
