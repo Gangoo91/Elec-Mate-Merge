@@ -46,7 +46,7 @@ const CourseSorting = ({
   const currentSortOption = sortOptions.find(option => option.key === currentSort);
 
   return (
-    <div className="flex flex-col gap-4 p-3 sm:p-4 border border-elec-yellow/20 rounded-lg bg-elec-gray">
+    <div className="flex flex-col gap-4 p-6 border border-elec-yellow/20 rounded-lg bg-elec-gray">
       {/* Top row - Sort controls */}
       <div className="flex flex-col sm:flex-row sm:items-center gap-3">
         <span className="text-sm font-medium whitespace-nowrap">Sort by:</span>
