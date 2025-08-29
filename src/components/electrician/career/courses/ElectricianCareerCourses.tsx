@@ -1015,11 +1015,11 @@ const ElectricianCareerCourses = () => {
             ) : filteredAndSortedCourses.length > 0 ? (
               <div className="space-y-6">
                 <div className={viewMode === "grid" ? 
-                  "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 gap-3 sm:gap-4 lg:gap-6" : 
-                  "space-y-3 sm:space-y-4 lg:space-y-6"
+                  "grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4 md:gap-6" : 
+                  "space-y-4 md:space-y-6"
                 }>
                   {currentCourses.map((course) => (
-                  <div key={course.id} className="relative group">
+                  <div key={course.id} className="relative group min-w-[320px]">
                     <EnhancedCourseCard 
                       course={course}
                       onViewDetails={viewCourseDetails}
