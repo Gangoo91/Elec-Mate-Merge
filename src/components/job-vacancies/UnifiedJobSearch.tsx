@@ -252,8 +252,8 @@ const UnifiedJobSearch = () => {
         </CardHeader>
         <CardContent className="space-y-6 px-4">
           {/* Primary Search */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-3 md:gap-4 lg:gap-6">
-            <div className="md:col-span-2 lg:col-span-5 space-y-2">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-2">
               <label className="text-sm font-medium text-elec-yellow">Job Title / Keywords</label>
               <Input
                 placeholder="e.g. electrician, maintenance, testing..."
@@ -264,7 +264,7 @@ const UnifiedJobSearch = () => {
               />
             </div>
             
-            <div className="md:col-span-2 lg:col-span-4 space-y-2 relative">
+            <div className="space-y-2 relative">
               <label className="text-sm font-medium text-elec-yellow">Location</label>
               <div className="relative">
                 <MapPin className="absolute left-3 sm:left-4 top-1/2 transform -translate-y-1/2 h-4 w-4 sm:h-5 sm:w-5 text-elec-yellow" />
@@ -293,7 +293,10 @@ const UnifiedJobSearch = () => {
               )}
             </div>
 
-            <div className="col-span-1 md:col-span-4 lg:col-span-3 flex flex-col sm:flex-row items-stretch sm:items-end gap-2 sm:gap-2">
+          </div>
+          
+          {/* Action Buttons */}
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
               <Button 
                 onClick={handleSearch} 
                 disabled={loading}
@@ -333,7 +336,6 @@ const UnifiedJobSearch = () => {
                 <span className="ml-2 sm:hidden">Refresh</span>
               </Button>
             </div>
-          </div>
 
           {/* Advanced Filters */}
           {showFilters && (
