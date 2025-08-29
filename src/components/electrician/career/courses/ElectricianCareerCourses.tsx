@@ -928,7 +928,7 @@ const ElectricianCareerCourses = () => {
       {/* Main Content */}
       <div className="space-y-6">
         {viewMode !== "map" && (
-          <div className="flex items-center justify-between pb-4 border-b border-border" data-courses-section>
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-2 pb-4 border-b border-border" data-courses-section>
             <div className="flex items-center gap-2">
               <BookOpen className="h-5 w-5 text-elec-yellow" />
               <h2 className="text-lg font-semibold">
@@ -951,8 +951,9 @@ const ElectricianCareerCourses = () => {
             
             {/* Courses Per Page Selector */}
             <div className="flex items-center gap-2">
-              <span className="text-sm text-muted-foreground">Courses per page:</span>
-              <Select 
+              <span className="text-sm text-muted-foreground hidden sm:inline">Courses per page:</span>
+              <span className="text-sm text-muted-foreground sm:hidden">Per page:</span>
+              <Select
                 value={coursesPerPage === -1 ? "all" : coursesPerPage.toString()} 
                 onValueChange={handleCoursesPerPageChange}
                 disabled={isSearching}
