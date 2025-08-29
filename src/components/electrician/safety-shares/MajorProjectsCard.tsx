@@ -449,7 +449,6 @@ const MajorProjectsCard = () => {
             <Button
               onClick={handleRefresh}
               disabled={isLoading}
-              size="sm"
               variant="outline"
               className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
             >
