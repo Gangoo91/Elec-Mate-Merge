@@ -1015,7 +1015,7 @@ const ElectricianCareerCourses = () => {
             ) : filteredAndSortedCourses.length > 0 ? (
               <div className="space-y-6">
                 <div className={viewMode === "grid" ? 
-                  "grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4 md:gap-6" : 
+                  "grid grid-cols-1 gap-4 md:gap-6" : 
                   "space-y-4 md:space-y-6"
                 }>
                   {currentCourses.map((course) => (
