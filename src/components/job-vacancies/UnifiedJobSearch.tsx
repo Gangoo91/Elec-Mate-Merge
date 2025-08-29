@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import JobPagination from "./JobPagination";
 import { 
   Search, 
@@ -19,13 +20,6 @@ import {
   RefreshCw,
   Database
 } from "lucide-react";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { toast } from "@/hooks/use-toast";
 import { formatDistanceToNow } from "date-fns";
 import { LocationService } from "@/services/locationService";
@@ -43,7 +37,7 @@ const UnifiedJobSearch = () => {
   const [showLocationSuggestions, setShowLocationSuggestions] = useState(false);
   const [showFilters, setShowFilters] = useState(false);
 
-  const { jobs, loading, error, searchProgress, searchAllJobs, triggerJobUpdate, currentPage, jobsPerPage, paginate } = useUnifiedJobSearch();
+  const { jobs, loading, error, searchProgress, searchAllJobs, triggerJobUpdate, currentPage, jobsPerPage, paginate, changeJobsPerPage } = useUnifiedJobSearch();
 
   const salaryRanges = [
     { value: "all", label: "All Salaries" },
@@ -219,10 +213,10 @@ const UnifiedJobSearch = () => {
   const filteredJobs = applyFilters(jobs);
 
   // Apply pagination
-  const indexOfLastJob = currentPage * jobsPerPage;
-  const indexOfFirstJob = indexOfLastJob - jobsPerPage;
+  const indexOfLastJob = jobsPerPage === -1 ? filteredJobs.length : currentPage * jobsPerPage;
+  const indexOfFirstJob = jobsPerPage === -1 ? 0 : indexOfLastJob - jobsPerPage;
   const currentJobs = filteredJobs.slice(indexOfFirstJob, indexOfLastJob);
-  const totalPages = Math.ceil(filteredJobs.length / jobsPerPage);
+  const totalPages = jobsPerPage === -1 ? 1 : Math.ceil(filteredJobs.length / jobsPerPage);
 
   const formatDescription = (description: string) => {
     const strippedDescription = description.replace(/<[^>]*>/g, '');
@@ -464,10 +458,36 @@ const UnifiedJobSearch = () => {
               {searchProgress.isSearching ? 'Partial Results' : 'Job Results'} 
               {filteredJobs.length > 0 && (
                 <span>
-                  (Showing {indexOfFirstJob + 1}-{Math.min(indexOfLastJob, filteredJobs.length)} of {filteredJobs.length} jobs{searchProgress.isSearching ? ' so far' : ''})
+                  {jobsPerPage === -1 
+                    ? `(${filteredJobs.length} jobs${searchProgress.isSearching ? ' so far' : ''})`
+                    : `(Showing ${indexOfFirstJob + 1}-${Math.min(indexOfLastJob, filteredJobs.length)} of ${filteredJobs.length} jobs${searchProgress.isSearching ? ' so far' : ''})`
+                  }
                 </span>
               )}
             </h3>
+            
+            {/* Jobs Per Page Selector */}
+            <div className="flex items-center gap-2">
+              <label className="text-sm font-medium text-muted-foreground">
+                Show:
+              </label>
+              <Select 
+                value={jobsPerPage === -1 ? "all" : jobsPerPage.toString()} 
+                onValueChange={changeJobsPerPage}
+                disabled={loading}
+              >
+                <SelectTrigger className="w-[120px] bg-elec-dark/60 border-elec-yellow/20">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent className="bg-elec-dark border-elec-yellow/30">
+                  <SelectItem value="5">5 jobs</SelectItem>
+                  <SelectItem value="10">10 jobs</SelectItem>
+                  <SelectItem value="20">20 jobs</SelectItem>
+                  <SelectItem value="50">50 jobs</SelectItem>
+                  <SelectItem value="all">Show all</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
           </div>
           
           <div className="grid gap-4 overflow-hidden">{currentJobs.map((job) => {
@@ -560,7 +580,7 @@ const UnifiedJobSearch = () => {
           </div>
 
           {/* Pagination */}
-          {filteredJobs.length > jobsPerPage && (
+          {filteredJobs.length > 0 && jobsPerPage !== -1 && filteredJobs.length > jobsPerPage && (
             <div className="mt-6">
               <JobPagination
                 currentPage={currentPage}

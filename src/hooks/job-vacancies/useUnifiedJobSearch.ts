@@ -37,6 +37,7 @@ export const useUnifiedJobSearch = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
+  const [jobsPerPage, setJobsPerPage] = useState(10);
   const [searchProgress, setSearchProgress] = useState<SearchProgress>({
     sources: [],
     totalJobsFound: 0,
@@ -44,8 +45,6 @@ export const useUnifiedJobSearch = () => {
     totalSources: 0,
     isSearching: false
   });
-
-  const jobsPerPage = 10;
 
   const searchDatabaseJobs = async (keywords: string, location?: string) => {
     try {
@@ -184,6 +183,12 @@ export const useUnifiedJobSearch = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const changeJobsPerPage = (value: string) => {
+    const newJobsPerPage = value === "all" ? -1 : parseInt(value);
+    setJobsPerPage(newJobsPerPage);
+    setCurrentPage(1);
+  };
+
   const searchAllJobs = async (keywords: string, location?: string) => {
     setLoading(true);
     setError(null);
@@ -257,6 +262,7 @@ export const useUnifiedJobSearch = () => {
     triggerJobUpdate,
     currentPage,
     jobsPerPage,
-    paginate
+    paginate,
+    changeJobsPerPage
   };
 };
