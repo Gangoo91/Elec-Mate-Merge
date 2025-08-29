@@ -1,348 +1,232 @@
-import { useState, useEffect } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useState, useEffect, useCallback } from 'react';
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { GraduationCap, ArrowLeft, BookOpen, PoundSterling, Users, Target, Calculator, RefreshCw, Loader2, AlertCircle } from "lucide-react";
-import EducationSearchForm, { SearchFilters } from "../../../apprentice/career/education/EducationSearchForm";
-import FundingCalculator from "../../../apprentice/career/education/FundingCalculator";
-import { useLiveEducationData, LiveEducationData } from "@/hooks/useLiveEducationData";
-import LiveEducationAnalyticsDashboard from "./LiveEducationAnalyticsDashboard";
-import LiveEducationCard from "./LiveEducationCard";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogClose } from "@/components/ui/dialog";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
+import { LiveEducationData, useLiveEducationData } from "@/hooks/useLiveEducationData";
+import LiveEducationCard from './LiveEducationCard';
+import { Search } from 'lucide-react';
 
 const ElectricianFurtherEducation = () => {
-  const { educationData, analytics, loading, error, lastUpdated, isFromCache, refreshData } = useLiveEducationData('all');
-  const [filteredOptions, setFilteredOptions] = useState<LiveEducationData[]>([]);
   const [selectedOption, setSelectedOption] = useState<LiveEducationData | null>(null);
-  const [viewMode, setViewMode] = useState<"grid" | "details" | "funding">("grid");
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filterCategory, setFilterCategory] = useState('all');
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 6;
 
-  // Update filtered options when education data changes
+  const { 
+    educationData, 
+    loading, 
+    error, 
+    lastUpdated, 
+    isFromCache, 
+    refreshData 
+  } = useLiveEducationData(filterCategory);
+
+  const handleRefreshData = useCallback(async (forceRefresh: boolean = false) => {
+    await refreshData(forceRefresh);
+  }, [refreshData]);
+
   useEffect(() => {
-    setFilteredOptions(educationData);
-  }, [educationData]);
+    // Refresh data on component mount
+    handleRefreshData();
+  }, [handleRefreshData]);
 
-  const handleSearch = (filters: SearchFilters) => {
-    let filtered = educationData;
+  const filteredEducationOptions = educationData.filter(option => {
+    const searchRegex = new RegExp(searchTerm, 'i');
+    return searchRegex.test(option.title + option.description + option.institution);
+  });
 
-    // Apply search term filter
-    if (filters.searchTerm) {
-      const searchLower = filters.searchTerm.toLowerCase();
-      filtered = filtered.filter(option => 
-        option.title.toLowerCase().includes(searchLower) ||
-        option.institution.toLowerCase().includes(searchLower) ||
-        option.description.toLowerCase().includes(searchLower) ||
-        option.keyTopics.some(topic => topic.toLowerCase().includes(searchLower))
-      );
-    }
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentEducationOptions = filteredEducationOptions.slice(indexOfFirstItem, indexOfLastItem);
 
-    // Apply category filter
-    if (filters.category && filters.category !== "All Categories") {
-      filtered = filtered.filter(option => option.category === filters.category);
-    }
-
-    // Apply study mode filter
-    if (filters.studyMode && filters.studyMode !== "All Study Modes") {
-      filtered = filtered.filter(option => option.studyMode === filters.studyMode);
-    }
-
-    // Apply location filter
-    if (filters.location) {
-      const locationLower = filters.location.toLowerCase();
-      filtered = filtered.filter(option => 
-        option.locations.some(loc => loc.toLowerCase().includes(locationLower))
-      );
-    }
-
-    // Apply level filter
-    if (filters.level) {
-      filtered = filtered.filter(option => option.level === filters.level);
-    }
-
-    // Apply funding type filter
-    if (filters.fundingType) {
-      filtered = filtered.filter(option => 
-        option.fundingOptions.some(funding => funding.includes(filters.fundingType))
-      );
-    }
-
-    setFilteredOptions(filtered);
-  };
-
-  const handleReset = () => {
-    setFilteredOptions(educationData);
-  };
-
-  const handleViewDetails = (option: LiveEducationData) => {
-    setSelectedOption(option);
-    setViewMode("details");
-  };
-
-  const handleBackToGrid = () => {
-    setSelectedOption(null);
-    setViewMode("grid");
-  };
-
-  const handleShowFundingCalculator = () => {
-    setViewMode("funding");
-  };
-
-  if (viewMode === "funding") {
-    return (
-      <div className="space-y-6">
-        <div className="flex items-center gap-4">
-          <Button variant="outline" onClick={handleBackToGrid}>
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Education Options
-          </Button>
-        </div>
-        <FundingCalculator />
-      </div>
-    );
-  }
-
-  if (viewMode === "details" && selectedOption) {
-    return (
-      <div className="space-y-6">
-        <div className="flex items-center gap-4">
-          <Button variant="outline" onClick={handleBackToGrid}>
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Education Options
-          </Button>
-        </div>
-        
-        <Card className="border-elec-yellow/20 bg-elec-gray">
-          <CardHeader>
-            <CardTitle className="text-2xl">{selectedOption.title}</CardTitle>
-            <p className="text-amber-400">{selectedOption.institution}</p>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            <p className="text-muted-foreground">{selectedOption.description}</p>
-            
-            {/* Detailed information sections would go here */}
-            <div className="text-center py-8">
-              <p className="text-muted-foreground">
-                Detailed view implementation would continue here with comprehensive information,
-                application forms, funding calculators, etc.
-              </p>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-    );
-  }
+  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   return (
     <div className="space-y-6">
-      {/* Header */}
-      <div className="space-y-4">
-        <h2 className="text-2xl font-semibold flex items-center gap-2">
-          <GraduationCap className="h-6 w-6 text-elec-yellow" />
-          Further Education for Electricians
-        </h2>
-        <p className="text-muted-foreground">
-          Discover comprehensive educational pathways to advance your electrical career. 
-          From HNC certificates to master's degrees, find the right qualification to achieve your professional goals.
-        </p>
-      </div>
-
-      {/* Analytics Dashboard */}
-      <LiveEducationAnalyticsDashboard 
-        analytics={analytics} 
-        loading={loading}
-        error={error}
-        lastUpdated={lastUpdated}
-        isFromCache={isFromCache}
-        onRefresh={() => refreshData(true)}
-      />
-
-      {/* Action Buttons */}
-      <div className="flex flex-wrap gap-2">
-        <Button 
-          onClick={handleShowFundingCalculator}
-          variant="outline"
-          className="border-elec-yellow/30 hover:bg-elec-yellow/10"
-        >
-          <Calculator className="mr-2 h-4 w-4" />
-          Funding Calculator
-        </Button>
-        <Button 
-          onClick={() => refreshData(true)}
-          variant="outline"
-          className="border-elec-yellow/30 hover:bg-elec-yellow/10"
-          disabled={loading}
-        >
-          {loading ? (
-            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-          ) : (
-            <RefreshCw className="mr-2 h-4 w-4" />
-          )}
-          Force Refresh Live Data
-        </Button>
-      </div>
-
-      {/* Status Indicators */}
-      {lastUpdated && (
-        <div className="flex items-center gap-4 text-sm text-muted-foreground">
-          <span>
-            Last updated: {new Date(lastUpdated).toLocaleString()}
-          </span>
-          {isFromCache && (
-            <span className="flex items-center gap-1 text-amber-400">
-              <AlertCircle className="h-3 w-3" />
-              Cached data
-            </span>
-          )}
-        </div>
-      )}
-
-      {/* Error Message */}
-      {error && (
-        <Card className="border-red-500/20 bg-red-900/10">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 text-red-400">
-              <AlertCircle className="h-4 w-4" />
-              <span className="text-sm">
-                {error} - Showing cached data if available.
-              </span>
+      {/* Filters and Search */}
+      <Accordion type="single" collapsible className="w-full">
+        <AccordionItem value="filters">
+          <AccordionTrigger>
+            <h3 className="text-lg font-semibold">
+              Filters and Search
+            </h3>
+          </AccordionTrigger>
+          <AccordionContent>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Input
+                  type="text"
+                  placeholder="Search courses..."
+                  value={searchTerm}
+                  onChange={(e) => {
+                    setSearchTerm(e.target.value);
+                    setCurrentPage(1); // Reset to first page on search
+                  }}
+                  className="pl-10"
+                />
+              </div>
+              <div>
+                <Label htmlFor="category">Category</Label>
+                <Select value={filterCategory} onValueChange={(value) => {
+                  setFilterCategory(value);
+                  setCurrentPage(1); // Reset to first page on category change
+                }}>
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="All Categories" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All Categories</SelectItem>
+                    <SelectItem value="apprenticeship">Apprenticeships</SelectItem>
+                    <SelectItem value="bachelor's degree">Bachelor's Degrees</SelectItem>
+                    <SelectItem value="master's degree">Master's Degrees</SelectItem>
+                    <SelectItem value="professional certification">Professional Certifications</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
-          </CardContent>
-        </Card>
-      )}
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
 
-      {/* Search and Filters */}
-      <EducationSearchForm onSearch={handleSearch} onReset={handleReset} />
+      {loading && <p>Loading education programmes...</p>}
+      {error && <p className="text-red-500">Error: {error}</p>}
 
-      {/* Results Header */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <h3 className="text-lg font-medium">Available Programmes</h3>
-          <span className="text-sm text-muted-foreground">
-            ({filteredOptions.length} {filteredOptions.length === 1 ? 'result' : 'results'})
-          </span>
-        </div>
+      {/* Available Programmes */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {currentEducationOptions.map((option) => (
+          <LiveEducationCard
+            key={option.id}
+            option={option}
+            onViewDetails={setSelectedOption}
+          />
+        ))}
       </div>
 
-      {/* Loading State */}
-      {loading && (
-        <div className="flex flex-col items-center justify-center py-12 space-y-4">
-          <Loader2 className="h-8 w-8 animate-spin text-elec-yellow" />
-          <div className="text-center space-y-2">
-            <span className="text-muted-foreground">Scraping live education data...</span>
-            <div className="text-xs text-muted-foreground max-w-md">
-              Fetching latest courses from IDP Education, National Careers Service, and TradeSkills4U
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Education Options Grid */}
-      {!loading && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredOptions.map((option) => (
-            <LiveEducationCard
-              key={option.id}
-              option={option}
-              onViewDetails={handleViewDetails}
-            />
+      {/* Pagination */}
+      {filteredEducationOptions.length > itemsPerPage && (
+        <div className="flex justify-center space-x-2">
+          {Array.from({ length: Math.ceil(filteredEducationOptions.length / itemsPerPage) }, (_, i) => i + 1).map(number => (
+            <Button
+              key={number}
+              variant={currentPage === number ? "default" : "outline"}
+              onClick={() => paginate(number)}
+            >
+              {number}
+            </Button>
           ))}
         </div>
       )}
 
-      {/* Empty State */}
-      {filteredOptions.length === 0 && (
-        <Card className="border-elec-yellow/20 bg-elec-gray">
-          <CardContent className="p-8 text-center">
-            <BookOpen className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-            <h3 className="text-lg font-medium mb-2">No programmes found</h3>
-            <p className="text-muted-foreground mb-4">
-              Try adjusting your search criteria or explore different categories.
-            </p>
-            <Button variant="outline" onClick={handleReset}>
-              Reset Filters
-            </Button>
-          </CardContent>
-        </Card>
-      )}
-
-      {/* Enhanced Funding Information Card */}
-      <Card className="border-elec-yellow/20 bg-elec-gray/50">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-lg">
-            <PoundSterling className="h-5 w-5 text-elec-yellow" />
-            UK Education Funding Support
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <h4 className="font-medium mb-3 text-amber-400">Government Support</h4>
-            <div className="space-y-3 text-sm">
-              <div>
-                <h5 className="font-medium text-white">Advanced Learner Loan (19+)</h5>
-                <p className="text-xs text-muted-foreground mt-1">
-                  Available for Level 3-6 qualifications. No upfront fees, only repay when earning £25,000+. 
-                  9% of income above threshold.
-                </p>
+      {/* Education Option Details Dialog */}
+      <Dialog open={selectedOption !== null} onOpenChange={(open) => {
+        if (!open) setSelectedOption(null);
+      }}>
+        <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>{selectedOption?.title || 'Education Programme Details'}</DialogTitle>
+          </DialogHeader>
+          <ScrollArea>
+            {selectedOption ? (
+              <div className="space-y-4">
+                <p>{selectedOption.description}</p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <Label>Institution</Label>
+                    <p className="font-medium">{selectedOption.institution}</p>
+                  </div>
+                  <div>
+                    <Label>Level</Label>
+                    <p className="font-medium">{selectedOption.level}</p>
+                  </div>
+                  <div>
+                    <Label>Duration</Label>
+                    <p className="font-medium">{selectedOption.duration}</p>
+                  </div>
+                  <div>
+                    <Label>Study Mode</Label>
+                    <p className="font-medium">{selectedOption.studyMode}</p>
+                  </div>
+                  <div>
+                    <Label>Tuition Fees</Label>
+                    <p className="font-medium">{selectedOption.tuitionFees}</p>
+                  </div>
+                  <div>
+                    <Label>Next Intake</Label>
+                    <p className="font-medium">{selectedOption.nextIntake}</p>
+                  </div>
+                </div>
+                <div>
+                  <Label>Locations</Label>
+                  <ul className="list-disc pl-5">
+                    {selectedOption.locations.map((location, index) => (
+                      <li key={index}>{location}</li>
+                    ))}
+                  </ul>
+                </div>
+                <div>
+                  <Label>Entry Requirements</Label>
+                  <ul className="list-disc pl-5">
+                    {selectedOption.entryRequirements.map((requirement, index) => (
+                      <li key={index}>{requirement}</li>
+                    ))}
+                  </ul>
+                </div>
+                <div>
+                  <Label>Key Topics</Label>
+                  <ul className="list-disc pl-5">
+                    {selectedOption.keyTopics.map((topic, index) => (
+                      <li key={index}>{topic}</li>
+                    ))}
+                  </ul>
+                </div>
+                <div>
+                  <Label>Progression Options</Label>
+                  <ul className="list-disc pl-5">
+                    {selectedOption.progressionOptions.map((option, index) => (
+                      <li key={index}>{option}</li>
+                    ))}
+                  </ul>
+                </div>
+                <div>
+                  <Label>Funding Options</Label>
+                  <ul className="list-disc pl-5">
+                    {selectedOption.fundingOptions.map((option, index) => (
+                      <li key={index}>{option}</li>
+                    ))}
+                  </ul>
+                </div>
+                <Button asChild>
+                  <a href={selectedOption.courseUrl} target="_blank" rel="noopener noreferrer">
+                    Visit Course Page
+                  </a>
+                </Button>
               </div>
-              <div>
-                <h5 className="font-medium text-white">Student Finance England</h5>
-                <p className="text-xs text-muted-foreground mt-1">
-                  Tuition fee loans up to £9,250 for degrees. Maintenance loans available based on household income. 
-                  Repayment at 9% above £27,295.
-                </p>
-              </div>
-              <div>
-                <h5 className="font-medium text-white">Postgraduate Loan</h5>
-                <p className="text-xs text-muted-foreground mt-1">
-                  Up to £12,167 for Master's study. 6% interest rate. Same repayment terms as undergraduate loans.
-                </p>
-              </div>
-            </div>
-          </div>
-          <div>
-            <h4 className="font-medium mb-3 text-amber-400">Industry & Employer Support</h4>
-            <div className="space-y-3 text-sm">
-              <div>
-                <h5 className="font-medium text-white">Apprenticeship Levy</h5>
-                <p className="text-xs text-muted-foreground mt-1">
-                  Large employers (£3M+ payroll) contribute 0.5% to apprenticeship levy. Can fund degree apprenticeships.
-                </p>
-              </div>
-              <div>
-                <h5 className="font-medium text-white">Professional Body Grants</h5>
-                <p className="text-xs text-muted-foreground mt-1">
-                  IET scholarships (£1,000-£10,000), ECA Educational Trust grants, NECA bursaries for electrical study.
-                </p>
-              </div>
-              <div>
-                <h5 className="font-medium text-white">Career Development Loans</h5>
-                <p className="text-xs text-muted-foreground mt-1">
-                  Bank loans for vocational training. Government pays interest during study and one month after.
-                </p>
-              </div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Quick Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Card className="border-elec-yellow/20 bg-elec-gray/50">
-          <CardContent className="p-4 text-center">
-            <div className="text-2xl font-bold text-elec-yellow">{analytics?.averageEmploymentRate || 96}%</div>
-            <div className="text-sm text-muted-foreground">Electrician Employment Rate</div>
-          </CardContent>
-        </Card>
-        <Card className="border-elec-yellow/20 bg-elec-gray/50">
-          <CardContent className="p-4 text-center">
-            <div className="text-2xl font-bold text-elec-yellow">£15k+</div>
-            <div className="text-sm text-muted-foreground">Average Salary Increase</div>
-          </CardContent>
-        </Card>
-        <Card className="border-elec-yellow/20 bg-elec-gray/50">
-          <CardContent className="p-4 text-center">
-            <div className="text-2xl font-bold text-elec-yellow">82%</div>
-            <div className="text-sm text-muted-foreground">Get Jobs Before Graduating</div>
-          </CardContent>
-        </Card>
-      </div>
+            ) : (
+              <p>No programme selected.</p>
+            )}
+          </ScrollArea>
+          <DialogClose asChild>
+            <Button type="button" variant="secondary">Close</Button>
+          </DialogClose>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
