@@ -455,16 +455,6 @@ const UnifiedJobSearch = () => {
             <h3 className="text-lg font-semibold text-elec-light">
               {searchProgress.isSearching ? 'Partial Results' : 'Job Results'} ({filteredJobs.length} jobs{searchProgress.isSearching ? ' so far' : ' found'})
             </h3>
-            <div className="flex gap-2">
-              <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
-                <Database className="h-3 w-3 mr-1" />
-                {jobs.filter(j => j.source !== 'Reed (Live)').length} Database
-              </Badge>
-              <Badge variant="outline" className="border-green-500/30 text-green-400">
-                <Zap className="h-3 w-3 mr-1" />
-                {jobs.filter(j => j.source === 'Reed (Live)').length} Live
-              </Badge>
-            </div>
           </div>
           
           <div className="grid gap-4 overflow-hidden">{filteredJobs.map((job) => {
