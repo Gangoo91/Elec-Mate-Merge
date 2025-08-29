@@ -444,9 +444,6 @@ const MajorProjectsCard = () => {
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
             
-            <p className="text-muted-foreground">
-              Latest electrical infrastructure projects and contract opportunities
-            </p>
           </div>
           <div className="flex gap-2 sm:flex-shrink-0">
             <Button
