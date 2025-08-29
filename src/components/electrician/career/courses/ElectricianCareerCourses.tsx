@@ -1019,7 +1019,7 @@ const ElectricianCareerCourses = () => {
                   "space-y-4 md:space-y-6"
                 }>
                   {currentCourses.map((course) => (
-                  <div key={course.id} className="relative group min-w-[320px]">
+                  <div key={course.id} className="relative group">
                     <EnhancedCourseCard 
                       course={course}
                       onViewDetails={viewCourseDetails}
