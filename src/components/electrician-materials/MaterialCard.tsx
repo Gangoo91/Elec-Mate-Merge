@@ -89,22 +89,17 @@ const MaterialCard: React.FC<MaterialCardProps> = ({ item }) => {
   })();
 
   return (
-    <Card className="group border-elec-yellow/20 bg-elec-gray flex flex-col h-full hover:border-elec-yellow/40 hover:shadow-lg hover:shadow-elec-yellow/10 transition-all duration-300 hover:scale-[1.02]">
-      {/* Header Section */}
-      <CardHeader className="pb-3">
+    <Card className="group h-full hover:border-elec-yellow/30 transition-all duration-200">
+      <CardContent className="p-4">
+        {/* Header with stock status */}
         <div className="flex justify-between items-start mb-3">
-          <div className="flex flex-wrap gap-1.5">
-            <span className="bg-elec-yellow/20 text-elec-yellow text-xs px-2.5 py-1 rounded-full font-medium">
-              Cables
+          <div className="flex items-center gap-2">
+            <span className="bg-elec-yellow/20 text-elec-yellow text-xs px-2 py-1 rounded font-medium">
+              {item.category}
             </span>
-            {item.category && item.category !== "Cables" && (
-              <span className="bg-blue-500/20 text-blue-400 text-xs px-2.5 py-1 rounded-full font-medium">
-                {item.category}
-              </span>
-            )}
           </div>
           {item.stockStatus && (
-            <span className={`text-xs px-2.5 py-1 rounded-full font-medium ${
+            <span className={`text-xs px-2 py-1 rounded font-medium ${
               item.stockStatus === "In Stock" ? "bg-green-500/20 text-green-400" :
               item.stockStatus === "Low Stock" ? "bg-orange-500/20 text-orange-400" :
               "bg-red-500/20 text-red-400"
@@ -113,87 +108,71 @@ const MaterialCard: React.FC<MaterialCardProps> = ({ item }) => {
             </span>
           )}
         </div>
-        <CardTitle className="text-lg font-semibold leading-tight group-hover:text-elec-yellow transition-colors duration-200">
-          {item.name}
-        </CardTitle>
-      </CardHeader>
 
-      <CardContent className="flex flex-col flex-1 px-6 pb-6">
-        {/* Image Section */}
-        <div className="relative bg-gradient-to-br from-elec-card/60 to-elec-card/40 border border-elec-yellow/10 h-36 rounded-lg mb-4 flex items-center justify-center overflow-hidden group-hover:border-elec-yellow/20 transition-all duration-300">
+        {/* Product name */}
+        <h3 className="font-semibold text-foreground mb-3 leading-snug">
+          {item.name}
+        </h3>
+
+        {/* Image */}
+        <div className="bg-muted/50 border rounded h-32 mb-3 flex items-center justify-center overflow-hidden">
           <img
             src={imageSrc}
-            alt={`${item.name} from ${item.supplier} - electrical materials`}
+            alt={`${item.name} from ${item.supplier}`}
             loading="lazy"
-            className="object-contain w-full h-full transition-transform duration-300 group-hover:scale-105"
+            className="object-contain w-full h-full"
             onError={(e) => { (e.currentTarget as HTMLImageElement).src = "/placeholder.svg"; }}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
         </div>
         
-        {/* Content Section */}
-        <div className="flex flex-col flex-1 space-y-4">
-          {/* Technical Specifications */}
-          {isCable && (cableInfo.type || cableInfo.size || cableInfo.length || cableInfo.cores) && (
-            <div className="bg-elec-card/30 border border-elec-yellow/10 rounded-lg p-3">
-              <div className="text-xs font-medium text-muted-foreground mb-2">Specifications</div>
-              <div className="flex flex-wrap gap-1.5">
-                {cableInfo.type && (
-                  <span className="bg-blue-500/15 text-blue-400 text-xs px-2 py-1 rounded-md font-medium">
-                    {cableInfo.type}
-                  </span>
-                )}
-                {cableInfo.size && (
-                  <span className="bg-purple-500/15 text-purple-400 text-xs px-2 py-1 rounded-md font-medium">
-                    {cableInfo.size}
-                  </span>
-                )}
-                {cableInfo.length && (
-                  <span className="bg-cyan-500/15 text-cyan-400 text-xs px-2 py-1 rounded-md font-medium">
-                    {cableInfo.length}
-                  </span>
-                )}
-                {cableInfo.cores && (
-                  <span className="bg-indigo-500/15 text-indigo-400 text-xs px-2 py-1 rounded-md font-medium">
-                    {cableInfo.cores}
-                  </span>
-                )}
-              </div>
-            </div>
-          )}
-          
-          {/* Supplier Information */}
-          <div className="flex items-center gap-2 text-sm text-muted-foreground">
-            <div className="w-2 h-2 bg-elec-yellow/60 rounded-full" />
-            <span className="font-medium">Supplier:</span>
-            <span>{item.supplier}</span>
-          </div>
-          
-          {/* Price Section */}
-          <div className="bg-gradient-to-r from-elec-yellow/10 to-elec-yellow/5 border border-elec-yellow/20 rounded-lg p-3 mt-auto">
-            <div className="flex items-baseline justify-between">
-              <div className="flex items-baseline gap-2">
-                {item.isOnSale ? (
-                  <>
-                    <span className="text-xl font-bold text-elec-yellow">{item.salePrice}</span>
-                    <span className="line-through text-muted-foreground text-sm">{item.price}</span>
-                    <span className="bg-red-500/20 text-red-400 text-xs px-2 py-1 rounded-full font-medium">SALE</span>
-                  </>
-                ) : (
-                  <span className="text-xl font-bold text-elec-yellow">{item.price}</span>
-                )}
-              </div>
+        {/* Specifications - simplified */}
+        {isCable && (cableInfo.type || cableInfo.size || cableInfo.length) && (
+          <div className="mb-3">
+            <div className="flex flex-wrap gap-1 text-xs">
+              {cableInfo.type && (
+                <span className="bg-muted text-muted-foreground px-2 py-1 rounded">
+                  {cableInfo.type}
+                </span>
+              )}
+              {cableInfo.size && (
+                <span className="bg-muted text-muted-foreground px-2 py-1 rounded">
+                  {cableInfo.size}
+                </span>
+              )}
+              {cableInfo.length && (
+                <span className="bg-muted text-muted-foreground px-2 py-1 rounded">
+                  {cableInfo.length}
+                </span>
+              )}
             </div>
           </div>
-          
-          {/* Action Button */}
-          <a href={getProductUrl()} target="_blank" rel="noopener noreferrer" className="w-full">
-            <Button className="w-full bg-gradient-to-r from-elec-yellow to-elec-yellow/90 hover:from-elec-yellow/90 hover:to-elec-yellow text-elec-dark font-semibold py-2.5 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] flex items-center justify-center gap-2 group/btn">
-              <span>View Deal</span>
-              <ExternalLink className="h-4 w-4 transition-transform duration-200 group-hover/btn:translate-x-0.5" />
-            </Button>
-          </a>
+        )}
+        
+        {/* Supplier */}
+        <div className="text-sm text-muted-foreground mb-3">
+          {item.supplier}
         </div>
+        
+        {/* Price - prominent */}
+        <div className="mb-4">
+          {item.isOnSale ? (
+            <div className="flex items-center gap-2">
+              <span className="text-xl font-bold text-elec-yellow">{item.salePrice}</span>
+              <span className="line-through text-muted-foreground text-sm">{item.price}</span>
+              <span className="bg-red-500/20 text-red-400 text-xs px-2 py-1 rounded font-medium">SALE</span>
+            </div>
+          ) : (
+            <span className="text-xl font-bold text-elec-yellow">{item.price}</span>
+          )}
+        </div>
+        
+        {/* Action button */}
+        <a href={getProductUrl()} target="_blank" rel="noopener noreferrer" className="block w-full">
+          <Button className="w-full bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark font-semibold">
+            View Deal
+            <ExternalLink className="h-4 w-4 ml-2" />
+          </Button>
+        </a>
       </CardContent>
     </Card>
   );
