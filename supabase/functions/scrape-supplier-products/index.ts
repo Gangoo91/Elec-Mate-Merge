@@ -449,12 +449,19 @@ serve(async (req) => {
         freshResults = await scrapeProtectionWithFirecrawl();
       }
       
-      if (freshResults.length > 0) {
-        console.log(`[SCRAPE-SUPPLIER-PRODUCTS] Successfully scraped ${freshResults.length} fresh ${currentCategory} products`);
-        products = freshResults;
-      } else {
-        console.log(`[SCRAPE-SUPPLIER-PRODUCTS] No products found for ${currentCategory} category`);
-      }
+      console.log(`[SCRAPE-SUPPLIER-PRODUCTS] Live scraping ${currentCategory} returned ${freshResults.length} products`);
+      
+      // Always return results from cached category scraping - don't continue to fallback logic
+      return new Response(
+        JSON.stringify({
+          products: freshResults,
+          supplier: supplierName,
+          lastUpdated: now,
+          cached: false,
+          note: freshResults.length === 0 ? `No ${currentCategory} products found via live scraping` : undefined
+        }),
+        { headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
     }
 
     if (firecrawlKey && !isCablesSearch && !isComponentsSearch && !isProtectionSearch) {
