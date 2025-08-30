@@ -437,57 +437,23 @@ serve(async (req) => {
 
     if (isCablesSearch || isComponentsSearch || isProtectionSearch) {
       const currentCategory = isCablesSearch ? 'cables' : (isProtectionSearch ? 'protection' : 'components');
-      console.log(`[SCRAPE-SUPPLIER-PRODUCTS] Using cached approach for ${currentCategory}`);
+      console.log(`[SCRAPE-SUPPLIER-PRODUCTS] CACHE DISABLED - forcing live scraping for ${currentCategory}`);
       
-      // Check for cached data with category filter for the current supplier (skip if force refresh)
-      if (forceRefresh) {
-        console.log(`[SCRAPE-SUPPLIER-PRODUCTS] Force refresh requested, clearing cache for ${currentCategory}`);
-        // Delete existing cache entries for this supplier/category
-        await supabase
-          .from('cables_materials_cache')
-          .delete()
-          .eq('supplier', supplierSlug)
-          .eq('category', currentCategory);
+      // Force live scraping - no cache logic
+      let freshResults: MaterialItem[] = [];
+      if (currentCategory === 'cables') {
+        freshResults = await scrapeCablesWiringWithFirecrawl();
+      } else if (currentCategory === 'components') {
+        freshResults = await scrapeComponentsWithFirecrawl();
+      } else if (currentCategory === 'protection') {
+        freshResults = await scrapeProtectionWithFirecrawl();
       }
-
-      const { data: cachedData } = !forceRefresh ? await supabase
-        .from('cables_materials_cache')
-        .select('*')
-        .eq('supplier', supplierSlug)
-        .eq('category', currentCategory)
-        .gt('expires_at', new Date().toISOString())
-        .maybeSingle() : { data: null };
-
-      if (!forceRefresh && cachedData && cachedData.product_data && Array.isArray(cachedData.product_data) && cachedData.product_data.length > 0) {
-        console.log(`[SCRAPE-SUPPLIER-PRODUCTS] Using cached ${currentCategory} data with ${cachedData.product_data.length} products`);
-        products = cachedData.product_data;
+      
+      if (freshResults.length > 0) {
+        console.log(`[SCRAPE-SUPPLIER-PRODUCTS] Successfully scraped ${freshResults.length} fresh ${currentCategory} products`);
+        products = freshResults;
       } else {
-        console.log(`[SCRAPE-SUPPLIER-PRODUCTS] ${forceRefresh ? 'Force refresh -' : 'Cache expired/missing,'} refreshing ${currentCategory} data`);
-        
-        // Fetch fresh data using appropriate function
-         let freshResults: MaterialItem[] = [];
-         if (currentCategory === 'cables') {
-           freshResults = await scrapeCablesWiringWithFirecrawl();
-         } else if (currentCategory === 'components') {
-           freshResults = await scrapeComponentsWithFirecrawl();
-         } else if (currentCategory === 'protection') {
-           freshResults = await scrapeProtectionWithFirecrawl();
-         }
-        
-        if (freshResults.length > 0) {
-          // Store in cache with category and correct supplier
-          await supabase
-            .from('cables_materials_cache')
-            .upsert({
-              supplier: supplierSlug,
-              category: currentCategory,
-              product_data: freshResults,
-              expires_at: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString() // 1 week
-            });
-          
-          console.log(`[SCRAPE-SUPPLIER-PRODUCTS] Cached ${freshResults.length} fresh ${currentCategory} products`);
-          products = freshResults;
-        }
+        console.log(`[SCRAPE-SUPPLIER-PRODUCTS] No products found for ${currentCategory} category`);
       }
     }
 
