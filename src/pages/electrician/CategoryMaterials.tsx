@@ -76,7 +76,7 @@ const CategoryMaterials = () => {
       "cables wiring" // Single comprehensive search for cables since we use database cache
     ],
     components: [
-      "Consumer units, MCBs, RCDs, isolators, accessories" // Single comprehensive search for components
+      "consumer units, MCBs, RCDs, isolators, accessories" // Single comprehensive search for components
     ],
     protection: ["rcbo", "surge protector", "earth rod"],
     accessories: ["junction box", "weatherproof enclosure", "cable gland"],
