@@ -156,14 +156,16 @@ const MaterialCard: React.FC<MaterialCardProps> = ({ item }) => {
         {/* Highlights */}
         {item.highlights && item.highlights.length > 0 && (
           <div className="mb-3">
-            <ul className="text-xs text-muted-foreground space-y-1">
+            <div className="flex flex-wrap gap-1">
               {item.highlights.map((highlight, index) => (
-                <li key={index} className="flex items-center">
-                  <span className="w-1 h-1 bg-elec-yellow rounded-full mr-2 flex-shrink-0"></span>
+                <span 
+                  key={index} 
+                  className="inline-flex items-center bg-elec-yellow/15 text-elec-yellow text-xs px-2 py-1 rounded-full font-medium border border-elec-yellow/20"
+                >
                   {highlight}
-                </li>
+                </span>
               ))}
-            </ul>
+            </div>
           </div>
         )}
         
