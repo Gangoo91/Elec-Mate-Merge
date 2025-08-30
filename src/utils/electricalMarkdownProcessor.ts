@@ -29,11 +29,20 @@ export const processElectricalMarkdown = (content: string): string => {
     
     let processedBlock = block.trim();
     
-    // Convert markdown headers
+    // Convert horizontal rules first (before headers)
+    processedBlock = processedBlock.replace(/^-{3,}$/gm, '<hr>');
+    
+    // Convert markdown headers (process from h6 to h1 to avoid conflicts)
     processedBlock = processedBlock
+      .replace(/^#{6} (.+)$/gm, '<h6>$1</h6>')
+      .replace(/^#{5} (.+)$/gm, '<h5>$1</h5>')
+      .replace(/^#{4} (.+)$/gm, '<h4>$1</h4>')
       .replace(/^### (.+)$/gm, '<h3>$1</h3>')
       .replace(/^## (.+)$/gm, '<h2>$1</h2>')
       .replace(/^# (.+)$/gm, '<h1>$1</h1>');
+    
+    // Convert blockquotes
+    processedBlock = processedBlock.replace(/^> (.+)$/gm, '<blockquote>$1</blockquote>');
     
     // Convert text formatting
     processedBlock = processedBlock
@@ -149,7 +158,25 @@ export const generateElectricalReportPDF = async (
             h1 { font-size: 18px; }
             h2 { font-size: 16px; border-bottom: 1px solid #DAA520; padding-bottom: 4px; }
             h3 { font-size: 14px; }
-            h4, h5, h6 { font-size: 12px; }
+            h4 { font-size: 12px; }
+            h5 { font-size: 11px; }
+            h6 { font-size: 10px; color: #666; }
+            
+            hr {
+              border: none;
+              border-top: 2px solid #DAA520;
+              margin: 20px 0;
+              page-break-inside: avoid;
+            }
+            
+            blockquote {
+              margin: 10px 0;
+              padding: 8px 15px;
+              border-left: 4px solid #DAA520;
+              background-color: #f9f9f9;
+              font-style: italic;
+              color: #333;
+            }
             
             p { 
               margin: 8px 0; 
