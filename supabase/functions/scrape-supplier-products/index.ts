@@ -291,18 +291,18 @@ serve(async (req) => {
       const currentCategory = isCablesSearch ? 'cables' : 'components';
       console.log(`[SCRAPE-SUPPLIER-PRODUCTS] Using cached approach for ${currentCategory}`);
       
-      // Check for cached data with category filter
+      // Check for cached data with category filter for the current supplier
       const { data: cachedData } = await supabase
         .from('cables_materials_cache')
         .select('*')
-        .eq('supplier', 'screwfix')
+        .eq('supplier', supplierSlug)
         .eq('category', currentCategory)
         .gt('expires_at', new Date().toISOString())
         .maybeSingle();
 
-      if (cachedData) {
-        console.log(`[SCRAPE-SUPPLIER-PRODUCTS] Using cached ${currentCategory} data`);
-        products = cachedData.product_data || [];
+      if (cachedData && cachedData.product_data && Array.isArray(cachedData.product_data) && cachedData.product_data.length > 0) {
+        console.log(`[SCRAPE-SUPPLIER-PRODUCTS] Using cached ${currentCategory} data with ${cachedData.product_data.length} products`);
+        products = cachedData.product_data;
       } else {
         console.log(`[SCRAPE-SUPPLIER-PRODUCTS] Cache expired/missing, refreshing ${currentCategory} data`);
         
@@ -315,11 +315,11 @@ serve(async (req) => {
         }
         
         if (freshResults.length > 0) {
-          // Store in cache with category
+          // Store in cache with category and correct supplier
           await supabase
             .from('cables_materials_cache')
             .upsert({
-              supplier: 'screwfix',
+              supplier: supplierSlug,
               category: currentCategory,
               product_data: freshResults,
               expires_at: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString() // 1 week
@@ -331,7 +331,7 @@ serve(async (req) => {
       }
     }
 
-    if (firecrawlKey && !isCablesSearch) {
+    if (firecrawlKey && !isCablesSearch && !isComponentsSearch) {
       try {
         // Use Firecrawl v2 JSON schema for protection equipment, v1 for others
         if (isProtectionSearch && supplierSlug === "screwfix") {
