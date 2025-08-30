@@ -461,7 +461,7 @@ const CategoryMaterials = () => {
 
   // Auto-load live deals for cables, components, accessories, lighting and tools categories
   useEffect(() => {
-    if ((categoryId === 'cables' || categoryId === 'components' || categoryId === 'accessories' || categoryId === 'lighting' || categoryId === 'tools' || categoryId === 'protection') && !isAutoLoaded && !isFetching) {
+    if ((categoryId === 'cables' || categoryId === 'components' || categoryId === 'accessories' || categoryId === 'lighting' || categoryId === 'tools') && !isAutoLoaded && !isFetching) {
       console.log(`Auto-loading live ${categoryId} deals...`);
       fetchLiveDeals(true);
     }
