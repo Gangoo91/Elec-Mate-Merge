@@ -267,28 +267,29 @@ const CategoryMaterials = () => {
         <link rel="canonical" href={typeof window !== 'undefined' ? window.location.href : ''} />
       </Helmet>
 
-      <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      <header className="flex flex-col gap-4">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight flex items-center gap-2">
-            <Package className="h-8 w-8 text-elec-yellow" />
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight flex items-center gap-2">
+            <Package className="h-6 w-6 sm:h-8 sm:w-8 text-elec-yellow" />
             {meta.title}
           </h1>
-          <p className="text-muted-foreground mt-1">{meta.description}</p>
+          <p className="text-sm sm:text-base text-muted-foreground mt-1">{meta.description}</p>
         </div>
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
           <Link to="/electrician/materials">
-            <Button variant="outline" className="flex items-center gap-2">
-              <ArrowLeft className="h-4 w-4" /> Back
+            <Button variant="outline" size="sm" className="flex items-center gap-1.5 text-xs sm:text-sm">
+              <ArrowLeft className="h-3.5 w-3.5 sm:h-4 sm:w-4" /> Back
             </Button>
           </Link>
           <Link to="/electrician/trade-essentials">
-            <Button variant="outline" className="flex items-center gap-2">
-              <ArrowLeft className="h-4 w-4" /> Trade Essentials
+            <Button variant="outline" size="sm" className="flex items-center gap-1.5 text-xs sm:text-sm">
+              <ArrowLeft className="h-3.5 w-3.5 sm:h-4 sm:w-4" /> Trade Essentials
             </Button>
           </Link>
-          <Button variant="outline" onClick={handleManualRefresh} disabled={isFetching} className="flex items-center gap-2">
-            <RefreshCw className={`h-4 w-4 ${isFetching ? 'animate-spin' : ''}`} />
-            {isFetching ? 'Fetching…' : 'Fetch Live Deals'}
+          <Button variant="outline" size="sm" onClick={handleManualRefresh} disabled={isFetching} className="flex items-center gap-1.5 text-xs sm:text-sm">
+            <RefreshCw className={`h-3.5 w-3.5 sm:h-4 sm:w-4 ${isFetching ? 'animate-spin' : ''}`} />
+            <span className="hidden xs:inline">{isFetching ? 'Fetching…' : 'Fetch Live Deals'}</span>
+            <span className="xs:hidden">{isFetching ? 'Fetch' : 'Deals'}</span>
           </Button>
         </div>
       </header>
