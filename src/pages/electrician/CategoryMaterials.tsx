@@ -65,7 +65,6 @@ const CategoryMaterials = () => {
   // Suppliers supported by the edge function
   const SUPPLIERS = [
     "screwfix",
-    "city-electrical-factors", 
     "electricaldirect",
     "toolstation",
   ] as const;
