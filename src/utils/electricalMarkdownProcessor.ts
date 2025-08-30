@@ -4,7 +4,7 @@ import html2pdf from 'html2pdf.js';
 export const processElectricalMarkdown = (content: string): string => {
   let processedContent = content;
 
-  // Process electrical badges and elements
+  // Process electrical badges and elements first
   processedContent = processedContent
     // BS 7671 compliance references
     .replace(/(\[BS 7671[^\]]*\])/g, '<span class="badge badge-bs7671">$1</span>')
@@ -20,37 +20,70 @@ export const processElectricalMarkdown = (content: string): string => {
     .replace(/\b(FI)\b/g, '<span class="badge badge-fi">$1</span>')
     
     // Measurements and values
-    .replace(/(\d+\.?\d*)\s*(Ω|V|A|kW|Hz|mm²?|m)\b/g, '<span class="badge badge-measurement">$1$2</span>')
+    .replace(/(\d+\.?\d*)\s*(Ω|V|A|kW|Hz|mm²?|m)\b/g, '<span class="badge badge-measurement">$1$2</span>');
+  
+  // Split content into blocks and process each separately
+  const blocks = processedContent.split(/\n\s*\n/);
+  const processedBlocks = blocks.map(block => {
+    if (!block.trim()) return '';
     
-    // Convert markdown to HTML
-    .replace(/### (.*)/g, '<h3>$1</h3>')
-    .replace(/## (.*)/g, '<h2>$1</h2>')
-    .replace(/# (.*)/g, '<h1>$1</h1>')
-    .replace(/\*\*\*(.+?)\*\*\*/g, '<strong><em>$1</em></strong>')
-    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-    .replace(/\*(.+?)\*/g, '<em>$1</em>')
-    .replace(/`(.+?)`/g, '<code>$1</code>')
-    .replace(/~~(.+?)~~/g, '<del>$1</del>')
+    let processedBlock = block.trim();
     
-    // Convert tables
-    .replace(/\|(.+)\|/g, (match, content) => {
-      const cells = content.split('|').map(cell => cell.trim()).filter(cell => cell);
-      return '<tr>' + cells.map(cell => `<td>${cell}</td>`).join('') + '</tr>';
-    })
+    // Convert markdown headers
+    processedBlock = processedBlock
+      .replace(/^### (.+)$/gm, '<h3>$1</h3>')
+      .replace(/^## (.+)$/gm, '<h2>$1</h2>')
+      .replace(/^# (.+)$/gm, '<h1>$1</h1>');
     
-    // Convert lists
-    .replace(/^- (.+)$/gm, '<li>$1</li>')
-    .replace(/^(\d+)\. (.+)$/gm, '<li>$1</li>')
+    // Convert text formatting
+    processedBlock = processedBlock
+      .replace(/\*\*\*(.+?)\*\*\*/g, '<strong><em>$1</em></strong>')
+      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\*(.+?)\*/g, '<em>$1</em>')
+      .replace(/`(.+?)`/g, '<code>$1</code>')
+      .replace(/~~(.+?)~~/g, '<del>$1</del>');
     
-    // Convert line breaks
-    .replace(/\n\n/g, '</p><p>')
-    .replace(/\n/g, '<br>')
+    // Handle tables
+    if (processedBlock.includes('|')) {
+      const tableRows = processedBlock.split('\n').filter(line => line.includes('|'));
+      if (tableRows.length > 0) {
+        const tableHtml = tableRows.map(row => {
+          const cells = row.split('|').map(cell => cell.trim()).filter(cell => cell);
+          return '<tr>' + cells.map(cell => `<td>${cell}</td>`).join('') + '</tr>';
+        }).join('');
+        return `<table>${tableHtml}</table>`;
+      }
+    }
     
-    // Normalize whitespace
-    .replace(/\s+/g, ' ')
-    .trim();
+    // Handle lists
+    if (processedBlock.match(/^[\-\*] /m) || processedBlock.match(/^\d+\. /m)) {
+      const listItems = processedBlock.split('\n').map(line => {
+        if (line.match(/^[\-\*] (.+)$/)) {
+          return `<li>${line.replace(/^[\-\*] /, '')}</li>`;
+        } else if (line.match(/^\d+\. (.+)$/)) {
+          return `<li>${line.replace(/^\d+\. /, '')}</li>`;
+        }
+        return line;
+      }).filter(line => line.startsWith('<li>'));
+      
+      if (listItems.length > 0) {
+        const listType = processedBlock.match(/^\d+\./) ? 'ol' : 'ul';
+        return `<${listType}>${listItems.join('')}</${listType}>`;
+      }
+    }
+    
+    // Handle headers (if not already processed)
+    if (processedBlock.match(/^<h[1-6]>/)) {
+      return processedBlock;
+    }
+    
+    // Regular paragraph - convert single line breaks to spaces, preserve formatting
+    processedBlock = processedBlock.replace(/\n/g, ' ').replace(/\s+/g, ' ').trim();
+    
+    return processedBlock ? `<p>${processedBlock}</p>` : '';
+  }).filter(block => block);
 
-  return processedContent;
+  return processedBlocks.join('\n');
 };
 
 // Generate PDF using html2pdf.js (browser-compatible)
@@ -79,6 +112,9 @@ export const generateElectricalReportPDF = async (
               max-width: 100%;
               margin: 0;
               padding: 20px;
+              word-wrap: break-word;
+              overflow-wrap: break-word;
+              hyphens: auto;
             }
             
             .report-header {
@@ -105,6 +141,9 @@ export const generateElectricalReportPDF = async (
               color: #DAA520;
               margin-top: 20px;
               margin-bottom: 10px;
+              page-break-after: avoid;
+              orphans: 3;
+              widows: 3;
             }
             
             h1 { font-size: 18px; }
@@ -112,7 +151,14 @@ export const generateElectricalReportPDF = async (
             h3 { font-size: 14px; }
             h4, h5, h6 { font-size: 12px; }
             
-            p { margin: 8px 0; text-align: justify; }
+            p { 
+              margin: 8px 0; 
+              text-align: justify; 
+              orphans: 2;
+              widows: 2;
+              word-spacing: normal;
+              letter-spacing: 0.02em;
+            }
             
             table {
               width: 100%;
@@ -219,7 +265,7 @@ export const generateElectricalReportPDF = async (
           </div>
           
           <div class="content">
-            <p>${processedContent}</p>
+            ${processedContent}
           </div>
           
           <div class="footer">
@@ -232,19 +278,24 @@ export const generateElectricalReportPDF = async (
 
     // Configure PDF options for html2pdf
     const options = {
-      margin: [0.5, 0.5, 0.5, 0.5],
+      margin: [12, 12, 12, 12],
       filename: filename || `${reportType.toLowerCase().replace(/\s+/g, '-')}-${new Date().toISOString().split('T')[0]}.pdf`,
       image: { type: 'jpeg', quality: 0.98 },
       html2canvas: { 
-        scale: 2,
+        scale: 1.5,
         useCORS: true,
-        letterRendering: true 
+        letterRendering: true,
+        allowTaint: true,
+        scrollX: 0,
+        scrollY: 0
       },
       jsPDF: { 
-        unit: 'in', 
+        unit: 'mm', 
         format: 'a4', 
-        orientation: 'portrait' 
-      }
+        orientation: 'portrait',
+        compressPDF: true
+      },
+      pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
     };
 
     // Generate and download the PDF
