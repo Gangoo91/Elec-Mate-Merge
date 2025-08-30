@@ -12,13 +12,13 @@ const ElectricalTools = () => {
         {/* Header */}
         <div className="space-y-4">
           <div className="flex justify-start">
-            <Link to="/electrician/trade-essentials">
+            <Link to="/electrician/business">
               <Button 
                 variant="outline" 
                 className="bg-elec-gray/50 border-elec-yellow/30 hover:bg-elec-yellow/10 text-white"
               >
                 <ArrowLeft className="mr-2 h-4 w-4" />
-                Back to Trade Essentials
+                Back to Business Hub
               </Button>
             </Link>
           </div>
