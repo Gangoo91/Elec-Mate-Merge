@@ -319,6 +319,72 @@ async function scrapeCablesWiringWithFirecrawl(): Promise<MaterialItem[]> {
   }
 }
 
+// Function to scrape protection equipment using Firecrawl v2 JSON extraction
+async function scrapeProtectionWithFirecrawl(): Promise<MaterialItem[]> {
+  const firecrawlKey = Deno.env.get("FIRECRAWL_API_KEY");
+  if (!firecrawlKey) {
+    throw new Error("Firecrawl API key not configured");
+  }
+
+  const url = "https://api.firecrawl.dev/v2/scrape";
+
+  const options = {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${firecrawlKey}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      url: "https://www.screwfix.com/search?search=earthing%2C+surge+protection%2C+circuit+protection&page_size=100",
+      onlyMainContent: true,
+      maxAge: 0,
+      parsers: [],
+      formats: [
+        {
+          type: "json",
+          schema: protectionProductSchema,
+        },
+      ],
+    }),
+  };
+
+  try {
+    console.log(`[PROTECTION] Firecrawl v2 scraping Screwfix comprehensive protection search...`);
+    
+    const response = await fetch(url, options);
+    console.log(`[PROTECTION] Firecrawl status: ${response.status} ${response.ok}`);
+
+    if (!response.ok) {
+      throw new Error(`API request failed: ${response.status}`);
+    }
+
+    const data = await response.json();
+    console.log(`[PROTECTION] Firecrawl response received, processing data...`);
+    
+    if (data.success && data.data && data.data.json) {
+      const products = Array.isArray(data.data.json) ? data.data.json : [];
+      console.log(`[PROTECTION] Extracted ${products.length} products from Firecrawl v2`);
+      
+      return products.map((product: any, index: number) => ({
+        id: Date.now() + index,
+        name: product.name || "Unknown Product",
+        category: categorizeProtectionProduct(product.name || ""),
+        price: product.price || "Price on application",
+        supplier: "Screwfix",
+        image: product.image && product.image.startsWith('http') ? product.image : "/placeholder.svg",
+        productUrl: product.view_product_url || "https://www.screwfix.com",
+        highlights: product.highlights || generateComponentHighlights(product.name || "", product.description || "")
+      }));
+    } else {
+      console.log(`[PROTECTION] Invalid Firecrawl v2 response structure`);
+      return [];
+    }
+  } catch (error) {
+    console.error(`[PROTECTION] Firecrawl v2 scraping failed:`, error);
+    return [];
+  }
+}
+
 serve(async (req) => {
   // CORS preflight
   if (req.method === "OPTIONS") {
@@ -397,12 +463,14 @@ serve(async (req) => {
         console.log(`[SCRAPE-SUPPLIER-PRODUCTS] ${forceRefresh ? 'Force refresh -' : 'Cache expired/missing,'} refreshing ${currentCategory} data`);
         
         // Fetch fresh data using appropriate function
-        let freshResults: MaterialItem[] = [];
-        if (currentCategory === 'cables') {
-          freshResults = await scrapeCablesWiringWithFirecrawl();
-        } else if (currentCategory === 'components') {
-          freshResults = await scrapeComponentsWithFirecrawl();
-        }
+         let freshResults: MaterialItem[] = [];
+         if (currentCategory === 'cables') {
+           freshResults = await scrapeCablesWiringWithFirecrawl();
+         } else if (currentCategory === 'components') {
+           freshResults = await scrapeComponentsWithFirecrawl();
+         } else if (currentCategory === 'protection') {
+           freshResults = await scrapeProtectionWithFirecrawl();
+         }
         
         if (freshResults.length > 0) {
           // Store in cache with category and correct supplier
@@ -421,7 +489,7 @@ serve(async (req) => {
       }
     }
 
-    if (firecrawlKey && !isCablesSearch && !isComponentsSearch) {
+    if (firecrawlKey && !isCablesSearch && !isComponentsSearch && !isProtectionSearch) {
       try {
         // Use Firecrawl v2 JSON schema for protection equipment, v1 for others
         if (isProtectionSearch && supplierSlug === "screwfix") {
