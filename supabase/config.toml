@@ -75,3 +75,6 @@ verify_jwt = false
 
 [functions.live-education-aggregator]
 verify_jwt = false
+
+[functions.ai-materials-counter]
+verify_jwt = false
