@@ -136,7 +136,7 @@ const CategoryMaterials = () => {
     return types;
   };
   
-  // Smart product selection: prioritize fresh live data, fallback to static when appropriate
+  // Smart product selection: only show live data, no static fallback
   const baseProducts = useMemo(() => {
     // If we have valid and fresh live data, use it
     if (hasValidLiveData && (categoryId === 'cables' || isLiveDataFresh)) {
@@ -144,22 +144,10 @@ const CategoryMaterials = () => {
       return liveProducts;
     }
     
-    // If live fetch failed or no live data found, use static products
-    if (hasAttemptedLiveFetch && (liveFetchFailed || liveProducts.length === 0)) {
-      setDataSource('static');
-      return products;
-    }
-    
-    // If no live fetch attempted yet, use static products
-    if (!hasAttemptedLiveFetch) {
-      setDataSource('static');
-      return products;
-    }
-    
-    // Default fallback
+    // Don't show static data - only show live data or nothing
     setDataSource('none');
     return [];
-  }, [hasValidLiveData, isLiveDataFresh, categoryId, liveProducts, hasAttemptedLiveFetch, liveFetchFailed, products]);
+  }, [hasValidLiveData, isLiveDataFresh, categoryId, liveProducts]);
   const displayProducts = useMemo(() => {
     if (categoryId !== 'cables' || selectedCableTypes.length === 0) {
       return baseProducts;
@@ -406,16 +394,16 @@ const CategoryMaterials = () => {
         <Card className="border-elec-yellow/20 bg-elec-gray">
           <CardContent className="p-6 text-center space-y-3">
             <p className="text-muted-foreground">
-              {hasAttemptedLiveFetch && !liveFetchFailed ? 
-                'No products found from live suppliers.' :
+              {!hasAttemptedLiveFetch ? 
+                'Loading live products...' :
                 liveFetchFailed ?
-                'Live fetch failed. Showing static products.' :
-                'No products found in this category yet.'
+                'Failed to fetch live products. Please try refreshing.' :
+                'No live products found for this category.'
               }
             </p>
             {hasAttemptedLiveFetch && !liveFetchFailed && (
               <p className="text-sm text-muted-foreground">
-                Try different filter options or refresh to get updated deals.
+                Try using the "Fetch Live Deals" button to get updated products.
               </p>
             )}
           </CardContent>
@@ -426,11 +414,7 @@ const CategoryMaterials = () => {
           {dataSource !== 'none' && (
             <div className="flex items-center justify-between text-xs text-muted-foreground">
               <span>
-                {dataSource === 'live' ? (
-                  <>📡 Live data • Updated {new Date(lastFetchTime).toLocaleTimeString()}</>
-                ) : (
-                  <>📋 Static catalogue data</>
-                )}
+                📡 Live data • Updated {new Date(lastFetchTime).toLocaleTimeString()}
               </span>
               {dataSource === 'live' && !isLiveDataFresh && categoryId !== 'cables' && (
                 <span className="text-yellow-600">• Data may be stale</span>
