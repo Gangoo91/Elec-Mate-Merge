@@ -90,12 +90,27 @@ const CategoryMaterials = () => {
   const [isFetching, setIsFetching] = useState(false);
   const [isAutoLoaded, setIsAutoLoaded] = useState(false);
   const [lastFetchTime, setLastFetchTime] = useState<number>(0);
+  const [hasAttemptedLiveFetch, setHasAttemptedLiveFetch] = useState(false);
+  const [liveFetchFailed, setLiveFetchFailed] = useState(false);
+  const [dataSource, setDataSource] = useState<'live' | 'static' | 'none'>('none');
   
   // Cable type filter state
   const [selectedCableTypes, setSelectedCableTypes] = useState<string[]>([]);
   
-  // Shorter cache for non-cables categories, cables use database cache
+  // Cache duration and freshness checking
   const CACHE_DURATION = categoryId === 'cables' ? 0 : 30 * 60 * 1000; // No frontend cache for cables
+  
+  // Check if live data is fresh
+  const isLiveDataFresh = useMemo(() => {
+    if (!hasAttemptedLiveFetch) return false;
+    const now = Date.now();
+    return (now - lastFetchTime) < CACHE_DURATION;
+  }, [hasAttemptedLiveFetch, lastFetchTime, CACHE_DURATION]);
+  
+  // Check if we have valid live data
+  const hasValidLiveData = useMemo(() => {
+    return hasAttemptedLiveFetch && !liveFetchFailed && liveProducts.length > 0;
+  }, [hasAttemptedLiveFetch, liveFetchFailed, liveProducts.length]);
   
   // Cable type detection function
   const getCableType = (itemName: string): string[] => {
@@ -121,8 +136,30 @@ const CategoryMaterials = () => {
     return types;
   };
   
-  // Filter products by cable type if filters are active
-  const baseProducts = liveProducts.length > 0 ? liveProducts : products;
+  // Smart product selection: prioritize fresh live data, fallback to static when appropriate
+  const baseProducts = useMemo(() => {
+    // If we have valid and fresh live data, use it
+    if (hasValidLiveData && (categoryId === 'cables' || isLiveDataFresh)) {
+      setDataSource('live');
+      return liveProducts;
+    }
+    
+    // If live fetch failed or no live data found, use static products
+    if (hasAttemptedLiveFetch && (liveFetchFailed || liveProducts.length === 0)) {
+      setDataSource('static');
+      return products;
+    }
+    
+    // If no live fetch attempted yet, use static products
+    if (!hasAttemptedLiveFetch) {
+      setDataSource('static');
+      return products;
+    }
+    
+    // Default fallback
+    setDataSource('none');
+    return [];
+  }, [hasValidLiveData, isLiveDataFresh, categoryId, liveProducts, hasAttemptedLiveFetch, liveFetchFailed, products]);
   const displayProducts = useMemo(() => {
     if (categoryId !== 'cables' || selectedCableTypes.length === 0) {
       return baseProducts;
@@ -134,16 +171,18 @@ const CategoryMaterials = () => {
     });
   }, [baseProducts, selectedCableTypes, categoryId]);
 
-  // Enhanced fetch with multiple search terms and caching
+  // Enhanced fetch with better error handling and state management
   const fetchLiveDeals = async (isAutoLoad = false) => {
-    // Check cache first
+    // Check cache first for non-cables categories
     const now = Date.now();
-    if (isAutoLoad && liveProducts.length > 0 && (now - lastFetchTime) < CACHE_DURATION) {
-      console.log('Using cached results for', categoryId);
+    if (isAutoLoad && hasValidLiveData && isLiveDataFresh) {
+      console.log('Using fresh cached results for', categoryId);
       return;
     }
 
     setIsFetching(true);
+    setLiveFetchFailed(false);
+    
     try {
       const searchTerms = CATEGORY_QUERIES[categoryId] || [meta.title];
       const allCollected: LiveItem[] = [];
@@ -208,6 +247,8 @@ const CategoryMaterials = () => {
       setLiveProducts(deduped);
       setLastFetchTime(now);
       setIsAutoLoaded(true);
+      setHasAttemptedLiveFetch(true);
+      setLiveFetchFailed(false);
       
       if (!isAutoLoad) {
         toast({ 
@@ -217,6 +258,9 @@ const CategoryMaterials = () => {
       }
     } catch (e) {
       console.error('Failed to fetch live deals:', e);
+      setLiveFetchFailed(true);
+      setHasAttemptedLiveFetch(true);
+      
       if (!isAutoLoad) {
         toast({ title: 'Failed to fetch', description: 'Please try again later.', variant: 'destructive' });
       }
@@ -360,17 +404,40 @@ const CategoryMaterials = () => {
 
       {displayProducts.length === 0 && !isFetching ? (
         <Card className="border-elec-yellow/20 bg-elec-gray">
-          <CardContent className="p-6 text-center">
+          <CardContent className="p-6 text-center space-y-3">
             <p className="text-muted-foreground">
-              {categoryId === 'cables' ? 
-                'No cable products found. Try refreshing to get the latest deals.' : 
-                'No products found in this category yet. Showing curated items soon.'
+              {hasAttemptedLiveFetch && !liveFetchFailed ? 
+                'No products found from live suppliers.' :
+                liveFetchFailed ?
+                'Live fetch failed. Showing static products.' :
+                'No products found in this category yet.'
               }
             </p>
+            {hasAttemptedLiveFetch && !liveFetchFailed && (
+              <p className="text-sm text-muted-foreground">
+                Try different filter options or refresh to get updated deals.
+              </p>
+            )}
           </CardContent>
         </Card>
       ) : (
         <section aria-label={`${meta.title} products`} className="space-y-4">
+          {/* Data source indicator */}
+          {dataSource !== 'none' && (
+            <div className="flex items-center justify-between text-xs text-muted-foreground">
+              <span>
+                {dataSource === 'live' ? (
+                  <>📡 Live data • Updated {new Date(lastFetchTime).toLocaleTimeString()}</>
+                ) : (
+                  <>📋 Static catalogue data</>
+                )}
+              </span>
+              {dataSource === 'live' && !isLiveDataFresh && categoryId !== 'cables' && (
+                <span className="text-yellow-600">• Data may be stale</span>
+              )}
+            </div>
+          )}
+          
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {displayProducts.map((item) => (
               <MaterialCard key={item.id} item={item} />
