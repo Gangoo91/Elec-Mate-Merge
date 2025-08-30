@@ -267,7 +267,7 @@ const CategoryMaterials = () => {
         <link rel="canonical" href={typeof window !== 'undefined' ? window.location.href : ''} />
       </Helmet>
 
-      <header className="flex flex-col gap-3">
+      <header className="flex flex-col gap-6">
         <div className="flex flex-wrap gap-2">
           <Link to="/electrician/materials">
             <Button variant="outline" size="sm" className="flex items-center gap-1.5 text-xs sm:text-sm">
