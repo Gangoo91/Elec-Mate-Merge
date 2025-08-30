@@ -327,7 +327,7 @@ const CategoryMaterials = () => {
             <Button variant="outline" size="sm" onClick={handleManualRefresh} disabled={isFetching} className="flex items-center gap-1.5 text-xs sm:text-sm">
               <RefreshCw className={`h-3.5 w-3.5 sm:h-4 sm:w-4 ${isFetching ? 'animate-spin' : ''}`} />
               <span className="hidden xs:inline">{isFetching ? 'Fetching…' : 'Fetch Live Deals'}</span>
-              <span className="xs:hidden">{isFetching ? 'Fetch' : 'Deals'}</span>
+              <span className="xs:hidden">Refresh Deals</span>
             </Button>
           </div>
           <div className="flex flex-wrap gap-2">
