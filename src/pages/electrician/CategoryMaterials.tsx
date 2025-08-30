@@ -1,6 +1,6 @@
 
 import { useMemo, useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useSearchParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -8,6 +8,8 @@ import { Badge } from "@/components/ui/badge";
 import { Package, ArrowLeft, Filter, RefreshCw } from "lucide-react";
 import { productsBySupplier, MaterialItem } from "@/data/electrician/productData";
 import MaterialCard from "@/components/electrician-materials/MaterialCard";
+import CategoryFilters from "@/components/electrician-materials/CategoryFilters";
+import RefreshButton from "@/components/electrician-materials/RefreshButton";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 
@@ -94,9 +96,27 @@ const CategoryMaterials = () => {
   const [hasAttemptedLiveFetch, setHasAttemptedLiveFetch] = useState(false);
   const [liveFetchFailed, setLiveFetchFailed] = useState(false);
   const [dataSource, setDataSource] = useState<'live' | 'static' | 'none'>('none');
+  const [searchParams, setSearchParams] = useSearchParams();
   
-  // Cable type filter state
-  const [selectedCableTypes, setSelectedCableTypes] = useState<string[]>([]);
+  // Enhanced filter state for all categories
+  interface FilterState {
+    productTypes: string[];
+    brands: string[];
+    priceRanges: string[];
+    moduleSizes: string[];
+    cableTypes: string[];
+  }
+  
+  const [filters, setFilters] = useState<FilterState>({
+    productTypes: [],
+    brands: [],
+    priceRanges: [],
+    moduleSizes: [],
+    cableTypes: []
+  });
+
+  // Legacy cable type state for backward compatibility
+  const selectedCableTypes = filters.cableTypes;
   
   // Cache duration and freshness checking
   const CACHE_DURATION = categoryId === 'cables' ? 0 : 30 * 60 * 1000; // No frontend cache for cables
@@ -149,16 +169,68 @@ const CategoryMaterials = () => {
     setDataSource('none');
     return [];
   }, [hasValidLiveData, isLiveDataFresh, categoryId, liveProducts]);
+
+  // Enhanced filtering logic for all categories
   const displayProducts = useMemo(() => {
-    if (categoryId !== 'cables' || selectedCableTypes.length === 0) {
-      return baseProducts;
+    let filtered = baseProducts;
+
+    // Apply filters based on category
+    if (filters.productTypes.length > 0 || filters.cableTypes.length > 0) {
+      const activeTypes = categoryId === 'cables' ? filters.cableTypes : filters.productTypes;
+      if (activeTypes.length > 0) {
+        filtered = filtered.filter(product => {
+          if (categoryId === 'cables') {
+            const cableTypes = getCableType(product.name);
+            return activeTypes.some(selectedType => cableTypes.includes(selectedType));
+          } else {
+            // Generic product type filtering for other categories
+            const productName = product.name.toLowerCase();
+            return activeTypes.some(type => productName.includes(type.toLowerCase()));
+          }
+        });
+      }
     }
-    
-    return baseProducts.filter(product => {
-      const cableTypes = getCableType(product.name);
-      return selectedCableTypes.some(selectedType => cableTypes.includes(selectedType));
-    });
-  }, [baseProducts, selectedCableTypes, categoryId]);
+
+    // Brand filtering
+    if (filters.brands.length > 0) {
+      filtered = filtered.filter(product => {
+        const productName = product.name.toLowerCase();
+        return filters.brands.some(brand => productName.includes(brand.toLowerCase()));
+      });
+    }
+
+    // Price range filtering
+    if (filters.priceRanges.length > 0) {
+      filtered = filtered.filter(product => {
+        const price = parseFloat(product.price.replace(/[£,]/g, ''));
+        return filters.priceRanges.some(range => {
+          switch (range) {
+            case 'Under £25': return price < 25;
+            case '£25-£50': return price >= 25 && price <= 50;
+            case '£50-£100': return price >= 50 && price <= 100;
+            case 'Over £100': return price > 100;
+            default: return true;
+          }
+        });
+      });
+    }
+
+    // Module size filtering for components
+    if (filters.moduleSizes.length > 0 && categoryId === 'components') {
+      filtered = filtered.filter(product => {
+        const productName = product.name.toLowerCase();
+        return filters.moduleSizes.some(size => {
+          const moduleNumber = size.split('-')[0];
+          return productName.includes(moduleNumber.toLowerCase() + 'module') || 
+                 productName.includes(moduleNumber.toLowerCase() + ' module') ||
+                 productName.includes(moduleNumber.toLowerCase() + 'way') ||
+                 productName.includes(moduleNumber.toLowerCase() + ' way');
+        });
+      });
+    }
+
+    return filtered;
+  }, [baseProducts, filters, categoryId]);
 
   // Enhanced fetch with better error handling and state management
   const fetchLiveDeals = async (isAutoLoad = false) => {
@@ -281,6 +353,27 @@ const CategoryMaterials = () => {
     fetchLiveDeals(false);
   };
 
+  // Initialize filters from URL parameters
+  useEffect(() => {
+    const urlFilters: FilterState = {
+      productTypes: searchParams.getAll('productType'),
+      brands: searchParams.getAll('brand'),
+      priceRanges: searchParams.getAll('priceRange'),
+      moduleSizes: searchParams.getAll('moduleSize'),
+      cableTypes: searchParams.getAll('cableType')
+    };
+    setFilters(urlFilters);
+  }, [searchParams]);
+
+  // Update URL when filters change
+  useEffect(() => {
+    const newParams = new URLSearchParams();
+    Object.entries(filters).forEach(([key, values]) => {
+      values.forEach(value => newParams.append(key.replace('Types', 'Type').replace('Sizes', 'Size'), value));
+    });
+    setSearchParams(newParams, { replace: true });
+  }, [filters, setSearchParams]);
+
   // Auto-load live deals for cables and components categories
   useEffect(() => {
     if ((categoryId === 'cables' || categoryId === 'components') && !isAutoLoaded && !isFetching) {
@@ -317,61 +410,25 @@ const CategoryMaterials = () => {
         </div>
       </header>
 
-      {/* Cable type filters for cables category */}
-      {categoryId === 'cables' && (
-        <section aria-labelledby="cable-filters" className="space-y-3">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <Filter className="h-4 w-4" />
-              Filter by cable type
-            </div>
-            <Button variant="outline" size="sm" onClick={handleManualRefresh} disabled={isFetching} className="flex items-center gap-1.5 text-xs sm:text-sm">
-              <RefreshCw className={`h-3.5 w-3.5 sm:h-4 sm:w-4 ${isFetching ? 'animate-spin' : ''}`} />
-              <span className="hidden xs:inline">{isFetching ? 'Fetching…' : 'Fetch Live Deals'}</span>
-              <span className="xs:hidden">Refresh Deals</span>
-            </Button>
-          </div>
-          <div className="flex flex-wrap gap-2">
-            {['Twin & Earth', 'SWA', 'Flex', 'Data', 'Control'].map((cableType) => {
-              const isSelected = selectedCableTypes.includes(cableType);
-              return (
-                <Badge
-                  key={cableType}
-                  variant={isSelected ? "default" : "outline"}
-                  className={`cursor-pointer transition-colors ${
-                    isSelected 
-                      ? 'bg-elec-yellow text-elec-black hover:bg-elec-yellow/90' 
-                      : 'hover:bg-elec-yellow/10 hover:border-elec-yellow/30'
-                  }`}
-                  onClick={() => {
-                    setSelectedCableTypes(prev => 
-                      isSelected 
-                        ? prev.filter(t => t !== cableType)
-                        : [...prev, cableType]
-                    );
-                  }}
-                >
-                  {cableType}
-                </Badge>
-              );
-            })}
-            {selectedCableTypes.length > 0 && (
-              <Badge
-                variant="outline"
-                className="cursor-pointer hover:bg-destructive/10 hover:text-destructive border-destructive/30 text-destructive"
-                onClick={() => setSelectedCableTypes([])}
-              >
-                Clear all
-              </Badge>
-            )}
-          </div>
-          {selectedCableTypes.length > 0 && (
-            <p className="text-sm text-muted-foreground">
-              Showing {displayProducts.length} products for: {selectedCableTypes.join(', ')}
-            </p>
-          )}
-        </section>
-      )}
+      {/* Enhanced filters for all categories */}
+      <section aria-labelledby="category-filters" className="space-y-4">
+        <div className="flex items-center justify-between">
+          <h2 className="sr-only">Category Filters</h2>
+          <RefreshButton
+            isFetching={isFetching}
+            lastFetchTime={lastFetchTime}
+            onRefresh={handleManualRefresh}
+            categoryId={categoryId}
+          />
+        </div>
+        
+        <CategoryFilters
+          categoryId={categoryId}
+          filters={filters}
+          onFiltersChange={setFilters}
+          productsCount={displayProducts.length}
+        />
+      </section>
 
       {/* Auto-loading indicator for cables */}
       {categoryId === 'cables' && isFetching && !isAutoLoaded && (
