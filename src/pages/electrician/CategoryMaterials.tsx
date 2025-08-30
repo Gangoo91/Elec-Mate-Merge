@@ -10,7 +10,7 @@ import { productsBySupplier, MaterialItem } from "@/data/electrician/productData
 import MaterialCard from "@/components/electrician-materials/MaterialCard";
 import CategoryFilters from "@/components/electrician-materials/CategoryFilters";
 import RefreshButton from "@/components/electrician-materials/RefreshButton";
-// Removed Supabase import - using direct Firecrawl API
+import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 
 const CATEGORY_META: Record<string, { title: string; description: string } > = {
@@ -73,25 +73,25 @@ const CategoryMaterials = () => {
   const { categoryId = "" } = useParams<{ categoryId: string }>();
   const meta = CATEGORY_META[categoryId] || { title: "Materials", description: "Browse curated products by category" };
 
-  // Firecrawl API configuration
-  const FIRECRAWL_API_KEY = "fc-9c6e4b05b7734e7cbc966e3ea52e86c3"; // Replace with your actual API key
+  // Suppliers supported by the edge function
+  const SUPPLIERS = [
+    "screwfix",
+    "electricaldirect",
+    "toolstation",
+  ] as const;
 
-  const productSchema = {
-    type: "array",
-    items: {
-      type: "object",
-      required: ["name", "price", "view_product_url"],
-      properties: {
-        name: { type: "string", description: "The name or title of the product" },
-        category: { type: "string", description: "The category or cable type of the product" },
-        highlights: { type: "array", description: "The highlight or cable highlight of the product" },
-        price: { type: "string", description: "The price of the product, including currency and VAT info" },
-        description: { type: "string", description: "Key features or details of the product" },
-        reviews: { type: "string", description: "The number of reviews or rating summary" },
-        image: { type: "string", format: "uri", description: "URL of the product image" },
-        view_product_url: { type: "string", format: "uri", description: "Direct URL to the product page" },
-      },
-    },
+  // Enhanced search terms per category for better results
+  const CATEGORY_QUERIES: Record<string, string[]> = {
+    cables: [
+      "cables wiring" // Single comprehensive search for cables since we use database cache
+    ],
+    components: [
+      "consumer units, MCBs, RCDs, isolators, accessories" // Single comprehensive search for components
+    ],
+    protection: ["testers%2C+hand+tools%2C+power+tools"],
+    accessories: ["junction boxes, glands, trunking, fixings"],
+    lighting: ["LED, downlights, battens, emergency, controls"],
+    tools: ["testers%2C+hand+tools%2C+power+tools"],
   };
 
   const allProducts = useMemo(() => Object.values(productsBySupplier).flat(), []);
@@ -197,55 +197,11 @@ const CategoryMaterials = () => {
     return baseProducts;
   }, [baseProducts]);
 
-  async function fetchElectricalTools() {
-    const url = "https://api.firecrawl.dev/v2/scrape";
-
-    const options = {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${FIRECRAWL_API_KEY}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        url: "https://www.screwfix.com/search?search=testers%2C+hand+tools%2C+power+tools&page_size=100",
-        onlyMainContent: true,
-        maxAge: 0,
-        parsers: [],
-        formats: [
-          {
-            type: "json",
-            schema: productSchema,
-          },
-        ],
-      }),
-    };
-
-    try {
-      const response = await fetch(url, options);
-
-      if (!response.ok) {
-        throw new Error(`❌ API request failed: ${response.status}`);
-      }
-
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      console.error(`⚠️ Error fetching Electrical Tools:`, error.message);
-      return [];
-    }
-  }
-
   // Enhanced fetch with better error handling and state management
   const fetchLiveDeals = async (isAutoLoad = false) => {
     console.log(`[${categoryId.toUpperCase()}] Starting fetchLiveDeals, isAutoLoad:`, isAutoLoad);
     
-    // Only fetch for tools category now
-    if (categoryId !== 'tools') {
-      console.log(`[${categoryId.toUpperCase()}] Skipping fetch - only tools category supported`);
-      return;
-    }
-    
-    // Check cache first
+    // Check cache first for non-cables categories
     const now = Date.now();
     if (isAutoLoad && hasValidLiveData && isLiveDataFresh) {
       console.log(`[${categoryId.toUpperCase()}] Using fresh cached results`);
@@ -257,39 +213,104 @@ const CategoryMaterials = () => {
     setLiveFetchFailed(false);
     
     try {
-      const data = await fetchElectricalTools();
+      const searchTerms = CATEGORY_QUERIES[categoryId] || [meta.title];
+      console.log(`[${categoryId.toUpperCase()}] Search terms:`, searchTerms);
       
-      if (data?.data?.json && Array.isArray(data.data.json)) {
-        const products = data.data.json.map((item: any): LiveItem => ({
-          id: Math.random(),
-          name: item.name || 'Unknown Product',
-          category: item.category || 'Tools',
-          price: item.price || 'Price on request',
-          supplier: 'Screwfix',
-          image: item.image || '/placeholder.svg',
-          stockStatus: 'In Stock' as const,
-          highlights: item.highlights || [],
-          productUrl: item.view_product_url
-        }));
-
-        console.log(`[${categoryId.toUpperCase()}] Mapped ${products.length} products from Firecrawl`);
-
-        setLiveProducts(products);
-        setLastFetchTime(now);
-        setIsAutoLoaded(true);
-        setHasAttemptedLiveFetch(true);
-        setLiveFetchFailed(false);
-        
-        console.log(`[${categoryId.toUpperCase()}] State updated - products: ${products.length}`);
-        
-        if (!isAutoLoad) {
-          toast({ 
-            title: 'Live deals updated', 
-            description: `Found ${products.length} electrical tools` 
-          });
+      const allCollected: LiveItem[] = [];
+      
+      // Reduce redundant calls to minimize duplicates from fallback products
+      const termsToUse = categoryId === 'cables' ? searchTerms.slice(0, 2) : [searchTerms[0]];
+      console.log(`[${categoryId.toUpperCase()}] Using terms:`, termsToUse);
+      
+      for (const term of termsToUse) {
+        console.log(`[${categoryId.toUpperCase()}] Searching for term: "${term}"`);
+        const tasks: Promise<any>[] = [];
+        for (const supplier of SUPPLIERS) {
+          tasks.push(
+            supabase.functions.invoke('scrape-supplier-products', {
+              body: { supplierSlug: supplier, searchTerm: term, category: categoryId }
+            })
+          );
         }
-      } else {
-        throw new Error('No valid data received from Firecrawl API');
+        
+        const responses = await Promise.allSettled(tasks);
+        console.log(`[${categoryId.toUpperCase()}] Got ${responses.length} responses for term "${term}"`);
+        
+        for (let i = 0; i < responses.length; i++) {
+          const r = responses[i];
+          const supplier = SUPPLIERS[i];
+          
+          if (r.status === 'fulfilled') {
+            const d = r.value?.data;
+            if (Array.isArray(d?.products)) {
+              console.log(`[${categoryId.toUpperCase()}] ${supplier}: ${d.products.length} products`);
+              allCollected.push(...(d.products as LiveItem[]));
+            } else {
+              console.log(`[${categoryId.toUpperCase()}] ${supplier}: No products in response`);
+            }
+          } else {
+            console.error(`[${categoryId.toUpperCase()}] ${supplier}: Request failed:`, r.reason);
+          }
+        }
+      }
+
+      console.log(`[${categoryId.toUpperCase()}] Total collected: ${allCollected.length} products`);
+      
+  // Show ALL raw products from edge function - NO FILTERING
+  console.log(`[${categoryId.toUpperCase()}] RAW DATA - Total collected: ${allCollected.length} products`);
+  console.log(`[${categoryId.toUpperCase()}] RAW PRODUCTS:`, allCollected.map(p => ({ name: p.name, supplier: p.supplier, category: p.category })));
+  
+  const deduped: LiveItem[] = [];
+  const seen = new Set<string>();
+  
+  // Use ALL collected products instead of filtering by category
+  for (const item of allCollected) {
+        // For fallback products (identified by placeholder image or specific price patterns),
+        // deduplicate by name and price to avoid supplier duplicates
+        const isFallbackProduct = item.image?.includes('placeholder') || 
+                                  item.productUrl?.includes('search') ||
+                                  item.name?.includes('Twin & Earth') ||
+                                  item.name?.includes('SWA Cable');
+        
+        const key = isFallbackProduct 
+          ? `${item.name}|${item.price}` 
+          : item.productUrl || `${item.supplier}|${item.name}`;
+          
+        if (key && !seen.has(key)) {
+          seen.add(key);
+          deduped.push(item);
+        }
+      }
+
+      console.log(`[${categoryId.toUpperCase()}] After deduplication: ${deduped.length} products`);
+      
+      // Sort by relevance for cables (T&E and common sizes first)
+      if (categoryId === 'cables') {
+        deduped.sort((a, b) => {
+          const aRelevance = getCableRelevanceScore(a.name);
+          const bRelevance = getCableRelevanceScore(b.name);
+          return bRelevance - aRelevance;
+        });
+      }
+
+      // Log tools specifically
+      if (categoryId === 'tools' && deduped.length > 0) {
+        console.log(`[TOOLS] Final products:`, deduped.map(p => ({ name: p.name, supplier: p.supplier, price: p.price })));
+      }
+
+      setLiveProducts(deduped);
+      setLastFetchTime(now);
+      setIsAutoLoaded(true);
+      setHasAttemptedLiveFetch(true);
+      setLiveFetchFailed(false);
+      
+      console.log(`[${categoryId.toUpperCase()}] State updated - products: ${deduped.length}`);
+      
+      if (!isAutoLoad) {
+        toast({ 
+          title: 'Live deals updated', 
+          description: `Found ${deduped.length} products from ${termsToUse.length} search${termsToUse.length > 1 ? 'es' : ''}` 
+        });
       }
     } catch (e) {
       console.error(`[${categoryId.toUpperCase()}] Failed to fetch live deals:`, e);
@@ -325,55 +346,81 @@ const CategoryMaterials = () => {
 
   // Manual refresh handler for button with cache clearing
   const handleManualRefresh = async () => {
-    // Only refresh for tools category now
-    if (categoryId !== 'tools') {
-      toast({ 
-        title: 'Refresh not available', 
-        description: 'Manual refresh only available for tools category.',
-        variant: 'destructive'
-      });
-      return;
-    }
-
     setIsFetching(true);
     setLiveFetchFailed(false);
     
     toast({ 
-      title: 'Refreshing tools', 
-      description: 'Fetching fresh data from Screwfix...' 
+      title: 'Clearing cache', 
+      description: 'Fetching fresh data from suppliers...' 
     });
     
     try {
-      const data = await fetchElectricalTools();
+      const searchTerms = CATEGORY_QUERIES[categoryId] || [meta.title];
+      const allCollected: LiveItem[] = [];
       
-      if (data?.data?.json && Array.isArray(data.data.json)) {
-        const products = data.data.json.map((item: any): LiveItem => ({
-          id: Math.random(),
-          name: item.name || 'Unknown Product',
-          category: item.category || 'Tools',
-          price: item.price || 'Price on request',
-          supplier: 'Screwfix',
-          image: item.image || '/placeholder.svg',
-          stockStatus: 'In Stock' as const,
-          highlights: item.highlights || [],
-          productUrl: item.view_product_url
-        }));
-
-        setLiveProducts(products);
-        setLastFetchTime(Date.now());
-        setIsAutoLoaded(true);
-        setHasAttemptedLiveFetch(true);
-        setLiveFetchFailed(false);
+      // Use force refresh parameter for all suppliers
+      for (const term of [searchTerms[0]]) {
+        const tasks: Promise<any>[] = [];
+        for (const supplier of SUPPLIERS) {
+          tasks.push(
+            supabase.functions.invoke('scrape-supplier-products', {
+              body: { 
+                supplierSlug: supplier, 
+                searchTerm: term, 
+                category: categoryId,
+                forceRefresh: true 
+              }
+            })
+          );
+        }
         
-        toast({ 
-          title: 'Tools refreshed successfully', 
-          description: `Found ${products.length} fresh electrical tools`
-        });
-      } else {
-        throw new Error('No valid data received from Firecrawl API');
+        const responses = await Promise.allSettled(tasks);
+        
+        for (const r of responses) {
+          if (r.status === 'fulfilled') {
+            const d = r.value?.data;
+            if (Array.isArray(d?.products)) {
+              allCollected.push(...(d.products as LiveItem[]));
+            }
+          }
+        }
       }
+
+      // Enhanced filtering and deduplication
+      const inCat = allCollected.filter((p) => matchesCategory(p, categoryId));
+      const deduped: LiveItem[] = [];
+      const seen = new Set<string>();
+      
+      for (const item of inCat) {
+        const key = item.productUrl || `${item.supplier}|${item.name}`;
+        if (key && !seen.has(key)) {
+          seen.add(key);
+          deduped.push(item);
+        }
+      }
+
+      // Sort by relevance for cables
+      if (categoryId === 'cables') {
+        deduped.sort((a, b) => {
+          const aRelevance = getCableRelevanceScore(a.name);
+          const bRelevance = getCableRelevanceScore(b.name);
+          return bRelevance - aRelevance;
+        });
+      }
+
+      setLiveProducts(deduped);
+      setLastFetchTime(Date.now());
+      setIsAutoLoaded(true);
+      setHasAttemptedLiveFetch(true);
+      setLiveFetchFailed(false);
+      
+      toast({ 
+        title: 'Cache cleared successfully', 
+        description: `Found ${deduped.length} fresh products`,
+        variant: 'success'
+      });
     } catch (e) {
-      console.error('Failed to refresh tools:', e);
+      console.error('Failed to refresh with cache clear:', e);
       setLiveFetchFailed(true);
       setHasAttemptedLiveFetch(true);
       
@@ -408,9 +455,9 @@ const CategoryMaterials = () => {
     setSearchParams(newParams, { replace: true });
   }, [filters, setSearchParams]);
 
-  // Auto-load live deals for tools category only
+  // Auto-load live deals for cables, components, accessories, lighting, tools and protection categories
   useEffect(() => {
-    if (categoryId === 'tools' && !isAutoLoaded && !isFetching) {
+    if ((categoryId === 'cables' || categoryId === 'components' || categoryId === 'accessories' || categoryId === 'lighting' || categoryId === 'tools' || categoryId === 'protection') && !isAutoLoaded && !isFetching) {
       console.log(`Auto-loading live ${categoryId} deals...`);
       fetchLiveDeals(true);
     }
