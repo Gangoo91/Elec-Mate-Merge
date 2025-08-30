@@ -162,11 +162,11 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
       .replace(/`(.*?)`/g, '$1')       // Remove code markers
       .trim();
 
-    const availableWidth = maxWidth - 6; // Better margin management
+    const availableWidth = maxWidth - 20; // Use more space
     const lineHeight = 4.5;
     let currentY = y;
     
-    // Set default font for width calculations
+    // Set consistent font for all calculations
     doc.setFont(undefined, 'normal');
     doc.setFontSize(10);
     
@@ -180,15 +180,15 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
       if (word.match(/^(C1|C2|C3|FI|\d+\.\d*[AΩV]?|\d+[AΩV]|PASS|FAIL|BS\s*7671|✓|✗|\d+mm²?|SATISFACTORY|UNSATISFACTORY|DANGER)$/i)) {
         doc.setFontSize(8);
         const textWidth = doc.getTextWidth(word);
-        doc.setFontSize(10); // Reset
+        doc.setFontSize(10); // Reset to normal
         return {
           isBadge: true,
-          width: Math.ceil(textWidth + 6) // More accurate badge sizing
+          width: textWidth + 6 // Badge padding
         };
       }
       return {
         isBadge: false,
-        width: doc.getTextWidth(word + ' ') // Include space in calculation
+        width: doc.getTextWidth(word) // Just the word width
       };
     };
 
@@ -278,50 +278,26 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
       currentLineWidth = 0;
     };
 
-    // Process words with optimized width tracking
+    // Process words with corrected width tracking
     words.forEach((word, index) => {
       const { width, isBadge } = getBadgeInfo(word);
       
-      // Calculate if this word fits on current line
-      const spaceNeeded = currentLine.length > 0 ? doc.getTextWidth(' ') : 0;
-      const totalWidth = currentLineWidth + spaceNeeded + width;
+      // Calculate space needed between words
+      const spaceWidth = currentLine.length > 0 ? doc.getTextWidth(' ') : 0;
+      const projectedWidth = currentLineWidth + spaceWidth + width;
       
-      // Line breaking logic - only break when truly necessary
-      if (totalWidth > availableWidth && currentLine.length > 0) {
+      // Only break line if word truly doesn't fit AND we have words in line
+      if (projectedWidth > availableWidth && currentLine.length > 0) {
         renderCurrentLine();
+        currentLineWidth = 0; // Reset for new line
       }
       
-      // Handle oversized non-badge elements only
-      if (width > availableWidth && !isBadge) {
-        if (currentLine.length > 0) {
-          renderCurrentLine();
-        }
-        
-        // Smart splitting - only for URLs and very long non-electrical terms
-        if (word.length > 40 && !word.match(/^(BS|IEE|IET|NICEIC|ELECSA|NAPIT)/i)) {
-          const chunks = [];
-          for (let i = 0; i < word.length; i += 35) {
-            chunks.push(word.substring(i, i + 35));
-          }
-          chunks.forEach((chunk, chunkIndex) => {
-            currentLine.push(chunk);
-            if (chunkIndex < chunks.length - 1) {
-              renderCurrentLine();
-            }
-          });
-        } else {
-          // Render oversized word as-is to preserve electrical terminology
-          currentLine.push(word);
-          renderCurrentLine();
-        }
-      } else {
-        // Normal word processing
-        currentLine.push(word);
-        currentLineWidth = totalWidth;
-      }
+      // Add word to current line
+      currentLine.push(word);
+      currentLineWidth += (currentLine.length > 1 ? spaceWidth : 0) + width;
       
-      // Render final line
-      if (index === words.length - 1 && currentLine.length > 0) {
+      // Render final line if this is the last word
+      if (index === words.length - 1) {
         renderCurrentLine();
       }
     });
