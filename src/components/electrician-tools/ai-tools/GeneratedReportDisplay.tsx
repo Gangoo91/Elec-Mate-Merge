@@ -155,11 +155,16 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
   };
 
   const renderTextWithBadges = (doc: jsPDF, text: string, x: number, y: number, maxWidth: number): number => {
-    // Clean up any remaining markdown syntax
+    // Enhanced markdown cleaning - process in correct order
     let cleanText = text
-      .replace(/\*\*(.*?)\*\*/g, '$1') // Remove bold markers
-      .replace(/\*(.*?)\*/g, '$1')     // Remove italic markers
-      .replace(/`(.*?)`/g, '$1')       // Remove code markers
+      .replace(/\*\*\*(.+?)\*\*\*/g, '$1')  // Remove bold+italic markers (*** ***)
+      .replace(/\*\*(.+?)\*\*/g, '$1')      // Remove bold markers (** **)
+      .replace(/\*(.+?)\*/g, '$1')          // Remove italic markers (* *)
+      .replace(/`(.+?)`/g, '$1')            // Remove code markers (` `)
+      .replace(/~~(.+?)~~/g, '$1')          // Remove strikethrough markers (~~ ~~)
+      .replace(/_{2,}(.+?)_{2,}/g, '$1')    // Remove underline markers (__ __)
+      .replace(/_(.+?)_/g, '$1')            // Remove single underline markers (_ _)
+      .replace(/\s+/g, ' ')                 // Normalize whitespace
       .trim();
 
     const availableWidth = maxWidth - 20; // Use more space
