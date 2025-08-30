@@ -162,8 +162,8 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
       .replace(/`(.*?)`/g, '$1')       // Remove code markers
       .trim();
 
-    const availableWidth = maxWidth - 5; // Reduced margin for more space
-    const lineHeight = 10; // Reduced from 14 to minimize white space
+    const availableWidth = maxWidth - 2; // Further reduced margin for more space
+    const lineHeight = 6; // Further reduced for minimal white space
     let currentY = y;
     
     // Split text into words for precise width management
@@ -291,7 +291,7 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
       }
     });
     
-    return currentY + 2; // Reduced spacing after text block
+    return currentY + 1; // Minimal spacing after text block
   };
 
   // Preprocess markdown content to clean up formatting
@@ -318,19 +318,19 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
     doc.setFontSize(18);
     doc.setTextColor(47, 47, 47);
     doc.text(reportType, pageWidth / 2, yPosition, { align: 'center' });
-    yPosition += 15;
+    yPosition += 10;
 
     // Date
     doc.setFontSize(10);
     doc.setTextColor(100, 100, 100);
     doc.text(`Generated: ${new Date().toLocaleDateString('en-GB')} at ${new Date().toLocaleTimeString('en-GB')}`, pageWidth / 2, yPosition, { align: 'center' });
-    yPosition += 20;
+    yPosition += 12;
 
     // Draw header line
     doc.setDrawColor(255, 215, 0);
     doc.setLineWidth(2);
     doc.line(margin, yPosition, pageWidth - margin, yPosition);
-    yPosition += 15;
+    yPosition += 10;
 
     // Preprocess and split content
     const processedContent = preprocessMarkdown(content);
@@ -340,14 +340,14 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
     while (i < lines.length) {
       const line = lines[i];
       
-      // Check if we need a new page
-      if (yPosition > pageHeight - 40) {
+      // Check if we need a new page with better space usage
+      if (yPosition > pageHeight - 30) {
         doc.addPage();
         yPosition = margin;
       }
 
       if (line.trim() === '') {
-        yPosition += 6;
+        yPosition += 3; // Reduced empty line spacing
         i++;
         continue;
       }
@@ -358,7 +358,7 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
         doc.setDrawColor(200, 200, 200);
         doc.setLineWidth(0.5);
         doc.line(margin, yPosition, pageWidth - margin, yPosition);
-        yPosition += 10;
+        yPosition += 6;
         i++;
         continue;
       }
@@ -370,7 +370,7 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
         doc.setTextColor(255, 215, 0);
         const text = line.substring(2);
         doc.text(text, margin, yPosition);
-        yPosition += 20;
+        yPosition += 12;
         i++;
       } else if (line.startsWith('## ')) {
         doc.setFontSize(14);
@@ -378,7 +378,7 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
         doc.setTextColor(255, 215, 0);
         const text = line.substring(3);
         doc.text(text, margin, yPosition);
-        yPosition += 15;
+        yPosition += 10;
         i++;
       } else if (line.startsWith('### ')) {
         doc.setFontSize(12);
@@ -386,7 +386,7 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
         doc.setTextColor(255, 215, 0);
         const text = line.substring(4);
         doc.text(text, margin, yPosition);
-        yPosition += 12;
+        yPosition += 8;
         i++;
       } else if (line.startsWith('#### ')) {
         doc.setFontSize(11);
@@ -394,7 +394,7 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
         doc.setTextColor(255, 215, 0);
         const text = line.substring(5);
         doc.text(text, margin, yPosition);
-        yPosition += 10;
+        yPosition += 8;
         i++;
       } else if (line.startsWith('##### ')) {
         doc.setFontSize(10);
@@ -402,7 +402,7 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
         doc.setTextColor(255, 215, 0);
         const text = line.substring(6);
         doc.text(text, margin, yPosition);
-        yPosition += 10;
+        yPosition += 8;
         i++;
       } else if (line.startsWith('###### ')) {
         doc.setFontSize(10);
@@ -410,7 +410,7 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
         doc.setTextColor(255, 215, 0);
         const text = line.substring(7);
         doc.text(text, margin, yPosition);
-        yPosition += 10;
+        yPosition += 8;
         i++;
       } else if (line.startsWith('| ') && line.includes('|')) {
         // Handle table - collect table rows
@@ -447,8 +447,8 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
           const dataRows = tableRows.slice(1);
 
           // Check if table fits on current page
-          const estimatedTableHeight = (dataRows.length + 1) * 8 + 20;
-          if (yPosition + estimatedTableHeight > pageHeight - 40) {
+          const estimatedTableHeight = (dataRows.length + 1) * 6 + 15;
+          if (yPosition + estimatedTableHeight > pageHeight - 30) {
             doc.addPage();
             yPosition = margin;
           }
@@ -478,7 +478,7 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
             }
           });
 
-          yPosition = (doc as any).lastAutoTable.finalY + 10;
+          yPosition = (doc as any).lastAutoTable.finalY + 6;
         }
         
         i = currentLineIndex;
@@ -486,12 +486,12 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
         // List items with electrical elements
         const text = line.substring(2);
         yPosition = renderTextWithBadges(doc, `• ${text}`, margin + 5, yPosition, maxWidth - 5);
-        yPosition += 8;
+        yPosition += 4;
         i++;
       } else {
         // Regular text with electrical elements
         yPosition = renderTextWithBadges(doc, line, margin, yPosition, maxWidth);
-        yPosition += 8;
+        yPosition += 4;
         i++;
       }
     }

@@ -43,29 +43,29 @@ export const generateQuotePDF = (quote: Partial<Quote>) => {
   });
   
   // Calculate final Y position after table
-  const finalY = (doc as any).lastAutoTable.finalY + 20;
-  
+  const finalY = (doc as any).lastAutoTable.finalY + 12;
+
   // Totals
   doc.setFontSize(12);
   const totalsX = 120;
   let currentY = finalY;
-  
+
   doc.text('Subtotal:', totalsX, currentY);
   doc.text(`£${(quote.subtotal || 0).toFixed(2)}`, 170, currentY);
-  currentY += 10;
-  
+  currentY += 8;
+
   doc.text(`Overhead (${quote.settings?.overheadPercentage}%):`, totalsX, currentY);
   doc.text(`£${(quote.overhead || 0).toFixed(2)}`, 170, currentY);
-  currentY += 10;
-  
+  currentY += 8;
+
   doc.text(`Profit (${quote.settings?.profitMargin}%):`, totalsX, currentY);
   doc.text(`£${(quote.profit || 0).toFixed(2)}`, 170, currentY);
-  currentY += 10;
+  currentY += 8;
   
   if (quote.settings?.vatRegistered) {
     doc.text(`VAT (${quote.settings.vatRate}%):`, totalsX, currentY);
     doc.text(`£${(quote.vatAmount || 0).toFixed(2)}`, 170, currentY);
-    currentY += 10;
+    currentY += 8;
   }
   
   // Total

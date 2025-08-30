@@ -91,20 +91,22 @@ export const generateTrainingReport = (data: ReportData): void => {
   
   // Add the table
   autoTable(doc, {
-    startY: 90,
+    startY: 85,
     head: [['Date', 'Activity', 'Duration', 'Type', 'Notes']],
     body: tableData,
     headStyles: {
       fillColor: [0, 102, 204],
       textColor: [255, 255, 255],
       fontStyle: 'bold',
+      fontSize: 9,
     },
     alternateRowStyles: {
       fillColor: [240, 240, 240],
     },
-    margin: { top: 90 },
+    margin: { top: 85 },
     styles: {
-      fontSize: 10,
+      fontSize: 9,
+      cellPadding: 2,
     },
     columnStyles: {
       0: { cellWidth: 25 },  // Date
