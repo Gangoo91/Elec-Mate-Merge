@@ -221,7 +221,7 @@ async function fetchLightingSolutions(): Promise<MaterialItem[]> {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      url: "https://www.screwfix.com/search?search=LED+downlights%2C+battens%2C+emergency%2C+controls&page_size=100",
+      url: "https://www.screwfix.com/search?search=LED+downlight&page_size=100",
       onlyMainContent: true,
       maxAge: 0,
       parsers: [],
@@ -235,17 +235,25 @@ async function fetchLightingSolutions(): Promise<MaterialItem[]> {
   };
 
   try {
-    console.log(`[LIGHTING-SOLUTIONS] Firecrawl v2 scraping lighting solutions...`);
+    console.log(`[LIGHTING-SOLUTIONS] Firecrawl v2 scraping lighting solutions with simplified search...`);
+    console.log(`[LIGHTING-SOLUTIONS] Search URL: https://www.screwfix.com/search?search=LED+downlight&page_size=100`);
     
     const response = await fetch(url, options);
     console.log(`[LIGHTING-SOLUTIONS] Firecrawl status: ${response.status} ${response.ok}`);
 
     if (!response.ok) {
+      const errorText = await response.text();
+      console.error(`[LIGHTING-SOLUTIONS] API error response:`, errorText);
       throw new Error(`❌ API request failed: ${response.status}`);
     }
 
     const data = await response.json();
-    console.log(`[LIGHTING-SOLUTIONS] Firecrawl response received, processing data...`);
+    console.log(`[LIGHTING-SOLUTIONS] Firecrawl response received, data structure:`, { 
+      success: data.success, 
+      hasData: !!data.data, 
+      hasJson: !!(data.data && data.data.json),
+      jsonType: data.data?.json ? typeof data.data.json : 'none'
+    });
     
     if (data.success && data.data && data.data.json) {
       const products = Array.isArray(data.data.json) ? data.data.json : [];
