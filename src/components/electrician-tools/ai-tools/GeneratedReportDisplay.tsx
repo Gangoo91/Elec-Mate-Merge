@@ -162,38 +162,33 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
       .replace(/`(.*?)`/g, '$1')       // Remove code markers
       .trim();
 
-    const availableWidth = maxWidth - 4; // Optimized margin for better space usage
-    const lineHeight = 5; // Minimal line height for compact layout
+    const availableWidth = maxWidth - 6; // Better margin management
+    const lineHeight = 4.5;
     let currentY = y;
     
-    // Improved word splitting to handle long technical terms
-    const words = cleanText.split(/\s+/).flatMap(word => {
-      // Break extremely long words for better wrapping
-      if (word.length > 30 && !word.match(/[A-Z0-9.]+/)) {
-        const chunks = [];
-        for (let i = 0; i < word.length; i += 25) {
-          chunks.push(word.substring(i, i + 25));
-        }
-        return chunks;
-      }
-      return [word];
-    });
+    // Set default font for width calculations
+    doc.setFont(undefined, 'normal');
+    doc.setFontSize(10);
+    
+    // Smart word processing - preserve electrical terms
+    const words = cleanText.split(/\s+/);
     
     let currentLine: string[] = [];
     let currentLineWidth = 0;
 
     const getBadgeInfo = (word: string) => {
       if (word.match(/^(C1|C2|C3|FI|\d+\.\d*[AΩV]?|\d+[AΩV]|PASS|FAIL|BS\s*7671|✓|✗|\d+mm²?|SATISFACTORY|UNSATISFACTORY|DANGER)$/i)) {
-        // More accurate badge width calculation
+        doc.setFontSize(8);
         const textWidth = doc.getTextWidth(word);
+        doc.setFontSize(10); // Reset
         return {
           isBadge: true,
-          width: textWidth + 5 // Reduced padding for compact badges
+          width: Math.ceil(textWidth + 6) // More accurate badge sizing
         };
       }
       return {
         isBadge: false,
-        width: doc.getTextWidth(word)
+        width: doc.getTextWidth(word + ' ') // Include space in calculation
       };
     };
 
@@ -283,51 +278,49 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
       currentLineWidth = 0;
     };
 
-    // Process words with improved width tracking
+    // Process words with optimized width tracking
     words.forEach((word, index) => {
-      const { width } = getBadgeInfo(word);
-      const spaceWidth = currentLine.length > 0 ? doc.getTextWidth(' ') : 0;
+      const { width, isBadge } = getBadgeInfo(word);
       
-      // More aggressive line breaking for better space usage
-      if (currentLineWidth + spaceWidth + width > availableWidth && currentLine.length > 0) {
+      // Calculate if this word fits on current line
+      const spaceNeeded = currentLine.length > 0 ? doc.getTextWidth(' ') : 0;
+      const totalWidth = currentLineWidth + spaceNeeded + width;
+      
+      // Line breaking logic - only break when truly necessary
+      if (totalWidth > availableWidth && currentLine.length > 0) {
         renderCurrentLine();
       }
       
-      // Handle extremely wide elements by force-breaking if necessary
-      if (width > availableWidth) {
+      // Handle oversized non-badge elements only
+      if (width > availableWidth && !isBadge) {
         if (currentLine.length > 0) {
           renderCurrentLine();
         }
-        // Split the oversized word character by character
-        const chars = word.split('');
-        let charLine = '';
-        chars.forEach((char, charIndex) => {
-          const testWidth = doc.getTextWidth(charLine + char);
-          if (testWidth > availableWidth && charLine) {
-            doc.setTextColor(0, 0, 0);
-            doc.setFont(undefined, 'normal');
-            doc.setFontSize(10);
-            doc.text(charLine, x, currentY);
-            currentY += lineHeight;
-            charLine = char;
-          } else {
-            charLine += char;
+        
+        // Smart splitting - only for URLs and very long non-electrical terms
+        if (word.length > 40 && !word.match(/^(BS|IEE|IET|NICEIC|ELECSA|NAPIT)/i)) {
+          const chunks = [];
+          for (let i = 0; i < word.length; i += 35) {
+            chunks.push(word.substring(i, i + 35));
           }
-          if (charIndex === chars.length - 1 && charLine) {
-            doc.setTextColor(0, 0, 0);
-            doc.setFont(undefined, 'normal');
-            doc.setFontSize(10);
-            doc.text(charLine, x, currentY);
-            currentY += lineHeight;
-          }
-        });
+          chunks.forEach((chunk, chunkIndex) => {
+            currentLine.push(chunk);
+            if (chunkIndex < chunks.length - 1) {
+              renderCurrentLine();
+            }
+          });
+        } else {
+          // Render oversized word as-is to preserve electrical terminology
+          currentLine.push(word);
+          renderCurrentLine();
+        }
       } else {
-        // Add word to current line
+        // Normal word processing
         currentLine.push(word);
-        currentLineWidth += spaceWidth + width;
+        currentLineWidth = totalWidth;
       }
       
-      // If this is the last word, render the final line
+      // Render final line
       if (index === words.length - 1 && currentLine.length > 0) {
         renderCurrentLine();
       }
