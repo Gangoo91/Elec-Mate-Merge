@@ -83,7 +83,7 @@ const ElectricalMaterials = () => {
           <h1 className="text-2xl md:text-3xl font-bold tracking-tight">Materials</h1>
           <p className="text-muted-foreground text-sm md:text-base">Browse electrical materials for your projects</p>
         </div>
-        <Link to="/electrician/business-hub">
+        <Link to="/electrician/business">
           <Button variant="outline" className="flex items-center gap-2">
             <ArrowLeft className="h-4 w-4" /> Back to Business Hub
           </Button>

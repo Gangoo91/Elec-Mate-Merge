@@ -39,7 +39,7 @@ const LivePricing = () => {
             </div>
             
             <div className="flex gap-2">
-              <Link to="/electrician/business-hub">
+              <Link to="/electrician/business">
                 <Button variant="outline" size="sm" className="flex items-center gap-1">
                   <ArrowLeft className="h-4 w-4" /> Back
                 </Button>
