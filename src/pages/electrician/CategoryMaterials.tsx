@@ -270,7 +270,7 @@ const CategoryMaterials = () => {
       <header className="flex flex-col gap-6">
         <div className="flex flex-wrap gap-2">
           <Link to="/electrician/materials">
-            <Button variant="outline" size="sm" className="flex items-center gap-1.5 text-xs sm:text-sm">
+            <Button variant="outline" size="sm" className="flex items-center gap-1.5 text-xs sm:text-sm h-10">
               <ArrowLeft className="h-3.5 w-3.5 sm:h-4 sm:w-4" /> Back to Sections
             </Button>
           </Link>
