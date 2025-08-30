@@ -256,11 +256,12 @@ serve(async (req) => {
     const { createClient } = await import("https://esm.sh/@supabase/supabase-js@2");
     const supabase = createClient(supabaseUrl!, supabaseKey!);
 
-    // Expecting JSON body with supplierSlug, searchTerm, and category
+    // Expecting JSON body with supplierSlug, searchTerm, category, and optional forceRefresh
     const body = await req.json().catch(() => ({}));
     const supplierSlug: SupplierSlug | undefined = body?.supplierSlug;
     const searchTerm: string = (body?.searchTerm || "electrical deals").toString();
     const category: string = body?.category || "general";
+    const forceRefresh: boolean = body?.forceRefresh || false;
 
     if (!supplierSlug || !(supplierSlug in SUPPLIER_NAMES)) {
       return new Response(
@@ -291,20 +292,30 @@ serve(async (req) => {
       const currentCategory = isCablesSearch ? 'cables' : 'components';
       console.log(`[SCRAPE-SUPPLIER-PRODUCTS] Using cached approach for ${currentCategory}`);
       
-      // Check for cached data with category filter for the current supplier
-      const { data: cachedData } = await supabase
+      // Check for cached data with category filter for the current supplier (skip if force refresh)
+      if (forceRefresh) {
+        console.log(`[SCRAPE-SUPPLIER-PRODUCTS] Force refresh requested, clearing cache for ${currentCategory}`);
+        // Delete existing cache entries for this supplier/category
+        await supabase
+          .from('cables_materials_cache')
+          .delete()
+          .eq('supplier', supplierSlug)
+          .eq('category', currentCategory);
+      }
+
+      const { data: cachedData } = !forceRefresh ? await supabase
         .from('cables_materials_cache')
         .select('*')
         .eq('supplier', supplierSlug)
         .eq('category', currentCategory)
         .gt('expires_at', new Date().toISOString())
-        .maybeSingle();
+        .maybeSingle() : { data: null };
 
-      if (cachedData && cachedData.product_data && Array.isArray(cachedData.product_data) && cachedData.product_data.length > 0) {
+      if (!forceRefresh && cachedData && cachedData.product_data && Array.isArray(cachedData.product_data) && cachedData.product_data.length > 0) {
         console.log(`[SCRAPE-SUPPLIER-PRODUCTS] Using cached ${currentCategory} data with ${cachedData.product_data.length} products`);
         products = cachedData.product_data;
       } else {
-        console.log(`[SCRAPE-SUPPLIER-PRODUCTS] Cache expired/missing, refreshing ${currentCategory} data`);
+        console.log(`[SCRAPE-SUPPLIER-PRODUCTS] ${forceRefresh ? 'Force refresh -' : 'Cache expired/missing,'} refreshing ${currentCategory} data`);
         
         // Fetch fresh data using appropriate function
         let freshResults: MaterialItem[] = [];

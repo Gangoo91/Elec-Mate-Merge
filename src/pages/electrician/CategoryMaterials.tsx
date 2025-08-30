@@ -348,9 +348,94 @@ const CategoryMaterials = () => {
     return score;
   };
 
-  // Manual refresh handler for button
-  const handleManualRefresh = () => {
-    fetchLiveDeals(false);
+  // Manual refresh handler for button with cache clearing
+  const handleManualRefresh = async () => {
+    setIsFetching(true);
+    setLiveFetchFailed(false);
+    
+    toast({ 
+      title: 'Clearing cache', 
+      description: 'Fetching fresh data from suppliers...' 
+    });
+    
+    try {
+      const searchTerms = CATEGORY_QUERIES[categoryId] || [meta.title];
+      const allCollected: LiveItem[] = [];
+      
+      // Use force refresh parameter for all suppliers
+      for (const term of [searchTerms[0]]) {
+        const tasks: Promise<any>[] = [];
+        for (const supplier of SUPPLIERS) {
+          tasks.push(
+            supabase.functions.invoke('scrape-supplier-products', {
+              body: { 
+                supplierSlug: supplier, 
+                searchTerm: term, 
+                category: categoryId,
+                forceRefresh: true 
+              }
+            })
+          );
+        }
+        
+        const responses = await Promise.allSettled(tasks);
+        
+        for (const r of responses) {
+          if (r.status === 'fulfilled') {
+            const d = r.value?.data;
+            if (Array.isArray(d?.products)) {
+              allCollected.push(...(d.products as LiveItem[]));
+            }
+          }
+        }
+      }
+
+      // Enhanced filtering and deduplication
+      const inCat = allCollected.filter((p) => matchesCategory(p, categoryId));
+      const deduped: LiveItem[] = [];
+      const seen = new Set<string>();
+      
+      for (const item of inCat) {
+        const key = item.productUrl || `${item.supplier}|${item.name}`;
+        if (key && !seen.has(key)) {
+          seen.add(key);
+          deduped.push(item);
+        }
+      }
+
+      // Sort by relevance for cables
+      if (categoryId === 'cables') {
+        deduped.sort((a, b) => {
+          const aRelevance = getCableRelevanceScore(a.name);
+          const bRelevance = getCableRelevanceScore(b.name);
+          return bRelevance - aRelevance;
+        });
+      }
+
+      setLiveProducts(deduped);
+      setLastFetchTime(Date.now());
+      setIsAutoLoaded(true);
+      setHasAttemptedLiveFetch(true);
+      setLiveFetchFailed(false);
+      
+      toast({ 
+        title: 'Cache cleared successfully', 
+        description: `Found ${deduped.length} fresh products`,
+        variant: 'success'
+      });
+    } catch (e) {
+      console.error('Failed to refresh with cache clear:', e);
+      setLiveFetchFailed(true);
+      setHasAttemptedLiveFetch(true);
+      
+      toast({ 
+        title: 'Refresh failed', 
+        description: 'Please try again later.', 
+        variant: 'destructive' 
+      });
+    } finally {
+      setIsFetching(false);
+    }
   };
 
   // Initialize filters from URL parameters
