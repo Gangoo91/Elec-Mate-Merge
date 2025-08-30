@@ -188,13 +188,31 @@ serve(async (req) => {
               try { image = new URL(imgMatch[1], searchUrl).toString(); } catch { /* keep placeholder */ }
             }
 
-            const isCable = /\b(cable|t\s*&\s*e|twin\s*&\s*earth|twin|earth|swa|flex|mm2|mm²|cat\d)\b/i.test(text) || /cable/i.test(searchTerm);
+            // Enhanced cable detection and categorization
+            const isCable = /\b(cable|t\s*&\s*e|twin\s*&\s*earth|twin|earth|swa|flex|mm2|mm²|cat\d|6242y|coax|data)\b/i.test(text) || /cable/i.test(searchTerm);
+            
+            // Determine specific cable category
+            let category = "Materials";
+            if (isCable) {
+              if (/\b(cat\d|ethernet|data|network)\b/i.test(text)) {
+                category = "Data Cables";
+              } else if (/\b(swa|armoured|armored)\b/i.test(text)) {
+                category = "Armoured Cables";
+              } else if (/\b(twin.*earth|t\s*&\s*e|6242y)\b/i.test(text)) {
+                category = "Power Cables";
+              } else if (/\b(flex|flexible)\b/i.test(text)) {
+                category = "Flex Cables";
+              } else {
+                category = "Cables";
+              }
+            }
+            
             const name = textRaw.length > 120 ? textRaw.slice(0, 117) + "…" : textRaw;
 
             results.push({
               id: Date.now() + results.length,
               name,
-              category: isCable ? "Cables" : "Materials",
+              category,
               price: chosenPrice,
               supplier: supplierName,
               image,

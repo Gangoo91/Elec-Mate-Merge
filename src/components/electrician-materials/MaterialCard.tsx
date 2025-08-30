@@ -14,6 +14,36 @@ interface MaterialCardProps {
 }
 
 const MaterialCard: React.FC<MaterialCardProps> = ({ item }) => {
+  // Extract cable-specific information
+  const getCableInfo = () => {
+    const name = item.name.toLowerCase();
+    const info: { type?: string; size?: string; length?: string; cores?: string } = {};
+    
+    // Cable type detection
+    if (name.includes('twin') && name.includes('earth')) info.type = 'T&E';
+    else if (name.includes('swa')) info.type = 'SWA';
+    else if (name.includes('flex') || name.includes('flexible')) info.type = 'Flex';
+    else if (name.includes('cat6') || name.includes('cat5')) info.type = 'Data';
+    else if (name.includes('coax')) info.type = 'Coax';
+    
+    // Size detection
+    const sizeMatch = name.match(/(\d+(?:\.\d+)?)\s*mm(?:2|²)?/);
+    if (sizeMatch) info.size = `${sizeMatch[1]}mm²`;
+    
+    // Length detection
+    const lengthMatch = name.match(/(\d+)\s*m(?:etre)?(?:s?)?\b/);
+    if (lengthMatch) info.length = `${lengthMatch[1]}m`;
+    
+    // Core count detection
+    const coreMatch = name.match(/(\d+)\s*core/);
+    if (coreMatch) info.cores = `${coreMatch[1]} core`;
+    
+    return info;
+  };
+
+  const cableInfo = getCableInfo();
+  const isCable = item.category.toLowerCase().includes('cable') || cableInfo.type;
+
   // Default URLs if not provided in the data
   const getProductUrl = () => {
     const supplier = (item.supplier || "").toLowerCase();
@@ -89,6 +119,32 @@ const MaterialCard: React.FC<MaterialCardProps> = ({ item }) => {
         </div>
         
         <div className="space-y-4">
+          {/* Cable-specific information */}
+          {isCable && (cableInfo.type || cableInfo.size || cableInfo.length || cableInfo.cores) && (
+            <div className="flex flex-wrap gap-1 mb-2">
+              {cableInfo.type && (
+                <span className="bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded">
+                  {cableInfo.type}
+                </span>
+              )}
+              {cableInfo.size && (
+                <span className="bg-purple-500/20 text-purple-400 text-xs px-2 py-1 rounded">
+                  {cableInfo.size}
+                </span>
+              )}
+              {cableInfo.length && (
+                <span className="bg-cyan-500/20 text-cyan-400 text-xs px-2 py-1 rounded">
+                  {cableInfo.length}
+                </span>
+              )}
+              {cableInfo.cores && (
+                <span className="bg-indigo-500/20 text-indigo-400 text-xs px-2 py-1 rounded">
+                  {cableInfo.cores}
+                </span>
+              )}
+            </div>
+          )}
+          
           <div className="text-sm text-muted-foreground">Supplier: {item.supplier}</div>
           
           <div className="flex items-baseline gap-2">
