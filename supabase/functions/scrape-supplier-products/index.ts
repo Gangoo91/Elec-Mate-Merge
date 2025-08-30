@@ -163,7 +163,7 @@ function buildSearchUrl(slug: SupplierSlug, query: string) {
   const q = encodeURIComponent(query);
   
   // For tools category, use specific category pages for better results
-  const isToolsSearch = /multimeter|socket tester|cable detector|voltage detector|testing|tester|meter/i.test(query);
+  const isToolsSearch = /testers.*hand.*tools.*power.*tools|multimeter|socket tester|cable detector|voltage detector|testing|tester|meter/i.test(query);
   const isProtectionSearch = /mcb|rcd|rcbo|breaker|protection|switch|isolator|surge|spd/i.test(query);
   
   switch (slug) {
@@ -828,7 +828,7 @@ serve(async (req) => {
       
       // For general searches, provide curated fallbacks
       const isCableSearch = /cable|twin|earth|swa|6242y|mm2|mm²/i.test(searchTerm);
-      const isToolsSearch = /multimeter|socket tester|cable detector|voltage detector|testing|tester|meter/i.test(searchTerm);
+      const isToolsSearch = /testers.*hand.*tools.*power.*tools|multimeter|socket tester|cable detector|voltage detector|testing|tester|meter/i.test(searchTerm);
       const isGeneralProtectionSearch = /mcb|rcd|rcbo|breaker|protection/i.test(searchTerm);
       const isLightingSearch = /led|light|downlight|batten/i.test(searchTerm);
       
