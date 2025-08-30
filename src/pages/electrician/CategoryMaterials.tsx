@@ -42,22 +42,31 @@ const CATEGORY_META: Record<string, { title: string; description: string } > = {
 
 function matchesCategory(item: MaterialItem, categoryId: string) {
   const hay = `${item.category} ${item.name}`.toLowerCase();
-  switch (categoryId) {
-    case "cables":
-      return /cable|wire|swa|t&e|t\s*&\s*e|flex|cat\d|data|6242y|power\s+cable|armoured|data\s+cable|twin.*earth|earth.*cable|power.*cable|armour|flex.*cable/.test(hay);
-    case "components":
-      return /consumer|rcd|rcbo|mcb|isolator|breaker|protector|fuse/.test(hay);
-    case "protection":
-      return /surge|rcd|breaker|earthing|earth|protector|bond|sp\d?d?/.test(hay);
-    case "accessories":
-      return /junction|gland|trunk|tray|clip|box|plate|socket|switch|backbox/.test(hay);
-    case "lighting":
-      return /light|led|batten|downlight|lamp|bulb|emergency/.test(hay);
-    case "tools":
-      return /tester|test|tool|screwdriver|pliers|multimeter|drill/.test(hay);
-    default:
-      return false;
+  const matches = (() => {
+    switch (categoryId) {
+      case "cables":
+        return /cable|wire|swa|t&e|t\s*&\s*e|flex|cat\d|data|6242y|power\s+cable|armoured|data\s+cable|twin.*earth|earth.*cable|power.*cable|armour|flex.*cable/.test(hay);
+      case "components":
+        return /consumer|rcd|rcbo|mcb|isolator|breaker|protector|fuse/.test(hay);
+      case "protection":
+        return /surge|rcd|breaker|earthing|earth|protector|bond|sp\d?d?/.test(hay);
+      case "accessories":
+        return /junction|gland|trunk|tray|clip|box|plate|socket|switch|backbox/.test(hay);
+      case "lighting":
+        return /light|led|batten|downlight|lamp|bulb|emergency/.test(hay);
+      case "tools":
+        return /tester|test|tool|screwdriver|pliers|multimeter|drill|voltage|detector|socket|electrical/.test(hay);
+      default:
+        return false;
+    }
+  })();
+  
+  // Log tools matching for debugging
+  if (categoryId === 'tools') {
+    console.log(`[TOOLS] Matching "${item.name}" against tools pattern: ${matches}`);
   }
+  
+  return matches;
 }
 
 const CategoryMaterials = () => {
@@ -159,25 +168,37 @@ const CategoryMaterials = () => {
   
   // Smart product selection: only show live data, no static fallback
   const baseProducts = useMemo(() => {
+    console.log(`[${categoryId.toUpperCase()}] baseProducts calculation:`, {
+      hasValidLiveData,
+      isLiveDataFresh,
+      liveProductsCount: liveProducts.length,
+      hasAttemptedLiveFetch,
+      liveFetchFailed
+    });
+    
     // If we have valid and fresh live data, use it
     if (hasValidLiveData && (categoryId === 'cables' || isLiveDataFresh)) {
+      console.log(`[${categoryId.toUpperCase()}] Using live data: ${liveProducts.length} products`);
       setDataSource('live');
       return liveProducts;
     }
     
     // Don't show static data - only show live data or nothing
+    console.log(`[${categoryId.toUpperCase()}] No valid data to show`);
     setDataSource('none');
     return [];
-  }, [hasValidLiveData, isLiveDataFresh, categoryId, liveProducts]);
+  }, [hasValidLiveData, isLiveDataFresh, categoryId, liveProducts, hasAttemptedLiveFetch, liveFetchFailed]);
 
   // Enhanced filtering logic for all categories
   const displayProducts = useMemo(() => {
+    console.log(`[${categoryId.toUpperCase()}] displayProducts calculation - starting with ${baseProducts.length} base products`);
     let filtered = baseProducts;
 
     // Apply filters based on category
     if (filters.productTypes.length > 0 || filters.cableTypes.length > 0) {
       const activeTypes = categoryId === 'cables' ? filters.cableTypes : filters.productTypes;
       if (activeTypes.length > 0) {
+        const beforeFilter = filtered.length;
         filtered = filtered.filter(product => {
           if (categoryId === 'cables') {
             const cableTypes = getCableType(product.name);
@@ -188,19 +209,23 @@ const CategoryMaterials = () => {
             return activeTypes.some(type => productName.includes(type.toLowerCase()));
           }
         });
+        console.log(`[${categoryId.toUpperCase()}] After type filter: ${beforeFilter} → ${filtered.length}`);
       }
     }
 
     // Brand filtering
     if (filters.brands.length > 0) {
+      const beforeFilter = filtered.length;
       filtered = filtered.filter(product => {
         const productName = product.name.toLowerCase();
         return filters.brands.some(brand => productName.includes(brand.toLowerCase()));
       });
+      console.log(`[${categoryId.toUpperCase()}] After brand filter: ${beforeFilter} → ${filtered.length}`);
     }
 
     // Price range filtering
     if (filters.priceRanges.length > 0) {
+      const beforeFilter = filtered.length;
       filtered = filtered.filter(product => {
         const price = parseFloat(product.price.replace(/[£,]/g, ''));
         return filters.priceRanges.some(range => {
@@ -213,10 +238,12 @@ const CategoryMaterials = () => {
           }
         });
       });
+      console.log(`[${categoryId.toUpperCase()}] After price filter: ${beforeFilter} → ${filtered.length}`);
     }
 
     // Module size filtering for components
     if (filters.moduleSizes.length > 0 && categoryId === 'components') {
+      const beforeFilter = filtered.length;
       filtered = filtered.filter(product => {
         const productName = product.name.toLowerCase();
         return filters.moduleSizes.some(size => {
@@ -227,31 +254,40 @@ const CategoryMaterials = () => {
                  productName.includes(moduleNumber.toLowerCase() + ' way');
         });
       });
+      console.log(`[${categoryId.toUpperCase()}] After module size filter: ${beforeFilter} → ${filtered.length}`);
     }
 
+    console.log(`[${categoryId.toUpperCase()}] Final displayProducts count: ${filtered.length}`);
     return filtered;
   }, [baseProducts, filters, categoryId]);
 
   // Enhanced fetch with better error handling and state management
   const fetchLiveDeals = async (isAutoLoad = false) => {
+    console.log(`[${categoryId.toUpperCase()}] Starting fetchLiveDeals, isAutoLoad:`, isAutoLoad);
+    
     // Check cache first for non-cables categories
     const now = Date.now();
     if (isAutoLoad && hasValidLiveData && isLiveDataFresh) {
-      console.log('Using fresh cached results for', categoryId);
+      console.log(`[${categoryId.toUpperCase()}] Using fresh cached results`);
       return;
     }
 
+    console.log(`[${categoryId.toUpperCase()}] Fetching fresh data...`);
     setIsFetching(true);
     setLiveFetchFailed(false);
     
     try {
       const searchTerms = CATEGORY_QUERIES[categoryId] || [meta.title];
+      console.log(`[${categoryId.toUpperCase()}] Search terms:`, searchTerms);
+      
       const allCollected: LiveItem[] = [];
       
       // Reduce redundant calls to minimize duplicates from fallback products
       const termsToUse = categoryId === 'cables' ? searchTerms.slice(0, 2) : [searchTerms[0]];
+      console.log(`[${categoryId.toUpperCase()}] Using terms:`, termsToUse);
       
       for (const term of termsToUse) {
+        console.log(`[${categoryId.toUpperCase()}] Searching for term: "${term}"`);
         const tasks: Promise<any>[] = [];
         for (const supplier of SUPPLIERS) {
           tasks.push(
@@ -262,19 +298,32 @@ const CategoryMaterials = () => {
         }
         
         const responses = await Promise.allSettled(tasks);
+        console.log(`[${categoryId.toUpperCase()}] Got ${responses.length} responses for term "${term}"`);
         
-        for (const r of responses) {
+        for (let i = 0; i < responses.length; i++) {
+          const r = responses[i];
+          const supplier = SUPPLIERS[i];
+          
           if (r.status === 'fulfilled') {
             const d = r.value?.data;
             if (Array.isArray(d?.products)) {
+              console.log(`[${categoryId.toUpperCase()}] ${supplier}: ${d.products.length} products`);
               allCollected.push(...(d.products as LiveItem[]));
+            } else {
+              console.log(`[${categoryId.toUpperCase()}] ${supplier}: No products in response`);
             }
+          } else {
+            console.error(`[${categoryId.toUpperCase()}] ${supplier}: Request failed:`, r.reason);
           }
         }
       }
 
+      console.log(`[${categoryId.toUpperCase()}] Total collected: ${allCollected.length} products`);
+      
       // Enhanced filtering and deduplication
       const inCat = allCollected.filter((p) => matchesCategory(p, categoryId));
+      console.log(`[${categoryId.toUpperCase()}] Matched category: ${inCat.length} products`);
+      
       const deduped: LiveItem[] = [];
       const seen = new Set<string>();
       
@@ -296,6 +345,8 @@ const CategoryMaterials = () => {
         }
       }
 
+      console.log(`[${categoryId.toUpperCase()}] After deduplication: ${deduped.length} products`);
+      
       // Sort by relevance for cables (T&E and common sizes first)
       if (categoryId === 'cables') {
         deduped.sort((a, b) => {
@@ -305,11 +356,18 @@ const CategoryMaterials = () => {
         });
       }
 
+      // Log tools specifically
+      if (categoryId === 'tools' && deduped.length > 0) {
+        console.log(`[TOOLS] Final products:`, deduped.map(p => ({ name: p.name, supplier: p.supplier, price: p.price })));
+      }
+
       setLiveProducts(deduped);
       setLastFetchTime(now);
       setIsAutoLoaded(true);
       setHasAttemptedLiveFetch(true);
       setLiveFetchFailed(false);
+      
+      console.log(`[${categoryId.toUpperCase()}] State updated - products: ${deduped.length}`);
       
       if (!isAutoLoad) {
         toast({ 
@@ -318,7 +376,7 @@ const CategoryMaterials = () => {
         });
       }
     } catch (e) {
-      console.error('Failed to fetch live deals:', e);
+      console.error(`[${categoryId.toUpperCase()}] Failed to fetch live deals:`, e);
       setLiveFetchFailed(true);
       setHasAttemptedLiveFetch(true);
       
@@ -327,6 +385,7 @@ const CategoryMaterials = () => {
       }
     } finally {
       setIsFetching(false);
+      console.log(`[${categoryId.toUpperCase()}] Fetch complete`);
     }
   };
 
