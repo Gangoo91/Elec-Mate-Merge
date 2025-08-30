@@ -64,6 +64,7 @@ export type Database = {
       }
       cables_materials_cache: {
         Row: {
+          category: string
           created_at: string
           expires_at: string
           id: string
@@ -71,6 +72,7 @@ export type Database = {
           supplier: string
         }
         Insert: {
+          category?: string
           created_at?: string
           expires_at?: string
           id?: string
@@ -78,6 +80,7 @@ export type Database = {
           supplier: string
         }
         Update: {
+          category?: string
           created_at?: string
           expires_at?: string
           id?: string

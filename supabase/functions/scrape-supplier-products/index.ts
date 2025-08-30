@@ -111,6 +111,72 @@ function buildSearchUrl(slug: SupplierSlug, query: string) {
   }
 }
 
+// Function to scrape components (Consumer units, MCBs, RCDs, isolators, accessories) using Firecrawl v2
+async function scrapeComponentsWithFirecrawl(): Promise<MaterialItem[]> {
+  const firecrawlKey = Deno.env.get("FIRECRAWL_API_KEY");
+  if (!firecrawlKey) {
+    throw new Error("Firecrawl API key not configured");
+  }
+
+  const url = "https://api.firecrawl.dev/v2/scrape";
+
+  const options = {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${firecrawlKey}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      url: "https://www.screwfix.com/search?search=Consumer+units%2C+MCBs%2C+RCDs%2C+isolators%2C+accessories&page_size=100",
+      onlyMainContent: true,
+      maxAge: 0,
+      parsers: [],
+      formats: [
+        {
+          type: "json",
+          schema: protectionProductSchema,
+        },
+      ],
+    }),
+  };
+
+  try {
+    console.log(`[COMPONENTS] Firecrawl v2 scraping Screwfix comprehensive components search...`);
+    
+    const response = await fetch(url, options);
+    console.log(`[COMPONENTS] Firecrawl status: ${response.status} ${response.ok}`);
+
+    if (!response.ok) {
+      throw new Error(`API request failed: ${response.status}`);
+    }
+
+    const data = await response.json();
+    console.log(`[COMPONENTS] Firecrawl response received, processing data...`);
+    
+    if (data.success && data.data && data.data.json) {
+      const products = Array.isArray(data.data.json) ? data.data.json : [];
+      console.log(`[COMPONENTS] Extracted ${products.length} products from Firecrawl v2`);
+      
+      return products.map((product: any, index: number) => ({
+        id: Date.now() + index,
+        name: product.name || "Unknown Product",
+        category: categorizeProtectionProduct(product.name || ""),
+        price: product.price || "Price on application",
+        supplier: "Screwfix",
+        image: product.image && product.image.startsWith('http') ? product.image : "/placeholder.svg",
+        productUrl: product.view_product_url || "https://www.screwfix.com",
+        highlights: product.highlights || []
+      }));
+    } else {
+      console.log(`[COMPONENTS] Invalid Firecrawl v2 response structure`);
+      return [];
+    }
+  } catch (error) {
+    console.error(`[COMPONENTS] Firecrawl v2 scraping failed:`, error);
+    return [];
+  }
+}
+
 // Function to scrape cables & wiring using Firecrawl v2 JSON extraction
 async function scrapeCablesWiringWithFirecrawl(): Promise<MaterialItem[]> {
   const firecrawlKey = Deno.env.get("FIRECRAWL_API_KEY");
@@ -193,10 +259,11 @@ serve(async (req) => {
     const { createClient } = await import("https://esm.sh/@supabase/supabase-js@2");
     const supabase = createClient(supabaseUrl!, supabaseKey!);
 
-    // Expecting JSON body with supplierSlug and optional searchTerm
+    // Expecting JSON body with supplierSlug, searchTerm, and category
     const body = await req.json().catch(() => ({}));
     const supplierSlug: SupplierSlug | undefined = body?.supplierSlug;
     const searchTerm: string = (body?.searchTerm || "electrical deals").toString();
+    const category: string = body?.category || "general";
 
     if (!supplierSlug || !(supplierSlug in SUPPLIER_NAMES)) {
       return new Response(
@@ -217,42 +284,51 @@ serve(async (req) => {
     const supplierName = SUPPLIER_NAMES[supplierSlug];
     const searchUrl = buildSearchUrl(supplierSlug, searchTerm);
 
-    // Check if this is a cables request and handle with cache
+    // Check if this is a cached category request  
     let products: MaterialItem[] = [];
-    const isCablesSearch = /cable|twin|earth|wiring|6242y|swa|flex/i.test(searchTerm);
+    const isCablesSearch = /cable|twin|earth|wiring|6242y|swa|flex/i.test(searchTerm) || category === 'cables';
+    const isComponentsSearch = /consumer units|mcb|rcd|rcbo|breaker|protection|switch|isolator|surge|spd|accessories/i.test(searchTerm) || category === 'components';
     const isProtectionSearch = /mcb|rcd|rcbo|breaker|protection|switch|isolator|surge|spd/i.test(searchTerm);
 
-    if (isCablesSearch) {
-      console.log("[SCRAPE-SUPPLIER-PRODUCTS] Using cached approach for cables");
+    if (isCablesSearch || isComponentsSearch) {
+      const currentCategory = isCablesSearch ? 'cables' : 'components';
+      console.log(`[SCRAPE-SUPPLIER-PRODUCTS] Using cached approach for ${currentCategory}`);
       
-      // Check for cached cables data
+      // Check for cached data with category filter
       const { data: cachedData } = await supabase
         .from('cables_materials_cache')
         .select('*')
         .eq('supplier', 'screwfix')
+        .eq('category', currentCategory)
         .gt('expires_at', new Date().toISOString())
-        .single();
+        .maybeSingle();
 
       if (cachedData) {
-        console.log("[SCRAPE-SUPPLIER-PRODUCTS] Using cached cables data");
+        console.log(`[SCRAPE-SUPPLIER-PRODUCTS] Using cached ${currentCategory} data`);
         products = cachedData.product_data || [];
       } else {
-        console.log("[SCRAPE-SUPPLIER-PRODUCTS] Cache expired/missing, refreshing cables data");
+        console.log(`[SCRAPE-SUPPLIER-PRODUCTS] Cache expired/missing, refreshing ${currentCategory} data`);
         
-        // Fetch fresh data using Firecrawl v2
-        const freshResults = await scrapeCablesWiringWithFirecrawl();
+        // Fetch fresh data using appropriate function
+        let freshResults: MaterialItem[] = [];
+        if (currentCategory === 'cables') {
+          freshResults = await scrapeCablesWiringWithFirecrawl();
+        } else if (currentCategory === 'components') {
+          freshResults = await scrapeComponentsWithFirecrawl();
+        }
         
         if (freshResults.length > 0) {
-          // Store in cache
+          // Store in cache with category
           await supabase
             .from('cables_materials_cache')
             .upsert({
               supplier: 'screwfix',
+              category: currentCategory,
               product_data: freshResults,
               expires_at: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString() // 1 week
             });
           
-          console.log(`[SCRAPE-SUPPLIER-PRODUCTS] Cached ${freshResults.length} fresh cable products`);
+          console.log(`[SCRAPE-SUPPLIER-PRODUCTS] Cached ${freshResults.length} fresh ${currentCategory} products`);
           products = freshResults;
         }
       }

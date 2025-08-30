@@ -75,7 +75,9 @@ const CategoryMaterials = () => {
     cables: [
       "cables wiring" // Single comprehensive search for cables since we use database cache
     ],
-    components: ["consumer unit", "MCB circuit breaker", "RCD 30mA"],
+    components: [
+      "Consumer units, MCBs, RCDs, isolators, accessories" // Single comprehensive search for components
+    ],
     protection: ["rcbo", "surge protector", "earth rod"],
     accessories: ["junction box", "weatherproof enclosure", "cable gland"],
     lighting: ["led downlight", "LED batten", "emergency lighting"],
@@ -183,7 +185,7 @@ const CategoryMaterials = () => {
         for (const supplier of SUPPLIERS) {
           tasks.push(
             supabase.functions.invoke('scrape-supplier-products', {
-              body: { supplierSlug: supplier, searchTerm: term }
+              body: { supplierSlug: supplier, searchTerm: term, category: categoryId }
             })
           );
         }
@@ -280,10 +282,10 @@ const CategoryMaterials = () => {
     fetchLiveDeals(false);
   };
 
-  // Auto-load live deals for cables category
+  // Auto-load live deals for cables and components categories
   useEffect(() => {
-    if (categoryId === 'cables' && !isAutoLoaded && !isFetching) {
-      console.log('Auto-loading live cable deals...');
+    if ((categoryId === 'cables' || categoryId === 'components') && !isAutoLoaded && !isFetching) {
+      console.log(`Auto-loading live ${categoryId} deals...`);
       fetchLiveDeals(true);
     }
   }, [categoryId, isAutoLoaded, isFetching]);
