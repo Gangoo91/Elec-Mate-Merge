@@ -189,77 +189,13 @@ const CategoryMaterials = () => {
     return [];
   }, [hasValidLiveData, isLiveDataFresh, categoryId, liveProducts, hasAttemptedLiveFetch, liveFetchFailed]);
 
-  // Enhanced filtering logic for all categories
+  // NO FILTERING - Show all raw products from edge function
   const displayProducts = useMemo(() => {
-    console.log(`[${categoryId.toUpperCase()}] displayProducts calculation - starting with ${baseProducts.length} base products`);
-    let filtered = baseProducts;
-
-    // Apply filters based on category
-    if (filters.productTypes.length > 0 || filters.cableTypes.length > 0) {
-      const activeTypes = categoryId === 'cables' ? filters.cableTypes : filters.productTypes;
-      if (activeTypes.length > 0) {
-        const beforeFilter = filtered.length;
-        filtered = filtered.filter(product => {
-          if (categoryId === 'cables') {
-            const cableTypes = getCableType(product.name);
-            return activeTypes.some(selectedType => cableTypes.includes(selectedType));
-          } else {
-            // Generic product type filtering for other categories
-            const productName = product.name.toLowerCase();
-            return activeTypes.some(type => productName.includes(type.toLowerCase()));
-          }
-        });
-        console.log(`[${categoryId.toUpperCase()}] After type filter: ${beforeFilter} → ${filtered.length}`);
-      }
-    }
-
-    // Brand filtering
-    if (filters.brands.length > 0) {
-      const beforeFilter = filtered.length;
-      filtered = filtered.filter(product => {
-        const productName = product.name.toLowerCase();
-        return filters.brands.some(brand => productName.includes(brand.toLowerCase()));
-      });
-      console.log(`[${categoryId.toUpperCase()}] After brand filter: ${beforeFilter} → ${filtered.length}`);
-    }
-
-    // Price range filtering
-    if (filters.priceRanges.length > 0) {
-      const beforeFilter = filtered.length;
-      filtered = filtered.filter(product => {
-        const price = parseFloat(product.price.replace(/[£,]/g, ''));
-        return filters.priceRanges.some(range => {
-          switch (range) {
-            case 'Under £25': return price < 25;
-            case '£25-£50': return price >= 25 && price <= 50;
-            case '£50-£100': return price >= 50 && price <= 100;
-            case 'Over £100': return price > 100;
-            default: return true;
-          }
-        });
-      });
-      console.log(`[${categoryId.toUpperCase()}] After price filter: ${beforeFilter} → ${filtered.length}`);
-    }
-
-    // Module size filtering for components
-    if (filters.moduleSizes.length > 0 && categoryId === 'components') {
-      const beforeFilter = filtered.length;
-      filtered = filtered.filter(product => {
-        const productName = product.name.toLowerCase();
-        return filters.moduleSizes.some(size => {
-          const moduleNumber = size.split('-')[0];
-          return productName.includes(moduleNumber.toLowerCase() + 'module') || 
-                 productName.includes(moduleNumber.toLowerCase() + ' module') ||
-                 productName.includes(moduleNumber.toLowerCase() + 'way') ||
-                 productName.includes(moduleNumber.toLowerCase() + ' way');
-        });
-      });
-      console.log(`[${categoryId.toUpperCase()}] After module size filter: ${beforeFilter} → ${filtered.length}`);
-    }
-
-    console.log(`[${categoryId.toUpperCase()}] Final displayProducts count: ${filtered.length}`);
-    return filtered;
-  }, [baseProducts, filters, categoryId]);
+    console.log(`[${categoryId.toUpperCase()}] RAW DISPLAY - showing all ${baseProducts.length} base products without any filtering`);
+    
+    // Return all base products without any filtering
+    return baseProducts;
+  }, [baseProducts]);
 
   // Enhanced fetch with better error handling and state management
   const fetchLiveDeals = async (isAutoLoad = false) => {
@@ -320,14 +256,15 @@ const CategoryMaterials = () => {
 
       console.log(`[${categoryId.toUpperCase()}] Total collected: ${allCollected.length} products`);
       
-      // Enhanced filtering and deduplication
-      const inCat = allCollected.filter((p) => matchesCategory(p, categoryId));
-      console.log(`[${categoryId.toUpperCase()}] Matched category: ${inCat.length} products`);
-      
-      const deduped: LiveItem[] = [];
-      const seen = new Set<string>();
-      
-      for (const item of inCat) {
+  // Show ALL raw products from edge function - NO FILTERING
+  console.log(`[${categoryId.toUpperCase()}] RAW DATA - Total collected: ${allCollected.length} products`);
+  console.log(`[${categoryId.toUpperCase()}] RAW PRODUCTS:`, allCollected.map(p => ({ name: p.name, supplier: p.supplier, category: p.category })));
+  
+  const deduped: LiveItem[] = [];
+  const seen = new Set<string>();
+  
+  // Use ALL collected products instead of filtering by category
+  for (const item of allCollected) {
         // For fallback products (identified by placeholder image or specific price patterns),
         // deduplicate by name and price to avoid supplier duplicates
         const isFallbackProduct = item.image?.includes('placeholder') || 
