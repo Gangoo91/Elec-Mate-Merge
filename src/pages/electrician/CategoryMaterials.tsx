@@ -81,7 +81,7 @@ const CategoryMaterials = () => {
     ],
     protection: ["earthing, surge protection, circuit protection"],
     accessories: ["junction boxes, glands, trunking, fixings"],
-    lighting: ["led downlight", "LED batten", "emergency lighting"],
+    lighting: ["LED+downlights%2C+battens%2C+emergency%2C+controls"],
     tools: ["multimeter", "socket tester", "cable detector"],
   };
 
@@ -459,9 +459,9 @@ const CategoryMaterials = () => {
     setSearchParams(newParams, { replace: true });
   }, [filters, setSearchParams]);
 
-  // Auto-load live deals for cables, components and accessories categories
+  // Auto-load live deals for cables, components, accessories and lighting categories
   useEffect(() => {
-    if ((categoryId === 'cables' || categoryId === 'components' || categoryId === 'accessories') && !isAutoLoaded && !isFetching) {
+    if ((categoryId === 'cables' || categoryId === 'components' || categoryId === 'accessories' || categoryId === 'lighting') && !isAutoLoaded && !isFetching) {
       console.log(`Auto-loading live ${categoryId} deals...`);
       fetchLiveDeals(true);
     }

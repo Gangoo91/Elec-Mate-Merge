@@ -187,6 +187,90 @@ function buildSearchUrl(slug: SupplierSlug, query: string) {
   }
 }
 
+// Function to scrape lighting solutions using Firecrawl v2
+async function fetchLightingSolutions(): Promise<MaterialItem[]> {
+  const FIRECRAWL_API_KEY = Deno.env.get("FIRECRAWL_API_KEY");
+  if (!FIRECRAWL_API_KEY) {
+    throw new Error("Firecrawl API key not configured");
+  }
+
+  const productSchema = {
+    type: "array",
+    items: {
+      type: "object",
+      required: ["name", "price", "view_product_url"],
+      properties: {
+        name: { type: "string", description: "The name or title of the product" },
+        category: { type: "string", description: "The category or lighting type of the product" },
+        highlights: { type: "array", description: "The highlight or lighting features of the product" },
+        price: { type: "string", description: "The price of the product, including currency and VAT info" },
+        description: { type: "string", description: "Key features or details of the product" },
+        reviews: { type: "string", description: "The number of reviews or rating summary" },
+        image: { type: "string", format: "uri", description: "URL of the product image" },
+        view_product_url: { type: "string", format: "uri", description: "Direct URL to the product page" },
+      },
+    },
+  };
+
+  const url = "https://api.firecrawl.dev/v2/scrape";
+
+  const options = {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${FIRECRAWL_API_KEY}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      url: "https://www.screwfix.com/search?search=LED+downlights%2C+battens%2C+emergency%2C+controls&page_size=100",
+      onlyMainContent: true,
+      maxAge: 0,
+      parsers: [],
+      formats: [
+        {
+          type: "json",
+          schema: productSchema,
+        },
+      ],
+    }),
+  };
+
+  try {
+    console.log(`[LIGHTING-SOLUTIONS] Firecrawl v2 scraping lighting solutions...`);
+    
+    const response = await fetch(url, options);
+    console.log(`[LIGHTING-SOLUTIONS] Firecrawl status: ${response.status} ${response.ok}`);
+
+    if (!response.ok) {
+      throw new Error(`❌ API request failed: ${response.status}`);
+    }
+
+    const data = await response.json();
+    console.log(`[LIGHTING-SOLUTIONS] Firecrawl response received, processing data...`);
+    
+    if (data.success && data.data && data.data.json) {
+      const products = Array.isArray(data.data.json) ? data.data.json : [];
+      console.log(`[LIGHTING-SOLUTIONS] Extracted ${products.length} products from Firecrawl v2`);
+      
+      return products.map((product: any, index: number) => ({
+        id: Date.now() + index,
+        name: product.name || "Unknown Product",
+        category: product.category || "Lighting",
+        price: product.price || "Price on application",
+        supplier: "Screwfix",
+        image: product.image && product.image.startsWith('http') ? product.image : "/placeholder.svg",
+        productUrl: product.view_product_url || "https://www.screwfix.com",
+        highlights: product.highlights || []
+      }));
+    } else {
+      console.log(`[LIGHTING-SOLUTIONS] Invalid Firecrawl v2 response structure`);
+      return [];
+    }
+  } catch (error) {
+    console.error(`⚠️ Error fetching Lighting Solutions:`, error.message);
+    return [];
+  }
+}
+
 // Function to scrape installation accessories using Firecrawl v2
 async function fetchInstallationAccessories(): Promise<MaterialItem[]> {
   const FIRECRAWL_API_KEY = Deno.env.get("FIRECRAWL_API_KEY");
@@ -470,9 +554,13 @@ serve(async (req) => {
     const isCablesSearch = /cable|twin|earth|wiring|6242y|swa|flex/i.test(searchTerm) || category === 'cables';
     const isProtectionSearch = /earthing|surge protection|circuit protection|mcb|rcd|rcbo|breaker|protection equipment|switch|isolator|earth rod/i.test(searchTerm) || category === 'protection';
     const isAccessoriesSearch = /junction|glands|trunking|fixings|accessories/i.test(searchTerm) || category === 'accessories';
+    const isLightingSearch = /LED\+downlights|downlight|batten|emergency|lighting|controls/i.test(searchTerm) || category === 'lighting';
 
-    if (isCablesSearch || isAccessoriesSearch || isProtectionSearch) {
-      const currentCategory = isCablesSearch ? 'cables' : (isProtectionSearch ? 'protection' : 'accessories');
+    if (isCablesSearch || isAccessoriesSearch || isProtectionSearch || isLightingSearch) {
+      const currentCategory = isCablesSearch ? 'cables' : 
+                             isProtectionSearch ? 'protection' : 
+                             isLightingSearch ? 'lighting' : 
+                             'accessories';
       console.log(`[SCRAPE-SUPPLIER-PRODUCTS] CACHE DISABLED - forcing live scraping for ${currentCategory}`);
       
       // Force live scraping - no cache logic
@@ -483,6 +571,8 @@ serve(async (req) => {
         freshResults = await fetchInstallationAccessories();
       } else if (currentCategory === 'protection') {
         freshResults = await scrapeProtectionWithFirecrawl();
+      } else if (currentCategory === 'lighting') {
+        freshResults = await fetchLightingSolutions();
       }
       
       console.log(`[SCRAPE-SUPPLIER-PRODUCTS] Live scraping ${currentCategory} returned ${freshResults.length} products`);
