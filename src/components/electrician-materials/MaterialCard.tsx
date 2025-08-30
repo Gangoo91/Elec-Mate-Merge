@@ -153,6 +153,19 @@ const MaterialCard: React.FC<MaterialCardProps> = ({ item }) => {
           {item.supplier}
         </div>
         
+        {/* Highlights */}
+        {item.highlights && item.highlights.length > 0 && (
+          <div className="mb-3">
+            <div className="flex flex-wrap gap-1 text-xs">
+              {item.highlights.map((highlight, index) => (
+                <span key={index} className="bg-elec-yellow/20 text-elec-yellow px-2 py-1 rounded font-medium">
+                  {highlight}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
+        
         {/* Price - prominent */}
         <div className="mb-4">
           {item.isOnSale ? (

@@ -9,6 +9,7 @@ export interface MaterialItem {
   isOnSale?: boolean;
   salePrice?: string;
   stockStatus?: "In Stock" | "Low Stock" | "Out of Stock";
+  highlights?: string[];
 }
 
 export const productsBySupplier: Record<string, MaterialItem[]> = {
@@ -20,7 +21,8 @@ export const productsBySupplier: Record<string, MaterialItem[]> = {
       price: "£6.75",
       supplier: "Screwfix",
       image: "/placeholder.svg",
-      stockStatus: "In Stock" as "In Stock"
+      stockStatus: "In Stock" as "In Stock",
+      highlights: ["CE Marked", "Easy Install", "BS 1363"]
     },
     {
       id: 102,
@@ -51,7 +53,8 @@ export const productsBySupplier: Record<string, MaterialItem[]> = {
       image: "/placeholder.svg",
       isOnSale: true,
       salePrice: "£95.75",
-      stockStatus: "In Stock" as "In Stock"
+      stockStatus: "In Stock" as "In Stock",
+      highlights: ["17th Edition", "Metal Enclosure", "Pre-Wired", "Dual RCD"]
     },
     {
       id: 202,
@@ -71,7 +74,8 @@ export const productsBySupplier: Record<string, MaterialItem[]> = {
       price: "£85.99",
       supplier: "ElectricalDirect",
       image: "/placeholder.svg",
-      stockStatus: "In Stock" as "In Stock"
+      stockStatus: "In Stock" as "In Stock",
+      highlights: ["BS 6724", "LSZH", "Fire Resistant", "Low Smoke"]
     },
     {
       id: 302,
