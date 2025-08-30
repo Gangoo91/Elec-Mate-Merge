@@ -187,68 +187,86 @@ function buildSearchUrl(slug: SupplierSlug, query: string) {
   }
 }
 
-// Function to scrape components (Consumer units, MCBs, RCDs, isolators, accessories) using Firecrawl v2
-async function scrapeComponentsWithFirecrawl(): Promise<MaterialItem[]> {
-  const firecrawlKey = Deno.env.get("FIRECRAWL_API_KEY");
-  if (!firecrawlKey) {
+// Function to scrape installation accessories using Firecrawl v2
+async function fetchInstallationAccessories(): Promise<MaterialItem[]> {
+  const FIRECRAWL_API_KEY = Deno.env.get("FIRECRAWL_API_KEY");
+  if (!FIRECRAWL_API_KEY) {
     throw new Error("Firecrawl API key not configured");
   }
+
+  const productSchema = {
+    type: "array",
+    items: {
+      type: "object",
+      required: ["name", "price", "view_product_url"],
+      properties: {
+        name: { type: "string", description: "The name or title of the product" },
+        category: { type: "string", description: "The category or cable type of the product" },
+        highlights: { type: "array", description: "The highlight or cable highlight of the product" },
+        price: { type: "string", description: "The price of the product, including currency and VAT info" },
+        description: { type: "string", description: "Key features or details of the product" },
+        reviews: { type: "string", description: "The number of reviews or rating summary" },
+        image: { type: "string", format: "uri", description: "URL of the product image" },
+        view_product_url: { type: "string", format: "uri", description: "Direct URL to the product page" },
+      },
+    },
+  };
 
   const url = "https://api.firecrawl.dev/v2/scrape";
 
   const options = {
     method: "POST",
     headers: {
-      Authorization: `Bearer ${firecrawlKey}`,
+      Authorization: `Bearer ${FIRECRAWL_API_KEY}`,
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      url: "https://www.screwfix.com/search?search=Consumer+units%2C+MCBs%2C+RCDs%2C+isolators%2C+accessories&page_size=100",
+      url: "https://www.screwfix.com/search?search=junction+boxes%2C+glands%2C+trunking%2C+fixings&page_size=100",
       onlyMainContent: true,
       maxAge: 0,
       parsers: [],
       formats: [
         {
           type: "json",
-          schema: protectionProductSchema,
+          schema: productSchema,
         },
       ],
     }),
   };
 
   try {
-    console.log(`[COMPONENTS] Firecrawl v2 scraping Screwfix comprehensive components search...`);
+    console.log(`[INSTALLATION-ACCESSORIES] Firecrawl v2 scraping installation accessories...`);
     
     const response = await fetch(url, options);
-    console.log(`[COMPONENTS] Firecrawl status: ${response.status} ${response.ok}`);
+    console.log(`[INSTALLATION-ACCESSORIES] Firecrawl status: ${response.status} ${response.ok}`);
 
     if (!response.ok) {
-      throw new Error(`API request failed: ${response.status}`);
+      throw new Error(`❌ API request failed: ${response.status}`);
     }
 
     const data = await response.json();
-    console.log(`[COMPONENTS] Firecrawl response received, processing data...`);
+    console.log(`[INSTALLATION-ACCESSORIES] Firecrawl response received, processing data...`);
     
     if (data.success && data.data && data.data.json) {
       const products = Array.isArray(data.data.json) ? data.data.json : [];
-      console.log(`[COMPONENTS] Extracted ${products.length} products from Firecrawl v2`);
+      console.log(`[INSTALLATION-ACCESSORIES] Extracted ${products.length} products from Firecrawl v2`);
       
       return products.map((product: any, index: number) => ({
         id: Date.now() + index,
         name: product.name || "Unknown Product",
-        category: categorizeProtectionProduct(product.name || ""),
+        category: product.category || "Installation Accessories",
         price: product.price || "Price on application",
         supplier: "Screwfix",
         image: product.image && product.image.startsWith('http') ? product.image : "/placeholder.svg",
         productUrl: product.view_product_url || "https://www.screwfix.com",
-        highlights: product.highlights || generateComponentHighlights(product.name || "", product.description || "")
+        highlights: product.highlights || []
       }));
     } else {
-      console.log(`[COMPONENTS] Invalid Firecrawl v2 response structure`);
+      console.log(`[INSTALLATION-ACCESSORIES] Invalid Firecrawl v2 response structure`);
       return [];
     }
   } catch (error) {
-    console.error(`[COMPONENTS] Firecrawl v2 scraping failed:`, error);
+    console.error(`⚠️ Error fetching Installation Accessories:`, error.message);
     return [];
   }
 }
@@ -451,18 +469,18 @@ serve(async (req) => {
     let products: MaterialItem[] = [];
     const isCablesSearch = /cable|twin|earth|wiring|6242y|swa|flex/i.test(searchTerm) || category === 'cables';
     const isProtectionSearch = /earthing|surge protection|circuit protection|mcb|rcd|rcbo|breaker|protection equipment|switch|isolator|earth rod/i.test(searchTerm) || category === 'protection';
-    const isComponentsSearch = /consumer units|accessories/i.test(searchTerm) || category === 'components';
+    const isAccessoriesSearch = /junction|glands|trunking|fixings|accessories/i.test(searchTerm) || category === 'accessories';
 
-    if (isCablesSearch || isComponentsSearch || isProtectionSearch) {
-      const currentCategory = isCablesSearch ? 'cables' : (isProtectionSearch ? 'protection' : 'components');
+    if (isCablesSearch || isAccessoriesSearch || isProtectionSearch) {
+      const currentCategory = isCablesSearch ? 'cables' : (isProtectionSearch ? 'protection' : 'accessories');
       console.log(`[SCRAPE-SUPPLIER-PRODUCTS] CACHE DISABLED - forcing live scraping for ${currentCategory}`);
       
       // Force live scraping - no cache logic
       let freshResults: MaterialItem[] = [];
       if (currentCategory === 'cables') {
         freshResults = await scrapeCablesWiringWithFirecrawl();
-      } else if (currentCategory === 'components') {
-        freshResults = await scrapeComponentsWithFirecrawl();
+      } else if (currentCategory === 'accessories') {
+        freshResults = await fetchInstallationAccessories();
       } else if (currentCategory === 'protection') {
         freshResults = await scrapeProtectionWithFirecrawl();
       }
@@ -482,7 +500,7 @@ serve(async (req) => {
       );
     }
 
-    if (firecrawlKey && !isCablesSearch && !isComponentsSearch && !isProtectionSearch) {
+    if (firecrawlKey && !isCablesSearch && !isAccessoriesSearch && !isProtectionSearch) {
       try {
         // Use Firecrawl v2 JSON schema for protection equipment, v1 for others
         if (isProtectionSearch && supplierSlug === "screwfix") {
@@ -696,8 +714,8 @@ serve(async (req) => {
     if (!products || products.length === 0) {
       console.log(`[SCRAPE-SUPPLIER-PRODUCTS] No products found, checking for category-specific fallbacks`);
       
-      // For cached category requests (cables, components, protection), return empty if scraping failed
-      if (isCablesSearch || isComponentsSearch || isProtectionSearch) {
+      // For cached category requests (cables, accessories, protection), return empty if scraping failed
+      if (isCablesSearch || isAccessoriesSearch || isProtectionSearch) {
         console.log(`[SCRAPE-SUPPLIER-PRODUCTS] Cached category ${category} had no results, returning empty array`);
         return new Response(
           JSON.stringify({
