@@ -54,7 +54,11 @@ const protectionProductSchema = {
       reviews: { type: "string", description: "The number of reviews or rating summary" },
       image: { type: "string", format: "uri", description: "URL of the product image" },
       view_product_url: { type: "string", format: "uri", description: "Direct URL to the product page" },
-      highlights: { type: "array", description: "The highlight or protection feature of the product" },
+      highlights: { 
+        type: "array", 
+        items: { type: "string" },
+        description: "Product highlights, features, certifications (BS/CE compliance), safety features, key specifications, or protection capabilities" 
+      },
     },
   },
 };
@@ -78,6 +82,81 @@ function categorizeProtectionProduct(name: string): string {
   } else {
     return "Protection";
   }
+}
+
+// Generate highlights for components when not provided by scraping
+function generateComponentHighlights(name: string, description: string = ""): string[] {
+  const highlights: string[] = [];
+  const lowerName = name.toLowerCase();
+  const lowerDesc = description.toLowerCase();
+  const combined = `${lowerName} ${lowerDesc}`;
+
+  // Extract ratings and specifications
+  const ampMatch = combined.match(/(\d+)\s*a\b/i);
+  if (ampMatch) highlights.push(`${ampMatch[1]}A Rated`);
+
+  const voltMatch = combined.match(/(\d+)\s*v\b/i);
+  if (voltMatch) highlights.push(`${voltMatch[1]}V`);
+
+  // Module counts
+  const moduleMatch = combined.match(/(\d+)\s*(?:way|module|circuit)/i);
+  if (moduleMatch) highlights.push(`${moduleMatch[1]}-Module`);
+
+  // Safety standards
+  if (/\bbs\s*\d+/i.test(combined)) highlights.push("BS Compliant");
+  if (/\bce\b/i.test(combined)) highlights.push("CE Marked");
+  if (/\ben\s*\d+/i.test(combined)) highlights.push("EN Standard");
+
+  // Product type specific highlights
+  if (/\bmcb\b/i.test(combined)) {
+    highlights.push("Circuit Protection");
+    if (/type\s*[abc]/i.test(combined)) {
+      const typeMatch = combined.match(/type\s*([abc])/i);
+      if (typeMatch) highlights.push(`Type ${typeMatch[1].toUpperCase()}`);
+    }
+  }
+
+  if (/\brcd\b/i.test(combined)) {
+    highlights.push("Earth Leakage Protection");
+    const sensitivityMatch = combined.match(/(\d+)\s*ma/i);
+    if (sensitivityMatch) highlights.push(`${sensitivityMatch[1]}mA Sensitivity`);
+  }
+
+  if (/\brcbo\b/i.test(combined)) {
+    highlights.push("Combined Protection");
+  }
+
+  if (/consumer.*unit/i.test(combined)) {
+    highlights.push("Distribution Board");
+    if (/split.*load/i.test(combined)) highlights.push("Split Load");
+    if (/metal/i.test(combined)) highlights.push("Metal Enclosure");
+  }
+
+  if (/isolator/i.test(combined)) {
+    highlights.push("Isolation Switch");
+  }
+
+  if (/surge/i.test(combined)) {
+    highlights.push("Surge Protection");
+  }
+
+  // Quality indicators
+  if (/professional/i.test(combined)) highlights.push("Professional Grade");
+  if (/contractor/i.test(combined)) highlights.push("Contractor Grade");
+  if (/din.*rail/i.test(combined)) highlights.push("DIN Rail Mount");
+
+  // Default highlights if none found
+  if (highlights.length === 0) {
+    if (/mcb/i.test(combined)) highlights.push("Circuit Breaker");
+    if (/rcd/i.test(combined)) highlights.push("Safety Device");
+    if (/consumer/i.test(combined)) highlights.push("Distribution");
+    if (/switch/i.test(combined)) highlights.push("Switching Device");
+    
+    // Fallback
+    if (highlights.length === 0) highlights.push("Electrical Component");
+  }
+
+  return highlights.slice(0, 3); // Limit to 3 highlights for clean display
 }
 
 function buildSearchUrl(slug: SupplierSlug, query: string) {
@@ -162,7 +241,7 @@ async function scrapeComponentsWithFirecrawl(): Promise<MaterialItem[]> {
         supplier: "Screwfix",
         image: product.image && product.image.startsWith('http') ? product.image : "/placeholder.svg",
         productUrl: product.view_product_url || "https://www.screwfix.com",
-        highlights: product.highlights || []
+        highlights: product.highlights || generateComponentHighlights(product.name || "", product.description || "")
       }));
     } else {
       console.log(`[COMPONENTS] Invalid Firecrawl v2 response structure`);
@@ -379,7 +458,7 @@ serve(async (req) => {
               supplier: supplierName,
               image: item.image && item.image.startsWith('http') ? item.image : "/placeholder.svg",
               productUrl: item.view_product_url || searchUrl,
-              highlights: item.highlights || []
+              highlights: item.highlights || generateComponentHighlights(item.name || "", item.description || "")
             }));
           }
         } else {
