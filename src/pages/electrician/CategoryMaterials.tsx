@@ -4,6 +4,7 @@ import { useParams, Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import { Package, ArrowLeft, Filter, RefreshCw } from "lucide-react";
 import { productsBySupplier, MaterialItem } from "@/data/electrician/productData";
 import MaterialCard from "@/components/electrician-materials/MaterialCard";
@@ -90,10 +91,48 @@ const CategoryMaterials = () => {
   const [isAutoLoaded, setIsAutoLoaded] = useState(false);
   const [lastFetchTime, setLastFetchTime] = useState<number>(0);
   
+  // Cable type filter state
+  const [selectedCableTypes, setSelectedCableTypes] = useState<string[]>([]);
+  
   // Shorter cache for non-cables categories, cables use database cache
   const CACHE_DURATION = categoryId === 'cables' ? 0 : 30 * 60 * 1000; // No frontend cache for cables
   
-  const displayProducts = liveProducts.length > 0 ? liveProducts : products;
+  // Cable type detection function
+  const getCableType = (itemName: string): string[] => {
+    const name = itemName.toLowerCase();
+    const types: string[] = [];
+    
+    if (name.includes('twin') && name.includes('earth') || name.includes('t&e') || name.includes('6242y')) {
+      types.push('Twin & Earth');
+    }
+    if (name.includes('swa') || name.includes('armour')) {
+      types.push('SWA');
+    }
+    if (name.includes('flex') && !name.includes('flexible')) {
+      types.push('Flex');
+    }
+    if (name.includes('data') || name.includes('cat') || name.includes('ethernet') || name.includes('coax')) {
+      types.push('Data');
+    }
+    if (name.includes('control') || name.includes('alarm') || name.includes('fire')) {
+      types.push('Control');
+    }
+    
+    return types;
+  };
+  
+  // Filter products by cable type if filters are active
+  const baseProducts = liveProducts.length > 0 ? liveProducts : products;
+  const displayProducts = useMemo(() => {
+    if (categoryId !== 'cables' || selectedCableTypes.length === 0) {
+      return baseProducts;
+    }
+    
+    return baseProducts.filter(product => {
+      const cableTypes = getCableType(product.name);
+      return selectedCableTypes.some(selectedType => cableTypes.includes(selectedType));
+    });
+  }, [baseProducts, selectedCableTypes, categoryId]);
 
   // Enhanced fetch with multiple search terms and caching
   const fetchLiveDeals = async (isAutoLoad = false) => {
@@ -254,12 +293,54 @@ const CategoryMaterials = () => {
         </div>
       </header>
 
-      <section aria-labelledby="filters" className="hidden">
-        <div className="flex items-center gap-2 text-sm text-muted-foreground">
-          <Filter className="h-4 w-4" />
-          Additional filters coming soon
-        </div>
-      </section>
+      {/* Cable type filters for cables category */}
+      {categoryId === 'cables' && (
+        <section aria-labelledby="cable-filters" className="space-y-3">
+          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+            <Filter className="h-4 w-4" />
+            Filter by cable type
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {['Twin & Earth', 'SWA', 'Flex', 'Data', 'Control'].map((cableType) => {
+              const isSelected = selectedCableTypes.includes(cableType);
+              return (
+                <Badge
+                  key={cableType}
+                  variant={isSelected ? "default" : "outline"}
+                  className={`cursor-pointer transition-colors ${
+                    isSelected 
+                      ? 'bg-elec-yellow text-elec-black hover:bg-elec-yellow/90' 
+                      : 'hover:bg-elec-yellow/10 hover:border-elec-yellow/30'
+                  }`}
+                  onClick={() => {
+                    setSelectedCableTypes(prev => 
+                      isSelected 
+                        ? prev.filter(t => t !== cableType)
+                        : [...prev, cableType]
+                    );
+                  }}
+                >
+                  {cableType}
+                </Badge>
+              );
+            })}
+            {selectedCableTypes.length > 0 && (
+              <Badge
+                variant="outline"
+                className="cursor-pointer hover:bg-destructive/10 hover:text-destructive border-destructive/30 text-destructive"
+                onClick={() => setSelectedCableTypes([])}
+              >
+                Clear all
+              </Badge>
+            )}
+          </div>
+          {selectedCableTypes.length > 0 && (
+            <p className="text-sm text-muted-foreground">
+              Showing {displayProducts.length} products for: {selectedCableTypes.join(', ')}
+            </p>
+          )}
+        </section>
+      )}
 
       {/* Auto-loading indicator for cables */}
       {categoryId === 'cables' && isFetching && !isAutoLoaded && (
