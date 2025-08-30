@@ -328,6 +328,25 @@ async function scrapeProtectionWithFirecrawl(): Promise<MaterialItem[]> {
 
   const url = "https://api.firecrawl.dev/v2/scrape";
 
+  // 🔧 Updated product schema for protection equipment
+  const protectionProductSchema = {
+    type: "array",
+    items: {
+      type: "object",
+      required: ["name", "price", "view_product_url"],
+      properties: {
+        name: { type: "string", description: "The name or title of the product" },
+        category: { type: "string", description: "The category or type of protection equipment" },
+        highlights: { type: "array", description: "The highlight or protection features of the product" },
+        price: { type: "string", description: "The price of the product, including currency and VAT info" },
+        description: { type: "string", description: "Key features or details of the product" },
+        reviews: { type: "string", description: "The number of reviews or rating summary" },
+        image: { type: "string", format: "uri", description: "URL of the product image" },
+        view_product_url: { type: "string", format: "uri", description: "Direct URL to the product page" },
+      },
+    },
+  };
+
   const options = {
     method: "POST",
     headers: {
@@ -335,7 +354,7 @@ async function scrapeProtectionWithFirecrawl(): Promise<MaterialItem[]> {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      url: "https://www.screwfix.com/search?search=earthing%2C+surge+protection%2C+circuit+protection&page_size=100",
+      url: "https://www.screwfix.com/search?search=MCB%2C+RCD%2C+consumer+unit%2C+isolator%2C+surge+protector&page_size=100",
       onlyMainContent: true,
       maxAge: 0,
       parsers: [],
@@ -349,13 +368,13 @@ async function scrapeProtectionWithFirecrawl(): Promise<MaterialItem[]> {
   };
 
   try {
-    console.log(`[PROTECTION] Firecrawl v2 scraping Screwfix comprehensive protection search...`);
+    console.log(`[PROTECTION] Firecrawl v2 scraping Screwfix protection equipment search...`);
     
     const response = await fetch(url, options);
     console.log(`[PROTECTION] Firecrawl status: ${response.status} ${response.ok}`);
 
     if (!response.ok) {
-      throw new Error(`API request failed: ${response.status}`);
+      throw new Error(`❌ API request failed: ${response.status}`);
     }
 
     const data = await response.json();
@@ -380,7 +399,7 @@ async function scrapeProtectionWithFirecrawl(): Promise<MaterialItem[]> {
       return [];
     }
   } catch (error) {
-    console.error(`[PROTECTION] Firecrawl v2 scraping failed:`, error);
+    console.error(`⚠️ Error fetching Protection Equipment:`, error.message);
     return [];
   }
 }
