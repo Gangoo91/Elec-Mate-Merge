@@ -23,17 +23,60 @@ const SUPPLIER_NAMES: Record<SupplierSlug, string> = {
   "toolstation": "Toolstation",
 };
 
+// JSON schema for protection equipment structured extraction
+const protectionProductSchema = {
+  type: "array",
+  items: {
+    type: "object",
+    required: ["name", "price", "view_product_url"],
+    properties: {
+      name: { type: "string", description: "The name or title of the product" },
+      price: { type: "string", description: "The price of the product, including currency and VAT info" },
+      description: { type: "string", description: "Key features or details of the product" },
+      reviews: { type: "string", description: "The number of reviews or rating summary" },
+      image: { type: "string", format: "uri", description: "URL of the product image" },
+      view_product_url: { type: "string", format: "uri", description: "Direct URL to the product page" },
+    },
+  },
+};
+
+// Categorize protection products based on their names
+function categorizeProtectionProduct(name: string): string {
+  const lowerName = name.toLowerCase();
+  
+  if (/\b(mcb|miniature|circuit.*breaker|type.*[abc])\b/i.test(lowerName)) {
+    return "MCBs";
+  } else if (/\b(rcd|residual.*current|earth.*leakage)\b/i.test(lowerName)) {
+    return "RCDs";
+  } else if (/\b(rcbo|combined.*protection)\b/i.test(lowerName)) {
+    return "RCBOs";
+  } else if (/\b(surge.*protect|spd|lightning.*protect|transient)\b/i.test(lowerName)) {
+    return "Surge Protectors";
+  } else if (/\b(isolator|switch.*disconnect|main.*switch)\b/i.test(lowerName)) {
+    return "Isolators";
+  } else if (/\b(afdd|arc.*fault|arc.*detect)\b/i.test(lowerName)) {
+    return "AFDD";
+  } else {
+    return "Protection";
+  }
+}
+
 function buildSearchUrl(slug: SupplierSlug, query: string) {
   const q = encodeURIComponent(query);
   
   // For tools category, use specific category pages for better results
   const isToolsSearch = /multimeter|socket tester|cable detector|voltage detector|testing|tester|meter/i.test(query);
+  const isProtectionSearch = /mcb|rcd|rcbo|breaker|protection|switch|isolator|surge|spd/i.test(query);
   
   switch (slug) {
     case "screwfix":
       // Use testing equipment category page for tools searches
       if (isToolsSearch) {
         return "https://www.screwfix.com/c/tools/testing-equipment/cat8830001";
+      }
+      // Use protection equipment search for protection searches
+      if (isProtectionSearch) {
+        return "https://www.screwfix.com/search?search=Protection+Equipment";
       }
       return `https://www.screwfix.com/search?search=${q}`;
     case "city-electrical-factors":
@@ -84,27 +127,67 @@ serve(async (req) => {
 
     // Attempt live scraping with Firecrawl if API key is configured
     let products: MaterialItem[] = [];
+    const isProtectionSearch = /mcb|rcd|rcbo|breaker|protection|switch|isolator|surge|spd/i.test(searchTerm);
 
     if (firecrawlKey) {
       try {
-        const fcRes = await fetch("https://api.firecrawl.dev/v1/scrape", {
-          method: "POST",
-          headers: {
-            "Authorization": `Bearer ${firecrawlKey}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            url: searchUrl,
-            formats: ["html"],
-          }),
-        });
+        // Use Firecrawl v2 JSON schema for protection equipment, v1 for others
+        if (isProtectionSearch && supplierSlug === "screwfix") {
+          const fcRes = await fetch("https://api.firecrawl.dev/v2/scrape", {
+            method: "POST",
+            headers: {
+              "Authorization": `Bearer ${firecrawlKey}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              url: searchUrl,
+              onlyMainContent: true,
+              maxAge: 0,
+              parsers: [],
+              formats: [
+                {
+                  type: "json",
+                  schema: protectionProductSchema,
+                },
+              ],
+            }),
+          });
 
-        const fcJson: any = await fcRes.json().catch(() => ({}));
-        console.log("[SCRAPE-SUPPLIER-PRODUCTS] Firecrawl status:", fcRes.status, fcJson?.status || fcJson?.success);
+          const fcJson: any = await fcRes.json().catch(() => ({}));
+          console.log("[SCRAPE-SUPPLIER-PRODUCTS] Firecrawl v2 status:", fcRes.status, fcJson?.success);
 
-        const html: string = fcJson?.data?.html || fcJson?.html || "";
+          if (fcJson.success && fcJson.data?.json) {
+            const jsonProducts = Array.isArray(fcJson.data.json) ? fcJson.data.json : [];
+            products = jsonProducts.slice(0, 8).map((item: any, index: number) => ({
+              id: Date.now() + index,
+              name: item.name || "Unknown Product",
+              category: categorizeProtectionProduct(item.name || ""),
+              price: item.price || "£0.00",
+              supplier: supplierName,
+              image: item.image && item.image.startsWith('http') ? item.image : "/placeholder.svg",
+              productUrl: item.view_product_url || searchUrl,
+            }));
+          }
+        } else {
+          // Use v1 API for other categories
+          const fcRes = await fetch("https://api.firecrawl.dev/v1/scrape", {
+            method: "POST",
+            headers: {
+              "Authorization": `Bearer ${firecrawlKey}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              url: searchUrl,
+              formats: ["html"],
+            }),
+          });
 
-        if (html) {
+          const fcJson: any = await fcRes.json().catch(() => ({}));
+          console.log("[SCRAPE-SUPPLIER-PRODUCTS] Firecrawl status:", fcRes.status, fcJson?.status || fcJson?.success);
+
+          const html: string = fcJson?.data?.html || fcJson?.html || "";
+
+          if (html) {
           const anchorRegex = /<a\s+[^>]*href=["']([^"']+)["'][^>]*>(.*?)<\/a>/gi;
           const textRegex = /<[^>]+>/g; // strip tags
           const seen = new Set<string>();
@@ -245,9 +328,10 @@ serve(async (req) => {
             });
           }
 
-          // Sort by numeric price and keep top results for speed/clarity
-          results.sort((a, b) => (parseFloat(a.price.replace(/[^\d.]/g, '')) || 0) - (parseFloat(b.price.replace(/[^\d.]/g, '')) || 0));
-          products = results.slice(0, 8);
+            // Sort by numeric price and keep top results for speed/clarity
+            results.sort((a, b) => (parseFloat(a.price.replace(/[^\d.]/g, '')) || 0) - (parseFloat(b.price.replace(/[^\d.]/g, '')) || 0));
+            products = results.slice(0, 8);
+          }
         }
       } catch (err) {
         console.error("[SCRAPE-SUPPLIER-PRODUCTS] Firecrawl fetch failed:", err);
@@ -338,6 +422,89 @@ serve(async (req) => {
             id: 20008,
             name: "PAT Testing Kit Complete",
             category: "Testing Equipment",
+            price: "£156.00",
+            supplier: supplierName,
+            image: "/placeholder.svg",
+            stockStatus: "In Stock",
+            productUrl: searchUrl,
+          },
+        ];
+      } else if (isProtectionSearch) {
+        products = [
+          {
+            id: 30001,
+            name: "32A Type B MCB BS EN 60898",
+            category: "MCBs",
+            price: "£7.95",
+            supplier: supplierName,
+            image: "/placeholder.svg",
+            stockStatus: "In Stock",
+            productUrl: searchUrl,
+          },
+          {
+            id: 30002,
+            name: "63A 30mA RCD Type AC",
+            category: "RCDs",
+            price: "£45.99",
+            supplier: supplierName,
+            image: "/placeholder.svg",
+            stockStatus: "In Stock",
+            productUrl: searchUrl,
+          },
+          {
+            id: 30003,
+            name: "32A Type B RCBO 30mA",
+            category: "RCBOs",
+            price: "£28.50",
+            supplier: supplierName,
+            image: "/placeholder.svg",
+            stockStatus: "In Stock",
+            productUrl: searchUrl,
+          },
+          {
+            id: 30004,
+            name: "Type 2 Surge Protector SPD 40kA",
+            category: "Surge Protectors",
+            price: "£67.99",
+            supplier: supplierName,
+            image: "/placeholder.svg",
+            stockStatus: "In Stock",
+            productUrl: searchUrl,
+          },
+          {
+            id: 30005,
+            name: "63A 4 Pole Main Switch Isolator",
+            category: "Isolators",
+            price: "£89.95",
+            supplier: supplierName,
+            image: "/placeholder.svg",
+            stockStatus: "In Stock",
+            productUrl: searchUrl,
+          },
+          {
+            id: 30006,
+            name: "AFDD Arc Fault Detection Device 16A",
+            category: "AFDD",
+            price: "£125.00",
+            supplier: supplierName,
+            image: "/placeholder.svg",
+            stockStatus: "In Stock",
+            productUrl: searchUrl,
+          },
+          {
+            id: 30007,
+            name: "20A Type C MCB High Breaking Capacity",
+            category: "MCBs",
+            price: "£9.25",
+            supplier: supplierName,
+            image: "/placeholder.svg",
+            stockStatus: "In Stock",
+            productUrl: searchUrl,
+          },
+          {
+            id: 30008,
+            name: "100A 300mA S-Type RCD Time Delay",
+            category: "RCDs",
             price: "£156.00",
             supplier: supplierName,
             image: "/placeholder.svg",
