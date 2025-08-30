@@ -118,15 +118,15 @@ const CategoryMaterials = () => {
   // Legacy cable type state for backward compatibility
   const selectedCableTypes = filters.cableTypes;
   
-  // Cache duration and freshness checking
-  const CACHE_DURATION = categoryId === 'cables' ? 0 : 30 * 60 * 1000; // No frontend cache for cables
+  // Cache duration and freshness checking - eliminate stale data
+  const CACHE_DURATION = 0; // No cache for any category - always require fresh data
   
-  // Check if live data is fresh
+  // Check if live data is fresh - with zero cache, data is only fresh for 30 seconds
   const isLiveDataFresh = useMemo(() => {
     if (!hasAttemptedLiveFetch) return false;
     const now = Date.now();
-    return (now - lastFetchTime) < CACHE_DURATION;
-  }, [hasAttemptedLiveFetch, lastFetchTime, CACHE_DURATION]);
+    return (now - lastFetchTime) < 30000; // 30 seconds freshness window
+  }, [hasAttemptedLiveFetch, lastFetchTime]);
   
   // Check if we have valid live data
   const hasValidLiveData = useMemo(() => {
@@ -157,18 +157,18 @@ const CategoryMaterials = () => {
     return types;
   };
   
-  // Smart product selection: only show live data, no static fallback
+  // Smart product selection: only show fresh live data, no stale data
   const baseProducts = useMemo(() => {
-    // If we have valid and fresh live data, use it
-    if (hasValidLiveData && (categoryId === 'cables' || isLiveDataFresh)) {
+    // Only show data if it's valid and fresh for all categories
+    if (hasValidLiveData && isLiveDataFresh) {
       setDataSource('live');
       return liveProducts;
     }
     
-    // Don't show static data - only show live data or nothing
+    // Don't show any stale data - only fresh live data or nothing
     setDataSource('none');
     return [];
-  }, [hasValidLiveData, isLiveDataFresh, categoryId, liveProducts]);
+  }, [hasValidLiveData, isLiveDataFresh, liveProducts]);
 
   // Enhanced filtering logic for all categories
   const displayProducts = useMemo(() => {
@@ -234,12 +234,8 @@ const CategoryMaterials = () => {
 
   // Enhanced fetch with better error handling and state management
   const fetchLiveDeals = async (isAutoLoad = false) => {
-    // Check cache first for non-cables categories
+    // Always fetch fresh data - no cache usage to avoid stale data
     const now = Date.now();
-    if (isAutoLoad && hasValidLiveData && isLiveDataFresh) {
-      console.log('Using fresh cached results for', categoryId);
-      return;
-    }
 
     setIsFetching(true);
     setLiveFetchFailed(false);
@@ -459,9 +455,12 @@ const CategoryMaterials = () => {
     setSearchParams(newParams, { replace: true });
   }, [filters, setSearchParams]);
 
-  // Auto-load live deals for cables, components and accessories categories
+  // Force fresh data fetch for accessories category to avoid stale data
   useEffect(() => {
-    if ((categoryId === 'cables' || categoryId === 'components' || categoryId === 'accessories') && !isAutoLoaded && !isFetching) {
+    if (categoryId === 'accessories' && !isFetching) {
+      console.log(`Force fetching fresh ${categoryId} data...`);
+      fetchLiveDeals(true);
+    } else if ((categoryId === 'cables' || categoryId === 'components') && !isAutoLoaded && !isFetching) {
       console.log(`Auto-loading live ${categoryId} deals...`);
       fetchLiveDeals(true);
     }
@@ -556,9 +555,6 @@ const CategoryMaterials = () => {
               <span>
                 📡 Live data • Updated {new Date(lastFetchTime).toLocaleTimeString()}
               </span>
-              {dataSource === 'live' && !isLiveDataFresh && categoryId !== 'cables' && (
-                <span className="text-yellow-600">• Data may be stale</span>
-              )}
             </div>
           )}
           
