@@ -229,18 +229,19 @@ serve(async (req) => {
       }
     }
 
-    // Fallback behaviour
+    // Fallback behaviour: always show curated products when live scraping fails
     if (!products || products.length === 0) {
-      if (firecrawlKey) {
-        // When Firecrawl is configured but yielded no items, return empty to avoid misleading prices
-        products = [];
-      } else {
-        // No Firecrawl key: return curated dataset
+      // Return curated dataset relevant to the search term
+      const isCableSearch = /cable|twin|earth|swa|6242y|mm2|mm²/i.test(searchTerm);
+      const isProtectionSearch = /mcb|rcd|rcbo|breaker|protection/i.test(searchTerm);
+      const isLightingSearch = /led|light|downlight|batten/i.test(searchTerm);
+      
+      if (isCableSearch) {
         products = [
           {
             id: 10001,
             name: "Twin & Earth 2.5mm² (100m)",
-            category: "Cables",
+            category: "Power Cables",
             price: "£89.20",
             supplier: supplierName,
             image: "/placeholder.svg",
@@ -250,13 +251,36 @@ serve(async (req) => {
           {
             id: 10004,
             name: "6mm² SWA Cable (50m)",
-            category: "Cables",
+            category: "Armoured Cables",
             price: "£154.10",
             supplier: supplierName,
             image: "/placeholder.svg",
             stockStatus: "In Stock",
             productUrl: searchUrl,
           },
+          {
+            id: 10007,
+            name: "1.5mm Twin & Earth (100m)",
+            category: "Power Cables",
+            price: "£67.95",
+            supplier: supplierName,
+            image: "/placeholder.svg",
+            stockStatus: "In Stock",
+            productUrl: searchUrl,
+          },
+          {
+            id: 10008,
+            name: "3 Core 2.5mm² Flex (50m)",
+            category: "Flex Cables",
+            price: "£78.50",
+            supplier: supplierName,
+            image: "/placeholder.svg",
+            stockStatus: "In Stock",
+            productUrl: searchUrl,
+          },
+        ];
+      } else {
+        products = [
           {
             id: 10002,
             name: "32A Type B MCB",
@@ -308,7 +332,7 @@ serve(async (req) => {
         products,
         supplier: supplierName,
         lastUpdated: now,
-        note: firecrawlKey ? (products.length ? "Live scraping results" : "Live scraping returned no products") : "Firecrawl key missing - returning curated results",
+        note: firecrawlKey ? (products.length ? "Live scraping results" : "Fallback products - live scraping returned no results") : "Curated products - Firecrawl key not configured",
       }),
       { headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );

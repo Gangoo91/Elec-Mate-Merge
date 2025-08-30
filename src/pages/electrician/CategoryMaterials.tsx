@@ -41,7 +41,7 @@ function matchesCategory(item: MaterialItem, categoryId: string) {
   const hay = `${item.category} ${item.name}`.toLowerCase();
   switch (categoryId) {
     case "cables":
-      return /cable|wire|swa|t&e|t\s*&\s*e|flex|cat\d|data|6242y|power\s+cable|armoured|data\s+cable/.test(hay);
+      return /cable|wire|swa|t&e|t\s*&\s*e|flex|cat\d|data|6242y|power\s+cable|armoured|data\s+cable|twin.*earth|earth.*cable|power.*cable|armour|flex.*cable/.test(hay);
     case "components":
       return /consumer|rcd|rcbo|mcb|isolator|breaker|protector|fuse/.test(hay);
     case "protection":
