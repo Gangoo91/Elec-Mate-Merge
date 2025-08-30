@@ -36,6 +36,7 @@ const cablesWiringSchema = {
       reviews: { type: "string", description: "The number of reviews or rating summary" },
       image: { type: "string", format: "uri", description: "URL of the product image" },
       view_product_url: { type: "string", format: "uri", description: "Direct URL to the product page" },
+      category: { type: "string", description: "The category or cable type of the product" },
     },
   },
 };
@@ -157,7 +158,7 @@ async function scrapeCablesWiringWithFirecrawl(): Promise<MaterialItem[]> {
       return products.map((product: any, index: number) => ({
         id: Date.now() + index,
         name: product.name || "Unknown Product",
-        category: "Cables",
+        category: product.category || "Cables",
         price: product.price || "Price on application",
         supplier: "Screwfix",
         image: product.image && product.image.startsWith('http') ? product.image : "/placeholder.svg",
