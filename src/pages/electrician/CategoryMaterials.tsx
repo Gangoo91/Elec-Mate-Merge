@@ -306,11 +306,6 @@ const CategoryMaterials = () => {
               <ArrowLeft className="h-3.5 w-3.5 sm:h-4 sm:w-4" /> Back to Sections
             </Button>
           </Link>
-          <Button variant="outline" size="sm" onClick={handleManualRefresh} disabled={isFetching} className="flex items-center gap-1.5 text-xs sm:text-sm">
-            <RefreshCw className={`h-3.5 w-3.5 sm:h-4 sm:w-4 ${isFetching ? 'animate-spin' : ''}`} />
-            <span className="hidden xs:inline">{isFetching ? 'Fetching…' : 'Fetch Live Deals'}</span>
-            <span className="xs:hidden">{isFetching ? 'Fetch' : 'Deals'}</span>
-          </Button>
         </div>
         <div>
           <h1 className="text-2xl sm:text-3xl font-bold tracking-tight flex items-center gap-2">
@@ -324,9 +319,16 @@ const CategoryMaterials = () => {
       {/* Cable type filters for cables category */}
       {categoryId === 'cables' && (
         <section aria-labelledby="cable-filters" className="space-y-3">
-          <div className="flex items-center gap-2 text-sm text-muted-foreground">
-            <Filter className="h-4 w-4" />
-            Filter by cable type
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+              <Filter className="h-4 w-4" />
+              Filter by cable type
+            </div>
+            <Button variant="outline" size="sm" onClick={handleManualRefresh} disabled={isFetching} className="flex items-center gap-1.5 text-xs sm:text-sm">
+              <RefreshCw className={`h-3.5 w-3.5 sm:h-4 sm:w-4 ${isFetching ? 'animate-spin' : ''}`} />
+              <span className="hidden xs:inline">{isFetching ? 'Fetching…' : 'Fetch Live Deals'}</span>
+              <span className="xs:hidden">{isFetching ? 'Fetch' : 'Deals'}</span>
+            </Button>
           </div>
           <div className="flex flex-wrap gap-2">
             {['Twin & Earth', 'SWA', 'Flex', 'Data', 'Control'].map((cableType) => {
