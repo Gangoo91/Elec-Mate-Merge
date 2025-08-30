@@ -268,13 +268,6 @@ const CategoryMaterials = () => {
       </Helmet>
 
       <header className="flex flex-col gap-4">
-        <div>
-          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight flex items-center gap-2">
-            <Package className="h-6 w-6 sm:h-8 sm:w-8 text-elec-yellow" />
-            {meta.title}
-          </h1>
-          <p className="text-sm sm:text-base text-muted-foreground mt-1">{meta.description}</p>
-        </div>
         <div className="flex flex-wrap gap-2">
           <Link to="/electrician/materials">
             <Button variant="outline" size="sm" className="flex items-center gap-1.5 text-xs sm:text-sm">
@@ -291,6 +284,13 @@ const CategoryMaterials = () => {
             <span className="hidden xs:inline">{isFetching ? 'Fetching…' : 'Fetch Live Deals'}</span>
             <span className="xs:hidden">{isFetching ? 'Fetch' : 'Deals'}</span>
           </Button>
+        </div>
+        <div>
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight flex items-center gap-2">
+            <Package className="h-6 w-6 sm:h-8 sm:w-8 text-elec-yellow" />
+            {meta.title}
+          </h1>
+          <p className="text-sm sm:text-base text-muted-foreground mt-1">{meta.description}</p>
         </div>
       </header>
 
