@@ -1,7 +1,7 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { corsHeaders } from "../_shared/cors.ts";
 
-type SupplierSlug = "screwfix" | "city-electrical-factors" | "electricaldirect" | "toolstation";
+type SupplierSlug = "screwfix" | "electricaldirect" | "toolstation";
 
 interface MaterialItem {
   id: number;
@@ -18,7 +18,6 @@ interface MaterialItem {
 
 const SUPPLIER_NAMES: Record<SupplierSlug, string> = {
   "screwfix": "Screwfix",
-  "city-electrical-factors": "City Electrical Factors",
   "electricaldirect": "ElectricalDirect",
   "toolstation": "Toolstation",
 };
@@ -99,8 +98,6 @@ function buildSearchUrl(slug: SupplierSlug, query: string) {
         return "https://www.screwfix.com/search?search=Protection+Equipment";
       }
       return `https://www.screwfix.com/search?search=${q}`;
-    case "city-electrical-factors":
-      return `https://www.cef.co.uk/search?q=${q}`;
     case "electricaldirect":
       // ElectricalDirect prefers `query` param – using `q` can yield Netlify 404s
       return `https://www.electricaldirect.co.uk/search?query=${q}`;

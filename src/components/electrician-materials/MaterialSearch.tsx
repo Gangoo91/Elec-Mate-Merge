@@ -9,7 +9,6 @@ import { MaterialItem } from "@/data/electrician/productData";
 
 const SUPPLIERS = [
   { slug: "screwfix", name: "Screwfix" },
-  { slug: "city-electrical-factors", name: "City Electrical Factors" },
   { slug: "electricaldirect", name: "ElectricalDirect" },
   { slug: "toolstation", name: "Toolstation" },
 ] as const;
