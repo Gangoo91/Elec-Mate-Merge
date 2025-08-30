@@ -25,8 +25,16 @@ const SUPPLIER_NAMES: Record<SupplierSlug, string> = {
 
 function buildSearchUrl(slug: SupplierSlug, query: string) {
   const q = encodeURIComponent(query);
+  
+  // For tools category, use specific category pages for better results
+  const isToolsSearch = /multimeter|socket tester|cable detector|voltage detector|testing|tester|meter/i.test(query);
+  
   switch (slug) {
     case "screwfix":
+      // Use testing equipment category page for tools searches
+      if (isToolsSearch) {
+        return "https://www.screwfix.com/c/tools/testing-equipment/cat8830001";
+      }
       return `https://www.screwfix.com/search?search=${q}`;
     case "city-electrical-factors":
       return `https://www.cef.co.uk/search?q=${q}`;
@@ -190,10 +198,27 @@ serve(async (req) => {
 
             // Enhanced cable detection and categorization
             const isCable = /\b(cable|t\s*&\s*e|twin\s*&\s*earth|twin|earth|swa|flex|mm2|mm²|cat\d|6242y|coax|data)\b/i.test(text) || /cable/i.test(searchTerm);
+            const isTool = /\b(multimeter|tester|detector|meter|test|testing|socket|voltage|continuity|clamp|insulation)\b/i.test(text) || /multimeter|tester|detector/i.test(searchTerm);
             
-            // Determine specific cable category
+            // Determine specific category
             let category = "Materials";
-            if (isCable) {
+            if (isTool) {
+              if (/\b(multimeter|digital.*meter|dmm)\b/i.test(text)) {
+                category = "Multimeters";
+              } else if (/\b(socket.*test|socket.*tester|pat.*test)\b/i.test(text)) {
+                category = "Socket Testers";
+              } else if (/\b(voltage.*detect|voltage.*tester|non.*contact)\b/i.test(text)) {
+                category = "Voltage Detectors";
+              } else if (/\b(cable.*detect|cable.*finder|cable.*tracer)\b/i.test(text)) {
+                category = "Cable Detectors";
+              } else if (/\b(clamp.*meter|current.*clamp)\b/i.test(text)) {
+                category = "Clamp Meters";
+              } else if (/\b(insulation.*test|insulation.*resist|megger)\b/i.test(text)) {
+                category = "Insulation Testers";
+              } else {
+                category = "Testing Equipment";
+              }
+            } else if (isCable) {
               if (/\b(cat\d|ethernet|data|network)\b/i.test(text)) {
                 category = "Data Cables";
               } else if (/\b(swa|armoured|armored)\b/i.test(text)) {
@@ -233,10 +258,94 @@ serve(async (req) => {
     if (!products || products.length === 0) {
       // Return curated dataset relevant to the search term
       const isCableSearch = /cable|twin|earth|swa|6242y|mm2|mm²/i.test(searchTerm);
+      const isToolsSearch = /multimeter|socket tester|cable detector|voltage detector|testing|tester|meter/i.test(searchTerm);
       const isProtectionSearch = /mcb|rcd|rcbo|breaker|protection/i.test(searchTerm);
       const isLightingSearch = /led|light|downlight|batten/i.test(searchTerm);
       
-      if (isCableSearch) {
+      if (isToolsSearch) {
+        products = [
+          {
+            id: 20001,
+            name: "Digital Multimeter 600V CAT III",
+            category: "Multimeters", 
+            price: "£24.99",
+            supplier: supplierName,
+            image: "/placeholder.svg",
+            stockStatus: "In Stock",
+            productUrl: searchUrl,
+          },
+          {
+            id: 20002,
+            name: "Socket & See Electrical Test Kit",
+            category: "Socket Testers",
+            price: "£89.99",
+            supplier: supplierName,
+            image: "/placeholder.svg",
+            stockStatus: "In Stock",
+            productUrl: searchUrl,
+          },
+          {
+            id: 20003,
+            name: "Non-Contact Voltage Detector",
+            category: "Voltage Detectors",
+            price: "£12.49",
+            supplier: supplierName,
+            image: "/placeholder.svg",
+            stockStatus: "In Stock",
+            productUrl: searchUrl,
+          },
+          {
+            id: 20004,
+            name: "Cable Detector & Tracer Kit",
+            category: "Cable Detectors",
+            price: "£45.99",
+            supplier: supplierName,
+            image: "/placeholder.svg",
+            stockStatus: "In Stock",
+            productUrl: searchUrl,
+          },
+          {
+            id: 20005,
+            name: "RCD Circuit Breaker Finder",
+            category: "Testing Equipment",
+            price: "£67.50",
+            supplier: supplierName,
+            image: "/placeholder.svg",
+            stockStatus: "In Stock",
+            productUrl: searchUrl,
+          },
+          {
+            id: 20006,
+            name: "Insulation Resistance Tester",
+            category: "Insulation Testers",
+            price: "£189.99",
+            supplier: supplierName,
+            image: "/placeholder.svg",
+            stockStatus: "In Stock",
+            productUrl: searchUrl,
+          },
+          {
+            id: 20007,
+            name: "Clamp Meter AC/DC 400A",
+            category: "Clamp Meters",
+            price: "£78.99",
+            supplier: supplierName,
+            image: "/placeholder.svg",
+            stockStatus: "In Stock",
+            productUrl: searchUrl,
+          },
+          {
+            id: 20008,
+            name: "PAT Testing Kit Complete",
+            category: "Testing Equipment",
+            price: "£156.00",
+            supplier: supplierName,
+            image: "/placeholder.svg",
+            stockStatus: "In Stock",
+            productUrl: searchUrl,
+          },
+        ];
+      } else if (isCableSearch) {
         products = [
           {
             id: 10001,
