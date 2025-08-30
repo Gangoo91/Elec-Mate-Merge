@@ -72,12 +72,7 @@ const CategoryMaterials = () => {
   // Enhanced search terms per category for better results
   const CATEGORY_QUERIES: Record<string, string[]> = {
     cables: [
-      "2.5mm twin and earth 100m",
-      "6242Y twin earth cable",
-      "SWA armoured cable 6mm",
-      "3 core flex cable",
-      "cat6 ethernet cable",
-      "1.5mm twin and earth"
+      "cables wiring" // Single comprehensive search for cables since we use database cache
     ],
     components: ["consumer unit", "MCB circuit breaker", "RCD 30mA"],
     protection: ["rcbo", "surge protector", "earth rod"],
@@ -95,8 +90,8 @@ const CategoryMaterials = () => {
   const [isAutoLoaded, setIsAutoLoaded] = useState(false);
   const [lastFetchTime, setLastFetchTime] = useState<number>(0);
   
-  // Cache duration: 30 minutes
-  const CACHE_DURATION = 30 * 60 * 1000;
+  // Shorter cache for non-cables categories, cables use database cache
+  const CACHE_DURATION = categoryId === 'cables' ? 0 : 30 * 60 * 1000; // No frontend cache for cables
   
   const displayProducts = liveProducts.length > 0 ? liveProducts : products;
 

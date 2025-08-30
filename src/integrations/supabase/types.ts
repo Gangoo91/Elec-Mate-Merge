@@ -62,6 +62,30 @@ export type Database = {
         }
         Relationships: []
       }
+      cables_materials_cache: {
+        Row: {
+          created_at: string
+          expires_at: string
+          id: string
+          product_data: Json
+          supplier: string
+        }
+        Insert: {
+          created_at?: string
+          expires_at?: string
+          id?: string
+          product_data?: Json
+          supplier: string
+        }
+        Update: {
+          created_at?: string
+          expires_at?: string
+          id?: string
+          product_data?: Json
+          supplier?: string
+        }
+        Relationships: []
+      }
       career_bookmarks: {
         Row: {
           career_path_id: string
@@ -2652,6 +2676,10 @@ export type Database = {
       }
     }
     Functions: {
+      cleanup_expired_cables_cache: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
       cleanup_expired_course_cache: {
         Args: Record<PropertyKey, never>
         Returns: undefined

@@ -23,6 +23,23 @@ const SUPPLIER_NAMES: Record<SupplierSlug, string> = {
   "toolstation": "Toolstation",
 };
 
+// Firecrawl v2 JSON schema for cables & wiring
+const cablesWiringSchema = {
+  type: "array",
+  items: {
+    type: "object",
+    required: ["name", "price", "view_product_url"],
+    properties: {
+      name: { type: "string", description: "The name or title of the product" },
+      price: { type: "string", description: "The price of the product, including currency and VAT info" },
+      description: { type: "string", description: "Key features or details of the product" },
+      reviews: { type: "string", description: "The number of reviews or rating summary" },
+      image: { type: "string", format: "uri", description: "URL of the product image" },
+      view_product_url: { type: "string", format: "uri", description: "Direct URL to the product page" },
+    },
+  },
+};
+
 // JSON schema for protection equipment structured extraction
 const protectionProductSchema = {
   type: "array",
@@ -91,6 +108,71 @@ function buildSearchUrl(slug: SupplierSlug, query: string) {
   }
 }
 
+// Function to scrape cables & wiring using Firecrawl v2 JSON extraction
+async function scrapeCablesWiringWithFirecrawl(): Promise<MaterialItem[]> {
+  const firecrawlKey = Deno.env.get("FIRECRAWL_API_KEY");
+  if (!firecrawlKey) {
+    throw new Error("Firecrawl API key not configured");
+  }
+
+  const url = "https://api.firecrawl.dev/v2/scrape";
+
+  const options = {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${firecrawlKey}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      url: "https://www.screwfix.com/search?search=Twin+%26+Earth%2C+SWA%2C+flex+cables%2C+data+cables&page_size=100",
+      onlyMainContent: true,
+      maxAge: 0,
+      parsers: [],
+      formats: [
+        {
+          type: "json",
+          schema: cablesWiringSchema,
+        },
+      ],
+    }),
+  };
+
+  try {
+    console.log(`[CABLES-WIRING] Firecrawl v2 scraping Screwfix comprehensive cables search...`);
+    
+    const response = await fetch(url, options);
+    console.log(`[CABLES-WIRING] Firecrawl status: ${response.status} ${response.ok}`);
+
+    if (!response.ok) {
+      throw new Error(`API request failed: ${response.status}`);
+    }
+
+    const data = await response.json();
+    console.log(`[CABLES-WIRING] Firecrawl response received, processing data...`);
+    
+    if (data.success && data.data && data.data.json) {
+      const products = Array.isArray(data.data.json) ? data.data.json : [];
+      console.log(`[CABLES-WIRING] Extracted ${products.length} products from Firecrawl v2`);
+      
+      return products.map((product: any, index: number) => ({
+        id: Date.now() + index,
+        name: product.name || "Unknown Product",
+        category: "Cables",
+        price: product.price || "Price on application",
+        supplier: "Screwfix",
+        image: product.image && product.image.startsWith('http') ? product.image : "/placeholder.svg",
+        productUrl: product.view_product_url || "https://www.screwfix.com"
+      }));
+    } else {
+      console.log(`[CABLES-WIRING] Invalid Firecrawl v2 response structure`);
+      return [];
+    }
+  } catch (error) {
+    console.error(`[CABLES-WIRING] Firecrawl v2 scraping failed:`, error);
+    return [];
+  }
+}
+
 serve(async (req) => {
   // CORS preflight
   if (req.method === "OPTIONS") {
@@ -98,8 +180,14 @@ serve(async (req) => {
   }
 
   try {
+    const supabaseUrl = Deno.env.get("SUPABASE_URL");
+    const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
     const firecrawlKey = Deno.env.get("FIRECRAWL_API_KEY");
     const now = new Date().toISOString();
+
+    // Initialize Supabase client
+    const { createClient } = await import("https://esm.sh/@supabase/supabase-js@2");
+    const supabase = createClient(supabaseUrl!, supabaseKey!);
 
     // Expecting JSON body with supplierSlug and optional searchTerm
     const body = await req.json().catch(() => ({}));
@@ -125,11 +213,48 @@ serve(async (req) => {
     const supplierName = SUPPLIER_NAMES[supplierSlug];
     const searchUrl = buildSearchUrl(supplierSlug, searchTerm);
 
-    // Attempt live scraping with Firecrawl if API key is configured
+    // Check if this is a cables request and handle with cache
     let products: MaterialItem[] = [];
+    const isCablesSearch = /cable|twin|earth|wiring|6242y|swa|flex/i.test(searchTerm);
     const isProtectionSearch = /mcb|rcd|rcbo|breaker|protection|switch|isolator|surge|spd/i.test(searchTerm);
 
-    if (firecrawlKey) {
+    if (isCablesSearch) {
+      console.log("[SCRAPE-SUPPLIER-PRODUCTS] Using cached approach for cables");
+      
+      // Check for cached cables data
+      const { data: cachedData } = await supabase
+        .from('cables_materials_cache')
+        .select('*')
+        .eq('supplier', 'screwfix')
+        .gt('expires_at', new Date().toISOString())
+        .single();
+
+      if (cachedData) {
+        console.log("[SCRAPE-SUPPLIER-PRODUCTS] Using cached cables data");
+        products = cachedData.product_data || [];
+      } else {
+        console.log("[SCRAPE-SUPPLIER-PRODUCTS] Cache expired/missing, refreshing cables data");
+        
+        // Fetch fresh data using Firecrawl v2
+        const freshResults = await scrapeCablesWiringWithFirecrawl();
+        
+        if (freshResults.length > 0) {
+          // Store in cache
+          await supabase
+            .from('cables_materials_cache')
+            .upsert({
+              supplier: 'screwfix',
+              product_data: freshResults,
+              expires_at: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString() // 1 week
+            });
+          
+          console.log(`[SCRAPE-SUPPLIER-PRODUCTS] Cached ${freshResults.length} fresh cable products`);
+          products = freshResults;
+        }
+      }
+    }
+
+    if (firecrawlKey && !isCablesSearch) {
       try {
         // Use Firecrawl v2 JSON schema for protection equipment, v1 for others
         if (isProtectionSearch && supplierSlug === "screwfix") {
@@ -345,6 +470,92 @@ serve(async (req) => {
       const isToolsSearch = /multimeter|socket tester|cable detector|voltage detector|testing|tester|meter/i.test(searchTerm);
       const isProtectionSearch = /mcb|rcd|rcbo|breaker|protection/i.test(searchTerm);
       const isLightingSearch = /led|light|downlight|batten/i.test(searchTerm);
+      
+      if (isCableSearch) {
+        // Comprehensive cables & wiring fallbacks
+        products = [
+          {
+            id: 10001,
+            name: "2.5mm² Twin & Earth Cable - 100m",
+            category: "Cables",
+            price: "£89.99",
+            supplier: supplierName,
+            image: "/placeholder.svg",
+            stockStatus: "In Stock",
+            productUrl: searchUrl,
+          },
+          {
+            id: 10002,
+            name: "1.5mm² Twin & Earth Cable - 100m",
+            category: "Cables", 
+            price: "£64.99",
+            supplier: supplierName,
+            image: "/placeholder.svg",
+            stockStatus: "In Stock",
+            productUrl: searchUrl,
+          },
+          {
+            id: 10003,
+            name: "4.0mm² Twin & Earth Cable - 50m",
+            category: "Cables",
+            price: "£125.99",
+            supplier: supplierName,
+            image: "/placeholder.svg",
+            stockStatus: "In Stock",
+            productUrl: searchUrl,
+          },
+          {
+            id: 10004,
+            name: "1.0mm² Twin & Earth Cable - 100m",
+            category: "Cables",
+            price: "£45.99",
+            supplier: supplierName,
+            image: "/placeholder.svg",
+            stockStatus: "In Stock",
+            productUrl: searchUrl,
+          },
+          {
+            id: 10005,
+            name: "6.0mm² Twin & Earth Cable - 25m",
+            category: "Cables",
+            price: "£89.99",
+            supplier: supplierName,
+            image: "/placeholder.svg",
+            stockStatus: "In Stock",
+            productUrl: searchUrl,
+          },
+          {
+            id: 10006,
+            name: "2.5mm² 3 Core SWA Cable - 50m",
+            category: "Cables",
+            price: "£156.99",
+            supplier: supplierName,
+            image: "/placeholder.svg",
+            stockStatus: "In Stock",
+            productUrl: searchUrl,
+          },
+          {
+            id: 10007,
+            name: "Cat6 Data Cable - 305m Box",
+            category: "Cables",
+            price: "£78.99",
+            supplier: supplierName,
+            image: "/placeholder.svg",
+            stockStatus: "In Stock",
+            productUrl: searchUrl,
+          },
+          {
+            id: 10008,
+            name: "3 Core Flex Cable - 1.5mm² 100m",
+            category: "Cables",
+            price: "£67.99",
+            supplier: supplierName,
+            image: "/placeholder.svg",
+            stockStatus: "In Stock",
+            productUrl: searchUrl,
+          }
+        ];
+      }
       
       if (isToolsSearch) {
         products = [
