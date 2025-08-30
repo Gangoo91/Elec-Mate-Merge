@@ -114,8 +114,8 @@ const CategoryMaterials = () => {
       const searchTerms = CATEGORY_QUERIES[categoryId] || [meta.title];
       const allCollected: LiveItem[] = [];
       
-      // For cables category, use multiple search terms for better coverage
-      const termsToUse = categoryId === 'cables' ? searchTerms.slice(0, 3) : [searchTerms[0]];
+      // Reduce redundant calls to minimize duplicates from fallback products
+      const termsToUse = categoryId === 'cables' ? searchTerms.slice(0, 2) : [searchTerms[0]];
       
       for (const term of termsToUse) {
         const tasks: Promise<any>[] = [];
@@ -145,7 +145,17 @@ const CategoryMaterials = () => {
       const seen = new Set<string>();
       
       for (const item of inCat) {
-        const key = item.productUrl || `${item.supplier}|${item.name}`;
+        // For fallback products (identified by placeholder image or specific price patterns),
+        // deduplicate by name and price to avoid supplier duplicates
+        const isFallbackProduct = item.image?.includes('placeholder') || 
+                                  item.productUrl?.includes('search') ||
+                                  item.name?.includes('Twin & Earth') ||
+                                  item.name?.includes('SWA Cable');
+        
+        const key = isFallbackProduct 
+          ? `${item.name}|${item.price}` 
+          : item.productUrl || `${item.supplier}|${item.name}`;
+          
         if (key && !seen.has(key)) {
           seen.add(key);
           deduped.push(item);
