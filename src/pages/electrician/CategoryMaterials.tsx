@@ -79,7 +79,7 @@ const CategoryMaterials = () => {
     components: [
       "consumer units, MCBs, RCDs, isolators, accessories" // Single comprehensive search for components
     ],
-    protection: ["RCD MCB RCBO surge protector earthing kit"],
+    protection: ["earthing, surge protection, circuit protection"],
     accessories: ["junction boxes, glands, trunking, fixings"],
     lighting: ["LED, downlights, battens, emergency, controls"],
     tools: ["testers%2C+hand+tools%2C+power+tools"],
@@ -159,27 +159,16 @@ const CategoryMaterials = () => {
   
   // Smart product selection: only show live data, no static fallback
   const baseProducts = useMemo(() => {
-    console.log(`[${categoryId.toUpperCase()}] Product selection logic:`, {
-      hasValidLiveData,
-      isLiveDataFresh,
-      liveProductsLength: liveProducts.length,
-      hasAttemptedLiveFetch,
-      liveFetchFailed,
-      lastFetchTime: new Date(lastFetchTime).toISOString()
-    });
-    
     // If we have valid and fresh live data, use it
     if (hasValidLiveData && (categoryId === 'cables' || isLiveDataFresh)) {
-      console.log(`[${categoryId.toUpperCase()}] Using live data with ${liveProducts.length} products`);
       setDataSource('live');
       return liveProducts;
     }
     
     // Don't show static data - only show live data or nothing
-    console.log(`[${categoryId.toUpperCase()}] No valid live data available`);
     setDataSource('none');
     return [];
-  }, [hasValidLiveData, isLiveDataFresh, categoryId, liveProducts, hasAttemptedLiveFetch, liveFetchFailed, lastFetchTime]);
+  }, [hasValidLiveData, isLiveDataFresh, categoryId, liveProducts]);
 
   // Enhanced filtering logic for all categories
   const displayProducts = useMemo(() => {
@@ -245,18 +234,10 @@ const CategoryMaterials = () => {
 
   // Enhanced fetch with better error handling and state management
   const fetchLiveDeals = async (isAutoLoad = false) => {
-    console.log(`[${categoryId.toUpperCase()}] Starting fetchLiveDeals:`, {
-      isAutoLoad,
-      hasValidLiveData,
-      isLiveDataFresh,
-      isFetching,
-      searchQuery: CATEGORY_QUERIES[categoryId]
-    });
-    
     // Check cache first for non-cables categories
     const now = Date.now();
     if (isAutoLoad && hasValidLiveData && isLiveDataFresh) {
-      console.log(`[${categoryId.toUpperCase()}] Using fresh cached results`);
+      console.log('Using fresh cached results for', categoryId);
       return;
     }
 
@@ -265,7 +246,6 @@ const CategoryMaterials = () => {
     
     try {
       const searchTerms = CATEGORY_QUERIES[categoryId] || [meta.title];
-      console.log(`[${categoryId.toUpperCase()}] Search terms:`, searchTerms);
       const allCollected: LiveItem[] = [];
       
       // Reduce redundant calls to minimize duplicates from fallback products
@@ -325,7 +305,6 @@ const CategoryMaterials = () => {
         });
       }
 
-      console.log(`[${categoryId.toUpperCase()}] Successfully fetched ${deduped.length} products`);
       setLiveProducts(deduped);
       setLastFetchTime(now);
       setIsAutoLoaded(true);
@@ -339,7 +318,7 @@ const CategoryMaterials = () => {
         });
       }
     } catch (e) {
-      console.error(`[${categoryId.toUpperCase()}] Failed to fetch live deals:`, e);
+      console.error('Failed to fetch live deals:', e);
       setLiveFetchFailed(true);
       setHasAttemptedLiveFetch(true);
       
@@ -348,11 +327,6 @@ const CategoryMaterials = () => {
       }
     } finally {
       setIsFetching(false);
-      console.log(`[${categoryId.toUpperCase()}] Fetch completed. Final state:`, {
-        liveProductsCount: liveProducts.length,
-        hasAttemptedLiveFetch: true,
-        liveFetchFailed
-      });
     }
   };
 
@@ -485,17 +459,10 @@ const CategoryMaterials = () => {
     setSearchParams(newParams, { replace: true });
   }, [filters, setSearchParams]);
 
-  // Auto-load live deals for cables, components, accessories, lighting, tools and protection categories
+  // Auto-load live deals for cables, components, accessories, lighting and tools categories
   useEffect(() => {
-    console.log(`[${categoryId.toUpperCase()}] Auto-load effect triggered:`, {
-      categoryId,
-      isAutoLoaded,
-      isFetching,
-      shouldAutoLoad: (categoryId === 'cables' || categoryId === 'components' || categoryId === 'accessories' || categoryId === 'lighting' || categoryId === 'tools' || categoryId === 'protection') && !isAutoLoaded && !isFetching
-    });
-    
-    if ((categoryId === 'cables' || categoryId === 'components' || categoryId === 'accessories' || categoryId === 'lighting' || categoryId === 'tools' || categoryId === 'protection') && !isAutoLoaded && !isFetching) {
-      console.log(`[${categoryId.toUpperCase()}] Auto-loading live deals...`);
+    if ((categoryId === 'cables' || categoryId === 'components' || categoryId === 'accessories' || categoryId === 'lighting' || categoryId === 'tools') && !isAutoLoaded && !isFetching) {
+      console.log(`Auto-loading live ${categoryId} deals...`);
       fetchLiveDeals(true);
     }
   }, [categoryId, isAutoLoaded, isFetching]);
