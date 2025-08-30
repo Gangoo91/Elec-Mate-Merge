@@ -221,7 +221,7 @@ async function fetchLightingSolutions(): Promise<MaterialItem[]> {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      url: "https://www.screwfix.com/search?search=LED+downlight&page_size=100",
+      url: "https://www.screwfix.com/search?search=LED%2C+downlights%2C+battens%2C+emergency%2C+controls&page_size=100",
       onlyMainContent: true,
       maxAge: 0,
       parsers: [],
@@ -235,8 +235,8 @@ async function fetchLightingSolutions(): Promise<MaterialItem[]> {
   };
 
   try {
-    console.log(`[LIGHTING-SOLUTIONS] Firecrawl v2 scraping lighting solutions with simplified search...`);
-    console.log(`[LIGHTING-SOLUTIONS] Search URL: https://www.screwfix.com/search?search=LED+downlight&page_size=100`);
+    console.log(`[LIGHTING-SOLUTIONS] Firecrawl v2 scraping lighting solutions with comprehensive search...`);
+    console.log(`[LIGHTING-SOLUTIONS] Search URL: https://www.screwfix.com/search?search=LED%2C+downlights%2C+battens%2C+emergency%2C+controls&page_size=100`);
     
     const response = await fetch(url, options);
     console.log(`[LIGHTING-SOLUTIONS] Firecrawl status: ${response.status} ${response.ok}`);

@@ -81,7 +81,7 @@ const CategoryMaterials = () => {
     ],
     protection: ["earthing, surge protection, circuit protection"],
     accessories: ["junction boxes, glands, trunking, fixings"],
-    lighting: ["LED downlight"],
+    lighting: ["LED, downlights, battens, emergency, controls"],
     tools: ["multimeter", "socket tester", "cable detector"],
   };
 
