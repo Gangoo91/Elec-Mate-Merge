@@ -364,11 +364,11 @@ serve(async (req) => {
     // Check if this is a cached category request  
     let products: MaterialItem[] = [];
     const isCablesSearch = /cable|twin|earth|wiring|6242y|swa|flex/i.test(searchTerm) || category === 'cables';
-    const isComponentsSearch = /consumer units|mcb|rcd|rcbo|breaker|protection|switch|isolator|surge|spd|accessories/i.test(searchTerm) || category === 'components';
-    const isProtectionSearch = /mcb|rcd|rcbo|breaker|protection|switch|isolator|surge|spd/i.test(searchTerm);
+    const isProtectionSearch = /earthing|surge protection|circuit protection|mcb|rcd|rcbo|breaker|protection equipment|switch|isolator|earth rod/i.test(searchTerm) || category === 'protection';
+    const isComponentsSearch = /consumer units|accessories/i.test(searchTerm) || category === 'components';
 
-    if (isCablesSearch || isComponentsSearch) {
-      const currentCategory = isCablesSearch ? 'cables' : 'components';
+    if (isCablesSearch || isComponentsSearch || isProtectionSearch) {
+      const currentCategory = isCablesSearch ? 'cables' : (isProtectionSearch ? 'protection' : 'components');
       console.log(`[SCRAPE-SUPPLIER-PRODUCTS] Using cached approach for ${currentCategory}`);
       
       // Check for cached data with category filter for the current supplier (skip if force refresh)
