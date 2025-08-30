@@ -4,7 +4,7 @@ import html2pdf from 'html2pdf.js';
 export const processElectricalMarkdown = (content: string): string => {
   let processedContent = content;
 
-  // Process electrical badges and elements
+  // Process electrical badges and elements first
   processedContent = processedContent
     // BS 7671 compliance references
     .replace(/(\[BS 7671[^\]]*\])/g, '<span class="badge badge-bs7671">$1</span>')
@@ -20,37 +20,101 @@ export const processElectricalMarkdown = (content: string): string => {
     .replace(/\b(FI)\b/g, '<span class="badge badge-fi">$1</span>')
     
     // Measurements and values
-    .replace(/(\d+\.?\d*)\s*(Ω|V|A|kW|Hz|mm²?|m)\b/g, '<span class="badge badge-measurement">$1$2</span>')
+    .replace(/(\d+\.?\d*)\s*(Ω|V|A|kW|Hz|mm²?|m)\b/g, '<span class="badge badge-measurement">$1$2</span>');
+
+  // Process block-level elements
+  const lines = processedContent.split('\n');
+  const htmlLines: string[] = [];
+  let inTable = false;
+  let inList = false;
+  let listType = '';
+
+  for (let i = 0; i < lines.length; i++) {
+    let line = lines[i].trim();
     
-    // Convert markdown to HTML
-    .replace(/### (.*)/g, '<h3>$1</h3>')
-    .replace(/## (.*)/g, '<h2>$1</h2>')
-    .replace(/# (.*)/g, '<h1>$1</h1>')
+    if (!line) {
+      // Handle empty lines
+      if (inList) {
+        htmlLines.push(`</${listType}>`);
+        inList = false;
+      }
+      if (inTable) {
+        htmlLines.push('</table>');
+        inTable = false;
+      }
+      htmlLines.push(''); // Preserve empty lines for paragraph separation
+      continue;
+    }
+
+    // Process headings
+    if (line.match(/^#{1,6}\s/)) {
+      if (inList) {
+        htmlLines.push(`</${listType}>`);
+        inList = false;
+      }
+      if (inTable) {
+        htmlLines.push('</table>');
+        inTable = false;
+      }
+      
+      const level = line.match(/^(#{1,6})/)?.[1].length || 1;
+      const text = line.replace(/^#{1,6}\s*/, '');
+      htmlLines.push(`<h${level}>${processInlineMarkdown(text)}</h${level}>`);
+      continue;
+    }
+
+    // Process tables
+    if (line.includes('|')) {
+      if (!inTable) {
+        htmlLines.push('<table>');
+        inTable = true;
+      }
+      const cells = line.split('|').map(cell => cell.trim()).filter(cell => cell);
+      const isHeader = i === 0 || (lines[i-1] && !lines[i-1].includes('|'));
+      const tag = isHeader ? 'th' : 'td';
+      htmlLines.push('<tr>' + cells.map(cell => `<${tag}>${processInlineMarkdown(cell)}</${tag}>`).join('') + '</tr>');
+      continue;
+    } else if (inTable) {
+      htmlLines.push('</table>');
+      inTable = false;
+    }
+
+    // Process lists
+    const listMatch = line.match(/^([-*]|\d+\.)\s+(.+)$/);
+    if (listMatch) {
+      const newListType = listMatch[1].match(/\d+\./) ? 'ol' : 'ul';
+      if (!inList || listType !== newListType) {
+        if (inList) htmlLines.push(`</${listType}>`);
+        htmlLines.push(`<${newListType}>`);
+        inList = true;
+        listType = newListType;
+      }
+      htmlLines.push(`<li>${processInlineMarkdown(listMatch[2])}</li>`);
+      continue;
+    } else if (inList) {
+      htmlLines.push(`</${listType}>`);
+      inList = false;
+    }
+
+    // Regular paragraph
+    htmlLines.push(`<p>${processInlineMarkdown(line)}</p>`);
+  }
+
+  // Close any remaining open tags
+  if (inList) htmlLines.push(`</${listType}>`);
+  if (inTable) htmlLines.push('</table>');
+
+  return htmlLines.join('\n');
+};
+
+// Process inline markdown elements
+const processInlineMarkdown = (text: string): string => {
+  return text
     .replace(/\*\*\*(.+?)\*\*\*/g, '<strong><em>$1</em></strong>')
     .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
     .replace(/\*(.+?)\*/g, '<em>$1</em>')
     .replace(/`(.+?)`/g, '<code>$1</code>')
-    .replace(/~~(.+?)~~/g, '<del>$1</del>')
-    
-    // Convert tables
-    .replace(/\|(.+)\|/g, (match, content) => {
-      const cells = content.split('|').map(cell => cell.trim()).filter(cell => cell);
-      return '<tr>' + cells.map(cell => `<td>${cell}</td>`).join('') + '</tr>';
-    })
-    
-    // Convert lists
-    .replace(/^- (.+)$/gm, '<li>$1</li>')
-    .replace(/^(\d+)\. (.+)$/gm, '<li>$1</li>')
-    
-    // Convert line breaks
-    .replace(/\n\n/g, '</p><p>')
-    .replace(/\n/g, '<br>')
-    
-    // Normalize whitespace
-    .replace(/\s+/g, ' ')
-    .trim();
-
-  return processedContent;
+    .replace(/~~(.+?)~~/g, '<del>$1</del>');
 };
 
 // Generate PDF using html2pdf.js (browser-compatible)
@@ -70,29 +134,39 @@ export const generateElectricalReportPDF = async (
         <head>
           <meta charset="UTF-8">
           <style>
+            * {
+              box-sizing: border-box;
+            }
+            
             body {
               font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
               font-size: 11px;
-              line-height: 1.4;
+              line-height: 1.5;
               color: #000;
               background: #fff;
               max-width: 100%;
               margin: 0;
-              padding: 20px;
+              padding: 15mm;
+              word-wrap: break-word;
+              hyphens: auto;
+              -webkit-hyphens: auto;
+              -ms-hyphens: auto;
             }
             
             .report-header {
               text-align: center;
-              margin-bottom: 20px;
+              margin-bottom: 25px;
               padding-bottom: 15px;
               border-bottom: 2px solid #DAA520;
+              page-break-after: avoid;
             }
             
             .report-title {
               font-size: 20px;
               color: #DAA520;
               font-weight: bold;
-              margin: 0;
+              margin: 0 0 10px 0;
+              page-break-after: avoid;
             }
             
             .report-meta {
@@ -103,28 +177,59 @@ export const generateElectricalReportPDF = async (
             
             h1, h2, h3, h4, h5, h6 {
               color: #DAA520;
-              margin-top: 20px;
-              margin-bottom: 10px;
+              margin: 20px 0 12px 0;
+              page-break-after: avoid;
+              orphans: 3;
+              widows: 3;
             }
             
-            h1 { font-size: 18px; }
-            h2 { font-size: 16px; border-bottom: 1px solid #DAA520; padding-bottom: 4px; }
-            h3 { font-size: 14px; }
-            h4, h5, h6 { font-size: 12px; }
+            h1 { 
+              font-size: 18px; 
+              page-break-before: auto;
+            }
+            h2 { 
+              font-size: 16px; 
+              border-bottom: 1px solid #DAA520; 
+              padding-bottom: 4px; 
+              margin-top: 25px;
+            }
+            h3 { 
+              font-size: 14px; 
+              margin-top: 20px;
+            }
+            h4, h5, h6 { 
+              font-size: 12px; 
+              margin-top: 15px;
+            }
             
-            p { margin: 8px 0; text-align: justify; }
+            p { 
+              margin: 10px 0; 
+              text-align: justify; 
+              orphans: 2;
+              widows: 2;
+              word-wrap: break-word;
+              hyphens: auto;
+              -webkit-hyphens: auto;
+              -ms-hyphens: auto;
+            }
             
             table {
               width: 100%;
               border-collapse: collapse;
               margin: 15px 0;
+              page-break-inside: avoid;
+              font-size: 10px;
             }
             
             th, td {
               border: 1px solid #000;
-              padding: 6px 8px;
+              padding: 8px;
               text-align: left;
               vertical-align: top;
+              word-wrap: break-word;
+              hyphens: auto;
+              -webkit-hyphens: auto;
+              -ms-hyphens: auto;
             }
             
             th {
@@ -132,18 +237,22 @@ export const generateElectricalReportPDF = async (
               color: #000;
               font-weight: bold;
               font-size: 10px;
+              page-break-after: avoid;
             }
             
-            td { font-size: 9px; }
+            td { 
+              font-size: 9px; 
+            }
             
             .badge {
               display: inline-block;
-              padding: 2px 6px;
+              padding: 3px 6px;
               border-radius: 3px;
               font-size: 8px;
               font-weight: bold;
               white-space: nowrap;
               margin: 0 2px;
+              page-break-inside: avoid;
             }
             
             .badge-bs7671 {
@@ -190,14 +299,31 @@ export const generateElectricalReportPDF = async (
             
             code {
               background-color: #f5f5f5;
-              padding: 1px 3px;
+              padding: 2px 4px;
               border-radius: 2px;
               font-family: 'Courier New', monospace;
               font-size: 9px;
+              word-wrap: break-word;
             }
             
-            ul, ol { margin: 8px 0; padding-left: 20px; }
-            li { margin: 3px 0; }
+            ul, ol { 
+              margin: 10px 0; 
+              padding-left: 20px; 
+              page-break-inside: avoid;
+            }
+            
+            li { 
+              margin: 4px 0; 
+              orphans: 2;
+              widows: 2;
+            }
+            
+            .content {
+              word-wrap: break-word;
+              hyphens: auto;
+              -webkit-hyphens: auto;
+              -ms-hyphens: auto;
+            }
             
             .footer {
               margin-top: 30px;
@@ -205,7 +331,31 @@ export const generateElectricalReportPDF = async (
               font-size: 9px;
               color: #666;
               border-top: 1px solid #ddd;
-              padding-top: 10px;
+              padding-top: 15px;
+              page-break-inside: avoid;
+            }
+
+            @media print {
+              body {
+                print-color-adjust: exact;
+                -webkit-print-color-adjust: exact;
+              }
+              
+              .report-header {
+                page-break-after: avoid;
+              }
+              
+              h1, h2, h3, h4, h5, h6 {
+                page-break-after: avoid;
+              }
+              
+              table {
+                page-break-inside: avoid;
+              }
+              
+              .badge {
+                page-break-inside: avoid;
+              }
             }
           </style>
         </head>
@@ -219,7 +369,7 @@ export const generateElectricalReportPDF = async (
           </div>
           
           <div class="content">
-            <p>${processedContent}</p>
+            ${processedContent}
           </div>
           
           <div class="footer">
@@ -232,18 +382,32 @@ export const generateElectricalReportPDF = async (
 
     // Configure PDF options for html2pdf
     const options = {
-      margin: [0.5, 0.5, 0.5, 0.5],
+      margin: [15, 15, 15, 15], // 15mm margins in all directions
       filename: filename || `${reportType.toLowerCase().replace(/\s+/g, '-')}-${new Date().toISOString().split('T')[0]}.pdf`,
-      image: { type: 'jpeg', quality: 0.98 },
+      image: { type: 'jpeg', quality: 0.95 },
       html2canvas: { 
-        scale: 2,
+        scale: 1.5,
         useCORS: true,
-        letterRendering: true 
+        letterRendering: true,
+        allowTaint: false,
+        logging: false,
+        width: 794, // A4 width in pixels at 96 DPI
+        height: 1123, // A4 height in pixels at 96 DPI
+        scrollX: 0,
+        scrollY: 0
       },
       jsPDF: { 
-        unit: 'in', 
+        unit: 'mm', 
         format: 'a4', 
-        orientation: 'portrait' 
+        orientation: 'portrait',
+        compress: true,
+        precision: 2
+      },
+      pagebreak: { 
+        mode: ['avoid-all', 'css', 'legacy'],
+        before: '.report-header, h1, h2',
+        after: '.footer',
+        avoid: 'table, .badge, code'
       }
     };
 
