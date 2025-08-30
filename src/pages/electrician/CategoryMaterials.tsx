@@ -79,7 +79,7 @@ const CategoryMaterials = () => {
     components: [
       "consumer units, MCBs, RCDs, isolators, accessories" // Single comprehensive search for components
     ],
-    protection: ["rcbo", "surge protector", "earth rod"],
+    protection: ["earthing, surge protection, circuit protection"],
     accessories: ["junction box", "weatherproof enclosure", "cable gland"],
     lighting: ["led downlight", "LED batten", "emergency lighting"],
     tools: ["multimeter", "socket tester", "cable detector"],
