@@ -929,6 +929,7 @@ serve(async (req) => {
             image: "/placeholder.svg",
             stockStatus: "In Stock",
             productUrl: searchUrl,
+            highlights: ["CAT III 600V Safety", "Digital Display", "Auto-ranging"]
           },
           {
             id: 20002,
@@ -939,6 +940,7 @@ serve(async (req) => {
             image: "/placeholder.svg",
             stockStatus: "In Stock",
             productUrl: searchUrl,
+            highlights: ["13A Socket Testing", "RCD Testing", "BS 7671 Compliant"]
           },
           {
             id: 20003,
@@ -949,6 +951,7 @@ serve(async (req) => {
             image: "/placeholder.svg",
             stockStatus: "In Stock",
             productUrl: searchUrl,
+            highlights: ["Non-contact Detection", "Visual & Audio Alert", "12V-1000V Range"]
           },
           {
             id: 20004,
@@ -959,6 +962,7 @@ serve(async (req) => {
             image: "/placeholder.svg",
             stockStatus: "In Stock",
             productUrl: searchUrl,
+            highlights: ["Live Cable Detection", "Depth Indication", "Metal Detection"]
           },
           {
             id: 20005,
@@ -969,6 +973,7 @@ serve(async (req) => {
             image: "/placeholder.svg",
             stockStatus: "In Stock",
             productUrl: searchUrl,
+            highlights: ["Circuit Identification", "RCD Testing", "Socket Tester Built-in"]
           },
           {
             id: 20006,
@@ -979,6 +984,7 @@ serve(async (req) => {
             image: "/placeholder.svg",
             stockStatus: "In Stock",
             productUrl: searchUrl,
+            highlights: ["500V-1000V Testing", "PI & DAR Functions", "BS 7671 Compliant"]
           },
           {
             id: 20007,
@@ -989,6 +995,7 @@ serve(async (req) => {
             image: "/placeholder.svg",
             stockStatus: "In Stock",
             productUrl: searchUrl,
+            highlights: ["400A AC/DC Current", "True RMS", "CAT III Safety"]
           },
           {
             id: 20008,
@@ -999,6 +1006,7 @@ serve(async (req) => {
             image: "/placeholder.svg",
             stockStatus: "In Stock",
             productUrl: searchUrl,
+            highlights: ["Complete PAT Testing", "Earth Bond Testing", "Insulation Testing"]
           },
         ];
       } else if (isGeneralProtectionSearch) {
