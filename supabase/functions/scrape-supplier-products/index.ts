@@ -408,6 +408,8 @@ serve(async (req) => {
     const category: string = body?.category || "general";
     const forceRefresh: boolean = body?.forceRefresh || false;
 
+    console.log(`[SCRAPE-SUPPLIER-PRODUCTS] Request details: category=${category}, supplierSlug=${supplierSlug}, searchTerm=${searchTerm}, forceRefresh=${forceRefresh}`);
+
     if (!supplierSlug || !(supplierSlug in SUPPLIER_NAMES)) {
       return new Response(
         JSON.stringify({ error: "Invalid or missing supplierSlug" }),
@@ -699,12 +701,28 @@ serve(async (req) => {
       }
     }
 
-    // Fallback behaviour: always show curated products when live scraping fails
+    // Fallback behaviour: only show curated products for specific categories when cache-based approach fails
     if (!products || products.length === 0) {
-      // Return curated dataset relevant to the search term
+      console.log(`[SCRAPE-SUPPLIER-PRODUCTS] No products found, checking for category-specific fallbacks`);
+      
+      // For cached category requests (cables, components, protection), return empty if scraping failed
+      if (isCablesSearch || isComponentsSearch || isProtectionSearch) {
+        console.log(`[SCRAPE-SUPPLIER-PRODUCTS] Cached category ${category} had no results, returning empty array`);
+        return new Response(
+          JSON.stringify({
+            products: [],
+            supplier: supplierName,
+            lastUpdated: now,
+            note: `No ${category} products found - scraping may have failed`,
+          }),
+          { headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
+      }
+      
+      // For general searches, provide curated fallbacks
       const isCableSearch = /cable|twin|earth|swa|6242y|mm2|mm²/i.test(searchTerm);
       const isToolsSearch = /multimeter|socket tester|cable detector|voltage detector|testing|tester|meter/i.test(searchTerm);
-      const isProtectionSearch = /mcb|rcd|rcbo|breaker|protection/i.test(searchTerm);
+      const isGeneralProtectionSearch = /mcb|rcd|rcbo|breaker|protection/i.test(searchTerm);
       const isLightingSearch = /led|light|downlight|batten/i.test(searchTerm);
       
       if (isCableSearch) {
@@ -876,7 +894,7 @@ serve(async (req) => {
             productUrl: searchUrl,
           },
         ];
-      } else if (isProtectionSearch) {
+      } else if (isGeneralProtectionSearch) {
         products = [
           {
             id: 30001,
