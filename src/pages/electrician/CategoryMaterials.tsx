@@ -271,7 +271,7 @@ const CategoryMaterials = () => {
         <div className="flex flex-wrap gap-2">
           <Link to="/electrician/materials">
             <Button variant="outline" size="sm" className="flex items-center gap-1.5 text-xs sm:text-sm">
-              <ArrowLeft className="h-3.5 w-3.5 sm:h-4 sm:w-4" /> Back
+              <ArrowLeft className="h-3.5 w-3.5 sm:h-4 sm:w-4" /> Back to Sections
             </Button>
           </Link>
           <Link to="/electrician/trade-essentials">
