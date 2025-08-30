@@ -80,7 +80,7 @@ const CategoryMaterials = () => {
       "consumer units, MCBs, RCDs, isolators, accessories" // Single comprehensive search for components
     ],
     protection: ["earthing, surge protection, circuit protection"],
-    accessories: ["junction box", "weatherproof enclosure", "cable gland"],
+    accessories: ["junction boxes, glands, trunking, fixings"],
     lighting: ["led downlight", "LED batten", "emergency lighting"],
     tools: ["multimeter", "socket tester", "cable detector"],
   };
@@ -459,9 +459,9 @@ const CategoryMaterials = () => {
     setSearchParams(newParams, { replace: true });
   }, [filters, setSearchParams]);
 
-  // Auto-load live deals for cables and components categories
+  // Auto-load live deals for cables, components and accessories categories
   useEffect(() => {
-    if ((categoryId === 'cables' || categoryId === 'components') && !isAutoLoaded && !isFetching) {
+    if ((categoryId === 'cables' || categoryId === 'components' || categoryId === 'accessories') && !isAutoLoaded && !isFetching) {
       console.log(`Auto-loading live ${categoryId} deals...`);
       fetchLiveDeals(true);
     }
