@@ -92,9 +92,16 @@ const MaterialCard: React.FC<MaterialCardProps> = ({ item }) => {
     <Card className="border-elec-yellow/20 bg-elec-gray flex flex-col h-full hover:border-elec-yellow/50 transition-all">
       <CardHeader className="pb-2">
         <div className="flex justify-between items-center mb-2">
-          <span className="bg-elec-yellow/20 text-elec-yellow text-xs px-2 py-1 rounded">
-            {item.category}
-          </span>
+          <div className="flex flex-wrap gap-2">
+            <span className="bg-elec-yellow/20 text-elec-yellow text-xs px-2 py-1 rounded">
+              Cables
+            </span>
+            {item.category && item.category !== "Cables" && (
+              <span className="bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded">
+                {item.category}
+              </span>
+            )}
+          </div>
           {item.stockStatus && (
             <span className={`text-xs px-2 py-1 rounded ${
               item.stockStatus === "In Stock" ? "bg-green-500/20 text-green-500" :
