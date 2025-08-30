@@ -162,20 +162,33 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
       .replace(/`(.*?)`/g, '$1')       // Remove code markers
       .trim();
 
-    const availableWidth = maxWidth - 2; // Further reduced margin for more space
-    const lineHeight = 6; // Further reduced for minimal white space
+    const availableWidth = maxWidth - 4; // Optimized margin for better space usage
+    const lineHeight = 5; // Minimal line height for compact layout
     let currentY = y;
     
-    // Split text into words for precise width management
-    const words = cleanText.split(/\s+/);
+    // Improved word splitting to handle long technical terms
+    const words = cleanText.split(/\s+/).flatMap(word => {
+      // Break extremely long words for better wrapping
+      if (word.length > 30 && !word.match(/[A-Z0-9.]+/)) {
+        const chunks = [];
+        for (let i = 0; i < word.length; i += 25) {
+          chunks.push(word.substring(i, i + 25));
+        }
+        return chunks;
+      }
+      return [word];
+    });
+    
     let currentLine: string[] = [];
     let currentLineWidth = 0;
 
     const getBadgeInfo = (word: string) => {
       if (word.match(/^(C1|C2|C3|FI|\d+\.\d*[AΩV]?|\d+[AΩV]|PASS|FAIL|BS\s*7671|✓|✗|\d+mm²?|SATISFACTORY|UNSATISFACTORY|DANGER)$/i)) {
+        // More accurate badge width calculation
+        const textWidth = doc.getTextWidth(word);
         return {
           isBadge: true,
-          width: doc.getTextWidth(word) + 6 + 4 // badge width + padding + spacing
+          width: textWidth + 5 // Reduced padding for compact badges
         };
       }
       return {
@@ -190,7 +203,7 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
       let currentX = x;
       let textBuffer = '';
       
-      currentLine.forEach((word, index) => {
+      currentLine.forEach((word) => {
         const { isBadge } = getBadgeInfo(word);
         
         if (isBadge) {
@@ -200,12 +213,12 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
             doc.setFont(undefined, 'normal');
             doc.setFontSize(10);
             doc.text(textBuffer.trim(), currentX, currentY);
-            currentX += doc.getTextWidth(textBuffer.trim()) + 2;
+            currentX += doc.getTextWidth(textBuffer.trim()) + 1;
             textBuffer = '';
           }
           
-          // Render badge
-          const badgeWidth = doc.getTextWidth(word) + 6;
+          // Render badge with optimized sizing
+          const badgeWidth = doc.getTextWidth(word) + 4;
           
           // Determine badge colors
           let fillColor: number[], textColor: number[];
@@ -237,20 +250,20 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
           
           // Draw badge background
           doc.setFillColor(fillColor[0], fillColor[1], fillColor[2]);
-          doc.roundedRect(currentX, currentY - 4, badgeWidth, 7, 1, 1, 'F');
+          doc.roundedRect(currentX, currentY - 3.5, badgeWidth, 6, 0.8, 0.8, 'F');
           
           // Draw badge border
           doc.setDrawColor(fillColor[0] * 0.8, fillColor[1] * 0.8, fillColor[2] * 0.8);
-          doc.setLineWidth(0.2);
-          doc.roundedRect(currentX, currentY - 4, badgeWidth, 7, 1, 1, 'S');
+          doc.setLineWidth(0.1);
+          doc.roundedRect(currentX, currentY - 3.5, badgeWidth, 6, 0.8, 0.8, 'S');
           
           // Draw badge text
           doc.setTextColor(textColor[0], textColor[1], textColor[2]);
           doc.setFont(undefined, 'bold');
           doc.setFontSize(8);
-          doc.text(word, currentX + 3, currentY - 0.5);
+          doc.text(word, currentX + 2, currentY - 0.5);
           
-          currentX += badgeWidth + 4;
+          currentX += badgeWidth + 2;
         } else {
           // Add to text buffer
           textBuffer += (textBuffer ? ' ' : '') + word;
@@ -270,28 +283,57 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
       currentLineWidth = 0;
     };
 
-    // Process words with width tracking
+    // Process words with improved width tracking
     words.forEach((word, index) => {
       const { width } = getBadgeInfo(word);
       const spaceWidth = currentLine.length > 0 ? doc.getTextWidth(' ') : 0;
       
-      // Check if adding this word would exceed available width
+      // More aggressive line breaking for better space usage
       if (currentLineWidth + spaceWidth + width > availableWidth && currentLine.length > 0) {
-        // Render current line and start new line
         renderCurrentLine();
       }
       
-      // Add word to current line
-      currentLine.push(word);
-      currentLineWidth += spaceWidth + width;
+      // Handle extremely wide elements by force-breaking if necessary
+      if (width > availableWidth) {
+        if (currentLine.length > 0) {
+          renderCurrentLine();
+        }
+        // Split the oversized word character by character
+        const chars = word.split('');
+        let charLine = '';
+        chars.forEach((char, charIndex) => {
+          const testWidth = doc.getTextWidth(charLine + char);
+          if (testWidth > availableWidth && charLine) {
+            doc.setTextColor(0, 0, 0);
+            doc.setFont(undefined, 'normal');
+            doc.setFontSize(10);
+            doc.text(charLine, x, currentY);
+            currentY += lineHeight;
+            charLine = char;
+          } else {
+            charLine += char;
+          }
+          if (charIndex === chars.length - 1 && charLine) {
+            doc.setTextColor(0, 0, 0);
+            doc.setFont(undefined, 'normal');
+            doc.setFontSize(10);
+            doc.text(charLine, x, currentY);
+            currentY += lineHeight;
+          }
+        });
+      } else {
+        // Add word to current line
+        currentLine.push(word);
+        currentLineWidth += spaceWidth + width;
+      }
       
       // If this is the last word, render the final line
-      if (index === words.length - 1) {
+      if (index === words.length - 1 && currentLine.length > 0) {
         renderCurrentLine();
       }
     });
     
-    return currentY + 1; // Minimal spacing after text block
+    return Math.max(currentY, y + lineHeight); // Ensure minimum advancement
   };
 
   // Preprocess markdown content to clean up formatting
@@ -340,14 +382,14 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
     while (i < lines.length) {
       const line = lines[i];
       
-      // Check if we need a new page with better space usage
-      if (yPosition > pageHeight - 30) {
+      // Check if we need a new page with optimized space usage
+      if (yPosition > pageHeight - 25) {
         doc.addPage();
         yPosition = margin;
       }
 
       if (line.trim() === '') {
-        yPosition += 3; // Reduced empty line spacing
+        yPosition += 2; // Minimal empty line spacing
         i++;
         continue;
       }
@@ -363,14 +405,14 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
         continue;
       }
 
-      // Headers - all levels
+      // Headers - all levels with optimized spacing
       if (line.startsWith('# ')) {
         doc.setFontSize(16);
         doc.setFont(undefined, 'bold');
         doc.setTextColor(255, 215, 0);
         const text = line.substring(2);
         doc.text(text, margin, yPosition);
-        yPosition += 12;
+        yPosition += 10;
         i++;
       } else if (line.startsWith('## ')) {
         doc.setFontSize(14);
@@ -378,7 +420,7 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
         doc.setTextColor(255, 215, 0);
         const text = line.substring(3);
         doc.text(text, margin, yPosition);
-        yPosition += 10;
+        yPosition += 8;
         i++;
       } else if (line.startsWith('### ')) {
         doc.setFontSize(12);
@@ -386,7 +428,7 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
         doc.setTextColor(255, 215, 0);
         const text = line.substring(4);
         doc.text(text, margin, yPosition);
-        yPosition += 8;
+        yPosition += 7;
         i++;
       } else if (line.startsWith('#### ')) {
         doc.setFontSize(11);
@@ -394,7 +436,7 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
         doc.setTextColor(255, 215, 0);
         const text = line.substring(5);
         doc.text(text, margin, yPosition);
-        yPosition += 8;
+        yPosition += 6;
         i++;
       } else if (line.startsWith('##### ')) {
         doc.setFontSize(10);
@@ -402,7 +444,7 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
         doc.setTextColor(255, 215, 0);
         const text = line.substring(6);
         doc.text(text, margin, yPosition);
-        yPosition += 8;
+        yPosition += 6;
         i++;
       } else if (line.startsWith('###### ')) {
         doc.setFontSize(10);
@@ -410,7 +452,7 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
         doc.setTextColor(255, 215, 0);
         const text = line.substring(7);
         doc.text(text, margin, yPosition);
-        yPosition += 8;
+        yPosition += 6;
         i++;
       } else if (line.startsWith('| ') && line.includes('|')) {
         // Handle table - collect table rows
@@ -478,7 +520,7 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
             }
           });
 
-          yPosition = (doc as any).lastAutoTable.finalY + 6;
+          yPosition = (doc as any).lastAutoTable.finalY + 4;
         }
         
         i = currentLineIndex;
@@ -486,12 +528,12 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
         // List items with electrical elements
         const text = line.substring(2);
         yPosition = renderTextWithBadges(doc, `• ${text}`, margin + 5, yPosition, maxWidth - 5);
-        yPosition += 4;
+        yPosition += 2;
         i++;
       } else {
         // Regular text with electrical elements
         yPosition = renderTextWithBadges(doc, line, margin, yPosition, maxWidth);
-        yPosition += 4;
+        yPosition += 2;
         i++;
       }
     }
