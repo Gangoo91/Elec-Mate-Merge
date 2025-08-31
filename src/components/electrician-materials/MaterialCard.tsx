@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ExternalLink } from "lucide-react";
@@ -115,7 +114,7 @@ const MaterialCard: React.FC<MaterialCardProps> = ({ item }) => {
         </h3>
 
         {/* Image */}
-        <div className="bg-muted/50 border rounded h-32 mb-3 flex items-center justify-center overflow-hidden">
+        <div className="bg-muted/50 border rounded h-48 mb-3 flex items-center justify-center overflow-hidden">
           <img
             src={imageSrc}
             alt={`${item.name} from ${item.supplier}`}
