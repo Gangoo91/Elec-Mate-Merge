@@ -57,7 +57,6 @@ async function fetchTenders(): Promise<TenderProject[]> {
       const buyer = tenderData.buyer || {};
       const award = (tenderData.awards && tenderData.awards[0]) || {};
       const supplierNames = award.suppliers ? award.suppliers.map((s: any) => s.name).join(", ") : "";
-      const buyerAddress = buyer.address || {};
       const isAwarded = award.suppliers && award.suppliers.length > 0;
 
       return {
@@ -68,7 +67,7 @@ async function fetchTenders(): Promise<TenderProject[]> {
         client: buyer.name || "",
         contract_value: award.value ? `${award.value.amount} ${award.value.currency}` : "",
         duration: award.contractPeriod ? `${award.contractPeriod.startDate} to ${award.contractPeriod.endDate}` : "",
-        location: [buyerAddress.locality, buyerAddress.region, buyerAddress.countryName].filter(Boolean).join(", "),
+        location: `${tenderData?.parties?.[0]?.address?.locality}, ${tenderData?.parties?.[0]?.address?.countryName}`,
         contractors: supplierNames,
         start_date: award.contractPeriod?.startDate || "",
         details_link: award.documents?.[0]?.url || "",
