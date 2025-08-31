@@ -95,7 +95,14 @@ const MaterialSearch = ({ supplierSlug, onResults }: MaterialSearchProps) => {
         <Button className="flex-1" variant="default" onClick={() => runSearch(searchQuery)} disabled={isLoading}>
           {isLoading ? "Searching…" : "Search"}
         </Button>
-        <Button className="flex-1" variant="outline">Advanced</Button>
+        <Button 
+          className="flex-1" 
+          variant="outline"
+          onClick={() => window.location.href = `/materials/compare?q=${encodeURIComponent(searchQuery)}`}
+          disabled={!searchQuery.trim()}
+        >
+          Compare Prices
+        </Button>
       </div>
     </div>
   );

@@ -107,22 +107,30 @@ async function fetchProductsFromSupplier(supplier: any, query: string, category:
 }
 
 // --- Main Function with Grouped Output ---
-async function getMaterials(FIRECRAWL_API_KEY: string, categoryFilter?: string, supplierFilter?: string) {
+async function getMaterials(FIRECRAWL_API_KEY: string, categoryFilter?: string, supplierFilter?: string, searchTerm?: string) {
   console.log('🚀 Starting comprehensive materials scraping...');
   
   const jobs = [];
-  const filteredProductList = categoryFilter 
-    ? productList.filter(group => group.category === categoryFilter)
-    : productList;
-  
   const filteredSuppliers = supplierFilter
     ? suppliers.filter(supplier => supplier.name === supplierFilter)
     : suppliers;
 
-  for (const group of filteredProductList) {
-    for (const product of group.items) {
-      for (const supplier of filteredSuppliers) {
-        jobs.push(fetchProductsFromSupplier(supplier, product, group.category, FIRECRAWL_API_KEY));
+  // If searchTerm is provided, use it directly instead of predefined queries
+  if (searchTerm && searchTerm.trim()) {
+    for (const supplier of filteredSuppliers) {
+      jobs.push(fetchProductsFromSupplier(supplier, searchTerm.trim(), 'search', FIRECRAWL_API_KEY));
+    }
+  } else {
+    // Use predefined product queries
+    const filteredProductList = categoryFilter 
+      ? productList.filter(group => group.category === categoryFilter)
+      : productList;
+
+    for (const group of filteredProductList) {
+      for (const product of group.items) {
+        for (const supplier of filteredSuppliers) {
+          jobs.push(fetchProductsFromSupplier(supplier, product, group.category, FIRECRAWL_API_KEY));
+        }
       }
     }
   }
@@ -161,16 +169,18 @@ Deno.serve(async (req) => {
     // Parse request body for filters
     let categoryFilter: string | undefined;
     let supplierFilter: string | undefined;
+    let searchTerm: string | undefined;
     
     if (req.method === 'POST') {
       const body = await req.json();
       categoryFilter = body.category;
       supplierFilter = body.supplier;
+      searchTerm = body.searchTerm;
     }
 
-    console.log(`📋 Request filters - Category: ${categoryFilter || 'all'}, Supplier: ${supplierFilter || 'all'}`);
+    console.log(`📋 Request filters - Category: ${categoryFilter || 'all'}, Supplier: ${supplierFilter || 'all'}, SearchTerm: ${searchTerm || 'none'}`);
 
-    const materials = await getMaterials(FIRECRAWL_API_KEY, categoryFilter, supplierFilter);
+    const materials = await getMaterials(FIRECRAWL_API_KEY, categoryFilter, supplierFilter, searchTerm);
 
     const response = {
       success: true,
