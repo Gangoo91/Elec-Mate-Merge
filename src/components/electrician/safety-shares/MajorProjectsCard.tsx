@@ -365,7 +365,9 @@ const MajorProjectsCard = () => {
           
           <div className="space-y-1">
             <p className="text-sm text-muted-foreground">Duration</p>
-            <p className="text-white font-medium">{project.duration || '18 months'}</p>
+            <p className="text-white font-medium">
+              {project.duration || 'Approximately 18 months'}
+            </p>
           </div>
           
           <div className="space-y-1">
