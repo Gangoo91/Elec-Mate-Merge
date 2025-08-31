@@ -366,7 +366,12 @@ const MajorProjectsCard = () => {
           <div className="space-y-1">
             <p className="text-sm text-muted-foreground">Duration</p>
             <p className="text-white font-medium">
-              {project.duration || 'Expected to take 18 months'}
+              {project.duration || (() => {
+                const startDate = project.start_date ? new Date(project.start_date) : new Date();
+                const endDate = new Date(startDate);
+                endDate.setMonth(endDate.getMonth() + 18);
+                return `Expected completion: ${endDate.toLocaleDateString('en-GB', { month: 'long', year: 'numeric' })}`;
+              })()}
             </p>
           </div>
           
