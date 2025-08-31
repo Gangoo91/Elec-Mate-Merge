@@ -5,21 +5,23 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, BookOpen, Calculator, ShoppingCart, Star, Users, Clock } from "lucide-react";
 import GuideSelector from "./guides/GuideSelector";
-import HandToolsGuide from "./guides/HandToolsGuide";
-import PPESafetyGuide from "./guides/PPESafetyGuide";
 import BudgetCalculator from "./guides/BudgetCalculator";
+import AIGuideModal from "./AIGuideModal";
 
 const ToolBuyingGuides = () => {
-  const [selectedGuide, setSelectedGuide] = useState<string | null>(null);
   const [showBudgetCalculator, setShowBudgetCalculator] = useState(false);
   const [budgetData, setBudgetData] = useState<any>(null);
+  const [isGuideModalOpen, setIsGuideModalOpen] = useState(false);
+  const [selectedGuideType, setSelectedGuideType] = useState<string>("");
+  const [selectedGuideTitle, setSelectedGuideTitle] = useState<string>("");
 
-  const handleSelectGuide = (guideId: string) => {
-    setSelectedGuide(guideId);
+  const handleSelectGuide = (guideId: string, guideTitle: string) => {
+    setSelectedGuideType(guideId);
+    setSelectedGuideTitle(guideTitle);
+    setIsGuideModalOpen(true);
   };
 
   const handleBackToGuides = () => {
-    setSelectedGuide(null);
     setShowBudgetCalculator(false);
   };
 
@@ -58,13 +60,6 @@ const ToolBuyingGuides = () => {
     );
   }
 
-  if (selectedGuide === "hand-tools") {
-    return <HandToolsGuide onBack={handleBackToGuides} />;
-  }
-
-  if (selectedGuide === "ppe") {
-    return <PPESafetyGuide onBack={handleBackToGuides} />;
-  }
 
   return (
     <div className="space-y-6">
@@ -109,6 +104,14 @@ const ToolBuyingGuides = () => {
 
       {/* Comprehensive Guides */}
       <GuideSelector onSelectGuide={handleSelectGuide} />
+
+      {/* AI Guide Modal */}
+      <AIGuideModal
+        isOpen={isGuideModalOpen}
+        onClose={() => setIsGuideModalOpen(false)}
+        guideType={selectedGuideType}
+        guideTitle={selectedGuideTitle}
+      />
 
       {/* Additional Resources */}
       <Card className="border-elec-yellow/20 bg-elec-gray">

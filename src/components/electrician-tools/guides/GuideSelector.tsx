@@ -19,7 +19,7 @@ interface Guide {
 }
 
 interface GuideSelectorProps {
-  onSelectGuide: (guideId: string) => void;
+  onSelectGuide: (guideId: string, guideTitle: string) => void;
 }
 
 const GuideSelector = ({ onSelectGuide }: GuideSelectorProps) => {
@@ -120,7 +120,7 @@ const GuideSelector = ({ onSelectGuide }: GuideSelectorProps) => {
               ? "hover:border-elec-yellow/50" 
               : "opacity-75 hover:border-elec-yellow/30"
           }`}
-          onClick={() => guide.status === "complete" && onSelectGuide(guide.id)}
+          onClick={() => onSelectGuide(guide.id, guide.title)}
         >
           <CardHeader className="pb-3">
             <div className="flex items-start justify-between mb-2">
