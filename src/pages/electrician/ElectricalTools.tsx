@@ -333,9 +333,11 @@ const ElectricalTools = () => {
                   <p className="text-sm text-muted-foreground mb-3">
                     Electrical wholesaler nationwide
                   </p>
-                  <Button size="sm" className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90">
-                    Visit CEF
-                  </Button>
+                  <a href="https://www.cef.co.uk/" target="_blank" rel="noopener noreferrer" className="block">
+                    <Button size="sm" className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90">
+                      Visit CEF
+                    </Button>
+                  </a>
                 </CardContent>
               </Card>
             </div>
