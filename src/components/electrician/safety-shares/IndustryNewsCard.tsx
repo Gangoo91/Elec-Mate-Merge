@@ -221,7 +221,7 @@ const IndustryNewsCard = () => {
             Live regulatory updates and compliance information from industry bodies
           </CardDescription>
         </CardHeader>
-        <CardContent className="space-y-6 bg-transparent">
+        <CardContent className="space-y-6 bg-transparent p-0">
           {/* Enhanced Control Panel - Always Visible */}
           <div className="bg-elec-card rounded-xl border border-elec-yellow/10 p-6 space-y-6">
             {/* Search Section */}
