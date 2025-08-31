@@ -377,9 +377,9 @@ const MajorProjectsCard = () => {
                     const diffMonths = Math.round((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24 * 30.44));
                     if (diffMonths >= 12) {
                       const years = Math.round(diffMonths / 12 * 10) / 10;
-                      return `Expected duration: ${years} ${years === 1 ? 'year' : 'years'}`;
+                      return `${years} ${years === 1 ? 'year' : 'years'}`;
                     } else {
-                      return `Expected duration: ${diffMonths} ${diffMonths === 1 ? 'month' : 'months'}`;
+                      return `${diffMonths} ${diffMonths === 1 ? 'month' : 'months'}`;
                     }
                   }
                 }
