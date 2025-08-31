@@ -54,13 +54,13 @@ export function WindPowerCalculator() {
   ];
 
   const windClasses = [
-    { value: '1', label: 'Class 1 (Poor - <6.4 m/s annual average)' },
-    { value: '2', label: 'Class 2 (Marginal - 6.4-7.0 m/s)' },
-    { value: '3', label: 'Class 3 (Fair - 7.0-7.5 m/s)' },
-    { value: '4', label: 'Class 4 (Good - 7.5-8.0 m/s)' },
-    { value: '5', label: 'Class 5 (Excellent - 8.0-8.8 m/s)' },
-    { value: '6', label: 'Class 6 (Outstanding - 8.8-9.4 m/s)' },
-    { value: '7', label: 'Class 7 (Superb - >9.4 m/s)' }
+    { value: '1', label: 'Class 1 (Poor - <14.3 mph annual average)' },
+    { value: '2', label: 'Class 2 (Marginal - 14.3-15.7 mph)' },
+    { value: '3', label: 'Class 3 (Fair - 15.7-16.8 mph)' },
+    { value: '4', label: 'Class 4 (Good - 16.8-17.9 mph)' },
+    { value: '5', label: 'Class 5 (Excellent - 17.9-19.7 mph)' },
+    { value: '6', label: 'Class 6 (Outstanding - 19.7-21.0 mph)' },
+    { value: '7', label: 'Class 7 (Superb - >21.0 mph)' }
   ];
 
   const terrainTypes = [
