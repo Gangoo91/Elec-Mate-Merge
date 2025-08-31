@@ -156,26 +156,26 @@ const CategoryMaterials = () => {
       {/* Advanced Features Navigation */}
       <section className="space-y-4 relative z-10">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full relative">
-          <TabsList className="flex w-full overflow-x-auto scrollbar-hide lg:grid lg:grid-cols-5 bg-elec-gray border border-elec-yellow/20 relative z-20 gap-1 p-1">
-            <TabsTrigger value="browse" className="flex-shrink-0 whitespace-nowrap px-3 py-2 text-sm data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark">
-              <Package className="h-4 w-4 mr-1 lg:mr-2" />
-              <span className="hidden sm:inline">Browse</span><span className="sm:hidden">Browse</span>
+          <TabsList className="flex w-full overflow-x-auto scrollbar-hide lg:grid lg:grid-cols-5 bg-elec-gray border border-elec-yellow/20 relative z-20 gap-2 p-2">
+            <TabsTrigger value="browse" className="flex-shrink-0 whitespace-nowrap px-4 py-3 text-sm min-w-fit data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark">
+              <Package className="h-4 w-4 mr-2" />
+              Browse
             </TabsTrigger>
-            <TabsTrigger value="compare" className="flex-shrink-0 whitespace-nowrap px-3 py-2 text-sm data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark">
-              <Scale className="h-4 w-4 mr-1 lg:mr-2" />
-              <span className="hidden sm:inline">Compare</span><span className="sm:hidden">Compare</span>
+            <TabsTrigger value="compare" className="flex-shrink-0 whitespace-nowrap px-4 py-3 text-sm min-w-fit data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark">
+              <Scale className="h-4 w-4 mr-2" />
+              Compare
             </TabsTrigger>
-            <TabsTrigger value="bulk" className="flex-shrink-0 whitespace-nowrap px-3 py-2 text-sm data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark">
-              <Calculator className="h-4 w-4 mr-1 lg:mr-2" />
-              <span className="hidden sm:inline">Bulk Pricing</span><span className="sm:hidden">Bulk</span>
+            <TabsTrigger value="bulk" className="flex-shrink-0 whitespace-nowrap px-4 py-3 text-sm min-w-fit data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark">
+              <Calculator className="h-4 w-4 mr-2" />
+              Bulk
             </TabsTrigger>
-            <TabsTrigger value="alerts" className="flex-shrink-0 whitespace-nowrap px-3 py-2 text-sm data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark">
-              <TrendingUp className="h-4 w-4 mr-1 lg:mr-2" />
-              <span className="hidden sm:inline">Price Alerts</span><span className="sm:hidden">Alerts</span>
+            <TabsTrigger value="alerts" className="flex-shrink-0 whitespace-nowrap px-4 py-3 text-sm min-w-fit data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark">
+              <TrendingUp className="h-4 w-4 mr-2" />
+              Alerts
             </TabsTrigger>
-            <TabsTrigger value="ai" className="flex-shrink-0 whitespace-nowrap px-3 py-2 text-sm data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark">
-              <Brain className="h-4 w-4 mr-1 lg:mr-2" />
-              <span className="hidden sm:inline">AI Insights</span><span className="sm:hidden">AI</span>
+            <TabsTrigger value="ai" className="flex-shrink-0 whitespace-nowrap px-4 py-3 text-sm min-w-fit data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark">
+              <Brain className="h-4 w-4 mr-2" />
+              AI
             </TabsTrigger>
           </TabsList>
 
