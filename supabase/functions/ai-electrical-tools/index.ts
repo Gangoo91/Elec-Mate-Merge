@@ -8,8 +8,9 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-// Static fallback data for emergency cases
+// Comprehensive fallback data - 24 realistic electrical tools
 const fallbackTools = [
+  // Testers (8)
   {
     id: 1,
     name: "Fluke 1653B Installation Tester",
@@ -20,31 +21,285 @@ const fallbackTools = [
     description: "Professional multifunction installation tester for electrical safety testing",
     productUrl: "https://uk.rs-online.com/web/p/installation-testers/0123456",
     stockStatus: "In Stock",
-    highlights: ["17th Edition compliant", "Loop impedance testing", "RCD testing"]
+    highlights: ["BS 7671 18th Edition compliant", "Loop impedance testing", "RCD testing"]
   },
   {
     id: 2,
-    name: "Wiha VDE Screwdriver Set",
-    category: "Hand Tools", 
+    name: "Martindale VI13700 Voltage Indicator",
+    category: "Testers",
+    price: "£28.95",
+    supplier: "Screwfix",
+    image: "/placeholder.svg",
+    description: "Two pole voltage indicator with LED and audible indication",
+    productUrl: "https://www.screwfix.com/p/martindale-vi13700-voltage-indicator",
+    stockStatus: "In Stock",
+    highlights: ["12-690V AC/DC", "LED & buzzer indication", "CAT III 690V rated"]
+  },
+  {
+    id: 3,
+    name: "Megger MFT1741 Multifunction Tester",
+    category: "Testers",
+    price: "£875.00",
+    supplier: "CPC",
+    image: "/placeholder.svg",
+    description: "Advanced multifunction installation tester with Bluetooth",
+    productUrl: "https://cpc.farnell.com/megger/mft1741/multifunction-tester",
+    stockStatus: "In Stock",
+    highlights: ["Bluetooth connectivity", "Auto test sequences", "Large colour display"]
+  },
+  {
+    id: 4,
+    name: "Kewtech KT64DL Digital Insulation Tester",
+    category: "Testers",
+    price: "£156.00",
+    supplier: "Toolstation",
+    image: "/placeholder.svg",
+    description: "Digital insulation and continuity tester with data logging",
+    productUrl: "https://www.toolstation.com/kewtech-kt64dl-insulation-tester",
+    stockStatus: "Low Stock",
+    highlights: ["500V/1000V test voltages", "Data logging", "Auto discharge"]
+  },
+  {
+    id: 5,
+    name: "Socket & See SOK-34 Socket Tester",
+    category: "Testers",
+    price: "£19.99",
+    supplier: "Screwfix",
+    image: "/placeholder.svg",
+    description: "13A socket tester for quick polarity and earth checks",
+    productUrl: "https://www.screwfix.com/p/socket-see-sok-34-socket-tester",
+    stockStatus: "In Stock",
+    highlights: ["Instant results", "LED indicators", "Compact design"]
+  },
+  {
+    id: 6,
+    name: "Fluke T6-1000 Electrical Tester",
+    category: "Testers",
+    price: "£289.00",
+    supplier: "RS Components",
+    image: "/placeholder.svg",
+    description: "Non-contact voltage and current electrical tester",
+    productUrl: "https://uk.rs-online.com/web/p/electrical-testers/fluke-t6-1000",
+    stockStatus: "In Stock",
+    highlights: ["FieldSense technology", "True RMS", "CAT IV 600V rated"]
+  },
+  {
+    id: 7,
+    name: "Seaward Primetest 100 PAT Tester",
+    category: "Testers",
+    price: "£325.00",
+    supplier: "CPC",
+    image: "/placeholder.svg",
+    description: "Portable appliance tester for Class I and Class II equipment",
+    productUrl: "https://cpc.farnell.com/seaward/primetest-100/pat-tester",
+    stockStatus: "In Stock",
+    highlights: ["Auto test sequences", "Pass/fail indication", "Battery powered"]
+  },
+  {
+    id: 8,
+    name: "Metrel MI3102H EurotestXE Tester",
+    category: "Testers",
+    price: "£1,245.00",
+    supplier: "RS Components",
+    image: "/placeholder.svg",
+    description: "Professional installation tester with advanced features",
+    productUrl: "https://uk.rs-online.com/web/p/installation-testers/metrel-mi3102h",
+    stockStatus: "In Stock",
+    highlights: ["Touch screen display", "Wireless communication", "Memory for 1000 tests"]
+  },
+  // Hand Tools (8)
+  {
+    id: 9,
+    name: "Wiha VDE Screwdriver Set 7pc",
+    category: "Hand Tools",
     price: "£34.99",
     supplier: "Screwfix",
     image: "/placeholder.svg",
     description: "VDE insulated screwdriver set for safe electrical work",
     productUrl: "https://www.screwfix.com/p/wiha-vde-screwdriver-set",
     stockStatus: "In Stock",
-    highlights: ["VDE certified", "1000V rated", "Comfortable grip"]
+    highlights: ["VDE certified to 1000V", "Ergonomic handles", "7 piece set"]
   },
   {
-    id: 3,
-    name: "Makita DHR202 SDS Drill",
+    id: 10,
+    name: "Knipex 13 96 200 Wire Strippers",
+    category: "Hand Tools",
+    price: "£45.60",
+    supplier: "CPC",
+    image: "/placeholder.svg",
+    description: "Professional wire strippers for electrical cables",
+    productUrl: "https://cpc.farnell.com/knipex/13-96-200/wire-stripper",
+    stockStatus: "In Stock",
+    highlights: ["0.2-6.0mm² capacity", "Precision stripping", "German engineering"]
+  },
+  {
+    id: 11,
+    name: "CK Tools Side Cutters 160mm",
+    category: "Hand Tools",
+    price: "£18.95",
+    supplier: "Toolstation",
+    image: "/placeholder.svg",
+    description: "Professional side cutting pliers for electrical work",
+    productUrl: "https://www.toolstation.com/ck-tools-side-cutters",
+    stockStatus: "In Stock",
+    highlights: ["Hardened cutting edges", "Comfortable grips", "160mm length"]
+  },
+  {
+    id: 12,
+    name: "Klein Tools 1004 Cable Cutters",
+    category: "Hand Tools",
+    price: "£89.00",
+    supplier: "RS Components",
+    image: "/placeholder.svg",
+    description: "Heavy duty cable cutters for armoured and large cables",
+    productUrl: "https://uk.rs-online.com/web/p/cable-cutters/klein-1004",
+    stockStatus: "In Stock",
+    highlights: ["Cuts up to 32mm cables", "Ratcheting action", "Professional grade"]
+  },
+  {
+    id: 13,
+    name: "Weidmuller PZ 50 Crimping Tool",
+    category: "Hand Tools",
+    price: "£125.00",
+    supplier: "CPC",
+    image: "/placeholder.svg",
+    description: "Professional crimping tool for electrical terminals",
+    productUrl: "https://cpc.farnell.com/weidmuller/pz-50-crimping-tool",
+    stockStatus: "In Stock",
+    highlights: ["0.5-6mm² terminals", "Ratcheting mechanism", "Precise crimping"]
+  },
+  {
+    id: 14,
+    name: "Stanley FatMax Utility Knife",
+    category: "Hand Tools",
+    price: "£12.99",
+    supplier: "Screwfix",
+    image: "/placeholder.svg",
+    description: "Heavy duty utility knife for cable preparation",
+    productUrl: "https://www.screwfix.com/p/stanley-fatmax-utility-knife",
+    stockStatus: "In Stock",
+    highlights: ["Retractable blade", "Heavy duty construction", "Comfortable grip"]
+  },
+  {
+    id: 15,
+    name: "Greenlee 1903 Conduit Bender",
+    category: "Hand Tools",
+    price: "£78.00",
+    supplier: "Toolstation",
+    image: "/placeholder.svg",
+    description: "Manual conduit bender for 20mm steel conduit",
+    productUrl: "https://www.toolstation.com/greenlee-conduit-bender",
+    stockStatus: "Low Stock",
+    highlights: ["20mm conduit capacity", "Accurate bending", "Durable construction"]
+  },
+  {
+    id: 16,
+    name: "Bahco Adjustable Wrench Set",
+    category: "Hand Tools",
+    price: "£24.95",
+    supplier: "CPC",
+    image: "/placeholder.svg",
+    description: "Set of adjustable wrenches for electrical installations",
+    productUrl: "https://cpc.farnell.com/bahco/adjustable-wrench-set",
+    stockStatus: "In Stock",
+    highlights: ["3 piece set", "Chrome vanadium steel", "Comfortable handles"]
+  },
+  // Power Tools (8)
+  {
+    id: 17,
+    name: "Makita DHR202Z SDS Drill",
     category: "Power Tools",
-    price: "£179.00", 
+    price: "£179.00",
     supplier: "Toolstation",
     image: "/placeholder.svg",
     description: "Cordless SDS plus rotary hammer drill for electrical installations",
     productUrl: "https://www.toolstation.com/makita-dhr202-sds-drill",
     stockStatus: "In Stock",
-    highlights: ["18V LXT battery", "20mm drilling capacity", "Anti-vibration"]
+    highlights: ["18V LXT battery", "20mm drilling capacity", "Anti-vibration technology"]
+  },
+  {
+    id: 18,
+    name: "DeWalt DCD796N Impact Driver",
+    category: "Power Tools",
+    price: "£145.00",
+    supplier: "Screwfix",
+    image: "/placeholder.svg",
+    description: "Brushless impact driver for electrical fixings",
+    productUrl: "https://www.screwfix.com/p/dewalt-dcd796n-impact-driver",
+    stockStatus: "In Stock",
+    highlights: ["Brushless motor", "180Nm torque", "LED work light"]
+  },
+  {
+    id: 19,
+    name: "Bosch GWS 7-115 Angle Grinder",
+    category: "Power Tools",
+    price: "£48.99",
+    supplier: "Toolstation",
+    image: "/placeholder.svg",
+    description: "Compact angle grinder for cutting and grinding tasks",
+    productUrl: "https://www.toolstation.com/bosch-gws-7-115-angle-grinder",
+    stockStatus: "In Stock",
+    highlights: ["115mm disc", "720W motor", "Compact design"]
+  },
+  {
+    id: 20,
+    name: "Milwaukee M18 FUEL Reciprocating Saw",
+    category: "Power Tools",
+    price: "£229.00",
+    supplier: "CPC",
+    image: "/placeholder.svg",
+    description: "Cordless reciprocating saw for demolition and cutting",
+    productUrl: "https://cpc.farnell.com/milwaukee/m18-fuel-reciprocating-saw",
+    stockStatus: "In Stock",
+    highlights: ["Brushless motor", "Variable speed", "Tool-free blade change"]
+  },
+  {
+    id: 21,
+    name: "Hilti TE 7-C Rotary Hammer",
+    category: "Power Tools",
+    price: "£169.00",
+    supplier: "RS Components",
+    image: "/placeholder.svg",
+    description: "Corded rotary hammer for drilling in concrete and masonry",
+    productUrl: "https://uk.rs-online.com/web/p/rotary-hammers/hilti-te-7-c",
+    stockStatus: "In Stock",
+    highlights: ["SDS-plus chuck", "Active vibration reduction", "720W motor"]
+  },
+  {
+    id: 22,
+    name: "Festool OSC 18 Multi-Tool",
+    category: "Power Tools",
+    price: "£289.00",
+    supplier: "Toolstation",
+    image: "/placeholder.svg",
+    description: "Cordless oscillating multi-tool for precision cutting",
+    productUrl: "https://www.toolstation.com/festool-osc-18-multi-tool",
+    stockStatus: "Low Stock",
+    highlights: ["18V battery", "StarlockMax system", "LED work light"]
+  },
+  {
+    id: 23,
+    name: "Greenlee 855GX Cable Puller",
+    category: "Power Tools",
+    price: "£1,850.00",
+    supplier: "CPC",
+    image: "/placeholder.svg",
+    description: "Electric cable pulling system for large installations",
+    productUrl: "https://cpc.farnell.com/greenlee/855gx-cable-puller",
+    stockStatus: "Out of Stock",
+    highlights: ["8000 lbs pulling force", "Variable speed", "Digital display"]
+  },
+  {
+    id: 24,
+    name: "Ridgid 700 Pipe Threader",
+    category: "Power Tools",
+    price: "£425.00",
+    supplier: "RS Components",
+    image: "/placeholder.svg",
+    description: "Portable pipe threading machine for conduit preparation",
+    productUrl: "https://uk.rs-online.com/web/p/pipe-threaders/ridgid-700",
+    stockStatus: "In Stock",
+    highlights: ["1/2\" to 2\" capacity", "Portable design", "Quick-acting cam lever"]
   }
 ];
 
@@ -64,9 +319,9 @@ serve(async (req) => {
         supplier: "Static Fallback",
         generated_at: new Date().toISOString(),
         categories: {
-          testers: 1,
-          handTools: 1,
-          powerTools: 1
+          testers: fallbackTools.filter((t: any) => t.category === "Testers").length,
+          handTools: fallbackTools.filter((t: any) => t.category === "Hand Tools").length,
+          powerTools: fallbackTools.filter((t: any) => t.category === "Power Tools").length
         }
       }), {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -75,7 +330,7 @@ serve(async (req) => {
 
     // Set timeout for OpenAI request
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 15000); // 15 second timeout
+    const timeoutId = setTimeout(() => controller.abort(), 12000); // 12 second timeout
 
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
@@ -85,43 +340,43 @@ serve(async (req) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'gpt-5-nano-2025-08-07',
-        max_completion_tokens: 2500,
+        model: 'gpt-4.1-2025-04-14',
+        max_completion_tokens: 3000,
         messages: [
           {
             role: 'system',
-            content: `Generate 24 UK electrical tools as a JSON array. Categories: 8 Testers, 8 Hand Tools, 8 Power Tools.
+            content: `You are a professional electrical tool database generator. Generate exactly 24 realistic UK electrical tools as a valid JSON array.
 
-JSON format (no other text):
+CRITICAL: Return ONLY the JSON array with no additional text, explanations, or markdown formatting.
+
+Required format:
 [
   {
     "id": 1,
-    "name": "Brand Model Name",
+    "name": "Real Brand Real Model",
     "category": "Testers",
     "price": "£XX.XX",
     "supplier": "Screwfix",
     "image": "/placeholder.svg",
-    "description": "Brief professional description",
-    "productUrl": "https://example.com/product",
+    "description": "Professional description",
+    "productUrl": "https://realurl.com/product",
     "stockStatus": "In Stock",
-    "highlights": ["Feature 1", "Feature 2"]
+    "highlights": ["Feature 1", "Feature 2", "Feature 3"]
   }
 ]
 
-Categories:
-- Testers: Multimeters, Socket testers, Voltage detectors, PAT testers, Installation testers, Earth loop testers, Insulation testers, Continuity testers
-- Hand Tools: Wire strippers, Cable cutters, Pliers, Screwdrivers, Crimping tools, Cable grips, Knockout punches, Conduit benders  
-- Power Tools: SDS drills, Impact drivers, Angle grinders, Cable pulling systems, Core bits, Diamond saws, Reciprocating saws, Cable strippers
+Generate 8 tools for each category:
+- Testers: Real brands like Fluke, Megger, Kewtech, Martindale
+- Hand Tools: Real brands like Wiha, Knipex, CK Tools, Klein
+- Power Tools: Real brands like Makita, DeWalt, Bosch, Milwaukee
 
-Suppliers: Screwfix, Toolstation, CPC, RS Components
-UK prices: £15-£500 range
-Stock: "In Stock", "Low Stock", "Out of Stock"
-
-Return ONLY the JSON array.`
+Use real UK suppliers: Screwfix, Toolstation, CPC, RS Components
+Use realistic UK prices: £15-£1500
+Stock options: "In Stock", "Low Stock", "Out of Stock"`
           },
           {
             role: 'user',
-            content: 'Generate the 24 electrical tools JSON array now.'
+            content: 'Generate the 24 electrical tools JSON array with real brands and models.'
           }
         ],
       }),
@@ -201,9 +456,9 @@ Return ONLY the JSON array.`
       supplier: "Fallback Data",
       generated_at: new Date().toISOString(),
       categories: {
-        testers: 1,
-        handTools: 1,
-        powerTools: 1
+        testers: fallbackTools.filter((t: any) => t.category === "Testers").length,
+        handTools: fallbackTools.filter((t: any) => t.category === "Hand Tools").length,
+        powerTools: fallbackTools.filter((t: any) => t.category === "Power Tools").length
       },
       note: "AI generation failed, showing sample tools"
     }), {
