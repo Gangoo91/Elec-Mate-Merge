@@ -59,8 +59,8 @@ const FILTER_OPTIONS = {
   },
   tools: {
     productTypes: ['Testers', 'Hand Tools', 'Power Tools', 'Measuring'],
-    brands: ['Fluke', 'Kewtech', 'Megger', 'DeWalt'],
-    priceRanges: [] as string[],
+    brands: [] as string[],
+    priceRanges: ['Under £25', '£25-£50', '£50-£100', '£100-£250', 'Over £250'],
     moduleSizes: [] as string[],
     cableTypes: [] as string[]
   }

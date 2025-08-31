@@ -189,13 +189,67 @@ const CategoryMaterials = () => {
     return [];
   }, [hasValidLiveData, isLiveDataFresh, categoryId, liveProducts, hasAttemptedLiveFetch, liveFetchFailed]);
 
-  // NO FILTERING - Show all raw products from edge function
+  // Apply filters to products
   const displayProducts = useMemo(() => {
-    console.log(`[${categoryId.toUpperCase()}] RAW DISPLAY - showing all ${baseProducts.length} base products without any filtering`);
+    console.log(`[${categoryId.toUpperCase()}] Filtering ${baseProducts.length} base products`);
     
-    // Return all base products without any filtering
-    return baseProducts;
-  }, [baseProducts]);
+    let filtered = baseProducts;
+    
+    // Filter by product types
+    if (filters.productTypes.length > 0) {
+      filtered = filtered.filter(product => {
+        const productName = product.name.toLowerCase();
+        return filters.productTypes.some(type => {
+          switch (type) {
+            case 'Testers':
+              return /tester|test|multimeter|voltage|detector/.test(productName);
+            case 'Hand Tools':
+              return /screwdriver|pliers|spanner|wrench|strip|crimp|cutter/.test(productName);
+            case 'Power Tools':
+              return /drill|driver|saw|grinder|impact|cordless|battery/.test(productName);
+            case 'Measuring':
+              return /measure|tape|rule|level|square|gauge/.test(productName);
+            default:
+              return productName.includes(type.toLowerCase());
+          }
+        });
+      });
+    }
+    
+    // Filter by price ranges
+    if (filters.priceRanges.length > 0) {
+      filtered = filtered.filter(product => {
+        const price = parseFloat(product.price.replace(/[£,]/g, ''));
+        return filters.priceRanges.some(range => {
+          switch (range) {
+            case 'Under £25':
+              return price < 25;
+            case '£25-£50':
+              return price >= 25 && price <= 50;
+            case '£50-£100':
+              return price >= 50 && price <= 100;
+            case '£100-£250':
+              return price >= 100 && price <= 250;
+            case 'Over £250':
+              return price > 250;
+            default:
+              return false;
+          }
+        });
+      });
+    }
+    
+    // Filter by cable types (for cables category)
+    if (categoryId === 'cables' && filters.cableTypes.length > 0) {
+      filtered = filtered.filter(product => {
+        const cableTypes = getCableType(product.name);
+        return filters.cableTypes.some(type => cableTypes.includes(type));
+      });
+    }
+    
+    console.log(`[${categoryId.toUpperCase()}] After filtering: ${filtered.length} products`);
+    return filtered;
+  }, [baseProducts, filters, categoryId]);
 
   // Enhanced fetch with better error handling and state management
   const fetchLiveDeals = async (isAutoLoad = false) => {
