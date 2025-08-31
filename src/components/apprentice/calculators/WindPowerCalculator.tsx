@@ -357,129 +357,187 @@ export function WindPowerCalculator() {
         {result && (
           <div className="space-y-6">
             {/* Technical Performance */}
-            <div className="p-4 bg-elec-dark/20 rounded-lg border border-elec-yellow/20">
-              <h3 className="text-lg font-semibold mb-3 text-elec-yellow">Technical Performance</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-white">
-                <div>
-                  <span className="font-medium">Wind Speed at Hub Height:</span>
-                  <span className="float-right">{(result.windSpeedAtHub * 2.23694).toFixed(1)} mph ({result.windSpeedAtHub.toFixed(1)} m/s)</span>
+            <div className="p-6 bg-elec-dark/20 rounded-lg border border-elec-yellow/20">
+              <h3 className="text-xl font-semibold mb-6 text-elec-yellow flex items-center gap-2">
+                <span className="w-2 h-2 bg-elec-yellow rounded-full"></span>
+                Technical Performance
+              </h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div className="bg-background/50 p-4 rounded-lg border border-border/20">
+                  <div className="text-sm text-muted-foreground mb-1">Wind Speed at Hub Height</div>
+                  <div className="text-lg font-semibold text-white">
+                    {(result.windSpeedAtHub * 2.23694).toFixed(1)} mph
+                  </div>
+                  <div className="text-xs text-muted-foreground">({result.windSpeedAtHub.toFixed(1)} m/s)</div>
                 </div>
-                <div>
-                  <span className="font-medium">Capacity Factor:</span>
-                  <span className="float-right">{result.capacityFactor.toFixed(1)}%</span>
+                
+                <div className="bg-background/50 p-4 rounded-lg border border-border/20">
+                  <div className="text-sm text-muted-foreground mb-1">Capacity Factor</div>
+                  <div className="text-lg font-semibold text-white">{result.capacityFactor.toFixed(1)}%</div>
+                  <div className="text-xs text-muted-foreground">
+                    {result.capacityFactor < 20 ? "Poor" : result.capacityFactor < 30 ? "Moderate" : result.capacityFactor < 40 ? "Good" : "Excellent"}
+                  </div>
                 </div>
-                <div>
-                  <span className="font-medium">Gross AEP (P50):</span>
-                  <span className="float-right">{result.grossAEP.toFixed(0)} kWh/year</span>
+                
+                <div className="bg-background/50 p-4 rounded-lg border border-border/20">
+                  <div className="text-sm text-muted-foreground mb-1">Average Power Output</div>
+                  <div className="text-lg font-semibold text-white">{result.averagePower.toFixed(2)} kW</div>
+                  <div className="text-xs text-muted-foreground">Continuous average</div>
                 </div>
-                <div>
-                  <span className="font-medium">Net AEP (after losses):</span>
-                  <span className="float-right">{result.netAEP.toFixed(0)} kWh/year</span>
+                
+                <div className="bg-background/50 p-4 rounded-lg border border-border/20">
+                  <div className="text-sm text-muted-foreground mb-1">Gross AEP (P50)</div>
+                  <div className="text-lg font-semibold text-white">{result.grossAEP.toLocaleString()} kWh/year</div>
+                  <div className="text-xs text-muted-foreground">Before losses</div>
                 </div>
-                <div>
-                  <span className="font-medium">Average Power Output:</span>
-                  <span className="float-right">{result.averagePower.toFixed(2)} kW</span>
+                
+                <div className="bg-background/50 p-4 rounded-lg border border-border/20">
+                  <div className="text-sm text-muted-foreground mb-1">Net AEP</div>
+                  <div className="text-lg font-semibold text-white">{result.netAEP.toLocaleString()} kWh/year</div>
+                  <div className="text-xs text-muted-foreground">After losses</div>
                 </div>
-                <div>
-                  <span className="font-medium">Daily Average Generation:</span>
-                  <span className="float-right">{result.dailyGeneration.toFixed(1)} kWh</span>
+                
+                <div className="bg-background/50 p-4 rounded-lg border border-border/20">
+                  <div className="text-sm text-muted-foreground mb-1">Daily Average</div>
+                  <div className="text-lg font-semibold text-white">{result.dailyGeneration.toFixed(1)} kWh</div>
+                  <div className="text-xs text-muted-foreground">Per day</div>
                 </div>
               </div>
             </div>
 
             {/* Economic Analysis */}
-            <div className="p-4 bg-elec-dark/20 rounded-lg border border-elec-yellow/20">
-              <h3 className="text-lg font-semibold mb-3 text-elec-yellow">Economic Analysis</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-white">
-                <div>
-                  <span className="font-medium">Self-Consumed Energy:</span>
-                  <span className="float-right">{result.selfConsumption.toFixed(0)} kWh/year</span>
+            <div className="p-6 bg-elec-dark/20 rounded-lg border border-elec-yellow/20">
+              <h3 className="text-xl font-semibold mb-6 text-elec-yellow flex items-center gap-2">
+                <span className="w-2 h-2 bg-green-400 rounded-full"></span>
+                Economic Analysis
+              </h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div className="bg-background/50 p-4 rounded-lg border border-border/20">
+                  <div className="text-sm text-muted-foreground mb-1">Self-Consumed Energy</div>
+                  <div className="text-lg font-semibold text-white">{result.selfConsumption.toLocaleString()} kWh/year</div>
+                  <div className="text-xs text-green-400">Maximum value</div>
                 </div>
-                <div>
-                  <span className="font-medium">Grid Export:</span>
-                  <span className="float-right">{result.gridExport.toFixed(0)} kWh/year</span>
+                
+                <div className="bg-background/50 p-4 rounded-lg border border-border/20">
+                  <div className="text-sm text-muted-foreground mb-1">Grid Export</div>
+                  <div className="text-lg font-semibold text-white">{result.gridExport.toLocaleString()} kWh/year</div>
+                  <div className="text-xs text-muted-foreground">To grid</div>
                 </div>
-                <div>
-                  <span className="font-medium">Annual Savings:</span>
-                  <span className="float-right">£{result.yearlyValue.toFixed(0)}</span>
+                
+                <div className="bg-background/50 p-4 rounded-lg border border-border/20">
+                  <div className="text-sm text-muted-foreground mb-1">Annual Savings</div>
+                  <div className="text-lg font-semibold text-green-400">£{result.yearlyValue.toLocaleString()}</div>
+                  <div className="text-xs text-muted-foreground">Per year</div>
                 </div>
-                <div>
-                  <span className="font-medium">Simple Payback Period:</span>
-                  <span className="float-right">{result.paybackPeriod.toFixed(1)} years</span>
+                
+                <div className="bg-background/50 p-4 rounded-lg border border-border/20">
+                  <div className="text-sm text-muted-foreground mb-1">Payback Period</div>
+                  <div className="text-lg font-semibold text-white">{result.paybackPeriod.toFixed(1)} years</div>
+                  <div className="text-xs text-muted-foreground">
+                    {result.paybackPeriod > 15 ? "Poor ROI" : result.paybackPeriod > 10 ? "Moderate ROI" : "Good ROI"}
+                  </div>
                 </div>
               </div>
             </div>
 
             {/* Environmental Impact */}
-            <div className="p-4 bg-elec-dark/20 rounded-lg border border-elec-yellow/20">
-              <h3 className="text-lg font-semibold mb-3 text-elec-yellow">Environmental Impact</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-white">
-                <div>
-                  <span className="font-medium">Annual CO₂ Savings:</span>
-                  <span className="float-right">{result.co2Savings.toFixed(0)} kg CO₂</span>
+            <div className="p-6 bg-elec-dark/20 rounded-lg border border-elec-yellow/20">
+              <h3 className="text-xl font-semibold mb-6 text-elec-yellow flex items-center gap-2">
+                <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+                Environmental Impact
+              </h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="bg-background/50 p-4 rounded-lg border border-border/20">
+                  <div className="text-sm text-muted-foreground mb-1">Annual CO₂ Savings</div>
+                  <div className="text-lg font-semibold text-green-400">{result.co2Savings.toLocaleString()} kg CO₂</div>
+                  <div className="text-xs text-muted-foreground">Per year</div>
                 </div>
-                <div>
-                  <span className="font-medium">Equivalent Trees Planted:</span>
-                  <span className="float-right">{(result.co2Savings / 21.8).toFixed(0)} trees/year</span>
+                
+                <div className="bg-background/50 p-4 rounded-lg border border-border/20">
+                  <div className="text-sm text-muted-foreground mb-1">Equivalent Trees Planted</div>
+                  <div className="text-lg font-semibold text-green-400">{(result.co2Savings / 21.8).toFixed(0)} trees/year</div>
+                  <div className="text-xs text-muted-foreground">Carbon offset equivalent</div>
                 </div>
               </div>
             </div>
 
             {/* What This Means */}
-            <div className="p-4 bg-blue-900/20 rounded-lg border border-blue-400/20">
-              <h3 className="text-lg font-semibold mb-3 text-blue-400">What This Means</h3>
-              <div className="space-y-3 text-sm text-white">
-                <p>
-                  <strong>Capacity Factor ({result.capacityFactor.toFixed(1)}%):</strong> {
-                    result.capacityFactor < 20 ? "Poor wind resource - turbine will run at low efficiency. Consider alternative location or technology." :
+            <div className="p-6 bg-blue-900/20 rounded-lg border border-blue-400/20">
+              <h3 className="text-xl font-semibold mb-6 text-blue-400 flex items-center gap-2">
+                <span className="w-2 h-2 bg-blue-400 rounded-full"></span>
+                What This Means
+              </h3>
+              <div className="space-y-4">
+                <div className="bg-background/30 p-4 rounded-lg border border-border/10">
+                  <h4 className="font-semibold text-white mb-2">Capacity Factor ({result.capacityFactor.toFixed(1)}%)</h4>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    {result.capacityFactor < 20 ? "Poor wind resource - turbine will run at low efficiency. Consider alternative location or technology." :
                     result.capacityFactor < 30 ? "Moderate wind resource - viable but not optimal. Ensure proper feasibility study." :
                     result.capacityFactor < 40 ? "Good wind resource - commercially viable installation with reasonable returns." :
-                    "Excellent wind resource - highly profitable installation with strong returns."
-                  }
-                </p>
-                <p>
-                  <strong>Wind Speed at Hub:</strong> Your {hubHeight}m hub height increases wind speed from {averageWindSpeed}mph to {(result.windSpeedAtHub * 2.23694).toFixed(1)}mph, 
-                  demonstrating the importance of turbine height for energy capture.
-                </p>
-                <p>
-                  <strong>Financial Viability:</strong> With a {result.paybackPeriod.toFixed(1)}-year payback period, this installation {
-                    result.paybackPeriod > 15 ? "may not be financially viable without grants or subsidies." :
-                    result.paybackPeriod > 10 ? "shows moderate returns - consider incentives and long-term electricity price trends." :
-                    "shows strong financial returns over the turbine's 20-25 year lifespan."
-                  }
-                </p>
+                    "Excellent wind resource - highly profitable installation with strong returns."}
+                  </p>
+                </div>
+                
+                <div className="bg-background/30 p-4 rounded-lg border border-border/10">
+                  <h4 className="font-semibold text-white mb-2">Wind Speed Enhancement</h4>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    Your {hubHeight}m hub height increases wind speed from {averageWindSpeed}mph to {(result.windSpeedAtHub * 2.23694).toFixed(1)}mph, 
+                    demonstrating the importance of turbine height for energy capture.
+                  </p>
+                </div>
+                
+                <div className="bg-background/30 p-4 rounded-lg border border-border/10">
+                  <h4 className="font-semibold text-white mb-2">Financial Viability</h4>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    With a {result.paybackPeriod.toFixed(1)}-year payback period, this installation {
+                      result.paybackPeriod > 15 ? "may not be financially viable without grants or subsidies." :
+                      result.paybackPeriod > 10 ? "shows moderate returns - consider incentives and long-term electricity price trends." :
+                      "shows strong financial returns over the turbine's 20-25 year lifespan."
+                    }
+                  </p>
+                </div>
               </div>
             </div>
 
             {/* BS 7671 & Planning Requirements */}
-            <div className="p-4 bg-amber-900/20 rounded-lg border border-amber-400/20">
-              <h3 className="text-lg font-semibold mb-3 text-amber-400">BS 7671 & Planning Considerations</h3>
-              <div className="space-y-3 text-sm text-white">
-                <p><strong>Electrical Installation (BS 7671:2018+A2:2022):</strong></p>
-                <ul className="list-disc ml-5 space-y-1">
-                  <li>Install appropriate DC and AC isolators as per Section 537</li>
-                  <li>Earthing and bonding must comply with Chapter 54</li>
-                  <li>Surge protection required for wind installations (Chapter 44)</li>
-                  <li>Cable sizing for voltage drop limits (Appendix 4)</li>
-                  <li>RCD protection for final circuits (Chapter 41)</li>
-                </ul>
-                
-                <p><strong>Planning Permission:</strong></p>
-                <ul className="list-disc ml-5 space-y-1">
-                  <li>Turbines {'>'}15m height typically require full planning permission</li>
-                  <li>Permitted development rights may apply for smaller installations</li>
-                  <li>Noise assessment required - typically 45dB limit at nearest property</li>
-                  <li>Shadow flicker analysis may be required</li>
-                  <li>Consider aviation lighting requirements for installations {'>'}15m</li>
-                </ul>
+            <div className="p-6 bg-amber-900/20 rounded-lg border border-amber-400/20">
+              <h3 className="text-xl font-semibold mb-6 text-amber-400 flex items-center gap-2">
+                <span className="w-2 h-2 bg-amber-400 rounded-full"></span>
+                BS 7671 & Planning Considerations
+              </h3>
+              
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div className="bg-background/30 p-4 rounded-lg border border-border/10">
+                  <h4 className="font-semibold text-amber-400 mb-3">Electrical Installation (BS 7671:2018+A2:2022)</h4>
+                  <ul className="list-disc ml-4 space-y-1 text-sm text-muted-foreground">
+                    <li>Install appropriate DC and AC isolators as per Section 537</li>
+                    <li>Earthing and bonding must comply with Chapter 54</li>
+                    <li>Surge protection required for wind installations (Chapter 44)</li>
+                    <li>Cable sizing for voltage drop limits (Appendix 4)</li>
+                    <li>RCD protection for final circuits (Chapter 41)</li>
+                  </ul>
+                </div>
 
-                <p><strong>Grid Connection:</strong></p>
-                <ul className="list-disc ml-5 space-y-1">
-                  <li>G98 application for systems ≤16A per phase</li>
-                  <li>G99 application for larger systems - DNO approval required</li>
-                  <li>Export limitation may be required in weak grid areas</li>
-                  <li>Consider power quality requirements (voltage, frequency, harmonics)</li>
-                </ul>
+                <div className="bg-background/30 p-4 rounded-lg border border-border/10">
+                  <h4 className="font-semibold text-amber-400 mb-3">Planning Permission</h4>
+                  <ul className="list-disc ml-4 space-y-1 text-sm text-muted-foreground">
+                    <li>Turbines {'>'}15m height typically require full planning permission</li>
+                    <li>Permitted development rights may apply for smaller installations</li>
+                    <li>Noise assessment required - typically 45dB limit at nearest property</li>
+                    <li>Shadow flicker analysis may be required</li>
+                    <li>Consider aviation lighting requirements for installations {'>'}15m</li>
+                  </ul>
+                </div>
+
+                <div className="bg-background/30 p-4 rounded-lg border border-border/10">
+                  <h4 className="font-semibold text-amber-400 mb-3">Grid Connection</h4>
+                  <ul className="list-disc ml-4 space-y-1 text-sm text-muted-foreground">
+                    <li>G98 application for systems ≤16A per phase</li>
+                    <li>G99 application for larger systems - DNO approval required</li>
+                    <li>Export limitation may be required in weak grid areas</li>
+                    <li>Consider power quality requirements (voltage, frequency, harmonics)</li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
