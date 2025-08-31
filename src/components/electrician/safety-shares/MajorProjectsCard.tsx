@@ -135,18 +135,18 @@ const MajorProjectsCard = () => {
         console.error('Database error:', dbError);
       }
 
-      // Then trigger Firecrawl scraping for new data (run in background)
+      // Then trigger API scraping for new data (run in background)
       let scrapeResult = null;
       try {
         const { data, error } = await supabase.functions.invoke('fetch-projects');
         if (error) {
-          console.error('Scraping error:', error);
+          console.error('API fetch error:', error);
         } else {
           scrapeResult = data;
-          console.log('Scraping success:', data);
+          console.log('API fetch success:', data);
         }
-      } catch (scrapeError) {
-        console.error('Scraping failed:', scrapeError);
+      } catch (fetchError) {
+        console.error('API fetch failed:', fetchError);
       }
 
       // Filter and map database projects to component format  
@@ -183,8 +183,8 @@ const MajorProjectsCard = () => {
       toast({
         title: "Projects Updated",
         description: isUsingFallback 
-          ? "Showing example projects - live scraping in progress" 
-          : `Showing ${totalProjects} live projects${newProjectsCount > 0 ? ` (${newProjectsCount} newly scraped)` : ''}`,
+          ? "Showing example projects - live API fetch in progress" 
+          : `Showing ${totalProjects} live projects${newProjectsCount > 0 ? ` (${newProjectsCount} newly fetched)` : ''}`,
         duration: 3000,
       });
 
