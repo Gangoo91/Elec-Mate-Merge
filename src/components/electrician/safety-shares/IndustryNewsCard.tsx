@@ -400,7 +400,7 @@ const IndustryNewsCard = () => {
               {currentArticles.map((article) => (
                 <Card
                   key={article.id}
-                  className="bg-elec-dark/20 border-elec-yellow/10 hover:border-elec-yellow/30 transition-all duration-300 hover:shadow-lg hover:shadow-elec-yellow/5 overflow-hidden group cursor-pointer"
+                  className="bg-elec-card border-elec-yellow/10 hover:border-elec-yellow/30 transition-all duration-300 hover:shadow-lg hover:shadow-elec-yellow/5 overflow-hidden group cursor-pointer"
                   onClick={() => {
                     if (article.url) {
                       window.open(article.url, '_blank', 'noopener,noreferrer');
