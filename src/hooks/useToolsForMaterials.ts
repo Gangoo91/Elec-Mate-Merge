@@ -8,7 +8,7 @@ export interface MaterialItem {
   price: string;
   supplier: string;
   image: string;
-  stockStatus: 'In Stock' | 'Out of Stock' | 'Limited Stock';
+  stockStatus: 'In Stock' | 'Out of Stock' | 'Low Stock';
   isOnSale?: boolean;
   salePrice?: string;
   highlights?: string[];
