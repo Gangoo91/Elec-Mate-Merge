@@ -215,20 +215,20 @@ const CategoryMaterials = () => {
     try {
       const allCollected: LiveItem[] = [];
       
-      // Use AI-powered tools function for tools category
+      // Use Firecrawl for tools category
       if (categoryId === 'tools') {
-        console.log(`[TOOLS] Using AI-powered electrical tools function`);
-        const { data, error } = await supabase.functions.invoke('ai-electrical-tools');
+        console.log(`[TOOLS] Using Firecrawl to scrape Screwfix tools`);
+        const { data, error } = await supabase.functions.invoke('firecrawl-tools-scraper');
         
         if (error) {
           throw new Error(error.message);
         }
         
-        if (Array.isArray(data?.products)) {
-          console.log(`[TOOLS] AI function returned ${data.products.length} tools`);
-          allCollected.push(...(data.products as LiveItem[]));
+        if (Array.isArray(data)) {
+          console.log(`[TOOLS] Firecrawl function returned ${data.length} tools`);
+          allCollected.push(...(data as LiveItem[]));
         } else {
-          console.log(`[TOOLS] AI function returned no products`);
+          console.log(`[TOOLS] Firecrawl function returned no products`);
         }
       } else {
         // Use existing scraping logic for other categories
@@ -376,18 +376,18 @@ const CategoryMaterials = () => {
     try {
       const allCollected: LiveItem[] = [];
       
-      // Use AI-powered tools function for tools category
+      // Use Firecrawl for tools category
       if (categoryId === 'tools') {
-        console.log(`[TOOLS] Manual refresh using AI-powered electrical tools function`);
-        const { data, error } = await supabase.functions.invoke('ai-electrical-tools');
+        console.log(`[TOOLS] Manual refresh using Firecrawl to scrape Screwfix tools`);
+        const { data, error } = await supabase.functions.invoke('firecrawl-tools-scraper');
         
         if (error) {
           throw new Error(error.message);
         }
         
-        if (Array.isArray(data?.products)) {
-          console.log(`[TOOLS] AI function returned ${data.products.length} tools`);
-          allCollected.push(...(data.products as LiveItem[]));
+        if (Array.isArray(data)) {
+          console.log(`[TOOLS] Firecrawl function returned ${data.length} tools`);
+          allCollected.push(...(data as LiveItem[]));
         }
       } else {
         // Use existing scraping logic for other categories
