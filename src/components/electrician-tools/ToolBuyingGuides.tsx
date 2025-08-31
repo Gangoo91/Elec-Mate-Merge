@@ -70,38 +70,6 @@ const ToolBuyingGuides = () => {
         </p>
       </div>
 
-      {/* Quick Actions */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-        <Card className="border-elec-yellow/20 bg-elec-gray hover:border-elec-yellow/50 transition-all cursor-pointer"
-              onClick={() => setShowBudgetCalculator(true)}>
-          <CardHeader className="pb-3">
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-elec-yellow/20 rounded-lg">
-                <Calculator className="h-5 w-5 text-elec-yellow" />
-              </div>
-              <div>
-                <CardTitle className="text-lg text-white">Budget Calculator</CardTitle>
-                <p className="text-sm text-muted-foreground">Plan your tool investments wisely</p>
-              </div>
-            </div>
-          </CardHeader>
-        </Card>
-
-        <Card className="border-elec-yellow/20 bg-elec-gray">
-          <CardHeader className="pb-3">
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-blue-500/20 rounded-lg">
-                <ShoppingCart className="h-5 w-5 text-blue-400" />
-              </div>
-              <div>
-                <CardTitle className="text-lg text-white">Quick Recommendations</CardTitle>
-                <p className="text-sm text-muted-foreground">Get instant tool suggestions</p>
-              </div>
-            </div>
-          </CardHeader>
-        </Card>
-      </div>
-
       {/* Comprehensive Guides */}
       <GuideSelector onSelectGuide={handleSelectGuide} />
 
