@@ -156,26 +156,26 @@ const CategoryMaterials = () => {
       {/* Advanced Features Navigation */}
       <section className="space-y-4 relative z-10">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full relative">
-          <TabsList className="grid w-full grid-cols-2 lg:grid-cols-5 bg-elec-gray border border-elec-yellow/20 relative z-20">
-            <TabsTrigger value="browse" className="data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark">
+          <TabsList className="flex w-full overflow-x-auto scrollbar-hide lg:grid lg:grid-cols-5 bg-elec-gray border border-elec-yellow/20 relative z-20 gap-2 p-2">
+            <TabsTrigger value="browse" className="flex-shrink-0 whitespace-nowrap px-4 py-3 text-sm min-w-fit data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark">
               <Package className="h-4 w-4 mr-2" />
               Browse
             </TabsTrigger>
-            <TabsTrigger value="compare" className="data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark">
+            <TabsTrigger value="compare" className="flex-shrink-0 whitespace-nowrap px-4 py-3 text-sm min-w-fit data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark">
               <Scale className="h-4 w-4 mr-2" />
               Compare
             </TabsTrigger>
-            <TabsTrigger value="bulk" className="data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark">
+            <TabsTrigger value="bulk" className="flex-shrink-0 whitespace-nowrap px-4 py-3 text-sm min-w-fit data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark">
               <Calculator className="h-4 w-4 mr-2" />
-              Bulk Pricing
+              Bulk
             </TabsTrigger>
-            <TabsTrigger value="alerts" className="data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark">
+            <TabsTrigger value="alerts" className="flex-shrink-0 whitespace-nowrap px-4 py-3 text-sm min-w-fit data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark">
               <TrendingUp className="h-4 w-4 mr-2" />
-              Price Alerts
+              Alerts
             </TabsTrigger>
-            <TabsTrigger value="ai" className="data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark">
+            <TabsTrigger value="ai" className="flex-shrink-0 whitespace-nowrap px-4 py-3 text-sm min-w-fit data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark">
               <Brain className="h-4 w-4 mr-2" />
-              AI Insights
+              AI
             </TabsTrigger>
           </TabsList>
 
