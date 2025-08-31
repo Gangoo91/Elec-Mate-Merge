@@ -29,11 +29,12 @@ interface PriceAlert {
 }
 
 interface PriceHistoryAlertsProps {
+  categoryId?: string;
   selectedProduct?: any;
-  currentUserId: string;
+  currentUserId?: string;
 }
 
-const PriceHistoryAlerts = ({ selectedProduct, currentUserId }: PriceHistoryAlertsProps) => {
+const PriceHistoryAlerts = ({ categoryId, selectedProduct, currentUserId = "demo-user" }: PriceHistoryAlertsProps) => {
   const [priceHistory, setPriceHistory] = useState<PriceHistoryEntry[]>([]);
   const [userAlerts, setUserAlerts] = useState<PriceAlert[]>([]);
   const [isLoadingHistory, setIsLoadingHistory] = useState(false);

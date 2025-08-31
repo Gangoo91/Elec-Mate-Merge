@@ -5,8 +5,12 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-import { Package, ArrowLeft, Filter, RefreshCw, Loader2, Search } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Package, ArrowLeft, Filter, RefreshCw, Loader2, Search, Scale, TrendingUp, Calculator, AlertTriangle, Brain } from "lucide-react";
 import MaterialCard from "@/components/electrician-materials/MaterialCard";
+import MaterialPriceComparison from "@/components/electrician-materials/MaterialPriceComparison";
+import BulkPricingCalculator from "@/components/electrician-materials/BulkPricingCalculator";
+import PriceHistoryAlerts from "@/components/electrician-materials/PriceHistoryAlerts";
 import { useCategoryMaterials } from "@/hooks/useCategoryMaterials";
 
 const CATEGORY_META: Record<string, { title: string; description: string }> = {
@@ -45,6 +49,8 @@ const CategoryMaterials = () => {
 
   // Filter state for the materials
   const [searchTerm, setSearchTerm] = useState("");
+  const [activeTab, setActiveTab] = useState("browse");
+  const [selectedItems, setSelectedItems] = useState<any[]>([]);
   
   // Filter and search the materials
   const filteredMaterials = useMemo(() => {
@@ -66,6 +72,21 @@ const CategoryMaterials = () => {
 
   const pageTitle = `${meta.title} | ElecMate Electrical Materials`;
   const pageDescription = `${meta.title} for UK electricians — ${meta.description}. BS 7671 18th Edition compliant guidance.`.slice(0, 160);
+
+  const handleAddToCompare = (item: any) => {
+    if (selectedItems.length >= 3) return;
+    if (!selectedItems.find(selected => selected.id === item.id)) {
+      setSelectedItems(prev => [...prev, item]);
+    }
+  };
+
+  const handleRemoveFromCompare = (itemId: string) => {
+    setSelectedItems(prev => prev.filter(item => item.id !== itemId));
+  };
+
+  const clearComparison = () => {
+    setSelectedItems([]);
+  };
 
   if (error) {
     return (
@@ -132,93 +153,199 @@ const CategoryMaterials = () => {
         </div>
       </header>
 
-      {/* Search and filters */}
+      {/* Advanced Features Navigation */}
       <section className="space-y-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-4 flex-1">
-            <div className="relative flex-1 max-w-md">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input
-                placeholder="Search materials..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10"
-              />
-            </div>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => refetch()}
-              disabled={isLoading}
-            >
-              {isLoading ? (
-                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-              ) : (
-                <RefreshCw className="h-4 w-4 mr-2" />
-              )}
-              Refresh
-            </Button>
-          </div>
-        </div>
-      </section>
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+          <TabsList className="grid w-full grid-cols-2 lg:grid-cols-5 bg-elec-gray border border-elec-yellow/20">
+            <TabsTrigger value="browse" className="data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark">
+              <Package className="h-4 w-4 mr-2" />
+              Browse
+            </TabsTrigger>
+            <TabsTrigger value="compare" className="data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark">
+              <Scale className="h-4 w-4 mr-2" />
+              Compare
+            </TabsTrigger>
+            <TabsTrigger value="bulk" className="data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark">
+              <Calculator className="h-4 w-4 mr-2" />
+              Bulk Pricing
+            </TabsTrigger>
+            <TabsTrigger value="alerts" className="data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark">
+              <TrendingUp className="h-4 w-4 mr-2" />
+              Price Alerts
+            </TabsTrigger>
+            <TabsTrigger value="ai" className="data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark">
+              <Brain className="h-4 w-4 mr-2" />
+              AI Insights
+            </TabsTrigger>
+          </TabsList>
 
-      {/* Loading state */}
-      {isLoading && (
-        <Card className="border-elec-yellow/20 bg-elec-gray">
-          <CardContent className="p-6 text-center">
-            <div className="flex items-center justify-center gap-2 mb-4">
-              <Loader2 className="h-5 w-5 animate-spin text-elec-yellow" />
-              <p className="text-elec-yellow font-medium">Loading {meta.title.toLowerCase()}...</p>
+          {/* Search and filters for Browse tab */}
+          {activeTab === "browse" && (
+            <div className="flex items-center justify-between mt-4">
+              <div className="flex items-center gap-4 flex-1">
+                <div className="relative flex-1 max-w-md">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                  <Input
+                    placeholder="Search materials..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="pl-10"
+                  />
+                </div>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => refetch()}
+                  disabled={isLoading}
+                >
+                  {isLoading ? (
+                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                  ) : (
+                    <RefreshCw className="h-4 w-4 mr-2" />
+                  )}
+                  Refresh
+                </Button>
+              </div>
             </div>
-            <p className="text-muted-foreground text-sm">
-              Fetching data from comprehensive materials database
-            </p>
-          </CardContent>
-        </Card>
-      )}
+          )}
 
-      {/* Materials grid */}
-      {!isLoading && (
-        <>
-          {filteredMaterials.length === 0 ? (
-            <Card className="border-elec-yellow/20 bg-elec-gray">
-              <CardContent className="p-6 text-center space-y-3">
-                <p className="text-muted-foreground">
-                  {searchTerm ? 
-                    `No materials found matching "${searchTerm}"` :
-                    `No materials found in ${meta.title.toLowerCase()} category`
-                  }
-                </p>
-                {searchTerm && (
-                  <Button
-                    variant="outline"
-                    onClick={() => setSearchTerm("")}
-                  >
-                    Clear search
-                  </Button>
-                )}
+          {/* Quick Compare Bar */}
+          {selectedItems.length > 0 && (
+            <Card className="bg-elec-yellow/10 border-elec-yellow/30 mt-4">
+              <CardContent className="p-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <Scale className="h-5 w-5 text-elec-yellow" />
+                    <span className="font-medium">{selectedItems.length}/3 items selected for comparison</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Button
+                      size="sm"
+                      onClick={() => setActiveTab("compare")}
+                      className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
+                    >
+                      Compare Now
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={clearComparison}
+                    >
+                      Clear
+                    </Button>
+                  </div>
+                </div>
               </CardContent>
             </Card>
-          ) : (
-            <section aria-label={`${meta.title} products`} className="space-y-4">
-              <div className="flex items-center justify-between text-xs text-muted-foreground">
-                <span>
-                  Showing {filteredMaterials.length} {filteredMaterials.length === 1 ? 'material' : 'materials'}
-                </span>
-                <span>
-                  📡 Live data from comprehensive materials database
-                </span>
-              </div>
-              
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {filteredMaterials.map((item, index) => (
-                  <MaterialCard key={item.id || `${item.supplier}-${item.name}-${index}`} item={item} />
-                ))}
-              </div>
-            </section>
           )}
-        </>
-      )}
+        </Tabs>
+      </section>
+
+      {/* Tab Content */}
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+        <TabsContent value="browse" className="space-y-6">
+          {/* Loading state */}
+          {isLoading && (
+            <Card className="border-elec-yellow/20 bg-elec-gray">
+              <CardContent className="p-6 text-center">
+                <div className="flex items-center justify-center gap-2 mb-4">
+                  <Loader2 className="h-5 w-5 animate-spin text-elec-yellow" />
+                  <p className="text-elec-yellow font-medium">Loading {meta.title.toLowerCase()}...</p>
+                </div>
+                <p className="text-muted-foreground text-sm">
+                  Fetching data from comprehensive materials database
+                </p>
+              </CardContent>
+            </Card>
+          )}
+
+          {/* Materials grid */}
+          {!isLoading && (
+            <>
+              {filteredMaterials.length === 0 ? (
+                <Card className="border-elec-yellow/20 bg-elec-gray">
+                  <CardContent className="p-6 text-center space-y-3">
+                    <p className="text-muted-foreground">
+                      {searchTerm ? 
+                        `No materials found matching "${searchTerm}"` :
+                        `No materials found in ${meta.title.toLowerCase()} category`
+                      }
+                    </p>
+                    {searchTerm && (
+                      <Button
+                        variant="outline"
+                        onClick={() => setSearchTerm("")}
+                      >
+                        Clear search
+                      </Button>
+                    )}
+                  </CardContent>
+                </Card>
+              ) : (
+                <section aria-label={`${meta.title} products`} className="space-y-4">
+                  <div className="flex items-center justify-between text-xs text-muted-foreground">
+                    <span>
+                      Showing {filteredMaterials.length} {filteredMaterials.length === 1 ? 'material' : 'materials'}
+                    </span>
+                    <span>
+                      📡 Live data from comprehensive materials database
+                    </span>
+                  </div>
+                  
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {filteredMaterials.map((item, index) => (
+                      <MaterialCard 
+                        key={item.id || `${item.supplier}-${item.name}-${index}`} 
+                        item={item}
+                        onAddToCompare={handleAddToCompare}
+                        onRemoveFromCompare={handleRemoveFromCompare}
+                        isSelected={selectedItems.some(selected => selected.id === item.id)}
+                        isCompareDisabled={selectedItems.length >= 3 && !selectedItems.some(selected => selected.id === item.id)}
+                      />
+                    ))}
+                  </div>
+                </section>
+              )}
+            </>
+          )}
+        </TabsContent>
+
+        <TabsContent value="compare" className="space-y-6">
+          <MaterialPriceComparison 
+            initialQuery={categoryId}
+            selectedItems={selectedItems}
+            onClearSelection={clearComparison}
+          />
+        </TabsContent>
+
+        <TabsContent value="bulk" className="space-y-6">
+          <BulkPricingCalculator categoryId={categoryId} />
+        </TabsContent>
+
+        <TabsContent value="alerts" className="space-y-6">
+          <PriceHistoryAlerts categoryId={categoryId} />
+        </TabsContent>
+
+        <TabsContent value="ai" className="space-y-6">
+          <Card className="border-elec-yellow/20 bg-elec-gray">
+            <CardContent className="p-6 text-center space-y-4">
+              <div className="flex items-center justify-center gap-2">
+                <Brain className="h-8 w-8 text-elec-yellow" />
+                <h3 className="text-xl font-semibold">AI-Powered Insights</h3>
+              </div>
+              <p className="text-muted-foreground">
+                Get personalised recommendations, value analysis, and purchase suggestions for {meta.title.toLowerCase()}.
+              </p>
+              <Button
+                className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
+                onClick={() => setActiveTab("compare")}
+              >
+                Try AI Recommendations in Compare
+              </Button>
+            </CardContent>
+          </Card>
+        </TabsContent>
+      </Tabs>
     </main>
   );
 };

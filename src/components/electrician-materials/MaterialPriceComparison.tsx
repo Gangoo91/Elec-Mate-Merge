@@ -91,7 +91,13 @@ const SUPPLIERS = [
   { value: "toolstation", label: "Toolstation" }
 ];
 
-const MaterialPriceComparison = () => {
+interface MaterialPriceComparisonProps {
+  initialQuery?: string;
+  selectedItems?: any[];
+  onClearSelection?: () => void;
+}
+
+const MaterialPriceComparison = ({ initialQuery = "", selectedItems = [], onClearSelection }: MaterialPriceComparisonProps) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedSupplier, setSelectedSupplier] = useState("all");

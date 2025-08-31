@@ -1,7 +1,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, Plus, Minus, Check } from "lucide-react";
 
 import { MaterialItem as BaseMaterialItem } from "@/data/electrician/productData";
 
@@ -11,9 +11,19 @@ interface MaterialItem extends BaseMaterialItem {
 
 interface MaterialCardProps {
   item: MaterialItem;
+  onAddToCompare?: (item: MaterialItem) => void;
+  onRemoveFromCompare?: (itemId: string) => void;
+  isSelected?: boolean;
+  isCompareDisabled?: boolean;
 }
 
-const MaterialCard: React.FC<MaterialCardProps> = ({ item }) => {
+const MaterialCard: React.FC<MaterialCardProps> = ({ 
+  item, 
+  onAddToCompare, 
+  onRemoveFromCompare, 
+  isSelected = false, 
+  isCompareDisabled = false 
+}) => {
   // Extract cable-specific information
   const getCableInfo = () => {
     const name = item.name.toLowerCase();
@@ -192,13 +202,47 @@ const MaterialCard: React.FC<MaterialCardProps> = ({ item }) => {
           )}
         </div>
         
-        {/* Action button */}
-        <a href={getProductUrl()} target="_blank" rel="noopener noreferrer" className="block w-full">
-          <Button className="w-full bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark font-semibold">
-            View Deal
-            <ExternalLink className="h-4 w-4 ml-2" />
-          </Button>
-        </a>
+        {/* Action buttons */}
+        <div className="space-y-2">
+          {onAddToCompare && (
+            <Button
+              onClick={() => {
+                if (isSelected && onRemoveFromCompare) {
+                  onRemoveFromCompare(String(item.id || item.name));
+                } else if (!isCompareDisabled) {
+                  onAddToCompare(item);
+                }
+              }}
+              disabled={isCompareDisabled && !isSelected}
+              variant={isSelected ? "default" : "outline"}
+              className={`w-full ${
+                isSelected 
+                  ? "bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90" 
+                  : "border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+              }`}
+              size="sm"
+            >
+              {isSelected ? (
+                <>
+                  <Check className="h-4 w-4 mr-2" />
+                  Selected
+                </>
+              ) : (
+                <>
+                  <Plus className="h-4 w-4 mr-2" />
+                  Compare
+                </>
+              )}
+            </Button>
+          )}
+          
+          <a href={getProductUrl()} target="_blank" rel="noopener noreferrer" className="block w-full">
+            <Button className="w-full bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark font-semibold">
+              View Deal
+              <ExternalLink className="h-4 w-4 ml-2" />
+            </Button>
+          </a>
+        </div>
       </CardContent>
     </Card>
   );

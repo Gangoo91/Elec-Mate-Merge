@@ -22,11 +22,12 @@ interface BulkPricingData {
 }
 
 interface BulkPricingCalculatorProps {
-  products: any[];
+  categoryId?: string;
+  products?: any[];
   onCalculate?: (data: BulkPricingData[]) => void;
 }
 
-const BulkPricingCalculator = ({ products, onCalculate }: BulkPricingCalculatorProps) => {
+const BulkPricingCalculator = ({ categoryId, products = [], onCalculate }: BulkPricingCalculatorProps) => {
   const [selectedProduct, setSelectedProduct] = useState<string>("");
   const [customQuantities, setCustomQuantities] = useState<number[]>([1, 5, 10, 25, 50, 100]);
   const [bulkResults, setBulkResults] = useState<BulkPricingData[]>([]);
