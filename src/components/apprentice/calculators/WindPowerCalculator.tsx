@@ -116,7 +116,8 @@ export function WindPowerCalculator() {
   const calculateWindPower = () => {
     const rating = getTurbineRating();
     const height = parseFloat(hubHeight);
-    const windSpeed = parseFloat(averageWindSpeed);
+    const windSpeedMph = parseFloat(averageWindSpeed);
+    const windSpeed = windSpeedMph * 0.44704; // Convert MPH to m/s for calculations
     const price = parseFloat(electricityPrice);
     const windClassNum = parseInt(windClass);
     const altitudeM = parseFloat(altitude);
@@ -267,7 +268,7 @@ export function WindPowerCalculator() {
               placeholder="Enter wind speed"
               value={averageWindSpeed}
               onChange={(e) => setAverageWindSpeed(e.target.value)}
-              unit="m/s"
+              unit="mph"
               step="0.1"
             />
             
@@ -361,7 +362,7 @@ export function WindPowerCalculator() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-white">
                 <div>
                   <span className="font-medium">Wind Speed at Hub Height:</span>
-                  <span className="float-right">{result.windSpeedAtHub.toFixed(1)} m/s</span>
+                  <span className="float-right">{(result.windSpeedAtHub * 2.23694).toFixed(1)} mph ({result.windSpeedAtHub.toFixed(1)} m/s)</span>
                 </div>
                 <div>
                   <span className="font-medium">Capacity Factor:</span>
@@ -437,7 +438,7 @@ export function WindPowerCalculator() {
                   }
                 </p>
                 <p>
-                  <strong>Wind Speed at Hub:</strong> Your {hubHeight}m hub height increases wind speed from {averageWindSpeed}m/s to {result.windSpeedAtHub.toFixed(1)}m/s, 
+                  <strong>Wind Speed at Hub:</strong> Your {hubHeight}m hub height increases wind speed from {averageWindSpeed}mph to {(result.windSpeedAtHub * 2.23694).toFixed(1)}mph, 
                   demonstrating the importance of turbine height for energy capture.
                 </p>
                 <p>
