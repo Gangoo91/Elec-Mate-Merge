@@ -488,10 +488,14 @@ const MajorProjectsCard = () => {
               onClick={handleRefresh}
               disabled={isLoading}
               variant="outline"
-              className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+              className={`border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 transition-all duration-200 ${
+                isLoading ? 'opacity-50 cursor-not-allowed' : ''
+              }`}
             >
-              <RefreshCw className={`h-4 w-4 mr-2 ${isLoading ? 'animate-spin' : ''}`} />
-              Refresh
+              <RefreshCw className={`h-4 w-4 mr-2 transition-transform duration-200 ${
+                isLoading ? 'animate-spin' : ''
+              }`} />
+              {isLoading ? 'Fetching...' : 'Refresh'}
             </Button>
             <Button 
               onClick={() => setIsSubmissionDialogOpen(true)}
