@@ -311,12 +311,13 @@ const BatteryBackupCalculator = () => {
 
             {showAdvanced && (
               <div className="space-y-4 border border-elec-yellow/10 rounded-lg p-4">
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <MobileInput
                     label="Temperature (°C)"
                     type="number"
                     value={ambientTemp}
                     onChange={(e) => setAmbientTemp(e.target.value)}
+                    placeholder="20"
                     unit="°C"
                   />
                   
@@ -325,6 +326,7 @@ const BatteryBackupCalculator = () => {
                     type="number"
                     value={batteryHealth}
                     onChange={(e) => setBatteryHealth(e.target.value)}
+                    placeholder="100"
                     unit="%"
                   />
                 </div>
