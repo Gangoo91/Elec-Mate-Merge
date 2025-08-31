@@ -203,7 +203,7 @@ const IndustryNewsCard = () => {
   return (
     <Card className="w-full bg-transparent border-none p-0">
         <CardHeader className="p-0">
-          <CardTitle className="text-elec-yellow flex items-center gap-2 justify-end">
+          <CardTitle className="text-elec-yellow flex items-center gap-2 justify-end pb-6">
             <Button
               onClick={fetchLiveNews}
               disabled={isLoading}
