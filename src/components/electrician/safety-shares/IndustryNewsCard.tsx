@@ -223,7 +223,7 @@ const IndustryNewsCard = () => {
         </CardHeader>
         <CardContent className="space-y-6 bg-transparent">
           {/* Enhanced Control Panel - Always Visible */}
-          <div className="bg-elec-gray/20 rounded-xl border border-elec-yellow/10 p-6 space-y-6">
+          <div className="bg-elec-dark/20 rounded-xl border border-elec-yellow/10 p-6 space-y-6">
             {/* Search Section */}
             <div className="space-y-3">
               <div className="flex items-center gap-2">
