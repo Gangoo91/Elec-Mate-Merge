@@ -1,266 +1,399 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
+import { MobileInputWrapper } from "@/components/ui/mobile-input-wrapper";
+import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
+import { MobileButton } from "@/components/ui/mobile-button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Zap, Info, Calculator, RotateCcw } from "lucide-react";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
+import { Zap, Info, Calculator, RotateCcw, Settings, AlertTriangle, TrendingUp, Activity, Gauge } from "lucide-react";
 import { useState } from "react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { calculateTransformer, transformerPresets, type TransformerInputs, type TransformerResults } from "@/lib/transformer-calcs";
 
 const TransformerCalculator = () => {
-  const [calculationType, setCalculationType] = useState<string>("turns-ratio");
+  const [advancedMode, setAdvancedMode] = useState(false);
   const [primaryVoltage, setPrimaryVoltage] = useState<string>("");
   const [secondaryVoltage, setSecondaryVoltage] = useState<string>("");
-  const [primaryTurns, setPrimaryTurns] = useState<string>("");
-  const [secondaryTurns, setSecondaryTurns] = useState<string>("");
-  const [power, setPower] = useState<string>("");
-  const [efficiency, setEfficiency] = useState<string>("0.95");
-  const [result, setResult] = useState<{
-    turnsRatio: number;
-    voltageRatio: number;
-    currentRatio: number;
-    primaryCurrent?: number;
-    secondaryCurrent?: number;
-    efficiency?: number;
-    powerLoss?: number;
-  } | null>(null);
+  const [kvaRating, setKvaRating] = useState<string>("");
+  const [powerFactor, setPowerFactor] = useState<string>("0.85");
+  const [phase, setPhase] = useState<string>("three");
+  const [frequency, setFrequency] = useState<string>("50");
+  const [percentImpedance, setPercentImpedance] = useState<string>("6");
+  const [connectionType, setConnectionType] = useState<string>("Dyn11");
+  const [sourceFaultLevel, setSourceFaultLevel] = useState<string>("");
+  const [ambientTemp, setAmbientTemp] = useState<string>("40");
+  const [altitude, setAltitude] = useState<string>("0");
+  const [harmonics, setHarmonics] = useState(false);
+  const [result, setResult] = useState<TransformerResults | null>(null);
 
-  const calculateTransformer = () => {
-    const vp = parseFloat(primaryVoltage);
-    const vs = parseFloat(secondaryVoltage);
-    const np = parseFloat(primaryTurns);
-    const ns = parseFloat(secondaryTurns);
-    const p = parseFloat(power);
-    const eff = parseFloat(efficiency);
+  const handleCalculate = () => {
+    const inputs: TransformerInputs = {
+      primaryVoltage: parseFloat(primaryVoltage),
+      secondaryVoltage: parseFloat(secondaryVoltage),
+      kvaRating: parseFloat(kvaRating),
+      powerFactor: parseFloat(powerFactor),
+      phase: phase as 'single' | 'three',
+      frequency: parseFloat(frequency),
+      percentImpedance: parseFloat(percentImpedance),
+      sourceFaultLevel: sourceFaultLevel ? parseFloat(sourceFaultLevel) : undefined,
+      ambientTemp: parseFloat(ambientTemp),
+      altitude: parseFloat(altitude),
+      harmonics,
+      connectionType
+    };
 
-    if (calculationType === "turns-ratio" && vp > 0 && vs > 0) {
-      const voltageRatio = vp / vs;
-      const turnsRatio = np > 0 && ns > 0 ? np / ns : voltageRatio;
-      const currentRatio = 1 / voltageRatio; // Inverse of voltage ratio
-
-      let primaryCurrent, secondaryCurrent, powerLoss;
-      
-      if (p > 0) {
-        secondaryCurrent = (p * 1000) / vs; // Convert kW to W
-        primaryCurrent = (p * 1000) / (vp * eff);
-        powerLoss = (p * 1000) * (1 - eff);
-      }
-
-      setResult({
-        turnsRatio,
-        voltageRatio,
-        currentRatio,
-        primaryCurrent,
-        secondaryCurrent,
-        efficiency: eff,
-        powerLoss
-      });
+    if (inputs.primaryVoltage > 0 && inputs.secondaryVoltage > 0 && inputs.kvaRating > 0) {
+      const transformerResults = calculateTransformer(inputs);
+      setResult(transformerResults);
     }
   };
 
   const reset = () => {
     setPrimaryVoltage("");
     setSecondaryVoltage("");
-    setPrimaryTurns("");
-    setSecondaryTurns("");
-    setPower("");
-    setEfficiency("0.95");
-    setCalculationType("turns-ratio");
+    setKvaRating("");
+    setPowerFactor("0.85");
+    setPhase("three");
+    setFrequency("50");
+    setPercentImpedance("6");
+    setConnectionType("Dyn11");
+    setSourceFaultLevel("");
+    setAmbientTemp("40");
+    setAltitude("0");
+    setHarmonics(false);
     setResult(null);
   };
 
   return (
-    <Card className="border-elec-yellow/20 bg-elec-gray">
+    <Card className="w-full max-w-none">
       <CardHeader>
-        <div className="flex items-center gap-2">
-          <Zap className="h-5 w-5 text-elec-yellow" />
-          <CardTitle>Transformer Calculator</CardTitle>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Zap className="h-5 w-5 text-elec-yellow" />
+            <CardTitle>Enhanced Transformer Analysis</CardTitle>
+          </div>
+          <div className="flex items-center gap-2">
+            <Label htmlFor="advanced-mode" className="text-sm">Advanced</Label>
+            <Switch
+              id="advanced-mode"
+              checked={advancedMode}
+              onCheckedChange={setAdvancedMode}
+            />
+          </div>
         </div>
         <CardDescription>
-          Calculate transformer ratios, currents, and efficiency for step-up/step-down transformers.
+          Comprehensive transformer calculations with BS 7671 18th Edition compliance
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="space-y-4">
-            <div>
-              <Label htmlFor="calculation-type">Calculation Type</Label>
-              <Select value={calculationType} onValueChange={setCalculationType}>
-                <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                  <SelectItem value="turns-ratio">Turns & Voltage Ratio</SelectItem>
-                  <SelectItem value="current-calc">Current Calculation</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div>
-              <Label htmlFor="primary-voltage">Primary Voltage (V)</Label>
-              <Input
-                id="primary-voltage"
-                type="number"
+        <div className="space-y-6">
+          {/* Input Section */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            {/* Basic Inputs */}
+            <div className="space-y-4">
+              <h3 className="text-lg font-semibold text-elec-yellow flex items-center gap-2">
+                <Settings className="h-4 w-4" />
+                Primary Parameters
+              </h3>
+              
+              <MobileSelectWrapper
+                label="Primary Voltage"
                 value={primaryVoltage}
-                onChange={(e) => setPrimaryVoltage(e.target.value)}
-                placeholder="e.g., 11000"
-                className="bg-elec-dark border-elec-yellow/20"
+                onValueChange={setPrimaryVoltage}
+                options={transformerPresets.voltages.primary}
+                placeholder="Select or enter voltage"
               />
-            </div>
-
-            <div>
-              <Label htmlFor="secondary-voltage">Secondary Voltage (V)</Label>
-              <Input
-                id="secondary-voltage"
-                type="number"
+              
+              <MobileSelectWrapper
+                label="Secondary Voltage"
                 value={secondaryVoltage}
-                onChange={(e) => setSecondaryVoltage(e.target.value)}
-                placeholder="e.g., 415"
-                className="bg-elec-dark border-elec-yellow/20"
+                onValueChange={setSecondaryVoltage}
+                options={transformerPresets.voltages.secondary}
+                placeholder="Select or enter voltage"
               />
-            </div>
-
-            <div className="grid grid-cols-2 gap-2">
-              <div>
-                <Label htmlFor="primary-turns">Primary Turns</Label>
-                <Input
-                  id="primary-turns"
+              
+              <MobileSelectWrapper
+                label="kVA Rating"
+                value={kvaRating}
+                onValueChange={setKvaRating}
+                options={transformerPresets.kvaRatings}
+                placeholder="Select rating"
+              />
+              
+              <div className="grid grid-cols-2 gap-2">
+                <MobileSelectWrapper
+                  label="Phase"
+                  value={phase}
+                  onValueChange={setPhase}
+                  options={[
+                    { value: 'single', label: 'Single Phase' },
+                    { value: 'three', label: 'Three Phase' }
+                  ]}
+                />
+                
+                <MobileInputWrapper
+                  label="Power Factor"
+                  value={powerFactor}
+                  onChange={setPowerFactor}
                   type="number"
-                  value={primaryTurns}
-                  onChange={(e) => setPrimaryTurns(e.target.value)}
-                  placeholder="Np"
-                  className="bg-elec-dark border-elec-yellow/20"
+                  step="0.01"
+                  min="0.1"
+                  max="1"
                 />
               </div>
-              <div>
-                <Label htmlFor="secondary-turns">Secondary Turns</Label>
-                <Input
-                  id="secondary-turns"
-                  type="number"
-                  value={secondaryTurns}
-                  onChange={(e) => setSecondaryTurns(e.target.value)}
-                  placeholder="Ns"
-                  className="bg-elec-dark border-elec-yellow/20"
+            </div>
+
+            {/* Advanced Inputs */}
+            {advancedMode && (
+              <div className="space-y-4">
+                <h3 className="text-lg font-semibold text-elec-yellow flex items-center gap-2">
+                  <Activity className="h-4 w-4" />
+                  Advanced Parameters
+                </h3>
+                
+                <div className="grid grid-cols-2 gap-2">
+                  <MobileInputWrapper
+                    label="Frequency (Hz)"
+                    value={frequency}
+                    onChange={setFrequency}
+                    type="number"
+                  />
+                  
+                  <MobileSelectWrapper
+                    label="% Impedance"
+                    value={percentImpedance}
+                    onValueChange={setPercentImpedance}
+                    options={transformerPresets.impedances}
+                  />
+                </div>
+                
+                <MobileSelectWrapper
+                  label="Connection Type"
+                  value={connectionType}
+                  onValueChange={setConnectionType}
+                  options={transformerPresets.connections}
                 />
+                
+                <MobileInputWrapper
+                  label="Source Fault Level (MVA)"
+                  value={sourceFaultLevel}
+                  onChange={setSourceFaultLevel}
+                  type="number"
+                  hint="Optional - for combined fault calculation"
+                />
+                
+                <div className="grid grid-cols-2 gap-2">
+                  <MobileInputWrapper
+                    label="Ambient Temp (°C)"
+                    value={ambientTemp}
+                    onChange={setAmbientTemp}
+                    type="number"
+                  />
+                  
+                  <MobileInputWrapper
+                    label="Altitude (m)"
+                    value={altitude}
+                    onChange={setAltitude}
+                    type="number"
+                  />
+                </div>
+                
+                <div className="flex items-center gap-2">
+                  <Switch
+                    id="harmonics"
+                    checked={harmonics}
+                    onCheckedChange={setHarmonics}
+                  />
+                  <Label htmlFor="harmonics" className="text-sm">
+                    Harmonic loads present
+                  </Label>
+                </div>
               </div>
-            </div>
-
-            <div>
-              <Label htmlFor="power">Power Rating (kW)</Label>
-              <Input
-                id="power"
-                type="number"
-                value={power}
-                onChange={(e) => setPower(e.target.value)}
-                placeholder="e.g., 100"
-                className="bg-elec-dark border-elec-yellow/20"
-              />
-            </div>
-
-            <div>
-              <Label htmlFor="efficiency">Efficiency</Label>
-              <Input
-                id="efficiency"
-                type="number"
-                step="0.01"
-                min="0"
-                max="1"
-                value={efficiency}
-                onChange={(e) => setEfficiency(e.target.value)}
-                placeholder="e.g., 0.95"
-                className="bg-elec-dark border-elec-yellow/20"
-              />
-            </div>
-
-            <div className="flex gap-2">
-              <Button onClick={calculateTransformer} className="flex-1 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90">
-                <Calculator className="h-4 w-4 mr-2" />
-                Calculate
-              </Button>
-              <Button variant="outline" onClick={reset}>
-                <RotateCcw className="h-4 w-4" />
-              </Button>
-            </div>
+            )}
           </div>
 
-          <div className="space-y-4">
-            <div className="rounded-md bg-elec-dark p-6 min-h-[350px]">
-              {result ? (
-                <div className="space-y-4">
-                  <div className="text-center">
-                    <h3 className="text-lg font-semibold text-elec-yellow mb-2">Transformer Results</h3>
-                    <Badge variant="secondary" className="mb-4">
-                      {result.voltageRatio > 1 ? 'Step Down' : 'Step Up'}
-                    </Badge>
-                  </div>
-                  
-                  <Separator />
-                  
-                  <div className="space-y-3 text-sm">
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <span className="text-muted-foreground">Turns Ratio:</span>
-                        <div className="font-mono text-elec-yellow">{result.turnsRatio.toFixed(2)}:1</div>
+          {/* Action Buttons */}
+          <div className="flex gap-2 sticky bottom-4 bg-background/95 backdrop-blur-sm p-4 -mx-4 border-t">
+            <MobileButton 
+              onClick={handleCalculate} 
+              variant="elec" 
+              size="wide"
+              icon={<Calculator className="h-4 w-4" />}
+            >
+              Analyse Transformer
+            </MobileButton>
+            <MobileButton variant="elec-outline" onClick={reset} size="icon">
+              <RotateCcw className="h-4 w-4" />
+            </MobileButton>
+          </div>
+
+          {/* Results Section */}
+          {result && (
+            <div className="space-y-4">
+              <h3 className="text-lg font-semibold text-elec-yellow flex items-center gap-2">
+                <TrendingUp className="h-4 w-4" />
+                Transformer Analysis Results
+              </h3>
+              
+              {/* Mobile-optimized results display */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {/* Basic Info */}
+                <Card className="bg-elec-card border-elec-yellow/20">
+                  <CardContent className="p-4">
+                    <div className="text-center">
+                      <Badge variant="secondary" className="mb-2">
+                        {result.transformerType.toUpperCase().replace('-', ' ')}
+                      </Badge>
+                      <div className="text-2xl font-bold text-elec-yellow">
+                        {result.voltageRatio.toFixed(2)}:1
                       </div>
-                      <div>
-                        <span className="text-muted-foreground">Voltage Ratio:</span>
-                        <div className="font-mono text-elec-yellow">{result.voltageRatio.toFixed(2)}:1</div>
+                      <div className="text-sm text-muted-foreground">Voltage Ratio</div>
+                    </div>
+                  </CardContent>
+                </Card>
+                
+                {/* Currents */}
+                <Card className="bg-elec-card border-elec-yellow/20">
+                  <CardContent className="p-4">
+                    <div className="space-y-2">
+                      <div className="flex justify-between">
+                        <span className="text-sm text-muted-foreground">Primary I:</span>
+                        <span className="font-mono text-elec-yellow">{result.primaryRatedCurrent.toFixed(1)}A</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-sm text-muted-foreground">Secondary I:</span>
+                        <span className="font-mono text-elec-yellow">{result.secondaryRatedCurrent.toFixed(1)}A</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-sm text-muted-foreground">Full Load I₂:</span>
+                        <span className="font-mono text-elec-yellow">{result.secondaryFullLoadCurrent.toFixed(1)}A</span>
                       </div>
                     </div>
-                    
-                    <div>
-                      <span className="text-muted-foreground">Current Ratio:</span>
-                      <div className="font-mono text-elec-yellow">1:{result.currentRatio.toFixed(2)}</div>
+                  </CardContent>
+                </Card>
+                
+                {/* Power */}
+                <Card className="bg-elec-card border-elec-yellow/20">
+                  <CardContent className="p-4">
+                    <div className="space-y-2">
+                      <div className="flex justify-between">
+                        <span className="text-sm text-muted-foreground">kW:</span>
+                        <span className="font-mono text-elec-yellow">{result.kw.toFixed(1)}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-sm text-muted-foreground">kVA:</span>
+                        <span className="font-mono text-elec-yellow">{result.kva.toFixed(1)}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-sm text-muted-foreground">kVAr:</span>
+                        <span className="font-mono text-elec-yellow">{result.kvar.toFixed(1)}</span>
+                      </div>
                     </div>
-                    
-                    {result.primaryCurrent && result.secondaryCurrent && (
-                      <>
-                        <Separator />
-                        <div className="grid grid-cols-2 gap-4">
-                          <div>
-                            <span className="text-muted-foreground">Primary Current:</span>
-                            <div className="font-mono text-elec-yellow">{result.primaryCurrent.toFixed(2)} A</div>
-                          </div>
-                          <div>
-                            <span className="text-muted-foreground">Secondary Current:</span>
-                            <div className="font-mono text-elec-yellow">{result.secondaryCurrent.toFixed(2)} A</div>
-                          </div>
+                  </CardContent>
+                </Card>
+                
+                {/* Fault Current */}
+                <Card className="bg-elec-card border-elec-yellow/20">
+                  <CardContent className="p-4">
+                    <div className="space-y-2">
+                      <div className="flex justify-between">
+                        <span className="text-sm text-muted-foreground">Fault I (TX):</span>
+                        <span className="font-mono text-elec-yellow">{(result.transformerFaultCurrent/1000).toFixed(1)}kA</span>
+                      </div>
+                      {result.combinedFaultCurrent && (
+                        <div className="flex justify-between">
+                          <span className="text-sm text-muted-foreground">Combined:</span>
+                          <span className="font-mono text-elec-yellow">{(result.combinedFaultCurrent/1000).toFixed(1)}kA</span>
                         </div>
-                        
-                        {result.powerLoss && (
-                          <div>
-                            <span className="text-muted-foreground">Power Loss:</span>
-                            <div className="font-mono text-elec-yellow">{(result.powerLoss / 1000).toFixed(2)} kW</div>
+                      )}
+                      <div className="flex justify-between">
+                        <span className="text-sm text-muted-foreground">Inrush:</span>
+                        <span className="font-mono text-elec-yellow">{(result.inrushCurrent/1000).toFixed(1)}kA</span>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+                
+                {/* Performance */}
+                <Card className="bg-elec-card border-elec-yellow/20">
+                  <CardContent className="p-4">
+                    <div className="space-y-2">
+                      <div className="flex justify-between">
+                        <span className="text-sm text-muted-foreground">Efficiency:</span>
+                        <span className="font-mono text-elec-yellow">{(result.efficiency*100).toFixed(1)}%</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-sm text-muted-foreground">Regulation:</span>
+                        <span className="font-mono text-elec-yellow">{(result.voltageRegulation*100).toFixed(1)}%</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-sm text-muted-foreground">Total Loss:</span>
+                        <span className="font-mono text-elec-yellow">{result.totalLoss.toFixed(1)}kW</span>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+                
+                {/* Derating */}
+                {(result.temperatureDerating || result.altitudeDerating || result.harmonicDerating) && (
+                  <Card className="bg-elec-card border-elec-yellow/20">
+                    <CardContent className="p-4">
+                      <div className="space-y-2">
+                        {result.temperatureDerating && (
+                          <div className="flex justify-between">
+                            <span className="text-sm text-muted-foreground">Temp Derating:</span>
+                            <span className="font-mono text-orange-400">{(result.temperatureDerating*100).toFixed(0)}%</span>
                           </div>
                         )}
-                      </>
-                    )}
-                    
-                    <Separator />
-                    
-                    <div className="text-xs text-muted-foreground">
-                      <div>Vp/Vs = Np/Ns = Ip/Is</div>
-                      <div>P = V × I × cos(φ)</div>
+                        {result.altitudeDerating && (
+                          <div className="flex justify-between">
+                            <span className="text-sm text-muted-foreground">Alt Derating:</span>
+                            <span className="font-mono text-orange-400">{(result.altitudeDerating*100).toFixed(0)}%</span>
+                          </div>
+                        )}
+                        {result.harmonicDerating && (
+                          <div className="flex justify-between">
+                            <span className="text-sm text-muted-foreground">Harmonic:</span>
+                            <span className="font-mono text-orange-400">{(result.harmonicDerating*100).toFixed(0)}%</span>
+                          </div>
+                        )}
+                      </div>
+                    </CardContent>
+                  </Card>
+                )}
+              </div>
+              
+              {/* Warnings */}
+              {result.warnings.length > 0 && (
+                <Alert className="border-orange-500/20 bg-orange-500/10">
+                  <AlertTriangle className="h-4 w-4 text-orange-500" />
+                  <AlertDescription className="text-orange-200">
+                    <div className="space-y-1">
+                      {result.warnings.map((warning, index) => (
+                        <div key={index}>• {warning}</div>
+                      ))}
                     </div>
-                  </div>
-                </div>
-              ) : (
-                <div className="flex items-center justify-center h-full text-muted-foreground">
-                  Enter transformer parameters to calculate ratios
-                </div>
+                  </AlertDescription>
+                </Alert>
+              )}
+              
+              {/* Recommendations */}
+              {result.recommendations.length > 0 && (
+                <Alert className="border-blue-500/20 bg-blue-500/10">
+                  <Info className="h-4 w-4 text-blue-500" />
+                  <AlertDescription className="text-blue-200">
+                    <div className="space-y-1">
+                      {result.recommendations.map((rec, index) => (
+                        <div key={index}>• {rec}</div>
+                      ))}
+                    </div>
+                  </AlertDescription>
+                </Alert>
               )}
             </div>
-
-            <Alert className="border-blue-500/20 bg-blue-500/10">
-              <Info className="h-4 w-4 text-blue-500" />
-              <AlertDescription className="text-blue-200">
-                Transformer calculations assume ideal conditions. Real transformers have losses and impedance.
-              </AlertDescription>
-            </Alert>
-          </div>
+          )}
         </div>
       </CardContent>
     </Card>
