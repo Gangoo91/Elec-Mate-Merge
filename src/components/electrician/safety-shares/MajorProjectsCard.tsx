@@ -221,15 +221,27 @@ const MajorProjectsCard = () => {
   const formatDuration = (duration: string): string => {
     if (!duration) return '18 months';
     
-    // Handle date range format like "2024-01-01 to 2024-12-31"
+    // Handle date range format like "2024-01-01 to 2024-12-31" or timestamp format
     if (duration.includes(' to ')) {
       const [startStr, endStr] = duration.split(' to ');
       try {
-        const start = new Date(startStr);
-        const end = new Date(endStr);
-        const diffTime = Math.abs(end.getTime() - start.getTime());
-        const diffMonths = Math.ceil(diffTime / (1000 * 60 * 60 * 24 * 30));
-        return `${diffMonths} months`;
+        const startDate = new Date(startStr);
+        const endDate = new Date(endStr);
+        
+        if (!isNaN(startDate.getTime()) && !isNaN(endDate.getTime())) {
+          const diffMonths = differenceInMonths(endDate, startDate);
+          if (diffMonths >= 12) {
+            const years = differenceInYears(endDate, startDate);
+            const remainingMonths = diffMonths - (years * 12);
+            if (remainingMonths > 0) {
+              return `${years} ${years === 1 ? 'year' : 'years'}, ${remainingMonths} ${remainingMonths === 1 ? 'month' : 'months'}`;
+            } else {
+              return `${years} ${years === 1 ? 'year' : 'years'}`;
+            }
+          } else {
+            return `${diffMonths} ${diffMonths === 1 ? 'month' : 'months'}`;
+          }
+        }
       } catch {
         return duration;
       }
