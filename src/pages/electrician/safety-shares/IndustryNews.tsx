@@ -13,45 +13,6 @@ const IndustryNews = () => {
     navigate('/electrician');
   };
 
-  // Sample news data - this would typically come from an API or database
-  const newsData = [
-    {
-      id: 1,
-      title: "New BS7671 18th Edition Update Released",
-      content: "The latest amendment to BS7671 introduces important changes to electrical safety standards, particularly regarding surge protection devices and electric vehicle charging installations.",
-      date: "2024-01-15",
-      source: "IET Wiring Regulations"
-    },
-    {
-      id: 2,
-      title: "NICEIC Launches Enhanced Inspection Scheme",
-      content: "NICEIC announces new inspection procedures for domestic and commercial electrical installations, focusing on improved safety protocols and compliance verification.",
-      date: "2024-01-12",
-      source: "NICEIC"
-    },
-    {
-      id: 3,
-      title: "Electric Vehicle Charging Infrastructure Expansion",
-      content: "Government announces £500 million investment in public EV charging points, creating significant opportunities for qualified electrical contractors.",
-      date: "2024-01-10",
-      source: "Department for Transport"
-    },
-    {
-      id: 4,
-      title: "New Safety Guidelines for Solar Panel Installations",
-      content: "Updated safety guidelines released for photovoltaic installations following recent incidents, emphasising proper isolation procedures and maintenance protocols.",
-      date: "2024-01-08",
-      source: "Solar Trade Association"
-    },
-    {
-      id: 5,
-      title: "NAPIT Introduces Digital Certification System",
-      content: "NAPIT launches new digital platform for electrical certificates, streamlining the certification process and improving compliance tracking.",
-      date: "2024-01-05",
-      source: "NAPIT"
-    }
-  ];
-
   return (
     <div className="min-h-screen bg-elec-dark text-white">
       <Helmet>
@@ -83,7 +44,7 @@ const IndustryNews = () => {
           </div>
         </div>
 
-        <IndustryNewsCard newsData={newsData} />
+        <IndustryNewsCard />
         
         {/* Section divider and Major Projects */}
         <div className="pt-12 space-y-8">
