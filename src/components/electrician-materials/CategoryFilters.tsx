@@ -184,11 +184,7 @@ const CategoryFilters = ({ categoryId, filters, onFiltersChange, productsCount }
                 categoryId === 'cables' ? filterConfig.cableTypes! : filterConfig.productTypes
               )}
               
-              {filterConfig.brands && renderFilterSection('Brands', 'brands', filterConfig.brands)}
-              
               {filterConfig.priceRanges && renderFilterSection('Price Range', 'priceRanges', filterConfig.priceRanges)}
-              
-              {filterConfig.moduleSizes && renderFilterSection('Module Size', 'moduleSizes', filterConfig.moduleSizes)}
             </div>
 
             {/* Filter actions */}
