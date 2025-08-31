@@ -8,6 +8,46 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
+// Static fallback data for emergency cases
+const fallbackTools = [
+  {
+    id: 1,
+    name: "Fluke 1653B Installation Tester",
+    category: "Testers",
+    price: "£489.00",
+    supplier: "RS Components",
+    image: "/placeholder.svg",
+    description: "Professional multifunction installation tester for electrical safety testing",
+    productUrl: "https://uk.rs-online.com/web/p/installation-testers/0123456",
+    stockStatus: "In Stock",
+    highlights: ["17th Edition compliant", "Loop impedance testing", "RCD testing"]
+  },
+  {
+    id: 2,
+    name: "Wiha VDE Screwdriver Set",
+    category: "Hand Tools", 
+    price: "£34.99",
+    supplier: "Screwfix",
+    image: "/placeholder.svg",
+    description: "VDE insulated screwdriver set for safe electrical work",
+    productUrl: "https://www.screwfix.com/p/wiha-vde-screwdriver-set",
+    stockStatus: "In Stock",
+    highlights: ["VDE certified", "1000V rated", "Comfortable grip"]
+  },
+  {
+    id: 3,
+    name: "Makita DHR202 SDS Drill",
+    category: "Power Tools",
+    price: "£179.00", 
+    supplier: "Toolstation",
+    image: "/placeholder.svg",
+    description: "Cordless SDS plus rotary hammer drill for electrical installations",
+    productUrl: "https://www.toolstation.com/makita-dhr202-sds-drill",
+    stockStatus: "In Stock",
+    highlights: ["18V LXT battery", "20mm drilling capacity", "Anti-vibration"]
+  }
+];
+
 serve(async (req) => {
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
@@ -18,60 +58,76 @@ serve(async (req) => {
     console.log('Starting AI electrical tools generation...');
 
     if (!openAIApiKey) {
-      throw new Error('OpenAI API key not found');
+      console.log('No OpenAI API key found, returning fallback data');
+      return new Response(JSON.stringify({
+        products: fallbackTools,
+        supplier: "Static Fallback",
+        generated_at: new Date().toISOString(),
+        categories: {
+          testers: 1,
+          handTools: 1,
+          powerTools: 1
+        }
+      }), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
+
+    // Set timeout for OpenAI request
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 15000); // 15 second timeout
 
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
+      signal: controller.signal,
       headers: {
         'Authorization': `Bearer ${openAIApiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'gpt-4.1-2025-04-14',
-        max_tokens: 3000,
-        temperature: 0.7,
+        model: 'gpt-5-nano-2025-08-07',
+        max_completion_tokens: 2500,
         messages: [
           {
             role: 'system',
-            content: `You are an expert UK electrical tools specialist. Generate a comprehensive list of electrical tools used by UK electricians, organized into three main categories: Testers, Hand Tools, and Power Tools.
+            content: `Generate 24 UK electrical tools as a JSON array. Categories: 8 Testers, 8 Hand Tools, 8 Power Tools.
 
-For each tool, provide:
-- Realistic product name with model/brand
-- Accurate UK price range
-- Professional description with key features
-- Appropriate supplier (Screwfix, Toolstation, CPC, RS Components)
-- Stock status
-- Product highlights (2-3 key features)
+JSON format (no other text):
+[
+  {
+    "id": 1,
+    "name": "Brand Model Name",
+    "category": "Testers",
+    "price": "£XX.XX",
+    "supplier": "Screwfix",
+    "image": "/placeholder.svg",
+    "description": "Brief professional description",
+    "productUrl": "https://example.com/product",
+    "stockStatus": "In Stock",
+    "highlights": ["Feature 1", "Feature 2"]
+  }
+]
 
-Categories to include:
-1. TESTERS: Multimeters, Socket testers, Voltage detectors, Continuity testers, PAT testers, Installation testers, Earth loop impedance testers, Insulation resistance testers
-2. HAND TOOLS: Wire strippers, Cable cutters, Pliers (needle nose, side cutters), Screwdriver sets, Crimping tools, Cable pulling grips, Knockout punches, Conduit benders
-3. POWER TOOLS: SDS drills, Impact drivers, Angle grinders, Cable pulling systems, Core drill bits, Diamond hole saws, Reciprocating saws
+Categories:
+- Testers: Multimeters, Socket testers, Voltage detectors, PAT testers, Installation testers, Earth loop testers, Insulation testers, Continuity testers
+- Hand Tools: Wire strippers, Cable cutters, Pliers, Screwdrivers, Crimping tools, Cable grips, Knockout punches, Conduit benders  
+- Power Tools: SDS drills, Impact drivers, Angle grinders, Cable pulling systems, Core bits, Diamond saws, Reciprocating saws, Cable strippers
 
-Return a JSON array with exactly this structure for each tool:
-{
-  "id": number,
-  "name": "Product Name with Model",
-  "category": "Testers|Hand Tools|Power Tools", 
-  "price": "£XX.XX",
-  "supplier": "Screwfix|Toolstation|CPC|RS Components",
-  "image": "/placeholder.svg",
-  "description": "Professional description with technical specs",
-  "productUrl": "https://example.com/product",
-  "stockStatus": "In Stock|Low Stock|Out of Stock",
-  "highlights": ["Feature 1", "Feature 2", "Feature 3"]
-}
+Suppliers: Screwfix, Toolstation, CPC, RS Components
+UK prices: £15-£500 range
+Stock: "In Stock", "Low Stock", "Out of Stock"
 
-Generate 30-40 tools total (10-15 per category). Use realistic UK electrical trade pricing. MUST return valid JSON only.`
+Return ONLY the JSON array.`
           },
           {
             role: 'user',
-            content: 'Generate a comprehensive list of electrical tools for UK electricians with realistic pricing and specifications.'
+            content: 'Generate the 24 electrical tools JSON array now.'
           }
         ],
       }),
     });
+
+    clearTimeout(timeoutId);
 
     if (!response.ok) {
       const errorText = await response.text();
@@ -137,12 +193,20 @@ Generate 30-40 tools total (10-15 per category). Use realistic UK electrical tra
 
   } catch (error) {
     console.error('Error in ai-electrical-tools function:', error);
-    return new Response(JSON.stringify({ 
-      error: error.message,
-      products: [],
-      supplier: "Error"
+    
+    // Return fallback data instead of error for better UX
+    console.log('Returning fallback data due to error');
+    return new Response(JSON.stringify({
+      products: fallbackTools,
+      supplier: "Fallback Data",
+      generated_at: new Date().toISOString(),
+      categories: {
+        testers: 1,
+        handTools: 1,
+        powerTools: 1
+      },
+      note: "AI generation failed, showing sample tools"
     }), {
-      status: 500,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   }
