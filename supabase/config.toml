@@ -87,3 +87,6 @@ verify_jwt = false
 
 [functions.ai-material-recommendations]
 verify_jwt = false
+
+[functions.price-history-alerts]
+verify_jwt = false
