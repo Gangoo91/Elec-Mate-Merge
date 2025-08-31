@@ -120,6 +120,41 @@ const BatteryStorageCalculator = () => {
     { value: "5", label: "5 Days" }
   ];
 
+  const unitVoltageOptions = [
+    { value: "2", label: "2V (Single Cell)" },
+    { value: "6", label: "6V" },
+    { value: "12", label: "12V" },
+    { value: "24", label: "24V" },
+    { value: "48", label: "48V" }
+  ];
+
+  const unitCapacityOptions = [
+    { value: "50", label: "50Ah" },
+    { value: "75", label: "75Ah" },
+    { value: "100", label: "100Ah" },
+    { value: "150", label: "150Ah" },
+    { value: "200", label: "200Ah" },
+    { value: "280", label: "280Ah" },
+    { value: "400", label: "400Ah" }
+  ];
+
+  const chargerPowerOptions = [
+    { value: "1", label: "1kW" },
+    { value: "2", label: "2kW" },
+    { value: "3", label: "3kW" },
+    { value: "5", label: "5kW" },
+    { value: "7", label: "7kW" },
+    { value: "10", label: "10kW" }
+  ];
+
+  const designReserveOptions = [
+    { value: "10", label: "10%" },
+    { value: "15", label: "15%" },
+    { value: "20", label: "20%" },
+    { value: "25", label: "25%" },
+    { value: "30", label: "30%" }
+  ];
+
   const calculateBatteryStorage = () => {
     const consumption = parseFloat(dailyConsumption);
     const criticalLoadKw = parseFloat(criticalLoad);
@@ -368,24 +403,30 @@ const BatteryStorageCalculator = () => {
                   ))}
                 </MobileSelectContent>
               </MobileSelect>
-              <MobileInput
-                label="Battery Unit Voltage"
-                type="number"
-                value={batteryUnitVoltage}
-                onChange={(e) => setBatteryUnitVoltage(e.target.value)}
-                placeholder="e.g., 12"
-                unit="V"
-                hint="Voltage of individual battery"
-              />
-              <MobileInput
-                label="Battery Unit Capacity"
-                type="number"
-                value={batteryUnitCapacity}
-                onChange={(e) => setBatteryUnitCapacity(e.target.value)}
-                placeholder="e.g., 100"
-                unit="Ah"
-                hint="Capacity of individual battery"
-              />
+              <MobileSelect value={batteryUnitVoltage} onValueChange={setBatteryUnitVoltage}>
+                <MobileSelectTrigger label="Battery Unit Voltage">
+                  <MobileSelectValue />
+                </MobileSelectTrigger>
+                <MobileSelectContent>
+                  {unitVoltageOptions.map((option) => (
+                    <MobileSelectItem key={option.value} value={option.value}>
+                      {option.label}
+                    </MobileSelectItem>
+                  ))}
+                </MobileSelectContent>
+              </MobileSelect>
+              <MobileSelect value={batteryUnitCapacity} onValueChange={setBatteryUnitCapacity}>
+                <MobileSelectTrigger label="Battery Unit Capacity">
+                  <MobileSelectValue />
+                </MobileSelectTrigger>
+                <MobileSelectContent>
+                  {unitCapacityOptions.map((option) => (
+                    <MobileSelectItem key={option.value} value={option.value}>
+                      {option.label}
+                    </MobileSelectItem>
+                  ))}
+                </MobileSelectContent>
+              </MobileSelect>
             </div>
           </div>
 
@@ -405,24 +446,30 @@ const BatteryStorageCalculator = () => {
                   ))}
                 </MobileSelectContent>
               </MobileSelect>
-              <MobileInput
-                label="Charger Power"
-                type="number"
-                value={chargerPower}
-                onChange={(e) => setChargerPower(e.target.value)}
-                placeholder="e.g., 3.0"
-                unit="kW"
-                hint="Optional: charging power rating"
-              />
-              <MobileInput
-                label="Design Reserve"
-                type="number"
-                value={designReserve}
-                onChange={(e) => setDesignReserve(e.target.value)}
-                placeholder="20"
-                unit="%"
-                hint="Safety margin for capacity sizing"
-              />
+              <MobileSelect value={chargerPower} onValueChange={setChargerPower}>
+                <MobileSelectTrigger label="Charger Power">
+                  <MobileSelectValue placeholder="Select charger size" />
+                </MobileSelectTrigger>
+                <MobileSelectContent>
+                  {chargerPowerOptions.map((option) => (
+                    <MobileSelectItem key={option.value} value={option.value}>
+                      {option.label}
+                    </MobileSelectItem>
+                  ))}
+                </MobileSelectContent>
+              </MobileSelect>
+              <MobileSelect value={designReserve} onValueChange={setDesignReserve}>
+                <MobileSelectTrigger label="Design Reserve">
+                  <MobileSelectValue />
+                </MobileSelectTrigger>
+                <MobileSelectContent>
+                  {designReserveOptions.map((option) => (
+                    <MobileSelectItem key={option.value} value={option.value}>
+                      {option.label}
+                    </MobileSelectItem>
+                  ))}
+                </MobileSelectContent>
+              </MobileSelect>
             </div>
           </div>
         </div>
