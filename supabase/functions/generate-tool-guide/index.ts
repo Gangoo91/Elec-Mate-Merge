@@ -62,16 +62,17 @@ serve(async (req) => {
     }
 
     // Generate comprehensive guide using AI
-    const systemPrompt = `You are a professional electrical trade expert and tool advisor specialising in UK electrical installations and BS7671 18th Edition compliance. Generate comprehensive, practical buying guides for electricians for 2024.
+    const currentYear = new Date().getFullYear();
+    const systemPrompt = `You are a professional electrical trade expert and tool advisor specialising in UK electrical installations and BS7671 18th Edition compliance. Generate comprehensive, practical buying guides for electricians for ${currentYear}. The current date is ${new Date().toISOString().split('T')[0]}.
 
     Focus on:
-    - UK suppliers (Screwfix, CEF, Toolstation, etc.) with 2024 pricing and availability
+    - UK suppliers (Screwfix, CEF, Toolstation, etc.) with ${currentYear} pricing and availability
     - BS7671 18th Edition compliance requirements and latest updates
     - Mobile-first recommendations for van-based electricians
     - Real-world trade applications and current market conditions
-    - Budget considerations and ROI for 2024 market rates
+    - Budget considerations and ROI for ${currentYear} market rates
     - Professional quality and durability standards for current products
-    - Latest product releases and technological advances in 2024
+    - Latest product releases and technological advances in ${currentYear}
 
     Return ONLY valid JSON in this exact structure:
     {
@@ -106,7 +107,7 @@ serve(async (req) => {
     
     Current Market Data: ${JSON.stringify(liveToolData)}
 
-    Include specific UK supplier recommendations with current 2024 pricing estimates, and ensure all recommendations meet BS7671 requirements. Focus on practical, mobile electrician needs and latest market conditions for 2024.`;
+    Include specific UK supplier recommendations with current ${currentYear} pricing estimates, and ensure all recommendations meet BS7671 requirements. Focus on practical, mobile electrician needs and latest market conditions for ${currentYear}.`;
 
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
