@@ -513,7 +513,11 @@ const MajorProjectsCard = () => {
                   <div className="flex justify-center mb-1">
                     <Users className="h-5 w-5 text-elec-yellow" />
                   </div>
-                  <div className="text-white font-medium text-sm">{project.contractors ? project.contractors.split(", ").length : 'TBC'}</div>
+                  <div className="text-white font-medium text-sm">
+                    {project.contractors ? 
+                      `${project.contractors.split(", ").length} contractor${project.contractors.split(", ").length !== 1 ? 's' : ''}` 
+                      : 'TBC'}
+                  </div>
                   <div className="text-xs text-muted-foreground">Contractors</div>
                 </div>
               </div>
