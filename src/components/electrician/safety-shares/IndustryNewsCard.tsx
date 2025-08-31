@@ -438,7 +438,7 @@ const IndustryNewsCard = () => {
                   </div>
 
                   {/* Content Section */}
-                  <CardContent className="p-4 space-y-3 h-full">
+                  <CardContent className="p-4 space-y-3">
                     {/* Category and Date */}
                     <div className="flex items-center justify-between gap-6 text-xs text-muted-foreground">
                       {article.tag && (
