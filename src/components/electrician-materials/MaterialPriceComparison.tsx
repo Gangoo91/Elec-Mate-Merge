@@ -440,7 +440,7 @@ const MaterialPriceComparison = ({ initialQuery = "", selectedItems = [], onClea
                     <SelectTrigger className="w-40 bg-elec-dark border-elec-yellow/30 text-white">
                       <SelectValue />
                     </SelectTrigger>
-                    <SelectContent className="bg-elec-dark border-elec-yellow/30">
+                    <SelectContent className="bg-elec-dark border-elec-yellow/30 z-50">
                       {CATEGORIES.map(cat => (
                         <SelectItem key={cat.value} value={cat.value} className="text-white focus:bg-elec-yellow/20">
                           {cat.label}
@@ -453,7 +453,7 @@ const MaterialPriceComparison = ({ initialQuery = "", selectedItems = [], onClea
                     <SelectTrigger className="w-40 bg-elec-dark border-elec-yellow/30 text-white">
                       <SelectValue />
                     </SelectTrigger>
-                    <SelectContent className="bg-elec-dark border-elec-yellow/30">
+                    <SelectContent className="bg-elec-dark border-elec-yellow/30 z-50">
                       {SUPPLIERS.map(sup => (
                         <SelectItem key={sup.value} value={sup.value} className="text-white focus:bg-elec-yellow/20">
                           {sup.label}

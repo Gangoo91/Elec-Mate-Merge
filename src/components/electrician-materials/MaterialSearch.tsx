@@ -81,7 +81,7 @@ const MaterialSearch = ({ supplierSlug, onResults }: MaterialSearchProps) => {
         </div>
         <select
           aria-label="Select supplier"
-          className="bg-elec-card border-elec-yellow/30 rounded-md px-2 py-2 text-sm"
+          className="bg-elec-dark border-elec-yellow/30 rounded-md px-2 py-2 text-sm text-white z-40 relative"
           value={selectedSupplier}
           onChange={(e) => setSelectedSupplier(e.target.value as SupplierSlug)}
         >

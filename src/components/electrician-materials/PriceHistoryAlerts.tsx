@@ -347,7 +347,7 @@ const PriceHistoryAlerts = ({ categoryId, selectedProduct, currentUserId = "demo
                     <SelectTrigger className="bg-elec-dark border-yellow-500/30 text-white">
                       <SelectValue />
                     </SelectTrigger>
-                    <SelectContent className="bg-elec-dark border-yellow-500/30">
+                    <SelectContent className="bg-elec-dark border-yellow-500/30 z-50">
                       <SelectItem value="below" className="text-white">Price drops below</SelectItem>
                       <SelectItem value="above" className="text-white">Price rises above</SelectItem>
                       <SelectItem value="change" className="text-white">Any price change</SelectItem>
@@ -360,7 +360,7 @@ const PriceHistoryAlerts = ({ categoryId, selectedProduct, currentUserId = "demo
                     <SelectTrigger className="bg-elec-dark border-yellow-500/30 text-white">
                       <SelectValue />
                     </SelectTrigger>
-                    <SelectContent className="bg-elec-dark border-yellow-500/30">
+                    <SelectContent className="bg-elec-dark border-yellow-500/30 z-50">
                       <SelectItem value="Any" className="text-white">Any Supplier</SelectItem>
                       <SelectItem value="Screwfix" className="text-white">Screwfix</SelectItem>
                       <SelectItem value="CEF" className="text-white">CEF</SelectItem>

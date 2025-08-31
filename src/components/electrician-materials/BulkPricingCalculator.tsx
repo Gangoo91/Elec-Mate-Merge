@@ -123,7 +123,7 @@ const BulkPricingCalculator = ({ categoryId, products = [], onCalculate }: BulkP
                 <SelectTrigger className="bg-elec-dark border-purple-500/30 text-white">
                   <SelectValue placeholder="Choose a product to calculate bulk pricing" />
                 </SelectTrigger>
-                <SelectContent className="bg-elec-dark border-purple-500/30">
+                <SelectContent className="bg-elec-dark border-purple-500/30 z-50">
                   {products.map(product => (
                     <SelectItem key={product.id} value={product.id.toString()} className="text-white focus:bg-purple-500/20">
                       {product.name} - {product.supplier} ({product.price})
