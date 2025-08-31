@@ -125,16 +125,18 @@ const WageInformationTab = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="space-y-4">
+          <div className="space-y-3">
             {progressionPath.map((stage, index) => (
-              <div key={index} className="flex items-center justify-between p-3 bg-blue-500/5 rounded-lg border border-blue-500/20">
-                <div className="flex-1">
-                  <h4 className="font-medium text-blue-300">{stage.stage}</h4>
-                  <p className="text-xs text-blue-200 mt-1">{stage.description}</p>
+              <div key={index} className="grid grid-cols-1 md:grid-cols-3 gap-4 items-center p-4 bg-blue-500/5 rounded-lg border border-blue-500/20">
+                <div className="md:col-span-1">
+                  <h4 className="font-medium text-blue-300 text-lg">{stage.stage}</h4>
+                  <p className="text-sm text-blue-200 mt-1">{stage.description}</p>
                 </div>
-                <div className="text-right">
-                  <div className="text-sm font-medium text-blue-300">{stage.wage}</div>
-                  <div className="text-xs text-blue-200">{stage.annual}</div>
+                <div className="md:col-span-1 text-center">
+                  <div className="text-base font-semibold text-blue-300">{stage.wage}</div>
+                </div>
+                <div className="md:col-span-1 text-right">
+                  <div className="text-base font-semibold text-blue-300">{stage.annual}</div>
                 </div>
               </div>
             ))}
