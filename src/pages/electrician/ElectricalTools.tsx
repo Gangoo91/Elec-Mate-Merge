@@ -3,146 +3,18 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowLeft, Wrench, Search, MapPin, BookOpen, Calculator, FileText, Zap, Loader2, Package, TrendingUp } from "lucide-react";
-import { useState, useEffect } from "react";
-import { supabase } from "@/integrations/supabase/client";
-import { toast } from "sonner";
+import { ArrowLeft, Wrench, Search, MapPin, BookOpen, Calculator, FileText, Zap, Loader2, Package, TrendingUp, RefreshCw } from "lucide-react";
+import { useState } from "react";
+import { useToolCategories } from "@/hooks/useToolCategories";
 import ToolBuyingGuides from "@/components/electrician-tools/ToolBuyingGuides";
 
-interface ToolCategory {
-  name: string;
-  icon: any;
-  description: string;
-  count: number;
-  priceRange?: string;
-  trending?: boolean;
-}
+// ToolCategory interface is now imported from useToolCategories hook
 
 const ElectricalTools = () => {
-  const [toolCategories, setToolCategories] = useState<ToolCategory[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
+  const { categories: toolCategories, isLoading, error, refetch } = useToolCategories();
 
-  useEffect(() => {
-    fetchToolData();
-  }, []);
-
-  const fetchToolData = async () => {
-    try {
-      setIsLoading(true);
-      console.log('🔧 Fetching live tool data...');
-      
-      const { data, error } = await supabase.functions.invoke('firecrawl-tools-scraper');
-      
-      if (error) {
-        console.error('❌ Error fetching tools:', error);
-        toast.error('Failed to load tool data');
-        setToolCategories(getDefaultCategories());
-        return;
-      }
-
-      if (Array.isArray(data) && data.length > 0) {
-        const categoryStats = analyzeCategoryData(data);
-        setToolCategories(categoryStats);
-        console.log('✅ Tool categories loaded:', categoryStats.length);
-      } else {
-        setToolCategories(getDefaultCategories());
-      }
-    } catch (error) {
-      console.error('❌ Error in fetchToolData:', error);
-      setToolCategories(getDefaultCategories());
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const analyzeCategoryData = (tools: any[]): ToolCategory[] => {
-    const categoryMap = new Map<string, { count: number; prices: number[]; tools: any[] }>();
-    
-    // Analyze tools and group by category
-    tools.forEach(tool => {
-      const category = categorizeToolByName(tool.name || '');
-      if (!categoryMap.has(category)) {
-        categoryMap.set(category, { count: 0, prices: [], tools: [] });
-      }
-      
-      const categoryData = categoryMap.get(category)!;
-      categoryData.count++;
-      categoryData.tools.push(tool);
-      
-      // Extract price for range calculation
-      const priceMatch = tool.price?.match(/£([\d,]+\.?\d*)/);
-      if (priceMatch) {
-        const price = parseFloat(priceMatch[1].replace(',', ''));
-        categoryData.prices.push(price);
-      }
-    });
-
-    // Convert to ToolCategory array
-    return Array.from(categoryMap.entries()).map(([name, data]) => {
-      const minPrice = data.prices.length > 0 ? Math.min(...data.prices) : 0;
-      const maxPrice = data.prices.length > 0 ? Math.max(...data.prices) : 0;
-      const priceRange = minPrice > 0 ? `£${minPrice}-£${maxPrice}` : 'Price varies';
-      
-      return {
-        name,
-        icon: getCategoryIcon(name),
-        description: getCategoryDescription(name),
-        count: data.count,
-        priceRange,
-        trending: data.count > 5 // Mark as trending if more than 5 tools
-      };
-    }).sort((a, b) => b.count - a.count); // Sort by count descending
-  };
-
-  const categorizeToolByName = (toolName: string): string => {
-    const name = toolName.toLowerCase();
-    
-    if (name.includes('drill') || name.includes('driver') || name.includes('saw') || name.includes('grinder')) {
-      return 'Power Tools';
-    } else if (name.includes('test') || name.includes('meter') || name.includes('detector') || name.includes('measure')) {
-      return 'Test Equipment';
-    } else if (name.includes('safety') || name.includes('helmet') || name.includes('glove') || name.includes('ppe')) {
-      return 'Safety Equipment';
-    } else if (name.includes('bag') || name.includes('box') || name.includes('case') || name.includes('storage')) {
-      return 'Tool Storage';
-    } else if (name.includes('wire') || name.includes('cable') || name.includes('conduit') || name.includes('specialist')) {
-      return 'Specialist Tools';
-    } else {
-      return 'Hand Tools';
-    }
-  };
-
-  const getCategoryIcon = (category: string) => {
-    switch (category) {
-      case 'Power Tools': return Zap;
-      case 'Test Equipment': return Calculator;
-      case 'Safety Equipment': return FileText;
-      case 'Tool Storage': return Package;
-      case 'Specialist Tools': return Wrench;
-      default: return Wrench;
-    }
-  };
-
-  const getCategoryDescription = (category: string): string => {
-    switch (category) {
-      case 'Power Tools': return 'Power tools and accessories';
-      case 'Test Equipment': return 'Testing and measurement equipment';
-      case 'Safety Equipment': return 'PPE and safety equipment';
-      case 'Tool Storage': return 'Tool bags, boxes and storage';
-      case 'Specialist Tools': return 'Specialist electrical tools';
-      default: return 'Essential hand tools for electrical work';
-    }
-  };
-
-  const getDefaultCategories = (): ToolCategory[] => [
-    { name: 'Hand Tools', icon: Wrench, description: 'Essential hand tools for electrical work', count: 0 },
-    { name: 'Test Equipment', icon: Calculator, description: 'Testing and measurement equipment', count: 0 },
-    { name: 'Power Tools', icon: Zap, description: 'Power tools and accessories', count: 0 },
-    { name: 'Safety Equipment', icon: FileText, description: 'PPE and safety equipment', count: 0 },
-    { name: 'Specialist Tools', icon: Wrench, description: 'Specialist electrical tools', count: 0 },
-    { name: 'Tool Storage', icon: Package, description: 'Tool bags, boxes and storage', count: 0 }
-  ];
+  // All category analysis logic is now in the useToolCategories hook
 
   const handleSearch = () => {
     if (searchTerm.trim()) {
@@ -206,6 +78,18 @@ const ElectricalTools = () => {
               <div className="flex items-center justify-center py-12">
                 <Loader2 className="h-8 w-8 animate-spin text-elec-yellow" />
                 <span className="ml-2 text-muted-foreground">Loading live tool data...</span>
+              </div>
+            ) : error ? (
+              <div className="flex flex-col items-center justify-center py-12 space-y-4">
+                <p className="text-muted-foreground">Failed to load tool data</p>
+                <Button 
+                  onClick={() => refetch()} 
+                  variant="outline"
+                  className="bg-elec-gray/50 border-elec-yellow/30 hover:bg-elec-yellow/10 text-white"
+                >
+                  <RefreshCw className="h-4 w-4 mr-2" />
+                  Retry
+                </Button>
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">

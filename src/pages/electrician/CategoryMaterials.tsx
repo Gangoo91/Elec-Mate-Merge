@@ -6,12 +6,14 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Package, ArrowLeft, Filter, RefreshCw } from "lucide-react";
-import { productsBySupplier, MaterialItem } from "@/data/electrician/productData";
+import { productsBySupplier, MaterialItem as OriginalMaterialItem } from "@/data/electrician/productData";
+import { MaterialItem } from "@/hooks/useToolsForMaterials";
 import MaterialCard from "@/components/electrician-materials/MaterialCard";
 import CategoryFilters from "@/components/electrician-materials/CategoryFilters";
 import RefreshButton from "@/components/electrician-materials/RefreshButton";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
+import { useToolsForMaterials } from "@/hooks/useToolsForMaterials";
 
 const CATEGORY_META: Record<string, { title: string; description: string } > = {
   cables: {
@@ -40,7 +42,7 @@ const CATEGORY_META: Record<string, { title: string; description: string } > = {
   }
 };
 
-function matchesCategory(item: MaterialItem, categoryId: string) {
+function matchesCategory(item: any, categoryId: string) {
   const hay = `${item.category} ${item.name}`.toLowerCase();
   const matches = (() => {
     switch (categoryId) {
@@ -72,6 +74,9 @@ function matchesCategory(item: MaterialItem, categoryId: string) {
 const CategoryMaterials = () => {
   const { categoryId = "" } = useParams<{ categoryId: string }>();
   const meta = CATEGORY_META[categoryId] || { title: "Materials", description: "Browse curated products by category" };
+  
+  // React Query hook for tools data
+  const { materials: toolsMaterials, isLoading: toolsLoading, error: toolsError, refetch: refetchTools } = useToolsForMaterials();
 
   // Suppliers supported by the edge function
   const SUPPLIERS = [
@@ -95,9 +100,12 @@ const CategoryMaterials = () => {
   };
 
   const allProducts = useMemo(() => Object.values(productsBySupplier).flat(), []);
-  const products = useMemo(() => allProducts.filter((p) => matchesCategory(p, categoryId)), [allProducts, categoryId]);
+  const products = useMemo(() => allProducts.filter((p) => matchesCategory(p as any, categoryId)), [allProducts, categoryId]);
 
-  type LiveItem = MaterialItem & { productUrl?: string };
+  type LiveItem = MaterialItem & { 
+    productUrl?: string;
+    stockStatus: 'In Stock' | 'Out of Stock' | 'Limited Stock';
+  };
   const [liveProducts, setLiveProducts] = useState<LiveItem[]>([]);
   const [isFetching, setIsFetching] = useState(false);
   const [isAutoLoaded, setIsAutoLoaded] = useState(false);
@@ -166,17 +174,26 @@ const CategoryMaterials = () => {
     return types;
   };
   
-  // Smart product selection: only show live data, no static fallback
+  // Smart product selection: use React Query for tools, live data for others
   const baseProducts = useMemo(() => {
     console.log(`[${categoryId.toUpperCase()}] baseProducts calculation:`, {
       hasValidLiveData,
       isLiveDataFresh,
       liveProductsCount: liveProducts.length,
       hasAttemptedLiveFetch,
-      liveFetchFailed
+      liveFetchFailed,
+      isToolsCategory: categoryId === 'tools',
+      toolsMaterialsCount: toolsMaterials.length
     });
     
-    // If we have valid and fresh live data, use it
+    // Use React Query data for tools category
+    if (categoryId === 'tools') {
+      console.log(`[TOOLS] Using React Query data: ${toolsMaterials.length} products`);
+      setDataSource(toolsMaterials.length > 0 ? 'live' : 'none');
+      return toolsMaterials;
+    }
+    
+    // For other categories, use live data if available and fresh
     if (hasValidLiveData && (categoryId === 'cables' || isLiveDataFresh)) {
       console.log(`[${categoryId.toUpperCase()}] Using live data: ${liveProducts.length} products`);
       setDataSource('live');
@@ -187,7 +204,7 @@ const CategoryMaterials = () => {
     console.log(`[${categoryId.toUpperCase()}] No valid data to show`);
     setDataSource('none');
     return [];
-  }, [hasValidLiveData, isLiveDataFresh, categoryId, liveProducts, hasAttemptedLiveFetch, liveFetchFailed]);
+  }, [hasValidLiveData, isLiveDataFresh, categoryId, liveProducts, hasAttemptedLiveFetch, liveFetchFailed, toolsMaterials]);
 
   // Apply filters to products
   const displayProducts = useMemo(() => {
@@ -255,6 +272,15 @@ const CategoryMaterials = () => {
   const fetchLiveDeals = async (isAutoLoad = false) => {
     console.log(`[${categoryId.toUpperCase()}] Starting fetchLiveDeals, isAutoLoad:`, isAutoLoad);
     
+    // For tools category, use React Query refetch instead
+    if (categoryId === 'tools') {
+      console.log(`[TOOLS] Using React Query refetch instead of direct API call`);
+      if (!isAutoLoad) {
+        await refetchTools();
+      }
+      return;
+    }
+    
     // Check cache first for non-cables categories
     const now = Date.now();
     if (isAutoLoad && hasValidLiveData && isLiveDataFresh) {
@@ -268,39 +294,7 @@ const CategoryMaterials = () => {
     
     try {
       const allCollected: LiveItem[] = [];
-      
-      // Use Firecrawl for tools category
-      if (categoryId === 'tools') {
-        console.log(`[TOOLS] Using Firecrawl to scrape Screwfix tools`);
-        const { data, error } = await supabase.functions.invoke('firecrawl-tools-scraper');
-        
-        if (error) {
-          throw new Error(error.message);
-        }
-        
-        if (Array.isArray(data)) {
-          console.log(`[TOOLS] Firecrawl function returned ${data.length} tools`);
-          // Transform Firecrawl data to match MaterialItem interface
-          const transformedTools = data.map((tool: any, index: number) => ({
-            id: tool.id || index + 1000, // Generate ID if missing
-            name: tool.name || 'Unknown Tool',
-            category: 'Tools',
-            price: tool.price || '£0.00',
-            supplier: 'Screwfix',
-            image: tool.image || '/placeholder.svg',
-            stockStatus: 'In Stock' as const,
-            isOnSale: tool.isOnSale || false,
-            salePrice: tool.salePrice,
-            highlights: tool.highlights || [],
-            productUrl: tool.view_product_url || tool.productUrl // Map view_product_url to productUrl
-          }));
-          console.log(`[TOOLS] Transformed tools with URLs:`, transformedTools.map(t => ({ name: t.name, productUrl: t.productUrl })));
-          allCollected.push(...transformedTools);
-        } else {
-          console.log(`[TOOLS] Firecrawl function returned no products`);
-        }
-      } else {
-        // Use existing scraping logic for other categories
+      // Use existing scraping logic for non-tools categories
         const searchTerms = CATEGORY_QUERIES[categoryId] || [meta.title];
         console.log(`[${categoryId.toUpperCase()}] Search terms:`, searchTerms);
         
@@ -336,8 +330,7 @@ const CategoryMaterials = () => {
               }
             } else {
               console.error(`[${categoryId.toUpperCase()}] ${supplier}: Request failed:`, r.reason);
-            }
-          }
+        }
         }
       }
 
@@ -445,34 +438,12 @@ const CategoryMaterials = () => {
     try {
       const allCollected: LiveItem[] = [];
       
-      // Use Firecrawl for tools category
+      // Use React Query refetch for tools category
       if (categoryId === 'tools') {
-        console.log(`[TOOLS] Manual refresh using Firecrawl to scrape Screwfix tools`);
-        const { data, error } = await supabase.functions.invoke('firecrawl-tools-scraper');
-        
-        if (error) {
-          throw new Error(error.message);
-        }
-        
-        if (Array.isArray(data)) {
-          console.log(`[TOOLS] Firecrawl function returned ${data.length} tools`);
-          // Transform Firecrawl data to match MaterialItem interface
-          const transformedTools = data.map((tool: any, index: number) => ({
-            id: tool.id || index + 1000, // Generate ID if missing
-            name: tool.name || 'Unknown Tool',
-            category: 'Tools',
-            price: tool.price || '£0.00',
-            supplier: 'Screwfix',
-            image: tool.image || '/placeholder.svg',
-            stockStatus: 'In Stock' as const,
-            isOnSale: tool.isOnSale || false,
-            salePrice: tool.salePrice,
-            highlights: tool.highlights || [],
-            productUrl: tool.view_product_url || tool.productUrl // Map view_product_url to productUrl
-          }));
-          console.log(`[TOOLS] Manual refresh - Transformed tools with URLs:`, transformedTools.map(t => ({ name: t.name, productUrl: t.productUrl })));
-          allCollected.push(...transformedTools);
-        }
+        console.log(`[TOOLS] Manual refresh using React Query refetch`);
+        await refetchTools();
+        setIsFetching(false);
+        return;
       } else {
         // Use existing scraping logic for other categories
         const searchTerms = CATEGORY_QUERIES[categoryId] || [meta.title];
