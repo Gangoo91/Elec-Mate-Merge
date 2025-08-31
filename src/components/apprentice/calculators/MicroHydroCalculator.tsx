@@ -194,9 +194,38 @@ export function MicroHydroCalculator() {
         return;
       }
 
+      // Validate input ranges
+      if (flow <= 0) {
+        toast({
+          title: "Invalid flow rate",
+          description: "Flow rate must be greater than 0",
+          variant: "destructive"
+        });
+        return;
+      }
+
+      if (headNum <= 0) {
+        toast({
+          title: "Invalid head",
+          description: "Head must be greater than 0",
+          variant: "destructive"
+        });
+        return;
+      }
+
       // Get turbine specifications
       const turbineSpecs = getTurbineSpecs(turbineType);
       const turbineEff = turbineEfficiency ? parseFloat(turbineEfficiency) / 100 : turbineSpecs.efficiency;
+      
+      // Validate efficiency
+      if (turbineEff <= 0 || turbineEff > 1) {
+        toast({
+          title: "Invalid efficiency",
+          description: "Turbine efficiency must be between 1% and 100%",
+          variant: "destructive"
+        });
+        return;
+      }
       
       // Hydraulic calculations
       const pipeLen = parseFloat(pipeLength);
@@ -209,7 +238,17 @@ export function MicroHydroCalculator() {
       // Head losses (Darcy-Weisbach equation simplified)
       const frictionFactor = 0.02; // Simplified assumption
       const headLoss = frictionFactor * (pipeLen / pipeDiam) * (flowVelocity * flowVelocity) / (2 * 9.81);
-      const netHead = headNum - headLoss;
+      const netHead = Math.max(0, headNum - headLoss); // Ensure net head isn't negative
+      
+      // Check if net head is sufficient
+      if (netHead <= 0) {
+        toast({
+          title: "Insufficient net head",
+          description: "Head losses exceed available head. Consider larger diameter pipes or shorter penstock.",
+          variant: "destructive"
+        });
+        return;
+      }
       
       // Theoretical power (kW) = ρ × g × Q × H / 1000
       const theoreticalPower = 9.81 * flow * netHead / 1000;
@@ -230,19 +269,19 @@ export function MicroHydroCalculator() {
       // Generation calculations
       const baseCapacityFactor = 0.9; // High for hydro
       const adjustedCapacityFactor = baseCapacityFactor * seasonalAdjustment;
-      const dailyGeneration = actualPower * 24 * adjustedCapacityFactor;
+      const dailyGeneration = Math.max(0, actualPower * 24 * adjustedCapacityFactor);
       const monthlyGeneration = dailyGeneration * 30;
       const yearlyGeneration = dailyGeneration * 365;
       
       // Economics
       const complexityMultiplier = INSTALLATION_COMPLEXITY.find(c => c.value === installationComplexity)?.multiplier || 1.3;
       const adjustedSystemCost = actualSystemCost * complexityMultiplier;
-      const yearlyValue = yearlyGeneration * actualElectricityPrice;
+      const yearlyValue = Math.max(0, yearlyGeneration * actualElectricityPrice);
       const maintenanceAnnual = adjustedSystemCost * (parseFloat(maintenanceCost) / 100);
-      const netYearlyValue = yearlyValue - maintenanceAnnual;
-      const paybackPeriod = adjustedSystemCost / netYearlyValue;
-      const costPerKw = adjustedSystemCost / actualPower;
-      const levelisedCost = adjustedSystemCost / (yearlyGeneration * 20); // 20 year lifespan
+      const netYearlyValue = Math.max(0, yearlyValue - maintenanceAnnual);
+      const paybackPeriod = netYearlyValue > 0 ? adjustedSystemCost / netYearlyValue : Infinity;
+      const costPerKw = actualPower > 0 ? adjustedSystemCost / actualPower : Infinity;
+      const levelisedCost = yearlyGeneration > 0 ? adjustedSystemCost / (yearlyGeneration * 20) : Infinity; // 20 year lifespan
       
       // Engineering calculations
       const specificSpeed = (flow * Math.sqrt(flow)) / Math.pow(netHead, 0.75);
@@ -745,26 +784,55 @@ export function MicroHydroCalculator() {
                 What This Means
               </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="prose prose-sm text-elec-light max-w-none">
-                <p>
-                  <strong>System Viability:</strong> Your micro-hydro system would generate {result.actualPower.toFixed(2)} kW 
-                  with a {result.capacityFactor.toFixed(0)}% capacity factor, providing 
-                  {result.dailyGeneration > 50 ? ' substantial' : result.dailyGeneration > 20 ? ' moderate' : ' limited'} 
-                  daily energy output of {result.dailyGeneration.toFixed(1)} kWh.
-                </p>
-                <p>
-                  <strong>Economic Outlook:</strong> With a {result.paybackPeriod.toFixed(1)}-year payback period, 
-                  this system is {result.paybackPeriod < 10 ? 'highly economical' : 
-                                 result.paybackPeriod < 20 ? 'moderately viable' : 'challenging economically'}. 
-                  The levelised cost of £{result.levelisedCost.toFixed(3)}/kWh compares 
-                  {result.levelisedCost < 0.20 ? 'favourably' : 'unfavourably'} to grid electricity.
-                </p>
-                <p>
-                  <strong>Environmental Considerations:</strong> Your site shows {result.environmentalImpact.toLowerCase()} environmental impact. 
-                  {result.fishMigrationConcern && ' Fish passage requirements may apply due to the head height.'} 
-                  {result.abstractionRequired && ' Water abstraction licensing will be required due to daily extraction volumes.'}
-                </p>
+            <CardContent className="space-y-6">
+              <div className="space-y-4">
+                <div className="p-4 bg-elec-dark/20 rounded-lg">
+                  <div className="font-semibold text-elec-yellow mb-2">System Viability</div>
+                  <div className="text-elec-light text-sm leading-relaxed">
+                    {result.actualPower > 0 ? (
+                      <>Your micro-hydro system would generate <span className="font-semibold text-elec-yellow">{result.actualPower.toFixed(2)} kW</span> with a <span className="font-semibold">{result.capacityFactor.toFixed(0)}% capacity factor</span>, providing {
+                        result.dailyGeneration > 50 ? 'substantial' : 
+                        result.dailyGeneration > 20 ? 'moderate' : 
+                        result.dailyGeneration > 5 ? 'limited' : 'minimal'
+                      } daily energy output of <span className="font-semibold">{result.dailyGeneration.toFixed(1)} kWh</span>.</>
+                    ) : (
+                      <span className="text-amber-400">System parameters result in insufficient power generation. Please review flow rate, head, and turbine selection.</span>
+                    )}
+                  </div>
+                </div>
+                
+                <div className="p-4 bg-elec-dark/20 rounded-lg">
+                  <div className="font-semibold text-elec-yellow mb-2">Economic Outlook</div>
+                  <div className="text-elec-light text-sm leading-relaxed">
+                    {result.paybackPeriod !== Infinity && result.paybackPeriod > 0 ? (
+                      <>With a <span className="font-semibold">{result.paybackPeriod > 50 ? '50+' : result.paybackPeriod.toFixed(1)}-year payback period</span>, this system is {
+                        result.paybackPeriod < 10 ? 'highly economical' : 
+                        result.paybackPeriod < 20 ? 'moderately viable' : 
+                        result.paybackPeriod < 30 ? 'challenging economically' : 'not economically viable'
+                      }. The levelised cost of <span className="font-semibold">£{result.levelisedCost !== Infinity ? result.levelisedCost.toFixed(3) : 'N/A'}/kWh</span> compares {
+                        result.levelisedCost !== Infinity && result.levelisedCost < 0.30 ? 'favourably' : 'unfavourably'
+                      } to grid electricity (typically 25-35p/kWh).</>
+                    ) : (
+                      <span className="text-amber-400">Economic analysis cannot be completed due to insufficient generation or zero annual value. The system is not financially viable with current parameters.</span>
+                    )}
+                  </div>
+                </div>
+                
+                <div className="p-4 bg-elec-dark/20 rounded-lg">
+                  <div className="font-semibold text-elec-yellow mb-2">Environmental Considerations</div>
+                  <div className="text-elec-light text-sm leading-relaxed">
+                    Your site shows <span className="font-semibold">{result.environmentalImpact.toLowerCase()} environmental impact</span>.
+                    {result.fishMigrationConcern && (
+                      <span className="block mt-1">⚠️ Fish passage requirements may apply due to the head height exceeding 1.5m.</span>
+                    )}
+                    {result.abstractionRequired && (
+                      <span className="block mt-1">📋 Water abstraction licensing will be required due to daily extraction volumes exceeding 20m³.</span>
+                    )}
+                    {!result.fishMigrationConcern && !result.abstractionRequired && (
+                      <span className="block mt-1 text-green-400">✓ Minimal regulatory constraints expected for this scale of development.</span>
+                    )}
+                  </div>
+                </div>
               </div>
             </CardContent>
           </Card>
