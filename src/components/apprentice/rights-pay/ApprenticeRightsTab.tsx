@@ -10,69 +10,79 @@ const ApprenticeRightsTab = () => {
       category: "Working Time & Conditions",
       icon: <Clock className="h-5 w-5" />,
       items: [
-        "Maximum 48-hour working week (averaged over 17 weeks) - you can opt out voluntarily",
-        "Minimum 20 days paid holiday plus 8 bank holidays (28 days total)",
-        "Rest breaks: 20 minutes if working over 6 hours continuously",
-        "11 hours consecutive rest between working days",
-        "24 hours consecutive rest in each 7-day period",
-        "Night work restrictions (22:00-06:00) with health assessments if required",
-        "Overtime pay rates should be clearly defined in your contract"
+        "Maximum 48-hour working week (averaged over 17 weeks) - you can opt out voluntarily in writing",
+        "Minimum 20 days paid holiday plus 8 bank holidays (28 days total) - increases with service",
+        "Rest breaks: 20 minutes if working over 6 hours continuously (paid break time)",
+        "11 hours consecutive rest between working days (protected by law)",
+        "24 hours consecutive rest in each 7-day period (usually includes one full weekend day)",
+        "Night work restrictions (22:00-06:00) with mandatory health assessments for regular night workers",
+        "Overtime pay rates must be clearly defined in your contract - cannot be below minimum wage",
+        "Flexible working requests can be made after 26 weeks of employment",
+        "Protection from excessive working hours that could affect your studies or wellbeing"
       ]
     },
     {
       category: "Training & Development Rights",
       icon: <GraduationCap className="h-5 w-5" />,
       items: [
-        "Minimum 20% off-the-job training (equivalent to 1 day per week)",
-        "Access to structured learning programme aligned to apprenticeship standard",
-        "Regular progress reviews every 12 weeks with documented feedback",
-        "Qualified mentor or supervisor support throughout apprenticeship",
-        "Training costs covered by employer (tuition fees, materials, assessments)",
+        "Minimum 20% off-the-job training (equivalent to 1 day per week) - this is legally protected time",
+        "Access to structured learning programme aligned to your specific apprenticeship standard",
+        "Regular progress reviews every 12 weeks with documented feedback and development planning",
+        "Qualified mentor or supervisor support throughout your apprenticeship journey",
+        "All training costs covered by employer (tuition fees, materials, assessments, EPA)",
         "Time off for college/training centre attendance without loss of pay",
-        "Access to End Point Assessment when ready, funded by employer",
-        "Protection from being used as cheap labour - training must be genuine"
+        "Access to End Point Assessment when ready, fully funded by your employer",
+        "Protection from being used as cheap labour - your role must provide genuine learning opportunities",
+        "Right to additional support if you have learning difficulties or require reasonable adjustments",
+        "Access to career guidance and progression planning discussions"
       ]
     },
     {
       category: "Health & Safety Protection",
       icon: <Shield className="h-5 w-5" />,
       items: [
-        "Safe working environment with proper risk assessments",
-        "Comprehensive health and safety training before starting work",
-        "Personal protective equipment (PPE) provided free of charge",
-        "Right to refuse unsafe work without penalty or discrimination",
-        "Access to first aid facilities and trained first aiders",
-        "Proper supervision when working with dangerous equipment/substances",
-        "Regular safety briefings and toolbox talks",
-        "Right to report safety concerns without fear of retaliation"
+        "Safe working environment with comprehensive risk assessments completed before you start",
+        "Mandatory health and safety induction training before beginning any work activities",
+        "Personal protective equipment (PPE) provided free of charge and replaced when necessary",
+        "Right to refuse unsafe work without penalty, discrimination, or loss of pay",
+        "Access to first aid facilities and trained first aiders at all times during working hours",
+        "Proper supervision when working with dangerous equipment, substances, or in hazardous areas",
+        "Regular safety briefings, toolbox talks, and ongoing safety training updates",
+        "Right to report safety concerns anonymously without fear of retaliation or victimisation",
+        "Access to occupational health services if your work affects your health",
+        "Right to safety representation through safety committees or union safety representatives"
       ]
     },
     {
       category: "Employment Protection & Benefits",
       icon: <FileText className="h-5 w-5" />,
       items: [
-        "Written apprenticeship agreement within 2 months of starting",
+        "Written apprenticeship agreement within 2 months of starting (legally required document)",
         "Protection against unfair dismissal after 2 years continuous employment",
-        "Statutory sick pay (SSP) after 4 consecutive days of illness",
-        "Maternity/paternity leave and pay entitlements",
-        "Right to join a trade union and participate in union activities",
-        "Protection from discrimination based on age, gender, race, religion, etc.",
-        "Reasonable adjustments for apprentices with disabilities",
-        "Access to grievance and disciplinary procedures"
+        "Statutory sick pay (SSP) after 4 consecutive days of illness (£109.40 per week in 2025)",
+        "Maternity/paternity leave and pay entitlements (including shared parental leave options)",
+        "Right to join a trade union and participate in union activities during working hours",
+        "Protection from discrimination based on age, gender, race, religion, disability, sexual orientation",
+        "Reasonable adjustments for apprentices with disabilities or health conditions",
+        "Access to formal grievance and disciplinary procedures with right to representation",
+        "Right to request flexible working arrangements after 26 weeks of employment",
+        "Protection from victimisation for exercising your employment rights"
       ]
     },
     {
       category: "Financial Rights & Protections",
       icon: <Users className="h-5 w-5" />,
       items: [
-        "Minimum wage protection (apprentice minimum wage applies for first year)",
-        "Regular, predictable pay schedule (weekly/monthly as specified)",
-        "Itemised payslips showing deductions and contributions",
-        "No unlawful deductions from wages without written consent",
-        "Travel expenses for training may be reimbursable (check contract)",
-        "Tool allowances or provision of necessary equipment",
-        "Protection from having to pay for training if you leave early",
-        "Clear explanation of any training bond or repayment clauses"
+        "Apprentice minimum wage £6.40/hour (2025) for under 19s or first year, then age-appropriate rates",
+        "Regular, predictable pay schedule (weekly/monthly as specified in your contract)",
+        "Detailed itemised payslips showing gross pay, deductions, tax, NI contributions, and net pay",
+        "No unlawful deductions from wages without your written consent",
+        "Reimbursement of reasonable travel expenses for off-site training (check your contract)",
+        "Tool allowances or provision of necessary equipment and protective clothing",
+        "Protection from having to pay back training costs if you leave through no fault of your own",
+        "Clear explanation of any training bond or repayment clauses before you sign",
+        "Right to National Insurance number and understanding of your tax obligations",
+        "Access to pension auto-enrolment after 3 months if you meet the criteria"
       ]
     }
   ];
