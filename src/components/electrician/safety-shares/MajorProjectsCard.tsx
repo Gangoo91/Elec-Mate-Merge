@@ -135,18 +135,18 @@ const MajorProjectsCard = () => {
         console.error('Database error:', dbError);
       }
 
-      // Then trigger official API data fetching for new data (run in background)
-      let apiResult = null;
+      // Then trigger Firecrawl scraping for new data (run in background)
+      let scrapeResult = null;
       try {
         const { data, error } = await supabase.functions.invoke('fetch-projects');
         if (error) {
-          console.error('API fetch error:', error);
+          console.error('Scraping error:', error);
         } else {
-          apiResult = data;
-          console.log('API fetch success:', data);
+          scrapeResult = data;
+          console.log('Scraping success:', data);
         }
-      } catch (apiError) {
-        console.error('API fetch failed:', apiError);
+      } catch (scrapeError) {
+        console.error('Scraping failed:', scrapeError);
       }
 
       // Filter and map database projects to component format  
@@ -174,18 +174,17 @@ const MajorProjectsCard = () => {
       // Use live data if available and valid, otherwise fallback to static projects
       const finalProjects = mappedProjects.length > 0 ? mappedProjects : staticProjects;
       
-      const newProjectsCount = apiResult?.scrapedProjects || 0;
+      const newProjectsCount = scrapeResult?.scrapedProjects || 0;
       const totalProjects = mappedProjects.length;
       const isUsingFallback = mappedProjects.length === 0;
       
       console.log(`Projects loaded: ${totalProjects} valid DB projects, ${finalProjects.length} total shown`);
-      console.log('Database projects raw data:', dbProjects?.map(p => ({ id: p.id, title: p.title, status: p.status, is_active: p.is_active })));
       
       toast({
         title: "Projects Updated",
         description: isUsingFallback 
-          ? "Showing example projects - live data fetching in progress" 
-          : `Showing ${totalProjects} live projects${newProjectsCount > 0 ? ` (${newProjectsCount} newly fetched)` : ''}`,
+          ? "Showing example projects - live scraping in progress" 
+          : `Showing ${totalProjects} live projects${newProjectsCount > 0 ? ` (${newProjectsCount} newly scraped)` : ''}`,
         duration: 3000,
       });
 
