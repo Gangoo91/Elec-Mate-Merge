@@ -9,6 +9,44 @@ import { Label } from "@/components/ui/label";
 import { Calculator, RotateCcw, Sun, Settings, Info, AlertTriangle, CheckCircle, XCircle } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 
+// Common panel specifications for dropdowns
+const panelSpecs = {
+  wattage: [
+    { value: "300", label: "300W (Budget)" },
+    { value: "350", label: "350W (Standard)" },
+    { value: "400", label: "400W (Popular)" },
+    { value: "450", label: "450W (Premium)" },
+    { value: "500", label: "500W (High-end)" },
+    { value: "550", label: "550W (Commercial)" }
+  ],
+  dimensions: [
+    { length: "1.65", width: "1.0", label: "1.65m × 1.0m (Standard 60-cell)" },
+    { length: "2.0", width: "1.0", label: "2.0m × 1.0m (Standard 72-cell)" },
+    { length: "2.1", width: "1.05", label: "2.1m × 1.05m (Modern)" },
+    { length: "2.3", width: "1.1", label: "2.3m × 1.1m (Large format)" }
+  ],
+  electrical: [
+    { voc: "49.5", vmpp: "40.6", impp: "9.85", label: "400W Mono PERC" },
+    { voc: "45.0", vmpp: "37.5", impp: "9.33", label: "350W Poly" },
+    { voc: "55.0", vmpp: "46.0", impp: "9.78", label: "450W Bifacial" },
+    { voc: "60.0", vmpp: "50.0", impp: "11.0", label: "550W Commercial" }
+  ]
+};
+
+const inverterSpecs = [
+  { maxVdc: "1000", minVdc: "200", maxIdc: "20", power: "5000", label: "5kW String Inverter" },
+  { maxVdc: "1000", minVdc: "200", maxIdc: "30", power: "8000", label: "8kW String Inverter" },
+  { maxVdc: "1100", minVdc: "250", maxIdc: "40", power: "10000", label: "10kW String Inverter" },
+  { maxVdc: "1500", minVdc: "200", maxIdc: "50", power: "15000", label: "15kW Commercial" }
+];
+
+const cableSpecs = [
+  { dcLoss: "1.0", acLoss: "0.8", label: "Short runs (<20m)" },
+  { dcLoss: "1.5", acLoss: "1.0", label: "Medium runs (20-50m)" },
+  { dcLoss: "2.0", acLoss: "1.5", label: "Long runs (50-100m)" },
+  { dcLoss: "2.5", acLoss: "2.0", label: "Very long runs (>100m)" }
+];
+
 interface PVResult {
   // Layout
   panelsPerRow: number;
@@ -239,7 +277,7 @@ const SolarArrayCalculator = () => {
   };
 
   return (
-    <Card className="border-elec-yellow/20 bg-elec-card">
+    <Card className="border-elec-yellow/20 bg-elec-gray">
       <CardHeader>
         <CardTitle className="flex items-center justify-between">
           <div className="flex items-center gap-2">
@@ -268,44 +306,69 @@ const SolarArrayCalculator = () => {
         {/* Basic Inputs */}
         <div className="space-y-4">
           <h3 className="text-lg font-semibold text-elec-yellow">Panel & Site Details</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <MobileInput
-              label="Panel Wattage"
-              type="number"
-              value={panelWattage}
-              onChange={(e) => setPanelWattage(e.target.value)}
-              placeholder="e.g., 400"
-              unit="W"
-            />
-            <MobileInput
-              label="Panel Length"
-              type="number"
-              value={panelLength}
-              onChange={(e) => setPanelLength(e.target.value)}
-              placeholder="e.g., 2.0"
-              unit="m"
-            />
-            <MobileInput
-              label="Panel Width"
-              type="number"
-              value={panelWidth}
-              onChange={(e) => setPanelWidth(e.target.value)}
-              placeholder="e.g., 1.0"
-              unit="m"
-            />
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label className="text-sm font-medium">Panel Wattage</Label>
+              <Select value={panelWattage} onValueChange={setPanelWattage}>
+                <SelectTrigger className="bg-card border-elec-yellow/20">
+                  <SelectValue placeholder="Choose panel wattage" />
+                </SelectTrigger>
+                <SelectContent className="bg-elec-gray border-elec-yellow/30">
+                  {panelSpecs.wattage.map((spec) => (
+                    <SelectItem key={spec.value} value={spec.value}>{spec.label}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            
+            <div className="space-y-2">
+              <Label className="text-sm font-medium">Panel Size</Label>
+              <Select 
+                value={panelLength ? `${panelLength},${panelWidth}` : ""} 
+                onValueChange={(value) => {
+                  const [length, width] = value.split(',');
+                  setPanelLength(length);
+                  setPanelWidth(width);
+                }}
+              >
+                <SelectTrigger className="bg-card border-elec-yellow/20">
+                  <SelectValue placeholder="Choose panel dimensions" />
+                </SelectTrigger>
+                <SelectContent className="bg-elec-gray border-elec-yellow/30">
+                  {panelSpecs.dimensions.map((spec) => (
+                    <SelectItem key={spec.label} value={`${spec.length},${spec.width}`}>
+                      {spec.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
             <div className="space-y-2">
               <Label className="text-sm font-medium">Location</Label>
               <Select value={location} onValueChange={setLocation}>
                 <SelectTrigger className="bg-card border-elec-yellow/20">
                   <SelectValue placeholder="Select location" />
                 </SelectTrigger>
-                <SelectContent className="bg-elec-card border-elec-yellow/30">
+                <SelectContent className="bg-elec-gray border-elec-yellow/30">
                   {Object.entries(locationData).map(([key, data]) => (
                     <SelectItem key={key} value={key}>{data.name}</SelectItem>
                   ))}
                 </SelectContent>
               </Select>
             </div>
+
+            <div className="space-y-2">
+              <Label className="text-sm font-medium">Custom Panel Wattage (optional)</Label>
+              <MobileInput
+                type="number"
+                value={panelWattage}
+                onChange={(e) => setPanelWattage(e.target.value)}
+                placeholder="Or enter custom wattage"
+                unit="W"
+              />
+            </div>
+
             <MobileInput
               label="Available Length"
               type="number"
@@ -314,6 +377,7 @@ const SolarArrayCalculator = () => {
               placeholder="e.g., 12"
               unit="m"
             />
+            
             <MobileInput
               label="Available Width"
               type="number"
@@ -331,6 +395,30 @@ const SolarArrayCalculator = () => {
             <MobileAccordionItem value="panel-specs">
               <MobileAccordionTrigger>Panel Electrical Specifications</MobileAccordionTrigger>
               <MobileAccordionContent className="space-y-4">
+                <div className="space-y-2">
+                  <Label className="text-sm font-medium">Panel Electrical Preset</Label>
+                  <Select 
+                    value=""
+                    onValueChange={(value) => {
+                      const spec = panelSpecs.electrical.find(s => s.label === value);
+                      if (spec) {
+                        setPanelVoc(spec.voc);
+                        setPanelVmpp(spec.vmpp);
+                        setPanelImpp(spec.impp);
+                      }
+                    }}
+                  >
+                    <SelectTrigger className="bg-card border-elec-yellow/20">
+                      <SelectValue placeholder="Choose panel electrical specs" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-elec-gray border-elec-yellow/30">
+                      {panelSpecs.electrical.map((spec) => (
+                        <SelectItem key={spec.label} value={spec.label}>{spec.label}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <MobileInput
                     label="Voc (Open Circuit)"
@@ -411,7 +499,32 @@ const SolarArrayCalculator = () => {
             <MobileAccordionItem value="inverter-specs">
               <MobileAccordionTrigger>Inverter Specifications</MobileAccordionTrigger>
               <MobileAccordionContent className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label className="text-sm font-medium">Inverter Preset</Label>
+                  <Select 
+                    value=""
+                    onValueChange={(value) => {
+                      const spec = inverterSpecs.find(s => s.label === value);
+                      if (spec) {
+                        setInverterMaxVdc(spec.maxVdc);
+                        setInverterMinVdc(spec.minVdc);
+                        setInverterMaxIdc(spec.maxIdc);
+                        setInverterNominalPower(spec.power);
+                      }
+                    }}
+                  >
+                    <SelectTrigger className="bg-card border-elec-yellow/20">
+                      <SelectValue placeholder="Choose inverter specifications" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-elec-gray border-elec-yellow/30">
+                      {inverterSpecs.map((spec) => (
+                        <SelectItem key={spec.label} value={spec.label}>{spec.label}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <MobileInput
                     label="Max DC Voltage"
                     type="number"
@@ -459,7 +572,30 @@ const SolarArrayCalculator = () => {
             <MobileAccordionItem value="system-losses">
               <MobileAccordionTrigger>System Losses & Cabling</MobileAccordionTrigger>
               <MobileAccordionContent className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label className="text-sm font-medium">Cable Run Preset</Label>
+                  <Select 
+                    value=""
+                    onValueChange={(value) => {
+                      const spec = cableSpecs.find(s => s.label === value);
+                      if (spec) {
+                        setDcCableLoss(spec.dcLoss);
+                        setAcCableLoss(spec.acLoss);
+                      }
+                    }}
+                  >
+                    <SelectTrigger className="bg-card border-elec-yellow/20">
+                      <SelectValue placeholder="Choose cable run length preset" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-elec-gray border-elec-yellow/30">
+                      {cableSpecs.map((spec) => (
+                        <SelectItem key={spec.label} value={spec.label}>{spec.label}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <MobileInput
                     label="DC Cable Loss"
                     type="number"
@@ -521,28 +657,28 @@ const SolarArrayCalculator = () => {
         {result && (
           <div className="space-y-6">
             {/* System Layout */}
-            <div className="p-4 bg-elec-dark rounded-lg border border-elec-yellow/20">
+            <div className="p-4 bg-elec-gray rounded-lg border border-elec-yellow/20">
               <h3 className="font-semibold text-elec-yellow mb-3 flex items-center gap-2">
                 <Sun className="h-4 w-4" />
                 System Layout & Performance
               </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
                 <div>
-                  <p className="text-elec-light">Array Configuration:</p>
+                  <p className="text-elec-light mb-2">Array Configuration:</p>
                   <p>Panels per row: <span className="text-elec-yellow font-medium">{result.panelsPerRow}</span></p>
                   <p>Number of rows: <span className="text-elec-yellow font-medium">{result.numberOfRows}</span></p>
                   <p>Total panels: <span className="text-elec-yellow font-medium">{result.totalPanels}</span></p>
                   <p>Total capacity: <span className="text-elec-yellow font-medium">{(result.totalWattage/1000).toFixed(1)} kWp</span></p>
                 </div>
                 <div>
-                  <p className="text-elec-light">String Configuration:</p>
+                  <p className="text-elec-light mb-2">String Configuration:</p>
                   <p>Total strings: <span className="text-elec-yellow font-medium">{result.totalStrings}</span></p>
                   <p>Panels per string: <span className="text-elec-yellow font-medium">{result.panelsPerString}</span></p>
                   <p>String Voc (cold): <span className="text-elec-yellow font-medium">{result.stringVocCold.toFixed(0)} V</span></p>
                   <p>String Vmpp (hot): <span className="text-elec-yellow font-medium">{result.stringVmppHot.toFixed(0)} V</span></p>
                 </div>
                 <div>
-                  <p className="text-elec-light">Annual Performance:</p>
+                  <p className="text-elec-light mb-2">Annual Performance:</p>
                   <p>Yearly generation: <span className="text-elec-yellow font-medium">{result.yearlyGeneration.toFixed(0)} kWh</span></p>
                   <p>Performance ratio: <span className="text-elec-yellow font-medium">{(result.performanceRatio * 100).toFixed(1)}%</span></p>
                   <p>Area efficiency: <span className="text-elec-yellow font-medium">{result.areaEfficiency.toFixed(1)}%</span></p>
@@ -552,12 +688,12 @@ const SolarArrayCalculator = () => {
             </div>
 
             {/* Compliance Checks */}
-            <div className="p-4 bg-elec-dark rounded-lg border border-elec-yellow/20">
+            <div className="p-4 bg-elec-gray rounded-lg border border-elec-yellow/20">
               <h3 className="font-semibold text-elec-yellow mb-3 flex items-center gap-2">
                 <CheckCircle className="h-4 w-4" />
                 BS 7671 Compliance Checks
               </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
                 <div className="space-y-2">
                   <div className="flex items-center gap-2">
                     {result.complianceChecks.stringVoltageOK ? 
@@ -600,13 +736,15 @@ const SolarArrayCalculator = () => {
               </div>
               <div className="mt-4 pt-4 border-t border-elec-yellow/20">
                 <h4 className="font-medium text-elec-yellow mb-2">Voltage Drop Analysis:</h4>
-                <p className="text-sm">DC voltage drop: <span className="text-elec-yellow font-medium">{result.voltageDropDC.toFixed(2)}%</span></p>
-                <p className="text-sm">AC voltage drop: <span className="text-elec-yellow font-medium">{result.voltageDropAC.toFixed(2)}%</span></p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  <p className="text-sm">DC voltage drop: <span className="text-elec-yellow font-medium">{result.voltageDropDC.toFixed(2)}%</span></p>
+                  <p className="text-sm">AC voltage drop: <span className="text-elec-yellow font-medium">{result.voltageDropAC.toFixed(2)}%</span></p>
+                </div>
               </div>
             </div>
 
             {/* Professional Analysis */}
-            <div className="p-4 bg-elec-dark rounded-lg border border-elec-yellow/20">
+            <div className="p-4 bg-elec-gray rounded-lg border border-elec-yellow/20">
               <h3 className="font-semibold text-elec-yellow mb-3 flex items-center gap-2">
                 <Info className="h-4 w-4" />
                 System Analysis & Recommendations
