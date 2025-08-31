@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Newspaper } from "lucide-react";
-import NewsPagination from "@/components/electrician/safety-shares/NewsPagination";
+import { NewsPagination } from "@/components/electrician/safety-shares/NewsPagination";
 
 interface NewsItem {
   id: number;

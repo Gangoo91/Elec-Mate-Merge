@@ -13,32 +13,8 @@ const IndustryNews = () => {
     navigate('/electrician');
   };
 
-  const sampleNewsData = [
-    {
-      id: 1,
-      title: "New BS 7671:2018+A2:2022 Amendment Released",
-      content: "The Institution of Engineering and Technology has released the latest amendment to the UK wiring regulations, introducing new requirements for electrical installations.",
-      date: "2024-03-15",
-      source: "IET"
-    },
-    {
-      id: 2,
-      title: "Electric Vehicle Charging Infrastructure Update",
-      content: "New guidance published on residential EV charging point installations following increased demand across the UK.",
-      date: "2024-03-12",
-      source: "NICEIC"
-    },
-    {
-      id: 3,
-      title: "Part P Building Regulations Changes",
-      content: "Updates to Part P of the Building Regulations affecting notifiable electrical work in dwellings.",
-      date: "2024-03-10",
-      source: "LABC"
-    }
-  ];
-
   return (
-    <div className="min-h-screen bg-elec-gray text-white">
+    <div className="min-h-screen bg-elec-dark text-white">
       <Helmet>
         <title>Industry News - Elec-Mate</title>
         <meta name="description" content="Latest regulatory updates and compliance information from industry bodies" />
@@ -68,7 +44,7 @@ const IndustryNews = () => {
           </div>
         </div>
 
-        <IndustryNewsCard newsData={sampleNewsData} />
+        <IndustryNewsCard />
         
         {/* Section divider and Major Projects */}
         <div className="pt-12 space-y-8">
