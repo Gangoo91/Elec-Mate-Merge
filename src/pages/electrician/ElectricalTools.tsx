@@ -7,6 +7,7 @@ import { ArrowLeft, Wrench, Search, MapPin, BookOpen, Calculator, FileText, Zap,
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import ToolBuyingGuides from "@/components/electrician-tools/ToolBuyingGuides";
 
 interface ToolCategory {
   name: string;
@@ -344,63 +345,7 @@ const ElectricalTools = () => {
           </TabsContent>
 
           <TabsContent value="guides" className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <Card className="border-elec-yellow/20 bg-elec-gray/50">
-                <CardHeader>
-                  <CardTitle>Essential Tool Kit</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground mb-3">
-                    What tools you need to get started as an electrician
-                  </p>
-                  <Button size="sm" className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90">
-                    Read Guide
-                  </Button>
-                </CardContent>
-              </Card>
-
-              <Card className="border-elec-yellow/20 bg-elec-gray/50">
-                <CardHeader>
-                  <CardTitle>Choosing Test Equipment</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground mb-3">
-                    Guide to selecting the right testing equipment
-                  </p>
-                  <Button size="sm" className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90">
-                    Read Guide
-                  </Button>
-                </CardContent>
-              </Card>
-
-              <Card className="border-elec-yellow/20 bg-elec-gray/50">
-                <CardHeader>
-                  <CardTitle>Tool Maintenance</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground mb-3">
-                    Keep your tools in top condition
-                  </p>
-                  <Button size="sm" className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90">
-                    Read Guide
-                  </Button>
-                </CardContent>
-              </Card>
-
-              <Card className="border-elec-yellow/20 bg-elec-gray/50">
-                <CardHeader>
-                  <CardTitle>Budget Tool Shopping</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground mb-3">
-                    Get the best value when buying tools
-                  </p>
-                  <Button size="sm" className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90">
-                    Read Guide
-                  </Button>
-                </CardContent>
-              </Card>
-            </div>
+            <ToolBuyingGuides />
           </TabsContent>
         </Tabs>
       </div>
