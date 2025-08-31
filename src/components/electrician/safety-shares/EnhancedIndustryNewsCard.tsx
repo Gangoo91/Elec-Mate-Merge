@@ -23,21 +23,7 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { format } from "date-fns";
-import { supabase } from "@/integrations/supabase/client";
-
-interface NewsArticle {
-  id: string;
-  title: string;
-  summary: string;
-  content: string;
-  source_url?: string;
-  date_published: string;
-  view_count?: number;
-  average_rating?: number;
-  category?: string;
-  source_type?: string;
-  source_name?: string;
-}
+import { useNewsData, useRefreshNews, type NewsArticle } from "@/hooks/useNewsData";
 
 interface UserInteraction {
   isBookmarked: boolean;
@@ -51,45 +37,28 @@ const EnhancedIndustryNewsCard = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [sortBy, setSortBy] = useState<string>("date");
   const [userInteractions, setUserInteractions] = useState<Record<string, UserInteraction>>({});
-  const [articles, setArticles] = useState<NewsArticle[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
-  const fetchLiveNews = async () => {
-    setIsLoading(true);
-    setError(null);
-    
-    try {
-      console.log('Fetching enhanced live industry news...');
-      const { data, error } = await supabase.functions.invoke('comprehensive-news-scraper', {
-        body: { live: true }
-      });
-      
-      if (error) {
-        console.error('Error fetching live news:', error);
-        throw error;
-      }
-      
-      console.log('Fetched enhanced live articles:', data?.articles?.length);
-      setArticles(data?.articles || []);
-    } catch (err) {
-      console.error('Error:', err);
-      setError(err instanceof Error ? err.message : 'Failed to fetch news');
-    } finally {
-      setIsLoading(false);
-    }
+  // Use React Query for data fetching
+  const { data: articles = [], isLoading, error, refetch } = useNewsData();
+  const refreshNewsMutation = useRefreshNews();
+
+  const handleRefreshNews = () => {
+    refreshNewsMutation.mutate();
   };
 
   // Get unique categories from articles
-  const uniqueCategories = [...new Set(articles.map(article => article.category).filter(Boolean))];
+  const uniqueCategories = [...new Set(articles.map(article => article.category || article.tag).filter(Boolean))];
 
   // Filter and sort articles
   const filteredArticles = articles.filter(article => {
     const matchesSearch = !searchTerm || 
       article.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      (article.summary && article.summary.toLowerCase().includes(searchTerm.toLowerCase()));
+      (article.summary && article.summary.toLowerCase().includes(searchTerm.toLowerCase())) ||
+      (article.snippet && article.snippet.toLowerCase().includes(searchTerm.toLowerCase()));
     
-    const matchesCategory = selectedCategory === "all" || article.category === selectedCategory;
+    const matchesCategory = selectedCategory === "all" || 
+      article.category === selectedCategory || 
+      article.tag === selectedCategory;
     
     return matchesSearch && matchesCategory;
   });
@@ -97,7 +66,9 @@ const EnhancedIndustryNewsCard = () => {
   const sortedAndFilteredArticles = [...filteredArticles].sort((a, b) => {
     switch (sortBy) {
       case "date":
-        return new Date(b.date_published).getTime() - new Date(a.date_published).getTime();
+        const dateA = new Date(a.date_published || a.date || 0);
+        const dateB = new Date(b.date_published || b.date || 0);
+        return dateB.getTime() - dateA.getTime();
       case "views":
         return (b.view_count || 0) - (a.view_count || 0);
       case "rating":
@@ -179,9 +150,9 @@ const EnhancedIndustryNewsCard = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-red-400">Error loading news: {error}</p>
+          <p className="text-red-400">Error loading news: {error instanceof Error ? error.message : 'Failed to fetch news'}</p>
           <Button 
-            onClick={fetchLiveNews} 
+            onClick={() => refetch()} 
             className="mt-2 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
           >
             <RefreshCw className="h-4 w-4 mr-2" />
@@ -200,13 +171,14 @@ const EnhancedIndustryNewsCard = () => {
             <Newspaper className="h-5 w-5" />
             Enhanced Industry News (Live)
             <Button
-              onClick={fetchLiveNews}
+              onClick={handleRefreshNews}
               variant="outline"
               size="sm"
-              className="ml-auto border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+              disabled={isLoading || refreshNewsMutation.isPending}
+              className="ml-auto border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 disabled:opacity-50"
             >
-              <RefreshCw className="h-4 w-4" />
-              Fetch News
+              <RefreshCw className={`h-4 w-4 ${(isLoading || refreshNewsMutation.isPending) ? 'animate-spin' : ''}`} />
+              {isLoading || refreshNewsMutation.isPending ? 'Fetching...' : 'Fetch News'}
             </Button>
           </CardTitle>
           <CardDescription className="text-muted-foreground">
@@ -325,7 +297,7 @@ const EnhancedIndustryNewsCard = () => {
                       <div className="flex items-center gap-4 text-sm text-muted-foreground">
                         <span className="flex items-center gap-1">
                           <Calendar className="h-4 w-4" />
-                          {format(new Date(article.date_published), 'dd MMM yyyy')}
+                          {format(new Date(article.date_published || article.date || new Date()), 'dd MMM yyyy')}
                         </span>
                         {article.view_count !== undefined && (
                           <span className="flex items-center gap-1">
@@ -347,11 +319,11 @@ const EnhancedIndustryNewsCard = () => {
                         >
                           Read More
                         </Button>
-                        {article.source_url && (
+                        {(article.source_url || article.url) && (
                           <Button 
                             size="sm" 
                             className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
-                            onClick={() => window.open(article.source_url, '_blank', 'noopener,noreferrer')}
+                            onClick={() => window.open(article.source_url || article.url, '_blank', 'noopener,noreferrer')}
                           >
                             <ExternalLink className="h-4 w-4 mr-2" />
                             Source
@@ -389,15 +361,17 @@ const EnhancedIndustryNewsCard = () => {
                   </Badge>
                 )}
                 <span>
-                  Published: {selectedArticle && format(new Date(selectedArticle.date_published), 'dd MMM yyyy')}
+                  Published: {selectedArticle && format(new Date(selectedArticle.date_published || selectedArticle.date || new Date()), 'dd MMM yyyy')}
                 </span>
               </div>
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-4 text-white">
-            {selectedArticle?.content && (
+            {(selectedArticle?.content || selectedArticle?.summary || selectedArticle?.snippet) && (
               <div className="prose prose-invert max-w-none">
-                <p className="whitespace-pre-wrap">{selectedArticle.content}</p>
+                <p className="whitespace-pre-wrap">
+                  {selectedArticle.content || selectedArticle.summary || selectedArticle.snippet}
+                </p>
               </div>
             )}
             
@@ -433,11 +407,12 @@ const EnhancedIndustryNewsCard = () => {
                 </div>
               </div>
               
-              {selectedArticle?.source_url && (
+              {(selectedArticle?.source_url || selectedArticle?.url) && (
                 <Button
                   onClick={() => {
-                    if (selectedArticle.source_url) {
-                      window.open(selectedArticle.source_url, '_blank', 'noopener,noreferrer');
+                    const url = selectedArticle.source_url || selectedArticle.url;
+                    if (url) {
+                      window.open(url, '_blank', 'noopener,noreferrer');
                     }
                   }}
                   className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"

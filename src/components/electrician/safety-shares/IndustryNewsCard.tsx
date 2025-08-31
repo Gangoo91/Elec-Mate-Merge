@@ -7,64 +7,26 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { ArrowLeft, ExternalLink, Newspaper, Search, Calendar, Eye, Star, RefreshCw } from "lucide-react";
 import { useState, useEffect } from "react";
 import { format } from "date-fns";
-import { supabase } from "@/integrations/supabase/client";
 import NewsPagination from "./NewsPagination";
-
-interface NewsArticle {
-  id?: string;
-  title: string;
-  url: string;
-  snippet: string;
-  date: string;
-  tag: string;
-  image?: string;
-  thumbnail?: string;
-  imageUrl?: string;
-  img?: string;
-}
+import { useNewsData, useRefreshNews, type NewsArticle } from "@/hooks/useNewsData";
 
 const IndustryNewsCard = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
-  const [articles, setArticles] = useState<NewsArticle[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [sortOption, setSortOption] = useState<string>("random");
 
-  const fetchLiveNews = async () => {
-    setIsLoading(true);
-    setError(null);
-    
-    try {
-      console.log('Fetching live industry news...');
-      const { data, error } = await supabase.functions.invoke('comprehensive-news-scraper', {
-        body: { live: true }
-      });
-      
-      if (error) {
-        console.error('Error fetching live news:', error);
-        throw error;
-      }
-      
-      console.log('Fetched live articles:', data?.articles?.length);
-      // Add IDs to articles for React keys
-      const articlesWithIds = (data?.articles || []).map((article, index) => ({
-        ...article,
-        id: `${article.url || article.title}-${index}`
-      }));
-      setArticles(articlesWithIds);
-    } catch (err) {
-      console.error('Error:', err);
-      setError(err instanceof Error ? err.message : 'Failed to fetch news');
-    } finally {
-      setIsLoading(false);
-    }
+  // Use React Query for data fetching
+  const { data: articles = [], isLoading, error, refetch } = useNewsData();
+  const refreshNewsMutation = useRefreshNews();
+
+  const handleRefreshNews = () => {
+    refreshNewsMutation.mutate();
   };
 
   // Get unique categories from articles
-  const uniqueCategories = [...new Set(articles.map(article => article.tag).filter(Boolean))];
+  const uniqueCategories = [...new Set(articles.map(article => article.tag || article.category).filter(Boolean))];
 
   // Count articles per category
   const getCategoryCount = (category: string) => {
@@ -72,7 +34,7 @@ const IndustryNewsCard = () => {
       (!searchTerm || 
         article.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
         (article.snippet && article.snippet.toLowerCase().includes(searchTerm.toLowerCase()))
-      ) && article.tag === category
+      ) && (article.tag === category || article.category === category)
     ).length;
   };
 
@@ -149,7 +111,9 @@ const IndustryNewsCard = () => {
       article.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       (article.snippet && article.snippet.toLowerCase().includes(searchTerm.toLowerCase()));
     
-    const matchesCategory = selectedCategory === "all" || article.tag === selectedCategory;
+    const matchesCategory = selectedCategory === "all" || 
+      article.tag === selectedCategory || 
+      article.category === selectedCategory;
     
     return matchesSearch && matchesCategory;
   }));
@@ -191,9 +155,9 @@ const IndustryNewsCard = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-red-400">Error loading news: {error}</p>
+          <p className="text-red-400">Error loading news: {error instanceof Error ? error.message : 'Failed to fetch news'}</p>
           <Button 
-            onClick={fetchLiveNews} 
+            onClick={() => refetch()} 
             className="mt-2 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
           >
             <RefreshCw className="h-4 w-4 mr-2" />
@@ -209,14 +173,14 @@ const IndustryNewsCard = () => {
         <CardHeader className="p-0">
           <CardTitle className="text-elec-yellow flex items-center gap-2 justify-end pb-6">
             <Button
-              onClick={fetchLiveNews}
-              disabled={isLoading}
+              onClick={handleRefreshNews}
+              disabled={isLoading || refreshNewsMutation.isPending}
               variant="outline"
               size="sm"
               className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 disabled:opacity-50"
             >
-              <RefreshCw className={`h-4 w-4 ${isLoading ? 'animate-spin' : ''}`} />
-              {isLoading ? 'Fetching...' : 'Refresh News'}
+              <RefreshCw className={`h-4 w-4 ${(isLoading || refreshNewsMutation.isPending) ? 'animate-spin' : ''}`} />
+              {isLoading || refreshNewsMutation.isPending ? 'Fetching...' : 'Refresh News'}
             </Button>
           </CardTitle>
         </CardHeader>
