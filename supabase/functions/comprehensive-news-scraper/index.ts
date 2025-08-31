@@ -8,54 +8,6 @@ const corsHeaders = {
 
 const URL = "https://api.firecrawl.dev/v2/search";
 
-const electricalKeywords = [
-  "Health and Safety Executive - UK",
-  "BS7671 (IET Wiring Regulations) - UK",
-  "Institution of Engineering and Technology - UK",
-  "Major Engineering and Infrastructure Projects - UK",
-  "UK Government Electrical Regulations and Publications - UK",
-];
-
-const keywordToShortTag = {
-  "Health and Safety Executive - UK": "HSE",
-  "BS7671 (IET Wiring Regulations) - UK": "BS7671",
-  "Institution of Engineering and Technology - UK": "IET",
-  "Major Engineering and Infrastructure Projects - UK": "Major Projects",
-  "UK Government Electrical Regulations and Publications - UK": "UK Regulations",
-};
-
-function isUKRelevant(article) {
-  const ukDomains = ['.gov.uk', '.co.uk', '.ac.uk', '.org.uk'];
-  const ukKeywords = ['UK', 'United Kingdom', 'Britain', 'British', 'England', 'Scotland', 'Wales', 'Northern Ireland'];
-  const excludeKeywords = ['India', 'Indian', 'Delhi', 'Mumbai', 'Bangalore', 'Chennai', 'Kolkata', 'Hyderabad'];
-  
-  // Check if URL is from UK domain
-  const hasUKDomain = ukDomains.some(domain => article.url.includes(domain));
-  
-  // Check if content mentions UK
-  const content = `${article.title} ${article.snippet}`.toLowerCase();
-  const hasUKKeywords = ukKeywords.some(keyword => content.includes(keyword.toLowerCase()));
-  
-  // Check if content mentions excluded locations
-  const hasExcludeKeywords = excludeKeywords.some(keyword => content.includes(keyword.toLowerCase()));
-  
-  return (hasUKDomain || hasUKKeywords) && !hasExcludeKeywords;
-}
-
-function normalizeArticles(articles, query) {
-  const shortTag = keywordToShortTag[query] || query;
-  
-  // Filter for UK-relevant articles only
-  const ukRelevantArticles = articles.filter(isUKRelevant);
-  
-  return ukRelevantArticles.map((a) => ({
-    title: a.title || "",
-    url: a.url || "",
-    snippet: a.snippet || "",
-    date: a.date || "",
-    tag: shortTag,
-  }));
-}
 
 async function fetchNews(query) {
   console.log(`🔎 Fetching: ${query}`);
@@ -69,18 +21,16 @@ async function fetchNews(query) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      query: `${query} site:gov.uk OR site:co.uk OR site:ac.uk`,
+      query,
       sources: ["news"],
       location: "United Kingdom",
       tbs: "qdr:w",
-      limit: 30,
-      country: "gb",
-      lang: "en",
+      limit: 50,
       scrapeOptions: {
-        onlyMainContent: true,
+        onlyMainContent: false,
         maxAge: 0,
         parsers: [],
-        formats: ["markdown"],
+        formats: [],
       },
     }),
   };
@@ -96,7 +46,7 @@ async function fetchNews(query) {
     const articles = data?.data?.news || [];
 
     // ✅ Return only normalized schema
-    return normalizeArticles(articles, query);
+    return articles.map((article) => ({ ...article, tag: query }));
   } catch (error) {
     console.error(`⚠️ Error fetching ${query}:`, error.message);
     return [];
@@ -104,10 +54,18 @@ async function fetchNews(query) {
 }
 
 async function main() {
+  const electricalKeywords = [
+    "Health and Safety Executive - UK",
+    "BS7671 (IET Wiring Regulations) - UK",
+    "Institution of Engineering and Technology - UK",
+    "Major Engineering and Infrastructure Projects - UK",
+    "UK Government Electrical Regulations and Publications - UK",
+  ];
+
   try {
     const results = await Promise.allSettled(electricalKeywords.map((keyword) => fetchNews(keyword)));
-    const newsArticles = results.filter((r) => r.status === "fulfilled").flatMap((r) => r.value);
-    return newsArticles;
+    const articles = results.filter((r) => r.status === "fulfilled").flatMap((r) => r.value);
+    return articles;
   } catch (error) {
     console.error("Error fetching data:", error);
   }
