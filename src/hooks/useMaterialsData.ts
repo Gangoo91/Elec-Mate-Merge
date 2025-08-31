@@ -151,8 +151,8 @@ function processMaterialsData(materials: MaterialItem[]): ProcessedCategoryData[
 }
 
 export const useMaterialsData = () => {
-  return useQuery({
-    queryKey: ['comprehensive-materials'],
+  const rawQuery = useQuery({
+    queryKey: ['comprehensive-materials-raw'],
     queryFn: async () => {
       const { data, error } = await supabase.functions.invoke('comprehensive-materials-scraper');
       
@@ -167,6 +167,16 @@ export const useMaterialsData = () => {
     gcTime: 1000 * 60 * 30, // 30 minutes
     retry: 3,
     refetchOnWindowFocus: true,
-    select: processMaterialsData,
   });
+
+  const processedData = rawQuery.data ? processMaterialsData(rawQuery.data) : defaultCategoryData;
+
+  return {
+    data: processedData,
+    rawMaterials: rawQuery.data || [],
+    isLoading: rawQuery.isLoading,
+    error: rawQuery.error,
+    refetch: rawQuery.refetch,
+    isRefetching: rawQuery.isRefetching,
+  };
 };

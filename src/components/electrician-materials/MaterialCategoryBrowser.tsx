@@ -2,6 +2,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Link } from "react-router-dom";
 import { Cable, Zap, Shield, Package, Building, TrendingUp, Star, ArrowRight, Users, Award, Loader2, RefreshCw } from "lucide-react";
 import { useMaterialsData } from "@/hooks/useMaterialsData";
 
@@ -182,9 +183,11 @@ const MaterialCategoryBrowser = () => {
                     </div>
                   )}
 
-                  <Button className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90 transition-colors">
-                    Browse {category.title}
-                    <ArrowRight className="h-4 w-4 ml-2" />
+                  <Button asChild className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90 transition-colors">
+                    <Link to={`/materials/category/${category.id}`}>
+                      Browse {category.title}
+                      <ArrowRight className="h-4 w-4 ml-2" />
+                    </Link>
                   </Button>
                 </CardContent>
               </Card>

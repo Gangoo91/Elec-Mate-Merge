@@ -1,21 +1,15 @@
-
-import { useMemo, useState, useEffect } from "react";
-import { useParams, Link, useSearchParams } from "react-router-dom";
+import { useMemo, useState } from "react";
+import { useParams, Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Package, ArrowLeft, Filter, RefreshCw } from "lucide-react";
-import { productsBySupplier, MaterialItem as OriginalMaterialItem } from "@/data/electrician/productData";
-import { MaterialItem } from "@/hooks/useToolsForMaterials";
+import { Input } from "@/components/ui/input";
+import { Package, ArrowLeft, Filter, RefreshCw, Loader2, Search } from "lucide-react";
 import MaterialCard from "@/components/electrician-materials/MaterialCard";
-import CategoryFilters from "@/components/electrician-materials/CategoryFilters";
-import RefreshButton from "@/components/electrician-materials/RefreshButton";
-import { supabase } from "@/integrations/supabase/client";
-import { toast } from "@/hooks/use-toast";
-import { useToolsForMaterials } from "@/hooks/useToolsForMaterials";
+import { useCategoryMaterials } from "@/hooks/useCategoryMaterials";
 
-const CATEGORY_META: Record<string, { title: string; description: string } > = {
+const CATEGORY_META: Record<string, { title: string; description: string }> = {
   cables: {
     title: "Cables & Wiring",
     description: "Twin & Earth, SWA, flex, data and control cabling"
@@ -42,520 +36,63 @@ const CATEGORY_META: Record<string, { title: string; description: string } > = {
   }
 };
 
-function matchesCategory(item: any, categoryId: string) {
-  const hay = `${item.category} ${item.name}`.toLowerCase();
-  const matches = (() => {
-    switch (categoryId) {
-      case "cables":
-        return /cable|wire|swa|t&e|t\s*&\s*e|flex|cat\d|data|6242y|power\s+cable|armoured|data\s+cable|twin.*earth|earth.*cable|power.*cable|armour|flex.*cable/.test(hay);
-      case "components":
-        return /consumer|rcd|rcbo|mcb|isolator|breaker|protector|fuse/.test(hay);
-      case "protection":
-        return /surge|rcd|breaker|earthing|earth|protector|bond|sp\d?d?/.test(hay);
-      case "accessories":
-        return /junction|gland|trunk|tray|clip|box|plate|socket|switch|backbox/.test(hay);
-      case "lighting":
-        return /light|led|batten|downlight|lamp|bulb|emergency/.test(hay);
-      case "tools":
-        return /tester|test|tool|screwdriver|pliers|multimeter|drill|voltage|detector|socket|electrical/.test(hay);
-      default:
-        return false;
-    }
-  })();
-  
-  // Log tools matching for debugging
-  if (categoryId === 'tools') {
-    console.log(`[TOOLS] Matching "${item.name}" against tools pattern: ${matches}`);
-  }
-  
-  return matches;
-}
-
 const CategoryMaterials = () => {
   const { categoryId = "" } = useParams<{ categoryId: string }>();
   const meta = CATEGORY_META[categoryId] || { title: "Materials", description: "Browse curated products by category" };
   
-  // React Query hook for tools data
-  const { materials: toolsMaterials, isLoading: toolsLoading, error: toolsError, refetch: refetchTools } = useToolsForMaterials();
+  // Use comprehensive materials data
+  const { materials, categoryData, isLoading, error, refetch } = useCategoryMaterials(categoryId);
 
-  // Suppliers supported by the edge function
-  const SUPPLIERS = [
-    "screwfix",
-    "electricaldirect",
-    "toolstation",
-  ] as const;
-
-  // Enhanced search terms per category for better results
-  const CATEGORY_QUERIES: Record<string, string[]> = {
-    cables: [
-      "cables wiring" // Single comprehensive search for cables since we use database cache
-    ],
-    components: [
-      "consumer units, MCBs, RCDs, isolators, accessories" // Single comprehensive search for components
-    ],
-    protection: ["testers%2C+hand+tools%2C+power+tools"],
-    accessories: ["junction boxes, glands, trunking, fixings"],
-    lighting: ["LED, downlights, battens, emergency, controls"],
-    tools: ["testers%2C+hand+tools%2C+power+tools"],
-  };
-
-  const allProducts = useMemo(() => Object.values(productsBySupplier).flat(), []);
-  const products = useMemo(() => allProducts.filter((p) => matchesCategory(p as any, categoryId)), [allProducts, categoryId]);
-
-  type LiveItem = MaterialItem & { 
-    productUrl?: string;
-    stockStatus: 'In Stock' | 'Out of Stock' | 'Limited Stock';
-  };
-  const [liveProducts, setLiveProducts] = useState<LiveItem[]>([]);
-  const [isFetching, setIsFetching] = useState(false);
-  const [isAutoLoaded, setIsAutoLoaded] = useState(false);
-  const [lastFetchTime, setLastFetchTime] = useState<number>(0);
-  const [hasAttemptedLiveFetch, setHasAttemptedLiveFetch] = useState(false);
-  const [liveFetchFailed, setLiveFetchFailed] = useState(false);
-  const [dataSource, setDataSource] = useState<'live' | 'static' | 'none'>('none');
-  const [searchParams, setSearchParams] = useSearchParams();
+  // Filter state for the materials
+  const [searchTerm, setSearchTerm] = useState("");
   
-  // Enhanced filter state for all categories
-  interface FilterState {
-    productTypes: string[];
-    brands: string[];
-    priceRanges: string[];
-    moduleSizes: string[];
-    cableTypes: string[];
-  }
-  
-  const [filters, setFilters] = useState<FilterState>({
-    productTypes: [],
-    brands: [],
-    priceRanges: [],
-    moduleSizes: [],
-    cableTypes: []
-  });
-
-  // Legacy cable type state for backward compatibility
-  const selectedCableTypes = filters.cableTypes;
-  
-  // Cache duration and freshness checking
-  const CACHE_DURATION = categoryId === 'cables' ? 0 : 30 * 60 * 1000; // No frontend cache for cables
-  
-  // Check if live data is fresh
-  const isLiveDataFresh = useMemo(() => {
-    if (!hasAttemptedLiveFetch) return false;
-    const now = Date.now();
-    return (now - lastFetchTime) < CACHE_DURATION;
-  }, [hasAttemptedLiveFetch, lastFetchTime, CACHE_DURATION]);
-  
-  // Check if we have valid live data
-  const hasValidLiveData = useMemo(() => {
-    return hasAttemptedLiveFetch && !liveFetchFailed && liveProducts.length > 0;
-  }, [hasAttemptedLiveFetch, liveFetchFailed, liveProducts.length]);
-  
-  // Cable type detection function
-  const getCableType = (itemName: string): string[] => {
-    const name = itemName.toLowerCase();
-    const types: string[] = [];
+  // Filter and search the materials
+  const filteredMaterials = useMemo(() => {
+    if (!materials) return [];
     
-    if (name.includes('twin') && name.includes('earth') || name.includes('t&e') || name.includes('6242y')) {
-      types.push('Twin & Earth');
-    }
-    if (name.includes('swa') || name.includes('armour')) {
-      types.push('SWA');
-    }
-    if (name.includes('flex') && !name.includes('flexible')) {
-      types.push('Flex');
-    }
-    if (name.includes('data') || name.includes('cat') || name.includes('ethernet') || name.includes('coax')) {
-      types.push('Data');
-    }
-    if (name.includes('control') || name.includes('alarm') || name.includes('fire')) {
-      types.push('Control');
+    let filtered = materials;
+    
+    // Apply search filter
+    if (searchTerm) {
+      filtered = filtered.filter(material =>
+        material.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        material.description?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        material.supplier?.toLowerCase().includes(searchTerm.toLowerCase())
+      );
     }
     
-    return types;
-  };
-  
-  // Smart product selection: use React Query for tools, live data for others
-  const baseProducts = useMemo(() => {
-    console.log(`[${categoryId.toUpperCase()}] baseProducts calculation:`, {
-      hasValidLiveData,
-      isLiveDataFresh,
-      liveProductsCount: liveProducts.length,
-      hasAttemptedLiveFetch,
-      liveFetchFailed,
-      isToolsCategory: categoryId === 'tools',
-      toolsMaterialsCount: toolsMaterials.length
-    });
-    
-    // Use React Query data for tools category
-    if (categoryId === 'tools') {
-      console.log(`[TOOLS] Using React Query data: ${toolsMaterials.length} products`);
-      setDataSource(toolsMaterials.length > 0 ? 'live' : 'none');
-      return toolsMaterials;
-    }
-    
-    // For other categories, use live data if available and fresh
-    if (hasValidLiveData && (categoryId === 'cables' || isLiveDataFresh)) {
-      console.log(`[${categoryId.toUpperCase()}] Using live data: ${liveProducts.length} products`);
-      setDataSource('live');
-      return liveProducts;
-    }
-    
-    // Don't show static data - only show live data or nothing
-    console.log(`[${categoryId.toUpperCase()}] No valid data to show`);
-    setDataSource('none');
-    return [];
-  }, [hasValidLiveData, isLiveDataFresh, categoryId, liveProducts, hasAttemptedLiveFetch, liveFetchFailed, toolsMaterials]);
-
-  // Apply filters to products
-  const displayProducts = useMemo(() => {
-    console.log(`[${categoryId.toUpperCase()}] Filtering ${baseProducts.length} base products`);
-    
-    let filtered = baseProducts;
-    
-    // Filter by product types
-    if (filters.productTypes.length > 0) {
-      filtered = filtered.filter(product => {
-        const productName = product.name.toLowerCase();
-        return filters.productTypes.some(type => {
-          switch (type) {
-            case 'Testers':
-              return /tester|test|multimeter|voltage|detector/.test(productName);
-            case 'Hand Tools':
-              return /screwdriver|pliers|spanner|wrench|strip|crimp|cutter/.test(productName);
-            case 'Power Tools':
-              return /drill|driver|saw|grinder|impact|cordless|battery/.test(productName);
-            case 'Measuring':
-              return /measure|tape|rule|level|square|gauge/.test(productName);
-            default:
-              return productName.includes(type.toLowerCase());
-          }
-        });
-      });
-    }
-    
-    // Filter by price ranges
-    if (filters.priceRanges.length > 0) {
-      filtered = filtered.filter(product => {
-        const price = parseFloat(product.price.replace(/[£,]/g, ''));
-        return filters.priceRanges.some(range => {
-          switch (range) {
-            case 'Under £25':
-              return price < 25;
-            case '£25-£50':
-              return price >= 25 && price <= 50;
-            case '£50-£100':
-              return price >= 50 && price <= 100;
-            case '£100-£250':
-              return price >= 100 && price <= 250;
-            case 'Over £250':
-              return price > 250;
-            default:
-              return false;
-          }
-        });
-      });
-    }
-    
-    // Filter by cable types (for cables category)
-    if (categoryId === 'cables' && filters.cableTypes.length > 0) {
-      filtered = filtered.filter(product => {
-        const cableTypes = getCableType(product.name);
-        return filters.cableTypes.some(type => cableTypes.includes(type));
-      });
-    }
-    
-    console.log(`[${categoryId.toUpperCase()}] After filtering: ${filtered.length} products`);
     return filtered;
-  }, [baseProducts, filters, categoryId]);
-
-  // Enhanced fetch with better error handling and state management
-  const fetchLiveDeals = async (isAutoLoad = false) => {
-    console.log(`[${categoryId.toUpperCase()}] Starting fetchLiveDeals, isAutoLoad:`, isAutoLoad);
-    
-    // For tools category, use React Query refetch instead
-    if (categoryId === 'tools') {
-      console.log(`[TOOLS] Using React Query refetch instead of direct API call`);
-      if (!isAutoLoad) {
-        await refetchTools();
-      }
-      return;
-    }
-    
-    // Check cache first for non-cables categories
-    const now = Date.now();
-    if (isAutoLoad && hasValidLiveData && isLiveDataFresh) {
-      console.log(`[${categoryId.toUpperCase()}] Using fresh cached results`);
-      return;
-    }
-
-    console.log(`[${categoryId.toUpperCase()}] Fetching fresh data...`);
-    setIsFetching(true);
-    setLiveFetchFailed(false);
-    
-    try {
-      const allCollected: LiveItem[] = [];
-      // Use existing scraping logic for non-tools categories
-        const searchTerms = CATEGORY_QUERIES[categoryId] || [meta.title];
-        console.log(`[${categoryId.toUpperCase()}] Search terms:`, searchTerms);
-        
-        // Reduce redundant calls to minimize duplicates from fallback products
-        const termsToUse = categoryId === 'cables' ? searchTerms.slice(0, 2) : [searchTerms[0]];
-        console.log(`[${categoryId.toUpperCase()}] Using terms:`, termsToUse);
-        
-        for (const term of termsToUse) {
-          console.log(`[${categoryId.toUpperCase()}] Searching for term: "${term}"`);
-          const tasks: Promise<any>[] = [];
-          for (const supplier of SUPPLIERS) {
-            tasks.push(
-              supabase.functions.invoke('scrape-supplier-products', {
-                body: { supplierSlug: supplier, searchTerm: term, category: categoryId }
-              })
-            );
-          }
-          
-          const responses = await Promise.allSettled(tasks);
-          console.log(`[${categoryId.toUpperCase()}] Got ${responses.length} responses for term "${term}"`);
-          
-          for (let i = 0; i < responses.length; i++) {
-            const r = responses[i];
-            const supplier = SUPPLIERS[i];
-            
-            if (r.status === 'fulfilled') {
-              const d = r.value?.data;
-              if (Array.isArray(d?.products)) {
-                console.log(`[${categoryId.toUpperCase()}] ${supplier}: ${d.products.length} products`);
-                allCollected.push(...(d.products as LiveItem[]));
-              } else {
-                console.log(`[${categoryId.toUpperCase()}] ${supplier}: No products in response`);
-              }
-            } else {
-              console.error(`[${categoryId.toUpperCase()}] ${supplier}: Request failed:`, r.reason);
-        }
-        }
-      }
-
-      console.log(`[${categoryId.toUpperCase()}] Total collected: ${allCollected.length} products`);
-      
-  // Show ALL raw products from edge function - NO FILTERING
-  console.log(`[${categoryId.toUpperCase()}] RAW DATA - Total collected: ${allCollected.length} products`);
-  console.log(`[${categoryId.toUpperCase()}] RAW PRODUCTS:`, allCollected.map(p => ({ name: p.name, supplier: p.supplier, category: p.category })));
-  
-  const deduped: LiveItem[] = [];
-  const seen = new Set<string>();
-  
-  // Use ALL collected products instead of filtering by category
-  for (const item of allCollected) {
-        // For fallback products (identified by placeholder image or specific price patterns),
-        // deduplicate by name and price to avoid supplier duplicates
-        const isFallbackProduct = item.image?.includes('placeholder') || 
-                                  item.productUrl?.includes('search') ||
-                                  item.name?.includes('Twin & Earth') ||
-                                  item.name?.includes('SWA Cable');
-        
-        const key = isFallbackProduct 
-          ? `${item.name}|${item.price}` 
-          : item.productUrl || `${item.supplier}|${item.name}`;
-          
-        if (key && !seen.has(key)) {
-          seen.add(key);
-          deduped.push(item);
-        }
-      }
-
-      console.log(`[${categoryId.toUpperCase()}] After deduplication: ${deduped.length} products`);
-      
-      // Sort by relevance for cables (T&E and common sizes first)
-      if (categoryId === 'cables') {
-        deduped.sort((a, b) => {
-          const aRelevance = getCableRelevanceScore(a.name);
-          const bRelevance = getCableRelevanceScore(b.name);
-          return bRelevance - aRelevance;
-        });
-      }
-
-      // Log tools specifically
-      if (categoryId === 'tools' && deduped.length > 0) {
-        console.log(`[TOOLS] Final products:`, deduped.map(p => ({ name: p.name, supplier: p.supplier, price: p.price })));
-      }
-
-      setLiveProducts(deduped);
-      setLastFetchTime(now);
-      setIsAutoLoaded(true);
-      setHasAttemptedLiveFetch(true);
-      setLiveFetchFailed(false);
-      
-      console.log(`[${categoryId.toUpperCase()}] State updated - products: ${deduped.length}`);
-      
-      if (!isAutoLoad) {
-        const searchCount = categoryId === 'tools' ? 1 : 1; // Always single search now
-        toast({ 
-          title: 'Live deals updated', 
-          description: `Found ${deduped.length} products` 
-        });
-      }
-    } catch (e) {
-      console.error(`[${categoryId.toUpperCase()}] Failed to fetch live deals:`, e);
-      setLiveFetchFailed(true);
-      setHasAttemptedLiveFetch(true);
-      
-      if (!isAutoLoad) {
-        toast({ title: 'Failed to fetch', description: 'Please try again later.', variant: 'destructive' });
-      }
-    } finally {
-      setIsFetching(false);
-      console.log(`[${categoryId.toUpperCase()}] Fetch complete`);
-    }
-  };
-
-  // Cable relevance scoring for better sorting
-  const getCableRelevanceScore = (name: string): number => {
-    const nameLower = name.toLowerCase();
-    let score = 0;
-    
-    // Prioritize common electrical cable types
-    if (nameLower.includes('twin') && nameLower.includes('earth')) score += 10;
-    if (nameLower.includes('6242y')) score += 8;
-    if (nameLower.includes('2.5mm')) score += 6;
-    if (nameLower.includes('1.5mm')) score += 5;
-    if (nameLower.includes('4mm')) score += 4;
-    if (nameLower.includes('swa')) score += 7;
-    if (nameLower.includes('100m')) score += 3;
-    if (nameLower.includes('50m')) score += 2;
-    
-    return score;
-  };
-
-  // Manual refresh handler for button with cache clearing
-  const handleManualRefresh = async () => {
-    setIsFetching(true);
-    setLiveFetchFailed(false);
-    
-    toast({ 
-      title: 'Clearing cache', 
-      description: 'Fetching fresh data from suppliers...' 
-    });
-    
-    try {
-      const allCollected: LiveItem[] = [];
-      
-      // Use React Query refetch for tools category
-      if (categoryId === 'tools') {
-        console.log(`[TOOLS] Manual refresh using React Query refetch`);
-        await refetchTools();
-        setIsFetching(false);
-        return;
-      } else {
-        // Use existing scraping logic for other categories
-        const searchTerms = CATEGORY_QUERIES[categoryId] || [meta.title];
-        
-        // Use force refresh parameter for all suppliers
-        for (const term of [searchTerms[0]]) {
-          const tasks: Promise<any>[] = [];
-          for (const supplier of SUPPLIERS) {
-            tasks.push(
-              supabase.functions.invoke('scrape-supplier-products', {
-                body: { 
-                  supplierSlug: supplier, 
-                  searchTerm: term, 
-                  category: categoryId,
-                  forceRefresh: true 
-                }
-              })
-            );
-          }
-          
-          const responses = await Promise.allSettled(tasks);
-          
-          for (const r of responses) {
-            if (r.status === 'fulfilled') {
-              const d = r.value?.data;
-              if (Array.isArray(d?.products)) {
-                allCollected.push(...(d.products as LiveItem[]));
-              }
-            }
-          }
-        }
-      }
-
-      // Enhanced filtering and deduplication
-      const inCat = allCollected.filter((p) => matchesCategory(p, categoryId));
-      const deduped: LiveItem[] = [];
-      const seen = new Set<string>();
-      
-      for (const item of inCat) {
-        const key = item.productUrl || `${item.supplier}|${item.name}`;
-        if (key && !seen.has(key)) {
-          seen.add(key);
-          deduped.push(item);
-        }
-      }
-
-      // Sort by relevance for cables
-      if (categoryId === 'cables') {
-        deduped.sort((a, b) => {
-          const aRelevance = getCableRelevanceScore(a.name);
-          const bRelevance = getCableRelevanceScore(b.name);
-          return bRelevance - aRelevance;
-        });
-      }
-
-      setLiveProducts(deduped);
-      setLastFetchTime(Date.now());
-      setIsAutoLoaded(true);
-      setHasAttemptedLiveFetch(true);
-      setLiveFetchFailed(false);
-      
-      toast({ 
-        title: 'Cache cleared successfully', 
-        description: `Found ${deduped.length} fresh products`,
-        variant: 'success'
-      });
-    } catch (e) {
-      console.error('Failed to refresh with cache clear:', e);
-      setLiveFetchFailed(true);
-      setHasAttemptedLiveFetch(true);
-      
-      toast({ 
-        title: 'Refresh failed', 
-        description: 'Please try again later.', 
-        variant: 'destructive' 
-      });
-    } finally {
-      setIsFetching(false);
-    }
-  };
-
-  // Initialize filters from URL parameters
-  useEffect(() => {
-    const urlFilters: FilterState = {
-      productTypes: searchParams.getAll('productTypes'),
-      brands: searchParams.getAll('brands'),
-      priceRanges: searchParams.getAll('priceRanges'),
-      moduleSizes: searchParams.getAll('moduleSizes'),
-      cableTypes: searchParams.getAll('cableTypes')
-    };
-    setFilters(urlFilters);
-  }, [searchParams]);
-
-  // Update URL when filters change
-  useEffect(() => {
-    const newParams = new URLSearchParams();
-    Object.entries(filters).forEach(([key, values]) => {
-      values.forEach(value => newParams.append(key, value));
-    });
-    setSearchParams(newParams, { replace: true });
-  }, [filters, setSearchParams]);
-
-  // Auto-load live deals for cables, components, accessories, lighting, tools and protection categories
-  useEffect(() => {
-    if ((categoryId === 'cables' || categoryId === 'components' || categoryId === 'accessories' || categoryId === 'lighting' || categoryId === 'tools' || categoryId === 'protection') && !isAutoLoaded && !isFetching) {
-      console.log(`Auto-loading live ${categoryId} deals...`);
-      fetchLiveDeals(true);
-    }
-  }, [categoryId, isAutoLoaded, isFetching]);
+  }, [materials, searchTerm]);
 
   const pageTitle = `${meta.title} | ElecMate Electrical Materials`;
   const pageDescription = `${meta.title} for UK electricians — ${meta.description}. BS 7671 18th Edition compliant guidance.`.slice(0, 160);
+
+  if (error) {
+    return (
+      <main className="space-y-6 animate-fade-in">
+        <Helmet>
+          <title>{pageTitle}</title>
+          <meta name="description" content={pageDescription} />
+        </Helmet>
+        
+        <div className="text-center space-y-4">
+          <p className="text-red-400">Failed to load materials data</p>
+          <Button 
+            variant="outline" 
+            onClick={() => refetch()}
+            disabled={isLoading}
+          >
+            {isLoading ? (
+              <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+            ) : (
+              <RefreshCw className="h-4 w-4 mr-2" />
+            )}
+            Try Again
+          </Button>
+        </div>
+      </main>
+    );
+  }
 
   return (
     <main className="space-y-6 animate-fade-in">
@@ -567,9 +104,9 @@ const CategoryMaterials = () => {
 
       <header className="flex flex-col gap-6">
         <div className="flex flex-wrap gap-2">
-          <Link to="/electrician/materials">
+          <Link to="/materials">
             <Button variant="outline" size="sm" className="flex items-center gap-1.5 text-xs sm:text-sm h-10">
-              <ArrowLeft className="h-3.5 w-3.5 sm:h-4 sm:w-4" /> Back to Sections
+              <ArrowLeft className="h-3.5 w-3.5 sm:h-4 sm:w-4" /> Back to Materials
             </Button>
           </Link>
         </div>
@@ -579,82 +116,108 @@ const CategoryMaterials = () => {
             {meta.title}
           </h1>
           <p className="text-sm sm:text-base text-muted-foreground mt-1 text-left pl-8 sm:pl-10">{meta.description}</p>
+          
+          {categoryData && (
+            <div className="flex items-center gap-4 mt-3 pl-8 sm:pl-10">
+              <Badge variant="outline" className="text-elec-yellow border-elec-yellow/30">
+                {categoryData.productCount} products
+              </Badge>
+              {categoryData.priceRange && (
+                <span className="text-sm text-muted-foreground">
+                  Price range: <span className="text-elec-yellow">{categoryData.priceRange}</span>
+                </span>
+              )}
+            </div>
+          )}
         </div>
       </header>
 
-      {/* Enhanced filters for all categories */}
-      <section aria-labelledby="category-filters" className="space-y-4">
+      {/* Search and filters */}
+      <section className="space-y-4">
         <div className="flex items-center justify-between">
-          <h2 className="sr-only">Category Filters</h2>
-          <RefreshButton
-            isFetching={isFetching}
-            lastFetchTime={lastFetchTime}
-            onRefresh={handleManualRefresh}
-            categoryId={categoryId}
-          />
+          <div className="flex items-center gap-4 flex-1">
+            <div className="relative flex-1 max-w-md">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Input
+                placeholder="Search materials..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="pl-10"
+              />
+            </div>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => refetch()}
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+              ) : (
+                <RefreshCw className="h-4 w-4 mr-2" />
+              )}
+              Refresh
+            </Button>
+          </div>
         </div>
-        
-        <CategoryFilters
-          categoryId={categoryId}
-          filters={filters}
-          onFiltersChange={setFilters}
-          productsCount={displayProducts.length}
-        />
       </section>
 
-      {/* Auto-loading indicator for cables */}
-      {categoryId === 'cables' && isFetching && !isAutoLoaded && (
+      {/* Loading state */}
+      {isLoading && (
         <Card className="border-elec-yellow/20 bg-elec-gray">
           <CardContent className="p-6 text-center">
             <div className="flex items-center justify-center gap-2 mb-4">
-              <RefreshCw className="h-5 w-5 animate-spin text-elec-yellow" />
-              <p className="text-elec-yellow font-medium">Loading live cable deals...</p>
+              <Loader2 className="h-5 w-5 animate-spin text-elec-yellow" />
+              <p className="text-elec-yellow font-medium">Loading {meta.title.toLowerCase()}...</p>
             </div>
             <p className="text-muted-foreground text-sm">
-              Fetching real-time prices from electrical suppliers
+              Fetching data from comprehensive materials database
             </p>
           </CardContent>
         </Card>
       )}
 
-      {displayProducts.length === 0 && !isFetching ? (
-        <Card className="border-elec-yellow/20 bg-elec-gray">
-          <CardContent className="p-6 text-center space-y-3">
-            <p className="text-muted-foreground">
-              {!hasAttemptedLiveFetch ? 
-                'Loading live products...' :
-                liveFetchFailed ?
-                'Failed to fetch live products. Please try refreshing.' :
-                'No live products found for this category.'
-              }
-            </p>
-            {hasAttemptedLiveFetch && !liveFetchFailed && (
-              <p className="text-sm text-muted-foreground">
-                Try using the "Fetch Live Deals" button to get updated products.
-              </p>
-            )}
-          </CardContent>
-        </Card>
-      ) : (
-        <section aria-label={`${meta.title} products`} className="space-y-4">
-          {/* Data source indicator */}
-          {dataSource !== 'none' && (
-            <div className="flex items-center justify-between text-xs text-muted-foreground">
-              <span>
-                📡 Live data • Updated {new Date(lastFetchTime).toLocaleTimeString()}
-              </span>
-              {dataSource === 'live' && !isLiveDataFresh && categoryId !== 'cables' && (
-                <span className="text-yellow-600">• Data may be stale</span>
-              )}
-            </div>
+      {/* Materials grid */}
+      {!isLoading && (
+        <>
+          {filteredMaterials.length === 0 ? (
+            <Card className="border-elec-yellow/20 bg-elec-gray">
+              <CardContent className="p-6 text-center space-y-3">
+                <p className="text-muted-foreground">
+                  {searchTerm ? 
+                    `No materials found matching "${searchTerm}"` :
+                    `No materials found in ${meta.title.toLowerCase()} category`
+                  }
+                </p>
+                {searchTerm && (
+                  <Button
+                    variant="outline"
+                    onClick={() => setSearchTerm("")}
+                  >
+                    Clear search
+                  </Button>
+                )}
+              </CardContent>
+            </Card>
+          ) : (
+            <section aria-label={`${meta.title} products`} className="space-y-4">
+              <div className="flex items-center justify-between text-xs text-muted-foreground">
+                <span>
+                  Showing {filteredMaterials.length} {filteredMaterials.length === 1 ? 'material' : 'materials'}
+                </span>
+                <span>
+                  📡 Live data from comprehensive materials database
+                </span>
+              </div>
+              
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {filteredMaterials.map((item, index) => (
+                  <MaterialCard key={item.id || `${item.supplier}-${item.name}-${index}`} item={item} />
+                ))}
+              </div>
+            </section>
           )}
-          
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {displayProducts.map((item) => (
-              <MaterialCard key={item.id} item={item} />
-            ))}
-          </div>
-        </section>
+        </>
       )}
     </main>
   );
