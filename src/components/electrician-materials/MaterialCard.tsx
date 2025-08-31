@@ -1,3 +1,4 @@
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ExternalLink } from "lucide-react";
@@ -79,12 +80,24 @@ const MaterialCard: React.FC<MaterialCardProps> = ({ item }) => {
     return buildSearch(item.name);
   };
 
-  // Normalise image paths to ensure relative placeholders become absolute
+  // Normalise image paths and update wid/hei parameters
   const imageSrc = (() => {
     const src = item.image;
     if (!src) return "/placeholder.svg";
-    if (/^https?:\/\//i.test(src) || src.startsWith("/")) return src;
-    return `/${src}`;
+    
+    let finalSrc = src;
+    
+    // If it's not already an absolute URL, make it one
+    if (!/^https?:\/\//i.test(src) && !src.startsWith("/")) {
+      finalSrc = `/${src}`;
+    }
+    
+    // Update image size parameters from 136x136 to 236x236
+    if (finalSrc.includes("wid=136") && finalSrc.includes("hei=136")) {
+      finalSrc = finalSrc.replace(/wid=136/g, "wid=236").replace(/hei=136/g, "hei=236");
+    }
+    
+    return finalSrc;
   })();
 
   return (
