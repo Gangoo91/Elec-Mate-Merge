@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -93,7 +94,7 @@ const IndustryNewsCard = () => {
           <NewsPagination
             currentPage={currentPage}
             totalPages={totalPages}
-            onPageChange={setCurrentPage}
+            paginate={setCurrentPage}
           />
         </div>
       </CardContent>
