@@ -10,6 +10,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { useNavigate } from "react-router-dom";
 import { ProjectSubmissionDialog } from "./ProjectSubmissionDialog";
 import { supabase } from "@/integrations/supabase/client";
+import { differenceInMonths, differenceInYears } from "date-fns";
 
 interface MajorProject {
   id: string;
@@ -373,15 +374,20 @@ const MajorProjectsCard = () => {
                   const startDate = new Date(startStr);
                   const endDate = new Date(endStr);
                   
-                  if (!isNaN(startDate.getTime()) && !isNaN(endDate.getTime())) {
-                    const diffMonths = Math.round((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24 * 30.44));
-                    if (diffMonths >= 12) {
-                      const years = Math.round(diffMonths / 12 * 10) / 10;
-                      return `${years} ${years === 1 ? 'year' : 'years'}`;
-                    } else {
-                      return `${diffMonths} ${diffMonths === 1 ? 'month' : 'months'}`;
-                    }
-                  }
+                   if (!isNaN(startDate.getTime()) && !isNaN(endDate.getTime())) {
+                     const diffMonths = differenceInMonths(endDate, startDate);
+                     if (diffMonths >= 12) {
+                       const years = differenceInYears(endDate, startDate);
+                       const remainingMonths = diffMonths - (years * 12);
+                       if (remainingMonths > 0) {
+                         return `${years} ${years === 1 ? 'year' : 'years'}, ${remainingMonths} ${remainingMonths === 1 ? 'month' : 'months'}`;
+                       } else {
+                         return `${years} ${years === 1 ? 'year' : 'years'}`;
+                       }
+                     } else {
+                       return `${diffMonths} ${diffMonths === 1 ? 'month' : 'months'}`;
+                     }
+                   }
                 }
                 
                 // Fallback for missing or invalid duration
