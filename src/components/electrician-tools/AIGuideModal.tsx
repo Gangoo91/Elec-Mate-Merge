@@ -115,14 +115,6 @@ const AIGuideModal = ({ isOpen, onClose, guideType, guideTitle }: AIGuideModalPr
             <Zap className="h-6 w-6 text-elec-yellow" />
             {guideTitle}
           </DialogTitle>
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={onClose}
-            className="absolute right-4 top-4 text-muted-foreground hover:text-white"
-          >
-            <X className="h-4 w-4" />
-          </Button>
         </DialogHeader>
 
         <div className="space-y-6 py-4">
