@@ -434,6 +434,92 @@ const BatteryBackupCalculator = () => {
                 Battery runtime calculated using Peukert's equation for accuracy. DoD and chemistry affect usable capacity.
               </AlertDescription>
             </Alert>
+
+            {/* Results Analysis & Feedback */}
+            {results && (
+              <div className="space-y-4">
+                <h4 className="text-sm font-medium text-elec-yellow">Analysis & Recommendations</h4>
+                
+                {/* Runtime Assessment */}
+                <div className="bg-elec-dark/30 p-3 rounded-lg space-y-2">
+                  <h5 className="text-xs font-medium text-elec-yellow">Runtime Assessment</h5>
+                  <div className="text-xs space-y-1">
+                    {results.runtime >= 8 ? (
+                      <div className="text-green-400">
+                        ✓ Excellent runtime ({formatRuntime(results.runtime)}) - Exceeds typical 8-hour requirement
+                      </div>
+                    ) : results.runtime >= 3 ? (
+                      <div className="text-yellow-400">
+                        ⚠ Moderate runtime ({formatRuntime(results.runtime)}) - Consider if adequate for your needs
+                      </div>
+                    ) : (
+                      <div className="text-red-400">
+                        ⚠ Short runtime ({formatRuntime(results.runtime)}) - May need larger battery or reduce loads
+                      </div>
+                    )}
+                    <p className="text-muted-foreground">
+                      Emergency lighting requires minimum 3 hours (BS 5266). Critical systems often need 8+ hours.
+                    </p>
+                  </div>
+                </div>
+
+                {/* C-Rate Assessment */}
+                <div className="bg-elec-dark/30 p-3 rounded-lg space-y-2">
+                  <h5 className="text-xs font-medium text-elec-yellow">Battery Discharge Rate</h5>
+                  <div className="text-xs space-y-1">
+                    {results.cRate <= selectedChemistry.maxCRate * 0.5 ? (
+                      <div className="text-green-400">
+                        ✓ Conservative discharge rate ({results.cRate.toFixed(2)}C) - Optimal for battery life
+                      </div>
+                    ) : results.cRate <= selectedChemistry.maxCRate * 0.8 ? (
+                      <div className="text-yellow-400">
+                        ⚠ Moderate discharge rate ({results.cRate.toFixed(2)}C) - Acceptable but monitor battery health
+                      </div>
+                    ) : (
+                      <div className="text-red-400">
+                        ⚠ High discharge rate ({results.cRate.toFixed(2)}C) - May reduce battery life significantly
+                      </div>
+                    )}
+                    <p className="text-muted-foreground">
+                      {selectedChemistry.name} max rate: {selectedChemistry.maxCRate}C. Lower rates extend battery life.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Regulatory Compliance */}
+                <div className="bg-elec-dark/30 p-3 rounded-lg space-y-2">
+                  <h5 className="text-xs font-medium text-elec-yellow">BS 7671 & Regulatory Notes</h5>
+                  <div className="text-xs space-y-1 text-muted-foreground">
+                    <p>• DC current ({results.dcCurrent.toFixed(1)}A) must not exceed cable rating</p>
+                    <p>• Battery system requires appropriate DC protection (fuses/MCBs)</p>
+                    <p>• Ventilation required for lead-acid batteries (hydrogen gas risk)</p>
+                    <p>• Temperature monitoring recommended above 25°C ambient</p>
+                    <p>• Regular testing required - monthly for critical systems</p>
+                  </div>
+                </div>
+
+                {/* Recommendations */}
+                <div className="bg-elec-dark/30 p-3 rounded-lg space-y-2">
+                  <h5 className="text-xs font-medium text-elec-yellow">Recommendations</h5>
+                  <div className="text-xs space-y-1">
+                    {results.runtime < 3 && (
+                      <div className="text-yellow-400">• Consider larger battery capacity or reduce non-essential loads</div>
+                    )}
+                    {results.cRate > selectedChemistry.maxCRate * 0.8 && (
+                      <div className="text-yellow-400">• Consider parallel batteries to reduce discharge rate</div>
+                    )}
+                    {ambientTemp > '25' && (
+                      <div className="text-yellow-400">• High temperature - ensure adequate ventilation and cooling</div>
+                    )}
+                    {batteryHealth < '90' && (
+                      <div className="text-yellow-400">• Battery health below 90% - plan replacement schedule</div>
+                    )}
+                    <div className="text-green-400">• Install battery monitoring system for optimal performance</div>
+                    <div className="text-green-400">• Document maintenance schedule and testing procedures</div>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </CardContent>
