@@ -22,7 +22,7 @@ async function fetchTenders(): Promise<TenderProject[]> {
   const params = new URLSearchParams({
     stages: "award", // only awarded contracts
     q: "latest major electrical infrastructure", // ✅ keyword filter
-    size: "10", // results per page
+    size: "20", // results per page
     page: "1", // page number
   });
 
