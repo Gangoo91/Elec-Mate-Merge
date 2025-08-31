@@ -70,27 +70,21 @@ const AIGuideModal = ({ isOpen, onClose, guideType, guideTitle }: AIGuideModalPr
 
       if (error) {
         console.error('Error generating guide:', error);
-        toast({
-          title: "Guide Generation Failed",
-          description: "Unable to generate guide. Please try again.",
-          variant: "destructive",
-        });
+      toast({
+        title: "Guide Loading Failed",
+        description: "Unable to load guide. Please try again.",
+        variant: "destructive",
+      });
         return;
       }
 
       setGuideData(data.guide);
       setHasGenerated(true);
-      
-      toast({
-        title: "Guide Generated",
-        description: "Your personalised buying guide is ready!",
-        variant: "success",
-      });
     } catch (error) {
       console.error('Error:', error);
       toast({
         title: "Connection Error",
-        description: "Failed to connect to guide service.",
+        description: "Failed to load guide data.",
         variant: "destructive",
       });
     } finally {
@@ -242,7 +236,7 @@ const AIGuideModal = ({ isOpen, onClose, guideType, guideTitle }: AIGuideModalPr
                   className="bg-elec-yellow text-black hover:bg-elec-yellow/90"
                 >
                   <Clock className="h-4 w-4 mr-2" />
-                  Regenerate Guide
+                  Update Guide
                 </Button>
                 <Button 
                   variant="outline" 
@@ -259,7 +253,7 @@ const AIGuideModal = ({ isOpen, onClose, guideType, guideTitle }: AIGuideModalPr
                 <AlertCircle className="h-12 w-12 text-elec-yellow mx-auto mb-4" />
                 <h3 className="text-white text-lg mb-2">Guide Not Available</h3>
                 <p className="text-muted-foreground mb-4">
-                  Unable to generate the guide at this moment.
+                  Unable to load the guide at this moment.
                 </p>
                 <Button 
                   onClick={generateGuide}
