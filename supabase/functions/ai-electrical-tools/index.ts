@@ -1,7 +1,7 @@
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 
-const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
+const openAIApiKey = Deno.env.get('OpenAI API') || Deno.env.get('OPENAI_API_KEY');
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -28,8 +28,9 @@ serve(async (req) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'gpt-5-mini-2025-08-07',
-        max_completion_tokens: 4000,
+        model: 'gpt-4.1-2025-04-14',
+        max_tokens: 3000,
+        temperature: 0.7,
         messages: [
           {
             role: 'system',
@@ -62,7 +63,7 @@ Return a JSON array with exactly this structure for each tool:
   "highlights": ["Feature 1", "Feature 2", "Feature 3"]
 }
 
-Generate 60-80 tools total (20-25 per category). Use realistic UK electrical trade pricing.`
+Generate 30-40 tools total (10-15 per category). Use realistic UK electrical trade pricing. MUST return valid JSON only.`
           },
           {
             role: 'user',
@@ -86,12 +87,19 @@ Generate 60-80 tools total (20-25 per category). Use realistic UK electrical tra
       const content = data.choices[0].message.content;
       console.log('Raw OpenAI content:', content.substring(0, 500) + '...');
       
-      // Extract JSON from the response (handle potential markdown formatting)
-      const jsonMatch = content.match(/\[[\s\S]*\]/);
+      // Extract JSON from the response with multiple fallback strategies
+      let cleanContent = content.trim();
+      
+      // Remove markdown code blocks
+      cleanContent = cleanContent.replace(/```json\s*/g, '').replace(/```\s*/g, '');
+      
+      // Try to find JSON array
+      const jsonMatch = cleanContent.match(/\[[\s\S]*\]/);
       if (jsonMatch) {
         toolsData = JSON.parse(jsonMatch[0]);
       } else {
-        toolsData = JSON.parse(content);
+        // Try parsing the entire content
+        toolsData = JSON.parse(cleanContent);
       }
       
       console.log(`Successfully parsed ${toolsData.length} tools`);
