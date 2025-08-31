@@ -145,11 +145,11 @@ const BatteryBackupCalculator = () => {
       <CardContent>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Input Section */}
-          <div className="space-y-4">
+          <div className="space-y-6">
             {/* Mode Toggle */}
             <div className="space-y-3">
               <label className="text-sm font-medium">Calculation Mode</label>
-              <div className="flex gap-2">
+              <div className="grid grid-cols-2 gap-2">
                 <MobileButton
                   variant={mode === 'runtime' ? 'elec' : 'elec-outline'}
                   size="sm"
@@ -172,7 +172,7 @@ const BatteryBackupCalculator = () => {
             {/* Battery Configuration */}
             <div className="space-y-3">
               <label className="text-sm font-medium">Battery Chemistry</label>
-              <div className="flex flex-wrap gap-2">
+              <div className="grid grid-cols-2 gap-2">
                 {Object.entries(BATTERY_CHEMISTRIES).map(([key, chem]) => (
                   <Badge
                     key={key}
@@ -186,7 +186,7 @@ const BatteryBackupCalculator = () => {
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-2 gap-4">
               <MobileInput
                 label="Voltage (V)"
                 type="number"
@@ -207,14 +207,14 @@ const BatteryBackupCalculator = () => {
             </div>
 
             {/* Inverter Type */}
-            <div className="space-y-2">
+            <div className="space-y-3">
               <label className="text-sm font-medium">Inverter Type</label>
-              <div className="flex flex-wrap gap-2">
+              <div className="grid grid-cols-1 gap-2">
                 {Object.entries(INVERTER_TYPES).map(([key, inv]) => (
                   <Badge
                     key={key}
                     variant={inverterType === key ? 'default' : 'outline'}
-                    className={`cursor-pointer ${inverterType === key ? 'bg-elec-yellow text-black' : ''}`}
+                    className={`cursor-pointer p-3 text-center justify-center h-auto ${inverterType === key ? 'bg-elec-yellow text-black' : ''}`}
                     onClick={() => setInverterType(key)}
                   >
                     {inv.name}
@@ -224,14 +224,14 @@ const BatteryBackupCalculator = () => {
             </div>
 
             {/* Quick Load Presets */}
-            <div className="space-y-2">
+            <div className="space-y-3">
               <label className="text-sm font-medium">Quick Add Loads</label>
-              <div className="flex flex-wrap gap-2">
+              <div className="grid grid-cols-2 gap-2">
                 {LOAD_PRESETS.slice(0, 6).map((preset, index) => (
                   <Badge
                     key={index}
                     variant="outline"
-                    className="cursor-pointer hover:bg-elec-yellow/10"
+                    className="cursor-pointer hover:bg-elec-yellow/10 p-3 text-center justify-center h-auto text-xs"
                     onClick={() => handleLoadPresetSelect(preset)}
                   >
                     {preset.name}
@@ -241,7 +241,7 @@ const BatteryBackupCalculator = () => {
             </div>
 
             {/* Manual Load Entry */}
-            <div className="space-y-3">
+            <div className="space-y-4">
               <MobileInput
                 label="Load Name"
                 value={newLoadName}
@@ -249,7 +249,7 @@ const BatteryBackupCalculator = () => {
                 placeholder="e.g., LED Lights"
               />
               
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-2 gap-4">
                 <MobileInput
                   label="Power (W)"
                   type="number"
@@ -261,12 +261,12 @@ const BatteryBackupCalculator = () => {
                 
                 <div className="space-y-2">
                   <label className="text-sm font-medium">Priority</label>
-                  <div className="flex gap-1">
+                  <div className="grid grid-cols-1 gap-1">
                     {(['essential', 'important', 'convenience'] as const).map((priority) => (
                       <Badge
                         key={priority}
                         variant={newLoadPriority === priority ? 'default' : 'outline'}
-                        className={`cursor-pointer text-xs ${newLoadPriority === priority ? 'bg-elec-yellow text-black' : ''}`}
+                        className={`cursor-pointer text-xs p-2 justify-center ${newLoadPriority === priority ? 'bg-elec-yellow text-black' : ''}`}
                         onClick={() => setNewLoadPriority(priority)}
                       >
                         {priority}
@@ -310,8 +310,8 @@ const BatteryBackupCalculator = () => {
             </MobileButton>
 
             {showAdvanced && (
-              <div className="space-y-3 border border-elec-yellow/10 rounded-lg p-3">
-                <div className="grid grid-cols-2 gap-3">
+              <div className="space-y-4 border border-elec-yellow/10 rounded-lg p-4">
+                <div className="grid grid-cols-2 gap-4">
                   <MobileInput
                     label="Temperature (°C)"
                     type="number"
@@ -401,14 +401,14 @@ const BatteryBackupCalculator = () => {
 
             {/* Current Loads Display */}
             {loads.length > 0 && (
-              <div className="space-y-2">
+              <div className="space-y-3">
                 <h4 className="text-sm font-medium">Connected Loads ({loads.length})</h4>
-                <div className="space-y-1 max-h-32 overflow-y-auto">
+                <div className="space-y-2 max-h-40 overflow-y-auto">
                   {loads.map((load, index) => (
-                    <div key={index} className="flex items-center justify-between bg-elec-dark/30 p-2 rounded text-xs">
-                      <div className="flex-1">
-                        <span className="font-medium">{load.name}</span>
-                        <div className="text-muted-foreground">
+                    <div key={index} className="flex items-center justify-between bg-elec-dark/30 p-3 rounded text-sm">
+                      <div className="flex-1 min-w-0">
+                        <span className="font-medium block truncate">{load.name}</span>
+                        <div className="text-muted-foreground text-xs">
                           {load.watts}W • {load.priority}
                         </div>
                       </div>
@@ -416,8 +416,9 @@ const BatteryBackupCalculator = () => {
                         variant="elec-outline"
                         size="sm"
                         onClick={() => removeLoad(index)}
+                        className="ml-2 flex-shrink-0"
                       >
-                        <X className="h-3 w-3" />
+                        <X className="h-4 w-4" />
                       </MobileButton>
                     </div>
                   ))}
