@@ -154,9 +154,9 @@ const CategoryMaterials = () => {
       </header>
 
       {/* Advanced Features Navigation */}
-      <section className="space-y-4">
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-2 lg:grid-cols-5 bg-elec-gray border border-elec-yellow/20">
+      <section className="space-y-4 relative z-10">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full relative">
+          <TabsList className="grid w-full grid-cols-2 lg:grid-cols-5 bg-elec-gray border border-elec-yellow/20 relative z-20">
             <TabsTrigger value="browse" className="data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark">
               <Package className="h-4 w-4 mr-2" />
               Browse
@@ -238,114 +238,112 @@ const CategoryMaterials = () => {
               </CardContent>
             </Card>
           )}
-        </Tabs>
-      </section>
 
-      {/* Tab Content */}
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsContent value="browse" className="space-y-6">
-          {/* Loading state */}
-          {isLoading && (
+          {/* Tab Content */}
+          <TabsContent value="browse" className="space-y-6 mt-6">
+            {/* Loading state */}
+            {isLoading && (
+              <Card className="border-elec-yellow/20 bg-elec-gray">
+                <CardContent className="p-6 text-center">
+                  <div className="flex items-center justify-center gap-2 mb-4">
+                    <Loader2 className="h-5 w-5 animate-spin text-elec-yellow" />
+                    <p className="text-elec-yellow font-medium">Loading {meta.title.toLowerCase()}...</p>
+                  </div>
+                  <p className="text-muted-foreground text-sm">
+                    Fetching data from comprehensive materials database
+                  </p>
+                </CardContent>
+              </Card>
+            )}
+
+            {/* Materials grid */}
+            {!isLoading && (
+              <>
+                {filteredMaterials.length === 0 ? (
+                  <Card className="border-elec-yellow/20 bg-elec-gray">
+                    <CardContent className="p-6 text-center space-y-3">
+                      <p className="text-muted-foreground">
+                        {searchTerm ? 
+                          `No materials found matching "${searchTerm}"` :
+                          `No materials found in ${meta.title.toLowerCase()} category`
+                        }
+                      </p>
+                      {searchTerm && (
+                        <Button
+                          variant="outline"
+                          onClick={() => setSearchTerm("")}
+                        >
+                          Clear search
+                        </Button>
+                      )}
+                    </CardContent>
+                  </Card>
+                ) : (
+                  <section aria-label={`${meta.title} products`} className="space-y-4">
+                    <div className="flex items-center justify-between text-xs text-muted-foreground">
+                      <span>
+                        Showing {filteredMaterials.length} {filteredMaterials.length === 1 ? 'material' : 'materials'}
+                      </span>
+                      <span>
+                        📡 Live data from comprehensive materials database
+                      </span>
+                    </div>
+                    
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                      {filteredMaterials.map((item, index) => (
+                        <MaterialCard 
+                          key={item.id || `${item.supplier}-${item.name}-${index}`} 
+                          item={item}
+                          onAddToCompare={handleAddToCompare}
+                          onRemoveFromCompare={handleRemoveFromCompare}
+                          isSelected={selectedItems.some(selected => selected.id === item.id)}
+                          isCompareDisabled={selectedItems.length >= 3 && !selectedItems.some(selected => selected.id === item.id)}
+                        />
+                      ))}
+                    </div>
+                  </section>
+                )}
+              </>
+            )}
+          </TabsContent>
+
+          <TabsContent value="compare" className="space-y-6 mt-6">
+            <MaterialPriceComparison 
+              initialQuery={categoryId}
+              selectedItems={selectedItems}
+              onClearSelection={clearComparison}
+            />
+          </TabsContent>
+
+          <TabsContent value="bulk" className="space-y-6 mt-6">
+            <BulkPricingCalculator categoryId={categoryId} />
+          </TabsContent>
+
+          <TabsContent value="alerts" className="space-y-6 mt-6">
+            <PriceHistoryAlerts categoryId={categoryId} />
+          </TabsContent>
+
+          <TabsContent value="ai" className="space-y-6 mt-6">
             <Card className="border-elec-yellow/20 bg-elec-gray">
-              <CardContent className="p-6 text-center">
-                <div className="flex items-center justify-center gap-2 mb-4">
-                  <Loader2 className="h-5 w-5 animate-spin text-elec-yellow" />
-                  <p className="text-elec-yellow font-medium">Loading {meta.title.toLowerCase()}...</p>
+              <CardContent className="p-6 text-center space-y-4">
+                <div className="flex items-center justify-center gap-2">
+                  <Brain className="h-8 w-8 text-elec-yellow" />
+                  <h3 className="text-xl font-semibold">AI-Powered Insights</h3>
                 </div>
-                <p className="text-muted-foreground text-sm">
-                  Fetching data from comprehensive materials database
+                <p className="text-muted-foreground">
+                  Get personalised recommendations, value analysis, and purchase suggestions for {meta.title.toLowerCase()}.
                 </p>
+                <Button
+                  className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
+                  onClick={() => setActiveTab("compare")}
+                >
+                  Try AI Recommendations in Compare
+                </Button>
               </CardContent>
             </Card>
-          )}
-
-          {/* Materials grid */}
-          {!isLoading && (
-            <>
-              {filteredMaterials.length === 0 ? (
-                <Card className="border-elec-yellow/20 bg-elec-gray">
-                  <CardContent className="p-6 text-center space-y-3">
-                    <p className="text-muted-foreground">
-                      {searchTerm ? 
-                        `No materials found matching "${searchTerm}"` :
-                        `No materials found in ${meta.title.toLowerCase()} category`
-                      }
-                    </p>
-                    {searchTerm && (
-                      <Button
-                        variant="outline"
-                        onClick={() => setSearchTerm("")}
-                      >
-                        Clear search
-                      </Button>
-                    )}
-                  </CardContent>
-                </Card>
-              ) : (
-                <section aria-label={`${meta.title} products`} className="space-y-4">
-                  <div className="flex items-center justify-between text-xs text-muted-foreground">
-                    <span>
-                      Showing {filteredMaterials.length} {filteredMaterials.length === 1 ? 'material' : 'materials'}
-                    </span>
-                    <span>
-                      📡 Live data from comprehensive materials database
-                    </span>
-                  </div>
-                  
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {filteredMaterials.map((item, index) => (
-                      <MaterialCard 
-                        key={item.id || `${item.supplier}-${item.name}-${index}`} 
-                        item={item}
-                        onAddToCompare={handleAddToCompare}
-                        onRemoveFromCompare={handleRemoveFromCompare}
-                        isSelected={selectedItems.some(selected => selected.id === item.id)}
-                        isCompareDisabled={selectedItems.length >= 3 && !selectedItems.some(selected => selected.id === item.id)}
-                      />
-                    ))}
-                  </div>
-                </section>
-              )}
-            </>
-          )}
-        </TabsContent>
-
-        <TabsContent value="compare" className="space-y-6">
-          <MaterialPriceComparison 
-            initialQuery={categoryId}
-            selectedItems={selectedItems}
-            onClearSelection={clearComparison}
-          />
-        </TabsContent>
-
-        <TabsContent value="bulk" className="space-y-6">
-          <BulkPricingCalculator categoryId={categoryId} />
-        </TabsContent>
-
-        <TabsContent value="alerts" className="space-y-6">
-          <PriceHistoryAlerts categoryId={categoryId} />
-        </TabsContent>
-
-        <TabsContent value="ai" className="space-y-6">
-          <Card className="border-elec-yellow/20 bg-elec-gray">
-            <CardContent className="p-6 text-center space-y-4">
-              <div className="flex items-center justify-center gap-2">
-                <Brain className="h-8 w-8 text-elec-yellow" />
-                <h3 className="text-xl font-semibold">AI-Powered Insights</h3>
-              </div>
-              <p className="text-muted-foreground">
-                Get personalised recommendations, value analysis, and purchase suggestions for {meta.title.toLowerCase()}.
-              </p>
-              <Button
-                className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
-                onClick={() => setActiveTab("compare")}
-              >
-                Try AI Recommendations in Compare
-              </Button>
-            </CardContent>
-          </Card>
-        </TabsContent>
-      </Tabs>
+          </TabsContent>
+        </Tabs>
+      </section>
     </main>
   );
 };
