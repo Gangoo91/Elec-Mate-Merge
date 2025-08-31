@@ -299,71 +299,72 @@ const MotorStartingCurrentCalculator = () => {
                   
                   <Separator />
                   
-                  <div className="grid grid-cols-2 gap-4 text-sm">
-                    <div>
-                      <span className="text-muted-foreground">Full Load Current:</span>
-                      <div className="font-mono text-elec-yellow text-lg">{result.fullLoadCurrent.toFixed(2)} A</div>
+                  <div className="space-y-3 sm:space-y-0 sm:grid sm:grid-cols-2 sm:gap-4 text-sm">
+                    <div className="bg-elec-gray/50 p-3 rounded-lg">
+                      <span className="text-muted-foreground text-xs block mb-1">Full Load Current:</span>
+                      <div className="font-mono text-elec-yellow text-xl sm:text-lg">{result.fullLoadCurrent.toFixed(2)} A</div>
                     </div>
                     
-                    <div>
-                      <span className="text-muted-foreground">Starting Current:</span>
-                      <div className="font-mono text-elec-yellow text-lg">{result.startingCurrent.toFixed(2)} A</div>
+                    <div className="bg-elec-gray/50 p-3 rounded-lg">
+                      <span className="text-muted-foreground text-xs block mb-1">Starting Current:</span>
+                      <div className="font-mono text-elec-yellow text-xl sm:text-lg">{result.startingCurrent.toFixed(2)} A</div>
                     </div>
                     
-                    <div>
-                      <span className="text-muted-foreground">Starting kVA:</span>
-                      <div className="font-mono text-elec-yellow">{result.startingKva.toFixed(1)} kVA</div>
+                    <div className="bg-elec-gray/50 p-3 rounded-lg">
+                      <span className="text-muted-foreground text-xs block mb-1">Starting kVA:</span>
+                      <div className="font-mono text-elec-yellow text-lg">{result.startingKva.toFixed(1)} kVA</div>
                     </div>
                     
-                    <div>
-                      <span className="text-muted-foreground">Multiplier:</span>
-                      <div className="font-mono text-elec-yellow">{result.startingMultiplier.toFixed(1)}x</div>
+                    <div className="bg-elec-gray/50 p-3 rounded-lg">
+                      <span className="text-muted-foreground text-xs block mb-1">Multiplier:</span>
+                      <div className="font-mono text-elec-yellow text-lg">{result.startingMultiplier.toFixed(1)}x</div>
                     </div>
 
-                    <div>
-                      <span className="text-muted-foreground">Voltage Drop Est.:</span>
-                      <div className={`font-mono ${result.voltageDropEstimate > 3 ? 'text-red-400' : 'text-green-400'}`}>
+                    <div className="bg-elec-gray/50 p-3 rounded-lg">
+                      <span className="text-muted-foreground text-xs block mb-1">Voltage Drop Est.:</span>
+                      <div className={`font-mono text-lg ${result.voltageDropEstimate > 3 ? 'text-red-400' : 'text-green-400'}`}>
                         {result.voltageDropEstimate.toFixed(1)}%
                       </div>
                     </div>
 
-                    <div>
-                      <span className="text-muted-foreground">I²t Thermal:</span>
-                      <div className="font-mono text-elec-yellow">{(result.thermalStress / 1000).toFixed(1)}k A²s</div>
+                    <div className="bg-elec-gray/50 p-3 rounded-lg">
+                      <span className="text-muted-foreground text-xs block mb-1">I²t Thermal:</span>
+                      <div className="font-mono text-elec-yellow text-lg">{(result.thermalStress / 1000).toFixed(1)}k A²s</div>
                     </div>
                   </div>
                   
                   <Separator />
                   
-                  <div className="space-y-2">
+                  <div className="space-y-2 bg-elec-gray/30 p-3 rounded-lg">
                     <div className="text-sm">
-                      <span className="text-muted-foreground">Protection:</span>
-                      <div className="text-elec-yellow text-sm mt-1">{result.protectionRecommendation}</div>
+                      <span className="text-muted-foreground text-xs block mb-1">Protection Recommendation:</span>
+                      <div className="text-elec-yellow text-sm">{result.protectionRecommendation}</div>
                     </div>
                   </div>
 
                   <Separator />
 
-                  <div className="space-y-2">
+                  <div className="space-y-2 bg-elec-gray/30 p-3 rounded-lg">
                     <h4 className="text-sm font-medium text-elec-yellow">Recommendations:</h4>
-                    <ul className="text-xs text-muted-foreground space-y-1">
+                    <ul className="text-xs text-muted-foreground space-y-2">
                       {result.recommendations.map((rec, index) => (
                         <li key={index} className="flex items-start">
-                          <span className="text-elec-yellow mr-2">•</span>
-                          {rec}
+                          <span className="text-elec-yellow mr-2 mt-0.5">•</span>
+                          <span className="flex-1">{rec}</span>
                         </li>
                       ))}
                     </ul>
                   </div>
                   
-                  <div className="text-xs text-muted-foreground mt-4 border-t border-elec-yellow/20 pt-2">
+                  <div className="text-xs text-muted-foreground mt-4 border-t border-elec-yellow/20 pt-3 space-y-1">
                     <div>Calculation: I = P / ({phases === "3" ? "√3 × " : ""}V × η × cos φ)</div>
                     <div>Starting factors include load type and temperature corrections</div>
                   </div>
                 </div>
               ) : (
-                <div className="flex items-center justify-center h-full text-muted-foreground">
-                  Enter motor details to calculate starting current and analysis
+                <div className="flex flex-col items-center justify-center h-full text-muted-foreground p-6 text-center">
+                  <Zap className="h-12 w-12 text-elec-yellow/30 mb-3" />
+                  <p>Enter motor details to calculate starting current and analysis</p>
                 </div>
               )}
             </div>
