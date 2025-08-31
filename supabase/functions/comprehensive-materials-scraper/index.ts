@@ -3,7 +3,7 @@ import { corsHeaders } from '../_shared/cors.ts';
 const suppliers = [
   { name: "Screwfix", url: "https://www.screwfix.com/search?search=" },
   { name: "Toolstation", url: "https://www.toolstation.com/search?q=" },
-  { name: "RS Components", url: "https://in.rsdelivers.com/productlist/search?query=" },
+  { name: "RS Components", url: "https://uk.rs-online.com/web/c/?searchTerm=" },
   { name: "CEF - City Electrical Factors", url: "https://www.cef.co.uk/catalogue/products/search?q=" },
 ];
 
