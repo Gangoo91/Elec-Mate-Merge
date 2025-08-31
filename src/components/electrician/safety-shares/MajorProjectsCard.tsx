@@ -8,7 +8,6 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Building2, MapPin, Calendar, PoundSterling, Users, Clock, ExternalLink, Bookmark, RefreshCw, Eye } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import { useNavigate } from "react-router-dom";
-import { supabase } from "@/integrations/supabase/client";
 import { ProjectSubmissionDialog } from "./ProjectSubmissionDialog";
 
 interface MajorProject {
@@ -117,84 +116,132 @@ const MajorProjectsCard = () => {
   };
 
   const fetchMajorProjects = async (): Promise<MajorProject[]> => {
+    console.log('🔧 Fetching live UK Contracts Finder data via direct API...');
+    
+    const searchQueries = [
+      "electrical infrastructure projects",
+      "power grid substation",
+      "electrical installation contracts",
+      "transmission distribution electrical"
+    ];
+
     try {
-      // First fetch existing database projects
-      const { data: dbProjects, error: dbError } = await supabase
-        .from('major_projects')
-        .select(`
-          id, title, summary, content, awarded_to, location, project_value, 
-          date_awarded, status, category, view_count, average_rating, 
-          is_active, created_at, updated_at, tender_deadline, 
-          source_url, external_project_url
-        `)
-        .eq('is_active', true)
-        .order('created_at', { ascending: false })
-        .limit(20);
+      const allProjects: MajorProject[] = [];
 
-      if (dbError) {
-        console.error('Database error:', dbError);
-      }
+      for (const query of searchQueries) {
+        const baseUrl = "https://www.contractsfinder.service.gov.uk/Published/Notices/OCDS/Search";
+        const params = new URLSearchParams({
+          stages: "award",
+          q: query,
+          size: "10",
+          page: "1",
+        });
 
-      // Then trigger API scraping for new data (run in background)
-      let scrapeResult = null;
-      try {
-        const { data, error } = await supabase.functions.invoke('fetch-projects');
-        if (error) {
-          console.error('API fetch error:', error);
-        } else {
-          scrapeResult = data;
-          console.log('API fetch success:', data);
+        const url = `${baseUrl}?${params.toString()}`;
+
+        try {
+          const response = await fetch(url, {
+            method: "GET",
+            headers: {
+              Accept: "application/json",
+            },
+          });
+
+          if (!response.ok) {
+            console.warn(`API call failed for "${query}": ${response.status}`);
+            continue;
+          }
+
+          const data = await response.json();
+          
+          if (!data.releases || !Array.isArray(data.releases)) {
+            console.warn(`No releases found for "${query}"`);
+            continue;
+          }
+
+          const awardedContracts = data.releases.map((tenderData: any, index: number) => {
+            const tender = tenderData.tender || {};
+            const buyer = tenderData.buyer || {};
+            const award = (tenderData.awards && tenderData.awards[0]) || {};
+            const supplierNames = award.suppliers ? award.suppliers.map((s: any) => s.name).join(", ") : "";
+            const buyerAddress = buyer.address || {};
+            const isAwarded = award.suppliers && award.suppliers.length > 0;
+
+            return {
+              id: `api-${Date.now()}-${index}`,
+              title: tender.title || "",
+              summary: tender.description || "",
+              awarded_to: buyer.name || "",
+              location: [buyerAddress.locality, buyerAddress.region, buyerAddress.countryName].filter(Boolean).join(", "),
+              project_value: award.value ? `£${award.value.amount} ${award.value.currency || ''}`.trim() : "",
+              duration: award.contractPeriod ? `${award.contractPeriod.startDate} to ${award.contractPeriod.endDate}` : "",
+              date_awarded: award.contractPeriod?.startDate || "",
+              status: tender.status || "awarded",
+              category: tender.classification?.description || determineSectorFromContent(tender.description || ""),
+              contractorCount: award.suppliers ? award.suppliers.length : 1,
+              external_project_url: award.documents?.[0]?.url || buyer.details?.url || "",
+              source_url: `https://www.contractsfinder.service.gov.uk/Search/Results?SearchType=1&Keywords=${encodeURIComponent(query)}`
+            };
+          });
+
+          // Filter for electrical projects only
+          const electricalProjects = awardedContracts.filter((project: any) => {
+            if (!project.title || !project.summary || !project.awarded_to) return false;
+            
+            const title = project.title.toLowerCase();
+            const summary = project.summary.toLowerCase();
+            const category = (project.category || "").toLowerCase();
+            
+            // Check for electrical keywords
+            const electricalKeywords = ['electrical', 'power', 'grid', 'substation', 'transmission', 'distribution', 'infrastructure', 'energy'];
+            const hasElectricalKeywords = electricalKeywords.some(keyword => 
+              title.includes(keyword) || summary.includes(keyword) || category.includes(keyword)
+            );
+
+            // Filter out irrelevant categories
+            const irrelevantPatterns = /cleaning|catering|security|office|furniture|stationery|consultancy|legal|financial|training|recruitment/i;
+            const isIrrelevant = irrelevantPatterns.test(title) || irrelevantPatterns.test(summary) || irrelevantPatterns.test(category);
+
+            return hasElectricalKeywords && !isIrrelevant;
+          });
+
+          allProjects.push(...electricalProjects);
+          console.log(`✅ Found ${electricalProjects.length} electrical projects for "${query}"`);
+
+        } catch (fetchError) {
+          console.error(`Error fetching data for "${query}":`, fetchError);
         }
-      } catch (fetchError) {
-        console.error('API fetch failed:', fetchError);
       }
 
-      // Filter and map database projects to component format  
-      const validDbProjects = (dbProjects || []).filter(isValidProject);
-      const mappedProjects: MajorProject[] = validDbProjects.map(project => ({
-        id: project.id,
-        title: project.title,
-        summary: project.summary,
-        content: project.content,
-        awarded_to: project.awarded_to,
-        location: project.location,
-        project_value: project.project_value,
-        date_awarded: project.date_awarded,
-        status: project.status,
-        category: project.category || determineSectorFromContent(project.content || project.summary),
-        view_count: project.view_count,
-        average_rating: project.average_rating,
-        contractorCount: estimateContractorCount(project.project_value),
-        duration: estimateDuration(project.content || project.summary),
-        tender_deadline: project.tender_deadline,
-        external_project_url: project.external_project_url,
-        source_url: project.source_url
-      }));
+      // Remove duplicates and limit results
+      const uniqueProjects = allProjects.filter((project, index, self) => 
+        index === self.findIndex(p => p.title === project.title && p.awarded_to === project.awarded_to)
+      ).slice(0, 15);
 
-      // Use live data if available and valid, otherwise fallback to static projects
-      const finalProjects = mappedProjects.length > 0 ? mappedProjects : staticProjects;
-      
-      const newProjectsCount = scrapeResult?.scrapedProjects || 0;
-      const totalProjects = mappedProjects.length;
-      const isUsingFallback = mappedProjects.length === 0;
-      
-      console.log(`Projects loaded: ${totalProjects} valid DB projects, ${finalProjects.length} total shown`);
-      
-      toast({
-        title: "Projects Updated",
-        description: isUsingFallback 
-          ? "Showing example projects - live API fetch in progress" 
-          : `Showing ${totalProjects} live projects${newProjectsCount > 0 ? ` (${newProjectsCount} newly fetched)` : ''}`,
-        duration: 3000,
-      });
+      console.log(`🎯 Total unique electrical projects found: ${uniqueProjects.length}`);
 
-      return finalProjects;
+      if (uniqueProjects.length > 0) {
+        toast({
+          title: "Projects Updated",
+          description: `Loaded ${uniqueProjects.length} live electrical infrastructure projects`,
+          duration: 3000,
+        });
+        return uniqueProjects;
+      } else {
+        console.log('📊 No electrical projects found, using static fallback');
+        toast({
+          title: "Using Example Data",
+          description: "No live electrical projects found - showing example projects",
+          duration: 3000,
+        });
+        return staticProjects;
+      }
 
     } catch (error) {
-      console.error('Fetch error:', error);
+      console.error('API fetch error:', error);
       toast({
         title: "Error",
-        description: "Failed to fetch project data, showing example projects",
+        description: "Failed to fetch live data, showing example projects",
         variant: "destructive",
         duration: 3000,
       });
@@ -293,17 +340,8 @@ const MajorProjectsCard = () => {
   };
 
   const trackProjectView = async (projectId: string) => {
-    try {
-      await supabase
-        .from('safety_content_views')
-        .insert({
-          content_type: 'major_projects',
-          content_id: projectId,
-          user_id: null // Anonymous tracking
-        });
-    } catch (error) {
-      console.error('Error tracking view:', error);
-    }
+    // Track project views (could implement analytics here if needed)
+    console.log(`Project viewed: ${projectId}`);
   };
 
   const ProjectDetailModal = ({ project }: { project: MajorProject }) => (
