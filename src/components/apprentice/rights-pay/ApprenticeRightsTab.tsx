@@ -133,7 +133,7 @@ const ApprenticeRightsTab = () => {
             <CardContent className="pt-0">
               <div className="space-y-4">
                 {section.items.map((item, itemIndex) => (
-                  <div key={itemIndex} className="flex gap-4 group">
+                  <div key={itemIndex} className="flex gap-3 group">
                     <div className="mt-2 h-1.5 w-1.5 rounded-full bg-elec-yellow/60 flex-shrink-0 group-hover:bg-elec-yellow transition-colors" />
                     <p className="text-white text-sm sm:text-base leading-relaxed font-light group-hover:text-elec-light transition-colors flex-1">
                       {item}
