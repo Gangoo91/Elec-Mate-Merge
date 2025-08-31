@@ -113,10 +113,12 @@ const ApprenticeRightsTab = () => {
   return (
     <div className="space-y-6 sm:space-y-8">
       <Alert className="border-elec-yellow/30 bg-elec-yellow/5 p-4 sm:p-6">
-        <Shield className="h-5 w-5 text-elec-yellow flex-shrink-0" />
-        <AlertDescription className="text-white pl-2">
-          <strong className="text-elec-yellow">Know Your Rights:</strong> These rights are protected by law. Understanding them helps ensure you receive fair treatment throughout your apprenticeship.
-        </AlertDescription>
+        <div className="flex gap-3">
+          <Shield className="h-5 w-5 text-elec-yellow flex-shrink-0 mt-0.5" />
+          <AlertDescription className="text-white">
+            <strong className="text-elec-yellow">Know Your Rights:</strong> These rights are protected by law. Understanding them helps ensure you receive fair treatment throughout your apprenticeship.
+          </AlertDescription>
+        </div>
       </Alert>
 
       <div className="grid gap-4 sm:gap-6">
@@ -156,26 +158,30 @@ const ApprenticeRightsTab = () => {
           </CardTitle>
         </CardHeader>
         <CardContent className="pt-0">
-          <div className="grid gap-4">
+          <ul className="space-y-4">
             {commonViolations.map((violation, index) => (
-              <div key={index} className="bg-orange-500/5 border border-orange-400/20 rounded-lg p-4 hover:bg-orange-500/10 transition-colors">
-                <h4 className="font-semibold text-orange-200 mb-2 text-sm sm:text-base">
-                  <span className="text-orange-300">Issue:</span> {violation.issue}
-                </h4>
-                <p className="text-white text-sm leading-relaxed font-light">
-                  <span className="text-orange-300 font-medium">Action:</span> {violation.action}
-                </p>
-              </div>
+              <li key={index} className="bg-orange-500/5 border border-orange-400/20 rounded-lg p-4 hover:bg-orange-500/10 transition-colors">
+                <div className="flex gap-2 mb-2">
+                  <span className="text-orange-300 text-sm font-medium flex-shrink-0">Issue:</span>
+                  <span className="text-orange-200 text-sm font-medium">{violation.issue}</span>
+                </div>
+                <div className="flex gap-2">
+                  <span className="text-orange-300 text-sm font-medium flex-shrink-0">Action:</span>
+                  <span className="text-white text-sm leading-relaxed font-light">{violation.action}</span>
+                </div>
+              </li>
             ))}
-          </div>
+          </ul>
         </CardContent>
       </Card>
 
       <Alert className="border-green-400/30 bg-green-500/10 p-4 sm:p-6">
-        <Heart className="h-5 w-5 text-green-400 flex-shrink-0" />
-        <AlertDescription className="text-white pl-2">
-          <strong className="text-green-400">Remember:</strong> Your apprenticeship should be a positive learning experience. If you're experiencing problems, don't suffer in silence - help is available and using it shows strength, not weakness.
-        </AlertDescription>
+        <div className="flex gap-3">
+          <Heart className="h-5 w-5 text-green-400 flex-shrink-0 mt-0.5" />
+          <AlertDescription className="text-white">
+            <strong className="text-green-400">Remember:</strong> Your apprenticeship should be a positive learning experience. If you're experiencing problems, don't suffer in silence - help is available and using it shows strength, not weakness.
+          </AlertDescription>
+        </div>
       </Alert>
     </div>
   );
