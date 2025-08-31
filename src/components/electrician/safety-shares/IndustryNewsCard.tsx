@@ -423,7 +423,7 @@ const IndustryNewsCard = () => {
                   {/* Content Section */}
                   <CardContent className="p-4 space-y-3">
                     {/* Category and Date */}
-                    <div className="flex items-center justify-between text-xs text-muted-foreground">
+                    <div className="flex items-center justify-between gap-6 text-xs text-muted-foreground">
                       {article.tag && (
                         <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
                           {article.tag}
