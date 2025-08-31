@@ -23,6 +23,25 @@ const CompactScrapMerchantFinder = () => {
     }
   };
 
+  const handleDirectionsClick = (merchant: any) => {
+    console.log('Opening directions for:', merchant);
+    
+    // Enhanced directions logic with better fallbacks
+    if (merchant.location && merchant.location.lat && merchant.location.lng) {
+      const url = `https://www.google.com/maps/dir/?api=1&destination=${merchant.location.lat},${merchant.location.lng}`;
+      console.log('Opening URL:', url);
+      window.open(url, '_blank', 'noopener,noreferrer');
+    } else if (merchant.address && merchant.name) {
+      const query = encodeURIComponent(`${merchant.name} ${merchant.address}`);
+      const url = `https://www.google.com/maps/search/?api=1&query=${query}`;
+      console.log('Opening fallback URL:', url);
+      window.open(url, '_blank', 'noopener,noreferrer');
+    } else {
+      console.error('No location data available for merchant:', merchant);
+      alert('Sorry, location data is not available for this merchant.');
+    }
+  };
+
   return (
     <div className="space-y-4">
       {/* Search Form */}
@@ -99,8 +118,9 @@ const CompactScrapMerchantFinder = () => {
                     <Button
                       variant="outline"
                       size="sm"
-                      onClick={() => openDirections(merchant)}
+                      onClick={() => handleDirectionsClick(merchant)}
                       className="flex-shrink-0"
+                      title="Get directions to this merchant"
                     >
                       <ExternalLink className="h-3 w-3" />
                     </Button>
