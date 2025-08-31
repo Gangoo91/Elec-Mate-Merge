@@ -133,10 +133,10 @@ const ApprenticeRightsTab = () => {
               </CardTitle>
             </CardHeader>
             <CardContent className="pt-0">
-              <ul className="space-y-3">
+              <ul className="space-y-2">
                 {section.items.map((item, itemIndex) => (
-                  <li key={itemIndex} className="flex items-start gap-2 text-white">
-                    <span className="text-elec-yellow text-lg leading-none mt-0.5 flex-shrink-0">•</span>
+                  <li key={itemIndex} className="flex items-start gap-3 text-white">
+                    <span className="text-elec-yellow text-sm leading-none mt-1 flex-shrink-0">•</span>
                     <span className="text-sm sm:text-base leading-relaxed font-light">
                       {item}
                     </span>
