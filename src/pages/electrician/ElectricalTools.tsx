@@ -301,9 +301,11 @@ const ElectricalTools = () => {
                   <p className="text-sm text-muted-foreground mb-3">
                     Professional electrical equipment
                   </p>
-                  <Button size="sm" className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90">
-                    Visit RS Components
-                  </Button>
+                  <a href="https://in.rsdelivers.com/" target="_blank" rel="noopener noreferrer" className="block">
+                    <Button size="sm" className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90">
+                      Visit RS Components
+                    </Button>
+                  </a>
                 </CardContent>
               </Card>
 
