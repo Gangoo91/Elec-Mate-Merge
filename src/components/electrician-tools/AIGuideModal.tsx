@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -54,32 +54,39 @@ const AIGuideModal = ({ isOpen, onClose, guideType, guideTitle }: AIGuideModalPr
   const [guideData, setGuideData] = useState<GuideData | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [hasGenerated, setHasGenerated] = useState(false);
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
 
-  const generateGuide = async () => {
-    setIsLoading(true);
+  const generateGuide = async (forceRefresh = false) => {
+    if (!forceRefresh && isInitialLoad) {
+      setIsLoading(true);
+    }
+    
     try {
       const { data, error } = await supabase.functions.invoke('generate-tool-guide', {
         body: { 
           guideType: guideType,
+          forceRefresh,
           userProfile: {
-            experienceLevel: 'professional',
-            specialization: 'general_electrical'
+            experience: 'professional',
+            specialization: 'general_electrical',
+            business_type: 'mobile_electrician'
           }
         }
       });
 
       if (error) {
-        console.error('Error generating guide:', error);
-      toast({
-        title: "Guide Loading Failed",
-        description: "Unable to load guide. Please try again.",
-        variant: "destructive",
-      });
+        console.error('Error loading guide:', error);
+        toast({
+          title: "Guide Loading Failed",
+          description: "Unable to load guide. Please try again.",
+          variant: "destructive",
+        });
         return;
       }
 
       setGuideData(data.guide);
       setHasGenerated(true);
+      setIsInitialLoad(false);
     } catch (error) {
       console.error('Error:', error);
       toast({
@@ -92,17 +99,17 @@ const AIGuideModal = ({ isOpen, onClose, guideType, guideTitle }: AIGuideModalPr
     }
   };
 
-  const handleModalOpen = () => {
-    if (!hasGenerated && !isLoading) {
-      generateGuide();
+  useEffect(() => {
+    if (isOpen && !hasGenerated) {
+      generateGuide(false);
     }
-  };
+  }, [isOpen, hasGenerated]);
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent 
         className="max-w-4xl max-h-[90vh] overflow-y-auto bg-elec-gray border-elec-yellow/20"
-        onOpenAutoFocus={handleModalOpen}
+        onOpenAutoFocus={() => {}}
       >
         <DialogHeader className="border-b border-elec-yellow/20 pb-4">
           <DialogTitle className="text-2xl text-white flex items-center gap-3">
@@ -112,7 +119,8 @@ const AIGuideModal = ({ isOpen, onClose, guideType, guideTitle }: AIGuideModalPr
         </DialogHeader>
 
         <div className="space-y-6 py-4">
-          {isLoading ? (
+          {/* Loading state - only show skeletons for initial load */}
+          {!guideData && isLoading && isInitialLoad && (
             <div className="space-y-4">
               <div className="text-center space-y-2">
                 <Skeleton className="h-8 w-64 mx-auto" />
@@ -131,7 +139,9 @@ const AIGuideModal = ({ isOpen, onClose, guideType, guideTitle }: AIGuideModalPr
                 </Card>
               ))}
             </div>
-          ) : guideData ? (
+          )}
+
+          {guideData && (
             <>
               {/* Guide Summary */}
               <Card className="border-elec-yellow/30 bg-elec-yellow/10">
@@ -232,7 +242,8 @@ const AIGuideModal = ({ isOpen, onClose, guideType, guideTitle }: AIGuideModalPr
               {/* Action Buttons */}
               <div className="flex gap-3 pt-4">
                 <Button 
-                  onClick={generateGuide} 
+                  onClick={() => generateGuide(true)}
+                  disabled={isLoading}
                   className="bg-elec-yellow text-black hover:bg-elec-yellow/90"
                 >
                   <Clock className="h-4 w-4 mr-2" />
@@ -247,7 +258,9 @@ const AIGuideModal = ({ isOpen, onClose, guideType, guideTitle }: AIGuideModalPr
                 </Button>
               </div>
             </>
-          ) : (
+          )}
+
+          {!guideData && !isLoading && (
             <Card className="border-elec-yellow/20 bg-elec-gray/50">
               <CardContent className="text-center py-8">
                 <AlertCircle className="h-12 w-12 text-elec-yellow mx-auto mb-4" />
@@ -256,10 +269,11 @@ const AIGuideModal = ({ isOpen, onClose, guideType, guideTitle }: AIGuideModalPr
                   Unable to load the guide at this moment.
                 </p>
                 <Button 
-                  onClick={generateGuide}
+                  onClick={() => generateGuide(false)}
+                  disabled={isLoading}
                   className="bg-elec-yellow text-black hover:bg-elec-yellow/90"
                 >
-                  Try Again
+                  Load Guide
                 </Button>
               </CardContent>
             </Card>
