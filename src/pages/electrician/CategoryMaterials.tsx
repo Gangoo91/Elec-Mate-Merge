@@ -527,11 +527,11 @@ const CategoryMaterials = () => {
   // Initialize filters from URL parameters
   useEffect(() => {
     const urlFilters: FilterState = {
-      productTypes: searchParams.getAll('productType'),
-      brands: searchParams.getAll('brand'),
-      priceRanges: searchParams.getAll('priceRange'),
-      moduleSizes: searchParams.getAll('moduleSize'),
-      cableTypes: searchParams.getAll('cableType')
+      productTypes: searchParams.getAll('productTypes'),
+      brands: searchParams.getAll('brands'),
+      priceRanges: searchParams.getAll('priceRanges'),
+      moduleSizes: searchParams.getAll('moduleSizes'),
+      cableTypes: searchParams.getAll('cableTypes')
     };
     setFilters(urlFilters);
   }, [searchParams]);
@@ -540,7 +540,7 @@ const CategoryMaterials = () => {
   useEffect(() => {
     const newParams = new URLSearchParams();
     Object.entries(filters).forEach(([key, values]) => {
-      values.forEach(value => newParams.append(key.replace('Types', 'Type').replace('Sizes', 'Size'), value));
+      values.forEach(value => newParams.append(key, value));
     });
     setSearchParams(newParams, { replace: true });
   }, [filters, setSearchParams]);
