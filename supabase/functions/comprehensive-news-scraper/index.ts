@@ -9,23 +9,19 @@ const corsHeaders = {
 const URL = "https://api.firecrawl.dev/v2/search";
 
 const electricalKeywords = [
-  "Health and Safety Executive UK electrical",
-  "BS7671 IET Wiring Regulations UK",
-  "Institution of Engineering and Technology UK",
-  "UK electrical infrastructure projects",
-  "UK Government electrical regulations HSE",
-  "British electrical industry news",
-  "UK power distribution projects",
+  "Health and Safety Executive - UK",
+  "BS7671 (IET Wiring Regulations) - UK",
+  "Institution of Engineering and Technology - UK",
+  "Major Engineering and Infrastructure Projects - UK",
+  "UK Government Electrical Regulations and Publications - UK",
 ];
 
 const keywordToShortTag = {
-  "Health and Safety Executive UK electrical": "HSE",
-  "BS7671 IET Wiring Regulations UK": "BS7671",
-  "Institution of Engineering and Technology UK": "IET",
-  "UK electrical infrastructure projects": "Major Projects",
-  "UK Government electrical regulations HSE": "UK Regulations",
-  "British electrical industry news": "Industry News",
-  "UK power distribution projects": "Power Projects",
+  "Health and Safety Executive - UK": "HSE",
+  "BS7671 (IET Wiring Regulations) - UK": "BS7671",
+  "Institution of Engineering and Technology - UK": "IET",
+  "Major Engineering and Infrastructure Projects - UK": "Major Projects",
+  "UK Government Electrical Regulations and Publications - UK": "UK Regulations",
 };
 
 function isUKRelevant(article) {
