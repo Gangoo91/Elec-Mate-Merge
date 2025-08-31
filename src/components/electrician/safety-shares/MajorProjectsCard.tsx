@@ -217,6 +217,32 @@ const MajorProjectsCard = () => {
     return 5;
   };
 
+  const formatDuration = (duration: string): string => {
+    if (!duration) return '18 months';
+    
+    // Handle date range format like "2024-01-01 to 2024-12-31"
+    if (duration.includes(' to ')) {
+      const [startStr, endStr] = duration.split(' to ');
+      try {
+        const start = new Date(startStr);
+        const end = new Date(endStr);
+        const diffTime = Math.abs(end.getTime() - start.getTime());
+        const diffMonths = Math.ceil(diffTime / (1000 * 60 * 60 * 24 * 30));
+        return `${diffMonths} months`;
+      } catch {
+        return duration;
+      }
+    }
+    
+    // If already in user-friendly format, return as is
+    if (duration.includes('month') || duration.includes('year')) {
+      return duration;
+    }
+    
+    // Return as is for other formats
+    return duration;
+  };
+
   const estimateDuration = (content: string): string => {
     if (!content) return '12 months';
     const contentLower = content.toLowerCase();
@@ -469,7 +495,9 @@ const MajorProjectsCard = () => {
                   <div className="flex justify-center mb-1">
                     <Clock className="h-5 w-5 text-elec-yellow" />
                   </div>
-                  <div className="text-white font-medium text-sm">{project.duration || '18 months'}</div>
+                  <div className="text-white font-medium text-sm">
+                    {project.duration ? formatDuration(project.duration) : '18 months'}
+                  </div>
                   <div className="text-xs text-muted-foreground">Duration</div>
                 </div>
                 
