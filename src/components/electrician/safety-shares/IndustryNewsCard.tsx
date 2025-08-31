@@ -203,15 +203,13 @@ const IndustryNewsCard = () => {
   return (
     <Card className="w-full bg-transparent border-none p-0">
         <CardHeader className="p-0">
-          <CardTitle className="text-elec-yellow flex items-center gap-2">
-            <Newspaper className="h-5 w-5" />
-            Industry News (Live)
+          <CardTitle className="text-elec-yellow flex items-center gap-2 justify-end">
             <Button
               onClick={fetchLiveNews}
               disabled={isLoading}
               variant="outline"
               size="sm"
-              className="ml-auto border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 disabled:opacity-50"
+              className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 disabled:opacity-50"
             >
               <RefreshCw className={`h-4 w-4 ${isLoading ? 'animate-spin' : ''}`} />
               {isLoading ? 'Fetching...' : 'Fetch News'}
@@ -357,6 +355,12 @@ const IndustryNewsCard = () => {
                 )}
               </div>
             </div>
+          </div>
+
+          {/* Section Title */}
+          <div className="flex items-center gap-2 mb-6">
+            <Newspaper className="h-5 w-5 text-elec-yellow" />
+            <h2 className="text-2xl font-semibold text-elec-yellow">Industry News (Live)</h2>
           </div>
 
           {/* Articles Grid */}
