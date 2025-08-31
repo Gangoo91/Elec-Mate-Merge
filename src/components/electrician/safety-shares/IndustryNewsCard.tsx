@@ -222,143 +222,145 @@ const IndustryNewsCard = () => {
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6 bg-transparent">
-          {/* Enhanced Control Panel - Always Visible */}
-          <div className="bg-elec-dark/20 rounded-xl border border-elec-yellow/10 p-6 space-y-6">
-            {/* Search Section */}
-            <div className="space-y-3">
-              <div className="flex items-center gap-2">
-                <Search className="h-4 w-4 text-elec-yellow" />
-                <h3 className="text-sm font-medium text-elec-yellow">Search & Filter</h3>
-              </div>
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <Input
-                  placeholder="Search articles by title or content..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
+          {/* Search Filters */}
+          <div className="bg-elec-dark/30 rounded-xl border border-elec-yellow/15 p-5 space-y-4">
+            <div className="flex items-center gap-2">
+              <Search className="h-4 w-4 text-elec-yellow" />
+              <h3 className="text-sm font-medium text-elec-yellow">Search Articles</h3>
+            </div>
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Input
+                placeholder="Search articles by title or content..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                disabled={isLoading}
+                className="pl-10 bg-elec-dark/60 border-elec-yellow/20 text-white placeholder:text-muted-foreground focus:border-elec-yellow/40 focus:ring-elec-yellow/20 transition-all duration-200 hover:border-elec-yellow/30"
+              />
+            </div>
+          </div>
+
+          {/* Category & Sort Filters */}
+          <div className="bg-elec-dark/20 rounded-xl border border-elec-yellow/10 p-5 space-y-4">
+            <div className="flex items-center gap-2">
+              <RefreshCw className="h-4 w-4 text-elec-yellow" />
+              <h3 className="text-sm font-medium text-elec-yellow">Filter & Sort</h3>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {/* Category Filter */}
+              <div className="space-y-2">
+                <label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+                  Filter Category
+                </label>
+                <Select 
+                  value={selectedCategory} 
+                  onValueChange={setSelectedCategory}
                   disabled={isLoading}
-                  className="pl-10 bg-elec-dark/60 border-elec-yellow/20 text-white placeholder:text-muted-foreground focus:border-elec-yellow/40 focus:ring-elec-yellow/20 transition-all duration-200 hover:border-elec-yellow/30"
-                />
+                >
+                  <SelectTrigger className="w-full bg-elec-dark/60 border-elec-yellow/20 text-white hover:border-elec-yellow/30 focus:border-elec-yellow/40 focus:ring-elec-yellow/20 transition-all duration-200">
+                    <SelectValue placeholder="All categories" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-elec-dark border-elec-yellow/30 z-50">
+                    <SelectItem value="all" className="text-white hover:bg-elec-yellow/15 focus:bg-elec-yellow/15">
+                      All Categories ({articles.filter(a => !searchTerm || 
+                        a.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                        (a.snippet && a.snippet.toLowerCase().includes(searchTerm.toLowerCase()))
+                      ).length})
+                    </SelectItem>
+                    {uniqueCategories.map((category) => (
+                      <SelectItem key={category} value={category} className="text-white hover:bg-elec-yellow/15 focus:bg-elec-yellow/15">
+                        {category} ({getCategoryCount(category)})
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* Sort Options */}
+              <div className="space-y-2">
+                <label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+                  Sort Articles
+                </label>
+                <Select 
+                  value={sortOption} 
+                  onValueChange={handleSortChange}
+                  disabled={isLoading}
+                >
+                  <SelectTrigger className="w-full bg-elec-dark/60 border-elec-yellow/20 text-white hover:border-elec-yellow/30 focus:border-elec-yellow/40 focus:ring-elec-yellow/20 transition-all duration-200">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent className="bg-elec-dark border-elec-yellow/30 z-50">
+                    <SelectItem value="random" className="text-white hover:bg-elec-yellow/15 focus:bg-elec-yellow/15">
+                      <div className="flex items-center gap-2">
+                        <RefreshCw className="h-3 w-3" />
+                        Random
+                      </div>
+                    </SelectItem>
+                    <SelectItem value="newest" className="text-white hover:bg-elec-yellow/15 focus:bg-elec-yellow/15">
+                      <div className="flex items-center gap-2">
+                        <Calendar className="h-3 w-3" />
+                        Newest First
+                      </div>
+                    </SelectItem>
+                    <SelectItem value="oldest" className="text-white hover:bg-elec-yellow/15 focus:bg-elec-yellow/15">
+                      <div className="flex items-center gap-2">
+                        <Calendar className="h-3 w-3" />
+                        Oldest First
+                      </div>
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
             </div>
+          </div>
 
-            {/* View Options Section */}
-            <div className="space-y-4">
-              <div className="flex items-center gap-2">
-                <Eye className="h-4 w-4 text-elec-yellow" />
-                <h3 className="text-sm font-medium text-elec-yellow">View Options</h3>
-              </div>
-              
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                {/* Sort Options */}
-                <div className="space-y-2">
-                  <label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
-                    Sort Articles
-                  </label>
-                  <Select 
-                    value={sortOption} 
-                    onValueChange={handleSortChange}
-                    disabled={isLoading}
-                  >
-                    <SelectTrigger className="w-full bg-elec-dark/60 border-elec-yellow/20 text-white hover:border-elec-yellow/30 focus:border-elec-yellow/40 focus:ring-elec-yellow/20 transition-all duration-200">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent className="bg-elec-dark border-elec-yellow/30 z-50">
-                      <SelectItem value="random" className="text-white hover:bg-elec-yellow/15 focus:bg-elec-yellow/15">
-                        <div className="flex items-center gap-2">
-                          <RefreshCw className="h-3 w-3" />
-                          Random
-                        </div>
-                      </SelectItem>
-                      <SelectItem value="newest" className="text-white hover:bg-elec-yellow/15 focus:bg-elec-yellow/15">
-                        <div className="flex items-center gap-2">
-                          <Calendar className="h-3 w-3" />
-                          Newest First
-                        </div>
-                      </SelectItem>
-                      <SelectItem value="oldest" className="text-white hover:bg-elec-yellow/15 focus:bg-elec-yellow/15">
-                        <div className="flex items-center gap-2">
-                          <Calendar className="h-3 w-3" />
-                          Oldest First
-                        </div>
-                      </SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                {/* Items Per Page Selector */}
-                <div className="space-y-2">
-                  <label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
-                    Articles Per Page
-                  </label>
-                  <Select 
-                    value={itemsPerPage === -1 ? "all" : itemsPerPage.toString()} 
-                    onValueChange={handleItemsPerPageChange}
-                    disabled={isLoading}
-                  >
-                    <SelectTrigger className="w-full bg-elec-dark/60 border-elec-yellow/20 text-white hover:border-elec-yellow/30 focus:border-elec-yellow/40 focus:ring-elec-yellow/20 transition-all duration-200">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent className="bg-elec-dark border-elec-yellow/30 z-50">
-                      <SelectItem value="5" className="text-white hover:bg-elec-yellow/15 focus:bg-elec-yellow/15">5 articles</SelectItem>
-                      <SelectItem value="10" className="text-white hover:bg-elec-yellow/15 focus:bg-elec-yellow/15">10 articles</SelectItem>
-                      <SelectItem value="20" className="text-white hover:bg-elec-yellow/15 focus:bg-elec-yellow/15">20 articles</SelectItem>
-                      <SelectItem value="50" className="text-white hover:bg-elec-yellow/15 focus:bg-elec-yellow/15">50 articles</SelectItem>
-                      <SelectItem value="all" className="text-white hover:bg-elec-yellow/15 focus:bg-elec-yellow/15">Show all</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                {/* Category Filter */}
-                <div className="space-y-2 sm:col-span-2 lg:col-span-1">
-                  <label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
-                    Filter Category
-                  </label>
-                  <Select 
-                    value={selectedCategory} 
-                    onValueChange={setSelectedCategory}
-                    disabled={isLoading}
-                  >
-                    <SelectTrigger className="w-full bg-elec-dark/60 border-elec-yellow/20 text-white hover:border-elec-yellow/30 focus:border-elec-yellow/40 focus:ring-elec-yellow/20 transition-all duration-200">
-                      <SelectValue placeholder="All categories" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-elec-dark border-elec-yellow/30 z-50">
-                      <SelectItem value="all" className="text-white hover:bg-elec-yellow/15 focus:bg-elec-yellow/15">
-                        All Categories ({articles.filter(a => !searchTerm || 
-                          a.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                          (a.snippet && a.snippet.toLowerCase().includes(searchTerm.toLowerCase()))
-                        ).length})
-                      </SelectItem>
-                      {uniqueCategories.map((category) => (
-                        <SelectItem key={category} value={category} className="text-white hover:bg-elec-yellow/15 focus:bg-elec-yellow/15">
-                          {category} ({getCategoryCount(category)})
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
+          {/* Display Options */}
+          <div className="bg-elec-dark/15 rounded-xl border border-elec-yellow/8 p-5 space-y-4">
+            <div className="flex items-center gap-2">
+              <Eye className="h-4 w-4 text-elec-yellow" />
+              <h3 className="text-sm font-medium text-elec-yellow">Display Options</h3>
             </div>
+            <div className="space-y-2">
+              <label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+                Articles Per Page
+              </label>
+              <Select 
+                value={itemsPerPage === -1 ? "all" : itemsPerPage.toString()} 
+                onValueChange={handleItemsPerPageChange}
+                disabled={isLoading}
+              >
+                <SelectTrigger className="w-full sm:w-48 bg-elec-dark/60 border-elec-yellow/20 text-white hover:border-elec-yellow/30 focus:border-elec-yellow/40 focus:ring-elec-yellow/20 transition-all duration-200">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent className="bg-elec-dark border-elec-yellow/30 z-50">
+                  <SelectItem value="5" className="text-white hover:bg-elec-yellow/15 focus:bg-elec-yellow/15">5 articles</SelectItem>
+                  <SelectItem value="10" className="text-white hover:bg-elec-yellow/15 focus:bg-elec-yellow/15">10 articles</SelectItem>
+                  <SelectItem value="20" className="text-white hover:bg-elec-yellow/15 focus:bg-elec-yellow/15">20 articles</SelectItem>
+                  <SelectItem value="50" className="text-white hover:bg-elec-yellow/15 focus:bg-elec-yellow/15">50 articles</SelectItem>
+                  <SelectItem value="all" className="text-white hover:bg-elec-yellow/15 focus:bg-elec-yellow/15">Show all</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
 
-            {/* Results Summary */}
-            <div className="pt-2 border-t border-elec-yellow/10">
-              <div className="flex items-center justify-between text-sm">
-                <span className="text-muted-foreground">
-                  {isLoading ? (
-                    <div className="flex items-center gap-2">
-                      <RefreshCw className="h-3 w-3 animate-spin" />
-                      Loading articles...
-                    </div>
-                  ) : (
-                    `Showing ${currentArticles.length} of ${filteredArticles.length} article${filteredArticles.length !== 1 ? 's' : ''}`
-                  )}
-                </span>
-                {!isLoading && filteredArticles.length > 0 && (
-                  <span className="text-elec-yellow font-medium">
-                    {itemsPerPage === -1 ? 'All' : `Page ${currentPage} of ${totalPages}`}
-                  </span>
+          {/* Results Summary */}
+          <div className="bg-elec-dark/10 rounded-lg border border-elec-yellow/5 p-4">
+            <div className="flex items-center justify-between text-sm">
+              <span className="text-muted-foreground">
+                {isLoading ? (
+                  <div className="flex items-center gap-2">
+                    <RefreshCw className="h-3 w-3 animate-spin" />
+                    Loading articles...
+                  </div>
+                ) : (
+                  `Showing ${currentArticles.length} of ${filteredArticles.length} article${filteredArticles.length !== 1 ? 's' : ''}`
                 )}
-              </div>
+              </span>
+              {!isLoading && filteredArticles.length > 0 && (
+                <span className="text-elec-yellow font-medium">
+                  {itemsPerPage === -1 ? 'All' : `Page ${currentPage} of ${totalPages}`}
+                </span>
+              )}
             </div>
           </div>
 
