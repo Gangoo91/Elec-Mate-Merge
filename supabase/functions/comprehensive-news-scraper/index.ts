@@ -21,7 +21,7 @@ async function fetchNews(query) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      query,
+      query: `${query} electrical UK`,
       sources: ["news"],
       location: "United Kingdom",
       tbs: "qdr:w",
@@ -30,7 +30,33 @@ async function fetchNews(query) {
         onlyMainContent: false,
         maxAge: 0,
         parsers: [],
-        formats: [],
+        formats: [
+          {
+            type: "json",
+            schema: {
+              type: "object",
+              required: [],
+              properties: {
+                title: {
+                  type: "string",
+                },
+                snippet: {
+                  type: "string",
+                },
+                imageUrl: {
+                  type: "string",
+                },
+                url: {
+                  type: "string",
+                },
+                date: {
+                  type: "string",
+                  description: "date in iso format",
+                },
+              },
+            },
+          },
+        ],
       },
     }),
   };
@@ -46,7 +72,15 @@ async function fetchNews(query) {
     const articles = data?.data?.news || [];
 
     // ✅ Return only normalized schema
-    return articles.map((article) => ({ ...article, tag: query }));
+    return articles.map((article) => ({
+      title: article.title,
+      snippet: article.snippet,
+      url: article.url,
+      date: article.date,
+      dateFormat: article?.json?.date,
+      imageUrl: article?.json?.imageUrl,
+      tag: query,
+    }));
   } catch (error) {
     console.error(`⚠️ Error fetching ${query}:`, error.message);
     return [];
@@ -55,11 +89,11 @@ async function fetchNews(query) {
 
 async function main() {
   const electricalKeywords = [
-    "Health and Safety Executive - UK",
-    "BS7671 (IET Wiring Regulations) - UK",
-    "Institution of Engineering and Technology - UK",
-    "Major Engineering and Infrastructure Projects - UK",
-    "UK Government Electrical Regulations and Publications - UK",
+    "Health and Safety Executive",
+    "BS7671 (IET Wiring Regulations)",
+    "Institution of Engineering and Technology",
+    "Major Engineering and Infrastructure Projects",
+    "UK Government Electrical Regulations and Publications",
   ];
 
   try {
