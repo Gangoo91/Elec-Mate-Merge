@@ -9,24 +9,50 @@ const corsHeaders = {
 const URL = "https://api.firecrawl.dev/v2/search";
 
 const electricalKeywords = [
-  "Health and Safety Executive",
-  "BS7671 (IET Wiring Regulations)",
-  "Institution of Engineering and Technology",
-  "Major Engineering and Infrastructure Projects",
-  "UK Government Electrical Regulations and Publications",
+  "Health and Safety Executive UK electrical",
+  "BS7671 IET Wiring Regulations UK",
+  "Institution of Engineering and Technology UK",
+  "UK electrical infrastructure projects",
+  "UK Government electrical regulations HSE",
+  "British electrical industry news",
+  "UK power distribution projects",
 ];
 
 const keywordToShortTag = {
-  "Health and Safety Executive": "HSE",
-  "BS7671 (IET Wiring Regulations)": "BS7671",
-  "Institution of Engineering and Technology": "IET",
-  "Major Engineering and Infrastructure Projects": "Major Projects",
-  "UK Government Electrical Regulations and Publications": "UK Regulations",
+  "Health and Safety Executive UK electrical": "HSE",
+  "BS7671 IET Wiring Regulations UK": "BS7671",
+  "Institution of Engineering and Technology UK": "IET",
+  "UK electrical infrastructure projects": "Major Projects",
+  "UK Government electrical regulations HSE": "UK Regulations",
+  "British electrical industry news": "Industry News",
+  "UK power distribution projects": "Power Projects",
 };
+
+function isUKRelevant(article) {
+  const ukDomains = ['.gov.uk', '.co.uk', '.ac.uk', '.org.uk'];
+  const ukKeywords = ['UK', 'United Kingdom', 'Britain', 'British', 'England', 'Scotland', 'Wales', 'Northern Ireland'];
+  const excludeKeywords = ['India', 'Indian', 'Delhi', 'Mumbai', 'Bangalore', 'Chennai', 'Kolkata', 'Hyderabad'];
+  
+  // Check if URL is from UK domain
+  const hasUKDomain = ukDomains.some(domain => article.url.includes(domain));
+  
+  // Check if content mentions UK
+  const content = `${article.title} ${article.snippet}`.toLowerCase();
+  const hasUKKeywords = ukKeywords.some(keyword => content.includes(keyword.toLowerCase()));
+  
+  // Check if content mentions excluded locations
+  const hasExcludeKeywords = excludeKeywords.some(keyword => content.includes(keyword.toLowerCase()));
+  
+  return (hasUKDomain || hasUKKeywords) && !hasExcludeKeywords;
+}
 
 function normalizeArticles(articles, query) {
   const shortTag = keywordToShortTag[query] || query;
-  return articles.map((a) => ({
+  
+  // Filter for UK-relevant articles only
+  const ukRelevantArticles = articles.filter(isUKRelevant);
+  
+  return ukRelevantArticles.map((a) => ({
     title: a.title || "",
     url: a.url || "",
     snippet: a.snippet || "",
@@ -47,16 +73,18 @@ async function fetchNews(query) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      query,
-      sources: ["news"], // focus on news
+      query: `${query} site:gov.uk OR site:co.uk OR site:ac.uk`,
+      sources: ["news"],
       location: "United Kingdom",
       tbs: "qdr:w",
-      limit: 50,
+      limit: 30,
+      country: "gb",
+      lang: "en",
       scrapeOptions: {
-        onlyMainContent: false,
+        onlyMainContent: true,
         maxAge: 0,
         parsers: [],
-        formats: [],
+        formats: ["markdown"],
       },
     }),
   };
