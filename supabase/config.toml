@@ -84,3 +84,6 @@ verify_jwt = false
 
 [functions.ai-electrical-tools]
 verify_jwt = false
+
+[functions.ai-material-recommendations]
+verify_jwt = false

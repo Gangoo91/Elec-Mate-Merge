@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Search, TrendingDown, Crown, ExternalLink, Loader2, AlertCircle, Filter, Star, RefreshCw } from "lucide-react";
+import { Search, TrendingDown, Crown, ExternalLink, Loader2, AlertCircle, Filter, Star, RefreshCw, Brain, Lightbulb, Package, AlertTriangle } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 
@@ -31,6 +31,35 @@ interface PriceComparisonResult {
   cheapestPrice: number;
   averagePrice: number;
   priceRange: string;
+  aiInsights?: AIInsights;
+}
+
+interface AIRecommendation {
+  type: 'alternative' | 'bundle' | 'upgrade' | 'warning';
+  title: string;
+  description: string;
+  savings?: number;
+  confidence: number;
+  products?: PriceComparisonItem[];
+}
+
+interface AIInsights {
+  smartMatching: {
+    matchedGroups: PriceComparisonItem[][];
+    alternatives: PriceComparisonItem[];
+    recommendations: AIRecommendation[];
+  };
+  valueAnalysis: {
+    recommendations: AIRecommendation[];
+    insights: string[];
+  };
+  purchaseRecommendations: AIRecommendation[];
+  summary: {
+    totalProducts: number;
+    matchedGroups: number;
+    alternatives: number;
+    recommendations: number;
+  };
 }
 
 // Common electrical product suggestions for autocomplete
@@ -65,10 +94,12 @@ const MaterialPriceComparison = () => {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedSupplier, setSelectedSupplier] = useState("all");
   const [isLoading, setIsLoading] = useState(false);
+  const [isAiAnalyzing, setIsAiAnalyzing] = useState(false);
   const [comparisonResult, setComparisonResult] = useState<PriceComparisonResult | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const [aiEnabled, setAiEnabled] = useState(true);
   const searchInputRef = useRef<HTMLInputElement>(null);
 
   const extractPrice = (priceStr: string): number => {
@@ -128,6 +159,36 @@ const MaterialPriceComparison = () => {
     };
   };
 
+  // Enhanced AI Analysis
+  const runAiAnalysis = async (products: PriceComparisonItem[]) => {
+    if (!aiEnabled || products.length === 0) return;
+    
+    setIsAiAnalyzing(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('ai-material-recommendations', {
+        body: { 
+          products, 
+          searchTerm: searchQuery,
+          userLocation: 'UK' // Could be enhanced with actual user location
+        }
+      });
+
+      if (error) throw new Error(error.message);
+
+      return data;
+    } catch (err: any) {
+      console.error('AI analysis failed:', err);
+      toast({
+        title: "AI Analysis Failed",
+        description: "Price comparison still available, but AI insights unavailable.",
+        variant: "destructive"
+      });
+      return null;
+    } finally {
+      setIsAiAnalyzing(false);
+    }
+  };
+
   const handleSearch = async () => {
     if (!searchQuery.trim()) return;
     
@@ -159,13 +220,25 @@ const MaterialPriceComparison = () => {
         const averagePrice = prices.reduce((sum, price) => sum + price, 0) / prices.length;
         const priceRange = `${formatPrice(cheapestPrice)} - ${formatPrice(Math.max(...prices))}`;
 
-        setComparisonResult({
+        // Create initial result
+        const result: PriceComparisonResult = {
           searchTerm: searchQuery,
           products: sortedProducts,
           cheapestPrice,
           averagePrice,
           priceRange
-        });
+        };
+
+        setComparisonResult(result);
+
+        // Run AI analysis in parallel
+        if (aiEnabled) {
+          runAiAnalysis(sortedProducts).then(aiInsights => {
+            if (aiInsights) {
+              setComparisonResult(prev => prev ? { ...prev, aiInsights } : null);
+            }
+          });
+        }
       } else {
         setError("No products found for your search. Try different keywords or adjust filters.");
       }
@@ -190,10 +263,25 @@ const MaterialPriceComparison = () => {
   return (
     <div className="space-y-6">
       <div className="text-center space-y-4">
-        <h2 className="text-3xl font-bold text-white">Material Price Comparison</h2>
+        <h2 className="text-3xl font-bold text-white">AI-Powered Material Price Comparison</h2>
         <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-          Compare prices across multiple suppliers to find the best deals on electrical materials
+          Compare prices across multiple suppliers with intelligent recommendations and value analysis
         </p>
+        <div className="flex items-center justify-center gap-4">
+          <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30">
+            <Brain className="h-3 w-3 mr-1" />
+            AI-Enhanced
+          </Badge>
+          <label className="flex items-center gap-2 text-sm">
+            <input
+              type="checkbox"
+              checked={aiEnabled}
+              onChange={(e) => setAiEnabled(e.target.checked)}
+              className="rounded"
+            />
+            <span className="text-muted-foreground">Enable AI Recommendations</span>
+          </label>
+        </div>
       </div>
 
       {/* Enhanced Search Interface */}
@@ -238,6 +326,11 @@ const MaterialPriceComparison = () => {
               >
                 {isLoading ? (
                   <Loader2 className="h-4 w-4 animate-spin" />
+                ) : aiEnabled ? (
+                  <>
+                    <Brain className="h-4 w-4 mr-2" />
+                    AI Compare
+                  </>
                 ) : (
                   "Compare Prices"
                 )}
@@ -320,7 +413,14 @@ const MaterialPriceComparison = () => {
                   </p>
                 </div>
                 <Badge variant="outline" className="text-xs border-green-500/30 text-green-400">
-                  Updated now
+                  {isAiAnalyzing ? (
+                    <>
+                      <Brain className="h-3 w-3 mr-1 animate-pulse" />
+                      AI Analyzing...
+                    </>
+                  ) : (
+                    "Updated now"
+                  )}
                 </Badge>
               </div>
             </CardHeader>
@@ -345,6 +445,104 @@ const MaterialPriceComparison = () => {
               </div>
             </CardContent>
           </Card>
+
+          {/* AI Recommendations */}
+          {comparisonResult.aiInsights && (
+            <div className="space-y-4">
+              {/* Smart Product Matching */}
+              {comparisonResult.aiInsights.smartMatching.matchedGroups.length > 0 && (
+                <Card className="border-blue-500/30 bg-blue-500/5">
+                  <CardHeader className="pb-3">
+                    <CardTitle className="text-blue-300 text-lg flex items-center gap-2">
+                      <Brain className="h-5 w-5" />
+                      Smart Product Matching
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-sm text-blue-200 mb-3">
+                      AI identified {comparisonResult.aiInsights.smartMatching.matchedGroups.length} groups of equivalent products from different suppliers.
+                    </p>
+                    <div className="space-y-2">
+                      {comparisonResult.aiInsights.smartMatching.matchedGroups.slice(0, 3).map((group, idx) => (
+                        <div key={idx} className="p-2 bg-blue-500/10 rounded border border-blue-500/20">
+                          <p className="text-xs text-blue-300 font-medium">Equivalent Group {idx + 1}:</p>
+                          <p className="text-xs text-blue-200">
+                            {group.map(p => `${p.supplier} (${p.price})`).join(' • ')}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
+
+              {/* AI Recommendations */}
+              {[...comparisonResult.aiInsights.smartMatching.recommendations,
+                ...comparisonResult.aiInsights.valueAnalysis.recommendations,
+                ...comparisonResult.aiInsights.purchaseRecommendations].length > 0 && (
+                <Card className="border-emerald-500/30 bg-emerald-500/5">
+                  <CardHeader className="pb-3">
+                    <CardTitle className="text-emerald-300 text-lg flex items-center gap-2">
+                      <Lightbulb className="h-5 w-5" />
+                      AI Recommendations
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-3">
+                      {[...comparisonResult.aiInsights.smartMatching.recommendations,
+                        ...comparisonResult.aiInsights.valueAnalysis.recommendations,
+                        ...comparisonResult.aiInsights.purchaseRecommendations].slice(0, 5).map((rec, idx) => (
+                        <div key={idx} className="p-3 bg-emerald-500/10 rounded border border-emerald-500/20">
+                          <div className="flex items-start justify-between mb-2">
+                            <div className="flex items-center gap-2">
+                              {rec.type === 'bundle' && <Package className="h-4 w-4 text-emerald-400" />}
+                              {rec.type === 'alternative' && <TrendingDown className="h-4 w-4 text-emerald-400" />}
+                              {rec.type === 'warning' && <AlertTriangle className="h-4 w-4 text-amber-400" />}
+                              {rec.type === 'upgrade' && <Star className="h-4 w-4 text-emerald-400" />}
+                              <h4 className="font-medium text-emerald-300 text-sm">{rec.title}</h4>
+                            </div>
+                            {rec.savings && (
+                              <Badge className="bg-emerald-500/20 text-emerald-400 text-xs">
+                                Save {rec.savings}%
+                              </Badge>
+                            )}
+                          </div>
+                          <p className="text-xs text-emerald-200">{rec.description}</p>
+                          <div className="mt-2 flex items-center justify-between">
+                            <Badge variant="outline" className="text-xs border-emerald-500/30 text-emerald-400">
+                              {Math.round(rec.confidence * 100)}% confidence
+                            </Badge>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
+
+              {/* Value Insights */}
+              {comparisonResult.aiInsights.valueAnalysis.insights.length > 0 && (
+                <Card className="border-amber-500/30 bg-amber-500/5">
+                  <CardHeader className="pb-3">
+                    <CardTitle className="text-amber-300 text-lg flex items-center gap-2">
+                      <Star className="h-5 w-5" />
+                      Value Analysis Insights
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-2">
+                      {comparisonResult.aiInsights.valueAnalysis.insights.slice(0, 3).map((insight, idx) => (
+                        <p key={idx} className="text-sm text-amber-200 flex items-start gap-2">
+                          <span className="text-amber-400 mt-1">•</span>
+                          {insight}
+                        </p>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
+            </div>
+          )}
 
           {/* Enhanced Product Comparison */}
           <div className="space-y-4">
