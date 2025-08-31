@@ -770,27 +770,74 @@ export function MicroHydroCalculator() {
           </Card>
 
           {/* Regulations & Next Steps */}
-          <Alert>
-            <AlertTriangle className="h-4 w-4" />
-            <AlertDescription className="space-y-2">
-              <div className="font-semibold">Regulatory Requirements & Next Steps:</div>
-              <ul className="list-disc list-inside space-y-1 text-sm">
-                <li><strong>Environment Agency:</strong> {result.abstractionRequired ? 
-                  'Abstraction licence required (>20m³/day). Application process 13-16 weeks.' :
-                  'No abstraction licence needed, but still notify EA of works.'}</li>
-                <li><strong>Planning Permission:</strong> Usually required for new structures. Check with local authority.</li>
-                {result.fishMigrationConcern && (
-                  <li><strong>Fish Passage:</strong> Measures required for heads &gt;1.5m. Consider fish ladder or bypass.</li>
-                )}
-                <li><strong>Flood Risk Activity Permit:</strong> Required for works within 8m of watercourse.</li>
-                <li><strong>Grid Connection:</strong> {gridConnection === 'grid_tie' ? 
-                  'G98/G99 application required for export systems.' :
-                  'Notify DNO of connection even if no export.'}</li>
-                <li><strong>Professional Services:</strong> Hydrological survey, environmental impact assessment, and structural engineering required.</li>
-                <li><strong>Insurance:</strong> Specialist hydro insurance for flood damage and environmental liability.</li>
-              </ul>
-            </AlertDescription>
-          </Alert>
+          <Card className="border-elec-yellow/20 bg-elec-gray">
+            <CardHeader>
+              <CardTitle className="text-elec-yellow flex items-center gap-2">
+                <AlertTriangle className="h-5 w-5" />
+                Regulatory Requirements & Next Steps
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                <div className="grid grid-cols-1 gap-3">
+                  <div className="flex flex-col sm:flex-row sm:items-start gap-2 p-3 bg-elec-dark/30 rounded-lg">
+                    <div className="font-semibold text-elec-yellow min-w-fit">Environment Agency:</div>
+                    <div className="text-elec-light text-sm">
+                      {result.abstractionRequired ? 
+                        'Abstraction licence required (>20m³/day). Application process 13-16 weeks.' :
+                        'No abstraction licence needed, but still notify EA of works.'}
+                    </div>
+                  </div>
+                  
+                  <div className="flex flex-col sm:flex-row sm:items-start gap-2 p-3 bg-elec-dark/30 rounded-lg">
+                    <div className="font-semibold text-elec-yellow min-w-fit">Planning Permission:</div>
+                    <div className="text-elec-light text-sm">
+                      Usually required for new structures. Check with local authority.
+                    </div>
+                  </div>
+                  
+                  {result.fishMigrationConcern && (
+                    <div className="flex flex-col sm:flex-row sm:items-start gap-2 p-3 bg-elec-dark/30 rounded-lg">
+                      <div className="font-semibold text-elec-yellow min-w-fit">Fish Passage:</div>
+                      <div className="text-elec-light text-sm">
+                        Measures required for heads &gt;1.5m. Consider fish ladder or bypass.
+                      </div>
+                    </div>
+                  )}
+                  
+                  <div className="flex flex-col sm:flex-row sm:items-start gap-2 p-3 bg-elec-dark/30 rounded-lg">
+                    <div className="font-semibold text-elec-yellow min-w-fit">Flood Risk Activity Permit:</div>
+                    <div className="text-elec-light text-sm">
+                      Required for works within 8m of watercourse.
+                    </div>
+                  </div>
+                  
+                  <div className="flex flex-col sm:flex-row sm:items-start gap-2 p-3 bg-elec-dark/30 rounded-lg">
+                    <div className="font-semibold text-elec-yellow min-w-fit">Grid Connection:</div>
+                    <div className="text-elec-light text-sm">
+                      {gridConnection === 'grid_tie' ? 
+                        'G98/G99 application required for export systems.' :
+                        'Notify DNO of connection even if no export.'}
+                    </div>
+                  </div>
+                  
+                  <div className="flex flex-col sm:flex-row sm:items-start gap-2 p-3 bg-elec-dark/30 rounded-lg">
+                    <div className="font-semibold text-elec-yellow min-w-fit">Professional Services:</div>
+                    <div className="text-elec-light text-sm">
+                      Hydrological survey, environmental impact assessment, and structural engineering required.
+                    </div>
+                  </div>
+                  
+                  <div className="flex flex-col sm:flex-row sm:items-start gap-2 p-3 bg-elec-dark/30 rounded-lg">
+                    <div className="font-semibold text-elec-yellow min-w-fit">Insurance:</div>
+                    <div className="text-elec-light text-sm">
+                      Specialist hydro insurance for flood damage and environmental liability.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
         </div>
       )}
     </div>
