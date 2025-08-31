@@ -17,6 +17,10 @@ interface NewsArticle {
   snippet: string;
   date: string;
   tag: string;
+  image?: string;
+  thumbnail?: string;
+  imageUrl?: string;
+  img?: string;
 }
 
 const IndustryNewsCard = () => {
@@ -410,12 +414,25 @@ const IndustryNewsCard = () => {
                 >
                   {/* Image Section */}
                   <div className="relative h-48 bg-muted/50 overflow-hidden">
-                    <div className="absolute top-3 left-3">
+                    <div className="absolute top-3 left-3 z-10">
                       <Badge className="bg-elec-yellow text-elec-dark font-semibold">
                         NEWS
                       </Badge>
                     </div>
-                    <div className="absolute inset-0 flex items-center justify-center">
+                    {/* Article Image or Fallback Icon */}
+                    {(article.image || article.thumbnail || article.imageUrl || article.img) ? (
+                      <img
+                        src={article.image || article.thumbnail || article.imageUrl || article.img}
+                        alt={article.title}
+                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        onError={(e) => {
+                          e.currentTarget.style.display = 'none';
+                          e.currentTarget.nextElementSibling?.classList.remove('hidden');
+                        }}
+                        loading="lazy"
+                      />
+                    ) : null}
+                    <div className={`absolute inset-0 flex items-center justify-center ${(article.image || article.thumbnail || article.imageUrl || article.img) ? 'hidden' : ''}`}>
                       <Newspaper className="h-16 w-16 text-elec-yellow/30 group-hover:text-elec-yellow/50 transition-colors" />
                     </div>
                   </div>
