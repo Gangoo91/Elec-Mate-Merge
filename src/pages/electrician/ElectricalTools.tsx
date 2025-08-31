@@ -3,9 +3,153 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowLeft, Wrench, Search, MapPin, BookOpen, Calculator, FileText, Zap } from "lucide-react";
+import { ArrowLeft, Wrench, Search, MapPin, BookOpen, Calculator, FileText, Zap, Loader2, Package, TrendingUp } from "lucide-react";
+import { useState, useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
+
+interface ToolCategory {
+  name: string;
+  icon: any;
+  description: string;
+  count: number;
+  priceRange?: string;
+  trending?: boolean;
+}
 
 const ElectricalTools = () => {
+  const [toolCategories, setToolCategories] = useState<ToolCategory[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState('');
+
+  useEffect(() => {
+    fetchToolData();
+  }, []);
+
+  const fetchToolData = async () => {
+    try {
+      setIsLoading(true);
+      console.log('🔧 Fetching live tool data...');
+      
+      const { data, error } = await supabase.functions.invoke('firecrawl-tools-scraper');
+      
+      if (error) {
+        console.error('❌ Error fetching tools:', error);
+        toast.error('Failed to load tool data');
+        setToolCategories(getDefaultCategories());
+        return;
+      }
+
+      if (Array.isArray(data) && data.length > 0) {
+        const categoryStats = analyzeCategoryData(data);
+        setToolCategories(categoryStats);
+        console.log('✅ Tool categories loaded:', categoryStats.length);
+      } else {
+        setToolCategories(getDefaultCategories());
+      }
+    } catch (error) {
+      console.error('❌ Error in fetchToolData:', error);
+      setToolCategories(getDefaultCategories());
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const analyzeCategoryData = (tools: any[]): ToolCategory[] => {
+    const categoryMap = new Map<string, { count: number; prices: number[]; tools: any[] }>();
+    
+    // Analyze tools and group by category
+    tools.forEach(tool => {
+      const category = categorizeToolByName(tool.name || '');
+      if (!categoryMap.has(category)) {
+        categoryMap.set(category, { count: 0, prices: [], tools: [] });
+      }
+      
+      const categoryData = categoryMap.get(category)!;
+      categoryData.count++;
+      categoryData.tools.push(tool);
+      
+      // Extract price for range calculation
+      const priceMatch = tool.price?.match(/£([\d,]+\.?\d*)/);
+      if (priceMatch) {
+        const price = parseFloat(priceMatch[1].replace(',', ''));
+        categoryData.prices.push(price);
+      }
+    });
+
+    // Convert to ToolCategory array
+    return Array.from(categoryMap.entries()).map(([name, data]) => {
+      const minPrice = data.prices.length > 0 ? Math.min(...data.prices) : 0;
+      const maxPrice = data.prices.length > 0 ? Math.max(...data.prices) : 0;
+      const priceRange = minPrice > 0 ? `£${minPrice}-£${maxPrice}` : 'Price varies';
+      
+      return {
+        name,
+        icon: getCategoryIcon(name),
+        description: getCategoryDescription(name),
+        count: data.count,
+        priceRange,
+        trending: data.count > 5 // Mark as trending if more than 5 tools
+      };
+    }).sort((a, b) => b.count - a.count); // Sort by count descending
+  };
+
+  const categorizeToolByName = (toolName: string): string => {
+    const name = toolName.toLowerCase();
+    
+    if (name.includes('drill') || name.includes('driver') || name.includes('saw') || name.includes('grinder')) {
+      return 'Power Tools';
+    } else if (name.includes('test') || name.includes('meter') || name.includes('detector') || name.includes('measure')) {
+      return 'Test Equipment';
+    } else if (name.includes('safety') || name.includes('helmet') || name.includes('glove') || name.includes('ppe')) {
+      return 'Safety Equipment';
+    } else if (name.includes('bag') || name.includes('box') || name.includes('case') || name.includes('storage')) {
+      return 'Tool Storage';
+    } else if (name.includes('wire') || name.includes('cable') || name.includes('conduit') || name.includes('specialist')) {
+      return 'Specialist Tools';
+    } else {
+      return 'Hand Tools';
+    }
+  };
+
+  const getCategoryIcon = (category: string) => {
+    switch (category) {
+      case 'Power Tools': return Zap;
+      case 'Test Equipment': return Calculator;
+      case 'Safety Equipment': return FileText;
+      case 'Tool Storage': return Package;
+      case 'Specialist Tools': return Wrench;
+      default: return Wrench;
+    }
+  };
+
+  const getCategoryDescription = (category: string): string => {
+    switch (category) {
+      case 'Power Tools': return 'Power tools and accessories';
+      case 'Test Equipment': return 'Testing and measurement equipment';
+      case 'Safety Equipment': return 'PPE and safety equipment';
+      case 'Tool Storage': return 'Tool bags, boxes and storage';
+      case 'Specialist Tools': return 'Specialist electrical tools';
+      default: return 'Essential hand tools for electrical work';
+    }
+  };
+
+  const getDefaultCategories = (): ToolCategory[] => [
+    { name: 'Hand Tools', icon: Wrench, description: 'Essential hand tools for electrical work', count: 0 },
+    { name: 'Test Equipment', icon: Calculator, description: 'Testing and measurement equipment', count: 0 },
+    { name: 'Power Tools', icon: Zap, description: 'Power tools and accessories', count: 0 },
+    { name: 'Safety Equipment', icon: FileText, description: 'PPE and safety equipment', count: 0 },
+    { name: 'Specialist Tools', icon: Wrench, description: 'Specialist electrical tools', count: 0 },
+    { name: 'Tool Storage', icon: Package, description: 'Tool bags, boxes and storage', count: 0 }
+  ];
+
+  const handleSearch = () => {
+    if (searchTerm.trim()) {
+      // Navigate to materials page with search term
+      window.location.href = `/electrician/materials/Tools?search=${encodeURIComponent(searchTerm)}`;
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-elec-dark via-elec-gray to-elec-dark">
       <div className="container mx-auto px-4 py-6 space-y-6 animate-fade-in">
@@ -57,109 +201,53 @@ const ElectricalTools = () => {
 
           <TabsContent value="browse" className="space-y-6">
             {/* Tool Categories */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              <Card className="border-elec-yellow/20 bg-elec-gray/50 hover:bg-elec-gray/70 transition-colors">
-                <CardHeader className="pb-3">
-                  <CardTitle className="flex items-center gap-2 text-lg">
-                    <Wrench className="h-5 w-5 text-elec-yellow" />
-                    Hand Tools
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground mb-3">
-                    Essential hand tools for electrical work
-                  </p>
-                  <Button size="sm" className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90">
-                    Browse Hand Tools
-                  </Button>
-                </CardContent>
-              </Card>
-
-              <Card className="border-elec-yellow/20 bg-elec-gray/50 hover:bg-elec-gray/70 transition-colors">
-                <CardHeader className="pb-3">
-                  <CardTitle className="flex items-center gap-2 text-lg">
-                    <Calculator className="h-5 w-5 text-elec-yellow" />
-                    Test Equipment
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground mb-3">
-                    Testing and measurement equipment
-                  </p>
-                  <Button size="sm" className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90">
-                    Browse Test Equipment
-                  </Button>
-                </CardContent>
-              </Card>
-
-              <Card className="border-elec-yellow/20 bg-elec-gray/50 hover:bg-elec-gray/70 transition-colors">
-                <CardHeader className="pb-3">
-                  <CardTitle className="flex items-center gap-2 text-lg">
-                    <Zap className="h-5 w-5 text-elec-yellow" />
-                    Power Tools
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground mb-3">
-                    Power tools and accessories
-                  </p>
-                  <Button size="sm" className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90">
-                    Browse Power Tools
-                  </Button>
-                </CardContent>
-              </Card>
-
-              <Card className="border-elec-yellow/20 bg-elec-gray/50 hover:bg-elec-gray/70 transition-colors">
-                <CardHeader className="pb-3">
-                  <CardTitle className="flex items-center gap-2 text-lg">
-                    <FileText className="h-5 w-5 text-elec-yellow" />
-                    Safety Equipment
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground mb-3">
-                    PPE and safety equipment
-                  </p>
-                  <Button size="sm" className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90">
-                    Browse Safety Equipment
-                  </Button>
-                </CardContent>
-              </Card>
-
-              <Card className="border-elec-yellow/20 bg-elec-gray/50 hover:bg-elec-gray/70 transition-colors">
-                <CardHeader className="pb-3">
-                  <CardTitle className="flex items-center gap-2 text-lg">
-                    <Wrench className="h-5 w-5 text-elec-yellow" />
-                    Specialist Tools
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground mb-3">
-                    Specialist electrical tools
-                  </p>
-                  <Button size="sm" className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90">
-                    Browse Specialist Tools
-                  </Button>
-                </CardContent>
-              </Card>
-
-              <Card className="border-elec-yellow/20 bg-elec-gray/50 hover:bg-elec-gray/70 transition-colors">
-                <CardHeader className="pb-3">
-                  <CardTitle className="flex items-center gap-2 text-lg">
-                    <Calculator className="h-5 w-5 text-elec-yellow" />
-                    Tool Storage
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground mb-3">
-                    Tool bags, boxes and storage
-                  </p>
-                  <Button size="sm" className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90">
-                    Browse Tool Storage
-                  </Button>
-                </CardContent>
-              </Card>
-            </div>
+            {isLoading ? (
+              <div className="flex items-center justify-center py-12">
+                <Loader2 className="h-8 w-8 animate-spin text-elec-yellow" />
+                <span className="ml-2 text-muted-foreground">Loading live tool data...</span>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {toolCategories.map((category) => {
+                  const IconComponent = category.icon;
+                  return (
+                    <Card key={category.name} className="border-elec-yellow/20 bg-elec-gray/50 hover:bg-elec-gray/70 transition-colors relative">
+                      {category.trending && (
+                        <div className="absolute top-2 right-2">
+                          <TrendingUp className="h-4 w-4 text-elec-yellow" />
+                        </div>
+                      )}
+                      <CardHeader className="pb-3">
+                        <CardTitle className="flex items-center gap-2 text-lg">
+                          <IconComponent className="h-5 w-5 text-elec-yellow" />
+                          {category.name}
+                          {category.count > 0 && (
+                            <span className="ml-auto text-sm bg-elec-yellow/20 text-elec-yellow px-2 py-1 rounded">
+                              {category.count}
+                            </span>
+                          )}
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <p className="text-sm text-muted-foreground mb-2">
+                          {category.description}
+                        </p>
+                        {category.priceRange && (
+                          <p className="text-xs text-elec-yellow mb-3">
+                            {category.priceRange}
+                          </p>
+                        )}
+                        <Link to={`/electrician/materials/Tools?category=${encodeURIComponent(category.name)}`}>
+                          <Button size="sm" className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90">
+                            Browse {category.name}
+                          </Button>
+                        </Link>
+                      </CardContent>
+                    </Card>
+                  );
+                })}
+              </div>
+            )}
 
             {/* Search */}
             <Card className="border-elec-yellow/20 bg-elec-gray/50">
@@ -171,9 +259,15 @@ const ElectricalTools = () => {
                   <input 
                     type="text" 
                     placeholder="Search for tools..." 
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
                     className="flex-1 px-3 py-2 rounded border border-elec-yellow/20 bg-elec-dark text-white placeholder:text-gray-400"
                   />
-                  <Button className="bg-elec-yellow text-black hover:bg-elec-yellow/90">
+                  <Button 
+                    onClick={handleSearch}
+                    className="bg-elec-yellow text-black hover:bg-elec-yellow/90"
+                  >
                     <Search className="h-4 w-4" />
                   </Button>
                 </div>
