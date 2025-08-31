@@ -1,6 +1,9 @@
 
 project_id = "jtwygbeceundfgnkirof"
 
+[functions.comprehensive-materials-scraper]
+verify_jwt = false
+
 [functions.find-training-providers]
 verify_jwt = false
 
