@@ -215,7 +215,7 @@ const TransformerCalculator = () => {
           </div>
 
           {/* Action Buttons */}
-          <div className="flex gap-2 sticky bottom-4 bg-background/95 backdrop-blur-sm p-4 -mx-4 border-t">
+          <div className="flex gap-2">
             <MobileButton 
               onClick={handleCalculate} 
               variant="elec" 
