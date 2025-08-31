@@ -365,6 +365,127 @@ const TransformerCalculator = () => {
                 )}
               </div>
               
+              {/* Practical Analysis & Feedback */}
+              <div className="space-y-4">
+                <h3 className="text-lg font-semibold text-elec-yellow flex items-center gap-2">
+                  <Gauge className="h-4 w-4" />
+                  What This Analysis Means
+                </h3>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {/* Key Results Explanation */}
+                  <Card className="bg-elec-card border-elec-yellow/20">
+                    <CardContent className="p-4">
+                      <h4 className="font-semibold text-elec-yellow mb-3">Key Parameters Explained</h4>
+                      <div className="space-y-3 text-sm">
+                        <div>
+                          <strong className="text-elec-yellow">Voltage Ratio ({result.voltageRatio.toFixed(2)}:1):</strong>
+                          <p className="text-muted-foreground mt-1">
+                            {result.transformerType === 'step-down' ? 'Reduces' : result.transformerType === 'step-up' ? 'Increases' : 'Maintains'} voltage by this factor. 
+                            {result.transformerType === 'step-down' && ' Typical for distribution transformers.'}
+                            {result.transformerType === 'step-up' && ' Used for transmission or inverter applications.'}
+                          </p>
+                        </div>
+                        
+                        <div>
+                          <strong className="text-elec-yellow">Full Load Current ({result.secondaryFullLoadCurrent.toFixed(1)}A):</strong>
+                          <p className="text-muted-foreground mt-1">
+                            Actual current drawn at {(parseFloat(powerFactor)*100).toFixed(0)}% power factor. Use this for cable sizing and protection settings.
+                          </p>
+                        </div>
+                        
+                        <div>
+                          <strong className="text-elec-yellow">Fault Current ({(result.transformerFaultCurrent/1000).toFixed(1)}kA):</strong>
+                          <p className="text-muted-foreground mt-1">
+                            Maximum fault current available from transformer. Critical for switchgear selection and protection coordination.
+                          </p>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                  
+                  {/* Performance Analysis */}
+                  <Card className="bg-elec-card border-elec-yellow/20">
+                    <CardContent className="p-4">
+                      <h4 className="font-semibold text-elec-yellow mb-3">Performance Assessment</h4>
+                      <div className="space-y-3 text-sm">
+                        <div>
+                          <strong className="text-elec-yellow">Efficiency ({(result.efficiency*100).toFixed(1)}%):</strong>
+                          <p className="text-muted-foreground mt-1">
+                            {result.efficiency > 0.95 ? 'Excellent' : result.efficiency > 0.90 ? 'Good' : 'Acceptable'} efficiency. 
+                            Higher efficiency reduces running costs and heat generation.
+                          </p>
+                        </div>
+                        
+                        <div>
+                          <strong className="text-elec-yellow">Voltage Regulation ({(result.voltageRegulation*100).toFixed(1)}%):</strong>
+                          <p className="text-muted-foreground mt-1">
+                            {result.voltageRegulation < 0.03 ? 'Excellent' : result.voltageRegulation < 0.05 ? 'Good' : 'High'} regulation. 
+                            {result.voltageRegulation > 0.05 && 'Consider tap changer or larger transformer.'}
+                          </p>
+                        </div>
+                        
+                        <div>
+                          <strong className="text-elec-yellow">Inrush Current ({(result.inrushCurrent/1000).toFixed(1)}kA):</strong>
+                          <p className="text-muted-foreground mt-1">
+                            {result.inrushCurrent > result.primaryRatedCurrent * 15 ? 'High' : 'Normal'} inrush current. 
+                            Ensure upstream protection can handle this without nuisance tripping.
+                          </p>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
+                
+                {/* BS 7671 Compliance */}
+                <Card className="bg-elec-card border-blue-500/20">
+                  <CardContent className="p-4">
+                    <h4 className="font-semibold text-blue-400 mb-3">BS 7671 18th Edition Compliance Notes</h4>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                      <div className="space-y-2">
+                        <div>
+                          <strong>Protection Requirements:</strong>
+                          <ul className="list-disc list-inside text-muted-foreground mt-1 space-y-1">
+                            <li>Primary protection: {result.primaryRatedCurrent > 16 ? 'HRC fuses or MCCB' : 'MCB suitable'}</li>
+                            <li>Secondary protection: Size for {result.secondaryFullLoadCurrent.toFixed(1)}A full load current</li>
+                            <li>Earth fault protection required (411.3.2)</li>
+                          </ul>
+                        </div>
+                        
+                        <div>
+                          <strong>Cable Sizing:</strong>
+                          <ul className="list-disc list-inside text-muted-foreground mt-1 space-y-1">
+                            <li>Primary cable: Min {(result.primaryFullLoadCurrent * 1.25).toFixed(1)}A capacity</li>
+                            <li>Secondary cable: Min {(result.secondaryFullLoadCurrent * 1.25).toFixed(1)}A capacity</li>
+                            <li>Consider voltage drop (525.1)</li>
+                          </ul>
+                        </div>
+                      </div>
+                      
+                      <div className="space-y-2">
+                        <div>
+                          <strong>Installation Requirements:</strong>
+                          <ul className="list-disc list-inside text-muted-foreground mt-1 space-y-1">
+                            <li>{parseFloat(kvaRating) >= 500 ? 'Separate transformer room required' : 'Adequate ventilation needed'}</li>
+                            <li>Fire barriers if oil-filled (422.3)</li>
+                            <li>Access for maintenance (132.12)</li>
+                          </ul>
+                        </div>
+                        
+                        <div>
+                          <strong>Testing:</strong>
+                          <ul className="list-disc list-inside text-muted-foreground mt-1 space-y-1">
+                            <li>Insulation resistance test</li>
+                            <li>Polarity check (61.1.5)</li>
+                            <li>Earth fault loop impedance</li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+              
               {/* Warnings */}
               {result.warnings.length > 0 && (
                 <Alert className="border-orange-500/20 bg-orange-500/10">
@@ -372,7 +493,7 @@ const TransformerCalculator = () => {
                   <AlertDescription className="text-orange-200">
                     <div className="space-y-1">
                       {result.warnings.map((warning, index) => (
-                        <div key={index}>• {warning}</div>
+                        <div key={index}>⚠️ {warning}</div>
                       ))}
                     </div>
                   </AlertDescription>
@@ -386,7 +507,7 @@ const TransformerCalculator = () => {
                   <AlertDescription className="text-blue-200">
                     <div className="space-y-1">
                       {result.recommendations.map((rec, index) => (
-                        <div key={index}>• {rec}</div>
+                        <div key={index}>💡 {rec}</div>
                       ))}
                     </div>
                   </AlertDescription>
