@@ -201,7 +201,7 @@ const IndustryNewsCard = () => {
   }
 
   return (
-    <Card className="w-full bg-elec-gray border-elec-yellow/20">
+    <Card className="w-full bg-transparent border-elec-yellow/20">
         <CardHeader>
           <CardTitle className="text-elec-yellow flex items-center gap-2">
             <Newspaper className="h-5 w-5" />
