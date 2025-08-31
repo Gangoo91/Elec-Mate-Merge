@@ -512,17 +512,17 @@ const BatteryStorageCalculator = () => {
             {/* Technical Details */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-3">
-                <h4 className="text-sm font-medium text-elec-yellow">Technical Specifications</h4>
-                <div className="text-sm space-y-1 text-muted-foreground">
-                  <p>Charging time: <span className="text-elec-light">{result.chargingTimeHours.toFixed(1)} hours</span></p>
-                  <p>Cycle life: <span className="text-elec-light">{result.cycleLife.toLocaleString()} cycles</span></p>
-                  <p>Warranty: <span className="text-elec-light">{result.warrantyYears} years</span></p>
-                  <p>Battery cost: <span className="text-elec-light">£{Math.round(result.batteryCost).toLocaleString()}</span></p>
+                <h4 className="text-sm font-medium text-white">Technical Specifications</h4>
+                <div className="text-sm space-y-1 text-white">
+                  <p>Charging time: <span className="text-white">{result.chargingTimeHours.toFixed(1)} hours</span></p>
+                  <p>Cycle life: <span className="text-white">{result.cycleLife.toLocaleString()} cycles</span></p>
+                  <p>Warranty: <span className="text-white">{result.warrantyYears} years</span></p>
+                  <p>Battery cost: <span className="text-white">£{Math.round(result.batteryCost).toLocaleString()}</span></p>
                 </div>
               </div>
               <div className="space-y-3">
-                <h4 className="text-sm font-medium text-elec-yellow">BS 7671 Compliance</h4>
-                <div className="text-sm space-y-1 text-muted-foreground">
+                <h4 className="text-sm font-medium text-white">BS 7671 Compliance</h4>
+                <div className="text-sm space-y-1 text-white">
                   {result.bs7671Notes.map((note, idx) => (
                     <p key={idx}>• {note}</p>
                   ))}
@@ -531,9 +531,9 @@ const BatteryStorageCalculator = () => {
             </div>
 
             {/* What This Means */}
-            <Alert>
+        <Alert className="text-white">
               <Battery className="h-4 w-4" />
-              <AlertDescription>
+              <AlertDescription className="text-white">
                 <strong>What this means:</strong> {result.whatThisMeans}
               </AlertDescription>
             </Alert>
@@ -541,10 +541,10 @@ const BatteryStorageCalculator = () => {
             {/* Recommendations */}
             {result.recommendations.length > 0 && (
               <div className="space-y-2">
-                <h4 className="text-sm font-medium text-elec-yellow">Recommendations</h4>
-                <div className="text-sm text-muted-foreground space-y-1">
+                <h4 className="text-sm font-medium text-white">Recommendations</h4>
+                <div className="text-sm text-white space-y-1">
                   {result.recommendations.map((rec, idx) => (
-                    <p key={idx}>• {rec}</p>
+                    <p key={idx} className="text-white">• {rec}</p>
                   ))}
                 </div>
               </div>
@@ -554,7 +554,7 @@ const BatteryStorageCalculator = () => {
 
         <Alert>
           <Battery className="h-4 w-4" />
-          <AlertDescription>
+          <AlertDescription className="text-white">
             This calculator provides sizing estimates based on 2025 battery technology data. Consider professional design review for critical applications and compliance verification.
           </AlertDescription>
         </Alert>
