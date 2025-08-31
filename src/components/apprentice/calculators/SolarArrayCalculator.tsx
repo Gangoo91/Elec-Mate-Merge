@@ -657,129 +657,194 @@ const SolarArrayCalculator = () => {
         {result && (
           <div className="space-y-6">
             {/* System Layout */}
-            <div className="p-4 bg-elec-gray rounded-lg border border-elec-yellow/20">
-              <h3 className="font-semibold text-elec-yellow mb-3 flex items-center gap-2">
-                <Sun className="h-4 w-4" />
+            <div className="p-6 bg-elec-gray rounded-lg border border-elec-yellow/20">
+              <h3 className="font-semibold text-elec-yellow mb-4 flex items-center gap-2 text-lg">
+                <Sun className="h-5 w-5" />
                 System Layout & Performance
               </h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
-                <div>
-                  <p className="text-elec-light mb-2">Array Configuration:</p>
-                  <p>Panels per row: <span className="text-elec-yellow font-medium">{result.panelsPerRow}</span></p>
-                  <p>Number of rows: <span className="text-elec-yellow font-medium">{result.numberOfRows}</span></p>
-                  <p>Total panels: <span className="text-elec-yellow font-medium">{result.totalPanels}</span></p>
-                  <p>Total capacity: <span className="text-elec-yellow font-medium">{(result.totalWattage/1000).toFixed(1)} kWp</span></p>
+              <div className="space-y-6 lg:space-y-0 lg:grid lg:grid-cols-3 lg:gap-6">
+                <div className="space-y-3">
+                  <h4 className="text-elec-yellow font-medium text-base mb-3 border-b border-elec-yellow/20 pb-2">Array Configuration</h4>
+                  <div className="space-y-2 text-sm">
+                    <div className="flex justify-between">
+                      <span className="text-elec-light">Panels per row:</span>
+                      <span className="text-elec-yellow font-medium">{result.panelsPerRow}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-elec-light">Number of rows:</span>
+                      <span className="text-elec-yellow font-medium">{result.numberOfRows}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-elec-light">Total panels:</span>
+                      <span className="text-elec-yellow font-medium">{result.totalPanels}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-elec-light">Total capacity:</span>
+                      <span className="text-elec-yellow font-medium">{(result.totalWattage/1000).toFixed(1)} kWp</span>
+                    </div>
+                  </div>
                 </div>
-                <div>
-                  <p className="text-elec-light mb-2">String Configuration:</p>
-                  <p>Total strings: <span className="text-elec-yellow font-medium">{result.totalStrings}</span></p>
-                  <p>Panels per string: <span className="text-elec-yellow font-medium">{result.panelsPerString}</span></p>
-                  <p>String Voc (cold): <span className="text-elec-yellow font-medium">{result.stringVocCold.toFixed(0)} V</span></p>
-                  <p>String Vmpp (hot): <span className="text-elec-yellow font-medium">{result.stringVmppHot.toFixed(0)} V</span></p>
+                
+                <div className="space-y-3">
+                  <h4 className="text-elec-yellow font-medium text-base mb-3 border-b border-elec-yellow/20 pb-2">String Configuration</h4>
+                  <div className="space-y-2 text-sm">
+                    <div className="flex justify-between">
+                      <span className="text-elec-light">Total strings:</span>
+                      <span className="text-elec-yellow font-medium">{result.totalStrings}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-elec-light">Panels per string:</span>
+                      <span className="text-elec-yellow font-medium">{result.panelsPerString}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-elec-light">String Voc (cold):</span>
+                      <span className="text-elec-yellow font-medium">{result.stringVocCold.toFixed(0)} V</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-elec-light">String Vmpp (hot):</span>
+                      <span className="text-elec-yellow font-medium">{result.stringVmppHot.toFixed(0)} V</span>
+                    </div>
+                  </div>
                 </div>
-                <div>
-                  <p className="text-elec-light mb-2">Annual Performance:</p>
-                  <p>Yearly generation: <span className="text-elec-yellow font-medium">{result.yearlyGeneration.toFixed(0)} kWh</span></p>
-                  <p>Performance ratio: <span className="text-elec-yellow font-medium">{(result.performanceRatio * 100).toFixed(1)}%</span></p>
-                  <p>Area efficiency: <span className="text-elec-yellow font-medium">{result.areaEfficiency.toFixed(1)}%</span></p>
-                  <p>Inverter sizing: <span className="text-elec-yellow font-medium">{result.inverterSizing.toFixed(0)}%</span></p>
+                
+                <div className="space-y-3">
+                  <h4 className="text-elec-yellow font-medium text-base mb-3 border-b border-elec-yellow/20 pb-2">Annual Performance</h4>
+                  <div className="space-y-2 text-sm">
+                    <div className="flex justify-between">
+                      <span className="text-elec-light">Yearly generation:</span>
+                      <span className="text-elec-yellow font-medium">{result.yearlyGeneration.toFixed(0)} kWh</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-elec-light">Performance ratio:</span>
+                      <span className="text-elec-yellow font-medium">{(result.performanceRatio * 100).toFixed(1)}%</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-elec-light">Area efficiency:</span>
+                      <span className="text-elec-yellow font-medium">{result.areaEfficiency.toFixed(1)}%</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-elec-light">Inverter sizing:</span>
+                      <span className="text-elec-yellow font-medium">{result.inverterSizing.toFixed(0)}%</span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
 
             {/* Compliance Checks */}
-            <div className="p-4 bg-elec-gray rounded-lg border border-elec-yellow/20">
-              <h3 className="font-semibold text-elec-yellow mb-3 flex items-center gap-2">
-                <CheckCircle className="h-4 w-4" />
+            <div className="p-6 bg-elec-gray rounded-lg border border-elec-yellow/20">
+              <h3 className="font-semibold text-elec-yellow mb-4 flex items-center gap-2 text-lg">
+                <CheckCircle className="h-5 w-5" />
                 BS 7671 Compliance Checks
               </h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
-                <div className="space-y-2">
-                  <div className="flex items-center gap-2">
+              <div className="space-y-4">
+                <div className="space-y-3">
+                  <div className="flex items-start gap-3 p-3 rounded-lg bg-elec-dark/50">
                     {result.complianceChecks.stringVoltageOK ? 
-                      <CheckCircle className="h-4 w-4 text-green-400" /> : 
-                      <XCircle className="h-4 w-4 text-red-400" />
+                      <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" /> : 
+                      <XCircle className="h-5 w-5 text-red-400 mt-0.5 flex-shrink-0" />
                     }
-                    <span>String voltage within inverter limits</span>
+                    <div>
+                      <p className="font-medium text-sm">String voltage within inverter limits</p>
+                      <p className="text-xs text-elec-light mt-1">Voc cold: {result.stringVocCold.toFixed(0)}V, Vmpp hot: {result.stringVmppHot.toFixed(0)}V</p>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-2">
+                  
+                  <div className="flex items-start gap-3 p-3 rounded-lg bg-elec-dark/50">
                     {result.complianceChecks.inverterSizingOK ? 
-                      <CheckCircle className="h-4 w-4 text-green-400" /> : 
-                      <AlertTriangle className="h-4 w-4 text-amber-400" />
+                      <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" /> : 
+                      <AlertTriangle className="h-5 w-5 text-amber-400 mt-0.5 flex-shrink-0" />
                     }
-                    <span>Inverter sizing (90-120% recommended)</span>
+                    <div>
+                      <p className="font-medium text-sm">Inverter sizing (90-120% recommended)</p>
+                      <p className="text-xs text-elec-light mt-1">Current sizing: {result.inverterSizing.toFixed(0)}%</p>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-2">
+                  
+                  <div className="flex items-start gap-3 p-3 rounded-lg bg-elec-dark/50">
                     {result.complianceChecks.voltageDropOK ? 
-                      <CheckCircle className="h-4 w-4 text-green-400" /> : 
-                      <XCircle className="h-4 w-4 text-red-400" />
+                      <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" /> : 
+                      <XCircle className="h-5 w-5 text-red-400 mt-0.5 flex-shrink-0" />
                     }
-                    <span>Voltage drop within limits (3% DC, 2.5% AC)</span>
+                    <div>
+                      <p className="font-medium text-sm">Voltage drop within limits</p>
+                      <p className="text-xs text-elec-light mt-1">DC: {result.voltageDropDC.toFixed(2)}% (max 3%), AC: {result.voltageDropAC.toFixed(2)}% (max 2.5%)</p>
+                    </div>
                   </div>
-                </div>
-                <div className="space-y-2">
-                  <div className="flex items-center gap-2">
+                  
+                  <div className="flex items-start gap-3 p-3 rounded-lg bg-elec-dark/50">
                     {result.complianceChecks.isolationDistanceOK ? 
-                      <CheckCircle className="h-4 w-4 text-green-400" /> : 
-                      <XCircle className="h-4 w-4 text-red-400" />
+                      <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" /> : 
+                      <XCircle className="h-5 w-5 text-red-400 mt-0.5 flex-shrink-0" />
                     }
-                    <span>Minimum isolation distances</span>
+                    <div>
+                      <p className="font-medium text-sm">Minimum isolation distances</p>
+                      <p className="text-xs text-elec-light mt-1">BS 7671 spacing requirements met</p>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-2">
+                  
+                  <div className="flex items-start gap-3 p-3 rounded-lg bg-elec-dark/50">
                     {result.complianceChecks.mcsSizingOK ? 
-                      <CheckCircle className="h-4 w-4 text-green-400" /> : 
-                      <AlertTriangle className="h-4 w-4 text-amber-400" />
+                      <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" /> : 
+                      <AlertTriangle className="h-5 w-5 text-amber-400 mt-0.5 flex-shrink-0" />
                     }
-                    <span>MCS sizing requirements</span>
+                    <div>
+                      <p className="font-medium text-sm">MCS sizing requirements</p>
+                      <p className="text-xs text-elec-light mt-1">Minimum panel count and capacity requirements</p>
+                    </div>
                   </div>
-                </div>
-              </div>
-              <div className="mt-4 pt-4 border-t border-elec-yellow/20">
-                <h4 className="font-medium text-elec-yellow mb-2">Voltage Drop Analysis:</h4>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                  <p className="text-sm">DC voltage drop: <span className="text-elec-yellow font-medium">{result.voltageDropDC.toFixed(2)}%</span></p>
-                  <p className="text-sm">AC voltage drop: <span className="text-elec-yellow font-medium">{result.voltageDropAC.toFixed(2)}%</span></p>
                 </div>
               </div>
             </div>
 
             {/* Professional Analysis */}
-            <div className="p-4 bg-elec-gray rounded-lg border border-elec-yellow/20">
-              <h3 className="font-semibold text-elec-yellow mb-3 flex items-center gap-2">
-                <Info className="h-4 w-4" />
+            <div className="p-6 bg-elec-gray rounded-lg border border-elec-yellow/20">
+              <h3 className="font-semibold text-elec-yellow mb-4 flex items-center gap-2 text-lg">
+                <Info className="h-5 w-5" />
                 System Analysis & Recommendations
               </h3>
-              <div className="space-y-3 text-sm text-elec-light">
-                <div>
-                  <h4 className="font-medium text-elec-yellow">Performance Analysis:</h4>
-                  <p>• Performance ratio of {(result.performanceRatio * 100).toFixed(1)}% is {result.performanceRatio > 0.8 ? 'excellent' : result.performanceRatio > 0.75 ? 'good' : 'below average'} for UK installations</p>
-                  <p>• Annual yield of {(result.yearlyGeneration / result.totalWattage * 1000).toFixed(0)} kWh/kWp is {result.yearlyGeneration / result.totalWattage * 1000 > 900 ? 'above average' : 'typical'} for the selected location</p>
-                  <p>• Area utilisation of {result.areaEfficiency.toFixed(1)}% optimises available space effectively</p>
+              <div className="space-y-6 text-sm text-elec-light">
+                <div className="space-y-3">
+                  <h4 className="font-medium text-elec-yellow text-base border-b border-elec-yellow/20 pb-2">Performance Analysis</h4>
+                  <div className="space-y-2 pl-3 border-l-2 border-elec-yellow/30">
+                    <p>• Performance ratio of <span className="text-elec-yellow font-medium">{(result.performanceRatio * 100).toFixed(1)}%</span> is <span className="text-elec-yellow">{result.performanceRatio > 0.8 ? 'excellent' : result.performanceRatio > 0.75 ? 'good' : 'below average'}</span> for UK installations</p>
+                    <p>• Annual yield of <span className="text-elec-yellow font-medium">{(result.yearlyGeneration / result.totalWattage * 1000).toFixed(0)} kWh/kWp</span> is <span className="text-elec-yellow">{result.yearlyGeneration / result.totalWattage * 1000 > 900 ? 'above average' : 'typical'}</span> for the selected location</p>
+                    <p>• Area utilisation of <span className="text-elec-yellow font-medium">{result.areaEfficiency.toFixed(1)}%</span> optimises available space effectively</p>
+                  </div>
                 </div>
                 
-                <div>
-                  <h4 className="font-medium text-elec-yellow">Regulatory Compliance (BS 7671):</h4>
-                  <p>• DC isolation: Ensure minimum 6mm air gap and 4mm creepage for safety disconnection</p>
-                  <p>• Earth fault protection: Install residual current monitoring device (RCMD) for enhanced safety</p>
-                  <p>• Surge protection: Type 2 SPDs required at DC and AC sides as per Section 534</p>
-                  <p>• Cable sizing: Verify current-carrying capacity with installation method and ambient temperature</p>
+                <div className="space-y-3">
+                  <h4 className="font-medium text-elec-yellow text-base border-b border-elec-yellow/20 pb-2">Regulatory Compliance (BS 7671)</h4>
+                  <div className="space-y-2 pl-3 border-l-2 border-elec-yellow/30">
+                    <p>• <span className="text-elec-yellow font-medium">DC isolation:</span> Ensure minimum 6mm air gap and 4mm creepage for safety disconnection</p>
+                    <p>• <span className="text-elec-yellow font-medium">Earth fault protection:</span> Install residual current monitoring device (RCMD) for enhanced safety</p>
+                    <p>• <span className="text-elec-yellow font-medium">Surge protection:</span> Type 2 SPDs required at DC and AC sides as per Section 534</p>
+                    <p>• <span className="text-elec-yellow font-medium">Cable sizing:</span> Verify current-carrying capacity with installation method and ambient temperature</p>
+                  </div>
                 </div>
 
-                <div>
-                  <h4 className="font-medium text-elec-yellow">Installation Considerations:</h4>
-                  <p>• String configuration allows for future expansion with additional MPPT inputs</p>
-                  <p>• Consider MC4 connector specifications for outdoor weatherproofing (IP67 minimum)</p>
-                  <p>• Fire safety: Maintain 1m setback from roof edges and 3m between arrays on large installations</p>
-                  <p>• Bird/vermin guards recommended for roof-mounted installations</p>
+                <div className="space-y-3">
+                  <h4 className="font-medium text-elec-yellow text-base border-b border-elec-yellow/20 pb-2">Installation Considerations</h4>
+                  <div className="space-y-2 pl-3 border-l-2 border-elec-yellow/30">
+                    <p>• <span className="text-elec-yellow font-medium">String configuration:</span> Allows for future expansion with additional MPPT inputs</p>
+                    <p>• <span className="text-elec-yellow font-medium">MC4 connectors:</span> Specify outdoor weatherproofing (IP67 minimum)</p>
+                    <p>• <span className="text-elec-yellow font-medium">Fire safety:</span> Maintain 1m setback from roof edges and 3m between arrays on large installations</p>
+                    <p>• <span className="text-elec-yellow font-medium">Protection:</span> Bird/vermin guards recommended for roof-mounted installations</p>
+                  </div>
                 </div>
 
                 {!result.complianceChecks.voltageDropOK && (
-                  <div className="p-3 bg-red-900/20 border border-red-500/20 rounded">
-                    <h4 className="font-medium text-red-400">Action Required:</h4>
-                    <p className="text-red-300">Voltage drop exceeds regulatory limits. Consider:</p>
-                    <p>• Larger cable cross-sectional area (6mm² DC, 10mm² AC minimum)</p>
-                    <p>• Shorter cable runs or intermediate junction boxes</p>
-                    <p>• Higher DC operating voltage with series string configuration</p>
+                  <div className="p-4 bg-red-900/20 border border-red-500/30 rounded-lg">
+                    <h4 className="font-medium text-red-400 mb-3 flex items-center gap-2">
+                      <AlertTriangle className="h-4 w-4" />
+                      Action Required
+                    </h4>
+                    <p className="text-red-300 mb-2 font-medium">Voltage drop exceeds regulatory limits. Consider:</p>
+                    <div className="space-y-1 pl-3 border-l-2 border-red-500/30">
+                      <p className="text-red-200">• Larger cable cross-sectional area (6mm² DC, 10mm² AC minimum)</p>
+                      <p className="text-red-200">• Shorter cable runs or intermediate junction boxes</p>
+                      <p className="text-red-200">• Higher DC operating voltage with series string configuration</p>
+                    </div>
                   </div>
                 )}
               </div>
