@@ -14,6 +14,9 @@ const ElectricalTools = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const { categories: toolCategories, isLoading, error, refetch } = useToolCategories();
 
+  // Show live data indicator when we have fresh data
+  const hasLiveData = toolCategories.some(cat => cat.count > 0);
+
   // All category analysis logic is now in the useToolCategories hook
 
   const handleSearch = () => {
@@ -107,7 +110,8 @@ const ElectricalTools = () => {
                           <IconComponent className="h-5 w-5 text-elec-yellow" />
                           {category.name}
                           {category.count > 0 && (
-                            <span className="ml-auto text-sm bg-elec-yellow/20 text-elec-yellow px-2 py-1 rounded">
+                            <span className="ml-auto text-sm bg-elec-yellow/20 text-elec-yellow px-2 py-1 rounded flex items-center gap-1">
+                              <div className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse"></div>
                               {category.count}
                             </span>
                           )}
@@ -140,21 +144,38 @@ const ElectricalTools = () => {
                 <CardTitle>Quick Search</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="flex gap-2">
-                  <input 
-                    type="text" 
-                    placeholder="Search for tools..." 
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
-                    className="flex-1 px-3 py-2 rounded border border-elec-yellow/20 bg-elec-dark text-white placeholder:text-gray-400"
-                  />
-                  <Button 
-                    onClick={handleSearch}
-                    className="bg-elec-yellow text-black hover:bg-elec-yellow/90"
-                  >
-                    <Search className="h-4 w-4" />
-                  </Button>
+                <div className="space-y-3">
+                  {hasLiveData && (
+                    <div className="flex items-center gap-2 text-xs text-green-400">
+                      <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                      Live data from {toolCategories.reduce((sum, cat) => sum + cat.count, 0)} tools
+                    </div>
+                  )}
+                  <div className="flex gap-2">
+                    <input 
+                      type="text" 
+                      placeholder="Search for tools..." 
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
+                      className="flex-1 px-3 py-2 rounded border border-elec-yellow/20 bg-elec-dark text-white placeholder:text-gray-400"
+                    />
+                    <Button 
+                      onClick={handleSearch}
+                      className="bg-elec-yellow text-black hover:bg-elec-yellow/90"
+                    >
+                      <Search className="h-4 w-4" />
+                    </Button>
+                    <Button 
+                      onClick={() => refetch()}
+                      variant="outline"
+                      size="icon"
+                      className="border-elec-yellow/30 hover:bg-elec-yellow/10"
+                      title="Refresh live data"
+                    >
+                      <RefreshCw className="h-4 w-4" />
+                    </Button>
+                  </div>
                 </div>
               </CardContent>
             </Card>
