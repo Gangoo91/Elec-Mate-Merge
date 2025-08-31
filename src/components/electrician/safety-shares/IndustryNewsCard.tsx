@@ -429,7 +429,7 @@ const IndustryNewsCard = () => {
                           {article.tag}
                         </Badge>
                       )}
-                      <span className="flex items-center gap-1">
+                      <span className="flex items-center gap-1 whitespace-nowrap">
                         <Calendar className="h-3 w-3" />
                         {article.date || 'Recent'}
                       </span>
