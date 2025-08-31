@@ -529,7 +529,11 @@ const MajorProjectsCard = () => {
                   <div className="flex justify-center mb-1">
                     <MapPin className="h-5 w-5 text-elec-yellow" />
                   </div>
-                  <div className="text-white font-medium text-sm">{project.location || 'UK'}</div>
+                  <div className="text-white font-medium text-sm">
+                    {(project.location || 'UK').split(' ').map(word => 
+                      word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+                    ).join(' ')}
+                  </div>
                   <div className="text-xs text-muted-foreground">Location</div>
                 </div>
                 
