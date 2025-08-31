@@ -2442,6 +2442,33 @@ export type Database = {
         }
         Relationships: []
       }
+      tool_guide_cache: {
+        Row: {
+          created_at: string
+          expires_at: string
+          guide_data: Json
+          guide_type: string
+          id: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          expires_at?: string
+          guide_data?: Json
+          guide_type: string
+          id?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          expires_at?: string
+          guide_data?: Json
+          guide_type?: string
+          id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       training_evidence: {
         Row: {
           assessment_criteria: string[] | null
@@ -2692,6 +2719,10 @@ export type Database = {
         Returns: undefined
       }
       cleanup_expired_education_cache: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
+      cleanup_expired_guide_cache: {
         Args: Record<PropertyKey, never>
         Returns: undefined
       }

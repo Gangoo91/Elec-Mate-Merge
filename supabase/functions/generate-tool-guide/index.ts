@@ -17,16 +17,35 @@ serve(async (req) => {
   }
 
   try {
-    const { guideType, userProfile = {} } = await req.json();
+    const { guideType, userProfile = {}, forceRefresh = false } = await req.json();
     
-    console.log(`🔧 Generating AI guide for: ${guideType}`);
+    console.log(`🔧 Processing guide request for: ${guideType}`);
+
+    // Create Supabase client
+    const supabase = createClient(supabaseUrl!, supabaseServiceKey!);
+    
+    // Check cache first (unless force refresh is requested)
+    if (!forceRefresh) {
+      const { data: cachedGuide } = await supabase
+        .from('tool_guide_cache')
+        .select('*')
+        .eq('guide_type', guideType)
+        .gt('expires_at', new Date().toISOString())
+        .single();
+      
+      if (cachedGuide) {
+        console.log(`✅ Returning cached guide for ${guideType}`);
+        return new Response(JSON.stringify({ guide: cachedGuide.guide_data }), {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        });
+      }
+    }
+
+    console.log(`🔧 Generating new AI guide for: ${guideType}`);
 
     if (!openAIApiKey) {
       throw new Error('OpenAI API key not configured');
     }
-
-    // Create Supabase client to fetch live tool data
-    const supabase = createClient(supabaseUrl!, supabaseServiceKey!);
     
     // Get current tool data from Firecrawl scraper
     let liveToolData = [];
@@ -43,15 +62,16 @@ serve(async (req) => {
     }
 
     // Generate comprehensive guide using AI
-    const systemPrompt = `You are a professional electrical trade expert and tool advisor specialising in UK electrical installations and BS7671 18th Edition compliance. Generate comprehensive, practical buying guides for electricians.
+    const systemPrompt = `You are a professional electrical trade expert and tool advisor specialising in UK electrical installations and BS7671 18th Edition compliance. Generate comprehensive, practical buying guides for electricians for 2024.
 
     Focus on:
-    - UK suppliers (Screwfix, CEF, Toolstation, etc.)
-    - BS7671 18th Edition compliance requirements
+    - UK suppliers (Screwfix, CEF, Toolstation, etc.) with 2024 pricing and availability
+    - BS7671 18th Edition compliance requirements and latest updates
     - Mobile-first recommendations for van-based electricians
-    - Real-world trade applications
-    - Budget considerations and ROI
-    - Professional quality and durability
+    - Real-world trade applications and current market conditions
+    - Budget considerations and ROI for 2024 market rates
+    - Professional quality and durability standards for current products
+    - Latest product releases and technological advances in 2024
 
     Return ONLY valid JSON in this exact structure:
     {
@@ -86,7 +106,7 @@ serve(async (req) => {
     
     Current Market Data: ${JSON.stringify(liveToolData)}
 
-    Include specific UK supplier recommendations, current pricing estimates, and ensure all recommendations meet BS7671 requirements. Focus on practical, mobile electrician needs.`;
+    Include specific UK supplier recommendations with current 2024 pricing estimates, and ensure all recommendations meet BS7671 requirements. Focus on practical, mobile electrician needs and latest market conditions for 2024.`;
 
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
@@ -143,6 +163,23 @@ serve(async (req) => {
     }
 
     console.log(`✅ Generated guide for ${guideType}`);
+
+    // Cache the generated guide
+    try {
+      await supabase
+        .from('tool_guide_cache')
+        .upsert({
+          guide_type: guideType,
+          guide_data: guide,
+          expires_at: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString() // 7 days
+        }, {
+          onConflict: 'guide_type'
+        });
+      console.log(`💾 Cached guide for ${guideType}`);
+    } catch (cacheError) {
+      console.error('Failed to cache guide:', cacheError);
+      // Continue even if caching fails
+    }
 
     return new Response(JSON.stringify({ guide }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
