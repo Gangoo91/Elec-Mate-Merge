@@ -409,8 +409,7 @@ const IndustryNewsCard = () => {
                   }}
                 >
                   {/* Image Section */}
-                  <div className="relative h-48 bg-gradient-to-br from-elec-yellow/10 via-elec-yellow/5 to-transparent overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-t from-elec-dark/20 to-transparent" />
+                  <div className="relative h-48 bg-muted/50 overflow-hidden">
                     <div className="absolute top-3 left-3">
                       <Badge className="bg-elec-yellow text-elec-dark font-semibold">
                         NEWS
