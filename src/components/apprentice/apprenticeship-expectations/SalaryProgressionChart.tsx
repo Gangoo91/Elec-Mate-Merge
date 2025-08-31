@@ -5,18 +5,18 @@ import { PoundSterling, TrendingUp } from "lucide-react";
 
 const SalaryProgressionChart = () => {
   const salaryData = [
-    { year: "Year 1", min: 15000, max: 18000, average: 16500 },
-    { year: "Year 2", min: 18000, max: 22000, average: 20000 },
-    { year: "Year 3", min: 24000, max: 28000, average: 26000 },
-    { year: "Year 4", min: 28000, max: 35000, average: 31500 },
-    { year: "Qualified", min: 32000, max: 45000, average: 38500 }
+    { year: "Year 1", min: 15000, max: 20000, average: 17500 },
+    { year: "Year 2", min: 20000, max: 25000, average: 22500 },
+    { year: "Year 3", min: 26000, max: 32000, average: 29000 },
+    { year: "Year 4", min: 30000, max: 38000, average: 34000 },
+    { year: "Qualified", min: 34000, max: 50000, average: 42000 }
   ];
 
   const regionalData = [
-    { region: "London", year1: 17000, year2: 21000, year3: 27000, year4: 35000, qualified: 42000 },
-    { region: "Manchester", year1: 15500, year2: 19000, year3: 25000, year4: 30000, qualified: 36000 },
-    { region: "Birmingham", year1: 16000, year2: 19500, year3: 26000, year4: 32000, qualified: 38000 },
-    { region: "Scotland", year1: 15000, year2: 18500, year3: 24000, year4: 29000, qualified: 35000 }
+    { region: "London", year1: 19000, year2: 24000, year3: 31000, year4: 38000, qualified: 46000 },
+    { region: "Manchester", year1: 17000, year2: 21000, year3: 28000, year4: 33000, qualified: 40000 },
+    { region: "Birmingham", year1: 17500, year2: 22000, year3: 29000, year4: 35000, qualified: 42000 },
+    { region: "Scotland", year1: 16500, year2: 20500, year3: 27000, year4: 32000, qualified: 38000 }
   ];
 
   return (

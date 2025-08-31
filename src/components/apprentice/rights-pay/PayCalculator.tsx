@@ -9,7 +9,7 @@ import { useState } from "react";
 
 const PayCalculator = () => {
   const [hoursPerWeek, setHoursPerWeek] = useState<string>("37.5");
-  const [hourlyRate, setHourlyRate] = useState<string>("6.40");
+  const [hourlyRate, setHourlyRate] = useState<string>("7.55");
   const [apprenticeYear, setApprenticeYear] = useState<string>("first");
   const [region, setRegion] = useState<string>("standard");
   const [results, setResults] = useState<any>(null);
@@ -20,8 +20,8 @@ const PayCalculator = () => {
     
     // Apply regional multiplier
     const regionalMultipliers: { [key: string]: number } = {
-      london: 1.2,
-      southeast: 1.1,
+      london: 1.25,
+      southeast: 1.15,
       standard: 1.0,
       wales: 0.95,
       ni: 0.95
@@ -50,10 +50,10 @@ const PayCalculator = () => {
 
   const getMinimumWageForYear = (year: string) => {
     switch (year) {
-      case "first": return "6.40";
-      case "second": return "10.42";
-      case "qualified": return "12.00";
-      default: return "6.40";
+      case "first": return "7.55";
+      case "second": return "12.21";
+      case "qualified": return "14.00";
+      default: return "7.55";
     }
   };
 
@@ -94,8 +94,8 @@ const PayCalculator = () => {
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="london">London (+20%)</SelectItem>
-                  <SelectItem value="southeast">South East (+10%)</SelectItem>
+                  <SelectItem value="london">London (+25%)</SelectItem>
+                  <SelectItem value="southeast">South East (+15%)</SelectItem>
                   <SelectItem value="standard">Standard Rate</SelectItem>
                   <SelectItem value="wales">Wales (-5%)</SelectItem>
                   <SelectItem value="ni">Northern Ireland (-5%)</SelectItem>

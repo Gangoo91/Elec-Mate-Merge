@@ -6,34 +6,34 @@ import { PoundSterling, TrendingUp, Calculator, Info, AlertTriangle } from "luci
 
 const WageInformationTab = () => {
   const currentRates = {
-    apprenticeMinimum: 6.40,
-    nationalMinimumWage: 8.60,
-    nationalLivingWage: 11.44,
-    lastUpdated: "April 2024"
+    apprenticeMinimum: 7.55,
+    nationalMinimumWage: 10.00,
+    nationalLivingWage: 12.21,
+    lastUpdated: "April 2025"
   };
 
   const ageBasedRates = [
-    { age: "Under 18", rate: 6.40, description: "Same as apprentice minimum wage" },
-    { age: "18-20", rate: 8.60, description: "Development rate for young workers" },
-    { age: "21-22", rate: 11.44, description: "National Living Wage rate" },
-    { age: "23+", rate: 11.44, description: "Full National Living Wage" }
+    { age: "Under 18", rate: 7.55, description: "Same as apprentice minimum wage" },
+    { age: "18-20", rate: 10.00, description: "Development rate for young workers" },
+    { age: "21-22", rate: 12.21, description: "National Living Wage rate" },
+    { age: "23+", rate: 12.21, description: "Full National Living Wage" }
   ];
 
   const regionalVariations = [
-    { region: "London", averageWage: "£18,000 - £22,000", description: "Higher cost of living adjustments common" },
-    { region: "South East", averageWage: "£16,000 - £20,000", description: "Competitive market with good opportunities" },
-    { region: "Scotland", averageWage: "£15,000 - £18,000", description: "Strong electrical sector, especially renewables" },
-    { region: "North West", averageWage: "£14,000 - £17,000", description: "Industrial heritage with modern opportunities" },
-    { region: "Yorkshire", averageWage: "£14,000 - £17,000", description: "Growing manufacturing and construction sectors" },
-    { region: "Other regions", averageWage: "£13,000 - £16,000", description: "Varies by local economic conditions" }
+    { region: "London", averageWage: "£20,000 - £25,000", description: "Higher cost of living adjustments common" },
+    { region: "South East", averageWage: "£18,000 - £22,000", description: "Competitive market with good opportunities" },
+    { region: "Scotland", averageWage: "£17,000 - £20,000", description: "Strong electrical sector, especially renewables" },
+    { region: "North West", averageWage: "£16,000 - £19,000", description: "Industrial heritage with modern opportunities" },
+    { region: "Yorkshire", averageWage: "£16,000 - £19,000", description: "Growing manufacturing and construction sectors" },
+    { region: "Other regions", averageWage: "£15,000 - £18,000", description: "Varies by local economic conditions" }
   ];
 
   const progressionPath = [
-    { stage: "Year 1 Apprentice", wage: "£6.40/hour minimum", annual: "~£13,000", description: "Learning fundamentals" },
-    { stage: "Year 2-4 Apprentice", wage: "£11.44/hour minimum", annual: "~£18,000", description: "Developing skills" },
-    { stage: "Newly Qualified", wage: "£12-15/hour", annual: "£20,000-25,000", description: "Basic competency achieved" },
-    { stage: "Experienced (2-5 years)", wage: "£15-20/hour", annual: "£25,000-35,000", description: "Proven track record" },
-    { stage: "Senior/Specialist", wage: "£20-30/hour", annual: "£35,000-50,000+", description: "Leadership or specialisation" }
+    { stage: "Year 1 Apprentice", wage: "£7.55/hour minimum", annual: "~£15,100", description: "Learning fundamentals" },
+    { stage: "Year 2-4 Apprentice", wage: "£12.21/hour minimum", annual: "~£24,400", description: "Developing skills" },
+    { stage: "Newly Qualified", wage: "£14-17/hour", annual: "£28,000-34,000", description: "Basic competency achieved" },
+    { stage: "Experienced (2-5 years)", wage: "£17-23/hour", annual: "£34,000-46,000", description: "Proven track record" },
+    { stage: "Senior/Specialist", wage: "£23-35/hour", annual: "£46,000-70,000+", description: "Leadership or specialisation" }
   ];
 
   const payFactors = [
@@ -69,7 +69,7 @@ const WageInformationTab = () => {
       <Alert className="border-green-500/50 bg-green-500/10">
         <PoundSterling className="h-4 w-4 text-green-400" />
         <AlertDescription className="text-green-200">
-          <strong>Current Minimum Wage Rates (April 2024):</strong> These are legal minimums - many employers pay above these rates.
+          <strong>Current Minimum Wage Rates:</strong> These are legal minimums - many employers pay above these rates.
         </AlertDescription>
       </Alert>
 

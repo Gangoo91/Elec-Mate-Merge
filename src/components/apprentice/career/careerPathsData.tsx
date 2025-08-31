@@ -9,7 +9,7 @@ export const careerPaths = [
     description: "Maintain, troubleshoot, and repair electrical systems in factories, plants, or commercial buildings.",
     icon: <Zap className="h-8 w-8 text-elec-yellow" />,
     skills: ["Fault diagnosis", "Preventative maintenance", "PLC systems", "Industrial standards"],
-    salaryRange: "£26,000 - £38,000",
+    salaryRange: "£30,000 - £44,000",
     timeToAchieve: "3-5 years"
   },
   {
@@ -19,7 +19,7 @@ export const careerPaths = [
     description: "Install, maintain, and repair electrical systems in domestic, commercial and industrial environments.",
     icon: <Hammer className="h-8 w-8 text-elec-yellow" />,
     skills: ["Installation techniques", "Fault finding", "Circuit testing", "Following diagrams"],
-    salaryRange: "£28,000 - £35,000",
+    salaryRange: "£32,000 - £40,000",
     timeToAchieve: "3-4 years"
   },
   {
@@ -29,7 +29,7 @@ export const careerPaths = [
     description: "Focus on specific areas like renewable energy, electric vehicles, or building management systems.",
     icon: <Briefcase className="h-8 w-8 text-elec-yellow" />,
     skills: ["Specialised knowledge", "Advanced technologies", "Problem solving", "Consultancy"],
-    salaryRange: "£30,000 - £40,000",
+    salaryRange: "£34,000 - £46,000",
     timeToAchieve: "4-6 years"
   },
   {
@@ -39,7 +39,7 @@ export const careerPaths = [
     description: "An approved status electrician is qualified to supervise others and can work on most electrical installations independently.",
     icon: <ShieldCheck className="h-8 w-8 text-elec-yellow" />,
     skills: ["Leadership", "Advanced installations", "Mentoring", "Technical knowledge"],
-    salaryRange: "£32,000 - £45,000",
+    salaryRange: "£36,000 - £52,000",
     timeToAchieve: "3-5 years"
   },
   {
@@ -49,7 +49,7 @@ export const careerPaths = [
     description: "Design, develop and test electrical equipment and systems for buildings, transportation, or power generation.",
     icon: <Award className="h-8 w-8 text-elec-yellow" />,
     skills: ["Circuit design", "Power systems", "Project management", "Technical documentation"],
-    salaryRange: "£32,000 - £55,000",
+    salaryRange: "£36,000 - £63,000",
     timeToAchieve: "5-7 years (including education)"
   },
   {
@@ -59,7 +59,7 @@ export const careerPaths = [
     description: "Create detailed electrical designs and drawings for construction projects using CAD and BIM software.",
     icon: <Lightbulb className="h-8 w-8 text-elec-yellow" />,
     skills: ["CAD software", "Design standards", "Load calculations", "Technical drawing"],
-    salaryRange: "£33,000 - £48,000",
+    salaryRange: "£38,000 - £55,000",
     timeToAchieve: "4-6 years"
   },
   {
@@ -69,7 +69,7 @@ export const careerPaths = [
     description: "Ensure electrical installations comply with regulations and safety standards, working with local authorities.",
     icon: <TrendingUp className="h-8 w-8 text-elec-yellow" />,
     skills: ["Regulatory expertise", "Attention to detail", "Documentation", "Communication"],
-    salaryRange: "£35,000 - £50,000",
+    salaryRange: "£40,000 - £58,000",
     timeToAchieve: "6-8 years"
   },
   {
@@ -79,7 +79,7 @@ export const careerPaths = [
     description: "Test, verify and commission new electrical systems to ensure they operate according to specification.",
     icon: <Wrench className="h-8 w-8 text-elec-yellow" />,
     skills: ["System testing", "Troubleshooting", "Documentation", "Commissioning procedures"],
-    salaryRange: "£36,000 - £48,000",
+    salaryRange: "£41,000 - £55,000",
     timeToAchieve: "5-7 years"
   },
   {
@@ -89,7 +89,7 @@ export const careerPaths = [
     description: "Lead complex commissioning projects for major electrical and control systems in commercial and industrial facilities.",
     icon: <Cpu className="h-8 w-8 text-elec-yellow" />,
     skills: ["Project management", "Control systems", "Technical leadership", "Client management"],
-    salaryRange: "£42,000 - £60,000",
+    salaryRange: "£48,000 - £69,000",
     timeToAchieve: "7-10 years"
   },
   {
@@ -99,7 +99,7 @@ export const careerPaths = [
     description: "Oversee large-scale electrical projects, coordinate teams, and manage budgets and timelines.",
     icon: <Trophy className="h-8 w-8 text-elec-yellow" />,
     skills: ["Leadership", "Budgeting", "Scheduling", "Stakeholder management"],
-    salaryRange: "£45,000 - £65,000",
+    salaryRange: "£52,000 - £75,000",
     timeToAchieve: "7-10 years"
   },
   {
@@ -109,7 +109,7 @@ export const careerPaths = [
     description: "Run your own electrical contracting business focusing on residential, commercial, or industrial work.",
     icon: <Building className="h-8 w-8 text-elec-yellow" />,
     skills: ["Business management", "Customer relations", "Estimation", "Financial planning"],
-    salaryRange: "£40,000 - £80,000+",
+    salaryRange: "£46,000 - £92,000+",
     timeToAchieve: "5+ years"
   }
 ];
