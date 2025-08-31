@@ -179,6 +179,7 @@ const MajorProjectsCard = () => {
       const isUsingFallback = mappedProjects.length === 0;
       
       console.log(`Projects loaded: ${totalProjects} valid DB projects, ${finalProjects.length} total shown`);
+      console.log('Database projects raw data:', dbProjects?.map(p => ({ id: p.id, title: p.title, status: p.status, is_active: p.is_active })));
       
       toast({
         title: "Projects Updated",

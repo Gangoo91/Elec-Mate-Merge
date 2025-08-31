@@ -276,15 +276,15 @@ function isElectricalContract(contract: any): boolean {
 
 // Normalize contract status to match database enum
 function normalizeStatus(status: string): string {
-  if (!status) return "Open for Tender";
+  if (!status) return "awarded";
   
   const statusLower = status.toLowerCase();
-  if (statusLower.includes('open') || statusLower.includes('tender')) return "Open for Tender";
-  if (statusLower.includes('award') || statusLower.includes('contract')) return "Contract Awarded"; 
-  if (statusLower.includes('progress') || statusLower.includes('ongoing')) return "In Progress";
-  if (statusLower.includes('complet')) return "Completed";
+  if (statusLower.includes('open') || statusLower.includes('tender')) return "open";
+  if (statusLower.includes('award') || statusLower.includes('contract')) return "awarded"; 
+  if (statusLower.includes('progress') || statusLower.includes('ongoing')) return "in_progress";
+  if (statusLower.includes('complet')) return "completed";
   
-  return "Open for Tender";
+  return "awarded";
 }
 
 
@@ -531,13 +531,14 @@ serve(async (req) => {
             awarded_to: project.client,
             project_value: project.contractValue,
             location: project.location,
-            status: project.status.toLowerCase().replace(' ', '_'),
+            status: project.status,
             date_awarded: project.startDate || new Date().toISOString(),
             category: project.category,
             electrical_scope: 'General Electrical',
             source_url: project.url,
             external_project_url: project.url,
             tender_deadline: project.deadline || null,
+            is_active: true,
           });
 
         if (!error) {
