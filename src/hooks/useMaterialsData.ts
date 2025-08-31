@@ -154,7 +154,9 @@ export const useMaterialsData = () => {
   const rawQuery = useQuery({
     queryKey: ['comprehensive-materials-raw'],
     queryFn: async () => {
-      const { data, error } = await supabase.functions.invoke('comprehensive-materials-scraper');
+  const { data, error } = await supabase.functions.invoke('comprehensive-materials-scraper', {
+    body: {}
+  });
       
       if (error) {
         console.error('Error fetching materials:', error);
