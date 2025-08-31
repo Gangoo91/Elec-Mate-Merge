@@ -366,7 +366,25 @@ const MajorProjectsCard = () => {
           <div className="space-y-1">
             <p className="text-sm text-muted-foreground">Duration</p>
             <p className="text-white font-medium">
-              {project.duration || (() => {
+              {(() => {
+                if (project.duration && project.duration.includes('T') && project.duration.includes('to')) {
+                  // Parse timestamp range like "2025-07-21T00:00:00+01:00 to 2026-07-20T23:59:59+01:00"
+                  const [startStr, endStr] = project.duration.split(' to ');
+                  const startDate = new Date(startStr);
+                  const endDate = new Date(endStr);
+                  
+                  if (!isNaN(startDate.getTime()) && !isNaN(endDate.getTime())) {
+                    const diffMonths = Math.round((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24 * 30.44));
+                    if (diffMonths >= 12) {
+                      const years = Math.round(diffMonths / 12 * 10) / 10;
+                      return `Expected duration: ${years} ${years === 1 ? 'year' : 'years'}`;
+                    } else {
+                      return `Expected duration: ${diffMonths} ${diffMonths === 1 ? 'month' : 'months'}`;
+                    }
+                  }
+                }
+                
+                // Fallback for missing or invalid duration
                 const startDate = project.start_date ? new Date(project.start_date) : new Date();
                 const endDate = new Date(startDate);
                 endDate.setMonth(endDate.getMonth() + 18);
