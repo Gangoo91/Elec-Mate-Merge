@@ -131,16 +131,16 @@ const ApprenticeRightsTab = () => {
               </CardTitle>
             </CardHeader>
             <CardContent className="pt-0">
-              <div className="space-y-4">
+              <ul className="space-y-3">
                 {section.items.map((item, itemIndex) => (
-                  <div key={itemIndex} className="flex gap-3 group">
-                    <div className="mt-2 h-1.5 w-1.5 rounded-full bg-elec-yellow/60 flex-shrink-0 group-hover:bg-elec-yellow transition-colors" />
-                    <p className="text-white text-sm sm:text-base leading-relaxed font-light group-hover:text-elec-light transition-colors flex-1">
+                  <li key={itemIndex} className="flex items-start gap-2 text-white">
+                    <span className="text-elec-yellow text-lg leading-none mt-0.5 flex-shrink-0">•</span>
+                    <span className="text-sm sm:text-base leading-relaxed font-light">
                       {item}
-                    </p>
-                  </div>
+                    </span>
+                  </li>
                 ))}
-              </div>
+              </ul>
             </CardContent>
           </Card>
         ))}
