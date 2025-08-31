@@ -111,60 +111,70 @@ const ApprenticeRightsTab = () => {
   ];
 
   return (
-    <div className="space-y-6">
-      <Alert className="border-blue-500/50 bg-blue-500/10">
-        <Shield className="h-4 w-4 text-blue-400" />
-        <AlertDescription className="text-blue-200">
-          <strong>Know Your Rights:</strong> These rights are protected by law. Understanding them helps ensure you receive fair treatment throughout your apprenticeship.
+    <div className="space-y-6 sm:space-y-8">
+      <Alert className="border-elec-yellow/30 bg-elec-yellow/5 p-4 sm:p-6">
+        <Shield className="h-5 w-5 text-elec-yellow flex-shrink-0" />
+        <AlertDescription className="text-white pl-2">
+          <strong className="text-elec-yellow">Know Your Rights:</strong> These rights are protected by law. Understanding them helps ensure you receive fair treatment throughout your apprenticeship.
         </AlertDescription>
       </Alert>
 
-      <div className="grid gap-6">
+      <div className="grid gap-4 sm:gap-6">
         {rights.map((section, index) => (
-          <Card key={index} className="border-elec-yellow/20 bg-elec-gray">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-elec-yellow">
-                {section.icon}
+          <Card key={index} className="border-elec-yellow/20 bg-elec-card/80 backdrop-blur-sm shadow-lg">
+            <CardHeader className="pb-4">
+              <CardTitle className="flex items-center gap-3 text-elec-yellow text-lg sm:text-xl font-semibold">
+                <div className="p-2 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20">
+                  {section.icon}
+                </div>
                 {section.category}
               </CardTitle>
             </CardHeader>
-            <CardContent>
-              <ul className="space-y-3">
+            <CardContent className="pt-0">
+              <div className="space-y-3">
                 {section.items.map((item, itemIndex) => (
-                  <li key={itemIndex} className="flex items-start gap-3 text-muted-foreground">
-                    <Badge variant="outline" className="mt-0.5 h-2 w-2 rounded-full p-0 border-elec-yellow/50 bg-elec-yellow/20 flex-shrink-0" />
-                    <span className="text-sm leading-relaxed">{item}</span>
-                  </li>
+                  <div key={itemIndex} className="flex items-start gap-3 group">
+                    <div className="mt-2 h-1.5 w-1.5 rounded-full bg-elec-yellow/60 flex-shrink-0 group-hover:bg-elec-yellow transition-colors" />
+                    <p className="text-white text-sm sm:text-base leading-relaxed font-light group-hover:text-elec-light transition-colors">
+                      {item}
+                    </p>
+                  </div>
                 ))}
-              </ul>
+              </div>
             </CardContent>
           </Card>
         ))}
       </div>
 
-      <Card className="border-orange-500/30 bg-orange-500/10">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-orange-400">
-            <AlertTriangle className="h-5 w-5" />
+      <Card className="border-orange-400/30 bg-orange-500/10 backdrop-blur-sm shadow-lg">
+        <CardHeader className="pb-4">
+          <CardTitle className="flex items-center gap-3 text-orange-300 text-lg sm:text-xl font-semibold">
+            <div className="p-2 rounded-lg bg-orange-500/10 border border-orange-400/20">
+              <AlertTriangle className="h-5 w-5" />
+            </div>
             Common Rights Violations & What to Do
           </CardTitle>
         </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
+        <CardContent className="pt-0">
+          <div className="grid gap-4">
             {commonViolations.map((violation, index) => (
-              <div key={index} className="border border-orange-500/20 rounded-lg p-4">
-                <h4 className="font-medium text-orange-300 mb-2">Issue: {violation.issue}</h4>
-                <p className="text-sm text-orange-200">Action: {violation.action}</p>
+              <div key={index} className="bg-orange-500/5 border border-orange-400/20 rounded-lg p-4 hover:bg-orange-500/10 transition-colors">
+                <h4 className="font-semibold text-orange-200 mb-2 text-sm sm:text-base">
+                  <span className="text-orange-300">Issue:</span> {violation.issue}
+                </h4>
+                <p className="text-white text-sm leading-relaxed font-light">
+                  <span className="text-orange-300 font-medium">Action:</span> {violation.action}
+                </p>
               </div>
             ))}
           </div>
         </CardContent>
       </Card>
 
-      <Alert className="border-green-500/50 bg-green-500/10">
-        <Heart className="h-4 w-4 text-green-400" />
-        <AlertDescription className="text-green-200">
-          <strong>Remember:</strong> Your apprenticeship should be a positive learning experience. If you're experiencing problems, don't suffer in silence - help is available and using it shows strength, not weakness.
+      <Alert className="border-green-400/30 bg-green-500/10 p-4 sm:p-6">
+        <Heart className="h-5 w-5 text-green-400 flex-shrink-0" />
+        <AlertDescription className="text-white pl-2">
+          <strong className="text-green-400">Remember:</strong> Your apprenticeship should be a positive learning experience. If you're experiencing problems, don't suffer in silence - help is available and using it shows strength, not weakness.
         </AlertDescription>
       </Alert>
     </div>
