@@ -243,6 +243,28 @@ const MajorProjectsCard = () => {
     return duration;
   };
 
+  const formatCurrency = (value: string): string => {
+    if (!value || value === 'TBC') return 'TBC';
+    
+    // Extract numbers from the string
+    const numberMatch = value.match(/[\d,]+\.?\d*/);
+    if (!numberMatch) return value;
+    
+    const number = parseFloat(numberMatch[0].replace(/,/g, ''));
+    if (isNaN(number)) return value;
+    
+    // Format large numbers
+    if (number >= 1000000) {
+      const millions = (number / 1000000).toFixed(1);
+      return `£${millions}M`;
+    } else if (number >= 1000) {
+      const thousands = (number / 1000).toFixed(0);
+      return `£${thousands}K`;
+    } else {
+      return `£${number.toLocaleString()}`;
+    }
+  };
+
   const estimateDuration = (content: string): string => {
     if (!content) return '12 months';
     const contentLower = content.toLowerCase();
@@ -487,7 +509,7 @@ const MajorProjectsCard = () => {
                   <div className="flex justify-center mb-1">
                     <PoundSterling className="h-5 w-5 text-elec-yellow" />
                   </div>
-                  <div className="text-white font-medium text-sm">{project.contract_value || 'TBC'}</div>
+                  <div className="text-white font-medium text-sm">{formatCurrency(project.contract_value)}</div>
                   <div className="text-xs text-muted-foreground">Contract Value</div>
                 </div>
                 
