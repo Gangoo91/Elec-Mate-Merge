@@ -255,10 +255,10 @@ const MajorProjectsCard = () => {
     
     // Format large numbers
     if (number >= 1000000) {
-      const millions = (number / 1000000).toFixed(1);
+      const millions = number / 1000000;
       return `£${millions}M`;
     } else if (number >= 1000) {
-      const thousands = (number / 1000).toFixed(0);
+      const thousands = number / 1000;
       return `£${thousands}K`;
     } else {
       return `£${number.toLocaleString()}`;
