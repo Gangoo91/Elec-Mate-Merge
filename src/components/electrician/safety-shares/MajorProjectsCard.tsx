@@ -355,7 +355,7 @@ const MajorProjectsCard = () => {
           
           <div className="space-y-1">
             <p className="text-sm text-muted-foreground">Contract Value</p>
-            <p className="text-white font-medium">{project.contract_value || 'TBC'}</p>
+            <p className="text-white font-medium">{project.contract_value ? formatCurrency(project.contract_value) : 'TBC'}</p>
           </div>
           
           <div className="space-y-1">
