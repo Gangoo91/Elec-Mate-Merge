@@ -217,9 +217,6 @@ const IndustryNewsCard = () => {
               {isLoading ? 'Fetching...' : 'Fetch News'}
             </Button>
           </CardTitle>
-          <CardDescription className="text-muted-foreground">
-            Live regulatory updates and compliance information from industry bodies
-          </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6 bg-transparent p-0">
           {/* Enhanced Control Panel - Always Visible */}
