@@ -78,3 +78,6 @@ verify_jwt = false
 
 [functions.ai-materials-counter]
 verify_jwt = false
+
+[functions.ai-electrical-tools]
+verify_jwt = false

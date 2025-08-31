@@ -213,43 +213,61 @@ const CategoryMaterials = () => {
     setLiveFetchFailed(false);
     
     try {
-      const searchTerms = CATEGORY_QUERIES[categoryId] || [meta.title];
-      console.log(`[${categoryId.toUpperCase()}] Search terms:`, searchTerms);
-      
       const allCollected: LiveItem[] = [];
       
-      // Reduce redundant calls to minimize duplicates from fallback products
-      const termsToUse = categoryId === 'cables' ? searchTerms.slice(0, 2) : [searchTerms[0]];
-      console.log(`[${categoryId.toUpperCase()}] Using terms:`, termsToUse);
-      
-      for (const term of termsToUse) {
-        console.log(`[${categoryId.toUpperCase()}] Searching for term: "${term}"`);
-        const tasks: Promise<any>[] = [];
-        for (const supplier of SUPPLIERS) {
-          tasks.push(
-            supabase.functions.invoke('scrape-supplier-products', {
-              body: { supplierSlug: supplier, searchTerm: term, category: categoryId }
-            })
-          );
+      // Use AI-powered tools function for tools category
+      if (categoryId === 'tools') {
+        console.log(`[TOOLS] Using AI-powered electrical tools function`);
+        const { data, error } = await supabase.functions.invoke('ai-electrical-tools');
+        
+        if (error) {
+          throw new Error(error.message);
         }
         
-        const responses = await Promise.allSettled(tasks);
-        console.log(`[${categoryId.toUpperCase()}] Got ${responses.length} responses for term "${term}"`);
+        if (Array.isArray(data?.products)) {
+          console.log(`[TOOLS] AI function returned ${data.products.length} tools`);
+          allCollected.push(...(data.products as LiveItem[]));
+        } else {
+          console.log(`[TOOLS] AI function returned no products`);
+        }
+      } else {
+        // Use existing scraping logic for other categories
+        const searchTerms = CATEGORY_QUERIES[categoryId] || [meta.title];
+        console.log(`[${categoryId.toUpperCase()}] Search terms:`, searchTerms);
         
-        for (let i = 0; i < responses.length; i++) {
-          const r = responses[i];
-          const supplier = SUPPLIERS[i];
+        // Reduce redundant calls to minimize duplicates from fallback products
+        const termsToUse = categoryId === 'cables' ? searchTerms.slice(0, 2) : [searchTerms[0]];
+        console.log(`[${categoryId.toUpperCase()}] Using terms:`, termsToUse);
+        
+        for (const term of termsToUse) {
+          console.log(`[${categoryId.toUpperCase()}] Searching for term: "${term}"`);
+          const tasks: Promise<any>[] = [];
+          for (const supplier of SUPPLIERS) {
+            tasks.push(
+              supabase.functions.invoke('scrape-supplier-products', {
+                body: { supplierSlug: supplier, searchTerm: term, category: categoryId }
+              })
+            );
+          }
           
-          if (r.status === 'fulfilled') {
-            const d = r.value?.data;
-            if (Array.isArray(d?.products)) {
-              console.log(`[${categoryId.toUpperCase()}] ${supplier}: ${d.products.length} products`);
-              allCollected.push(...(d.products as LiveItem[]));
+          const responses = await Promise.allSettled(tasks);
+          console.log(`[${categoryId.toUpperCase()}] Got ${responses.length} responses for term "${term}"`);
+          
+          for (let i = 0; i < responses.length; i++) {
+            const r = responses[i];
+            const supplier = SUPPLIERS[i];
+            
+            if (r.status === 'fulfilled') {
+              const d = r.value?.data;
+              if (Array.isArray(d?.products)) {
+                console.log(`[${categoryId.toUpperCase()}] ${supplier}: ${d.products.length} products`);
+                allCollected.push(...(d.products as LiveItem[]));
+              } else {
+                console.log(`[${categoryId.toUpperCase()}] ${supplier}: No products in response`);
+              }
             } else {
-              console.log(`[${categoryId.toUpperCase()}] ${supplier}: No products in response`);
+              console.error(`[${categoryId.toUpperCase()}] ${supplier}: Request failed:`, r.reason);
             }
-          } else {
-            console.error(`[${categoryId.toUpperCase()}] ${supplier}: Request failed:`, r.reason);
           }
         }
       }
@@ -307,9 +325,10 @@ const CategoryMaterials = () => {
       console.log(`[${categoryId.toUpperCase()}] State updated - products: ${deduped.length}`);
       
       if (!isAutoLoad) {
+        const searchCount = categoryId === 'tools' ? 1 : 1; // Always single search now
         toast({ 
           title: 'Live deals updated', 
-          description: `Found ${deduped.length} products from ${termsToUse.length} search${termsToUse.length > 1 ? 'es' : ''}` 
+          description: `Found ${deduped.length} products` 
         });
       }
     } catch (e) {
@@ -355,32 +374,49 @@ const CategoryMaterials = () => {
     });
     
     try {
-      const searchTerms = CATEGORY_QUERIES[categoryId] || [meta.title];
       const allCollected: LiveItem[] = [];
       
-      // Use force refresh parameter for all suppliers
-      for (const term of [searchTerms[0]]) {
-        const tasks: Promise<any>[] = [];
-        for (const supplier of SUPPLIERS) {
-          tasks.push(
-            supabase.functions.invoke('scrape-supplier-products', {
-              body: { 
-                supplierSlug: supplier, 
-                searchTerm: term, 
-                category: categoryId,
-                forceRefresh: true 
-              }
-            })
-          );
+      // Use AI-powered tools function for tools category
+      if (categoryId === 'tools') {
+        console.log(`[TOOLS] Manual refresh using AI-powered electrical tools function`);
+        const { data, error } = await supabase.functions.invoke('ai-electrical-tools');
+        
+        if (error) {
+          throw new Error(error.message);
         }
         
-        const responses = await Promise.allSettled(tasks);
+        if (Array.isArray(data?.products)) {
+          console.log(`[TOOLS] AI function returned ${data.products.length} tools`);
+          allCollected.push(...(data.products as LiveItem[]));
+        }
+      } else {
+        // Use existing scraping logic for other categories
+        const searchTerms = CATEGORY_QUERIES[categoryId] || [meta.title];
         
-        for (const r of responses) {
-          if (r.status === 'fulfilled') {
-            const d = r.value?.data;
-            if (Array.isArray(d?.products)) {
-              allCollected.push(...(d.products as LiveItem[]));
+        // Use force refresh parameter for all suppliers
+        for (const term of [searchTerms[0]]) {
+          const tasks: Promise<any>[] = [];
+          for (const supplier of SUPPLIERS) {
+            tasks.push(
+              supabase.functions.invoke('scrape-supplier-products', {
+                body: { 
+                  supplierSlug: supplier, 
+                  searchTerm: term, 
+                  category: categoryId,
+                  forceRefresh: true 
+                }
+              })
+            );
+          }
+          
+          const responses = await Promise.allSettled(tasks);
+          
+          for (const r of responses) {
+            if (r.status === 'fulfilled') {
+              const d = r.value?.data;
+              if (Array.isArray(d?.products)) {
+                allCollected.push(...(d.products as LiveItem[]));
+              }
             }
           }
         }
