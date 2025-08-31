@@ -9,29 +9,27 @@ import { Building2, MapPin, Calendar, PoundSterling, Users, Clock, ExternalLink,
 import { useToast } from "@/components/ui/use-toast";
 import { useNavigate } from "react-router-dom";
 import { ProjectSubmissionDialog } from "./ProjectSubmissionDialog";
+import { supabase } from "@/integrations/supabase/client";
 
 interface MajorProject {
   id: string;
-  title: string;
-  summary: string;
-  content?: string;
-  awarded_to: string;
+  project_name: string;
+  description: string;
+  client: string;
   location?: string;
-  project_value?: string;
+  contract_value?: string;
   duration?: string;
-  date_awarded?: string;
+  start_date?: string;
   status: string;
   category?: string;
-  contractorCount?: number;
-  deadline?: string;
+  contractors?: string;
+  awarded?: boolean;
+  details_link?: string;
+  project_link?: string;
   view_count?: number;
   average_rating?: number;
-  is_active?: boolean;
   created_at?: string;
   updated_at?: string;
-  source_url?: string;
-  external_project_url?: string;
-  tender_deadline?: string;
 }
 
 const MajorProjectsCard = () => {
@@ -44,191 +42,127 @@ const MajorProjectsCard = () => {
   const staticProjects: MajorProject[] = [
     {
       id: "static-1",
-      title: "London Underground Station Modernisation Programme",
-      summary: "Complete electrical system upgrade for 15 underground stations including LED lighting, power distribution, and emergency systems.",
-      awarded_to: "Transport for London",
+      project_name: "London Underground Station Modernisation Programme",
+      description: "Complete electrical system upgrade for 15 underground stations including LED lighting, power distribution, and emergency systems.",
+      client: "Transport for London",
       location: "London, UK",
-      project_value: "£45M",
+      contract_value: "£45M",
       duration: "18 months",
-      date_awarded: "2024-09-01",
+      start_date: "2024-09-01",
       status: "active",
       category: "Transport",
-      contractorCount: 12,
-      tender_deadline: "2025-02-15",
-      external_project_url: "https://tfl.gov.uk/corporate/procurement-and-commercial/procurement-opportunities",
-      source_url: "https://tfl.gov.uk/corporate/procurement-and-commercial/procurement-opportunities"
+      contractors: "Balfour Beatty, Siemens, VolkerRail",
+      awarded: true,
+      project_link: "https://tfl.gov.uk/corporate/procurement-and-commercial/procurement-opportunities",
+      details_link: "https://tfl.gov.uk/corporate/procurement-and-commercial/procurement-opportunities"
     },
     {
       id: "static-2", 
-      title: "NHS Hospital Electrical Infrastructure Expansion",
-      summary: "New electrical installation for major hospital expansion including critical care units, operating theatres, and backup power systems.",
-      awarded_to: "NHS Foundation Trust",
+      project_name: "NHS Hospital Electrical Infrastructure Expansion",
+      description: "New electrical installation for major hospital expansion including critical care units, operating theatres, and backup power systems.",
+      client: "NHS Foundation Trust",
       location: "Manchester, UK",
-      project_value: "£32M",
+      contract_value: "£32M",
       duration: "24 months",
-      date_awarded: "2024-08-15",
+      start_date: "2024-08-15",
       status: "active",
       category: "Healthcare",
-      contractorCount: 8,
-      tender_deadline: "2025-01-30",
-      external_project_url: "https://www.contractsfinder.service.gov.uk/Search/Results?SearchType=1&Keywords=nhs+electrical",
-      source_url: "https://www.contractsfinder.service.gov.uk"
+      contractors: "Kier Construction, Schneider Electric",
+      awarded: true,
+      project_link: "https://www.contractsfinder.service.gov.uk/Search/Results?SearchType=1&Keywords=nhs+electrical",
+      details_link: "https://www.contractsfinder.service.gov.uk"
     },
     {
       id: "static-3",
-      title: "Offshore Wind Farm Grid Connection Project",
-      summary: "High voltage transmission infrastructure to connect 800MW offshore wind farm to the national grid.",
-      awarded_to: "SSE Renewables",
+      project_name: "Offshore Wind Farm Grid Connection Project",
+      description: "High voltage transmission infrastructure to connect 800MW offshore wind farm to the national grid.",
+      client: "SSE Renewables",
       location: "East Anglia, UK", 
-      project_value: "£180M",
+      contract_value: "£180M",
       duration: "36 months",
-      date_awarded: "2024-10-01",
+      start_date: "2024-10-01",
       status: "awarded",
       category: "Energy",
-      contractorCount: 25,
-      external_project_url: "https://www.sse.com/about-us/investor-centre/debt-investors/procurement/",
-      source_url: "https://www.sse.com"
+      contractors: "National Grid, Ørsted, Prysmian Group, ABB, GE Grid Solutions",
+      awarded: true,
+      project_link: "https://www.sse.com/about-us/investor-centre/debt-investors/procurement/",
+      details_link: "https://www.sse.com"
     }
   ];
 
   // Validate project data quality
   const isValidProject = (project: any): boolean => {
-    if (!project.title || !project.summary || !project.awarded_to) return false;
+    if (!project.project_name || !project.description || !project.client) return false;
     
     // Filter out test data and meaningless entries
-    const title = project.title.toLowerCase();
-    const summary = project.summary.toLowerCase();
-    const awardedTo = project.awarded_to.toLowerCase();
+    const title = project.project_name.toLowerCase();
+    const description = project.description.toLowerCase();
+    const client = project.client.toLowerCase();
     
     // Check for minimum content quality
-    if (project.title.length < 5 || project.summary.length < 10) return false;
+    if (project.project_name.length < 5 || project.description.length < 10) return false;
     
     // Filter out obvious test data patterns
     const testPatterns = /^[a-z]{1,5}$|^test|^example|^sample/i;
-    if (testPatterns.test(project.title) || testPatterns.test(project.awarded_to)) return false;
+    if (testPatterns.test(project.project_name) || testPatterns.test(project.client)) return false;
     
     // Check for meaningful content
     const hasValidWords = title.includes('electrical') || title.includes('infrastructure') || 
                          title.includes('project') || title.includes('contract') ||
-                         summary.includes('electrical') || summary.includes('infrastructure');
+                         description.includes('electrical') || description.includes('infrastructure');
     
     return hasValidWords;
   };
 
   const fetchMajorProjects = async (): Promise<MajorProject[]> => {
-    console.log('🔧 Fetching live UK Contracts Finder data via direct API...');
+    console.log('🔧 Fetching live UK Contracts Finder data via Supabase Edge Function...');
     
-    const searchQueries = [
-      "electrical infrastructure projects",
-      "power grid substation",
-      "electrical installation contracts",
-      "transmission distribution electrical"
-    ];
-
     try {
-      const allProjects: MajorProject[] = [];
-
-      for (const query of searchQueries) {
-        const baseUrl = "https://www.contractsfinder.service.gov.uk/Published/Notices/OCDS/Search";
-        const params = new URLSearchParams({
-          stages: "award",
-          q: query,
-          size: "10",
-          page: "1",
-        });
-
-        const url = `${baseUrl}?${params.toString()}`;
-
-        try {
-          const response = await fetch(url, {
-            method: "GET",
-            headers: {
-              Accept: "application/json",
-            },
-          });
-
-          if (!response.ok) {
-            console.warn(`API call failed for "${query}": ${response.status}`);
-            continue;
-          }
-
-          const data = await response.json();
-          
-          if (!data.releases || !Array.isArray(data.releases)) {
-            console.warn(`No releases found for "${query}"`);
-            continue;
-          }
-
-          const awardedContracts = data.releases.map((tenderData: any, index: number) => {
-            const tender = tenderData.tender || {};
-            const buyer = tenderData.buyer || {};
-            const award = (tenderData.awards && tenderData.awards[0]) || {};
-            const supplierNames = award.suppliers ? award.suppliers.map((s: any) => s.name).join(", ") : "";
-            const buyerAddress = buyer.address || {};
-            const isAwarded = award.suppliers && award.suppliers.length > 0;
-
-            return {
-              id: `api-${Date.now()}-${index}`,
-              title: tender.title || "",
-              summary: tender.description || "",
-              awarded_to: buyer.name || "",
-              location: [buyerAddress.locality, buyerAddress.region, buyerAddress.countryName].filter(Boolean).join(", "),
-              project_value: award.value ? `£${award.value.amount} ${award.value.currency || ''}`.trim() : "",
-              duration: award.contractPeriod ? `${award.contractPeriod.startDate} to ${award.contractPeriod.endDate}` : "",
-              date_awarded: award.contractPeriod?.startDate || "",
-              status: tender.status || "awarded",
-              category: tender.classification?.description || determineSectorFromContent(tender.description || ""),
-              contractorCount: award.suppliers ? award.suppliers.length : 1,
-              external_project_url: award.documents?.[0]?.url || buyer.details?.url || "",
-              source_url: `https://www.contractsfinder.service.gov.uk/Search/Results?SearchType=1&Keywords=${encodeURIComponent(query)}`
-            };
-          });
-
-          // Filter for electrical projects only
-          const electricalProjects = awardedContracts.filter((project: any) => {
-            if (!project.title || !project.summary || !project.awarded_to) return false;
-            
-            const title = project.title.toLowerCase();
-            const summary = project.summary.toLowerCase();
-            const category = (project.category || "").toLowerCase();
-            
-            // Check for electrical keywords
-            const electricalKeywords = ['electrical', 'power', 'grid', 'substation', 'transmission', 'distribution', 'infrastructure', 'energy'];
-            const hasElectricalKeywords = electricalKeywords.some(keyword => 
-              title.includes(keyword) || summary.includes(keyword) || category.includes(keyword)
-            );
-
-            // Filter out irrelevant categories
-            const irrelevantPatterns = /cleaning|catering|security|office|furniture|stationery|consultancy|legal|financial|training|recruitment/i;
-            const isIrrelevant = irrelevantPatterns.test(title) || irrelevantPatterns.test(summary) || irrelevantPatterns.test(category);
-
-            return hasElectricalKeywords && !isIrrelevant;
-          });
-
-          allProjects.push(...electricalProjects);
-          console.log(`✅ Found ${electricalProjects.length} electrical projects for "${query}"`);
-
-        } catch (fetchError) {
-          console.error(`Error fetching data for "${query}":`, fetchError);
-        }
+      const { data, error } = await supabase.functions.invoke('fetch-projects');
+      
+      if (error) {
+        console.error('Edge function error:', error);
+        throw error;
       }
 
-      // Remove duplicates and limit results
-      const uniqueProjects = allProjects.filter((project, index, self) => 
-        index === self.findIndex(p => p.title === project.title && p.awarded_to === project.awarded_to)
-      ).slice(0, 15);
+      if (!data || !data.projects) {
+        console.warn('No projects data received from edge function');
+        throw new Error('No projects data received');
+      }
 
-      console.log(`🎯 Total unique electrical projects found: ${uniqueProjects.length}`);
+      const projects = data.projects as any[];
+      console.log(`✅ Received ${projects.length} projects from edge function`);
 
-      if (uniqueProjects.length > 0) {
+      // Transform to match our interface
+      const transformedProjects: MajorProject[] = projects.map((project: any, index: number) => ({
+        id: `api-${Date.now()}-${index}`,
+        project_name: project.project_name || "",
+        description: project.description || "",
+        client: project.client || "",
+        location: project.location || "",
+        contract_value: project.contract_value || "",
+        duration: project.duration || "",
+        start_date: project.start_date || "",
+        status: project.status || "awarded",
+        category: project.category || determineSectorFromContent(project.description || ""),
+        contractors: project.contractors || "",
+        awarded: project.awarded || false,
+        details_link: project.details_link || "",
+        project_link: project.project_link || ""
+      }));
+
+      // Filter valid projects
+      const validProjects = transformedProjects.filter(isValidProject);
+
+      if (validProjects.length > 0) {
         toast({
           title: "Projects Updated",
-          description: `Loaded ${uniqueProjects.length} live electrical infrastructure projects`,
+          description: `Loaded ${validProjects.length} live electrical infrastructure projects`,
           duration: 3000,
         });
-        return uniqueProjects;
+        return validProjects;
       } else {
-        console.log('📊 No electrical projects found, using static fallback');
+        console.log('📊 No valid electrical projects found, using static fallback');
         toast({
           title: "Using Example Data",
           description: "No live electrical projects found - showing example projects",
@@ -315,19 +249,14 @@ const MajorProjectsCard = () => {
   };
 
   const getProjectUrl = (project: MajorProject): string => {
-    // Priority 1: Direct external project URL
-    if (project.external_project_url) {
-      return project.external_project_url;
+    // Priority 1: Direct project URL
+    if (project.project_link) {
+      return project.project_link;
     }
     
-    // Priority 2: Source URL
-    if (project.source_url) {
-      return project.source_url;
-    }
-    
-    // Priority 3: Static project specific URLs
-    if (project.id.startsWith('static-')) {
-      return project.source_url || generateSearchUrl(project);
+    // Priority 2: Details URL
+    if (project.details_link) {
+      return project.details_link;
     }
     
     // Fallback: Generate search URL
@@ -335,7 +264,7 @@ const MajorProjectsCard = () => {
   };
 
   const generateSearchUrl = (project: MajorProject): string => {
-    const searchTerm = encodeURIComponent(`${project.title} ${project.awarded_to}`);
+    const searchTerm = encodeURIComponent(`${project.project_name} ${project.client}`);
     return `https://www.contractsfinder.service.gov.uk/Search/Results?SearchType=1&Keywords=${searchTerm}`;
   };
 
@@ -347,7 +276,7 @@ const MajorProjectsCard = () => {
   const ProjectDetailModal = ({ project }: { project: MajorProject }) => (
     <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
       <DialogHeader>
-        <DialogTitle className="text-xl font-bold text-white">{project.title}</DialogTitle>
+        <DialogTitle className="text-xl font-bold text-white">{project.project_name}</DialogTitle>
       </DialogHeader>
       
       <div className="space-y-6">
@@ -366,24 +295,19 @@ const MajorProjectsCard = () => {
         {/* Project Summary */}
         <div>
           <h3 className="text-lg font-semibold text-white mb-2">Project Overview</h3>
-          <p className="text-gray-300">{project.summary}</p>
-          {project.content && project.content !== project.summary && (
-            <div className="mt-3">
-              <p className="text-gray-300">{project.content}</p>
-            </div>
-          )}
+          <p className="text-gray-300">{project.description}</p>
         </div>
 
         {/* Project Details Grid */}
         <div className="grid grid-cols-2 gap-4">
           <div className="space-y-1">
             <p className="text-sm text-muted-foreground">Client</p>
-            <p className="text-white font-medium">{project.awarded_to}</p>
+            <p className="text-white font-medium">{project.client}</p>
           </div>
           
           <div className="space-y-1">
             <p className="text-sm text-muted-foreground">Contract Value</p>
-            <p className="text-white font-medium">{project.project_value || 'TBC'}</p>
+            <p className="text-white font-medium">{project.contract_value || 'TBC'}</p>
           </div>
           
           <div className="space-y-1">
@@ -399,31 +323,18 @@ const MajorProjectsCard = () => {
           <div className="space-y-1">
             <p className="text-sm text-muted-foreground">Start Date</p>
             <p className="text-white font-medium">
-              {project.date_awarded 
-                ? new Date(project.date_awarded).toLocaleDateString('en-GB')
+              {project.start_date 
+                ? new Date(project.start_date).toLocaleDateString('en-GB')
                 : 'TBC'
               }
             </p>
           </div>
           
           <div className="space-y-1">
-            <p className="text-sm text-muted-foreground">Estimated Contractors</p>
-            <p className="text-white font-medium">{project.contractorCount || 5}</p>
+            <p className="text-sm text-muted-foreground">Contractors</p>
+            <p className="text-white font-medium">{project.contractors || 'TBC'}</p>
           </div>
         </div>
-
-        {/* Deadline Info */}
-        {project.tender_deadline && getStatusText(project.status) === "Open for Tender" && (
-          <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-lg">
-            <div className="flex items-center gap-2">
-              <Calendar className="h-5 w-5 text-red-400" />
-              <div>
-                <p className="text-red-400 font-medium">Tender Deadline</p>
-                <p className="text-white">{new Date(project.tender_deadline).toLocaleDateString('en-GB')}</p>
-              </div>
-            </div>
-          </div>
-        )}
 
         {/* Action Buttons */}
         <div className="flex gap-3 pt-4 border-t border-elec-yellow/20">
@@ -523,27 +434,22 @@ const MajorProjectsCard = () => {
                     {project.category}
                   </Badge>
                 )}
-                {project.tender_deadline && getStatusText(project.status) === "Open for Tender" && (
-                  <Badge className="bg-red-500/20 text-red-400 border-red-500/30">
-                    Deadline: {new Date(project.tender_deadline).toLocaleDateString('en-GB')}
-                  </Badge>
-                )}
               </div>
               
               {/* Project Title - Bold and centered */}
               <CardTitle className="text-xl font-bold text-center text-white mb-3 line-clamp-2">
-                {project.title}
+                {project.project_name}
               </CardTitle>
               
               {/* Short Description */}
               <p className="text-gray-300 text-sm text-center mb-3 line-clamp-3">
-                {project.summary}
+                {project.description}
               </p>
               
               {/* Client */}
               <div className="text-center mb-4">
                 <span className="text-sm text-muted-foreground">
-                  Client: <span className="text-elec-yellow hover:text-elec-yellow/80 transition-colors cursor-pointer">{project.awarded_to}</span>
+                  Client: <span className="text-elec-yellow hover:text-elec-yellow/80 transition-colors cursor-pointer">{project.client}</span>
                 </span>
               </div>
             </CardHeader>
@@ -555,7 +461,7 @@ const MajorProjectsCard = () => {
                   <div className="flex justify-center mb-1">
                     <PoundSterling className="h-5 w-5 text-elec-yellow" />
                   </div>
-                  <div className="text-white font-medium text-sm">{project.project_value || 'TBC'}</div>
+                  <div className="text-white font-medium text-sm">{project.contract_value || 'TBC'}</div>
                   <div className="text-xs text-muted-foreground">Contract Value</div>
                 </div>
                 
@@ -579,7 +485,7 @@ const MajorProjectsCard = () => {
                   <div className="flex justify-center mb-1">
                     <Users className="h-5 w-5 text-elec-yellow" />
                   </div>
-                  <div className="text-white font-medium text-sm">{project.contractorCount || 5}</div>
+                  <div className="text-white font-medium text-sm">{project.contractors ? project.contractors.split(", ").length : 'TBC'}</div>
                   <div className="text-xs text-muted-foreground">Contractors</div>
                 </div>
               </div>
@@ -590,8 +496,8 @@ const MajorProjectsCard = () => {
                 <div className="flex items-center gap-2 text-sm text-muted-foreground">
                   <Calendar className="h-4 w-4" />
                   <span>
-                    {project.date_awarded 
-                      ? new Date(project.date_awarded).toLocaleDateString('en-GB')
+                    {project.start_date 
+                      ? new Date(project.start_date).toLocaleDateString('en-GB')
                       : 'TBC'
                     }
                   </span>
