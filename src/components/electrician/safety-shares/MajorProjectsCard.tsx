@@ -135,18 +135,18 @@ const MajorProjectsCard = () => {
         console.error('Database error:', dbError);
       }
 
-      // Then trigger Firecrawl scraping for new data (run in background)
-      let scrapeResult = null;
+      // Then trigger official API data fetching for new data (run in background)
+      let apiResult = null;
       try {
         const { data, error } = await supabase.functions.invoke('fetch-projects');
         if (error) {
-          console.error('Scraping error:', error);
+          console.error('API fetch error:', error);
         } else {
-          scrapeResult = data;
-          console.log('Scraping success:', data);
+          apiResult = data;
+          console.log('API fetch success:', data);
         }
-      } catch (scrapeError) {
-        console.error('Scraping failed:', scrapeError);
+      } catch (apiError) {
+        console.error('API fetch failed:', apiError);
       }
 
       // Filter and map database projects to component format  
@@ -174,7 +174,7 @@ const MajorProjectsCard = () => {
       // Use live data if available and valid, otherwise fallback to static projects
       const finalProjects = mappedProjects.length > 0 ? mappedProjects : staticProjects;
       
-      const newProjectsCount = scrapeResult?.scrapedProjects || 0;
+      const newProjectsCount = apiResult?.scrapedProjects || 0;
       const totalProjects = mappedProjects.length;
       const isUsingFallback = mappedProjects.length === 0;
       
@@ -183,8 +183,8 @@ const MajorProjectsCard = () => {
       toast({
         title: "Projects Updated",
         description: isUsingFallback 
-          ? "Showing example projects - live scraping in progress" 
-          : `Showing ${totalProjects} live projects${newProjectsCount > 0 ? ` (${newProjectsCount} newly scraped)` : ''}`,
+          ? "Showing example projects - live data fetching in progress" 
+          : `Showing ${totalProjects} live projects${newProjectsCount > 0 ? ` (${newProjectsCount} newly fetched)` : ''}`,
         duration: 3000,
       });
 

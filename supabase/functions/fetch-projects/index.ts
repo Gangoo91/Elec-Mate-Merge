@@ -1,4 +1,3 @@
-import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.45.0';
 
@@ -22,120 +21,150 @@ interface ProjectData {
   url: string;
 }
 
-// UK Contracts Finder listing URLs for electrical/infrastructure projects
-const listingUrls = [
-  "https://www.contractsfinder.service.gov.uk/Search/Results?search=electrical",
-  "https://www.contractsfinder.service.gov.uk/Search/Results?search=infrastructure",
-  "https://www.contractsfinder.service.gov.uk/Search/Results?search=power",
-  "https://www.contractsfinder.service.gov.uk/Search/Results?search=substation"
-];
-
-// Simplified Firecrawl scraping with markdown fallback
-async function scrapeWithFallback(url: string, apiKey: string) {
-  console.log(`🔄 Scraping: ${url}`);
-  
-  try {
-    // First try with JSON schema
-    const jsonResponse = await fetch("https://api.firecrawl.dev/v1/scrape", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        url,
-        extractorOptions: {
-          mode: "llm-extraction",
-          extractionPrompt: `Extract all electrical/infrastructure project information as JSON with these fields:
-          - title: project name
-          - description: project description  
-          - client: organization/authority
-          - contractValue: monetary value
-          - location: where project is located
-          - status: current status
-          - deadline: tender deadline if mentioned
-          Return as array of projects found on this page.`,
-        },
-      }),
-    });
-
-    const jsonData = await jsonResponse.json();
-    
-    if (jsonData.success && jsonData.data?.llm_extraction) {
-      console.log(`✅ JSON extraction successful for ${url}`);
-      return { success: true, data: jsonData.data.llm_extraction };
-    }
-
-    // Fallback to markdown scraping
-    console.log(`🔄 Falling back to markdown for ${url}`);
-    const markdownResponse = await fetch("https://api.firecrawl.dev/v1/scrape", {
-      method: "POST", 
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        url,
-        pageOptions: {
-          onlyMainContent: true,
-        },
-      }),
-    });
-
-    const markdownData = await markdownResponse.json();
-    
-    if (markdownData.success && markdownData.data?.markdown) {
-      console.log(`✅ Markdown extraction successful for ${url}`);
-      return { success: true, data: markdownData.data.markdown, isMarkdown: true };
-    }
-
-    throw new Error(`Both JSON and markdown extraction failed for ${url}`);
-    
-  } catch (error) {
-    console.error(`❌ Scraping failed for ${url}:`, error);
-    return { success: false, error: error.message };
-  }
+interface OCDSRelease {
+  tender?: {
+    title?: string;
+    description?: string;
+    status?: string;
+    value?: {
+      amount?: number;
+      currency?: string;
+    };
+    contractPeriod?: {
+      startDate?: string;
+      endDate?: string;
+    };
+  };
+  buyer?: {
+    name?: string;
+  };
+  awards?: Array<{
+    date?: string;
+    suppliers?: Array<{
+      name?: string;
+    }>;
+    documents?: Array<{
+      url?: string;
+    }>;
+  }>;
 }
 
-// Simplified project extraction with better error handling
-async function simplifiedProjectExtraction(firecrawlApiKey: string): Promise<ProjectData[]> {
-  console.log('🚀 Starting simplified UK Contracts Finder extraction...');
+interface OCDSResponse {
+  releases: OCDSRelease[];
+}
 
-  const allProjects: ProjectData[] = [];
+// UK Contracts Finder API endpoints for electrical/infrastructure projects
+const searchQueries = [
+  "electrical",
+  "power",
+  "infrastructure", 
+  "substation",
+  "grid",
+  "transmission"
+];
+
+// Fetch projects using official UK Contracts Finder API
+async function fetchElectricalContracts(): Promise<ProjectData[]> {
+  console.log('🚀 Starting official UK Contracts Finder API extraction...');
   
-  // Try each listing URL individually with proper error handling
-  for (const url of listingUrls) {
+  const allProjects: ProjectData[] = [];
+  const baseUrl = "https://www.contractsfinder.service.gov.uk/Published/Notices/OCDS/Search";
+  
+  for (const query of searchQueries) {
     try {
-      console.log(`🔍 Processing: ${url}`);
-      const result = await scrapeWithFallback(url, firecrawlApiKey);
+      console.log(`🔍 Fetching contracts for: ${query}`);
       
-      if (result.success) {
-        if (result.isMarkdown) {
-          // Process markdown content
-          const projects = extractProjectsFromMarkdown(result.data, url);
-          allProjects.push(...projects);
-        } else {
-          // Process JSON/LLM extraction
-          const projects = Array.isArray(result.data) ? result.data : [result.data];
-          for (const project of projects) {
-            if (project && project.title && isElectricalContract(project)) {
-              const projectData = createProjectData(project, url);
-              if (projectData) {
-                allProjects.push(projectData);
-                console.log(`✅ Added project: ${projectData.title.substring(0, 50)}...`);
-              }
-            }
-          }
-        }
+      const params = new URLSearchParams({
+        stages: "award", // only awarded contracts
+        q: query,
+        size: "20", // results per page
+        page: "1",
+      });
+
+      const url = `${baseUrl}?${params.toString()}`;
+      
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        console.error(`❌ API request failed for ${query}: ${response.status}`);
+        continue;
       }
+
+      const data: OCDSResponse = await response.json();
+      
+      if (!data.releases || !Array.isArray(data.releases)) {
+        console.warn(`⚠️ No releases found for query: ${query}`);
+        continue;
+      }
+
+      const projects = data.releases
+        .map((release) => createProjectFromOCDS(release, query))
+        .filter((project): project is ProjectData => project !== null && isElectricalContract(project));
+
+      allProjects.push(...projects);
+      console.log(`✅ Added ${projects.length} projects from ${query} query`);
+      
     } catch (error) {
-      console.error(`❌ Failed to process ${url}:`, error);
-      continue; // Continue with next URL
+      console.error(`❌ Error fetching ${query} contracts:`, error);
+      continue;
     }
   }
 
   console.log(`🎯 Total projects extracted: ${allProjects.length}`);
-  return deduplicateProjects(allProjects).slice(0, 12);
+  return deduplicateProjects(allProjects).slice(0, 15);
+}
+
+// Convert OCDS release data to ProjectData format
+function createProjectFromOCDS(release: OCDSRelease, searchQuery: string): ProjectData | null {
+  try {
+    if (!release.tender?.title || !release.buyer?.name) {
+      return null;
+    }
+
+    const title = release.tender.title;
+    const description = release.tender.description || title;
+    
+    // Filter out non-electrical projects
+    if (!isElectricalProject(title, description)) {
+      return null;
+    }
+
+    return {
+      status: normalizeStatus(release.tender.status) || "Contract Awarded",
+      category: determineCategory(title + " " + description),
+      title: title.substring(0, 100),
+      snippet: description.substring(0, 200),
+      client: release.buyer.name,
+      contractValue: formatContractValue(release.tender.value),
+      duration: estimateDurationFromContract(release.tender.contractPeriod),
+      location: "UK", // OCDS UK data is inherently UK-based
+      contractors: estimateContractors(release.tender.value?.amount),
+      startDate: release.awards?.[0]?.date || release.tender.contractPeriod?.startDate || new Date().toISOString(),
+      url: release.awards?.[0]?.documents?.[0]?.url || `https://www.contractsfinder.service.gov.uk/Search/Results?SearchType=1&Keywords=${encodeURIComponent(searchQuery)}`
+    };
+  } catch (error) {
+    console.error('Error creating project from OCDS:', error);
+    return null;
+  }
+}
+
+// Check if project is electrical/infrastructure related
+function isElectricalProject(title: string, description: string): boolean {
+  const searchText = `${title} ${description}`.toLowerCase();
+  
+  const electricalKeywords = [
+    'electrical', 'power', 'grid', 'substation', 'transmission', 'distribution',
+    'transformer', 'switchgear', 'cable', 'hvdc', 'solar', 'wind', 'renewable',
+    'lighting', 'wiring', 'installation', 'electrical infrastructure', 'energy',
+    'voltage', 'generator', 'circuit'
+  ];
+  
+  return electricalKeywords.some(keyword => searchText.includes(keyword));
 }
 
 // Extract projects from markdown content using pattern matching
@@ -268,11 +297,15 @@ function determineCategory(title: string): string {
   return 'Infrastructure';
 }
 
-function estimateContractors(value: string): number {
-  const numValue = parseFloat(value.replace(/[£,KM]/g, ''));
-  if (value.includes('M') && numValue > 50) return 15;
-  if (value.includes('M') && numValue > 20) return 10;
-  if (value.includes('M')) return 8;
+function estimateContractors(value: string | number | undefined): number {
+  if (!value) return 5;
+  
+  const numValue = typeof value === 'number' ? value : parseFloat(value.toString().replace(/[£,KM]/g, ''));
+  
+  if (numValue >= 50000000) return 25; // £50M+
+  if (numValue >= 20000000) return 15; // £20M+
+  if (numValue >= 5000000) return 10;  // £5M+
+  if (numValue >= 1000000) return 8;   // £1M+
   return 5;
 }
 
@@ -440,25 +473,48 @@ function isValidElectricalProject(project: ProjectData): boolean {
   return hasElectricalKeyword && hasUkKeyword && !hasExcludeKeyword && project.title.length >= 20;
 }
 
+// Format contract value from OCDS format
+function formatContractValue(value?: { amount?: number; currency?: string }): string {
+  if (!value?.amount) return "TBC";
+  
+  const amount = value.amount;
+  const currency = value.currency || "GBP";
+  const symbol = currency === "GBP" ? "£" : currency;
+  
+  if (amount >= 1000000) {
+    return `${symbol}${(amount / 1000000).toFixed(1)}M`;
+  } else if (amount >= 1000) {
+    return `${symbol}${(amount / 1000).toFixed(0)}K`;
+  }
+  
+  return `${symbol}${amount.toLocaleString()}`;
+}
+
+// Estimate duration from contract period
+function estimateDurationFromContract(contractPeriod?: { startDate?: string; endDate?: string }): string {
+  if (contractPeriod?.startDate && contractPeriod?.endDate) {
+    const start = new Date(contractPeriod.startDate);
+    const end = new Date(contractPeriod.endDate);
+    const diffMonths = Math.round((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24 * 30));
+    return `${diffMonths} months`;
+  }
+  return "18 months";
+}
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
-    const firecrawlApiKey = Deno.env.get('FIRECRAWL_API_KEY');
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
-    
-    if (!firecrawlApiKey) {
-      throw new Error('FIRECRAWL_API_KEY not configured');
-    }
 
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-    console.log('🚀 Starting simplified UK Contracts Finder extraction...');
+    console.log('🚀 Starting official UK Contracts Finder API extraction...');
     
-    const projects = await simplifiedProjectExtraction(firecrawlApiKey);
+    const projects = await fetchElectricalContracts();
     
     let totalInserted = 0;
     let errors = 0;
