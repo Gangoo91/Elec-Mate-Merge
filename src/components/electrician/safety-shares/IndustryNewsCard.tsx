@@ -212,7 +212,7 @@ const IndustryNewsCard = () => {
               className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 disabled:opacity-50"
             >
               <RefreshCw className={`h-4 w-4 ${isLoading ? 'animate-spin' : ''}`} />
-              {isLoading ? 'Fetching...' : 'Fetch News'}
+              {isLoading ? 'Fetching...' : 'Refresh News'}
             </Button>
           </CardTitle>
         </CardHeader>
