@@ -280,7 +280,22 @@ const CategoryMaterials = () => {
         
         if (Array.isArray(data)) {
           console.log(`[TOOLS] Firecrawl function returned ${data.length} tools`);
-          allCollected.push(...(data as LiveItem[]));
+          // Transform Firecrawl data to match MaterialItem interface
+          const transformedTools = data.map((tool: any, index: number) => ({
+            id: tool.id || index + 1000, // Generate ID if missing
+            name: tool.name || 'Unknown Tool',
+            category: 'Tools',
+            price: tool.price || '£0.00',
+            supplier: 'Screwfix',
+            image: tool.image || '/placeholder.svg',
+            stockStatus: 'In Stock' as const,
+            isOnSale: tool.isOnSale || false,
+            salePrice: tool.salePrice,
+            highlights: tool.highlights || [],
+            productUrl: tool.view_product_url || tool.productUrl // Map view_product_url to productUrl
+          }));
+          console.log(`[TOOLS] Transformed tools with URLs:`, transformedTools.map(t => ({ name: t.name, productUrl: t.productUrl })));
+          allCollected.push(...transformedTools);
         } else {
           console.log(`[TOOLS] Firecrawl function returned no products`);
         }
@@ -441,7 +456,22 @@ const CategoryMaterials = () => {
         
         if (Array.isArray(data)) {
           console.log(`[TOOLS] Firecrawl function returned ${data.length} tools`);
-          allCollected.push(...(data as LiveItem[]));
+          // Transform Firecrawl data to match MaterialItem interface
+          const transformedTools = data.map((tool: any, index: number) => ({
+            id: tool.id || index + 1000, // Generate ID if missing
+            name: tool.name || 'Unknown Tool',
+            category: 'Tools',
+            price: tool.price || '£0.00',
+            supplier: 'Screwfix',
+            image: tool.image || '/placeholder.svg',
+            stockStatus: 'In Stock' as const,
+            isOnSale: tool.isOnSale || false,
+            salePrice: tool.salePrice,
+            highlights: tool.highlights || [],
+            productUrl: tool.view_product_url || tool.productUrl // Map view_product_url to productUrl
+          }));
+          console.log(`[TOOLS] Manual refresh - Transformed tools with URLs:`, transformedTools.map(t => ({ name: t.name, productUrl: t.productUrl })));
+          allCollected.push(...transformedTools);
         }
       } else {
         // Use existing scraping logic for other categories
