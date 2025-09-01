@@ -240,7 +240,7 @@ const CategoryMaterials = () => {
 
           {/* Search and filters for Browse tab */}
           {activeTab === "browse" && (
-            <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center mt-4">
+            <div className="flex flex-col sm:flex-row gap-3 items-stretch sm:items-end mt-4">
               <div className="flex-1">
                 <MobileInputWrapper
                   placeholder="Search materials..."
@@ -250,20 +250,21 @@ const CategoryMaterials = () => {
                   hint="Search by product name, supplier, or description"
                 />
               </div>
-              <div className="flex items-center gap-2 shrink-0">
+              <div className="flex items-end">
                 <MobileButton
                   variant="elec-outline"
                   size={isMobile ? "wide" : "sm"}
                   onClick={() => refetch()}
                   disabled={isLoading}
                   loading={isLoading}
+                  className="h-10"
                 >
                   <RefreshCw className="h-4 w-4 mr-2" />
                   Refresh
                 </MobileButton>
                 {/* Render last update time inline on desktop */}
                 {!isMobile && !isLoading && (
-                  <div className="flex items-center gap-1 text-xs text-muted-foreground whitespace-nowrap">
+                  <div className="flex items-center gap-1 text-xs text-muted-foreground whitespace-nowrap ml-2">
                     <span>📡 Live data</span>
                   </div>
                 )}
