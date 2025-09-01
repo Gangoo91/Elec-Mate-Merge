@@ -465,8 +465,9 @@ const AdiabaticCalculator = () => {
         </div>
 
         {/* Educational Content */}
-        <div className="space-y-6">
+        <div className="space-y-6 pt-6 border-t border-elec-yellow/20">
           <WhyThisMatters
+            title="Why Adiabatic Calculations Matter"
             points={[
               "The adiabatic equation ensures cables can withstand fault currents without dangerous overheating",
               "BS 7671 requires protective devices to operate within specific time limits for safety",
@@ -474,9 +475,10 @@ const AdiabaticCalculator = () => {
               "This calculation is mandatory for earthing conductor sizing and short-circuit protection",
               "Proper cable sizing ensures compliance with UK electrical regulations and insurance requirements"
             ]}
+            className="mb-6"
           />
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
             <InfoBox
               title="BS 7671 Requirements"
               icon={<BookOpen className="h-5 w-5 text-elec-yellow" />}
@@ -486,6 +488,7 @@ const AdiabaticCalculator = () => {
                 "Regulation 411.3.2: Maximum disconnection times for automatic disconnection",
                 "Section 434: Protection against overcurrent in case of short-circuit"
               ]}
+              className="h-full"
             />
 
             <InfoBox
@@ -493,24 +496,41 @@ const AdiabaticCalculator = () => {
               icon={<Lightbulb className="h-5 w-5 text-elec-yellow" />}
               points={[
                 "Use manufacturer's k values when available for greater accuracy",
-                "Consider derating factors for cables in conduits or high ambient temperatures",
+                "Consider derating factors for cables in conduits or high ambient temperatures", 
                 "Verify protection device characteristics match calculated fault levels",
                 "Document calculations for inspection and certification purposes",
                 "Regular testing ensures actual values match design calculations"
               ]}
+              className="h-full"
             />
           </div>
 
-          <Alert className="border-elec-yellow/20 bg-elec-yellow/5">
-            <Info className="h-4 w-4 text-elec-yellow" />
+          <Alert className="border-elec-yellow/30 bg-elec-yellow/5">
+            <Info className="h-5 w-5 text-elec-yellow" />
             <AlertDescription className="text-elec-light">
-              <div className="font-medium mb-2">Important Notes:</div>
-              <ul className="space-y-1 text-sm">
-                <li>• This calculation assumes adiabatic conditions (no heat dissipation)</li>
-                <li>• Always verify results against manufacturer data and BS 7671</li>
-                <li>• Consider additional factors like voltage drop and current-carrying capacity</li>
-                <li>• For complex installations, consult a qualified electrical engineer</li>
-              </ul>
+              <div className="font-semibold mb-3 text-elec-yellow">Important Notes:</div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm leading-relaxed">
+                <div className="space-y-2">
+                  <div className="flex items-start gap-2">
+                    <span className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></span>
+                    <span>This calculation assumes adiabatic conditions (no heat dissipation)</span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></span>
+                    <span>Always verify results against manufacturer data and BS 7671</span>
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <div className="flex items-start gap-2">
+                    <span className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></span>
+                    <span>Consider additional factors like voltage drop and current-carrying capacity</span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></span>
+                    <span>For complex installations, consult a qualified electrical engineer</span>
+                  </div>
+                </div>
+              </div>
             </AlertDescription>
           </Alert>
         </div>
