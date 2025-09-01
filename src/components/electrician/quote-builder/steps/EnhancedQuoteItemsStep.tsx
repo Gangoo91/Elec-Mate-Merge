@@ -7,7 +7,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { DropdownTabs } from "@/components/ui/dropdown-tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
-import { Plus, Trash2, Wrench, Package, Zap, Clock, Users, FileText, Copy, Calculator } from "lucide-react";
+import { Plus, Trash2, Wrench, Package, Zap, Clock, Users, FileText, Copy, Calculator, Search } from "lucide-react";
 import { QuoteItem, JobTemplate } from "@/types/quote";
 import { JobTemplates } from "../JobTemplates";
 import { 
@@ -20,6 +20,8 @@ import {
 } from "@/data/electrician/presetData";
 import { enhancedMaterials, EnhancedMaterialItem } from "@/data/electrician/enhancedPricingData";
 import MaterialSearchEnhanced from "../MaterialSearchEnhanced";
+import { LiveMaterialPricing } from "./LiveMaterialPricing";
+import { useQuoteMaterialIntegration } from "@/hooks/useQuoteMaterialIntegration";
 
 interface EnhancedQuoteItemsStepProps {
   items: QuoteItem[];
@@ -43,6 +45,9 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove }: Enh
     equipmentCode: "",
     notes: ""
   });
+
+  // Material integration hook
+  const { addMaterialToQuote, addMultipleMaterialsToQuote } = useQuoteMaterialIntegration(onAdd);
 
   const handleTemplateSelect = (template: JobTemplate) => {
     template.items.forEach(item => {
@@ -232,6 +237,19 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove }: Enh
                   </p>
                 </div>
                 <MaterialSearchEnhanced onAddMaterial={handleEnhancedMaterialAdd} />
+              </div>
+            )
+          },
+          {
+            value: "live",
+            label: "Live Pricing",
+            icon: Search,
+            content: (
+              <div className="w-full bg-card/50 border border-primary/20 rounded-lg p-4">
+                <LiveMaterialPricing 
+                  onAddToQuote={addMaterialToQuote}
+                  onAddMultipleToQuote={addMultipleMaterialsToQuote}
+                />
               </div>
             )
           },
