@@ -349,25 +349,23 @@ const RCDDiscriminationCalculator = () => {
         </p>
       </CardHeader>
       <CardContent className="space-y-6">
-        {/* Configuration Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Upstream RCD Configuration */}
-          <Card className="border-blue-500/40 bg-blue-500/10">
-            <CardHeader>
-              <CardTitle className="text-blue-300 text-lg flex items-center gap-2">
-                <Shield className="h-5 w-5" />
-                Upstream RCD (Main Protection)
-              </CardTitle>
-              <p className="text-xs text-blue-200">Main incomer or distribution board RCD</p>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid grid-cols-2 gap-3">
-                <div className="space-y-2">
-                  <Label className="text-elec-light text-sm">Rating (IΔn)</Label>
+        {/* Upstream RCD Configuration */}
+        <div className="space-y-8">
+          <div className="space-y-6">
+            <div className="flex items-center gap-2">
+              <Shield className="h-6 w-6 text-blue-400" />
+              <h3 className="text-xl font-semibold text-blue-400">Upstream RCD (Main Protection)</h3>
+            </div>
+            <p className="text-sm text-blue-300">Main incomer or distribution board RCD</p>
+            
+            <div className="space-y-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div className="space-y-3">
+                  <Label className="text-elec-light text-base font-medium">Rating (IΔn)</Label>
                   <Select value={upstreamRCD.rating} onValueChange={(value) => 
                     setUpstreamRCD(prev => ({ ...prev, rating: value }))
                   }>
-                    <SelectTrigger className="bg-elec-dark border-elec-yellow/20 h-10">
+                    <SelectTrigger className="bg-elec-dark border-elec-yellow/20 h-12 text-base">
                       <SelectValue placeholder="Select rating" />
                     </SelectTrigger>
                     <SelectContent className="bg-elec-dark border-elec-yellow/20">
@@ -383,12 +381,12 @@ const RCDDiscriminationCalculator = () => {
                   </Select>
                 </div>
                 
-                <div className="space-y-2">
-                  <Label className="text-elec-light text-sm">RCD Type</Label>
+                <div className="space-y-3">
+                  <Label className="text-elec-light text-base font-medium">RCD Type</Label>
                   <Select value={upstreamRCD.type} onValueChange={(value) => 
                     setUpstreamRCD(prev => ({ ...prev, type: value }))
                   }>
-                    <SelectTrigger className="bg-elec-dark border-elec-yellow/20 h-10">
+                    <SelectTrigger className="bg-elec-dark border-elec-yellow/20 h-12 text-base">
                       <SelectValue placeholder="Select type" />
                     </SelectTrigger>
                     <SelectContent className="bg-elec-dark border-elec-yellow/20">
@@ -405,13 +403,13 @@ const RCDDiscriminationCalculator = () => {
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
-                <div className="space-y-2">
-                  <Label className="text-elec-light text-sm">Installation Location</Label>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div className="space-y-3">
+                  <Label className="text-elec-light text-base font-medium">Installation Location</Label>
                   <Select value={upstreamRCD.installationLocation} onValueChange={(value) => 
                     setUpstreamRCD(prev => ({ ...prev, installationLocation: value }))
                   }>
-                    <SelectTrigger className="bg-elec-dark border-elec-yellow/20 h-10">
+                    <SelectTrigger className="bg-elec-dark border-elec-yellow/20 h-12 text-base">
                       <SelectValue placeholder="Select location" />
                     </SelectTrigger>
                     <SelectContent className="bg-elec-dark border-elec-yellow/20">
@@ -424,12 +422,12 @@ const RCDDiscriminationCalculator = () => {
                   </Select>
                 </div>
 
-                <div className="space-y-2">
-                  <Label className="text-elec-light text-sm">Earthing System</Label>
+                <div className="space-y-3">
+                  <Label className="text-elec-light text-base font-medium">Earthing System</Label>
                   <Select value={upstreamRCD.earthingSystem} onValueChange={(value) => 
                     setUpstreamRCD(prev => ({ ...prev, earthingSystem: value }))
                   }>
-                    <SelectTrigger className="bg-elec-dark border-elec-yellow/20 h-10">
+                    <SelectTrigger className="bg-elec-dark border-elec-yellow/20 h-12 text-base">
                       <SelectValue placeholder="Select system" />
                     </SelectTrigger>
                     <SelectContent className="bg-elec-dark border-elec-yellow/20">
@@ -451,45 +449,46 @@ const RCDDiscriminationCalculator = () => {
                     setUpstreamRCD(prev => ({ ...prev, hasTimeDelay: !!checked }))
                   }
                 />
-                <Label htmlFor="upstream-delay" className="text-elec-light text-sm">
+                <Label htmlFor="upstream-delay" className="text-elec-light text-base font-medium">
                   Custom time delay
                 </Label>
               </div>
 
               {upstreamRCD.hasTimeDelay && (
-                <div className="space-y-2">
-                  <Label className="text-elec-light text-sm">Custom Trip Time (ms)</Label>
+                <div className="space-y-3">
+                  <Label className="text-elec-light text-base font-medium">Trip Time (ms)</Label>
                   <Input
                     type="number"
                     value={upstreamRCD.customTripTime}
                     onChange={(e) => setUpstreamRCD(prev => ({ ...prev, customTripTime: e.target.value }))}
-                    placeholder="e.g. 500"
-                    className="bg-elec-dark border-elec-yellow/20 h-10"
+                    placeholder="Enter trip time in milliseconds"
+                    className="bg-elec-dark border-elec-yellow/20 h-12 text-base"
                     min="10"
                     max="10000"
                   />
                 </div>
               )}
-            </CardContent>
-          </Card>
+            </div>
+          </div>
+
+          <Separator className="bg-elec-yellow/20" />
 
           {/* Downstream RCD Configuration */}
-          <Card className="border-green-500/40 bg-green-500/10">
-            <CardHeader>
-              <CardTitle className="text-green-300 text-lg flex items-center gap-2">
-                <Zap className="h-5 w-5" />
-                Downstream RCD (Circuit Protection)
-              </CardTitle>
-              <p className="text-xs text-green-200">Final circuit or local RCD protection</p>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid grid-cols-2 gap-3">
-                <div className="space-y-2">
-                  <Label className="text-elec-light text-sm">Rating (IΔn)</Label>
+          <div className="space-y-6">
+            <div className="flex items-center gap-2">
+              <Zap className="h-6 w-6 text-green-400" />
+              <h3 className="text-xl font-semibold text-green-400">Downstream RCD (Circuit Protection)</h3>
+            </div>
+            <p className="text-sm text-green-300">Final circuit or local RCD protection</p>
+            
+            <div className="space-y-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div className="space-y-3">
+                  <Label className="text-elec-light text-base font-medium">Rating (IΔn)</Label>
                   <Select value={downstreamRCD.rating} onValueChange={(value) => 
                     setDownstreamRCD(prev => ({ ...prev, rating: value }))
                   }>
-                    <SelectTrigger className="bg-elec-dark border-elec-yellow/20 h-10">
+                    <SelectTrigger className="bg-elec-dark border-elec-yellow/20 h-12 text-base">
                       <SelectValue placeholder="Select rating" />
                     </SelectTrigger>
                     <SelectContent className="bg-elec-dark border-elec-yellow/20">
@@ -505,12 +504,12 @@ const RCDDiscriminationCalculator = () => {
                   </Select>
                 </div>
                 
-                <div className="space-y-2">
-                  <Label className="text-elec-light text-sm">RCD Type</Label>
+                <div className="space-y-3">
+                  <Label className="text-elec-light text-base font-medium">RCD Type</Label>
                   <Select value={downstreamRCD.type} onValueChange={(value) => 
                     setDownstreamRCD(prev => ({ ...prev, type: value }))
                   }>
-                    <SelectTrigger className="bg-elec-dark border-elec-yellow/20 h-10">
+                    <SelectTrigger className="bg-elec-dark border-elec-yellow/20 h-12 text-base">
                       <SelectValue placeholder="Select type" />
                     </SelectTrigger>
                     <SelectContent className="bg-elec-dark border-elec-yellow/20">
@@ -527,12 +526,12 @@ const RCDDiscriminationCalculator = () => {
                 </div>
               </div>
 
-              <div className="space-y-2">
-                <Label className="text-elec-light text-sm">Circuit Type</Label>
+              <div className="space-y-3">
+                <Label className="text-elec-light text-base font-medium">Circuit Type</Label>
                 <Select value={downstreamRCD.circuitType} onValueChange={(value) => 
                   setDownstreamRCD(prev => ({ ...prev, circuitType: value }))
                 }>
-                  <SelectTrigger className="bg-elec-dark border-elec-yellow/20 h-10">
+                  <SelectTrigger className="bg-elec-dark border-elec-yellow/20 h-12 text-base">
                     <SelectValue placeholder="Select circuit type" />
                   </SelectTrigger>
                   <SelectContent className="bg-elec-dark border-elec-yellow/20">
@@ -545,29 +544,29 @@ const RCDDiscriminationCalculator = () => {
                 </Select>
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
-                <div className="space-y-2">
-                  <Label className="text-elec-light text-sm">Load Current (A)</Label>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div className="space-y-3">
+                  <Label className="text-elec-light text-base font-medium">Load Current (A)</Label>
                   <Input
                     type="number"
                     value={downstreamRCD.loadCurrent}
                     onChange={(e) => setDownstreamRCD(prev => ({ ...prev, loadCurrent: e.target.value }))}
-                    placeholder="e.g. 16"
-                    className="bg-elec-dark border-elec-yellow/20 h-10"
+                    placeholder="Enter load current"
+                    className="bg-elec-dark border-elec-yellow/20 h-12 text-base"
                     min="0"
                     max="100"
                     step="0.1"
                   />
                 </div>
 
-                <div className="space-y-2">
-                  <Label className="text-elec-light text-sm">Cable Length (m)</Label>
+                <div className="space-y-3">
+                  <Label className="text-elec-light text-base font-medium">Cable Length (m)</Label>
                   <Input
                     type="number"
                     value={downstreamRCD.cableLength}
                     onChange={(e) => setDownstreamRCD(prev => ({ ...prev, cableLength: e.target.value }))}
-                    placeholder="e.g. 25"
-                    className="bg-elec-dark border-elec-yellow/20 h-10"
+                    placeholder="Enter cable length"
+                    className="bg-elec-dark border-elec-yellow/20 h-12 text-base"
                     min="0"
                     max="1000"
                   />
@@ -582,27 +581,27 @@ const RCDDiscriminationCalculator = () => {
                     setDownstreamRCD(prev => ({ ...prev, hasTimeDelay: !!checked }))
                   }
                 />
-                <Label htmlFor="downstream-delay" className="text-elec-light text-sm">
+                <Label htmlFor="downstream-delay" className="text-elec-light text-base font-medium">
                   Custom time delay
                 </Label>
               </div>
 
               {downstreamRCD.hasTimeDelay && (
-                <div className="space-y-2">
-                  <Label className="text-elec-light text-sm">Custom Trip Time (ms)</Label>
+                <div className="space-y-3">
+                  <Label className="text-elec-light text-base font-medium">Trip Time (ms)</Label>
                   <Input
                     type="number"
                     value={downstreamRCD.customTripTime}
                     onChange={(e) => setDownstreamRCD(prev => ({ ...prev, customTripTime: e.target.value }))}
-                    placeholder="e.g. 300"
-                    className="bg-elec-dark border-elec-yellow/20 h-10"
+                    placeholder="Enter trip time in milliseconds"
+                    className="bg-elec-dark border-elec-yellow/20 h-12 text-base"
                     min="10"
                     max="10000"
                   />
                 </div>
               )}
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         </div>
 
         {/* Control Buttons */}
