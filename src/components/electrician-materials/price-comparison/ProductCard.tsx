@@ -149,7 +149,7 @@ export const ProductCard = ({ product, isCheapest, savings, onAddToQuote }: Prod
                 />
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-1">
-                    <h3 className="font-medium text-white truncate">{product.name}</h3>
+                    <h3 className="font-medium text-white text-wrap">{product.name}</h3>
                     {isCheapest && (
                       <Badge className="bg-green-500/20 text-green-400 border-green-500/30">
                         <Crown className="h-4 w-4 mr-1" />
