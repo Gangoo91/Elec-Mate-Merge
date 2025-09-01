@@ -56,11 +56,13 @@ const MobileButton = React.forwardRef<HTMLButtonElement, MobileButtonProps>(
         disabled={disabled || loading}
         {...props}
       >
-        {loading && (
-          <div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
-        )}
-        {icon && !loading && <div className="mr-2">{icon}</div>}
-        {children}
+        <>
+          {loading && (
+            <div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+          )}
+          {icon && !loading && <div className="mr-2">{icon}</div>}
+          {children}
+        </>
       </Comp>
     );
   }
