@@ -240,17 +240,17 @@ const CategoryMaterials = () => {
 
           {/* Search and filters for Browse tab */}
           {activeTab === "browse" && (
-            <div className={`${isMobile ? 'flex flex-col gap-4' : 'flex items-center justify-between'} mt-4`}>
-              <div className={`${isMobile ? 'w-full' : 'flex items-center gap-4 flex-1'}`}>
-                <div className={`${isMobile ? 'w-full mb-3' : 'relative flex-1 max-w-md'}`}>
-                  <MobileInputWrapper
-                    placeholder="Search materials..."
-                    value={searchTerm}
-                    onChange={setSearchTerm}
-                    icon={<Search className="h-4 w-4" />}
-                    hint="Search by product name, supplier, or description"
-                  />
-                </div>
+            <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center mt-4">
+              <div className="flex-1">
+                <MobileInputWrapper
+                  placeholder="Search materials..."
+                  value={searchTerm}
+                  onChange={setSearchTerm}
+                  icon={<Search className="h-4 w-4" />}
+                  hint="Search by product name, supplier, or description"
+                />
+              </div>
+              <div className="flex items-center gap-2 shrink-0">
                 <MobileButton
                   variant="elec-outline"
                   size={isMobile ? "wide" : "sm"}
@@ -261,6 +261,12 @@ const CategoryMaterials = () => {
                   <RefreshCw className="h-4 w-4 mr-2" />
                   Refresh
                 </MobileButton>
+                {/* Render last update time inline on desktop */}
+                {!isMobile && !isLoading && (
+                  <div className="flex items-center gap-1 text-xs text-muted-foreground whitespace-nowrap">
+                    <span>📡 Live data</span>
+                  </div>
+                )}
               </div>
             </div>
           )}

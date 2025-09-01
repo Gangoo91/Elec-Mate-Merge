@@ -23,13 +23,13 @@ const RefreshButton = ({ isFetching, lastFetchTime, onRefresh, categoryId, class
   };
 
   return (
-    <div className={`flex flex-col sm:flex-row gap-2 items-start ${className}`}>
+    <div className={`flex items-center gap-2 ${className}`}>
       <Button 
         variant="outline" 
         size="sm" 
         onClick={onRefresh} 
         disabled={isFetching} 
-        className="flex items-center gap-1.5 text-xs sm:text-sm bg-elec-yellow/10 border-elec-yellow/30 hover:bg-elec-yellow/20"
+        className="flex items-center gap-1.5 text-xs sm:text-sm bg-elec-yellow/10 border-elec-yellow/30 hover:bg-elec-yellow/20 shrink-0"
       >
         <RefreshCw className={`h-3.5 w-3.5 sm:h-4 sm:w-4 ${isFetching ? 'animate-spin' : ''}`} />
         <span className="hidden xs:inline">
@@ -41,7 +41,7 @@ const RefreshButton = ({ isFetching, lastFetchTime, onRefresh, categoryId, class
       </Button>
       
       {lastFetchTime > 0 && !isFetching && (
-        <div className="flex items-center gap-1 text-xs text-muted-foreground">
+        <div className="flex items-center gap-1 text-xs text-muted-foreground whitespace-nowrap">
           <Clock className="h-3 w-3" />
           <span>Updated {formatLastUpdate(lastFetchTime)}</span>
         </div>
