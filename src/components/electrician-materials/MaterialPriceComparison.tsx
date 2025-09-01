@@ -19,7 +19,6 @@ interface MaterialPriceComparisonProps {
   onClearSelection?: () => void;
   onAddToQuote?: (material: any, quantity?: number) => void;
   onAddMultipleToQuote?: (materials: any[]) => void;
-  hideHeader?: boolean;
 }
 
 const MaterialPriceComparison = ({ 
@@ -27,8 +26,7 @@ const MaterialPriceComparison = ({
   selectedItems = [], 
   onClearSelection, 
   onAddToQuote, 
-  onAddMultipleToQuote,
-  hideHeader = false
+  onAddMultipleToQuote 
 }: MaterialPriceComparisonProps) => {
   const isMobile = useIsMobile();
   const [searchQuery, setSearchQuery] = useState(initialQuery);
@@ -325,29 +323,27 @@ const MaterialPriceComparison = ({
 
   return (
     <div className="space-y-6">
-      {!hideHeader && (
-        <div className="text-center space-y-4">
-          <h2 className="text-3xl font-bold text-white">AI-Powered Material Price Comparison</h2>
-          <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-            Compare prices across multiple suppliers with intelligent recommendations and value analysis
-          </p>
-          <div className="flex items-center justify-center gap-4">
-            <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30">
-              <Brain className="h-3 w-3 mr-1" />
-              AI-Enhanced
-            </Badge>
-            <label className="flex items-center gap-2 text-sm">
-              <input
-                type="checkbox"
-                checked={aiEnabled}
-                onChange={(e) => setAiEnabled(e.target.checked)}
-                className="rounded"
-              />
-              <span className="text-muted-foreground">Enable AI Recommendations</span>
-            </label>
-          </div>
+      <div className="text-center space-y-4">
+        <h2 className="text-3xl font-bold text-white">AI-Powered Material Price Comparison</h2>
+        <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+          Compare prices across multiple suppliers with intelligent recommendations and value analysis
+        </p>
+        <div className="flex items-center justify-center gap-4">
+          <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30">
+            <Brain className="h-3 w-3 mr-1" />
+            AI-Enhanced
+          </Badge>
+          <label className="flex items-center gap-2 text-sm">
+            <input
+              type="checkbox"
+              checked={aiEnabled}
+              onChange={(e) => setAiEnabled(e.target.checked)}
+              className="rounded"
+            />
+            <span className="text-muted-foreground">Enable AI Recommendations</span>
+          </label>
         </div>
-      )}
+      </div>
 
       {/* Tab Navigation - Collapsible on Mobile */}
       {isMobile ? (
