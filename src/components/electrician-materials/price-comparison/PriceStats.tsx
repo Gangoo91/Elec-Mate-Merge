@@ -2,7 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { TrendingDown, Download, Plus } from "lucide-react";
-import { PriceComparisonItem } from "@/types/materials";
+import { PriceComparisonItem } from "./ProductCard";
 
 export interface PriceComparisonResult {
   searchTerm: string;
