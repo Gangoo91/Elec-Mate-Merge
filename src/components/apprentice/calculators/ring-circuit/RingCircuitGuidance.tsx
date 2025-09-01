@@ -71,48 +71,85 @@ const RingCircuitGuidance = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <Accordion type="single" collapsible className="w-full">
-            <AccordionItem value="r1-r2" className="border-elec-yellow/20">
-              <AccordionTrigger className="text-elec-light">R1 + R2 Calculation</AccordionTrigger>
-              <AccordionContent className="text-elec-light/80 space-y-3">
-                <p>
+          <Accordion type="single" collapsible className="w-full space-y-2">
+            <AccordionItem value="r1-r2" className="border-elec-yellow/20 bg-elec-dark/20 rounded-lg px-4">
+              <AccordionTrigger className="text-elec-light hover:text-elec-yellow text-left py-4">
+                R1 + R2 Calculation
+              </AccordionTrigger>
+              <AccordionContent className="text-elec-light/80 space-y-3 pb-4">
+                <p className="text-sm sm:text-base leading-relaxed">
                   R1 + R2 represents the resistance of the live and earth conductors combined. For a ring circuit:
                 </p>
-                <div className="bg-elec-dark rounded p-3 font-mono text-sm border border-elec-yellow/20">
+                <div className="bg-elec-dark rounded-lg p-3 sm:p-4 font-mono text-xs sm:text-sm border border-elec-yellow/20">
                   R1 + R2 (at midpoint) = (End-to-End Live + End-to-End CPC) ÷ 4
                 </div>
-                <p className="text-sm">
+                <p className="text-xs sm:text-sm leading-relaxed">
                   This is because at the midpoint of the ring, you have two parallel paths, each with half the total resistance.
                 </p>
               </AccordionContent>
             </AccordionItem>
             
-            <AccordionItem value="end-to-end" className="border-elec-yellow/20">
-              <AccordionTrigger className="text-elec-light">End-to-End Resistance</AccordionTrigger>
-              <AccordionContent className="text-elec-light/80 space-y-3">
-                <p>
+            <AccordionItem value="end-to-end" className="border-elec-yellow/20 bg-elec-dark/20 rounded-lg px-4">
+              <AccordionTrigger className="text-elec-light hover:text-elec-yellow text-left py-4">
+                End-to-End Resistance
+              </AccordionTrigger>
+              <AccordionContent className="text-elec-light/80 space-y-3 pb-4">
+                <p className="text-sm sm:text-base leading-relaxed">
                   End-to-end resistance is measured across the entire loop to confirm continuity:
                 </p>
-                <div className="bg-elec-dark rounded p-3 font-mono text-sm border border-elec-yellow/20">
+                <div className="bg-elec-dark rounded-lg p-3 sm:p-4 font-mono text-xs sm:text-sm border border-elec-yellow/20">
                   Individual Leg Resistance = End-to-End Reading ÷ 4
                 </div>
-                <p className="text-sm">
+                <p className="text-xs sm:text-sm leading-relaxed">
                   This confirms the ring is continuous and helps identify any high resistance joints.
                 </p>
               </AccordionContent>
             </AccordionItem>
 
-            <AccordionItem value="cross-connection" className="border-elec-yellow/20">
-              <AccordionTrigger className="text-elec-light">Cross-Connection Testing</AccordionTrigger>
-              <AccordionContent className="text-elec-light/80 space-y-3">
-                <p>
+            <AccordionItem value="cross-connection" className="border-elec-yellow/20 bg-elec-dark/20 rounded-lg px-4">
+              <AccordionTrigger className="text-elec-light hover:text-elec-yellow text-left py-4">
+                Cross-Connection Testing
+              </AccordionTrigger>
+              <AccordionContent className="text-elec-light/80 space-y-3 pb-4">
+                <p className="text-sm sm:text-base leading-relaxed">
                   Cross-connection tests verify the ring is properly wired and not interconnected with other circuits:
                 </p>
-                <ul className="space-y-2 text-sm">
-                  <li>• <strong>Live to Neutral:</strong> Should equal R1 + Rn</li>
-                  <li>• <strong>Live to CPC:</strong> Should equal R1 + R2</li>
-                  <li>• <strong>Neutral to CPC:</strong> Should equal Rn + R2</li>
+                <ul className="space-y-2 text-xs sm:text-sm">
+                  <li className="flex items-start gap-2">
+                    <span className="flex-shrink-0 w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2"></span>
+                    <span><strong>Live to Neutral:</strong> Should equal R1 + Rn</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="flex-shrink-0 w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2"></span>
+                    <span><strong>Live to CPC:</strong> Should equal R1 + R2</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="flex-shrink-0 w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2"></span>
+                    <span><strong>Neutral to CPC:</strong> Should equal Rn + R2</span>
+                  </li>
                 </ul>
+              </AccordionContent>
+            </AccordionItem>
+
+            <AccordionItem value="cable-calculations" className="border-elec-yellow/20 bg-elec-dark/20 rounded-lg px-4">
+              <AccordionTrigger className="text-elec-light hover:text-elec-yellow text-left py-4">
+                Cable Size Impact & Temperature Correction
+              </AccordionTrigger>
+              <AccordionContent className="text-elec-light/80 space-y-3 pb-4">
+                <p className="text-sm sm:text-base leading-relaxed">
+                  Cable size significantly affects resistance values. Expected resistances at 20°C:
+                </p>
+                <div className="bg-elec-dark rounded-lg p-3 sm:p-4 text-xs sm:text-sm border border-elec-yellow/20 space-y-2">
+                  <div><strong>2.5mm² T&E:</strong> Live: 7.41mΩ/m, CPC (1.5mm²): 12.1mΩ/m</div>
+                  <div><strong>4.0mm² T&E:</strong> Live: 4.61mΩ/m, CPC (2.5mm²): 7.41mΩ/m</div>
+                  <div><strong>6.0mm² T&E:</strong> Live: 3.08mΩ/m, CPC (4.0mm²): 4.61mΩ/m</div>
+                  <div><strong>10mm² T&E:</strong> Live: 1.83mΩ/m, CPC (6.0mm²): 3.08mΩ/m</div>
+                </div>
+                <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-3 sm:p-4">
+                  <p className="text-xs sm:text-sm"><strong>Temperature Correction:</strong></p>
+                  <p className="text-xs sm:text-sm">Resistance increases by 0.393% per °C above 20°C</p>
+                  <div className="font-mono text-xs mt-2">R(temp) = R(20°C) × [1 + 0.00393 × (T - 20)]</div>
+                </div>
               </AccordionContent>
             </AccordionItem>
           </Accordion>
@@ -179,30 +216,54 @@ const RingCircuitGuidance = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
-              <h4 className="font-semibold text-green-300 mb-2 flex items-center gap-2">
-                <CheckCircle className="h-4 w-4" />
+              <h4 className="font-semibold text-green-300 mb-3 flex items-center gap-2 text-sm sm:text-base">
+                <CheckCircle className="h-4 w-4 flex-shrink-0" />
                 Good Results Indicate:
               </h4>
-              <ul className="text-sm text-elec-light/80 space-y-1">
-                <li>• Consistent readings around the ring</li>
-                <li>• R1 ≈ Rn (similar conductor sizes)</li>
-                <li>• Cross-connection values match calculations</li>
-                <li>• No readings above expected values</li>
+              <ul className="text-xs sm:text-sm text-elec-light/80 space-y-2">
+                <li className="flex items-start gap-2">
+                  <span className="flex-shrink-0 w-1.5 h-1.5 bg-green-400 rounded-full mt-2"></span>
+                  <span>Consistent readings around the ring</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="flex-shrink-0 w-1.5 h-1.5 bg-green-400 rounded-full mt-2"></span>
+                  <span>R1 ≈ Rn (similar conductor sizes)</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="flex-shrink-0 w-1.5 h-1.5 bg-green-400 rounded-full mt-2"></span>
+                  <span>Cross-connection values match calculations</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="flex-shrink-0 w-1.5 h-1.5 bg-green-400 rounded-full mt-2"></span>
+                  <span>Values within cable specification tolerances</span>
+                </li>
               </ul>
             </div>
 
             <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4">
-              <h4 className="font-semibold text-red-300 mb-2 flex items-center gap-2">
-                <AlertTriangle className="h-4 w-4" />
+              <h4 className="font-semibold text-red-300 mb-3 flex items-center gap-2 text-sm sm:text-base">
+                <AlertTriangle className="h-4 w-4 flex-shrink-0" />
                 Warning Signs:
               </h4>
-              <ul className="text-sm text-elec-light/80 space-y-1">
-                <li>• High resistance at specific points</li>
-                <li>• Significant difference between R1 and R2</li>
-                <li>• Infinite readings (open circuit)</li>
-                <li>• Inconsistent readings around ring</li>
+              <ul className="text-xs sm:text-sm text-elec-light/80 space-y-2">
+                <li className="flex items-start gap-2">
+                  <span className="flex-shrink-0 w-1.5 h-1.5 bg-red-400 rounded-full mt-2"></span>
+                  <span>High resistance at specific points</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="flex-shrink-0 w-1.5 h-1.5 bg-red-400 rounded-full mt-2"></span>
+                  <span>Significant difference between R1 and R2</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="flex-shrink-0 w-1.5 h-1.5 bg-red-400 rounded-full mt-2"></span>
+                  <span>Infinite readings (open circuit)</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="flex-shrink-0 w-1.5 h-1.5 bg-red-400 rounded-full mt-2"></span>
+                  <span>Values significantly off from cable specs</span>
+                </li>
               </ul>
             </div>
           </div>

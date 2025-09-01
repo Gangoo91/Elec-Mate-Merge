@@ -104,23 +104,28 @@ export function useRingCircuitCalculator() {
     const cableData = CABLE_RESISTANCE_VALUES[cable as keyof typeof CABLE_RESISTANCE_VALUES];
     
     // Temperature correction factor (resistance increases with temperature)
-    const tempCorrection = 1 + 0.004 * (temp - 20);
+    // Copper resistance coefficient: 0.00393 per °C at 20°C
+    const tempCorrection = 1 + 0.00393 * (temp - 20);
     
     // Calculate expected resistances for the complete ring
-    const r1Expected = (cableData.live * length * tempCorrection) / 1000; // Convert mΩ to Ω
-    const r2Expected = (cableData.cpc * length * tempCorrection) / 1000;
+    // Total ring length = length × 2 (two legs of the ring)
+    const totalRingLength = length * 2;
+    const r1Expected = (cableData.live * totalRingLength * tempCorrection) / 1000; // Convert mΩ to Ω
+    const r2Expected = (cableData.cpc * totalRingLength * tempCorrection) / 1000;
     
     return {
-      r1Expected: r1Expected / 4, // Divided by 4 for ring circuit
+      r1Expected: r1Expected / 4, // Divided by 4 for parallel paths in ring circuit
       r2Expected: r2Expected / 4,
-      toleranceRange: 0.1 // 10% tolerance
+      toleranceRange: Math.max(0.05, (r1Expected / 4) * 0.15) // 15% tolerance or minimum 0.05Ω
     };
   }, []);
 
   const performValidationChecks = useCallback((
     calculatedValues: { r1: number; r2: number; rn: number; r1PlusR2: number },
     readingValues: { [key: string]: number },
-    expectedValues: any
+    expectedValues: any,
+    cable: string = "",
+    temp: number = 20
   ): RingCircuitResult['validationDetails'] => {
     
     const endToEndChecks: ValidationCheck[] = [
@@ -202,26 +207,29 @@ export function useRingCircuitCalculator() {
 
     const cableComparisonChecks: ValidationCheck[] = [];
     if (expectedValues) {
+      const r1Difference = Math.abs(calculatedValues.r1 - expectedValues.r1Expected);
+      const r2Difference = Math.abs(calculatedValues.r2 - expectedValues.r2Expected);
+      
       cableComparisonChecks.push(
         {
           description: "R1 vs expected cable resistance",
-          status: Math.abs(calculatedValues.r1 - expectedValues.r1Expected) < expectedValues.toleranceRange ? 'pass' : 'warning',
+          status: r1Difference < expectedValues.toleranceRange ? 'pass' : 'warning',
           actualValue: calculatedValues.r1,
           expectedValue: expectedValues.r1Expected,
           tolerance: expectedValues.toleranceRange,
-          message: Math.abs(calculatedValues.r1 - expectedValues.r1Expected) < expectedValues.toleranceRange
-            ? "R1 matches expected cable resistance"
-            : "R1 differs from expected - check cable length/type"
+          message: r1Difference < expectedValues.toleranceRange
+            ? `R1 matches expected cable resistance (${cable.toUpperCase()} at ${temp}°C)`
+            : `R1 differs from expected by ${r1Difference.toFixed(3)}Ω - check cable length/type/connections`
         },
         {
           description: "R2 vs expected cable resistance", 
-          status: Math.abs(calculatedValues.r2 - expectedValues.r2Expected) < expectedValues.toleranceRange ? 'pass' : 'warning',
+          status: r2Difference < expectedValues.toleranceRange ? 'pass' : 'warning',
           actualValue: calculatedValues.r2,
           expectedValue: expectedValues.r2Expected,
           tolerance: expectedValues.toleranceRange,
-          message: Math.abs(calculatedValues.r2 - expectedValues.r2Expected) < expectedValues.toleranceRange
-            ? "R2 matches expected cable resistance"
-            : "R2 differs from expected - check cable length/type/connections"
+          message: r2Difference < expectedValues.toleranceRange
+            ? `R2 matches expected cable resistance (${cable.toUpperCase()} CPC at ${temp}°C)`
+            : `R2 differs from expected by ${r2Difference.toFixed(3)}Ω - check cable length/type/connections`
         }
       );
     }
@@ -263,12 +271,15 @@ export function useRingCircuitCalculator() {
 
     // Calculate expected values if cable data available
     let expectedValues = null;
+    let cable = "";
+    let temp = parseFloat(temperature);
     if (cableType && cableLength) {
-      expectedValues = calculateExpectedValues(cableType, parseFloat(cableLength), parseFloat(temperature));
+      cable = cableType;
+      expectedValues = calculateExpectedValues(cableType, parseFloat(cableLength), temp);
     }
 
     // Perform comprehensive validation
-    const validationDetails = performValidationChecks(calculatedValues, readingValues, expectedValues);
+    const validationDetails = performValidationChecks(calculatedValues, readingValues, expectedValues, cable, temp);
 
     // Determine overall status
     const allChecks = [
