@@ -107,9 +107,9 @@ const BulkPricingCalculator = ({ categoryId, products = [], onCalculate }: BulkP
 
   return (
     <div className="space-y-6">
-      <Card className="border-purple-500/30 bg-purple-500/5">
+      <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader>
-          <CardTitle className="text-purple-300 flex items-center gap-2">
+          <CardTitle className="text-elec-yellow flex items-center gap-2">
             <Calculator className="h-5 w-5" />
             Bulk Pricing Calculator
           </CardTitle>
@@ -118,14 +118,14 @@ const BulkPricingCalculator = ({ categoryId, products = [], onCalculate }: BulkP
           <div className="space-y-4">
             {/* Product Selection */}
             <div className="space-y-2">
-              <label className="text-sm font-medium text-purple-200">Select Product</label>
+              <label className="text-sm font-medium text-muted-foreground">Select Product</label>
               <Select value={selectedProduct} onValueChange={setSelectedProduct}>
-                <SelectTrigger className="bg-elec-dark border-purple-500/30 text-white">
+                <SelectTrigger className="bg-elec-dark border-elec-yellow/20 text-white">
                   <SelectValue placeholder="Choose a product to calculate bulk pricing" />
                 </SelectTrigger>
-                <SelectContent className="bg-elec-dark border-purple-500/30 z-50">
+                <SelectContent className="bg-elec-dark border-elec-yellow/20 z-50">
                   {products.map(product => (
-                    <SelectItem key={product.id} value={product.id.toString()} className="text-white focus:bg-purple-500/20">
+                    <SelectItem key={product.id} value={product.id.toString()} className="text-white focus:bg-elec-yellow/20">
                       {product.name} - {product.supplier} ({product.price})
                     </SelectItem>
                   ))}
@@ -135,13 +135,13 @@ const BulkPricingCalculator = ({ categoryId, products = [], onCalculate }: BulkP
 
             {/* Custom Quantities */}
             <div className="space-y-2">
-              <label className="text-sm font-medium text-purple-200">Quantities to Calculate</label>
+              <label className="text-sm font-medium text-muted-foreground">Quantities to Calculate</label>
               <div className="flex flex-wrap gap-2 mb-2">
                 {customQuantities.map(qty => (
                   <Badge 
                     key={qty} 
                     variant="outline" 
-                    className="border-purple-500/30 text-purple-300 px-2 py-1 cursor-pointer hover:bg-purple-500/20"
+                    className="border-elec-yellow/30 text-elec-yellow px-2 py-1 cursor-pointer hover:bg-elec-yellow/20"
                     onClick={() => removeQuantity(qty)}
                   >
                     {qty}
@@ -155,13 +155,13 @@ const BulkPricingCalculator = ({ categoryId, products = [], onCalculate }: BulkP
                   placeholder="Add quantity"
                   value={newQuantity}
                   onChange={(e) => setNewQuantity(e.target.value)}
-                  className="bg-elec-dark border-purple-500/30 text-white"
+                  className="bg-elec-dark border-elec-yellow/20 text-white"
                   min="1"
                 />
                 <Button 
                   size="sm" 
                   onClick={addCustomQuantity}
-                  className="bg-purple-500/20 text-purple-300 hover:bg-purple-500/30"
+                  className="bg-elec-yellow/20 text-elec-yellow hover:bg-elec-yellow/30"
                 >
                   <Plus className="h-4 w-4" />
                 </Button>
@@ -171,7 +171,7 @@ const BulkPricingCalculator = ({ categoryId, products = [], onCalculate }: BulkP
             <Button 
               onClick={calculateBulkPricing}
               disabled={!selectedProduct || isCalculating}
-              className="w-full bg-purple-500/20 text-purple-300 hover:bg-purple-500/30"
+              className="w-full bg-elec-yellow/20 text-elec-yellow hover:bg-elec-yellow/30"
             >
               {isCalculating ? "Calculating..." : "Calculate Bulk Pricing"}
             </Button>
@@ -181,9 +181,9 @@ const BulkPricingCalculator = ({ categoryId, products = [], onCalculate }: BulkP
 
       {/* Results */}
       {bulkResults.length > 0 && (
-        <Card className="border-purple-500/30 bg-purple-500/5">
+        <Card className="border-elec-yellow/20 bg-elec-gray">
           <CardHeader>
-            <CardTitle className="text-purple-300 flex items-center gap-2">
+            <CardTitle className="text-elec-yellow flex items-center gap-2">
               <Package className="h-5 w-5" />
               Bulk Pricing Results
             </CardTitle>
@@ -197,18 +197,18 @@ const BulkPricingCalculator = ({ categoryId, products = [], onCalculate }: BulkP
                     <p className="text-sm text-muted-foreground">{result.supplier}</p>
                   </div>
                   <div className="text-right">
-                    <p className="text-lg font-bold text-purple-300">
+                    <p className="text-lg font-bold text-elec-yellow">
                       Unit Price: {formatPrice(result.unitPrice)}
                     </p>
                   </div>
                 </div>
 
                 {/* Bulk Discount Tiers */}
-                <div className="bg-purple-500/10 rounded-lg p-3">
-                  <h5 className="font-medium text-purple-200 mb-2">Discount Tiers</h5>
+                <div className="bg-elec-yellow/10 rounded-lg p-3">
+                  <h5 className="font-medium text-muted-foreground mb-2">Discount Tiers</h5>
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
                     {result.bulkDiscounts.map((discount, idx) => (
-                      <div key={idx} className="text-xs text-purple-200">
+                      <div key={idx} className="text-xs text-muted-foreground">
                         {discount.minQuantity}+ units: {discount.discountPercent}% off
                       </div>
                     ))}
@@ -219,16 +219,16 @@ const BulkPricingCalculator = ({ categoryId, products = [], onCalculate }: BulkP
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm">
                     <thead>
-                      <tr className="border-b border-purple-500/30">
-                        <th className="text-left py-2 text-purple-200">Quantity</th>
-                        <th className="text-right py-2 text-purple-200">Unit Price</th>
-                        <th className="text-right py-2 text-purple-200">Total Price</th>
-                        <th className="text-right py-2 text-purple-200">Savings</th>
+                      <tr className="border-b border-elec-yellow/30">
+                        <th className="text-left py-2 text-muted-foreground">Quantity</th>
+                        <th className="text-right py-2 text-muted-foreground">Unit Price</th>
+                        <th className="text-right py-2 text-muted-foreground">Total Price</th>
+                        <th className="text-right py-2 text-muted-foreground">Savings</th>
                       </tr>
                     </thead>
                     <tbody>
                       {result.quantities.map((qty, idx) => (
-                        <tr key={idx} className="border-b border-purple-500/10">
+                        <tr key={idx} className="border-b border-elec-yellow/10">
                           <td className="py-2 text-white font-medium">{qty.quantity}</td>
                           <td className="py-2 text-right text-white">
                             {formatPrice(qty.unitPrice)}
@@ -236,7 +236,7 @@ const BulkPricingCalculator = ({ categoryId, products = [], onCalculate }: BulkP
                               <TrendingDown className="inline h-3 w-3 ml-1 text-green-400" />
                             )}
                           </td>
-                          <td className="py-2 text-right text-purple-300 font-medium">
+                          <td className="py-2 text-right text-elec-yellow font-medium">
                             {formatPrice(qty.totalPrice)}
                           </td>
                           <td className="py-2 text-right">
