@@ -114,48 +114,128 @@ serve(async (req) => {
   }
 });
 
+function extractProductSpecs(productName: string): {
+  type: string;
+  wireSize?: string;
+  length?: string;
+  rating?: string;
+  wattage?: string;
+  specs: string;
+} {
+  const name = productName.toLowerCase();
+  
+  // Extract wire size (1.5mm, 2.5mm, etc.)
+  const wireSizeMatch = name.match(/(\d+(?:\.\d+)?)\s*mm/);
+  const wireSize = wireSizeMatch ? wireSizeMatch[1] + 'mm' : '';
+  
+  // Extract length (10m, 25m, 100m, etc.)
+  const lengthMatch = name.match(/(\d+)\s*m(?:\s|$|,)/);
+  const length = lengthMatch ? lengthMatch[1] + 'm' : '';
+  
+  // Extract current rating (16a, 32a, etc.)
+  const ratingMatch = name.match(/(\d+)\s*a(?:mp)?(?:\s|$|,)/);
+  const rating = ratingMatch ? ratingMatch[1] + 'a' : '';
+  
+  // Extract wattage (5w, 10w, etc.)
+  const wattageMatch = name.match(/(\d+)\s*w(?:att)?(?:\s|$|,)/);
+  const wattage = wattageMatch ? wattageMatch[1] + 'w' : '';
+  
+  // Determine product type
+  let type = '';
+  if (name.includes('twin') && name.includes('earth')) {
+    type = 'twin-earth-cable';
+  } else if (name.includes('swa') || name.includes('armoured')) {
+    type = 'armoured-cable';
+  } else if (name.includes('flex')) {
+    type = 'flex-cable';
+  } else if (name.includes('data') || name.includes('cat5') || name.includes('cat6')) {
+    type = 'data-cable';
+  } else if (name.includes('mcb') || name.includes('circuit breaker')) {
+    type = 'mcb';
+  } else if (name.includes('rcd')) {
+    type = 'rcd';
+  } else if (name.includes('consumer unit')) {
+    type = 'consumer-unit';
+  } else if (name.includes('downlight') || name.includes('led') && name.includes('light')) {
+    type = 'led-downlight';
+  } else if (name.includes('batten')) {
+    type = 'batten-light';
+  } else if (name.includes('emergency')) {
+    type = 'emergency-light';
+  } else if (name.includes('clip')) {
+    type = 'cable-clip';
+  } else if (name.includes('gland')) {
+    type = 'cable-gland';
+  } else if (name.includes('trunking')) {
+    type = 'trunking';
+  } else {
+    // Generic categorization based on keywords
+    const words = name.split(' ').filter(word => word.length > 2);
+    type = words.slice(0, 2).join('-');
+  }
+  
+  // Create a specification string for exact matching
+  const specs = [type, wireSize, length, rating, wattage].filter(Boolean).join('-');
+  
+  return { type, wireSize, length, rating, wattage, specs };
+}
+
 function groupSimilarProducts(products: Product[]): Product[][] {
   const groups: { [key: string]: Product[] } = {};
   
   products.forEach(product => {
-    // Create a simplified key for grouping (remove sizes, lengths, etc.)
-    const key = product.name
-      .toLowerCase()
-      .replace(/\d+(?:mm|m|a|w|amp|watt)\b/g, '') // Remove measurements
-      .replace(/\s+/g, ' ')
-      .trim();
+    const { specs } = extractProductSpecs(product.name);
     
-    if (!groups[key]) {
-      groups[key] = [];
+    if (!groups[specs]) {
+      groups[specs] = [];
     }
-    groups[key].push(product);
+    groups[specs].push(product);
   });
   
-  // Only return groups with more than one product
-  return Object.values(groups).filter(group => group.length > 1);
+  // Only return groups with more than one product from different suppliers
+  return Object.values(groups).filter(group => {
+    if (group.length < 2) return false;
+    
+    // Check if products are from different suppliers
+    const suppliers = new Set(group.map(p => p.supplier));
+    return suppliers.size > 1;
+  });
 }
 
 function findAlternatives(products: Product[]): Product[] {
-  // Find products that are similar but from different suppliers
+  // Find exact product alternatives from different suppliers
   const alternatives: Product[] = [];
-  const seen = new Set();
+  const specGroups: { [key: string]: Product[] } = {};
   
+  // Group products by exact specifications
   products.forEach(product => {
-    const productKey = product.name.toLowerCase().replace(/[^a-z0-9]/g, '');
-    if (!seen.has(productKey)) {
-      seen.add(productKey);
-      const similarProducts = products.filter(p => 
-        p.id !== product.id && 
-        p.name.toLowerCase().replace(/[^a-z0-9]/g, '').includes(productKey.slice(0, 10))
-      );
-      
-      if (similarProducts.length > 0) {
-        alternatives.push(...similarProducts.slice(0, 2)); // Limit alternatives
+    const { specs } = extractProductSpecs(product.name);
+    if (!specGroups[specs]) {
+      specGroups[specs] = [];
+    }
+    specGroups[specs].push(product);
+  });
+  
+  // Find alternatives (same specs, different suppliers)
+  Object.values(specGroups).forEach(group => {
+    if (group.length > 1) {
+      const suppliers = new Set(group.map(p => p.supplier));
+      if (suppliers.size > 1) {
+        // Sort by price and take the cheapest alternative from each supplier
+        const supplierBest: { [supplier: string]: Product } = {};
+        group.forEach(product => {
+          const existing = supplierBest[product.supplier];
+          if (!existing || product.numericPrice < existing.numericPrice) {
+            supplierBest[product.supplier] = product;
+          }
+        });
+        
+        alternatives.push(...Object.values(supplierBest));
       }
     }
   });
   
-  return alternatives.slice(0, 10); // Limit total alternatives
+  return alternatives;
 }
 
 function generateSmartRecommendations(products: Product[], searchTerm: string): AIRecommendation[] {
