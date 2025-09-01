@@ -77,6 +77,11 @@ export const ProductCard = ({ product, isCheapest, savings, onAddToQuote }: Prod
                 )}
               </div>
               
+              {/* Product image */}
+              <div>
+                <img src={product.image || "/placeholder.svg"} alt={product.name} />
+              </div>
+              
               {/* Product name */}
               <div>
                 <h3 className="font-medium text-white text-sm leading-tight">{product.name}</h3>
