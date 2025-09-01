@@ -52,7 +52,7 @@ const QuoteBuilder = () => {
   const canonical = `${window.location.origin}/electrician/quote-builder`;
 
   return (
-    <div className="space-y-6 md:space-y-8 animate-fade-in px-4 md:px-0">
+    <div className="space-y-6 md:space-y-8 animate-fade-in p-0">
       <Helmet>
         <title>Quote Builder for Electricians | Create Professional Quotes</title>
         <meta
