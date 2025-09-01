@@ -195,12 +195,12 @@ const PFCCalculator = () => {
                 <h3 className="text-lg font-semibold">Results</h3>
                 
                 {result ? (
-                  <div className="space-y-6">
+                  <div className="space-y-4 sm:space-y-6">
                     {/* Primary Results */}
                     <Card className="border-success/30 bg-success/5">
-                      <CardContent className="pt-4">
-                        <div className="space-y-4">
-                          <div className="flex items-center gap-3 mb-3">
+                      <CardContent className="pt-4 sm:pt-6">
+                        <div className="space-y-4 sm:space-y-6">
+                          <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-4">
                             <Badge 
                               variant={
                                 result.assessmentLevel === 'Low' ? 'default' :
@@ -208,7 +208,7 @@ const PFCCalculator = () => {
                                 result.assessmentLevel === 'High' ? 'outline' :
                                 'destructive'
                               } 
-                              className="text-sm font-medium"
+                              className="text-sm font-medium w-fit"
                             >
                               {result.assessmentLevel} PFC Level
                             </Badge>
@@ -221,32 +221,32 @@ const PFCCalculator = () => {
                             )}
                           </div>
                           
-                          <div className="space-y-3">
-                            <div className="flex justify-between items-center">
-                              <span className="text-muted-foreground">Zs (Total Impedance):</span>
-                              <span className="font-mono text-foreground font-medium">
+                          <div className="space-y-4">
+                            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
+                              <span className="text-white text-sm sm:text-base">Zs (Total Impedance):</span>
+                              <span className="font-mono text-white font-medium text-lg">
                                 {(parseFloat(zeValue) + parseFloat(r1r2Value)).toFixed(3)} Ω
                               </span>
                             </div>
-                            <div className="flex justify-between items-center border-t border-border pt-3">
-                              <span className="text-foreground font-semibold">Prospective Fault Current:</span>
-                              <span className="font-mono text-foreground font-bold text-xl">
+                            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 border-t border-border pt-4">
+                              <span className="text-white font-semibold text-sm sm:text-base">Prospective Fault Current:</span>
+                              <span className="font-mono text-white font-bold text-2xl sm:text-3xl">
                                 {result.pfcValue.toFixed(0)} A
                               </span>
                             </div>
-                            <div className="flex justify-between items-center">
-                              <span className="text-muted-foreground">Required Breaking Capacity:</span>
-                              <span className="font-medium text-primary">{result.breakingCapacity}</span>
+                            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
+                              <span className="text-white text-sm sm:text-base">Required Breaking Capacity:</span>
+                              <span className="font-medium text-elec-yellow text-sm sm:text-base">{result.breakingCapacity}</span>
                             </div>
                           </div>
 
                           {/* Safety Margin Assessment */}
-                          <div className="mt-4 p-3 bg-muted/20 rounded-lg border border-border">
-                            <div className="flex items-center gap-2 mb-2">
-                              <Shield className="h-4 w-4 text-primary" />
-                              <span className="font-medium text-sm">Safety Margin Analysis</span>
+                          <div className="mt-6 p-4 bg-muted/10 rounded-lg border border-border">
+                            <div className="flex items-center gap-2 mb-3">
+                              <Shield className="h-4 w-4 text-elec-yellow" />
+                              <span className="font-medium text-white text-sm sm:text-base">Safety Margin Analysis</span>
                             </div>
-                            <p className="text-sm text-muted-foreground">
+                            <p className="text-white text-sm leading-relaxed">
                               {result.pfcValue < 6000 
                                 ? "Adequate safety margin with standard equipment." 
                                 : result.pfcValue < 10000 
@@ -256,12 +256,12 @@ const PFCCalculator = () => {
                           </div>
 
                           {/* Key Assumptions */}
-                          <div className="mt-4 p-3 bg-accent/10 rounded-lg border border-accent/20">
-                            <div className="flex items-center gap-2 mb-2">
-                              <Info className="h-4 w-4 text-accent" />
-                              <span className="font-medium text-sm">Calculation Assumptions</span>
+                          <div className="mt-4 p-4 bg-muted/10 rounded-lg border border-border">
+                            <div className="flex items-center gap-2 mb-3">
+                              <Info className="h-4 w-4 text-elec-yellow" />
+                              <span className="font-medium text-white text-sm sm:text-base">Calculation Assumptions</span>
                             </div>
-                            <ul className="text-xs text-muted-foreground space-y-1">
+                            <ul className="text-white text-xs sm:text-sm space-y-1 leading-relaxed">
                               <li>• Temperature factor: 20°C ambient</li>
                               <li>• Voltage tolerance: ±6% (BS 7671)</li>
                               <li>• Worst-case fault scenario considered</li>
@@ -274,25 +274,25 @@ const PFCCalculator = () => {
 
                     {/* Installation Guidance */}
                     <Card className="border-primary/30 bg-primary/5">
-                      <CardContent className="pt-4">
-                        <div className="space-y-3">
-                          <h4 className="text-primary font-semibold flex items-center gap-2">
+                      <CardContent className="pt-4 sm:pt-6">
+                        <div className="space-y-4">
+                          <h4 className="text-white font-semibold flex items-center gap-2 text-sm sm:text-base">
                             <Target className="h-4 w-4" />
                             Next Steps & Recommendations
                           </h4>
-                          <div className="space-y-2">
+                          <div className="space-y-3">
                             {result.recommendations.map((rec, index) => (
-                              <div key={index} className="flex items-start gap-2 text-sm">
-                                <span className="text-primary mt-1 flex-shrink-0">•</span>
-                                <span className="text-muted-foreground">{rec}</span>
+                              <div key={index} className="flex items-start gap-2 text-sm leading-relaxed">
+                                <span className="text-elec-yellow mt-1 flex-shrink-0">•</span>
+                                <span className="text-white">{rec}</span>
                               </div>
                             ))}
                           </div>
                           
                           {/* Practical guidance based on PFC level */}
-                          <div className="mt-4 p-3 bg-primary/10 rounded-lg border border-primary/20">
-                            <p className="text-sm font-medium text-primary mb-2">Practical Guidance:</p>
-                            <p className="text-sm text-muted-foreground">
+                          <div className="mt-6 p-4 bg-primary/10 rounded-lg border border-primary/20">
+                            <p className="text-sm font-medium text-white mb-3">Practical Guidance:</p>
+                            <p className="text-sm text-white leading-relaxed">
                               {result.pfcValue < 1000 
                                 ? "Standard installation practices apply. Verify protective device coordination and ensure adequate cable sizing for expected loads."
                                 : result.pfcValue < 6000
@@ -306,8 +306,8 @@ const PFCCalculator = () => {
                       </CardContent>
                     </Card>
 
-                    {/* Educational Content - Three Column Layout */}
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    {/* Educational Content - Responsive Layout */}
+                    <div className="grid grid-cols-1 gap-4 sm:gap-6">
                       <WhyThisMatters
                         points={[
                           "Ensures protective devices can safely interrupt fault currents without damage",
