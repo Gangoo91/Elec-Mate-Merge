@@ -61,9 +61,8 @@ export function MobileInputWrapper({
             placeholder={placeholder}
             disabled={disabled}
             className={cn(
-              "h-14 bg-elec-card border-2 border-elec-gray/50 rounded-xl text-elec-light",
+              "h-14 bg-elec-gray border-2 border-elec-gray/50 rounded-xl text-elec-light",
               "hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200",
-              "group-hover:shadow-lg group-hover:shadow-elec-yellow/10",
               "placeholder:text-elec-light/60 text-base font-medium",
               icon ? "pl-12" : "pl-4",
               unit ? "pr-16" : "pr-4",
@@ -78,8 +77,6 @@ export function MobileInputWrapper({
           )}
         </div>
         
-        {/* Subtle glow effect */}
-        <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/5 to-elec-yellow/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
       </div>
       
       {hint && !error && (
