@@ -18,6 +18,7 @@ const EarthFaultLoopCalculator = () => {
   // Earthing system and measurement mode
   const [earthingSystem, setEarthingSystem] = useState<EarthingSystem>("tn");
   const [measurementMode, setMeasurementMode] = useState<MeasurementMode>("calculated");
+  const [showResults, setShowResults] = useState(false);
 
   // Input values
   const [ze, setZe] = useState("");
@@ -145,6 +146,19 @@ const EarthFaultLoopCalculator = () => {
     }
     return [];
   }, [deviceType, curveType, fuseType]);
+
+  // Check if calculation is possible
+  const canCalculate = useMemo(() => {
+    if (earthingSystem === "tn") {
+      if (measurementMode === "calculated") {
+        return ze.trim() !== "" && r1PlusR2.trim() !== "";
+      } else {
+        return measuredZs.trim() !== "";
+      }
+    } else {
+      return ra.trim() !== "" && iDeltaN.trim() !== "";
+    }
+  }, [earthingSystem, measurementMode, ze, r1PlusR2, measuredZs, ra, iDeltaN]);
 
   return (
     <div className="space-y-4 sm:space-y-6">
@@ -388,11 +402,32 @@ const EarthFaultLoopCalculator = () => {
               </div>
             </>
           )}
+
+          {/* Calculate Button */}
+          <div className="pt-4 border-t border-elec-yellow/20">
+            <Button
+              onClick={() => setShowResults(true)}
+              disabled={!canCalculate}
+              className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90 font-medium"
+              size="lg"
+            >
+              <Calculator className="mr-2 h-5 w-5" />
+              Calculate {earthingSystem === "tn" ? "Zs" : "RA × IΔn"}
+            </Button>
+            {!canCalculate && (
+              <p className="text-sm text-muted-foreground mt-2 text-center">
+                {earthingSystem === "tn" 
+                  ? (measurementMode === "calculated" ? "Enter Ze and R1+R2 values" : "Enter measured Zs value")
+                  : "Enter RA and IΔn values"
+                }
+              </p>
+            )}
+          </div>
         </CardContent>
       </Card>
 
       {/* Results */}
-      {results && (
+      {results && showResults && (
         <Card className="border-elec-yellow/20 bg-elec-card">
           <CardHeader className="pb-4">
             <CardTitle className="text-elec-light flex items-center gap-3 text-lg">
