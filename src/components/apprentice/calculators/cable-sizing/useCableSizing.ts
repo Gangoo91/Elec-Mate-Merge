@@ -38,6 +38,12 @@ export const useCableSizing = () => {
     voltage: "230",
     cableType: "single"
   });
+  
+  // UI state for dropdowns to display selected values correctly
+  const [uiSelections, setUiSelections] = useState({
+    installationMethodUI: "clipped-direct",
+    cableTypeUI: "pvc-70"
+  });
   const [result, setResult] = useState<CableSizingResult>({
     recommendedCable: null,
     alternativeCables: [],
@@ -51,7 +57,7 @@ export const useCableSizing = () => {
     }
   };
 
-  const setInstallationType = (type: "pvc" | "xlpe") => {
+  const setInstallationType = (type: string) => {
     // Map professional terminology to simple insulation types
     const installationMapping: Record<string, "pvc" | "xlpe"> = {
       "clipped-direct": "pvc",
@@ -66,6 +72,7 @@ export const useCableSizing = () => {
     const mappedType = installationMapping[type] || "pvc";
     console.log(`Installation type mapping: ${type} -> ${mappedType}`);
     setInputs(prev => ({ ...prev, installationType: mappedType }));
+    setUiSelections(prev => ({ ...prev, installationMethodUI: type }));
   };
 
   const setCableType = (type: string) => {
@@ -86,6 +93,7 @@ export const useCableSizing = () => {
     const mappedType = cableTypeMapping[type] || type;
     console.log(`Cable type mapping: ${type} -> ${mappedType}`);
     setInputs(prev => ({ ...prev, cableType: mappedType }));
+    setUiSelections(prev => ({ ...prev, cableTypeUI: type }));
   };
 
   const clearError = (field: string) => {
@@ -346,6 +354,10 @@ export const useCableSizing = () => {
       diversityFactor: "1.0",
       powerFactor: "0.9"
     });
+    setUiSelections({
+      installationMethodUI: "clipped-direct",
+      cableTypeUI: "pvc-70"
+    });
     setResult({
       recommendedCable: null,
       alternativeCables: [],
@@ -356,6 +368,7 @@ export const useCableSizing = () => {
   return {
     inputs,
     result,
+    uiSelections,
     updateInput,
     setInstallationType,
     setCableType,

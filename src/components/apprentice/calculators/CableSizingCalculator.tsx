@@ -30,6 +30,7 @@ const CableSizingCalculator = () => {
   const {
     inputs,
     result,
+    uiSelections,
     updateInput,
     setInstallationType,
     setCableType,
@@ -270,6 +271,7 @@ const CableSizingCalculator = () => {
               <CableSizingForm
                 inputs={inputs}
                 errors={result.errors}
+                uiSelections={uiSelections}
                 updateInput={updateInput}
                 setInstallationType={(type: string) => setInstallationType(type as any)}
                 setCableType={setCableType}

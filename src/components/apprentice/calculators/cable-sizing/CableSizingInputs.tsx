@@ -9,6 +9,10 @@ import { CableSizingInputs, CableSizingErrors } from "./useCableSizing";
 interface CableSizingFormProps {
   inputs: CableSizingInputs;
   errors: CableSizingErrors;
+  uiSelections: {
+    installationMethodUI: string;
+    cableTypeUI: string;
+  };
   updateInput: (field: keyof CableSizingInputs, value: string) => void;
   setInstallationType: (type: string) => void;
   setCableType: (type: string) => void;
@@ -19,6 +23,7 @@ interface CableSizingFormProps {
 const CableSizingForm = ({
   inputs,
   errors,
+  uiSelections,
   updateInput,
   setInstallationType,
   setCableType,
@@ -64,31 +69,31 @@ const CableSizingForm = ({
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <Label htmlFor="installation-type">Installation Method</Label>
-          <Select value={inputs.installationType} onValueChange={setInstallationType}>
-            <SelectTrigger className="bg-elec-dark border-elec-yellow/20 text-white">
-              <SelectValue placeholder="Select installation method" />
+          <Select value={uiSelections.installationMethodUI} onValueChange={setInstallationType}>
+            <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
+              <SelectValue placeholder="Select installation method" className="text-white" />
             </SelectTrigger>
-            <SelectContent className="bg-elec-dark border-elec-yellow/20 text-white">
-              <SelectItem value="clipped-direct">Clipped Direct (Reference Method C)</SelectItem>
-              <SelectItem value="in-conduit">In Conduit/Trunking (Reference Method B)</SelectItem>
-              <SelectItem value="buried-direct">Buried Direct (Reference Method D)</SelectItem>
-              <SelectItem value="cable-tray">On Cable Tray (Reference Method F)</SelectItem>
-              <SelectItem value="free-air">Free Air (Reference Method E)</SelectItem>
+            <SelectContent className="bg-elec-dark border-elec-yellow/20">
+              <SelectItem value="clipped-direct" className="text-white hover:bg-elec-yellow/20">Clipped Direct (Reference Method C)</SelectItem>
+              <SelectItem value="in-conduit" className="text-white hover:bg-elec-yellow/20">In Conduit/Trunking (Reference Method B)</SelectItem>
+              <SelectItem value="buried-direct" className="text-white hover:bg-elec-yellow/20">Buried Direct (Reference Method D)</SelectItem>
+              <SelectItem value="cable-tray" className="text-white hover:bg-elec-yellow/20">On Cable Tray (Reference Method F)</SelectItem>
+              <SelectItem value="free-air" className="text-white hover:bg-elec-yellow/20">Free Air (Reference Method E)</SelectItem>
             </SelectContent>
           </Select>
         </div>
 
         <div>
           <Label htmlFor="cable-type">Cable Type</Label>
-          <Select value={inputs.cableType} onValueChange={setCableType}>
-            <SelectTrigger className="bg-elec-dark border-elec-yellow/20 text-white">
-              <SelectValue placeholder="Select cable type" />
+          <Select value={uiSelections.cableTypeUI} onValueChange={setCableType}>
+            <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
+              <SelectValue placeholder="Select cable type" className="text-white" />
             </SelectTrigger>
-            <SelectContent className="bg-elec-dark border-elec-yellow/20 text-white">
-              <SelectItem value="pvc-70">PVC 70°C (Standard)</SelectItem>
-              <SelectItem value="xlpe-90">XLPE 90°C (Enhanced)</SelectItem>
-              <SelectItem value="lsf-70">LSF 70°C (Low Smoke)</SelectItem>
-              <SelectItem value="mineral-70">MI Cable 70°C</SelectItem>
+            <SelectContent className="bg-elec-dark border-elec-yellow/20">
+              <SelectItem value="pvc-70" className="text-white hover:bg-elec-yellow/20">PVC 70°C (Standard)</SelectItem>
+              <SelectItem value="xlpe-90" className="text-white hover:bg-elec-yellow/20">XLPE 90°C (Enhanced)</SelectItem>
+              <SelectItem value="lsf-70" className="text-white hover:bg-elec-yellow/20">LSF 70°C (Low Smoke)</SelectItem>
+              <SelectItem value="mineral-70" className="text-white hover:bg-elec-yellow/20">MI Cable 70°C</SelectItem>
             </SelectContent>
           </Select>
         </div>
