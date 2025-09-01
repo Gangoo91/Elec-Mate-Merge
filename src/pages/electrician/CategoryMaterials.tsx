@@ -159,28 +159,56 @@ const CategoryMaterials = () => {
       {/* Advanced Features Navigation */}
       <section className="space-y-4 relative z-10">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full relative">
-          <TabsList className={`flex w-full ${isMobile ? 'flex-col gap-2' : 'flex-wrap grid grid-cols-3 lg:grid-cols-5'} bg-elec-gray border border-elec-yellow/20 relative z-20 p-[0.3rem] h-fit`}>
-            <TabsTrigger value="browse" className={`flex-shrink-0 whitespace-nowrap ${isMobile ? 'w-full' : ''} px-4 py-3 text-sm min-w-fit data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark`}>
-              <Package className="h-4 w-4 mr-2" />
-              Browse
-            </TabsTrigger>
-            <TabsTrigger value="compare" className={`flex-shrink-0 whitespace-nowrap ${isMobile ? 'w-full' : ''} px-4 py-3 text-sm min-w-fit data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark`}>
-              <Scale className="h-4 w-4 mr-2" />
-              Compare
-            </TabsTrigger>
-            <TabsTrigger value="bulk" className={`flex-shrink-0 whitespace-nowrap ${isMobile ? 'w-full' : ''} px-4 py-3 text-sm min-w-fit data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark`}>
-              <Calculator className="h-4 w-4 mr-2" />
-              Bulk
-            </TabsTrigger>
-            <TabsTrigger value="alerts" className={`flex-shrink-0 whitespace-nowrap ${isMobile ? 'w-full' : ''} px-4 py-3 text-sm min-w-fit data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark`}>
-              <TrendingUp className="h-4 w-4 mr-2" />
-              Alerts
-            </TabsTrigger>
-            <TabsTrigger value="ai" className={`flex-shrink-0 whitespace-nowrap ${isMobile ? 'w-full' : ''} px-4 py-3 text-sm min-w-fit data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark`}>
-              <Brain className="h-4 w-4 mr-2" />
-              AI
-            </TabsTrigger>
-          </TabsList>
+          {/* Mobile Collapsible Tabs */}
+          {isMobile ? (
+            <div className="space-y-2">
+              <div className="flex items-center justify-between bg-elec-gray border border-elec-yellow/20 rounded-xl p-3">
+                <span className="text-sm font-medium text-elec-light">
+                  {activeTab === "browse" && "Browse Materials"}
+                  {activeTab === "compare" && "Compare Products"}
+                  {activeTab === "bulk" && "Bulk Pricing"}
+                  {activeTab === "alerts" && "Price Alerts"}
+                  {activeTab === "ai" && "AI Insights"}
+                </span>
+                <div className="flex gap-1">
+                  {["browse", "compare", "bulk", "alerts", "ai"].map((tab) => (
+                    <button
+                      key={tab}
+                      onClick={() => setActiveTab(tab)}
+                      className={`w-2 h-2 rounded-full transition-colors ${
+                        activeTab === tab ? "bg-elec-yellow" : "bg-elec-gray/50"
+                      }`}
+                      aria-label={`Switch to ${tab} tab`}
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
+          ) : (
+            /* Desktop Tabs */
+            <TabsList className="flex w-full flex-wrap grid grid-cols-3 lg:grid-cols-5 bg-elec-gray border border-elec-yellow/20 relative z-20 p-[0.3rem] h-fit">
+              <TabsTrigger value="browse" className="flex-shrink-0 whitespace-nowrap px-4 py-3 text-sm min-w-fit data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark">
+                <Package className="h-4 w-4 mr-2" />
+                Browse
+              </TabsTrigger>
+              <TabsTrigger value="compare" className="flex-shrink-0 whitespace-nowrap px-4 py-3 text-sm min-w-fit data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark">
+                <Scale className="h-4 w-4 mr-2" />
+                Compare
+              </TabsTrigger>
+              <TabsTrigger value="bulk" className="flex-shrink-0 whitespace-nowrap px-4 py-3 text-sm min-w-fit data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark">
+                <Calculator className="h-4 w-4 mr-2" />
+                Bulk
+              </TabsTrigger>
+              <TabsTrigger value="alerts" className="flex-shrink-0 whitespace-nowrap px-4 py-3 text-sm min-w-fit data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark">
+                <TrendingUp className="h-4 w-4 mr-2" />
+                Alerts
+              </TabsTrigger>
+              <TabsTrigger value="ai" className="flex-shrink-0 whitespace-nowrap px-4 py-3 text-sm min-w-fit data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark">
+                <Brain className="h-4 w-4 mr-2" />
+                AI
+              </TabsTrigger>
+            </TabsList>
+          )}
 
           {/* Search and filters for Browse tab */}
           {activeTab === "browse" && (
