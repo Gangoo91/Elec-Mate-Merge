@@ -252,8 +252,16 @@ const MaximumDemandCalculator = () => {
                           type="number"
                           step="0.1"
                           min="0"
-                          value={load.power}
-                          onChange={(e) => updateLoad(load.id, 'power', parseFloat(e.target.value) || 0)}
+                          value={load.power === 0 ? '' : load.power}
+                          onChange={(e) => {
+                            const value = e.target.value;
+                            if (value === '' || value === '.') {
+                              updateLoad(load.id, 'power', 0);
+                            } else {
+                              const numValue = parseFloat(value);
+                              updateLoad(load.id, 'power', isNaN(numValue) ? 0 : numValue);
+                            }
+                          }}
                           className="bg-elec-gray border-elec-yellow/20 mt-1"
                           placeholder="0.0"
                         />
