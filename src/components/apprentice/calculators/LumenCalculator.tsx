@@ -679,9 +679,9 @@ const LumenCalculator = () => {
               icon={<Info className="h-5 w-5 text-elec-yellow" />}
               points={[
                 "Lux (lx): Light intensity per square metre - what you actually see",
-                "Lumens (lm): Total light output from source - what the bulb produces", 
+                "Lumens (lm): Total light output from source - what the bulb produces",
                 "Utilisation Factor (UF): How much light reaches the work surface",
-                "Maintenance Factor (MF): Light reduction over time due to dirt and aging",
+                "Maintenance Factor (MF): Light reduction over time due to dirt and ageing",
                 "Efficacy (lm/W): How efficient the light source is - higher is better"
               ]}
               className="mb-0"
@@ -691,7 +691,7 @@ const LumenCalculator = () => {
             <WhyThisMatters
               points={[
                 "Proper lighting reduces eye strain and improves productivity",
-                "Under-lighting causes fatigue and increases accident risk", 
+                "Under-lighting causes fatigue and increases accident risk",
                 "Over-lighting wastes energy and increases running costs",
                 "Correct spacing prevents dark spots and uneven illumination",
                 "Energy efficient fixtures reduce carbon footprint and bills"
