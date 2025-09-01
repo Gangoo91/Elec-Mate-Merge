@@ -31,7 +31,7 @@ const Layout = () => {
         {/* Header with mobile menu toggle */}
         <Header toggleSidebar={toggleSidebar} />
         
-        <main className="flex-1 overflow-y-auto overflow-x-hidden pt-24 sm:p-4 lg:p-6">
+        <main className="flex-1 overflow-y-auto overflow-x-hidden pt-24 px-4 sm:p-4 lg:p-6">
           <div className={cn("mobile-container mobile-safe-area p-0 max-w-7xl min-w-0")}>
             <Outlet />
           </div>
