@@ -262,12 +262,6 @@ const CategoryMaterials = () => {
                   <RefreshCw className="h-4 w-4 mr-2" />
                   Refresh
                 </MobileButton>
-                {/* Render last update time inline on desktop */}
-                {!isMobile && !isLoading && (
-                  <div className="flex items-center gap-1 text-xs text-muted-foreground whitespace-nowrap ml-2">
-                    <span>📡 Live data</span>
-                  </div>
-                )}
               </div>
             </div>
           )}
