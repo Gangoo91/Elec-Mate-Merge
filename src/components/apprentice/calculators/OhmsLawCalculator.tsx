@@ -4,7 +4,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { MobileInputWrapper } from "@/components/ui/mobile-input-wrapper";
 import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
-import QuickCalculationPresets from "./smart-features/QuickCalculationPresets";
+
 import { Info, Copy, CheckCircle } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 
@@ -301,12 +301,6 @@ const OhmsLawCalculator = () => {
 
   return (
     <div className="space-y-6">
-      {/* Quick Presets */}
-      <QuickCalculationPresets
-        calculatorType="ohms-law"
-        onPresetSelect={handlePresetSelect}
-      />
-
       <Card className="bg-elec-gray/50 overflow-hidden">
         <CardHeader>
           <CardTitle className="text-xl font-bold">Ohm's Law Calculator</CardTitle>
