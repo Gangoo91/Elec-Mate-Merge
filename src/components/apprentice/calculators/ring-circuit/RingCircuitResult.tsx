@@ -68,10 +68,25 @@ const RingCircuitResult: React.FC<RingCircuitResultProps> = ({ result }) => {
   };
 
   const whyThisMattersPoints = [
-    "Ring circuit testing ensures electrical safety and code compliance for socket outlet circuits",
+    "Ring circuit testing ensures electrical safety and BS 7671 compliance for socket outlet circuits",
     "Proper continuity confirms the ring is intact and will operate correctly under fault conditions",
-    "Cross-connection testing verifies that protective devices will operate when needed",
-    "R1+R2 values are critical for earth fault loop impedance calculations and safety"
+    "Cross-connection testing verifies protective devices will operate when needed to clear faults",
+    "R1+R2 values are critical for earth fault loop impedance calculations and shock protection",
+    "Accurate testing prevents overloading and ensures proper load distribution around the ring"
+  ];
+
+  const practicalExamples = [
+    "A typical 32A ring circuit in a 3-bed house should have R1+R2 values around 0.7-1.2Ω",
+    "End-to-end readings for 2.5mm² cable in a 50m ring: Live ≈ 0.74Ω, CPC ≈ 1.21Ω",
+    "Cross-connection test at socket 6 from start should read approximately R1+R2 calculated value",
+    "Temperature correction: readings increase by ~0.4% per °C above 20°C"
+  ];
+
+  const bs7671Regs = [
+    "Regulation 433.1.204: Ring circuits maximum 32A protection, 100m² floor area",
+    "Section 612.2.2: Continuity testing required for all protective conductors",
+    "Regulation 543.1.1: Minimum 1.5mm² CPC for circuits up to 16A, 2.5mm² for 32A rings",
+    "Table 54.7: Maximum earth fault loop impedance (Zs) values for shock protection"
   ];
 
   return (
@@ -219,6 +234,67 @@ const RingCircuitResult: React.FC<RingCircuitResultProps> = ({ result }) => {
         title="Why Ring Circuit Testing Matters"
         points={whyThisMattersPoints}
       />
+
+      {/* Worked Example */}
+      <Card className="bg-elec-card border-elec-yellow/20">
+        <CardHeader className="pb-3">
+          <CardTitle className="text-lg flex items-center gap-2">
+            <BarChart3 className="h-5 w-5 text-elec-yellow" />
+            Worked Example
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="bg-elec-dark/30 rounded-lg p-4">
+            <h4 className="font-medium text-elec-light mb-3">Ring Circuit Test Calculation:</h4>
+            <div className="space-y-2 text-sm text-elec-light/80 font-mono">
+              <div>End-to-End Live: 0.74Ω → R1 = 0.74 ÷ 4 = 0.185Ω</div>
+              <div>End-to-End CPC: 1.21Ω → R2 = 1.21 ÷ 4 = 0.303Ω</div>
+              <div>R1 + R2 = 0.185 + 0.303 = 0.488Ω</div>
+              <div className="text-elec-yellow mt-2">✓ Values within acceptable limits for 2.5mm² ring circuit</div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Practical Examples */}
+      <Card className="bg-elec-card border-elec-yellow/20">
+        <CardHeader className="pb-3">
+          <CardTitle className="text-lg flex items-center gap-2">
+            <TrendingUp className="h-5 w-5 text-elec-yellow" />
+            Practical Examples
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <ul className="space-y-3">
+            {practicalExamples.map((example, index) => (
+              <li key={index} className="flex items-start gap-3 text-sm text-elec-light">
+                <span className="flex-shrink-0 w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2"></span>
+                <span>{example}</span>
+              </li>
+            ))}
+          </ul>
+        </CardContent>
+      </Card>
+
+      {/* BS 7671 Regulations */}
+      <Card className="bg-elec-card border-elec-yellow/20">
+        <CardHeader className="pb-3">
+          <CardTitle className="text-lg flex items-center gap-2">
+            <CheckCircle className="h-5 w-5 text-elec-yellow" />
+            Relevant BS 7671:2018 Regulations
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <ul className="space-y-3">
+            {bs7671Regs.map((reg, index) => (
+              <li key={index} className="flex items-start gap-3 text-sm text-elec-light">
+                <span className="flex-shrink-0 w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2"></span>
+                <span>{reg}</span>
+              </li>
+            ))}
+          </ul>
+        </CardContent>
+      </Card>
     </div>
   );
 };

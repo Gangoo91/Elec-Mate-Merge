@@ -33,32 +33,26 @@ const RingCircuitCalculator = () => {
       label: "Calculator",
       icon: Calculator,
       content: (
-        <RingCircuitForm
-          readings={readings}
-          cableType={cableType}
-          cableLength={cableLength}
-          temperature={temperature}
-          errors={errors}
-          onInputChange={handleInputChange}
-          onCableTypeChange={setCableType}
-          onCableLengthChange={setCableLength}
-          onTemperatureChange={setTemperature}
-          onCalculate={calculateValues}
-          onReset={resetCalculator}
-          hasResults={!!result}
-        />
-      )
-    },
-    {
-      value: "results",
-      label: "Results",
-      icon: BarChart3,
-      content: result ? (
-        <RingCircuitResult result={result} />
-      ) : (
-        <div className="text-center py-12 text-muted-foreground">
-          <BarChart3 className="h-12 w-12 mx-auto mb-4 opacity-50" />
-          <p>Complete the calculator form to see results</p>
+        <div className="space-y-6">
+          <RingCircuitForm
+            readings={readings}
+            cableType={cableType}
+            cableLength={cableLength}
+            temperature={temperature}
+            errors={errors}
+            onInputChange={handleInputChange}
+            onCableTypeChange={setCableType}
+            onCableLengthChange={setCableLength}
+            onTemperatureChange={setTemperature}
+            onCalculate={calculateValues}
+            onReset={resetCalculator}
+            hasResults={!!result}
+          />
+          {result && (
+            <div id="calculator-results">
+              <RingCircuitResult result={result} />
+            </div>
+          )}
         </div>
       )
     },
@@ -87,7 +81,7 @@ const RingCircuitCalculator = () => {
         />
       ) : (
         <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full">
-          <TabsList className="grid w-full grid-cols-3 bg-elec-dark/50 border border-elec-yellow/20">
+          <TabsList className="grid w-full grid-cols-2 bg-elec-dark/50 border border-elec-yellow/20">
             {tabs.map((tab) => {
               const IconComponent = tab.icon;
               return (

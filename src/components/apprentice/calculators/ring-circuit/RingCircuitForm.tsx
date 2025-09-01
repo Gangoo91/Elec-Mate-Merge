@@ -47,6 +47,17 @@ const RingCircuitForm: React.FC<RingCircuitFormProps> = ({
 }) => {
   const hasAllReadings = Object.values(readings).every(value => value.trim() !== "");
 
+  const handleCalculate = () => {
+    onCalculate();
+    // Auto-scroll to results after calculation
+    setTimeout(() => {
+      const resultsElement = document.getElementById('calculator-results');
+      if (resultsElement) {
+        resultsElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 100);
+  };
+
   return (
     <div className="space-y-6">
       <Card className="bg-elec-card border-elec-yellow/20">
@@ -268,7 +279,7 @@ const RingCircuitForm: React.FC<RingCircuitFormProps> = ({
           {/* Action Buttons */}
           <div className="flex flex-col sm:flex-row gap-3 pt-4">
             <Button 
-              onClick={onCalculate}
+              onClick={handleCalculate}
               disabled={!hasAllReadings}
               className="flex-1 h-11 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 font-medium"
             >
