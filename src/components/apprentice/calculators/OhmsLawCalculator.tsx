@@ -230,42 +230,42 @@ const OhmsLawCalculator = () => {
           <div className="space-y-4">
             <Card className="border-green-500/30 bg-green-500/5">
               <CardHeader>
-                <div className="flex items-center justify-between">
-                  <CardTitle className="text-green-300">Calculated Values</CardTitle>
-                  <Badge className={getCurrentStatus().color}>
-                    {getCurrentStatus().text}
-                  </Badge>
-                </div>
+                <CardTitle className="text-green-300">Calculated Values</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="text-sm text-green-200 mb-4">
                   <strong>Formula used:</strong> {result.formula}
                 </div>
                 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="flex justify-between items-center">
-                    <span className="text-green-200">Voltage:</span>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1 p-3 bg-green-500/5 rounded-lg">
+                    <span className="text-green-200 text-sm">Voltage:</span>
                     <span className="text-green-300 font-mono text-lg">{result.voltage?.toFixed(2)} V</span>
                   </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-green-200">Current:</span>
+                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1 p-3 bg-green-500/5 rounded-lg">
+                    <span className="text-green-200 text-sm">Current:</span>
                     <span className="text-green-300 font-mono text-lg">{result.current?.toFixed(3)} A</span>
                   </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-green-200">Resistance:</span>
+                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1 p-3 bg-green-500/5 rounded-lg">
+                    <span className="text-green-200 text-sm">Resistance:</span>
                     <span className="text-green-300 font-mono text-lg">{result.resistance?.toFixed(2)} Ω</span>
                   </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-green-200">Power:</span>
+                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1 p-3 bg-green-500/5 rounded-lg">
+                    <span className="text-green-200 text-sm">Power:</span>
                     <span className="text-green-300 font-mono text-lg">{result.power?.toFixed(2)} W</span>
                   </div>
                 </div>
                 
                 {result.currentAt230V && result.currentAt230V > 0 && (
                   <div className="pt-3 border-t border-green-500/30">
-                    <div className="flex justify-between items-center">
-                      <span className="text-green-200">Current at 230V:</span>
-                      <span className="text-green-300 font-mono">{result.currentAt230V.toFixed(2)} A</span>
+                    <div className="space-y-2">
+                      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1">
+                        <span className="text-green-200">Current at 230V (per phase):</span>
+                        <span className="text-green-300 font-mono text-lg">{result.currentAt230V.toFixed(2)} A</span>
+                      </div>
+                      <div className="text-xs text-green-300/70">
+                        For 3-phase systems: Total power ÷ 3 phases ÷ 230V line-to-neutral voltage
+                      </div>
                     </div>
                   </div>
                 )}
@@ -289,13 +289,35 @@ const OhmsLawCalculator = () => {
                   What This Means
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-3">
-                <div className="text-sm text-blue-200 space-y-2">
-                  <p>• <strong>Current Rating:</strong> Cable and protection must handle {result.current?.toFixed(1)}A continuously</p>
-                  <p>• <strong>Voltage Drop:</strong> Check cable length vs current for BS 7671 compliance (&lt;3% lighting, &lt;5% power)</p>
-                  <p>• <strong>Protection:</strong> {result.protectionGuidance}</p>
+              <CardContent className="space-y-4">
+                <div className="text-sm text-blue-200 space-y-3">
+                  <div className="p-3 bg-blue-500/5 rounded-lg border border-blue-500/20">
+                    <p className="font-medium text-blue-300 mb-1">Current Rating Requirements</p>
+                    <p>Cables and protective devices must be rated for at least {result.current?.toFixed(1)}A continuously. Consider derating factors for ambient temperature, cable grouping, and thermal insulation per BS 7671 Table 4D5.</p>
+                  </div>
+                  
+                  <div className="p-3 bg-blue-500/5 rounded-lg border border-blue-500/20">
+                    <p className="font-medium text-blue-300 mb-1">Voltage Drop Compliance</p>
+                    <p>BS 7671 limits voltage drop to 3% for lighting circuits and 5% for power circuits. For this current ({result.current?.toFixed(1)}A), calculate cable length carefully to ensure compliance. Higher currents require larger cables or shorter runs.</p>
+                  </div>
+                  
+                  <div className="p-3 bg-blue-500/5 rounded-lg border border-blue-500/20">
+                    <p className="font-medium text-blue-300 mb-1">Protection Coordination</p>
+                    <p>Protective device rating (In) must coordinate with cable capacity (Iz) where Ib ≤ In ≤ Iz. {result.protectionGuidance}</p>
+                  </div>
+                  
                   {result.current && result.current > 16 && (
-                    <p>• <strong>High Current Warning:</strong> Consider cable heating effects and derating factors</p>
+                    <div className="p-3 bg-yellow-500/10 rounded-lg border border-yellow-500/30">
+                      <p className="font-medium text-yellow-300 mb-1">High Current Considerations</p>
+                      <p className="text-yellow-200">Currents above 16A generate significant heat. Consider cable heating effects, installation method derating factors, and ensure adequate ventilation. Distribution board protection becomes critical for safe operation.</p>
+                    </div>
+                  )}
+                  
+                  {result.currentAt230V && result.currentAt230V > 0 && (
+                    <div className="p-3 bg-purple-500/10 rounded-lg border border-purple-500/30">
+                      <p className="font-medium text-purple-300 mb-1">Three-Phase Current Distribution</p>
+                      <p className="text-purple-200">The 230V current ({result.currentAt230V.toFixed(2)}A) represents current per phase in a balanced 3-phase system. Total power is distributed equally across three phases, reducing current per conductor compared to single-phase equivalent.</p>
+                    </div>
                   )}
                 </div>
               </CardContent>
