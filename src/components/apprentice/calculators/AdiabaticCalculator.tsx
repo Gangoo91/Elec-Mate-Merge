@@ -450,6 +450,47 @@ const AdiabaticCalculator = () => {
                         </AlertDescription>
                       </Alert>
                     )}
+
+                    {/* Enhanced Results Feedback */}
+                    <div className="space-y-4 mt-6 pt-4 border-t border-elec-yellow/20">
+                      <h4 className="font-medium text-elec-light flex items-center gap-2">
+                        <CheckCircle className="h-4 w-4 text-elec-yellow" />
+                        Installation Guidance
+                      </h4>
+                      
+                      <div className="grid grid-cols-1 gap-4">
+                        <div className="bg-elec-dark/50 rounded-lg p-4">
+                          <div className="text-sm font-medium text-elec-yellow mb-2">Next Steps:</div>
+                          <ul className="space-y-2 text-sm text-elec-light/80">
+                            <li className="flex items-start gap-2">
+                              <span className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-1.5 flex-shrink-0"></span>
+                              <span>Verify the {result.roundedCsa}mm² cable is available and suitable for your installation method</span>
+                            </li>
+                            <li className="flex items-start gap-2">
+                              <span className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-1.5 flex-shrink-0"></span>
+                              <span>Check current-carrying capacity meets circuit requirements (this calculation is for fault conditions only)</span>
+                            </li>
+                            <li className="flex items-start gap-2">
+                              <span className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-1.5 flex-shrink-0"></span>
+                              <span>Ensure protective device operates within {result.disconnectionTime}s at calculated fault level</span>
+                            </li>
+                            <li className="flex items-start gap-2">
+                              <span className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-1.5 flex-shrink-0"></span>
+                              <span>Document calculation for electrical certificate and future reference</span>
+                            </li>
+                          </ul>
+                        </div>
+
+                        {result.roundedCsa !== result.minimumCsa && (
+                          <div className="bg-green-900/20 border border-green-500/30 rounded-lg p-4">
+                            <div className="text-sm font-medium text-green-400 mb-2">Safety Margin:</div>
+                            <div className="text-sm text-green-200">
+                              The selected {result.roundedCsa}mm² cable provides a {((result.roundedCsa / result.minimumCsa - 1) * 100).toFixed(1)}% safety margin above the minimum required {result.minimumCsa.toFixed(2)}mm².
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
                   </div>
                 ) : (
                   <div className="flex flex-col items-center justify-center py-12 text-elec-light/60">
@@ -482,27 +523,56 @@ const AdiabaticCalculator = () => {
             <InfoBox
               title="BS 7671 Requirements"
               icon={<BookOpen className="h-5 w-5 text-elec-yellow" />}
-              points={[
-                "Section 543: Earthing conductors must be sized using adiabatic equation",
-                "Table 54.3: k factors for different conductor materials and insulation",
-                "Regulation 411.3.2: Maximum disconnection times for automatic disconnection",
-                "Section 434: Protection against overcurrent in case of short-circuit"
-              ]}
               className="h-full"
-            />
+            >
+              <ul className="space-y-3 text-elec-light text-sm leading-relaxed">
+                <li className="flex items-start gap-3">
+                  <span className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></span>
+                  <span><strong>Section 543:</strong> Earthing conductors must be sized using adiabatic equation</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></span>
+                  <span><strong>Table 54.3:</strong> k factors for different conductor materials and insulation</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></span>
+                  <span><strong>Regulation 411.3.2:</strong> Maximum disconnection times for automatic disconnection</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></span>
+                  <span><strong>Section 434:</strong> Protection against overcurrent in case of short-circuit</span>
+                </li>
+              </ul>
+            </InfoBox>
 
             <InfoBox
               title="Practical Guidance"
               icon={<Lightbulb className="h-5 w-5 text-elec-yellow" />}
-              points={[
-                "Use manufacturer's k values when available for greater accuracy",
-                "Consider derating factors for cables in conduits or high ambient temperatures", 
-                "Verify protection device characteristics match calculated fault levels",
-                "Document calculations for inspection and certification purposes",
-                "Regular testing ensures actual values match design calculations"
-              ]}
               className="h-full"
-            />
+            >
+              <ul className="space-y-3 text-elec-light text-sm leading-relaxed">
+                <li className="flex items-start gap-3">
+                  <span className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></span>
+                  <span>Use manufacturer's k values when available for greater accuracy</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></span>
+                  <span>Consider derating factors for cables in conduits or high ambient temperatures</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></span>
+                  <span>Verify protection device characteristics match calculated fault levels</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></span>
+                  <span>Document calculations for inspection and certification purposes</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></span>
+                  <span>Regular testing ensures actual values match design calculations</span>
+                </li>
+              </ul>
+            </InfoBox>
           </div>
 
           <Alert className="border-elec-yellow/30 bg-elec-yellow/5">
