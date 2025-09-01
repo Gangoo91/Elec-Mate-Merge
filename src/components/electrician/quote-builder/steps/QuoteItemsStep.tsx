@@ -4,10 +4,12 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Plus, Trash2, Wrench, Package, Zap, FileText } from "lucide-react";
+import { Plus, Trash2, Wrench, Package, Zap, FileText, Search } from "lucide-react";
 import { QuoteItem, JobTemplate } from "@/types/quote";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { JobTemplates } from "../JobTemplates";
+import { LiveMaterialPricing } from "./LiveMaterialPricing";
+import { useQuoteMaterialIntegration } from "@/hooks/useQuoteMaterialIntegration";
 
 interface QuoteItemsStepProps {
   items: QuoteItem[];
@@ -17,6 +19,8 @@ interface QuoteItemsStepProps {
 }
 
 export const QuoteItemsStep = ({ items, onAdd, onUpdate, onRemove }: QuoteItemsStepProps) => {
+  const { addMaterialToQuote, addMultipleMaterialsToQuote } = useQuoteMaterialIntegration(onAdd);
+  
   const handleTemplateSelect = (template: JobTemplate) => {
     template.items.forEach(item => {
       onAdd(item);
@@ -56,16 +60,27 @@ export const QuoteItemsStep = ({ items, onAdd, onUpdate, onRemove }: QuoteItemsS
 
   return (
     <Tabs defaultValue="manual" className="space-y-6">
-      <TabsList className="grid w-full grid-cols-2">
+      <TabsList className="grid w-full grid-cols-3">
         <TabsTrigger value="manual" className="flex items-center gap-2">
           <Plus className="h-4 w-4" />
           Manual Entry
+        </TabsTrigger>
+        <TabsTrigger value="live-pricing" className="flex items-center gap-2">
+          <Search className="h-4 w-4" />
+          Live Pricing
         </TabsTrigger>
         <TabsTrigger value="templates" className="flex items-center gap-2">
           <FileText className="h-4 w-4" />
           Job Templates
         </TabsTrigger>
       </TabsList>
+
+      <TabsContent value="live-pricing">
+        <LiveMaterialPricing 
+          onAddToQuote={addMaterialToQuote}
+          onAddMultipleToQuote={addMultipleMaterialsToQuote}
+        />
+      </TabsContent>
 
       <TabsContent value="templates">
         <JobTemplates onSelectTemplate={handleTemplateSelect} />

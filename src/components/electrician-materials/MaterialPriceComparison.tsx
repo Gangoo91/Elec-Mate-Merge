@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Search, TrendingDown, Crown, ExternalLink, Loader2, AlertCircle, Filter, Star, RefreshCw, Brain, Lightbulb, Package, AlertTriangle, Download, Calculator, History, Bell, ChevronDown } from "lucide-react";
+import { Search, TrendingDown, Crown, ExternalLink, Loader2, AlertCircle, Filter, Star, RefreshCw, Brain, Lightbulb, Package, AlertTriangle, Download, Calculator, History, Bell, ChevronDown, Plus } from "lucide-react";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { MobileButton } from "@/components/ui/mobile-button";
 import { MobileInputWrapper } from "@/components/ui/mobile-input-wrapper";
@@ -100,9 +100,11 @@ interface MaterialPriceComparisonProps {
   initialQuery?: string;
   selectedItems?: any[];
   onClearSelection?: () => void;
+  onAddToQuote?: (material: any, quantity?: number) => void;
+  onAddMultipleToQuote?: (materials: any[]) => void;
 }
 
-const MaterialPriceComparison = ({ initialQuery = "", selectedItems = [], onClearSelection }: MaterialPriceComparisonProps) => {
+const MaterialPriceComparison = ({ initialQuery = "", selectedItems = [], onClearSelection, onAddToQuote, onAddMultipleToQuote }: MaterialPriceComparisonProps) => {
   const isMobile = useIsMobile();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
@@ -904,6 +906,17 @@ const MaterialPriceComparison = ({ initialQuery = "", selectedItems = [], onClea
                             
                             {/* Actions */}
                             <div className="flex gap-2">
+                              {onAddToQuote && (
+                                <MobileButton 
+                                  size="sm"
+                                  variant="elec"
+                                  onClick={() => onAddToQuote(product, 1)}
+                                  className="flex-1"
+                                >
+                                  <Plus className="h-3 w-3 mr-2" />
+                                  Add to Quote
+                                </MobileButton>
+                              )}
                               <MobileButton 
                                 size="sm"
                                 variant="outline"
@@ -1001,6 +1014,17 @@ const MaterialPriceComparison = ({ initialQuery = "", selectedItems = [], onClea
                               </div>
                               
                               <div className="flex gap-2">
+                                {onAddToQuote && (
+                                  <Button 
+                                    size="sm"
+                                    variant="default"
+                                    onClick={() => onAddToQuote(product, 1)}
+                                    className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
+                                  >
+                                    <Plus className="h-3 w-3 mr-1" />
+                                    Add to Quote
+                                  </Button>
+                                )}
                                 <Button 
                                   size="sm"
                                   variant="outline"
