@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { MobileInput } from "@/components/ui/mobile-input";
 import { MobileButton } from "@/components/ui/mobile-button";
 import { MobileSelect, MobileSelectContent, MobileSelectItem, MobileSelectTrigger, MobileSelectValue } from "@/components/ui/mobile-select";
@@ -132,12 +132,15 @@ const ConduitFillCalculator = () => {
   };
 
   return (
-    <Card className="border-elec-yellow/20 bg-elec-gray">
+    <Card className="border border-muted/40 bg-card">
       <CardHeader>
         <div className="flex items-center gap-2">
-          <Calculator className="h-5 w-5 text-elec-yellow" />
+          <Calculator className="h-5 w-5 text-primary" />
           <div>
             <CardTitle>Conduit Fill Calculator</CardTitle>
+            <CardDescription className="mt-1">
+              Calculate conduit fill percentage with BS EN 61386-1 compliance and practical installation guidance.
+            </CardDescription>
           </div>
           <Badge variant="outline" className="ml-auto">
             BS EN 61386-1
@@ -246,7 +249,7 @@ const ConduitFillCalculator = () => {
 
           {/* Result Section */}
           <div className="space-y-4">
-            <div className="bg-elec-dark/50 rounded-lg p-6 min-h-[300px]">
+            <div className="bg-muted/50 rounded-lg p-6 min-h-[300px]">
               {result ? (
                 <div className="space-y-4">
                   <div className="flex items-center gap-2 mb-4">
@@ -255,13 +258,13 @@ const ConduitFillCalculator = () => {
                     ) : (
                       <AlertTriangle className="h-5 w-5 text-red-500" />
                     )}
-                    <h3 className="text-lg font-semibold text-elec-yellow">Fill Analysis</h3>
+                    <h3 className="text-lg font-semibold">Fill Analysis</h3>
                   </div>
                   
                   <div className="grid grid-cols-2 gap-4">
                     <div className="space-y-1">
                       <p className="text-sm text-muted-foreground">Fill Percentage</p>
-                      <p className="text-2xl font-bold text-elec-yellow">{result.fillPercentage}%</p>
+                      <p className="text-2xl font-bold text-primary">{result.fillPercentage}%</p>
                     </div>
                     <div className="space-y-1">
                       <p className="text-sm text-muted-foreground">Target Fill</p>
@@ -322,26 +325,42 @@ const ConduitFillCalculator = () => {
                 <div className="space-y-2">
                   <p className="font-medium">What This Means:</p>
                   <ul className="text-sm space-y-1">
-                    <li>• Fill percentage affects cable pulling and heat dissipation</li>
-                    <li>• Lower fill allows easier cable pulling and maintenance</li>
-                    <li>• Bend radius determines minimum bending requirements</li>
-                    <li>• Consider future cable additions when designing</li>
+                    <li>• Fill percentage affects cable pulling difficulty and heat dissipation</li>
+                    <li>• High fill causes cables to jam during pulling and overheat</li>
+                    <li>• Proper fill allows easier maintenance and future installations</li>
+                    <li>• Consider pull tension and lubrication for difficult pulls</li>
                   </ul>
                 </div>
               </AlertDescription>
             </Alert>
 
-            {/* BS Guidance */}
+            {/* Practical Guidance */}
+            <Alert className="border-amber-500/20 bg-amber-500/10">
+              <Info className="h-4 w-4 text-amber-500" />
+              <AlertDescription className="text-amber-200">
+                <div className="space-y-2">
+                  <p className="font-medium">Practical Guidance:</p>
+                  <ul className="text-sm space-y-1">
+                    <li>• Use cable pulling lubricant for high fill runs</li>
+                    <li>• Install draw strings for future cable additions</li>
+                    <li>• Consider larger conduit for cable grouping derating</li>
+                    <li>• Plan cable routes to minimise sharp bends</li>
+                  </ul>
+                </div>
+              </AlertDescription>
+            </Alert>
+
+            {/* Regs at a Glance */}
             <Alert className="border-green-500/20 bg-green-500/10">
               <Info className="h-4 w-4 text-green-500" />
               <AlertDescription className="text-green-200">
                 <div className="space-y-2">
-                  <p className="font-medium">BS EN 61386-1 Guidance:</p>
+                  <p className="font-medium">Regs at a Glance:</p>
                   <ul className="text-sm space-y-1">
+                    <li>• BS EN 61386-1: Conduit systems for cable management</li>
                     <li>• 53% max fill for 1 cable, 31% for 2 cables</li>
                     <li>• 40% max fill for 3+ cables in straight runs</li>
-                    <li>• Reduce fill for runs with bends or long distances</li>
-                    <li>• Consider mechanical protection and pulling forces</li>
+                    <li>• Reduce to 35% for runs with multiple bends</li>
                   </ul>
                 </div>
               </AlertDescription>

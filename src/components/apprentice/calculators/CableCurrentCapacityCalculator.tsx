@@ -260,7 +260,7 @@ const CableCurrentCapacityCalculator = () => {
     <Card className="border border-muted/40 bg-card">
       <CardHeader>
         <div className="flex items-center gap-2">
-          <Zap className="h-5 w-5 text-elec-yellow" />
+          <Zap className="h-5 w-5 text-primary" />
           <div>
             <CardTitle>Cable Current Capacity Calculator</CardTitle>
             <CardDescription className="mt-1">

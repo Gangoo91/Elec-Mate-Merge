@@ -162,7 +162,7 @@ const MaximumDemandCalculator = () => {
     <Card className="border border-muted/40 bg-card">
       <CardHeader>
         <div className="flex items-center gap-2">
-          <Zap className="h-5 w-5 text-elec-yellow" />
+          <Zap className="h-5 w-5 text-primary" />
           <div>
             <CardTitle>Maximum Demand Calculator</CardTitle>
             <CardDescription className="mt-1">
@@ -180,7 +180,7 @@ const MaximumDemandCalculator = () => {
           <div className="space-y-4">
             {/* Stacked Header and Button */}
             <div className="space-y-3">
-              <h3 className="text-lg font-semibold text-elec-yellow flex items-center gap-2">
+              <h3 className="text-lg font-semibold flex items-center gap-2">
                 <Calculator className="h-4 w-4" />
                 Load Configuration
               </h3>
@@ -303,7 +303,7 @@ const MaximumDemandCalculator = () => {
             <div className="bg-muted/50 rounded-lg p-6">
               <div className="flex items-center gap-2 mb-4">
                 <TrendingUp className="h-5 w-5 text-elec-yellow" />
-                <h3 className="text-lg font-medium text-elec-yellow">Calculation Results</h3>
+                <h3 className="text-lg font-medium">Calculation Results</h3>
                 {loads.length > 0 && (
                   <Badge variant="outline" className="ml-auto text-xs">
                     {loads.length} Load{loads.length !== 1 ? 's' : ''}
@@ -321,7 +321,7 @@ const MaximumDemandCalculator = () => {
                     
                     <div className="flex justify-between items-center p-3 bg-elec-yellow/10 rounded">
                       <span className="text-sm font-medium">Maximum Demand:</span>
-                      <span className="text-xl font-bold text-elec-yellow">{result.maximumDemand} kW</span>
+                      <span className="text-xl font-bold text-primary">{result.maximumDemand} kW</span>
                     </div>
                     
                     <div className="flex justify-between items-center">
@@ -336,7 +336,7 @@ const MaximumDemandCalculator = () => {
                         <>
                           <div className="flex justify-between items-center">
                             <span className="text-sm text-muted-foreground">Estimated Current:</span>
-                            <span className="font-semibold text-elec-yellow">{supplyInfo.estimatedCurrent.toFixed(1)} A</span>
+                            <span className="font-semibold text-primary">{supplyInfo.estimatedCurrent.toFixed(1)} A</span>
                           </div>
                           
                           <Separator className="bg-muted/40" />

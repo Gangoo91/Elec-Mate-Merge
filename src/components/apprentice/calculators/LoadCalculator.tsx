@@ -74,15 +74,20 @@ const LoadCalculator = () => {
   };
 
   return (
-    <Card className="border-elec-yellow/20 bg-elec-gray">
+    <Card className="border border-muted/40 bg-card">
       <CardHeader>
         <div className="flex items-center gap-2">
-          <BarChart4 className="h-5 w-5 text-elec-yellow" />
-          <CardTitle>Load Assessment Calculator</CardTitle>
+          <BarChart4 className="h-5 w-5 text-primary" />
+          <div>
+            <CardTitle>Load Assessment Calculator</CardTitle>
+            <CardDescription className="mt-1">
+              Calculate total electrical load with diversity factors for BS 7671 compliant installations.
+            </CardDescription>
+          </div>
+          <Badge variant="outline" className="ml-auto">
+            BS 7671
+          </Badge>
         </div>
-        <CardDescription>
-          Calculate total electrical load with diversity factors for BS 7671 compliant installations.
-        </CardDescription>
       </CardHeader>
       <CardContent>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -162,11 +167,11 @@ const LoadCalculator = () => {
 
           {/* Result Section */}
           <div className="space-y-4">
-            <div className="rounded-md bg-elec-dark p-6 min-h-[200px]">
+            <div className="rounded-md bg-muted/50 p-6 min-h-[200px]">
               {result ? (
                 <div className="space-y-4">
                   <div className="text-center">
-                    <h3 className="text-lg font-semibold text-elec-yellow mb-2">Load Assessment Results</h3>
+                    <h3 className="text-lg font-semibold mb-2">Load Assessment Results</h3>
                     <Badge variant="secondary" className="mb-4">
                       BS 7671 Compliant
                     </Badge>
@@ -177,16 +182,21 @@ const LoadCalculator = () => {
                   <div className="grid grid-cols-1 gap-4 text-sm">
                     <div>
                       <span className="text-muted-foreground">Total Connected Load:</span>
-                      <div className="font-mono text-elec-yellow">{result.totalLoad.toLocaleString()} W ({(result.totalLoad / 1000).toFixed(1)} kW)</div>
+                      <div className="font-mono text-primary">{result.totalLoad.toLocaleString()} W ({(result.totalLoad / 1000).toFixed(1)} kW)</div>
                     </div>
                     <div>
                       <span className="text-muted-foreground">After Diversity ({parseFloat(diversityFactor) * 100}%):</span>
-                      <div className="font-mono text-elec-yellow">{result.diversifiedLoad.toLocaleString()} W ({(result.diversifiedLoad / 1000).toFixed(1)} kW)</div>
+                      <div className="font-mono text-primary">{result.diversifiedLoad.toLocaleString()} W ({(result.diversifiedLoad / 1000).toFixed(1)} kW)</div>
                     </div>
-                    <div className="pt-2 border-t border-elec-yellow/20">
+                    <div className="pt-2 border-t border-primary/20">
                       <span className="text-muted-foreground">Recommended Supply:</span>
-                      <div className="font-mono text-elec-yellow text-lg">{result.recommendedSupply.toLocaleString()} W ({(result.recommendedSupply / 1000).toFixed(1)} kW)</div>
-                      <div className="text-xs text-gray-400 mt-1">Includes 25% safety margin</div>
+                      <div className="font-mono text-primary text-lg">{result.recommendedSupply.toLocaleString()} W ({(result.recommendedSupply / 1000).toFixed(1)} kW)</div>
+                      <div className="text-xs text-muted-foreground mt-1">Includes 25% safety margin</div>
+                    </div>
+                    <div>
+                      <span className="text-muted-foreground">Estimated Current (230V):</span>
+                      <div className="font-mono text-primary">{(result.diversifiedLoad / 230).toFixed(1)} A</div>
+                      <div className="text-xs text-muted-foreground mt-1">Per phase current for single-phase supply</div>
                     </div>
                   </div>
                 </div>
@@ -197,14 +207,35 @@ const LoadCalculator = () => {
               )}
             </div>
 
+            {/* What This Means Panel */}
             <Alert className="border-blue-500/20 bg-blue-500/10">
               <Info className="h-4 w-4 text-blue-500" />
               <AlertDescription className="text-blue-200">
-                <strong>BS 7671 Diversity Factors:</strong><br />
-                • Lighting: 1.0 (100%)<br />
-                • Socket outlets: 0.4-0.8 depending on type<br />
-                • Heating: 1.0 (100%)<br />
-                • Motors: 1.0 plus safety factors
+                <div className="space-y-2">
+                  <p className="font-medium">What This Means:</p>
+                  <ul className="text-sm space-y-1">
+                    <li>• Total load determines cable and protective device sizing</li>
+                    <li>• Diversity prevents over-sizing of installation components</li>
+                    <li>• Current calculation helps determine supply adequacy</li>
+                    <li>• Safety margin protects against load growth</li>
+                  </ul>
+                </div>
+              </AlertDescription>
+            </Alert>
+
+            {/* Regs at a Glance */}
+            <Alert className="border-green-500/20 bg-green-500/10">
+              <Info className="h-4 w-4 text-green-500" />
+              <AlertDescription className="text-green-200">
+                <div className="space-y-2">
+                  <p className="font-medium">Regs at a Glance:</p>
+                  <ul className="text-sm space-y-1">
+                    <li>• BS 7671 Table 311: Standard diversity factors</li>
+                    <li>• Lighting: 66% after 5A plus 25% remainder</li>
+                    <li>• Socket outlets: Variable based on floor area</li>
+                    <li>• Water heating: 100% - no diversity allowed</li>
+                  </ul>
+                </div>
               </AlertDescription>
             </Alert>
           </div>

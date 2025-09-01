@@ -71,15 +71,20 @@ const reset = () => {
   };
 
   return (
-    <Card className="border-elec-yellow/20 bg-elec-gray">
+    <Card className="border border-muted/40 bg-card">
       <CardHeader>
         <div className="flex items-center gap-2">
-          <Activity className="h-5 w-5 text-elec-yellow" />
-          <CardTitle>Voltage Drop Calculator</CardTitle>
+          <Activity className="h-5 w-5 text-primary" />
+          <div>
+            <CardTitle>Voltage Drop Calculator</CardTitle>
+            <CardDescription className="mt-1">
+              Calculate voltage drop across cable runs according to BS 7671 requirements with practical guidance.
+            </CardDescription>
+          </div>
+          <Badge variant="outline" className="ml-auto">
+            BS 7671
+          </Badge>
         </div>
-        <CardDescription>
-          Calculate voltage drop across cable runs according to BS 7671 requirements.
-        </CardDescription>
       </CardHeader>
       <CardContent>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -210,10 +215,35 @@ const reset = () => {
               )}
             </div>
 
+            {/* What This Means Panel */}
             <Alert className="border-blue-500/20 bg-blue-500/10">
               <Info className="h-4 w-4 text-blue-500" />
               <AlertDescription className="text-blue-200">
-                BS 7671 limits: 3% for lighting circuits, 5% for other circuits from origin to furthest point.
+                <div className="space-y-2">
+                  <p className="font-medium">What This Means:</p>
+                  <ul className="text-sm space-y-1">
+                    <li>• Voltage drop affects equipment performance and efficiency</li>
+                    <li>• Excessive drop causes lights to dim and motors to overheat</li>
+                    <li>• Cable size increase reduces voltage drop but costs more</li>
+                    <li>• Consider load distribution to minimise cable runs</li>
+                  </ul>
+                </div>
+              </AlertDescription>
+            </Alert>
+
+            {/* Regs at a Glance */}
+            <Alert className="border-green-500/20 bg-green-500/10">
+              <Info className="h-4 w-4 text-green-500" />
+              <AlertDescription className="text-green-200">
+                <div className="space-y-2">
+                  <p className="font-medium">Regs at a Glance:</p>
+                  <ul className="text-sm space-y-1">
+                    <li>• BS 7671 Section 525: Voltage drop limits</li>
+                    <li>• 3% max for lighting circuits from origin</li>
+                    <li>• 5% max for other final circuits from origin</li>
+                    <li>• Use copper conductor resistance at 70°C</li>
+                  </ul>
+                </div>
               </AlertDescription>
             </Alert>
           </div>
