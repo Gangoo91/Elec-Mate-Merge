@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { RefreshCw, Clock } from "lucide-react";
 
@@ -22,7 +23,7 @@ const RefreshButton = ({ isFetching, lastFetchTime, onRefresh, categoryId, class
   };
 
   return (
-    <div className={`flex flex-col sm:flex-row gap-2 items-start sm:items-center ${className}`}>
+    <div className={`flex flex-col sm:flex-row gap-2 items-start ${className}`}>
       <Button 
         variant="outline" 
         size="sm" 
