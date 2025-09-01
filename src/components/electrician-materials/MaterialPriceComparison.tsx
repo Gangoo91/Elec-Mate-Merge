@@ -629,9 +629,9 @@ const MaterialPriceComparison = ({ initialQuery = "", selectedItems = [], onClea
             {/* Enhanced Summary with Export */}
             <Card className="border-elec-yellow/20 bg-elec-gray">
               <CardHeader className="pb-3">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <CardTitle className="text-white">
+                <div className={`${isMobile ? 'space-y-4' : 'flex items-center justify-between'}`}>
+                  <div className={isMobile ? 'space-y-1' : ''}>
+                    <CardTitle className={`text-white ${isMobile ? 'text-lg' : 'text-xl'}`}>
                       {showingPreSelected ? 'Selected Items Comparison' : `Search Results for "${comparisonResult.searchTerm}"`}
                     </CardTitle>
                     <p className="text-sm text-elec-yellow">
