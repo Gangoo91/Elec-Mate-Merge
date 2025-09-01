@@ -159,7 +159,7 @@ const MaximumDemandCalculator = () => {
   };
 
   return (
-    <Card className="border border-muted/40 bg-card">
+    <Card className="border-elec-yellow/20 bg-elec-gray">
       <CardHeader>
         <div className="flex items-center gap-2">
           <Zap className="h-5 w-5 text-primary" />
