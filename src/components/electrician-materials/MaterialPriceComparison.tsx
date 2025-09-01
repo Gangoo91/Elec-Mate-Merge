@@ -345,48 +345,46 @@ const MaterialPriceComparison = ({
         </div>
       </div>
 
-      {/* Tab Navigation - Collapsible on Mobile */}
-      {isMobile ? (
-        <Collapsible className="mb-4">
-          <CollapsibleTrigger className="w-full flex items-center justify-between bg-elec-gray border border-elec-yellow/20 rounded-xl p-4 mobile-interactive touch-target hover:bg-elec-yellow/5 transition-colors">
-            <div className="flex items-center gap-3">
-              {activeTab === 'comparison' && <Brain className="h-4 w-4 text-elec-yellow" />}
-              {activeTab === 'bulk' && <Calculator className="h-4 w-4 text-elec-yellow" />}
-              {activeTab === 'history' && <History className="h-4 w-4 text-elec-yellow" />}
-              <span className="text-sm font-medium text-elec-light">
-                {activeTab === 'comparison' && "Price Comparison"}
-                {activeTab === 'bulk' && "Bulk Pricing"}
-                {activeTab === 'history' && "Price History & Alerts"}
-              </span>
-            </div>
-            <ChevronDown className="h-4 w-4 text-elec-yellow transition-transform duration-200 group-data-[state=open]:rotate-180" />
-          </CollapsibleTrigger>
-          
-          <CollapsibleContent className="mt-2">
-            <div className="bg-elec-gray border border-elec-yellow/20 rounded-xl overflow-hidden">
-              {[
-                { key: 'comparison', label: 'Price Comparison', icon: Brain, disabled: false },
-                { key: 'bulk', label: 'Bulk Pricing', icon: Calculator, disabled: !comparisonResult?.products.length },
-                { key: 'history', label: 'Price History & Alerts', icon: History, disabled: !selectedProductForAnalysis }
-              ].filter(tab => tab.key !== activeTab).map((tab) => (
-                <button
-                  key={tab.key}
-                  onClick={() => setActiveTab(tab.key as any)}
-                  disabled={tab.disabled}
-                  className={`w-full flex items-center gap-3 p-4 text-left transition-all duration-200 mobile-interactive touch-target border-b border-elec-yellow/10 last:border-b-0 ${
-                    tab.disabled 
-                      ? "text-elec-light/50 cursor-not-allowed" 
-                      : "text-elec-light hover:bg-elec-yellow/10"
-                  }`}
-                >
-                  <tab.icon className="h-4 w-4" />
-                  <span className="text-sm font-medium">{tab.label}</span>
-                </button>
-              ))}
-            </div>
-          </CollapsibleContent>
-        </Collapsible>
-      ) : null}
+      {/* Tab Navigation - Collapsible */}
+      <Collapsible className="mb-4">
+        <CollapsibleTrigger className="w-full flex items-center justify-between bg-elec-gray border border-elec-yellow/20 rounded-xl p-4 mobile-interactive touch-target hover:bg-elec-yellow/5 transition-colors">
+          <div className="flex items-center gap-3">
+            {activeTab === 'comparison' && <Brain className="h-4 w-4 text-elec-yellow" />}
+            {activeTab === 'bulk' && <Calculator className="h-4 w-4 text-elec-yellow" />}
+            {activeTab === 'history' && <History className="h-4 w-4 text-elec-yellow" />}
+            <span className="text-sm font-medium text-elec-light">
+              {activeTab === 'comparison' && "Price Comparison"}
+              {activeTab === 'bulk' && "Bulk Pricing"}
+              {activeTab === 'history' && "Price History & Alerts"}
+            </span>
+          </div>
+          <ChevronDown className="h-4 w-4 text-elec-yellow transition-transform duration-200 group-data-[state=open]:rotate-180" />
+        </CollapsibleTrigger>
+        
+        <CollapsibleContent className="mt-2">
+          <div className="bg-elec-gray border border-elec-yellow/20 rounded-xl overflow-hidden">
+            {[
+              { key: 'comparison', label: 'Price Comparison', icon: Brain, disabled: false },
+              { key: 'bulk', label: 'Bulk Pricing', icon: Calculator, disabled: !comparisonResult?.products.length },
+              { key: 'history', label: 'Price History & Alerts', icon: History, disabled: !selectedProductForAnalysis }
+            ].filter(tab => tab.key !== activeTab).map((tab) => (
+              <button
+                key={tab.key}
+                onClick={() => setActiveTab(tab.key as any)}
+                disabled={tab.disabled}
+                className={`w-full flex items-center gap-3 p-4 text-left transition-all duration-200 mobile-interactive touch-target border-b border-elec-yellow/10 last:border-b-0 ${
+                  tab.disabled 
+                    ? "text-elec-light/50 cursor-not-allowed" 
+                    : "text-elec-light hover:bg-elec-yellow/10"
+                }`}
+              >
+                <tab.icon className="h-4 w-4" />
+                <span className="text-sm font-medium">{tab.label}</span>
+              </button>
+            ))}
+          </div>
+        </CollapsibleContent>
+      </Collapsible>
 
       {/* Tab Content */}
       {activeTab === 'comparison' && (
