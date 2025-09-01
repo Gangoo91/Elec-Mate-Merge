@@ -138,27 +138,6 @@ const ZsLookupResult = ({ searchType, results, complianceCheck, measuredZs }: Zs
 
   return (
     <div className="space-y-6">
-      {/* Why This Matters */}
-      <WhyThisMatters
-        points={[
-          "Zs values ensure protective devices operate within required disconnection times (0.4s for final circuits, 5s for distribution)",
-          "Values in BS7671 tables are maximum limits - actual installations should have margin for safety",
-          "80% test values account for conductor temperature rise under fault conditions"
-        ]}
-      />
-
-      {/* Assumptions */}
-      <InfoBox
-        title="Key Assumptions"
-        icon={<Info className="h-5 w-5 text-blue-400" />}
-        points={[
-          "Nominal voltage: 230V (single phase), 400V (three phase)",
-          "Standard ambient temperature (20°C for cables)",
-          "Values from BS7671 Tables 41.2, 41.3, and 41.4",
-          "TN system unless otherwise specified"
-        ]}
-      />
-
       {/* Device Lookup Results */}
       {searchType === "device" && results.length > 0 && (
         <Card className="bg-elec-card border-elec-yellow/20">
@@ -400,6 +379,27 @@ const ZsLookupResult = ({ searchType, results, complianceCheck, measuredZs }: Zs
           </CardContent>
         </Card>
       )}
+
+      {/* Why This Matters */}
+      <WhyThisMatters
+        points={[
+          "Zs values ensure protective devices operate within required disconnection times (0.4s for final circuits, 5s for distribution)",
+          "Values in BS7671 tables are maximum limits - actual installations should have margin for safety",
+          "80% test values account for conductor temperature rise under fault conditions"
+        ]}
+      />
+
+      {/* Assumptions */}
+      <InfoBox
+        title="Key Assumptions"
+        icon={<Info className="h-5 w-5 text-blue-400" />}
+        points={[
+          "Nominal voltage: 230V (single phase), 400V (three phase)",
+          "Standard ambient temperature (20°C for cables)",
+          "Values from BS7671 Tables 41.2, 41.3, and 41.4",
+          "TN system unless otherwise specified"
+        ]}
+      />
     </div>
   );
 };
