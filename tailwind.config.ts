@@ -67,6 +67,7 @@ export default {
 				'elec-yellow': 'hsl(var(--elec-yellow))',
 				'elec-dark': 'hsl(var(--elec-dark))',
 				'elec-gray': 'hsl(var(--elec-gray))',
+				'elec-grey': 'hsl(var(--elec-grey))',
 				'elec-light': 'hsl(var(--elec-light))',
 				'elec-card': 'hsl(var(--elec-card))',
 				'elec-slate': 'hsl(var(--elec-slate))',
