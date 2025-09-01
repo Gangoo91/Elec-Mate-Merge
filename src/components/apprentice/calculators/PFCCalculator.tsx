@@ -549,8 +549,8 @@ const PFCCalculator = () => {
                           <p className="text-xs">10kA MCB</p>
                           <p className="text-xs text-muted-foreground">Industrial/large commercial</p>
                         </div>
-                        <div className="bg-destructive/10 border border-destructive/30 rounded p-3">
-                          <h5 className="text-destructive font-medium text-xs mb-1">Above 10kA</h5>
+                        <div className="bg-red-500/20 border border-red-400/50 rounded p-3">
+                          <h5 className="text-red-400 font-medium text-xs mb-1">Above 10kA</h5>
                           <p className="text-xs">16kA+ MCB/MCCB</p>
                           <p className="text-xs text-muted-foreground">High fault current locations</p>
                         </div>
@@ -581,8 +581,8 @@ const PFCCalculator = () => {
                       </ul>
                     </div>
 
-                    <div className="bg-destructive/10 border border-destructive/30 rounded p-3">
-                      <h5 className="text-destructive font-medium text-sm mb-2">Common Pitfalls</h5>
+                    <div className="bg-red-500/20 border border-red-400/50 rounded p-3">
+                      <h5 className="text-red-400 font-medium text-sm mb-2">Common Pitfalls</h5>
                       <ul className="text-sm space-y-1">
                         <li className="flex items-start gap-3">
                           <span className="text-elec-yellow mt-1 flex-shrink-0 w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
