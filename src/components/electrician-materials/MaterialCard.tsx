@@ -123,7 +123,7 @@ const MaterialCard: React.FC<MaterialCardProps> = ({
             </span>
           </div>
           {item.stockStatus && (
-            <span className={`text-xs px-2 py-1 rounded font-medium ${
+            <span className={`text-xs px-2 py-1 rounded-full font-medium ${
               item.stockStatus === "In Stock" ? "bg-green-500/20 text-green-400" :
               item.stockStatus === "Low Stock" ? "bg-orange-500/20 text-orange-400" :
               "bg-red-500/20 text-red-400"
