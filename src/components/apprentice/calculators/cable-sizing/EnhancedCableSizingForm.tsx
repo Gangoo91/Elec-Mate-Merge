@@ -91,14 +91,14 @@ const EnhancedCableSizingForm: React.FC<EnhancedCableSizingFormProps> = ({
                 value={inputs.template}
                 onValueChange={(value) => {
                   updateInput('template', value);
-                  applyTemplate(value);
+                  if (value !== "none") applyTemplate(value);
                 }}
               >
                 <SelectTrigger className="mt-1">
                   <SelectValue placeholder="Select template" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">No template</SelectItem>
+                  <SelectItem value="none">No template</SelectItem>
                   {industryTemplates.map((template) => (
                     <SelectItem key={template.id} value={template.id}>
                       {template.name}

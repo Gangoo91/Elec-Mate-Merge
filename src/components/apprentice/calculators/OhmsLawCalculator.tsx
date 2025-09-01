@@ -12,7 +12,7 @@ const OhmsLawCalculator = () => {
   const [current, setCurrent] = useState("");
   const [resistance, setResistance] = useState("");
   const [power, setPower] = useState("");
-  const [solveFor, setSolveFor] = useState("");
+  const [solveFor, setSolveFor] = useState("auto");
   const [errors, setErrors] = useState<{[key: string]: string}>({});
   const [result, setResult] = useState<{
     voltage?: number;
@@ -117,7 +117,7 @@ const OhmsLawCalculator = () => {
     setCurrent("");
     setResistance("");
     setPower("");
-    setSolveFor("");
+    setSolveFor("auto");
     setErrors({});
     setResult(null);
   };
@@ -149,7 +149,7 @@ const OhmsLawCalculator = () => {
               <MobileSelectValue placeholder="What are you trying to find?" />
             </MobileSelectTrigger>
             <MobileSelectContent className="bg-elec-dark border-elec-yellow/20 z-50">
-              <MobileSelectItem value="">Auto-detect from inputs</MobileSelectItem>
+              <MobileSelectItem value="auto">Auto-detect from inputs</MobileSelectItem>
               <MobileSelectItem value="voltage">Voltage (V)</MobileSelectItem>
               <MobileSelectItem value="current">Current (I)</MobileSelectItem>
               <MobileSelectItem value="resistance">Resistance (R)</MobileSelectItem>
