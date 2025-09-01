@@ -312,6 +312,7 @@ const OhmsLawCalculator = () => {
             value={inputs.solveFor}
             onValueChange={(value) => handleInputChange("solveFor", value)}
             options={solveForOptions}
+            placeholder="Choose what to calculate"
           />
 
           {/* Input Grid */}
