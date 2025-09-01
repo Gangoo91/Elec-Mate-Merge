@@ -1,100 +1,17 @@
-import { useState, useEffect, useRef } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { useState, useEffect } from "react";
+import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Search, TrendingDown, Crown, ExternalLink, Loader2, AlertCircle, Filter, Star, RefreshCw, Brain, Lightbulb, Package, AlertTriangle, Download, Calculator, History, Bell, ChevronDown, Plus } from "lucide-react";
+import { Brain, Calculator, History, ChevronDown } from "lucide-react";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { MobileButton } from "@/components/ui/mobile-button";
-import { MobileInputWrapper } from "@/components/ui/mobile-input-wrapper";
-import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import BulkPricingCalculator from "./BulkPricingCalculator";
 import PriceHistoryAlerts from "./PriceHistoryAlerts";
-
-interface PriceComparisonItem {
-  id: number;
-  name: string;
-  category: string;
-  price: string;
-  supplier: string;
-  image: string;
-  stockStatus: "In Stock" | "Low Stock" | "Out of Stock";
-  productUrl?: string;
-  highlights?: string[];
-  numericPrice: number;
-  rating?: number;
-  deliveryInfo?: string;
-  originalPrice?: string;
-  discount?: string;
-}
-
-interface PriceComparisonResult {
-  searchTerm: string;
-  products: PriceComparisonItem[];
-  cheapestPrice: number;
-  averagePrice: number;
-  priceRange: string;
-  aiInsights?: AIInsights;
-}
-
-interface AIRecommendation {
-  type: 'alternative' | 'bundle' | 'upgrade' | 'warning';
-  title: string;
-  description: string;
-  savings?: number;
-  confidence: number;
-  products?: PriceComparisonItem[];
-}
-
-interface AIInsights {
-  smartMatching: {
-    matchedGroups: PriceComparisonItem[][];
-    alternatives: PriceComparisonItem[];
-    recommendations: AIRecommendation[];
-  };
-  valueAnalysis: {
-    recommendations: AIRecommendation[];
-    insights: string[];
-  };
-  purchaseRecommendations: AIRecommendation[];
-  summary: {
-    totalProducts: number;
-    matchedGroups: number;
-    alternatives: number;
-    recommendations: number;
-  };
-}
-
-// Common electrical product suggestions for autocomplete
-const COMMON_PRODUCTS = [
-  "Twin & Earth Cable 2.5mm", "Twin & Earth Cable 1.5mm", "SWA Cable 4mm", "SWA Cable 2.5mm",
-  "MCB 32A", "MCB 20A", "MCB 16A", "MCB 6A", "RCD 30mA", "RCD 100mA",
-  "Consumer Unit 10 Way", "Consumer Unit 18 Way", "Isolator Switch", "Circuit Breaker",
-  "LED Downlight 6W", "LED Downlight 9W", "Emergency Light", "Batten Light 4ft",
-  "Cable Clips", "Cable Gland 20mm", "Conduit 20mm", "Trunking 50x50",
-  "Junction Box", "Weatherproof Box", "Socket Outlet", "Light Switch"
-];
-
-const CATEGORIES = [
-  { value: "all", label: "All Categories" },
-  { value: "cables", label: "Cables" },
-  { value: "components", label: "Components" },
-  { value: "lighting", label: "Lighting" },
-  { value: "protection", label: "Protection" },
-  { value: "accessories", label: "Accessories" }
-];
-
-const SUPPLIERS = [
-  { value: "all", label: "All Suppliers" },
-  { value: "screwfix", label: "Screwfix" },
-  { value: "cef", label: "CEF" },
-  { value: "rs", label: "RS Components" },
-  { value: "toolstation", label: "Toolstation" }
-];
+import { SearchInterface } from "./price-comparison/SearchInterface";
+import { ProductCard, PriceComparisonItem } from "./price-comparison/ProductCard";
+import { AIInsightsComponent, AIInsights } from "./price-comparison/AIInsights";
+import { PriceStats, PriceComparisonResult } from "./price-comparison/PriceStats";
 
 interface MaterialPriceComparisonProps {
   initialQuery?: string;
@@ -104,22 +21,40 @@ interface MaterialPriceComparisonProps {
   onAddMultipleToQuote?: (materials: any[]) => void;
 }
 
-const MaterialPriceComparison = ({ initialQuery = "", selectedItems = [], onClearSelection, onAddToQuote, onAddMultipleToQuote }: MaterialPriceComparisonProps) => {
+const MaterialPriceComparison = ({ 
+  initialQuery = "", 
+  selectedItems = [], 
+  onClearSelection, 
+  onAddToQuote, 
+  onAddMultipleToQuote 
+}: MaterialPriceComparisonProps) => {
   const isMobile = useIsMobile();
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState(initialQuery);
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedSupplier, setSelectedSupplier] = useState("all");
   const [isLoading, setIsLoading] = useState(false);
   const [isAiAnalyzing, setIsAiAnalyzing] = useState(false);
   const [comparisonResult, setComparisonResult] = useState<PriceComparisonResult | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [suggestions, setSuggestions] = useState<string[]>([]);
-  const [showSuggestions, setShowSuggestions] = useState(false);
   const [aiEnabled, setAiEnabled] = useState(true);
   const [activeTab, setActiveTab] = useState<'comparison' | 'bulk' | 'history'>('comparison');
   const [selectedProductForAnalysis, setSelectedProductForAnalysis] = useState<PriceComparisonItem | null>(null);
   const [showingPreSelected, setShowingPreSelected] = useState(false);
-  const searchInputRef = useRef<HTMLInputElement>(null);
+
+  // Helper functions
+  const extractPrice = (priceStr: string): number => {
+    const cleaned = priceStr.replace(/[£,]/g, '');
+    return parseFloat(cleaned) || 0;
+  };
+
+  const formatPrice = (price: number): string => {
+    return `£${price.toFixed(2)}`;
+  };
+
+  const calculateSavings = (currentPrice: number, cheapestPrice: number): number => {
+    if (cheapestPrice === 0) return 0;
+    return Math.round(((currentPrice - cheapestPrice) / cheapestPrice) * 100);
+  };
 
   // Process selected items from the category page
   const processSelectedItems = (items: any[]): PriceComparisonResult | null => {
@@ -158,73 +93,6 @@ const MaterialPriceComparison = ({ initialQuery = "", selectedItems = [], onClea
       averagePrice,
       priceRange
     };
-  };
-
-  // Process selected items when component mounts or selectedItems changes
-  useEffect(() => {
-    if (selectedItems && selectedItems.length > 0) {
-      const result = processSelectedItems(selectedItems);
-      if (result) {
-        setComparisonResult(result);
-        setShowingPreSelected(true);
-        
-        // Run AI analysis on pre-selected items if enabled
-        if (aiEnabled) {
-          runAiAnalysis(result.products).then(aiInsights => {
-            if (aiInsights) {
-              setComparisonResult(prev => prev ? { ...prev, aiInsights } : null);
-            }
-          });
-        }
-      }
-    }
-  }, [selectedItems, aiEnabled]);
-
-  // Handle clearing selection
-  const handleClearSelection = () => {
-    setComparisonResult(null);
-    setShowingPreSelected(false);
-    setSearchQuery("");
-    if (onClearSelection) {
-      onClearSelection();
-    }
-  };
-
-  const extractPrice = (priceStr: string): number => {
-    const cleaned = priceStr.replace(/[£,]/g, '');
-    return parseFloat(cleaned) || 0;
-  };
-
-  const formatPrice = (price: number): string => {
-    return `£${price.toFixed(2)}`;
-  };
-
-  const calculateSavings = (currentPrice: number, cheapestPrice: number): number => {
-    if (cheapestPrice === 0) return 0;
-    return Math.round(((currentPrice - cheapestPrice) / cheapestPrice) * 100);
-  };
-
-  // Handle search input with autocomplete
-  const handleSearchChange = (value: string) => {
-    setSearchQuery(value);
-    
-    if (value.length > 1) {
-      const filtered = COMMON_PRODUCTS.filter(product =>
-        product.toLowerCase().includes(value.toLowerCase())
-      ).slice(0, 5);
-      setSuggestions(filtered);
-      setShowSuggestions(true);
-    } else {
-      setSuggestions([]);
-      setShowSuggestions(false);
-    }
-  };
-
-  const selectSuggestion = (suggestion: string) => {
-    setSearchQuery(suggestion);
-    setSuggestions([]);
-    setShowSuggestions(false);
-    searchInputRef.current?.focus();
   };
 
   // Enhanced product processing with supplier-specific data enrichment
@@ -302,7 +170,6 @@ const MaterialPriceComparison = ({ initialQuery = "", selectedItems = [], onClea
     
     setIsLoading(true);
     setError(null);
-    setShowSuggestions(false);
     setShowingPreSelected(false);
     
     try {
@@ -376,12 +243,6 @@ const MaterialPriceComparison = ({ initialQuery = "", selectedItems = [], onClea
     }
   };
 
-  const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') {
-      handleSearch();
-    }
-  };
-
   // PDF Export functionality
   const exportToPDF = async () => {
     if (!comparisonResult) return;
@@ -430,6 +291,36 @@ const MaterialPriceComparison = ({ initialQuery = "", selectedItems = [], onClea
     }
   };
 
+  // Handle clearing selection
+  const handleClearSelection = () => {
+    setComparisonResult(null);
+    setShowingPreSelected(false);
+    setSearchQuery("");
+    if (onClearSelection) {
+      onClearSelection();
+    }
+  };
+
+  // Process selected items when component mounts or selectedItems changes
+  useEffect(() => {
+    if (selectedItems && selectedItems.length > 0) {
+      const result = processSelectedItems(selectedItems);
+      if (result) {
+        setComparisonResult(result);
+        setShowingPreSelected(true);
+        
+        // Run AI analysis on pre-selected items if enabled
+        if (aiEnabled) {
+          runAiAnalysis(result.products).then(aiInsights => {
+            if (aiInsights) {
+              setComparisonResult(prev => prev ? { ...prev, aiInsights } : null);
+            }
+          });
+        }
+      }
+    }
+  }, [selectedItems, aiEnabled]);
+
   return (
     <div className="space-y-6">
       <div className="text-center space-y-4">
@@ -454,632 +345,124 @@ const MaterialPriceComparison = ({ initialQuery = "", selectedItems = [], onClea
         </div>
       </div>
 
-      {/* Enhanced Search Interface */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardContent className="p-6">
-          <div className="space-y-4">
-            {/* Tab Navigation - Collapsible on Mobile */}
-            {isMobile ? (
-              <Collapsible className="mb-4">
-                <CollapsibleTrigger className="w-full flex items-center justify-between bg-elec-gray border border-elec-yellow/20 rounded-xl p-4 mobile-interactive touch-target hover:bg-elec-yellow/5 transition-colors">
-                  <div className="flex items-center gap-3">
-                    {activeTab === 'comparison' && <Search className="h-4 w-4 text-elec-yellow" />}
-                    {activeTab === 'bulk' && <Calculator className="h-4 w-4 text-elec-yellow" />}
-                    {activeTab === 'history' && <History className="h-4 w-4 text-elec-yellow" />}
-                    <span className="text-sm font-medium text-elec-light">
-                      {activeTab === 'comparison' && "Price Comparison"}
-                      {activeTab === 'bulk' && "Bulk Pricing"}
-                      {activeTab === 'history' && "Price History & Alerts"}
-                    </span>
-                  </div>
-                  <ChevronDown className="h-4 w-4 text-elec-yellow transition-transform duration-200 group-data-[state=open]:rotate-180" />
-                </CollapsibleTrigger>
-                
-                <CollapsibleContent className="mt-2">
-                  <div className="bg-elec-gray border border-elec-yellow/20 rounded-xl overflow-hidden">
-                    {[
-                      { key: 'comparison', label: 'Price Comparison', icon: Search, disabled: false },
-                      { key: 'bulk', label: 'Bulk Pricing', icon: Calculator, disabled: !comparisonResult?.products.length },
-                      { key: 'history', label: 'Price History & Alerts', icon: History, disabled: !selectedProductForAnalysis }
-                    ].filter(tab => tab.key !== activeTab).map((tab) => (
-                      <button
-                        key={tab.key}
-                        onClick={() => setActiveTab(tab.key as any)}
-                        disabled={tab.disabled}
-                        className={`w-full flex items-center gap-3 p-4 text-left transition-all duration-200 mobile-interactive touch-target border-b border-elec-yellow/10 last:border-b-0 ${
-                          tab.disabled 
-                            ? "text-elec-light/50 cursor-not-allowed" 
-                            : "text-elec-light hover:bg-elec-yellow/10"
-                        }`}
-                      >
-                        <tab.icon className="h-4 w-4" />
-                        <span className="text-sm font-medium">{tab.label}</span>
-                      </button>
-                    ))}
-                  </div>
-                </CollapsibleContent>
-              </Collapsible>
-            ) : (
-              <div className="flex flex-wrap gap-2 mb-4">
-                <MobileButton
-                  variant={activeTab === 'comparison' ? 'elec' : 'elec-outline'}
-                  size="sm"
-                  onClick={() => setActiveTab('comparison')}
+      {/* Tab Navigation - Collapsible on Mobile */}
+      {isMobile ? (
+        <Collapsible className="mb-4">
+          <CollapsibleTrigger className="w-full flex items-center justify-between bg-elec-gray border border-elec-yellow/20 rounded-xl p-4 mobile-interactive touch-target hover:bg-elec-yellow/5 transition-colors">
+            <div className="flex items-center gap-3">
+              {activeTab === 'comparison' && <Brain className="h-4 w-4 text-elec-yellow" />}
+              {activeTab === 'bulk' && <Calculator className="h-4 w-4 text-elec-yellow" />}
+              {activeTab === 'history' && <History className="h-4 w-4 text-elec-yellow" />}
+              <span className="text-sm font-medium text-elec-light">
+                {activeTab === 'comparison' && "Price Comparison"}
+                {activeTab === 'bulk' && "Bulk Pricing"}
+                {activeTab === 'history' && "Price History & Alerts"}
+              </span>
+            </div>
+            <ChevronDown className="h-4 w-4 text-elec-yellow transition-transform duration-200 group-data-[state=open]:rotate-180" />
+          </CollapsibleTrigger>
+          
+          <CollapsibleContent className="mt-2">
+            <div className="bg-elec-gray border border-elec-yellow/20 rounded-xl overflow-hidden">
+              {[
+                { key: 'comparison', label: 'Price Comparison', icon: Brain, disabled: false },
+                { key: 'bulk', label: 'Bulk Pricing', icon: Calculator, disabled: !comparisonResult?.products.length },
+                { key: 'history', label: 'Price History & Alerts', icon: History, disabled: !selectedProductForAnalysis }
+              ].filter(tab => tab.key !== activeTab).map((tab) => (
+                <button
+                  key={tab.key}
+                  onClick={() => setActiveTab(tab.key as any)}
+                  disabled={tab.disabled}
+                  className={`w-full flex items-center gap-3 p-4 text-left transition-all duration-200 mobile-interactive touch-target border-b border-elec-yellow/10 last:border-b-0 ${
+                    tab.disabled 
+                      ? "text-elec-light/50 cursor-not-allowed" 
+                      : "text-elec-light hover:bg-elec-yellow/10"
+                  }`}
                 >
-                  <Search className="h-4 w-4 mr-2" />
-                  Price Comparison
-                </MobileButton>
-                <MobileButton
-                  variant={activeTab === 'bulk' ? 'elec' : 'elec-outline'}
-                  size="sm"
-                  onClick={() => setActiveTab('bulk')}
-                  disabled={!comparisonResult?.products.length}
-                >
-                  <Calculator className="h-4 w-4 mr-2" />
-                  Bulk Pricing
-                </MobileButton>
-                <MobileButton
-                  variant={activeTab === 'history' ? 'elec' : 'elec-outline'}
-                  size="sm"
-                  onClick={() => setActiveTab('history')}
-                  disabled={!selectedProductForAnalysis}
-                >
-                  <History className="h-4 w-4 mr-2" />
-                  Price History & Alerts
-                </MobileButton>
-              </div>
-            )}
-            {/* Main Search Input - Only show for comparison tab */}
-            {activeTab === 'comparison' && (
-              <>
-                {showingPreSelected && selectedItems?.length > 0 && (
-                  <div className="flex items-center gap-4 p-4 bg-blue-500/10 border border-blue-500/30 rounded-lg mb-4">
-                    <Package className="h-5 w-5 text-blue-400" />
-                    <div className="flex-1">
-                      <p className="text-sm font-medium text-blue-400">
-                        Comparing {selectedItems.length} selected items
-                      </p>
-                      <p className="text-xs text-blue-300/70">
-                        These items were pre-selected from the category page
-                      </p>
-                    </div>
-                    <MobileButton
-                      variant="elec-outline"
-                      size="sm"
-                      onClick={handleClearSelection}
-                    >
-                      Clear Selection
-                    </MobileButton>
-                  </div>
-                )}
-
-                <div className={`space-y-4 ${isMobile ? '' : 'space-y-6'}`}>
-                  <div className="relative">
-                    <MobileInputWrapper
-                      label="Search for electrical materials"
-                      placeholder="e.g. 'Twin & Earth Cable 2.5mm'"
-                      value={searchQuery}
-                      onChange={handleSearchChange}
-                      disabled={isLoading}
-                      icon={<Search className="h-5 w-5 text-muted-foreground" />}
-                      hint="Start typing to see product suggestions"
-                    />
-                    
-                    {/* Autocomplete Suggestions */}
-                    {showSuggestions && suggestions.length > 0 && (
-                      <div className="absolute top-full left-0 right-0 mt-1 bg-card border border-muted/40 rounded-lg z-10 shadow-lg max-h-48 overflow-y-auto">
-                        {suggestions.map((suggestion, index) => (
-                          <button
-                            key={index}
-                            onClick={() => selectSuggestion(suggestion)}
-                            className="w-full px-4 py-2 text-left text-foreground hover:bg-muted/50 first:rounded-t-lg last:rounded-b-lg text-sm"
-                          >
-                            {suggestion}
-                          </button>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Advanced Filters */}
-                  <div className={`grid gap-4 ${isMobile ? 'grid-cols-1' : 'grid-cols-2 lg:grid-cols-3'}`}>
-                    <MobileSelectWrapper
-                      label="Category"
-                      value={selectedCategory}
-                      onValueChange={setSelectedCategory}
-                      options={CATEGORIES}
-                      placeholder="Select category"
-                    />
-
-                    <MobileSelectWrapper
-                      label="Supplier"
-                      value={selectedSupplier}
-                      onValueChange={setSelectedSupplier}
-                      options={SUPPLIERS}
-                      placeholder="Select supplier"
-                    />
-
-                    <div className={`flex items-end ${isMobile ? 'col-span-1' : ''}`}>
-                      <MobileButton
-                        onClick={handleSearch}
-                        disabled={isLoading || !searchQuery.trim()}
-                        size="wide"
-                        variant="elec"
-                        className="w-full h-14"
-                        loading={isLoading}
-                      >
-                        {!isLoading && (aiEnabled ? <Brain className="h-4 w-4 mr-2" /> : <Search className="h-4 w-4 mr-2" />)}
-                        {aiEnabled ? 'AI Compare' : 'Compare Prices'}
-                      </MobileButton>
-                    </div>
-                  </div>
-                </div>
-
-                {comparisonResult && (
-                  <div className="flex justify-center">
-                    <MobileButton 
-                      variant="elec-outline" 
-                      size="sm" 
-                      onClick={handleSearch}
-                    >
-                      <RefreshCw className="h-4 w-4 mr-2" />
-                      Refresh
-                    </MobileButton>
-                  </div>
-                )}
-              </>
-            )}
-          </div>
-        </CardContent>
-      </Card>
+                  <tab.icon className="h-4 w-4" />
+                  <span className="text-sm font-medium">{tab.label}</span>
+                </button>
+              ))}
+            </div>
+          </CollapsibleContent>
+        </Collapsible>
+      ) : null}
 
       {/* Tab Content */}
       {activeTab === 'comparison' && (
         <div className="space-y-6">
-        {error && (
-          <Card className="border-red-500/20 bg-red-500/5">
-            <CardContent className="p-6 text-center">
-              <AlertCircle className="h-8 w-8 text-red-400 mx-auto mb-2" />
-              <p className="text-red-400">{error}</p>
-            </CardContent>
-          </Card>
-        )}
+          {/* Search Interface */}
+          <SearchInterface 
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            selectedCategory={selectedCategory}
+            setSelectedCategory={setSelectedCategory}
+            selectedSupplier={selectedSupplier}
+            setSelectedSupplier={setSelectedSupplier}
+            isLoading={isLoading}
+            onSearch={handleSearch}
+            onClearSelection={onClearSelection}
+            showingPreSelected={showingPreSelected}
+          />
 
-        {comparisonResult && (
-          <div className="space-y-6">
-            {/* Pre-selected items banner */}
-            {showingPreSelected && (
-              <Card className="border-green-500/20 bg-green-500/5">
-                <CardContent className="p-4">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <Package className="h-4 w-4 text-green-400" />
-                      <span className="text-green-300 text-sm font-medium">
-                        Showing pre-selected items from category page
-                      </span>
-                    </div>
-                    <Button
-                      onClick={handleClearSelection}
-                      size="sm"
-                      variant="outline"
-                      className="border-green-500/30 text-green-400 hover:bg-green-500/20"
-                    >
-                      Clear Selection
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            )}
-
-            {/* Enhanced Summary with Export */}
-            <Card className="border-elec-yellow/20 bg-elec-gray">
-              <CardHeader className="pb-3">
-                <div className={`${isMobile ? 'space-y-4' : 'flex items-center justify-between'}`}>
-                  <div className={isMobile ? 'space-y-1' : ''}>
-                    <CardTitle className={`text-white ${isMobile ? 'text-lg' : 'text-xl'}`}>
-                      {showingPreSelected ? 'Selected Items Comparison' : `Search Results for "${comparisonResult.searchTerm}"`}
-                    </CardTitle>
-                    <p className="text-sm text-elec-yellow">
-                      {!showingPreSelected && selectedCategory !== 'all' && `${CATEGORIES.find(c => c.value === selectedCategory)?.label} • `}
-                      {!showingPreSelected && selectedSupplier !== 'all' && `${SUPPLIERS.find(s => s.value === selectedSupplier)?.label} • `}
-                      Live pricing
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Button
-                      onClick={exportToPDF}
-                      size="sm"
-                      variant="outline"
-                      className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/20"
-                    >
-                      <Download className="h-4 w-4 mr-2" />
-                      Export
-                    </Button>
-                    <Badge variant="outline" className="text-xs border-green-500/30 text-green-400">
-                      {isAiAnalyzing ? (
-                        <>
-                          <Brain className="h-3 w-3 mr-1 animate-pulse" />
-                          AI Analyzing...
-                        </>
-                      ) : (
-                        "Updated now"
-                      )}
-                    </Badge>
-                  </div>
-                </div>
-              </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <div className="text-center">
-                  <p className="text-sm text-muted-foreground">Products Found</p>
-                  <p className="text-2xl font-bold text-elec-yellow">{comparisonResult.products.length}</p>
-                </div>
-                <div className="text-center">
-                  <p className="text-sm text-muted-foreground">Best Price</p>
-                  <p className="text-2xl font-bold text-green-400">{formatPrice(comparisonResult.cheapestPrice)}</p>
-                </div>
-                <div className="text-center">
-                  <p className="text-sm text-muted-foreground">Average Price</p>
-                  <p className="text-2xl font-bold text-white">{formatPrice(comparisonResult.averagePrice)}</p>
-                </div>
-                <div className="text-center">
-                  <p className="text-sm text-muted-foreground">Price Range</p>
-                  <p className="text-lg font-bold text-white">{comparisonResult.priceRange}</p>
-                </div>
-              </div>
+          {/* Error Display */}
+          {error && (
+            <Card className="border-red-500/20 bg-red-500/5">
+              <CardContent className="p-6 text-center">
+                <p className="text-red-400">{error}</p>
               </CardContent>
             </Card>
+          )}
 
-            {/* AI Recommendations */}
-            {comparisonResult.aiInsights && (
-            <div className="space-y-4">
-              {/* Smart Product Matching */}
-              {comparisonResult.aiInsights.smartMatching.matchedGroups.length > 0 && (
-                <Card className="border-blue-500/30 bg-blue-500/5">
-                  <CardHeader className="pb-3">
-                    <CardTitle className="text-blue-300 text-lg flex items-center gap-2">
-                      <Brain className="h-5 w-5" />
-                      Smart Product Matching
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-sm text-blue-200 mb-3">
-                      AI identified {comparisonResult.aiInsights.smartMatching.matchedGroups.length} groups of equivalent products from different suppliers.
-                    </p>
-                    <div className="space-y-2">
-                      {comparisonResult.aiInsights.smartMatching.matchedGroups.slice(0, 3).map((group, idx) => (
-                        <div key={idx} className="p-2 bg-blue-500/10 rounded border border-blue-500/20">
-                          <p className="text-xs text-blue-300 font-medium">Equivalent Group {idx + 1}:</p>
-                          <p className="text-xs text-blue-200">
-                            {group.map(p => `${p.supplier} (${p.price})`).join(' • ')}
-                          </p>
-                        </div>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
-                )}
+          {/* Results */}
+          {comparisonResult && (
+            <div className="space-y-6">
+              {/* Price Statistics */}
+              <PriceStats 
+                comparisonResult={comparisonResult}
+                onExportToPDF={exportToPDF}
+                onAddMultipleToQuote={onAddMultipleToQuote}
+              />
 
-              {/* AI Recommendations */}
-              {[...comparisonResult.aiInsights.smartMatching.recommendations,
-                ...comparisonResult.aiInsights.valueAnalysis.recommendations,
-                ...comparisonResult.aiInsights.purchaseRecommendations].length > 0 && (
-                <Card className="border-emerald-500/30 bg-emerald-500/5">
-                  <CardHeader className="pb-3">
-                    <CardTitle className="text-emerald-300 text-lg flex items-center gap-2">
-                      <Lightbulb className="h-5 w-5" />
-                      AI Recommendations
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-3">
-                      {[...comparisonResult.aiInsights.smartMatching.recommendations,
-                        ...comparisonResult.aiInsights.valueAnalysis.recommendations,
-                        ...comparisonResult.aiInsights.purchaseRecommendations].slice(0, 5).map((rec, idx) => (
-                        <div key={idx} className="p-3 bg-emerald-500/10 rounded border border-emerald-500/20">
-                          <div className="flex items-start justify-between mb-2">
-                            <div className="flex items-center gap-2">
-                              {rec.type === 'bundle' && <Package className="h-4 w-4 text-emerald-400" />}
-                              {rec.type === 'alternative' && <TrendingDown className="h-4 w-4 text-emerald-400" />}
-                              {rec.type === 'warning' && <AlertTriangle className="h-4 w-4 text-amber-400" />}
-                              {rec.type === 'upgrade' && <Star className="h-4 w-4 text-emerald-400" />}
-                              <h4 className="font-medium text-emerald-300 text-sm">{rec.title}</h4>
-                            </div>
-                            {rec.savings && (
-                              <Badge className="bg-emerald-500/20 text-emerald-400 text-xs">
-                                Save {rec.savings}%
-                              </Badge>
-                            )}
-                          </div>
-                          <p className="text-xs text-emerald-200">{rec.description}</p>
-                          <div className="mt-2 flex items-center justify-between">
-                            <Badge variant="outline" className="text-xs border-emerald-500/30 text-emerald-400">
-                              {Math.round(rec.confidence * 100)}% confidence
-                            </Badge>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
+              {/* AI Insights */}
+              {(comparisonResult.aiInsights || isAiAnalyzing) && (
+                <AIInsightsComponent 
+                  aiInsights={comparisonResult.aiInsights!}
+                  isAiAnalyzing={isAiAnalyzing}
+                  onAddToQuote={onAddToQuote}
+                  onAddMultipleToQuote={onAddMultipleToQuote}
+                />
               )}
 
-              {/* Value Insights */}
-              {comparisonResult.aiInsights.valueAnalysis.insights.length > 0 && (
-                <Card className="border-amber-500/30 bg-amber-500/5">
-                  <CardHeader className="pb-3">
-                    <CardTitle className="text-amber-300 text-lg flex items-center gap-2">
-                      <Star className="h-5 w-5" />
-                      Value Analysis Insights
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-2">
-                      {comparisonResult.aiInsights.valueAnalysis.insights.slice(0, 3).map((insight, idx) => (
-                        <p key={idx} className="text-sm text-amber-200 flex items-start gap-2">
-                          <span className="text-amber-400 mt-1">•</span>
-                          {insight}
-                        </p>
-                      ))}
-                    </div>
-                  </CardContent>
+              {/* Product Cards */}
+              <div className="space-y-4">
+                {comparisonResult.products.map((product) => {
+                  const isCheapest = product.numericPrice === comparisonResult.cheapestPrice;
+                  const savings = calculateSavings(product.numericPrice, comparisonResult.cheapestPrice);
+                  
+                  return (
+                    <ProductCard 
+                      key={product.id}
+                      product={product}
+                      isCheapest={isCheapest}
+                      savings={savings}
+                      onAddToQuote={onAddToQuote}
+                    />
+                  );
+                })}
+              </div>
+
+              {/* Trade Tips */}
+              <Card className="border-blue-500/30 bg-blue-500/5">
+                <CardContent className="p-4">
+                  <p className="text-sm text-blue-300">
+                    💡 <strong>Trade Tips:</strong> Prices include VAT where applicable. Check delivery costs and 
+                    availability before ordering. Trade account discounts may apply. Consider bulk pricing for larger projects.
+                  </p>
+                </CardContent>
               </Card>
-            )}
-          </div>
-        )}
-
-            {/* Enhanced Product Comparison */}
-            <div className="space-y-4">
-              {comparisonResult.products.map((product, index) => {
-                const isCheapest = product.numericPrice === comparisonResult.cheapestPrice;
-                const savings = calculateSavings(product.numericPrice, comparisonResult.cheapestPrice);
-                
-                return (
-                  <Card 
-                    key={product.id} 
-                    className={`border transition-all hover:shadow-lg ${
-                      isCheapest 
-                        ? 'border-green-500/50 bg-green-500/5 ring-1 ring-green-500/20' 
-                        : 'border-elec-yellow/20 bg-elec-gray'
-                    }`}
-                  >
-                    <CardContent className="p-4">
-                      <div className={`${isMobile ? 'space-y-4' : 'flex items-center justify-between'}`}>
-                        {/* Mobile: Vertical layout */}
-                        {isMobile ? (
-                          <>
-                            {/* Header */}
-                            <div className="flex items-center justify-between">
-                              <div className="flex items-center gap-2">
-                                <span className="font-medium text-white text-sm">{product.supplier}</span>
-                                {isCheapest && (
-                                  <Badge className="bg-green-500/20 text-green-400 border-green-500/30 text-xs">
-                                    <Crown className="h-3 w-3 mr-1" />
-                                    Best
-                                  </Badge>
-                                )}
-                              </div>
-                              {product.rating && (
-                                <div className="flex items-center gap-1">
-                                  <Star className="h-3 w-3 text-amber-400 fill-current" />
-                                  <span className="text-xs text-muted-foreground">{product.rating}</span>
-                                </div>
-                              )}
-                            </div>
-                            
-                            {/* Product name */}
-                            <div>
-                              <h3 className="font-medium text-white text-sm leading-tight">{product.name}</h3>
-                              <p className="text-xs text-muted-foreground">{product.category}</p>
-                            </div>
-                            
-                            {/* Price and stock */}
-                            <div className="flex items-center justify-between">
-                              <div className="flex items-center gap-2">
-                                <Badge 
-                                  variant="outline" 
-                                  className={`text-xs ${
-                                    product.stockStatus === 'In Stock' 
-                                      ? 'border-green-500/30 text-green-400' 
-                                      : product.stockStatus === 'Low Stock'
-                                      ? 'border-yellow-500/30 text-yellow-400'
-                                      : 'border-red-500/30 text-red-400'
-                                  }`}
-                                >
-                                  {product.stockStatus}
-                                </Badge>
-                                {product.deliveryInfo && (
-                                  <span className="text-xs text-muted-foreground">{product.deliveryInfo}</span>
-                                )}
-                              </div>
-                              
-                              <div className="text-right">
-                                <span className="text-xl font-bold text-elec-yellow">{product.price}</span>
-                                {savings > 0 && (
-                                  <div className="flex items-center gap-1 text-red-400 text-xs">
-                                    <TrendingDown className="h-3 w-3" />
-                                    +{savings}% vs best
-                                  </div>
-                                )}
-                              </div>
-                            </div>
-                            
-                            {/* Actions */}
-                            <div className="flex gap-2">
-                              {onAddToQuote && (
-                                <MobileButton 
-                                  size="sm"
-                                  variant="elec"
-                                  onClick={() => onAddToQuote(product, 1)}
-                                  className="flex-1"
-                                >
-                                  <Plus className="h-3 w-3 mr-2" />
-                                  Add to Quote
-                                </MobileButton>
-                              )}
-                              <MobileButton 
-                                size="sm"
-                                variant="outline"
-                                onClick={() => {
-                                  setSelectedProductForAnalysis(product);
-                                  setActiveTab('history');
-                                }}
-                                className="flex-1"
-                              >
-                                <Bell className="h-3 w-3 mr-2" />
-                                Alerts
-                              </MobileButton>
-                              {product.productUrl && (
-                                <MobileButton 
-                                  asChild 
-                                  variant="elec-outline" 
-                                  size="sm"
-                                  className="flex-1"
-                                >
-                                  <a href={product.productUrl} target="_blank" rel="noopener noreferrer">
-                                    <ExternalLink className="h-4 w-4 mr-2" />
-                                    View
-                                  </a>
-                                </MobileButton>
-                              )}
-                            </div>
-                          </>
-                        ) : (
-                          /* Desktop: Horizontal layout */
-                          <>
-                            <div className="flex items-center gap-4 flex-1">
-                              <div className="flex items-center gap-3">
-                                <div className="flex items-center gap-2">
-                                  <span className="font-medium text-white text-sm">{product.supplier}</span>
-                                  {isCheapest && (
-                                    <Badge className="bg-green-500/20 text-green-400 border-green-500/30 text-xs">
-                                      <Crown className="h-3 w-3 mr-1" />
-                                      Best Price
-                                    </Badge>
-                                  )}
-                                </div>
-                                {product.rating && (
-                                  <div className="flex items-center gap-1">
-                                    <Star className="h-3 w-3 text-amber-400 fill-current" />
-                                    <span className="text-xs text-muted-foreground">{product.rating}</span>
-                                  </div>
-                                )}
-                              </div>
-
-                              <div className="flex-1">
-                                <h3 className="font-medium text-white text-sm">{product.name}</h3>
-                                <p className="text-xs text-muted-foreground">{product.category}</p>
-                              </div>
-                            </div>
-                            
-                            <div className="flex items-center gap-4">
-                              <div className="flex items-center gap-2">
-                                <Badge 
-                                  variant="outline" 
-                                  className={`text-xs ${
-                                    product.stockStatus === 'In Stock' 
-                                      ? 'border-green-500/30 text-green-400' 
-                                      : product.stockStatus === 'Low Stock'
-                                      ? 'border-yellow-500/30 text-yellow-400'
-                                      : 'border-red-500/30 text-red-400'
-                                  }`}
-                                >
-                                  {product.stockStatus}
-                                </Badge>
-                                {product.deliveryInfo && (
-                                  <span className="text-xs text-muted-foreground">{product.deliveryInfo}</span>
-                                )}
-                              </div>
-                              
-                              <div className="flex items-center gap-2">
-                                {product.originalPrice && (
-                                  <>
-                                    <span className="text-sm line-through text-muted-foreground">
-                                      {product.originalPrice}
-                                    </span>
-                                    <Badge className="bg-elec-yellow/20 text-elec-yellow text-xs">
-                                      -{product.discount}
-                                    </Badge>
-                                  </>
-                                )}
-                                <div className="text-right">
-                                  <span className="text-xl font-bold text-elec-yellow">{product.price}</span>
-                                  {savings > 0 && (
-                                    <div className="flex items-center gap-1 text-red-400 text-xs">
-                                      <TrendingDown className="h-3 w-3" />
-                                      +{savings}% vs best
-                                    </div>
-                                  )}
-                                </div>
-                              </div>
-                              
-                              <div className="flex gap-2">
-                                {onAddToQuote && (
-                                  <Button 
-                                    size="sm"
-                                    variant="default"
-                                    onClick={() => onAddToQuote(product, 1)}
-                                    className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
-                                  >
-                                    <Plus className="h-3 w-3 mr-1" />
-                                    Add to Quote
-                                  </Button>
-                                )}
-                                <Button 
-                                  size="sm"
-                                  variant="outline"
-                                  onClick={() => {
-                                    setSelectedProductForAnalysis(product);
-                                    setActiveTab('history');
-                                  }}
-                                  className="border-blue-500/30 text-blue-400 hover:bg-blue-500/20"
-                                >
-                                  <Bell className="h-3 w-3" />
-                                </Button>
-                                {product.productUrl && (
-                                  <Button 
-                                    asChild 
-                                    variant="outline" 
-                                    size="sm" 
-                                    className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow hover:text-black"
-                                  >
-                                    <a href={product.productUrl} target="_blank" rel="noopener noreferrer">
-                                      <ExternalLink className="h-4 w-4" />
-                                    </a>
-                                  </Button>
-                                )}
-                              </div>
-                            </div>
-                          </>
-                        )}
-                      </div>
-                      
-                      {product.highlights && product.highlights.length > 0 && (
-                        <div className="mt-3 pt-3 border-t border-elec-yellow/20">
-                          <div className="grid grid-cols-2 gap-2">
-                            {product.highlights.slice(0, 4).map((highlight, idx) => (
-                              <p key={idx} className="text-xs text-muted-foreground">• {highlight}</p>
-                            ))}
-                          </div>
-                        </div>
-                      )}
-                    </CardContent>
-                  </Card>
-                );
-              })}
             </div>
-
-            {/* Trade Tips */}
-            <Card className="border-blue-500/30 bg-blue-500/5">
-              <CardContent className="p-4">
-                <p className="text-sm text-blue-300">
-                  💡 <strong>Trade Tips:</strong> Prices include VAT where applicable. Check delivery costs and 
-                  availability before ordering. Trade account discounts may apply. Consider bulk pricing for larger projects.
-                </p>
-              </CardContent>
-            </Card>
-          </div>
-        )}
+          )}
         </div>
       )}
 
