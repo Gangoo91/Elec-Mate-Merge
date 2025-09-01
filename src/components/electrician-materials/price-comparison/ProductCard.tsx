@@ -79,7 +79,7 @@ export const ProductCard = ({ product, isCheapest, savings, onAddToQuote }: Prod
               
               {/* Product image */}
               <div>
-                <img src={product.image || "/placeholder.svg"} alt={product.name} />
+                <img src={product.image || "/placeholder.svg"} alt={product.name} className="mx-auto" />
               </div>
               
               {/* Product name */}
