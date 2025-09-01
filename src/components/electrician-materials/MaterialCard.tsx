@@ -1,184 +1,244 @@
 
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Star, ExternalLink, ShoppingCart } from "lucide-react";
-import { MaterialItem } from "@/data/electrician/productData";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ExternalLink, Plus, Minus, Check } from "lucide-react";
+import { MobileButton } from "@/components/ui/mobile-button";
+import { useIsMobile } from "@/hooks/use-mobile";
+
+import { MaterialItem as BaseMaterialItem } from "@/data/electrician/productData";
+
+interface MaterialItem extends BaseMaterialItem {
+  productUrl?: string;
+}
 
 interface MaterialCardProps {
   item: MaterialItem;
-  onQuickAdd?: (item: MaterialItem) => void;
-  onViewDetails?: (item: MaterialItem) => void;
   onAddToCompare?: (item: MaterialItem) => void;
   onRemoveFromCompare?: (itemId: string) => void;
   isSelected?: boolean;
   isCompareDisabled?: boolean;
 }
 
-const MaterialCard = ({ 
+const MaterialCard: React.FC<MaterialCardProps> = ({ 
   item, 
-  onQuickAdd, 
-  onViewDetails, 
   onAddToCompare, 
   onRemoveFromCompare, 
-  isSelected, 
-  isCompareDisabled 
-}: MaterialCardProps) => {
-  const getStockColor = (status?: string) => {
-    switch (status) {
-      case "In Stock":
-        return "text-green-400";
-      case "Low Stock":
-        return "text-yellow-400";
-      case "Out of Stock":
-        return "text-red-400";
-      default:
-        return "text-muted-foreground";
+  isSelected = false, 
+  isCompareDisabled = false 
+}) => {
+  const isMobile = useIsMobile();
+  // Extract cable-specific information
+  const getCableInfo = () => {
+    const name = item.name.toLowerCase();
+    const info: { type?: string; size?: string; length?: string; cores?: string } = {};
+    
+    // Cable type detection
+    if (name.includes('twin') && name.includes('earth')) info.type = 'T&E';
+    else if (name.includes('swa')) info.type = 'SWA';
+    else if (name.includes('flex') || name.includes('flexible')) info.type = 'Flex';
+    else if (name.includes('cat6') || name.includes('cat5')) info.type = 'Data';
+    else if (name.includes('coax')) info.type = 'Coax';
+    
+    // Size detection
+    const sizeMatch = name.match(/(\d+(?:\.\d+)?)\s*mm(?:2|²)?/);
+    if (sizeMatch) info.size = `${sizeMatch[1]}mm²`;
+    
+    // Length detection
+    const lengthMatch = name.match(/(\d+)\s*m(?:etre)?(?:s?)?\b/);
+    if (lengthMatch) info.length = `${lengthMatch[1]}m`;
+    
+    // Core count detection
+    const coreMatch = name.match(/(\d+)\s*core/);
+    if (coreMatch) info.cores = `${coreMatch[1]} core`;
+    
+    return info;
+  };
+
+  const cableInfo = getCableInfo();
+  const isCable = item.category.toLowerCase().includes('cable') || cableInfo.type;
+
+  // Default URLs if not provided in the data
+  const getProductUrl = () => {
+    const supplier = (item.supplier || "").toLowerCase();
+    const hosts: Record<string, string> = {
+      "screwfix": "screwfix.com",
+      "city electrical factors": "cef.co.uk",
+      "city-electrical-factors": "cef.co.uk",
+      "electricaldirect": "electricaldirect.co.uk",
+      "toolstation": "toolstation.com",
+    };
+    const expectedHost = hosts[supplier];
+
+    const buildSearch = (q: string) => {
+      const term = encodeURIComponent(q);
+      if (supplier.includes("electricaldirect")) return `https://www.electricaldirect.co.uk/search?query=${term}`;
+      if (supplier.includes("city")) return `https://www.cef.co.uk/search?q=${term}`;
+      if (supplier.includes("screwfix")) return `https://www.screwfix.com/search?search=${term}`;
+      if (supplier.includes("toolstation")) return `https://www.toolstation.com/search?q=${term}`;
+      return "#";
+    };
+
+    if (item.productUrl) {
+      try {
+        const base = expectedHost ? `https://www.${expectedHost}/` : undefined;
+        const url = base ? new URL(item.productUrl, base) : new URL(item.productUrl);
+        const isHttp = /^https?:$/.test(url.protocol);
+        const hostOk = expectedHost ? url.hostname.endsWith(expectedHost) : true;
+        if (isHttp && hostOk) return url.toString();
+      } catch {
+        // ignore and fall back
+      }
     }
+
+    return buildSearch(item.name);
   };
 
-  const getStockDot = (status?: string) => {
-    switch (status) {
-      case "In Stock":
-        return "bg-green-400";
-      case "Low Stock":
-        return "bg-yellow-400";
-      case "Out of Stock":
-        return "bg-red-400";
-      default:
-        return "bg-muted-foreground";
+  // Normalise image paths and update wid/hei parameters
+  const imageSrc = (() => {
+    const src = item.image;
+    if (!src) return "/placeholder.svg";
+    
+    let finalSrc = src;
+    
+    // If it's not already an absolute URL, make it one
+    if (!/^https?:\/\//i.test(src) && !src.startsWith("/")) {
+      finalSrc = `/${src}`;
     }
-  };
-
-  const handleQuickAdd = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    onQuickAdd?.(item);
-  };
-
-  const handleViewDetails = () => {
-    onViewDetails?.(item);
-  };
-
-  const currentPrice = item.isOnSale ? item.salePrice : item.price;
-  const originalPrice = item.isOnSale ? item.price : undefined;
+    
+    // Update image size parameters from 136x136 to 236x236
+    if (finalSrc.includes("wid=136") && finalSrc.includes("hei=136")) {
+      finalSrc = finalSrc.replace(/wid=136/g, "wid=236").replace(/hei=136/g, "hei=236");
+    }
+    
+    return finalSrc;
+  })();
 
   return (
-    <Card 
-      className="group border-elec-yellow/20 bg-elec-gray hover:border-elec-yellow/40 transition-all duration-300 hover:shadow-lg hover:shadow-elec-yellow/10 cursor-pointer h-full"
-      onClick={handleViewDetails}
-    >
-      <CardContent className="p-4 h-full flex flex-col">
-        {/* Image placeholder */}
-        <div className="aspect-square bg-elec-dark/50 rounded-lg mb-4 flex items-center justify-center border border-elec-yellow/10 group-hover:border-elec-yellow/30 transition-colors">
-          <div className="text-4xl opacity-30">📦</div>
+    <Card className="group h-full hover:border-elec-yellow/30 transition-all duration-200">
+      <CardContent className="p-4 h-full">
+        {/* Header with stock status */}
+        <div className="flex justify-between items-start mb-3">
+          <div className="flex items-center gap-2">
+            <span className="inline-flex items-center bg-elec-yellow/10 border border-elec-yellow/30 text-elec-yellow text-xs px-3 py-1.5 rounded-full font-medium shadow-sm transition-colors hover:bg-elec-yellow/20">
+              {item.category}
+            </span>
+          </div>
+          {item.stockStatus && (
+            <span className={`text-xs px-2 py-1 rounded font-medium ${
+              item.stockStatus === "In Stock" ? "bg-green-500/20 text-green-400" :
+              item.stockStatus === "Low Stock" ? "bg-orange-500/20 text-orange-400" :
+              "bg-red-500/20 text-red-400"
+            }`}>
+              {item.stockStatus}
+            </span>
+          )}
         </div>
 
-        {/* Content */}
-        <div className="flex-1 flex flex-col">
-          {/* Sale badge */}
-          {item.isOnSale && (
-            <div className="mb-2">
-              <Badge variant="destructive" className="text-xs font-medium px-2 py-1">
-                SALE
-              </Badge>
-            </div>
-          )}
+        {/* Product name */}
+        <h3 className="font-semibold text-foreground mb-3 leading-snug">
+          {item.name}
+        </h3>
 
-          {/* Title */}
-          <h3 className="font-semibold text-white text-base mb-2 line-clamp-2 leading-tight group-hover:text-elec-yellow transition-colors">
-            {item.name}
-          </h3>
-
-          {/* Supplier */}
-          <p className="text-sm text-muted-foreground mb-3 capitalize">
-            {item.supplier.replace(/-/g, ' ')}
-          </p>
-
-          {/* Highlights */}
-          {item.highlights && item.highlights.length > 0 && (
-            <div className="mb-3">
-              <div className="flex flex-wrap gap-1">
-                {item.highlights.slice(0, 2).map((highlight, index) => (
-                  <span 
-                    key={index}
-                    className="inline-flex items-center text-xs px-2 py-1 bg-blue-500/10 text-blue-300 border border-blue-500/20 rounded-full font-medium"
-                  >
-                    {highlight}
-                  </span>
-                ))}
-                {item.highlights.length > 2 && (
-                  <span className="text-xs text-muted-foreground">
-                    +{item.highlights.length - 2} more
-                  </span>
-                )}
-              </div>
-            </div>
-          )}
-
-          {/* Stock status and category chips */}
-          <div className="space-y-2 mb-4">
-            {/* Header with stock status */}
-            <div className="flex justify-between items-start">
-              <div className="flex items-center gap-2">
-                <span className="inline-flex items-center bg-elec-yellow/10 border border-elec-yellow/30 text-elec-yellow text-xs px-2 py-0.5 rounded-full font-medium shadow-sm transition-colors hover:bg-elec-yellow/20">
-                  {item.category}
+        {/* Image */}
+        <div className={`bg-muted/50 border rounded ${isMobile ? 'h-40' : 'h-48'} mb-3 flex items-center justify-center overflow-hidden`}>
+          <img
+            src={imageSrc}
+            alt={`${item.name} from ${item.supplier}`}
+            loading="lazy"
+            className="object-fill w-full h-full"
+            onError={(e) => { (e.currentTarget as HTMLImageElement).src = "/placeholder.svg"; }}
+          />
+        </div>
+        
+        {/* Specifications - simplified */}
+        {isCable && (cableInfo.type || cableInfo.size || cableInfo.length) && (
+          <div className="mb-3">
+            <div className="flex flex-wrap gap-1 text-xs">
+              {cableInfo.type && (
+                <span className="bg-muted text-muted-foreground px-2 py-1 rounded">
+                  {cableInfo.type}
                 </span>
-              </div>
-              {item.stockStatus && (
-                <div className="flex items-center gap-1.5">
-                  <div className={`w-2 h-2 rounded-full ${getStockDot(item.stockStatus)}`} />
-                  <span className={`text-xs font-medium ${getStockColor(item.stockStatus)}`}>
-                    {item.stockStatus}
-                  </span>
-                </div>
+              )}
+              {cableInfo.size && (
+                <span className="bg-muted text-muted-foreground px-2 py-1 rounded">
+                  {cableInfo.size}
+                </span>
+              )}
+              {cableInfo.length && (
+                <span className="bg-muted text-muted-foreground px-2 py-1 rounded">
+                  {cableInfo.length}
+                </span>
               )}
             </div>
           </div>
-
-          {/* Pricing section - pushed to bottom */}
-          <div className="mt-auto">
-            <div className="flex items-center justify-between mb-3">
-              <div className="flex items-baseline gap-2">
-                <span className="text-lg font-bold text-elec-yellow">
-                  {currentPrice}
-                </span>
-                {originalPrice && (
-                  <span className="text-sm text-muted-foreground line-through">
-                    {originalPrice}
-                  </span>
-                )}
-              </div>
-              
-              <div className="flex items-center gap-1 text-yellow-400">
-                {[1, 2, 3, 4, 5].map((star) => (
-                  <Star key={star} className="h-3 w-3 fill-current" />
-                ))}
-                <span className="text-xs text-muted-foreground ml-1">4.5</span>
-              </div>
-            </div>
-
-            {/* Action buttons */}
-            <div className="flex gap-2">
-              <Button
-                variant="outline"
-                size="sm"
-                className="flex-1 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow hover:text-elec-dark transition-all duration-200 text-sm h-8"
-                onClick={handleQuickAdd}
-              >
-                <ShoppingCart className="h-3 w-3 mr-1.5" />
-                Quick Add
-              </Button>
-              
-              <Button
-                variant="ghost"
-                size="sm"
-                className="px-3 text-elec-yellow hover:bg-elec-yellow/10 transition-all duration-200 h-8"
-                onClick={handleViewDetails}
-              >
-                <ExternalLink className="h-3 w-3" />
-              </Button>
-            </div>
+        )}
+        
+        {/* Supplier */}
+        <div className="text-sm text-muted-foreground mb-3">
+          {item.supplier}
+        </div>
+        
+        {/* Highlights */}
+        {item.highlights && item.highlights.length > 0 && (
+          <div className="mb-3">
+            <ul className="text-xs text-muted-foreground space-y-1">
+              {item.highlights.map((highlight, index) => (
+                <li key={index} className="flex items-center">
+                  <span className="w-1 h-1 bg-elec-yellow rounded-full mr-2 flex-shrink-0"></span>
+                  {highlight}
+                </li>
+              ))}
+            </ul>
           </div>
+        )}
+        
+        {/* Price - prominent */}
+        <div className="mb-4">
+          {item.isOnSale ? (
+            <div className="flex items-center gap-2">
+              <span className="text-xl font-bold text-elec-yellow">{item.salePrice}</span>
+              <span className="line-through text-muted-foreground text-sm">{item.price}</span>
+              <span className="bg-red-500/20 text-red-400 text-xs px-2 py-1 rounded font-medium">SALE</span>
+            </div>
+          ) : (
+            <span className="text-xl font-bold text-elec-yellow">{item.price}</span>
+          )}
+        </div>
+        
+        {/* Action buttons */}
+        <div className="space-y-2">
+          {onAddToCompare && (
+            <MobileButton
+              onClick={() => {
+                if (isSelected && onRemoveFromCompare) {
+                  onRemoveFromCompare(String(item.id || item.name));
+                } else if (!isCompareDisabled) {
+                  onAddToCompare(item);
+                }
+              }}
+              disabled={isCompareDisabled && !isSelected}
+              variant={isSelected ? "elec" : "elec-outline"}
+              size="wide"
+            >
+              {isSelected ? (
+                <>
+                  <Check className="h-4 w-4 mr-2" />
+                  Selected
+                </>
+              ) : (
+                <>
+                  <Plus className="h-4 w-4 mr-2" />
+                  Compare
+                </>
+              )}
+            </MobileButton>
+          )}
+          
+          <a href={getProductUrl()} target="_blank" rel="noopener noreferrer" className="block w-full">
+            <MobileButton variant="elec" size="wide">
+              View Deal
+              <ExternalLink className="h-4 w-4 ml-2" />
+            </MobileButton>
+          </a>
         </div>
       </CardContent>
     </Card>
