@@ -257,7 +257,7 @@ const CategoryMaterials = () => {
                   onClick={() => refetch()}
                   disabled={isLoading}
                   loading={isLoading}
-                  className="h-13"
+                  className="h-12"
                 >
                   <RefreshCw className="h-4 w-4 mr-2" />
                   Refresh
