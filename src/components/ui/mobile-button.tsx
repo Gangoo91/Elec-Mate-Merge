@@ -60,7 +60,11 @@ const MobileButton = React.forwardRef<HTMLButtonElement, MobileButtonProps>(
           {loading && (
             <div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
           )}
-          {icon && !loading && <div className="mr-2">{icon}</div>}
+          {icon && !loading && (
+            <div className={`${children ? "mr-2" : "flex items-center justify-center"}`}>
+              {icon}
+            </div>
+          )}
           {children}
         </>
       </Comp>
