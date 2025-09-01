@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { MobileButton } from "@/components/ui/mobile-button";
 import { Badge } from "@/components/ui/badge";
 import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
 import { MobileInputWrapper } from "@/components/ui/mobile-input-wrapper";
@@ -154,23 +154,24 @@ const BulkPricingCalculator = ({ categoryId, products = [], onCalculate }: BulkP
                     min="1"
                   />
                 </div>
-                <Button 
-                  size="sm" 
+                <MobileButton 
+                  variant="elec-outline"
+                  size="icon"
                   onClick={addCustomQuantity}
-                  className="bg-elec-yellow/20 text-elec-yellow hover:bg-elec-yellow/30 h-14 px-4"
-                >
-                  <Plus className="h-4 w-4" />
-                </Button>
+                  icon={<Plus className="h-4 w-4" />}
+                />
               </div>
             </div>
 
-            <Button 
+            <MobileButton 
+              variant="elec"
+              size="wide"
               onClick={calculateBulkPricing}
               disabled={!selectedProduct || isCalculating}
-              className="w-full bg-elec-yellow/20 text-elec-yellow hover:bg-elec-yellow/30"
+              loading={isCalculating}
             >
-              {isCalculating ? "Calculating..." : "Calculate Bulk Pricing"}
-            </Button>
+              Calculate Bulk Pricing
+            </MobileButton>
           </div>
         </CardContent>
       </Card>
