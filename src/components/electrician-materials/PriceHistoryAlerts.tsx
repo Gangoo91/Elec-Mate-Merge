@@ -308,17 +308,17 @@ const PriceHistoryAlerts = ({ categoryId, selectedProduct, currentUserId = "demo
       )}
 
       {/* Price Alerts */}
-      <Card className="border-yellow-500/30 bg-yellow-500/5">
+      <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader className="pb-3">
           <div className="flex items-center justify-between">
-            <CardTitle className="text-yellow-300 flex items-center gap-2">
+            <CardTitle className="text-elec-yellow flex items-center gap-2">
               <Bell className="h-5 w-5" />
               Price Alerts
             </CardTitle>
             <Button 
               onClick={() => setShowCreateAlert(!showCreateAlert)}
               size="sm"
-              className="bg-yellow-500/20 text-yellow-300 hover:bg-yellow-500/30"
+              className="bg-elec-yellow/20 text-elec-yellow hover:bg-elec-yellow/30"
             >
               {showCreateAlert ? <BellOff className="h-4 w-4" /> : <Bell className="h-4 w-4" />}
               {showCreateAlert ? 'Cancel' : 'Create Alert'}
@@ -327,27 +327,27 @@ const PriceHistoryAlerts = ({ categoryId, selectedProduct, currentUserId = "demo
         </CardHeader>
         <CardContent>
           {showCreateAlert && selectedProduct && (
-            <div className="bg-yellow-500/10 rounded-lg p-4 mb-4 space-y-3">
-              <h4 className="font-medium text-yellow-300">Create Price Alert for {selectedProduct.name}</h4>
+            <div className="bg-elec-yellow/10 rounded-lg p-4 mb-4 space-y-3">
+              <h4 className="font-medium text-elec-yellow">Create Price Alert for {selectedProduct.name}</h4>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                 <div>
-                  <label className="text-xs text-yellow-200">Target Price (£)</label>
+                  <label className="text-xs text-muted-foreground">Target Price (£)</label>
                   <Input
                     type="number"
                     step="0.01"
                     placeholder="0.00"
                     value={alertForm.targetPrice}
                     onChange={(e) => setAlertForm(prev => ({ ...prev, targetPrice: e.target.value }))}
-                    className="bg-elec-dark border-yellow-500/30 text-white"
+                    className="bg-elec-dark border-elec-yellow/20 text-white"
                   />
                 </div>
                 <div>
-                  <label className="text-xs text-yellow-200">Alert Type</label>
+                  <label className="text-xs text-muted-foreground">Alert Type</label>
                   <Select value={alertForm.alertType} onValueChange={(value: any) => setAlertForm(prev => ({ ...prev, alertType: value }))}>
-                    <SelectTrigger className="bg-elec-dark border-yellow-500/30 text-white">
+                    <SelectTrigger className="bg-elec-dark border-elec-yellow/20 text-white">
                       <SelectValue />
                     </SelectTrigger>
-                    <SelectContent className="bg-elec-dark border-yellow-500/30 z-50">
+                    <SelectContent className="bg-elec-dark border-elec-yellow/20 z-50">
                       <SelectItem value="below" className="text-white">Price drops below</SelectItem>
                       <SelectItem value="above" className="text-white">Price rises above</SelectItem>
                       <SelectItem value="change" className="text-white">Any price change</SelectItem>
@@ -355,12 +355,12 @@ const PriceHistoryAlerts = ({ categoryId, selectedProduct, currentUserId = "demo
                   </Select>
                 </div>
                 <div>
-                  <label className="text-xs text-yellow-200">Supplier</label>
+                  <label className="text-xs text-muted-foreground">Supplier</label>
                   <Select value={alertForm.supplier} onValueChange={(value) => setAlertForm(prev => ({ ...prev, supplier: value }))}>
-                    <SelectTrigger className="bg-elec-dark border-yellow-500/30 text-white">
+                    <SelectTrigger className="bg-elec-dark border-elec-yellow/20 text-white">
                       <SelectValue />
                     </SelectTrigger>
-                    <SelectContent className="bg-elec-dark border-yellow-500/30 z-50">
+                    <SelectContent className="bg-elec-dark border-elec-yellow/20 z-50">
                       <SelectItem value="Any" className="text-white">Any Supplier</SelectItem>
                       <SelectItem value="Screwfix" className="text-white">Screwfix</SelectItem>
                       <SelectItem value="CEF" className="text-white">CEF</SelectItem>
@@ -373,7 +373,7 @@ const PriceHistoryAlerts = ({ categoryId, selectedProduct, currentUserId = "demo
               <Button 
                 onClick={createPriceAlert}
                 disabled={!alertForm.targetPrice}
-                className="bg-yellow-500/20 text-yellow-300 hover:bg-yellow-500/30"
+                className="bg-elec-yellow/20 text-elec-yellow hover:bg-elec-yellow/30"
               >
                 Create Alert
               </Button>
@@ -383,14 +383,14 @@ const PriceHistoryAlerts = ({ categoryId, selectedProduct, currentUserId = "demo
           {/* Active Alerts */}
           <div className="space-y-2">
             {isLoadingAlerts ? (
-              <div className="text-yellow-300">Loading alerts...</div>
+              <div className="text-elec-yellow">Loading alerts...</div>
             ) : userAlerts.length > 0 ? (
               userAlerts.map(alert => (
-                <div key={alert.id} className="flex items-center justify-between p-3 bg-yellow-500/10 rounded-lg border border-yellow-500/20">
+                <div key={alert.id} className="flex items-center justify-between p-3 bg-elec-yellow/10 rounded-lg border border-elec-yellow/20">
                   <div>
-                    <h5 className="font-medium text-yellow-200">{alert.productName}</h5>
-                    <p className="text-xs text-yellow-300">
-                      Alert when price goes {alert.alertType} £{alert.targetPrice} 
+                    <h5 className="font-medium text-foreground">{alert.productName}</h5>
+                    <p className="text-xs text-muted-foreground">
+                      Alert when price goes {alert.alertType} £{alert.targetPrice}
                       {alert.supplier && ` (${alert.supplier})`}
                     </p>
                     <p className="text-xs text-muted-foreground">
