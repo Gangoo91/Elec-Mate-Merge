@@ -51,54 +51,54 @@ const LandingPage = () => {
 
   return (
     <div className="min-h-screen bg-elec-dark text-white">
-      <div className="max-w-4xl mx-auto px-4 py-8">
+      <div className="mobile-container py-6 sm:py-8 lg:py-12 max-w-4xl">
         {/* Hero Section */}
-        <div className="text-center mb-16">
+        <div className="text-center mobile-card-spacing mb-12 sm:mb-16">
           {/* Logo */}
-          <div className="flex justify-center mb-8">
-            <div className="w-16 h-16 bg-elec-yellow rounded-full flex items-center justify-center">
-              <Lightbulb className="h-8 w-8 text-elec-dark" />
+          <div className="flex justify-center mb-6 sm:mb-8">
+            <div className="w-12 h-12 sm:w-16 sm:h-16 bg-elec-yellow rounded-full flex items-center justify-center mobile-interactive">
+              <Lightbulb className="h-6 w-6 sm:h-8 sm:w-8 text-elec-dark" />
             </div>
           </div>
           
           {/* Main Heading */}
-          <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight">
             <span className="text-elec-yellow">Elec-</span>
             <span className="text-white">Mate</span>
           </h1>
           
           {/* Subheading */}
-          <h2 className="text-xl md:text-2xl text-gray-300 mb-8 leading-relaxed max-w-2xl mx-auto">
+          <h2 className="text-lg sm:text-xl md:text-2xl text-gray-300 mb-6 sm:mb-8 leading-relaxed max-w-2xl mx-auto px-2">
             The UK's most comprehensive electrical industry platform for apprentices and professionals
           </h2>
           
           {/* Description */}
-          <p className="text-lg text-gray-400 mb-12 max-w-3xl mx-auto leading-relaxed">
+          <p className="mobile-text text-gray-400 mb-8 sm:mb-12 max-w-3xl mx-auto leading-relaxed px-2">
             From your first day as an apprentice to running your own electrical business, 
             Elec-Mate is your trusted partner throughout your entire electrical career journey.
           </p>
           
-          {user && <MilestonesDisplay className="mb-12" />}
+          {user && <MilestonesDisplay className="mb-8 sm:mb-12" />}
           
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center mb-12 sm:mb-16 px-2">
             {user ? (
-              <Link to="/dashboard">
-                <Button size="lg" className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 font-medium px-8 py-4 text-lg w-full sm:w-auto">
+              <Link to="/dashboard" className="w-full sm:w-auto">
+                <Button size="lg" className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 font-medium touch-button w-full sm:w-auto mobile-interactive">
                   Access Your Dashboard
-                  <ArrowRight className="ml-2 h-5 w-5" />
+                  <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
                 </Button>
               </Link>
             ) : (
               <>
-                <Link to="/auth/signin">
-                  <Button size="lg" className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 font-medium px-8 py-4 text-lg w-full sm:w-auto">
+                <Link to="/auth/signin" className="w-full sm:w-auto">
+                  <Button size="lg" className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 font-medium touch-button w-full sm:w-auto mobile-interactive">
                     Start Your Journey
-                    <ArrowRight className="ml-2 h-5 w-5" />
+                    <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
                   </Button>
                 </Link>
-                <Link to="/auth/signup">
-                  <Button size="lg" variant="outline" className="border-elec-yellow text-elec-yellow hover:bg-elec-yellow/10 font-medium px-8 py-4 text-lg w-full sm:w-auto">
+                <Link to="/auth/signup" className="w-full sm:w-auto">
+                  <Button size="lg" variant="outline" className="border-elec-yellow text-elec-yellow hover:bg-elec-yellow/10 font-medium touch-button w-full sm:w-auto mobile-interactive">
                     Create Account
                   </Button>
                 </Link>
@@ -108,21 +108,21 @@ const LandingPage = () => {
         </div>
 
         {/* Features Section */}
-        <div className="mb-16">
-          <h3 className="text-2xl md:text-3xl font-bold text-center mb-12">
+        <div className="mb-12 sm:mb-16">
+          <h3 className="mobile-subheading font-bold text-center mb-8 sm:mb-12 px-2">
             Everything you need to succeed in the electrical industry
           </h3>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="mobile-grid-auto">
             {features.map((feature, index) => {
               const IconComponent = feature.icon;
               return (
-                <div key={index} className="text-center p-6 rounded-lg bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-all duration-300">
-                  <div className="w-12 h-12 bg-elec-yellow/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <IconComponent className="h-6 w-6 text-elec-yellow" />
+                <div key={index} className="mobile-card-compact text-center bg-white/5 backdrop-blur-sm hover:bg-white/10 mobile-interactive">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-elec-yellow/20 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
+                    <IconComponent className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow" />
                   </div>
-                  <h4 className="text-xl font-semibold text-white mb-3">{feature.title}</h4>
-                  <p className="text-gray-400 leading-relaxed">{feature.description}</p>
+                  <h4 className="mobile-subheading font-semibold text-white mb-2 sm:mb-3">{feature.title}</h4>
+                  <p className="mobile-text text-gray-400 leading-relaxed">{feature.description}</p>
                 </div>
               );
             })}

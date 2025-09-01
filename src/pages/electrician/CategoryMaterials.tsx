@@ -119,35 +119,35 @@ const CategoryMaterials = () => {
   }
 
   return (
-    <main className="space-y-6 animate-fade-in">
+    <main className="mobile-card-spacing animate-fade-in">
       <Helmet>
         <title>{pageTitle}</title>
         <meta name="description" content={pageDescription} />
         <link rel="canonical" href={typeof window !== 'undefined' ? window.location.href : ''} />
       </Helmet>
 
-      <header className="flex flex-col gap-6">
+      <header className="mobile-card-spacing">
         <div className="flex flex-wrap gap-2">
           <Link to="/materials">
-            <MobileButton variant="outline" size={isMobile ? "wide" : "sm"} className="flex items-center gap-1.5">
+            <MobileButton variant="outline" size={isMobile ? "wide" : "sm"} className="flex items-center gap-1.5 mobile-interactive">
               <ArrowLeft className="h-3.5 w-3.5 sm:h-4 sm:w-4" /> Back to Materials
             </MobileButton>
           </Link>
         </div>
-        <div>
-          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight flex items-center gap-2">
-            <Package className="h-6 w-6 sm:h-8 sm:w-8 text-elec-yellow" />
-            {meta.title}
+        <div className="space-y-3">
+          <h1 className="mobile-heading font-bold tracking-tight flex items-center gap-2">
+            <Package className="h-5 w-5 sm:h-6 sm:w-6 lg:h-8 lg:w-8 text-elec-yellow flex-shrink-0" />
+            <span className="min-w-0">{meta.title}</span>
           </h1>
-          <p className="text-sm sm:text-base text-muted-foreground mt-1 text-left pl-8 sm:pl-10">{meta.description}</p>
+          <p className="mobile-text text-muted-foreground leading-relaxed pl-7 sm:pl-8 lg:pl-10">{meta.description}</p>
           
           {categoryData && (
-            <div className="flex items-center gap-4 mt-3 pl-8 sm:pl-10">
-              <Badge variant="outline" className="text-elec-yellow border-elec-yellow/30">
+            <div className="flex flex-wrap items-center gap-3 sm:gap-4 pl-7 sm:pl-8 lg:pl-10">
+              <Badge variant="outline" className="text-elec-yellow border-elec-yellow/30 text-xs sm:text-sm">
                 {categoryData.productCount} products
               </Badge>
               {categoryData.priceRange && (
-                <span className="text-sm text-muted-foreground">
+                <span className="mobile-small-text text-muted-foreground">
                   Price range: <span className="text-elec-yellow">{categoryData.priceRange}</span>
                 </span>
               )}

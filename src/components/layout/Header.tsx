@@ -14,21 +14,21 @@ const Header = ({ toggleSidebar }: HeaderProps) => {
   const isMobile = useIsMobile();
   
   return (
-    <header className="bg-[#1e1e1e] border-b border-elec-yellow/10 py-3 px-4 flex justify-between items-center fixed top-0 left-0 right-0 z-50">
-      <div className="flex items-center gap-4 pl-1">
+    <header className="bg-[#1e1e1e] border-b border-elec-yellow/10 py-2 sm:py-3 px-3 sm:px-4 flex justify-between items-center fixed top-0 left-0 right-0 z-50">
+      <div className="flex items-center gap-2 sm:gap-4 pl-0 sm:pl-1">
         {isMobile && (
           <Button 
             variant="ghost" 
             size="icon" 
             onClick={toggleSidebar}
-            className="hover:bg-elec-yellow/10"
+            className="hover:bg-elec-yellow/10 touch-target mobile-tap-highlight"
             aria-label="Toggle navigation menu"
           >
-            <Menu className="h-6 w-6" />
+            <Menu className="h-5 w-5 sm:h-6 sm:w-6" />
           </Button>
         )}
         <div className="flex items-center gap-1">
-          <h1 className="text-2xl md:text-3xl font-bold tracking-tight">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold tracking-tight">
             <span className="text-elec-yellow">Elec</span>
             <span className="text-elec-yellow">-</span>
             <span className="text-white">Mate</span>
@@ -37,7 +37,7 @@ const Header = ({ toggleSidebar }: HeaderProps) => {
         </div>
       </div>
       
-      <div className="flex items-center space-x-2 md:space-x-4">
+      <div className="flex items-center space-x-1 sm:space-x-2 md:space-x-4">
         <NotificationDropdown />
         <UserProfileDropdown />
       </div>

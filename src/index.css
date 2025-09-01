@@ -173,25 +173,83 @@
   
   /* Mobile-optimized spacing utilities */
   .mobile-padding {
-    @apply px-4 sm:px-6 lg:px-8;
+    @apply px-3 sm:px-6 lg:px-8;
   }
   
   .mobile-container {
-    @apply max-w-sm sm:max-w-full mx-auto;
+    @apply w-full max-w-full mx-auto px-4 sm:px-6;
   }
   
-  /* Touch-friendly button sizing */
+  /* Enhanced mobile layout */
+  .mobile-safe-area {
+    @apply pb-4 sm:pb-6;
+  }
+  
+  .mobile-card-spacing {
+    @apply space-y-3 sm:space-y-4;
+  }
+  
+  /* Touch-friendly button sizing - 44px minimum */
   .touch-target {
-    @apply min-h-11 min-w-11;
+    @apply min-h-11 min-w-11 sm:min-h-10 sm:min-w-10;
   }
   
-  /* Better mobile typography */
+  .touch-button {
+    @apply min-h-12 px-4 py-3 text-base;
+  }
+  
+  /* Enhanced mobile typography */
   .mobile-heading {
-    @apply text-xl sm:text-2xl lg:text-3xl;
+    @apply text-lg sm:text-xl lg:text-2xl xl:text-3xl font-semibold leading-tight;
+  }
+  
+  .mobile-subheading {
+    @apply text-base sm:text-lg lg:text-xl font-medium;
   }
   
   .mobile-text {
-    @apply text-sm sm:text-base;
+    @apply text-sm sm:text-base leading-relaxed;
+  }
+  
+  .mobile-small-text {
+    @apply text-xs sm:text-sm;
+  }
+  
+  /* Mobile-optimized cards */
+  .mobile-card {
+    @apply bg-card border border-border/40 rounded-xl p-4 sm:p-6 shadow-sm;
+  }
+  
+  .mobile-card-compact {
+    @apply bg-card border border-border/40 rounded-lg p-3 sm:p-4;
+  }
+  
+  /* Enhanced mobile interactions */
+  .mobile-interactive {
+    @apply transition-all duration-200 active:scale-[0.98] touch-manipulation;
+  }
+  
+  .mobile-tap-highlight {
+    @apply active:bg-accent/20 transition-colors duration-150;
+  }
+  
+  /* Mobile grid layouts */
+  .mobile-grid-auto {
+    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6;
+  }
+  
+  .mobile-grid-responsive {
+    @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6;
+  }
+  
+  /* Mobile form improvements */
+  .mobile-input-spacing {
+    @apply space-y-4 sm:space-y-3;
+  }
+  
+  /* Better focus states for mobile */
+  .mobile-focus {
+    @apply focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:outline-none;
   }
 }
 
