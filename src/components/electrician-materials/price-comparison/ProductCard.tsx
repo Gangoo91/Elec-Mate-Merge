@@ -2,31 +2,45 @@
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ExternalLink, Plus, Check } from "lucide-react";
-import { MaterialItem } from "@/types/materials";
+import { MaterialItem, PriceComparisonItem } from "@/types/materials";
+
+// Export the type for other files to use
+export type { PriceComparisonItem } from "@/types/materials";
 
 interface ProductCardProps {
-  material: MaterialItem;
+  material?: MaterialItem;
+  product?: PriceComparisonItem;
   onAddToQuote?: (material: any, quantity?: number) => void;
   isAddedToQuote?: boolean;
+  isCheapest?: boolean;
+  savings?: number;
 }
 
-export const ProductCard = ({ material, onAddToQuote, isAddedToQuote }: ProductCardProps) => {
+export const ProductCard = ({ material, product, onAddToQuote, isAddedToQuote, isCheapest, savings }: ProductCardProps) => {
+  // Use either material or product prop
+  const item = material || product;
+  
+  if (!item) {
+    return null;
+  }
+
   const handleAddToQuote = () => {
     if (onAddToQuote) {
       onAddToQuote({
-        id: material.id,
-        name: material.name,
-        price: parseFloat(material.price.replace('£', '')),
-        supplier: material.supplier,
-        description: material.description || '',
-        category: material.category || 'General'
+        id: item.id,
+        name: item.name,
+        price: typeof item.price === 'string' ? parseFloat(item.price.replace('£', '')) : item.price,
+        supplier: item.supplier,
+        description: 'description' in item ? item.description || '' : '',
+        category: item.category || 'General'
       });
     }
   };
 
   const handleViewProduct = () => {
-    if (material.url) {
-      window.open(material.url, '_blank');
+    const url = 'url' in item ? item.url : item.productUrl;
+    if (url) {
+      window.open(url, '_blank');
     }
   };
 
@@ -41,23 +55,27 @@ export const ProductCard = ({ material, onAddToQuote, isAddedToQuote }: ProductC
     return colors[supplier] || 'bg-gray-500/20 text-gray-400 border-gray-500/30';
   };
 
+  const stockStatus = 'inStock' in item 
+    ? (item.inStock ? 'In Stock' : 'Out of Stock')
+    : item.stockStatus;
+
   return (
     <div className="bg-elec-card border border-elec-yellow/20 rounded-lg p-4 hover:border-elec-yellow/40 transition-colors">
       {/* Header with supplier badge */}
       <div className="flex justify-between items-start mb-3">
         <Badge 
           variant="outline" 
-          className={`text-xs ${getSupplierBadgeColor(material.supplier)}`}
+          className={`text-xs ${getSupplierBadgeColor(item.supplier)}`}
         >
-          {material.supplier}
+          {item.supplier}
         </Badge>
-        {material.inStock !== undefined && (
+        {stockStatus && (
           <span className={`text-xs px-2 py-1 rounded ${
-            material.inStock 
+            stockStatus === 'In Stock' 
               ? 'bg-green-500/20 text-green-400' 
               : 'bg-red-500/20 text-red-400'
           }`}>
-            {material.inStock ? 'In Stock' : 'Out of Stock'}
+            {stockStatus}
           </span>
         )}
       </div>
@@ -69,15 +87,20 @@ export const ProductCard = ({ material, onAddToQuote, isAddedToQuote }: ProductC
 
       {/* Product details */}
       <div className="space-y-2 mb-4">
-        <h3 className="font-medium text-white break-words">{material.name}</h3>
-        {material.description && (
+        <h3 className="font-medium text-white break-words">{item.name}</h3>
+        {'description' in item && item.description && (
           <p className="text-sm text-muted-foreground line-clamp-2">
-            {material.description}
+            {item.description}
           </p>
         )}
-        {material.category && (
+        {item.category && (
           <Badge variant="secondary" className="text-xs">
-            {material.category}
+            {item.category}
+          </Badge>
+        )}
+        {isCheapest && (
+          <Badge className="bg-green-500/20 text-green-400 border-green-500/30 text-xs">
+            Best Price
           </Badge>
         )}
       </div>
@@ -85,10 +108,10 @@ export const ProductCard = ({ material, onAddToQuote, isAddedToQuote }: ProductC
       {/* Price and actions */}
       <div className="flex flex-col gap-3">
         <div className="flex justify-between items-center">
-          <span className="text-xl font-bold text-elec-yellow">{material.price}</span>
-          {material.originalPrice && (
+          <span className="text-xl font-bold text-elec-yellow">{item.price}</span>
+          {'originalPrice' in item && item.originalPrice && (
             <span className="text-sm text-muted-foreground line-through">
-              {material.originalPrice}
+              {item.originalPrice}
             </span>
           )}
         </div>
@@ -115,7 +138,7 @@ export const ProductCard = ({ material, onAddToQuote, isAddedToQuote }: ProductC
             </Button>
           )}
           
-          {material.url && (
+          {(('url' in item && item.url) || item.productUrl) && (
             <Button
               size="sm"
               variant="outline"
