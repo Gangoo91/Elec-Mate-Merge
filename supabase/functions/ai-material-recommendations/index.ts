@@ -1,25 +1,21 @@
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 
-const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
-
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-interface MaterialItem {
+interface Product {
   id: number;
   name: string;
   category: string;
   price: string;
   supplier: string;
+  numericPrice: number;
   stockStatus: string;
   productUrl?: string;
   highlights?: string[];
-  numericPrice: number;
-  rating?: number;
-  deliveryInfo?: string;
 }
 
 interface AIRecommendation {
@@ -28,16 +24,32 @@ interface AIRecommendation {
   description: string;
   savings?: number;
   confidence: number;
-  products?: MaterialItem[];
+  products?: Product[];
 }
 
-interface SmartMatching {
-  matchedGroups: MaterialItem[][];
-  alternatives: MaterialItem[];
-  recommendations: AIRecommendation[];
+interface AIInsights {
+  smartMatching: {
+    matchedGroups: Product[][];
+    alternatives: Product[];
+    recommendations: AIRecommendation[];
+  };
+  valueAnalysis: {
+    recommendations: AIRecommendation[];
+    insights: string[];
+  };
+  purchaseRecommendations: AIRecommendation[];
+  summary: {
+    totalProducts: number;
+    matchedGroups: number;
+    alternatives: number;
+    recommendations: number;
+  };
 }
 
 serve(async (req) => {
+  console.log('🤖 [AI-MATERIAL-RECOMMENDATIONS] Starting request...');
+
+  // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
@@ -45,49 +57,56 @@ serve(async (req) => {
   try {
     const { products, searchTerm, userLocation } = await req.json();
     
-    console.log(`🤖 AI Material Recommendations - Processing ${products.length} products for "${searchTerm}"`);
+    console.log(`🔍 Analyzing ${products?.length || 0} products for search: "${searchTerm}"`);
 
-    if (!openAIApiKey) {
-      throw new Error('OpenAI API key not configured');
+    if (!products || products.length === 0) {
+      throw new Error('No products provided for analysis');
     }
 
-    // Smart Product Matching using AI
-    const matchingResult = await smartProductMatching(products, searchTerm);
+    // Group products by similar items (same type/category)
+    const productGroups = groupSimilarProducts(products);
     
-    // Value Analysis using AI
-    const valueAnalysis = await performValueAnalysis(products, userLocation);
+    // Find alternatives (similar products from different suppliers)
+    const alternatives = findAlternatives(products);
     
-    // Purchase Recommendations
-    const purchaseRecommendations = await generatePurchaseRecommendations(products, searchTerm, userLocation);
+    // Generate smart recommendations
+    const smartRecommendations = generateSmartRecommendations(products, searchTerm);
+    
+    // Perform value analysis
+    const valueAnalysis = performValueAnalysis(products);
+    
+    // Generate purchase recommendations
+    const purchaseRecommendations = generatePurchaseRecommendations(products, userLocation);
 
-    // Combine all AI insights
-    const aiInsights = {
-      smartMatching: matchingResult,
-      valueAnalysis,
+    const insights: AIInsights = {
+      smartMatching: {
+        matchedGroups: productGroups,
+        alternatives: alternatives,
+        recommendations: smartRecommendations
+      },
+      valueAnalysis: {
+        recommendations: valueAnalysis.recommendations,
+        insights: valueAnalysis.insights
+      },
       purchaseRecommendations,
       summary: {
         totalProducts: products.length,
-        matchedGroups: matchingResult.matchedGroups.length,
-        alternatives: matchingResult.alternatives.length,
-        recommendations: [...matchingResult.recommendations, ...valueAnalysis.recommendations, ...purchaseRecommendations].length
+        matchedGroups: productGroups.length,
+        alternatives: alternatives.length,
+        recommendations: smartRecommendations.length + valueAnalysis.recommendations.length + purchaseRecommendations.length
       }
     };
 
-    console.log(`✅ AI analysis complete - Generated ${aiInsights.summary.recommendations} recommendations`);
+    console.log(`✅ Generated AI insights with ${insights.summary.recommendations} recommendations`);
 
-    return new Response(JSON.stringify(aiInsights), {
+    return new Response(JSON.stringify(insights), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
+
   } catch (error) {
     console.error('❌ Error in AI material recommendations:', error);
     return new Response(JSON.stringify({ 
-      error: 'AI analysis failed', 
-      details: error.message,
-      fallback: {
-        smartMatching: { matchedGroups: [], alternatives: [], recommendations: [] },
-        valueAnalysis: { recommendations: [], insights: [] },
-        purchaseRecommendations: []
-      }
+      error: error.message || 'Failed to generate AI recommendations' 
     }), {
       status: 500,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -95,203 +114,173 @@ serve(async (req) => {
   }
 });
 
-async function smartProductMatching(products: MaterialItem[], searchTerm: string): Promise<SmartMatching> {
-  const prompt = `
-As an electrical materials expert, analyze these products and identify equivalent items across different suppliers.
-
-Search Term: "${searchTerm}"
-Products: ${JSON.stringify(products.map(p => ({
-  name: p.name,
-  supplier: p.supplier,
-  price: p.price,
-  category: p.category,
-  highlights: p.highlights?.slice(0, 2)
-})))}
-
-Tasks:
-1. Group equivalent products that are essentially the same item from different suppliers
-2. Identify alternative products that could serve the same purpose but with different specifications
-3. Generate specific recommendations for better value or upgraded options
-
-Focus on electrical specifications like:
-- Cable: core count, conductor size (mm²), voltage rating, insulation type
-- Components: current rating (A), voltage rating (V), breaking capacity
-- Lighting: wattage, colour temperature, IP rating, beam angle
-
-Respond in JSON format:
-{
-  "matchedGroups": [
-    [/* equivalent products array */]
-  ],
-  "alternatives": [/* alternative products that could work */],
-  "recommendations": [
-    {
-      "type": "alternative|upgrade|bundle|warning",
-      "title": "Brief recommendation title",
-      "description": "Detailed explanation",
-      "savings": 15,
-      "confidence": 0.9
-    }
-  ]
-}`;
-
-  try {
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${openAIApiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        model: 'gpt-4.1-2025-04-14',
-        messages: [
-          { role: 'system', content: 'You are an expert electrical materials specialist with deep knowledge of UK suppliers, product specifications, and BS7671 compliance.' },
-          { role: 'user', content: prompt }
-        ],
-        max_tokens: 2000,
-        temperature: 0.3,
-      }),
-    });
-
-    const data = await response.json();
-    const aiResponse = JSON.parse(data.choices[0].message.content);
+function groupSimilarProducts(products: Product[]): Product[][] {
+  const groups: { [key: string]: Product[] } = {};
+  
+  products.forEach(product => {
+    // Create a simplified key for grouping (remove sizes, lengths, etc.)
+    const key = product.name
+      .toLowerCase()
+      .replace(/\d+(?:mm|m|a|w|amp|watt)\b/g, '') // Remove measurements
+      .replace(/\s+/g, ' ')
+      .trim();
     
-    return {
-      matchedGroups: aiResponse.matchedGroups || [],
-      alternatives: aiResponse.alternatives || [],
-      recommendations: aiResponse.recommendations || []
-    };
-  } catch (error) {
-    console.error('Smart matching error:', error);
-    return { matchedGroups: [], alternatives: [], recommendations: [] };
-  }
-}
-
-async function performValueAnalysis(products: MaterialItem[], userLocation?: string): Promise<{ recommendations: AIRecommendation[], insights: string[] }> {
-  const prompt = `
-Perform a comprehensive value analysis of these electrical materials:
-
-Products: ${JSON.stringify(products.map(p => ({
-  name: p.name,
-  supplier: p.supplier,
-  price: p.price,
-  stockStatus: p.stockStatus,
-  deliveryInfo: p.deliveryInfo,
-  rating: p.rating
-})))}
-
-User Location: ${userLocation || 'UK'}
-
-Consider:
-1. Total cost of ownership (price + delivery + potential downtime)
-2. Supplier reliability and trade account benefits
-3. Stock availability and lead times
-4. Quality indicators and warranty terms
-5. Bulk pricing opportunities
-
-Provide practical recommendations focusing on:
-- Cost savings opportunities
-- Quality vs price trade-offs
-- Delivery optimization
-- Risk mitigation (stock availability)
-
-Respond in JSON format:
-{
-  "recommendations": [
-    {
-      "type": "alternative|bundle|upgrade|warning",
-      "title": "Recommendation title",
-      "description": "Detailed value analysis",
-      "savings": 25,
-      "confidence": 0.8
+    if (!groups[key]) {
+      groups[key] = [];
     }
-  ],
-  "insights": ["Key insight 1", "Key insight 2"]
-}`;
-
-  try {
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${openAIApiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        model: 'gpt-4.1-2025-04-14',
-        messages: [
-          { role: 'system', content: 'You are a procurement specialist for electrical contractors, expert in UK supplier relationships and total cost optimization.' },
-          { role: 'user', content: prompt }
-        ],
-        max_tokens: 1500,
-        temperature: 0.2,
-      }),
-    });
-
-    const data = await response.json();
-    return JSON.parse(data.choices[0].message.content);
-  } catch (error) {
-    console.error('Value analysis error:', error);
-    return { recommendations: [], insights: [] };
-  }
+    groups[key].push(product);
+  });
+  
+  // Only return groups with more than one product
+  return Object.values(groups).filter(group => group.length > 1);
 }
 
-async function generatePurchaseRecommendations(products: MaterialItem[], searchTerm: string, userLocation?: string): Promise<AIRecommendation[]> {
-  const prompt = `
-Generate smart purchase recommendations for electrical materials:
+function findAlternatives(products: Product[]): Product[] {
+  // Find products that are similar but from different suppliers
+  const alternatives: Product[] = [];
+  const seen = new Set();
+  
+  products.forEach(product => {
+    const productKey = product.name.toLowerCase().replace(/[^a-z0-9]/g, '');
+    if (!seen.has(productKey)) {
+      seen.add(productKey);
+      const similarProducts = products.filter(p => 
+        p.id !== product.id && 
+        p.name.toLowerCase().replace(/[^a-z0-9]/g, '').includes(productKey.slice(0, 10))
+      );
+      
+      if (similarProducts.length > 0) {
+        alternatives.push(...similarProducts.slice(0, 2)); // Limit alternatives
+      }
+    }
+  });
+  
+  return alternatives.slice(0, 10); // Limit total alternatives
+}
 
-Search: "${searchTerm}"
-Products: ${JSON.stringify(products.slice(0, 5).map(p => ({
-  name: p.name,
-  supplier: p.supplier,
-  price: p.price,
-  stockStatus: p.stockStatus
-})))}
-
-Location: ${userLocation || 'UK'}
-
-Focus on:
-1. Bundling opportunities (cables + accessories)
-2. Quantity break points and bulk discounts
-3. Delivery optimization (combine orders)
-4. Stock level warnings
-5. Seasonal pricing patterns
-6. Alternative specifications that meet requirements
-
-Generate 2-3 actionable recommendations that save money or reduce risk.
-
-Respond in JSON format as array of recommendations:
-[
-  {
-    "type": "bundle|alternative|warning",
-    "title": "Actionable recommendation title",
-    "description": "Specific advice with numbers",
-    "savings": 30,
-    "confidence": 0.9
-  }
-]`;
-
-  try {
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${openAIApiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        model: 'gpt-4.1-2025-04-14',
-        messages: [
-          { role: 'system', content: 'You are an experienced electrical contractor who knows how to save money on materials while maintaining quality and compliance.' },
-          { role: 'user', content: prompt }
-        ],
-        max_tokens: 1000,
-        temperature: 0.4,
-      }),
+function generateSmartRecommendations(products: Product[], searchTerm: string): AIRecommendation[] {
+  const recommendations: AIRecommendation[] = [];
+  
+  // Price-based recommendations
+  const sortedByPrice = [...products].sort((a, b) => a.numericPrice - b.numericPrice);
+  const cheapest = sortedByPrice[0];
+  const mostExpensive = sortedByPrice[sortedByPrice.length - 1];
+  
+  if (sortedByPrice.length > 1) {
+    const savings = mostExpensive.numericPrice - cheapest.numericPrice;
+    const savingsPercent = ((savings / mostExpensive.numericPrice) * 100).toFixed(0);
+    
+    recommendations.push({
+      type: 'alternative',
+      title: 'Best Value Option',
+      description: `Save ${savingsPercent}% by choosing ${cheapest.supplier} instead of ${mostExpensive.supplier}`,
+      savings: parseFloat(savings.toFixed(2)),
+      confidence: 0.9,
+      products: [cheapest]
     });
-
-    const data = await response.json();
-    return JSON.parse(data.choices[0].message.content);
-  } catch (error) {
-    console.error('Purchase recommendations error:', error);
-    return [];
   }
+  
+  // Stock-based recommendations
+  const outOfStock = products.filter(p => p.stockStatus === 'Out of Stock');
+  const inStock = products.filter(p => p.stockStatus === 'In Stock');
+  
+  if (outOfStock.length > 0 && inStock.length > 0) {
+    recommendations.push({
+      type: 'warning',
+      title: 'Stock Availability Alert',
+      description: `${outOfStock.length} items are out of stock. Consider these available alternatives.`,
+      confidence: 0.8,
+      products: inStock.slice(0, 3)
+    });
+  }
+  
+  // Bundle recommendations for common electrical items
+  if (searchTerm.toLowerCase().includes('cable') && products.length > 2) {
+    recommendations.push({
+      type: 'bundle',
+      title: 'Complete Installation Bundle',
+      description: 'Consider bundling with cable clips, conduit, and accessories for a complete installation.',
+      confidence: 0.7
+    });
+  }
+  
+  return recommendations;
+}
+
+function performValueAnalysis(products: Product[]): { recommendations: AIRecommendation[], insights: string[] } {
+  const recommendations: AIRecommendation[] = [];
+  const insights: string[] = [];
+  
+  // Price distribution analysis
+  const prices = products.map(p => p.numericPrice);
+  const avgPrice = prices.reduce((a, b) => a + b, 0) / prices.length;
+  const minPrice = Math.min(...prices);
+  const maxPrice = Math.max(...prices);
+  
+  insights.push(`Price range varies from £${minPrice.toFixed(2)} to £${maxPrice.toFixed(2)}`);
+  insights.push(`Average price is £${avgPrice.toFixed(2)}`);
+  
+  // Supplier diversity analysis
+  const suppliers = [...new Set(products.map(p => p.supplier))];
+  insights.push(`${suppliers.length} different suppliers found: ${suppliers.join(', ')}`);
+  
+  // Value recommendations
+  const underAverage = products.filter(p => p.numericPrice < avgPrice * 0.9);
+  if (underAverage.length > 0) {
+    recommendations.push({
+      type: 'upgrade',
+      title: 'Excellent Value Products',
+      description: `${underAverage.length} items are significantly below average price`,
+      confidence: 0.8,
+      products: underAverage.slice(0, 3)
+    });
+  }
+  
+  return { recommendations, insights };
+}
+
+function generatePurchaseRecommendations(products: Product[], userLocation: string): AIRecommendation[] {
+  const recommendations: AIRecommendation[] = [];
+  
+  // UK-specific recommendations
+  if (userLocation === 'UK') {
+    const tradeFocused = products.filter(p => 
+      p.supplier === 'CEF' || 
+      p.supplier.toLowerCase().includes('trade')
+    );
+    
+    if (tradeFocused.length > 0) {
+      recommendations.push({
+        type: 'alternative',
+        title: 'Trade Account Benefits',
+        description: 'Consider opening trade accounts for better pricing and credit terms',
+        confidence: 0.6,
+        products: tradeFocused.slice(0, 2)
+      });
+    }
+  }
+  
+  // Bulk purchase recommendations
+  if (products.length > 5) {
+    recommendations.push({
+      type: 'bundle',
+      title: 'Bulk Purchase Opportunity',
+      description: 'Consider bulk purchasing for additional discounts on large quantities',
+      confidence: 0.7
+    });
+  }
+  
+  // Low stock warnings
+  const lowStock = products.filter(p => p.stockStatus === 'Low Stock');
+  if (lowStock.length > 0) {
+    recommendations.push({
+      type: 'warning',
+      title: 'Stock Level Alert',
+      description: `${lowStock.length} items have low stock levels. Consider ordering soon.`,
+      confidence: 0.9,
+      products: lowStock
+    });
+  }
+  
+  return recommendations;
 }

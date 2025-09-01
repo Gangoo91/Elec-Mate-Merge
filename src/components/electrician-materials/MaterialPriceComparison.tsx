@@ -241,23 +241,34 @@ const MaterialPriceComparison = ({ initialQuery = "", selectedItems = [], onClea
 
   // Enhanced AI Analysis
   const runAiAnalysis = async (products: PriceComparisonItem[]) => {
-    if (!aiEnabled || products.length === 0) return;
+    if (!aiEnabled || products.length === 0) {
+      console.log('🚫 AI analysis skipped - disabled or no products');
+      return;
+    }
     
+    console.log(`🤖 Running AI analysis on ${products.length} products...`);
     setIsAiAnalyzing(true);
+    
     try {
       const { data, error } = await supabase.functions.invoke('ai-material-recommendations', {
         body: { 
           products, 
           searchTerm: searchQuery,
-          userLocation: 'UK' // Could be enhanced with actual user location
+          userLocation: 'UK'
         }
       });
 
-      if (error) throw new Error(error.message);
+      console.log('🤖 AI analysis response:', { data, error });
 
+      if (error) {
+        console.error('❌ AI analysis error:', error);
+        throw new Error(error.message);
+      }
+
+      console.log('✅ AI analysis successful');
       return data;
     } catch (err: any) {
-      console.error('AI analysis failed:', err);
+      console.error('❌ AI analysis failed:', err);
       toast({
         title: "AI Analysis Failed",
         description: "Price comparison still available, but AI insights unavailable.",
@@ -270,7 +281,16 @@ const MaterialPriceComparison = ({ initialQuery = "", selectedItems = [], onClea
   };
 
   const handleSearch = async () => {
-    if (!searchQuery.trim()) return;
+    if (!searchQuery.trim()) {
+      toast({
+        title: "Search Required",
+        description: "Please enter a search term to find materials.",
+        variant: "destructive"
+      });
+      return;
+    }
+    
+    console.log('🔍 Starting search:', { searchQuery, selectedCategory, selectedSupplier });
     
     setIsLoading(true);
     setError(null);
@@ -278,17 +298,25 @@ const MaterialPriceComparison = ({ initialQuery = "", selectedItems = [], onClea
     setShowingPreSelected(false);
     
     try {
+      console.log('📡 Calling comprehensive-materials-scraper...');
       const { data, error } = await supabase.functions.invoke('comprehensive-materials-scraper', {
         body: { 
-          category: selectedCategory === 'all' ? 'all' : selectedCategory, 
-          supplier: selectedSupplier === 'all' ? 'all' : selectedSupplier, 
-          searchTerm: searchQuery 
+          categoryFilter: selectedCategory === 'all' ? null : selectedCategory, 
+          supplierFilter: selectedSupplier === 'all' ? null : selectedSupplier, 
+          searchTerm: searchQuery.trim()
         }
       });
 
-      if (error) throw new Error(error.message);
+      console.log('📡 Scraper response:', { data, error });
+
+      if (error) {
+        console.error('❌ Scraper error:', error);
+        throw new Error(error.message);
+      }
 
       if (data?.materials && data.materials.length > 0) {
+        console.log(`✅ Found ${data.materials.length} materials`);
+        
         // Process and enrich the results
         const processedProducts: PriceComparisonItem[] = data.materials.map(enrichProductData);
 
@@ -314,20 +342,25 @@ const MaterialPriceComparison = ({ initialQuery = "", selectedItems = [], onClea
 
         // Run AI analysis in parallel
         if (aiEnabled) {
+          console.log('🤖 Starting AI analysis...');
           runAiAnalysis(sortedProducts).then(aiInsights => {
             if (aiInsights) {
+              console.log('✅ AI analysis completed');
               setComparisonResult(prev => prev ? { ...prev, aiInsights } : null);
             }
           });
         }
       } else {
+        console.log('⚠️ No materials found in response');
         setError("No products found for your search. Try different keywords or adjust filters.");
       }
     } catch (err: any) {
-      setError(err.message || "Failed to fetch price comparison data");
+      console.error('❌ Search failed:', err);
+      const errorMessage = err.message || "Failed to fetch price comparison data";
+      setError(errorMessage);
       toast({
-        title: "Search failed",
-        description: "Please try again in a moment.",
+        title: "Search Failed",
+        description: errorMessage.includes('fetch') ? "Network error - please check your connection" : "Please try again in a moment.",
         variant: "destructive"
       });
     } finally {
