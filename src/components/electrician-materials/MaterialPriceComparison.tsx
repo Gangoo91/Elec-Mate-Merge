@@ -102,6 +102,7 @@ interface MaterialPriceComparisonProps {
 }
 
 const MaterialPriceComparison = ({ initialQuery = "", selectedItems = [], onClearSelection }: MaterialPriceComparisonProps) => {
+  const isMobile = useIsMobile();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedSupplier, setSelectedSupplier] = useState("all");
@@ -458,7 +459,7 @@ const MaterialPriceComparison = ({ initialQuery = "", selectedItems = [], onClea
             <div className="flex flex-wrap gap-2 mb-4">
               <MobileButton
                 variant={activeTab === 'comparison' ? 'elec' : 'elec-outline'}
-                size={useIsMobile() ? "wide" : "sm"}
+                size={isMobile ? "wide" : "sm"}
                 onClick={() => setActiveTab('comparison')}
               >
                 <Search className="h-4 w-4 mr-2" />
@@ -466,7 +467,7 @@ const MaterialPriceComparison = ({ initialQuery = "", selectedItems = [], onClea
               </MobileButton>
               <MobileButton
                 variant={activeTab === 'bulk' ? 'elec' : 'elec-outline'}
-                size={useIsMobile() ? "wide" : "sm"}
+                size={isMobile ? "wide" : "sm"}
                 onClick={() => setActiveTab('bulk')}
                 disabled={!comparisonResult?.products.length}
               >
@@ -475,7 +476,7 @@ const MaterialPriceComparison = ({ initialQuery = "", selectedItems = [], onClea
               </MobileButton>
               <MobileButton
                 variant={activeTab === 'history' ? 'elec' : 'elec-outline'}
-                size={useIsMobile() ? "wide" : "sm"}
+                size={isMobile ? "wide" : "sm"}
                 onClick={() => setActiveTab('history')}
                 disabled={!selectedProductForAnalysis}
               >
@@ -507,7 +508,7 @@ const MaterialPriceComparison = ({ initialQuery = "", selectedItems = [], onClea
                   </div>
                 )}
 
-                <div className={`space-y-4 ${useIsMobile() ? '' : 'space-y-6'}`}>
+                <div className={`space-y-4 ${isMobile ? '' : 'space-y-6'}`}>
                   <div className="relative">
                     <MobileInputWrapper
                       label="Search for electrical materials"
@@ -536,7 +537,7 @@ const MaterialPriceComparison = ({ initialQuery = "", selectedItems = [], onClea
                   </div>
 
                   {/* Advanced Filters */}
-                  <div className={`grid gap-4 ${useIsMobile() ? 'grid-cols-1' : 'grid-cols-2 lg:grid-cols-3'}`}>
+                  <div className={`grid gap-4 ${isMobile ? 'grid-cols-1' : 'grid-cols-2 lg:grid-cols-3'}`}>
                     <MobileSelectWrapper
                       label="Category"
                       value={selectedCategory}
@@ -553,7 +554,7 @@ const MaterialPriceComparison = ({ initialQuery = "", selectedItems = [], onClea
                       placeholder="Select supplier"
                     />
 
-                    <div className={`flex items-end ${useIsMobile() ? 'col-span-1' : ''}`}>
+                    <div className={`flex items-end ${isMobile ? 'col-span-1' : ''}`}>
                       <MobileButton
                         onClick={handleSearch}
                         disabled={isLoading || !searchQuery.trim()}
@@ -798,9 +799,9 @@ const MaterialPriceComparison = ({ initialQuery = "", selectedItems = [], onClea
                     }`}
                   >
                     <CardContent className="p-4">
-                      <div className={`${useIsMobile() ? 'space-y-4' : 'flex items-center justify-between'}`}>
+                      <div className={`${isMobile ? 'space-y-4' : 'flex items-center justify-between'}`}>
                         {/* Mobile: Vertical layout */}
-                        {useIsMobile() ? (
+                        {isMobile ? (
                           <>
                             {/* Header */}
                             <div className="flex items-center justify-between">
