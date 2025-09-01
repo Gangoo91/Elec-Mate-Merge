@@ -123,8 +123,8 @@ const PhaseRotationCalculator = () => {
                 {testMethod === "phase-rotation-meter" && (
                   <div className="space-y-4 p-4 border border-elec-yellow/20 rounded-lg">
                     <h4 className="font-medium text-elec-yellow">Phase Rotation Meter Reading</h4>
-                    <div>
-                      <Label htmlFor="phase-meter" className="flex items-center gap-2">
+                    <div className="space-y-3">
+                      <Label htmlFor="phase-meter" className="flex items-center gap-2 text-sm">
                         Meter Indication
                         {errors.phaseRotationMeter && <AlertCircle className="h-3 w-3 text-destructive" />}
                       </Label>
@@ -135,7 +135,7 @@ const PhaseRotationCalculator = () => {
                           clearError('phaseRotationMeter');
                         }}
                       >
-                        <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
+                        <SelectTrigger className="bg-elec-dark border-elec-yellow/30 focus:border-elec-yellow/50 focus:ring-1 focus:ring-elec-yellow/30">
                           <SelectValue placeholder="Select meter reading" />
                         </SelectTrigger>
                         <SelectContent className="bg-elec-dark border-elec-yellow/20 z-50">
@@ -144,7 +144,7 @@ const PhaseRotationCalculator = () => {
                         </SelectContent>
                       </Select>
                       {errors.phaseRotationMeter && (
-                        <p className="text-xs text-destructive">{errors.phaseRotationMeter}</p>
+                        <p className="text-xs text-destructive mt-1">{errors.phaseRotationMeter}</p>
                       )}
                     </div>
                   </div>
@@ -202,8 +202,8 @@ const PhaseRotationCalculator = () => {
                 {testMethod === "motor-behaviour" && (
                   <div className="space-y-4 p-4 border border-elec-yellow/20 rounded-lg">
                     <h4 className="font-medium text-elec-yellow">Motor Rotation Test</h4>
-                    <div>
-                      <Label htmlFor="motor-rotation" className="flex items-center gap-2">
+                    <div className="space-y-3">
+                      <Label htmlFor="motor-rotation" className="flex items-center gap-2 text-sm">
                         Observed Motor Rotation
                         {errors.motorBehaviour && <AlertCircle className="h-3 w-3 text-destructive" />}
                       </Label>
@@ -214,7 +214,7 @@ const PhaseRotationCalculator = () => {
                           clearError('motorBehaviour');
                         }}
                       >
-                        <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
+                        <SelectTrigger className="bg-elec-dark border-elec-yellow/30 focus:border-elec-yellow/50 focus:ring-1 focus:ring-elec-yellow/30">
                           <SelectValue placeholder="Select rotation direction" />
                         </SelectTrigger>
                         <SelectContent className="bg-elec-dark border-elec-yellow/20 z-50">
