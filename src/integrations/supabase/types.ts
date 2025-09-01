@@ -585,6 +585,45 @@ export type Database = {
           },
         ]
       }
+      historical_prices: {
+        Row: {
+          category: string | null
+          created_at: string
+          currency: string
+          date_scraped: string
+          id: string
+          price: number
+          product_name: string
+          product_url: string | null
+          source_url: string | null
+          supplier: string
+        }
+        Insert: {
+          category?: string | null
+          created_at?: string
+          currency?: string
+          date_scraped?: string
+          id?: string
+          price: number
+          product_name: string
+          product_url?: string | null
+          source_url?: string | null
+          supplier: string
+        }
+        Update: {
+          category?: string | null
+          created_at?: string
+          currency?: string
+          date_scraped?: string
+          id?: string
+          price?: number
+          product_name?: string
+          product_url?: string | null
+          source_url?: string | null
+          supplier?: string
+        }
+        Relationships: []
+      }
       incident_photos: {
         Row: {
           description: string | null
@@ -2644,6 +2683,19 @@ export type Database = {
       }
     }
     Views: {
+      current_prices: {
+        Row: {
+          category: string | null
+          currency: string | null
+          date_scraped: string | null
+          price: number | null
+          product_name: string | null
+          product_url: string | null
+          source_url: string | null
+          supplier: string | null
+        }
+        Relationships: []
+      }
       message_upvote_counts: {
         Row: {
           message_id: string | null

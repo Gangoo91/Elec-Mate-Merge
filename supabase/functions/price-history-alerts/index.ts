@@ -84,53 +84,105 @@ serve(async (req) => {
 async function getPriceHistory(supabase: any, { productName, days = 30 }: any) {
   console.log(`📈 Getting price history for "${productName}" (${days} days)`);
   
-  // Generate mock price history data with realistic trends
-  const history: PriceHistoryEntry[] = [];
-  const basePrice = Math.random() * 100 + 50; // £50-150 base price
-  const suppliers = ['Screwfix', 'CEF', 'RS Components', 'Toolstation'];
-  
-  for (let i = days; i >= 0; i--) {
-    const date = new Date();
-    date.setDate(date.getDate() - i);
+  try {
+    // Calculate date range
+    const endDate = new Date();
+    const startDate = new Date();
+    startDate.setDate(startDate.getDate() - days);
+
+    // Query real historical data from database
+    const { data: historicalData, error } = await supabase
+      .from('historical_prices')
+      .select('*')
+      .ilike('product_name', `%${productName}%`)
+      .gte('date_scraped', startDate.toISOString())
+      .lte('date_scraped', endDate.toISOString())
+      .order('date_scraped', { ascending: true });
+
+    if (error) {
+      console.error('❌ Error fetching historical data:', error);
+      throw error;
+    }
+
+    // If no historical data, try to get current prices and create recent entries
+    let history: PriceHistoryEntry[] = [];
     
-    suppliers.forEach(supplier => {
-      // Add some realistic price variation
-      const variation = (Math.random() - 0.5) * 0.1; // ±5% variation
-      const trendFactor = Math.sin(i / 10) * 0.05; // Seasonal trend
-      const supplierOffset = suppliers.indexOf(supplier) * 0.02; // Supplier-specific pricing
+    if (!historicalData || historicalData.length === 0) {
+      console.log('⚠️ No historical data found, checking current prices...');
       
-      const price = basePrice * (1 + variation + trendFactor + supplierOffset);
-      
-      history.push({
-        date: date.toISOString().split('T')[0],
-        price: Math.round(price * 100) / 100,
-        supplier,
-        productName
+      // Try to find current prices for similar products
+      const { data: currentData, error: currentError } = await supabase
+        .from('current_prices')
+        .select('*')
+        .ilike('product_name', `%${productName}%`)
+        .limit(10);
+
+      if (currentData && currentData.length > 0) {
+        // Use current prices to simulate recent history
+        const today = new Date().toISOString().split('T')[0];
+        history = currentData.map(item => ({
+          date: today,
+          price: parseFloat(item.price.toString()),
+          supplier: item.supplier,
+          productName: item.product_name
+        }));
+      }
+    } else {
+      // Transform historical data to expected format
+      history = historicalData.map(item => ({
+        date: new Date(item.date_scraped).toISOString().split('T')[0],
+        price: parseFloat(item.price.toString()),
+        supplier: item.supplier,
+        productName: item.product_name
+      }));
+    }
+
+    // If still no data, return empty response with message
+    if (history.length === 0) {
+      return new Response(JSON.stringify({
+        history: [],
+        analysis: null,
+        message: `No price history available for "${productName}". Try searching for a more specific product name.`
+      }), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
+    }
+
+    // Calculate trends from real data
+    const allPrices = history.map(h => h.price);
+    const recentPrices = history.slice(-Math.min(7, Math.floor(history.length / 2))); // Last portion of data
+    const olderPrices = history.slice(0, Math.max(1, Math.floor(history.length / 2))); // Earlier portion of data
+    
+    const recentAvg = recentPrices.reduce((sum, h) => sum + h.price, 0) / recentPrices.length;
+    const olderAvg = olderPrices.reduce((sum, h) => sum + h.price, 0) / olderPrices.length;
+    const trendPercent = olderAvg > 0 ? ((recentAvg - olderAvg) / olderAvg * 100).toFixed(1) : '0.0';
+
+    return new Response(JSON.stringify({
+      history,
+      analysis: {
+        trend: recentAvg > olderAvg ? 'up' : 'down',
+        trendPercent: `${Math.abs(parseFloat(trendPercent))}%`,
+        lowestPrice: Math.min(...allPrices),
+        highestPrice: Math.max(...allPrices),
+        averagePrice: Math.round((allPrices.reduce((sum, p) => sum + p, 0) / allPrices.length) * 100) / 100,
+        recommendation: recentAvg > olderAvg ? 'Consider buying soon as prices are rising' : 'Prices are falling, might be worth waiting',
+        dataPoints: history.length,
+        dateRange: `${Math.max(1, days)} days`
+      }
+    }), {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
+
+  } catch (error) {
+    console.error('❌ Error in getPriceHistory:', error);
+    return new Response(JSON.stringify({
+      error: 'Failed to fetch price history',
+      details: error.message
+    }), {
+      status: 500,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   }
-
-  // Calculate trends
-  const recentPrices = history.slice(-7); // Last 7 days
-  const olderPrices = history.slice(-14, -7); // Previous 7 days
-  
-  const recentAvg = recentPrices.reduce((sum, h) => sum + h.price, 0) / recentPrices.length;
-  const olderAvg = olderPrices.reduce((sum, h) => sum + h.price, 0) / olderPrices.length;
-  const trendPercent = ((recentAvg - olderAvg) / olderAvg * 100).toFixed(1);
-
-  return new Response(JSON.stringify({
-    history,
-    analysis: {
-      trend: recentAvg > olderAvg ? 'up' : 'down',
-      trendPercent: `${Math.abs(parseFloat(trendPercent))}%`,
-      lowestPrice: Math.min(...history.map(h => h.price)),
-      highestPrice: Math.max(...history.map(h => h.price)),
-      averagePrice: history.reduce((sum, h) => sum + h.price, 0) / history.length,
-      recommendation: recentAvg > olderAvg ? 'Consider buying soon as prices are rising' : 'Prices are falling, might be worth waiting'
-    }
-  }), {
-    headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-  });
 }
 
 async function addPriceAlert(supabase: any, alertData: PriceAlert) {
@@ -157,35 +209,74 @@ async function addPriceAlert(supabase: any, alertData: PriceAlert) {
 async function getUserAlerts(supabase: any, { userId }: any) {
   console.log(`📱 Getting alerts for user ${userId}`);
   
-  // Mock user alerts
-  const alerts: PriceAlert[] = [
-    {
-      id: 'alert_1',
-      userId,
-      productName: 'Twin & Earth Cable 2.5mm',
-      targetPrice: 80.00,
-      currentPrice: 89.50,
-      supplier: 'Any',
-      alertType: 'below',
-      isActive: true,
-      createdAt: '2024-08-30T10:00:00Z'
-    },
-    {
-      id: 'alert_2',
-      userId,
-      productName: 'MCB 32A',
-      targetPrice: 15.00,
-      currentPrice: 18.50,
-      supplier: 'Screwfix',
-      alertType: 'below',
-      isActive: true,
-      createdAt: '2024-08-29T15:30:00Z'
-    }
-  ];
+  try {
+    // Mock user alerts with real current prices where possible
+    const mockAlerts = [
+      {
+        id: 'alert_1',
+        userId,
+        productName: 'Twin & Earth Cable 2.5mm',
+        targetPrice: 80.00,
+        supplier: 'Any',
+        alertType: 'below' as const,
+        isActive: true,
+        createdAt: '2024-08-30T10:00:00Z'
+      },
+      {
+        id: 'alert_2',
+        userId,
+        productName: 'MCB 32A',
+        targetPrice: 15.00,
+        supplier: 'Screwfix',
+        alertType: 'below' as const,
+        isActive: true,
+        createdAt: '2024-08-29T15:30:00Z'
+      }
+    ];
 
-  return new Response(JSON.stringify({ alerts }), {
-    headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-  });
+    // Try to get current prices for alert products
+    const alertsWithCurrentPrices = await Promise.all(
+      mockAlerts.map(async (alert) => {
+        try {
+          const { data: currentPrices } = await supabase
+            .from('current_prices')
+            .select('price')
+            .ilike('product_name', `%${alert.productName}%`)
+            .eq('supplier', alert.supplier === 'Any' ? 'Screwfix' : alert.supplier)
+            .limit(1);
+
+          const currentPrice = currentPrices && currentPrices.length > 0 
+            ? parseFloat(currentPrices[0].price.toString())
+            : alert.targetPrice + 10; // Fallback price slightly above target
+
+          return {
+            ...alert,
+            currentPrice
+          };
+        } catch (error) {
+          console.error(`Error fetching current price for ${alert.productName}:`, error);
+          return {
+            ...alert,
+            currentPrice: alert.targetPrice + 10 // Fallback
+          };
+        }
+      })
+    );
+
+    return new Response(JSON.stringify({ alerts: alertsWithCurrentPrices }), {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
+
+  } catch (error) {
+    console.error('❌ Error in getUserAlerts:', error);
+    return new Response(JSON.stringify({
+      error: 'Failed to fetch user alerts',
+      details: error.message
+    }), {
+      status: 500,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
+  }
 }
 
 async function calculateBulkPricing(data: any) {

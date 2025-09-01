@@ -1,4 +1,5 @@
 import { corsHeaders } from '../_shared/cors.ts';
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.7.1';
 
 const suppliers = [
   { name: "Screwfix", url: "https://www.screwfix.com/search?search=" },
@@ -145,6 +146,39 @@ async function getMaterials(FIRECRAWL_API_KEY: string, categoryFilter?: string, 
   return materials;
 }
 
+// --- Save Prices to Historical Database ---
+async function savePricesToHistory(materials: any[]) {
+  console.log(`💾 Saving ${materials.length} prices to historical database...`);
+  
+  const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+  const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+  const supabase = createClient(supabaseUrl, supabaseServiceKey);
+
+  const historicalEntries = materials
+    .filter(material => material.price && material.price !== '£0.00')
+    .map(material => ({
+      product_name: material.name,
+      supplier: material.supplier,
+      price: parseFloat(material.price.replace('£', '').replace(',', '')),
+      currency: 'GBP',
+      source_url: material.productUrl,
+      category: material.category,
+      date_scraped: new Date().toISOString()
+    }));
+
+  if (historicalEntries.length > 0) {
+    const { error } = await supabase
+      .from('historical_prices')
+      .insert(historicalEntries);
+
+    if (error) {
+      console.error('❌ Error saving prices to history:', error);
+    } else {
+      console.log(`✅ Saved ${historicalEntries.length} prices to historical database`);
+    }
+  }
+}
+
 Deno.serve(async (req) => {
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
@@ -181,6 +215,9 @@ Deno.serve(async (req) => {
     console.log(`📋 Request filters - Category: ${categoryFilter || 'all'}, Supplier: ${supplierFilter || 'all'}, SearchTerm: ${searchTerm || 'none'}`);
 
     const materials = await getMaterials(FIRECRAWL_API_KEY, categoryFilter, supplierFilter, searchTerm);
+
+    // Save prices to historical database
+    await savePricesToHistory(materials);
 
     const response = {
       success: true,
