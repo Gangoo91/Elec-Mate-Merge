@@ -1,24 +1,20 @@
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ExternalLink, ShoppingCart, Check, X } from "lucide-react";
 
 interface MaterialItem {
-  id: string;
+  id: number;
   name: string;
-  description: string;
   category: string;
-  subcategory: string;
-  brand: string;
-  model: string;
-  price: number;
-  specifications: Record<string, string>;
-  availability: string;
+  price: string;
   supplier: string;
-  image?: string;
-  datasheet?: string;
-  purchaseUrl?: string;
-  compliance?: string[];
+  image: string;
+  isOnSale?: boolean;
+  salePrice?: string;
+  stockStatus?: "In Stock" | "Low Stock" | "Out of Stock";
+  highlights?: string[];
 }
 
 interface MaterialCardProps {
@@ -38,10 +34,16 @@ const MaterialCard = ({
 }: MaterialCardProps) => {
   const handleCompareToggle = () => {
     if (isSelected && onRemoveFromCompare) {
-      onRemoveFromCompare(item.id);
+      onRemoveFromCompare(item.id.toString());
     } else if (!isSelected && onAddToCompare && !isCompareDisabled) {
       onAddToCompare(item);
     }
+  };
+
+  // Parse price to handle both string and number formats
+  const parsePrice = (price: string) => {
+    const numericPrice = parseFloat(price.replace(/[£$,]/g, ''));
+    return isNaN(numericPrice) ? 0 : numericPrice;
   };
 
   return (
@@ -69,53 +71,63 @@ const MaterialCard = ({
             </Button>
           )}
         </div>
-        
-        <p className="text-sm text-muted-foreground mt-2 line-clamp-2">
-          {item.description}
-        </p>
       </CardHeader>
 
       <CardContent className="flex-grow flex flex-col justify-between">
         <div className="space-y-2 text-sm">
           <div>
-            <span className="font-medium text-white">Brand:</span>{" "}
-            <span className="text-muted-foreground">{item.brand}</span>
-          </div>
-          <div>
-            <span className="font-medium text-white">Model:</span>{" "}
-            <span className="text-muted-foreground">{item.model}</span>
-          </div>
-          <div>
-            <span className="font-medium text-white">Availability:</span>{" "}
-            <span className="text-muted-foreground">{item.availability}</span>
-          </div>
-          <div>
             <span className="font-medium text-white">Supplier:</span>{" "}
             <span className="text-muted-foreground">{item.supplier}</span>
           </div>
+          {item.stockStatus && (
+            <div>
+              <span className="font-medium text-white">Stock:</span>{" "}
+              <span className={`text-sm ${
+                item.stockStatus === 'In Stock' ? 'text-green-400' :
+                item.stockStatus === 'Low Stock' ? 'text-yellow-400' :
+                'text-red-400'
+              }`}>
+                {item.stockStatus}
+              </span>
+            </div>
+          )}
           <div>
             <span className="font-medium text-white">Price:</span>{" "}
-            <span className="text-elec-yellow font-semibold">£{item.price.toFixed(2)}</span>
+            {item.isOnSale && item.salePrice ? (
+              <span className="space-x-2">
+                <span className="text-red-400 line-through">{item.price}</span>
+                <span className="text-elec-yellow font-semibold">{item.salePrice}</span>
+              </span>
+            ) : (
+              <span className="text-elec-yellow font-semibold">{item.price}</span>
+            )}
           </div>
+          {item.highlights && item.highlights.length > 0 && (
+            <div>
+              <span className="font-medium text-white">Features:</span>
+              <div className="flex flex-wrap gap-1 mt-1">
+                {item.highlights.slice(0, 3).map((highlight, index) => (
+                  <span 
+                    key={index}
+                    className="inline-flex items-center px-2 py-0.5 rounded text-xs bg-elec-yellow/10 text-elec-yellow border border-elec-yellow/20"
+                  >
+                    {highlight}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
 
         <div className="flex items-center justify-between mt-4">
-          {item.purchaseUrl && (
-            <Button variant="outline" size="sm" asChild>
-              <a href={item.purchaseUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
-                <ShoppingCart className="h-4 w-4" />
-                Buy Now
-              </a>
-            </Button>
-          )}
-          {item.datasheet && (
-            <Button variant="ghost" size="sm" asChild>
-              <a href={item.datasheet} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
-                <ExternalLink className="h-3.5 w-3.5" />
-                Datasheet
-              </a>
-            </Button>
-          )}
+          <Button variant="outline" size="sm" className="flex items-center gap-2">
+            <ShoppingCart className="h-4 w-4" />
+            Add to Cart
+          </Button>
+          <Button variant="ghost" size="sm" className="flex items-center gap-2">
+            <ExternalLink className="h-3.5 w-3.5" />
+            Details
+          </Button>
         </div>
       </CardContent>
     </Card>
