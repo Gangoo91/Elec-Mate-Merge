@@ -4,9 +4,11 @@ import { Helmet } from "react-helmet";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Package, ArrowLeft, Filter, RefreshCw, Loader2, Search, Scale, TrendingUp, Calculator, AlertTriangle, Brain } from "lucide-react";
+import { MobileButton } from "@/components/ui/mobile-button";
+import { MobileInputWrapper } from "@/components/ui/mobile-input-wrapper";
+import { useIsMobile } from "@/hooks/use-mobile";
 import MaterialCard from "@/components/electrician-materials/MaterialCard";
 import MaterialPriceComparison from "@/components/electrician-materials/MaterialPriceComparison";
 import BulkPricingCalculator from "@/components/electrician-materials/BulkPricingCalculator";
@@ -51,6 +53,7 @@ const CategoryMaterials = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [activeTab, setActiveTab] = useState("browse");
   const [selectedItems, setSelectedItems] = useState<any[]>([]);
+  const isMobile = useIsMobile();
   
   // Filter and search the materials
   const filteredMaterials = useMemo(() => {
@@ -126,9 +129,9 @@ const CategoryMaterials = () => {
       <header className="flex flex-col gap-6">
         <div className="flex flex-wrap gap-2">
           <Link to="/materials">
-            <Button variant="outline" size="sm" className="flex items-center gap-1.5 text-xs sm:text-sm h-10">
+            <MobileButton variant="outline" size={isMobile ? "wide" : "sm"} className="flex items-center gap-1.5">
               <ArrowLeft className="h-3.5 w-3.5 sm:h-4 sm:w-4" /> Back to Materials
-            </Button>
+            </MobileButton>
           </Link>
         </div>
         <div>
@@ -156,24 +159,24 @@ const CategoryMaterials = () => {
       {/* Advanced Features Navigation */}
       <section className="space-y-4 relative z-10">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full relative">
-          <TabsList className="flex w-full flex-wrap grid grid-cols-3 lg:grid-cols-5 bg-elec-gray border border-elec-yellow/20 relative z-20 gap-2 p-[0.3rem] h-fit">
-            <TabsTrigger value="browse" className="flex-shrink-0 whitespace-nowrap px-4 py-3 text-sm min-w-fit data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark">
+          <TabsList className={`flex w-full ${isMobile ? 'flex-col gap-2' : 'flex-wrap grid grid-cols-3 lg:grid-cols-5'} bg-elec-gray border border-elec-yellow/20 relative z-20 p-[0.3rem] h-fit`}>
+            <TabsTrigger value="browse" className={`flex-shrink-0 whitespace-nowrap ${isMobile ? 'w-full' : ''} px-4 py-3 text-sm min-w-fit data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark`}>
               <Package className="h-4 w-4 mr-2" />
               Browse
             </TabsTrigger>
-            <TabsTrigger value="compare" className="flex-shrink-0 whitespace-nowrap px-4 py-3 text-sm min-w-fit data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark">
+            <TabsTrigger value="compare" className={`flex-shrink-0 whitespace-nowrap ${isMobile ? 'w-full' : ''} px-4 py-3 text-sm min-w-fit data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark`}>
               <Scale className="h-4 w-4 mr-2" />
               Compare
             </TabsTrigger>
-            <TabsTrigger value="bulk" className="flex-shrink-0 whitespace-nowrap px-4 py-3 text-sm min-w-fit data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark">
+            <TabsTrigger value="bulk" className={`flex-shrink-0 whitespace-nowrap ${isMobile ? 'w-full' : ''} px-4 py-3 text-sm min-w-fit data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark`}>
               <Calculator className="h-4 w-4 mr-2" />
               Bulk
             </TabsTrigger>
-            <TabsTrigger value="alerts" className="flex-shrink-0 whitespace-nowrap px-4 py-3 text-sm min-w-fit data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark">
+            <TabsTrigger value="alerts" className={`flex-shrink-0 whitespace-nowrap ${isMobile ? 'w-full' : ''} px-4 py-3 text-sm min-w-fit data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark`}>
               <TrendingUp className="h-4 w-4 mr-2" />
               Alerts
             </TabsTrigger>
-            <TabsTrigger value="ai" className="flex-shrink-0 whitespace-nowrap px-4 py-3 text-sm min-w-fit data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark">
+            <TabsTrigger value="ai" className={`flex-shrink-0 whitespace-nowrap ${isMobile ? 'w-full' : ''} px-4 py-3 text-sm min-w-fit data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark`}>
               <Brain className="h-4 w-4 mr-2" />
               AI
             </TabsTrigger>
@@ -181,30 +184,27 @@ const CategoryMaterials = () => {
 
           {/* Search and filters for Browse tab */}
           {activeTab === "browse" && (
-            <div className="flex items-center justify-between mt-4">
-              <div className="flex items-center gap-4 flex-1">
-                <div className="relative flex-1 max-w-md">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                  <Input
+            <div className={`${isMobile ? 'flex flex-col gap-4' : 'flex items-center justify-between'} mt-4`}>
+              <div className={`${isMobile ? 'w-full' : 'flex items-center gap-4 flex-1'}`}>
+                <div className={`${isMobile ? 'w-full mb-3' : 'relative flex-1 max-w-md'}`}>
+                  <MobileInputWrapper
                     placeholder="Search materials..."
                     value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="pl-10"
+                    onChange={setSearchTerm}
+                    icon={<Search className="h-4 w-4" />}
+                    hint="Search by product name, supplier, or description"
                   />
                 </div>
-                <Button
-                  variant="outline"
-                  size="sm"
+                <MobileButton
+                  variant="elec-outline"
+                  size={isMobile ? "wide" : "sm"}
                   onClick={() => refetch()}
                   disabled={isLoading}
+                  loading={isLoading}
                 >
-                  {isLoading ? (
-                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                  ) : (
-                    <RefreshCw className="h-4 w-4 mr-2" />
-                  )}
+                  <RefreshCw className="h-4 w-4 mr-2" />
                   Refresh
-                </Button>
+                </MobileButton>
               </div>
             </div>
           )}
@@ -218,21 +218,21 @@ const CategoryMaterials = () => {
                     <Scale className="h-5 w-5 text-elec-yellow" />
                     <span className="font-medium">{selectedItems.length}/3 items selected for comparison</span>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <Button
-                      size="sm"
+                  <div className={`${isMobile ? 'flex flex-col gap-2' : 'flex items-center gap-2'}`}>
+                    <MobileButton
+                      size={isMobile ? "wide" : "sm"}
                       onClick={() => setActiveTab("compare")}
-                      className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
+                      variant="elec"
                     >
                       Compare Now
-                    </Button>
-                    <Button
-                      size="sm"
-                      variant="outline"
+                    </MobileButton>
+                    <MobileButton
+                      size={isMobile ? "wide" : "sm"}
+                      variant="elec-outline"
                       onClick={clearComparison}
                     >
                       Clear
-                    </Button>
+                    </MobileButton>
                   </div>
                 </div>
               </CardContent>
@@ -269,12 +269,13 @@ const CategoryMaterials = () => {
                         }
                       </p>
                       {searchTerm && (
-                        <Button
+                        <MobileButton
                           variant="outline"
+                          size={isMobile ? "wide" : "default"}
                           onClick={() => setSearchTerm("")}
                         >
                           Clear search
-                        </Button>
+                        </MobileButton>
                       )}
                     </CardContent>
                   </Card>
@@ -289,7 +290,7 @@ const CategoryMaterials = () => {
                       </span>
                     </div>
                     
-                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div className={`grid gap-6 ${isMobile ? 'grid-cols-1' : 'md:grid-cols-2 lg:grid-cols-3'}`}>
                       {filteredMaterials.map((item, index) => (
                         <MaterialCard 
                           key={item.id || `${item.supplier}-${item.name}-${index}`} 
@@ -333,12 +334,13 @@ const CategoryMaterials = () => {
                 <p className="text-muted-foreground">
                   Get personalised recommendations, value analysis, and purchase suggestions for {meta.title.toLowerCase()}.
                 </p>
-                <Button
-                  className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
+                <MobileButton
+                  variant="elec"
+                  size={isMobile ? "wide" : "default"}
                   onClick={() => setActiveTab("compare")}
                 >
                   Try AI Recommendations in Compare
-                </Button>
+                </MobileButton>
               </CardContent>
             </Card>
           </TabsContent>

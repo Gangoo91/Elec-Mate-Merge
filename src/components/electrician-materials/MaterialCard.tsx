@@ -1,7 +1,8 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { ExternalLink, Plus, Minus, Check } from "lucide-react";
+import { MobileButton } from "@/components/ui/mobile-button";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 import { MaterialItem as BaseMaterialItem } from "@/data/electrician/productData";
 
@@ -24,6 +25,7 @@ const MaterialCard: React.FC<MaterialCardProps> = ({
   isSelected = false, 
   isCompareDisabled = false 
 }) => {
+  const isMobile = useIsMobile();
   // Extract cable-specific information
   const getCableInfo = () => {
     const name = item.name.toLowerCase();
@@ -137,7 +139,7 @@ const MaterialCard: React.FC<MaterialCardProps> = ({
         </h3>
 
         {/* Image */}
-        <div className="bg-muted/50 border rounded h-48 mb-3 flex items-center justify-center overflow-hidden">
+        <div className={`bg-muted/50 border rounded ${isMobile ? 'h-40' : 'h-48'} mb-3 flex items-center justify-center overflow-hidden`}>
           <img
             src={imageSrc}
             alt={`${item.name} from ${item.supplier}`}
@@ -205,7 +207,7 @@ const MaterialCard: React.FC<MaterialCardProps> = ({
         {/* Action buttons */}
         <div className="space-y-2">
           {onAddToCompare && (
-            <Button
+            <MobileButton
               onClick={() => {
                 if (isSelected && onRemoveFromCompare) {
                   onRemoveFromCompare(String(item.id || item.name));
@@ -214,13 +216,8 @@ const MaterialCard: React.FC<MaterialCardProps> = ({
                 }
               }}
               disabled={isCompareDisabled && !isSelected}
-              variant={isSelected ? "default" : "outline"}
-              className={`w-full ${
-                isSelected 
-                  ? "bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90" 
-                  : "border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
-              }`}
-              size="sm"
+              variant={isSelected ? "elec" : "elec-outline"}
+              size="wide"
             >
               {isSelected ? (
                 <>
@@ -233,14 +230,14 @@ const MaterialCard: React.FC<MaterialCardProps> = ({
                   Compare
                 </>
               )}
-            </Button>
+            </MobileButton>
           )}
           
           <a href={getProductUrl()} target="_blank" rel="noopener noreferrer" className="block w-full">
-            <Button className="w-full bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark font-semibold">
+            <MobileButton variant="elec" size="wide">
               View Deal
               <ExternalLink className="h-4 w-4 ml-2" />
-            </Button>
+            </MobileButton>
           </a>
         </div>
       </CardContent>

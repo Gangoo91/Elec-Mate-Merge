@@ -5,6 +5,10 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Search, TrendingDown, Crown, ExternalLink, Loader2, AlertCircle, Filter, Star, RefreshCw, Brain, Lightbulb, Package, AlertTriangle, Download, Calculator, History, Bell } from "lucide-react";
+import { MobileButton } from "@/components/ui/mobile-button";
+import { MobileInputWrapper } from "@/components/ui/mobile-input-wrapper";
+import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import BulkPricingCalculator from "./BulkPricingCalculator";
@@ -451,36 +455,33 @@ const MaterialPriceComparison = ({ initialQuery = "", selectedItems = [], onClea
         <CardContent className="p-6">
           <div className="space-y-4">
             {/* Tab Navigation */}
-            <div className="flex gap-2 mb-4">
-              <Button
-                variant={activeTab === 'comparison' ? 'default' : 'outline'}
-                size="sm"
+            <div className="flex flex-wrap gap-2 mb-4">
+              <MobileButton
+                variant={activeTab === 'comparison' ? 'elec' : 'elec-outline'}
+                size={useIsMobile() ? "wide" : "sm"}
                 onClick={() => setActiveTab('comparison')}
-                className={activeTab === 'comparison' ? 'bg-elec-yellow text-black' : 'border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/20'}
               >
                 <Search className="h-4 w-4 mr-2" />
                 Price Comparison
-              </Button>
-              <Button
-                variant={activeTab === 'bulk' ? 'default' : 'outline'}
-                size="sm"
+              </MobileButton>
+              <MobileButton
+                variant={activeTab === 'bulk' ? 'elec' : 'elec-outline'}
+                size={useIsMobile() ? "wide" : "sm"}
                 onClick={() => setActiveTab('bulk')}
                 disabled={!comparisonResult?.products.length}
-                className={activeTab === 'bulk' ? 'bg-elec-yellow text-black' : 'border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/20'}
               >
                 <Calculator className="h-4 w-4 mr-2" />
                 Bulk Pricing
-              </Button>
-              <Button
-                variant={activeTab === 'history' ? 'default' : 'outline'}
-                size="sm"
+              </MobileButton>
+              <MobileButton
+                variant={activeTab === 'history' ? 'elec' : 'elec-outline'}
+                size={useIsMobile() ? "wide" : "sm"}
                 onClick={() => setActiveTab('history')}
                 disabled={!selectedProductForAnalysis}
-                className={activeTab === 'history' ? 'bg-elec-yellow text-black' : 'border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/20'}
               >
                 <History className="h-4 w-4 mr-2" />
                 Price History & Alerts
-              </Button>
+              </MobileButton>
             </div>
             {/* Main Search Input - Only show for comparison tab */}
             {activeTab === 'comparison' && (
@@ -795,99 +796,192 @@ const MaterialPriceComparison = ({ initialQuery = "", selectedItems = [], onClea
                     }`}
                   >
                     <CardContent className="p-4">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-4 flex-1">
-                          <div className="flex items-center gap-3">
-                            <div className="flex items-center gap-2">
-                              <span className="font-medium text-white text-sm">{product.supplier}</span>
-                              {isCheapest && (
-                                <Badge className="bg-green-500/20 text-green-400 border-green-500/30 text-xs">
-                                  <Crown className="h-3 w-3 mr-1" />
-                                  Best Price
-                                </Badge>
-                              )}
-                            </div>
-                            {product.rating && (
-                              <div className="flex items-center gap-1">
-                                <Star className="h-3 w-3 text-amber-400 fill-current" />
-                                <span className="text-xs text-muted-foreground">{product.rating}</span>
+                      <div className={`${useIsMobile() ? 'space-y-4' : 'flex items-center justify-between'}`}>
+                        {/* Mobile: Vertical layout */}
+                        {useIsMobile() ? (
+                          <>
+                            {/* Header */}
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center gap-2">
+                                <span className="font-medium text-white text-sm">{product.supplier}</span>
+                                {isCheapest && (
+                                  <Badge className="bg-green-500/20 text-green-400 border-green-500/30 text-xs">
+                                    <Crown className="h-3 w-3 mr-1" />
+                                    Best
+                                  </Badge>
+                                )}
                               </div>
-                            )}
-                          </div>
-
-                          <div className="flex-1">
-                            <h3 className="font-medium text-white text-sm">{product.name}</h3>
-                            <p className="text-xs text-muted-foreground">{product.category}</p>
-                          </div>
-                        </div>
-                        
-                        <div className="flex items-center gap-4">
-                          <div className="flex items-center gap-2">
-                            <Badge 
-                              variant="outline" 
-                              className={`text-xs ${
-                                product.stockStatus === 'In Stock' 
-                                  ? 'border-green-500/30 text-green-400' 
-                                  : product.stockStatus === 'Low Stock'
-                                  ? 'border-yellow-500/30 text-yellow-400'
-                                  : 'border-red-500/30 text-red-400'
-                              }`}
-                            >
-                              {product.stockStatus}
-                            </Badge>
-                            {product.deliveryInfo && (
-                              <span className="text-xs text-muted-foreground">{product.deliveryInfo}</span>
-                            )}
-                          </div>
-                          
-                          <div className="flex items-center gap-2">
-                            {product.originalPrice && (
-                              <>
-                                <span className="text-sm line-through text-muted-foreground">
-                                  {product.originalPrice}
-                                </span>
-                                <Badge className="bg-elec-yellow/20 text-elec-yellow text-xs">
-                                  -{product.discount}
-                                </Badge>
-                              </>
-                            )}
-                            <div className="text-right">
-                              <span className="text-xl font-bold text-elec-yellow">{product.price}</span>
-                              {savings > 0 && (
-                                <div className="flex items-center gap-1 text-red-400 text-xs">
-                                  <TrendingDown className="h-3 w-3" />
-                                  +{savings}% vs best
+                              {product.rating && (
+                                <div className="flex items-center gap-1">
+                                  <Star className="h-3 w-3 text-amber-400 fill-current" />
+                                  <span className="text-xs text-muted-foreground">{product.rating}</span>
                                 </div>
                               )}
                             </div>
-                          </div>
-                          
-                          <div className="flex gap-2">
-                            <Button 
-                              size="sm"
-                              variant="outline"
-                              onClick={() => {
-                                setSelectedProductForAnalysis(product);
-                                setActiveTab('history');
-                              }}
-                              className="border-blue-500/30 text-blue-400 hover:bg-blue-500/20"
-                            >
-                              <Bell className="h-3 w-3" />
-                            </Button>
-                            {product.productUrl && (
-                              <Button 
-                                asChild 
-                                variant="outline" 
-                                size="sm" 
-                                className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow hover:text-black"
+                            
+                            {/* Product name */}
+                            <div>
+                              <h3 className="font-medium text-white text-sm leading-tight">{product.name}</h3>
+                              <p className="text-xs text-muted-foreground">{product.category}</p>
+                            </div>
+                            
+                            {/* Price and stock */}
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center gap-2">
+                                <Badge 
+                                  variant="outline" 
+                                  className={`text-xs ${
+                                    product.stockStatus === 'In Stock' 
+                                      ? 'border-green-500/30 text-green-400' 
+                                      : product.stockStatus === 'Low Stock'
+                                      ? 'border-yellow-500/30 text-yellow-400'
+                                      : 'border-red-500/30 text-red-400'
+                                  }`}
+                                >
+                                  {product.stockStatus}
+                                </Badge>
+                                {product.deliveryInfo && (
+                                  <span className="text-xs text-muted-foreground">{product.deliveryInfo}</span>
+                                )}
+                              </div>
+                              
+                              <div className="text-right">
+                                <span className="text-xl font-bold text-elec-yellow">{product.price}</span>
+                                {savings > 0 && (
+                                  <div className="flex items-center gap-1 text-red-400 text-xs">
+                                    <TrendingDown className="h-3 w-3" />
+                                    +{savings}% vs best
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                            
+                            {/* Actions */}
+                            <div className="flex gap-2">
+                              <MobileButton 
+                                size="sm"
+                                variant="outline"
+                                onClick={() => {
+                                  setSelectedProductForAnalysis(product);
+                                  setActiveTab('history');
+                                }}
+                                className="flex-1"
                               >
-                                <a href={product.productUrl} target="_blank" rel="noopener noreferrer">
-                                  <ExternalLink className="h-4 w-4" />
-                                </a>
-                              </Button>
-                            )}
-                          </div>
-                        </div>
+                                <Bell className="h-3 w-3 mr-2" />
+                                Alerts
+                              </MobileButton>
+                              {product.productUrl && (
+                                <MobileButton 
+                                  asChild 
+                                  variant="elec-outline" 
+                                  size="sm"
+                                  className="flex-1"
+                                >
+                                  <a href={product.productUrl} target="_blank" rel="noopener noreferrer">
+                                    <ExternalLink className="h-4 w-4 mr-2" />
+                                    View
+                                  </a>
+                                </MobileButton>
+                              )}
+                            </div>
+                          </>
+                        ) : (
+                          /* Desktop: Horizontal layout */
+                          <>
+                            <div className="flex items-center gap-4 flex-1">
+                              <div className="flex items-center gap-3">
+                                <div className="flex items-center gap-2">
+                                  <span className="font-medium text-white text-sm">{product.supplier}</span>
+                                  {isCheapest && (
+                                    <Badge className="bg-green-500/20 text-green-400 border-green-500/30 text-xs">
+                                      <Crown className="h-3 w-3 mr-1" />
+                                      Best Price
+                                    </Badge>
+                                  )}
+                                </div>
+                                {product.rating && (
+                                  <div className="flex items-center gap-1">
+                                    <Star className="h-3 w-3 text-amber-400 fill-current" />
+                                    <span className="text-xs text-muted-foreground">{product.rating}</span>
+                                  </div>
+                                )}
+                              </div>
+
+                              <div className="flex-1">
+                                <h3 className="font-medium text-white text-sm">{product.name}</h3>
+                                <p className="text-xs text-muted-foreground">{product.category}</p>
+                              </div>
+                            </div>
+                            
+                            <div className="flex items-center gap-4">
+                              <div className="flex items-center gap-2">
+                                <Badge 
+                                  variant="outline" 
+                                  className={`text-xs ${
+                                    product.stockStatus === 'In Stock' 
+                                      ? 'border-green-500/30 text-green-400' 
+                                      : product.stockStatus === 'Low Stock'
+                                      ? 'border-yellow-500/30 text-yellow-400'
+                                      : 'border-red-500/30 text-red-400'
+                                  }`}
+                                >
+                                  {product.stockStatus}
+                                </Badge>
+                                {product.deliveryInfo && (
+                                  <span className="text-xs text-muted-foreground">{product.deliveryInfo}</span>
+                                )}
+                              </div>
+                              
+                              <div className="flex items-center gap-2">
+                                {product.originalPrice && (
+                                  <>
+                                    <span className="text-sm line-through text-muted-foreground">
+                                      {product.originalPrice}
+                                    </span>
+                                    <Badge className="bg-elec-yellow/20 text-elec-yellow text-xs">
+                                      -{product.discount}
+                                    </Badge>
+                                  </>
+                                )}
+                                <div className="text-right">
+                                  <span className="text-xl font-bold text-elec-yellow">{product.price}</span>
+                                  {savings > 0 && (
+                                    <div className="flex items-center gap-1 text-red-400 text-xs">
+                                      <TrendingDown className="h-3 w-3" />
+                                      +{savings}% vs best
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
+                              
+                              <div className="flex gap-2">
+                                <Button 
+                                  size="sm"
+                                  variant="outline"
+                                  onClick={() => {
+                                    setSelectedProductForAnalysis(product);
+                                    setActiveTab('history');
+                                  }}
+                                  className="border-blue-500/30 text-blue-400 hover:bg-blue-500/20"
+                                >
+                                  <Bell className="h-3 w-3" />
+                                </Button>
+                                {product.productUrl && (
+                                  <Button 
+                                    asChild 
+                                    variant="outline" 
+                                    size="sm" 
+                                    className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow hover:text-black"
+                                  >
+                                    <a href={product.productUrl} target="_blank" rel="noopener noreferrer">
+                                      <ExternalLink className="h-4 w-4" />
+                                    </a>
+                                  </Button>
+                                )}
+                              </div>
+                            </div>
+                          </>
+                        )}
                       </div>
                       
                       {product.highlights && product.highlights.length > 0 && (
