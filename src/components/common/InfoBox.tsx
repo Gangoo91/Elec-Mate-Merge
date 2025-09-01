@@ -24,18 +24,21 @@ const InfoBox: React.FC<InfoBoxProps & { children?: React.ReactNode }> = ({
   return (
     <Section aria-label={title} className={cn("mb-4 sm:mb-6", className)}>
       <Card className="bg-elec-card border-elec-yellow/20">
-        <CardHeader className="pb-2 sm:pb-3">
-          <CardTitle className="text-elec-light flex items-center gap-2 text-base sm:text-lg">
-            {icon}
-            {title}
+        <CardHeader className="pb-3 sm:pb-4">
+          <CardTitle className="text-elec-light flex items-center gap-3 text-base sm:text-lg font-medium">
+            {icon && <span className="flex-shrink-0">{icon}</span>}
+            <span>{title}</span>
           </CardTitle>
         </CardHeader>
         <CardContent className="pt-0">
           {children}
           {points?.length ? (
-            <ul className="list-disc pl-5 space-y-1.5 text-elec-light text-sm sm:text-[0.95rem]">
+            <ul className="space-y-2 text-elec-light text-sm sm:text-[0.95rem] leading-relaxed">
               {points.map((p, i) => (
-                <li key={i}>{p}</li>
+                <li key={i} className="flex items-start gap-3">
+                  <span className="flex-shrink-0 w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2"></span>
+                  <span className="flex-1">{p}</span>
+                </li>
               ))}
             </ul>
           ) : null}

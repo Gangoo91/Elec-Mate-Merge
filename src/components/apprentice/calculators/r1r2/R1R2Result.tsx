@@ -288,6 +288,7 @@ const R1R2Result = ({ result, measuredValue }: R1R2ResultProps) => {
 
       {/* Why This Matters */}
       <WhyThisMatters
+        title="Why this matters"
         points={[
           "R1+R2 testing verifies the continuity of the protective conductor throughout the circuit",
           "Essential for ensuring adequate earth fault loop impedance (Zs = Ze + R1+R2)",
@@ -300,6 +301,7 @@ const R1R2Result = ({ result, measuredValue }: R1R2ResultProps) => {
       <InfoBox
         title="Calculation Assumptions"
         icon={<Info className="h-5 w-5 text-blue-400" />}
+        as="section"
         points={[
           "Resistance values based on BS EN 60228 standard conductor resistivity",
           "Temperature coefficient: Copper (0.004/°C), Aluminium (0.004/°C)",
