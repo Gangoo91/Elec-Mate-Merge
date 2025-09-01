@@ -41,7 +41,7 @@
     --elec-gray: 0 0% 16%;
     --elec-yellow: 47 100% 50%;
     --elec-card: 0 0% 14%;
-    --elec-slate: 215 16% 25%;
+    --elec-grey: 240 5.9% 7%;
     
     /* Muted text colors for comfortable reading */
     --text-muted: 210 40% 82%;
@@ -124,7 +124,7 @@
   }
 
   body {
-    @apply bg-elec-dark text-elec-light dark;
+    @apply bg-elec-grey text-elec-light dark;
   }
   
   .gradient-text {
@@ -169,6 +169,29 @@
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
+  }
+  
+  /* Mobile-optimized spacing utilities */
+  .mobile-padding {
+    @apply px-4 sm:px-6 lg:px-8;
+  }
+  
+  .mobile-container {
+    @apply max-w-sm sm:max-w-full mx-auto;
+  }
+  
+  /* Touch-friendly button sizing */
+  .touch-target {
+    @apply min-h-11 min-w-11;
+  }
+  
+  /* Better mobile typography */
+  .mobile-heading {
+    @apply text-xl sm:text-2xl lg:text-3xl;
+  }
+  
+  .mobile-text {
+    @apply text-sm sm:text-base;
   }
 }
 

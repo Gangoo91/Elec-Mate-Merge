@@ -122,47 +122,47 @@ const R1R2Calculator = () => {
   };
 
   return (
-    <div className="bg-elec-grey min-h-screen">
-      <Card className="border-elec-yellow/20 bg-elec-card">
-        <CardHeader>
-          <div className="flex items-center gap-2">
-            <Calculator className="h-5 w-5 text-elec-yellow" />
-            <CardTitle className="text-elec-light">R1+R2 Calculator</CardTitle>
-          </div>
-          <p className="text-sm text-muted-foreground">
-            Calculate R1+R2 values for continuity testing according to BS 7671
-          </p>
-        </CardHeader>
-        <CardContent>
-          <Tabs defaultValue="calculator" className="space-y-6">
-            <TabsList className="grid w-full grid-cols-3 bg-elec-dark">
-              <TabsTrigger value="calculator" className="text-elec-light">Calculator</TabsTrigger>
-              <TabsTrigger value="guidance" className="text-elec-light">Guidance</TabsTrigger>
-              <TabsTrigger value="standards" className="text-elec-light">Standards</TabsTrigger>
-            </TabsList>
+    <Card className="border-elec-yellow/20 bg-elec-card w-full max-w-none">
+      <CardHeader className="px-4 sm:px-6">
+        <div className="flex items-center gap-2">
+          <Calculator className="h-5 w-5 text-elec-yellow" />
+          <CardTitle className="text-elec-light mobile-heading">R1+R2 Calculator</CardTitle>
+        </div>
+        <p className="mobile-text text-muted-foreground">
+          Calculate R1+R2 values for continuity testing according to BS 7671
+        </p>
+      </CardHeader>
+      <CardContent className="px-4 sm:px-6">
+        <Tabs defaultValue="calculator" className="space-y-6">
+          <TabsList className="grid w-full grid-cols-3 bg-elec-dark h-11">
+            <TabsTrigger value="calculator" className="text-elec-light text-sm">Calculator</TabsTrigger>
+            <TabsTrigger value="guidance" className="text-elec-light text-sm">Guidance</TabsTrigger>
+            <TabsTrigger value="standards" className="text-elec-light text-sm">Standards</TabsTrigger>
+          </TabsList>
 
-            <TabsContent value="calculator" className="space-y-6">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                {/* Input Section */}
+          <TabsContent value="calculator" className="space-y-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {/* Input Section */}
+              <div className="space-y-4">
+                <h3 className="text-lg font-semibold text-elec-light">Circuit Parameters</h3>
+                
                 <div className="space-y-4">
-                  <h3 className="text-lg font-semibold text-elec-light">Circuit Parameters</h3>
-                  
-                  <div className="space-y-2">
-                    <Label htmlFor="cable-length">Cable Length (m)</Label>
+                  <div>
+                    <Label htmlFor="cable-length" className="text-sm font-medium text-elec-light">Cable Length (m)</Label>
                     <Input
                       id="cable-length"
                       type="number"
                       value={cableLength}
                       onChange={(e) => setCableLength(e.target.value)}
                       placeholder="Enter cable length"
-                      className="bg-elec-dark border-elec-yellow/20"
+                      className="mt-2 h-11 bg-elec-dark border-elec-yellow/20 text-elec-light"
                     />
                   </div>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="conductor-material">Conductor Material</Label>
+                  <div>
+                    <Label htmlFor="conductor-material" className="text-sm font-medium text-elec-light">Conductor Material</Label>
                     <Select value={conductorMaterial} onValueChange={setConductorMaterial}>
-                      <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
+                      <SelectTrigger className="mt-2 h-11 bg-elec-dark border-elec-yellow/20">
                         <SelectValue placeholder="Select material" />
                       </SelectTrigger>
                       <SelectContent>
@@ -172,13 +172,13 @@ const R1R2Calculator = () => {
                     </Select>
                   </div>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="line-csa">Line Conductor CSA (mm²)</Label>
+                  <div>
+                    <Label htmlFor="line-csa" className="text-sm font-medium text-elec-light">Line Conductor CSA (mm²)</Label>
                     <Select value={lineConductorCSA} onValueChange={setLineConductorCSA}>
-                      <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
+                      <SelectTrigger className="mt-2 h-11 bg-elec-dark border-elec-yellow/20">
                         <SelectValue placeholder="Select CSA" />
                       </SelectTrigger>
-                      <SelectContent>
+                      <SelectContent className="max-h-48">
                         <SelectItem value="1.0">1.0</SelectItem>
                         <SelectItem value="1.5">1.5</SelectItem>
                         <SelectItem value="2.5">2.5</SelectItem>
@@ -200,13 +200,13 @@ const R1R2Calculator = () => {
                     </Select>
                   </div>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="cpc-csa">CPC Conductor CSA (mm²)</Label>
+                  <div>
+                    <Label htmlFor="cpc-csa" className="text-sm font-medium text-elec-light">CPC Conductor CSA (mm²)</Label>
                     <Select value={cpcConductorCSA} onValueChange={setCpcConductorCSA}>
-                      <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
+                      <SelectTrigger className="mt-2 h-11 bg-elec-dark border-elec-yellow/20">
                         <SelectValue placeholder="Select CSA" />
                       </SelectTrigger>
-                      <SelectContent>
+                      <SelectContent className="max-h-48">
                         <SelectItem value="1.0">1.0</SelectItem>
                         <SelectItem value="1.5">1.5</SelectItem>
                         <SelectItem value="2.5">2.5</SelectItem>
@@ -228,19 +228,19 @@ const R1R2Calculator = () => {
                     </Select>
                   </div>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="temperature">Operating Temperature (°C)</Label>
+                  <div>
+                    <Label htmlFor="temperature" className="text-sm font-medium text-elec-light">Operating Temperature (°C)</Label>
                     <Input
                       id="temperature"
                       type="number"
                       value={temperature}
                       onChange={(e) => setTemperature(e.target.value)}
-                      className="bg-elec-dark border-elec-yellow/20"
+                      className="mt-2 h-11 bg-elec-dark border-elec-yellow/20 text-elec-light"
                     />
                   </div>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="measured-value">Measured R1+R2 Value (Ω) - Optional</Label>
+                  <div>
+                    <Label htmlFor="measured-value" className="text-sm font-medium text-elec-light">Measured R1+R2 Value (Ω) - Optional</Label>
                     <Input
                       id="measured-value"
                       type="number"
@@ -248,82 +248,82 @@ const R1R2Calculator = () => {
                       value={measuredValue}
                       onChange={(e) => setMeasuredValue(e.target.value)}
                       placeholder="Enter test result for comparison"
-                      className="bg-elec-dark border-elec-yellow/20"
+                      className="mt-2 h-11 bg-elec-dark border-elec-yellow/20 text-elec-light"
                     />
                   </div>
 
-                  <div className="flex gap-2">
+                  <div className="flex flex-col sm:flex-row gap-3 pt-2">
                     <Button 
                       onClick={calculateR1R2} 
-                      className="flex-1 bg-elec-yellow text-black hover:bg-elec-yellow/90"
+                      className="flex-1 h-11 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-medium"
                       disabled={!cableLength || !lineConductorCSA || !cpcConductorCSA || !conductorMaterial}
                     >
                       Calculate R1+R2
                     </Button>
-                    <Button onClick={resetCalculator} variant="outline">
+                    <Button onClick={resetCalculator} variant="outline" className="h-11 touch-target">
                       <RotateCcw className="h-4 w-4" />
                     </Button>
                   </div>
                 </div>
+              </div>
 
-                {/* Result Section */}
-                <div className="space-y-4">
-                  <h3 className="text-lg font-semibold text-elec-light">Results</h3>
-                  
-                  {result ? (
-                    <div className="space-y-4">
-                      <Card className="border-green-500/30 bg-green-500/5">
-                        <CardContent className="pt-4">
-                          <div className="space-y-3">
-                            <div className="flex justify-between">
-                              <span className="text-green-200">R1 (Line resistance):</span>
-                              <span className="font-mono text-green-300">{result.r1.toFixed(4)} Ω</span>
-                            </div>
-                            <div className="flex justify-between">
-                              <span className="text-green-200">R2 (CPC resistance):</span>
-                              <span className="font-mono text-green-300">{result.r2.toFixed(4)} Ω</span>
-                            </div>
-                            <div className="flex justify-between border-t border-green-500/20 pt-2">
-                              <span className="text-green-200 font-semibold">R1+R2 Total:</span>
-                              <span className="font-mono text-green-300 font-semibold">{result.r1r2.toFixed(4)} Ω</span>
-                            </div>
-                            <div className="flex justify-between">
-                              <span className="text-yellow-200">Test Limit (×1.67):</span>
-                              <span className="font-mono text-yellow-300">{result.continuityLimit.toFixed(4)} Ω</span>
-                            </div>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    </div>
-                  ) : (
-                    <Card className="border-elec-yellow/20 bg-elec-yellow/5">
+              {/* Result Section */}
+              <div className="space-y-4">
+                <h3 className="text-lg font-semibold text-elec-light">Results</h3>
+                
+                {result ? (
+                  <div className="space-y-4">
+                    <Card className="border-green-500/30 bg-green-500/5">
                       <CardContent className="pt-4">
-                        <div className="text-center text-elec-yellow/80">
-                          <Calculator className="h-8 w-8 mx-auto mb-2" />
-                          <p>Enter circuit parameters to calculate R1+R2 values</p>
+                        <div className="space-y-3">
+                          <div className="flex justify-between">
+                            <span className="text-green-200">R1 (Line resistance):</span>
+                            <span className="font-mono text-green-300">{result.r1.toFixed(4)} Ω</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-green-200">R2 (CPC resistance):</span>
+                            <span className="font-mono text-green-300">{result.r2.toFixed(4)} Ω</span>
+                          </div>
+                          <div className="flex justify-between border-t border-green-500/20 pt-2">
+                            <span className="text-green-200 font-semibold">R1+R2 Total:</span>
+                            <span className="font-mono text-green-300 font-semibold">{result.r1r2.toFixed(4)} Ω</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-yellow-200">Test Limit (×1.67):</span>
+                            <span className="font-mono text-yellow-300">{result.continuityLimit.toFixed(4)} Ω</span>
+                          </div>
                         </div>
                       </CardContent>
                     </Card>
-                  )}
-                </div>
+                  </div>
+                ) : (
+                  <Card className="border-elec-yellow/20 bg-elec-yellow/5">
+                    <CardContent className="pt-4">
+                      <div className="text-center text-elec-yellow/80">
+                        <Calculator className="h-8 w-8 mx-auto mb-2" />
+                        <p className="mobile-text">Enter circuit parameters to calculate R1+R2 values</p>
+                      </div>
+                    </CardContent>
+                  </Card>
+                )}
               </div>
+            </div>
 
-              {result && (
-                <R1R2Result result={result} measuredValue={measuredValue} />
-              )}
-            </TabsContent>
+            {result && (
+              <R1R2Result result={result} measuredValue={measuredValue} />
+            )}
+          </TabsContent>
 
-            <TabsContent value="guidance">
-              <R1R2Guidance />
-            </TabsContent>
+          <TabsContent value="guidance">
+            <R1R2Guidance />
+          </TabsContent>
 
-            <TabsContent value="standards">
-              <R1R2Standards />
-            </TabsContent>
-          </Tabs>
-        </CardContent>
-      </Card>
-    </div>
+          <TabsContent value="standards">
+            <R1R2Standards />
+          </TabsContent>
+        </Tabs>
+      </CardContent>
+    </Card>
   );
 };
 

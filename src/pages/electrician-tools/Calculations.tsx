@@ -196,26 +196,42 @@ const Calculations = () => {
   };
 
   return (
-    <div className="space-y-6 animate-fade-in">
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">Professional Electrical Calculations</h1>
-          <p className="text-muted-foreground">
-            Comprehensive electrical calculations for professional work. Industry-standard tools following BS 7671 and UK electrical regulations.
-          </p>
+    <div className="min-h-screen bg-elec-grey">
+      <div className="container mx-auto px-4 py-6 max-w-7xl space-y-6 animate-fade-in">
+        {/* Header Section - Mobile Optimized */}
+        <div className="flex flex-col gap-4">
+          <div className="flex flex-col-reverse sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div className="space-y-2">
+              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-elec-light">
+                Professional Electrical Calculations
+              </h1>
+              <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                Comprehensive electrical calculations for professional work. Industry-standard tools following BS 7671 and UK electrical regulations.
+              </p>
+            </div>
+            <Link to="/electrician" className="w-full sm:w-auto">
+              <Button 
+                variant="outline" 
+                className="w-full sm:w-auto flex items-center justify-center gap-2 h-11 px-6 border-elec-yellow/20 text-elec-light hover:bg-elec-yellow/10"
+              >
+                <ArrowLeft className="h-4 w-4" /> 
+                <span className="hidden sm:inline">Back to Electrical Hub</span>
+                <span className="sm:hidden">Back to Hub</span>
+              </Button>
+            </Link>
+          </div>
         </div>
-        <Link to="/electrician">
-          <Button variant="outline" className="flex items-center gap-2">
-            <ArrowLeft className="h-4 w-4" /> Back to Electrical Hub
-          </Button>
-        </Link>
-      </div>
 
-      {/* Calculator Selector */}
-      <CalculatorSelector calculatorType={calculatorType} setCalculatorType={setCalculatorType} />
-      
-      {/* Dynamic Calculator */}
-      {renderCalculator()}
+        {/* Calculator Selector - Enhanced Mobile Layout */}
+        <div className="bg-elec-card rounded-lg border border-elec-yellow/20 p-4 sm:p-6">
+          <CalculatorSelector calculatorType={calculatorType} setCalculatorType={setCalculatorType} />
+        </div>
+        
+        {/* Dynamic Calculator - Mobile Optimized Container */}
+        <div className="w-full">
+          {renderCalculator()}
+        </div>
+      </div>
     </div>
   );
 };
