@@ -162,21 +162,21 @@ const CategoryMaterials = () => {
           {/* Mobile Collapsible Tabs */}
           {isMobile ? (
             <div className="space-y-2">
-              <div className="flex items-center justify-between bg-elec-gray border border-elec-yellow/20 rounded-xl p-3">
-                <span className="text-sm font-medium text-elec-light">
+              <div className="flex items-center justify-between bg-elec-gray border border-elec-yellow/20 rounded-xl p-4 mobile-interactive touch-target">
+                <span className="text-sm sm:text-base font-medium text-elec-light">
                   {activeTab === "browse" && "Browse Materials"}
                   {activeTab === "compare" && "Compare Products"}
                   {activeTab === "bulk" && "Bulk Pricing"}
                   {activeTab === "alerts" && "Price Alerts"}
                   {activeTab === "ai" && "AI Insights"}
                 </span>
-                <div className="flex gap-1">
+                <div className="flex gap-2">
                   {["browse", "compare", "bulk", "alerts", "ai"].map((tab) => (
                     <button
                       key={tab}
                       onClick={() => setActiveTab(tab)}
-                      className={`w-2 h-2 rounded-full transition-colors ${
-                        activeTab === tab ? "bg-elec-yellow" : "bg-elec-gray/50"
+                      className={`w-3 h-3 rounded-full transition-all duration-200 touch-target ${
+                        activeTab === tab ? "bg-elec-yellow scale-110" : "bg-elec-gray/50 hover:bg-elec-yellow/30"
                       }`}
                       aria-label={`Switch to ${tab} tab`}
                     />
