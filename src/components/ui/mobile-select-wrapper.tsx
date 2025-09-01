@@ -49,7 +49,6 @@ export function MobileSelectWrapper({
             className={cn(
               "h-14 bg-card border border-muted/40 rounded-xl",
               "hover:border-elec-yellow/40 focus-visible:ring-2 focus-visible:ring-elec-yellow focus-visible:ring-offset-2 focus-visible:ring-offset-background transition-all duration-200",
-              "group-hover:shadow-lg group-hover:shadow-elec-yellow/10",
               "text-foreground placeholder:text-muted-foreground",
               "text-sm font-normal overflow-hidden",
               error ? "border-destructive focus-visible:ring-destructive" : ""
@@ -73,8 +72,6 @@ export function MobileSelectWrapper({
           </MobileSelectContent>
         </MobileSelect>
         
-        {/* Subtle glow effect */}
-        <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/5 to-elec-yellow/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
       </div>
       
       {hint && !error && (
