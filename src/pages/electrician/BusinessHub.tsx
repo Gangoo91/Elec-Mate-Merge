@@ -78,7 +78,7 @@ const BusinessHub = () => {
             Practical, BS 7671-aware guidance for the UK market. Choose where you want to focus today.
           </p>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6 max-w-7xl mx-auto mt-2">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6 max-w-7xl mx-auto mt-2 pb-4">
             {cards.map((c) => (
               <Link to={c.link} key={c.id} className="focus:outline-none hover-scale">
                 <Card className={`border-elec-yellow/20 bg-elec-gray h-full hover:bg-elec-gray/80 transition-all duration-200 cursor-pointer relative ${c.comingSoon ? 'opacity-75' : ''}`}>
