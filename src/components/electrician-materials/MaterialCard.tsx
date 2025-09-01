@@ -116,7 +116,7 @@ const MaterialCard: React.FC<MaterialCardProps> = ({
     <Card className="group h-full hover:border-elec-yellow/30 transition-all duration-200">
       <CardContent className="p-4 h-full">
         {/* Header with stock status */}
-        <div className="flex justify-between items-start mb-3">
+        <div className="flex justify-between items-center mb-3">
           <div className="flex items-center gap-2">
             <span className="inline-flex items-center bg-elec-yellow/10 border border-elec-yellow/30 text-elec-yellow text-xs px-3 py-1.5 rounded-full font-medium shadow-sm transition-colors hover:bg-elec-yellow/20">
               {item.category}
