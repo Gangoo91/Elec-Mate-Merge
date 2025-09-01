@@ -366,318 +366,334 @@ const PFCCalculator = () => {
           <TabsContent value="guidance">
             <div className="space-y-6">
               {/* Overview Section */}
-              <InfoBox
-                title="Prospective Fault Current (PFC) Overview"
-                icon={<Zap className="h-6 w-6 text-primary" />}
-                className="mb-6"
-                as="section"
-              >
-                <div className="space-y-4">
-                  <p className="text-muted-foreground">
-                    Prospective Fault Current is the maximum current that would flow during a fault with negligible impedance. 
-                    It's essential for determining protective device ratings and ensuring safe fault clearance.
-                  </p>
-                  
-                  <div className="bg-muted/20 border border-border rounded-lg p-4">
-                    <h4 className="font-semibold mb-3 flex items-center gap-2">
-                      <Calculator className="h-4 w-4 text-primary" />
-                      Calculation Formula
-                    </h4>
-                    <div className="space-y-2 text-sm">
-                      <div className="font-mono bg-accent/10 p-2 rounded border border-accent/20">
-                        PFC = U₀ / Zs
+              <Card className="border-primary/40 bg-primary/10">
+                <CardHeader>
+                  <CardTitle className="text-white flex items-center gap-3 text-lg sm:text-xl">
+                    <Zap className="h-6 w-6 text-elec-yellow" />
+                    Prospective Fault Current (PFC) Overview
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-6">
+                    <p className="text-white text-base sm:text-lg leading-relaxed">
+                      Prospective Fault Current is the maximum current that would flow during a fault with negligible impedance. 
+                      It's essential for determining protective device ratings and ensuring safe fault clearance.
+                    </p>
+                    
+                    <div className="bg-elec-card border border-elec-yellow/30 rounded-lg p-4 sm:p-6">
+                      <h4 className="font-semibold mb-4 flex items-center gap-2 text-white text-base sm:text-lg">
+                        <Calculator className="h-5 w-5 text-elec-yellow" />
+                        Calculation Formula
+                      </h4>
+                      <div className="space-y-4 text-base sm:text-lg">
+                        <div className="font-mono bg-elec-yellow/20 p-3 sm:p-4 rounded border border-elec-yellow/40 text-white text-center font-bold">
+                          PFC = U₀ / Zs
+                        </div>
+                        <ul className="space-y-2 text-white">
+                          <li>• <strong className="text-elec-yellow">U₀</strong> = Nominal voltage to earth (230V single phase, 400V three phase)</li>
+                          <li>• <strong className="text-elec-yellow">Zs</strong> = Earth fault loop impedance (Ze + R1 + R2)</li>
+                          <li>• <strong className="text-elec-yellow">Ze</strong> = External earth loop impedance (supply authority)</li>
+                          <li>• <strong className="text-elec-yellow">R1+R2</strong> = Circuit conductor resistance (line + protective conductor)</li>
+                        </ul>
                       </div>
-                      <ul className="space-y-1 text-muted-foreground">
-                        <li>• <strong>U₀</strong> = Nominal voltage to earth (230V single phase, 400V three phase)</li>
-                        <li>• <strong>Zs</strong> = Earth fault loop impedance (Ze + R1 + R2)</li>
-                        <li>• <strong>Ze</strong> = External earth loop impedance (supply authority)</li>
-                        <li>• <strong>R1+R2</strong> = Circuit conductor resistance (line + protective conductor)</li>
+                    </div>
+
+                    <div className="bg-warning/20 border border-warning/40 rounded-lg p-4 sm:p-6">
+                      <h4 className="font-semibold mb-3 text-white flex items-center gap-2 text-base sm:text-lg">
+                        <AlertTriangle className="h-5 w-5 text-warning" />
+                        Important Considerations
+                      </h4>
+                      <ul className="space-y-2 text-base text-white">
+                        <li>• Account for voltage tolerance (±6% in UK)</li>
+                        <li>• Consider temperature effects on conductor resistance</li>
+                        <li>• Parallel earth paths may reduce actual fault current</li>
+                        <li>• Supply impedance can vary with network conditions</li>
                       </ul>
                     </div>
                   </div>
-
-                  <div className="bg-warning/10 border border-warning/20 rounded-lg p-4">
-                    <h4 className="font-semibold mb-2 text-warning flex items-center gap-2">
-                      <AlertTriangle className="h-4 w-4" />
-                      Important Considerations
-                    </h4>
-                    <ul className="space-y-1 text-sm text-muted-foreground">
-                      <li>• Account for voltage tolerance (±6% in UK)</li>
-                      <li>• Consider temperature effects on conductor resistance</li>
-                      <li>• Parallel earth paths may reduce actual fault current</li>
-                      <li>• Supply impedance can vary with network conditions</li>
-                    </ul>
-                  </div>
-                </div>
-              </InfoBox>
+                </CardContent>
+              </Card>
 
               {/* Measurement and Testing */}
-              <InfoBox
-                title="Measurement and Testing Requirements"
-                icon={<Target className="h-6 w-6 text-accent" />}
-                className="mb-6"
-                as="section"
-              >
-                <div className="space-y-4">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="bg-muted/20 border border-border rounded-lg p-4">
-                      <h4 className="font-semibold mb-3 text-primary">Ze Measurement</h4>
-                      <ul className="space-y-2 text-sm text-muted-foreground">
-                        <li>• Measured at main earthing terminal</li>
-                        <li>• Installation isolated from supply</li>
-                        <li>• Use appropriate earth loop impedance tester</li>
-                        <li>• Test between line and earth conductors</li>
-                        <li>• Record highest reading if multiple phases</li>
-                      </ul>
+              <Card className="border-accent/40 bg-accent/10">
+                <CardHeader>
+                  <CardTitle className="text-white flex items-center gap-3 text-lg sm:text-xl">
+                    <Target className="h-6 w-6 text-elec-yellow" />
+                    Measurement and Testing Requirements
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-6">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                      <div className="bg-elec-card border border-primary/40 rounded-lg p-4 sm:p-6">
+                        <h4 className="font-semibold mb-4 text-white text-base sm:text-lg">Ze Measurement</h4>
+                        <ul className="space-y-3 text-base text-white">
+                          <li>• Measured at main earthing terminal</li>
+                          <li>• Installation isolated from supply</li>
+                          <li>• Use appropriate earth loop impedance tester</li>
+                          <li>• Test between line and earth conductors</li>
+                          <li>• Record highest reading if multiple phases</li>
+                        </ul>
+                      </div>
+                      
+                      <div className="bg-elec-card border border-accent/40 rounded-lg p-4 sm:p-6">
+                        <h4 className="font-semibold mb-4 text-white text-base sm:text-lg">R1+R2 Measurement</h4>
+                        <ul className="space-y-3 text-base text-white">
+                          <li>• Measured end-to-end during dead testing</li>
+                          <li>• Test between line and cpc at distribution board</li>
+                          <li>• Link line and cpc at furthest point</li>
+                          <li>• Apply temperature correction if necessary</li>
+                          <li>• Include all circuit conductors in measurement</li>
+                        </ul>
+                      </div>
                     </div>
-                    
-                    <div className="bg-muted/20 border border-border rounded-lg p-4">
-                      <h4 className="font-semibold mb-3 text-accent">R1+R2 Measurement</h4>
-                      <ul className="space-y-2 text-sm text-muted-foreground">
-                        <li>• Measured end-to-end during dead testing</li>
-                        <li>• Test between line and cpc at distribution board</li>
-                        <li>• Link line and cpc at furthest point</li>
-                        <li>• Apply temperature correction if necessary</li>
-                        <li>• Include all circuit conductors in measurement</li>
-                      </ul>
-                    </div>
-                  </div>
 
-                  <div className="bg-success/10 border border-success/20 rounded-lg p-4">
-                    <h4 className="font-semibold mb-2 text-success">Best Practice Tips</h4>
-                    <ul className="space-y-1 text-sm text-muted-foreground">
-                      <li>• Always verify test equipment calibration before use</li>
-                      <li>• Record ambient temperature during testing</li>
-                      <li>• Check all connections are secure before testing</li>
-                      <li>• Consider parallel earth paths in fault current calculations</li>
-                      <li>• Document all readings and calculation methods used</li>
-                    </ul>
+                    <div className="bg-success/20 border border-success/40 rounded-lg p-4 sm:p-6">
+                      <h4 className="font-semibold mb-3 text-white text-base sm:text-lg">Best Practice Tips</h4>
+                      <ul className="space-y-2 text-base text-white">
+                        <li>• Always verify test equipment calibration before use</li>
+                        <li>• Record ambient temperature during testing</li>
+                        <li>• Check all connections are secure before testing</li>
+                        <li>• Consider parallel earth paths in fault current calculations</li>
+                        <li>• Document all readings and calculation methods used</li>
+                      </ul>
+                    </div>
                   </div>
-                </div>
-              </InfoBox>
+                </CardContent>
+              </Card>
 
               {/* Device Selection Guide */}
-              <InfoBox
-                title="Protective Device Selection"
-                icon={<Shield className="h-6 w-6 text-warning" />}
-                className="mb-6"
-                as="section"
-              >
-                <div className="space-y-4">
-                  <div className="overflow-x-auto">
-                    <table className="w-full text-sm border border-border rounded-lg">
-                      <thead>
-                        <tr className="bg-muted/50">
-                          <th className="text-left p-3 border-b border-border font-semibold">PFC Range</th>
-                          <th className="text-left p-3 border-b border-border font-semibold">Min. Breaking Capacity</th>
-                          <th className="text-left p-3 border-b border-border font-semibold">Device Type</th>
-                          <th className="text-left p-3 border-b border-border font-semibold">Application</th>
-                        </tr>
-                      </thead>
-                      <tbody className="text-muted-foreground">
-                        <tr>
-                          <td className="p-3 border-b border-border">Up to 1kA</td>
-                          <td className="p-3 border-b border-border text-success">3kA - 6kA</td>
-                          <td className="p-3 border-b border-border">Standard MCB</td>
-                          <td className="p-3 border-b border-border">Domestic, small commercial</td>
-                        </tr>
-                        <tr>
-                          <td className="p-3 border-b border-border">1kA - 6kA</td>
-                          <td className="p-3 border-b border-border text-primary">6kA</td>
-                          <td className="p-3 border-b border-border">Standard MCB</td>
-                          <td className="p-3 border-b border-border">Most installations</td>
-                        </tr>
-                        <tr>
-                          <td className="p-3 border-b border-border">6kA - 10kA</td>
-                          <td className="p-3 border-b border-border text-warning">10kA</td>
-                          <td className="p-3 border-b border-border">Enhanced MCB</td>
-                          <td className="p-3 border-b border-border">Industrial, large commercial</td>
-                        </tr>
-                        <tr>
-                          <td className="p-3">Above 10kA</td>
-                          <td className="p-3 text-destructive">16kA+</td>
-                          <td className="p-3">Specialist MCB/MCCB</td>
-                          <td className="p-3">High fault current locations</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="bg-accent/10 border border-accent/20 rounded-lg p-4">
-                      <h4 className="font-semibold mb-3 text-accent">Selection Factors</h4>
-                      <ul className="space-y-1 text-sm text-muted-foreground">
-                        <li>• Breaking capacity must exceed calculated PFC</li>
-                        <li>• Consider safety margin (typically 25-50%)</li>
-                        <li>• Account for network changes and load growth</li>
-                        <li>• Verify manufacturer specifications and certifications</li>
-                        <li>• Consider discrimination with upstream devices</li>
-                      </ul>
+              <Card className="border-warning/40 bg-warning/10">
+                <CardHeader>
+                  <CardTitle className="text-white flex items-center gap-3 text-lg sm:text-xl">
+                    <Shield className="h-6 w-6 text-elec-yellow" />
+                    Protective Device Selection
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-6">
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-base border border-elec-yellow/30 rounded-lg bg-elec-card">
+                        <thead>
+                          <tr className="bg-elec-yellow/20">
+                            <th className="text-left p-4 border-b border-elec-yellow/30 font-semibold text-white">PFC Range</th>
+                            <th className="text-left p-4 border-b border-elec-yellow/30 font-semibold text-white">Min. Breaking Capacity</th>
+                            <th className="text-left p-4 border-b border-elec-yellow/30 font-semibold text-white">Device Type</th>
+                            <th className="text-left p-4 border-b border-elec-yellow/30 font-semibold text-white">Application</th>
+                          </tr>
+                        </thead>
+                        <tbody className="text-white">
+                          <tr>
+                            <td className="p-4 border-b border-elec-yellow/20">Up to 1kA</td>
+                            <td className="p-4 border-b border-elec-yellow/20 text-success font-medium">3kA - 6kA</td>
+                            <td className="p-4 border-b border-elec-yellow/20">Standard MCB</td>
+                            <td className="p-4 border-b border-elec-yellow/20">Domestic, small commercial</td>
+                          </tr>
+                          <tr>
+                            <td className="p-4 border-b border-elec-yellow/20">1kA - 6kA</td>
+                            <td className="p-4 border-b border-elec-yellow/20 text-primary font-medium">6kA</td>
+                            <td className="p-4 border-b border-elec-yellow/20">Standard MCB</td>
+                            <td className="p-4 border-b border-elec-yellow/20">Most installations</td>
+                          </tr>
+                          <tr>
+                            <td className="p-4 border-b border-elec-yellow/20">6kA - 10kA</td>
+                            <td className="p-4 border-b border-elec-yellow/20 text-warning font-medium">10kA</td>
+                            <td className="p-4 border-b border-elec-yellow/20">Enhanced MCB</td>
+                            <td className="p-4 border-b border-elec-yellow/20">Industrial, large commercial</td>
+                          </tr>
+                          <tr>
+                            <td className="p-4">Above 10kA</td>
+                            <td className="p-4 text-destructive font-medium">16kA+</td>
+                            <td className="p-4">Specialist MCB/MCCB</td>
+                            <td className="p-4">High fault current locations</td>
+                          </tr>
+                        </tbody>
+                      </table>
                     </div>
 
-                    <div className="bg-destructive/10 border border-destructive/20 rounded-lg p-4">
-                      <h4 className="font-semibold mb-3 text-destructive">Common Pitfalls</h4>
-                      <ul className="space-y-1 text-sm text-muted-foreground">
-                        <li>• Using outdated Ze values from suppliers</li>
-                        <li>• Ignoring cable temperature effects</li>
-                        <li>• Inadequate breaking capacity margins</li>
-                        <li>• Not considering parallel earth paths</li>
-                        <li>• Mixing different calculation methods</li>
-                      </ul>
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                      <div className="bg-accent/20 border border-accent/40 rounded-lg p-4 sm:p-6">
+                        <h4 className="font-semibold mb-4 text-white text-base sm:text-lg">Selection Factors</h4>
+                        <ul className="space-y-2 text-base text-white">
+                          <li>• Breaking capacity must exceed calculated PFC</li>
+                          <li>• Consider safety margin (typically 25-50%)</li>
+                          <li>• Account for network changes and load growth</li>
+                          <li>• Verify manufacturer specifications and certifications</li>
+                          <li>• Consider discrimination with upstream devices</li>
+                        </ul>
+                      </div>
+
+                      <div className="bg-destructive/20 border border-destructive/40 rounded-lg p-4 sm:p-6">
+                        <h4 className="font-semibold mb-4 text-white text-base sm:text-lg">Common Pitfalls</h4>
+                        <ul className="space-y-2 text-base text-white">
+                          <li>• Using outdated Ze values from suppliers</li>
+                          <li>• Ignoring cable temperature effects</li>
+                          <li>• Inadequate breaking capacity margins</li>
+                          <li>• Not considering parallel earth paths</li>
+                          <li>• Mixing different calculation methods</li>
+                        </ul>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </InfoBox>
+                </CardContent>
+              </Card>
 
               {/* Regulatory Compliance */}
-              <InfoBox
-                title="BS 7671 Compliance Requirements"
-                icon={<BookOpen className="h-6 w-6 text-primary" />}
-                className="mb-6"
-                as="section"
-              >
-                <div className="space-y-4">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="space-y-3">
-                      <h4 className="font-semibold text-primary">Design Stage Requirements</h4>
-                      <div className="bg-primary/10 border border-primary/20 rounded-lg p-4">
-                        <ul className="space-y-2 text-sm text-muted-foreground">
-                          <li><strong>Regulation 434.5.2:</strong> PFC must be determined at every relevant point in the installation</li>
-                          <li><strong>Regulation 411.3.2:</strong> Maximum disconnection times must be achieved</li>
-                          <li><strong>Section 312:</strong> Protective device coordination requirements</li>
-                          <li><strong>Appendix 4:</strong> Current-carrying capacity and voltage drop considerations</li>
-                        </ul>
+              <Card className="border-primary/40 bg-primary/10">
+                <CardHeader>
+                  <CardTitle className="text-white flex items-center gap-3 text-lg sm:text-xl">
+                    <BookOpen className="h-6 w-6 text-elec-yellow" />
+                    BS 7671 Compliance Requirements
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-6">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                      <div className="space-y-4">
+                        <h4 className="font-semibold text-white text-base sm:text-lg">Design Stage Requirements</h4>
+                        <div className="bg-primary/20 border border-primary/40 rounded-lg p-4 sm:p-6">
+                          <ul className="space-y-3 text-base text-white">
+                            <li><strong className="text-elec-yellow">Regulation 434.5.2:</strong> PFC must be determined at every relevant point in the installation</li>
+                            <li><strong className="text-elec-yellow">Regulation 411.3.2:</strong> Maximum disconnection times must be achieved</li>
+                            <li><strong className="text-elec-yellow">Section 312:</strong> Protective device coordination requirements</li>
+                            <li><strong className="text-elec-yellow">Appendix 4:</strong> Current-carrying capacity and voltage drop considerations</li>
+                          </ul>
+                        </div>
+                      </div>
+
+                      <div className="space-y-4">
+                        <h4 className="font-semibold text-white text-base sm:text-lg">Verification Requirements</h4>
+                        <div className="bg-accent/20 border border-accent/40 rounded-lg p-4 sm:p-6">
+                          <ul className="space-y-3 text-base text-white">
+                            <li><strong className="text-elec-yellow">Section 612:</strong> Initial verification must include PFC verification</li>
+                            <li><strong className="text-elec-yellow">Table 61:</strong> Minimum test requirements and acceptance criteria</li>
+                            <li><strong className="text-elec-yellow">Regulation 612.11:</strong> Earth fault loop impedance testing requirements</li>
+                            <li><strong className="text-elec-yellow">Part 6:</strong> Documentation and certification requirements</li>
+                          </ul>
+                        </div>
                       </div>
                     </div>
 
-                    <div className="space-y-3">
-                      <h4 className="font-semibold text-accent">Verification Requirements</h4>
-                      <div className="bg-accent/10 border border-accent/20 rounded-lg p-4">
-                        <ul className="space-y-2 text-sm text-muted-foreground">
-                          <li><strong>Section 612:</strong> Initial verification must include PFC verification</li>
-                          <li><strong>Table 61:</strong> Minimum test requirements and acceptance criteria</li>
-                          <li><strong>Regulation 612.11:</strong> Earth fault loop impedance testing requirements</li>
-                          <li><strong>Part 6:</strong> Documentation and certification requirements</li>
-                        </ul>
+                    <div className="bg-warning/20 border border-warning/40 rounded-lg p-4 sm:p-6">
+                      <h4 className="font-semibold mb-4 text-white text-base sm:text-lg">Documentation Requirements</h4>
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-base">
+                        <div>
+                          <h5 className="font-medium mb-3 text-elec-yellow">Design Records</h5>
+                          <ul className="space-y-2 text-white">
+                            <li>• PFC calculations</li>
+                            <li>• Device specifications</li>
+                            <li>• Safety margins applied</li>
+                            <li>• Assumption documented</li>
+                          </ul>
+                        </div>
+                        <div>
+                          <h5 className="font-medium mb-3 text-elec-yellow">Test Results</h5>
+                          <ul className="space-y-2 text-white">
+                            <li>• Ze measurements</li>
+                            <li>• R1+R2 values</li>
+                            <li>• PFC verification</li>
+                            <li>• Test conditions</li>
+                          </ul>
+                        </div>
+                        <div>
+                          <h5 className="font-medium mb-3 text-elec-yellow">Certificates</h5>
+                          <ul className="space-y-2 text-white">
+                            <li>• EIC compliance</li>
+                            <li>• Device certifications</li>
+                            <li>• Test certificates</li>
+                            <li>• Design validation</li>
+                          </ul>
+                        </div>
                       </div>
                     </div>
                   </div>
-
-                  <div className="bg-warning/10 border border-warning/20 rounded-lg p-4">
-                    <h4 className="font-semibold mb-3 text-warning">Documentation Requirements</h4>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-                      <div>
-                        <h5 className="font-medium mb-2">Design Records</h5>
-                        <ul className="space-y-1 text-muted-foreground">
-                          <li>• PFC calculations</li>
-                          <li>• Device specifications</li>
-                          <li>• Safety margins applied</li>
-                          <li>• Assumption documented</li>
-                        </ul>
-                      </div>
-                      <div>
-                        <h5 className="font-medium mb-2">Test Results</h5>
-                        <ul className="space-y-1 text-muted-foreground">
-                          <li>• Ze measurements</li>
-                          <li>• R1+R2 values</li>
-                          <li>• PFC verification</li>
-                          <li>• Test conditions</li>
-                        </ul>
-                      </div>
-                      <div>
-                        <h5 className="font-medium mb-2">Certificates</h5>
-                        <ul className="space-y-1 text-muted-foreground">
-                          <li>• EIC compliance</li>
-                          <li>• Device certifications</li>
-                          <li>• Test certificates</li>
-                          <li>• Design validation</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </InfoBox>
+                </CardContent>
+              </Card>
 
               {/* Practical Examples */}
-              <InfoBox
-                title="Worked Examples and Common Scenarios"
-                icon={<Calculator className="h-6 w-6 text-success" />}
-                as="section"
-              >
-                <div className="space-y-4">
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                    <div className="bg-muted/20 border border-border rounded-lg p-4">
-                      <h4 className="font-semibold mb-3 text-success">Example 1: Domestic Installation</h4>
-                      <div className="space-y-2 text-sm">
-                        <div className="bg-accent/10 p-3 rounded border border-accent/20">
-                          <p><strong>Given:</strong></p>
-                          <ul className="mt-1 space-y-1 text-muted-foreground">
-                            <li>• Single phase 230V supply</li>
-                            <li>• Ze = 0.35Ω (TN-S system)</li>
-                            <li>• 32A ring final circuit</li>
-                            <li>• 2.5mm² T&E cable, R1+R2 = 0.31Ω</li>
-                          </ul>
+              <Card className="border-success/40 bg-success/10">
+                <CardHeader>
+                  <CardTitle className="text-white flex items-center gap-3 text-lg sm:text-xl">
+                    <Calculator className="h-6 w-6 text-elec-yellow" />
+                    Worked Examples and Common Scenarios
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-6">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                      <div className="bg-elec-card border border-success/40 rounded-lg p-4 sm:p-6">
+                        <h4 className="font-semibold mb-4 text-white text-base sm:text-lg">Example 1: Domestic Installation</h4>
+                        <div className="space-y-4 text-base">
+                          <div className="bg-accent/20 p-4 rounded border border-accent/40">
+                            <p className="font-semibold text-white mb-2">Given:</p>
+                            <ul className="mt-2 space-y-2 text-white">
+                              <li>• Single phase 230V supply</li>
+                              <li>• Ze = 0.35Ω (TN-S system)</li>
+                              <li>• 32A ring final circuit</li>
+                              <li>• 2.5mm² T&E cable, R1+R2 = 0.31Ω</li>
+                            </ul>
+                          </div>
+                          <div className="bg-success/20 p-4 rounded border border-success/40">
+                            <p className="font-semibold text-white mb-2">Calculation:</p>
+                            <ul className="mt-2 space-y-2 text-white font-mono text-sm">
+                              <li>Zs = Ze + R1+R2 = 0.35 + 0.31 = 0.66Ω</li>
+                              <li>PFC = 230V ÷ 0.66Ω = 348A</li>
+                              <li className="text-elec-yellow font-bold">Assessment: Low PFC - 6kA MCB adequate</li>
+                            </ul>
+                          </div>
                         </div>
-                        <div className="bg-success/10 p-3 rounded border border-success/20">
-                          <p><strong>Calculation:</strong></p>
-                          <ul className="mt-1 space-y-1 text-muted-foreground font-mono text-xs">
-                            <li>Zs = Ze + R1+R2 = 0.35 + 0.31 = 0.66Ω</li>
-                            <li>PFC = 230V ÷ 0.66Ω = 348A</li>
-                            <li>Assessment: Low PFC - 6kA MCB adequate</li>
-                          </ul>
+                      </div>
+
+                      <div className="bg-elec-card border border-warning/40 rounded-lg p-4 sm:p-6">
+                        <h4 className="font-semibold mb-4 text-white text-base sm:text-lg">Example 2: Commercial Installation</h4>
+                        <div className="space-y-4 text-base">
+                          <div className="bg-accent/20 p-4 rounded border border-accent/40">
+                            <p className="font-semibold text-white mb-2">Given:</p>
+                            <ul className="mt-2 space-y-2 text-white">
+                              <li>• Three phase 400V supply</li>
+                              <li>• Ze = 0.15Ω (TN-C-S system)</li>
+                              <li>• 63A distribution circuit</li>
+                              <li>• 16mm² SWA cable, R1+R2 = 0.08Ω</li>
+                            </ul>
+                          </div>
+                          <div className="bg-warning/20 p-4 rounded border border-warning/40">
+                            <p className="font-semibold text-white mb-2">Calculation:</p>
+                            <ul className="mt-2 space-y-2 text-white font-mono text-sm">
+                              <li>Zs = Ze + R1+R2 = 0.15 + 0.08 = 0.23Ω</li>
+                              <li>PFC = 400V ÷ 0.23Ω = 1,739A</li>
+                              <li className="text-elec-yellow font-bold">Assessment: Medium PFC - 6kA MCB adequate</li>
+                            </ul>
+                          </div>
                         </div>
                       </div>
                     </div>
 
-                    <div className="bg-muted/20 border border-border rounded-lg p-4">
-                      <h4 className="font-semibold mb-3 text-warning">Example 2: Commercial Installation</h4>
-                      <div className="space-y-2 text-sm">
-                        <div className="bg-accent/10 p-3 rounded border border-accent/20">
-                          <p><strong>Given:</strong></p>
-                          <ul className="mt-1 space-y-1 text-muted-foreground">
-                            <li>• Three phase 400V supply</li>
-                            <li>• Ze = 0.15Ω (TN-C-S system)</li>
-                            <li>• 63A distribution circuit</li>
-                            <li>• 16mm² SWA cable, R1+R2 = 0.08Ω</li>
+                    <div className="bg-destructive/20 border border-destructive/40 rounded-lg p-4 sm:p-6">
+                      <h4 className="font-semibold mb-4 text-white text-base sm:text-lg">High PFC Scenario Considerations</h4>
+                      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 text-base">
+                        <div>
+                          <h5 className="font-medium mb-3 text-elec-yellow">When PFC exceeds 10kA:</h5>
+                          <ul className="space-y-2 text-white">
+                            <li>• Review supply arrangement with DNO</li>
+                            <li>• Consider current limiting reactors</li>
+                            <li>• Specify enhanced breaking capacity devices</li>
+                            <li>• Implement additional discrimination measures</li>
                           </ul>
                         </div>
-                        <div className="bg-warning/10 p-3 rounded border border-warning/20">
-                          <p><strong>Calculation:</strong></p>
-                          <ul className="mt-1 space-y-1 text-muted-foreground font-mono text-xs">
-                            <li>Zs = Ze + R1+R2 = 0.15 + 0.08 = 0.23Ω</li>
-                            <li>PFC = 400V ÷ 0.23Ω = 1,739A</li>
-                            <li>Assessment: Medium PFC - 6kA MCB adequate</li>
+                        <div>
+                          <h5 className="font-medium mb-3 text-elec-yellow">Risk Mitigation:</h5>
+                          <ul className="space-y-2 text-white">
+                            <li>• Increase cable sizing to reduce R1+R2</li>
+                            <li>• Split large circuits into smaller sections</li>
+                            <li>• Use diversity factors appropriately</li>
+                            <li>• Consider alternative earthing arrangements</li>
                           </ul>
                         </div>
                       </div>
                     </div>
                   </div>
-
-                  <div className="bg-destructive/10 border border-destructive/20 rounded-lg p-4">
-                    <h4 className="font-semibold mb-3 text-destructive">High PFC Scenario Considerations</h4>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                      <div>
-                        <h5 className="font-medium mb-2">When PFC exceeds 10kA:</h5>
-                        <ul className="space-y-1 text-muted-foreground">
-                          <li>• Review supply arrangement with DNO</li>
-                          <li>• Consider current limiting reactors</li>
-                          <li>• Specify enhanced breaking capacity devices</li>
-                          <li>• Implement additional discrimination measures</li>
-                        </ul>
-                      </div>
-                      <div>
-                        <h5 className="font-medium mb-2">Risk Mitigation:</h5>
-                        <ul className="space-y-1 text-muted-foreground">
-                          <li>• Increase cable sizing to reduce R1+R2</li>
-                          <li>• Split large circuits into smaller sections</li>
-                          <li>• Use diversity factors appropriately</li>
-                          <li>• Consider alternative earthing arrangements</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </InfoBox>
+                </CardContent>
+              </Card>
             </div>
           </TabsContent>
         </Tabs>
