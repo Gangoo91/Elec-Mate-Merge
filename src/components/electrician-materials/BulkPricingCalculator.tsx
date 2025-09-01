@@ -144,7 +144,7 @@ const BulkPricingCalculator = ({ categoryId, products = [], onCalculate }: BulkP
                   </Badge>
                 ))}
               </div>
-              <div className="flex gap-2">
+              <div className="flex gap-2 items-end">
                 <div className="flex-1">
                   <MobileInputWrapper
                     type="number"
@@ -156,7 +156,7 @@ const BulkPricingCalculator = ({ categoryId, products = [], onCalculate }: BulkP
                 </div>
                 <MobileButton 
                   variant="elec-outline"
-                  size="icon"
+                  size="default"
                   onClick={addCustomQuantity}
                   icon={<Plus className="h-4 w-4" />}
                 />
