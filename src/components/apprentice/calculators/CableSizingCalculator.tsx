@@ -169,7 +169,7 @@ const CableSizingCalculator = () => {
 
   return (
     <div className="space-y-6">
-      <Card className="border border-muted/40 bg-card">
+      <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader>
           <div className="flex items-center gap-2">
             <Sigma className="h-5 w-5 text-primary" />
@@ -216,16 +216,16 @@ const CableSizingCalculator = () => {
               <h3 className="text-lg font-semibold text-elec-yellow">Circuit Design Parameters</h3>
               
               {/* Protective Device Section */}
-              <div className="space-y-4 p-4 border border-muted/40 rounded-lg bg-muted/20">
+              <div className="space-y-4 p-4 border border-elec-yellow/40 rounded-lg bg-elec-dark/50">
                 <h4 className="font-medium">Protective Device</h4>
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <Label>Device Type</Label>
                     <Select value={protectiveDevice} onValueChange={setProtectiveDevice}>
-                      <SelectTrigger className="bg-card border border-muted/40">
+                      <SelectTrigger className="bg-elec-dark border-elec-yellow/40">
                         <SelectValue />
                       </SelectTrigger>
-                      <SelectContent className="bg-background border border-muted/40 z-50">
+                      <SelectContent className="bg-elec-dark border-elec-yellow/40 z-50">
                         <SelectItem value="mcb">MCB</SelectItem>
                         <SelectItem value="rcbo">RCBO</SelectItem>
                         <SelectItem value="fuse">Fuse</SelectItem>
@@ -235,10 +235,10 @@ const CableSizingCalculator = () => {
                   <div className="space-y-2">
                     <Label>Device Rating (A)</Label>
                     <Select value={deviceRating} onValueChange={setDeviceRating}>
-                      <SelectTrigger className="bg-card border border-muted/40">
+                      <SelectTrigger className="bg-elec-dark border-elec-yellow/40">
                         <SelectValue />
                       </SelectTrigger>
-                      <SelectContent className="bg-background border border-muted/40 z-50">
+                      <SelectContent className="bg-elec-dark border-elec-yellow/40 z-50">
                         <SelectItem value="6">6A</SelectItem>
                         <SelectItem value="10">10A</SelectItem>
                         <SelectItem value="16">16A</SelectItem>
@@ -260,7 +260,7 @@ const CableSizingCalculator = () => {
                     value={designCurrent}
                     onChange={(e) => setDesignCurrent(e.target.value)}
                     placeholder="Enter design current"
-                    className="w-full px-3 py-2 bg-card border border-muted/40 rounded-md"
+                    className="w-full px-3 py-2 bg-elec-dark border border-elec-yellow/40 rounded-md text-white"
                   />
                 </div>
               </div>
@@ -279,7 +279,7 @@ const CableSizingCalculator = () => {
             </div>
             
             <div className="flex flex-col space-y-4">
-              <div className="rounded-md bg-muted/50 border border-muted/40 p-6 flex-grow flex flex-col min-h-[400px]">
+              <div className="rounded-md bg-elec-dark border border-elec-yellow/40 p-6 flex-grow flex flex-col min-h-[400px]">
                 <CableSizingResult
                   recommendedCable={result.recommendedCable}
                   alternativeCables={result.alternativeCables}
