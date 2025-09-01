@@ -486,28 +486,47 @@ const MaterialPriceComparison = ({ initialQuery = "", selectedItems = [], onClea
             {/* Main Search Input - Only show for comparison tab */}
             {activeTab === 'comparison' && (
               <>
-                <div className="flex gap-4">
-                  <div className="flex-1 relative">
-                    <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                    <Input
-                      ref={searchInputRef}
-                      placeholder="Search for materials (e.g., '2.5mm Twin & Earth 100m', 'MCB 32A')"
+                {showingPreSelected && selectedItems?.length > 0 && (
+                  <div className="flex items-center gap-4 p-4 bg-blue-500/10 border border-blue-500/30 rounded-lg mb-4">
+                    <Package className="h-5 w-5 text-blue-400" />
+                    <div className="flex-1">
+                      <p className="text-sm font-medium text-blue-400">
+                        Comparing {selectedItems.length} selected items
+                      </p>
+                      <p className="text-xs text-blue-300/70">
+                        These items were pre-selected from the category page
+                      </p>
+                    </div>
+                    <MobileButton
+                      variant="elec-outline"
+                      size="sm"
+                      onClick={handleClearSelection}
+                    >
+                      Clear Selection
+                    </MobileButton>
+                  </div>
+                )}
+
+                <div className={`space-y-4 ${useIsMobile() ? '' : 'space-y-6'}`}>
+                  <div className="relative">
+                    <MobileInputWrapper
+                      label="Search for electrical materials"
+                      placeholder="e.g. 'Twin & Earth Cable 2.5mm'"
                       value={searchQuery}
-                      onChange={(e) => handleSearchChange(e.target.value)}
-                      onKeyPress={handleKeyPress}
-                      onFocus={() => suggestions.length > 0 && setShowSuggestions(true)}
-                      onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
-                      className="pl-10 bg-elec-dark border-elec-yellow/30 text-white"
+                      onChange={handleSearchChange}
+                      disabled={isLoading}
+                      icon={<Search className="h-5 w-5 text-muted-foreground" />}
+                      hint="Start typing to see product suggestions"
                     />
                     
                     {/* Autocomplete Suggestions */}
                     {showSuggestions && suggestions.length > 0 && (
-                      <div className="absolute top-full left-0 right-0 mt-1 bg-elec-dark border border-elec-yellow/30 rounded-md z-10 shadow-lg">
+                      <div className="absolute top-full left-0 right-0 mt-1 bg-card border border-muted/40 rounded-lg z-10 shadow-lg max-h-48 overflow-y-auto">
                         {suggestions.map((suggestion, index) => (
                           <button
                             key={index}
                             onClick={() => selectSuggestion(suggestion)}
-                            className="w-full px-3 py-2 text-left text-white hover:bg-elec-yellow/20 first:rounded-t-md last:rounded-b-md"
+                            className="w-full px-4 py-2 text-left text-foreground hover:bg-muted/50 first:rounded-t-lg last:rounded-b-lg text-sm"
                           >
                             {suggestion}
                           </button>
@@ -515,70 +534,53 @@ const MaterialPriceComparison = ({ initialQuery = "", selectedItems = [], onClea
                       </div>
                     )}
                   </div>
-                  
-                  <Button 
-                    onClick={handleSearch}
-                    disabled={isLoading || !searchQuery.trim()}
-                    className="bg-elec-yellow text-black hover:bg-elec-yellow/90"
-                  >
-                    {isLoading ? (
-                      <Loader2 className="h-4 w-4 animate-spin" />
-                    ) : aiEnabled ? (
-                      <>
-                        <Brain className="h-4 w-4 mr-2" />
-                        AI Compare
-                      </>
-                    ) : (
-                      "Compare Prices"
-                    )}
-                  </Button>
+
+                  {/* Advanced Filters */}
+                  <div className={`grid gap-4 ${useIsMobile() ? 'grid-cols-1' : 'grid-cols-2 lg:grid-cols-3'}`}>
+                    <MobileSelectWrapper
+                      label="Category"
+                      value={selectedCategory}
+                      onValueChange={setSelectedCategory}
+                      options={CATEGORIES}
+                      placeholder="Select category"
+                    />
+
+                    <MobileSelectWrapper
+                      label="Supplier"
+                      value={selectedSupplier}
+                      onValueChange={setSelectedSupplier}
+                      options={SUPPLIERS}
+                      placeholder="Select supplier"
+                    />
+
+                    <div className={`flex items-end ${useIsMobile() ? 'col-span-1' : ''}`}>
+                      <MobileButton
+                        onClick={handleSearch}
+                        disabled={isLoading || !searchQuery.trim()}
+                        size="wide"
+                        variant="elec"
+                        className="w-full h-14"
+                        loading={isLoading}
+                      >
+                        {!isLoading && (aiEnabled ? <Brain className="h-4 w-4 mr-2" /> : <Search className="h-4 w-4 mr-2" />)}
+                        {aiEnabled ? 'AI Compare' : 'Compare Prices'}
+                      </MobileButton>
+                    </div>
+                  </div>
                 </div>
 
-                {/* Advanced Filters - Only show for comparison tab */}
-                <div className="flex gap-4 items-center">
-                  <div className="flex items-center gap-2">
-                    <Filter className="h-4 w-4 text-muted-foreground" />
-                    <span className="text-sm text-muted-foreground">Filters:</span>
-                  </div>
-                  
-                  <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-                    <SelectTrigger className="w-40 bg-elec-dark border-elec-yellow/30 text-white">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent className="bg-elec-dark border-elec-yellow/30 z-50">
-                      {CATEGORIES.map(cat => (
-                        <SelectItem key={cat.value} value={cat.value} className="text-white focus:bg-elec-yellow/20">
-                          {cat.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-
-                  <Select value={selectedSupplier} onValueChange={setSelectedSupplier}>
-                    <SelectTrigger className="w-40 bg-elec-dark border-elec-yellow/30 text-white">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent className="bg-elec-dark border-elec-yellow/30 z-50">
-                      {SUPPLIERS.map(sup => (
-                        <SelectItem key={sup.value} value={sup.value} className="text-white focus:bg-elec-yellow/20">
-                          {sup.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-
-                  {comparisonResult && (
-                    <Button 
-                      variant="outline" 
+                {comparisonResult && (
+                  <div className="flex justify-center">
+                    <MobileButton 
+                      variant="elec-outline" 
                       size="sm" 
                       onClick={handleSearch}
-                      className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/20"
                     >
                       <RefreshCw className="h-4 w-4 mr-2" />
                       Refresh
-                    </Button>
-                  )}
-                </div>
+                    </MobileButton>
+                  </div>
+                )}
               </>
             )}
           </div>
