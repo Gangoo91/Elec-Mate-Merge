@@ -76,7 +76,7 @@ const RingCircuitForm: React.FC<RingCircuitFormProps> = ({
                   <SelectTrigger className="mt-1 bg-elec-dark border-elec-yellow/20 h-11">
                     <SelectValue placeholder="Select cable type" />
                   </SelectTrigger>
-                  <SelectContent className="bg-elec-gray border-elec-yellow/20">
+                  <SelectContent className="bg-elec-gray border-elec-yellow/20 z-50">
                     <SelectItem value="2.5mm-twin">2.5mm² Twin & Earth</SelectItem>
                     <SelectItem value="4mm-twin">4.0mm² Twin & Earth</SelectItem>
                     <SelectItem value="6mm-twin">6.0mm² Twin & Earth</SelectItem>
