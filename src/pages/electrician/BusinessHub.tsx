@@ -48,7 +48,7 @@ const BusinessHub = () => {
   const canonical = `${window.location.origin}/electrician/business`;
 
   return (
-    <div className="space-y-6 md:space-y-8 animate-fade-in px-4 md:px-0">
+    <div className="space-y-6 md:space-y-8 animate-fade-in px-0">
       <Helmet>
         <title>Business Hub for Electricians | Start & Run</title>
         <meta
