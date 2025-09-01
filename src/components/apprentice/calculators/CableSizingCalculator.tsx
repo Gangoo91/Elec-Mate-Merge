@@ -222,10 +222,10 @@ const CableSizingCalculator = () => {
                   <div className="space-y-2">
                     <Label>Device Type</Label>
                     <Select value={protectiveDevice} onValueChange={setProtectiveDevice}>
-                      <SelectTrigger className="bg-elec-dark border-elec-yellow/40">
+                      <SelectTrigger className="bg-elec-dark border-elec-yellow/40 text-white">
                         <SelectValue />
                       </SelectTrigger>
-                      <SelectContent className="bg-elec-dark border-elec-yellow/40 z-50">
+                      <SelectContent className="bg-elec-dark border-elec-yellow/40 z-50 text-white">
                         <SelectItem value="mcb">MCB</SelectItem>
                         <SelectItem value="rcbo">RCBO</SelectItem>
                         <SelectItem value="fuse">Fuse</SelectItem>
@@ -235,10 +235,10 @@ const CableSizingCalculator = () => {
                   <div className="space-y-2">
                     <Label>Device Rating (A)</Label>
                     <Select value={deviceRating} onValueChange={setDeviceRating}>
-                      <SelectTrigger className="bg-elec-dark border-elec-yellow/40">
+                      <SelectTrigger className="bg-elec-dark border-elec-yellow/40 text-white">
                         <SelectValue />
                       </SelectTrigger>
-                      <SelectContent className="bg-elec-dark border-elec-yellow/40 z-50">
+                      <SelectContent className="bg-elec-dark border-elec-yellow/40 z-50 text-white">
                         <SelectItem value="6">6A</SelectItem>
                         <SelectItem value="10">10A</SelectItem>
                         <SelectItem value="16">16A</SelectItem>
