@@ -162,26 +162,36 @@ const CategoryMaterials = () => {
           {/* Mobile Collapsible Tabs */}
           {isMobile ? (
             <div className="space-y-2">
-              <div className="flex items-center justify-between bg-elec-gray border border-elec-yellow/20 rounded-xl p-4 mobile-interactive touch-target">
-                <span className="text-sm sm:text-base font-medium text-elec-light">
-                  {activeTab === "browse" && "Browse Materials"}
-                  {activeTab === "compare" && "Compare Products"}
-                  {activeTab === "bulk" && "Bulk Pricing"}
-                  {activeTab === "alerts" && "Price Alerts"}
-                  {activeTab === "ai" && "AI Insights"}
-                </span>
-                <div className="flex gap-2">
-                  {["browse", "compare", "bulk", "alerts", "ai"].map((tab) => (
-                    <button
-                      key={tab}
-                      onClick={() => setActiveTab(tab)}
-                      className={`w-3 h-3 rounded-full transition-all duration-200 touch-target ${
-                        activeTab === tab ? "bg-elec-yellow scale-110" : "bg-elec-gray/50 hover:bg-elec-yellow/30"
-                      }`}
-                      aria-label={`Switch to ${tab} tab`}
-                    />
-                  ))}
-                </div>
+              <div className="bg-elec-gray border border-elec-yellow/20 rounded-xl overflow-hidden">
+                {["browse", "compare", "bulk", "alerts", "ai"].map((tab) => (
+                  <button
+                    key={tab}
+                    onClick={() => setActiveTab(tab)}
+                    className={`w-full flex items-center justify-between p-4 text-left transition-all duration-200 mobile-interactive touch-target border-b border-elec-yellow/10 last:border-b-0 ${
+                      activeTab === tab 
+                        ? "bg-elec-yellow text-elec-dark font-medium" 
+                        : "text-elec-light hover:bg-elec-yellow/10"
+                    }`}
+                  >
+                    <div className="flex items-center gap-3">
+                      {tab === "browse" && <Package className="h-4 w-4" />}
+                      {tab === "compare" && <Scale className="h-4 w-4" />}
+                      {tab === "bulk" && <Calculator className="h-4 w-4" />}
+                      {tab === "alerts" && <TrendingUp className="h-4 w-4" />}
+                      {tab === "ai" && <Brain className="h-4 w-4" />}
+                      <span className="text-sm sm:text-base font-medium">
+                        {tab === "browse" && "Browse Materials"}
+                        {tab === "compare" && "Compare Products"}
+                        {tab === "bulk" && "Bulk Pricing"}
+                        {tab === "alerts" && "Price Alerts"}
+                        {tab === "ai" && "AI Insights"}
+                      </span>
+                    </div>
+                    {activeTab === tab && (
+                      <div className="w-2 h-2 bg-elec-dark rounded-full"></div>
+                    )}
+                  </button>
+                ))}
               </div>
             </div>
           ) : (
