@@ -2,8 +2,8 @@ import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
+import { MobileInputWrapper } from "@/components/ui/mobile-input-wrapper";
 import { Calculator, Package, TrendingUp, TrendingDown, Plus, Minus } from "lucide-react";
 
 interface BulkPricingItem {
@@ -117,21 +117,16 @@ const BulkPricingCalculator = ({ categoryId, products = [], onCalculate }: BulkP
         <CardContent>
           <div className="space-y-4">
             {/* Product Selection */}
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-muted-foreground">Select Product</label>
-              <Select value={selectedProduct} onValueChange={setSelectedProduct}>
-                <SelectTrigger className="bg-elec-dark border-elec-yellow/20 text-white">
-                  <SelectValue placeholder="Choose a product to calculate bulk pricing" />
-                </SelectTrigger>
-                <SelectContent className="bg-elec-dark border-elec-yellow/20 z-50">
-                  {products.map(product => (
-                    <SelectItem key={product.id} value={product.id.toString()} className="text-white focus:bg-elec-yellow/20">
-                      {product.name} - {product.supplier} ({product.price})
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
+            <MobileSelectWrapper
+              label="Select Product"
+              placeholder="Choose a product to calculate bulk pricing"
+              value={selectedProduct}
+              onValueChange={setSelectedProduct}
+              options={products.map(product => ({
+                value: product.id.toString(),
+                label: `${product.name} - ${product.supplier} (${product.price})`
+              }))}
+            />
 
             {/* Custom Quantities */}
             <div className="space-y-2">
@@ -150,18 +145,19 @@ const BulkPricingCalculator = ({ categoryId, products = [], onCalculate }: BulkP
                 ))}
               </div>
               <div className="flex gap-2">
-                <Input
-                  type="number"
-                  placeholder="Add quantity"
-                  value={newQuantity}
-                  onChange={(e) => setNewQuantity(e.target.value)}
-                  className="bg-elec-dark border-elec-yellow/20 text-white"
-                  min="1"
-                />
+                <div className="flex-1">
+                  <MobileInputWrapper
+                    type="number"
+                    placeholder="Add quantity"
+                    value={newQuantity}
+                    onChange={setNewQuantity}
+                    min="1"
+                  />
+                </div>
                 <Button 
                   size="sm" 
                   onClick={addCustomQuantity}
-                  className="bg-elec-yellow/20 text-elec-yellow hover:bg-elec-yellow/30"
+                  className="bg-elec-yellow/20 text-elec-yellow hover:bg-elec-yellow/30 h-14 px-4"
                 >
                   <Plus className="h-4 w-4" />
                 </Button>
