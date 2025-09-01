@@ -1,13 +1,12 @@
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { MobileInput } from "@/components/ui/mobile-input";
 import { MobileButton } from "@/components/ui/mobile-button";
 import { MobileSelect, MobileSelectContent, MobileSelectItem, MobileSelectTrigger, MobileSelectValue } from "@/components/ui/mobile-select";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { Zap, Info, Calculator, RotateCcw } from "lucide-react";
-import { useState } from "react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Zap, Info, Calculator, RotateCcw, CheckCircle2, AlertTriangle } from "lucide-react";
+import { useState } from "react";
 
 const CableCurrentCapacityCalculator = () => {
   const [cableSize, setCableSize] = useState<string>("");
@@ -17,6 +16,12 @@ const CableCurrentCapacityCalculator = () => {
   const [ambientTemp, setAmbientTemp] = useState<string>("30");
   const [groupingFactor, setGroupingFactor] = useState<string>("1.0");
   const [soilThermalResistivity, setSoilThermalResistivity] = useState<string>("2.5");
+  
+  // Enhanced inputs for design verification
+  const [designCurrent, setDesignCurrent] = useState<string>("");
+  const [protectiveDevice, setProtectiveDevice] = useState<string>("mcb");
+  const [deviceRating, setDeviceRating] = useState<string>("32");
+  
   const [result, setResult] = useState<{
     referenceMethod: string;
     baseCapacity: number;
@@ -26,6 +31,16 @@ const CableCurrentCapacityCalculator = () => {
     finalCapacity: number;
     voltageRating: string;
     standard: string;
+    compliance: {
+      Ib: number;
+      In: number;
+      Iz: number;
+      ibInCompliant: boolean;
+      inIzCompliant: boolean;
+      overallCompliant: boolean;
+      safetyMargin: number;
+    } | null;
+    warnings: string[];
   } | null>(null);
 
   // Cable sizes dropdown options
@@ -34,7 +49,7 @@ const CableCurrentCapacityCalculator = () => {
     "70.0", "95.0", "120.0", "150.0", "185.0", "240.0", "300.0", "400.0", "500.0", "630.0"
   ];
 
-  // Cable types with comprehensive options
+  // Enhanced cable types with comprehensive options
   const cableTypes = [
     { value: "pvc-single", label: "Single Core PVC 70°C" },
     { value: "pvc-multicore", label: "Multicore PVC 70°C" },
@@ -46,8 +61,6 @@ const CableCurrentCapacityCalculator = () => {
     { value: "lsf-single", label: "LSF Single Core 70°C" },
     { value: "lsf-multicore", label: "LSF Multicore 70°C" },
     { value: "mineral", label: "Mineral Insulated 70°C" },
-    { value: "aerial-pvc", label: "Aerial Bundled PVC" },
-    { value: "overhead", label: "Overhead Bare Conductor" }
   ];
 
   // Installation methods based on BS 7671 Reference Methods
@@ -156,7 +169,6 @@ const CableCurrentCapacityCalculator = () => {
           let tempFactor = 1.0;
           
           if (ambient !== 30) {
-            // Using BS 7671 temperature correction factors
             const tempDiff = ambient - 30;
             if (cableType.includes('xlpe')) {
               tempFactor = 1.0 - (tempDiff * 0.0067); // For 90°C cables
@@ -175,11 +187,43 @@ const CableCurrentCapacityCalculator = () => {
           
           const finalCapacity = baseCapacity * tempFactor * grouping * soilFactor;
           
+          // Calculate compliance if design current and device rating are provided
+          let compliance = null;
+          let warnings: string[] = [];
+          
+          if (designCurrent && deviceRating) {
+            const Ib = parseFloat(designCurrent);
+            const In = parseFloat(deviceRating);
+            const Iz = finalCapacity;
+            
+            const ibInCompliant = Ib <= In;
+            const inIzCompliant = In <= Iz;
+            const overallCompliant = ibInCompliant && inIzCompliant;
+            const safetyMargin = Iz > 0 ? ((Iz - In) / Iz * 100) : 0;
+            
+            compliance = { Ib, In, Iz, ibInCompliant, inIzCompliant, overallCompliant, safetyMargin };
+            
+            if (!overallCompliant) {
+              if (!ibInCompliant) warnings.push("Design current exceeds device rating");
+              if (!inIzCompliant) warnings.push("Device rating exceeds cable capacity");
+            }
+            if (safetyMargin < 10) {
+              warnings.push("Low safety margin - consider larger cable or lower device rating");
+            }
+          }
+          
+          // Additional warnings
+          if (tempFactor < 0.8) {
+            warnings.push("High ambient temperature significantly reducing capacity");
+          }
+          if (grouping < 0.7) {
+            warnings.push("Cable grouping causing significant derating");
+          }
+          
           // Determine voltage rating based on cable type
           let voltageRating = "600/1000V";
           if (cableType.includes('swa')) voltageRating = "600/1000V or 1900/3300V";
           if (cableType.includes('mineral')) voltageRating = "500V or 750V";
-          if (cableType.includes('overhead')) voltageRating = "11kV/33kV";
           
           setResult({
             referenceMethod: installationMethods.find(m => m.value === installationMethod)?.label || installationMethod,
@@ -189,7 +233,9 @@ const CableCurrentCapacityCalculator = () => {
             soilCorrectionFactor: soilFactor,
             finalCapacity,
             voltageRating,
-            standard: "BS 7671:2018+A2:2022"
+            standard: "BS 7671:2018+A2:2022",
+            compliance,
+            warnings
           });
         }
       }
@@ -204,24 +250,87 @@ const CableCurrentCapacityCalculator = () => {
     setAmbientTemp("30");
     setGroupingFactor("1.0");
     setSoilThermalResistivity("2.5");
+    setDesignCurrent("");
+    setProtectiveDevice("mcb");
+    setDeviceRating("32");
     setResult(null);
   };
 
   return (
-    <Card className="border-elec-yellow/20 bg-elec-gray">
+    <Card className="border border-muted/40 bg-card">
       <CardHeader>
         <div className="flex items-center gap-2">
           <Zap className="h-5 w-5 text-elec-yellow" />
-          <CardTitle>Cable Current Capacity Calculator</CardTitle>
+          <div>
+            <CardTitle>Cable Current Capacity Calculator</CardTitle>
+            <CardDescription className="mt-1">
+              Calculate current carrying capacity with BS 7671 compliance verification.
+            </CardDescription>
+          </div>
+          <Badge variant="outline" className="ml-auto">
+            BS 7671
+          </Badge>
         </div>
-        <CardDescription>
-          Calculate current carrying capacity of cables based on BS 7671 installation methods.
-        </CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="space-y-6">
+        {/* Compliance Status */}
+        {result?.compliance && (
+          <Alert className={`${result.compliance.overallCompliant ? 'border-green-500/20 bg-green-950/20' : 'border-red-500/20 bg-red-950/20'}`}>
+            {result.compliance.overallCompliant ? (
+              <CheckCircle2 className="h-4 w-4 text-green-500" />
+            ) : (
+              <AlertTriangle className="h-4 w-4 text-red-500" />
+            )}
+            <AlertDescription>
+              <div className="font-medium mb-2">
+                {result.compliance.overallCompliant ? "Ib ≤ In ≤ Iz: ✓ COMPLIANT" : "Ib ≤ In ≤ Iz: ✗ NON-COMPLIANT"}
+              </div>
+              <div className="text-sm grid grid-cols-3 gap-4">
+                <div>Ib = {result.compliance.Ib}A</div>
+                <div>In = {result.compliance.In}A</div>
+                <div>Iz = {result.compliance.Iz.toFixed(1)}A</div>
+              </div>
+              <div className="text-xs mt-1">Safety margin: {result.compliance.safetyMargin.toFixed(1)}%</div>
+            </AlertDescription>
+          </Alert>
+        )}
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Input Section */}
           <div className="space-y-4">
+            {/* Design Parameters */}
+            <div className="space-y-4 p-4 border border-muted/40 rounded-lg bg-muted/20">
+              <h4 className="font-medium">Circuit Design</h4>
+              <div className="grid grid-cols-2 gap-4">
+                <MobileInput
+                  label="Design Current Ib (A)"
+                  type="number"
+                  step="0.1"
+                  value={designCurrent}
+                  onChange={(e) => setDesignCurrent(e.target.value)}
+                  placeholder="Enter design current"
+                />
+                <MobileSelect value={deviceRating} onValueChange={setDeviceRating}>
+                  <MobileSelectTrigger label="Device Rating In (A)">
+                    <MobileSelectValue />
+                  </MobileSelectTrigger>
+                  <MobileSelectContent>
+                    <MobileSelectItem value="6">6A</MobileSelectItem>
+                    <MobileSelectItem value="10">10A</MobileSelectItem>
+                    <MobileSelectItem value="16">16A</MobileSelectItem>
+                    <MobileSelectItem value="20">20A</MobileSelectItem>
+                    <MobileSelectItem value="25">25A</MobileSelectItem>
+                    <MobileSelectItem value="32">32A</MobileSelectItem>
+                    <MobileSelectItem value="40">40A</MobileSelectItem>
+                    <MobileSelectItem value="50">50A</MobileSelectItem>
+                    <MobileSelectItem value="63">63A</MobileSelectItem>
+                  </MobileSelectContent>
+                </MobileSelect>
+              </div>
+            </div>
+
+            <Separator />
+
             <MobileSelect value={cableType} onValueChange={setCableType}>
               <MobileSelectTrigger label="Cable Type">
                 <MobileSelectValue placeholder="Select cable type" />
@@ -248,16 +357,6 @@ const CableCurrentCapacityCalculator = () => {
               </MobileSelectContent>
             </MobileSelect>
 
-            <MobileSelect value={conductorMaterial} onValueChange={setConductorMaterial}>
-              <MobileSelectTrigger label="Conductor Material">
-                <MobileSelectValue placeholder="Select conductor material" />
-              </MobileSelectTrigger>
-              <MobileSelectContent>
-                <MobileSelectItem value="copper">Copper</MobileSelectItem>
-                <MobileSelectItem value="aluminium">Aluminium</MobileSelectItem>
-              </MobileSelectContent>
-            </MobileSelect>
-
             <MobileSelect value={installationMethod} onValueChange={setInstallationMethod}>
               <MobileSelectTrigger label="Installation Method">
                 <MobileSelectValue placeholder="Select installation method" />
@@ -271,31 +370,33 @@ const CableCurrentCapacityCalculator = () => {
               </MobileSelectContent>
             </MobileSelect>
 
-            <MobileSelect value={ambientTemp} onValueChange={setAmbientTemp}>
-              <MobileSelectTrigger label="Ambient Temperature (°C)">
-                <MobileSelectValue placeholder="Select ambient temperature" />
-              </MobileSelectTrigger>
-              <MobileSelectContent>
-                {ambientTemperatures.map((temp) => (
-                  <MobileSelectItem key={temp} value={temp}>
-                    {temp}°C
-                  </MobileSelectItem>
-                ))}
-              </MobileSelectContent>
-            </MobileSelect>
+            <div className="grid grid-cols-2 gap-4">
+              <MobileSelect value={ambientTemp} onValueChange={setAmbientTemp}>
+                <MobileSelectTrigger label="Ambient Temp (°C)">
+                  <MobileSelectValue />
+                </MobileSelectTrigger>
+                <MobileSelectContent>
+                  {ambientTemperatures.map((temp) => (
+                    <MobileSelectItem key={temp} value={temp}>
+                      {temp}°C
+                    </MobileSelectItem>
+                  ))}
+                </MobileSelectContent>
+              </MobileSelect>
 
-            <MobileSelect value={groupingFactor} onValueChange={setGroupingFactor}>
-              <MobileSelectTrigger label="Grouping Factor">
-                <MobileSelectValue placeholder="Select grouping factor" />
-              </MobileSelectTrigger>
-              <MobileSelectContent>
-                {groupingFactors.map((factor) => (
-                  <MobileSelectItem key={factor.value} value={factor.value}>
-                    {factor.label}
-                  </MobileSelectItem>
-                ))}
-              </MobileSelectContent>
-            </MobileSelect>
+              <MobileSelect value={groupingFactor} onValueChange={setGroupingFactor}>
+                <MobileSelectTrigger label="Grouping Factor">
+                  <MobileSelectValue />
+                </MobileSelectTrigger>
+                <MobileSelectContent>
+                  {groupingFactors.map((factor) => (
+                    <MobileSelectItem key={factor.value} value={factor.value}>
+                      {factor.label}
+                    </MobileSelectItem>
+                  ))}
+                </MobileSelectContent>
+              </MobileSelect>
+            </div>
 
             {(installationMethod.includes('d1') || installationMethod.includes('d2')) && (
               <MobileInput
@@ -320,7 +421,7 @@ const CableCurrentCapacityCalculator = () => {
 
           {/* Result Section */}
           <div className="space-y-4">
-            <div className="rounded-md bg-elec-dark p-6 min-h-[200px]">
+            <div className="rounded-md bg-muted/50 p-6 min-h-[300px]">
               {result ? (
                 <div className="space-y-4">
                   <div className="text-center">
@@ -354,27 +455,68 @@ const CableCurrentCapacityCalculator = () => {
                   <Separator />
                   
                   <div className="text-center">
-                    <span className="text-muted-foreground">Final Current Capacity:</span>
+                    <span className="text-muted-foreground">Final Current Capacity Iz:</span>
                     <div className="font-mono text-elec-yellow text-2xl font-bold">{result.finalCapacity.toFixed(1)} A</div>
                     <div className="text-xs text-gray-400 mt-1">{result.voltageRating}</div>
                   </div>
                   
-                  <div className="text-xs text-muted-foreground pt-2 border-t border-elec-yellow/20">
+                  <div className="text-xs text-muted-foreground pt-2 border-t border-muted/40">
                     <div>Method: {result.referenceMethod.split(' - ')[0]}</div>
                     <div>Calculation: {result.baseCapacity} × {result.tempCorrectionFactor.toFixed(3)} × {result.groupingCorrectionFactor} × {result.soilCorrectionFactor.toFixed(3)}</div>
                   </div>
+
+                  {result.warnings.length > 0 && (
+                    <Alert className="border-orange-500/20 bg-orange-500/10">
+                      <AlertTriangle className="h-4 w-4 text-orange-500" />
+                      <AlertDescription className="text-orange-200">
+                        <div className="space-y-1">
+                          {result.warnings.map((warning, index) => (
+                            <div key={index}>• {warning}</div>
+                          ))}
+                        </div>
+                      </AlertDescription>
+                    </Alert>
+                  )}
                 </div>
               ) : (
                 <div className="flex items-center justify-center h-full text-muted-foreground">
-                  Select cable parameters to calculate capacity
+                  <div className="text-center">
+                    <Zap className="h-12 w-12 mx-auto mb-3 opacity-50" />
+                    <p>Select cable parameters to calculate capacity</p>
+                  </div>
                 </div>
               )}
             </div>
 
+            {/* What This Means Panel */}
             <Alert className="border-blue-500/20 bg-blue-500/10">
               <Info className="h-4 w-4 text-blue-500" />
               <AlertDescription className="text-blue-200">
-                Current capacity calculations based on BS 7671:2018+A2:2022. Consider derating factors for specific installations.
+                <div className="space-y-2">
+                  <p className="font-medium">What This Means:</p>
+                  <ul className="text-sm space-y-1">
+                    <li>• Iz is the cable's maximum safe current carrying capacity</li>
+                    <li>• Derating factors account for installation conditions</li>
+                    <li>• Ib ≤ In ≤ Iz ensures safe circuit design per BS 7671</li>
+                    <li>• Safety margin provides protection against overload</li>
+                  </ul>
+                </div>
+              </AlertDescription>
+            </Alert>
+
+            {/* BS 7671 Guidance */}
+            <Alert className="border-green-500/20 bg-green-500/10">
+              <Info className="h-4 w-4 text-green-500" />
+              <AlertDescription className="text-green-200">
+                <div className="space-y-2">
+                  <p className="font-medium">BS 7671 Requirements:</p>
+                  <ul className="text-sm space-y-1">
+                    <li>• Table 4D5: Current-carrying capacities</li>
+                    <li>• Section 523: Current-carrying capacity calculations</li>
+                    <li>• Appendix 4: Correction factors for ambient temperature</li>
+                    <li>• Consider grouping, thermal insulation, and soil conditions</li>
+                  </ul>
+                </div>
               </AlertDescription>
             </Alert>
           </div>

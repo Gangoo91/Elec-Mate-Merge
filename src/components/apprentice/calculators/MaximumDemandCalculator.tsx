@@ -125,7 +125,7 @@ const MaximumDemandCalculator = () => {
     setErrors({});
   };
 
-  // Auto-calculate when loads change
+  // Enhanced calculation with supply adequacy assessment
   useEffect(() => {
     const timer = setTimeout(() => {
       if (loads.some(load => load.power > 0)) {
@@ -136,19 +136,43 @@ const MaximumDemandCalculator = () => {
     return () => clearTimeout(timer);
   }, [loads]);
 
+  // Calculate estimated current and supply adequacy
+  const calculateSupplyRequirements = (totalAfterDiversity: number) => {
+    // Assume 230V single phase for current calculation
+    const estimatedCurrent = (totalAfterDiversity * 1000) / 230;
+    
+    let supplyAdequacy = "";
+    let mainSwitchRecommendation = "";
+    
+    if (estimatedCurrent <= 63) {
+      supplyAdequacy = "Standard single phase supply adequate (100A service fuse)";
+      mainSwitchRecommendation = estimatedCurrent <= 32 ? "63A Main Switch" : "100A Main Switch";
+    } else if (estimatedCurrent <= 200) {
+      supplyAdequacy = "Three phase supply recommended";
+      mainSwitchRecommendation = "Three phase distribution board required";
+    } else {
+      supplyAdequacy = "High load installation - DNO consultation required";
+      mainSwitchRecommendation = "Professional electrical design needed";
+    }
+    
+    return { estimatedCurrent, supplyAdequacy, mainSwitchRecommendation };
+  };
+
   return (
-    <Card className="border-elec-yellow/20 bg-elec-gray">
+    <Card className="border border-muted/40 bg-card">
       <CardHeader>
         <div className="flex items-center gap-2">
           <Zap className="h-5 w-5 text-elec-yellow" />
-          <CardTitle>Maximum Demand Calculator</CardTitle>
-          <Badge variant="outline" className="ml-auto text-xs">
+          <div>
+            <CardTitle>Maximum Demand Calculator</CardTitle>
+            <CardDescription className="mt-1">
+              Calculate maximum demand with BS 7671 diversity factors and supply adequacy assessment.
+            </CardDescription>
+          </div>
+          <Badge variant="outline" className="ml-auto">
             BS 7671
           </Badge>
         </div>
-        <CardDescription>
-          Calculate maximum demand considering diversity factors for different load types.
-        </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -276,7 +300,7 @@ const MaximumDemandCalculator = () => {
 
           {/* Result Section */}
           <div className="space-y-4">
-            <div className="bg-elec-dark/50 rounded-lg p-6">
+            <div className="bg-muted/50 rounded-lg p-6">
               <div className="flex items-center gap-2 mb-4">
                 <TrendingUp className="h-5 w-5 text-elec-yellow" />
                 <h3 className="text-lg font-medium text-elec-yellow">Calculation Results</h3>
@@ -304,9 +328,41 @@ const MaximumDemandCalculator = () => {
                       <span className="text-sm text-muted-foreground">Overall Diversity Factor:</span>
                       <span className="font-semibold text-white">{(result.overallDiversityFactor * 100).toFixed(1)}%</span>
                     </div>
+
+                    {/* Enhanced supply assessment */}
+                    {(() => {
+                      const supplyInfo = calculateSupplyRequirements(result.maximumDemand);
+                      return (
+                        <>
+                          <div className="flex justify-between items-center">
+                            <span className="text-sm text-muted-foreground">Estimated Current:</span>
+                            <span className="font-semibold text-elec-yellow">{supplyInfo.estimatedCurrent.toFixed(1)} A</span>
+                          </div>
+                          
+                          <Separator className="bg-muted/40" />
+                          
+                          <div className="space-y-2">
+                            <p className="text-sm font-medium">Supply Assessment:</p>
+                            <div className="bg-blue-500/10 border border-blue-500/30 rounded p-3">
+                              <div className="text-sm text-blue-300">
+                                <p className="font-medium text-blue-400">Supply Adequacy:</p>
+                                <p>{supplyInfo.supplyAdequacy}</p>
+                              </div>
+                            </div>
+                            <div className="bg-green-500/10 border border-green-500/30 rounded p-3">
+                              <div className="flex items-center gap-2">
+                                <Zap className="h-4 w-4 text-green-400" />
+                                <span className="text-sm font-medium text-green-400">Recommended:</span>
+                                <span className="text-green-300">{supplyInfo.mainSwitchRecommendation}</span>
+                              </div>
+                            </div>
+                          </div>
+                        </>
+                      );
+                    })()}
                   </div>
                   
-                  <Separator className="bg-elec-yellow/20" />
+                  <Separator className="bg-muted/40" />
                   
                   <div className="bg-green-500/10 border border-green-500/30 rounded p-3">
                     <div className="flex items-center gap-2">
@@ -314,7 +370,7 @@ const MaximumDemandCalculator = () => {
                       <span className="text-sm font-medium text-green-400">Load Reduction:</span>
                     </div>
                     <p className="text-green-300 mt-1">
-                      {result.loadReduction} kW saved ({((result.loadReduction / result.totalConnectedLoad) * 100).toFixed(1)}% reduction)
+                      {result.loadReduction.toFixed(2)} kW saved ({((result.loadReduction / result.totalConnectedLoad) * 100).toFixed(1)}% reduction)
                     </p>
                   </div>
 
@@ -333,10 +389,42 @@ const MaximumDemandCalculator = () => {
                 </div>
               )}
             </div>
+
+            {/* What This Means Panel */}
+            <Alert className="border-blue-500/20 bg-blue-500/10">
+              <Info className="h-4 w-4 text-blue-500" />
+              <AlertDescription className="text-blue-200">
+                <div className="space-y-2">
+                  <p className="font-medium">What This Means:</p>
+                  <ul className="text-sm space-y-1">
+                    <li>• Maximum demand determines supply requirements and main protection</li>
+                    <li>• Diversity factors prevent oversizing of electrical infrastructure</li>
+                    <li>• Current estimation helps size supply cables and equipment</li>
+                    <li>• Supply adequacy ensures sufficient network capacity</li>
+                  </ul>
+                </div>
+              </AlertDescription>
+            </Alert>
+
+            {/* BS 7671 Guidance */}
+            <Alert className="border-green-500/20 bg-green-500/10">
+              <Info className="h-4 w-4 text-green-500" />
+              <AlertDescription className="text-green-200">
+                <div className="space-y-2">
+                  <p className="font-medium">BS 7671 Requirements:</p>
+                  <ul className="text-sm space-y-1">
+                    <li>• Table 311: Diversity factors for different loads</li>
+                    <li>• Section 311: Assessment of general characteristics</li>
+                    <li>• Consider future expansion in maximum demand calculations</li>
+                    <li>• Consult DNO for supplies exceeding standard ratings</li>
+                  </ul>
+                </div>
+              </AlertDescription>
+            </Alert>
           </div>
         </div>
 
-        {/* Information Section */}
+        {/* Enhanced Information Section */}
         <Alert className="bg-blue-500/10 border-blue-500/30">
           <Info className="h-4 w-4" />
           <AlertDescription className="text-blue-300">
