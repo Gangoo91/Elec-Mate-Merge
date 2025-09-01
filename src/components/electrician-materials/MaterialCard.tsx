@@ -9,9 +9,21 @@ interface MaterialCardProps {
   item: MaterialItem;
   onQuickAdd?: (item: MaterialItem) => void;
   onViewDetails?: (item: MaterialItem) => void;
+  onAddToCompare?: (item: MaterialItem) => void;
+  onRemoveFromCompare?: (itemId: string) => void;
+  isSelected?: boolean;
+  isCompareDisabled?: boolean;
 }
 
-const MaterialCard = ({ item, onQuickAdd, onViewDetails }: MaterialCardProps) => {
+const MaterialCard = ({ 
+  item, 
+  onQuickAdd, 
+  onViewDetails, 
+  onAddToCompare, 
+  onRemoveFromCompare, 
+  isSelected, 
+  isCompareDisabled 
+}: MaterialCardProps) => {
   const getStockColor = (status?: string) => {
     switch (status) {
       case "In Stock":
@@ -108,7 +120,7 @@ const MaterialCard = ({ item, onQuickAdd, onViewDetails }: MaterialCardProps) =>
             {/* Header with stock status */}
             <div className="flex justify-between items-start">
               <div className="flex items-center gap-2">
-                <span className="inline-flex items-center bg-elec-yellow/10 border border-elec-yellow/30 text-elec-yellow text-xs px-2.5 py-1 rounded-full font-medium shadow-sm transition-colors hover:bg-elec-yellow/20">
+                <span className="inline-flex items-center bg-elec-yellow/10 border border-elec-yellow/30 text-elec-yellow text-xs px-2 py-0.5 rounded-full font-medium shadow-sm transition-colors hover:bg-elec-yellow/20">
                   {item.category}
                 </span>
               </div>
