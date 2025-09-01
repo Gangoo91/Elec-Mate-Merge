@@ -366,545 +366,349 @@ const PFCCalculator = () => {
           <TabsContent value="guidance">
             <div className="space-y-6">
               {/* Overview Section */}
-              <Card className="border-primary/40 bg-primary/10">
-                <CardHeader>
-                  <CardTitle className="text-white flex items-center gap-3 text-lg sm:text-xl">
-                    <Zap className="h-6 w-6 text-elec-grey" />
-                    Prospective Fault Current (PFC) Overview
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-6">
-                    <p className="text-white text-base sm:text-lg leading-relaxed">
-                      Prospective Fault Current is the maximum current that would flow during a fault with negligible impedance. 
-                      It's essential for determining protective device ratings and ensuring safe fault clearance.
-                    </p>
-                    
-                    <div className="bg-elec-card border border-elec-grey/30 rounded-lg p-4 sm:p-6">
-                      <h4 className="font-semibold mb-4 flex items-center gap-2 text-white text-base sm:text-lg">
-                        <Calculator className="h-5 w-5 text-elec-grey" />
-                        Calculation Formula
-                      </h4>
-                      <div className="space-y-4 text-base sm:text-lg">
-                        <div className="font-mono bg-elec-grey/20 p-3 sm:p-4 rounded border border-elec-grey/40 text-white text-center font-bold">
-                          PFC = U₀ / Zs
-                        </div>
-                        <div className="space-y-3 text-white">
-                          <div className="flex items-start gap-3">
-                            <span className="text-elec-grey font-bold min-w-fit">U₀</span>
-                            <span>=</span>
-                            <span>Nominal voltage to earth (230V single phase, 400V three phase)</span>
-                          </div>
-                          <div className="flex items-start gap-3">
-                            <span className="text-elec-grey font-bold min-w-fit">Zs</span>
-                            <span>=</span>
-                            <span>Earth fault loop impedance (Ze + R1 + R2)</span>
-                          </div>
-                          <div className="flex items-start gap-3">
-                            <span className="text-elec-grey font-bold min-w-fit">Ze</span>
-                            <span>=</span>
-                            <span>External earth loop impedance (supply authority)</span>
-                          </div>
-                          <div className="flex items-start gap-3">
-                            <span className="text-elec-grey font-bold min-w-fit">R1+R2</span>
-                            <span>=</span>
-                            <span>Circuit conductor resistance (line + protective conductor)</span>
-                          </div>
-                        </div>
+              <InfoBox
+                title="Understanding Prospective Fault Current (PFC)"
+                icon={<Zap className="h-5 w-5 text-elec-yellow" />}
+                as="section"
+              >
+                <div className="space-y-4 text-elec-light text-sm sm:text-[0.95rem]">
+                  <p className="text-elec-light">
+                    Prospective Fault Current is the maximum current that would flow during a fault with negligible impedance. 
+                    It's essential for determining protective device ratings and ensuring safe fault clearance.
+                  </p>
+                  
+                  <div className="bg-elec-card border border-elec-grey/30 rounded-lg p-4">
+                    <h4 className="font-semibold mb-4 flex items-center gap-2 text-elec-light text-base">
+                      <Calculator className="h-5 w-5 text-elec-yellow" />
+                      Calculation Formula
+                    </h4>
+                    <div className="space-y-4">
+                      <div className="font-mono bg-elec-grey/20 p-3 rounded border border-elec-grey/40 text-elec-light text-center font-bold">
+                        PFC = U₀ / Zs
                       </div>
-                    </div>
-
-                    <div className="bg-warning/20 border border-warning/40 rounded-lg p-4 sm:p-6">
-                      <h4 className="font-semibold mb-3 text-white flex items-center gap-2 text-base sm:text-lg">
-                        <AlertTriangle className="h-5 w-5 text-warning" />
-                        Important Considerations
-                      </h4>
-                      <div className="space-y-3 text-base text-white">
+                      <div className="space-y-2 text-elec-light text-sm">
                         <div className="flex items-start gap-3">
-                          <span className="text-elec-grey mt-1 text-lg">•</span>
-                          <span>Account for voltage tolerance (±6% in UK)</span>
+                          <span className="text-elec-yellow font-bold min-w-fit">U₀</span>
+                          <span>=</span>
+                          <span>Nominal voltage to earth (230V single phase, 400V three phase)</span>
                         </div>
                         <div className="flex items-start gap-3">
-                          <span className="text-elec-grey mt-1 text-lg">•</span>
-                          <span>Consider temperature effects on conductor resistance</span>
+                          <span className="text-elec-yellow font-bold min-w-fit">Zs</span>
+                          <span>=</span>
+                          <span>Earth fault loop impedance (Ze + R1 + R2)</span>
                         </div>
                         <div className="flex items-start gap-3">
-                          <span className="text-elec-grey mt-1 text-lg">•</span>
-                          <span>Parallel earth paths may reduce actual fault current</span>
+                          <span className="text-elec-yellow font-bold min-w-fit">Ze</span>
+                          <span>=</span>
+                          <span>External earth loop impedance (supply authority)</span>
                         </div>
                         <div className="flex items-start gap-3">
-                          <span className="text-elec-grey mt-1 text-lg">•</span>
-                          <span>Supply impedance can vary with network conditions</span>
+                          <span className="text-elec-yellow font-bold min-w-fit">R1+R2</span>
+                          <span>=</span>
+                          <span>Circuit conductor resistance (line + protective conductor)</span>
                         </div>
                       </div>
                     </div>
                   </div>
-                </CardContent>
-              </Card>
+
+                  <div className="bg-warning/10 border border-warning/30 rounded p-3">
+                    <h5 className="text-warning font-medium text-sm mb-2 flex items-center gap-2">
+                      <AlertTriangle className="h-4 w-4" />
+                      Important Considerations
+                    </h5>
+                    <ul className="text-sm space-y-1">
+                      <li className="flex items-start gap-3">
+                        <span className="text-elec-yellow mt-1 flex-shrink-0 w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
+                        <span>Account for voltage tolerance (±6% in UK)</span>
+                      </li>
+                      <li className="flex items-start gap-3">
+                        <span className="text-elec-yellow mt-1 flex-shrink-0 w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
+                        <span>Consider temperature effects on conductor resistance</span>
+                      </li>
+                      <li className="flex items-start gap-3">
+                        <span className="text-elec-yellow mt-1 flex-shrink-0 w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
+                        <span>Parallel earth paths may reduce actual fault current</span>
+                      </li>
+                      <li className="flex items-start gap-3">
+                        <span className="text-elec-yellow mt-1 flex-shrink-0 w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
+                        <span>Supply impedance can vary with network conditions</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </InfoBox>
 
               {/* Measurement and Testing */}
-              <Card className="border-accent/40 bg-accent/10">
-                <CardHeader>
-                  <CardTitle className="text-white flex items-center gap-3 text-lg sm:text-xl">
-                    <Target className="h-6 w-6 text-elec-grey" />
-                    Measurement and Testing Requirements
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-6">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                      <div className="bg-elec-card border border-primary/40 rounded-lg p-4 sm:p-6">
-                        <h4 className="font-semibold mb-4 text-white text-base sm:text-lg">Ze Measurement</h4>
-                        <div className="space-y-3 text-base text-white">
-                          <div className="flex items-start gap-3">
-                            <span className="text-elec-grey mt-1 text-lg">•</span>
-                            <span>Measured at main earthing terminal</span>
-                          </div>
-                          <div className="flex items-start gap-3">
-                            <span className="text-elec-grey mt-1 text-lg">•</span>
-                            <span>Installation isolated from supply</span>
-                          </div>
-                          <div className="flex items-start gap-3">
-                            <span className="text-elec-grey mt-1 text-lg">•</span>
-                            <span>Use appropriate earth loop impedance tester</span>
-                          </div>
-                          <div className="flex items-start gap-3">
-                            <span className="text-elec-grey mt-1 text-lg">•</span>
-                            <span>Test between line and earth conductors</span>
-                          </div>
-                          <div className="flex items-start gap-3">
-                            <span className="text-elec-grey mt-1 text-lg">•</span>
-                            <span>Record highest reading if multiple phases</span>
-                          </div>
-                        </div>
-                      </div>
-                      
-                      <div className="bg-elec-card border border-accent/40 rounded-lg p-4 sm:p-6">
-                        <h4 className="font-semibold mb-4 text-white text-base sm:text-lg">R1+R2 Measurement</h4>
-                        <div className="space-y-3 text-base text-white">
-                          <div className="flex items-start gap-3">
-                            <span className="text-elec-grey mt-1 text-lg">•</span>
-                            <span>Measured end-to-end during dead testing</span>
-                          </div>
-                          <div className="flex items-start gap-3">
-                            <span className="text-elec-grey mt-1 text-lg">•</span>
-                            <span>Test between line and cpc at distribution board</span>
-                          </div>
-                          <div className="flex items-start gap-3">
-                            <span className="text-elec-grey mt-1 text-lg">•</span>
-                            <span>Link line and cpc at furthest point</span>
-                          </div>
-                          <div className="flex items-start gap-3">
-                            <span className="text-elec-grey mt-1 text-lg">•</span>
-                            <span>Apply temperature correction if necessary</span>
-                          </div>
-                          <div className="flex items-start gap-3">
-                            <span className="text-elec-grey mt-1 text-lg">•</span>
-                            <span>Include all circuit conductors in measurement</span>
-                          </div>
-                        </div>
-                      </div>
+              <InfoBox
+                title="Measurement and Testing Requirements"
+                icon={<Target className="h-5 w-5 text-elec-yellow" />}
+                as="section"
+              >
+                <div className="space-y-4 text-elec-light text-sm sm:text-[0.95rem]">
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    <div className="bg-elec-card border border-primary/30 rounded p-4">
+                      <h4 className="font-semibold mb-3 text-elec-light text-sm">Ze Measurement</h4>
+                      <ul className="text-sm space-y-1">
+                        <li className="flex items-start gap-3">
+                          <span className="text-elec-yellow mt-1 flex-shrink-0 w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
+                          <span>Measured at main earthing terminal</span>
+                        </li>
+                        <li className="flex items-start gap-3">
+                          <span className="text-elec-yellow mt-1 flex-shrink-0 w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
+                          <span>Installation isolated from supply</span>
+                        </li>
+                        <li className="flex items-start gap-3">
+                          <span className="text-elec-yellow mt-1 flex-shrink-0 w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
+                          <span>Use appropriate earth loop impedance tester</span>
+                        </li>
+                        <li className="flex items-start gap-3">
+                          <span className="text-elec-yellow mt-1 flex-shrink-0 w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
+                          <span>Test between line and earth conductors</span>
+                        </li>
+                        <li className="flex items-start gap-3">
+                          <span className="text-elec-yellow mt-1 flex-shrink-0 w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
+                          <span>Record highest reading if multiple phases</span>
+                        </li>
+                      </ul>
                     </div>
-
-                    <div className="bg-success/20 border border-success/40 rounded-lg p-4 sm:p-6">
-                      <h4 className="font-semibold mb-3 text-white text-base sm:text-lg">Best Practice Tips</h4>
-                      <div className="space-y-3 text-base text-white">
-                        <div className="flex items-start gap-3">
-                          <span className="text-elec-grey mt-1 text-lg">•</span>
-                          <span>Always verify test equipment calibration before use</span>
-                        </div>
-                        <div className="flex items-start gap-3">
-                          <span className="text-elec-grey mt-1 text-lg">•</span>
-                          <span>Record ambient temperature during testing</span>
-                        </div>
-                        <div className="flex items-start gap-3">
-                          <span className="text-elec-grey mt-1 text-lg">•</span>
-                          <span>Check all connections are secure before testing</span>
-                        </div>
-                        <div className="flex items-start gap-3">
-                          <span className="text-elec-grey mt-1 text-lg">•</span>
-                          <span>Consider parallel earth paths in fault current calculations</span>
-                        </div>
-                        <div className="flex items-start gap-3">
-                          <span className="text-elec-grey mt-1 text-lg">•</span>
-                          <span>Document all readings and calculation methods used</span>
-                        </div>
-                      </div>
+                    
+                    <div className="bg-elec-card border border-accent/30 rounded p-4">
+                      <h4 className="font-semibold mb-3 text-elec-light text-sm">R1+R2 Measurement</h4>
+                      <ul className="text-sm space-y-1">
+                        <li className="flex items-start gap-3">
+                          <span className="text-elec-yellow mt-1 flex-shrink-0 w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
+                          <span>Measured end-to-end during dead testing</span>
+                        </li>
+                        <li className="flex items-start gap-3">
+                          <span className="text-elec-yellow mt-1 flex-shrink-0 w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
+                          <span>Test between line and cpc at distribution board</span>
+                        </li>
+                        <li className="flex items-start gap-3">
+                          <span className="text-elec-yellow mt-1 flex-shrink-0 w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
+                          <span>Link line and cpc at furthest point</span>
+                        </li>
+                        <li className="flex items-start gap-3">
+                          <span className="text-elec-yellow mt-1 flex-shrink-0 w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
+                          <span>Apply temperature correction if necessary</span>
+                        </li>
+                      </ul>
                     </div>
                   </div>
-                </CardContent>
-              </Card>
+
+                  <div className="bg-success/10 border border-success/30 rounded p-3">
+                    <h5 className="text-success font-medium text-sm mb-2">Best Practice Tips</h5>
+                    <ul className="text-sm space-y-1">
+                      <li className="flex items-start gap-3">
+                        <span className="text-elec-yellow mt-1 flex-shrink-0 w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
+                        <span>Always verify test equipment calibration before use</span>
+                      </li>
+                      <li className="flex items-start gap-3">
+                        <span className="text-elec-yellow mt-1 flex-shrink-0 w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
+                        <span>Record ambient temperature during testing</span>
+                      </li>
+                      <li className="flex items-start gap-3">
+                        <span className="text-elec-yellow mt-1 flex-shrink-0 w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
+                        <span>Check all connections are secure before testing</span>
+                      </li>
+                      <li className="flex items-start gap-3">
+                        <span className="text-elec-yellow mt-1 flex-shrink-0 w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
+                        <span>Consider parallel earth paths in fault current calculations</span>
+                      </li>
+                      <li className="flex items-start gap-3">
+                        <span className="text-elec-yellow mt-1 flex-shrink-0 w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
+                        <span>Document all readings and calculation methods used</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </InfoBox>
 
               {/* Device Selection Guide */}
-              <Card className="border-warning/40 bg-warning/10">
-                <CardHeader>
-                  <CardTitle className="text-white flex items-center gap-3 text-lg sm:text-xl">
-                    <Shield className="h-6 w-6 text-elec-grey" />
-                    Protective Device Selection
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-6">
-                    <div className="overflow-x-auto">
-                      <table className="w-full text-base border border-elec-grey/30 rounded-lg bg-elec-card">
-                        <thead>
-                          <tr className="bg-elec-grey/20">
-                            <th className="text-left p-4 border-b border-elec-grey/30 font-semibold text-white">PFC Range</th>
-                            <th className="text-left p-4 border-b border-elec-grey/30 font-semibold text-white">Min. Breaking Capacity</th>
-                            <th className="text-left p-4 border-b border-elec-grey/30 font-semibold text-white">Device Type</th>
-                            <th className="text-left p-4 border-b border-elec-grey/30 font-semibold text-white">Application</th>
-                          </tr>
-                        </thead>
-                        <tbody className="text-white">
-                          <tr>
-                            <td className="p-4 border-b border-elec-grey/20">Up to 1kA</td>
-                            <td className="p-4 border-b border-elec-grey/20 text-success font-medium">3kA - 6kA</td>
-                            <td className="p-4 border-b border-elec-grey/20">Standard MCB</td>
-                            <td className="p-4 border-b border-elec-grey/20">Domestic, small commercial</td>
-                          </tr>
-                          <tr>
-                            <td className="p-4 border-b border-elec-grey/20">1kA - 6kA</td>
-                            <td className="p-4 border-b border-elec-grey/20 text-primary font-medium">6kA</td>
-                            <td className="p-4 border-b border-elec-grey/20">Standard MCB</td>
-                            <td className="p-4 border-b border-elec-grey/20">Most installations</td>
-                          </tr>
-                          <tr>
-                            <td className="p-4 border-b border-elec-grey/20">6kA - 10kA</td>
-                            <td className="p-4 border-b border-elec-grey/20 text-warning font-medium">10kA</td>
-                            <td className="p-4 border-b border-elec-grey/20">Enhanced MCB</td>
-                            <td className="p-4 border-b border-elec-grey/20">Industrial, large commercial</td>
-                          </tr>
-                          <tr>
-                            <td className="p-4">Above 10kA</td>
-                            <td className="p-4 text-destructive font-medium">16kA+</td>
-                            <td className="p-4">Specialist MCB/MCCB</td>
-                            <td className="p-4">High fault current locations</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                      <div className="bg-accent/20 border border-accent/40 rounded-lg p-4 sm:p-6">
-                        <h4 className="font-semibold mb-4 text-white text-base sm:text-lg">Selection Factors</h4>
-                        <div className="space-y-3 text-base text-white">
-                          <div className="flex items-start gap-3">
-                            <span className="text-elec-grey mt-1 text-lg">•</span>
-                            <span>Breaking capacity must exceed calculated PFC</span>
-                          </div>
-                          <div className="flex items-start gap-3">
-                            <span className="text-elec-grey mt-1 text-lg">•</span>
-                            <span>Consider safety margin (typically 25-50%)</span>
-                          </div>
-                          <div className="flex items-start gap-3">
-                            <span className="text-elec-grey mt-1 text-lg">•</span>
-                            <span>Account for network changes and load growth</span>
-                          </div>
-                          <div className="flex items-start gap-3">
-                            <span className="text-elec-grey mt-1 text-lg">•</span>
-                            <span>Verify manufacturer specifications and certifications</span>
-                          </div>
-                          <div className="flex items-start gap-3">
-                            <span className="text-elec-grey mt-1 text-lg">•</span>
-                            <span>Consider discrimination with upstream devices</span>
-                          </div>
+              <InfoBox
+                title="Protective Device Selection"
+                icon={<Shield className="h-5 w-5 text-elec-yellow" />}
+                as="section"
+              >
+                <div className="space-y-4 text-elec-light text-sm sm:text-[0.95rem]">
+                  <div className="overflow-x-auto">
+                    <div className="bg-elec-card border border-elec-grey/30 rounded-lg p-4">
+                      <h4 className="font-semibold mb-3 text-elec-light text-sm">Breaking Capacity Requirements</h4>
+                      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+                        <div className="bg-success/10 border border-success/30 rounded p-3">
+                          <h5 className="text-success font-medium text-xs mb-1">Up to 1kA</h5>
+                          <p className="text-xs">3kA - 6kA MCB</p>
+                          <p className="text-xs text-muted-foreground">Domestic/small commercial</p>
                         </div>
-                      </div>
-
-                      <div className="bg-destructive/20 border border-destructive/40 rounded-lg p-4 sm:p-6">
-                        <h4 className="font-semibold mb-4 text-white text-base sm:text-lg">Common Pitfalls</h4>
-                        <div className="space-y-3 text-base text-white">
-                          <div className="flex items-start gap-3">
-                            <span className="text-elec-grey mt-1 text-lg">•</span>
-                            <span>Using outdated Ze values from suppliers</span>
-                          </div>
-                          <div className="flex items-start gap-3">
-                            <span className="text-elec-grey mt-1 text-lg">•</span>
-                            <span>Ignoring cable temperature effects</span>
-                          </div>
-                          <div className="flex items-start gap-3">
-                            <span className="text-elec-grey mt-1 text-lg">•</span>
-                            <span>Inadequate breaking capacity margins</span>
-                          </div>
-                          <div className="flex items-start gap-3">
-                            <span className="text-elec-grey mt-1 text-lg">•</span>
-                            <span>Not considering parallel earth paths</span>
-                          </div>
-                          <div className="flex items-start gap-3">
-                            <span className="text-elec-grey mt-1 text-lg">•</span>
-                            <span>Mixing different calculation methods</span>
-                          </div>
+                        <div className="bg-primary/10 border border-primary/30 rounded p-3">
+                          <h5 className="text-primary font-medium text-xs mb-1">1kA - 6kA</h5>
+                          <p className="text-xs">6kA MCB</p>
+                          <p className="text-xs text-muted-foreground">Most installations</p>
+                        </div>
+                        <div className="bg-warning/10 border border-warning/30 rounded p-3">
+                          <h5 className="text-warning font-medium text-xs mb-1">6kA - 10kA</h5>
+                          <p className="text-xs">10kA MCB</p>
+                          <p className="text-xs text-muted-foreground">Industrial/large commercial</p>
+                        </div>
+                        <div className="bg-destructive/10 border border-destructive/30 rounded p-3">
+                          <h5 className="text-destructive font-medium text-xs mb-1">Above 10kA</h5>
+                          <p className="text-xs">16kA+ MCB/MCCB</p>
+                          <p className="text-xs text-muted-foreground">High fault current locations</p>
                         </div>
                       </div>
                     </div>
                   </div>
-                </CardContent>
-              </Card>
+
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    <div className="bg-accent/10 border border-accent/30 rounded p-3">
+                      <h5 className="text-accent font-medium text-sm mb-2">Selection Factors</h5>
+                      <ul className="text-sm space-y-1">
+                        <li className="flex items-start gap-3">
+                          <span className="text-elec-yellow mt-1 flex-shrink-0 w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
+                          <span>Breaking capacity must exceed calculated PFC</span>
+                        </li>
+                        <li className="flex items-start gap-3">
+                          <span className="text-elec-yellow mt-1 flex-shrink-0 w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
+                          <span>Consider safety margin (typically 25-50%)</span>
+                        </li>
+                        <li className="flex items-start gap-3">
+                          <span className="text-elec-yellow mt-1 flex-shrink-0 w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
+                          <span>Account for network changes and load growth</span>
+                        </li>
+                        <li className="flex items-start gap-3">
+                          <span className="text-elec-yellow mt-1 flex-shrink-0 w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
+                          <span>Verify manufacturer specifications</span>
+                        </li>
+                      </ul>
+                    </div>
+
+                    <div className="bg-destructive/10 border border-destructive/30 rounded p-3">
+                      <h5 className="text-destructive font-medium text-sm mb-2">Common Pitfalls</h5>
+                      <ul className="text-sm space-y-1">
+                        <li className="flex items-start gap-3">
+                          <span className="text-elec-yellow mt-1 flex-shrink-0 w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
+                          <span>Using outdated Ze values from suppliers</span>
+                        </li>
+                        <li className="flex items-start gap-3">
+                          <span className="text-elec-yellow mt-1 flex-shrink-0 w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
+                          <span>Ignoring cable temperature effects</span>
+                        </li>
+                        <li className="flex items-start gap-3">
+                          <span className="text-elec-yellow mt-1 flex-shrink-0 w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
+                          <span>Inadequate breaking capacity margins</span>
+                        </li>
+                        <li className="flex items-start gap-3">
+                          <span className="text-elec-yellow mt-1 flex-shrink-0 w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
+                          <span>Not considering parallel earth paths</span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </InfoBox>
 
               {/* Regulatory Compliance */}
-              <Card className="border-primary/40 bg-primary/10">
-                <CardHeader>
-                  <CardTitle className="text-white flex items-center gap-3 text-lg sm:text-xl">
-                    <BookOpen className="h-6 w-6 text-elec-grey" />
-                    BS 7671 Compliance Requirements
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-6">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                      <div className="space-y-4">
-                        <h4 className="font-semibold text-white text-base sm:text-lg">Design Stage Requirements</h4>
-                        <div className="bg-primary/20 border border-primary/40 rounded-lg p-4 sm:p-6">
-                          <div className="space-y-3 text-base text-white">
-                            <div className="flex items-start gap-3">
-                              <span className="text-elec-grey font-bold min-w-fit">Regulation 434.5.2:</span>
-                              <span>PFC must be determined at every relevant point in the installation</span>
-                            </div>
-                            <div className="flex items-start gap-3">
-                              <span className="text-elec-grey font-bold min-w-fit">Regulation 411.3.2:</span>
-                              <span>Maximum disconnection times must be achieved</span>
-                            </div>
-                            <div className="flex items-start gap-3">
-                              <span className="text-elec-grey font-bold min-w-fit">Section 312:</span>
-                              <span>Protective device coordination requirements</span>
-                            </div>
-                            <div className="flex items-start gap-3">
-                              <span className="text-elec-grey font-bold min-w-fit">Appendix 4:</span>
-                              <span>Current-carrying capacity and voltage drop considerations</span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="space-y-4">
-                        <h4 className="font-semibold text-white text-base sm:text-lg">Verification Requirements</h4>
-                        <div className="bg-accent/20 border border-accent/40 rounded-lg p-4 sm:p-6">
-                          <div className="space-y-3 text-base text-white">
-                            <div className="flex items-start gap-3">
-                              <span className="text-elec-grey font-bold min-w-fit">Section 612:</span>
-                              <span>Initial verification must include PFC verification</span>
-                            </div>
-                            <div className="flex items-start gap-3">
-                              <span className="text-elec-grey font-bold min-w-fit">Table 61:</span>
-                              <span>Minimum test requirements and acceptance criteria</span>
-                            </div>
-                            <div className="flex items-start gap-3">
-                              <span className="text-elec-grey font-bold min-w-fit">Regulation 612.11:</span>
-                              <span>Earth fault loop impedance testing requirements</span>
-                            </div>
-                            <div className="flex items-start gap-3">
-                              <span className="text-elec-grey font-bold min-w-fit">Part 6:</span>
-                              <span>Documentation and certification requirements</span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+              <InfoBox
+                title="BS 7671 Compliance Requirements"
+                icon={<BookOpen className="h-5 w-5 text-elec-yellow" />}
+                as="section"
+              >
+                <div className="space-y-4 text-elec-light text-sm sm:text-[0.95rem]">
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    <div className="bg-primary/10 border border-primary/30 rounded p-3">
+                      <h5 className="text-primary font-medium text-sm mb-2">Design Stage Requirements</h5>
+                      <ul className="text-sm space-y-1">
+                        <li className="flex items-start gap-3">
+                          <span className="text-elec-yellow mt-1 flex-shrink-0 w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
+                          <span><strong>Regulation 434.5.2:</strong> PFC must be determined at every relevant point</span>
+                        </li>
+                        <li className="flex items-start gap-3">
+                          <span className="text-elec-yellow mt-1 flex-shrink-0 w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
+                          <span><strong>Regulation 411.3.2:</strong> Maximum disconnection times must be achieved</span>
+                        </li>
+                        <li className="flex items-start gap-3">
+                          <span className="text-elec-yellow mt-1 flex-shrink-0 w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
+                          <span><strong>Section 312:</strong> Protective device coordination requirements</span>
+                        </li>
+                      </ul>
                     </div>
 
-                    <div className="bg-warning/20 border border-warning/40 rounded-lg p-4 sm:p-6">
-                      <h4 className="font-semibold mb-4 text-white text-base sm:text-lg">Documentation Requirements</h4>
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-base">
-                        <div>
-                          <h5 className="font-medium mb-3 text-elec-grey">Design Records</h5>
-                          <div className="space-y-2 text-white">
-                            <div className="flex items-start gap-3">
-                              <span className="text-elec-grey mt-1 text-lg">•</span>
-                              <span>PFC calculations</span>
-                            </div>
-                            <div className="flex items-start gap-3">
-                              <span className="text-elec-grey mt-1 text-lg">•</span>
-                              <span>Device specifications</span>
-                            </div>
-                            <div className="flex items-start gap-3">
-                              <span className="text-elec-grey mt-1 text-lg">•</span>
-                              <span>Safety margins applied</span>
-                            </div>
-                            <div className="flex items-start gap-3">
-                              <span className="text-elec-grey mt-1 text-lg">•</span>
-                              <span>Assumption documented</span>
-                            </div>
-                          </div>
-                        </div>
-                        <div>
-                          <h5 className="font-medium mb-3 text-elec-grey">Test Results</h5>
-                          <div className="space-y-2 text-white">
-                            <div className="flex items-start gap-3">
-                              <span className="text-elec-grey mt-1 text-lg">•</span>
-                              <span>Ze measurements</span>
-                            </div>
-                            <div className="flex items-start gap-3">
-                              <span className="text-elec-grey mt-1 text-lg">•</span>
-                              <span>R1+R2 values</span>
-                            </div>
-                            <div className="flex items-start gap-3">
-                              <span className="text-elec-grey mt-1 text-lg">•</span>
-                              <span>PFC verification</span>
-                            </div>
-                            <div className="flex items-start gap-3">
-                              <span className="text-elec-grey mt-1 text-lg">•</span>
-                              <span>Test conditions</span>
-                            </div>
-                          </div>
-                        </div>
-                        <div>
-                          <h5 className="font-medium mb-3 text-elec-grey">Certificates</h5>
-                          <div className="space-y-2 text-white">
-                            <div className="flex items-start gap-3">
-                              <span className="text-elec-grey mt-1 text-lg">•</span>
-                              <span>EIC compliance</span>
-                            </div>
-                            <div className="flex items-start gap-3">
-                              <span className="text-elec-grey mt-1 text-lg">•</span>
-                              <span>Device certifications</span>
-                            </div>
-                            <div className="flex items-start gap-3">
-                              <span className="text-elec-grey mt-1 text-lg">•</span>
-                              <span>Test certificates</span>
-                            </div>
-                            <div className="flex items-start gap-3">
-                              <span className="text-elec-grey mt-1 text-lg">•</span>
-                              <span>Design validation</span>
-                            </div>
-                          </div>
-                        </div>
+                    <div className="bg-accent/10 border border-accent/30 rounded p-3">
+                      <h5 className="text-accent font-medium text-sm mb-2">Verification Requirements</h5>
+                      <ul className="text-sm space-y-1">
+                        <li className="flex items-start gap-3">
+                          <span className="text-elec-yellow mt-1 flex-shrink-0 w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
+                          <span><strong>Section 612:</strong> Initial verification must include PFC verification</span>
+                        </li>
+                        <li className="flex items-start gap-3">
+                          <span className="text-elec-yellow mt-1 flex-shrink-0 w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
+                          <span><strong>Table 61:</strong> Minimum test requirements and acceptance criteria</span>
+                        </li>
+                        <li className="flex items-start gap-3">
+                          <span className="text-elec-yellow mt-1 flex-shrink-0 w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
+                          <span><strong>Regulation 612.11:</strong> Earth fault loop impedance testing requirements</span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div className="bg-warning/10 border border-warning/30 rounded p-3">
+                    <h5 className="text-warning font-medium text-sm mb-2">Documentation Requirements</h5>
+                    <div className="grid gap-3 sm:grid-cols-3">
+                      <div>
+                        <h6 className="text-elec-yellow font-medium text-xs mb-1">Design Records</h6>
+                        <ul className="text-xs space-y-0.5">
+                          <li className="flex items-start gap-2">
+                            <span className="text-elec-yellow mt-1 flex-shrink-0 w-1 h-1 bg-elec-yellow rounded-full"></span>
+                            <span>PFC calculations</span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <span className="text-elec-yellow mt-1 flex-shrink-0 w-1 h-1 bg-elec-yellow rounded-full"></span>
+                            <span>Device specifications</span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <span className="text-elec-yellow mt-1 flex-shrink-0 w-1 h-1 bg-elec-yellow rounded-full"></span>
+                            <span>Safety margins applied</span>
+                          </li>
+                        </ul>
+                      </div>
+                      <div>
+                        <h6 className="text-elec-yellow font-medium text-xs mb-1">Test Results</h6>
+                        <ul className="text-xs space-y-0.5">
+                          <li className="flex items-start gap-2">
+                            <span className="text-elec-yellow mt-1 flex-shrink-0 w-1 h-1 bg-elec-yellow rounded-full"></span>
+                            <span>Ze measurements</span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <span className="text-elec-yellow mt-1 flex-shrink-0 w-1 h-1 bg-elec-yellow rounded-full"></span>
+                            <span>R1+R2 values</span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <span className="text-elec-yellow mt-1 flex-shrink-0 w-1 h-1 bg-elec-yellow rounded-full"></span>
+                            <span>PFC verification</span>
+                          </li>
+                        </ul>
+                      </div>
+                      <div>
+                        <h6 className="text-elec-yellow font-medium text-xs mb-1">Certificates</h6>
+                        <ul className="text-xs space-y-0.5">
+                          <li className="flex items-start gap-2">
+                            <span className="text-elec-yellow mt-1 flex-shrink-0 w-1 h-1 bg-elec-yellow rounded-full"></span>
+                            <span>EIC compliance</span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <span className="text-elec-yellow mt-1 flex-shrink-0 w-1 h-1 bg-elec-yellow rounded-full"></span>
+                            <span>Device certifications</span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <span className="text-elec-yellow mt-1 flex-shrink-0 w-1 h-1 bg-elec-yellow rounded-full"></span>
+                            <span>Test certificates</span>
+                          </li>
+                        </ul>
                       </div>
                     </div>
                   </div>
-                </CardContent>
-              </Card>
-
-              {/* Practical Examples */}
-              <Card className="border-success/40 bg-success/10">
-                <CardHeader>
-                  <CardTitle className="text-white flex items-center gap-3 text-lg sm:text-xl">
-                    <Calculator className="h-6 w-6 text-elec-grey" />
-                    Worked Examples and Common Scenarios
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-6">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                      <div className="bg-elec-card border border-success/40 rounded-lg p-4 sm:p-6">
-                        <h4 className="font-semibold mb-4 text-white text-base sm:text-lg">Example 1: Domestic Installation</h4>
-                        <div className="space-y-4 text-base">
-                          <div className="bg-accent/20 p-4 rounded border border-accent/40">
-                            <p className="font-semibold text-white mb-3">Given:</p>
-                            <div className="space-y-2 text-white">
-                              <div className="flex items-start gap-3">
-                                <span className="text-elec-grey mt-1 text-lg">•</span>
-                                <span>Single phase 230V supply</span>
-                              </div>
-                              <div className="flex items-start gap-3">
-                                <span className="text-elec-grey mt-1 text-lg">•</span>
-                                <span>Ze = 0.35Ω (TN-S system)</span>
-                              </div>
-                              <div className="flex items-start gap-3">
-                                <span className="text-elec-grey mt-1 text-lg">•</span>
-                                <span>32A ring final circuit</span>
-                              </div>
-                              <div className="flex items-start gap-3">
-                                <span className="text-elec-grey mt-1 text-lg">•</span>
-                                <span>2.5mm² T&E cable, R1+R2 = 0.31Ω</span>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="bg-success/20 p-4 rounded border border-success/40">
-                            <p className="font-semibold text-white mb-3">Calculation:</p>
-                            <div className="space-y-2 text-white font-mono text-sm">
-                              <div>Zs = Ze + R1+R2 = 0.35 + 0.31 = 0.66Ω</div>
-                              <div>PFC = 230V ÷ 0.66Ω = 348A</div>
-                              <div className="text-elec-grey font-bold">Assessment: Low PFC - 6kA MCB adequate</div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="bg-elec-card border border-warning/40 rounded-lg p-4 sm:p-6">
-                        <h4 className="font-semibold mb-4 text-white text-base sm:text-lg">Example 2: Commercial Installation</h4>
-                        <div className="space-y-4 text-base">
-                          <div className="bg-accent/20 p-4 rounded border border-accent/40">
-                            <p className="font-semibold text-white mb-3">Given:</p>
-                            <div className="space-y-2 text-white">
-                              <div className="flex items-start gap-3">
-                                <span className="text-elec-grey mt-1 text-lg">•</span>
-                                <span>Three phase 400V supply</span>
-                              </div>
-                              <div className="flex items-start gap-3">
-                                <span className="text-elec-grey mt-1 text-lg">•</span>
-                                <span>Ze = 0.15Ω (TN-C-S system)</span>
-                              </div>
-                              <div className="flex items-start gap-3">
-                                <span className="text-elec-grey mt-1 text-lg">•</span>
-                                <span>63A distribution circuit</span>
-                              </div>
-                              <div className="flex items-start gap-3">
-                                <span className="text-elec-grey mt-1 text-lg">•</span>
-                                <span>16mm² SWA cable, R1+R2 = 0.08Ω</span>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="bg-warning/20 p-4 rounded border border-warning/40">
-                            <p className="font-semibold text-white mb-3">Calculation:</p>
-                            <div className="space-y-2 text-white font-mono text-sm">
-                              <div>Zs = Ze + R1+R2 = 0.15 + 0.08 = 0.23Ω</div>
-                              <div>PFC = 400V ÷ 0.23Ω = 1,739A</div>
-                              <div className="text-elec-grey font-bold">Assessment: Medium PFC - 6kA MCB adequate</div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="bg-destructive/20 border border-destructive/40 rounded-lg p-4 sm:p-6">
-                      <h4 className="font-semibold mb-4 text-white text-base sm:text-lg">High PFC Scenario Considerations</h4>
-                      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 text-base">
-                        <div>
-                          <h5 className="font-medium mb-3 text-elec-grey">When PFC exceeds 10kA:</h5>
-                          <div className="space-y-2 text-white">
-                            <div className="flex items-start gap-3">
-                              <span className="text-elec-grey mt-1 text-lg">•</span>
-                              <span>Review supply arrangement with DNO</span>
-                            </div>
-                            <div className="flex items-start gap-3">
-                              <span className="text-elec-grey mt-1 text-lg">•</span>
-                              <span>Consider current limiting reactors</span>
-                            </div>
-                            <div className="flex items-start gap-3">
-                              <span className="text-elec-grey mt-1 text-lg">•</span>
-                              <span>Specify enhanced breaking capacity devices</span>
-                            </div>
-                            <div className="flex items-start gap-3">
-                              <span className="text-elec-grey mt-1 text-lg">•</span>
-                              <span>Implement additional discrimination measures</span>
-                            </div>
-                          </div>
-                        </div>
-                        <div>
-                          <h5 className="font-medium mb-3 text-elec-grey">Risk Mitigation:</h5>
-                          <div className="space-y-2 text-white">
-                            <div className="flex items-start gap-3">
-                              <span className="text-elec-grey mt-1 text-lg">•</span>
-                              <span>Increase cable sizing to reduce R1+R2</span>
-                            </div>
-                            <div className="flex items-start gap-3">
-                              <span className="text-elec-grey mt-1 text-lg">•</span>
-                              <span>Split large circuits into smaller sections</span>
-                            </div>
-                            <div className="flex items-start gap-3">
-                              <span className="text-elec-grey mt-1 text-lg">•</span>
-                              <span>Use diversity factors appropriately</span>
-                            </div>
-                            <div className="flex items-start gap-3">
-                              <span className="text-elec-grey mt-1 text-lg">•</span>
-                              <span>Consider alternative earthing arrangements</span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+                </div>
+              </InfoBox>
             </div>
           </TabsContent>
         </Tabs>
