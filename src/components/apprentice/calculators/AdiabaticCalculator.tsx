@@ -1,6 +1,6 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { MobileInput } from "@/components/ui/mobile-input";
+import { MobileInputWrapper } from "@/components/ui/mobile-input-wrapper";
 import { MobileButton } from "@/components/ui/mobile-button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
@@ -11,9 +11,11 @@ import {
   MobileSelectTrigger,
   MobileSelectValue,
 } from "@/components/ui/mobile-select";
-import { Shield, Info, Calculator as CalcIcon, RotateCcw, ChevronDown, Zap } from "lucide-react";
+import { Shield, Info, Calculator as CalcIcon, RotateCcw, ChevronDown, Zap, CheckCircle, AlertTriangle, BookOpen, Lightbulb, FileText } from "lucide-react";
 import { useMemo, useState } from "react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import InfoBox from "@/components/common/InfoBox";
+import WhyThisMatters from "@/components/common/WhyThisMatters";
 
 // Standard CSA sizes in mm² (typical metric sizes)
 const STANDARD_SIZES = [
@@ -44,16 +46,23 @@ const AdiabaticCalculator = () => {
   const [zs, setZs] = useState<string>("");
   const [voltage, setVoltage] = useState<string>("230");
 
-  // Results
+  // Results and validation
   const [result, setResult] = useState<
     | {
         minimumCsa: number;
         roundedCsa: number;
         k: number;
         usedFaultCurrent: number;
+        disconnectionTime: number;
+        material: string;
+        maxTemp: string;
+        isCompliant: boolean;
+        complianceNotes: string[];
       }
     | null
   >(null);
+
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
   const effectiveK = useMemo(() => {
     const kFromMap = K_FACTORS[material]?.[parseFloat(maxTemp)] ?? 115;
@@ -85,7 +94,33 @@ const AdiabaticCalculator = () => {
     return STANDARD_SIZES[STANDARD_SIZES.length - 1];
   }
 
+  const validateInputs = () => {
+    const newErrors: Record<string, string> = {};
+    
+    if (mode === "current") {
+      if (!faultCurrent || parseFloat(faultCurrent) <= 0) {
+        newErrors.faultCurrent = "Fault current must be greater than 0";
+      }
+    } else {
+      if (!zs || parseFloat(zs) <= 0) {
+        newErrors.zs = "Zs must be greater than 0";
+      }
+      if (!voltage || parseFloat(voltage) <= 0) {
+        newErrors.voltage = "Voltage must be greater than 0";
+      }
+    }
+    
+    if (timePreset === "custom" && (!disconnectionTime || parseFloat(disconnectionTime) <= 0)) {
+      newErrors.disconnectionTime = "Disconnection time must be greater than 0";
+    }
+    
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const calculateAdiabatic = () => {
+    if (!validateInputs()) return;
+    
     const I = computeFaultCurrent;
     const t = effectiveTime;
     const k = effectiveK;
@@ -98,7 +133,35 @@ const AdiabaticCalculator = () => {
     // Adiabatic: S = I * sqrt(t) / k
     const minimumCsa = (I * Math.sqrt(t)) / k;
     const roundedCsa = roundUpToStandard(minimumCsa);
-    setResult({ minimumCsa, roundedCsa, k, usedFaultCurrent: I });
+    
+    // Compliance checks
+    const complianceNotes: string[] = [];
+    let isCompliant = true;
+    
+    if (t > 5) {
+      complianceNotes.push("Disconnection time >5s may require additional considerations per BS 7671");
+      isCompliant = false;
+    }
+    
+    if (I > 10000) {
+      complianceNotes.push("Very high fault current - verify calculation method and protection coordination");
+    }
+    
+    if (roundedCsa < 1.5) {
+      complianceNotes.push("Minimum 1.5mm² generally required for fixed wiring per BS 7671");
+    }
+    
+    setResult({ 
+      minimumCsa, 
+      roundedCsa, 
+      k, 
+      usedFaultCurrent: I, 
+      disconnectionTime: t,
+      material,
+      maxTemp,
+      isCompliant,
+      complianceNotes
+    });
   };
 
   const reset = () => {
@@ -112,6 +175,7 @@ const AdiabaticCalculator = () => {
     setMaxTemp("70");
     setCustomK("");
     setResult(null);
+    setErrors({});
   };
 
   return (
@@ -125,10 +189,11 @@ const AdiabaticCalculator = () => {
           Calculate minimum cable cross-sectional area to withstand fault current (BS 7671).
         </CardDescription>
       </CardHeader>
-      <CardContent>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Input Section */}
-          <div className="space-y-4">
+      <CardContent className="space-y-6">
+        {/* Input Section */}
+        <div className="space-y-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="space-y-5">
             {/* Input mode */}
             <MobileSelect value={mode} onValueChange={(v) => setMode(v as "current" | "zs") }>
               <MobileSelectTrigger label="Input Mode">
@@ -141,37 +206,68 @@ const AdiabaticCalculator = () => {
             </MobileSelect>
 
             {mode === "current" ? (
-              <MobileInput
+              <MobileInputWrapper
                 label="Prospective Fault Current (I)"
                 type="number"
                 value={faultCurrent}
-                onChange={(e) => setFaultCurrent(e.target.value)}
+                onChange={(value) => {
+                  setFaultCurrent(value);
+                  if (errors.faultCurrent) {
+                    const newErrors = { ...errors };
+                    delete newErrors.faultCurrent;
+                    setErrors(newErrors);
+                  }
+                }}
                 placeholder="e.g., 1000"
                 unit="A"
+                error={errors.faultCurrent}
+                hint="Enter the prospective fault current at the point of connection"
+                icon={<Zap className="h-4 w-4" />}
               />
             ) : (
-              <div className="space-y-3">
-                <MobileInput
+              <div className="space-y-4">
+                <MobileInputWrapper
                   label="Earth Fault Loop Impedance (Zs)"
                   type="number"
                   step="0.001"
                   value={zs}
-                  onChange={(e) => setZs(e.target.value)}
+                  onChange={(value) => {
+                    setZs(value);
+                    if (errors.zs) {
+                      const newErrors = { ...errors };
+                      delete newErrors.zs;
+                      setErrors(newErrors);
+                    }
+                  }}
                   placeholder="e.g., 0.35"
                   unit="Ω"
+                  error={errors.zs}
+                  hint="Total earth fault loop impedance from supply to fault point"
                 />
-                <MobileInput
+                <MobileInputWrapper
                   label="Supply Voltage (Uo)"
                   type="number"
                   value={voltage}
-                  onChange={(e) => setVoltage(e.target.value)}
+                  onChange={(value) => {
+                    setVoltage(value);
+                    if (errors.voltage) {
+                      const newErrors = { ...errors };
+                      delete newErrors.voltage;
+                      setErrors(newErrors);
+                    }
+                  }}
                   placeholder="230"
                   unit="V"
+                  error={errors.voltage}
+                  hint="Line to earth voltage (230V for UK single phase)"
                 />
                 {Number.isFinite(computeFaultCurrent) && computeFaultCurrent > 0 && (
-                  <div className="text-xs text-muted-foreground flex items-center gap-2">
-                    <Zap className="h-3.5 w-3.5 text-elec-yellow" />
-                    Derived I ≈ <span className="font-mono text-elec-yellow">{computeFaultCurrent.toFixed(0)} A</span>
+                  <div className="p-3 bg-elec-card/50 border border-elec-yellow/20 rounded-lg">
+                    <div className="text-sm text-elec-light flex items-center gap-2">
+                      <Zap className="h-4 w-4 text-elec-yellow" />
+                      <span>Calculated fault current: </span>
+                      <span className="font-mono text-elec-yellow font-medium">{computeFaultCurrent.toFixed(0)} A</span>
+                    </div>
                   </div>
                 )}
               </div>
@@ -193,14 +289,23 @@ const AdiabaticCalculator = () => {
             </MobileSelect>
 
             {timePreset === "custom" && (
-              <MobileInput
-                label="Disconnection Time (s)"
+              <MobileInputWrapper
+                label="Disconnection Time (t)"
                 type="number"
                 step="0.01"
                 value={disconnectionTime}
-                onChange={(e) => setDisconnectionTime(e.target.value)}
+                onChange={(value) => {
+                  setDisconnectionTime(value);
+                  if (errors.disconnectionTime) {
+                    const newErrors = { ...errors };
+                    delete newErrors.disconnectionTime;
+                    setErrors(newErrors);
+                  }
+                }}
                 placeholder="e.g., 0.4"
                 unit="s"
+                error={errors.disconnectionTime}
+                hint="Maximum disconnection time per BS 7671 requirements"
               />
             )}
 
@@ -229,35 +334,33 @@ const AdiabaticCalculator = () => {
             </MobileSelect>
 
             {/* Advanced options */}
-            <div className="rounded-md border border-elec-yellow/20 bg-elec-dark/40 p-3">
+            <div className="rounded-lg border border-elec-yellow/20 bg-elec-card/30 p-4">
               <button
                 type="button"
                 onClick={(e) => {
                   const box = (e.currentTarget.nextElementSibling as HTMLDivElement) || null;
                   if (box) box.classList.toggle("hidden");
                 }}
-                className="w-full flex items-center justify-between text-sm"
+                className="w-full flex items-center justify-between text-sm text-elec-light hover:text-elec-yellow transition-colors"
                 aria-expanded={false}
               >
-                <span>Advanced options</span>
+                <span className="font-medium">Advanced Options</span>
                 <ChevronDown className="h-4 w-4" />
               </button>
-              <div className="mt-3 space-y-3 hidden">
-                <MobileInput
+              <div className="mt-4 space-y-4 hidden">
+                <MobileInputWrapper
                   label="Custom k factor (optional)"
                   type="number"
                   step="1"
                   value={customK}
-                  onChange={(e) => setCustomK(e.target.value)}
-                  placeholder={`${effectiveK}`}
+                  onChange={setCustomK}
+                  placeholder={`Default: ${effectiveK}`}
+                  hint="Override material-based k factor. Use values from manufacturer data or BS 7671 Table 54.3"
                 />
-                <div className="text-xs text-muted-foreground">
-                  If provided, this overrides k derived from material and insulation.
-                </div>
               </div>
             </div>
 
-            <div className="flex gap-2">
+            <div className="flex gap-3">
               <MobileButton onClick={calculateAdiabatic} className="flex-1" variant="elec" icon={<CalcIcon className="h-4 w-4" />}>
                 Calculate
               </MobileButton>
@@ -265,61 +368,151 @@ const AdiabaticCalculator = () => {
                 <RotateCcw className="h-4 w-4" />
               </MobileButton>
             </div>
-          </div>
-
-          {/* Result Section */}
-          <div className="space-y-4">
-            <div className="rounded-md bg-elec-dark p-6 min-h-[220px]">
-              {result ? (
-                <div className="space-y-4">
-                  <div className="text-center">
-                    <h3 className="text-lg font-semibold text-elec-yellow mb-2">Adiabatic Calculation</h3>
-                    <Badge variant="secondary" className="mb-2">
-                      {material.charAt(0).toUpperCase() + material.slice(1)} @ {maxTemp}°C
-                    </Badge>
-                    <div className="text-xs text-muted-foreground">k = {result.k}</div>
-                  </div>
-
-                  <Separator />
-
-                  <div className="space-y-3 text-sm">
-                    <div>
-                      <span className="text-muted-foreground">Fault current used:</span>
-                      <div className="font-mono text-elec-yellow">{result.usedFaultCurrent.toFixed(0)} A</div>
-                    </div>
-
-                    <div>
-                      <span className="text-muted-foreground">Minimum CSA required (S):</span>
-                      <div className="font-mono text-elec-yellow text-lg">{result.minimumCsa.toFixed(2)} mm²</div>
-                    </div>
-
-                    <div>
-                      <span className="text-muted-foreground">Round up to standard size:</span>
-                      <div className="font-mono text-elec-yellow">{result.roundedCsa} mm²</div>
-                    </div>
-
-                    <Separator />
-
-                    <div className="text-xs text-muted-foreground">
-                      <div>Formula: S = I × √t / k</div>
-                      <div>Where S is CSA (mm²), I in Amps, t in seconds, k from BS 7671.</div>
-                    </div>
-                  </div>
-                </div>
-              ) : (
-                <div className="flex items-center justify-center h-full text-muted-foreground">
-                  Enter inputs then tap Calculate to determine the minimum cable size
-                </div>
-              )}
             </div>
 
-            <Alert className="border-blue-500/20 bg-blue-500/10">
-              <Info className="h-4 w-4 text-blue-500" />
-              <AlertDescription className="text-blue-200">
-                This tool uses the adiabatic method (no heat loss). Verify results against BS 7671 and manufacturer data.
-              </AlertDescription>
-            </Alert>
+            {/* Results Section */}
+            <div className="space-y-5">
+              <div className="bg-elec-card border border-elec-yellow/20 rounded-xl p-6">
+                {result ? (
+                  <div className="space-y-6">
+                    {/* Header */}
+                    <div className="text-center border-b border-elec-yellow/20 pb-4">
+                      <div className="flex items-center justify-center gap-2 mb-2">
+                        {result.isCompliant ? (
+                          <CheckCircle className="h-5 w-5 text-green-400" />
+                        ) : (
+                          <AlertTriangle className="h-5 w-5 text-amber-400" />
+                        )}
+                        <h3 className="text-xl font-semibold text-elec-yellow">
+                          Adiabatic Calculation Results
+                        </h3>
+                      </div>
+                      <div className="flex items-center justify-center gap-3">
+                        <Badge variant="secondary" className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30">
+                          {result.material.charAt(0).toUpperCase() + result.material.slice(1)} @ {result.maxTemp}°C
+                        </Badge>
+                        <span className="text-sm text-elec-light/70">k = {result.k}</span>
+                      </div>
+                    </div>
+
+                    {/* Key Results */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div className="bg-elec-dark/50 rounded-lg p-4 text-center">
+                        <div className="text-sm text-elec-light/70 mb-1">Minimum CSA Required</div>
+                        <div className="text-2xl font-mono font-bold text-elec-yellow">
+                          {result.minimumCsa.toFixed(2)} mm²
+                        </div>
+                      </div>
+                      <div className="bg-elec-dark/50 rounded-lg p-4 text-center">
+                        <div className="text-sm text-elec-light/70 mb-1">Standard Cable Size</div>
+                        <div className="text-2xl font-mono font-bold text-elec-yellow">
+                          {result.roundedCsa} mm²
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Calculation Details */}
+                    <div className="space-y-3">
+                      <h4 className="font-medium text-elec-light flex items-center gap-2">
+                        <FileText className="h-4 w-4 text-elec-yellow" />
+                        Calculation Details
+                      </h4>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+                        <div>
+                          <span className="text-elec-light/70">Fault Current (I):</span>
+                          <div className="font-mono text-elec-yellow">{result.usedFaultCurrent.toFixed(0)} A</div>
+                        </div>
+                        <div>
+                          <span className="text-elec-light/70">Disconnection Time (t):</span>
+                          <div className="font-mono text-elec-yellow">{result.disconnectionTime} s</div>
+                        </div>
+                      </div>
+                      <div className="text-xs text-elec-light/60 bg-elec-dark/30 rounded p-3">
+                        <div className="font-mono">Formula: S = I × √t / k</div>
+                        <div className="mt-1">Where S = CSA (mm²), I = current (A), t = time (s), k = material factor</div>
+                      </div>
+                    </div>
+
+                    {/* Compliance Notes */}
+                    {result.complianceNotes.length > 0 && (
+                      <Alert className={result.isCompliant ? "border-amber-500/20 bg-amber-500/10" : "border-red-500/20 bg-red-500/10"}>
+                        <AlertTriangle className={`h-4 w-4 ${result.isCompliant ? "text-amber-400" : "text-red-400"}`} />
+                        <AlertDescription className={result.isCompliant ? "text-amber-200" : "text-red-200"}>
+                          <div className="font-medium mb-2">Compliance Notes:</div>
+                          <ul className="space-y-1 text-sm">
+                            {result.complianceNotes.map((note, index) => (
+                              <li key={index} className="flex items-start gap-2">
+                                <span className="w-1 h-1 bg-current rounded-full mt-2 flex-shrink-0"></span>
+                                <span>{note}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </AlertDescription>
+                      </Alert>
+                    )}
+                  </div>
+                ) : (
+                  <div className="flex flex-col items-center justify-center py-12 text-elec-light/60">
+                    <CalcIcon className="h-12 w-12 mb-4 text-elec-yellow/30" />
+                    <p className="text-center">
+                      Enter all required parameters and click Calculate to determine the minimum cable cross-sectional area
+                    </p>
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
+        </div>
+
+        {/* Educational Content */}
+        <div className="space-y-6">
+          <WhyThisMatters
+            points={[
+              "The adiabatic equation ensures cables can withstand fault currents without dangerous overheating",
+              "BS 7671 requires protective devices to operate within specific time limits for safety",
+              "Undersized cables during fault conditions can cause fires or equipment damage",
+              "This calculation is mandatory for earthing conductor sizing and short-circuit protection",
+              "Proper cable sizing ensures compliance with UK electrical regulations and insurance requirements"
+            ]}
+          />
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <InfoBox
+              title="BS 7671 Requirements"
+              icon={<BookOpen className="h-5 w-5 text-elec-yellow" />}
+              points={[
+                "Section 543: Earthing conductors must be sized using adiabatic equation",
+                "Table 54.3: k factors for different conductor materials and insulation",
+                "Regulation 411.3.2: Maximum disconnection times for automatic disconnection",
+                "Section 434: Protection against overcurrent in case of short-circuit"
+              ]}
+            />
+
+            <InfoBox
+              title="Practical Guidance"
+              icon={<Lightbulb className="h-5 w-5 text-elec-yellow" />}
+              points={[
+                "Use manufacturer's k values when available for greater accuracy",
+                "Consider derating factors for cables in conduits or high ambient temperatures",
+                "Verify protection device characteristics match calculated fault levels",
+                "Document calculations for inspection and certification purposes",
+                "Regular testing ensures actual values match design calculations"
+              ]}
+            />
+          </div>
+
+          <Alert className="border-elec-yellow/20 bg-elec-yellow/5">
+            <Info className="h-4 w-4 text-elec-yellow" />
+            <AlertDescription className="text-elec-light">
+              <div className="font-medium mb-2">Important Notes:</div>
+              <ul className="space-y-1 text-sm">
+                <li>• This calculation assumes adiabatic conditions (no heat dissipation)</li>
+                <li>• Always verify results against manufacturer data and BS 7671</li>
+                <li>• Consider additional factors like voltage drop and current-carrying capacity</li>
+                <li>• For complex installations, consult a qualified electrical engineer</li>
+              </ul>
+            </AlertDescription>
+          </Alert>
         </div>
       </CardContent>
     </Card>
