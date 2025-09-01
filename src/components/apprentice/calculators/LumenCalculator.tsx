@@ -1,7 +1,7 @@
 
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Variable, Lightbulb, Copy, Calculator, ChevronDown, ChevronRight } from "lucide-react";
+import { Variable, Lightbulb, Copy, Calculator, ChevronDown, ChevronRight, Info, CheckCircle, AlertTriangle } from "lucide-react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -9,6 +9,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { MobileInput } from "@/components/ui/mobile-input";
+import WhyThisMatters from "@/components/common/WhyThisMatters";
+import InfoBox from "@/components/common/InfoBox";
 import { copyToClipboard } from "@/lib/calc-utils";
 
 // Room type presets with recommended lux levels
@@ -27,10 +30,15 @@ const ROOM_PRESETS = {
 
 const LumenCalculator = () => {
   const [calculationType, setCalculationType] = useState<"lux-to-lumens" | "lumens-to-lux" | "fixtures-needed">("lux-to-lumens");
+  const [inputMode, setInputMode] = useState<"area" | "dimensions">("area");
   const [area, setArea] = useState("");
+  const [length, setLength] = useState("");
+  const [width, setWidth] = useState("");
   const [lux, setLux] = useState("");
   const [lumens, setLumens] = useState("");
   const [fixtureOutput, setFixtureOutput] = useState("");
+  const [mountingHeight, setMountingHeight] = useState("");
+  const [workingHeight, setWorkingHeight] = useState("0.85");
   const [selectedRoom, setSelectedRoom] = useState("");
   const [result, setResult] = useState<string | null>(null);
   const [additionalInfo, setAdditionalInfo] = useState<string | null>(null);
@@ -38,16 +46,27 @@ const LumenCalculator = () => {
   
   // Advanced calculation factors
   const [showAdvanced, setShowAdvanced] = useState(false);
-  const [utilizationFactor, setUtilizationFactor] = useState("0.6"); // UF - typical 0.4-0.8
-  const [maintenanceFactor, setMaintenanceFactor] = useState("0.8"); // MF - typical 0.7-0.9
-  const [fixtureEfficacy, setFixtureEfficacy] = useState("100"); // lm/W - typical LED 80-150
-  const [daylightContribution, setDaylightContribution] = useState("0"); // % reduction 0-50%
+  const [utilizationFactor, setUtilizationFactor] = useState("0.6");
+  const [maintenanceFactor, setMaintenanceFactor] = useState("0.8");
+  const [fixtureEfficacy, setFixtureEfficacy] = useState("100");
+  const [daylightContribution, setDaylightContribution] = useState("0");
 
   const validateInputs = () => {
     const newErrors: {[key: string]: string} = {};
     
-    if (!area || parseFloat(area) <= 0) {
-      newErrors.area = "Valid area is required";
+    // Area validation
+    const finalArea = inputMode === "area" ? parseFloat(area) : (parseFloat(length) * parseFloat(width));
+    if (inputMode === "area") {
+      if (!area || parseFloat(area) <= 0) {
+        newErrors.area = "Valid area is required";
+      }
+    } else {
+      if (!length || parseFloat(length) <= 0) {
+        newErrors.length = "Valid length is required";
+      }
+      if (!width || parseFloat(width) <= 0) {
+        newErrors.width = "Valid width is required";
+      }
     }
     
     // Basic validation
@@ -96,7 +115,7 @@ const LumenCalculator = () => {
   const calculate = () => {
     if (!validateInputs()) return;
     
-    const areaVal = parseFloat(area);
+    const areaVal = inputMode === "area" ? parseFloat(area) : (parseFloat(length) * parseFloat(width));
     
     // Get advanced factors with defaults
     const uf = parseFloat(utilizationFactor);
@@ -118,8 +137,21 @@ const LumenCalculator = () => {
       
       setResult(`${calculatedLumens.toFixed(0)} lumens`);
       
-      // Enhanced efficiency info with advanced factors
-      let efficacyInfo = `For LED lighting (${efficacy} lm/W), approximately ${(calculatedLumens / efficacy).toFixed(1)}W power required`;
+      // Calculate spacing suggestion
+      const mountHeight = parseFloat(mountingHeight) || 3;
+      const workHeight = parseFloat(workingHeight);
+      const mountingToWork = mountHeight - workHeight;
+      const spacingRatio = mountingToWork * 1.2; // Conservative spacing
+      const fixturesPerRow = Math.ceil(Math.sqrt(areaVal) / spacingRatio);
+      const totalFixtures = Math.ceil(calculatedLumens / efficacy / 40); // Assume 40W per fixture
+      
+      // Enhanced efficiency info
+      let efficacyInfo = `Power: ${(calculatedLumens / efficacy).toFixed(1)}W`;
+      if (mountingHeight) {
+        efficacyInfo += ` | Suggested spacing: ${spacingRatio.toFixed(1)}m`;
+      }
+      efficacyInfo += ` | Est. ${totalFixtures} fixtures`;
+      
       if (showAdvanced) {
         efficacyInfo += ` | UF: ${uf} | MF: ${mf}`;
         if (daylightReduction > 0) {
@@ -170,9 +202,20 @@ const LumenCalculator = () => {
       
       setResult(`${fixturesNeeded} fixtures`);
       
-      let additionalInfoText = `Total lumens needed: ${totalLumensNeeded.toFixed(0)} lm | Power: ~${(totalLumensNeeded / efficacy).toFixed(1)}W`;
+      // Calculate spacing and additional details
+      const mountHeight = parseFloat(mountingHeight) || 3;
+      const workHeight = parseFloat(workingHeight);
+      const mountingToWork = mountHeight - workHeight;
+      const spacingDistance = mountingToWork * 1.2;
+      const totalPower = (totalLumensNeeded / efficacy);
+      const annualCost = (totalPower * 0.25 * 2500 * 8760) / 1000; // £0.25/kWh, 25% usage
+      
+      let additionalInfoText = `Total: ${totalLumensNeeded.toFixed(0)}lm | Power: ${totalPower.toFixed(1)}W | Annual cost: £${annualCost.toFixed(0)}`;
+      if (mountingHeight) {
+        additionalInfoText += ` | Spacing: ${spacingDistance.toFixed(1)}m`;
+      }
       if (showAdvanced && (daylightReduction > 0 || uf !== 0.6 || mf !== 0.8)) {
-        additionalInfoText += ` | Professional calculation applied`;
+        additionalInfoText += ` | Pro calc applied`;
       }
       setAdditionalInfo(additionalInfoText);
     }
@@ -180,14 +223,17 @@ const LumenCalculator = () => {
 
   const resetCalculator = () => {
     setArea("");
+    setLength("");
+    setWidth("");
     setLux("");
     setLumens("");
     setFixtureOutput("");
+    setMountingHeight("");
+    setWorkingHeight("0.85");
     setSelectedRoom("");
     setResult(null);
     setAdditionalInfo(null);
     setErrors({});
-    // Reset advanced factors to defaults
     setUtilizationFactor("0.6");
     setMaintenanceFactor("0.8");
     setFixtureEfficacy("100");
@@ -278,32 +324,82 @@ const LumenCalculator = () => {
             </div>
           )}
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="space-y-6">
             {/* Input Section */}
             <div className="space-y-4">
-              {/* Area Input */}
+              {/* Area Input Mode Toggle */}
               <div className="space-y-2">
-                <Label htmlFor="area">Area (m²)</Label>
-                <Input
-                  id="area"
-                  type="number"
-                  placeholder="Enter area in square metres"
-                  value={area}
-                  onChange={(e) => {
-                    setArea(e.target.value);
-                    clearError('area');
-                  }}
-                  className={`bg-elec-dark border-elec-yellow/20 ${errors.area ? "border-destructive" : ""}`}
-                />
-                {errors.area && <p className="text-xs text-destructive">{errors.area}</p>}
+                <Label>Area Input</Label>
+                <div className="flex gap-2">
+                  <Button
+                    type="button"
+                    variant={inputMode === "area" ? "default" : "outline"}
+                    onClick={() => setInputMode("area")}
+                    className="flex-1 text-xs"
+                  >
+                    Direct Area
+                  </Button>
+                  <Button
+                    type="button"
+                    variant={inputMode === "dimensions" ? "default" : "outline"}
+                    onClick={() => setInputMode("dimensions")}
+                    className="flex-1 text-xs"
+                  >
+                    Length × Width
+                  </Button>
+                </div>
               </div>
 
-              {/* Conditional Inputs based on calculation type */}
-              {calculationType === "lux-to-lumens" && (
-                <div className="space-y-2">
-                  <Label htmlFor="lux">Required Illuminance (lx)</Label>
-                  <Input
-                    id="lux"
+              {/* Area/Dimension Inputs */}
+              <div className="grid grid-cols-1 gap-4">
+                {inputMode === "area" ? (
+                  <MobileInput
+                    label="Area"
+                    type="number"
+                    placeholder="Enter area"
+                    value={area}
+                    onChange={(e) => {
+                      setArea(e.target.value);
+                      clearError('area');
+                    }}
+                    unit="m²"
+                    error={errors.area}
+                  />
+                ) : (
+                  <div className="grid grid-cols-2 gap-3">
+                    <MobileInput
+                      label="Length"
+                      type="number"
+                      placeholder="Length"
+                      value={length}
+                      onChange={(e) => {
+                        setLength(e.target.value);
+                        clearError('length');
+                      }}
+                      unit="m"
+                      error={errors.length}
+                    />
+                    <MobileInput
+                      label="Width"
+                      type="number"
+                      placeholder="Width"
+                      value={width}
+                      onChange={(e) => {
+                        setWidth(e.target.value);
+                        clearError('width');
+                      }}
+                      unit="m"
+                      error={errors.width}
+                    />
+                  </div>
+                )}
+              </div>
+
+              {/* Main calculation inputs */}
+              <div className="grid grid-cols-1 gap-4">
+                {calculationType === "lux-to-lumens" && (
+                  <MobileInput
+                    label="Required Illuminance"
                     type="number"
                     placeholder="Enter lux value"
                     value={lux}
@@ -311,17 +407,14 @@ const LumenCalculator = () => {
                       setLux(e.target.value);
                       clearError('lux');
                     }}
-                    className={`bg-elec-dark border-elec-yellow/20 ${errors.lux ? "border-destructive" : ""}`}
+                    unit="lx"
+                    error={errors.lux}
                   />
-                  {errors.lux && <p className="text-xs text-destructive">{errors.lux}</p>}
-                </div>
-              )}
+                )}
 
-              {calculationType === "lumens-to-lux" && (
-                <div className="space-y-2">
-                  <Label htmlFor="lumens">Total Light Output (lm)</Label>
-                  <Input
-                    id="lumens"
+                {calculationType === "lumens-to-lux" && (
+                  <MobileInput
+                    label="Total Light Output"
                     type="number"
                     placeholder="Enter lumens value"
                     value={lumens}
@@ -329,18 +422,15 @@ const LumenCalculator = () => {
                       setLumens(e.target.value);
                       clearError('lumens');
                     }}
-                    className={`bg-elec-dark border-elec-yellow/20 ${errors.lumens ? "border-destructive" : ""}`}
+                    unit="lm"
+                    error={errors.lumens}
                   />
-                  {errors.lumens && <p className="text-xs text-destructive">{errors.lumens}</p>}
-                </div>
-              )}
+                )}
 
-              {calculationType === "fixtures-needed" && (
-                <>
-                  <div className="space-y-2">
-                    <Label htmlFor="lux">Required Illuminance (lx)</Label>
-                    <Input
-                      id="lux"
+                {calculationType === "fixtures-needed" && (
+                  <div className="grid grid-cols-1 gap-4">
+                    <MobileInput
+                      label="Required Illuminance"
                       type="number"
                       placeholder="Enter lux value"
                       value={lux}
@@ -348,28 +438,46 @@ const LumenCalculator = () => {
                         setLux(e.target.value);
                         clearError('lux');
                       }}
-                      className={`bg-elec-dark border-elec-yellow/20 ${errors.lux ? "border-destructive" : ""}`}
+                      unit="lx"
+                      error={errors.lux}
                     />
-                    {errors.lux && <p className="text-xs text-destructive">{errors.lux}</p>}
-                  </div>
-                  
-                  <div className="space-y-2">
-                    <Label htmlFor="fixture-output">Fixture Output (lm each)</Label>
-                    <Input
-                      id="fixture-output"
+                    <MobileInput
+                      label="Fixture Output"
                       type="number"
-                      placeholder="Enter lumens per fixture"
+                      placeholder="Lumens per fixture"
                       value={fixtureOutput}
                       onChange={(e) => {
                         setFixtureOutput(e.target.value);
                         clearError('fixtureOutput');
                       }}
-                      className={`bg-elec-dark border-elec-yellow/20 ${errors.fixtureOutput ? "border-destructive" : ""}`}
+                      unit="lm"
+                      error={errors.fixtureOutput}
                     />
-                    {errors.fixtureOutput && <p className="text-xs text-destructive">{errors.fixtureOutput}</p>}
                   </div>
-                </>
-              )}
+                )}
+              </div>
+
+              {/* Optional height inputs */}
+              <div className="grid grid-cols-2 gap-3">
+                <MobileInput
+                  label="Mounting Height (optional)"
+                  type="number"
+                  placeholder="3.0"
+                  value={mountingHeight}
+                  onChange={(e) => setMountingHeight(e.target.value)}
+                  unit="m"
+                  hint="For spacing calculations"
+                />
+                <MobileInput
+                  label="Working Height"
+                  type="number"
+                  placeholder="0.85"
+                  value={workingHeight}
+                  onChange={(e) => setWorkingHeight(e.target.value)}
+                  unit="m"
+                  hint="Work plane level"
+                />
+              </div>
 
               {/* Advanced Options */}
               <Collapsible open={showAdvanced} onOpenChange={setShowAdvanced}>
@@ -495,10 +603,10 @@ const LumenCalculator = () => {
               </Collapsible>
 
               {/* Action Buttons */}
-              <div className="flex flex-col gap-2 mt-6">
+              <div className="flex flex-col sm:flex-row gap-2 mt-6">
                 <Button 
                   onClick={calculate} 
-                  className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90"
+                  className="flex-1 bg-elec-yellow text-black hover:bg-elec-yellow/90"
                 >
                   <Calculator className="h-4 w-4 mr-2" />
                   Calculate
@@ -506,7 +614,7 @@ const LumenCalculator = () => {
                 <Button 
                   variant="outline" 
                   onClick={resetCalculator} 
-                  className="w-full border-elec-yellow/20 hover:bg-elec-yellow/10"
+                  className="flex-1 border-elec-yellow/20 hover:bg-elec-yellow/10"
                 >
                   Reset
                 </Button>
@@ -514,69 +622,125 @@ const LumenCalculator = () => {
             </div>
 
             {/* Results Section */}
-            <div className="flex flex-col space-y-4">
-              <div className="flex-grow rounded-md bg-elec-dark p-6 flex flex-col items-center justify-center text-center min-h-48">
-                {result ? (
-                  <>
-                    <div className="flex items-center gap-2 mb-3">
-                      <Lightbulb className="h-5 w-5 text-elec-yellow" />
-                      <span className="text-elec-yellow text-lg font-medium">Result</span>
-                    </div>
-                    <div className="text-center space-y-2">
-                      <div className="text-sm text-muted-foreground">
-                        {calculationType === "lux-to-lumens" && "Total Lumens Required:"}
-                        {calculationType === "lumens-to-lux" && "Illuminance Level:"}
-                        {calculationType === "fixtures-needed" && "Fixtures Required:"}
-                      </div>
-                      <div className="text-3xl font-bold text-elec-yellow mb-3">{result}</div>
-                      {additionalInfo && (
-                        <Badge variant="secondary" className="text-xs bg-elec-yellow/10 text-elec-yellow border-elec-yellow/20">
-                          {additionalInfo}
-                        </Badge>
-                      )}
-                    </div>
-                    
-                    <Button 
-                      variant="outline" 
-                      size="sm" 
-                      onClick={copyResult}
-                      className="mt-4 border-elec-yellow/20 hover:bg-elec-yellow/10"
-                    >
-                      <Copy className="h-3 w-3 mr-1" />
-                      Copy Result
-                    </Button>
-                  </>
-                ) : (
-                  <div className="text-muted-foreground">
-                    <Variable className="h-12 w-12 mx-auto mb-2 opacity-50" />
-                    <p>Enter values to calculate</p>
-                    <p className="text-xs mt-1">
-                      {calculationType === "lux-to-lumens" && "lumens required"}
-                      {calculationType === "lumens-to-lux" && "illuminance level"}
-                      {calculationType === "fixtures-needed" && "number of fixtures"}
-                    </p>
+            {result && (
+              <Card className="bg-elec-card border-elec-yellow/20">
+                <CardHeader className="pb-3">
+                  <div className="flex items-center gap-2">
+                    <Lightbulb className="h-5 w-5 text-elec-yellow" />
+                    <CardTitle className="text-lg">
+                      {calculationType === "lux-to-lumens" && "Lumens Required"}
+                      {calculationType === "lumens-to-lux" && "Illuminance Level"}
+                      {calculationType === "fixtures-needed" && "Fixtures Needed"}
+                    </CardTitle>
                   </div>
-                )}
-              </div>
-            </div>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="text-center">
+                    <div className="text-3xl font-bold text-elec-yellow mb-2">{result}</div>
+                    {additionalInfo && (
+                      <div className="text-sm text-elec-light bg-elec-dark/30 px-3 py-2 rounded-md">
+                        {additionalInfo}
+                      </div>
+                    )}
+                  </div>
+                  
+                  {/* Compliance Badge */}
+                  {calculationType === "lumens-to-lux" && (
+                    <div className="flex justify-center">
+                      {(() => {
+                        const luxValue = parseFloat(result.replace(" lux", ""));
+                        if (luxValue >= 500) return <Badge className="bg-green-500/10 text-green-400 border-green-500/20"><CheckCircle className="h-3 w-3 mr-1" />Excellent</Badge>;
+                        if (luxValue >= 300) return <Badge className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/20"><CheckCircle className="h-3 w-3 mr-1" />Good</Badge>;
+                        if (luxValue >= 100) return <Badge className="bg-orange-500/10 text-orange-400 border-orange-500/20"><AlertTriangle className="h-3 w-3 mr-1" />Basic</Badge>;
+                        return <Badge variant="destructive"><AlertTriangle className="h-3 w-3 mr-1" />Poor</Badge>;
+                      })()}
+                    </div>
+                  )}
+                  
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    onClick={copyResult}
+                    className="w-full border-elec-yellow/20 hover:bg-elec-yellow/10"
+                  >
+                    <Copy className="h-3 w-3 mr-1" />
+                    Copy Result
+                  </Button>
+                </CardContent>
+              </Card>
+            )}
           </div>
 
-          {/* Information Panel */}
+          {/* Guidance Sections */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            {/* What the Results Mean */}
+            <InfoBox
+              title="What the Results Mean"
+              icon={<Info className="h-5 w-5 text-elec-yellow" />}
+              points={[
+                "Lux (lx): Light intensity per square metre - what you actually see",
+                "Lumens (lm): Total light output from source - what the bulb produces", 
+                "Utilisation Factor (UF): How much light reaches the work surface",
+                "Maintenance Factor (MF): Light reduction over time due to dirt and aging",
+                "Efficacy (lm/W): How efficient the light source is - higher is better"
+              ]}
+              className="mb-0"
+            />
+
+            {/* Why This Matters */}
+            <WhyThisMatters
+              points={[
+                "Proper lighting reduces eye strain and improves productivity",
+                "Under-lighting causes fatigue and increases accident risk", 
+                "Over-lighting wastes energy and increases running costs",
+                "Correct spacing prevents dark spots and uneven illumination",
+                "Energy efficient fixtures reduce carbon footprint and bills"
+              ]}
+              className="mb-0"
+            />
+          </div>
+
+          {/* Practical Guidance */}
+          <InfoBox
+            title="Practical Tips & Regulations"
+            icon={<CheckCircle className="h-5 w-5 text-elec-yellow" />}
+            points={[
+              "BS EN 12464-1 specifies UK workplace lighting standards",
+              "Offices need 300-500 lx, detailed work areas need 750+ lx",
+              "LED fixtures typically 80-150 lm/W, much better than older tech",
+              "Mount fixtures 2.4-4m high, space at 1.2x mounting height",
+              "Consider daylight sensors to reduce artificial lighting during day",
+              "Use warm white (3000K) for comfort, cool white (4000K+) for focus",
+              "Clean fixtures regularly - dirty lights can lose 30% output"
+            ]}
+            as="section"
+          />
+
+          {/* Quick Reference */}
           <Alert className="bg-elec-dark/50 border-elec-yellow/20">
             <Lightbulb className="h-4 w-4" />
             <AlertDescription>
               <div className="space-y-2">
-                <h3 className="font-medium text-elec-yellow">Professional Lighting Guide</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-elec-light/80">
+                <h3 className="font-medium text-elec-yellow">Quick Reference</h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-sm text-elec-light/80">
                   <div>
-                    <p><span className="text-elec-yellow">Lux (lx):</span> Illuminance per square metre</p>
-                    <p><span className="text-elec-yellow">Lumen (lm):</span> Total light output</p>
-                    <p><span className="text-elec-yellow">Formula:</span> Lumens = Lux × Area</p>
+                    <p className="font-medium text-elec-yellow mb-1">Common Levels:</p>
+                    <p>Corridors: 100 lx</p>
+                    <p>Meetings: 300 lx</p>
+                    <p>Offices: 500 lx</p>
+                    <p>Workshops: 750 lx</p>
                   </div>
                   <div>
-                    <p><span className="text-elec-yellow">Typical Levels:</span></p>
-                    <p>Offices: 300-500 lx | Workshops: 750 lx</p>
-                    <p>Corridors: 100 lx | Detailed work: 1000+ lx</p>
+                    <p className="font-medium text-elec-yellow mb-1">Energy Costs:</p>
+                    <p>LED: £2-4 per year per 100W</p>
+                    <p>Fluorescent: £6-8 per year</p>
+                    <p>Halogen: £15-20 per year</p>
+                  </div>
+                  <div>
+                    <p className="font-medium text-elec-yellow mb-1">Regulations:</p>
+                    <p>BS EN 12464-1: Workplace</p>
+                    <p>Building Regs Part L: Energy</p>
+                    <p>CDM 2015: Construction sites</p>
                   </div>
                 </div>
               </div>
