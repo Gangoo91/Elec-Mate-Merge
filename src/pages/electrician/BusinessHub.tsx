@@ -38,12 +38,6 @@ const BusinessHub = () => {
     },
     {
       id: 6,
-      title: "Live Pricing",
-      icon: PoundSterling,
-      link: "/electrician/live-pricing",
-    },
-    {
-      id: 7,
       title: "Business Admin",
       icon: Cog,
       link: "/electrician/business-admin",

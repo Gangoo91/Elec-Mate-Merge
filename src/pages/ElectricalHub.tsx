@@ -2,7 +2,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Wrench, Heart, Brain, GraduationCap, Briefcase, ArrowLeft, Calculator, Zap, MapPin, Shield } from "lucide-react";
+import { Wrench, Heart, Brain, GraduationCap, Briefcase, ArrowLeft, Calculator, Zap, MapPin, Shield, PoundSterling } from "lucide-react";
 
 const ElectricalHub = () => {
   // Main 2x2 grid - 4 most frequently used tools for daily electrical work
@@ -43,24 +43,30 @@ const ElectricalHub = () => {
     },
     {
       id: 6,
+      title: "Live Pricing",
+      icon: PoundSterling,
+      link: "/electrician/live-pricing"
+    },
+    {
+      id: 7,
       title: "AI Tooling",
       icon: Brain,
       link: "/electrician-tools/ai-tooling"
     },
     {
-      id: 7,
+      id: 8,
       title: "Industry Updates",
       icon: Wrench,
       link: "/electrician/safety-shares/news"
     },
     {
-      id: 8,
+      id: 9,
       title: "Mental Health Hub",
       icon: Heart,
       link: "/electrician/mental-health"
     },
     {
-      id: 9,
+      id: 10,
       title: "Career Progression", 
       icon: GraduationCap,
       link: "/electrician/career-progression"
