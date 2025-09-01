@@ -54,6 +54,7 @@ const CategoryMaterials = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [activeTab, setActiveTab] = useState("browse");
   const [selectedItems, setSelectedItems] = useState<any[]>([]);
+  const [isTabSelectorOpen, setIsTabSelectorOpen] = useState(false);
   const isMobile = useIsMobile();
   
   // Filter and search the materials
@@ -163,7 +164,7 @@ const CategoryMaterials = () => {
           {/* Mobile Collapsible Tabs */}
           {isMobile ? (
             <div className="space-y-2">
-              <Collapsible>
+              <Collapsible open={isTabSelectorOpen} onOpenChange={setIsTabSelectorOpen}>
                 <CollapsibleTrigger className="w-full flex items-center justify-between bg-elec-gray border border-elec-yellow/20 rounded-xl p-4 mobile-interactive touch-target hover:bg-elec-yellow/5 transition-colors">
                   <div className="flex items-center gap-3">
                     {activeTab === "browse" && <Package className="h-4 w-4 text-elec-yellow" />}
@@ -187,7 +188,10 @@ const CategoryMaterials = () => {
                     {["browse", "compare", "bulk", "alerts", "ai"].filter(tab => tab !== activeTab).map((tab) => (
                       <button
                         key={tab}
-                        onClick={() => setActiveTab(tab)}
+                        onClick={() => {
+                          setActiveTab(tab);
+                          setIsTabSelectorOpen(false); // Auto-collapse after selection
+                        }}
                         className="w-full flex items-center gap-3 p-4 text-left transition-all duration-200 mobile-interactive touch-target border-b border-elec-yellow/10 last:border-b-0 text-elec-light hover:bg-elec-yellow/10"
                       >
                         {tab === "browse" && <Package className="h-4 w-4" />}
