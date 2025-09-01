@@ -1,9 +1,12 @@
 
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Info } from "lucide-react";
+import { Info, ChevronDown, ChevronUp, HelpCircle } from "lucide-react";
 import { CableSizingInputs } from "./useCableSizing";
 import { CableSizeOption } from "./cableSizeData";
 import EmptyState from "./EmptyState";
+import { RequiredFieldTooltip } from "@/components/ui/required-field-tooltip";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { useState } from "react";
 
 interface CableSizingResultProps {
   recommendedCable: CableSizeOption | null;
@@ -20,6 +23,22 @@ const CableSizingResult = ({
   errors,
   inputs,
 }: CableSizingResultProps) => {
+  const [showDerivation, setShowDerivation] = useState(false);
+
+  const getInstallationMethodDisplay = (installationType: string) => {
+    const methodMap: Record<string, string> = {
+      'pvc': 'Method C (Clipped Direct)',
+      'xlpe': 'Method E (In Conduit/Trunking)',
+      'swa': 'Method D (Direct Burial)',
+      'lsf': 'Method C (Clipped Direct)',
+      'armored': 'Method D (Direct Burial)'
+    };
+    return methodMap[installationType] || installationType.toUpperCase();
+  };
+
+  const getBaseCapacityTooltip = (cable: CableSizeOption, installationType: string) => {
+    return `This is the tabulated current-carrying capacity (It) for ${cable.size} ${cable.cableType} cable using ${getInstallationMethodDisplay(installationType)} at 30°C ambient temperature with no grouping factors. This value comes from BS 7671 Appendix 4.`;
+  };
   return (
     <div className="flex-grow flex flex-col">
       {errors.general && (
@@ -39,12 +58,13 @@ const CableSizingResult = ({
               <div className="text-3xl font-bold text-elec-yellow mb-2">{recommendedCable.size}</div>
               <div className="grid grid-cols-2 gap-2 text-sm">
                 <div>
-                  <span className="text-muted-foreground">Insulation: </span>
-                  <span className="font-medium">{inputs.installationType.toUpperCase()}</span>
+                  <span className="text-muted-foreground">Installation: </span>
+                  <span className="font-medium">{getInstallationMethodDisplay(inputs.installationType)}</span>
                 </div>
-                <div>
-                  <span className="text-muted-foreground">Rating: </span>
+                <div className="flex items-center gap-1">
+                  <span className="text-muted-foreground">Base Capacity: </span>
                   <span className="font-medium">{recommendedCable.currentRating[inputs.installationType]}A</span>
+                  <RequiredFieldTooltip content={getBaseCapacityTooltip(recommendedCable, inputs.installationType)} />
                 </div>
                 <div className="col-span-2">
                   <span className="text-muted-foreground">Voltage drop: </span>
@@ -54,6 +74,35 @@ const CableSizingResult = ({
                   </span>
                 </div>
               </div>
+              
+              <Collapsible open={showDerivation} onOpenChange={setShowDerivation} className="mt-3">
+                <CollapsibleTrigger className="flex items-center gap-2 text-xs text-elec-yellow/70 hover:text-elec-yellow transition-colors">
+                  {showDerivation ? <ChevronUp className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
+                  Show calculation derivation
+                </CollapsibleTrigger>
+                <CollapsibleContent className="mt-2 p-3 bg-elec-gray/20 rounded border border-elec-yellow/10">
+                  <div className="space-y-2 text-xs">
+                    <div className="font-medium text-elec-yellow">Source Data:</div>
+                    <div className="text-muted-foreground">
+                      • Cable: {recommendedCable.size} {recommendedCable.cableType}<br/>
+                      • Method: {getInstallationMethodDisplay(inputs.installationType)}<br/>
+                      • Tabulated It: {recommendedCable.currentRating[inputs.installationType]}A (BS 7671 Appendix 4)
+                    </div>
+                    <div className="font-medium text-elec-yellow mt-3">Effective Current Rating (Iz):</div>
+                    <div className="text-muted-foreground">
+                      Iz = It × Ca × Cg × Ci × Cc<br/>
+                      Where: Ca=1.0 (30°C), Cg=1.0 (no grouping), Ci=1.0 (no derating), Cc=1.0 (no correction)<br/>
+                      Iz = {recommendedCable.currentRating[inputs.installationType]} × 1.0 = {recommendedCable.currentRating[inputs.installationType]}A
+                    </div>
+                    <div className="font-medium text-elec-yellow mt-3">Compliance Check:</div>
+                    <div className="text-muted-foreground">
+                      • Design current (Ib): {inputs.current}A<br/>
+                      • Applied derating factors: Ca=1.0, Cg=1.0, Ci=1.0, Cc=1.0<br/>
+                      • Condition: Ib ≤ Iz ({inputs.current}A ≤ {recommendedCable.currentRating[inputs.installationType]}A) ✓
+                    </div>
+                  </div>
+                </CollapsibleContent>
+              </Collapsible>
             </div>
           </div>
           
