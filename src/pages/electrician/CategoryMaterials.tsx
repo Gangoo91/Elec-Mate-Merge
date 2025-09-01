@@ -240,7 +240,7 @@ const CategoryMaterials = () => {
 
           {/* Search and filters for Browse tab */}
           {activeTab === "browse" && (
-            <div className="flex flex-col sm:flex-row gap-3 items-stretch sm:items-end mt-4">
+            <div className="flex flex-col sm:flex-row gap-3 items-start mt-4">
               <div className="flex-1">
                 <MobileInputWrapper
                   placeholder="Search materials..."
