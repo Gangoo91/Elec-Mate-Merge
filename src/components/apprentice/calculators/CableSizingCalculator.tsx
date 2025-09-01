@@ -221,19 +221,19 @@ const CableSizingCalculator = () => {
             </Alert>
           )}
 
-          <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+          <div className="space-y-6">
             {/* Enhanced Input Section */}
-            <div className="space-y-4">
+            <div className="space-y-6">
               <h3 className="text-lg font-semibold text-elec-yellow">Circuit Design Parameters</h3>
               
               {/* Protective Device Section */}
               <div className="space-y-4 p-4 border border-elec-yellow/40 rounded-lg bg-elec-dark/50">
-                <h4 className="font-medium">Protective Device</h4>
-                <div className="grid grid-cols-2 gap-4">
+                <h4 className="font-medium text-white">Protective Device</h4>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label>Device Type</Label>
+                    <Label className="text-sm font-medium text-white">Device Type</Label>
                     <Select value={protectiveDevice} onValueChange={setProtectiveDevice}>
-                      <SelectTrigger className="bg-elec-dark border-elec-yellow/40 text-white">
+                      <SelectTrigger className="bg-elec-dark border-elec-yellow/40 text-white h-11">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent className="bg-elec-dark border-elec-yellow/40 z-50 text-white">
@@ -244,9 +244,9 @@ const CableSizingCalculator = () => {
                     </Select>
                   </div>
                   <div className="space-y-2">
-                    <Label>Device Rating (A)</Label>
+                    <Label className="text-sm font-medium text-white">Device Rating (A)</Label>
                     <Select value={deviceRating} onValueChange={setDeviceRating}>
-                      <SelectTrigger className="bg-elec-dark border-elec-yellow/40 text-white">
+                      <SelectTrigger className="bg-elec-dark border-elec-yellow/40 text-white h-11">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent className="bg-elec-dark border-elec-yellow/40 z-50 text-white">
@@ -264,16 +264,16 @@ const CableSizingCalculator = () => {
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <Label>Design Current Ib (A)</Label>
+                  <Label className="text-sm font-medium text-white">Design Current Ib (A)</Label>
                   <input
                     type="number"
                     step="0.1"
                     value={designCurrent}
                     onChange={(e) => setDesignCurrent(e.target.value)}
                     placeholder={inputs.current ? `Leave empty to use ${inputs.current}A` : "Enter design current"}
-                    className="w-full px-3 py-2 bg-elec-dark border border-elec-yellow/40 rounded-md text-white placeholder:text-muted-foreground/60"
+                    className="w-full h-11 px-3 py-2 bg-elec-dark border border-elec-yellow/40 rounded-md text-white placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 focus:ring-elec-yellow/40"
                   />
-                  <p className="text-xs text-muted-foreground">
+                  <p className="text-xs text-muted-foreground leading-relaxed">
                     Optional: If different from main current input. Leave empty to use main current ({inputs.current || '0'}A).
                   </p>
                 </div>
@@ -293,7 +293,7 @@ const CableSizingCalculator = () => {
               />
             </div>
             
-            <div className="flex flex-col space-y-4">
+            <div className="flex flex-col space-y-4 mt-6 xl:mt-0">
               <div className="rounded-md bg-elec-dark border border-elec-yellow/40 p-6 flex-grow flex flex-col min-h-[400px]">
                 <CableSizingResult
                   recommendedCable={result.recommendedCable}
