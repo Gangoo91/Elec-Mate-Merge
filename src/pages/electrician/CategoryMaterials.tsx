@@ -317,7 +317,7 @@ const CategoryMaterials = () => {
           </TabsContent>
 
           <TabsContent value="bulk" className="space-y-6 mt-6">
-            <BulkPricingCalculator categoryId={categoryId} />
+            <BulkPricingCalculator categoryId={categoryId} products={materials} />
           </TabsContent>
 
           <TabsContent value="alerts" className="space-y-6 mt-6">
