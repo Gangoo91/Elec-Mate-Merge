@@ -110,7 +110,77 @@ const MaterialPriceComparison = ({ initialQuery = "", selectedItems = [], onClea
   const [aiEnabled, setAiEnabled] = useState(true);
   const [activeTab, setActiveTab] = useState<'comparison' | 'bulk' | 'history'>('comparison');
   const [selectedProductForAnalysis, setSelectedProductForAnalysis] = useState<PriceComparisonItem | null>(null);
+  const [showingPreSelected, setShowingPreSelected] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
+
+  // Process selected items from the category page
+  const processSelectedItems = (items: any[]): PriceComparisonResult | null => {
+    if (!items || items.length === 0) return null;
+
+    const processedProducts: PriceComparisonItem[] = items.map((item, index) => ({
+      id: item.id || index,
+      name: item.name || 'Unknown Product',
+      category: item.category || 'Materials',
+      price: item.price || '£0.00',
+      supplier: item.supplier || 'Unknown',
+      image: item.image || '/placeholder.svg',
+      stockStatus: item.stockStatus || 'In Stock',
+      productUrl: item.productUrl,
+      highlights: item.highlights || [],
+      numericPrice: extractPrice(item.price || '£0.00'),
+      rating: 4.5,
+      deliveryInfo: 'Standard'
+    }));
+
+    // Filter out items with 0 price and sort by price
+    const validProducts = processedProducts.filter(p => p.numericPrice > 0);
+    const sortedProducts = validProducts.sort((a, b) => a.numericPrice - b.numericPrice);
+
+    if (sortedProducts.length === 0) return null;
+
+    const prices = sortedProducts.map(p => p.numericPrice);
+    const cheapestPrice = Math.min(...prices);
+    const averagePrice = prices.reduce((sum, price) => sum + price, 0) / prices.length;
+    const priceRange = `${formatPrice(cheapestPrice)} - ${formatPrice(Math.max(...prices))}`;
+
+    return {
+      searchTerm: `Selected Items (${items.length})`,
+      products: sortedProducts,
+      cheapestPrice,
+      averagePrice,
+      priceRange
+    };
+  };
+
+  // Process selected items when component mounts or selectedItems changes
+  useEffect(() => {
+    if (selectedItems && selectedItems.length > 0) {
+      const result = processSelectedItems(selectedItems);
+      if (result) {
+        setComparisonResult(result);
+        setShowingPreSelected(true);
+        
+        // Run AI analysis on pre-selected items if enabled
+        if (aiEnabled) {
+          runAiAnalysis(result.products).then(aiInsights => {
+            if (aiInsights) {
+              setComparisonResult(prev => prev ? { ...prev, aiInsights } : null);
+            }
+          });
+        }
+      }
+    }
+  }, [selectedItems, aiEnabled]);
+
+  // Handle clearing selection
+  const handleClearSelection = () => {
+    setComparisonResult(null);
+    setShowingPreSelected(false);
+    setSearchQuery("");
+    if (onClearSelection) {
+      onClearSelection();
+    }
+  };
 
   const extractPrice = (priceStr: string): number => {
     const cleaned = priceStr.replace(/[£,]/g, '');
@@ -205,6 +275,7 @@ const MaterialPriceComparison = ({ initialQuery = "", selectedItems = [], onClea
     setIsLoading(true);
     setError(null);
     setShowSuggestions(false);
+    setShowingPreSelected(false);
     
     try {
       const { data, error } = await supabase.functions.invoke('comprehensive-materials-scraper', {
@@ -494,17 +565,41 @@ const MaterialPriceComparison = ({ initialQuery = "", selectedItems = [], onClea
 
         {comparisonResult && (
           <div className="space-y-6">
+            {/* Pre-selected items banner */}
+            {showingPreSelected && (
+              <Card className="border-green-500/20 bg-green-500/5">
+                <CardContent className="p-4">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <Package className="h-4 w-4 text-green-400" />
+                      <span className="text-green-300 text-sm font-medium">
+                        Showing pre-selected items from category page
+                      </span>
+                    </div>
+                    <Button
+                      onClick={handleClearSelection}
+                      size="sm"
+                      variant="outline"
+                      className="border-green-500/30 text-green-400 hover:bg-green-500/20"
+                    >
+                      Clear Selection
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
             {/* Enhanced Summary with Export */}
             <Card className="border-elec-yellow/20 bg-elec-gray">
               <CardHeader className="pb-3">
                 <div className="flex items-center justify-between">
                   <div>
                     <CardTitle className="text-white">
-                      Search Results for "{comparisonResult.searchTerm}"
+                      {showingPreSelected ? 'Selected Items Comparison' : `Search Results for "${comparisonResult.searchTerm}"`}
                     </CardTitle>
                     <p className="text-sm text-elec-yellow">
-                      {selectedCategory !== 'all' && `${CATEGORIES.find(c => c.value === selectedCategory)?.label} • `}
-                      {selectedSupplier !== 'all' && `${SUPPLIERS.find(s => s.value === selectedSupplier)?.label} • `}
+                      {!showingPreSelected && selectedCategory !== 'all' && `${CATEGORIES.find(c => c.value === selectedCategory)?.label} • `}
+                      {!showingPreSelected && selectedSupplier !== 'all' && `${SUPPLIERS.find(s => s.value === selectedSupplier)?.label} • `}
                       Live pricing
                     </p>
                   </div>
