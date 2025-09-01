@@ -386,7 +386,7 @@ const PriceHistoryAlerts = ({ categoryId, selectedProduct, currentUserId = "demo
               <div className="text-elec-yellow">Loading alerts...</div>
             ) : userAlerts.length > 0 ? (
               userAlerts.map(alert => (
-                <div key={alert.id} className="flex items-center justify-between p-3 bg-elec-yellow/10 rounded-lg border border-elec-yellow/20">
+                <div key={alert.id} className="flex items-center justify-between p-3 bg-elec-card rounded-lg border border-elec-yellow/20">
                   <div>
                     <h5 className="font-medium text-foreground">{alert.productName}</h5>
                     <p className="text-xs text-muted-foreground">
