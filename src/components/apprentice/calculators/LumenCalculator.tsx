@@ -723,24 +723,24 @@ const LumenCalculator = () => {
               <div className="space-y-2">
                 <h3 className="font-medium text-elec-yellow">Quick Reference</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-sm text-elec-light/80">
-                  <div>
-                    <p className="font-medium text-elec-yellow mb-1">Common Levels:</p>
-                    <p>Corridors: 100 lx</p>
-                    <p>Meetings: 300 lx</p>
-                    <p>Offices: 500 lx</p>
-                    <p>Workshops: 750 lx</p>
+                  <div className="space-y-1">
+                    <p className="font-medium text-elec-yellow mb-2">Common Levels:</p>
+                    <p className="leading-relaxed">Corridors: 100 lx</p>
+                    <p className="leading-relaxed">Meetings: 300 lx</p>
+                    <p className="leading-relaxed">Offices: 500 lx</p>
+                    <p className="leading-relaxed">Workshops: 750 lx</p>
                   </div>
-                  <div>
-                    <p className="font-medium text-elec-yellow mb-1">Energy Costs:</p>
-                    <p>LED: £2-4 per year per 100W</p>
-                    <p>Fluorescent: £6-8 per year</p>
-                    <p>Halogen: £15-20 per year</p>
+                  <div className="space-y-1">
+                    <p className="font-medium text-elec-yellow mb-2">Energy Costs:</p>
+                    <p className="leading-relaxed">LED: £2-4 per year per 100W</p>
+                    <p className="leading-relaxed">Fluorescent: £6-8 per year</p>
+                    <p className="leading-relaxed">Halogen: £15-20 per year</p>
                   </div>
-                  <div>
-                    <p className="font-medium text-elec-yellow mb-1">Regulations:</p>
-                    <p>BS EN 12464-1: Workplace</p>
-                    <p>Building Regs Part L: Energy</p>
-                    <p>CDM 2015: Construction sites</p>
+                  <div className="space-y-1">
+                    <p className="font-medium text-elec-yellow mb-2">Regulations:</p>
+                    <p className="leading-relaxed">BS EN 12464-1: Workplace</p>
+                    <p className="leading-relaxed">Building Regs Part L: Energy</p>
+                    <p className="leading-relaxed">CDM 2015: Construction sites</p>
                   </div>
                 </div>
               </div>
