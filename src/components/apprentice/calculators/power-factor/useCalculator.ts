@@ -10,7 +10,9 @@ export const useCalculator = () => {
   const [calculationMethod, setCalculationMethod] = useState<"power" | "currentVoltage">("power");
   const [powerFactor, setPowerFactor] = useState<string | null>(null);
   const [targetPF, setTargetPF] = useState<string>("0.95");
+  const [pfType, setPfType] = useState<string>("lagging");
   const [capacitorKVAr, setCapacitorKVAr] = useState<string | null>(null);
+  const [currentAfterCorrection, setCurrentAfterCorrection] = useState<string | null>(null);
   const [validation, setValidation] = useState<ValidationResult | null>(null);
   const [errors, setErrors] = useState<{[key: string]: string}>({});
 
@@ -148,13 +150,26 @@ export const useCalculator = () => {
     setValidation(pfValidation);
     setPowerFactor(pf.toFixed(4)); // Professional precision to 4 decimal places
 
-    // Capacitor sizing to reach target PF
-    const tpf = Math.min(Math.max(parseFloat(targetPF || '0.95'), 0.1), 1);
-    const phi1 = Math.acos(pf);
-    const phi2 = Math.acos(tpf);
-    const PkW = activeValue >= 1000 ? activeValue / 1000 : activeValue; // Accept W or kW input
-    const kvar = Math.max(0, PkW * (Math.tan(phi1) - Math.tan(phi2)));
-    setCapacitorKVAr(kvar.toFixed(2));
+    // Capacitor sizing to reach target PF (only for lagging PF)
+    if (pfType === "lagging" && targetPF) {
+      const tpf = Math.min(Math.max(parseFloat(targetPF), 0.1), 1);
+      const phi1 = Math.acos(pf);
+      const phi2 = Math.acos(tpf);
+      const PkW = activeValue >= 1000 ? activeValue / 1000 : activeValue; // Accept W or kW input
+      const kvar = Math.max(0, PkW * (Math.tan(phi1) - Math.tan(phi2)));
+      setCapacitorKVAr(kvar.toFixed(2));
+      
+      // Calculate estimated current after correction
+      if (calculationMethod === "currentVoltage") {
+        const volts = parseFloat(voltage);
+        const newApparentPower = PkW * 1000 / tpf; // Convert back to watts for apparent power
+        const newCurrent = newApparentPower / volts;
+        setCurrentAfterCorrection(newCurrent.toFixed(2));
+      }
+    } else {
+      setCapacitorKVAr(null);
+      setCurrentAfterCorrection(null);
+    }
     
     // Clear any previous errors if calculation is successful
     if (pfValidation.isValid) {
@@ -184,7 +199,9 @@ export const useCalculator = () => {
     setVoltage("");
     setPowerFactor(null);
     setTargetPF("0.95");
+    setPfType("lagging");
     setCapacitorKVAr(null);
+    setCurrentAfterCorrection(null);
     setValidation(null);
     setErrors({});
   };
@@ -204,7 +221,10 @@ export const useCalculator = () => {
     setPowerFactor,
     targetPF,
     setTargetPF,
+    pfType,
+    setPfType,
     capacitorKVAr,
+    currentAfterCorrection,
     validation,
     errors,
     setErrors,

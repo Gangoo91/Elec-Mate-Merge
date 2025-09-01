@@ -71,7 +71,18 @@ const OhmsLawCalculator = () => {
     setCurrent("");
     setResistance("");
     setPower("");
+    setSolveFor("");
+    setErrors({});
     setResult(null);
+  };
+
+  const getCurrentStatus = () => {
+    if (!result?.current) return { text: "Unknown", color: "text-muted-foreground" };
+    const I = result.current;
+    if (I > 32) return { text: "High Current", color: "text-red-400" };
+    if (I > 16) return { text: "High Power Circuit", color: "text-yellow-400" };
+    if (I > 6) return { text: "Standard Circuit", color: "text-green-400" };
+    return { text: "Low Current", color: "text-blue-400" };
   };
 
   return (

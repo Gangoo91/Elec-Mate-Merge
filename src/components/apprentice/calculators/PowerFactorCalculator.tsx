@@ -5,8 +5,8 @@ import { MobileButton } from "@/components/ui/mobile-button";
 import { MobileSelect, MobileSelectContent, MobileSelectItem, MobileSelectTrigger, MobileSelectValue } from "@/components/ui/mobile-select";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { PlugZap, Info, Calculator, RotateCcw } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { PlugZap, Info, Calculator, RotateCcw, BookOpen, TrendingDown } from "lucide-react";
 import { useCalculator } from "./power-factor/useCalculator";
 
 const PowerFactorCalculator = () => {
@@ -28,7 +28,10 @@ const PowerFactorCalculator = () => {
     resetCalculator,
     targetPF,
     setTargetPF,
-    capacitorKVAr
+    pfType,
+    setPfType,
+    capacitorKVAr,
+    currentAfterCorrection
   } = useCalculator();
 
   const getResultStatus = () => {
@@ -66,7 +69,7 @@ const PowerFactorCalculator = () => {
               <MobileSelectTrigger label="Calculation Method">
                 <MobileSelectValue placeholder="Select calculation method" />
               </MobileSelectTrigger>
-              <MobileSelectContent>
+              <MobileSelectContent className="bg-elec-dark border-elec-yellow/20 z-50">
                 <MobileSelectItem value="power">From Power Values</MobileSelectItem>
                 <MobileSelectItem value="currentVoltage">From Electrical Parameters</MobileSelectItem>
               </MobileSelectContent>
@@ -129,6 +132,32 @@ const PowerFactorCalculator = () => {
                 />
               </>
             )}
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <MobileSelect value={pfType} onValueChange={setPfType}>
+                <MobileSelectTrigger label="Power Factor Type">
+                  <MobileSelectValue />
+                </MobileSelectTrigger>
+                <MobileSelectContent className="bg-elec-dark border-elec-yellow/20 z-50">
+                  <MobileSelectItem value="lagging">Lagging (Inductive loads)</MobileSelectItem>
+                  <MobileSelectItem value="leading">Leading (Capacitive loads)</MobileSelectItem>
+                </MobileSelectContent>
+              </MobileSelect>
+              
+              {pfType === "lagging" && (
+                <MobileInput
+                  label="Target PF for Correction"
+                  type="number"
+                  step="0.01"
+                  min="0.8"
+                  max="0.99"
+                  value={targetPF}
+                  onChange={(e) => setTargetPF(e.target.value)}
+                  placeholder="0.95"
+                  hint="Typical target: 0.95"
+                />
+              )}
+            </div>
 
             <div className="flex gap-2">
               <MobileButton onClick={calculatePowerFactor} className="flex-1" variant="elec" icon={<Calculator className="h-4 w-4" />}>
@@ -168,12 +197,18 @@ const PowerFactorCalculator = () => {
                         {parseFloat(powerFactor) >= 0.85 ? "✓ Compliant" : "✗ Below minimum"}
                       </span>
                     </div>
-                    {capacitorKVAr && targetPF && (
-                      <div className="pt-2 border-t border-elec-yellow/20">
+                    {capacitorKVAr && targetPF && pfType === "lagging" && (
+                      <div className="pt-2 border-t border-elec-yellow/20 space-y-2">
                         <div className="flex justify-between">
-                          <span className="text-muted-foreground">Correction to {targetPF}:</span>
+                          <span className="text-muted-foreground">Capacitor needed:</span>
                           <span className="font-mono text-elec-yellow">{capacitorKVAr} kVAr</span>
                         </div>
+                        {currentAfterCorrection && (
+                          <div className="flex justify-between">
+                            <span className="text-muted-foreground">Current after correction:</span>
+                            <span className="font-mono text-green-400">{currentAfterCorrection} A</span>
+                          </div>
+                        )}
                       </div>
                     )}
                   </div>
@@ -185,14 +220,70 @@ const PowerFactorCalculator = () => {
               )}
             </div>
 
-            <Alert className="border-blue-500/20 bg-blue-500/10">
-              <Info className="h-4 w-4 text-blue-500" />
-              <AlertDescription className="text-blue-200">
-                Power Factor = Active Power ÷ Apparent Power. BS 7671 requires minimum 0.85 for most installations. Ideal range: 0.95-1.0.
-              </AlertDescription>
-            </Alert>
+            {capacitorKVAr && currentAfterCorrection && (
+              <Alert className="border-green-500/30 bg-green-500/10">
+                <TrendingDown className="h-4 w-4 text-green-500" />
+                <AlertDescription className="text-green-200">
+                  Current reduction with PF correction: {((parseFloat(current) - parseFloat(currentAfterCorrection)) / parseFloat(current) * 100).toFixed(1)}% lower
+                </AlertDescription>
+              </Alert>
+            )}
           </div>
         </div>
+        
+        {/* What this means panel */}
+        {powerFactor && (
+          <div className="space-y-4">
+            <Card className="border-blue-500/30 bg-blue-500/5">
+              <CardHeader>
+                <CardTitle className="text-blue-300 flex items-center gap-2">
+                  <Info className="h-4 w-4" />
+                  What This Means
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <div className="text-sm text-blue-200 space-y-2">
+                  <p>• <strong>Power Factor Quality:</strong> {parseFloat(powerFactor) >= 0.95 ? "Excellent - minimal reactive power waste" : parseFloat(powerFactor) >= 0.85 ? "Acceptable for most applications" : "Poor - significant energy inefficiency"}</p>
+                  {pfType === "lagging" && (
+                    <p>• <strong>Inductive Load:</strong> Current lags voltage - typical of motors, transformers, fluorescent lighting</p>
+                  )}
+                  {pfType === "leading" && (
+                    <p>• <strong>Capacitive Load:</strong> Current leads voltage - can cause voltage regulation issues</p>
+                  )}
+                  {capacitorKVAr && (
+                    <p>• <strong>Correction Benefits:</strong> Reduced kVA demand, lower energy costs, improved voltage regulation, reduced cable losses</p>
+                  )}
+                  <p>• <strong>Energy Impact:</strong> Low PF increases the kVA demand from the DNO, potentially increasing energy charges</p>
+                </div>
+              </CardContent>
+            </Card>
+            
+            {/* BS 7671 Guidance */}
+            <Card className="border-amber-500/30 bg-amber-500/5">
+              <CardHeader>
+                <CardTitle className="text-amber-300 flex items-center gap-2">
+                  <BookOpen className="h-4 w-4" />
+                  BS 7671 Regs at a Glance
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-2">
+                <div className="text-sm text-amber-200 space-y-1">
+                  <p>• <strong>512.1.2:</strong> Equipment selection must consider power factor and efficiency requirements</p>
+                  <p>• <strong>525:</strong> Voltage drop calculations must account for both active and reactive power</p>
+                  <p>• <strong>523:</strong> Conductor sizing based on design current, not reduced current from poor PF</p>
+                  <p>• <strong>534:</strong> Capacitor banks require appropriate protection and switching arrangements</p>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        )}
+        
+        <Alert className="border-blue-500/20 bg-blue-500/10">
+          <Info className="h-4 w-4 text-blue-500" />
+          <AlertDescription className="text-blue-200">
+            Power Factor = Active Power ÷ Apparent Power. BS 7671 requires minimum 0.85 for most installations. Ideal range: 0.95-1.0.
+          </AlertDescription>
+        </Alert>
       </CardContent>
     </Card>
   );
