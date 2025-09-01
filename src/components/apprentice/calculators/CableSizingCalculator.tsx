@@ -40,9 +40,13 @@ const CableSizingCalculator = () => {
 
   // Calculate Ib ≤ In ≤ Iz compliance
   const calculateCompliance = () => {
-    if (!designCurrent || !deviceRating || !result.recommendedCable) return null;
+    if (!result.recommendedCable) return null;
     
-    const Ib = parseFloat(designCurrent); // Design current
+    // Use design current if provided, otherwise fall back to main current input
+    const currentToUse = designCurrent || inputs.current;
+    if (!currentToUse || !deviceRating) return null;
+    
+    const Ib = parseFloat(currentToUse); // Design current (or main current as fallback)
     const In = parseFloat(deviceRating);  // Device rating  
     const Iz = result.recommendedCable.currentRating[inputs.installationType] || 0; // Cable capacity
     
@@ -57,7 +61,8 @@ const CableSizingCalculator = () => {
       ibInCompliant,
       inIzCompliant,
       overallCompliant,
-      safetyMargin: Iz > 0 ? ((Iz - In) / Iz * 100) : 0
+      safetyMargin: Iz > 0 ? ((Iz - In) / Iz * 100) : 0,
+      usingFallbackCurrent: !designCurrent && inputs.current
     };
   };
 
@@ -198,6 +203,11 @@ const CableSizingCalculator = () => {
                 <div className="font-medium mb-2">
                   {compliance.overallCompliant ? "BS 7671 Compliance: ✓ PASSED" : "BS 7671 Compliance: ✗ FAILED"}
                 </div>
+                {compliance.usingFallbackCurrent && (
+                  <div className="text-xs text-yellow-400 mb-2">
+                    ⚠️ Using main current input ({compliance.Ib}A) - consider setting design current for proper validation
+                  </div>
+                )}
                 <div className="text-sm grid grid-cols-3 gap-4">
                   <div>Ib = {compliance.Ib}A</div>
                   <div>In = {compliance.In}A</div>
@@ -260,9 +270,12 @@ const CableSizingCalculator = () => {
                     step="0.1"
                     value={designCurrent}
                     onChange={(e) => setDesignCurrent(e.target.value)}
-                    placeholder="Enter design current"
-                    className="w-full px-3 py-2 bg-elec-dark border border-elec-yellow/40 rounded-md text-white"
+                    placeholder={inputs.current ? `Leave empty to use ${inputs.current}A` : "Enter design current"}
+                    className="w-full px-3 py-2 bg-elec-dark border border-elec-yellow/40 rounded-md text-white placeholder:text-muted-foreground/60"
                   />
+                  <p className="text-xs text-muted-foreground">
+                    Optional: If different from main current input. Leave empty to use main current ({inputs.current || '0'}A).
+                  </p>
                 </div>
               </div>
 
