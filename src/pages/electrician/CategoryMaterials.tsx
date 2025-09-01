@@ -346,7 +346,7 @@ const CategoryMaterials = () => {
                       </span>
                     </div>
                     
-                    <div className={`grid gap-6 ${isMobile ? 'grid-cols-1' : 'md:grid-cols-2 lg:grid-cols-3'}`}>
+                    <div className={`grid gap-6 pb-6 ${isMobile ? 'grid-cols-1' : 'md:grid-cols-2 lg:grid-cols-3'}`}>
                       {filteredMaterials.map((item, index) => (
                         <MaterialCard 
                           key={item.id || `${item.supplier}-${item.name}-${index}`} 
