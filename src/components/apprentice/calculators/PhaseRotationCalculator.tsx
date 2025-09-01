@@ -2,14 +2,16 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
-import { RotateCw, AlertTriangle, CheckCircle, XCircle, Info, Zap, Eye, AlertCircle } from "lucide-react";
+import { RotateCw, AlertTriangle, CheckCircle, XCircle, Info, Zap, Eye, AlertCircle, Calculator, Lightbulb } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { usePhaseRotationCalculator } from "./phase-rotation/usePhaseRotationCalculator";
+import { MobileInputWrapper } from "@/components/ui/mobile-input-wrapper";
+import WhyThisMatters from "@/components/common/WhyThisMatters";
+import { useRef, useEffect } from "react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const PhaseRotationCalculator = () => {
   const {
@@ -29,8 +31,35 @@ const PhaseRotationCalculator = () => {
     setPhaseRotationMeter,
     calculatePhaseSequence,
     resetCalculator,
-    clearError
+    clearError,
+    validateInputs
   } = usePhaseRotationCalculator();
+  
+  const resultsRef = useRef<HTMLDivElement>(null);
+  const isMobile = useIsMobile();
+  
+  // Auto-scroll to results on mobile
+  useEffect(() => {
+    if (result && resultsRef.current && isMobile) {
+      resultsRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, [result, isMobile]);
+
+  // Check if calculation is possible
+  const canCalculate = () => {
+    const validationErrors = validateInputs();
+    return Object.keys(validationErrors).length === 0;
+  };
+
+  // Get confidence level for results
+  const getConfidenceLevel = () => {
+    if (!result) return null;
+    
+    if (testMethod === "phase-rotation-meter") return "High";
+    if (testMethod === "motor-behaviour") return "Medium"; 
+    if (testMethod === "voltage-measurement") return "Low";
+    return "Unknown";
+  };
 
   return (
     <Card className="border-elec-yellow/20 bg-elec-gray">
@@ -124,73 +153,49 @@ const PhaseRotationCalculator = () => {
                 {testMethod === "voltage-measurement" && (
                   <div className="space-y-4 p-4 border border-elec-yellow/20 rounded-lg">
                     <h4 className="font-medium text-elec-yellow">Line-to-Line Voltages</h4>
-                    <div className="grid grid-cols-1 gap-3">
-                      <div>
-                        <Label htmlFor="l1-l2" className="flex items-center gap-2">
-                          L1 to L2 (V) - Brown to Black
-                          {errors.voltage0 && <AlertCircle className="h-3 w-3 text-destructive" />}
-                        </Label>
-                        <Input
-                          id="l1-l2"
-                          type="number"
-                          step="0.1"
-                          value={l1ToL2}
-                          onChange={(e) => {
-                            setL1ToL2(e.target.value);
-                            clearError('voltage0');
-                          }}
-                          className="bg-elec-dark border-elec-yellow/20"
-                          placeholder="e.g. 400"
-                        />
-                        {errors.voltage0 && (
-                          <p className="text-xs text-destructive mt-1">{errors.voltage0}</p>
-                        )}
-                      </div>
+                    <div className="space-y-4">
+                      <MobileInputWrapper
+                        label="L1 to L2 (V) - Brown to Black"
+                        value={l1ToL2}
+                        onChange={setL1ToL2}
+                        type="number"
+                        step="0.1"
+                        placeholder="e.g. 400"
+                        error={errors.voltage0}
+                        hint="Typical UK supply: 400V"
+                        unit="V"
+                      />
                       
-                      <div>
-                        <Label htmlFor="l2-l3" className="flex items-center gap-2">
-                          L2 to L3 (V) - Black to Grey
-                          {errors.voltage1 && <AlertCircle className="h-3 w-3 text-destructive" />}
-                        </Label>
-                        <Input
-                          id="l2-l3"
-                          type="number"
-                          step="0.1"
-                          value={l2ToL3}
-                          onChange={(e) => {
-                            setL2ToL3(e.target.value);
-                            clearError('voltage1');
-                          }}
-                          className="bg-elec-dark border-elec-yellow/20"
-                          placeholder="e.g. 400"
-                        />
-                        {errors.voltage1 && (
-                          <p className="text-xs text-destructive mt-1">{errors.voltage1}</p>
-                        )}
-                      </div>
+                      <MobileInputWrapper
+                        label="L2 to L3 (V) - Black to Grey"
+                        value={l2ToL3}
+                        onChange={setL2ToL3}
+                        type="number"
+                        step="0.1"
+                        placeholder="e.g. 400"
+                        error={errors.voltage1}
+                        hint="Should be similar to L1-L2"
+                        unit="V"
+                      />
                       
-                      <div>
-                        <Label htmlFor="l3-l1" className="flex items-center gap-2">
-                          L3 to L1 (V) - Grey to Brown
-                          {errors.voltage2 && <AlertCircle className="h-3 w-3 text-destructive" />}
-                        </Label>
-                        <Input
-                          id="l3-l1"
-                          type="number"
-                          step="0.1"
-                          value={l3ToL1}
-                          onChange={(e) => {
-                            setL3ToL1(e.target.value);
-                            clearError('voltage2');
-                          }}
-                          className="bg-elec-dark border-elec-yellow/20"
-                          placeholder="e.g. 400"
-                        />
-                        {errors.voltage2 && (
-                          <p className="text-xs text-destructive mt-1">{errors.voltage2}</p>
-                        )}
-                      </div>
+                      <MobileInputWrapper
+                        label="L3 to L1 (V) - Grey to Brown"
+                        value={l3ToL1}
+                        onChange={setL3ToL1}
+                        type="number"
+                        step="0.1"
+                        placeholder="e.g. 400"
+                        error={errors.voltage2}
+                        hint="Completes the triangle measurement"
+                        unit="V"
+                      />
                     </div>
+                    <Alert className="bg-blue-500/10 border-blue-500/30">
+                      <Info className="h-4 w-4" />
+                      <AlertDescription className="text-blue-300">
+                        <strong>Voltage Method Note:</strong> This method only checks balance, not actual phase sequence. A phase rotation meter gives definitive results.
+                      </AlertDescription>
+                    </Alert>
                   </div>
                 )}
 
@@ -230,69 +235,108 @@ const PhaseRotationCalculator = () => {
                   </div>
                 )}
 
-                <div className="flex gap-3">
+                <div className="pt-4 border-t border-elec-yellow/20">
                   <Button 
                     onClick={calculatePhaseSequence}
-                    className="flex-1 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
+                    disabled={!canCalculate()}
+                    className="w-full bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 font-medium"
+                    size="lg"
                   >
-                    <RotateCw className="h-4 w-4 mr-2" />
+                    <Calculator className="h-5 w-5 mr-2" />
                     Analyse Phase Sequence
                   </Button>
+                  {!canCalculate() && (
+                    <p className="text-sm text-muted-foreground mt-2 text-center">
+                      {!testMethod ? "Select a test method first" : "Complete all required fields"}
+                    </p>
+                  )}
                   <Button 
                     variant="outline" 
                     onClick={resetCalculator}
-                    className="border-elec-yellow/20"
+                    className="w-full mt-2 border-elec-yellow/20"
+                    size="sm"
                   >
-                    Reset
+                    Reset Calculator
                   </Button>
                 </div>
               </div>
 
               {/* Results Section */}
-              <div className="space-y-4">
+              <div className="space-y-4" ref={resultsRef}>
                 <div className="flex items-center gap-2">
                   <Eye className="h-4 w-4 text-elec-yellow" />
                   <h3 className="text-lg font-semibold text-elec-yellow">Analysis Results</h3>
                 </div>
                 
                 {result ? (
-                  <div className="space-y-4">
-                    {/* Main Result */}
-                    <Card className={`border-2 ${result.isCorrect ? 'border-green-500/30 bg-green-500/10' : 'border-red-500/30 bg-red-500/10'}`}>
+                  <div className="space-y-4" role="region" aria-live="polite" aria-label="Phase rotation analysis results">
+                    {/* Summary Banner */}
+                    <Card className={`border-2 ${result.isCorrect ? 'border-green-500/40 bg-green-500/10' : 'border-red-500/40 bg-red-500/10'}`}>
                       <CardContent className="pt-4">
-                        <div className="flex items-center gap-2 mb-3">
-                          {result.isCorrect ? (
-                            <CheckCircle className="h-5 w-5 text-green-400" />
-                          ) : (
-                            <XCircle className="h-5 w-5 text-red-400" />
-                          )}
-                          <span className={`font-semibold text-lg ${result.isCorrect ? 'text-green-300' : 'text-red-300'}`}>
-                            {result.sequence}
-                          </span>
+                        <div className="flex items-start justify-between mb-3">
+                          <div className="flex items-center gap-2">
+                            {result.isCorrect ? (
+                              <CheckCircle className="h-6 w-6 text-green-400" />
+                            ) : (
+                              <XCircle className="h-6 w-6 text-red-400" />
+                            )}
+                            <div>
+                              <span className={`font-semibold text-lg ${result.isCorrect ? 'text-green-300' : 'text-red-300'}`}>
+                                {result.sequence}
+                              </span>
+                              <div className="flex items-center gap-2 mt-1">
+                                <Badge variant={result.isCorrect ? "default" : "destructive"} className="text-xs">
+                                  {result.isCorrect ? "Correct Sequence" : "Incorrect Sequence"}
+                                </Badge>
+                                <Badge variant="outline" className="text-xs">
+                                  {getConfidenceLevel()} Confidence
+                                </Badge>
+                              </div>
+                            </div>
+                          </div>
                         </div>
-                        <p className={`text-sm mb-2 ${result.isCorrect ? 'text-green-200' : 'text-red-200'}`}>
+                        <p className={`text-sm ${result.isCorrect ? 'text-green-200' : 'text-red-200'}`}>
                           {result.recommendation}
                         </p>
                         {result.balanceStatus && (
-                          <div className="mt-2 text-xs text-muted-foreground">
+                          <div className="mt-3 p-2 bg-black/20 rounded text-xs">
                             <strong>Balance Status:</strong> {result.balanceStatus}
                           </div>
                         )}
                       </CardContent>
                     </Card>
 
-                    {/* Detailed Analysis */}
-                    <div className="grid grid-cols-1 gap-4">
-                      <div className="bg-elec-dark/30 rounded-lg p-4">
-                        <h4 className="font-medium text-elec-yellow mb-2">Motor Direction</h4>
-                        <p className="text-sm text-muted-foreground">{result.motorDirection}</p>
-                      </div>
-                      
-                      <div className="bg-elec-dark/30 rounded-lg p-4">
-                        <h4 className="font-medium text-elec-yellow mb-2">Correction Method</h4>
-                        <p className="text-sm text-muted-foreground">{result.correctionMethod}</p>
-                      </div>
-                    </div>
+                    {/* Next Steps */}
+                    <Card className="border-elec-yellow/20 bg-elec-card">
+                      <CardHeader className="pb-3">
+                        <CardTitle className="text-elec-yellow text-base flex items-center gap-2">
+                          <Info className="h-4 w-4" />
+                          Next Steps
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent className="space-y-3">
+                        <div className="bg-elec-dark/30 rounded-lg p-3">
+                          <h4 className="font-medium text-elec-yellow mb-2 text-sm">Motor Direction</h4>
+                          <p className="text-sm text-muted-foreground">{result.motorDirection}</p>
+                        </div>
+                        
+                        <div className="bg-elec-dark/30 rounded-lg p-3">
+                          <h4 className="font-medium text-elec-yellow mb-2 text-sm">
+                            {result.isCorrect ? "Verification" : "Correction Required"}
+                          </h4>
+                          <p className="text-sm text-muted-foreground">{result.correctionMethod}</p>
+                        </div>
+
+                        {!result.isCorrect && (
+                          <Alert className="bg-amber-500/10 border-amber-500/30">
+                            <AlertTriangle className="h-4 w-4" />
+                            <AlertDescription className="text-amber-300 text-sm">
+                              <strong>Remember:</strong> Always isolate supply and prove dead before making any phase corrections.
+                            </AlertDescription>
+                          </Alert>
+                        )}
+                      </CardContent>
+                    </Card>
 
                     {/* Visual Representation */}
                     {result.visualRepresentation && (
@@ -359,6 +403,32 @@ const PhaseRotationCalculator = () => {
                         </div>
                       </div>
                     )}
+
+                    {/* Why This Matters */}
+                    <WhyThisMatters
+                      points={[
+                        "Incorrect phase sequence can damage equipment and create safety hazards",
+                        "Water pumps may not flow or could be damaged by reverse rotation", 
+                        "HVAC systems will have reduced efficiency with wrong fan direction",
+                        "Industrial processes depend on correct motor rotation for quality control",
+                        "BS 7671 requires proper phase sequence verification for three-phase installations"
+                      ]}
+                    />
+
+                    {/* Regulatory Guidance */}
+                    <Card className="border-blue-500/20 bg-blue-500/5">
+                      <CardHeader className="pb-3">
+                        <CardTitle className="text-blue-300 text-base flex items-center gap-2">
+                          <Info className="h-4 w-4" />
+                          BS 7671 Requirements
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent className="text-blue-200 text-sm space-y-2">
+                        <p><strong>Regulation 612.6:</strong> Phase sequence verification required for three-phase installations</p>
+                        <p><strong>Regulation 314.1:</strong> Conductors must be clearly identified according to approved colour coding</p>
+                        <p><strong>Section 514:</strong> Correct identification and connection of conductors to prevent hazards</p>
+                      </CardContent>
+                    </Card>
 
                     {/* Safety Information */}
                     <Alert className="bg-amber-500/10 border-amber-500/30">
