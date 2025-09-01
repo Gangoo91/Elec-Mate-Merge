@@ -372,59 +372,136 @@ const RCDTripTimeCalculator = () => {
 
           <TabsContent value="guidance">
             <div className="space-y-6">
+              {/* What Results Actually Mean */}
+              <InfoBox
+                title="What Do The Results Actually Tell You?"
+                icon={<Info className="h-5 w-5 text-elec-yellow" />}
+                as="section"
+              >
+                <div className="space-y-4 text-elec-light text-base">
+                  <p className="leading-relaxed">
+                    You're absolutely right - RCD trip times are marked on the device. However, this calculator 
+                    helps you understand what your <strong>actual measured readings</strong> mean for safety and compliance.
+                  </p>
+                  
+                  <div className="bg-blue-500/20 border border-blue-500/40 rounded-lg p-4">
+                    <h5 className="text-blue-200 font-semibold text-base mb-3">Real-World Example</h5>
+                    <p className="text-base leading-relaxed mb-3">
+                      A 30mA RCD might trip at 25mA in 150ms, or 35mA in 400ms. Both scenarios affect safety differently:
+                    </p>
+                    <ul className="space-y-2 text-sm">
+                      <li className="flex items-start gap-3">
+                        <span className="text-green-400 font-bold">✓</span>
+                        <span><strong>25mA in 150ms:</strong> Excellent - trips early with good safety margin</span>
+                      </li>
+                      <li className="flex items-start gap-3">
+                        <span className="text-red-400 font-bold">✗</span>
+                        <span><strong>35mA in 400ms:</strong> Dangerous - exceeds time limits, inadequate protection</span>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    <div className="bg-green-500/20 border border-green-500/40 rounded-lg p-4">
+                      <h6 className="text-green-200 font-semibold text-base mb-3">This Calculator Helps You:</h6>
+                      <ul className="space-y-2 text-sm">
+                        <li className="flex items-start gap-3">
+                          <span className="text-elec-yellow">→</span>
+                          <span><strong>Verify compliance</strong> with BS 7671 standards</span>
+                        </li>
+                        <li className="flex items-start gap-3">
+                          <span className="text-elec-yellow">→</span>
+                          <span><strong>Assess safety margin</strong> - how close to limits?</span>
+                        </li>
+                        <li className="flex items-start gap-3">
+                          <span className="text-elec-yellow">→</span>
+                          <span><strong>Document evidence</strong> for test certificates</span>
+                        </li>
+                        <li className="flex items-start gap-3">
+                          <span className="text-elec-yellow">→</span>
+                          <span><strong>Troubleshoot problems</strong> when RCDs operate outside limits</span>
+                        </li>
+                      </ul>
+                    </div>
+                    
+                    <div className="bg-orange-500/20 border border-orange-500/40 rounded-lg p-4">
+                      <h6 className="text-orange-200 font-semibold text-base mb-3">Why This Matters:</h6>
+                      <ul className="space-y-2 text-sm">
+                        <li className="flex items-start gap-3">
+                          <span className="text-elec-yellow">→</span>
+                          <span><strong>Life safety</strong> - slow trip = longer shock duration</span>
+                        </li>
+                        <li className="flex items-start gap-3">
+                          <span className="text-elec-yellow">→</span>
+                          <span><strong>Legal compliance</strong> - meet BS 7671 requirements</span>
+                        </li>
+                        <li className="flex items-start gap-3">
+                          <span className="text-elec-yellow">→</span>
+                          <span><strong>Insurance validity</strong> - proper testing evidence</span>
+                        </li>
+                        <li className="flex items-start gap-3">
+                          <span className="text-elec-yellow">→</span>
+                          <span><strong>Professional duty</strong> - demonstrate competence</span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </InfoBox>
+
               {/* Understanding RCD Testing */}
               <InfoBox
                 title="Understanding RCD Trip Time Testing"
                 icon={<Shield className="h-5 w-5 text-elec-yellow" />}
                 as="section"
               >
-                <div className="space-y-4 text-elec-light text-sm sm:text-[0.95rem]">
-                  <p>
+                <div className="space-y-4 text-elec-light text-base">
+                  <p className="leading-relaxed">
                     RCD trip time testing verifies that residual current devices operate within the time limits 
                     specified in BS 7671, ensuring adequate protection against electric shock and fire.
                   </p>
                   
                   <div className="grid gap-4 sm:grid-cols-2">
-                    <div className="bg-blue-500/10 border border-blue-500/30 rounded p-3">
-                      <h5 className="text-blue-300 font-medium text-sm mb-2">1× Rated Current Test</h5>
-                      <ul className="text-xs space-y-1">
-                        <li className="flex items-start gap-2">
-                          <span className="text-elec-yellow mt-1 flex-shrink-0 w-1 h-1 bg-elec-yellow rounded-full"></span>
+                    <div className="bg-blue-500/15 border border-blue-500/40 rounded-lg p-4">
+                      <h5 className="text-blue-300 font-semibold text-base mb-3">1× Rated Current Test</h5>
+                      <ul className="text-sm space-y-2">
+                        <li className="flex items-start gap-3">
+                          <span className="text-elec-yellow font-bold">•</span>
                           <span>Tests sensitivity at rated current</span>
                         </li>
-                        <li className="flex items-start gap-2">
-                          <span className="text-elec-yellow mt-1 flex-shrink-0 w-1 h-1 bg-elec-yellow rounded-full"></span>
+                        <li className="flex items-start gap-3">
+                          <span className="text-elec-yellow font-bold">•</span>
                           <span>Maximum 300ms for all RCD ratings</span>
                         </li>
-                        <li className="flex items-start gap-2">
-                          <span className="text-elec-yellow mt-1 flex-shrink-0 w-1 h-1 bg-elec-yellow rounded-full"></span>
+                        <li className="flex items-start gap-3">
+                          <span className="text-elec-yellow font-bold">•</span>
                           <span>Ensures protection operates reliably</span>
                         </li>
                       </ul>
                     </div>
                     
-                    <div className="bg-green-500/10 border border-green-500/30 rounded p-3">
-                      <h5 className="text-green-300 font-medium text-sm mb-2">5× Rated Current Test</h5>
-                      <ul className="text-xs space-y-1">
-                        <li className="flex items-start gap-2">
-                          <span className="text-elec-yellow mt-1 flex-shrink-0 w-1 h-1 bg-elec-yellow rounded-full"></span>
+                    <div className="bg-green-500/15 border border-green-500/40 rounded-lg p-4">
+                      <h5 className="text-green-300 font-semibold text-base mb-3">5× Rated Current Test</h5>
+                      <ul className="text-sm space-y-2">
+                        <li className="flex items-start gap-3">
+                          <span className="text-elec-yellow font-bold">•</span>
                           <span>Tests fast disconnection capability</span>
                         </li>
-                        <li className="flex items-start gap-2">
-                          <span className="text-elec-yellow mt-1 flex-shrink-0 w-1 h-1 bg-elec-yellow rounded-full"></span>
+                        <li className="flex items-start gap-3">
+                          <span className="text-elec-yellow font-bold">•</span>
                           <span>40ms for 30mA/100mA, 150ms for 300mA</span>
                         </li>
-                        <li className="flex items-start gap-2">
-                          <span className="text-elec-yellow mt-1 flex-shrink-0 w-1 h-1 bg-elec-yellow rounded-full"></span>
+                        <li className="flex items-start gap-3">
+                          <span className="text-elec-yellow font-bold">•</span>
                           <span>Critical for shock protection</span>
                         </li>
                       </ul>
                     </div>
                   </div>
 
-                  <div className="bg-warning/10 border border-warning/30 rounded p-3">
-                    <h5 className="text-warning font-medium text-sm mb-2">0.5× Rated Current Test</h5>
-                    <p className="text-xs">
+                  <div className="bg-warning/15 border border-warning/40 rounded-lg p-4">
+                    <h5 className="text-warning font-semibold text-base mb-3">0.5× Rated Current Test</h5>
+                    <p className="text-sm leading-relaxed">
                       RCD must NOT trip at half rated current. This ensures the device doesn't 
                       cause nuisance tripping while maintaining adequate sensitivity.
                     </p>
@@ -438,84 +515,120 @@ const RCDTripTimeCalculator = () => {
                 icon={<Zap className="h-5 w-5 text-elec-yellow" />}
                 as="section"
               >
-                <div className="space-y-4 text-elec-light text-sm sm:text-[0.95rem]">
+                <div className="space-y-4 text-elec-light text-base">
                   <div className="grid gap-4 lg:grid-cols-2">
                     <div>
-                      <h5 className="text-elec-yellow font-medium mb-2">Equipment Required</h5>
-                      <ul className="text-xs space-y-1">
-                        <li className="flex items-start gap-2">
-                          <span className="text-elec-yellow mt-1 flex-shrink-0 w-1 h-1 bg-elec-yellow rounded-full"></span>
+                      <h5 className="text-elec-yellow font-semibold text-base mb-3">Equipment Required</h5>
+                      <ul className="text-sm space-y-2">
+                        <li className="flex items-start gap-3">
+                          <span className="text-elec-yellow font-bold">•</span>
                           <span>Calibrated RCD tester (not test button)</span>
                         </li>
-                        <li className="flex items-start gap-2">
-                          <span className="text-elec-yellow mt-1 flex-shrink-0 w-1 h-1 bg-elec-yellow rounded-full"></span>
+                        <li className="flex items-start gap-3">
+                          <span className="text-elec-yellow font-bold">•</span>
                           <span>Proved voltage indicator</span>
                         </li>
-                        <li className="flex items-start gap-2">
-                          <span className="text-elec-yellow mt-1 flex-shrink-0 w-1 h-1 bg-elec-yellow rounded-full"></span>
-                          <span>Appropriate PPE</span>
+                        <li className="flex items-start gap-3">
+                          <span className="text-elec-yellow font-bold">•</span>
+                          <span>Appropriate PPE (insulated gloves, safety glasses)</span>
                         </li>
-                        <li className="flex items-start gap-2">
-                          <span className="text-elec-yellow mt-1 flex-shrink-0 w-1 h-1 bg-elec-yellow rounded-full"></span>
+                        <li className="flex items-start gap-3">
+                          <span className="text-elec-yellow font-bold">•</span>
                           <span>Installation certificates/drawings</span>
+                        </li>
+                        <li className="flex items-start gap-3">
+                          <span className="text-elec-yellow font-bold">•</span>
+                          <span>Lock-off devices for isolation</span>
                         </li>
                       </ul>
                     </div>
                     
                     <div>
-                      <h5 className="text-elec-yellow font-medium mb-2">Testing Sequence</h5>
-                      <ol className="text-xs space-y-1 list-decimal list-inside">
-                        <li>Verify RCD is energised and functional</li>
-                        <li>Test at 0.5× rated current (should NOT trip)</li>
-                        <li>Test at 1× rated current (record trip time)</li>
-                        <li>Test at 5× rated current (record trip time)</li>
-                        <li>Test mechanical operation using test button</li>
-                        <li>Record all results on test certificate</li>
-                      </ol>
+                      <h5 className="text-elec-yellow font-semibold text-base mb-3">Testing Sequence</h5>
+                      <div className="space-y-2 text-sm">
+                        <div className="flex items-start gap-3">
+                          <span className="bg-elec-yellow text-black rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">1</span>
+                          <span>Verify RCD is energised and functional</span>
+                        </div>
+                        <div className="flex items-start gap-3">
+                          <span className="bg-elec-yellow text-black rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">2</span>
+                          <span>Test at 0.5× rated current (should NOT trip)</span>
+                        </div>
+                        <div className="flex items-start gap-3">
+                          <span className="bg-elec-yellow text-black rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">3</span>
+                          <span>Test at 1× rated current (record trip time)</span>
+                        </div>
+                        <div className="flex items-start gap-3">
+                          <span className="bg-elec-yellow text-black rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">4</span>
+                          <span>Test at 5× rated current (record trip time)</span>
+                        </div>
+                        <div className="flex items-start gap-3">
+                          <span className="bg-elec-yellow text-black rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">5</span>
+                          <span>Test mechanical operation using test button</span>
+                        </div>
+                        <div className="flex items-start gap-3">
+                          <span className="bg-elec-yellow text-black rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">6</span>
+                          <span>Record all results on test certificate</span>
+                        </div>
+                      </div>
                     </div>
                   </div>
                   
-                  <div className="grid gap-3 sm:grid-cols-2">
-                    <div className="bg-green-500/10 border border-green-500/30 rounded p-3">
-                      <h6 className="text-green-300 font-medium text-xs mb-1">✓ Good Practice</h6>
-                      <ul className="text-xs space-y-0.5">
-                        <li className="flex items-start gap-2">
-                          <span className="text-elec-yellow mt-1 flex-shrink-0 w-0.5 h-0.5 bg-elec-yellow rounded-full"></span>
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    <div className="bg-green-500/15 border border-green-500/40 rounded-lg p-4">
+                      <h6 className="text-green-300 font-semibold text-base mb-3 flex items-center gap-2">
+                        <CheckCircle className="h-5 w-5" />
+                        Good Practice
+                      </h6>
+                      <ul className="text-sm space-y-2">
+                        <li className="flex items-start gap-3">
+                          <span className="text-green-400 font-bold">•</span>
                           <span>Test during installation commissioning</span>
                         </li>
-                        <li className="flex items-start gap-2">
-                          <span className="text-elec-yellow mt-1 flex-shrink-0 w-0.5 h-0.5 bg-elec-yellow rounded-full"></span>
+                        <li className="flex items-start gap-3">
+                          <span className="text-green-400 font-bold">•</span>
                           <span>Use calibrated test equipment</span>
                         </li>
-                        <li className="flex items-start gap-2">
-                          <span className="text-elec-yellow mt-1 flex-shrink-0 w-0.5 h-0.5 bg-elec-yellow rounded-full"></span>
+                        <li className="flex items-start gap-3">
+                          <span className="text-green-400 font-bold">•</span>
                           <span>Record environmental conditions</span>
                         </li>
-                        <li className="flex items-start gap-2">
-                          <span className="text-elec-yellow mt-1 flex-shrink-0 w-0.5 h-0.5 bg-elec-yellow rounded-full"></span>
+                        <li className="flex items-start gap-3">
+                          <span className="text-green-400 font-bold">•</span>
                           <span>Test both Line-Earth and Neutral-Earth</span>
+                        </li>
+                        <li className="flex items-start gap-3">
+                          <span className="text-green-400 font-bold">•</span>
+                          <span>Perform visual inspection first</span>
                         </li>
                       </ul>
                     </div>
                     
-                    <div className="bg-red-500/10 border border-red-500/30 rounded p-3">
-                      <h6 className="text-red-300 font-medium text-xs mb-1">❌ Common Errors</h6>
-                      <ul className="text-xs space-y-0.5">
-                        <li className="flex items-start gap-2">
-                          <span className="text-elec-yellow mt-1 flex-shrink-0 w-0.5 h-0.5 bg-elec-yellow rounded-full"></span>
+                    <div className="bg-red-500/20 border border-red-500/50 rounded-lg p-4">
+                      <h6 className="text-red-300 font-semibold text-base mb-3 flex items-center gap-2">
+                        <XCircle className="h-5 w-5" />
+                        Common Errors
+                      </h6>
+                      <ul className="text-sm space-y-2">
+                        <li className="flex items-start gap-3">
+                          <span className="text-red-400 font-bold">•</span>
                           <span>Using RCD test button for formal testing</span>
                         </li>
-                        <li className="flex items-start gap-2">
-                          <span className="text-elec-yellow mt-1 flex-shrink-0 w-0.5 h-0.5 bg-elec-yellow rounded-full"></span>
+                        <li className="flex items-start gap-3">
+                          <span className="text-red-400 font-bold">•</span>
                           <span>Not testing at all required currents</span>
                         </li>
-                        <li className="flex items-start gap-2">
-                          <span className="text-elec-yellow mt-1 flex-shrink-0 w-0.5 h-0.5 bg-elec-yellow rounded-full"></span>
+                        <li className="flex items-start gap-3">
+                          <span className="text-red-400 font-bold">•</span>
                           <span>Testing with uncalibrated equipment</span>
                         </li>
-                        <li className="flex items-start gap-2">
-                          <span className="text-elec-yellow mt-1 flex-shrink-0 w-0.5 h-0.5 bg-elec-yellow rounded-full"></span>
+                        <li className="flex items-start gap-3">
+                          <span className="text-red-400 font-bold">•</span>
                           <span>Ignoring failed test results</span>
+                        </li>
+                        <li className="flex items-start gap-3">
+                          <span className="text-red-400 font-bold">•</span>
+                          <span>Not isolating properly before testing</span>
                         </li>
                       </ul>
                     </div>
@@ -529,73 +642,90 @@ const RCDTripTimeCalculator = () => {
                 icon={<AlertTriangle className="h-5 w-5 text-elec-yellow" />}
                 as="section"
               >
-                <div className="space-y-4 text-elec-light text-sm sm:text-[0.95rem]">
+                <div className="space-y-4 text-elec-light text-base">
                   <div className="grid gap-4 sm:grid-cols-2">
-                    <div>
-                      <h5 className="text-red-300 font-medium mb-2">Trip Time Too Slow</h5>
-                      <ul className="text-xs space-y-1">
-                        <li className="flex items-start gap-2">
-                          <span className="text-elec-yellow mt-1 flex-shrink-0 w-1 h-1 bg-elec-yellow rounded-full"></span>
+                    <div className="bg-red-500/15 border border-red-500/40 rounded-lg p-4">
+                      <h5 className="text-red-300 font-semibold text-base mb-3">Trip Time Too Slow</h5>
+                      <ul className="text-sm space-y-2">
+                        <li className="flex items-start gap-3">
+                          <span className="text-elec-yellow font-bold">•</span>
                           <span>Internal contacts may be deteriorating</span>
                         </li>
-                        <li className="flex items-start gap-2">
-                          <span className="text-elec-yellow mt-1 flex-shrink-0 w-1 h-1 bg-elec-yellow rounded-full"></span>
+                        <li className="flex items-start gap-3">
+                          <span className="text-elec-yellow font-bold">•</span>
                           <span>Magnetic core may be contaminated</span>
                         </li>
-                        <li className="flex items-start gap-2">
-                          <span className="text-elec-yellow mt-1 flex-shrink-0 w-1 h-1 bg-elec-yellow rounded-full"></span>
+                        <li className="flex items-start gap-3">
+                          <span className="text-elec-yellow font-bold">•</span>
                           <span>Temperature effects on electronics</span>
                         </li>
-                        <li className="flex items-start gap-2">
-                          <span className="text-elec-yellow mt-1 flex-shrink-0 w-1 h-1 bg-elec-yellow rounded-full"></span>
+                        <li className="flex items-start gap-3">
+                          <span className="text-elec-yellow font-bold">•</span>
                           <span>RCD approaching end of service life</span>
                         </li>
                       </ul>
                     </div>
                     
-                    <div>
-                      <h5 className="text-orange-300 font-medium mb-2">RCD Won't Trip</h5>
-                      <ul className="text-xs space-y-1">
-                        <li className="flex items-start gap-2">
-                          <span className="text-elec-yellow mt-1 flex-shrink-0 w-1 h-1 bg-elec-yellow rounded-full"></span>
+                    <div className="bg-orange-500/15 border border-orange-500/40 rounded-lg p-4">
+                      <h5 className="text-orange-300 font-semibold text-base mb-3">RCD Won't Trip</h5>
+                      <ul className="text-sm space-y-2">
+                        <li className="flex items-start gap-3">
+                          <span className="text-elec-yellow font-bold">•</span>
                           <span>Check supply voltage is present</span>
                         </li>
-                        <li className="flex items-start gap-2">
-                          <span className="text-elec-yellow mt-1 flex-shrink-0 w-1 h-1 bg-elec-yellow rounded-full"></span>
+                        <li className="flex items-start gap-3">
+                          <span className="text-elec-yellow font-bold">•</span>
                           <span>Verify correct test current selection</span>
                         </li>
-                        <li className="flex items-start gap-2">
-                          <span className="text-elec-yellow mt-1 flex-shrink-0 w-1 h-1 bg-elec-yellow rounded-full"></span>
+                        <li className="flex items-start gap-3">
+                          <span className="text-elec-yellow font-bold">•</span>
                           <span>Internal mechanism may have failed</span>
                         </li>
-                        <li className="flex items-start gap-2">
-                          <span className="text-elec-yellow mt-1 flex-shrink-0 w-1 h-1 bg-elec-yellow rounded-full"></span>
+                        <li className="flex items-start gap-3">
+                          <span className="text-elec-yellow font-bold">•</span>
                           <span>RCD requires immediate replacement</span>
                         </li>
                       </ul>
                     </div>
                   </div>
                   
-                  <div className="bg-destructive/10 border border-destructive/30 rounded p-3">
-                    <h6 className="text-destructive font-medium text-sm mb-2">Action Required for Failed Tests</h6>
-                    <ul className="text-xs space-y-1">
-                      <li className="flex items-start gap-2">
-                        <span className="text-elec-yellow mt-1 flex-shrink-0 w-1 h-1 bg-elec-yellow rounded-full"></span>
-                        <span>Do not energise circuits protected by failed RCD</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-elec-yellow mt-1 flex-shrink-0 w-1 h-1 bg-elec-yellow rounded-full"></span>
-                        <span>Replace RCD immediately if it fails to trip</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-elec-yellow mt-1 flex-shrink-0 w-1 h-1 bg-elec-yellow rounded-full"></span>
-                        <span>Investigate cause before re-energising</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-elec-yellow mt-1 flex-shrink-0 w-1 h-1 bg-elec-yellow rounded-full"></span>
-                        <span>Complete retest after replacement</span>
-                      </li>
-                    </ul>
+                  <div className="bg-red-600/30 border border-red-500/60 rounded-lg p-4">
+                    <h6 className="text-red-200 font-semibold text-base mb-3 flex items-center gap-2">
+                      <AlertTriangle className="h-5 w-5 text-red-400" />
+                      Action Required for Failed Tests
+                    </h6>
+                    <div className="space-y-3">
+                      <div className="bg-red-700/40 border border-red-500/50 rounded-lg p-3">
+                        <p className="text-red-100 font-medium text-sm mb-2">CRITICAL SAFETY NOTICE</p>
+                        <p className="text-red-200 text-sm leading-relaxed">
+                          A failed RCD means NO protection against electric shock or fire from earth faults. 
+                          This creates immediate danger to life. Take action immediately.
+                        </p>
+                      </div>
+                      
+                      <ul className="text-sm space-y-2 text-red-100">
+                        <li className="flex items-start gap-3">
+                          <span className="text-red-400 font-bold text-base">•</span>
+                          <span><strong>Do not energise circuits</strong> protected by failed RCD</span>
+                        </li>
+                        <li className="flex items-start gap-3">
+                          <span className="text-red-400 font-bold text-base">•</span>
+                          <span><strong>Replace RCD immediately</strong> if it fails to trip</span>
+                        </li>
+                        <li className="flex items-start gap-3">
+                          <span className="text-red-400 font-bold text-base">•</span>
+                          <span><strong>Investigate root cause</strong> before re-energising</span>
+                        </li>
+                        <li className="flex items-start gap-3">
+                          <span className="text-red-400 font-bold text-base">•</span>
+                          <span><strong>Complete full retest</strong> after replacement</span>
+                        </li>
+                        <li className="flex items-start gap-3">
+                          <span className="text-red-400 font-bold text-base">•</span>
+                          <span><strong>Issue danger notice</strong> if installation cannot be made safe</span>
+                        </li>
+                      </ul>
+                    </div>
                   </div>
                 </div>
               </InfoBox>
