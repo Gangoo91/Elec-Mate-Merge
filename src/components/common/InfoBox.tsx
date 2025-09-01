@@ -33,11 +33,11 @@ const InfoBox: React.FC<InfoBoxProps & { children?: React.ReactNode }> = ({
         <CardContent className="pt-0">
           {children}
           {points?.length ? (
-            <ul className="space-y-2 text-elec-light text-sm sm:text-[0.95rem] leading-relaxed">
+            <ul className="space-y-1.5 text-elec-light text-sm sm:text-[0.95rem]">
               {points.map((p, i) => (
-                <li key={i} className="flex items-start gap-2">
-                  <span className="flex-shrink-0 w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2.5"></span>
-                  <span className="flex-1 leading-6">{p}</span>
+                <li key={i} className="flex items-center gap-3">
+                  <span className="flex-shrink-0 w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
+                  <span className="flex-1 leading-relaxed">{p}</span>
                 </li>
               ))}
             </ul>
