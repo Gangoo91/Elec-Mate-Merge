@@ -47,14 +47,14 @@ export const ProductCard = ({ product, isCheapest, savings, onAddToQuote }: Prod
 
   return (
     <Card 
-      className={`border transition-all hover:shadow-lg ${
+      className={`border transition-all hover:shadow-lg overflow-hidden ${
         isCheapest 
           ? 'border-green-500/50 bg-green-500/5 ring-1 ring-green-500/20' 
           : 'border-elec-yellow/20 bg-elec-gray'
       }`}
     >
-      <CardContent className="p-4">
-        <div className={`${isMobile ? 'space-y-4' : 'flex items-center justify-between'}`}>
+      <CardContent className={`${isMobile ? 'p-3' : 'p-4'}`}>
+        <div className={`${isMobile ? 'space-y-3' : 'flex items-center justify-between min-h-0'}`}>
           {/* Mobile: Vertical layout */}
           {isMobile ? (
             <>
@@ -78,9 +78,9 @@ export const ProductCard = ({ product, isCheapest, savings, onAddToQuote }: Prod
               </div>
               
               {/* Product name */}
-              <div>
-                <h3 className="font-medium text-white text-sm leading-tight">{product.name}</h3>
-                <p className="text-xs text-muted-foreground">{product.category}</p>
+              <div className="min-w-0">
+                <h3 className="font-medium text-white text-sm leading-tight line-clamp-2 break-words">{product.name}</h3>
+                <p className="text-xs text-muted-foreground truncate">{product.category}</p>
               </div>
               
               {/* Price and stock */}
@@ -115,24 +115,26 @@ export const ProductCard = ({ product, isCheapest, savings, onAddToQuote }: Prod
               </div>
               
               {/* Action buttons */}
-              <div className="flex gap-2">
+              <div className={`${onAddToQuote && product.productUrl ? 'grid grid-cols-2 gap-2' : 'flex'}`}>
                 {onAddToQuote && (
                   <MobileButton
                     variant="default"
+                    size="sm"
                     onClick={handleAddToQuote}
-                    className="flex-1 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
+                    className={`bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 text-xs h-10 ${!product.productUrl ? 'w-full' : ''}`}
                   >
-                    <Plus className="h-4 w-4 mr-2" />
-                    Add to Quote
+                    <Plus className="h-3 w-3 mr-1" />
+                    Add
                   </MobileButton>
                 )}
                 {product.productUrl && (
                   <MobileButton
                     variant="outline"
+                    size="sm"
                     onClick={() => window.open(product.productUrl, '_blank')}
-                    className="flex-1"
+                    className="text-xs h-10"
                   >
-                    <ExternalLink className="h-4 w-4 mr-2" />
+                    <ExternalLink className="h-3 w-3 mr-1" />
                     View
                   </MobileButton>
                 )}
@@ -141,25 +143,25 @@ export const ProductCard = ({ product, isCheapest, savings, onAddToQuote }: Prod
           ) : (
             /* Desktop: Horizontal layout */
             <>
-              <div className="flex items-center gap-4 flex-1">
+              <div className="flex items-center gap-4 flex-1 min-w-0">
                 <img 
                   src={product.image} 
                   alt={product.name}
-                  className="w-16 h-16 object-cover rounded-lg bg-elec-gray"
+                  className="w-12 h-12 lg:w-16 lg:h-16 object-cover rounded-lg bg-elec-gray flex-shrink-0"
                 />
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-1">
-                    <h3 className="font-medium text-white truncate">{product.name}</h3>
+                    <h3 className="font-medium text-white text-sm lg:text-base line-clamp-1">{product.name}</h3>
                     {isCheapest && (
-                      <Badge className="bg-green-500/20 text-green-400 border-green-500/30">
-                        <Crown className="h-4 w-4 mr-1" />
-                        Best Price
+                      <Badge className="bg-green-500/20 text-green-400 border-green-500/30 text-xs flex-shrink-0">
+                        <Crown className="h-3 w-3 mr-1" />
+                        Best
                       </Badge>
                     )}
                   </div>
-                  <p className="text-sm text-muted-foreground">{product.category}</p>
-                  <div className="flex items-center gap-3 mt-2">
-                    <span className="text-sm font-medium text-elec-yellow">{product.supplier}</span>
+                  <p className="text-xs lg:text-sm text-muted-foreground truncate">{product.category}</p>
+                  <div className="flex items-center gap-2 lg:gap-3 mt-1 lg:mt-2 flex-wrap">
+                    <span className="text-xs lg:text-sm font-medium text-elec-yellow">{product.supplier}</span>
                     <Badge 
                       variant="outline" 
                       className={`text-xs ${
@@ -174,42 +176,45 @@ export const ProductCard = ({ product, isCheapest, savings, onAddToQuote }: Prod
                     </Badge>
                     {product.rating && (
                       <div className="flex items-center gap-1">
-                        <Star className="h-4 w-4 text-amber-400 fill-current" />
-                        <span className="text-sm text-muted-foreground">{product.rating}</span>
+                        <Star className="h-3 w-3 lg:h-4 lg:w-4 text-amber-400 fill-current" />
+                        <span className="text-xs lg:text-sm text-muted-foreground">{product.rating}</span>
                       </div>
                     )}
                   </div>
                 </div>
               </div>
               
-              <div className="text-right">
-                <div className="flex items-center gap-4">
+              <div className="text-right flex-shrink-0">
+                <div className="flex items-center gap-2 lg:gap-4">
                   <div>
-                    <div className="text-2xl font-bold text-elec-yellow">{product.price}</div>
+                    <div className="text-lg lg:text-2xl font-bold text-elec-yellow">{product.price}</div>
                     {savings > 0 && (
-                      <div className="flex items-center gap-1 text-red-400 text-sm">
-                        <TrendingDown className="h-4 w-4" />
-                        +{savings}% more
+                      <div className="flex items-center gap-1 text-red-400 text-xs lg:text-sm">
+                        <TrendingDown className="h-3 w-3 lg:h-4 lg:w-4" />
+                        +{savings}%
                       </div>
                     )}
                   </div>
                   
-                  <div className="flex gap-2">
+                  <div className="flex gap-1 lg:gap-2">
                     {onAddToQuote && (
                       <Button
+                        size="sm"
                         onClick={handleAddToQuote}
-                        className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
+                        className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 text-xs lg:text-sm h-8 lg:h-10 px-2 lg:px-4"
                       >
-                        <Plus className="h-4 w-4 mr-2" />
-                        Add to Quote
+                        <Plus className="h-3 w-3 lg:h-4 lg:w-4 lg:mr-2" />
+                        <span className="hidden lg:inline">Add</span>
                       </Button>
                     )}
                     {product.productUrl && (
                       <Button
                         variant="outline"
+                        size="sm"
                         onClick={() => window.open(product.productUrl, '_blank')}
+                        className="text-xs lg:text-sm h-8 lg:h-10 px-2 lg:px-3"
                       >
-                        <ExternalLink className="h-4 w-4" />
+                        <ExternalLink className="h-3 w-3 lg:h-4 lg:w-4" />
                       </Button>
                     )}
                   </div>

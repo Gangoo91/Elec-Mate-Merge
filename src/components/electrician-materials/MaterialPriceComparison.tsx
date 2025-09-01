@@ -435,7 +435,7 @@ const MaterialPriceComparison = ({
               )}
 
               {/* Product Cards */}
-              <div className="space-y-4">
+              <div className={`${isMobile ? 'space-y-3' : 'space-y-4'}`}>
                 {comparisonResult.products.map((product) => {
                   const isCheapest = product.numericPrice === comparisonResult.cheapestPrice;
                   const savings = calculateSavings(product.numericPrice, comparisonResult.cheapestPrice);
