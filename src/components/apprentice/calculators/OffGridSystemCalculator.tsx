@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { MobileInputWrapper } from "@/components/ui/mobile-input-wrapper";
 import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
 import { MobileButton } from "@/components/ui/mobile-button";
-import { Battery, Sun, Zap, AlertTriangle, CheckCircle2, Info, Settings, Lightbulb } from "lucide-react";
-import { useDebounce } from "@/hooks/useDebounce";
+import { Battery, Sun, Zap, AlertTriangle, CheckCircle2, Info, Settings, Lightbulb, Calculator, RotateCcw } from "lucide-react";
 import { OFFGRID_PRESETS, getPresetByName } from "@/lib/offgrid-presets";
 import { calculateOffGridSystem, OffGridResult } from "@/lib/offgrid-calculations";
 import InfoBox from "@/components/common/InfoBox";
@@ -23,11 +22,6 @@ export function OffGridSystemCalculator() {
   const [depthOfDischarge, setDepthOfDischarge] = useState('80');
   const [systemEfficiency, setSystemEfficiency] = useState('85');
   const [result, setResult] = useState<OffGridResult | null>(null);
-  
-  // Debounced values for live calculation
-  const debouncedDailyConsumption = useDebounce(dailyConsumption, 800);
-  const debouncedPeakSunHours = useDebounce(peakSunHours, 800);
-  const debouncedAutonomyDays = useDebounce(autonomyDays, 800);
 
   const presetOptions = OFFGRID_PRESETS.map(preset => ({ value: preset.name, label: preset.name }));
 
@@ -61,11 +55,10 @@ export function OffGridSystemCalculator() {
     }
   };
 
-  // Live calculation when key inputs change
-  useEffect(() => {
-    const consumption = parseFloat(debouncedDailyConsumption);
-    const sunHours = parseFloat(debouncedPeakSunHours);
-    const autonomy = parseFloat(debouncedAutonomyDays);
+  const calculateSystem = () => {
+    const consumption = parseFloat(dailyConsumption);
+    const sunHours = parseFloat(peakSunHours);
+    const autonomy = parseFloat(autonomyDays);
     const voltage = parseFloat(systemVoltage);
     const panelWatt = parseFloat(panelWattage);
     const battCap = parseFloat(batteryCapacity);
@@ -87,10 +80,8 @@ export function OffGridSystemCalculator() {
         batteryType: batteryType as 'lithium' | 'agm'
       });
       setResult(calculatedResult);
-    } else {
-      setResult(null);
     }
-  }, [debouncedDailyConsumption, debouncedPeakSunHours, debouncedAutonomyDays, systemVoltage, panelWattage, batteryCapacity, batteryVoltage, batteryType, depthOfDischarge, systemEfficiency]);
+  };
 
   const reset = () => {
     setSelectedPreset('');
@@ -284,14 +275,25 @@ export function OffGridSystemCalculator() {
             />
           </div>
 
-          <MobileButton 
-            onClick={reset} 
-            variant="outline" 
-            size="wide"
-            className="sm:w-auto"
-          >
-            Reset All Values
-          </MobileButton>
+          <div className="flex gap-3">
+            <MobileButton 
+              onClick={calculateSystem} 
+              variant="elec" 
+              size="wide"
+              className="flex-1"
+            >
+              <Calculator className="h-4 w-4" />
+              Calculate System
+            </MobileButton>
+            <MobileButton 
+              onClick={reset} 
+              variant="outline" 
+              size="default"
+              className="px-4"
+            >
+              <RotateCcw className="h-4 w-4" />
+            </MobileButton>
+          </div>
         </CardContent>
       </Card>
 
