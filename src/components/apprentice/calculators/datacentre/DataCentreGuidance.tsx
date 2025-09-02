@@ -2,6 +2,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { ResultCard } from "@/components/ui/result-card";
 import { 
   Server, 
   Zap, 
@@ -62,283 +63,273 @@ export function DataCentreGuidance({ results }: DataCentreGuidanceProps) {
   return (
     <div className="space-y-4 sm:space-y-6">
       {/* Executive Summary - What This Means */}
-      <Card className="border-elec-yellow/20 bg-elec-grey">
-        <CardHeader className="pb-4">
-          <CardTitle className="flex items-center gap-2 text-elec-light text-lg">
+      <ResultCard>
+        <div className="space-y-2 mb-6">
+          <div className="flex items-center gap-2">
             <Info className="h-5 w-5 text-elec-yellow" />
-            What This Means
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="space-y-3">
-              <div className="flex items-start gap-3">
-                <Target className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
-                <div>
-                  <div className="font-medium text-elec-light text-sm">Efficiency Status</div>
-                  <div className="text-xs text-elec-muted">
-                    {results.pue <= 1.3 ? "Excellent efficiency - world-class design" :
-                     results.pue <= 1.6 ? "Good efficiency - modern standard" :
-                     results.pue <= 2.0 ? "Average efficiency - improvement opportunities" :
-                     "Poor efficiency - significant improvements needed"}
-                  </div>
-                </div>
-              </div>
-              <div className="flex items-start gap-3">
-                <PoundSterling className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
-                <div>
-                  <div className="font-medium text-elec-light text-sm">Cost Impact</div>
-                  <div className="text-xs text-elec-muted">
-                    Annual energy costs of {formatLargeCurrency(results.annualCost)} represent significant operational expense requiring optimisation
-                  </div>
+            <h3 className="text-lg font-medium">What This Means</h3>
+          </div>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="space-y-3">
+            <div className="flex items-start gap-3">
+              <Target className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
+              <div>
+                <div className="font-medium text-sm">Efficiency Status</div>
+                <div className="text-xs text-muted-foreground">
+                  {results.pue <= 1.3 ? "Excellent efficiency - world-class design" :
+                   results.pue <= 1.6 ? "Good efficiency - modern standard" :
+                   results.pue <= 2.0 ? "Average efficiency - improvement opportunities" :
+                   "Poor efficiency - significant improvements needed"}
                 </div>
               </div>
             </div>
-            <div className="space-y-3">
-              <div className="flex items-start gap-3">
-                <Gauge className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
-                <div>
-                  <div className="font-medium text-elec-light text-sm">Capacity Planning</div>
-                  <div className="text-xs text-elec-muted">
-                    {results.capacityHeadroom >= 20 ? "Good headroom for growth" :
-                     results.capacityHeadroom >= 10 ? "Adequate capacity for near-term" :
-                     "Expansion planning required soon"}
-                  </div>
-                </div>
-              </div>
-              <div className="flex items-start gap-3">
-                <Leaf className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
-                <div>
-                  <div className="font-medium text-elec-light text-sm">Environmental Impact</div>
-                  <div className="text-xs text-elec-muted">
-                    {formatLargeNumber(results.annualCo2e / 1000)}t CO2e annually - efficiency improvements reduce both costs and carbon footprint
-                  </div>
+            <div className="flex items-start gap-3">
+              <PoundSterling className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
+              <div>
+                <div className="font-medium text-sm">Cost Impact</div>
+                <div className="text-xs text-muted-foreground">
+                  Annual energy costs of {formatLargeCurrency(results.annualCost)} represent significant operational expense requiring optimisation
                 </div>
               </div>
             </div>
           </div>
-        </CardContent>
-      </Card>
+          <div className="space-y-3">
+            <div className="flex items-start gap-3">
+              <Gauge className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
+              <div>
+                <div className="font-medium text-sm">Capacity Planning</div>
+                <div className="text-xs text-muted-foreground">
+                  {results.capacityHeadroom >= 20 ? "Good headroom for growth" :
+                   results.capacityHeadroom >= 10 ? "Adequate capacity for near-term" :
+                   "Expansion planning required soon"}
+                </div>
+              </div>
+            </div>
+            <div className="flex items-start gap-3">
+              <Leaf className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
+              <div>
+                <div className="font-medium text-sm">Environmental Impact</div>
+                <div className="text-xs text-muted-foreground">
+                  {formatLargeNumber(results.annualCo2e / 1000)}t CO2e annually - efficiency improvements reduce both costs and carbon footprint
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ResultCard>
 
       {/* Load Breakdown Results */}
-      <Card className="border-elec-yellow/20 bg-elec-grey">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-elec-light">
+      <ResultCard>
+        <div className="space-y-2 mb-6">
+          <div className="flex items-center gap-2">
             <Server className="h-5 w-5 text-elec-yellow" />
-            Load Analysis & Infrastructure Sizing
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="space-y-3">
-              <div className="flex items-center gap-2">
-                <Zap className="h-4 w-4 text-elec-yellow" />
-                <span className="font-medium text-elec-light">Power Loads</span>
-              </div>
-              <div className="space-y-2 text-sm ml-6">
-                <div className="flex justify-between">
-                  <span className="text-elec-muted">Total IT load:</span>
-                  <span className="text-elec-yellow font-medium">{results.totalItLoad.toFixed(0)} kW</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-elec-muted">Cooling load:</span>
-                  <span className="text-elec-yellow font-medium">{results.coolingLoad.toFixed(0)} kW</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-elec-muted">Lights & misc:</span>
-                  <span className="text-elec-yellow font-medium">{results.lightsLoad.toFixed(0)} kW</span>
-                </div>
-                <div className="flex justify-between font-semibold border-t border-elec-yellow/20 pt-2">
-                  <span className="text-elec-light">Total facility:</span>
-                  <span className="text-elec-yellow">{results.totalFacilityLoad.toFixed(0)} kW</span>
-                </div>
-              </div>
+            <h3 className="text-lg font-medium">Load Analysis & Infrastructure Sizing</h3>
+          </div>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="space-y-3">
+            <div className="flex items-center gap-2">
+              <Zap className="h-4 w-4 text-elec-yellow" />
+              <span className="font-medium">Power Loads</span>
             </div>
-
-            <div className="space-y-3">
-              <div className="flex items-center gap-2">
-                <Battery className="h-4 w-4 text-elec-yellow" />
-                <span className="font-medium text-elec-light">Infrastructure</span>
+            <div className="space-y-2 text-sm ml-6">
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">Total IT load:</span>
+                <span className="text-elec-yellow font-medium">{results.totalItLoad.toFixed(0)} kW</span>
               </div>
-              <div className="space-y-2 text-sm ml-6">
-                <div className="flex justify-between">
-                  <span className="text-elec-muted">UPS capacity:</span>
-                  <span className="text-elec-yellow font-medium">{results.upsCapacity.toFixed(0)} kW</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-elec-muted">Generator:</span>
-                  <span className="text-elec-yellow font-medium">{results.generatorCapacity.toFixed(0)} kW</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-elec-muted">Battery:</span>
-                  <span className="text-elec-yellow font-medium">{results.batteryCapacity.toFixed(0)} kWh</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-elec-muted">Cooling:</span>
-                  <span className="text-elec-yellow font-medium">{results.coolingCapacity.toFixed(0)} kW</span>
-                </div>
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">Cooling load:</span>
+                <span className="text-elec-yellow font-medium">{results.coolingLoad.toFixed(0)} kW</span>
               </div>
-            </div>
-
-            <div className="space-y-3">
-              <div className="flex items-center gap-2">
-                <Gauge className="h-4 w-4 text-elec-yellow" />
-                <span className="font-medium text-elec-light">Efficiency</span>
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">Lights & misc:</span>
+                <span className="text-elec-yellow font-medium">{results.lightsLoad.toFixed(0)} kW</span>
               </div>
-              <div className="space-y-2 text-sm ml-6">
-                <div className="flex justify-between">
-                  <span className="text-elec-muted">PUE:</span>
-                  <span className="text-elec-yellow font-medium">{results.pue.toFixed(2)}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-elec-muted">DCiE:</span>
-                  <span className="text-elec-yellow font-medium">{results.dcie.toFixed(1)}%</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-elec-muted">Capacity headroom:</span>
-                  <span className="text-elec-yellow font-medium">{results.capacityHeadroom.toFixed(1)}%</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-elec-muted">Max IT capacity:</span>
-                  <span className="text-elec-yellow font-medium">{results.maxItLoadCapacity.toFixed(0)} kW</span>
-                </div>
+              <div className="flex justify-between font-semibold border-t border-elec-yellow/20 pt-2">
+                <span>Total facility:</span>
+                <span className="text-elec-yellow">{results.totalFacilityLoad.toFixed(0)} kW</span>
               </div>
             </div>
           </div>
-        </CardContent>
-      </Card>
+
+          <div className="space-y-3">
+            <div className="flex items-center gap-2">
+              <Battery className="h-4 w-4 text-elec-yellow" />
+              <span className="font-medium">Infrastructure</span>
+            </div>
+            <div className="space-y-2 text-sm ml-6">
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">UPS capacity:</span>
+                <span className="text-elec-yellow font-medium">{results.upsCapacity.toFixed(0)} kW</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">Generator:</span>
+                <span className="text-elec-yellow font-medium">{results.generatorCapacity.toFixed(0)} kW</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">Battery:</span>
+                <span className="text-elec-yellow font-medium">{results.batteryCapacity.toFixed(0)} kWh</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">Cooling:</span>
+                <span className="text-elec-yellow font-medium">{results.coolingCapacity.toFixed(0)} kW</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="space-y-3">
+            <div className="flex items-center gap-2">
+              <Gauge className="h-4 w-4 text-elec-yellow" />
+              <span className="font-medium">Efficiency</span>
+            </div>
+            <div className="space-y-2 text-sm ml-6">
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">PUE:</span>
+                <span className="text-elec-yellow font-medium">{results.pue.toFixed(2)}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">DCiE:</span>
+                <span className="text-elec-yellow font-medium">{results.dcie.toFixed(1)}%</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">Capacity headroom:</span>
+                <span className="text-elec-yellow font-medium">{results.capacityHeadroom.toFixed(1)}%</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">Max IT capacity:</span>
+                <span className="text-elec-yellow font-medium">{results.maxItLoadCapacity.toFixed(0)} kW</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ResultCard>
 
       {/* Annual Consumption & Costs */}
-      <Card className="border-elec-yellow/20 bg-elec-grey">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-elec-light">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <ResultCard
+          title="Annual Energy"
+          value={formatLargeNumber(results.annualKwh)}
+          unit="kWh"
+          icon={<Zap className="h-5 w-5" />}
+        />
+        <ResultCard
+          title="Annual Cost"
+          value={formatLargeCurrency(results.annualCost)}
+          icon={<PoundSterling className="h-5 w-5" />}
+        />
+        <ResultCard
+          title="CO2 Emissions"
+          value={`${formatLargeNumber(results.annualCo2e / 1000)}t`}
+          subtitle="CO2e per year"
+          icon={<Leaf className="h-5 w-5" />}
+        />
+      </div>
+      
+      <ResultCard>
+        <div className="space-y-2 mb-4">
+          <div className="flex items-center gap-2">
             <TrendingUp className="h-5 w-5 text-elec-yellow" />
-            Annual Consumption & Financial Impact
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
-            <div className="text-center p-4 bg-elec-card rounded-lg border border-elec-yellow/10">
-              <Zap className="h-8 w-8 text-elec-yellow mx-auto mb-2" />
-              <div className="text-xl sm:text-2xl font-bold text-elec-yellow">{formatLargeNumber(results.annualKwh)}</div>
-              <div className="text-xs sm:text-sm text-elec-muted">kWh per year</div>
-            </div>
-            <div className="text-center p-4 bg-elec-card rounded-lg border border-elec-yellow/10">
-              <PoundSterling className="h-8 w-8 text-elec-yellow mx-auto mb-2" />
-              <div className="text-xl sm:text-2xl font-bold text-elec-yellow">{formatLargeCurrency(results.annualCost)}</div>
-              <div className="text-xs sm:text-sm text-elec-muted">Energy cost per year</div>
-            </div>
-            <div className="text-center p-4 bg-elec-card rounded-lg border border-elec-yellow/10">
-              <Leaf className="h-8 w-8 text-elec-yellow mx-auto mb-2" />
-              <div className="text-xl sm:text-2xl font-bold text-elec-yellow">{formatLargeNumber(results.annualCo2e / 1000)}t</div>
-              <div className="text-xs sm:text-sm text-elec-muted">CO2e per year</div>
-            </div>
+            <h3 className="text-lg font-medium">Financial Summary</h3>
           </div>
-          
-          <div className="mt-4 p-4 bg-elec-card/50 rounded-lg">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 text-xs sm:text-sm">
-              <div className="flex justify-between items-center">
-                <span className="text-elec-muted">Estimated capital cost:</span>
-                <span className="text-elec-yellow font-medium">{formatLargeCurrency(results.estimatedCapitalCost)}</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-elec-muted">Annual operating cost:</span>
-                <span className="text-elec-yellow font-medium">{formatLargeCurrency(results.annualOperatingCost)}</span>
-              </div>
-            </div>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+          <div className="flex justify-between items-center">
+            <span className="text-muted-foreground">Estimated capital cost:</span>
+            <span className="text-elec-yellow font-medium">{formatLargeCurrency(results.estimatedCapitalCost)}</span>
           </div>
-        </CardContent>
-      </Card>
+          <div className="flex justify-between items-center">
+            <span className="text-muted-foreground">Annual operating cost:</span>
+            <span className="text-elec-yellow font-medium">{formatLargeCurrency(results.annualOperatingCost)}</span>
+          </div>
+        </div>
+      </ResultCard>
 
       {/* Compliance Status */}
-      <Card className="border-elec-yellow/20 bg-elec-grey">
-        <CardHeader className="pb-4">
-          <CardTitle className="flex items-center gap-2 text-elec-light text-lg">
+      <ResultCard>
+        <div className="space-y-2 mb-6">
+          <div className="flex items-center gap-2">
             <Shield className="h-5 w-5 text-elec-yellow" />
-            Standards Compliance
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-3">
-            {results.complianceStatus.map((item, index) => (
-              <div key={index} className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 p-3 sm:p-4 bg-elec-card/50 rounded-lg border border-elec-yellow/10">
-                <div className="flex items-start gap-3 flex-1">
-                  <div className="flex-shrink-0 mt-0.5">
-                    {getStatusIcon(item.status)}
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="font-medium text-elec-light text-sm sm:text-base">{item.standard}</div>
-                    <div className="text-xs sm:text-sm text-elec-muted mt-1 leading-relaxed">{item.message}</div>
-                  </div>
+            <h3 className="text-lg font-medium">Standards Compliance</h3>
+          </div>
+        </div>
+        <div className="space-y-3">
+          {results.complianceStatus.map((item, index) => (
+            <div key={index} className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 p-3 rounded-lg border border-border">
+              <div className="flex items-start gap-3 flex-1">
+                <div className="flex-shrink-0 mt-0.5">
+                  {getStatusIcon(item.status)}
                 </div>
-                <div className="flex-shrink-0 self-start sm:self-center">
-                  {getStatusBadge(item.status)}
+                <div className="flex-1 min-w-0">
+                  <div className="font-medium text-sm sm:text-base">{item.standard}</div>
+                  <div className="text-xs sm:text-sm text-muted-foreground mt-1 leading-relaxed">{item.message}</div>
                 </div>
               </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+              <div className="flex-shrink-0 self-start sm:self-center">
+                {getStatusBadge(item.status)}
+              </div>
+            </div>
+          ))}
+        </div>
+      </ResultCard>
 
       {/* Recommendations */}
-      <Card className="border-elec-yellow/20 bg-elec-grey">
-        <CardHeader className="pb-4">
-          <CardTitle className="flex items-center gap-2 text-elec-light text-lg">
+      <ResultCard>
+        <div className="space-y-2 mb-6">
+          <div className="flex items-center gap-2">
             <Lightbulb className="h-5 w-5 text-elec-yellow" />
-            Recommendations & Actions
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            {results.recommendations.map((rec, index) => (
-              <div key={index} className="p-4 bg-elec-card/50 rounded-lg border border-elec-yellow/10">
-                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-3">
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <span className="font-medium text-elec-light text-sm sm:text-base">{rec.category}</span>
-                    {getPriorityBadge(rec.priority)}
-                  </div>
+            <h3 className="text-lg font-medium">Recommendations & Actions</h3>
+          </div>
+        </div>
+        <div className="space-y-4">
+          {results.recommendations.map((rec, index) => (
+            <div key={index} className="p-4 rounded-lg border border-border">
+              <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-3">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <span className="font-medium text-sm sm:text-base">{rec.category}</span>
+                  {getPriorityBadge(rec.priority)}
                 </div>
-                <div className="space-y-3">
-                  <p className="text-sm text-elec-muted leading-relaxed">{rec.message}</p>
-                  <div className="space-y-2">
-                    <div className="flex items-start gap-2">
-                      <Target className="h-3 w-3 text-elec-yellow mt-1 flex-shrink-0" />
-                      <span className="text-xs text-elec-yellow font-medium">Impact:</span>
-                      <span className="text-xs text-elec-muted">{rec.impact}</span>
+              </div>
+              <div className="space-y-3">
+                <p className="text-sm text-muted-foreground leading-relaxed">{rec.message}</p>
+                <div className="space-y-2">
+                  <div className="flex items-start gap-2">
+                    <Target className="h-3 w-3 text-elec-yellow mt-1 flex-shrink-0" />
+                    <span className="text-xs text-elec-yellow font-medium">Impact:</span>
+                    <span className="text-xs text-muted-foreground">{rec.impact}</span>
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs">
+                    <div className="flex items-center gap-2">
+                      <Gauge className="h-3 w-3 text-elec-yellow" />
+                      <span className="text-muted-foreground">
+                        Difficulty: <span className="text-elec-yellow">
+                          {rec.priority === 'high' ? 'Complex' : rec.priority === 'medium' ? 'Moderate' : 'Simple'}
+                        </span>
+                      </span>
                     </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs">
-                      <div className="flex items-center gap-2">
-                        <Gauge className="h-3 w-3 text-elec-yellow" />
-                        <span className="text-elec-muted">
-                          Difficulty: <span className="text-elec-yellow">
-                            {rec.priority === 'high' ? 'Complex' : rec.priority === 'medium' ? 'Moderate' : 'Simple'}
-                          </span>
+                    <div className="flex items-center gap-2">
+                      <Clock className="h-3 w-3 text-elec-yellow" />
+                      <span className="text-muted-foreground">
+                        Timeframe: <span className="text-elec-yellow">
+                          {rec.priority === 'high' ? '3-6 months' : rec.priority === 'medium' ? '1-3 months' : '2-4 weeks'}
                         </span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Clock className="h-3 w-3 text-elec-yellow" />
-                        <span className="text-elec-muted">
-                          Timeframe: <span className="text-elec-yellow">
-                            {rec.priority === 'high' ? '3-6 months' : rec.priority === 'medium' ? '1-3 months' : '2-4 weeks'}
-                          </span>
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <PoundSterling className="h-3 w-3 text-elec-yellow" />
+                      <span className="text-muted-foreground">
+                        Cost: <span className="text-elec-yellow">
+                          {rec.priority === 'high' ? 'High (£50k+)' : rec.priority === 'medium' ? 'Medium (£10-50k)' : 'Low (<£10k)'}
                         </span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <PoundSterling className="h-3 w-3 text-elec-yellow" />
-                        <span className="text-elec-muted">
-                          Cost: <span className="text-elec-yellow">
-                            {rec.priority === 'high' ? 'High (£50k+)' : rec.priority === 'medium' ? 'Medium (£10-50k)' : 'Low (<£10k)'}
-                          </span>
-                        </span>
-                      </div>
+                      </span>
                     </div>
                   </div>
                 </div>
               </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+            </div>
+          ))}
+        </div>
+      </ResultCard>
 
       {/* Advanced Details */}
       <Collapsible open={detailsOpen} onOpenChange={setDetailsOpen}>
