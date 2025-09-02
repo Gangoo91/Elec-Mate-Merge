@@ -108,7 +108,7 @@ export function calculateEVSELoad(input: EVSEInput): EVSEResult {
   const rcdType = determineRCDType(input.chargingPoints, input.earthingSystem);
 
   // PEN fault protection for external PME
-  const penFaultProtection = input.earthingSystem === 'TN-C-S' && input.installationLocation === 'external';
+  const penFaultProtection = input.earthingSystem === 'tn-c-s' && input.installationLocation === 'external';
   if (penFaultProtection) {
     recommendations.push("PEN fault protection required for external PME installation");
   }
@@ -231,6 +231,6 @@ function generateSummary(input: EVSEInput, simultaneousLoad: number, cable: any,
     loadAnalysis: `Total connected load of ${input.chargingPoints.reduce((sum, p) => sum + (p.power * p.quantity), 0).toFixed(1)}kW with ${(input.simultaneityFactor)}% simultaneity gives ${simultaneousLoad.toFixed(1)}kW simultaneous demand.`,
     cableAssessment: `${cable.label} cable selected for ${input.feederRunLength}m run with ${input.voltageDrop}% voltage drop limit on ${input.supplyType}-phase ${input.supplyVoltage}V supply.`,
     protectionCompliance: `${protection} recommended with ${input.earthingSystem} earthing system. ${input.earthingSystem === 'TT' ? '30mA RCD mandatory.' : 'RCD protection as per BS 7671.'}`,
-    installationRequirements: `${INSTALLATION_LOCATIONS[input.installationLocation]?.label} installation with ${INSTALLATION_LOCATIONS[input.installationLocation]?.ipRating} protection. ${input.earthingSystem === 'TN-C-S' && input.installationLocation === 'external' ? 'PEN fault protection required.' : ''}`
+    installationRequirements: `${INSTALLATION_LOCATIONS[input.installationLocation]?.label} installation with ${INSTALLATION_LOCATIONS[input.installationLocation]?.ipRating} protection. ${input.earthingSystem === 'tn-c-s' && input.installationLocation === 'external' ? 'PEN fault protection required.' : ''}`
   };
 }

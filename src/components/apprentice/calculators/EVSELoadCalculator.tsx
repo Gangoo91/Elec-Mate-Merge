@@ -45,7 +45,7 @@ const EVSELoadCalculator = () => {
   // Basic parameters
   const [supplyType, setSupplyType] = useState<"single" | "three">("three");
   const [voltage, setVoltage] = useState<string>("415");
-  const [earthingSystem, setEarthingSystem] = useState<string>("tn_c_s");
+  const [earthingSystem, setEarthingSystem] = useState<string>("tn-c-s");
   const [installationLocation, setInstallationLocation] = useState<string>("external");
   const [feederLength, setFeederLength] = useState<string>("25");
   const [maxVoltageDrop, setMaxVoltageDrop] = useState<string>("5");
@@ -101,7 +101,7 @@ const EVSELoadCalculator = () => {
     setNewPoint({ power: "", quantity: "", type: "7kw_ac_single" });
     setSupplyType("three");
     setVoltage("415");
-    setEarthingSystem("tn_c_s");
+    setEarthingSystem("tn-c-s");
     setInstallationLocation("external");
     setFeederLength("25");
     setMaxVoltageDrop("5");
@@ -355,7 +355,7 @@ const EVSELoadCalculator = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 <ResultCard
                   title="Connected Load"
-                  value={result.totalConnectedLoad}
+                  value={result.connectedLoad}
                   unit="kW"
                   status="info"
                 />
@@ -368,10 +368,10 @@ const EVSELoadCalculator = () => {
                 />
                 
                 <ResultCard
-                  title="Design Current"
-                  value={result.designCurrent}
+                  title="Line Current"
+                  value={result.lineCurrent}
                   unit="A"
-                  status={result.designCurrent > result.availableCapacity ? "warning" : "success"}
+                  status={result.headroom < 0 ? "warning" : "success"}
                 />
                 
                 <ResultCard
@@ -390,7 +390,7 @@ const EVSELoadCalculator = () => {
                   title="Voltage Drop"
                   value={result.voltageDrop}
                   unit="%"
-                  status={result.voltageDrop > result.maxVoltageDrop ? "error" : "success"}
+                  status={result.voltageDrop > parseFloat(maxVoltageDrop) ? "error" : "success"}
                 />
               </div>
 
