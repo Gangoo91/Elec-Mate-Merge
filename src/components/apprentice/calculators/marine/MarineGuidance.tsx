@@ -426,52 +426,121 @@ const MarineGuidance = ({ results, inputs }: MarineGuidanceProps) => {
             Installation Best Practices
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-3">
-              <h4 className="font-medium">Cable Installation</h4>
-              <ul className="space-y-1 text-sm text-muted-foreground">
-                <li>• Use tinned copper conductors for saltwater environments</li>
-                <li>• Route cables high and dry where possible</li>
-                <li>• Support cables every 18 inches maximum</li>
-                <li>• Use proper marine-grade cable glands</li>
-                <li>• Maintain separation from hot surfaces</li>
-                <li>• Label all circuits at both ends</li>
-                <li>• Use heat-shrink tubing on all connections</li>
-                <li>• Apply dielectric grease to connections</li>
-              </ul>
+        <CardContent className="space-y-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div className="space-y-4">
+              <h4 className="font-semibold text-lg text-white text-center">Cable Installation</h4>
+              <div className="bg-elec-card p-6 rounded-lg border border-elec-yellow/20">
+                <ul className="space-y-3 text-sm text-white">
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow mt-1">•</span>
+                    <span>Use tinned copper conductors for saltwater environments</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow mt-1">•</span>
+                    <span>Route cables high and dry where possible</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow mt-1">•</span>
+                    <span>Support cables every 18 inches maximum</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow mt-1">•</span>
+                    <span>Use proper marine-grade cable glands</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow mt-1">•</span>
+                    <span>Maintain separation from hot surfaces</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow mt-1">•</span>
+                    <span>Label all circuits at both ends</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow mt-1">•</span>
+                    <span>Use heat-shrink tubing on all connections</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow mt-1">•</span>
+                    <span>Apply dielectric grease to connections</span>
+                  </li>
+                </ul>
+              </div>
             </div>
 
-            <div className="space-y-3">
-              <h4 className="font-medium">Equipment Mounting</h4>
-              <ul className="space-y-1 text-sm text-muted-foreground">
-                <li>• Mount equipment clear of bilge water</li>
-                <li>• Secure against vibration and shock</li>
-                <li>• Ensure adequate ventilation for electronics</li>
-                <li>• Use stainless steel fasteners</li>
-                <li>• Install easy-access service panels</li>
-                <li>• Protect from spray and condensation</li>
-                <li>• Consider vessel heel angles in placement</li>
-                <li>• Emergency equipment must be accessible</li>
-              </ul>
+            <div className="space-y-4">
+              <h4 className="font-semibold text-lg text-white text-center">Equipment Mounting</h4>
+              <div className="bg-elec-card p-6 rounded-lg border border-elec-yellow/20">
+                <ul className="space-y-3 text-sm text-white">
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow mt-1">•</span>
+                    <span>Mount equipment clear of bilge water</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow mt-1">•</span>
+                    <span>Secure against vibration and shock</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow mt-1">•</span>
+                    <span>Ensure adequate ventilation for electronics</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow mt-1">•</span>
+                    <span>Use stainless steel fasteners</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow mt-1">•</span>
+                    <span>Install easy-access service panels</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow mt-1">•</span>
+                    <span>Protect from spray and condensation</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow mt-1">•</span>
+                    <span>Consider vessel heel angles in placement</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow mt-1">•</span>
+                    <span>Emergency equipment must be accessible</span>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
 
-          <div className="p-4 bg-amber-500/10 border border-amber-500/20 rounded-lg">
-            <div className="flex items-start gap-3">
-              <AlertTriangle className="h-5 w-5 text-amber-500 flex-shrink-0 mt-1" />
-              <div>
-                <h4 className="font-medium text-amber-400 mb-2">Corrosion Prevention</h4>
-                <p className="text-sm text-muted-foreground mb-2">
-                  Marine environments are extremely corrosive. All electrical connections must use appropriate 
-                  materials and protection methods:
-                </p>
-                <ul className="text-sm text-muted-foreground space-y-1">
-                  <li>• Install galvanic isolator on shore power connection</li>
-                  <li>• Use sacrificial anodes on metal components</li>
-                  <li>• Apply anti-corrosion compounds to all connections</li>
-                  <li>• Regular inspection and maintenance schedule essential</li>
-                </ul>
+          <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-6">
+            <div className="text-center mb-6">
+              <div className="flex justify-center items-center gap-2 mb-4">
+                <AlertTriangle className="h-6 w-6 text-amber-400" />
+                <h4 className="font-bold text-xl text-amber-400">Corrosion Prevention</h4>
+              </div>
+              <p className="text-white text-base leading-relaxed max-w-4xl mx-auto">
+                Marine environments are extremely corrosive. All electrical connections must use 
+                appropriate materials and protection methods:
+              </p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div className="text-center">
+                <div className="text-white text-sm">
+                  <span className="text-elec-yellow">•</span> Install galvanic isolator on shore power connection
+                </div>
+              </div>
+              <div className="text-center">
+                <div className="text-white text-sm">
+                  <span className="text-elec-yellow">•</span> Use sacrificial anodes on metal components
+                </div>
+              </div>
+              <div className="text-center">
+                <div className="text-white text-sm">
+                  <span className="text-elec-yellow">•</span> Apply anti-corrosion compounds to all connections
+                </div>
+              </div>
+              <div className="text-center">
+                <div className="text-white text-sm">
+                  <span className="text-elec-yellow">•</span> Regular inspection and maintenance schedule essential
+                </div>
               </div>
             </div>
           </div>
