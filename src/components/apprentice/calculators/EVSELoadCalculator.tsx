@@ -76,7 +76,13 @@ const EVSELoadCalculator = () => {
   };
 
   const handleCalculate = () => {
-    if (chargingPoints.length === 0) return;
+    console.log('Calculate button clicked');
+    console.log('Charging points:', chargingPoints);
+    
+    if (chargingPoints.length === 0) {
+      console.log('No charging points - returning early');
+      return;
+    }
 
     const inputs: CalculationInputs = {
       chargingPoints,
@@ -92,8 +98,15 @@ const EVSELoadCalculator = () => {
       powerFactor: parseFloat(powerFactor)
     };
 
-    const calculations = calculateEVSELoad(inputs);
-    setResult(calculations);
+    console.log('Calculation inputs:', inputs);
+    
+    try {
+      const calculations = calculateEVSELoad(inputs);
+      console.log('Calculation result:', calculations);
+      setResult(calculations);
+    } catch (error) {
+      console.error('Calculation error:', error);
+    }
   };
 
   const reset = () => {
