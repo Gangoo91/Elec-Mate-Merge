@@ -218,24 +218,24 @@ export function DataCentreGuidance({ results }: DataCentreGuidanceProps) {
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
-            <div className="text-center p-4 bg-elec-card rounded-lg border border-elec-yellow/10">
+            <div className="text-center p-4 bg-elec-dark rounded-lg border border-elec-yellow/10">
               <Zap className="h-8 w-8 text-elec-yellow mx-auto mb-2" />
               <div className="text-xl sm:text-2xl font-bold text-elec-yellow">{formatLargeNumber(results.annualKwh)}</div>
               <div className="text-xs sm:text-sm text-elec-muted">kWh per year</div>
             </div>
-            <div className="text-center p-4 bg-elec-card rounded-lg border border-elec-yellow/10">
+            <div className="text-center p-4 bg-elec-dark rounded-lg border border-elec-yellow/10">
               <PoundSterling className="h-8 w-8 text-elec-yellow mx-auto mb-2" />
               <div className="text-xl sm:text-2xl font-bold text-elec-yellow">{formatLargeCurrency(results.annualCost)}</div>
               <div className="text-xs sm:text-sm text-elec-muted">Energy cost per year</div>
             </div>
-            <div className="text-center p-4 bg-elec-card rounded-lg border border-elec-yellow/10">
+            <div className="text-center p-4 bg-elec-dark rounded-lg border border-elec-yellow/10">
               <Leaf className="h-8 w-8 text-elec-yellow mx-auto mb-2" />
               <div className="text-xl sm:text-2xl font-bold text-elec-yellow">{formatLargeNumber(results.annualCo2e / 1000)}t</div>
               <div className="text-xs sm:text-sm text-elec-muted">CO2e per year</div>
             </div>
           </div>
           
-          <div className="mt-4 p-4 bg-elec-card/50 rounded-lg">
+          <div className="mt-4 p-4 bg-elec-dark/50 rounded-lg">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 text-xs sm:text-sm">
               <div className="flex justify-between items-center">
                 <span className="text-elec-muted">Estimated capital cost:</span>
@@ -261,7 +261,7 @@ export function DataCentreGuidance({ results }: DataCentreGuidanceProps) {
         <CardContent>
           <div className="space-y-3">
             {results.complianceStatus.map((item, index) => (
-              <div key={index} className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 p-3 sm:p-4 bg-elec-card/50 rounded-lg border border-elec-yellow/10">
+              <div key={index} className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 p-3 sm:p-4 bg-elec-dark/30 rounded-lg border border-elec-yellow/10">
                 <div className="flex items-start gap-3 flex-1">
                   <div className="flex-shrink-0 mt-0.5">
                     {getStatusIcon(item.status)}
@@ -291,7 +291,7 @@ export function DataCentreGuidance({ results }: DataCentreGuidanceProps) {
         <CardContent>
           <div className="space-y-4">
             {results.recommendations.map((rec, index) => (
-              <div key={index} className="p-4 bg-elec-card/50 rounded-lg border border-elec-yellow/10">
+              <div key={index} className="p-4 bg-elec-dark/30 rounded-lg border border-elec-yellow/10">
                 <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-3">
                   <div className="flex items-center gap-2 flex-wrap">
                     <span className="font-medium text-elec-light text-sm sm:text-base">{rec.category}</span>
