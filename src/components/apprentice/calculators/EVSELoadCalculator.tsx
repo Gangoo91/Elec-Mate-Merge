@@ -15,6 +15,7 @@ const EVSELoadCalculator = () => {
   
   // Form state
   const [chargingPoints, setChargingPoints] = useState<ChargingPoint[]>([]);
+  const [quantityInputs, setQuantityInputs] = useState<string[]>([]); // Buffer for quantity editing
   const [supplyVoltage, setSupplyVoltage] = useState('415');
   const [earthingSystem, setEarthingSystem] = useState('tn-c-s');
   const [availableCapacity, setAvailableCapacity] = useState('100');
@@ -29,10 +30,12 @@ const EVSELoadCalculator = () => {
       quantity: 1
     };
     setChargingPoints([...chargingPoints, newPoint]);
+    setQuantityInputs([...quantityInputs, '1']); // Add corresponding quantity input
   };
 
   const removeChargingPoint = (index: number) => {
     setChargingPoints(chargingPoints.filter((_, i) => i !== index));
+    setQuantityInputs(quantityInputs.filter((_, i) => i !== index)); // Remove corresponding quantity input
   };
 
   const updateChargingPoint = (index: number, field: keyof ChargingPoint, value: string | number) => {
@@ -80,6 +83,7 @@ const EVSELoadCalculator = () => {
 
   const reset = () => {
     setChargingPoints([]);
+    setQuantityInputs([]); // Reset quantity inputs buffer
     setSupplyVoltage('415');
     setEarthingSystem('tn-c-s');
     setAvailableCapacity('100');
@@ -151,24 +155,30 @@ const EVSELoadCalculator = () => {
 
                     <MobileInput
                       label="Quantity"
-                      type="number"
-                      min="1"
-                      value={point.quantity.toString()}
+                      type="text"
+                      inputMode="numeric"
+                      pattern="[0-9]*"
+                      value={quantityInputs[index] || '1'}
                       onChange={(e) => {
                         const value = e.target.value;
-                        // Allow empty value temporarily while typing
-                        if (value === '') {
-                          updateChargingPoint(index, 'quantity', 1);
-                          return;
-                        }
-                        const numValue = parseInt(value);
-                        if (!isNaN(numValue) && numValue > 0) {
-                          updateChargingPoint(index, 'quantity', numValue);
+                        // Allow only numeric characters
+                        if (value === '' || /^[0-9]+$/.test(value)) {
+                          const updatedInputs = [...quantityInputs];
+                          updatedInputs[index] = value;
+                          setQuantityInputs(updatedInputs);
+                          
+                          // Update charging point if valid number
+                          if (value !== '' && parseInt(value) > 0) {
+                            updateChargingPoint(index, 'quantity', parseInt(value));
+                          }
                         }
                       }}
-                      onBlur={(e) => {
-                        const value = e.target.value;
+                      onBlur={() => {
+                        const value = quantityInputs[index] || '';
                         if (value === '' || parseInt(value) < 1) {
+                          const updatedInputs = [...quantityInputs];
+                          updatedInputs[index] = '1';
+                          setQuantityInputs(updatedInputs);
                           updateChargingPoint(index, 'quantity', 1);
                           toast({
                             title: "Quantity Reset",
