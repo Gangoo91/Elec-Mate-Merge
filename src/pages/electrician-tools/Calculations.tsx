@@ -51,6 +51,7 @@ import ResistorColourCodeCalculator from "@/components/apprentice/calculators/Re
 import WireGaugeCalculator from "@/components/apprentice/calculators/WireGaugeCalculator";
 import InstrumentationCalculator from "@/components/apprentice/calculators/InstrumentationCalculator";
 import UnitConverterCalculator from "@/components/apprentice/calculators/UnitConverterCalculator";
+import MarineElectricalCalculator from "@/components/apprentice/calculators/MarineElectricalCalculator";
 import ComingSoonCalculator from "@/components/apprentice/calculators/ComingSoonCalculator";
 import ArcFlashCalculator from "@/components/apprentice/calculators/ArcFlashCalculator";
 import EVSELoadCalculator from "@/components/apprentice/calculators/EVSELoadCalculator";
@@ -182,11 +183,7 @@ const Calculations = () => {
       
       // Specialist Locations
       case "marine-electrical":
-        return <ComingSoonCalculator 
-          title="Marine Electrical"
-          description="This calculator will help with marine electrical installations and safety requirements."
-          icon={Anchor}
-        />;
+        return <MarineElectricalCalculator />;
       case "swimming-pool":
         return <SwimmingPoolCalculator />;
       
