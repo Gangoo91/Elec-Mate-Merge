@@ -3,125 +3,89 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { MobileInput } from "@/components/ui/mobile-input";
 import { MobileButton } from "@/components/ui/mobile-button";
 import { MobileSelect, MobileSelectContent, MobileSelectItem, MobileSelectTrigger, MobileSelectValue } from "@/components/ui/mobile-select";
-import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { Car, Calculator, RotateCcw, Plus, Trash2, Info, AlertTriangle, CheckCircle, Zap } from "lucide-react";
-import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Car, Calculator, RotateCcw, Plus, Trash2, Info, Zap } from "lucide-react";
 import { ResultCard } from "@/components/ui/result-card";
-import { Switch } from "@/components/ui/switch";
-import { Label } from "@/components/ui/label";
-import { calculateEVSELoad } from "@/lib/evse-calculations";
-import { CHARGER_TYPES, EARTHING_SYSTEMS, INSTALLATION_LOCATIONS } from "@/lib/ev-constants";
-
-interface ChargingPoint {
-  id: number;
-  power: number;
-  quantity: number;
-  type: string;
-}
-
-interface CalculationInputs {
-  chargingPoints: ChargingPoint[];
-  supplyType: "single" | "three";
-  supplyVoltage: number;
-  earthingSystem: string;
-  installationLocation: string;
-  feederRunLength: number;
-  voltageDrop: number;
-  availableCapacity: number;
-  loadManagementEnabled: boolean;
-  simultaneityFactor: number;
-  powerFactor: number;
-}
+import { useToast } from "@/hooks/use-toast";
+import { calculateEVSELoad, type ChargingPoint, type CalculationInputs, type CalculationResult } from "@/lib/evse-calculations";
+import { CHARGER_TYPES, EARTHING_SYSTEMS, DIVERSITY_FACTORS } from "@/lib/ev-constants";
 
 const EVSELoadCalculator = () => {
+  const { toast } = useToast();
+  
+  // Form state
   const [chargingPoints, setChargingPoints] = useState<ChargingPoint[]>([]);
-  const [newPoint, setNewPoint] = useState({
-    power: "",
-    quantity: "",
-    type: "7kw_ac_single"
-  });
-  
-  // Basic parameters
-  const [supplyType, setSupplyType] = useState<"single" | "three">("three");
-  const [voltage, setVoltage] = useState<string>("415");
-  const [earthingSystem, setEarthingSystem] = useState<string>("tn-c-s");
-  const [installationLocation, setInstallationLocation] = useState<string>("external");
-  const [feederLength, setFeederLength] = useState<string>("25");
-  const [maxVoltageDrop, setMaxVoltageDrop] = useState<string>("5");
-  const [availableCapacity, setAvailableCapacity] = useState<string>("100");
-  const [hasLoadManagement, setHasLoadManagement] = useState<boolean>(false);
-  const [simultaneityFactor, setSimultaneityFactor] = useState<string>("75");
-  const [powerFactor, setPowerFactor] = useState<string>("0.95");
-  
-  const [result, setResult] = useState<any>(null);
-
+  const [supplyVoltage, setSupplyVoltage] = useState('415');
+  const [earthingSystem, setEarthingSystem] = useState('tn-c-s');
+  const [availableCapacity, setAvailableCapacity] = useState('100');
+  const [cableLength, setCableLength] = useState('50');
+  const [diversityScenario, setDiversityScenario] = useState('multiple_domestic');
+  const [powerFactor, setPowerFactor] = useState('0.95');
+  const [result, setResult] = useState<CalculationResult | null>(null);
 
   const addChargingPoint = () => {
-    if (!newPoint.power || !newPoint.quantity) return;
-
-    const point: ChargingPoint = {
-      id: Date.now(),
-      power: parseFloat(newPoint.power),
-      quantity: parseInt(newPoint.quantity),
-      type: newPoint.type
+    const newPoint: ChargingPoint = {
+      chargerType: 'single-phase-7kw',
+      quantity: 1
     };
-
-    setChargingPoints([...chargingPoints, point]);
-    setNewPoint({ power: "", quantity: "", type: "7kw_ac_single" });
+    setChargingPoints([...chargingPoints, newPoint]);
   };
 
-  const removeChargingPoint = (id: number) => {
-    setChargingPoints(chargingPoints.filter(point => point.id !== id));
+  const removeChargingPoint = (index: number) => {
+    setChargingPoints(chargingPoints.filter((_, i) => i !== index));
+  };
+
+  const updateChargingPoint = (index: number, field: keyof ChargingPoint, value: string | number) => {
+    const updatedPoints = [...chargingPoints];
+    updatedPoints[index] = { ...updatedPoints[index], [field]: value };
+    setChargingPoints(updatedPoints);
   };
 
   const handleCalculate = () => {
-    console.log('Calculate button clicked');
-    console.log('Charging points:', chargingPoints);
-    
     if (chargingPoints.length === 0) {
-      console.log('No charging points - returning early');
+      toast({
+        title: "No Charging Points",
+        description: "Please add at least one charging point before calculating.",
+        variant: "destructive"
+      });
       return;
     }
 
     const inputs: CalculationInputs = {
       chargingPoints,
-      supplyType,
-      supplyVoltage: parseFloat(voltage),
+      supplyVoltage: parseFloat(supplyVoltage),
       earthingSystem,
-      installationLocation,
-      feederRunLength: parseFloat(feederLength),
-      voltageDrop: parseFloat(maxVoltageDrop),
       availableCapacity: parseFloat(availableCapacity),
-      loadManagementEnabled: hasLoadManagement,
-      simultaneityFactor: parseFloat(simultaneityFactor),
+      cableLength: parseFloat(cableLength),
+      diversityScenario,
       powerFactor: parseFloat(powerFactor)
     };
-
-    console.log('Calculation inputs:', inputs);
     
     try {
       const calculations = calculateEVSELoad(inputs);
-      console.log('Calculation result:', calculations);
       setResult(calculations);
+      toast({
+        title: "Calculation Complete",
+        description: "EVSE load calculations have been completed successfully."
+      });
     } catch (error) {
       console.error('Calculation error:', error);
+      toast({
+        title: "Calculation Error",
+        description: error instanceof Error ? error.message : "An error occurred during calculation.",
+        variant: "destructive"
+      });
     }
   };
 
   const reset = () => {
     setChargingPoints([]);
-    setNewPoint({ power: "", quantity: "", type: "7kw_ac_single" });
-    setSupplyType("three");
-    setVoltage("415");
-    setEarthingSystem("tn-c-s");
-    setInstallationLocation("external");
-    setFeederLength("25");
-    setMaxVoltageDrop("5");
-    setAvailableCapacity("100");
-    setHasLoadManagement(false);
-    setSimultaneityFactor("75");
-    setPowerFactor("0.95");
+    setSupplyVoltage('415');
+    setEarthingSystem('tn-c-s');
+    setAvailableCapacity('100');
+    setCableLength('50');
+    setDiversityScenario('multiple_domestic');
+    setPowerFactor('0.95');
     setResult(null);
   };
 
@@ -138,196 +102,116 @@ const EVSELoadCalculator = () => {
       </CardHeader>
       <CardContent className="p-4 lg:p-6">
         <div className="space-y-6">
-          {/* Input Section - Mobile Stacked */}
+          {/* Charging Points Section */}
           <div className="space-y-4">
-            {/* Charging Points Section */}
-            <div className="space-y-4">
-              <h3 className="text-lg font-medium text-elec-yellow flex items-center gap-2">
-                <Car className="h-5 w-5" />
-                Charging Points
-              </h3>
-              
-              {/* Mobile-first stacked inputs */}
+            <h3 className="text-lg font-medium text-elec-yellow flex items-center gap-2">
+              <Car className="h-5 w-5" />
+              Charging Points
+            </h3>
+            
+            <MobileButton 
+              onClick={addChargingPoint}
+              variant="elec"
+              icon={<Plus className="h-4 w-4" />}
+              className="w-full"
+            >
+              Add Charging Point
+            </MobileButton>
+
+            {chargingPoints.length > 0 && (
               <div className="space-y-3">
-                <MobileSelect value={newPoint.type} onValueChange={(value) => setNewPoint({ ...newPoint, type: value })}>
-                  <MobileSelectTrigger label="Charger Type">
-                    <MobileSelectValue />
-                  </MobileSelectTrigger>
-                  <MobileSelectContent>
-                    {Object.entries(CHARGER_TYPES).map(([key, charger]) => (
-                      <MobileSelectItem key={key} value={key}>
-                        {charger.label}
-                      </MobileSelectItem>
-                    ))}
-                  </MobileSelectContent>
-                </MobileSelect>
+                {chargingPoints.map((point, index) => (
+                  <div key={index} className="bg-elec-dark/50 p-3 rounded-lg space-y-3">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-medium">Point {index + 1}</span>
+                      <MobileButton
+                        variant="elec-outline"
+                        size="sm"
+                        onClick={() => removeChargingPoint(index)}
+                      >
+                        <Trash2 className="h-3 w-3" />
+                      </MobileButton>
+                    </div>
+                    
+                    <MobileSelect 
+                      value={point.chargerType} 
+                      onValueChange={(value) => updateChargingPoint(index, 'chargerType', value)}
+                    >
+                      <MobileSelectTrigger label="Charger Type">
+                        <MobileSelectValue />
+                      </MobileSelectTrigger>
+                      <MobileSelectContent>
+                        {Object.entries(CHARGER_TYPES).map(([key, charger]) => (
+                          <MobileSelectItem key={key} value={key}>
+                            {charger.label}
+                          </MobileSelectItem>
+                        ))}
+                      </MobileSelectContent>
+                    </MobileSelect>
 
-                <div className="grid grid-cols-2 gap-3">
-                  <MobileInput
-                    label="Power (kW)"
-                    type="number"
-                    value={newPoint.power}
-                    onChange={(e) => setNewPoint({ ...newPoint, power: e.target.value })}
-                    placeholder="e.g., 7"
-                    unit="kW"
-                  />
-
-                  <MobileInput
-                    label="Quantity"
-                    type="number"
-                    min="1"
-                    value={newPoint.quantity}
-                    onChange={(e) => setNewPoint({ ...newPoint, quantity: e.target.value })}
-                    placeholder="e.g., 4"
-                  />
-                </div>
-              </div>
-
-              <MobileButton 
-                onClick={addChargingPoint}
-                variant="elec"
-                disabled={!newPoint.power || !newPoint.quantity}
-                icon={<Plus className="h-4 w-4" />}
-                className="w-full"
-              >
-                Add Charging Points
-              </MobileButton>
-
-              {chargingPoints.length > 0 && (
-                <div className="space-y-2">
-                  <h4 className="text-md font-medium">Configured Points</h4>
-                  <div className="max-h-32 overflow-y-auto space-y-1">
-                    {chargingPoints.map((point) => (
-                      <div key={point.id} className="flex items-center justify-between bg-elec-dark/50 p-2 rounded text-sm">
-                        <span>{point.quantity}x {point.power}kW {CHARGER_TYPES[point.type as keyof typeof CHARGER_TYPES]?.label}</span>
-                        <MobileButton
-                          variant="elec-outline"
-                          size="sm"
-                          onClick={() => removeChargingPoint(point.id)}
-                        >
-                          <Trash2 className="h-3 w-3" />
-                        </MobileButton>
-                      </div>
-                    ))}
+                    <MobileInput
+                      label="Quantity"
+                      type="number"
+                      min="1"
+                      value={point.quantity.toString()}
+                      onChange={(e) => updateChargingPoint(index, 'quantity', parseInt(e.target.value) || 1)}
+                      placeholder="1"
+                    />
                   </div>
-                </div>
-              )}
-            </div>
-
-            <Separator />
-
-            {/* Supply Details Section */}
-            <div className="space-y-4">
-              <h3 className="text-lg font-medium text-elec-yellow flex items-center gap-2">
-                <Zap className="h-5 w-5" />
-                Supply Details
-              </h3>
-              
-              <div className="space-y-3">
-                <MobileSelect value={supplyType} onValueChange={(value: "single" | "three") => setSupplyType(value)}>
-                  <MobileSelectTrigger label="Supply Type">
-                    <MobileSelectValue />
-                  </MobileSelectTrigger>
-                  <MobileSelectContent>
-                    <MobileSelectItem value="single">Single Phase</MobileSelectItem>
-                    <MobileSelectItem value="three">Three Phase</MobileSelectItem>
-                  </MobileSelectContent>
-                </MobileSelect>
-
-                <div className="grid grid-cols-2 gap-3">
-                  <MobileInput
-                    label="Voltage"
-                    type="number"
-                    value={voltage}
-                    onChange={(e) => setVoltage(e.target.value)}
-                    placeholder="415"
-                    unit="V"
-                  />
-
-                  <MobileInput
-                    label="Available Capacity"
-                    type="number"
-                    value={availableCapacity}
-                    onChange={(e) => setAvailableCapacity(e.target.value)}
-                    placeholder="100"
-                    unit="kW"
-                  />
-                </div>
-
-                <MobileSelect value={earthingSystem} onValueChange={setEarthingSystem}>
-                  <MobileSelectTrigger label="Earthing System">
-                    <MobileSelectValue />
-                  </MobileSelectTrigger>
-                  <MobileSelectContent>
-                    {Object.entries(EARTHING_SYSTEMS).map(([key, system]) => (
-                      <MobileSelectItem key={key} value={key}>
-                        {system.label}
-                      </MobileSelectItem>
-                    ))}
-                  </MobileSelectContent>
-                </MobileSelect>
-
-                <MobileSelect value={installationLocation} onValueChange={setInstallationLocation}>
-                  <MobileSelectTrigger label="Installation Location">
-                    <MobileSelectValue />
-                  </MobileSelectTrigger>
-                  <MobileSelectContent>
-                    {Object.entries(INSTALLATION_LOCATIONS).map(([key, location]) => (
-                      <MobileSelectItem key={key} value={key}>
-                        {location.label}
-                      </MobileSelectItem>
-                    ))}
-                  </MobileSelectContent>
-                </MobileSelect>
-
-                <div className="grid grid-cols-2 gap-3">
-                  <MobileInput
-                    label="Feeder Length"
-                    type="number"
-                    value={feederLength}
-                    onChange={(e) => setFeederLength(e.target.value)}
-                    placeholder="25"
-                    unit="m"
-                  />
-
-                  <MobileInput
-                    label="Max Voltage Drop"
-                    type="number"
-                    value={maxVoltageDrop}
-                    onChange={(e) => setMaxVoltageDrop(e.target.value)}
-                    placeholder="5"
-                    unit="%"
-                  />
-                </div>
-
-                <div className="flex items-center justify-between">
-                  <Label htmlFor="load-management" className="text-sm">Load Management System</Label>
-                  <Switch
-                    id="load-management"
-                    checked={hasLoadManagement}
-                    onCheckedChange={setHasLoadManagement}
-                  />
-                </div>
+                ))}
               </div>
-            </div>
+            )}
+          </div>
 
-            <Separator />
+          <Separator />
 
-            {/* Load Factors Section */}
-            <div className="space-y-4">
-              <h3 className="text-lg font-medium text-elec-yellow">Load Factors</h3>
-              
+          {/* Supply Details Section */}
+          <div className="space-y-4">
+            <h3 className="text-lg font-medium text-elec-yellow flex items-center gap-2">
+              <Zap className="h-5 w-5" />
+              Supply & Installation Details
+            </h3>
+            
+            <div className="space-y-3">
+              <MobileInput
+                label="Supply Voltage"
+                type="number"
+                value={supplyVoltage}
+                onChange={(e) => setSupplyVoltage(e.target.value)}
+                placeholder="415"
+                unit="V"
+              />
+
+              <MobileInput
+                label="Available Capacity"
+                type="number"
+                value={availableCapacity}
+                onChange={(e) => setAvailableCapacity(e.target.value)}
+                placeholder="100"
+                unit="kW"
+              />
+
+              <MobileSelect value={earthingSystem} onValueChange={setEarthingSystem}>
+                <MobileSelectTrigger label="Earthing System">
+                  <MobileSelectValue />
+                </MobileSelectTrigger>
+                <MobileSelectContent>
+                  {Object.entries(EARTHING_SYSTEMS).map(([key, system]) => (
+                    <MobileSelectItem key={key} value={key}>
+                      {system.label}
+                    </MobileSelectItem>
+                  ))}
+                </MobileSelectContent>
+              </MobileSelect>
+
               <div className="grid grid-cols-2 gap-3">
                 <MobileInput
-                  label="Simultaneity Factor"
+                  label="Cable Length"
                   type="number"
-                  min="1"
-                  max="100"
-                  value={simultaneityFactor}
-                  onChange={(e) => setSimultaneityFactor(e.target.value)}
-                  placeholder="75"
-                  unit="%"
-                  hint="Workplace: 75%, Public: 50%"
+                  value={cableLength}
+                  onChange={(e) => setCableLength(e.target.value)}
+                  placeholder="50"
+                  unit="m"
                 />
 
                 <MobileInput
@@ -341,23 +225,36 @@ const EVSELoadCalculator = () => {
                   placeholder="0.95"
                 />
               </div>
-            </div>
 
-            {/* Action Buttons */}
-            <div className="flex gap-2">
-              <MobileButton 
-                onClick={handleCalculate}
-                variant="elec"
-                disabled={chargingPoints.length === 0}
-                icon={<Calculator className="h-4 w-4" />}
-                className="flex-1"
-              >
-                Calculate Load
-              </MobileButton>
-              <MobileButton variant="elec-outline" onClick={reset}>
-                <RotateCcw className="h-4 w-4" />
-              </MobileButton>
+              <MobileSelect value={diversityScenario} onValueChange={setDiversityScenario}>
+                <MobileSelectTrigger label="Diversity Scenario">
+                  <MobileSelectValue />
+                </MobileSelectTrigger>
+                <MobileSelectContent>
+                  {Object.entries(DIVERSITY_FACTORS).map(([key, factor]) => (
+                    <MobileSelectItem key={key} value={key}>
+                      {key.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())} ({(Number(factor) * 100).toFixed(0)}%)
+                    </MobileSelectItem>
+                  ))}
+                </MobileSelectContent>
+              </MobileSelect>
             </div>
+          </div>
+
+          {/* Action Buttons */}
+          <div className="flex gap-2">
+            <MobileButton 
+              onClick={handleCalculate}
+              variant="elec"
+              disabled={chargingPoints.length === 0}
+              icon={<Calculator className="h-4 w-4" />}
+              className="flex-1"
+            >
+              Calculate Load
+            </MobileButton>
+            <MobileButton variant="elec-outline" onClick={reset}>
+              <RotateCcw className="h-4 w-4" />
+            </MobileButton>
           </div>
 
           {/* Results Section */}
@@ -365,109 +262,73 @@ const EVSELoadCalculator = () => {
             <div className="space-y-4">
               <h3 className="text-lg font-medium text-elec-yellow">Results</h3>
               
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 <ResultCard
-                  title="Connected Load"
-                  value={result.connectedLoad}
+                  title="Total Nominal Power"
+                  value={result.totalNominalPower}
                   unit="kW"
-                  status="info"
+                  subtitle="Connected load without diversity"
                 />
                 
                 <ResultCard
-                  title="Simultaneous Load"
-                  value={result.simultaneousLoad}
+                  title="Total Diversified Load"
+                  value={result.totalDiversifiedLoad}
                   unit="kW"
-                  status="info"
+                  subtitle="Load with diversity factor applied"
                 />
                 
                 <ResultCard
-                  title="Line Current"
-                  value={result.lineCurrent}
+                  title="Design Current"
+                  value={result.designCurrent}
                   unit="A"
-                  status={result.headroom < 0 ? "warning" : "success"}
+                  subtitle="Per phase current requirement"
                 />
                 
                 <ResultCard
                   title="Cable Size"
-                  value={result.cableSize}
-                  status={result.voltageDrop > result.maxVoltageDrop ? "warning" : "success"}
+                  value={result.selectedCable || "Not determined"}
+                  subtitle="Minimum conductor size"
                 />
                 
                 <ResultCard
                   title="Protection Device"
-                  value={result.protectionDevice}
-                  status="info"
+                  value={result.selectedProtection || "Not determined"}
+                  subtitle="Required protection"
                 />
                 
                 <ResultCard
                   title="Voltage Drop"
-                  value={result.voltageDrop}
+                  value={result.voltageDropPercent}
                   unit="%"
-                  status={result.voltageDrop > parseFloat(maxVoltageDrop) ? "error" : "success"}
+                  subtitle="At maximum load"
+                  status={result.voltageDropPercent <= 5 ? "success" : "error"}
+                />
+                
+                <ResultCard
+                  title="Available Headroom"
+                  value={result.headroom}
+                  unit="A"
+                  subtitle="Remaining capacity"
+                  status={result.headroom > 0 ? "success" : "warning"}
                 />
               </div>
 
-              {/* Analysis & Guidance */}
-              <div className="space-y-4">
-                <ResultCard
-                  title="Analysis & Recommendations"
-                  status={result.warnings.length > 0 ? "warning" : "success"}
-                >
-                  <div className="space-y-3 text-sm">
-                    {result.warnings.length > 0 && (
-                      <div className="space-y-2">
-                        <h4 className="font-medium text-yellow-500 flex items-center gap-2">
-                          <AlertTriangle className="h-4 w-4" />
-                          Warnings
-                        </h4>
-                        <ul className="space-y-1 text-yellow-300">
-                          {result.warnings.map((warning: string, index: number) => (
-                            <li key={index} className="text-xs">• {warning}</li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-                    
-                    <div className="space-y-2">
-                      <h4 className="font-medium text-green-500 flex items-center gap-2">
-                        <CheckCircle className="h-4 w-4" />
-                        Recommendations
-                      </h4>
-                      <ul className="space-y-1 text-green-300">
-                        {result.recommendations.map((rec: string, index: number) => (
-                          <li key={index} className="text-xs">• {rec}</li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    <div className="space-y-2">
-                      <h4 className="font-medium text-blue-500 flex items-center gap-2">
-                        <Info className="h-4 w-4" />
-                        Why This Matters
-                      </h4>
-                      <p className="text-xs text-blue-300">{result.whyItMatters}</p>
-                    </div>
-
-                    <div className="space-y-2">
-                      <h4 className="font-medium text-purple-500">Regulations & Standards</h4>
-                      <ul className="space-y-1 text-purple-300">
-                        {result.regulations.map((reg: string, index: number) => (
-                          <li key={index} className="text-xs">• {reg}</li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    <div className="space-y-2">
-                      <h4 className="font-medium text-orange-500">Practical Guidance</h4>
-                      <ul className="space-y-1 text-orange-300">
-                        {result.practicalGuidance.map((guide: string, index: number) => (
-                          <li key={index} className="text-xs">• {guide}</li>
-                        ))}
-                      </ul>
-                    </div>
+              {/* Recommendations */}
+              {result.recommendations.length > 0 && (
+                <div className="space-y-2">
+                  <h4 className="font-medium text-elec-yellow">Recommendations</h4>
+                  <div className="bg-elec-dark/30 p-3 rounded-lg">
+                    <ul className="space-y-1 text-sm">
+                      {result.recommendations.map((rec: string, index: number) => (
+                        <li key={index} className="flex items-start gap-2">
+                          <Info className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
+                          {rec}
+                        </li>
+                      ))}
+                    </ul>
                   </div>
-                </ResultCard>
-              </div>
+                </div>
+              )}
             </div>
           )}
 
