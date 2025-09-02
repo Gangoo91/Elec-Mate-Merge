@@ -307,31 +307,31 @@ const TransformerCalculator = () => {
                       </Badge>
                     </div>
 
-                    {/* Key Metrics */}
-                    <div className="grid grid-cols-2 gap-3 text-sm">
-                      <div className="text-left">
-                        <span className="text-muted-foreground block">Primary Current:</span>
-                        <div className="font-mono text-elec-yellow text-base">{result.primaryRatedCurrent.toFixed(1)} A</div>
+                    {/* Key Metrics - Mobile Optimized */}
+                    <div className="space-y-3 text-sm">
+                      <div className="flex justify-between items-center py-1">
+                        <span className="text-muted-foreground">Primary Current:</span>
+                        <div className="font-mono text-elec-yellow text-base font-semibold">{result.primaryRatedCurrent.toFixed(1)} A</div>
                       </div>
-                      <div className="text-left">
-                        <span className="text-muted-foreground block">Secondary Current:</span>
-                        <div className="font-mono text-elec-yellow text-base">{result.secondaryRatedCurrent.toFixed(1)} A</div>
+                      <div className="flex justify-between items-center py-1">
+                        <span className="text-muted-foreground">Secondary Current:</span>
+                        <div className="font-mono text-elec-yellow text-base font-semibold">{result.secondaryRatedCurrent.toFixed(1)} A</div>
                       </div>
-                      <div className="text-left">
-                        <span className="text-muted-foreground block">Real Power:</span>
-                        <div className="font-mono text-elec-yellow text-base">{result.kw.toFixed(1)} kW</div>
+                      <div className="flex justify-between items-center py-1">
+                        <span className="text-muted-foreground">Real Power:</span>
+                        <div className="font-mono text-elec-yellow text-base font-semibold">{result.kw.toFixed(1)} kW</div>
                       </div>
-                      <div className="text-left">
-                        <span className="text-muted-foreground block">Efficiency:</span>
-                        <div className="font-mono text-elec-yellow text-base">{(result.efficiency * 100).toFixed(1)}%</div>
+                      <div className="flex justify-between items-center py-1">
+                        <span className="text-muted-foreground">Efficiency:</span>
+                        <div className="font-mono text-elec-yellow text-base font-semibold">{(result.efficiency * 100).toFixed(1)}%</div>
                       </div>
-                      <div className="text-left">
-                        <span className="text-muted-foreground block">Fault Current:</span>
-                        <div className="font-mono text-elec-yellow text-base">{(result.transformerFaultCurrent / 1000).toFixed(1)} kA</div>
+                      <div className="flex justify-between items-center py-1">
+                        <span className="text-muted-foreground">Fault Current:</span>
+                        <div className="font-mono text-elec-yellow text-base font-semibold">{(result.transformerFaultCurrent / 1000).toFixed(1)} kA</div>
                       </div>
-                      <div className="text-left">
-                        <span className="text-muted-foreground block">Voltage Regulation:</span>
-                        <div className="font-mono text-elec-yellow text-base">{(result.voltageRegulation * 100).toFixed(1)}%</div>
+                      <div className="flex justify-between items-center py-1">
+                        <span className="text-muted-foreground">Voltage Regulation:</span>
+                        <div className="font-mono text-elec-yellow text-base font-semibold">{(result.voltageRegulation * 100).toFixed(1)}%</div>
                       </div>
                     </div>
                   </CardContent>
@@ -347,17 +347,17 @@ const TransformerCalculator = () => {
                   </CardHeader>
                   <CardContent className="pt-0">
                     <div className="space-y-3">
-                      <div className="text-left">
-                        <span className="text-sm text-muted-foreground block">Recommended MCCB Rating:</span>
-                        <div className="font-medium text-elec-yellow">{getRecommendedMCCB(result.secondaryRatedCurrent)}A</div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm text-muted-foreground">Recommended MCCB Rating:</span>
+                        <div className="font-medium text-elec-yellow font-semibold text-base">{getRecommendedMCCB(result.secondaryRatedCurrent)}A</div>
                       </div>
-                      <div className="text-left">
-                        <span className="text-sm text-muted-foreground block">Minimum Breaking Capacity:</span>
-                        <div className="font-medium text-elec-yellow">{getSwitchgearBreakingCapacity(result.transformerFaultCurrent)}</div>
+                      <div className="flex justify-between items-start">
+                        <span className="text-sm text-muted-foreground flex-shrink-0 mr-2">Minimum Breaking Capacity:</span>
+                        <div className="font-medium text-elec-yellow font-semibold text-base text-right">{getSwitchgearBreakingCapacity(result.transformerFaultCurrent)}</div>
                       </div>
-                      <div className="text-left">
-                        <span className="text-sm text-muted-foreground block">Inrush Current:</span>
-                        <div className="font-medium text-elec-yellow">{(result.inrushCurrent / 1000).toFixed(1)} kA for {result.inrushDuration}s</div>
+                      <div className="flex justify-between items-start">
+                        <span className="text-sm text-muted-foreground flex-shrink-0 mr-2">Inrush Current:</span>
+                        <div className="font-medium text-elec-yellow font-semibold text-base text-right">{(result.inrushCurrent / 1000).toFixed(1)} kA for {result.inrushDuration}s</div>
                       </div>
                     </div>
                   </CardContent>
@@ -383,10 +383,19 @@ const TransformerCalculator = () => {
                     </div>
                   </CardHeader>
                   <CardContent className="pt-0">
-                    <div className="space-y-2 text-sm text-left">
-                      <p>• Install {getRecommendedMCCB(result.secondaryRatedCurrent)}A MCCB for secondary protection</p>
-                      <p>• Ensure switchgear has {getSwitchgearBreakingCapacity(result.transformerFaultCurrent)} breaking capacity</p>
-                      <p>• Consider soft-start if inrush current ({(result.inrushCurrent / 1000).toFixed(1)} kA) causes supply issues</p>
+                    <div className="space-y-3 text-sm">
+                      <div className="flex items-start gap-2">
+                        <span className="text-elec-yellow mt-1">•</span>
+                        <span>Install {getRecommendedMCCB(result.secondaryRatedCurrent)}A MCCB for secondary protection</span>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <span className="text-elec-yellow mt-1">•</span>
+                        <span>Ensure switchgear has {getSwitchgearBreakingCapacity(result.transformerFaultCurrent)} breaking capacity</span>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <span className="text-elec-yellow mt-1">•</span>
+                        <span>Consider soft-start if inrush current ({(result.inrushCurrent / 1000).toFixed(1)} kA) causes supply issues</span>
+                      </div>
                       {result.voltageRegulation > 0.05 && <p>• High voltage regulation - consider tap changer or voltage stabiliser</p>}
                       {result.efficiency < 0.95 && <p>• Low efficiency transformer - consider upgrading for energy savings</p>}
                       {result.temperatureDerating && <p>• Apply {((1 - result.temperatureDerating) * 100).toFixed(0)}% derating for high ambient temperature</p>}
