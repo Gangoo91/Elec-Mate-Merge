@@ -29,3 +29,39 @@ export function formatNumber(num: number, decimals: number = 1): string {
     maximumFractionDigits: decimals,
   }).format(num);
 }
+
+/**
+ * Format large currency amounts with smart scaling (k, M, B)
+ * @param amount - The amount to format
+ * @param decimals - Number of decimal places for scaled values (default: 1)
+ * @returns Formatted currency string with scaling
+ */
+export function formatLargeCurrency(amount: number, decimals: number = 1): string {
+  if (amount >= 1000000000) {
+    return `£${(amount / 1000000000).toFixed(decimals)}B`;
+  } else if (amount >= 1000000) {
+    return `£${(amount / 1000000).toFixed(decimals)}M`;
+  } else if (amount >= 1000) {
+    return `£${(amount / 1000).toFixed(decimals)}k`;
+  } else {
+    return formatCurrency(amount, 0);
+  }
+}
+
+/**
+ * Format large numbers with smart scaling (k, M, B)
+ * @param num - The number to format
+ * @param decimals - Number of decimal places for scaled values (default: 1)
+ * @returns Formatted number string with scaling
+ */
+export function formatLargeNumber(num: number, decimals: number = 1): string {
+  if (num >= 1000000000) {
+    return `${(num / 1000000000).toFixed(decimals)}B`;
+  } else if (num >= 1000000) {
+    return `${(num / 1000000).toFixed(decimals)}M`;
+  } else if (num >= 1000) {
+    return `${(num / 1000).toFixed(decimals)}k`;
+  } else {
+    return formatNumber(num, decimals);
+  }
+}
