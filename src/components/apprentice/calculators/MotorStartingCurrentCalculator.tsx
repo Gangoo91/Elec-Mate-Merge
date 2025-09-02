@@ -36,6 +36,8 @@ const MotorStartingCurrentCalculator = () => {
     efficiencyAtStart: number;
     breakerSuitability: string;
     complianceStatus: string;
+    recommendedCableSize: string;
+    cableAnalysis: string;
     whatThisMeans: string[];
     practicalGuidance: string[];
     recommendations: string[];
@@ -107,6 +109,34 @@ const MotorStartingCurrentCalculator = () => {
       const totalImpedance = Math.sqrt(Math.pow(rCable + impedance, 2) + Math.pow(0.1, 2));
       const voltageDropEstimate = (startingCurrent * totalImpedance * 100) / V;
 
+      // Cable size recommendation based on voltage drop
+      let recommendedCableSize = cableCsa.toString();
+      let cableAnalysis = "Current cable size is adequate";
+      
+      if (voltageDropEstimate > 3) {
+        // Calculate required cable size for 3% voltage drop
+        const requiredResistance = (3 * V) / (startingCurrent * 100) - impedance;
+        const requiredCsa = cableLen / (requiredResistance * 58);
+        
+        // Round up to next standard cable size
+        const standardSizes = [1.5, 2.5, 4, 6, 10, 16, 25, 35, 50, 70, 95, 120, 150, 185, 240, 300];
+        const nextSize = standardSizes.find(size => size >= requiredCsa) || 300;
+        
+        recommendedCableSize = `${nextSize}mm²`;
+        cableAnalysis = `Upgrade to ${nextSize}mm² cable to achieve 3% voltage drop (currently ${voltageDropEstimate.toFixed(1)}%)`;
+      } else if (voltageDropEstimate < 1.5) {
+        // Check if cable can be downsized
+        const nextSmallerSize = [1.5, 2.5, 4, 6, 10, 16, 25, 35, 50, 70, 95].reverse().find(size => size < cableCsa);
+        if (nextSmallerSize) {
+          const smallerR = cableLen / (nextSmallerSize * 58);
+          const smallerVD = (startingCurrent * Math.sqrt(Math.pow(smallerR + impedance, 2) + Math.pow(0.1, 2)) * 100) / V;
+          if (smallerVD <= 3) {
+            recommendedCableSize = `${nextSmallerSize}mm² (optimised)`;
+            cableAnalysis = `Cable can be reduced to ${nextSmallerSize}mm² while maintaining compliance`;
+          }
+        }
+      }
+
       // Breaker suitability assessment
       let breakerSuitability = "No breaker specified";
       if (breakerRating && parseFloat(breakerRating) > 0) {
@@ -144,7 +174,8 @@ const MotorStartingCurrentCalculator = () => {
       // Enhanced recommendations
       const recommendations: string[] = [];
       if (voltageDropEstimate > 3) {
-        recommendations.push(`Use ${(cableCsa * 1.5).toFixed(1)}mm² cable or consider soft starter to reduce voltage drop`);
+        recommendations.push(cableAnalysis);
+        recommendations.push("Consider soft starter to reduce starting current and voltage drop");
       }
       if (startingMethod === "direct" && P > 11) {
         recommendations.push("BS 7671 recommends reduced starting for motors >11kW to limit supply disturbance");
@@ -154,6 +185,9 @@ const MotorStartingCurrentCalculator = () => {
       }
       if (thermalStress > 50000) {
         recommendations.push("High I²t stress - verify cable and contactor thermal capability");
+      }
+      if (voltageDropEstimate < 1.5 && cableAnalysis.includes("optimised")) {
+        recommendations.push(cableAnalysis);
       }
 
       // Warnings
@@ -179,6 +213,8 @@ const MotorStartingCurrentCalculator = () => {
         efficiencyAtStart,
         breakerSuitability,
         complianceStatus,
+        recommendedCableSize,
+        cableAnalysis,
         whatThisMeans,
         practicalGuidance,
         recommendations: recommendations.length > 0 ? recommendations : ["Motor starting parameters within acceptable ranges"],
@@ -449,46 +485,63 @@ const MotorStartingCurrentCalculator = () => {
               </span>
             </div>
 
-            {/* Key Results */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-              <div className="bg-card/50 p-4 rounded-lg text-center">
-                <div className="text-2xl font-bold text-elec-yellow">{result.fullLoadCurrent.toFixed(1)}</div>
-                <div className="text-sm text-muted-foreground">Full Load Current (A)</div>
+            {/* Key Results - Mobile Optimized */}
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4">
+              <div className="bg-card/50 p-3 sm:p-4 rounded-lg text-center">
+                <div className="text-xl sm:text-2xl font-bold text-elec-yellow">{result.fullLoadCurrent.toFixed(1)}</div>
+                <div className="text-xs sm:text-sm text-muted-foreground leading-tight">Full Load<br className="sm:hidden" /> Current (A)</div>
               </div>
               
-              <div className="bg-card/50 p-4 rounded-lg text-center">
-                <div className="text-2xl font-bold text-elec-yellow">{result.startingCurrent.toFixed(0)}</div>
-                <div className="text-sm text-muted-foreground">Starting Current (A)</div>
+              <div className="bg-card/50 p-3 sm:p-4 rounded-lg text-center">
+                <div className="text-xl sm:text-2xl font-bold text-elec-yellow">{result.startingCurrent.toFixed(0)}</div>
+                <div className="text-xs sm:text-sm text-muted-foreground leading-tight">Starting<br className="sm:hidden" /> Current (A)</div>
               </div>
               
-              <div className="bg-card/50 p-4 rounded-lg text-center">
-                <div className="text-2xl font-bold text-elec-yellow">{result.startingMultiplier.toFixed(1)}x</div>
-                <div className="text-sm text-muted-foreground">Start Multiplier</div>
+              <div className="bg-card/50 p-3 sm:p-4 rounded-lg text-center">
+                <div className="text-xl sm:text-2xl font-bold text-elec-yellow">{result.startingMultiplier.toFixed(1)}x</div>
+                <div className="text-xs sm:text-sm text-muted-foreground leading-tight">Start<br className="sm:hidden" /> Multiplier</div>
               </div>
               
-              <div className="bg-card/50 p-4 rounded-lg text-center">
-                <div className={`text-2xl font-bold ${result.voltageDropEstimate > 3 ? 'text-red-400' : 'text-green-400'}`}>
+              <div className="bg-card/50 p-3 sm:p-4 rounded-lg text-center">
+                <div className={`text-xl sm:text-2xl font-bold ${result.voltageDropEstimate > 3 ? 'text-red-400' : 'text-green-400'}`}>
                   {result.voltageDropEstimate.toFixed(1)}%
                 </div>
-                <div className="text-sm text-muted-foreground">Voltage Drop</div>
+                <div className="text-xs sm:text-sm text-muted-foreground leading-tight">Voltage<br className="sm:hidden" /> Drop</div>
               </div>
             </div>
 
-            {/* Additional Parameters */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <div className="bg-card/30 p-3 rounded-lg">
+            {/* Additional Parameters - Mobile Optimized */}
+            <div className="space-y-3">
+              <div className="text-center bg-card/30 p-3 rounded-lg">
                 <div className="text-sm text-muted-foreground">Starting kVA</div>
-                <div className="font-mono text-lg text-foreground">{result.startingKva.toFixed(1)} kVA</div>
+                <div className="font-mono text-xl font-bold text-elec-yellow">{result.startingKva.toFixed(1)} kVA</div>
               </div>
               
-              <div className="bg-card/30 p-3 rounded-lg">
-                <div className="text-sm text-muted-foreground">I²t Thermal Stress</div>
-                <div className="font-mono text-lg text-foreground">{(result.thermalStress / 1000).toFixed(1)}k A²s</div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="bg-card/30 p-3 rounded-lg text-center">
+                  <div className="text-sm text-muted-foreground">I²t Thermal Stress</div>
+                  <div className="font-mono text-lg text-foreground">{(result.thermalStress / 1000).toFixed(1)}k A²s</div>
+                </div>
+                
+                <div className="bg-card/30 p-3 rounded-lg text-center">
+                  <div className="text-sm text-muted-foreground">Protection</div>
+                  <div className="text-sm text-foreground leading-tight">{result.protectionRecommendation}</div>
+                </div>
               </div>
-              
-              <div className="bg-card/30 p-3 rounded-lg">
-                <div className="text-sm text-muted-foreground">Protection</div>
-                <div className="text-sm text-foreground">{result.protectionRecommendation}</div>
+            </div>
+
+            {/* Cable Recommendation */}
+            <div className="bg-elec-card border border-elec-yellow/30 p-4 rounded-lg">
+              <div className="flex items-center gap-2 mb-3">
+                <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
+                <h3 className="font-semibold text-elec-yellow">Cable Size Recommendation</h3>
+              </div>
+              <div className="text-center mb-3">
+                <div className="text-2xl font-bold text-elec-yellow">{result.recommendedCableSize}</div>
+                <div className="text-sm text-muted-foreground">Recommended Cable Size</div>
+              </div>
+              <div className="text-sm text-muted-foreground text-center leading-relaxed">
+                {result.cableAnalysis}
               </div>
             </div>
 
@@ -529,14 +582,14 @@ const MotorStartingCurrentCalculator = () => {
             {/* Practical Guidance */}
             <div className="bg-card/50 p-4 rounded-lg">
               <div className="flex items-center gap-2 mb-3">
-                <Lightbulb className="h-5 w-5 text-elec-yellow" />
-                <h3 className="font-semibold">Practical Guidance</h3>
+                <Lightbulb className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow" />
+                <h3 className="font-semibold text-base sm:text-lg">Practical Guidance</h3>
               </div>
-              <ul className="space-y-2 text-sm text-muted-foreground">
+              <ul className="space-y-2.5 text-sm sm:text-base text-muted-foreground">
                 {result.practicalGuidance.map((guidance, index) => (
-                  <li key={index} className="flex items-start">
-                    <span className="text-elec-yellow mr-2 mt-1">•</span>
-                    <span>{guidance}</span>
+                  <li key={index} className="flex items-start gap-3">
+                    <span className="text-elec-yellow mt-1.5 w-1.5 h-1.5 rounded-full bg-elec-yellow flex-shrink-0"></span>
+                    <span className="leading-relaxed">{guidance}</span>
                   </li>
                 ))}
               </ul>
@@ -544,12 +597,12 @@ const MotorStartingCurrentCalculator = () => {
 
             {/* Recommendations */}
             <div className="bg-card/50 p-4 rounded-lg">
-              <h3 className="font-semibold mb-3 text-elec-yellow">BS 7671 Recommendations</h3>
-              <ul className="space-y-2 text-sm text-muted-foreground">
+              <h3 className="font-semibold mb-3 text-elec-yellow text-base sm:text-lg">BS 7671 Recommendations</h3>
+              <ul className="space-y-2.5 text-sm sm:text-base text-muted-foreground">
                 {result.recommendations.map((rec, index) => (
-                  <li key={index} className="flex items-start">
-                    <span className="text-elec-yellow mr-2 mt-1">•</span>
-                    <span>{rec}</span>
+                  <li key={index} className="flex items-start gap-3">
+                    <span className="text-elec-yellow mt-1.5 w-1.5 h-1.5 rounded-full bg-elec-yellow flex-shrink-0"></span>
+                    <span className="leading-relaxed">{rec}</span>
                   </li>
                 ))}
               </ul>
