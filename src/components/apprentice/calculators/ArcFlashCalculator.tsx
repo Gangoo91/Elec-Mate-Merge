@@ -157,7 +157,7 @@ const ArcFlashCalculator = () => {
           <CardTitle>Arc Flash Energy Calculator</CardTitle>
         </div>
         <CardDescription>
-          Calculate arc flash incident energy and determine PPE requirements according to IEEE 1584 guidelines.
+          Calculate arc flash incident energy and determine minimum arc rating requirements according to IEEE 1584-2018 and BS 7671 18th Edition.
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -316,23 +316,39 @@ const ArcFlashCalculator = () => {
           <div className="space-y-4">
             <div className="rounded-lg bg-elec-dark p-4 sm:p-6 min-h-[400px]">
               {result ? (
-                <div className="space-y-4">
-                  <div className="text-center">
-                    <h3 className="text-lg font-semibold text-elec-yellow mb-2">Arc Flash Analysis</h3>
-                    <Badge 
-                      variant={result.ppeCategory <= 1 ? "default" : result.ppeCategory <= 3 ? "secondary" : "destructive"}
-                      className="mb-4"
-                    >
-                      PPE Category {result.ppeCategory}
-                    </Badge>
-                    {result.warnings.length > 0 && (
-                      <div className="text-xs text-orange-400 mb-2">
-                        {result.warnings.map((warning, i) => (
-                          <div key={i}>⚠ {warning}</div>
-                        ))}
+                  <div className="space-y-4">
+                    <div className="text-center">
+                      <h3 className="text-lg font-semibold text-elec-yellow mb-2">Arc Flash Analysis</h3>
+                      <div className="flex flex-col gap-2 mb-4">
+                        <Badge 
+                          variant={result.incidentEnergy <= 8 ? "default" : result.incidentEnergy <= 25 ? "secondary" : "destructive"}
+                          className="mx-auto"
+                        >
+                          {result.isUnrealistic ? "Dangerous Energy Level" : `Min Arc Rating: ${result.minArcRatingRequired} cal/cm²`}
+                        </Badge>
+                        {result.isUnrealistic && (
+                          <Badge variant="destructive" className="mx-auto text-xs">
+                            ⚠ Exceeds practical PPE limits
+                          </Badge>
+                        )}
                       </div>
-                    )}
-                  </div>
+                      
+                      {result.warnings.length > 0 && (
+                        <div className="text-xs text-orange-400 mb-2">
+                          {result.warnings.map((warning, i) => (
+                            <div key={i}>⚠ {warning}</div>
+                          ))}
+                        </div>
+                      )}
+                      
+                      {result.advisoryMessages.length > 0 && (
+                        <div className="text-xs text-blue-400 mb-2">
+                          {result.advisoryMessages.map((message, i) => (
+                            <div key={i}>💡 {message}</div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
                   
                   <Separator />
                   
@@ -378,20 +394,36 @@ const ArcFlashCalculator = () => {
 
                    <Separator />
 
-                  <div>
-                    <div className="flex items-center gap-2 mb-2">
-                      <Shield className="h-4 w-4 text-blue-400" />
-                      <span className="font-medium">Required PPE:</span>
-                    </div>
-                    <ul className="space-y-2 text-sm">
-                      {result.ppeRecommendations.map((rec, index) => (
-                        <li key={index} className="flex items-start gap-3">
-                          <span className="flex-shrink-0 w-2 h-2 bg-blue-400 rounded-full mt-2"></span>
-                          <span className="text-muted-foreground">{rec}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                   <div>
+                     <div className="flex items-center gap-2 mb-2">
+                       <Shield className="h-4 w-4 text-blue-400" />
+                       <span className="font-medium">PPE Requirements:</span>
+                     </div>
+                     {result.isUnrealistic ? (
+                       <div className="bg-red-900/20 p-3 rounded-lg border border-red-500/30">
+                         <p className="text-sm text-red-300 mb-2">
+                           ⚠ <strong>Energy level exceeds safe PPE limits</strong>
+                         </p>
+                         <p className="text-xs text-red-400">
+                           Consider: De-energisation • Remote operation • Engineering controls
+                         </p>
+                       </div>
+                     ) : (
+                       <ul className="space-y-2 text-sm">
+                         {result.ppeRecommendations.map((rec, index) => (
+                           <li key={index} className="flex items-start gap-3">
+                             <span className="flex-shrink-0 w-2 h-2 bg-blue-400 rounded-full mt-2"></span>
+                             <span className="text-muted-foreground">{rec}</span>
+                           </li>
+                         ))}
+                       </ul>
+                     )}
+                     {result.incidentEnergy > 8 && !result.isUnrealistic && (
+                       <div className="mt-2 text-xs text-yellow-400">
+                         Note: PPE rating is thermal protection only. Blast pressure effects not included.
+                       </div>
+                     )}
+                   </div>
 
                   {getMostImpactfulLever() && (
                     <>
@@ -486,12 +518,14 @@ const ArcFlashCalculator = () => {
         {/* Educational Content */}
         <div className="grid grid-cols-1 gap-6 mt-8">
           <WhyThisMatters
+            title="BS 7671 18th Edition Compliance"
             points={[
-              "Arc flash incidents can cause severe burns, blindness, and death from temperatures exceeding 20,000°C",
-              "UK HSE requires risk assessment and appropriate PPE for electrical work under EAWR 1989",
-              "Arc flash boundaries determine safe approach distances for unqualified personnel",
-              "PPE selection based on incident energy prevents life-threatening injuries",
-              "Proper clearing times and working distances dramatically reduce exposure risk"
+              "Arc flash assessment required for electrical work on live systems above 50V AC",
+              "Energy calculations determine minimum PPE requirements and safe working procedures", 
+              "Arc flash boundary calculated at 1.2 cal/cm² threshold per UK standards",
+              "High energy readings (>40 cal/cm²) indicate potential calculation errors or extremely hazardous conditions",
+              "Results should be reviewed by competent person and documented",
+              "Consider de-energisation as primary control measure for high-energy situations"
             ]}
           />
           

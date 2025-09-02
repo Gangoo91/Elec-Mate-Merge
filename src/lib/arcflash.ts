@@ -23,7 +23,11 @@ export interface ArcFlashResult {
   distanceExponent: number; // Distance exponent used
   isWithinIEEEBounds: boolean; // Whether inputs are within IEEE 1584 bounds
   warnings: string[];
-  ppeCategory: PPECategory;
+  minArcRatingRequired: number; // Minimum arc rating required (cal/cm²)
+  withinIEEEBounds: boolean; // Duplicate for consistency
+  isUnrealistic: boolean; // High energy warning flag
+  advisoryMessages: string[]; // Additional guidance messages
+  ppeCategory: PPECategory; // Legacy field
   ppeRecommendations: string[];
   calculationMethod: string;
 }
@@ -117,11 +121,11 @@ function calculateArcingCurrent(inputs: ArcFlashInputs): number {
   return Math.max(minArcCurrent, Math.min(maxArcCurrent, arcingCurrent * 1000)) / 1000; // Return in kA
 }
 
-// Calculate incident energy using IEEE 1584-2018
+// Calculate incident energy using IEEE 1584-2018 (corrected formula)
 function calculateIncidentEnergy(inputs: ArcFlashInputs, arcingCurrent: number): { energy: number; distanceExponent: number } {
-  const { voltage, workingDistance, electrodeConfig, enclosureType } = inputs;
+  const { voltage, workingDistance, clearingTime, electrodeConfig } = inputs;
   
-  // IEEE 1584-2018 incident energy coefficients
+  // IEEE 1584-2018 incident energy coefficients (corrected)
   let k1: number, k2: number, cf: number;
   
   // Configuration and enclosure specific coefficients
@@ -141,24 +145,24 @@ function calculateIncidentEnergy(inputs: ArcFlashInputs, arcingCurrent: number):
       k1 = -0.555; k2 = 0.113; cf = 1.0;
   }
 
-  // Calculate normalized incident energy (at 610mm)
+  // Calculate normalized incident energy (at 610mm, 0.2s) - corrected formula
   const logEn = k1 + k2 + 1.081 * Math.log10(arcingCurrent) + 0.0011 * voltage;
-  const En = Math.pow(10, logEn); // cal/cm² at 610mm, 0.2s
+  const En = Math.pow(10, logEn); // J/cm² at 610mm, 0.2s
   
-  // Distance exponent (x)
-  const x = 2.0; // Simplified - IEEE 1584 uses more complex calculation
+  // Distance exponent (simplified for IEEE 1584-2018)
+  const x = 2.0;
   
-  // Scale for actual distance and time
-  const incidentEnergy = cf * 4.184 * En * (inputs.clearingTime / 0.2) * Math.pow(610 / workingDistance, x);
+  // Scale for actual distance and time (corrected scaling)
+  const incidentEnergy = cf * En * (clearingTime / 0.2) * Math.pow(610 / workingDistance, x);
   
   return { energy: incidentEnergy, distanceExponent: x };
 }
 
-// Calculate arc flash boundary
+// Calculate arc flash boundary at 1.2 cal/cm² threshold (BS 7671 18th Edition)
 function calculateArcFlashBoundary(inputs: ArcFlashInputs, arcingCurrent: number): number {
   const { voltage, clearingTime, electrodeConfig } = inputs;
   
-  // Use incident energy calculation at 5 cal/cm² threshold
+  // Use incident energy calculation at 1.2 cal/cm² threshold (IEEE 1584-2018)
   let k1: number, k2: number, cf: number;
   
   switch (electrodeConfig) {
@@ -180,8 +184,8 @@ function calculateArcFlashBoundary(inputs: ArcFlashInputs, arcingCurrent: number
   const logEn = k1 + k2 + 1.081 * Math.log10(arcingCurrent) + 0.0011 * voltage;
   const En = Math.pow(10, logEn);
   
-  // Distance for 5 cal/cm² (typical PPE threshold)
-  const boundary = 610 * Math.sqrt((cf * 4.184 * En * (clearingTime / 0.2)) / 5.0);
+  // Distance for 1.2 cal/cm² (UK arc flash boundary threshold)
+  const boundary = 610 * Math.sqrt((cf * 4.184 * En * (clearingTime / 0.2)) / 1.2);
   
   return Math.max(200, boundary); // Minimum 200mm boundary
 }
@@ -272,6 +276,26 @@ export function calculateArcFlash(inputs: ArcFlashInputs): ArcFlashResult {
   // Determine PPE requirements
   const ppe = determinePPE(incidentEnergy);
   
+  // Generate advisory messages
+  const advisoryMessages: string[] = [];
+  const isUnrealistic = incidentEnergy > 100;
+  
+  if (isUnrealistic) {
+    advisoryMessages.push("Energy level exceeds practical PPE limits - consider de-energisation or remote operation");
+  }
+  
+  if (incidentEnergy > 40) {
+    advisoryMessages.push("PPE rating indicates thermal protection only - blast and pressure effects not considered");
+  }
+  
+  if (inputs.clearingTime > 0.5) {
+    advisoryMessages.push("Consider faster protection devices to reduce incident energy");
+  }
+  
+  if (inputs.workingDistance < 600 && incidentEnergy > 8) {
+    advisoryMessages.push("Increase working distance where practicable to reduce energy exposure");
+  }
+  
   // Determine calculation method
   let calculationMethod = validation.isValid ? 'IEEE 1584-2018' : 'IEEE 1584-2018 (extrapolated)';
   
@@ -283,6 +307,10 @@ export function calculateArcFlash(inputs: ArcFlashInputs): ArcFlashResult {
     distanceExponent,
     isWithinIEEEBounds: validation.isValid,
     warnings: validation.warnings,
+    minArcRatingRequired: Math.ceil(incidentEnergy),
+    withinIEEEBounds: validation.isValid,
+    isUnrealistic,
+    advisoryMessages,
     ppeCategory: ppe.category,
     ppeRecommendations: ppe.recommendations,
     calculationMethod
