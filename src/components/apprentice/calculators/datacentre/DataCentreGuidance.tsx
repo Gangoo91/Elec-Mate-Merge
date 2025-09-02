@@ -334,145 +334,149 @@ export function DataCentreGuidance({ results }: DataCentreGuidanceProps) {
       {/* Advanced Details */}
       <Collapsible open={detailsOpen} onOpenChange={setDetailsOpen}>
         <CollapsibleTrigger asChild>
-          <Card className="border-elec-yellow/20 bg-elec-grey cursor-pointer hover:border-elec-yellow/30 transition-colors">
-            <CardHeader>
-              <CardTitle className="flex items-center justify-between text-elec-light">
-                <div className="flex items-center gap-2">
-                  <Thermometer className="h-5 w-5 text-elec-yellow" />
-                  Advanced Details & Guidance
-                </div>
-                <ChevronDown className={`h-4 w-4 text-elec-yellow transition-transform ${detailsOpen ? 'rotate-180' : ''}`} />
-              </CardTitle>
-            </CardHeader>
-          </Card>
+          <ResultCard className="cursor-pointer hover:border-elec-yellow/30 transition-colors">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Thermometer className="h-5 w-5 text-elec-yellow" />
+                <h3 className="text-lg font-medium">Advanced Details & Guidance</h3>
+              </div>
+              <ChevronDown className={`h-4 w-4 text-elec-yellow transition-transform ${detailsOpen ? 'rotate-180' : ''}`} />
+            </div>
+          </ResultCard>
         </CollapsibleTrigger>
         <CollapsibleContent>
-          <Card className="border-elec-yellow/20 bg-elec-grey mt-2">
-            <CardContent className="pt-6">
-              <div className="space-y-6">
-                {/* Why This Matters */}
-                <div>
-                  <h3 className="font-semibold text-elec-yellow mb-3 flex items-center gap-2">
-                    <AlertTriangle className="h-4 w-4" />
-                    Why Data Centre Design Matters
-                  </h3>
-                  <div className="space-y-2 text-sm text-elec-muted">
-                    <p>• <strong>Business Continuity:</strong> Poor design leads to costly downtime (average £4,500 per minute)</p>
-                    <p>• <strong>Energy Efficiency:</strong> Data centres consume 1% of global electricity - efficiency is crucial</p>
-                    <p>• <strong>Scalability:</strong> Proper planning prevents expensive retrofits and capacity constraints</p>
-                    <p>• <strong>Compliance:</strong> Industry standards ensure reliability and operational excellence</p>
-                    <p>• <strong>Environmental Impact:</strong> Efficient design reduces carbon footprint and operating costs</p>
-                  </div>
+          <div className="space-y-4 mt-2">
+            {/* Why This Matters */}
+            <ResultCard>
+              <div className="space-y-2 mb-4">
+                <div className="flex items-center gap-2">
+                  <AlertTriangle className="h-4 w-4 text-elec-yellow" />
+                  <h4 className="font-medium">Why Data Centre Design Matters</h4>
                 </div>
+              </div>
+              <div className="space-y-2 text-sm">
+                <p>• <strong>Business Continuity:</strong> Poor design leads to costly downtime (average £4,500 per minute)</p>
+                <p>• <strong>Energy Efficiency:</strong> Data centres consume 1% of global electricity - efficiency is crucial</p>
+                <p>• <strong>Scalability:</strong> Proper planning prevents expensive retrofits and capacity constraints</p>
+                <p>• <strong>Compliance:</strong> Industry standards ensure reliability and operational excellence</p>
+                <p>• <strong>Environmental Impact:</strong> Efficient design reduces carbon footprint and operating costs</p>
+              </div>
+            </ResultCard>
 
-                {/* Key Metrics Explained */}
-                <div>
-                  <h3 className="font-semibold text-elec-yellow mb-3 flex items-center gap-2">
-                    <Gauge className="h-4 w-4" />
-                    Key Metrics Explained
-                  </h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                    <div className="space-y-3">
-                      <div>
-                        <div className="font-medium text-elec-light">PUE (Power Usage Effectiveness)</div>
-                        <div className="text-elec-muted">Total facility power ÷ IT power</div>
-                        <div className="text-xs text-elec-yellow">
-                          • 1.0 = Perfect efficiency (impossible)<br/>
-                          • 1.2-1.5 = Excellent (modern efficient)<br/>
-                          • 1.5-2.0 = Good (typical)<br/>
-                          • 2.0+ = Poor (needs improvement)
-                        </div>
-                      </div>
-                      <div>
-                        <div className="font-medium text-elec-light">DCiE (Data Centre Infrastructure Efficiency)</div>
-                        <div className="text-elec-muted">IT power ÷ total facility power × 100</div>
-                        <div className="text-xs text-elec-yellow">Inverse of PUE as percentage</div>
-                      </div>
-                    </div>
-                    <div className="space-y-3">
-                      <div>
-                        <div className="font-medium text-elec-light">Capacity Headroom</div>
-                        <div className="text-elec-muted">Available capacity for growth</div>
-                        <div className="text-xs text-elec-yellow">
-                          • 20%+ = Good planning buffer<br/>
-                          • 10-20% = Adequate short-term<br/>
-                          • &lt;10% = Expansion needed soon
-                        </div>
-                      </div>
-                      <div>
-                        <div className="font-medium text-elec-light">Redundancy Levels</div>
-                        <div className="text-elec-muted">Protection against failures</div>
-                        <div className="text-xs text-elec-yellow">
-                          • N = No redundancy<br/>
-                          • N+1 = Single component backup<br/>
-                          • 2N = Complete duplicate systems
-                        </div>
-                      </div>
+            {/* Key Metrics Explained */}
+            <ResultCard>
+              <div className="space-y-2 mb-4">
+                <div className="flex items-center gap-2">
+                  <Gauge className="h-4 w-4 text-elec-yellow" />
+                  <h4 className="font-medium">Key Metrics Explained</h4>
+                </div>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                <div className="space-y-3">
+                  <div>
+                    <div className="font-medium">PUE (Power Usage Effectiveness)</div>
+                    <div className="text-muted-foreground">Total facility power ÷ IT power</div>
+                    <div className="text-xs text-elec-yellow">
+                      • 1.0 = Perfect efficiency (impossible)<br/>
+                      • 1.2-1.5 = Excellent (modern efficient)<br/>
+                      • 1.5-2.0 = Good (typical)<br/>
+                      • 2.0+ = Poor (needs improvement)
                     </div>
                   </div>
+                  <div>
+                    <div className="font-medium">DCiE (Data Centre Infrastructure Efficiency)</div>
+                    <div className="text-muted-foreground">IT power ÷ total facility power × 100</div>
+                    <div className="text-xs text-elec-yellow">Inverse of PUE as percentage</div>
+                  </div>
                 </div>
-
-                {/* Practical Guidance */}
-                <div>
-                  <h3 className="font-semibold text-elec-yellow mb-3 flex items-center gap-2">
-                    <Server className="h-4 w-4" />
-                    Practical Implementation Guidance
-                  </h3>
-                  <div className="space-y-4 text-sm">
-                    <div>
-                      <div className="font-medium text-elec-light mb-2">Infrastructure Sizing Best Practices:</div>
-                      <ul className="list-disc list-inside space-y-1 text-elec-muted ml-4">
-                        <li>Size UPS for peak load plus 15-25% design margin</li>
-                        <li>Generator should be 125% of UPS capacity for starting loads</li>
-                        <li>Battery runtime: minimum 15 minutes, recommend 30+ minutes</li>
-                        <li>Cooling redundancy separate from power redundancy planning</li>
-                      </ul>
+                <div className="space-y-3">
+                  <div>
+                    <div className="font-medium">Capacity Headroom</div>
+                    <div className="text-muted-foreground">Available capacity for growth</div>
+                    <div className="text-xs text-elec-yellow">
+                      • 20%+ = Good planning buffer<br/>
+                      • 10-20% = Adequate short-term<br/>
+                      • &lt;10% = Expansion needed soon
                     </div>
-                    <div>
-                      <div className="font-medium text-elec-light mb-2">Efficiency Improvements:</div>
-                      <ul className="list-disc list-inside space-y-1 text-elec-muted ml-4">
-                        <li>Hot/cold aisle containment can improve PUE by 20-30%</li>
-                        <li>Variable speed drive fans reduce energy by 10-15%</li>
-                        <li>Free cooling in temperate climates saves 30% cooling energy</li>
-                        <li>Higher supply temperatures (27°C) reduce cooling load</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <div className="font-medium text-elec-light mb-2">Monitoring & Maintenance:</div>
-                      <ul className="list-disc list-inside space-y-1 text-elec-muted ml-4">
-                        <li>Real-time PUE monitoring enables optimisation</li>
-                        <li>Regular thermal mapping identifies hot spots</li>
-                        <li>Preventive maintenance schedules for critical systems</li>
-                        <li>Annual load bank testing of backup power systems</li>
-                      </ul>
+                  </div>
+                  <div>
+                    <div className="font-medium">Redundancy Levels</div>
+                    <div className="text-muted-foreground">Protection against failures</div>
+                    <div className="text-xs text-elec-yellow">
+                      • N = No redundancy<br/>
+                      • N+1 = Single component backup<br/>
+                      • 2N = Complete duplicate systems
                     </div>
                   </div>
                 </div>
               </div>
-            </CardContent>
-          </Card>
+            </ResultCard>
+
+            {/* Practical Guidance */}
+            <ResultCard>
+              <div className="space-y-2 mb-4">
+                <div className="flex items-center gap-2">
+                  <Server className="h-4 w-4 text-elec-yellow" />
+                  <h4 className="font-medium">Practical Implementation Guidance</h4>
+                </div>
+              </div>
+              <div className="space-y-4 text-sm">
+                <div>
+                  <div className="font-medium mb-2">Infrastructure Sizing Best Practices:</div>
+                  <ul className="list-disc list-inside space-y-1 text-muted-foreground ml-4">
+                    <li>Size UPS for peak load plus 15-25% design margin</li>
+                    <li>Generator should be 125% of UPS capacity for starting loads</li>
+                    <li>Battery runtime: minimum 15 minutes, recommend 30+ minutes</li>
+                    <li>Cooling redundancy separate from power redundancy planning</li>
+                  </ul>
+                </div>
+                <div>
+                  <div className="font-medium mb-2">Efficiency Improvements:</div>
+                  <ul className="list-disc list-inside space-y-1 text-muted-foreground ml-4">
+                    <li>Hot/cold aisle containment can improve PUE by 20-30%</li>
+                    <li>Variable speed drive fans reduce energy by 10-15%</li>
+                    <li>Free cooling in temperate climates saves 30% cooling energy</li>
+                    <li>Higher supply temperatures (27°C) reduce cooling load</li>
+                  </ul>
+                </div>
+                <div>
+                  <div className="font-medium mb-2">Monitoring & Maintenance:</div>
+                  <ul className="list-disc list-inside space-y-1 text-muted-foreground ml-4">
+                    <li>Real-time PUE monitoring enables optimisation</li>
+                    <li>Regular thermal mapping identifies hot spots</li>
+                    <li>Preventive maintenance schedules for critical systems</li>
+                    <li>Annual load bank testing of backup power systems</li>
+                  </ul>
+                </div>
+              </div>
+            </ResultCard>
+          </div>
         </CollapsibleContent>
       </Collapsible>
 
       {/* Warning Alerts */}
-      <Alert className="border-elec-yellow/20 bg-elec-grey">
-        <AlertTriangle className="h-4 w-4 text-elec-yellow" />
-        <AlertDescription className="text-elec-light text-sm leading-relaxed">
-          <strong className="text-elec-yellow">Professional Verification Required:</strong> These calculations provide design guidance only. Critical 
-          infrastructure requires professional mechanical and electrical engineering validation, detailed 
-          thermal modelling, and compliance verification with local building codes and industry 
-          standards.
-        </AlertDescription>
-      </Alert>
+      <ResultCard status="warning">
+        <div className="flex items-start gap-3">
+          <AlertTriangle className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
+          <div className="text-sm leading-relaxed">
+            <strong className="text-amber-400">Professional Verification Required:</strong> These calculations provide design guidance only. Critical 
+            infrastructure requires professional mechanical and electrical engineering validation, detailed 
+            thermal modelling, and compliance verification with local building codes and industry 
+            standards.
+          </div>
+        </div>
+      </ResultCard>
 
-      <Alert className="border-elec-yellow/20 bg-elec-grey">
-        <Server className="h-4 w-4 text-elec-yellow" />
-        <AlertDescription className="text-elec-light text-sm leading-relaxed">
-          This calculator provides comprehensive data centre design guidance including load analysis, 
-          efficiency metrics, annual consumption, costs, and regulatory compliance. Results require 
-          professional engineering validation for critical infrastructure projects.
-        </AlertDescription>
-      </Alert>
+      <ResultCard status="info">
+        <div className="flex items-start gap-3">
+          <Server className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
+          <div className="text-sm leading-relaxed">
+            This calculator provides comprehensive data centre design guidance including load analysis, 
+            efficiency metrics, annual consumption, costs, and regulatory compliance. Results require 
+            professional engineering validation for critical infrastructure projects.
+          </div>
+        </div>
+      </ResultCard>
     </div>
   );
 }
