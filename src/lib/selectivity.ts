@@ -72,12 +72,12 @@ export function calculateSelectivity(inputs: SelectivityInputs): SelectivityResu
     upstreamCurve,
     upstreamMagneticSetting,
     upstreamTimeDelay = 0,
-    upstreamBreakingCapacity = 10000,
+    upstreamBreakingCapacity = 10, // kA converted to A for comparison
     downstreamDevice,
     downstreamRating,
     downstreamCurve,
     downstreamMagneticSetting,
-    downstreamBreakingCapacity = 6000,
+    downstreamBreakingCapacity = 6, // kA converted to A for comparison
     faultCurrent,
     shortCircuitCurrent = faultCurrent,
     loadCurrent = upstreamRating * 0.8
@@ -139,10 +139,10 @@ export function calculateSelectivity(inputs: SelectivityInputs): SelectivityResu
     downstreamTime
   );
 
-  // Breaking capacity check
+  // Breaking capacity check (convert kA to A for comparison)
   const breakingCapacityCheck = 
-    upstreamBreakingCapacity >= shortCircuitCurrent && 
-    downstreamBreakingCapacity >= shortCircuitCurrent;
+    (upstreamBreakingCapacity * 1000) >= shortCircuitCurrent && 
+    (downstreamBreakingCapacity * 1000) >= shortCircuitCurrent;
 
   // Overall selectivity
   const isSelective = overloadSelectivity && shortCircuitSelectivity && breakingCapacityCheck;

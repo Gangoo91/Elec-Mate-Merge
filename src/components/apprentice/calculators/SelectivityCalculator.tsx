@@ -340,11 +340,11 @@ const SelectivityCalculator = () => {
         </CardContent>
       </Card>
 
+      {/* Results Section - Immediately after calculator */}
+      {result && <SelectivityGuidance result={result} />}
+
       {/* Information Section */}
       <SelectivityInfo />
-
-      {/* Results Section */}
-      {result && <SelectivityGuidance result={result} />}
     </div>
   );
 };

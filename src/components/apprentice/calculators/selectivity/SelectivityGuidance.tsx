@@ -137,11 +137,11 @@ const SelectivityGuidance: React.FC<SelectivityGuidanceProps> = ({ result }) => 
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <ul className="space-y-2">
+            <ul className="space-y-2 list-none">
               {result.immediateActions.map((action, index) => (
-                <li key={index} className="flex items-start gap-2">
-                  <span className="text-red-400 mt-1">•</span>
-                  <span className="text-red-200 text-sm">{action}</span>
+                <li key={index} className="flex items-start gap-3 text-sm">
+                  <span className="text-red-400 text-xs mt-0.5 flex-shrink-0">•</span>
+                  <span className="text-red-200 leading-relaxed">{action}</span>
                 </li>
               ))}
             </ul>
@@ -159,11 +159,11 @@ const SelectivityGuidance: React.FC<SelectivityGuidanceProps> = ({ result }) => 
             </div>
           </CardHeader>
           <CardContent>
-            <ul className="space-y-2">
+            <ul className="space-y-2 list-none">
               {result.concerns.map((concern, index) => (
-                <li key={index} className="flex items-start gap-2">
-                  <span className="text-orange-400 mt-1">•</span>
-                  <span className="text-orange-200 text-sm">{concern}</span>
+                <li key={index} className="flex items-start gap-3 text-sm">
+                  <span className="text-orange-400 text-xs mt-0.5 flex-shrink-0">•</span>
+                  <span className="text-orange-200 leading-relaxed">{concern}</span>
                 </li>
               ))}
             </ul>
@@ -180,11 +180,11 @@ const SelectivityGuidance: React.FC<SelectivityGuidanceProps> = ({ result }) => 
           </div>
         </CardHeader>
         <CardContent>
-          <ul className="space-y-2">
+          <ul className="space-y-2 list-none">
             {result.recommendations.map((rec, index) => (
-              <li key={index} className="flex items-start gap-2">
-                <span className="text-elec-yellow mt-1">•</span>
-                <span className="text-elec-light text-sm">{rec}</span>
+              <li key={index} className="flex items-start gap-3 text-sm">
+                <span className="text-elec-yellow text-xs mt-0.5 flex-shrink-0">•</span>
+                <span className="text-elec-light leading-relaxed">{rec}</span>
               </li>
             ))}
           </ul>
@@ -202,11 +202,23 @@ const SelectivityGuidance: React.FC<SelectivityGuidanceProps> = ({ result }) => 
         <CardContent className="space-y-4">
           <div>
             <h4 className="font-medium text-blue-300 mb-2">BS 7671:2018 Requirements</h4>
-            <ul className="space-y-1 text-sm text-blue-200">
-              <li>• Regulation 536.4.1: Selectivity between protective devices</li>
-              <li>• Section 536: Co-ordination of protective devices</li>
-              <li>• Appendix 3: Time/current characteristics must be verified</li>
-              <li>• Regulation 432.1: Protection against overload currents</li>
+            <ul className="space-y-1 text-sm text-blue-200 list-none">
+              <li className="flex items-start gap-2">
+                <span className="text-blue-400 text-xs mt-0.5 flex-shrink-0">•</span>
+                <span>Regulation 536.4.1: Selectivity between protective devices</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-blue-400 text-xs mt-0.5 flex-shrink-0">•</span>
+                <span>Section 536: Co-ordination of protective devices</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-blue-400 text-xs mt-0.5 flex-shrink-0">•</span>
+                <span>Appendix 3: Time/current characteristics must be verified</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-blue-400 text-xs mt-0.5 flex-shrink-0">•</span>
+                <span>Regulation 432.1: Protection against overload currents</span>
+              </li>
             </ul>
           </div>
 
@@ -214,11 +226,23 @@ const SelectivityGuidance: React.FC<SelectivityGuidanceProps> = ({ result }) => 
 
           <div>
             <h4 className="font-medium text-blue-300 mb-2">IET Guidance Notes</h4>
-            <ul className="space-y-1 text-sm text-blue-200">
-              <li>• GN1: Selection & Erection of Equipment</li>
-              <li>• GN5: Protection Against Electric Shock</li>
-              <li>• Design calculations must demonstrate selectivity</li>
-              <li>• Testing schedules must verify coordination</li>
+            <ul className="space-y-1 text-sm text-blue-200 list-none">
+              <li className="flex items-start gap-2">
+                <span className="text-blue-400 text-xs mt-0.5 flex-shrink-0">•</span>
+                <span>GN1: Selection & Erection of Equipment</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-blue-400 text-xs mt-0.5 flex-shrink-0">•</span>
+                <span>GN5: Protection Against Electric Shock</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-blue-400 text-xs mt-0.5 flex-shrink-0">•</span>
+                <span>Design calculations must demonstrate selectivity</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-blue-400 text-xs mt-0.5 flex-shrink-0">•</span>
+                <span>Testing schedules must verify coordination</span>
+              </li>
             </ul>
           </div>
 
@@ -226,11 +250,23 @@ const SelectivityGuidance: React.FC<SelectivityGuidanceProps> = ({ result }) => 
 
           <div>
             <h4 className="font-medium text-blue-300 mb-2">Professional Standards</h4>
-            <ul className="space-y-1 text-sm text-blue-200">
-              <li>• IET Code of Practice for Electrical Safety Management</li>
-              <li>• CIBSE Guide L: Lighting</li>
-              <li>• BEAMA Guide to Protection Coordination</li>
-              <li>• Manufacturer selectivity tables must be consulted</li>
+            <ul className="space-y-1 text-sm text-blue-200 list-none">
+              <li className="flex items-start gap-2">
+                <span className="text-blue-400 text-xs mt-0.5 flex-shrink-0">•</span>
+                <span>IET Code of Practice for Electrical Safety Management</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-blue-400 text-xs mt-0.5 flex-shrink-0">•</span>
+                <span>CIBSE Guide L: Lighting</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-blue-400 text-xs mt-0.5 flex-shrink-0">•</span>
+                <span>BEAMA Guide to Protection Coordination</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-blue-400 text-xs mt-0.5 flex-shrink-0">•</span>
+                <span>Manufacturer selectivity tables must be consulted</span>
+              </li>
             </ul>
           </div>
         </CardContent>
