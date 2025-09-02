@@ -1,39 +1,36 @@
 import React from 'react';
-import {
-  MobileSelect,
-  MobileSelectContent,
-  MobileSelectItem,
-  MobileSelectTrigger,
-  MobileSelectValue,
-} from "@/components/ui/mobile-select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 
 interface SelectOption {
   value: string;
   label: string;
+  description?: string;
 }
 
 interface MobileSelectWrapperProps {
   label?: string;
-  placeholder?: string;
   value: string;
   onValueChange: (value: string) => void;
   options: SelectOption[];
+  placeholder?: string;
   error?: string;
   hint?: string;
   disabled?: boolean;
+  icon?: React.ReactNode;
 }
 
 export function MobileSelectWrapper({
   label,
-  placeholder,
   value,
   onValueChange,
   options,
+  placeholder,
   error,
   hint,
-  disabled
+  disabled,
+  icon
 }: MobileSelectWrapperProps) {
   return (
     <div className="space-y-3">
@@ -43,39 +40,47 @@ export function MobileSelectWrapper({
           {label}
         </Label>
       )}
+      
       <div className="relative group">
-        <MobileSelect value={value} onValueChange={onValueChange} disabled={disabled}>
-          <MobileSelectTrigger 
-            className={cn(
-              "h-14 bg-card border border-muted/40 rounded-xl",
-              "hover:border-elec-yellow/40 focus-visible:ring-2 focus-visible:ring-elec-yellow focus-visible:ring-offset-2 focus-visible:ring-offset-background transition-all duration-200",
-              "text-foreground placeholder:text-muted-foreground",
-              "text-sm font-normal overflow-hidden",
-              error ? "border-destructive focus-visible:ring-destructive" : ""
-            )}
-          >
-            <MobileSelectValue 
-              placeholder={placeholder} 
-              className="text-sm font-normal text-foreground truncate"
-            />
-          </MobileSelectTrigger>
-          <MobileSelectContent className="bg-card border border-muted/40 shadow-2xl z-[9999] max-w-[calc(100vw-2rem)]">
-            {options.filter(option => option.value && option.value.trim() !== '').map((option) => (
-              <MobileSelectItem 
-                key={option.value} 
-                value={option.value}
-                className="text-foreground hover:bg-muted/50 focus:bg-muted/50 text-sm"
-              >
-                <span className="text-sm truncate">{option.label}</span>
-              </MobileSelectItem>
-            ))}
-          </MobileSelectContent>
-        </MobileSelect>
-        
+        <div className="relative">
+          {icon && (
+            <div className="absolute left-4 top-1/2 transform -translate-y-1/2 text-elec-yellow/70 z-10">
+              {icon}
+            </div>
+          )}
+          
+          <Select value={value} onValueChange={onValueChange} disabled={disabled}>
+            <SelectTrigger className={cn(
+              "h-14 bg-card border-2 border-elec-gray/50 rounded-xl text-elec-light",
+              "hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200",
+              "text-base font-medium",
+              icon ? "pl-12" : "pl-4",
+              error ? "border-destructive focus:border-destructive" : ""
+            )}>
+              <SelectValue placeholder={placeholder} />
+            </SelectTrigger>
+            <SelectContent className="bg-card border-elec-yellow/30">
+              {options.map((option) => (
+                <SelectItem 
+                  key={option.value} 
+                  value={option.value}
+                  className="text-elec-light hover:bg-elec-yellow/10 focus:bg-elec-yellow/10"
+                >
+                  <div>
+                    <div className="font-medium">{option.label}</div>
+                    {option.description && (
+                      <div className="text-xs text-elec-light/60 mt-1">{option.description}</div>
+                    )}
+                  </div>
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
       </div>
       
       {hint && !error && (
-        <p className="text-xs text-muted-foreground flex items-center gap-1">
+        <p className="text-xs text-elec-light/70 flex items-center gap-1">
           <span className="w-1 h-1 bg-elec-yellow/60 rounded-full"></span>
           {hint}
         </p>

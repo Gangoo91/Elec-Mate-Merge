@@ -1,266 +1,481 @@
 
 import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Calculator, Thermometer, Zap, PoundSterling, Home } from "lucide-react";
+import { Calculator, Thermometer, Zap, PoundSterling, Home, AlertTriangle, CheckCircle, Info, Lightbulb, BookOpen, Settings } from "lucide-react";
+import { MobileInputWrapper } from "@/components/ui/mobile-input-wrapper";
+import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
+import { MobileButton } from "@/components/ui/mobile-button";
+import { ResultCard } from "@/components/ui/result-card";
+import InfoBox from "@/components/common/InfoBox";
+import WhyThisMatters from "@/components/common/WhyThisMatters";
+import { 
+  INSULATION_LEVELS, 
+  AIR_TIGHTNESS_LEVELS, 
+  UK_REGIONS, 
+  HEAT_PUMP_TYPES, 
+  EMITTER_TYPES, 
+  DHW_OPTIONS 
+} from "@/lib/heat-pump-constants";
+import { 
+  calculateHeatPumpLoad, 
+  getRecommendations, 
+  getRegulatoryGuidance,
+  type HeatPumpInputs,
+  type HeatPumpResults 
+} from "@/lib/heat-pump-calculations";
+
+interface FormInputs {
+  floorArea: string;
+  insulationLevel: keyof typeof INSULATION_LEVELS;
+  airTightness: keyof typeof AIR_TIGHTNESS_LEVELS;
+  region: keyof typeof UK_REGIONS;
+  designTemp: string;
+  indoorTemp: string;
+  heatPumpType: keyof typeof HEAT_PUMP_TYPES;
+  emitterType: keyof typeof EMITTER_TYPES;
+  dhwOption: keyof typeof DHW_OPTIONS;
+  electricityRate: string;
+}
 
 const HeatPumpCalculator = () => {
-  const [inputs, setInputs] = useState({
-    houseSize: "",
+  const [inputs, setInputs] = useState<FormInputs>({
+    floorArea: "",
     insulationLevel: "average",
+    airTightness: "average",
+    region: "midlands",
+    designTemp: "",
+    indoorTemp: "21",
     heatPumpType: "air-source",
-    outdoorTemp: "-3",
-    indoorTemp: "20",
+    emitterType: "radiators",
+    dhwOption: "cylinder",
     electricityRate: "0.30"
   });
 
-  const [results, setResults] = useState<{
-    heatLoad: number;
-    cop: number;
-    electricalPower: number;
-    dailyCost: number;
-    annualCost: number;
-    carbonSavings: number;
-  } | null>(null);
+  const [results, setResults] = useState<HeatPumpResults | null>(null);
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
+  const validateInputs = (): boolean => {
+    const newErrors: Record<string, string> = {};
+    
+    if (!inputs.floorArea || parseFloat(inputs.floorArea as string) <= 0) {
+      newErrors.floorArea = "Floor area must be greater than 0";
+    }
+    
+    if (!inputs.designTemp) {
+      newErrors.designTemp = "Design temperature is required";
+    }
+    
+    if (!inputs.indoorTemp || parseFloat(inputs.indoorTemp as string) < 18 || parseFloat(inputs.indoorTemp as string) > 25) {
+      newErrors.indoorTemp = "Indoor temperature should be between 18°C and 25°C";
+    }
+    
+    if (!inputs.electricityRate || parseFloat(inputs.electricityRate as string) <= 0) {
+      newErrors.electricityRate = "Electricity rate must be greater than 0";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const calculateHeatPump = () => {
-    const size = parseFloat(inputs.houseSize);
-    const outdoorTemp = parseFloat(inputs.outdoorTemp);
-    const indoorTemp = parseFloat(inputs.indoorTemp);
-    const electricityRate = parseFloat(inputs.electricityRate);
+    if (!validateInputs()) return;
 
-    if (!size || !electricityRate) return;
-
-    // Heat loss calculation based on house size and insulation
-    const insulationFactor = {
-      'poor': 150,
-      'average': 100,
-      'good': 70,
-      'excellent': 50
+    const calculationInputs: HeatPumpInputs = {
+      floorArea: parseFloat(inputs.floorArea as string),
+      insulationLevel: inputs.insulationLevel as keyof typeof INSULATION_LEVELS,
+      airTightness: inputs.airTightness as keyof typeof AIR_TIGHTNESS_LEVELS,
+      designTemp: parseFloat(inputs.designTemp as string),
+      indoorTemp: parseFloat(inputs.indoorTemp as string),
+      heatPumpType: inputs.heatPumpType as keyof typeof HEAT_PUMP_TYPES,
+      emitterType: inputs.emitterType as keyof typeof EMITTER_TYPES,
+      dhwOption: inputs.dhwOption as keyof typeof DHW_OPTIONS,
+      electricityRate: parseFloat(inputs.electricityRate as string)
     };
 
-    const baseLoss = insulationFactor[inputs.insulationLevel as keyof typeof insulationFactor];
-    const tempDifference = indoorTemp - outdoorTemp;
-    const heatLoad = (size * baseLoss * tempDifference) / 1000; // kW
-
-    // COP calculation based on heat pump type and outdoor temperature
-    let baseCOP = inputs.heatPumpType === 'air-source' ? 3.5 : 4.5;
-    
-    // COP decreases with lower outdoor temperatures
-    const tempDerating = Math.max(0.5, 1 - (5 - outdoorTemp) * 0.05);
-    const cop = baseCOP * tempDerating;
-
-    const electricalPower = heatLoad / cop;
-    const dailyCost = electricalPower * 12 * electricityRate; // 12 hours heating per day
-    const annualCost = dailyCost * 200; // 200 heating days per year
-
-    // Carbon savings vs gas boiler (kg CO2 per year)
-    const gasCO2 = heatLoad * 12 * 200 * 0.185; // kg CO2 from gas
-    const electricCO2 = electricalPower * 12 * 200 * 0.233; // kg CO2 from electricity
-    const carbonSavings = Math.max(0, gasCO2 - electricCO2);
-
-    setResults({
-      heatLoad,
-      cop,
-      electricalPower,
-      dailyCost,
-      annualCost,
-      carbonSavings
-    });
+    const calculationResults = calculateHeatPumpLoad(calculationInputs);
+    setResults(calculationResults);
   };
 
   const resetCalculator = () => {
     setInputs({
-      houseSize: "",
+      floorArea: "",
       insulationLevel: "average",
+      airTightness: "average",
+      region: "midlands",
+      designTemp: "",
+      indoorTemp: "21",
       heatPumpType: "air-source",
-      outdoorTemp: "-3",
-      indoorTemp: "20",
+      emitterType: "radiators",
+      dhwOption: "cylinder",
       electricityRate: "0.30"
     });
     setResults(null);
+    setErrors({});
   };
+
+  const handleRegionChange = (region: string) => {
+    const regionData = UK_REGIONS[region as keyof typeof UK_REGIONS];
+    setInputs(prev => ({
+      ...prev,
+      region: region as keyof typeof UK_REGIONS,
+      designTemp: regionData.designTemp.toString()
+    }));
+  };
+
+  // Transform data for mobile select components
+  const insulationOptions = Object.entries(INSULATION_LEVELS).map(([key, value]) => ({
+    value: key,
+    label: value.label,
+    description: value.description
+  }));
+
+  const airTightnessOptions = Object.entries(AIR_TIGHTNESS_LEVELS).map(([key, value]) => ({
+    value: key,
+    label: value.label,
+    description: value.description
+  }));
+
+  const regionOptions = Object.entries(UK_REGIONS).map(([key, value]) => ({
+    value: key,
+    label: value.label,
+    description: value.description
+  }));
+
+  const heatPumpOptions = Object.entries(HEAT_PUMP_TYPES).map(([key, value]) => ({
+    value: key,
+    label: value.label,
+    description: value.description
+  }));
+
+  const emitterOptions = Object.entries(EMITTER_TYPES).map(([key, value]) => ({
+    value: key,
+    label: value.label,
+    description: value.description
+  }));
+
+  const dhwOptions = Object.entries(DHW_OPTIONS).map(([key, value]) => ({
+    value: key,
+    label: value.label,
+    description: value.description
+  }));
 
   return (
     <div className="space-y-6">
-      <Card className="border-elec-yellow/20 bg-elec-card">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-elec-yellow">
-            <Thermometer className="h-5 w-5" />
-            Heat Pump Load Calculator
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <Label htmlFor="houseSize">House Size (m²)</Label>
-              <Input
-                id="houseSize"
-                type="number"
-                value={inputs.houseSize}
-                onChange={(e) => setInputs({...inputs, houseSize: e.target.value})}
-                placeholder="Floor area in square metres"
-                className="bg-elec-dark border-elec-yellow/20"
-              />
-            </div>
+      {/* Header */}
+      <div className="text-center space-y-2 mb-6">
+        <div className="flex items-center justify-center gap-2 text-elec-yellow">
+          <Thermometer className="h-6 w-6" />
+          <h1 className="text-xl font-bold text-elec-light">Heat Pump Load Calculator</h1>
+        </div>
+        <p className="text-sm text-elec-light/80 max-w-md mx-auto">
+          Calculate heat pump sizing, performance, and costs with detailed analysis and recommendations
+        </p>
+      </div>
 
-            <div>
-              <Label htmlFor="insulationLevel">Insulation Level</Label>
-              <Select value={inputs.insulationLevel} onValueChange={(value) => setInputs({...inputs, insulationLevel: value})}>
-                <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                  <SelectItem value="poor">Poor (Pre-1920)</SelectItem>
-                  <SelectItem value="average">Average (1920-1990)</SelectItem>
-                  <SelectItem value="good">Good (Post-1990)</SelectItem>
-                  <SelectItem value="excellent">Excellent (Passivhaus)</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+      {/* Input Form */}
+      <div className="space-y-6">
+        {/* Building Details */}
+        <div className="space-y-4">
+          <h3 className="text-base font-semibold text-elec-light flex items-center gap-2">
+            <Home className="h-4 w-4 text-elec-yellow" />
+            Building Details
+          </h3>
+          
+          <div className="space-y-4">
+            <MobileInputWrapper
+              label="Floor Area"
+              placeholder="Enter total floor area"
+              value={inputs.floorArea || ""}
+              onChange={(value) => setInputs(prev => ({ ...prev, floorArea: value }))}
+              type="number"
+              unit="m²"
+              icon={<Home className="h-4 w-4" />}
+              error={errors.floorArea}
+              hint="Total heated floor area of the property"
+            />
 
-            <div>
-              <Label htmlFor="heatPumpType">Heat Pump Type</Label>
-              <Select value={inputs.heatPumpType} onValueChange={(value) => setInputs({...inputs, heatPumpType: value})}>
-                <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                  <SelectItem value="air-source">Air Source Heat Pump</SelectItem>
-                  <SelectItem value="ground-source">Ground Source Heat Pump</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+            <MobileSelectWrapper
+              label="Insulation Level"
+              value={inputs.insulationLevel}
+              onValueChange={(value) => setInputs(prev => ({ ...prev, insulationLevel: value as keyof typeof INSULATION_LEVELS }))}
+              options={insulationOptions}
+              hint="Building age and insulation standard"
+            />
 
-            <div>
-              <Label htmlFor="outdoorTemp">Design Outdoor Temp (°C)</Label>
-              <Input
-                id="outdoorTemp"
-                type="number"
-                value={inputs.outdoorTemp}
-                onChange={(e) => setInputs({...inputs, outdoorTemp: e.target.value})}
-                placeholder="Coldest expected temperature"
-                className="bg-elec-dark border-elec-yellow/20"
-              />
-            </div>
-
-            <div>
-              <Label htmlFor="indoorTemp">Indoor Target Temp (°C)</Label>
-              <Input
-                id="indoorTemp"
-                type="number"
-                value={inputs.indoorTemp}
-                onChange={(e) => setInputs({...inputs, indoorTemp: e.target.value})}
-                placeholder="Desired indoor temperature"
-                className="bg-elec-dark border-elec-yellow/20"
-              />
-            </div>
-
-            <div>
-              <Label htmlFor="electricityRate">Electricity Rate (£/kWh)</Label>
-              <Input
-                id="electricityRate"
-                type="number"
-                step="0.01"
-                value={inputs.electricityRate}
-                onChange={(e) => setInputs({...inputs, electricityRate: e.target.value})}
-                placeholder="Cost per kWh"
-                className="bg-elec-dark border-elec-yellow/20"
-              />
-            </div>
+            <MobileSelectWrapper
+              label="Air Tightness"
+              value={inputs.airTightness}
+              onValueChange={(value) => setInputs(prev => ({ ...prev, airTightness: value as keyof typeof AIR_TIGHTNESS_LEVELS }))}
+              options={airTightnessOptions}
+              hint="How well sealed the building is"
+            />
           </div>
+        </div>
 
-          <div className="flex gap-2">
-            <Button onClick={calculateHeatPump} className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90">
-              <Calculator className="h-4 w-4 mr-2" />
-              Calculate
-            </Button>
-            <Button onClick={resetCalculator} variant="outline" className="border-elec-yellow/20">
-              Reset
-            </Button>
+        {/* Location & Climate */}
+        <div className="space-y-4">
+          <h3 className="text-base font-semibold text-elec-light flex items-center gap-2">
+            <Settings className="h-4 w-4 text-elec-yellow" />
+            Location & Climate
+          </h3>
+          
+          <div className="space-y-4">
+            <MobileSelectWrapper
+              label="UK Region"
+              value={inputs.region}
+              onValueChange={handleRegionChange}
+              options={regionOptions}
+              hint="Your location affects design temperature"
+            />
+
+            <MobileInputWrapper
+              label="Design Temperature"
+              placeholder="Coldest expected temperature"
+              value={inputs.designTemp}
+              onChange={(value) => setInputs(prev => ({ ...prev, designTemp: value }))}
+              type="number"
+              unit="°C"
+              icon={<Thermometer className="h-4 w-4" />}
+              error={errors.designTemp}
+              hint="Automatically set based on region selection"
+            />
+
+            <MobileInputWrapper
+              label="Indoor Target Temperature"
+              placeholder="Desired indoor temperature"
+              value={inputs.indoorTemp}
+              onChange={(value) => setInputs(prev => ({ ...prev, indoorTemp: value }))}
+              type="number"
+              unit="°C"
+              icon={<Thermometer className="h-4 w-4" />}
+              error={errors.indoorTemp}
+              hint="Recommended: 21°C for living areas"
+            />
           </div>
-        </CardContent>
-      </Card>
+        </div>
 
+        {/* System Details */}
+        <div className="space-y-4">
+          <h3 className="text-base font-semibold text-elec-light flex items-center gap-2">
+            <Zap className="h-4 w-4 text-elec-yellow" />
+            System Configuration
+          </h3>
+          
+          <div className="space-y-4">
+            <MobileSelectWrapper
+              label="Heat Pump Type"
+              value={inputs.heatPumpType}
+              onValueChange={(value) => setInputs(prev => ({ ...prev, heatPumpType: value as keyof typeof HEAT_PUMP_TYPES }))}
+              options={heatPumpOptions}
+              hint="Type of heat pump system"
+            />
+
+            <MobileSelectWrapper
+              label="Heat Emitter Type"
+              value={inputs.emitterType}
+              onValueChange={(value) => setInputs(prev => ({ ...prev, emitterType: value as keyof typeof EMITTER_TYPES }))}
+              options={emitterOptions}
+              hint="How heat is distributed in the building"
+            />
+
+            <MobileSelectWrapper
+              label="Hot Water Option"
+              value={inputs.dhwOption}
+              onValueChange={(value) => setInputs(prev => ({ ...prev, dhwOption: value as keyof typeof DHW_OPTIONS }))}
+              options={dhwOptions}
+              hint="Domestic hot water provision"
+            />
+
+            <MobileInputWrapper
+              label="Electricity Rate"
+              placeholder="Cost per kWh"
+              value={inputs.electricityRate}
+              onChange={(value) => setInputs(prev => ({ ...prev, electricityRate: value }))}
+              type="number"
+              step="0.01"
+              unit="£/kWh"
+              icon={<PoundSterling className="h-4 w-4" />}
+              error={errors.electricityRate}
+              hint="Your electricity tariff rate"
+            />
+          </div>
+        </div>
+
+        {/* Calculate Button */}
+        <div className="flex gap-3 pt-4">
+          <MobileButton
+            onClick={calculateHeatPump}
+            variant="elec"
+            size="default"
+            className="flex-1"
+            icon={<Calculator className="h-4 w-4" />}
+          >
+            Calculate Heat Pump Load
+          </MobileButton>
+          <MobileButton
+            onClick={resetCalculator}
+            variant="outline"
+            size="default"
+          >
+            Reset
+          </MobileButton>
+        </div>
+      </div>
+
+      {/* Results Section */}
       {results && (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <Card className="border-elec-yellow/20 bg-elec-gray">
-            <CardHeader>
-              <CardTitle className="text-elec-light flex items-center gap-2">
-                <Zap className="h-5 w-5" />
-                Heat Pump Performance
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              <div className="flex justify-between">
-                <span className="text-elec-light/80">Heat Load Required:</span>
-                <span className="text-elec-yellow font-semibold">{results.heatLoad.toFixed(1)} kW</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-elec-light/80">Coefficient of Performance:</span>
-                <span className="text-elec-yellow font-semibold">{results.cop.toFixed(2)}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-elec-light/80">Electrical Power:</span>
-                <span className="text-elec-yellow font-semibold">{results.electricalPower.toFixed(1)} kW</span>
-              </div>
-            </CardContent>
-          </Card>
+        <div className="space-y-6">
+          {/* Key Results */}
+          <div className="space-y-4">
+            <h3 className="text-lg font-semibold text-elec-light flex items-center gap-2">
+              <Calculator className="h-5 w-5 text-elec-yellow" />
+              Calculation Results
+            </h3>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <ResultCard
+                title="Total Heat Load"
+                value={results.totalHeatLoad}
+                unit="kW"
+                subtitle={`Space: ${results.spaceHeatingLoad.toFixed(1)}kW + DHW: ${results.dhwLoad.toFixed(1)}kW`}
+                status={results.totalHeatLoad > 15 ? "warning" : "success"}
+                icon={<Thermometer className="h-4 w-4" />}
+              />
 
-          <Card className="border-elec-yellow/20 bg-elec-gray">
-            <CardHeader>
-              <CardTitle className="text-elec-light flex items-center gap-2">
-                <PoundSterling className="h-5 w-5" />
-                Running Costs
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              <div className="flex justify-between">
-                <span className="text-elec-light/80">Daily Cost:</span>
-                <span className="text-elec-yellow font-semibold">£{results.dailyCost.toFixed(2)}</span>
+              <ResultCard
+                title="Heat Pump COP"
+                value={results.cop}
+                unit=""
+                subtitle={`Seasonal COP: ${results.performance.seasonalCOP.toFixed(1)}`}
+                status={results.cop > 3.5 ? "success" : results.cop > 2.5 ? "warning" : "error"}
+                icon={<Zap className="h-4 w-4" />}
+              />
+
+              <ResultCard
+                title="Electrical Power"
+                value={results.electricalPower}
+                unit="kW"
+                subtitle={`Flow temp: ${results.flowTemperature}°C`}
+                status={results.sizing.withinMCS ? "success" : "warning"}
+                icon={<Zap className="h-4 w-4" />}
+              />
+
+              <ResultCard
+                title="Annual Running Cost"
+                value={results.annualCost}
+                unit="£"
+                subtitle={`Daily: £${results.dailyCost.toFixed(2)}`}
+                status="info"
+                icon={<PoundSterling className="h-4 w-4" />}
+              />
+            </div>
+          </div>
+
+          {/* Performance Analysis */}
+          <InfoBox
+            title="Performance Analysis"
+            icon={<CheckCircle className="h-5 w-5 text-elec-yellow" />}
+            as="section"
+          >
+            <div className="space-y-3 text-sm">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <span className="font-medium text-elec-light">System Efficiency:</span>
+                  <p className="text-elec-light/80">{results.performance.efficiency}</p>
+                </div>
+                <div>
+                  <span className="font-medium text-elec-light">Suitability:</span>
+                  <p className="text-elec-light/80">{results.performance.suitability}</p>
+                </div>
+                <div>
+                  <span className="font-medium text-elec-light">Carbon Savings:</span>
+                  <p className="text-elec-light/80">{results.carbonSavings.toFixed(0)} kg CO₂/year vs gas</p>
+                </div>
+                <div>
+                  <span className="font-medium text-elec-light">MCS Compliance:</span>
+                  <p className="text-elec-light/80">
+                    {results.sizing.withinMCS ? "✓ Within guidelines" : "⚠ Outside recommended range"}
+                  </p>
+                </div>
               </div>
-              <div className="flex justify-between">
-                <span className="text-elec-light/80">Annual Cost:</span>
-                <span className="text-elec-yellow font-semibold">£{results.annualCost.toFixed(0)}</span>
+            </div>
+          </InfoBox>
+
+          {/* Recommendations */}
+          {(() => {
+            const calculationInputs: HeatPumpInputs = {
+              floorArea: parseFloat(inputs.floorArea),
+              insulationLevel: inputs.insulationLevel,
+              airTightness: inputs.airTightness,
+              designTemp: parseFloat(inputs.designTemp),
+              indoorTemp: parseFloat(inputs.indoorTemp),
+              heatPumpType: inputs.heatPumpType,
+              emitterType: inputs.emitterType,
+              dhwOption: inputs.dhwOption,
+              electricityRate: parseFloat(inputs.electricityRate)
+            };
+            const recommendations = getRecommendations(calculationInputs, results);
+            
+            return recommendations.length > 0 ? (
+              <InfoBox
+                title="Recommendations"
+                icon={<Lightbulb className="h-5 w-5 text-elec-yellow" />}
+                points={recommendations}
+                as="section"
+              />
+            ) : null;
+          })()}
+
+          {/* Why This Matters */}
+          <WhyThisMatters
+            title="Why Accurate Heat Pump Sizing Matters"
+            points={[
+              "Oversized heat pumps cycle frequently, reducing efficiency and increasing wear",
+              "Undersized systems cannot maintain comfort during cold weather",
+              "Proper sizing ensures optimal COP and lowest running costs",
+              "MCS requirements must be met for warranty and RHI eligibility",
+              "Flow temperatures affect efficiency - lower is better for heat pumps",
+              "Building fabric improvements often more cost-effective than larger heat pumps"
+            ]}
+          />
+
+          {/* Regulatory Guidance */}
+          <InfoBox
+            title="UK Regulatory Guidance & Standards"
+            icon={<BookOpen className="h-5 w-5 text-elec-yellow" />}
+            points={getRegulatoryGuidance()}
+            as="section"
+          />
+
+          {/* Installation Considerations */}
+          <InfoBox
+            title="Installation Considerations"
+            icon={<Settings className="h-5 w-5 text-elec-yellow" />}
+            as="section"
+          >
+            <div className="space-y-4 text-sm">
+              <div>
+                <h4 className="font-semibold text-elec-light mb-2">Electrical Requirements:</h4>
+                <ul className="space-y-1 text-elec-light/80">
+                  <li>• Single phase suitable up to 12kW electrical input</li>
+                  <li>• Three-phase required for larger systems</li>
+                  <li>• Dedicated circuit with appropriate protective devices</li>
+                  <li>• Emergency controls and isolation switches required</li>
+                </ul>
               </div>
-              <div className="flex justify-between">
-                <span className="text-elec-light/80">CO₂ Savings:</span>
-                <span className="text-elec-yellow font-semibold">{results.carbonSavings.toFixed(0)} kg/year</span>
+              
+              <div>
+                <h4 className="font-semibold text-elec-light mb-2">System Design:</h4>
+                <ul className="space-y-1 text-elec-light/80">
+                  <li>• Weather compensation controls improve efficiency</li>
+                  <li>• Buffer tanks may be required for short cycling</li>
+                  <li>• Defrost provision essential for air source systems</li>
+                  <li>• Backup heating consideration for extreme weather</li>
+                </ul>
               </div>
-            </CardContent>
-          </Card>
+            </div>
+          </InfoBox>
         </div>
       )}
-
-      <Card className="border-blue-500/30 bg-blue-500/5">
-        <CardHeader>
-          <CardTitle className="text-blue-300">Heat Pump Installation Notes</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4 text-blue-200">
-          <div className="space-y-3">
-            <h4 className="font-semibold">Sizing Considerations:</h4>
-            <ul className="space-y-1 text-sm">
-              <li>• Size for 95% of heating demand to avoid oversizing</li>
-              <li>• Consider thermal mass and heat-up times</li>
-              <li>• Account for domestic hot water requirements</li>
-              <li>• Plan for defrost cycles in air source systems</li>
-            </ul>
-          </div>
-
-          <div className="space-y-3">
-            <h4 className="font-semibold">Electrical Requirements:</h4>
-            <ul className="space-y-1 text-sm">
-              <li>• Three-phase supply may be required for larger units</li>
-              <li>• Consider supply capacity and diversity</li>
-              <li>• Install appropriate protection and isolation</li>
-              <li>• Plan for backup heating if required</li>
-            </ul>
-          </div>
-        </CardContent>
-      </Card>
     </div>
   );
 };
