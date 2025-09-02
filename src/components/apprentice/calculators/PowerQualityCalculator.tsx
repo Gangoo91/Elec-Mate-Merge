@@ -348,32 +348,80 @@ const PowerQualityCalculator = () => {
 
               <Separator />
 
-              {/* Key Metrics Grid */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                <div className="text-center p-3 bg-background/30 rounded-lg">
-                  <div className="text-xs text-muted-foreground mb-1">THDi Current</div>
-                  <div className="text-xl font-bold text-elec-yellow">{result.thdiCurrent.toFixed(2)}%</div>
-                  <div className="text-xs text-muted-foreground">Limit: 5%</div>
-                </div>
-                
-                <div className="text-center p-3 bg-background/30 rounded-lg">
-                  <div className="text-xs text-muted-foreground mb-1">RMS Current</div>
-                  <div className="text-xl font-bold text-elec-yellow">{result.rmsCurrentTotal.toFixed(2)}A</div>
-                  <div className="text-xs text-muted-foreground">Total RMS</div>
-                </div>
+               {/* Key Metrics Grid - Optimized for Mobile */}
+               <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+                 <div className="text-center p-3 bg-background/40 rounded-lg border border-elec-yellow/10">
+                   <div className="text-xs text-muted-foreground mb-1">THDi Current</div>
+                   <div className={`text-lg sm:text-xl font-bold ${
+                     result.thdiCurrent > 15 ? 'text-red-400' :
+                     result.thdiCurrent > 10 ? 'text-orange-400' :
+                     result.thdiCurrent > 5 ? 'text-yellow-400' : 'text-green-400'
+                   }`}>
+                     {result.thdiCurrent.toFixed(2)}%
+                   </div>
+                   <div className="text-xs text-muted-foreground">Limit: 5%</div>
+                 </div>
+                 
+                 <div className="text-center p-3 bg-background/40 rounded-lg border border-elec-yellow/10">
+                   <div className="text-xs text-muted-foreground mb-1">RMS Current</div>
+                   <div className="text-lg sm:text-xl font-bold text-elec-yellow">{result.rmsCurrentTotal.toFixed(2)}A</div>
+                   <div className="text-xs text-muted-foreground">Total RMS</div>
+                 </div>
 
-                <div className="text-center p-3 bg-background/30 rounded-lg">
-                  <div className="text-xs text-muted-foreground mb-1">Crest Factor</div>
-                  <div className="text-xl font-bold text-elec-yellow">{result.crestFactorCurrent.toFixed(2)}</div>
-                  <div className="text-xs text-muted-foreground">Typical: 1.41</div>
-                </div>
+                 <div className="text-center p-3 bg-background/40 rounded-lg border border-elec-yellow/10">
+                   <div className="text-xs text-muted-foreground mb-1">Crest Factor</div>
+                   <div className={`text-lg sm:text-xl font-bold ${
+                     result.crestFactorCurrent > 2.5 ? 'text-orange-400' :
+                     result.crestFactorCurrent > 2.0 ? 'text-yellow-400' : 'text-green-400'
+                   }`}>
+                     {result.crestFactorCurrent.toFixed(2)}
+                   </div>
+                   <div className="text-xs text-muted-foreground">Typical: 1.41</div>
+                 </div>
 
-                <div className="text-center p-3 bg-background/30 rounded-lg">
-                  <div className="text-xs text-muted-foreground mb-1">K-Factor</div>
-                  <div className="text-xl font-bold text-elec-yellow">{result.kFactor.toFixed(1)}</div>
-                  <div className="text-xs text-muted-foreground">Transformer</div>
-                </div>
-              </div>
+                 <div className="text-center p-3 bg-background/40 rounded-lg border border-elec-yellow/10">
+                   <div className="text-xs text-muted-foreground mb-1">K-Factor</div>
+                   <div className={`text-lg sm:text-xl font-bold ${
+                     result.kFactor > 13 ? 'text-red-400' :
+                     result.kFactor > 9 ? 'text-orange-400' :
+                     result.kFactor > 4 ? 'text-yellow-400' : 'text-green-400'
+                   }`}>
+                     {result.kFactor.toFixed(1)}
+                   </div>
+                   <div className="text-xs text-muted-foreground">Transformer</div>
+                 </div>
+               </div>
+
+               {/* Top Offenders - Show worst harmonics */}
+               {result.harmonicSpectrum.filter(h => h.compliance === 'fail').length > 0 && (
+                 <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-lg">
+                   <div className="flex items-center gap-2 mb-2">
+                     <AlertCircle className="h-5 w-5 text-red-400" />
+                     <span className="font-medium text-red-300">Critical Harmonic Violations</span>
+                   </div>
+                   <div className="space-y-1">
+                     {result.harmonicSpectrum
+                       .filter(h => h.compliance === 'fail')
+                       .sort((a, b) => (b.currentPercentage / b.limit) - (a.currentPercentage / a.limit))
+                       .slice(0, 3)
+                       .map((harmonic) => {
+                         const getOrdinal = (num: number) => {
+                           if (num === 1) return "1st";
+                           if (num === 2) return "2nd";
+                           if (num === 3) return "3rd";
+                           return `${num}th`;
+                         };
+                         const violation = ((harmonic.currentPercentage / harmonic.limit) - 1) * 100;
+                         return (
+                           <div key={harmonic.order} className="text-sm">
+                             <span className="font-medium">{getOrdinal(harmonic.order)} harmonic:</span>
+                             <span className="text-red-300 ml-2">{harmonic.currentPercentage.toFixed(2)}% ({violation.toFixed(0)}% over limit)</span>
+                           </div>
+                         );
+                       })}
+                   </div>
+                 </div>
+               )}
 
               {/* System-specific metrics */}
               {systemType === 'three-phase' && result.neutralCurrent > 0 && (
@@ -400,21 +448,30 @@ const PowerQualityCalculator = () => {
                     <h4 className="font-medium">Individual Harmonic Analysis</h4>
                   </div>
                   <div className="space-y-2">
-                    {result.harmonicSpectrum.map((harmonic) => (
-                      <div key={harmonic.order} className="flex items-center justify-between p-2 bg-background/30 rounded">
-                        <div className="flex items-center gap-3">
-                          <span className="font-medium">{harmonic.order}th</span>
-                          <div className={`w-3 h-3 rounded-full ${
-                            harmonic.compliance === 'pass' ? 'bg-green-500' :
-                            harmonic.compliance === 'warning' ? 'bg-yellow-500' : 'bg-red-500'
-                          }`}></div>
-                        </div>
-                        <div className="text-right">
-                          <div className="font-mono text-sm">{harmonic.currentPercentage.toFixed(2)}%</div>
-                          <div className="text-xs text-muted-foreground">Limit: {harmonic.limit}%</div>
-                        </div>
-                      </div>
-                    ))}
+                     {result.harmonicSpectrum.map((harmonic) => {
+                       const getOrdinal = (num: number) => {
+                         if (num === 1) return "1st";
+                         if (num === 2) return "2nd";
+                         if (num === 3) return "3rd";
+                         return `${num}th`;
+                       };
+                       
+                       return (
+                         <div key={harmonic.order} className="flex items-center justify-between p-2 bg-background/30 rounded">
+                           <div className="flex items-center gap-3">
+                             <span className="font-medium">{getOrdinal(harmonic.order)}</span>
+                             <div className={`w-3 h-3 rounded-full ${
+                               harmonic.compliance === 'pass' ? 'bg-green-500' :
+                               harmonic.compliance === 'warning' ? 'bg-yellow-500' : 'bg-red-500'
+                             }`}></div>
+                           </div>
+                           <div className="text-right">
+                             <div className="font-mono text-sm">{harmonic.currentPercentage.toFixed(2)}%</div>
+                             <div className="text-xs text-muted-foreground">Limit: {harmonic.limit}%</div>
+                           </div>
+                         </div>
+                       );
+                     })}
                   </div>
                 </div>
               )}
@@ -480,85 +537,142 @@ const PowerQualityCalculator = () => {
                 </div>
               )}
 
-              {/* Recommendations & Equipment Risks */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {result.recommendations.length > 0 && (
-                  <div>
-                    <div className="flex items-center gap-2 mb-2">
-                      <Zap className="h-5 w-5 text-blue-400" />
-                      <span className="font-medium">Recommendations</span>
-                    </div>
-                    <ul className="space-y-1 text-sm pl-4">
-                      {result.recommendations.map((rec, index) => (
-                        <li key={index} className="text-muted-foreground">• {rec}</li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
+               {/* Technical Recommendations */}
+               {result.recommendations.length > 0 && (
+                 <div>
+                   <div className="flex items-center gap-2 mb-3">
+                     <BookOpen className="h-5 w-5 text-blue-400" />
+                     <h4 className="font-medium">Technical Solutions</h4>
+                   </div>
+                   <div className="space-y-2">
+                     {result.recommendations.map((rec, index) => (
+                       <div key={index} className="flex items-start gap-3 p-3 bg-blue-500/10 border border-blue-500/20 rounded-lg">
+                         <div className="w-2 h-2 rounded-full bg-blue-400 mt-1.5 flex-shrink-0"></div>
+                         <span className="text-sm leading-relaxed">{rec}</span>
+                       </div>
+                     ))}
+                   </div>
+                 </div>
+               )}
 
-                {result.equipmentRisks.length > 0 && (
-                  <div>
-                    <div className="flex items-center gap-2 mb-2">
-                      <Shield className="h-5 w-5 text-yellow-400" />
-                      <span className="font-medium">Equipment Risks</span>
-                    </div>
-                    <ul className="space-y-1 text-sm pl-4">
-                      {result.equipmentRisks.map((risk, index) => (
-                        <li key={index} className="text-muted-foreground">• {risk}</li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-              </div>
+               {/* Practical Guidance */}
+               {result.practicalGuidance && result.practicalGuidance.length > 0 && (
+                 <div>
+                   <div className="flex items-center gap-2 mb-3">
+                     <Zap className="h-5 w-5 text-elec-yellow" />
+                     <h4 className="font-medium">Practical Implementation Guide</h4>
+                   </div>
+                   <div className="space-y-2">
+                     {result.practicalGuidance.map((guidance, index) => (
+                       <div key={index} className="flex items-start gap-3 p-3 bg-background/40 border border-elec-yellow/10 rounded-lg">
+                         <div className="w-2 h-2 rounded-full bg-elec-yellow mt-1.5 flex-shrink-0"></div>
+                         <span className="text-sm leading-relaxed">{guidance}</span>
+                       </div>
+                     ))}
+                   </div>
+                 </div>
+               )}
+
+               {/* Equipment Risks */}
+               {result.equipmentRisks.length > 0 && (
+                 <div>
+                   <div className="flex items-center gap-2 mb-3">
+                     <AlertCircle className="h-5 w-5 text-yellow-400" />
+                     <h4 className="font-medium">Equipment Risk Assessment</h4>
+                   </div>
+                   <div className="space-y-2">
+                     {result.equipmentRisks.map((risk, index) => (
+                       <div key={index} className="flex items-start gap-3 p-3 bg-yellow-500/10 border border-yellow-500/20 rounded-lg">
+                         <div className="w-2 h-2 rounded-full bg-yellow-400 mt-1.5 flex-shrink-0"></div>
+                         <span className="text-sm leading-relaxed">{risk}</span>
+                       </div>
+                     ))}
+                   </div>
+                 </div>
+               )}
+
+               {/* Equipment Impact Assessment */}
+               <div className="p-4 bg-background/30 border border-elec-yellow/20 rounded-lg">
+                 <h4 className="font-medium mb-3 text-elec-yellow">Equipment Impact Assessment</h4>
+                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+                   <div>
+                     <div className="font-medium mb-2 text-muted-foreground">Transformers</div>
+                     <div className={`${result.kFactor > 13 ? 'text-red-400' : result.kFactor > 9 ? 'text-orange-400' : 'text-green-400'}`}>
+                       {result.kFactor > 13 ? 'Critical overheating risk' :
+                        result.kFactor > 9 ? 'Elevated temperature operation' : 'Normal operation expected'}
+                     </div>
+                   </div>
+                   <div>
+                     <div className="font-medium mb-2 text-muted-foreground">Neutral Conductor</div>
+                     <div className={`${systemType === 'three-phase' && result.neutralCurrent > parseFloat(fundamentalCurrent) ? 'text-orange-400' : 'text-green-400'}`}>
+                       {systemType === 'three-phase' && result.neutralCurrent > parseFloat(fundamentalCurrent) ? 
+                        'Oversizing required' : 'Standard sizing adequate'}
+                     </div>
+                   </div>
+                   <div>
+                     <div className="font-medium mb-2 text-muted-foreground">Protection Devices</div>
+                     <div className={`${result.crestFactorCurrent > 2.5 ? 'text-orange-400' : 'text-green-400'}`}>
+                       {result.crestFactorCurrent > 2.5 ? 'RMS-sensing devices recommended' : 'Standard devices suitable'}
+                     </div>
+                   </div>
+                   <div>
+                     <div className="font-medium mb-2 text-muted-foreground">Power Factor Correction</div>
+                     <div className={`${result.thdiCurrent > 8 ? 'text-orange-400' : 'text-green-400'}`}>
+                       {result.thdiCurrent > 8 ? 'Detuned capacitors required' : 'Standard capacitors acceptable'}
+                     </div>
+                   </div>
+                 </div>
+               </div>
             </div>
           </CardContent>
         </Card>
       )}
 
-      {/* Why This Matters Section */}
-      <WhyThisMatters
-        points={[
-          "Power quality directly affects equipment lifespan and energy efficiency",
-          "Poor power quality costs UK industry millions annually through equipment failures",
-          "Harmonics cause neutral conductor overloading in 3-phase systems",
-          "Non-compliance with BS 7671 G5/5 can lead to DNO disconnection",
-          "High THD increases transformer losses and reduces power factor"
-        ]}
-      />
+       {/* Enhanced Information Sections - More Content */}
+       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+         <WhyThisMatters
+           title="Why Power Quality Analysis Matters"
+           points={[
+             "Prevents costly equipment failures and reduces maintenance costs",
+             "Harmonics cause 15-25% increase in energy consumption",
+             "Non-compliance with BS 7671 18th Edition creates legal liability",
+             "Poor power quality reduces equipment lifespan by up to 50%",
+             "Harmonic currents cause neutral conductor overheating in 3-phase systems"
+           ]}
+         />
 
-      {/* Regulations & Standards */}
-      <InfoBox
-        title="Regulations & Standards"
-        icon={<BookOpen className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow" />}
-        points={[
-          "BS 7671 18th Edition requires compliance with G5/5 harmonic limits",
-          "IEEE 519-2014 provides comprehensive harmonic distortion guidelines",
-          "DNO G5/5 limits individual harmonic currents to protect supply quality",
-          "IEC 61000-4-7 defines harmonic measurement techniques",
-          "Building Regulations Part L considers power quality for energy efficiency"
-        ]}
-      >
-        <div className="text-sm text-elec-light/80 mb-2">
-          Power quality analysis ensures compliance with electrical installation standards and protects both your installation and the wider electrical network.
-        </div>
-      </InfoBox>
+         <InfoBox
+           title="BS 7671 18th Edition & Standards"
+           icon={<Shield className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow" />}
+           points={[
+             "Section 331.1: Assessment of general characteristics",
+             "Regulation 515.2: Harmonic distortion considerations",
+             "IEEE 519: Recommended practice for harmonic control",
+             "G5/5: Engineering Recommendation for harmonic limits",
+             "BS EN 61000-3-2: Equipment harmonic current limits"
+           ]}
+         >
+           <p className="text-sm text-elec-light/80 mb-2">
+             The 18th Edition requires electrical installers to assess and manage power quality, particularly where harmonics may affect safety or equipment operation. This includes LED lighting installations, data centres, and industrial facilities with variable frequency drives.
+           </p>
+         </InfoBox>
 
-      {/* Practical Guidance */}
-      <InfoBox
-        title="Practical Analysis & Guidance"
-        icon={<Target className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow" />}
-        points={[
-          "Measure harmonics at main distribution board during peak load conditions",
-          "Use power quality analysers that comply with IEC 61000-4-30 Class A",
-          "Monitor for at least one week to capture load variations",
-          "Check neutral conductor temperature in 3-phase installations",
-          "Consider load scheduling to reduce harmonic distortion"
-        ]}
-      >
-        <div className="text-sm text-elec-light/80 mb-2">
-          Effective power quality management requires systematic measurement, analysis, and appropriate mitigation strategies tailored to your specific installation.
+         <InfoBox
+           title="Understanding Power Quality Metrics"
+           icon={<Activity className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow" />}
+           points={[
+             "THDi < 5%: Excellent power quality",
+             "K-Factor: K-4 (office), K-13 (industrial), K-20 (data centre)",
+             "Crest Factor > 2.5: High peak currents may cause nuisance tripping",
+             "Neutral current in 3-phase systems should not exceed line current",
+             "Individual harmonics limited by G5/5 Engineering Recommendation"
+           ]}
+         >
+           <p className="text-sm text-elec-light/80 mb-2">
+             This calculator evaluates current harmonics against IEEE 519 and BS 7671 standards, providing actionable insights for maintaining electrical system integrity and compliance with UK electrical safety regulations.
+           </p>
+          </InfoBox>
         </div>
-      </InfoBox>
     </div>
   );
 };
