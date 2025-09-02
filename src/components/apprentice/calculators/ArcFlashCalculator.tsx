@@ -22,6 +22,19 @@ import {
   type ArcFlashResult 
 } from "@/lib/arcflash";
 
+// Voltage options for UK electrical systems
+const voltageOptions = [
+  { value: "230", label: "230V", description: "Single phase domestic/commercial" },
+  { value: "400", label: "400V", description: "3-phase standard (new)" },
+  { value: "415", label: "415V", description: "3-phase standard (legacy)" },
+  { value: "690", label: "690V", description: "3-phase industrial" },
+  { value: "1000", label: "1000V", description: "LV maximum" },
+  { value: "3300", label: "3.3kV", description: "HV distribution" },
+  { value: "6600", label: "6.6kV", description: "HV distribution" },
+  { value: "11000", label: "11kV", description: "HV primary" },
+  { value: "33000", label: "33kV", description: "HV transmission" }
+];
+
 const ArcFlashCalculator = () => {
   const [voltage, setVoltage] = useState<string>("415");
   const [faultCurrent, setFaultCurrent] = useState<string>("");
@@ -158,13 +171,12 @@ const ArcFlashCalculator = () => {
                   <span className="text-sm font-medium">System Voltage (V)</span>
                   <RequiredFieldTooltip content="System line-to-line voltage. IEEE 1584 valid range: 208-15000V. Common UK values: 415V (3-phase), 230V (single-phase)." />
                 </div>
-                <MobileInput
+                <MobileSelect
                   label=""
-                  type="number"
+                  placeholder="Select voltage"
                   value={voltage}
-                  onChange={(e) => setVoltage(e.target.value)}
-                  placeholder="415"
-                  unit="V"
+                  onValueChange={setVoltage}
+                  options={voltageOptions}
                   error={errors.voltage}
                 />
               </div>
