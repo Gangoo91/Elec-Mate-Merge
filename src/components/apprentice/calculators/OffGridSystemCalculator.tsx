@@ -29,10 +29,7 @@ export function OffGridSystemCalculator() {
   const debouncedPeakSunHours = useDebounce(peakSunHours, 800);
   const debouncedAutonomyDays = useDebounce(autonomyDays, 800);
 
-  const presetOptions = [
-    { value: '', label: 'Custom Configuration' },
-    ...OFFGRID_PRESETS.map(preset => ({ value: preset.name, label: preset.name }))
-  ];
+  const presetOptions = OFFGRID_PRESETS.map(preset => ({ value: preset.name, label: preset.name }));
 
   const voltageOptions = [
     { value: '12', label: '12V DC (Small systems)' },
