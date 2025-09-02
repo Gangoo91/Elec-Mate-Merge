@@ -134,9 +134,9 @@ const MicroHydroCalculator = () => {
       return;
     }
 
-    // Determine best turbine if not specified
+    // Determine best turbine if not specified or set to auto
     let selectedTurbine = turbineType;
-    if (!selectedTurbine) {
+    if (!selectedTurbine || selectedTurbine === "auto") {
       selectedTurbine = determineBestTurbine(headValue, flowValue);
     }
 
@@ -319,7 +319,7 @@ const MicroHydroCalculator = () => {
                   <MobileSelectValue placeholder="Auto-select turbine" />
                 </MobileSelectTrigger>
                 <MobileSelectContent>
-                  <MobileSelectItem value="">Auto-select best turbine</MobileSelectItem>
+                  <MobileSelectItem value="auto">Auto-select best turbine</MobileSelectItem>
                   {Object.entries(TURBINE_TYPES).map(([key, turbine]) => (
                     <MobileSelectItem key={key} value={key}>
                       {turbine.name} - {turbine.description}
