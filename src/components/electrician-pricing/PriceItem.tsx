@@ -67,12 +67,12 @@ const PriceItem = ({ name, value, change, trend, isLarge = false, badge, supplie
           )}
         </div>
         
-        <div className="flex items-center gap-3 ml-3">
-          <span className={`font-bold ${isLarge ? 'text-lg' : 'text-base'} text-elec-yellow`}>
+        <div className="flex items-center gap-2 ml-3 flex-shrink-0">
+          <span className={`font-bold ${isLarge ? 'text-lg' : 'text-base'} text-elec-yellow text-right min-w-[80px]`}>
             {value}
           </span>
           
-          <div className={`flex items-center gap-1 px-2 py-1 rounded-full ${getTrendBg()} ${getTrendColor()}`}>
+          <div className={`flex items-center gap-1 px-2 py-1 rounded-full ${getTrendBg()} ${getTrendColor()} min-w-[65px] justify-center`}>
             {getTrendIcon()}
             <span className="text-xs font-medium">
               {change}
@@ -113,12 +113,12 @@ const PriceItem = ({ name, value, change, trend, isLarge = false, badge, supplie
               )}
             </div>
             
-            <div className="flex items-center gap-3 ml-3">
-              <span className={`font-bold ${isLarge ? 'text-lg' : 'text-base'} text-elec-yellow`}>
+            <div className="flex items-center gap-2 ml-3 flex-shrink-0">
+              <span className={`font-bold ${isLarge ? 'text-lg' : 'text-base'} text-elec-yellow text-right min-w-[80px]`}>
                 {value}
               </span>
               
-              <div className={`flex items-center gap-1 px-2 py-1 rounded-full ${getTrendBg()} ${getTrendColor()}`}>
+              <div className={`flex items-center gap-1 px-2 py-1 rounded-full ${getTrendBg()} ${getTrendColor()} min-w-[65px] justify-center`}>
                 {getTrendIcon()}
                 <span className="text-xs font-medium">
                   {change}
@@ -133,9 +133,9 @@ const PriceItem = ({ name, value, change, trend, isLarge = false, badge, supplie
             {subItems.map((subItem) => (
               <div key={subItem.id} className="flex items-center justify-between p-2 rounded bg-elec-dark/50 border border-elec-yellow/10">
                 <span className="text-sm text-foreground/90">{subItem.name}</span>
-                <div className="flex items-center gap-2">
-                  <span className="text-sm font-medium text-elec-yellow">{subItem.value}</span>
-                  <div className={`flex items-center gap-1 px-1.5 py-0.5 rounded-full text-xs ${getTrendBg()}`}>
+                <div className="flex items-center gap-2 flex-shrink-0">
+                  <span className="text-sm font-medium text-elec-yellow text-right min-w-[60px]">{subItem.value}</span>
+                  <div className={`flex items-center gap-1 px-1.5 py-0.5 rounded-full text-xs ${getTrendBg()} min-w-[50px] justify-center`}>
                     {subItem.trend === "up" ? <TrendingUp className="h-2.5 w-2.5" /> : 
                      subItem.trend === "down" ? <TrendingDown className="h-2.5 w-2.5" /> : 
                      <Minus className="h-2.5 w-2.5" />}
