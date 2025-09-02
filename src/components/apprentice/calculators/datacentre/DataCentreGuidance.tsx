@@ -70,13 +70,13 @@ export function DataCentreGuidance({ results }: DataCentreGuidanceProps) {
             <h3 className="text-lg font-medium">What This Means</h3>
           </div>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="space-y-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="space-y-4">
             <div className="flex items-start gap-3">
               <Target className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
-              <div>
-                <div className="font-medium text-sm">Efficiency Status</div>
-                <div className="text-xs text-muted-foreground">
+              <div className="flex-1">
+                <div className="font-medium text-sm mb-1">Efficiency Status</div>
+                <div className="text-xs text-muted-foreground leading-relaxed">
                   {results.pue <= 1.3 ? "Excellent efficiency - world-class design" :
                    results.pue <= 1.6 ? "Good efficiency - modern standard" :
                    results.pue <= 2.0 ? "Average efficiency - improvement opportunities" :
@@ -86,20 +86,20 @@ export function DataCentreGuidance({ results }: DataCentreGuidanceProps) {
             </div>
             <div className="flex items-start gap-3">
               <PoundSterling className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
-              <div>
-                <div className="font-medium text-sm">Cost Impact</div>
-                <div className="text-xs text-muted-foreground">
+              <div className="flex-1">
+                <div className="font-medium text-sm mb-1">Cost Impact</div>
+                <div className="text-xs text-muted-foreground leading-relaxed">
                   Annual energy costs of {formatLargeCurrency(results.annualCost)} represent significant operational expense requiring optimisation
                 </div>
               </div>
             </div>
           </div>
-          <div className="space-y-3">
+          <div className="space-y-4">
             <div className="flex items-start gap-3">
               <Gauge className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
-              <div>
-                <div className="font-medium text-sm">Capacity Planning</div>
-                <div className="text-xs text-muted-foreground">
+              <div className="flex-1">
+                <div className="font-medium text-sm mb-1">Capacity Planning</div>
+                <div className="text-xs text-muted-foreground leading-relaxed">
                   {results.capacityHeadroom >= 20 ? "Good headroom for growth" :
                    results.capacityHeadroom >= 10 ? "Adequate capacity for near-term" :
                    "Expansion planning required soon"}
@@ -108,9 +108,9 @@ export function DataCentreGuidance({ results }: DataCentreGuidanceProps) {
             </div>
             <div className="flex items-start gap-3">
               <Leaf className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
-              <div>
-                <div className="font-medium text-sm">Environmental Impact</div>
-                <div className="text-xs text-muted-foreground">
+              <div className="flex-1">
+                <div className="font-medium text-sm mb-1">Environmental Impact</div>
+                <div className="text-xs text-muted-foreground leading-relaxed">
                   {formatLargeNumber(results.annualCo2e / 1000)}t CO2e annually - efficiency improvements reduce both costs and carbon footprint
                 </div>
               </div>
@@ -127,76 +127,76 @@ export function DataCentreGuidance({ results }: DataCentreGuidanceProps) {
             <h3 className="text-lg font-medium">Load Analysis & Infrastructure Sizing</h3>
           </div>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="space-y-3">
-            <div className="flex items-center gap-2">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="space-y-4">
+            <div className="flex items-center gap-2 mb-3">
               <Zap className="h-4 w-4 text-elec-yellow" />
               <span className="font-medium">Power Loads</span>
             </div>
-            <div className="space-y-2 text-sm ml-6">
-              <div className="flex justify-between">
+            <div className="space-y-3 text-sm">
+              <div className="flex justify-between items-center">
                 <span className="text-muted-foreground">Total IT load:</span>
                 <span className="text-elec-yellow font-medium">{results.totalItLoad.toFixed(0)} kW</span>
               </div>
-              <div className="flex justify-between">
+              <div className="flex justify-between items-center">
                 <span className="text-muted-foreground">Cooling load:</span>
                 <span className="text-elec-yellow font-medium">{results.coolingLoad.toFixed(0)} kW</span>
               </div>
-              <div className="flex justify-between">
+              <div className="flex justify-between items-center">
                 <span className="text-muted-foreground">Lights & misc:</span>
                 <span className="text-elec-yellow font-medium">{results.lightsLoad.toFixed(0)} kW</span>
               </div>
-              <div className="flex justify-between font-semibold border-t border-elec-yellow/20 pt-2">
+              <div className="flex justify-between items-center font-semibold border-t border-border pt-2">
                 <span>Total facility:</span>
                 <span className="text-elec-yellow">{results.totalFacilityLoad.toFixed(0)} kW</span>
               </div>
             </div>
           </div>
 
-          <div className="space-y-3">
-            <div className="flex items-center gap-2">
+          <div className="space-y-4">
+            <div className="flex items-center gap-2 mb-3">
               <Battery className="h-4 w-4 text-elec-yellow" />
               <span className="font-medium">Infrastructure</span>
             </div>
-            <div className="space-y-2 text-sm ml-6">
-              <div className="flex justify-between">
+            <div className="space-y-3 text-sm">
+              <div className="flex justify-between items-center">
                 <span className="text-muted-foreground">UPS capacity:</span>
                 <span className="text-elec-yellow font-medium">{results.upsCapacity.toFixed(0)} kW</span>
               </div>
-              <div className="flex justify-between">
+              <div className="flex justify-between items-center">
                 <span className="text-muted-foreground">Generator:</span>
                 <span className="text-elec-yellow font-medium">{results.generatorCapacity.toFixed(0)} kW</span>
               </div>
-              <div className="flex justify-between">
+              <div className="flex justify-between items-center">
                 <span className="text-muted-foreground">Battery:</span>
                 <span className="text-elec-yellow font-medium">{results.batteryCapacity.toFixed(0)} kWh</span>
               </div>
-              <div className="flex justify-between">
+              <div className="flex justify-between items-center">
                 <span className="text-muted-foreground">Cooling:</span>
                 <span className="text-elec-yellow font-medium">{results.coolingCapacity.toFixed(0)} kW</span>
               </div>
             </div>
           </div>
 
-          <div className="space-y-3">
-            <div className="flex items-center gap-2">
+          <div className="space-y-4">
+            <div className="flex items-center gap-2 mb-3">
               <Gauge className="h-4 w-4 text-elec-yellow" />
               <span className="font-medium">Efficiency</span>
             </div>
-            <div className="space-y-2 text-sm ml-6">
-              <div className="flex justify-between">
+            <div className="space-y-3 text-sm">
+              <div className="flex justify-between items-center">
                 <span className="text-muted-foreground">PUE:</span>
                 <span className="text-elec-yellow font-medium">{results.pue.toFixed(2)}</span>
               </div>
-              <div className="flex justify-between">
+              <div className="flex justify-between items-center">
                 <span className="text-muted-foreground">DCiE:</span>
                 <span className="text-elec-yellow font-medium">{results.dcie.toFixed(1)}%</span>
               </div>
-              <div className="flex justify-between">
+              <div className="flex justify-between items-center">
                 <span className="text-muted-foreground">Capacity headroom:</span>
                 <span className="text-elec-yellow font-medium">{results.capacityHeadroom.toFixed(1)}%</span>
               </div>
-              <div className="flex justify-between">
+              <div className="flex justify-between items-center">
                 <span className="text-muted-foreground">Max IT capacity:</span>
                 <span className="text-elec-yellow font-medium">{results.maxItLoadCapacity.toFixed(0)} kW</span>
               </div>
@@ -233,12 +233,12 @@ export function DataCentreGuidance({ results }: DataCentreGuidanceProps) {
             <h3 className="text-lg font-medium">Financial Summary</h3>
           </div>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
-          <div className="flex justify-between items-center">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+          <div className="flex justify-between items-center py-2">
             <span className="text-muted-foreground">Estimated capital cost:</span>
             <span className="text-elec-yellow font-medium">{formatLargeCurrency(results.estimatedCapitalCost)}</span>
           </div>
-          <div className="flex justify-between items-center">
+          <div className="flex justify-between items-center py-2">
             <span className="text-muted-foreground">Annual operating cost:</span>
             <span className="text-elec-yellow font-medium">{formatLargeCurrency(results.annualOperatingCost)}</span>
           </div>
@@ -253,16 +253,16 @@ export function DataCentreGuidance({ results }: DataCentreGuidanceProps) {
             <h3 className="text-lg font-medium">Standards Compliance</h3>
           </div>
         </div>
-        <div className="space-y-3">
+        <div className="space-y-4">
           {results.complianceStatus.map((item, index) => (
-            <div key={index} className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 p-3 rounded-lg border border-border">
+            <div key={index} className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 p-4 rounded-lg border border-border">
               <div className="flex items-start gap-3 flex-1">
                 <div className="flex-shrink-0 mt-0.5">
                   {getStatusIcon(item.status)}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <div className="font-medium text-sm sm:text-base">{item.standard}</div>
-                  <div className="text-xs sm:text-sm text-muted-foreground mt-1 leading-relaxed">{item.message}</div>
+                  <div className="font-medium text-sm sm:text-base mb-1">{item.standard}</div>
+                  <div className="text-xs sm:text-sm text-muted-foreground leading-relaxed">{item.message}</div>
                 </div>
               </div>
               <div className="flex-shrink-0 self-start sm:self-center">
@@ -354,12 +354,27 @@ export function DataCentreGuidance({ results }: DataCentreGuidanceProps) {
                   <h4 className="font-medium">Why Data Centre Design Matters</h4>
                 </div>
               </div>
-              <div className="space-y-2 text-sm">
-                <p>• <strong>Business Continuity:</strong> Poor design leads to costly downtime (average £4,500 per minute)</p>
-                <p>• <strong>Energy Efficiency:</strong> Data centres consume 1% of global electricity - efficiency is crucial</p>
-                <p>• <strong>Scalability:</strong> Proper planning prevents expensive retrofits and capacity constraints</p>
-                <p>• <strong>Compliance:</strong> Industry standards ensure reliability and operational excellence</p>
-                <p>• <strong>Environmental Impact:</strong> Efficient design reduces carbon footprint and operating costs</p>
+              <div className="space-y-3 text-sm leading-relaxed">
+                <div className="flex items-start gap-2">
+                  <span className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></span>
+                  <span><strong>Business Continuity:</strong> Poor design leads to costly downtime (average £4,500 per minute)</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></span>
+                  <span><strong>Energy Efficiency:</strong> Data centres consume 1% of global electricity - efficiency is crucial</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></span>
+                  <span><strong>Scalability:</strong> Proper planning prevents expensive retrofits and capacity constraints</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></span>
+                  <span><strong>Compliance:</strong> Industry standards ensure reliability and operational excellence</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></span>
+                  <span><strong>Environmental Impact:</strong> Efficient design reduces carbon footprint and operating costs</span>
+                </div>
               </div>
             </ResultCard>
 
@@ -371,41 +386,41 @@ export function DataCentreGuidance({ results }: DataCentreGuidanceProps) {
                   <h4 className="font-medium">Key Metrics Explained</h4>
                 </div>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                <div className="space-y-3">
-                  <div>
-                    <div className="font-medium">PUE (Power Usage Effectiveness)</div>
-                    <div className="text-muted-foreground">Total facility power ÷ IT power</div>
-                    <div className="text-xs text-elec-yellow">
-                      • 1.0 = Perfect efficiency (impossible)<br/>
-                      • 1.2-1.5 = Excellent (modern efficient)<br/>
-                      • 1.5-2.0 = Good (typical)<br/>
-                      • 2.0+ = Poor (needs improvement)
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
+                <div className="space-y-4">
+                  <div className="p-3 border border-border rounded-lg">
+                    <div className="font-medium mb-2">PUE (Power Usage Effectiveness)</div>
+                    <div className="text-muted-foreground text-xs mb-2">Total facility power ÷ IT power</div>
+                    <div className="text-xs text-elec-yellow space-y-1">
+                      <div>• 1.0 = Perfect efficiency (impossible)</div>
+                      <div>• 1.2-1.5 = Excellent (modern efficient)</div>
+                      <div>• 1.5-2.0 = Good (typical)</div>
+                      <div>• 2.0+ = Poor (needs improvement)</div>
                     </div>
                   </div>
-                  <div>
-                    <div className="font-medium">DCiE (Data Centre Infrastructure Efficiency)</div>
-                    <div className="text-muted-foreground">IT power ÷ total facility power × 100</div>
+                  <div className="p-3 border border-border rounded-lg">
+                    <div className="font-medium mb-2">DCiE (Data Centre Infrastructure Efficiency)</div>
+                    <div className="text-muted-foreground text-xs mb-2">IT power ÷ total facility power × 100</div>
                     <div className="text-xs text-elec-yellow">Inverse of PUE as percentage</div>
                   </div>
                 </div>
-                <div className="space-y-3">
-                  <div>
-                    <div className="font-medium">Capacity Headroom</div>
-                    <div className="text-muted-foreground">Available capacity for growth</div>
-                    <div className="text-xs text-elec-yellow">
-                      • 20%+ = Good planning buffer<br/>
-                      • 10-20% = Adequate short-term<br/>
-                      • &lt;10% = Expansion needed soon
+                <div className="space-y-4">
+                  <div className="p-3 border border-border rounded-lg">
+                    <div className="font-medium mb-2">Capacity Headroom</div>
+                    <div className="text-muted-foreground text-xs mb-2">Available capacity for growth</div>
+                    <div className="text-xs text-elec-yellow space-y-1">
+                      <div>• 20%+ = Good planning buffer</div>
+                      <div>• 10-20% = Adequate short-term</div>
+                      <div>• &lt;10% = Expansion needed soon</div>
                     </div>
                   </div>
-                  <div>
-                    <div className="font-medium">Redundancy Levels</div>
-                    <div className="text-muted-foreground">Protection against failures</div>
-                    <div className="text-xs text-elec-yellow">
-                      • N = No redundancy<br/>
-                      • N+1 = Single component backup<br/>
-                      • 2N = Complete duplicate systems
+                  <div className="p-3 border border-border rounded-lg">
+                    <div className="font-medium mb-2">Redundancy Levels</div>
+                    <div className="text-muted-foreground text-xs mb-2">Protection against failures</div>
+                    <div className="text-xs text-elec-yellow space-y-1">
+                      <div>• N = No redundancy</div>
+                      <div>• N+1 = Single component backup</div>
+                      <div>• 2N = Complete duplicate systems</div>
                     </div>
                   </div>
                 </div>
@@ -420,33 +435,78 @@ export function DataCentreGuidance({ results }: DataCentreGuidanceProps) {
                   <h4 className="font-medium">Practical Implementation Guidance</h4>
                 </div>
               </div>
-              <div className="space-y-4 text-sm">
-                <div>
-                  <div className="font-medium mb-2">Infrastructure Sizing Best Practices:</div>
-                  <ul className="list-disc list-inside space-y-1 text-muted-foreground ml-4">
-                    <li>Size UPS for peak load plus 15-25% design margin</li>
-                    <li>Generator should be 125% of UPS capacity for starting loads</li>
-                    <li>Battery runtime: minimum 15 minutes, recommend 30+ minutes</li>
-                    <li>Cooling redundancy separate from power redundancy planning</li>
-                  </ul>
+              <div className="space-y-6 text-sm">
+                <div className="p-4 border border-border rounded-lg">
+                  <div className="font-medium mb-3 flex items-center gap-2">
+                    <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
+                    Infrastructure Sizing Best Practices
+                  </div>
+                  <div className="space-y-2 text-muted-foreground pl-4">
+                    <div className="flex items-start gap-2">
+                      <span className="w-1 h-1 bg-muted-foreground rounded-full mt-2 flex-shrink-0"></span>
+                      <span>Size UPS for peak load plus 15-25% design margin</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <span className="w-1 h-1 bg-muted-foreground rounded-full mt-2 flex-shrink-0"></span>
+                      <span>Generator should be 125% of UPS capacity for starting loads</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <span className="w-1 h-1 bg-muted-foreground rounded-full mt-2 flex-shrink-0"></span>
+                      <span>Battery runtime: minimum 15 minutes, recommend 30+ minutes</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <span className="w-1 h-1 bg-muted-foreground rounded-full mt-2 flex-shrink-0"></span>
+                      <span>Cooling redundancy separate from power redundancy planning</span>
+                    </div>
+                  </div>
                 </div>
-                <div>
-                  <div className="font-medium mb-2">Efficiency Improvements:</div>
-                  <ul className="list-disc list-inside space-y-1 text-muted-foreground ml-4">
-                    <li>Hot/cold aisle containment can improve PUE by 20-30%</li>
-                    <li>Variable speed drive fans reduce energy by 10-15%</li>
-                    <li>Free cooling in temperate climates saves 30% cooling energy</li>
-                    <li>Higher supply temperatures (27°C) reduce cooling load</li>
-                  </ul>
+                <div className="p-4 border border-border rounded-lg">
+                  <div className="font-medium mb-3 flex items-center gap-2">
+                    <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
+                    Efficiency Improvements
+                  </div>
+                  <div className="space-y-2 text-muted-foreground pl-4">
+                    <div className="flex items-start gap-2">
+                      <span className="w-1 h-1 bg-muted-foreground rounded-full mt-2 flex-shrink-0"></span>
+                      <span>Hot/cold aisle containment can improve PUE by 20-30%</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <span className="w-1 h-1 bg-muted-foreground rounded-full mt-2 flex-shrink-0"></span>
+                      <span>Variable speed drive fans reduce energy by 10-15%</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <span className="w-1 h-1 bg-muted-foreground rounded-full mt-2 flex-shrink-0"></span>
+                      <span>Free cooling in temperate climates saves 30% cooling energy</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <span className="w-1 h-1 bg-muted-foreground rounded-full mt-2 flex-shrink-0"></span>
+                      <span>Higher supply temperatures (27°C) reduce cooling load</span>
+                    </div>
+                  </div>
                 </div>
-                <div>
-                  <div className="font-medium mb-2">Monitoring & Maintenance:</div>
-                  <ul className="list-disc list-inside space-y-1 text-muted-foreground ml-4">
-                    <li>Real-time PUE monitoring enables optimisation</li>
-                    <li>Regular thermal mapping identifies hot spots</li>
-                    <li>Preventive maintenance schedules for critical systems</li>
-                    <li>Annual load bank testing of backup power systems</li>
-                  </ul>
+                <div className="p-4 border border-border rounded-lg">
+                  <div className="font-medium mb-3 flex items-center gap-2">
+                    <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
+                    Monitoring & Maintenance
+                  </div>
+                  <div className="space-y-2 text-muted-foreground pl-4">
+                    <div className="flex items-start gap-2">
+                      <span className="w-1 h-1 bg-muted-foreground rounded-full mt-2 flex-shrink-0"></span>
+                      <span>Real-time PUE monitoring enables optimisation</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <span className="w-1 h-1 bg-muted-foreground rounded-full mt-2 flex-shrink-0"></span>
+                      <span>Regular thermal mapping identifies hot spots</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <span className="w-1 h-1 bg-muted-foreground rounded-full mt-2 flex-shrink-0"></span>
+                      <span>Preventive maintenance schedules for critical systems</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <span className="w-1 h-1 bg-muted-foreground rounded-full mt-2 flex-shrink-0"></span>
+                      <span>Annual load bank testing of backup power systems</span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </ResultCard>
