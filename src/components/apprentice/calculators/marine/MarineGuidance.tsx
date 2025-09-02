@@ -301,8 +301,8 @@ const MarineGuidance = ({ results, inputs }: MarineGuidanceProps) => {
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-3">
-              <h4 className="font-medium">UK Maritime & Coastguard Agency (MCA)</h4>
-              <ul className="space-y-1 text-sm text-muted-foreground">
+              <h4 className="font-medium text-white">UK Maritime & Coastguard Agency (MCA)</h4>
+              <ul className="space-y-1 text-sm text-white">
                 <li>• MGN 280(M) - Small Vessel Electrical Safety</li>
                 <li>• MGN 503(M) - Fire Safety on Small Commercial Vessels</li>
                 <li>• Pleasure craft ≤24m: Recreational Craft Directive (RCD)</li>
@@ -313,8 +313,8 @@ const MarineGuidance = ({ results, inputs }: MarineGuidanceProps) => {
             </div>
 
             <div className="space-y-3">
-              <h4 className="font-medium">International Standards</h4>
-              <ul className="space-y-1 text-sm text-muted-foreground">
+              <h4 className="font-medium text-white">International Standards</h4>
+              <ul className="space-y-1 text-sm text-white">
                 <li>• ISO 13297 - Small craft electrical systems</li>
                 <li>• IEC 60092 - Marine electrical installations</li>
                 <li>• ABYC E-11 - AC & DC electrical systems aboard boats</li>
@@ -326,29 +326,29 @@ const MarineGuidance = ({ results, inputs }: MarineGuidanceProps) => {
           </div>
 
           <div className="space-y-3">
-            <h4 className="font-medium">Critical Safety Requirements</h4>
+            <h4 className="font-medium text-white text-center">Critical Safety Requirements</h4>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="p-4 bg-elec-card rounded border border-elec-yellow/10">
-                <h5 className="font-medium text-sm mb-2 text-elec-yellow">Electrical Protection</h5>
-                <ul className="text-xs text-muted-foreground space-y-1">
+              <div className="p-4 bg-elec-card rounded border border-elec-yellow/10 text-center">
+                <h5 className="font-medium text-sm mb-3 text-elec-yellow">Electrical Protection</h5>
+                <ul className="text-xs text-white space-y-1 text-left">
                   <li>• RCD protection (30mA) for AC circuits</li>
                   <li>• Galvanic isolation transformers</li>
                   <li>• Overcurrent protection all circuits</li>
                   <li>• Emergency battery disconnect</li>
                 </ul>
               </div>
-              <div className="p-4 bg-elec-card rounded border border-elec-yellow/10">
-                <h5 className="font-medium text-sm mb-2 text-elec-yellow">Fire Prevention</h5>
-                <ul className="text-xs text-muted-foreground space-y-1">
+              <div className="p-4 bg-elec-card rounded border border-elec-yellow/10 text-center">
+                <h5 className="font-medium text-sm mb-3 text-elec-yellow">Fire Prevention</h5>
+                <ul className="text-xs text-white space-y-1 text-left">
                   <li>• Battery compartment ventilation</li>
                   <li>• Ignition protection devices</li>
                   <li>• Proper cable routing and protection</li>
                   <li>• Emergency shutdown systems</li>
                 </ul>
               </div>
-              <div className="p-4 bg-elec-card rounded border border-elec-yellow/10">
-                <h5 className="font-medium text-sm mb-2 text-elec-yellow">Water Ingress</h5>
-                <ul className="text-xs text-muted-foreground space-y-1">
+              <div className="p-4 bg-elec-card rounded border border-elec-yellow/10 text-center">
+                <h5 className="font-medium text-sm mb-3 text-elec-yellow">Water Ingress</h5>
+                <ul className="text-xs text-white space-y-1 text-left">
                   <li>• IP65 minimum rating wet areas</li>
                   <li>• Sealed penetrations through hull</li>
                   <li>• Corrosion-resistant materials</li>
