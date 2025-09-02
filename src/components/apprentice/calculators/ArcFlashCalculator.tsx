@@ -22,7 +22,7 @@ import {
   type ArcFlashResult 
 } from "@/lib/arcflash";
 
-// Voltage options for UK electrical systems
+// Voltage options for UK electrical systems (IEEE 1584 compliant: 208-15000V)
 const voltageOptions = [
   { value: "230", label: "230V", description: "Single phase domestic/commercial" },
   { value: "400", label: "400V", description: "3-phase standard (new)" },
@@ -31,8 +31,7 @@ const voltageOptions = [
   { value: "1000", label: "1000V", description: "LV maximum" },
   { value: "3300", label: "3.3kV", description: "HV distribution" },
   { value: "6600", label: "6.6kV", description: "HV distribution" },
-  { value: "11000", label: "11kV", description: "HV primary" },
-  { value: "33000", label: "33kV", description: "HV transmission" }
+  { value: "11000", label: "11kV", description: "HV primary (IEEE 1584 max)" }
 ];
 
 const ArcFlashCalculator = () => {
