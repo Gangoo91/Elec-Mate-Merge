@@ -110,21 +110,21 @@ export function calculateTransformer(inputs: TransformerInputs): TransformerResu
     combinedFaultCurrent = secondaryVoltage / (Math.sqrt(3) * totalImpedance);
   }
 
-  // Efficiency and losses (typical values based on rating)
+  // Efficiency and losses (realistic values based on rating)
   let efficiency: number;
   let copperLoss: number;
   let ironLoss: number;
 
   if (kvaRating <= 25) {
-    efficiency = 0.92 + (kvaRating / 1000); // Small transformers
+    efficiency = Math.min(0.95, 0.88 + (kvaRating / 250)); // Small transformers: 88-95%
     copperLoss = kvaRating * 0.035;
     ironLoss = kvaRating * 0.015;
   } else if (kvaRating <= 500) {
-    efficiency = 0.95 + (kvaRating / 5000);
+    efficiency = Math.min(0.975, 0.92 + (kvaRating / 1250)); // Medium: 92-97.5%
     copperLoss = kvaRating * 0.025;
     ironLoss = kvaRating * 0.010;
   } else {
-    efficiency = 0.98;
+    efficiency = Math.min(0.985, 0.96 + (kvaRating / 5000)); // Large: 96-98.5%
     copperLoss = kvaRating * 0.015;
     ironLoss = kvaRating * 0.008;
   }
