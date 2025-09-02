@@ -69,63 +69,51 @@ export function DataCentreGuidance({ results }: DataCentreGuidanceProps) {
             What This Means
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="space-y-4">
-              <div className="p-4 bg-elec-grey rounded-lg border border-elec-yellow/10">
-                <div className="flex items-start gap-3">
-                  <Target className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <div className="flex-1">
-                    <div className="font-medium text-elec-light text-base mb-1">Efficiency Status</div>
-                    <div className="text-sm text-elec-light leading-relaxed">
-                      {results.pue <= 1.3 ? "Excellent efficiency - world-class design" :
-                       results.pue <= 1.6 ? "Good efficiency - modern standard" :
-                       results.pue <= 2.0 ? "Average efficiency - improvement opportunities" :
-                       "Poor efficiency - significant improvements needed"}
-                    </div>
-                  </div>
-                </div>
+        <CardContent className="space-y-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
+            <div className="p-5 bg-elec-grey rounded-xl border border-elec-yellow/10 hover:border-elec-yellow/20 transition-colors">
+              <div className="flex items-center gap-3 mb-3">
+                <Target className="h-6 w-6 text-elec-yellow flex-shrink-0" />
+                <h4 className="font-semibold text-elec-light text-lg">Efficiency Status</h4>
               </div>
-              
-              <div className="p-4 bg-elec-grey rounded-lg border border-elec-yellow/10">
-                <div className="flex items-start gap-3">
-                  <PoundSterling className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <div className="flex-1">
-                    <div className="font-medium text-elec-light text-base mb-1">Cost Impact</div>
-                    <div className="text-sm text-elec-light leading-relaxed">
-                      Annual energy costs of {formatLargeCurrency(results.annualCost)} represent significant operational expense requiring optimisation
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <p className="text-sm text-elec-light leading-relaxed">
+                {results.pue <= 1.3 ? "Excellent efficiency - world-class design" :
+                 results.pue <= 1.6 ? "Good efficiency - modern standard" :
+                 results.pue <= 2.0 ? "Average efficiency - improvement opportunities" :
+                 "Poor efficiency - significant improvements needed"}
+              </p>
             </div>
             
-            <div className="space-y-4">
-              <div className="p-4 bg-elec-grey rounded-lg border border-elec-yellow/10">
-                <div className="flex items-start gap-3">
-                  <Gauge className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <div className="flex-1">
-                    <div className="font-medium text-elec-light text-base mb-1">Capacity Planning</div>
-                    <div className="text-sm text-elec-light leading-relaxed">
-                      {results.capacityHeadroom >= 20 ? "Good headroom for growth" :
-                       results.capacityHeadroom >= 10 ? "Adequate capacity for near-term" :
-                       "Expansion planning required soon"}
-                    </div>
-                  </div>
-                </div>
+            <div className="p-5 bg-elec-grey rounded-xl border border-elec-yellow/10 hover:border-elec-yellow/20 transition-colors">
+              <div className="flex items-center gap-3 mb-3">
+                <Gauge className="h-6 w-6 text-elec-yellow flex-shrink-0" />
+                <h4 className="font-semibold text-elec-light text-lg">Capacity Planning</h4>
               </div>
+              <p className="text-sm text-elec-light leading-relaxed">
+                {results.capacityHeadroom >= 20 ? "Good headroom for growth" :
+                 results.capacityHeadroom >= 10 ? "Adequate capacity for near-term" :
+                 "Expansion planning required soon"}
+              </p>
+            </div>
+            
+            <div className="p-5 bg-elec-grey rounded-xl border border-elec-yellow/10 hover:border-elec-yellow/20 transition-colors">
+              <div className="flex items-center gap-3 mb-3">
+                <PoundSterling className="h-6 w-6 text-elec-yellow flex-shrink-0" />
+                <h4 className="font-semibold text-elec-light text-lg">Cost Impact</h4>
+              </div>
+              <p className="text-sm text-elec-light leading-relaxed">
+                Annual energy costs of {formatLargeCurrency(results.annualCost)} represent significant operational expense requiring optimisation
+              </p>
+            </div>
               
-              <div className="p-4 bg-elec-grey rounded-lg border border-elec-yellow/10">
-                <div className="flex items-start gap-3">
-                  <Leaf className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <div className="flex-1">
-                    <div className="font-medium text-elec-light text-base mb-1">Environmental Impact</div>
-                    <div className="text-sm text-elec-light leading-relaxed">
-                      {formatLargeNumber(results.annualCo2e / 1000)}t CO2e annually - efficiency improvements reduce both costs and carbon footprint
-                    </div>
-                  </div>
-                </div>
+            <div className="p-5 bg-elec-grey rounded-xl border border-elec-yellow/10 hover:border-elec-yellow/20 transition-colors">
+              <div className="flex items-center gap-3 mb-3">
+                <Leaf className="h-6 w-6 text-elec-yellow flex-shrink-0" />
+                <h4 className="font-semibold text-elec-light text-lg">Environmental Impact</h4>
               </div>
+              <p className="text-sm text-elec-light leading-relaxed">
+                {formatLargeNumber(results.annualCo2e / 1000)}t CO2e annually - efficiency improvements reduce both costs and carbon footprint
+              </p>
             </div>
           </div>
         </CardContent>
