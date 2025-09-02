@@ -281,7 +281,7 @@ const SolarPVCalculator = () => {
 
           {/* Results Section */}
           <div className="space-y-4">
-            <div className="rounded-md bg-elec-dark p-6 min-h-[400px]">
+            <div className="rounded-md bg-elec-gray p-6 min-h-[400px]">
               {result ? (
                 <div className="space-y-6">
                   <div className="text-center">
