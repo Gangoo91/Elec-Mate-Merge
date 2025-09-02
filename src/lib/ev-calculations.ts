@@ -40,6 +40,19 @@ export interface EVCalculationResults {
 }
 
 export function calculateEVCharging(inputs: EVCalculationInputs): EVCalculationResults {
+  // Validate inputs
+  if (!inputs.batteryCapacity || inputs.batteryCapacity <= 0) {
+    throw new Error("Battery capacity must be greater than 0");
+  }
+  
+  if (inputs.currentCharge >= inputs.targetCharge) {
+    throw new Error("Target charge must be higher than current charge level");
+  }
+  
+  if (inputs.runLength <= 0) {
+    throw new Error("Cable run length must be greater than 0");
+  }
+  
   const charger = CHARGER_TYPES[inputs.chargerType];
   const earthingSystem = EARTHING_SYSTEMS[inputs.supplyType];
   
@@ -170,64 +183,85 @@ function generateRecommendations(
   
   // Cable recommendations
   if (analysis.cableSelection.current < analysis.deratedCurrent * 1.2) {
-    recommendations.push(`Consider next cable size up (${getNextCableSize(analysis.cableSelection.size)}) for additional safety margin`);
+    recommendations.push(`Consider upgrading to ${getNextCableSize(analysis.cableSelection.size)} for additional safety margin and future-proofing`);
   }
   
   // Voltage drop recommendations
   if (analysis.voltageDrop_percent > 3) {
-    recommendations.push('Consider larger cable size to reduce voltage drop below 3%');
+    recommendations.push("Voltage drop exceeds 3% - consider larger cable size to improve efficiency and comply with best practice");
+  } else if (analysis.voltageDrop_percent > 5) {
+    warnings.push("Voltage drop exceeds 5% limit - cable upgrade required for BS 7671 compliance");
   }
   
   // Earth fault loop impedance
   if (analysis.actualZs > analysis.charger.voltage * 0.8) {
-    warnings.push('High earth fault loop impedance - verify earthing arrangements');
+    warnings.push("Earth fault loop impedance is high - verify earthing arrangements and consider additional earthing measures");
   }
   
   // Installation location considerations
-  if (inputs.installationLocation === 'external') {
-    recommendations.push('Ensure IP65 rated equipment for external installation');
-    recommendations.push('Consider earth electrode if TT system or long cable runs');
+  if (inputs.installationLocation === "external") {
+    recommendations.push("External installation requires IP65-rated equipment and weather-resistant cable glands");
+    recommendations.push("Consider earth electrode installation if TT earthing system or long cable runs are involved");
+  } else if (inputs.installationLocation === "internal") {
+    recommendations.push("Ensure adequate ventilation in enclosed spaces to prevent heat buildup during charging");
   }
   
-  // Load management
+  // Load management for high current installations
   if (inputs.existingLoadCurrent > 50) {
-    recommendations.push('Consider load management system to prevent supply overload');
+    recommendations.push("Existing high load detected - implement load management system to prevent supply overload");
   }
   
-  // DNO notification
+  if (analysis.deratedCurrent > 32) {
+    recommendations.push("High current installation - consider three-phase supply or load balancing for optimal performance");
+  }
+  
+  // DNO notification requirements
   if (analysis.charger.power > 3.68 && analysis.charger.phases === 1) {
-    recommendations.push('DNO notification required for single-phase installations >3.68kW');
+    recommendations.push("DNO notification required for single-phase installations exceeding 3.68kW per phase");
   }
   
   if (analysis.charger.power > 11) {
-    recommendations.push('DNO application may be required for installations >11kW');
+    recommendations.push("High-power installation may require formal DNO application and supply upgrade assessment");
   }
   
   // Compliance warnings
   if (!analysis.installationCompliant) {
-    warnings.push('Installation may not comply with BS 7671 - review calculations');
+    warnings.push("Installation calculations indicate potential non-compliance with BS 7671 - professional review recommended");
+  }
+  
+  // Temperature considerations
+  if (inputs.ambientTemp > 35) {
+    recommendations.push("High ambient temperature detected - ensure adequate cable derating and consider active cooling");
   }
   
   return { recommendations, warnings };
 }
 
 function generateReviewFindings(inputs: EVCalculationInputs, results: any) {
-  const loadAnalysis = `Peak demand of ${results.peakDemand.toFixed(1)}kW requires ${results.circuitCurrent.toFixed(1)}A circuit capacity. ${
+  const loadAnalysis = `Peak electrical demand of ${results.peakDemand.toFixed(1)}kW requires ${results.circuitCurrent.toFixed(1)}A circuit capacity. ${
     inputs.existingLoadCurrent > 0 
-      ? `Existing load of ${inputs.existingLoadCurrent}A should be considered for total installation capacity.` 
-      : ''
+      ? `Combined with existing load of ${inputs.existingLoadCurrent}A, total installation capacity should be assessed for supply adequacy.` 
+      : "No existing load specified - ensure total installation capacity remains within supply limits."
   }`;
   
-  const cableAssessment = `${results.cableSelection.label} cable selected for ${results.circuitCurrent.toFixed(1)}A load over ${inputs.runLength}m run. Voltage drop: ${results.voltageDrop_percent.toFixed(1)}% ${
-    results.voltageDrop_percent <= 3 ? '(Good)' : results.voltageDrop_percent <= 5 ? '(Acceptable)' : '(Excessive)'
+  const cableAssessment = `Selected ${results.cableSelection.label} cable for ${results.circuitCurrent.toFixed(1)}A load over ${inputs.runLength}m cable run. Calculated voltage drop: ${results.voltageDrop_percent.toFixed(1)}% ${
+    results.voltageDrop_percent <= 3 ? "(Excellent - within best practice)" : 
+    results.voltageDrop_percent <= 5 ? "(Acceptable - within regulations)" : 
+    "(Excessive - requires cable upgrade)"
   }.`;
   
-  const protectionCompliance = `Earth fault loop impedance: ${results.actualZs.toFixed(2)}Ω (Max: ${EARTHING_SYSTEMS[inputs.supplyType].zs_max}Ω). ${
-    results.actualZs <= EARTHING_SYSTEMS[inputs.supplyType].zs_max ? 'Compliant' : 'Non-compliant - requires attention'
-  }.`;
+  const protectionCompliance = `Earth fault loop impedance measured: ${results.actualZs.toFixed(2)}Ω (Maximum permitted: ${EARTHING_SYSTEMS[inputs.supplyType].zs_max}Ω). ${
+    results.actualZs <= EARTHING_SYSTEMS[inputs.supplyType].zs_max ? 
+    "Protective device operation confirmed within safe parameters." : 
+    "Non-compliant - protective device may not operate correctly in fault conditions."
+  }`;
   
-  const installationRequirements = `${CHARGER_TYPES[inputs.chargerType].label} installation requires ${getProtectionRequirements(inputs.chargerType, CHARGER_TYPES[inputs.chargerType].power)}. ${
-    inputs.installationLocation === 'external' ? 'External installation requires IP65 rated equipment.' : 'Internal installation - ensure adequate ventilation.'
+  const installationRequirements = `${CHARGER_TYPES[inputs.chargerType].label} installation requires ${getProtectionRequirements(inputs.chargerType, CHARGER_TYPES[inputs.chargerType].power)} protection. ${
+    inputs.installationLocation === "external" ? 
+    "External installation demands IP65-rated equipment with appropriate weatherproofing measures." : 
+    inputs.installationLocation === "internal" ?
+    "Internal installation requires adequate ventilation and space clearances per manufacturer specifications." :
+    "Commercial installation requires additional considerations for accessibility and maintenance."
   }`;
   
   return {

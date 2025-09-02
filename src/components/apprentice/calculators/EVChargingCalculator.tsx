@@ -344,22 +344,22 @@ const EVChargingCalculator = () => {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="space-y-3">
-                <div className="space-y-2">
-                  <h4 className="font-medium text-elec-light">Load Analysis</h4>
-                  <p className="text-sm text-elec-light/80">{results.reviewFindings.loadAnalysis}</p>
+              <div className="space-y-4">
+                <div className="p-4 bg-elec-gray/50 rounded-lg border border-elec-yellow/10">
+                  <h4 className="font-medium text-elec-yellow mb-2">Load Analysis</h4>
+                  <p className="text-sm text-elec-light/90 leading-relaxed">{results.reviewFindings.loadAnalysis}</p>
                 </div>
-                <div className="space-y-2">
-                  <h4 className="font-medium text-elec-light">Cable Assessment</h4>
-                  <p className="text-sm text-elec-light/80">{results.reviewFindings.cableAssessment}</p>
+                <div className="p-4 bg-elec-gray/50 rounded-lg border border-elec-yellow/10">
+                  <h4 className="font-medium text-elec-yellow mb-2">Cable Assessment</h4>
+                  <p className="text-sm text-elec-light/90 leading-relaxed">{results.reviewFindings.cableAssessment}</p>
                 </div>
-                <div className="space-y-2">
-                  <h4 className="font-medium text-elec-light">Protection Compliance</h4>
-                  <p className="text-sm text-elec-light/80">{results.reviewFindings.protectionCompliance}</p>
+                <div className="p-4 bg-elec-gray/50 rounded-lg border border-elec-yellow/10">
+                  <h4 className="font-medium text-elec-yellow mb-2">Protection Compliance</h4>
+                  <p className="text-sm text-elec-light/90 leading-relaxed">{results.reviewFindings.protectionCompliance}</p>
                 </div>
-                <div className="space-y-2">
-                  <h4 className="font-medium text-elec-light">Installation Requirements</h4>
-                  <p className="text-sm text-elec-light/80">{results.reviewFindings.installationRequirements}</p>
+                <div className="p-4 bg-elec-gray/50 rounded-lg border border-elec-yellow/10">
+                  <h4 className="font-medium text-elec-yellow mb-2">Installation Requirements</h4>
+                  <p className="text-sm text-elec-light/90 leading-relaxed">{results.reviewFindings.installationRequirements}</p>
                 </div>
               </div>
             </CardContent>
@@ -383,14 +383,14 @@ const EVChargingCalculator = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <ul className="space-y-2">
+                <div className="space-y-3">
                   {results.warnings.map((warning, index) => (
-                    <li key={index} className="text-red-200 text-sm flex items-start gap-2">
-                      <AlertTriangle className="h-4 w-4 mt-0.5 flex-shrink-0" />
-                      {warning}
-                    </li>
+                    <div key={index} className="flex items-start gap-3 p-3 bg-red-500/10 rounded-lg border border-red-500/20">
+                      <AlertTriangle className="h-5 w-5 text-red-400 mt-0.5 flex-shrink-0" />
+                      <p className="text-red-200 text-sm leading-relaxed">{warning}</p>
+                    </div>
                   ))}
-                </ul>
+                </div>
               </CardContent>
             </Card>
           )}
@@ -400,13 +400,13 @@ const EVChargingCalculator = () => {
       <WhyThisMatters
         title="EV Charging Installation Requirements"
         points={[
-          "Dedicated circuit with RCD protection (Type A or B) ensures safety and prevents nuisance tripping",
-          "DC fault protection required for AC charging points to detect DC leakage currents",
-          "Earth electrode may be required for outdoor installations, particularly on TT systems",
-          "Load balancing considerations prevent supply overload with multiple charge points",
-          "BS EN 61851 series compliance ensures equipment meets safety and performance standards",
-          "Building Regulations Part P notification required for new circuits and installations",
-          "DNO notification for installations over 3.68kW per phase prevents supply network issues"
+          "Dedicated circuit with RCD protection (Type A or B) ensures safety and prevents nuisance tripping from vehicle charging systems",
+          "DC fault protection required for AC charging points to detect dangerous DC leakage currents that standard RCDs cannot detect",
+          "Earth electrode may be required for outdoor installations, particularly on TT earthing systems or long cable runs",
+          "Load balancing considerations prevent supply overload when multiple charge points operate simultaneously",
+          "BS EN 61851 series compliance ensures charging equipment meets rigorous safety and performance standards",
+          "Building Regulations Part P notification required for new circuits and installations over 3.68kW capacity",
+          "DNO notification for high-power installations prevents supply network issues and ensures grid stability"
         ]}
       />
     </div>
