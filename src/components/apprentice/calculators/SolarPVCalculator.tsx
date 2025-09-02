@@ -6,9 +6,10 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Sun, Info, Calculator, RotateCcw, Zap, TrendingUp, Lightbulb, CheckCircle, AlertTriangle, FileText, Shield } from "lucide-react";
+import { Sun, Info, Calculator, RotateCcw, Zap, TrendingUp, Lightbulb, CheckCircle, AlertTriangle, FileText, Shield, PoundSterling, Building, Wrench } from "lucide-react";
 import { useState } from "react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { MobileInput } from "@/components/ui/mobile-input";
 
 // Expanded UK locations with solar irradiance data (kWh/m²/year)
 const UK_LOCATIONS = [
@@ -66,7 +67,69 @@ const SolarPVCalculator = () => {
     tiltFactor: number;
     dnoConnectionType: string;
     viability: string;
+    costEstimate: {
+      totalCost: number;
+      breakdown: {
+        panels: number;
+        inverter: number;
+        installation: number;
+        electrical: number;
+        scaffolding: number;
+        mcsAndDno: number;
+        vat: number;
+      };
+      costPerKw: number;
+      category: string;
+    };
   } | null>(null);
+
+  const calculateCostEstimate = (systemSize: number, efficiency: number) => {
+    // 2025 UK Solar PV Cost Estimates
+    let baseCostPerKw = 0;
+    let category = "";
+    
+    // Panel costs based on efficiency
+    if (efficiency <= 0.15) {
+      baseCostPerKw = 1000; // Budget panels
+      category = "Budget System";
+    } else if (efficiency <= 0.18) {
+      baseCostPerKw = 1400; // Standard panels
+      category = "Standard System";
+    } else if (efficiency <= 0.20) {
+      baseCostPerKw = 1800; // Premium panels
+      category = "Premium System";
+    } else {
+      baseCostPerKw = 2600; // High-efficiency panels
+      category = "High-Efficiency System";
+    }
+
+    // Component breakdown (2025 costs)
+    const panels = systemSize * baseCostPerKw * 0.4; // 40% panels
+    const inverter = systemSize * 600; // £600 per kW
+    const installation = systemSize * 800; // £800 per kW labour
+    const electrical = 800 + (systemSize * 200); // Base £800 + £200/kW
+    const scaffolding = systemSize > 4 ? 1200 : 800; // More scaffolding for larger systems
+    const mcsAndDno = systemSize <= 3.68 ? 400 : 800; // G98 vs G99 costs
+    
+    const subtotal = panels + inverter + installation + electrical + scaffolding + mcsAndDno;
+    const vat = subtotal * 0.05; // 5% VAT on solar installations
+    const totalCost = subtotal + vat;
+
+    return {
+      totalCost: Math.round(totalCost),
+      breakdown: {
+        panels: Math.round(panels),
+        inverter: Math.round(inverter),
+        installation: Math.round(installation),
+        electrical: Math.round(electrical),
+        scaffolding: Math.round(scaffolding),
+        mcsAndDno: Math.round(mcsAndDno),
+        vat: Math.round(vat)
+      },
+      costPerKw: Math.round(totalCost / systemSize),
+      category
+    };
+  };
 
   const calculateSolarPV = () => {
     const size = parseFloat(systemSize);
@@ -104,9 +167,12 @@ const SolarPVCalculator = () => {
       const annualGeneration = size * irradiance * orientationFactor * tiltFactor * systemEfficiency;
       const dailyGeneration = annualGeneration / 365;
 
-      // Financial calculations
+      // Get realistic cost estimate
+      const costEstimate = calculateCostEstimate(size, efficiency);
+
+      // Financial calculations using realistic costs
       const annualSavings = annualGeneration * rate;
-      const paybackPeriod = cost / annualSavings;
+      const paybackPeriod = costEstimate.totalCost / annualSavings;
 
       // Environmental impact (UK grid factor: 0.233 kg CO2/kWh)
       const co2Savings = annualGeneration * 0.233;
@@ -130,7 +196,8 @@ const SolarPVCalculator = () => {
         orientationFactor: Math.round(orientationFactor * 100),
         tiltFactor: Math.round(tiltFactor * 100),
         dnoConnectionType,
-        viability
+        viability,
+        costEstimate
       });
     }
   };
@@ -158,49 +225,49 @@ const SolarPVCalculator = () => {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
           {/* Input Section */}
-          <div className="space-y-4">
+          <div className="space-y-4 lg:space-y-6">
             {/* System Configuration */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <Label htmlFor="system-size">System Size (kW)</Label>
-                <Input
+            <div className="grid grid-cols-1 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="system-size" className="text-sm font-medium">System Size (kW)</Label>
+                <MobileInput
                   id="system-size"
                   type="number"
                   step="0.1"
                   value={systemSize}
                   onChange={(e) => setSystemSize(e.target.value)}
                   placeholder="e.g., 4.0"
-                  className="bg-elec-dark border-elec-yellow/20"
+                  hint="Typical UK homes: 3-6kW"
                 />
               </div>
 
-              <div>
-                <Label htmlFor="panel-efficiency">Panel Efficiency (%)</Label>
+              <div className="space-y-2">
+                <Label htmlFor="panel-efficiency" className="text-sm font-medium">Panel Efficiency (%)</Label>
                 <Select value={panelEfficiency} onValueChange={setPanelEfficiency}>
-                  <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
+                  <SelectTrigger className="mobile-touch-target bg-elec-dark border-elec-yellow/20">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                    <SelectItem value="15">15% (Budget panels)</SelectItem>
-                    <SelectItem value="18">18% (Standard panels)</SelectItem>
-                    <SelectItem value="20">20% (Premium panels)</SelectItem>
-                    <SelectItem value="22">22% (High-efficiency panels)</SelectItem>
+                    <SelectItem value="15">15% (Budget panels - £1,000/kW)</SelectItem>
+                    <SelectItem value="18">18% (Standard panels - £1,400/kW)</SelectItem>
+                    <SelectItem value="20">20% (Premium panels - £1,800/kW)</SelectItem>
+                    <SelectItem value="22">22% (High-efficiency - £2,600/kW)</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
             </div>
 
             {/* Location and Installation */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <Label htmlFor="location">Location</Label>
+            <div className="grid grid-cols-1 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="location" className="text-sm font-medium">Location</Label>
                 <Select value={location} onValueChange={setLocation}>
-                  <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
+                  <SelectTrigger className="mobile-touch-target bg-elec-dark border-elec-yellow/20">
                     <SelectValue placeholder="Select your location" />
                   </SelectTrigger>
-                  <SelectContent className="bg-elec-dark border-elec-yellow/20">
+                  <SelectContent className="bg-elec-dark border-elec-yellow/20 max-h-60">
                     {UK_LOCATIONS.map((loc) => (
                       <SelectItem key={loc.name} value={loc.name}>
                         {loc.name} ({loc.irradiance} kWh/m²/year)
@@ -210,70 +277,60 @@ const SolarPVCalculator = () => {
                 </Select>
               </div>
 
-              <div>
-                <Label htmlFor="roof-orientation">Roof Orientation</Label>
+              <div className="space-y-2">
+                <Label htmlFor="roof-orientation" className="text-sm font-medium">Roof Orientation</Label>
                 <Select value={roofOrientation} onValueChange={setRoofOrientation}>
-                  <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
+                  <SelectTrigger className="mobile-touch-target bg-elec-dark border-elec-yellow/20">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                    <SelectItem value="south">South (Best)</SelectItem>
-                    <SelectItem value="southeast">South-East</SelectItem>
-                    <SelectItem value="southwest">South-West</SelectItem>
-                    <SelectItem value="east">East</SelectItem>
-                    <SelectItem value="west">West</SelectItem>
-                    <SelectItem value="north">North (Poor)</SelectItem>
+                    <SelectItem value="south">South (Best - 100%)</SelectItem>
+                    <SelectItem value="southeast">South-East (95%)</SelectItem>
+                    <SelectItem value="southwest">South-West (95%)</SelectItem>
+                    <SelectItem value="east">East (85%)</SelectItem>
+                    <SelectItem value="west">West (85%)</SelectItem>
+                    <SelectItem value="north">North (60%)</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
             </div>
 
-            {/* Financial and Technical Parameters */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <Label htmlFor="roof-tilt">Roof Tilt (degrees)</Label>
-                <Input
+            {/* Technical Parameters */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="roof-tilt" className="text-sm font-medium">Roof Tilt (degrees)</Label>
+                <MobileInput
                   id="roof-tilt"
                   type="number"
                   value={roofTilt}
                   onChange={(e) => setRoofTilt(e.target.value)}
                   placeholder="35"
-                  className="bg-elec-dark border-elec-yellow/20"
+                  hint="Optimal: 35°"
+                  unit="°"
                 />
               </div>
 
-              <div>
-                <Label htmlFor="system-cost">System Cost (£)</Label>
-                <Input
-                  id="system-cost"
+              <div className="space-y-2">
+                <Label htmlFor="electricity-rate" className="text-sm font-medium">Electricity Rate</Label>
+                <MobileInput
+                  id="electricity-rate"
                   type="number"
-                  value={systemCost}
-                  onChange={(e) => setSystemCost(e.target.value)}
-                  placeholder="6000"
-                  className="bg-elec-dark border-elec-yellow/20"
+                  step="0.01"
+                  value={electricityRate}
+                  onChange={(e) => setElectricityRate(e.target.value)}
+                  placeholder="0.25"
+                  hint="Current UK average: £0.25"
+                  unit="£/kWh"
                 />
               </div>
             </div>
 
-            <div>
-              <Label htmlFor="electricity-rate">Electricity Rate (£/kWh)</Label>
-              <Input
-                id="electricity-rate"
-                type="number"
-                step="0.01"
-                value={electricityRate}
-                onChange={(e) => setElectricityRate(e.target.value)}
-                placeholder="0.25"
-                className="bg-elec-dark border-elec-yellow/20"
-              />
-            </div>
-
-            <div className="flex gap-2 pt-2">
-              <Button onClick={calculateSolarPV} className="flex-1 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90">
+            <div className="flex gap-3 pt-4">
+              <Button onClick={calculateSolarPV} className="flex-1 mobile-touch-target bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 font-medium">
                 <Calculator className="h-4 w-4 mr-2" />
                 Calculate
               </Button>
-              <Button variant="outline" onClick={reset}>
+              <Button variant="outline" onClick={reset} className="mobile-touch-target">
                 <RotateCcw className="h-4 w-4" />
               </Button>
             </div>
@@ -281,18 +338,18 @@ const SolarPVCalculator = () => {
 
           {/* Results Section */}
           <div className="space-y-4">
-            <div className="rounded-md bg-elec-gray p-6 min-h-[400px]">
+            <div className="rounded-lg bg-elec-gray p-4 lg:p-6 min-h-[400px]">
               {result ? (
-                <div className="space-y-6">
+                <div className="space-y-4 lg:space-y-6">
                   <div className="text-center">
-                    <h3 className="text-xl font-semibold text-white mb-2">Solar PV System Analysis</h3>
+                    <h3 className="text-lg lg:text-xl font-semibold text-white mb-3">Solar PV System Analysis</h3>
                     <div className="flex flex-wrap justify-center gap-2 mb-4">
-                      <Badge variant="secondary" className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30">
+                      <Badge variant="secondary" className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30 text-xs lg:text-sm">
                         {location} - {result.systemEfficiency}% Efficiency
                       </Badge>
                       <Badge 
                         variant="secondary" 
-                        className={`${
+                        className={`text-xs lg:text-sm ${
                           result.viability === 'Excellent' ? 'bg-green-500/20 text-green-400 border-green-500/30' :
                           result.viability === 'Good' ? 'bg-blue-500/20 text-blue-400 border-blue-500/30' :
                           result.viability === 'Fair' ? 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30' :
@@ -305,33 +362,90 @@ const SolarPVCalculator = () => {
                   </div>
                   
                   <Separator className="bg-elec-yellow/20" />
+
+                  {/* 2025 Cost Estimate Section */}
+                  <div className="bg-elec-dark/30 p-4 rounded-lg border border-elec-yellow/30">
+                    <div className="flex items-center gap-2 mb-3">
+                      <PoundSterling className="h-5 w-5 text-elec-yellow" />
+                      <h4 className="text-lg font-semibold text-white">2025 Cost Estimate</h4>
+                    </div>
+                    
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                      <div className="text-center bg-elec-gray/50 p-3 rounded border border-elec-yellow/20">
+                        <p className="text-2xl font-bold text-elec-yellow">£{result.costEstimate.totalCost.toLocaleString()}</p>
+                        <p className="text-sm text-white/80">Total System Cost</p>
+                        <p className="text-xs text-white/60">{result.costEstimate.category}</p>
+                      </div>
+                      <div className="text-center bg-elec-gray/50 p-3 rounded border border-green-500/30">
+                        <p className="text-2xl font-bold text-green-400">£{result.costEstimate.costPerKw.toLocaleString()}</p>
+                        <p className="text-sm text-white/80">Cost per kW</p>
+                        <p className="text-xs text-white/60">Including VAT & installation</p>
+                      </div>
+                    </div>
+
+                    <div className="space-y-2">
+                      <p className="text-sm font-medium text-white mb-2">Cost Breakdown:</p>
+                      <div className="grid grid-cols-2 gap-2 text-sm">
+                        <div className="flex justify-between">
+                          <span className="text-white/80">Panels:</span>
+                          <span className="text-white font-medium">£{result.costEstimate.breakdown.panels.toLocaleString()}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-white/80">Inverter:</span>
+                          <span className="text-white font-medium">£{result.costEstimate.breakdown.inverter.toLocaleString()}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-white/80">Installation:</span>
+                          <span className="text-white font-medium">£{result.costEstimate.breakdown.installation.toLocaleString()}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-white/80">Electrical:</span>
+                          <span className="text-white font-medium">£{result.costEstimate.breakdown.electrical.toLocaleString()}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-white/80">Scaffolding:</span>
+                          <span className="text-white font-medium">£{result.costEstimate.breakdown.scaffolding.toLocaleString()}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-white/80">MCS & DNO:</span>
+                          <span className="text-white font-medium">£{result.costEstimate.breakdown.mcsAndDno.toLocaleString()}</span>
+                        </div>
+                      </div>
+                      <div className="flex justify-between pt-2 border-t border-elec-yellow/20">
+                        <span className="text-white/80 font-medium">VAT (5%):</span>
+                        <span className="text-elec-yellow font-medium">£{result.costEstimate.breakdown.vat.toLocaleString()}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <Separator className="bg-elec-yellow/20" />
                   
                   {/* Key Performance Metrics */}
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div className="bg-elec-gray/50 p-4 rounded-lg border border-elec-yellow/20">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 lg:gap-4">
+                    <div className="bg-elec-gray/50 p-3 lg:p-4 rounded-lg border border-elec-yellow/20">
                       <div className="flex items-center justify-between mb-2">
-                        <Zap className="h-5 w-5 text-elec-yellow" />
-                        <span className="text-lg font-bold text-white">{result.annualGeneration.toLocaleString()} kWh</span>
+                        <Zap className="h-4 w-4 lg:h-5 lg:w-5 text-elec-yellow" />
+                        <span className="text-base lg:text-lg font-bold text-white">{result.annualGeneration.toLocaleString()}</span>
                       </div>
-                      <p className="text-sm text-white/80">Annual Generation</p>
+                      <p className="text-xs lg:text-sm text-white/80">Annual Generation (kWh)</p>
                       <p className="text-xs text-white/60 mt-1">{result.dailyGeneration} kWh/day average</p>
                     </div>
                     
-                    <div className="bg-elec-gray/50 p-4 rounded-lg border border-green-500/30">
+                    <div className="bg-elec-gray/50 p-3 lg:p-4 rounded-lg border border-green-500/30">
                       <div className="flex items-center justify-between mb-2">
-                        <TrendingUp className="h-5 w-5 text-green-400" />
-                        <span className="text-lg font-bold text-white">£{result.annualSavings.toLocaleString()}</span>
+                        <TrendingUp className="h-4 w-4 lg:h-5 lg:w-5 text-green-400" />
+                        <span className="text-base lg:text-lg font-bold text-white">£{result.annualSavings.toLocaleString()}</span>
                       </div>
-                      <p className="text-sm text-white/80">Annual Savings</p>
+                      <p className="text-xs lg:text-sm text-white/80">Annual Savings</p>
                       <p className="text-xs text-white/60 mt-1">{result.paybackPeriod} year payback</p>
                     </div>
                     
-                    <div className="bg-elec-gray/50 p-4 rounded-lg border border-blue-500/30">
+                    <div className="bg-elec-gray/50 p-3 lg:p-4 rounded-lg border border-blue-500/30">
                       <div className="flex items-center justify-between mb-2">
-                        <Lightbulb className="h-5 w-5 text-blue-400" />
-                        <span className="text-lg font-bold text-white">{result.co2Savings} kg</span>
+                        <Lightbulb className="h-4 w-4 lg:h-5 lg:w-5 text-blue-400" />
+                        <span className="text-base lg:text-lg font-bold text-white">{result.co2Savings}</span>
                       </div>
-                      <p className="text-sm text-white/80">CO₂ Saved Annually</p>
+                      <p className="text-xs lg:text-sm text-white/80">CO₂ Saved (kg/year)</p>
                       <p className="text-xs text-white/60 mt-1">Environmental benefit</p>
                     </div>
                   </div>
@@ -451,13 +565,14 @@ const SolarPVCalculator = () => {
                         </div>
                       </div>
 
-                      {/* Financial Recommendations */}
+                   {/* Financial Recommendations */}
                       <div className="bg-elec-gray/30 p-4 rounded border border-green-500/30">
                         <h5 className="font-medium text-white mb-2 flex items-center gap-2">
                           <TrendingUp className="h-4 w-4 text-green-400" />
-                          Financial Recommendations
+                          Financial Analysis (2025 Costs)
                         </h5>
                         <div className="text-sm text-white/90 space-y-1">
+                          <p>• <strong>Realistic payback:</strong> {result.paybackPeriod} years using £{result.costEstimate.totalCost.toLocaleString()} actual cost estimate</p>
                           {result.paybackPeriod < 10 ? (
                             <p className="text-green-400">• Excellent financial case - payback under 10 years</p>
                           ) : result.paybackPeriod < 15 ? (
@@ -465,9 +580,10 @@ const SolarPVCalculator = () => {
                           ) : (
                             <p className="text-red-400">• Consider larger system or check for shading issues</p>
                           )}
-                          <p>• Smart Export Guarantee (SEG) could provide £{Math.round(result.annualGeneration * 0.05)}-£{Math.round(result.annualGeneration * 0.15)} additional annual income</p>
-                          <p>• Battery storage could increase self-consumption from 30% to 70%</p>
+                          <p>• Smart Export Guarantee (SEG): £{Math.round(result.annualGeneration * 0.05)}-£{Math.round(result.annualGeneration * 0.15)} additional annual income</p>
+                          <p>• Battery storage (£400-800/kWh): could increase self-consumption from 30% to 70%</p>
                           <p>• 25-year total savings: £{Math.round(result.annualSavings * 22.5).toLocaleString()} (inflation-adjusted)</p>
+                          <p>• Monthly financing available: approx. £{Math.round(result.costEstimate.totalCost / 120)} over 10 years</p>
                         </div>
                       </div>
 
@@ -502,10 +618,10 @@ const SolarPVCalculator = () => {
                 </div>
               ) : (
                 <div className="flex items-center justify-center h-full text-white/60">
-                  <div className="text-center">
-                    <Sun className="h-12 w-12 text-elec-yellow/60 mx-auto mb-4" />
-                    <p className="text-lg font-medium">Configure Your Solar PV System</p>
-                    <p className="text-sm mt-2">Enter your system details to see comprehensive performance analysis, financial projections, and regulatory guidance</p>
+                  <div className="text-center p-4">
+                    <Sun className="h-10 w-10 lg:h-12 lg:w-12 text-elec-yellow/60 mx-auto mb-4" />
+                    <p className="text-base lg:text-lg font-medium">Configure Your Solar PV System</p>
+                    <p className="text-sm mt-2 max-w-md mx-auto">Enter your system details to see comprehensive performance analysis, 2025 cost estimates, financial projections, and regulatory guidance</p>
                   </div>
                 </div>
               )}
