@@ -71,47 +71,58 @@ export function DataCentreGuidance({ results }: DataCentreGuidanceProps) {
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="space-y-3">
-              <div className="flex items-start gap-3">
-                <Target className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
-                <div>
-                  <div className="font-medium text-elec-light text-sm">Efficiency Status</div>
-                  <div className="text-xs text-elec-muted">
-                    {results.pue <= 1.3 ? "Excellent efficiency - world-class design" :
-                     results.pue <= 1.6 ? "Good efficiency - modern standard" :
-                     results.pue <= 2.0 ? "Average efficiency - improvement opportunities" :
-                     "Poor efficiency - significant improvements needed"}
+            <div className="space-y-4">
+              <div className="p-4 bg-elec-grey rounded-lg border border-elec-yellow/10">
+                <div className="flex items-start gap-3">
+                  <Target className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
+                  <div className="flex-1">
+                    <div className="font-medium text-elec-light text-base mb-1">Efficiency Status</div>
+                    <div className="text-sm text-elec-light leading-relaxed">
+                      {results.pue <= 1.3 ? "Excellent efficiency - world-class design" :
+                       results.pue <= 1.6 ? "Good efficiency - modern standard" :
+                       results.pue <= 2.0 ? "Average efficiency - improvement opportunities" :
+                       "Poor efficiency - significant improvements needed"}
+                    </div>
                   </div>
                 </div>
               </div>
-              <div className="flex items-start gap-3">
-                <PoundSterling className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
-                <div>
-                  <div className="font-medium text-elec-light text-sm">Cost Impact</div>
-                  <div className="text-xs text-elec-muted">
-                    Annual energy costs of {formatLargeCurrency(results.annualCost)} represent significant operational expense requiring optimisation
+              
+              <div className="p-4 bg-elec-grey rounded-lg border border-elec-yellow/10">
+                <div className="flex items-start gap-3">
+                  <PoundSterling className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
+                  <div className="flex-1">
+                    <div className="font-medium text-elec-light text-base mb-1">Cost Impact</div>
+                    <div className="text-sm text-elec-light leading-relaxed">
+                      Annual energy costs of {formatLargeCurrency(results.annualCost)} represent significant operational expense requiring optimisation
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="space-y-3">
-              <div className="flex items-start gap-3">
-                <Gauge className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
-                <div>
-                  <div className="font-medium text-elec-light text-sm">Capacity Planning</div>
-                  <div className="text-xs text-elec-muted">
-                    {results.capacityHeadroom >= 20 ? "Good headroom for growth" :
-                     results.capacityHeadroom >= 10 ? "Adequate capacity for near-term" :
-                     "Expansion planning required soon"}
+            
+            <div className="space-y-4">
+              <div className="p-4 bg-elec-grey rounded-lg border border-elec-yellow/10">
+                <div className="flex items-start gap-3">
+                  <Gauge className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
+                  <div className="flex-1">
+                    <div className="font-medium text-elec-light text-base mb-1">Capacity Planning</div>
+                    <div className="text-sm text-elec-light leading-relaxed">
+                      {results.capacityHeadroom >= 20 ? "Good headroom for growth" :
+                       results.capacityHeadroom >= 10 ? "Adequate capacity for near-term" :
+                       "Expansion planning required soon"}
+                    </div>
                   </div>
                 </div>
               </div>
-              <div className="flex items-start gap-3">
-                <Leaf className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
-                <div>
-                  <div className="font-medium text-elec-light text-sm">Environmental Impact</div>
-                  <div className="text-xs text-elec-muted">
-                    {formatLargeNumber(results.annualCo2e / 1000)}t CO2e annually - efficiency improvements reduce both costs and carbon footprint
+              
+              <div className="p-4 bg-elec-grey rounded-lg border border-elec-yellow/10">
+                <div className="flex items-start gap-3">
+                  <Leaf className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
+                  <div className="flex-1">
+                    <div className="font-medium text-elec-light text-base mb-1">Environmental Impact</div>
+                    <div className="text-sm text-elec-light leading-relaxed">
+                      {formatLargeNumber(results.annualCo2e / 1000)}t CO2e annually - efficiency improvements reduce both costs and carbon footprint
+                    </div>
                   </div>
                 </div>
               </div>
@@ -130,76 +141,76 @@ export function DataCentreGuidance({ results }: DataCentreGuidanceProps) {
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="space-y-3">
-              <div className="flex items-center gap-2">
-                <Zap className="h-4 w-4 text-elec-yellow" />
-                <span className="font-medium text-elec-light">Power Loads</span>
+            <div className="p-4 bg-elec-grey rounded-lg border border-elec-yellow/10">
+              <div className="flex items-center gap-2 mb-4">
+                <Zap className="h-5 w-5 text-elec-yellow" />
+                <span className="font-medium text-elec-light text-lg">Power Loads</span>
               </div>
-              <div className="space-y-2 text-sm ml-6">
+              <div className="space-y-3 text-sm">
                 <div className="flex justify-between">
-                  <span className="text-elec-muted">Total IT load:</span>
+                  <span className="text-elec-light">Total IT load:</span>
                   <span className="text-elec-yellow font-medium">{results.totalItLoad.toFixed(0)} kW</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-elec-muted">Cooling load:</span>
+                  <span className="text-elec-light">Cooling load:</span>
                   <span className="text-elec-yellow font-medium">{results.coolingLoad.toFixed(0)} kW</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-elec-muted">Lights & misc:</span>
+                  <span className="text-elec-light">Lights & misc:</span>
                   <span className="text-elec-yellow font-medium">{results.lightsLoad.toFixed(0)} kW</span>
                 </div>
-                <div className="flex justify-between font-semibold border-t border-elec-yellow/20 pt-2">
+                <div className="flex justify-between font-semibold border-t border-elec-yellow/20 pt-3">
                   <span className="text-elec-light">Total facility:</span>
                   <span className="text-elec-yellow">{results.totalFacilityLoad.toFixed(0)} kW</span>
                 </div>
               </div>
             </div>
 
-            <div className="space-y-3">
-              <div className="flex items-center gap-2">
-                <Battery className="h-4 w-4 text-elec-yellow" />
-                <span className="font-medium text-elec-light">Infrastructure</span>
+            <div className="p-4 bg-elec-grey rounded-lg border border-elec-yellow/10">
+              <div className="flex items-center gap-2 mb-4">
+                <Battery className="h-5 w-5 text-elec-yellow" />
+                <span className="font-medium text-elec-light text-lg">Infrastructure</span>
               </div>
-              <div className="space-y-2 text-sm ml-6">
+              <div className="space-y-3 text-sm">
                 <div className="flex justify-between">
-                  <span className="text-elec-muted">UPS capacity:</span>
+                  <span className="text-elec-light">UPS capacity:</span>
                   <span className="text-elec-yellow font-medium">{results.upsCapacity.toFixed(0)} kW</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-elec-muted">Generator:</span>
+                  <span className="text-elec-light">Generator:</span>
                   <span className="text-elec-yellow font-medium">{results.generatorCapacity.toFixed(0)} kW</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-elec-muted">Battery:</span>
+                  <span className="text-elec-light">Battery:</span>
                   <span className="text-elec-yellow font-medium">{results.batteryCapacity.toFixed(0)} kWh</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-elec-muted">Cooling:</span>
+                  <span className="text-elec-light">Cooling:</span>
                   <span className="text-elec-yellow font-medium">{results.coolingCapacity.toFixed(0)} kW</span>
                 </div>
               </div>
             </div>
 
-            <div className="space-y-3">
-              <div className="flex items-center gap-2">
-                <Gauge className="h-4 w-4 text-elec-yellow" />
-                <span className="font-medium text-elec-light">Efficiency</span>
+            <div className="p-4 bg-elec-grey rounded-lg border border-elec-yellow/10">
+              <div className="flex items-center gap-2 mb-4">
+                <Gauge className="h-5 w-5 text-elec-yellow" />
+                <span className="font-medium text-elec-light text-lg">Efficiency</span>
               </div>
-              <div className="space-y-2 text-sm ml-6">
+              <div className="space-y-3 text-sm">
                 <div className="flex justify-between">
-                  <span className="text-elec-muted">PUE:</span>
+                  <span className="text-elec-light">PUE:</span>
                   <span className="text-elec-yellow font-medium">{results.pue.toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-elec-muted">DCiE:</span>
+                  <span className="text-elec-light">DCiE:</span>
                   <span className="text-elec-yellow font-medium">{results.dcie.toFixed(1)}%</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-elec-muted">Capacity headroom:</span>
+                  <span className="text-elec-light">Capacity headroom:</span>
                   <span className="text-elec-yellow font-medium">{results.capacityHeadroom.toFixed(1)}%</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-elec-muted">Max IT capacity:</span>
+                  <span className="text-elec-light">Max IT capacity:</span>
                   <span className="text-elec-yellow font-medium">{results.maxItLoadCapacity.toFixed(0)} kW</span>
                 </div>
               </div>
