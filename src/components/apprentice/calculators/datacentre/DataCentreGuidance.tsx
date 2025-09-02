@@ -121,7 +121,7 @@ export function DataCentreGuidance({ results }: DataCentreGuidanceProps) {
       </Card>
 
       {/* Load Breakdown Results */}
-      <Card className="border-elec-yellow/20 bg-elec-card">
+      <Card className="border-elec-yellow/20 bg-elec-grey">
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-elec-light">
             <Server className="h-5 w-5 text-elec-yellow" />
@@ -209,7 +209,7 @@ export function DataCentreGuidance({ results }: DataCentreGuidanceProps) {
       </Card>
 
       {/* Annual Consumption & Costs */}
-      <Card className="border-elec-yellow/20 bg-elec-card">
+      <Card className="border-elec-yellow/20 bg-elec-grey">
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-elec-light">
             <TrendingUp className="h-5 w-5 text-elec-yellow" />
@@ -343,7 +343,7 @@ export function DataCentreGuidance({ results }: DataCentreGuidanceProps) {
       {/* Advanced Details */}
       <Collapsible open={detailsOpen} onOpenChange={setDetailsOpen}>
         <CollapsibleTrigger asChild>
-          <Card className="border-elec-yellow/20 bg-elec-card cursor-pointer hover:border-elec-yellow/30 transition-colors">
+          <Card className="border-elec-yellow/20 bg-elec-grey cursor-pointer hover:border-elec-yellow/30 transition-colors">
             <CardHeader>
               <CardTitle className="flex items-center justify-between text-elec-light">
                 <div className="flex items-center gap-2">
