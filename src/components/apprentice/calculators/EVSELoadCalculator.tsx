@@ -158,7 +158,7 @@ const EVSELoadCalculator = () => {
                       type="text"
                       inputMode="numeric"
                       pattern="[0-9]*"
-                      value={quantityInputs[index] ?? '1'}
+                      value={quantityInputs[index] ?? ''}
                       onChange={(e) => {
                         const value = e.target.value;
                         // Allow only numeric characters
