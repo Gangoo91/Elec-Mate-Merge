@@ -438,86 +438,151 @@ const BatteryBackupCalculator = () => {
             {/* Results Analysis & Feedback */}
             {results && (
               <div className="space-y-4">
-                <h4 className="text-sm font-medium text-elec-yellow">Analysis & Recommendations</h4>
-                
                 {/* Runtime Assessment */}
-                <div className="bg-elec-dark/30 p-3 rounded-lg space-y-2">
-                  <h5 className="text-xs font-medium text-elec-yellow">Runtime Assessment</h5>
-                  <div className="text-xs space-y-1">
-                    {results.runtime >= 8 ? (
-                      <div className="text-green-400">
-                        ✓ Excellent runtime ({formatRuntime(results.runtime)}) - Exceeds typical 8-hour requirement
-                      </div>
-                    ) : results.runtime >= 3 ? (
-                      <div className="text-yellow-400">
-                        ⚠ Moderate runtime ({formatRuntime(results.runtime)}) - Consider if adequate for your needs
-                      </div>
-                    ) : (
-                      <div className="text-red-400">
-                        ⚠ Short runtime ({formatRuntime(results.runtime)}) - May need larger battery or reduce loads
-                      </div>
-                    )}
-                    <p className="text-muted-foreground">
-                      Emergency lighting requires minimum 3 hours (BS 5266). Critical systems often need 8+ hours.
-                    </p>
-                  </div>
-                </div>
+                <Card className="border-elec-yellow/20 bg-elec-dark">
+                  <CardHeader className="pb-3">
+                    <CardTitle className="text-base text-elec-yellow">Runtime Assessment</CardTitle>
+                  </CardHeader>
+                  <CardContent className="pt-0">
+                    <div className="space-y-3">
+                      {results.runtime >= 8 ? (
+                        <Alert className="border-green-500/20 bg-green-500/10">
+                          <AlertTriangle className="h-4 w-4 text-green-400" />
+                          <AlertDescription className="text-white">
+                            <strong>Excellent runtime ({formatRuntime(results.runtime)})</strong> - Exceeds typical 8-hour requirement
+                          </AlertDescription>
+                        </Alert>
+                      ) : results.runtime >= 3 ? (
+                        <Alert className="border-amber-500/20 bg-amber-500/10">
+                          <AlertTriangle className="h-4 w-4 text-amber-400" />
+                          <AlertDescription className="text-white">
+                            <strong>Moderate runtime ({formatRuntime(results.runtime)})</strong> - Consider if adequate for your needs
+                          </AlertDescription>
+                        </Alert>
+                      ) : (
+                        <Alert className="border-red-500/20 bg-red-500/10">
+                          <AlertTriangle className="h-4 w-4 text-red-400" />
+                          <AlertDescription className="text-white">
+                            <strong>Short runtime ({formatRuntime(results.runtime)})</strong> - May need larger battery or reduce loads
+                          </AlertDescription>
+                        </Alert>
+                      )}
+                      <p className="text-white text-sm">
+                        Emergency lighting requires minimum 3 hours (BS 5266). Critical systems often need 8+ hours.
+                      </p>
+                    </div>
+                  </CardContent>
+                </Card>
 
-                {/* C-Rate Assessment */}
-                <div className="bg-elec-dark/30 p-3 rounded-lg space-y-2">
-                  <h5 className="text-xs font-medium text-elec-yellow">Battery Discharge Rate</h5>
-                  <div className="text-xs space-y-1">
-                    {results.cRate <= selectedChemistry.maxCRate * 0.5 ? (
-                      <div className="text-green-400">
-                        ✓ Conservative discharge rate ({results.cRate.toFixed(2)}C) - Optimal for battery life
-                      </div>
-                    ) : results.cRate <= selectedChemistry.maxCRate * 0.8 ? (
-                      <div className="text-yellow-400">
-                        ⚠ Moderate discharge rate ({results.cRate.toFixed(2)}C) - Acceptable but monitor battery health
-                      </div>
-                    ) : (
-                      <div className="text-red-400">
-                        ⚠ High discharge rate ({results.cRate.toFixed(2)}C) - May reduce battery life significantly
-                      </div>
-                    )}
-                    <p className="text-muted-foreground">
-                      {selectedChemistry.name} max rate: {selectedChemistry.maxCRate}C. Lower rates extend battery life.
-                    </p>
-                  </div>
-                </div>
+                {/* Battery Discharge Rate */}
+                <Card className="border-elec-yellow/20 bg-elec-dark">
+                  <CardHeader className="pb-3">
+                    <CardTitle className="text-base text-elec-yellow">Battery Discharge Rate</CardTitle>
+                  </CardHeader>
+                  <CardContent className="pt-0">
+                    <div className="space-y-3">
+                      {results.cRate <= selectedChemistry.maxCRate * 0.5 ? (
+                        <Alert className="border-green-500/20 bg-green-500/10">
+                          <AlertTriangle className="h-4 w-4 text-green-400" />
+                          <AlertDescription className="text-white">
+                            <strong>Conservative discharge rate ({results.cRate.toFixed(2)}C)</strong> - Optimal for battery life
+                          </AlertDescription>
+                        </Alert>
+                      ) : results.cRate <= selectedChemistry.maxCRate * 0.8 ? (
+                        <Alert className="border-amber-500/20 bg-amber-500/10">
+                          <AlertTriangle className="h-4 w-4 text-amber-400" />
+                          <AlertDescription className="text-white">
+                            <strong>High discharge rate ({results.cRate.toFixed(2)}C)</strong> - May reduce battery life significantly
+                          </AlertDescription>
+                        </Alert>
+                      ) : (
+                        <Alert className="border-red-500/20 bg-red-500/10">
+                          <AlertTriangle className="h-4 w-4 text-red-400" />
+                          <AlertDescription className="text-white">
+                            <strong>High discharge rate ({results.cRate.toFixed(2)}C)</strong> - May reduce battery life significantly
+                          </AlertDescription>
+                        </Alert>
+                      )}
+                      <p className="text-white text-sm">
+                        {selectedChemistry.name} max rate: {selectedChemistry.maxCRate}C. Lower rates extend battery life.
+                      </p>
+                    </div>
+                  </CardContent>
+                </Card>
 
-                {/* Regulatory Compliance */}
-                <div className="bg-elec-dark/30 p-3 rounded-lg space-y-2">
-                  <h5 className="text-xs font-medium text-elec-yellow">BS 7671 & Regulatory Notes</h5>
-                  <div className="text-xs space-y-1 text-muted-foreground">
-                    <p>• DC current ({results.dcCurrent.toFixed(1)}A) must not exceed cable rating</p>
-                    <p>• Battery system requires appropriate DC protection (fuses/MCBs)</p>
-                    <p>• Ventilation required for lead-acid batteries (hydrogen gas risk)</p>
-                    <p>• Temperature monitoring recommended above 25°C ambient</p>
-                    <p>• Regular testing required - monthly for critical systems</p>
-                  </div>
-                </div>
+                {/* BS 7671 & Regulatory Notes */}
+                <Card className="border-elec-yellow/20 bg-elec-dark">
+                  <CardHeader className="pb-3">
+                    <CardTitle className="text-base text-elec-yellow">BS 7671 & Regulatory Notes</CardTitle>
+                  </CardHeader>
+                  <CardContent className="pt-0">
+                    <div className="space-y-3 text-white">
+                      <div className="flex items-start gap-2">
+                        <span className="text-elec-yellow mt-1">•</span>
+                        <span className="text-sm">DC current ({results.dcCurrent.toFixed(1)}A) must not exceed cable rating</span>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <span className="text-elec-yellow mt-1">•</span>
+                        <span className="text-sm">Battery system requires appropriate DC protection (fuses/MCBs)</span>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <span className="text-elec-yellow mt-1">•</span>
+                        <span className="text-sm">Ventilation required for lead-acid batteries (hydrogen gas risk)</span>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <span className="text-elec-yellow mt-1">•</span>
+                        <span className="text-sm">Temperature monitoring recommended above 25°C ambient</span>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <span className="text-elec-yellow mt-1">•</span>
+                        <span className="text-sm">Regular testing required - monthly for critical systems</span>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
 
                 {/* Recommendations */}
-                <div className="bg-elec-dark/30 p-3 rounded-lg space-y-2">
-                  <h5 className="text-xs font-medium text-elec-yellow">Recommendations</h5>
-                  <div className="text-xs space-y-1">
-                    {results.runtime < 3 && (
-                      <div className="text-yellow-400">• Consider larger battery capacity or reduce non-essential loads</div>
-                    )}
-                    {results.cRate > selectedChemistry.maxCRate * 0.8 && (
-                      <div className="text-yellow-400">• Consider parallel batteries to reduce discharge rate</div>
-                    )}
-                    {ambientTemp > '25' && (
-                      <div className="text-yellow-400">• High temperature - ensure adequate ventilation and cooling</div>
-                    )}
-                    {batteryHealth < '90' && (
-                      <div className="text-yellow-400">• Battery health below 90% - plan replacement schedule</div>
-                    )}
-                    <div className="text-green-400">• Install battery monitoring system for optimal performance</div>
-                    <div className="text-green-400">• Document maintenance schedule and testing procedures</div>
-                  </div>
-                </div>
+                <Card className="border-elec-yellow/20 bg-elec-dark">
+                  <CardHeader className="pb-3">
+                    <CardTitle className="text-base text-elec-yellow">Recommendations</CardTitle>
+                  </CardHeader>
+                  <CardContent className="pt-0">
+                    <div className="space-y-3 text-white">
+                      {results.runtime < 3 && (
+                        <div className="flex items-start gap-2">
+                          <span className="text-amber-400 mt-1">•</span>
+                          <span className="text-sm">Consider larger battery capacity or reduce non-essential loads</span>
+                        </div>
+                      )}
+                      {results.cRate > selectedChemistry.maxCRate * 0.8 && (
+                        <div className="flex items-start gap-2">
+                          <span className="text-amber-400 mt-1">•</span>
+                          <span className="text-sm">Consider parallel batteries to reduce discharge rate</span>
+                        </div>
+                      )}
+                      {parseFloat(ambientTemp) > 25 && (
+                        <div className="flex items-start gap-2">
+                          <span className="text-amber-400 mt-1">•</span>
+                          <span className="text-sm">High temperature - ensure adequate ventilation and cooling</span>
+                        </div>
+                      )}
+                      {parseFloat(batteryHealth) < 90 && (
+                        <div className="flex items-start gap-2">
+                          <span className="text-amber-400 mt-1">•</span>
+                          <span className="text-sm">Battery health below 90% - plan replacement schedule</span>
+                        </div>
+                      )}
+                      <div className="flex items-start gap-2">
+                        <span className="text-green-400 mt-1">•</span>
+                        <span className="text-sm">Install battery monitoring system for optimal performance</span>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <span className="text-green-400 mt-1">•</span>
+                        <span className="text-sm">Document maintenance schedule and testing procedures</span>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
               </div>
             )}
           </div>
