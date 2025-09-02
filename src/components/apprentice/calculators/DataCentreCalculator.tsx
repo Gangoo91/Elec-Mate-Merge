@@ -5,207 +5,254 @@ import { MobileButton } from "@/components/ui/mobile-button";
 import { MobileSelectWrapper as MobileSelect } from "@/components/ui/mobile-select-wrapper";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Calculator, RotateCcw, Server } from "lucide-react";
+import { 
+  calculateDataCentre, 
+  redundancyOptions, 
+  coolingMethodOptions, 
+  facilityTypeOptions, 
+  climateZoneOptions,
+  type DataCentreResults 
+} from "@/lib/datacentre";
+import { DataCentreGuidance } from "./datacentre/DataCentreGuidance";
 
 const DataCentreCalculator = () => {
+  // Core inputs
   const [itLoad, setItLoad] = useState("");
   const [redundancy, setRedundancy] = useState("2n");
-  const [efficiency, setEfficiency] = useState("90");
+  const [coolingMethod, setCoolingMethod] = useState("air");
   const [coolingRatio, setCoolingRatio] = useState("1.5");
   const [lightsAndMisc, setLightsAndMisc] = useState("5");
+  
+  // Infrastructure inputs
   const [upsBatteryHours, setUpsBatteryHours] = useState("15");
   const [upsEfficiency, setUpsEfficiency] = useState("95");
-  const [result, setResult] = useState<{
-    totalItLoad?: number;
-    coolingLoad?: number;
-    lightsLoad?: number;
-    totalFacilityLoad?: number;
-    upsCapacity?: number;
-    generatorCapacity?: number;
-    batteryCapacity?: number;
-    pue?: number;
-    estimatedCost?: number;
-  } | null>(null);
+  const [powerRedundancy, setPowerRedundancy] = useState("2n");
+  const [coolingRedundancy, setCoolingRedundancy] = useState("n+1");
+  
+  // Advanced inputs
+  const [energyCost, setEnergyCost] = useState("0.15");
+  const [carbonFactor, setCarbonFactor] = useState("0.233");
+  const [designMargin, setDesignMargin] = useState("20");
+  const [facilityType, setFacilityType] = useState("enterprise");
+  const [climateZone, setClimateZone] = useState("temperate");
+  
+  const [result, setResult] = useState<DataCentreResults | null>(null);
 
-  const redundancyOptions = [
-    { value: "n", label: "N (No Redundancy)" },
-    { value: "n+1", label: "N+1 (Single Redundancy)" },
-    { value: "2n", label: "2N (Full Redundancy)" },
-    { value: "2n+1", label: "2N+1 (Beyond Redundancy)" }
-  ];
 
-  const calculateDataCentre = () => {
+  const handleCalculate = () => {
     const baseItLoad = parseFloat(itLoad);
-    const upsEff = parseFloat(upsEfficiency) / 100;
-    const facilityEff = parseFloat(efficiency) / 100;
-    const coolingMultiplier = parseFloat(coolingRatio);
-    const miscLoad = parseFloat(lightsAndMisc) / 100;
-    const batteryHours = parseFloat(upsBatteryHours) / 60; // Convert minutes to hours
-
-    if (!baseItLoad || !upsEff || !facilityEff || !coolingMultiplier) return;
-
-    // Calculate redundancy multiplier
-    let redundancyMultiplier = 1;
-    switch (redundancy) {
-      case "n": redundancyMultiplier = 1; break;
-      case "n+1": redundancyMultiplier = 1.25; break;
-      case "2n": redundancyMultiplier = 2; break;
-      case "2n+1": redundancyMultiplier = 2.25; break;
+    
+    if (!baseItLoad || baseItLoad <= 0) {
+      return;
     }
 
-    // Calculate loads
-    const totalItLoad = baseItLoad * redundancyMultiplier;
-    const coolingLoad = totalItLoad * coolingMultiplier;
-    const lightsLoad = totalItLoad * miscLoad;
-    const totalFacilityLoad = totalItLoad + coolingLoad + lightsLoad;
+    const inputs = {
+      itLoad: baseItLoad,
+      redundancy,
+      coolingMethod,
+      coolingRatio: parseFloat(coolingRatio) || 1.5,
+      lightsAndMisc: parseFloat(lightsAndMisc) || 5,
+      upsBatteryHours: parseFloat(upsBatteryHours) || 15,
+      upsEfficiency: parseFloat(upsEfficiency) || 95,
+      powerRedundancy,
+      coolingRedundancy,
+      energyCost: parseFloat(energyCost) || 0.15,
+      carbonFactor: parseFloat(carbonFactor) || 0.233,
+      designMargin: parseFloat(designMargin) || 20,
+      facilityType,
+      climateZone
+    };
 
-    // Calculate UPS sizing (account for inefficiency)
-    const upsCapacity = totalFacilityLoad / upsEff;
-
-    // Generator sizing (125% of UPS capacity for starting loads)
-    const generatorCapacity = upsCapacity * 1.25;
-
-    // Battery capacity calculation (kWh)
-    const batteryCapacity = totalFacilityLoad * batteryHours;
-
-    // Power Usage Effectiveness (PUE)
-    const pue = totalFacilityLoad / totalItLoad;
-
-    // Rough cost estimation (£ per kW installed)
-    const costPerKw = 15000; // £15k per kW for data centre infrastructure
-    const estimatedCost = (upsCapacity / 1000) * costPerKw;
-
-    setResult({
-      totalItLoad,
-      coolingLoad,
-      lightsLoad,
-      totalFacilityLoad,
-      upsCapacity,
-      generatorCapacity,
-      batteryCapacity,
-      pue,
-      estimatedCost
-    });
+    const results = calculateDataCentre(inputs);
+    setResult(results);
   };
 
   const reset = () => {
     setItLoad("");
     setRedundancy("2n");
-    setEfficiency("90");
+    setCoolingMethod("air");
     setCoolingRatio("1.5");
     setLightsAndMisc("5");
     setUpsBatteryHours("15");
     setUpsEfficiency("95");
+    setPowerRedundancy("2n");
+    setCoolingRedundancy("n+1");
+    setEnergyCost("0.15");
+    setCarbonFactor("0.233");
+    setDesignMargin("20");
+    setFacilityType("enterprise");
+    setClimateZone("temperate");
     setResult(null);
   };
 
   return (
-    <Card className="border-elec-yellow/20 bg-elec-gray">
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <Server className="h-5 w-5 text-elec-yellow" />
-          Data Centre Calculator
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <MobileInput
-            label="IT Load"
-            type="number"
-            value={itLoad}
-            onChange={(e) => setItLoad(e.target.value)}
-            placeholder="e.g., 500"
-            unit="kW"
-          />
-          <MobileSelect
-            label="Redundancy Level"
-            placeholder="Select redundancy level"
-            value={redundancy}
-            onValueChange={setRedundancy}
-            options={redundancyOptions}
-          />
-          <MobileInput
-            label="Cooling Ratio"
-            type="number"
-            value={coolingRatio}
-            onChange={(e) => setCoolingRatio(e.target.value)}
-            placeholder="e.g., 1.5"
-            hint="Cooling load as ratio of IT load"
-          />
-          <MobileInput
-            label="Lights & Misc Load"
-            type="number"
-            value={lightsAndMisc}
-            onChange={(e) => setLightsAndMisc(e.target.value)}
-            placeholder="e.g., 5"
-            unit="%"
-          />
-          <MobileInput
-            label="UPS Battery Runtime"
-            type="number"
-            value={upsBatteryHours}
-            onChange={(e) => setUpsBatteryHours(e.target.value)}
-            placeholder="e.g., 15"
-            unit="minutes"
-          />
-          <MobileInput
-            label="UPS Efficiency"
-            type="number"
-            value={upsEfficiency}
-            onChange={(e) => setUpsEfficiency(e.target.value)}
-            placeholder="e.g., 95"
-            unit="%"
-          />
-        </div>
-
-        <div className="flex flex-col sm:flex-row gap-2">
-          <MobileButton 
-            onClick={calculateDataCentre} 
-            variant="elec"
-            size="wide"
-            className="sm:flex-1"
-          >
-            <Calculator className="w-4 h-4 mr-2" />
-            Calculate Loads
-          </MobileButton>
-          <MobileButton 
-            onClick={reset} 
-            variant="outline" 
-            size="default"
-            className="sm:w-auto"
-          >
-            <RotateCcw className="w-4 h-4" />
-          </MobileButton>
-        </div>
-
-        {result && (
-          <div className="mt-6 p-4 bg-elec-dark rounded-lg border border-elec-yellow/20">
-            <h3 className="font-semibold text-elec-yellow mb-3">Data Centre Results:</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-              <div>
-                <p>Total IT load: <span className="text-elec-yellow font-medium">{result.totalItLoad?.toFixed(0)} kW</span></p>
-                <p>Cooling load: <span className="text-elec-yellow font-medium">{result.coolingLoad?.toFixed(0)} kW</span></p>
-                <p>Lights & misc: <span className="text-elec-yellow font-medium">{result.lightsLoad?.toFixed(0)} kW</span></p>
-                <p>Total facility load: <span className="text-elec-yellow font-medium">{result.totalFacilityLoad?.toFixed(0)} kW</span></p>
-                <p>PUE: <span className="text-elec-yellow font-medium">{result.pue?.toFixed(2)}</span></p>
-              </div>
-              <div>
-                <p>UPS capacity: <span className="text-elec-yellow font-medium">{result.upsCapacity?.toFixed(0)} kW</span></p>
-                <p>Generator capacity: <span className="text-elec-yellow font-medium">{result.generatorCapacity?.toFixed(0)} kW</span></p>
-                <p>Battery capacity: <span className="text-elec-yellow font-medium">{result.batteryCapacity?.toFixed(0)} kWh</span></p>
-                <p>Estimated cost: <span className="text-elec-yellow font-medium">£{result.estimatedCost?.toLocaleString()}</span></p>
-              </div>
+    <div className="space-y-6">
+      <Card className="border-elec-yellow/20 bg-elec-gray">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Server className="h-5 w-5 text-elec-yellow" />
+            Data Centre Calculator
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          {/* Core Parameters */}
+          <div className="space-y-4">
+            <h3 className="font-semibold text-elec-yellow">Core Parameters</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <MobileInput
+                label="IT Load"
+                type="number"
+                value={itLoad}
+                onChange={(e) => setItLoad(e.target.value)}
+                placeholder="e.g., 500"
+                unit="kW"
+              />
+              <MobileSelect
+                label="Overall Redundancy Level"
+                placeholder="Select redundancy level"
+                value={redundancy}
+                onValueChange={setRedundancy}
+                options={redundancyOptions}
+              />
+              <MobileSelect
+                label="Facility Type"
+                placeholder="Select facility type"
+                value={facilityType}
+                onValueChange={setFacilityType}
+                options={facilityTypeOptions}
+              />
+              <MobileSelect
+                label="Climate Zone"
+                placeholder="Select climate zone"
+                value={climateZone}
+                onValueChange={setClimateZone}
+                options={climateZoneOptions}
+              />
             </div>
           </div>
-        )}
 
-        <Alert>
-          <Server className="h-4 w-4" />
-          <AlertDescription>
-            PUE of 1.5-2.0 is typical. Modern efficient data centres achieve PUE below 1.3. Costs include UPS, cooling, and infrastructure.
-          </AlertDescription>
-        </Alert>
-      </CardContent>
-    </Card>
+          {/* Infrastructure Sizing */}
+          <div className="space-y-4">
+            <h3 className="font-semibold text-elec-yellow">Infrastructure Sizing</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <MobileSelect
+                label="Cooling Method"
+                placeholder="Select cooling method"
+                value={coolingMethod}
+                onValueChange={setCoolingMethod}
+                options={coolingMethodOptions}
+              />
+              <MobileInput
+                label="Design Margin"
+                type="number"
+                value={designMargin}
+                onChange={(e) => setDesignMargin(e.target.value)}
+                placeholder="e.g., 20"
+                unit="%"
+                hint="Safety margin for equipment sizing"
+              />
+              <MobileSelect
+                label="Power Redundancy"
+                placeholder="Select power redundancy"
+                value={powerRedundancy}
+                onValueChange={setPowerRedundancy}
+                options={redundancyOptions}
+              />
+              <MobileSelect
+                label="Cooling Redundancy"
+                placeholder="Select cooling redundancy"
+                value={coolingRedundancy}
+                onValueChange={setCoolingRedundancy}
+                options={redundancyOptions}
+              />
+              <MobileInput
+                label="UPS Battery Runtime"
+                type="number"
+                value={upsBatteryHours}
+                onChange={(e) => setUpsBatteryHours(e.target.value)}
+                placeholder="e.g., 15"
+                unit="minutes"
+              />
+              <MobileInput
+                label="UPS Efficiency"
+                type="number"
+                value={upsEfficiency}
+                onChange={(e) => setUpsEfficiency(e.target.value)}
+                placeholder="e.g., 95"
+                unit="%"
+              />
+            </div>
+          </div>
+
+          {/* Advanced Parameters */}
+          <div className="space-y-4">
+            <h3 className="font-semibold text-elec-yellow">Advanced Parameters</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <MobileInput
+                label="Lights & Misc Load"
+                type="number"
+                value={lightsAndMisc}
+                onChange={(e) => setLightsAndMisc(e.target.value)}
+                placeholder="e.g., 5"
+                unit="%"
+              />
+              <MobileInput
+                label="Energy Cost"
+                type="number"
+                value={energyCost}
+                onChange={(e) => setEnergyCost(e.target.value)}
+                placeholder="e.g., 0.15"
+                unit="£/kWh"
+                step="0.01"
+              />
+              <MobileInput
+                label="Carbon Factor"
+                type="number"
+                value={carbonFactor}
+                onChange={(e) => setCarbonFactor(e.target.value)}
+                placeholder="e.g., 0.233"
+                unit="kg CO2e/kWh"
+                step="0.001"
+                hint="UK grid carbon intensity"
+              />
+            </div>
+          </div>
+
+          <div className="flex flex-col sm:flex-row gap-2">
+            <MobileButton 
+              onClick={handleCalculate} 
+              variant="elec"
+              size="wide"
+              className="sm:flex-1"
+            >
+              <Calculator className="w-4 h-4 mr-2" />
+              Calculate Data Centre
+            </MobileButton>
+            <MobileButton 
+              onClick={reset} 
+              variant="outline" 
+              size="default"
+              className="sm:w-auto"
+            >
+              <RotateCcw className="w-4 h-4" />
+            </MobileButton>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Results and Guidance */}
+      {result && <DataCentreGuidance results={result} />}
+
+      {/* Information Alert */}
+      <Alert>
+        <Server className="h-4 w-4" />
+        <AlertDescription>
+          This calculator provides comprehensive data centre design guidance including load analysis, 
+          efficiency metrics, annual consumption, costs, and regulatory compliance. Results require 
+          professional engineering validation for critical infrastructure projects.
+        </AlertDescription>
+      </Alert>
+    </div>
   );
 };
 
