@@ -156,17 +156,25 @@ const EVSELoadCalculator = () => {
                       value={point.quantity.toString()}
                       onChange={(e) => {
                         const value = e.target.value;
-                        if (value === '' || value === '0') {
-                          toast({
-                            title: "Invalid Quantity",
-                            description: "Quantity must be at least 1",
-                            variant: "destructive"
-                          });
+                        // Allow empty value temporarily while typing
+                        if (value === '') {
+                          updateChargingPoint(index, 'quantity', 1);
                           return;
                         }
                         const numValue = parseInt(value);
-                        if (numValue > 0) {
+                        if (!isNaN(numValue) && numValue > 0) {
                           updateChargingPoint(index, 'quantity', numValue);
+                        }
+                      }}
+                      onBlur={(e) => {
+                        const value = e.target.value;
+                        if (value === '' || parseInt(value) < 1) {
+                          updateChargingPoint(index, 'quantity', 1);
+                          toast({
+                            title: "Quantity Reset",
+                            description: "Quantity must be at least 1, reset to 1",
+                            variant: "default"
+                          });
                         }
                       }}
                       placeholder="1"
