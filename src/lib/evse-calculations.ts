@@ -79,9 +79,9 @@ export function calculateEVSELoad(inputs: CalculationInputs): CalculationResult 
     return sum + (chargerData.power * point.quantity);
   }, 0);
 
-  const diversityFactor = DIVERSITY_FACTORS[inputs.diversityScenario] || 1;
+  const diversityFactor = DIVERSITY_FACTORS[inputs.diversityScenario]?.value || 1;
   const totalDiversifiedLoad = totalNominalPower * diversityFactor;
-  const designCurrent = totalDiversifiedLoad / (inputs.supplyVoltage * Math.sqrt(3) * inputs.powerFactor);
+  const designCurrent = (totalDiversifiedLoad * 1000) / (inputs.supplyVoltage * Math.sqrt(3) * inputs.powerFactor);
 
   // Cable selection based on design current with safety factor
   const requiredConductorCurrent = designCurrent * SAFETY_FACTORS.design_current_factor;

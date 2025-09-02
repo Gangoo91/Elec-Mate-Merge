@@ -19,13 +19,13 @@ const EVSELoadCalculator = () => {
   const [earthingSystem, setEarthingSystem] = useState('tn-c-s');
   const [availableCapacity, setAvailableCapacity] = useState('100');
   const [cableLength, setCableLength] = useState('50');
-  const [diversityScenario, setDiversityScenario] = useState('multiple_domestic');
+  const [diversityScenario, setDiversityScenario] = useState('domestic_multiple');
   const [powerFactor, setPowerFactor] = useState('0.95');
   const [result, setResult] = useState<CalculationResult | null>(null);
 
   const addChargingPoint = () => {
     const newPoint: ChargingPoint = {
-      chargerType: 'single-phase-7kw',
+      chargerType: '7kw-ac', // Fixed to match actual key
       quantity: 1
     };
     setChargingPoints([...chargingPoints, newPoint]);
@@ -84,7 +84,7 @@ const EVSELoadCalculator = () => {
     setEarthingSystem('tn-c-s');
     setAvailableCapacity('100');
     setCableLength('50');
-    setDiversityScenario('multiple_domestic');
+    setDiversityScenario('domestic_multiple');
     setPowerFactor('0.95');
     setResult(null);
   };
@@ -154,7 +154,21 @@ const EVSELoadCalculator = () => {
                       type="number"
                       min="1"
                       value={point.quantity.toString()}
-                      onChange={(e) => updateChargingPoint(index, 'quantity', parseInt(e.target.value) || 1)}
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        if (value === '' || value === '0') {
+                          toast({
+                            title: "Invalid Quantity",
+                            description: "Quantity must be at least 1",
+                            variant: "destructive"
+                          });
+                          return;
+                        }
+                        const numValue = parseInt(value);
+                        if (numValue > 0) {
+                          updateChargingPoint(index, 'quantity', numValue);
+                        }
+                      }}
                       placeholder="1"
                     />
                   </div>
@@ -233,7 +247,7 @@ const EVSELoadCalculator = () => {
                 <MobileSelectContent>
                   {Object.entries(DIVERSITY_FACTORS).map(([key, factor]) => (
                     <MobileSelectItem key={key} value={key}>
-                      {key.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())} ({(Number(factor) * 100).toFixed(0)}%)
+                      {factor.label} ({(factor.value * 100).toFixed(0)}%)
                     </MobileSelectItem>
                   ))}
                 </MobileSelectContent>
@@ -313,22 +327,54 @@ const EVSELoadCalculator = () => {
                 />
               </div>
 
-              {/* Recommendations */}
-              {result.recommendations.length > 0 && (
+              {/* Enhanced Feedback Section */}
+              <div className="space-y-4">
+                {/* Recommendations */}
+                {result.recommendations.length > 0 && (
+                  <div className="space-y-2">
+                    <h4 className="font-medium text-elec-yellow">Recommendations</h4>
+                    <div className="bg-elec-dark/30 p-3 rounded-lg">
+                      <ul className="space-y-1 text-sm">
+                        {result.recommendations.map((rec: string, index: number) => (
+                          <li key={index} className="flex items-start gap-2">
+                            <Info className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
+                            {rec}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                )}
+
+                {/* Why This Matters */}
                 <div className="space-y-2">
-                  <h4 className="font-medium text-elec-yellow">Recommendations</h4>
-                  <div className="bg-elec-dark/30 p-3 rounded-lg">
-                    <ul className="space-y-1 text-sm">
-                      {result.recommendations.map((rec: string, index: number) => (
-                        <li key={index} className="flex items-start gap-2">
-                          <Info className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                          {rec}
-                        </li>
-                      ))}
-                    </ul>
+                  <h4 className="font-medium text-elec-yellow">Why This Matters</h4>
+                  <div className="bg-elec-dark/30 p-3 rounded-lg text-sm space-y-2">
+                    <p><strong>Design Current:</strong> Determines cable sizing and protection device rating. Too low = potential overload, too high = oversized installation.</p>
+                    <p><strong>Voltage Drop:</strong> Must stay below 5% (BS 7671). Excessive drop causes inefficient charging and potential equipment damage.</p>
+                    <p><strong>Diversity Factor:</strong> Accounts for realistic usage patterns. Multiple chargers rarely operate at full load simultaneously.</p>
+                    {result.headroom < 10 && (
+                      <p className="text-orange-400"><strong>Low Headroom Warning:</strong> Consider future expansion needs and load growth.</p>
+                    )}
                   </div>
                 </div>
-              )}
+
+                {/* Regulations & Guidance */}
+                <div className="space-y-2">
+                  <h4 className="font-medium text-elec-yellow">Regulations & Guidance</h4>
+                  <div className="bg-elec-dark/30 p-3 rounded-lg text-sm space-y-2">
+                    <p><strong>BS 7671 (18th Edition):</strong> Section 722 covers EV charging installations. RCD protection mandatory (30mA Type A minimum).</p>
+                    <p><strong>IET Code of Practice:</strong> Provides specific guidance on EV supply equipment installation and earthing arrangements.</p>
+                    <p><strong>Earthing System:</strong> {EARTHING_SYSTEMS[earthingSystem]?.description} - {EARTHING_SYSTEMS[earthingSystem]?.considerations}</p>
+                    {result.compliance.voltageDrop === false && (
+                      <p className="text-red-400"><strong>Voltage Drop Compliance:</strong> Exceeds 5% limit. Consider larger cable or reduced cable length.</p>
+                    )}
+                    {result.selectedProtection?.includes('DC') && (
+                      <p className="text-blue-400"><strong>DC Protection:</strong> Required for installations &gt;32A. Consult manufacturer specifications.</p>
+                    )}
+                  </div>
+                </div>
+              </div>
             </div>
           )}
 
