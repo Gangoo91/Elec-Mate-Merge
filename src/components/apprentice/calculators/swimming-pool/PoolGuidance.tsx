@@ -178,8 +178,10 @@ const PoolGuidance = ({ result }: PoolGuidanceProps) => {
           <CardContent>
             <div className="grid gap-3">
               {result.practicalGuidance.testingRequirements.map((test, index) => (
-                <div key={index} className="flex items-start gap-2 p-3 rounded-lg border border-blue-500/20 bg-blue-500/5">
-                  <CheckCircle className="h-4 w-4 text-blue-400 mt-0.5 flex-shrink-0" />
+                <div key={index} className="flex items-start gap-3 p-3 rounded-lg border border-blue-500/20 bg-blue-500/5">
+                  <div className="flex-shrink-0 w-6 h-6 rounded-full bg-blue-500 text-white text-xs font-bold flex items-center justify-center">
+                    {index + 1}
+                  </div>
                   <p className="text-sm text-white">{test}</p>
                 </div>
               ))}

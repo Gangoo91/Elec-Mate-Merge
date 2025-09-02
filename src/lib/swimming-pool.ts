@@ -274,12 +274,12 @@ export function calculatePoolInstallation(inputs: PoolCalculationInputs): PoolCa
       'Complete electrical installation certificate'
     ],
     testingRequirements: [
+      'Continuity of bonding conductors (< 0.05Ω)',
+      'Polarity verification (correct L, N, E connections)',
+      'Earth electrode resistance (≤ 200Ω if TT system)',
+      'Insulation resistance (≥ 1MΩ between conductors)',
       'Earth fault loop impedance (Zs ≤ 1.44Ω for 30mA RCD)',
       'RCD operating times (≤ 300ms at rated current)',
-      'Insulation resistance (≥ 1MΩ)',
-      'Continuity of bonding conductors',
-      'Polarity verification',
-      'Earth electrode resistance (if applicable)',
       'Functional testing of emergency stops',
       'PAT testing of portable equipment'
     ],
