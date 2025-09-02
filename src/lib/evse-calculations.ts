@@ -70,7 +70,7 @@ export function calculateEVSELoad(inputs: CalculationInputs): CalculationResult 
     throw new Error(`Invalid earthing system: ${inputs.earthingSystem}`);
   }
 
-  // Calculate total diversified load
+  // Calculate total nominal power and diversified load  
   const totalNominalPower = inputs.chargingPoints.reduce((sum, point) => {
     const chargerData = CHARGER_TYPES[point.chargerType];
     if (!chargerData) {
@@ -81,49 +81,85 @@ export function calculateEVSELoad(inputs: CalculationInputs): CalculationResult 
 
   const diversityFactor = DIVERSITY_FACTORS[inputs.diversityScenario]?.value || 1;
   const totalDiversifiedLoad = totalNominalPower * diversityFactor;
-  const designCurrent = (totalDiversifiedLoad * 1000) / (inputs.supplyVoltage * Math.sqrt(3) * inputs.powerFactor);
 
-  // Cable selection based on design current with safety factor
+  // Calculate design current per-point then apply diversity
+  const designCurrent = inputs.chargingPoints.reduce((total, point) => {
+    const chargerData = CHARGER_TYPES[point.chargerType];
+    const powerPerPoint = chargerData.power * point.quantity;
+    
+    // Determine base voltage for current calculation based on charger phases
+    const baseVoltage = chargerData.phases === 1 ? inputs.supplyVoltage / Math.sqrt(3) : inputs.supplyVoltage;
+    const voltageMultiplier = chargerData.phases === 3 ? Math.sqrt(3) : 1;
+    
+    const currentPerPoint = (powerPerPoint * 1000) / (baseVoltage * voltageMultiplier * inputs.powerFactor);
+    return total + currentPerPoint;
+  }, 0) * diversityFactor;
+
+  // Cable selection - consider both ampacity and voltage drop
   const requiredConductorCurrent = designCurrent * SAFETY_FACTORS.design_current_factor;
   
   let selectedCable = null;
   let cableCapacity = 0;
-  for (const [size, spec] of Object.entries(CABLE_SPECIFICATIONS)) {
-    if (spec.current >= requiredConductorCurrent) {
-      selectedCable = size;
-      cableCapacity = spec.current;
-      break;
+  
+  // First pass: find cables that meet ampacity requirements
+  const suitableCables = Object.entries(CABLE_SPECIFICATIONS).filter(([_, spec]) => 
+    spec.current >= requiredConductorCurrent
+  );
+  
+  if (suitableCables.length > 0) {
+    // Second pass: check voltage drop for each suitable cable
+    for (const [size, spec] of suitableCables) {
+      // Correct voltage drop calculation: mV/A/m from cable spec
+      const voltageDropmV = designCurrent * spec.impedance * inputs.cableLength;
+      const voltageDropV = voltageDropmV / 1000;
+      const voltageDropPercent = (voltageDropV / inputs.supplyVoltage) * 100;
+      
+      if (voltageDropPercent <= (SAFETY_FACTORS.voltage_drop_limit * 100)) {
+        selectedCable = size;
+        cableCapacity = spec.current;
+        break;
+      }
+    }
+    
+    // If no cable meets voltage drop, select smallest that meets ampacity
+    if (!selectedCable) {
+      selectedCable = suitableCables[0][0];
+      cableCapacity = suitableCables[0][1].current;
     }
   }
 
-  // Protection device selection
+  // Enhanced protection device selection
   const requiredProtection = Math.ceil(designCurrent * 1.1); // 10% margin
   let selectedProtection = null;
   
-  // Select appropriate protection device based on current rating
-  if (requiredProtection <= 32) {
-    selectedProtection = 'RCBO (Combined MCB + RCD)';
-  } else if (requiredProtection <= 63) {
-    selectedProtection = 'MCB + RCD';
+  // Check for DC chargers requiring special protection
+  const hasDCChargers = inputs.chargingPoints.some(point => 
+    CHARGER_TYPES[point.chargerType]?.connector?.includes('DC')
+  );
+  
+  if (hasDCChargers || requiredProtection > 63) {
+    selectedProtection = 'DC Fault Protection Required + Type B RCD';
+  } else if (requiredProtection <= 32) {
+    selectedProtection = 'RCBO (Combined MCB + RCD) Type A 30mA';
   } else {
-    selectedProtection = 'DC Fault Protection Required';
+    selectedProtection = 'MCB + Type A RCD 30mA';
   }
 
-  // Voltage drop calculation
+  // Final voltage drop calculation using selected cable
   const cableSpec = selectedCable ? CABLE_SPECIFICATIONS[selectedCable] : null;
   const voltageDropPercent = cableSpec ? 
-    (designCurrent * cableSpec.impedance * inputs.cableLength * Math.sqrt(3)) / inputs.supplyVoltage * 100 : 0;
+    (designCurrent * cableSpec.impedance * inputs.cableLength) / (inputs.supplyVoltage * 1000) * 100 : 0;
 
-  // Convert available capacity from kW to A (to match current units)
+  // Convert available capacity from kW to A
   const availableCapacityA = inputs.availableCapacity * 1000 / (inputs.supplyVoltage * Math.sqrt(3) * inputs.powerFactor);
   
   // Calculate headroom
   const headroom = availableCapacityA - designCurrent;
 
-  // Compliance checks
+  // Enhanced compliance checks
   const voltageDrop = voltageDropPercent <= (SAFETY_FACTORS.voltage_drop_limit * 100);
-  const earthFaultLoop = true; // Simplified for now
-  const rcdProtection = selectedProtection?.includes('RCBO') || selectedProtection?.includes('RCD');
+  const earthFaultLoop = true; // Simplified - would need earth loop impedance calculation
+  const rcdProtection = selectedProtection?.includes('RCD') || selectedProtection?.includes('RCBO');
 
   return {
     totalNominalPower,
