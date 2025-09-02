@@ -365,55 +365,57 @@ const SolarPVCalculator = () => {
 
                   {/* 2025 Cost Estimate Section */}
                   <div className="bg-elec-dark/30 p-4 rounded-lg border border-elec-yellow/30">
-                    <div className="flex items-center gap-2 mb-3">
+                    <div className="flex items-center gap-2 mb-4">
                       <PoundSterling className="h-5 w-5 text-elec-yellow" />
                       <h4 className="text-lg font-semibold text-white">2025 Cost Estimate</h4>
                     </div>
                     
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-                      <div className="text-center bg-elec-gray/50 p-3 rounded border border-elec-yellow/20">
-                        <p className="text-2xl font-bold text-elec-yellow">£{result.costEstimate.totalCost.toLocaleString()}</p>
-                        <p className="text-sm text-white/80">Total System Cost</p>
-                        <p className="text-xs text-white/60">{result.costEstimate.category}</p>
+                    {/* Mobile-First Stacked Layout - No Inner Containers */}
+                    <div className="space-y-4 mb-6">
+                      <div className="text-center">
+                        <p className="text-3xl font-bold text-elec-yellow mb-1">£{result.costEstimate.totalCost.toLocaleString()}</p>
+                        <p className="text-base text-white font-medium">Total System Cost</p>
+                        <p className="text-sm text-white/60">{result.costEstimate.category}</p>
                       </div>
-                      <div className="text-center bg-elec-gray/50 p-3 rounded border border-green-500/30">
-                        <p className="text-2xl font-bold text-green-400">£{result.costEstimate.costPerKw.toLocaleString()}</p>
-                        <p className="text-sm text-white/80">Cost per kW</p>
-                        <p className="text-xs text-white/60">Including VAT & installation</p>
+                      
+                      <div className="text-center pt-2">
+                        <p className="text-2xl font-bold text-green-400 mb-1">£{result.costEstimate.costPerKw.toLocaleString()}</p>
+                        <p className="text-base text-white font-medium">Cost per kW</p>
+                        <p className="text-sm text-white/60">Including VAT & installation</p>
                       </div>
                     </div>
 
-                    <div className="space-y-2">
-                      <p className="text-sm font-medium text-white mb-2">Cost Breakdown:</p>
-                      <div className="grid grid-cols-2 gap-2 text-sm">
-                        <div className="flex justify-between">
+                    <div className="space-y-3">
+                      <p className="text-base font-semibold text-white mb-3">Cost Breakdown:</p>
+                      <div className="space-y-3">
+                        <div className="flex justify-between items-center py-1">
                           <span className="text-white/80">Panels:</span>
-                          <span className="text-white font-medium">£{result.costEstimate.breakdown.panels.toLocaleString()}</span>
+                          <span className="text-white font-semibold">£{result.costEstimate.breakdown.panels.toLocaleString()}</span>
                         </div>
-                        <div className="flex justify-between">
+                        <div className="flex justify-between items-center py-1">
                           <span className="text-white/80">Inverter:</span>
-                          <span className="text-white font-medium">£{result.costEstimate.breakdown.inverter.toLocaleString()}</span>
+                          <span className="text-white font-semibold">£{result.costEstimate.breakdown.inverter.toLocaleString()}</span>
                         </div>
-                        <div className="flex justify-between">
+                        <div className="flex justify-between items-center py-1">
                           <span className="text-white/80">Installation:</span>
-                          <span className="text-white font-medium">£{result.costEstimate.breakdown.installation.toLocaleString()}</span>
+                          <span className="text-white font-semibold">£{result.costEstimate.breakdown.installation.toLocaleString()}</span>
                         </div>
-                        <div className="flex justify-between">
+                        <div className="flex justify-between items-center py-1">
                           <span className="text-white/80">Electrical:</span>
-                          <span className="text-white font-medium">£{result.costEstimate.breakdown.electrical.toLocaleString()}</span>
+                          <span className="text-white font-semibold">£{result.costEstimate.breakdown.electrical.toLocaleString()}</span>
                         </div>
-                        <div className="flex justify-between">
+                        <div className="flex justify-between items-center py-1">
                           <span className="text-white/80">Scaffolding:</span>
-                          <span className="text-white font-medium">£{result.costEstimate.breakdown.scaffolding.toLocaleString()}</span>
+                          <span className="text-white font-semibold">£{result.costEstimate.breakdown.scaffolding.toLocaleString()}</span>
                         </div>
-                        <div className="flex justify-between">
+                        <div className="flex justify-between items-center py-1">
                           <span className="text-white/80">MCS & DNO:</span>
-                          <span className="text-white font-medium">£{result.costEstimate.breakdown.mcsAndDno.toLocaleString()}</span>
+                          <span className="text-white font-semibold">£{result.costEstimate.breakdown.mcsAndDno.toLocaleString()}</span>
                         </div>
                       </div>
-                      <div className="flex justify-between pt-2 border-t border-elec-yellow/20">
-                        <span className="text-white/80 font-medium">VAT (5%):</span>
-                        <span className="text-elec-yellow font-medium">£{result.costEstimate.breakdown.vat.toLocaleString()}</span>
+                      <div className="flex justify-between items-center pt-3 mt-3 border-t border-elec-yellow/20">
+                        <span className="text-white font-medium">VAT (5%):</span>
+                        <span className="text-elec-yellow font-bold text-lg">£{result.costEstimate.breakdown.vat.toLocaleString()}</span>
                       </div>
                     </div>
                   </div>
