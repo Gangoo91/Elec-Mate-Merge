@@ -149,12 +149,12 @@ const ArcFlashCalculator = () => {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="space-y-6">
           {/* Input Section */}
           <div className="space-y-4">
-            <div className="grid grid-cols-2 gap-3">
-              <div>
-                <div className="flex items-center gap-2 mb-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="space-y-2">
+                <div className="flex items-center gap-2">
                   <span className="text-sm font-medium">System Voltage (V)</span>
                   <RequiredFieldTooltip content="System line-to-line voltage. IEEE 1584 valid range: 208-15000V. Common UK values: 415V (3-phase), 230V (single-phase)." />
                 </div>
@@ -169,9 +169,10 @@ const ArcFlashCalculator = () => {
                 />
               </div>
               
-              <div>
+              <div className="space-y-2">
+                <span className="text-sm font-medium">Equipment Type</span>
                 <MobileSelect
-                  label="Equipment Type"
+                  label=""
                   placeholder="Select equipment"
                   value={equipmentType}
                   onValueChange={(value) => setEquipmentType(value as EquipmentType)}
@@ -183,23 +184,25 @@ const ArcFlashCalculator = () => {
               </div>
             </div>
 
-            <div className="flex items-center gap-2 mb-2">
-              <span className="text-sm font-medium">Prospective Fault Current (A)</span>
-              <RequiredFieldTooltip content="Available short-circuit current at the point of work. Obtain from electrical drawings or fault studies. Typical range: 1-100kA." />
+            <div className="space-y-2">
+              <div className="flex items-center gap-2">
+                <span className="text-sm font-medium">Prospective Fault Current (A)</span>
+                <RequiredFieldTooltip content="Available short-circuit current at the point of work. Obtain from electrical drawings or fault studies. Typical range: 1-100kA." />
+              </div>
+              <MobileInput
+                label=""
+                type="number"
+                value={faultCurrent}
+                onChange={(e) => setFaultCurrent(e.target.value)}
+                placeholder="25000"
+                unit="A"
+                error={errors.faultCurrent}
+              />
             </div>
-            <MobileInput
-              label=""
-              type="number"
-              value={faultCurrent}
-              onChange={(e) => setFaultCurrent(e.target.value)}
-              placeholder="25000"
-              unit="A"
-              error={errors.faultCurrent}
-            />
 
-            <div className="grid grid-cols-2 gap-3">
-              <div>
-                <div className="flex items-center gap-2 mb-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="space-y-2">
+                <div className="flex items-center gap-2">
                   <span className="text-sm font-medium">Arc Clearing Time (s)</span>
                   <RequiredFieldTooltip content="Time for protective device to clear the arc fault. Check device time-current curves. Values >2s indicate sustained arc risk." />
                 </div>
@@ -215,8 +218,8 @@ const ArcFlashCalculator = () => {
                 />
               </div>
               
-              <div>
-                <div className="flex items-center gap-2 mb-2">
+              <div className="space-y-2">
+                <div className="flex items-center gap-2">
                   <span className="text-sm font-medium">Working Distance (mm)</span>
                   <RequiredFieldTooltip content="Distance from worker's face/chest to potential arc source. Minimum 200mm recommended. Equipment defaults applied automatically." />
                 </div>
@@ -232,18 +235,21 @@ const ArcFlashCalculator = () => {
               </div>
             </div>
 
-            <MobileSelect
-              label="Electrode Configuration"
-              placeholder="Select configuration"
-              value={electrodeConfig}
-              onValueChange={(value) => setElectrodeConfig(value as ElectrodeConfig)}
-              options={Object.entries(ELECTRODE_CONFIG_LABELS).map(([key, label]) => ({
-                value: key,
-                label
-              }))}
-            />
+            <div className="space-y-2">
+              <span className="text-sm font-medium">Electrode Configuration</span>
+              <MobileSelect
+                label=""
+                placeholder="Select configuration"
+                value={electrodeConfig}
+                onValueChange={(value) => setElectrodeConfig(value as ElectrodeConfig)}
+                options={Object.entries(ELECTRODE_CONFIG_LABELS).map(([key, label]) => ({
+                  value: key,
+                  label
+                }))}
+              />
+            </div>
 
-            <div className="bg-elec-dark/30 p-3 rounded-lg space-y-3">
+            <div className="bg-elec-dark/30 p-4 rounded-lg space-y-3">
               <div className="flex items-center justify-between">
                 <span className="text-sm font-medium">Conductor Gap</span>
                 <div className="flex items-center gap-2">
@@ -272,12 +278,12 @@ const ArcFlashCalculator = () => {
               )}
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-2">
+            <div className="flex flex-col gap-3 pt-2">
               <MobileButton 
                 onClick={performCalculation} 
                 variant="elec"
                 size="wide"
-                className="sm:flex-1"
+                className="w-full"
                 disabled={Object.keys(errors).length > 0}
               >
                 <Calculator className="h-4 w-4 mr-2" />
@@ -287,16 +293,17 @@ const ArcFlashCalculator = () => {
                 onClick={reset} 
                 variant="outline" 
                 size="default"
-                className="sm:w-auto"
+                className="w-full"
               >
-                <RotateCcw className="h-4 w-4" />
+                <RotateCcw className="h-4 w-4 mr-2" />
+                Reset
               </MobileButton>
             </div>
           </div>
 
           {/* Results Section */}
           <div className="space-y-4">
-            <div className="rounded-md bg-elec-dark p-6 min-h-[500px]">
+            <div className="rounded-lg bg-elec-dark p-4 sm:p-6 min-h-[400px]">
               {result ? (
                 <div className="space-y-4">
                   <div className="text-center">
@@ -318,46 +325,59 @@ const ArcFlashCalculator = () => {
                   
                   <Separator />
                   
-                  <div className="grid grid-cols-2 gap-4 text-sm">
-                    <div>
-                      <span className="text-muted-foreground">Incident Energy:</span>
-                      <div className="font-mono text-elec-yellow text-base">
-                        {result.incidentEnergy.toFixed(2)} cal/cm²
+                  <div className="space-y-4 text-sm">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div className="text-center sm:text-left">
+                        <span className="text-muted-foreground block mb-1">Incident Energy:</span>
+                        <div className="font-mono text-elec-yellow text-xl sm:text-2xl font-bold">
+                          {result.incidentEnergy.toFixed(2)}
+                        </div>
+                        <div className="text-xs text-muted-foreground">
+                          cal/cm² ({result.incidentEnergyJoules.toFixed(1)} J/cm²)
+                        </div>
                       </div>
-                      <div className="text-xs text-muted-foreground">
-                        ({result.incidentEnergyJoules.toFixed(1)} J/cm²)
-                      </div>
-                    </div>
-                    
-                    <div>
-                      <span className="text-muted-foreground">Arc Flash Boundary:</span>
-                      <div className="font-mono text-elec-yellow text-base">{Math.round(result.arcFlashBoundary)} mm</div>
-                      <div className="text-xs text-muted-foreground">
-                        ({(result.arcFlashBoundary/1000).toFixed(2)} m)
+                      
+                      <div className="text-center sm:text-left">
+                        <span className="text-muted-foreground block mb-1">Arc Flash Boundary:</span>
+                        <div className="font-mono text-elec-yellow text-xl sm:text-2xl font-bold">
+                          {Math.round(result.arcFlashBoundary)}
+                        </div>
+                        <div className="text-xs text-muted-foreground">
+                          mm ({(result.arcFlashBoundary/1000).toFixed(2)} m)
+                        </div>
                       </div>
                     </div>
 
-                    <div>
-                      <span className="text-muted-foreground">Arcing Current:</span>
-                      <div className="font-mono text-elec-yellow text-base">{result.arcingCurrent.toFixed(1)} kA</div>
-                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                      <div className="text-center sm:text-left">
+                        <span className="text-muted-foreground block mb-1">Arcing Current:</span>
+                        <div className="font-mono text-elec-yellow text-lg font-semibold">
+                          {result.arcingCurrent.toFixed(1)} kA
+                        </div>
+                      </div>
 
-                    <div>
-                      <span className="text-muted-foreground">Method:</span>
-                      <div className="text-xs text-muted-foreground">{result.calculationMethod}</div>
+                      <div className="text-center sm:text-left">
+                        <span className="text-muted-foreground block mb-1">Method:</span>
+                        <div className="text-xs text-muted-foreground">
+                          {result.calculationMethod}
+                        </div>
+                      </div>
                     </div>
                   </div>
 
-                  <Separator />
+                   <Separator />
 
                   <div>
                     <div className="flex items-center gap-2 mb-2">
                       <Shield className="h-4 w-4 text-blue-400" />
                       <span className="font-medium">Required PPE:</span>
                     </div>
-                    <ul className="space-y-1 pl-6">
+                    <ul className="space-y-2 text-sm">
                       {result.ppeRecommendations.map((rec, index) => (
-                        <li key={index} className="text-xs text-muted-foreground">• {rec}</li>
+                        <li key={index} className="flex items-start gap-3">
+                          <span className="flex-shrink-0 w-2 h-2 bg-blue-400 rounded-full mt-2"></span>
+                          <span className="text-muted-foreground">{rec}</span>
+                        </li>
                       ))}
                     </ul>
                   </div>
@@ -365,53 +385,70 @@ const ArcFlashCalculator = () => {
                   {getMostImpactfulLever() && (
                     <>
                       <Separator />
-                      <div className="bg-elec-yellow/10 p-3 rounded">
-                        <div className="flex items-center gap-2 mb-1">
-                          <Lightbulb className="h-4 w-4 text-elec-yellow" />
+                      <div className="bg-elec-yellow/10 p-3 sm:p-4 rounded-lg">
+                        <div className="flex items-center gap-2 mb-2">
+                          <Lightbulb className="h-4 w-4 text-elec-yellow flex-shrink-0" />
                           <span className="text-sm font-medium">Most Impactful Change:</span>
                         </div>
-                        <p className="text-xs text-muted-foreground">{getMostImpactfulLever()}</p>
+                        <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+                          {getMostImpactfulLever()}
+                        </p>
                       </div>
                     </>
                   )}
 
                   {/* What-if Section */}
                   <Separator />
-                  <div className="space-y-3">
-                    <h4 className="text-sm font-medium">What-if Analysis</h4>
+                  <div className="space-y-4">
+                    <h4 className="text-sm font-medium flex items-center gap-2">
+                      <HelpCircle className="h-4 w-4 text-elec-yellow" />
+                      What-if Analysis
+                    </h4>
                     
-                    <div className="space-y-2">
-                      <div className="flex items-center justify-between">
-                        <span className="text-xs">Working Distance: {whatIfDistance}mm</span>
+                    <div className="space-y-4">
+                      <div className="space-y-3">
+                        <div className="flex items-center justify-between text-sm">
+                          <span className="text-muted-foreground">Working Distance:</span>
+                          <span className="font-mono text-elec-yellow">{whatIfDistance}mm</span>
+                        </div>
+                        <Slider
+                          value={[whatIfDistance]}
+                          onValueChange={(value) => setWhatIfDistance(value[0])}
+                          min={200}
+                          max={1200}
+                          step={50}
+                          className="w-full"
+                        />
                       </div>
-                      <Slider
-                        value={[whatIfDistance]}
-                        onValueChange={(value) => setWhatIfDistance(value[0])}
-                        min={200}
-                        max={1200}
-                        step={50}
-                        className="w-full"
-                      />
                       
-                      <div className="flex items-center justify-between">
-                        <span className="text-xs">Clearing Time: {whatIfTime.toFixed(2)}s</span>
+                      <div className="space-y-3">
+                        <div className="flex items-center justify-between text-sm">
+                          <span className="text-muted-foreground">Clearing Time:</span>
+                          <span className="font-mono text-elec-yellow">{whatIfTime.toFixed(2)}s</span>
+                        </div>
+                        <Slider
+                          value={[whatIfTime]}
+                          onValueChange={(value) => setWhatIfTime(value[0])}
+                          min={0.02}
+                          max={2.0}
+                          step={0.01}
+                          className="w-full"
+                        />
                       </div>
-                      <Slider
-                        value={[whatIfTime]}
-                        onValueChange={(value) => setWhatIfTime(value[0])}
-                        min={0.02}
-                        max={2.0}
-                        step={0.01}
-                        className="w-full"
-                      />
                       
                       {(() => {
                         const whatIfResult = calculateWhatIf(whatIfDistance, whatIfTime);
                         return whatIfResult ? (
-                          <div className="text-xs bg-elec-dark/50 p-2 rounded">
-                            <span className="text-muted-foreground">What-if Energy: </span>
-                            <span className="text-elec-yellow font-mono">{whatIfResult.incidentEnergy.toFixed(2)} cal/cm²</span>
-                            <span className="text-muted-foreground"> (PPE Cat {whatIfResult.ppeCategory})</span>
+                          <div className="bg-elec-dark/50 p-3 rounded-lg border border-elec-yellow/20">
+                            <div className="text-center">
+                              <div className="text-sm text-muted-foreground mb-1">What-if Energy:</div>
+                              <div className="font-mono text-elec-yellow text-lg font-semibold">
+                                {whatIfResult.incidentEnergy.toFixed(2)} cal/cm²
+                              </div>
+                              <div className="text-xs text-muted-foreground">
+                                PPE Category {whatIfResult.ppeCategory}
+                              </div>
+                            </div>
                           </div>
                         ) : null;
                       })()}
@@ -426,7 +463,7 @@ const ArcFlashCalculator = () => {
             </div>
 
             <Alert className="border-red-500/20 bg-red-500/10">
-              <AlertTriangle className="h-4 w-4 text-red-500" />
+              <AlertTriangle className="h-4 w-4 text-red-500 flex-shrink-0" />
               <AlertDescription className="text-red-200">
                 <strong>Warning:</strong> This calculation is for estimation only. 
                 Formal arc flash studies must be conducted by qualified engineers for safety compliance.
@@ -436,7 +473,7 @@ const ArcFlashCalculator = () => {
         </div>
         
         {/* Educational Content */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
+        <div className="grid grid-cols-1 gap-6 mt-8">
           <WhyThisMatters
             points={[
               "Arc flash incidents can cause severe burns, blindness, and death from temperatures exceeding 20,000°C",
@@ -452,22 +489,18 @@ const ArcFlashCalculator = () => {
             icon={<Info className="h-5 w-5 text-elec-yellow" />}
             as="section"
           >
-            <div className="space-y-3 text-sm text-elec-light">
-              <div>
-                <strong className="text-elec-yellow">IEEE 1584-2018:</strong> International standard for arc flash calculations providing empirical models for incident energy and arc flash boundary determination.
+            <div className="space-y-4 text-sm text-elec-light">
+              <div className="space-y-2">
+                <div><strong className="text-elec-yellow">IEEE 1584-2018:</strong> International standard for arc flash calculations providing empirical models for incident energy and arc flash boundary determination.</div>
+                <div><strong className="text-elec-yellow">NFPA 70E:</strong> PPE categories and safety requirements for electrical work (US standard, often referenced in UK).</div>
+                <div><strong className="text-elec-yellow">UK EAWR 1989:</strong> Electrical safety regulations requiring competent persons and appropriate precautions.</div>
+                <div><strong className="text-elec-yellow">BS 7671 (18th Edition):</strong> UK wiring regulations requiring protective devices for fault clearing.</div>
               </div>
-              <div>
-                <strong className="text-elec-yellow">NFPA 70E:</strong> PPE categories and safety requirements for electrical work (US standard, often referenced in UK).
+              <div className="border-t border-elec-yellow/20 pt-3">
+                <p className="text-xs text-elec-light/70">
+                  <strong>Important:</strong> This tool provides estimates only. Professional arc flash studies by qualified engineers are required for safety-critical applications and formal risk assessments.
+                </p>
               </div>
-              <div>
-                <strong className="text-elec-yellow">UK EAWR 1989:</strong> Electrical safety regulations requiring competent persons and appropriate precautions.
-              </div>
-              <div>
-                <strong className="text-elec-yellow">BS 7671 (18th Edition):</strong> UK wiring regulations requiring protective devices for fault clearing.
-              </div>
-              <p className="text-xs text-elec-light/70 mt-4 border-t border-elec-yellow/20 pt-2">
-                <strong>Important:</strong> This tool provides estimates only. Professional arc flash studies by qualified engineers are required for safety-critical applications and formal risk assessments.
-              </p>
             </div>
           </InfoBox>
         </div>
