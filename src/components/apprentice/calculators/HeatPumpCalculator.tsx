@@ -305,7 +305,7 @@ const HeatPumpCalculator = () => {
         </div>
 
         {/* Calculate Button */}
-        <div className="flex gap-3 pt-4">
+        <div className="flex flex-col sm:flex-row gap-3 pt-4">
           <MobileButton
             onClick={calculateHeatPump}
             variant="elec"
@@ -319,6 +319,7 @@ const HeatPumpCalculator = () => {
             onClick={resetCalculator}
             variant="outline"
             size="default"
+            className="sm:w-auto w-full"
           >
             Reset
           </MobileButton>
