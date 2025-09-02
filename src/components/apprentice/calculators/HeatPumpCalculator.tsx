@@ -20,8 +20,11 @@ import {
   getRecommendations, 
   getRegulatoryGuidance,
   type HeatPumpInputs,
-  type HeatPumpResults 
+  type HeatPumpResults,
+  type ReviewFinding 
 } from "@/lib/heat-pump-calculations";
+import { formatCurrency } from "@/lib/format";
+import { cn } from "@/lib/utils";
 
 interface FormInputs {
   floorArea: string;
@@ -52,6 +55,7 @@ const HeatPumpCalculator = () => {
 
   const [results, setResults] = useState<HeatPumpResults | null>(null);
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [showReviewSummary, setShowReviewSummary] = useState(false);
 
   const validateInputs = (): boolean => {
     const newErrors: Record<string, string> = {};
@@ -348,6 +352,7 @@ const HeatPumpCalculator = () => {
                 subtitle={`Seasonal COP: ${results.performance.seasonalCOP.toFixed(1)}`}
                 status={results.cop > 3.5 ? "success" : results.cop > 2.5 ? "warning" : "error"}
                 icon={<Zap className="h-4 w-4" />}
+                onBadgeClick={() => setShowReviewSummary(true)}
               />
 
               <ResultCard
@@ -357,18 +362,67 @@ const HeatPumpCalculator = () => {
                 subtitle={`Flow temp: ${results.flowTemperature}°C`}
                 status={results.sizing.withinMCS ? "success" : "warning"}
                 icon={<Zap className="h-4 w-4" />}
+                onBadgeClick={() => setShowReviewSummary(true)}
               />
 
               <ResultCard
                 title="Annual Running Cost"
-                value={results.annualCost}
-                unit="£"
-                subtitle={`Daily: £${results.dailyCost.toFixed(2)}`}
+                value={formatCurrency(results.annualCost, 0)}
+                unit=""
+                subtitle={`Daily: ${formatCurrency(results.dailyCost)}`}
                 status="info"
                 icon={<PoundSterling className="h-4 w-4" />}
               />
             </div>
           </div>
+
+          {/* Review Summary */}
+          {showReviewSummary && results.reviewFindings.length > 0 && (
+            <InfoBox
+              title="Review Summary"
+              icon={<AlertTriangle className="h-5 w-5 text-elec-yellow" />}
+              as="section"
+            >
+              <div className="space-y-4">
+                <div className="flex justify-between items-center">
+                  <p className="text-sm text-elec-light/80">
+                    {results.reviewFindings.length} finding{results.reviewFindings.length !== 1 ? 's' : ''} require attention
+                  </p>
+                  <MobileButton
+                    onClick={() => setShowReviewSummary(false)}
+                    variant="outline"
+                    size="sm"
+                  >
+                    Close
+                  </MobileButton>
+                </div>
+                
+                <div className="space-y-3">
+                  {results.reviewFindings.map((finding) => (
+                    <div key={finding.id} className="border-l-2 border-elec-yellow/30 pl-3 space-y-1">
+                      <div className="flex items-center gap-2">
+                        <span className={cn(
+                          "w-2 h-2 rounded-full",
+                          finding.type === 'critical' ? "bg-red-500" :
+                          finding.type === 'warning' ? "bg-yellow-500" : "bg-blue-500"
+                        )} />
+                        <h4 className="font-medium text-elec-light text-sm">{finding.title}</h4>
+                      </div>
+                      <p className="text-xs text-elec-light/70">{finding.description}</p>
+                      <p className="text-xs text-elec-light/80 font-medium">
+                        Recommendation: {finding.recommendation}
+                      </p>
+                      {finding.regulation && (
+                        <p className="text-xs text-elec-yellow/80 italic">
+                          Regulation: {finding.regulation}
+                        </p>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </InfoBox>
+          )}
 
           {/* Performance Analysis */}
           <InfoBox

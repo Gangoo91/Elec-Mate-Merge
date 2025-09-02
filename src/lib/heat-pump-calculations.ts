@@ -20,6 +20,15 @@ export interface HeatPumpInputs {
   electricityRate: number;
 }
 
+export interface ReviewFinding {
+  id: string;
+  type: 'critical' | 'warning' | 'info';
+  title: string;
+  description: string;
+  recommendation: string;
+  regulation?: string;
+}
+
 export interface HeatPumpResults {
   spaceHeatingLoad: number;
   dhwLoad: number;
@@ -41,6 +50,7 @@ export interface HeatPumpResults {
     suitability: string;
     seasonalCOP: number;
   };
+  reviewFindings: ReviewFinding[];
 }
 
 export function calculateHeatPumpLoad(inputs: HeatPumpInputs): HeatPumpResults {
@@ -129,6 +139,22 @@ export function calculateHeatPumpLoad(inputs: HeatPumpInputs): HeatPumpResults {
     seasonalCOP
   };
 
+  // Generate review findings
+  const reviewFindings = getReviewFindings(inputs, {
+    spaceHeatingLoad,
+    dhwLoad,
+    totalHeatLoad,
+    cop,
+    electricalPower,
+    dailyCost,
+    annualCost,
+    carbonSavings,
+    flowTemperature,
+    sizing,
+    performance,
+    reviewFindings: [] // temporary for the call
+  });
+
   return {
     spaceHeatingLoad,
     dhwLoad,
@@ -140,7 +166,8 @@ export function calculateHeatPumpLoad(inputs: HeatPumpInputs): HeatPumpResults {
     carbonSavings,
     flowTemperature,
     sizing,
-    performance
+    performance,
+    reviewFindings
   };
 }
 
@@ -182,6 +209,96 @@ export function getRecommendations(inputs: HeatPumpInputs, results: HeatPumpResu
   }
 
   return recommendations;
+}
+
+export function getReviewFindings(inputs: HeatPumpInputs, results: HeatPumpResults): ReviewFinding[] {
+  const findings: ReviewFinding[] = [];
+
+  // High electrical power requirement
+  if (results.electricalPower > 12) {
+    findings.push({
+      id: 'high-electrical-power',
+      type: 'critical',
+      title: 'High Electrical Power Requirement',
+      description: `System requires ${results.electricalPower.toFixed(1)}kW electrical input`,
+      recommendation: 'Three-phase supply required. Ensure supply infrastructure can handle load.',
+      regulation: 'BS 7671 - Electrical installations require appropriate protective devices'
+    });
+  }
+
+  // Low COP
+  if (results.cop < 2.5) {
+    findings.push({
+      id: 'low-cop',
+      type: 'warning',
+      title: 'Low Coefficient of Performance',
+      description: `COP of ${results.cop.toFixed(1)} indicates poor efficiency`,
+      recommendation: 'Consider improving building fabric or selecting different heat pump type.',
+      regulation: 'MCS guidelines recommend COP > 2.5 for economic viability'
+    });
+  }
+
+  // High flow temperature
+  if (results.flowTemperature > 55) {
+    findings.push({
+      id: 'high-flow-temp',
+      type: 'warning',
+      title: 'High Flow Temperature Required',
+      description: `${results.flowTemperature}°C flow temperature reduces efficiency`,
+      recommendation: 'Consider upgrading to low temperature radiators or underfloor heating.',
+      regulation: 'Heat pump efficiency decreases significantly above 55°C flow temperature'
+    });
+  }
+
+  // Oversized system
+  if (results.sizing.oversized) {
+    findings.push({
+      id: 'oversized',
+      type: 'warning',
+      title: 'System May Be Oversized',
+      description: 'Heat pump exceeds MCS recommended sizing guidelines',
+      recommendation: 'Consider smaller unit to improve efficiency and reduce short cycling.',
+      regulation: 'MCS guidelines limit oversizing to prevent poor performance'
+    });
+  }
+
+  // Undersized system
+  if (results.sizing.undersized) {
+    findings.push({
+      id: 'undersized',
+      type: 'critical',
+      title: 'System May Be Undersized',
+      description: 'Heat pump below MCS minimum sizing requirements',
+      recommendation: 'Consider backup heating or improve building thermal performance.',
+      regulation: 'MCS requires adequate sizing to meet design heat load'
+    });
+  }
+
+  // Poor building fabric
+  if (inputs.insulationLevel === 'poor') {
+    findings.push({
+      id: 'poor-insulation',
+      type: 'info',
+      title: 'Poor Building Insulation',
+      description: 'Building fabric improvements could significantly reduce heat demand',
+      recommendation: 'Improve insulation before heat pump installation for better ROI.',
+      regulation: 'Building Regulations Part L encourages fabric-first approach'
+    });
+  }
+
+  // High annual costs
+  if (results.annualCost > 1500) {
+    findings.push({
+      id: 'high-running-costs',
+      type: 'info',
+      title: 'High Annual Running Costs',
+      description: `Estimated £${results.annualCost.toFixed(0)} annual heating cost`,
+      recommendation: 'Consider improving building efficiency or alternative heating solutions.',
+      regulation: 'Economic assessment required under MCS installation standards'
+    });
+  }
+
+  return findings;
 }
 
 export function getRegulatoryGuidance(): string[] {

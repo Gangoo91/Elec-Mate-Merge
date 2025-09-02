@@ -14,6 +14,7 @@ interface ResultCardProps {
   children?: React.ReactNode;
   isEmpty?: boolean;
   emptyMessage?: string;
+  onBadgeClick?: () => void;
 }
 
 const ResultCard = React.forwardRef<HTMLDivElement, ResultCardProps>(
@@ -28,6 +29,7 @@ const ResultCard = React.forwardRef<HTMLDivElement, ResultCardProps>(
     children, 
     isEmpty = false,
     emptyMessage = "Enter values to see results",
+    onBadgeClick,
     ...props 
   }, ref) => {
     const statusColors = {
@@ -85,20 +87,34 @@ const ResultCard = React.forwardRef<HTMLDivElement, ResultCardProps>(
               )}
               
               {status === "warning" && (
-                <Badge variant="outline" className="w-full justify-center border-amber-400/50 text-amber-400">
+                <Badge 
+                  variant="outline" 
+                  className={cn(
+                    "w-full justify-center border-amber-400/50 text-amber-400",
+                    onBadgeClick && "cursor-pointer hover:opacity-80 transition-opacity"
+                  )}
+                  onClick={onBadgeClick}
+                >
                   Review Required
                 </Badge>
               )}
               
               {status === "error" && (
-                <Badge variant="outline" className="w-full justify-center border-red-400/50 text-red-400">
-                  Error
+                <Badge 
+                  variant="outline" 
+                  className={cn(
+                    "w-full justify-center border-red-400/50 text-red-400",
+                    onBadgeClick && "cursor-pointer hover:opacity-80 transition-opacity"
+                  )}
+                  onClick={onBadgeClick}
+                >
+                  Review Required
                 </Badge>
               )}
               
               {status === "success" && (
                 <Badge variant="outline" className="w-full justify-center border-green-400/50 text-green-400">
-                  Compliant
+                  Optimal
                 </Badge>
               )}
             </div>
