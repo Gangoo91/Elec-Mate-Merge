@@ -63,43 +63,35 @@ const PoolResults = ({ result }: PoolResultsProps) => {
         <CardContent className="space-y-6">
           {/* Key Metrics Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <Card className="border-elec-yellow/20 bg-elec-dark/50 p-4">
-              <div className="text-center space-y-2">
-                <div className="text-xs sm:text-sm text-gray-400 uppercase tracking-wide">Total Load</div>
-                <div className="text-2xl sm:text-3xl font-bold text-elec-yellow">
-                  {result.totalLoad.toLocaleString()}
-                  <span className="text-lg text-gray-300 ml-1">W</span>
-                </div>
+            <div className="text-center space-y-2 p-4 rounded-lg border border-elec-yellow/20 bg-elec-dark/50">
+              <div className="text-xs sm:text-sm text-gray-400 uppercase tracking-wide">Total Load</div>
+              <div className="text-2xl sm:text-3xl font-bold text-elec-yellow">
+                {result.totalLoad.toLocaleString()}
+                <span className="text-lg text-gray-300 ml-1">W</span>
               </div>
-            </Card>
+            </div>
             
-            <Card className="border-elec-yellow/20 bg-elec-dark/50 p-4">
-              <div className="text-center space-y-2">
-                <div className="text-xs sm:text-sm text-gray-400 uppercase tracking-wide">Total Current</div>
-                <div className="text-2xl sm:text-3xl font-bold text-elec-yellow">
-                  {result.totalCurrent}
-                  <span className="text-lg text-gray-300 ml-1">A</span>
-                </div>
+            <div className="text-center space-y-2 p-4 rounded-lg border border-elec-yellow/20 bg-elec-dark/50">
+              <div className="text-xs sm:text-sm text-gray-400 uppercase tracking-wide">Total Current</div>
+              <div className="text-2xl sm:text-3xl font-bold text-elec-yellow">
+                {result.totalCurrent}
+                <span className="text-lg text-gray-300 ml-1">A</span>
               </div>
-            </Card>
+            </div>
             
-            <Card className="border-elec-yellow/20 bg-elec-dark/50 p-4">
-              <div className="text-center space-y-2">
-                <div className="text-xs sm:text-sm text-gray-400 uppercase tracking-wide">Diversity Factor</div>
-                <div className="text-2xl sm:text-3xl font-bold text-elec-yellow">
-                  {result.safetyFactors.diversityFactor}
-                </div>
+            <div className="text-center space-y-2 p-4 rounded-lg border border-elec-yellow/20 bg-elec-dark/50">
+              <div className="text-xs sm:text-sm text-gray-400 uppercase tracking-wide">Diversity Factor</div>
+              <div className="text-2xl sm:text-3xl font-bold text-elec-yellow">
+                {result.safetyFactors.diversityFactor}
               </div>
-            </Card>
+            </div>
             
-            <Card className="border-elec-yellow/20 bg-elec-dark/50 p-4">
-              <div className="text-center space-y-2">
-                <div className="text-xs sm:text-sm text-gray-400 uppercase tracking-wide">Safety Margin</div>
-                <div className="text-2xl sm:text-3xl font-bold text-elec-yellow">
-                  {result.safetyFactors.safetyMargin}
-                </div>
+            <div className="text-center space-y-2 p-4 rounded-lg border border-elec-yellow/20 bg-elec-dark/50">
+              <div className="text-xs sm:text-sm text-gray-400 uppercase tracking-wide">Safety Margin</div>
+              <div className="text-2xl sm:text-3xl font-bold text-elec-yellow">
+                {result.safetyFactors.safetyMargin}
               </div>
-            </Card>
+            </div>
           </div>
 
           <Separator className="bg-elec-yellow/20" />
@@ -135,52 +127,50 @@ const PoolResults = ({ result }: PoolResultsProps) => {
         <CardContent>
           <div className="space-y-4">
             {result.circuits.map((circuit, index) => (
-              <Card key={index} className={`${getComplianceColor(circuit.complianceStatus)} border transition-all hover:border-opacity-60`}>
-                <CardContent className="p-4 sm:p-6">
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
-                    <h4 className="font-semibold flex items-center gap-2 text-base sm:text-lg text-white">
-                      {getComplianceIcon(circuit.complianceStatus)}
-                      {circuit.name}
-                    </h4>
-                    <Badge variant="outline" className="self-start sm:self-center border-gray-500 text-gray-300">
-                      {circuit.ipRating}
-                    </Badge>
+              <div key={index} className={`${getComplianceColor(circuit.complianceStatus)} border transition-all hover:border-opacity-60 p-4 sm:p-6 rounded-lg`}>
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+                  <h4 className="font-semibold flex items-center gap-2 text-base sm:text-lg text-white">
+                    {getComplianceIcon(circuit.complianceStatus)}
+                    {circuit.name}
+                  </h4>
+                  <Badge variant="outline" className="self-start sm:self-center border-gray-500 text-gray-300">
+                    {circuit.ipRating}
+                  </Badge>
+                </div>
+                
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 text-sm">
+                  <div className="p-3 rounded-lg bg-elec-dark/50">
+                    <div className="text-gray-400 text-xs mb-1">Load</div>
+                    <div className="font-mono text-elec-yellow font-semibold">{circuit.load}W</div>
                   </div>
-                  
-                  <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 text-sm">
-                    <div className="p-3 rounded-lg bg-elec-dark/50">
-                      <div className="text-gray-400 text-xs mb-1">Load</div>
-                      <div className="font-mono text-elec-yellow font-semibold">{circuit.load}W</div>
-                    </div>
-                    <div className="p-3 rounded-lg bg-elec-dark/50">
-                      <div className="text-gray-400 text-xs mb-1">Current</div>
-                      <div className="font-mono text-elec-yellow font-semibold">{circuit.current.toFixed(1)}A</div>
-                    </div>
-                    <div className="p-3 rounded-lg bg-elec-dark/50">
-                      <div className="text-gray-400 text-xs mb-1">Cable</div>
-                      <div className="font-mono text-elec-yellow font-semibold">{circuit.cableSize}</div>
-                    </div>
-                    <div className="p-3 rounded-lg bg-elec-dark/50">
-                      <div className="text-gray-400 text-xs mb-1">Protection</div>
-                      <div className="font-mono text-elec-yellow font-semibold">{circuit.protectionRating}A</div>
-                    </div>
+                  <div className="p-3 rounded-lg bg-elec-dark/50">
+                    <div className="text-gray-400 text-xs mb-1">Current</div>
+                    <div className="font-mono text-elec-yellow font-semibold">{circuit.current.toFixed(1)}A</div>
                   </div>
+                  <div className="p-3 rounded-lg bg-elec-dark/50">
+                    <div className="text-gray-400 text-xs mb-1">Cable</div>
+                    <div className="font-mono text-elec-yellow font-semibold">{circuit.cableSize}</div>
+                  </div>
+                  <div className="p-3 rounded-lg bg-elec-dark/50">
+                    <div className="text-gray-400 text-xs mb-1">Protection</div>
+                    <div className="font-mono text-elec-yellow font-semibold">{circuit.protectionRating}A</div>
+                  </div>
+                </div>
 
-                  {circuit.specialRequirements.length > 0 && (
-                    <div className="mt-4 p-3 rounded-lg bg-elec-dark/30 border border-elec-yellow/10">
-                      <div className="text-xs text-gray-400 mb-2 font-medium">Special Requirements:</div>
-                      <ul className="text-xs text-white space-y-1">
-                        {circuit.specialRequirements.map((req, i) => (
-                          <li key={i} className="flex items-start gap-2">
-                            <span className="text-elec-yellow mt-1">•</span>
-                            {req}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-                </CardContent>
-              </Card>
+                {circuit.specialRequirements.length > 0 && (
+                  <div className="mt-4 p-3 rounded-lg bg-elec-dark/30 border border-elec-yellow/10">
+                    <div className="text-xs text-gray-400 mb-2 font-medium">Special Requirements:</div>
+                    <ul className="text-xs text-white space-y-1">
+                      {circuit.specialRequirements.map((req, i) => (
+                        <li key={i} className="flex items-start gap-2">
+                          <span className="text-elec-yellow mt-1">•</span>
+                          {req}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
             ))}
           </div>
         </CardContent>
@@ -231,50 +221,48 @@ const PoolResults = ({ result }: PoolResultsProps) => {
         <CardContent>
           <div className="grid gap-4 lg:gap-6">
             {Object.entries(result.zonalCompliance).map(([zone, requirements]) => (
-              <Card key={zone} className="border-elec-yellow/20 bg-elec-dark/30">
-                <CardContent className="p-4 sm:p-6">
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
-                    <h4 className="font-semibold text-elec-yellow text-base sm:text-lg">
-                      Zone {zone.slice(-1)} Classification
-                    </h4>
-                    <Badge variant="outline" className="self-start sm:self-center border-elec-yellow/50 text-elec-yellow">
-                      {requirements.ipRating}
-                    </Badge>
+              <div key={zone} className="border-elec-yellow/20 bg-elec-dark/30 p-4 sm:p-6 rounded-lg">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+                  <h4 className="font-semibold text-elec-yellow text-base sm:text-lg">
+                    Zone {zone.slice(-1)} Classification
+                  </h4>
+                  <Badge variant="outline" className="self-start sm:self-center border-elec-yellow/50 text-elec-yellow">
+                    {requirements.ipRating}
+                  </Badge>
+                </div>
+                
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+                  <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20">
+                    <h5 className="text-sm font-semibold text-green-300 mb-3 flex items-center gap-2">
+                      <CheckCircle className="h-4 w-4" />
+                      Permitted Equipment
+                    </h5>
+                    <ul className="space-y-2">
+                      {requirements.permitted.map((item, i) => (
+                        <li key={i} className="text-xs text-white flex items-start gap-2 leading-relaxed">
+                          <CheckCircle className="h-3 w-3 text-green-400 mt-1 flex-shrink-0" />
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
                   </div>
                   
-                  <div className="grid sm:grid-cols-2 gap-4 sm:gap-6">
-                    <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20">
-                      <h5 className="text-sm font-semibold text-green-300 mb-3 flex items-center gap-2">
-                        <CheckCircle className="h-4 w-4" />
-                        Permitted Equipment
-                      </h5>
-                      <ul className="space-y-2">
-                        {requirements.permitted.map((item, i) => (
-                          <li key={i} className="text-xs text-white flex items-start gap-2 leading-relaxed">
-                            <CheckCircle className="h-3 w-3 text-green-400 mt-1 flex-shrink-0" />
-                            {item}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                    
-                    <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
-                      <h5 className="text-sm font-semibold text-red-300 mb-3 flex items-center gap-2">
-                        <XCircle className="h-4 w-4" />
-                        Prohibited Equipment
-                      </h5>
-                      <ul className="space-y-2">
-                        {requirements.prohibited.map((item, i) => (
-                          <li key={i} className="text-xs text-white flex items-start gap-2 leading-relaxed">
-                            <XCircle className="h-3 w-3 text-red-400 mt-1 flex-shrink-0" />
-                            {item}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
+                  <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
+                    <h5 className="text-sm font-semibold text-red-300 mb-3 flex items-center gap-2">
+                      <XCircle className="h-4 w-4" />
+                      Prohibited Equipment
+                    </h5>
+                    <ul className="space-y-2">
+                      {requirements.prohibited.map((item, i) => (
+                        <li key={i} className="text-xs text-white flex items-start gap-2 leading-relaxed">
+                          <XCircle className="h-3 w-3 text-red-400 mt-1 flex-shrink-0" />
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
                   </div>
-                </CardContent>
-              </Card>
+                </div>
+              </div>
             ))}
           </div>
         </CardContent>

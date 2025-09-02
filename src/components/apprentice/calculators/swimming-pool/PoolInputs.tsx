@@ -73,7 +73,7 @@ const PoolInputs = ({ inputs, errors, onInputChange }: PoolInputsProps) => {
             </MobileSelectContent>
           </MobileSelect>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <MobileInput
               label="Pool Volume"
               type="number"
@@ -94,7 +94,7 @@ const PoolInputs = ({ inputs, errors, onInputChange }: PoolInputsProps) => {
             />
           </div>
 
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <MobileInput
               label="Length"
               type="number"
@@ -132,7 +132,7 @@ const PoolInputs = ({ inputs, errors, onInputChange }: PoolInputsProps) => {
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <MobileInput
               label="Pool Heater Power"
               type="number"
@@ -162,7 +162,7 @@ const PoolInputs = ({ inputs, errors, onInputChange }: PoolInputsProps) => {
             unit="W"
           />
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <MobileSelect value={inputs.filtrationSystem} onValueChange={(value) => onInputChange('filtrationSystem', value)}>
               <MobileSelectTrigger label="Filtration System">
                 <MobileSelectValue />
@@ -186,7 +186,7 @@ const PoolInputs = ({ inputs, errors, onInputChange }: PoolInputsProps) => {
             </MobileSelect>
           </div>
 
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
             <Badge 
               variant={inputs.hasUnderwaterLighting ? "default" : "outline"}
               className={`cursor-pointer ${inputs.hasUnderwaterLighting ? 'bg-elec-yellow text-elec-dark' : ''}`}
@@ -221,7 +221,7 @@ const PoolInputs = ({ inputs, errors, onInputChange }: PoolInputsProps) => {
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <MobileSelect value={inputs.supplyVoltage.toString()} onValueChange={(value) => onInputChange('supplyVoltage', parseInt(value))}>
               <MobileSelectTrigger label="Supply Voltage">
                 <MobileSelectValue />
@@ -244,7 +244,7 @@ const PoolInputs = ({ inputs, errors, onInputChange }: PoolInputsProps) => {
             </MobileSelect>
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <MobileSelect value={inputs.installationMethod} onValueChange={(value) => onInputChange('installationMethod', value)}>
               <MobileSelectTrigger label="Installation Method">
                 <MobileSelectValue />
@@ -268,7 +268,7 @@ const PoolInputs = ({ inputs, errors, onInputChange }: PoolInputsProps) => {
             </MobileSelect>
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <MobileInput
               label="Ambient Temperature"
               type="number"

@@ -32,7 +32,7 @@ const PoolGuidance = ({ result }: PoolGuidanceProps) => {
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="grid gap-4">
+          <div className="space-y-4">
             <div className="p-4 rounded-lg border border-elec-yellow/20 bg-elec-dark">
               <h4 className="font-medium text-elec-yellow mb-2 flex items-center gap-2">
                 <Shield className="h-4 w-4" />
@@ -90,11 +90,11 @@ const PoolGuidance = ({ result }: PoolGuidanceProps) => {
           </div>
         </CardHeader>
         <CardContent>
-          <div className="grid gap-4">
+          <div className="space-y-4">
             <div className="p-4 rounded-lg border border-red-500/20 bg-red-500/5">
-              <div className="flex items-center justify-between mb-2">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
                 <h4 className="font-medium text-red-300">Zone 0 - Highest Risk</h4>
-                <Badge variant="outline" className="border-red-500/30 text-red-300">IPX8 Required</Badge>
+                <Badge variant="outline" className="border-red-500/30 text-red-300 self-start sm:self-center">IPX8 Required</Badge>
               </div>
               <p className="text-sm text-white mb-2">Interior of pool, fountain, or water feature</p>
               <ul className="space-y-1 text-xs text-white">
@@ -108,9 +108,9 @@ const PoolGuidance = ({ result }: PoolGuidanceProps) => {
             </div>
 
             <div className="p-4 rounded-lg border border-yellow-500/20 bg-yellow-500/5">
-              <div className="flex items-center justify-between mb-2">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
                 <h4 className="font-medium text-yellow-300">Zone 1 - Medium Risk</h4>
-                <Badge variant="outline" className="border-yellow-500/30 text-yellow-300">IPX4 Minimum</Badge>
+                <Badge variant="outline" className="border-yellow-500/30 text-yellow-300 self-start sm:self-center">IPX4 Minimum</Badge>
               </div>
               <p className="text-sm text-white mb-2">2m horizontally from pool edge, up to 2.5m height</p>
               <ul className="space-y-1 text-xs text-white">
@@ -124,9 +124,9 @@ const PoolGuidance = ({ result }: PoolGuidanceProps) => {
             </div>
 
             <div className="p-4 rounded-lg border border-green-500/20 bg-green-500/5">
-              <div className="flex items-center justify-between mb-2">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
                 <h4 className="font-medium text-green-300">Zone 2 - Lower Risk</h4>
-                <Badge variant="outline" className="border-green-500/30 text-green-300">IPX2 Minimum</Badge>
+                <Badge variant="outline" className="border-green-500/30 text-green-300 self-start sm:self-center">IPX2 Minimum</Badge>
               </div>
               <p className="text-sm text-white mb-2">1.5m beyond Zone 1, up to 2.5m height</p>
               <ul className="space-y-1 text-xs text-white">
@@ -245,7 +245,7 @@ const PoolGuidance = ({ result }: PoolGuidanceProps) => {
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="grid gap-4">
+          <div className="space-y-4">
             <div className="p-4 rounded-lg border border-elec-yellow/20 bg-elec-dark">
               <h4 className="font-medium text-elec-yellow mb-2">Pool Pumps & Filtration</h4>
               <ul className="space-y-1 text-xs text-white">
@@ -292,7 +292,7 @@ const PoolGuidance = ({ result }: PoolGuidanceProps) => {
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="grid gap-4">
+          <div className="space-y-4">
             <div className="p-4 rounded-lg border border-elec-yellow/20 bg-elec-dark">
               <h4 className="font-medium text-elec-yellow mb-2">Load Calculations</h4>
               <ul className="space-y-1 text-xs text-white">
