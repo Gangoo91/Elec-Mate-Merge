@@ -5,10 +5,14 @@ import { MobileButton } from "@/components/ui/mobile-button";
 import { MobileSelectWrapper as MobileSelect } from "@/components/ui/mobile-select-wrapper";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { Zap, Calculator, RotateCcw, ArrowDownUp, Target } from "lucide-react";
-import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { ChevronDown, Calculator, RotateCcw, ArrowDownUp, Settings } from "lucide-react";
+import { calculateSelectivity, SelectivityInputs, SelectivityResult } from "@/lib/selectivity";
+import SelectivityInfo from "./selectivity/SelectivityInfo";
+import SelectivityGuidance from "./selectivity/SelectivityGuidance";
 
 const SelectivityCalculator = () => {
+  // Basic inputs
   const [upstreamDevice, setUpstreamDevice] = useState<string>("mccb");
   const [upstreamRating, setUpstreamRating] = useState<string>("");
   const [upstreamCurve, setUpstreamCurve] = useState<string>("");
@@ -16,106 +20,71 @@ const SelectivityCalculator = () => {
   const [downstreamRating, setDownstreamRating] = useState<string>("");
   const [downstreamCurve, setDownstreamCurve] = useState<string>("B");
   const [faultCurrent, setFaultCurrent] = useState<string>("");
-  const [result, setResult] = useState<{
-    selectivityRatio: number;
-    isSelective: boolean;
-    selectivityLimit: number;
-    recommendations: string[];
-    operatingTimes: {
-      upstream: number;
-      downstream: number;
-    };
-  } | null>(null);
+  
+  // Advanced inputs
+  const [showAdvanced, setShowAdvanced] = useState<boolean>(false);
+  const [upstreamMagneticSetting, setUpstreamMagneticSetting] = useState<string>("");
+  const [upstreamTimeDelay, setUpstreamTimeDelay] = useState<string>("");
+  const [upstreamBreakingCapacity, setUpstreamBreakingCapacity] = useState<string>("");
+  const [downstreamMagneticSetting, setDownstreamMagneticSetting] = useState<string>("");
+  const [downstreamBreakingCapacity, setDownstreamBreakingCapacity] = useState<string>("");
+  const [shortCircuitCurrent, setShortCircuitCurrent] = useState<string>("");
+  const [loadCurrent, setLoadCurrent] = useState<string>("");
+  const [cableLength, setCableLength] = useState<string>("");
+  const [ambientTemperature, setAmbientTemperature] = useState<string>("");
+  const [installationMethod, setInstallationMethod] = useState<string>("reference-method-c");
+  
+  const [result, setResult] = useState<SelectivityResult | null>(null);
 
   const deviceTypes = {
     mcb: "MCB (Miniature Circuit Breaker)",
-    mccb: "MCCB (Moulded Case Circuit Breaker)",
+    mccb: "MCCB (Moulded Case Circuit Breaker)", 
     fuse: "Fuse (BS 88/1361)",
     rcbo: "RCBO (Residual Current Breaker)"
   };
 
   const mcbCurves = {
     B: "B Curve (3-5 x In)",
-    C: "C Curve (5-10 x In)", 
+    C: "C Curve (5-10 x In)",
     D: "D Curve (10-20 x In)"
   };
 
-  const calculateSelectivity = () => {
+  const installationMethods = {
+    "reference-method-c": "Reference Method C (Clipped Direct)",
+    "reference-method-a": "Reference Method A (Enclosed)",
+    "reference-method-b": "Reference Method B (Trunking)",
+    "reference-method-e": "Reference Method E (Free Air)",
+    "underground": "Underground (Direct Buried)"
+  };
+
+  const calculateSelectivityResult = () => {
     const upRating = parseFloat(upstreamRating);
     const downRating = parseFloat(downstreamRating);
     const faultI = parseFloat(faultCurrent);
 
     if (upRating > 0 && downRating > 0 && faultI > 0) {
-      // Basic selectivity ratio
-      const selectivityRatio = upRating / downRating;
+      const inputs: SelectivityInputs = {
+        upstreamDevice,
+        upstreamRating: upRating,
+        upstreamCurve,
+        upstreamMagneticSetting: upstreamMagneticSetting ? parseFloat(upstreamMagneticSetting) : undefined,
+        upstreamTimeDelay: upstreamTimeDelay ? parseFloat(upstreamTimeDelay) : undefined,
+        upstreamBreakingCapacity: upstreamBreakingCapacity ? parseFloat(upstreamBreakingCapacity) : undefined,
+        downstreamDevice,
+        downstreamRating: downRating,
+        downstreamCurve,
+        downstreamMagneticSetting: downstreamMagneticSetting ? parseFloat(downstreamMagneticSetting) : undefined,
+        downstreamBreakingCapacity: downstreamBreakingCapacity ? parseFloat(downstreamBreakingCapacity) : undefined,
+        faultCurrent: faultI,
+        shortCircuitCurrent: shortCircuitCurrent ? parseFloat(shortCircuitCurrent) : faultI,
+        loadCurrent: loadCurrent ? parseFloat(loadCurrent) : upRating * 0.8,
+        cableLength: cableLength ? parseFloat(cableLength) : undefined,
+        ambientTemperature: ambientTemperature ? parseFloat(ambientTemperature) : undefined,
+        installationMethod
+      };
 
-      // Calculate magnetic trip levels
-      let downstreamMagnetic = 0;
-      let upstreamMagnetic = 0;
-
-      if (downstreamDevice === "mcb") {
-        switch (downstreamCurve) {
-          case "B": downstreamMagnetic = downRating * 5; break;
-          case "C": downstreamMagnetic = downRating * 10; break;
-          case "D": downstreamMagnetic = downRating * 20; break;
-        }
-      } else {
-        downstreamMagnetic = downRating * 10; // Default for MCCB/others
-      }
-
-      if (upstreamDevice === "mcb") {
-        switch (upstreamCurve) {
-          case "B": upstreamMagnetic = upRating * 5; break;
-          case "C": upstreamMagnetic = upRating * 10; break;
-          case "D": upstreamMagnetic = upRating * 20; break;
-        }
-      } else {
-        upstreamMagnetic = upRating * 8; // Typical MCCB magnetic setting
-      }
-
-      // Selectivity limit (current at which selectivity is lost)
-      const selectivityLimit = Math.min(upstreamMagnetic, downstreamMagnetic * 1.6);
-
-      // Estimate operating times (simplified)
-      const downstreamTime = faultI > downstreamMagnetic ? 0.01 : 0.1; // 10ms magnetic, 100ms thermal
-      const upstreamTime = faultI > upstreamMagnetic ? 0.02 : 0.4; // Delayed
-
-      // Check if selective
-      const isSelective = (faultI < selectivityLimit) && (upstreamTime > downstreamTime * 2);
-
-      // Generate recommendations
-      const recommendations = [];
-      
-      if (!isSelective) {
-        recommendations.push("Selectivity not achieved at fault current level");
-        recommendations.push("Consider increasing upstream device rating");
-        recommendations.push("Review downstream device curve type");
-      } else {
-        recommendations.push("Selectivity achieved up to " + selectivityLimit.toFixed(0) + "A");
-      }
-
-      if (selectivityRatio < 1.6) {
-        recommendations.push("Selectivity ratio too low - increase to minimum 1.6:1");
-      }
-
-      if (upstreamDevice === downstreamDevice && upstreamCurve === downstreamCurve) {
-        recommendations.push("Same device types may not provide selectivity");
-        recommendations.push("Consider time-delayed upstream protection");
-      }
-
-      recommendations.push("Verify with manufacturer's selectivity tables");
-      recommendations.push("Test coordination under actual fault conditions");
-
-      setResult({
-        selectivityRatio,
-        isSelective,
-        selectivityLimit,
-        recommendations,
-        operatingTimes: {
-          upstream: upstreamTime,
-          downstream: downstreamTime
-        }
-      });
+      const calculationResult = calculateSelectivity(inputs);
+      setResult(calculationResult);
     }
   };
 
@@ -127,23 +96,33 @@ const SelectivityCalculator = () => {
     setDownstreamRating("");
     setDownstreamCurve("B");
     setFaultCurrent("");
+    setUpstreamMagneticSetting("");
+    setUpstreamTimeDelay("");
+    setUpstreamBreakingCapacity("");
+    setDownstreamMagneticSetting("");
+    setDownstreamBreakingCapacity("");
+    setShortCircuitCurrent("");
+    setLoadCurrent("");
+    setCableLength("");
+    setAmbientTemperature("");
+    setInstallationMethod("reference-method-c");
     setResult(null);
   };
 
   return (
-    <Card className="border-elec-yellow/20 bg-elec-gray">
-      <CardHeader>
-        <div className="flex items-center gap-2">
-          <ArrowDownUp className="h-5 w-5 text-elec-yellow" />
-          <CardTitle>Selectivity/Discrimination Calculator</CardTitle>
-        </div>
-        <CardDescription>
-          Calculate protection device selectivity and discrimination for proper fault current coordination.
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Input Section */}
+    <div className="space-y-6">
+      {/* Input Section */}
+      <Card className="border-elec-yellow/20 bg-elec-gray">
+        <CardHeader>
+          <div className="flex items-center gap-2">
+            <ArrowDownUp className="h-5 w-5 text-elec-yellow" />
+            <CardTitle>Selectivity/Discrimination Calculator</CardTitle>
+          </div>
+          <CardDescription>
+            Calculate protection device selectivity and discrimination for proper fault current coordination.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-6">
           <div className="space-y-4">
             <h3 className="text-lg font-medium text-elec-yellow">Upstream Protection</h3>
             
@@ -214,9 +193,132 @@ const SelectivityCalculator = () => {
               unit="A"
             />
 
+            {/* Advanced Settings */}
+            <Collapsible open={showAdvanced} onOpenChange={setShowAdvanced}>
+              <CollapsibleTrigger asChild>
+                <MobileButton 
+                  variant="outline" 
+                  className="w-full justify-between"
+                  type="button"
+                >
+                  <div className="flex items-center gap-2">
+                    <Settings className="h-4 w-4" />
+                    Advanced Settings
+                  </div>
+                  <ChevronDown className={`h-4 w-4 transition-transform ${showAdvanced ? 'rotate-180' : ''}`} />
+                </MobileButton>
+              </CollapsibleTrigger>
+              <CollapsibleContent className="space-y-4 mt-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-4">
+                    <h4 className="text-sm font-medium text-elec-yellow">Upstream Settings</h4>
+                    <MobileInput
+                      label="Custom Magnetic Setting (A)"
+                      type="number"
+                      value={upstreamMagneticSetting}
+                      onChange={(e) => setUpstreamMagneticSetting(e.target.value)}
+                      placeholder="Auto-calculated if blank"
+                      unit="A"
+                    />
+                    <MobileInput
+                      label="Time Delay (s)"
+                      type="number"
+                      value={upstreamTimeDelay}
+                      onChange={(e) => setUpstreamTimeDelay(e.target.value)}
+                      placeholder="0.0"
+                      unit="s"
+                      step="0.1"
+                    />
+                    <MobileInput
+                      label="Breaking Capacity (kA)"
+                      type="number"
+                      value={upstreamBreakingCapacity}
+                      onChange={(e) => setUpstreamBreakingCapacity(e.target.value)}
+                      placeholder="e.g., 25"
+                      unit="kA"
+                    />
+                  </div>
+                  
+                  <div className="space-y-4">
+                    <h4 className="text-sm font-medium text-elec-yellow">Downstream Settings</h4>
+                    <MobileInput
+                      label="Custom Magnetic Setting (A)"
+                      type="number"
+                      value={downstreamMagneticSetting}
+                      onChange={(e) => setDownstreamMagneticSetting(e.target.value)}
+                      placeholder="Auto-calculated if blank"
+                      unit="A"
+                    />
+                    <MobileInput
+                      label="Breaking Capacity (kA)"
+                      type="number"
+                      value={downstreamBreakingCapacity}
+                      onChange={(e) => setDownstreamBreakingCapacity(e.target.value)}
+                      placeholder="e.g., 10"
+                      unit="kA"
+                    />
+                  </div>
+                </div>
+
+                <Separator />
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-4">
+                    <h4 className="text-sm font-medium text-elec-yellow">Circuit Parameters</h4>
+                    <MobileInput
+                      label="Short Circuit Current (A)"
+                      type="number"
+                      value={shortCircuitCurrent}
+                      onChange={(e) => setShortCircuitCurrent(e.target.value)}
+                      placeholder="Same as fault current if blank"
+                      unit="A"
+                    />
+                    <MobileInput
+                      label="Load Current (A)"
+                      type="number"
+                      value={loadCurrent}
+                      onChange={(e) => setLoadCurrent(e.target.value)}
+                      placeholder="80% of upstream rating if blank"
+                      unit="A"
+                    />
+                    <MobileInput
+                      label="Cable Length (m)"
+                      type="number"
+                      value={cableLength}
+                      onChange={(e) => setCableLength(e.target.value)}
+                      placeholder="e.g., 50"
+                      unit="m"
+                    />
+                  </div>
+
+                  <div className="space-y-4">
+                    <h4 className="text-sm font-medium text-elec-yellow">Environmental</h4>
+                    <MobileInput
+                      label="Ambient Temperature (°C)"
+                      type="number"
+                      value={ambientTemperature}
+                      onChange={(e) => setAmbientTemperature(e.target.value)}
+                      placeholder="e.g., 30"
+                      unit="°C"
+                    />
+                    <MobileSelect
+                      label="Installation Method"
+                      placeholder="Select installation method"
+                      value={installationMethod}
+                      onValueChange={setInstallationMethod}
+                      options={Object.entries(installationMethods).map(([key, method]) => ({ 
+                        value: key, 
+                        label: method 
+                      }))}
+                    />
+                  </div>
+                </div>
+              </CollapsibleContent>
+            </Collapsible>
+
             <div className="flex flex-col sm:flex-row gap-2">
               <MobileButton 
-                onClick={calculateSelectivity}
+                onClick={calculateSelectivityResult}
                 variant="elec"
                 size="wide"
                 disabled={!upstreamRating || !downstreamRating || !faultCurrent}
@@ -235,87 +337,15 @@ const SelectivityCalculator = () => {
               </MobileButton>
             </div>
           </div>
+        </CardContent>
+      </Card>
 
-          {/* Results Section */}
-          <div className="space-y-4">
-            <div className="rounded-md bg-elec-dark p-6 min-h-[400px]">
-              {result ? (
-                <div className="space-y-4">
-                  <div className="text-center">
-                    <h3 className="text-lg font-semibold text-elec-yellow mb-2">Selectivity Analysis</h3>
-                    <Badge 
-                      variant={result.isSelective ? "default" : "destructive"}
-                      className="mb-4"
-                    >
-                      {result.isSelective ? "✓ Selective" : "✗ Not Selective"}
-                    </Badge>
-                  </div>
-                  
-                  <Separator />
-                  
-                  <div className="space-y-3 text-sm">
-                    <div>
-                      <span className="text-muted-foreground">Selectivity Ratio:</span>
-                      <div className="font-mono text-elec-yellow text-lg">{result.selectivityRatio.toFixed(2)}:1</div>
-                    </div>
-                    
-                    <div>
-                      <span className="text-muted-foreground">Selectivity Limit:</span>
-                      <div className="font-mono text-elec-yellow">{result.selectivityLimit.toFixed(0)} A</div>
-                    </div>
+      {/* Information Section */}
+      <SelectivityInfo />
 
-                    <Separator />
-
-                    <div>
-                      <div className="flex items-center gap-2 mb-2">
-                        <Zap className="h-4 w-4 text-blue-400" />
-                        <span className="font-medium">Operating Times:</span>
-                      </div>
-                      <div className="pl-6 space-y-1">
-                        <div className="flex justify-between">
-                          <span className="text-xs text-muted-foreground">Downstream:</span>
-                          <span className="text-elec-yellow">{(result.operatingTimes.downstream * 1000).toFixed(0)}ms</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-xs text-muted-foreground">Upstream:</span>
-                          <span className="text-elec-yellow">{(result.operatingTimes.upstream * 1000).toFixed(0)}ms</span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <Separator />
-
-                    <div>
-                      <div className="flex items-center gap-2 mb-2">
-                        <Target className="h-4 w-4 text-orange-400" />
-                        <span className="font-medium">Recommendations:</span>
-                      </div>
-                      <ul className="space-y-1 pl-6">
-                        {result.recommendations.map((rec, index) => (
-                          <li key={index} className="text-xs text-muted-foreground">• {rec}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              ) : (
-                <div className="flex items-center justify-center h-full text-muted-foreground">
-                  Configure protection devices to analyse selectivity
-                </div>
-              )}
-            </div>
-
-            <Alert className="border-blue-500/20 bg-blue-500/10">
-              <ArrowDownUp className="h-4 w-4 text-blue-500" />
-              <AlertDescription className="text-blue-200">
-                This is a simplified selectivity analysis. Always verify with manufacturer's 
-                selectivity tables and consider fault current asymmetry factors.
-              </AlertDescription>
-            </Alert>
-          </div>
-        </div>
-      </CardContent>
-    </Card>
+      {/* Results Section */}
+      {result && <SelectivityGuidance result={result} />}
+    </div>
   );
 };
 
