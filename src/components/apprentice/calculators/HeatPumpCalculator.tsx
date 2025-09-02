@@ -163,7 +163,7 @@ const HeatPumpCalculator = () => {
   }));
 
   return (
-    <div className="space-y-6">
+    <div className="w-full max-w-4xl mx-auto space-y-6 p-4 bg-elec-gray rounded-lg">
       {/* Header */}
       <div className="text-center space-y-2 mb-6">
         <div className="flex items-center justify-center gap-2 text-elec-yellow">
@@ -473,32 +473,58 @@ const HeatPumpCalculator = () => {
               <InfoBox
                 title="Recommendations"
                 icon={<Lightbulb className="h-5 w-5 text-elec-yellow" />}
-                points={recommendations}
                 as="section"
-              />
+              >
+                <div className="space-y-3 text-sm">
+                  {recommendations.map((rec, index) => (
+                    <div key={index} className="flex items-start gap-3">
+                      <div className="w-2 h-2 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
+                      <p className="text-elec-light/80 leading-relaxed">{rec}</p>
+                    </div>
+                  ))}
+                </div>
+              </InfoBox>
             ) : null;
           })()}
 
           {/* Why This Matters */}
-          <WhyThisMatters
+          <InfoBox
             title="Why Accurate Heat Pump Sizing Matters"
-            points={[
-              "Oversized heat pumps cycle frequently, reducing efficiency and increasing wear",
-              "Undersized systems cannot maintain comfort during cold weather",
-              "Proper sizing ensures optimal COP and lowest running costs",
-              "MCS requirements must be met for warranty and RHI eligibility",
-              "Flow temperatures affect efficiency - lower is better for heat pumps",
-              "Building fabric improvements often more cost-effective than larger heat pumps"
-            ]}
-          />
+            icon={<Lightbulb className="h-5 w-5 text-elec-yellow" />}
+            as="section"
+          >
+            <div className="space-y-3 text-sm">
+              {[
+                "Oversized heat pumps cycle frequently, reducing efficiency and increasing wear",
+                "Undersized systems cannot maintain comfort during cold weather", 
+                "Proper sizing ensures optimal COP and lowest running costs",
+                "MCS requirements must be met for warranty and RHI eligibility",
+                "Flow temperatures affect efficiency - lower is better for heat pumps",
+                "Building fabric improvements often more cost-effective than larger heat pumps"
+              ].map((point, index) => (
+                <div key={index} className="flex items-start gap-3">
+                  <div className="w-2 h-2 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
+                  <p className="text-elec-light/80 leading-relaxed">{point}</p>
+                </div>
+              ))}
+            </div>
+          </InfoBox>
 
           {/* Regulatory Guidance */}
           <InfoBox
             title="UK Regulatory Guidance & Standards"
             icon={<BookOpen className="h-5 w-5 text-elec-yellow" />}
-            points={getRegulatoryGuidance()}
             as="section"
-          />
+          >
+            <div className="space-y-3 text-sm">
+              {getRegulatoryGuidance().map((guidance, index) => (
+                <div key={index} className="flex items-start gap-3">
+                  <div className="w-2 h-2 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
+                  <p className="text-elec-light/80 leading-relaxed">{guidance}</p>
+                </div>
+              ))}
+            </div>
+          </InfoBox>
 
           {/* Installation Considerations */}
           <InfoBox
@@ -508,23 +534,37 @@ const HeatPumpCalculator = () => {
           >
             <div className="space-y-4 text-sm">
               <div>
-                <h4 className="font-semibold text-elec-light mb-2">Electrical Requirements:</h4>
-                <ul className="space-y-1 text-elec-light/80">
-                  <li>• Single phase suitable up to 12kW electrical input</li>
-                  <li>• Three-phase required for larger systems</li>
-                  <li>• Dedicated circuit with appropriate protective devices</li>
-                  <li>• Emergency controls and isolation switches required</li>
-                </ul>
+                <h4 className="font-semibold text-elec-light mb-3">Electrical Requirements:</h4>
+                <div className="space-y-2">
+                  {[
+                    "Single phase suitable up to 12kW electrical input",
+                    "Three-phase required for larger systems", 
+                    "Dedicated circuit with appropriate protective devices",
+                    "Emergency controls and isolation switches required"
+                  ].map((req, index) => (
+                    <div key={index} className="flex items-start gap-3">
+                      <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow mt-2.5 flex-shrink-0" />
+                      <p className="text-elec-light/80 leading-relaxed">{req}</p>
+                    </div>
+                  ))}
+                </div>
               </div>
               
               <div>
-                <h4 className="font-semibold text-elec-light mb-2">System Design:</h4>
-                <ul className="space-y-1 text-elec-light/80">
-                  <li>• Weather compensation controls improve efficiency</li>
-                  <li>• Buffer tanks may be required for short cycling</li>
-                  <li>• Defrost provision essential for air source systems</li>
-                  <li>• Backup heating consideration for extreme weather</li>
-                </ul>
+                <h4 className="font-semibold text-elec-light mb-3">System Design:</h4>
+                <div className="space-y-2">
+                  {[
+                    "Weather compensation controls improve efficiency",
+                    "Buffer tanks may be required for short cycling",
+                    "Defrost provision essential for air source systems", 
+                    "Backup heating consideration for extreme weather"
+                  ].map((design, index) => (
+                    <div key={index} className="flex items-start gap-3">
+                      <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow mt-2.5 flex-shrink-0" />
+                      <p className="text-elec-light/80 leading-relaxed">{design}</p>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </InfoBox>
