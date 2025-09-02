@@ -107,46 +107,66 @@ const MarineGuidance = ({ results, inputs }: MarineGuidanceProps) => {
             Load Analysis & Energy Management
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-3">
-              <h4 className="font-medium flex items-center gap-2">
-                <Eye className="h-4 w-4 text-elec-yellow" />
+        <CardContent className="space-y-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div className="space-y-4">
+              <h4 className="font-semibold text-lg flex items-center gap-2 text-white">
+                <Eye className="h-5 w-5 text-elec-yellow" />
                 Load Distribution Analysis
               </h4>
-              <div className="space-y-2 text-sm">
-                <div className="flex justify-between">
-                  <span>Continuous Loads:</span>
-                  <span>{results.totalContinuousLoad}W ({Math.round((results.totalContinuousLoad / results.peakLoad) * 100)}%)</span>
+              <div className="space-y-3 text-sm bg-elec-card p-4 rounded-lg border border-elec-yellow/10">
+                <div className="flex justify-between items-center">
+                  <span className="text-white">Continuous Loads:</span>
+                  <span className="text-elec-yellow font-medium">{results.totalContinuousLoad}W ({Math.round((results.totalContinuousLoad / results.peakLoad) * 100)}%)</span>
                 </div>
-                <div className="flex justify-between">
-                  <span>Intermittent Loads:</span>
-                  <span>{results.totalIntermittentLoad}W ({Math.round((results.totalIntermittentLoad / results.peakLoad) * 100)}%)</span>
+                <div className="flex justify-between items-center">
+                  <span className="text-white">Intermittent Loads:</span>
+                  <span className="text-elec-yellow font-medium">{results.totalIntermittentLoad}W ({Math.round((results.totalIntermittentLoad / results.peakLoad) * 100)}%)</span>
                 </div>
-                <div className="flex justify-between font-medium">
-                  <span>Peak Demand:</span>
-                  <span>{results.peakLoad}W</span>
+                <div className="flex justify-between items-center border-t border-elec-yellow/20 pt-2">
+                  <span className="text-white font-medium">Peak Demand:</span>
+                  <span className="text-elec-yellow font-bold">{results.peakLoad}W</span>
                 </div>
-                <div className="flex justify-between text-elec-yellow">
-                  <span>Current at Peak:</span>
-                  <span>{(results.peakLoad / inputs.systemVoltage).toFixed(1)}A</span>
+                <div className="flex justify-between items-center">
+                  <span className="text-white">Current at Peak:</span>
+                  <span className="text-elec-yellow font-medium">{(results.peakLoad / inputs.systemVoltage).toFixed(1)}A</span>
                 </div>
               </div>
             </div>
 
-            <div className="space-y-3">
-              <h4 className="font-medium flex items-center gap-2">
-                <BookOpen className="h-4 w-4 text-elec-yellow" />
+            <div className="space-y-4">
+              <h4 className="font-semibold text-lg flex items-center gap-2 text-white">
+                <BookOpen className="h-5 w-5 text-elec-yellow" />
                 Energy Management Guidelines
               </h4>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-                <li>• Monitor battery voltage regularly - never discharge below 50% for lead-acid</li>
-                <li>• Use load prioritisation: Navigation equipment first, comfort loads second</li>
-                <li>• Install battery monitor with Ah counting for accurate state of charge</li>
-                <li>• Consider inverter efficiency - typically 85-95% for quality units</li>
-                <li>• Implement low voltage disconnects to protect batteries</li>
-                <li>• Schedule high-draw equipment during charging periods</li>
-              </ul>
+              <div className="bg-elec-card p-4 rounded-lg border border-elec-yellow/10">
+                <ul className="space-y-3 text-sm text-white">
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow mt-1">•</span>
+                    <span>Monitor battery voltage regularly - never discharge below 50% for lead-acid</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow mt-1">•</span>
+                    <span>Use load prioritisation: Navigation equipment first, comfort loads second</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow mt-1">•</span>
+                    <span>Install battery monitor with Ah counting for accurate state of charge</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow mt-1">•</span>
+                    <span>Consider inverter efficiency - typically 85-95% for quality units</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow mt-1">•</span>
+                    <span>Implement low voltage disconnects to protect batteries</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow mt-1">•</span>
+                    <span>Schedule high-draw equipment during charging periods</span>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
         </CardContent>
@@ -160,50 +180,50 @@ const MarineGuidance = ({ results, inputs }: MarineGuidanceProps) => {
             Battery System Design & Maintenance
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-3">
-              <h4 className="font-medium">Battery Configuration</h4>
-              <div className="p-4 bg-elec-card rounded-lg border border-elec-yellow/10">
-                <div className="space-y-2 text-sm">
-                  <div className="flex justify-between">
-                    <span>Recommended Capacity:</span>
-                    <span className="font-medium">{results.recommendedBatteryCapacity}Ah @ {results.batteryBankVoltage}V</span>
+        <CardContent className="space-y-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div className="space-y-4">
+              <h4 className="font-semibold text-lg text-white">Battery Configuration</h4>
+              <div className="p-6 bg-elec-card rounded-lg border border-elec-yellow/20">
+                <div className="space-y-4 text-sm">
+                  <div className="flex justify-between items-center">
+                    <span className="text-white">Recommended Capacity:</span>
+                    <span className="font-bold text-elec-yellow">{results.recommendedBatteryCapacity}Ah @ {results.batteryBankVoltage}V</span>
                   </div>
-                  <div className="flex justify-between">
-                    <span>Battery Configuration:</span>
-                    <span>{results.numberOfBatteries} × 100Ah batteries</span>
+                  <div className="flex justify-between items-center">
+                    <span className="text-white">Battery Configuration:</span>
+                    <span className="text-white font-medium">{results.numberOfBatteries} × 100Ah batteries</span>
                   </div>
-                  <div className="flex justify-between">
-                    <span>Usable Capacity:</span>
-                    <span>{Math.round(results.recommendedBatteryCapacity * (inputs.maxDischarge / 100))}Ah</span>
+                  <div className="flex justify-between items-center">
+                    <span className="text-white">Usable Capacity:</span>
+                    <span className="text-white font-medium">{Math.round(results.recommendedBatteryCapacity * (inputs.maxDischarge / 100))}Ah</span>
                   </div>
-                  <div className="flex justify-between">
-                    <span>Reserve Capacity:</span>
-                    <span>{Math.round(results.recommendedBatteryCapacity * (1 - inputs.maxDischarge / 100))}Ah</span>
+                  <div className="flex justify-between items-center">
+                    <span className="text-white">Reserve Capacity:</span>
+                    <span className="text-white font-medium">{Math.round(results.recommendedBatteryCapacity * (1 - inputs.maxDischarge / 100))}Ah</span>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="space-y-3">
-              <h4 className="font-medium">Battery Technology Comparison</h4>
-              <div className="space-y-2 text-sm">
-                <div className="p-3 bg-elec-card rounded border border-elec-yellow/10">
-                  <div className="font-medium mb-1">Lead Acid (Flooded)</div>
-                  <div className="text-muted-foreground text-xs">
+            <div className="space-y-4">
+              <h4 className="font-semibold text-lg text-white">Battery Technology Comparison</h4>
+              <div className="space-y-3 text-sm">
+                <div className="p-4 bg-elec-card rounded-lg border border-elec-yellow/10">
+                  <div className="font-semibold mb-2 text-white">Lead Acid (Flooded)</div>
+                  <div className="text-white text-xs leading-relaxed">
                     • Lowest cost • Requires ventilation • 50% DoD • 3-5 year life • Regular maintenance
                   </div>
                 </div>
-                <div className="p-3 bg-elec-card rounded border border-elec-yellow/10">
-                  <div className="font-medium mb-1">AGM/Gel</div>
-                  <div className="text-muted-foreground text-xs">
+                <div className="p-4 bg-elec-card rounded-lg border border-elec-yellow/10">
+                  <div className="font-semibold mb-2 text-white">AGM/Gel</div>
+                  <div className="text-white text-xs leading-relaxed">
                     • Sealed design • 80% DoD • 5-7 year life • Minimal maintenance • Good vibration resistance
                   </div>
                 </div>
-                <div className="p-3 bg-elec-card rounded border border-green-500/20 bg-green-500/5">
-                  <div className="font-medium mb-1 text-green-400">LiFePO4 (Recommended for performance)</div>
-                  <div className="text-muted-foreground text-xs">
+                <div className="p-4 bg-elec-card rounded-lg border border-green-500/30 bg-green-500/10">
+                  <div className="font-semibold mb-2 text-green-400">LiFePO4 (Recommended for performance)</div>
+                  <div className="text-white text-xs leading-relaxed">
                     • 90% DoD • 10-15 year life • Lightweight • Fast charging • Built-in BMS protection
                   </div>
                 </div>
@@ -211,23 +231,59 @@ const MarineGuidance = ({ results, inputs }: MarineGuidanceProps) => {
             </div>
           </div>
 
-          <div className="space-y-3">
-            <h4 className="font-medium">Installation Requirements</h4>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <ul className="space-y-1 text-sm text-muted-foreground">
-                <li>• Install in ventilated compartment (except LiFePO4)</li>
-                <li>• Secure against movement in heavy seas</li>
-                <li>• Use marine-grade battery boxes with drainage</li>
-                <li>• Install battery isolator switches</li>
-                <li>• Provide easy access for maintenance</li>
-              </ul>
-              <ul className="space-y-1 text-sm text-muted-foreground">
-                <li>• Install battery temperature sensors</li>
-                <li>• Use appropriate battery bank fusing</li>
-                <li>• Ensure proper cable terminations</li>
-                <li>• Label all circuits clearly</li>
-                <li>• Install low voltage alarms</li>
-              </ul>
+          <div className="space-y-4">
+            <h4 className="font-semibold text-lg text-white text-center">Installation Requirements</h4>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="bg-elec-card p-4 rounded-lg border border-elec-yellow/10">
+                <h5 className="font-medium text-elec-yellow mb-3">Safety & Placement</h5>
+                <ul className="space-y-2 text-sm text-white">
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow mt-1">•</span>
+                    <span>Install in ventilated compartment (except LiFePO4)</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow mt-1">•</span>
+                    <span>Secure against movement in heavy seas</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow mt-1">•</span>
+                    <span>Use marine-grade battery boxes with drainage</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow mt-1">•</span>
+                    <span>Install battery isolator switches</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow mt-1">•</span>
+                    <span>Provide easy access for maintenance</span>
+                  </li>
+                </ul>
+              </div>
+              <div className="bg-elec-card p-4 rounded-lg border border-elec-yellow/10">
+                <h5 className="font-medium text-elec-yellow mb-3">Electrical & Monitoring</h5>
+                <ul className="space-y-2 text-sm text-white">
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow mt-1">•</span>
+                    <span>Install battery temperature sensors</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow mt-1">•</span>
+                    <span>Use appropriate battery bank fusing</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow mt-1">•</span>
+                    <span>Ensure proper cable terminations</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow mt-1">•</span>
+                    <span>Label all circuits clearly</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow mt-1">•</span>
+                    <span>Install low voltage alarms</span>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
         </CardContent>
@@ -241,48 +297,50 @@ const MarineGuidance = ({ results, inputs }: MarineGuidanceProps) => {
             Charging System Analysis
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-3">
-              <h4 className="font-medium">Charging Source Analysis</h4>
-              <div className="space-y-2">
-                <div className="flex justify-between text-sm">
-                  <span>Engine Alternator:</span>
-                  <span>{inputs.alternatorRating}W ({Math.round((inputs.alternatorRating / results.totalChargingCapacity) * 100)}%)</span>
-                </div>
-                <div className="flex justify-between text-sm">
-                  <span>Solar Panels:</span>
-                  <span>{inputs.solarPanels}W ({Math.round((inputs.solarPanels / results.totalChargingCapacity) * 100)}%)</span>
-                </div>
-                <div className="flex justify-between text-sm">
-                  <span>Wind Generator:</span>
-                  <span>{inputs.windGenerator}W ({Math.round((inputs.windGenerator / results.totalChargingCapacity) * 100)}%)</span>
-                </div>
-                <div className="flex justify-between text-sm">
-                  <span>Shore Charger:</span>
-                  <span>{inputs.shoreCharger}W ({Math.round((inputs.shoreCharger / results.totalChargingCapacity) * 100)}%)</span>
-                </div>
-                <div className="flex justify-between text-sm font-medium border-t border-elec-yellow/20 pt-2">
-                  <span>Total Capacity:</span>
-                  <span>{results.totalChargingCapacity}W</span>
+        <CardContent className="space-y-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div className="space-y-4">
+              <h4 className="font-semibold text-lg text-white">Charging Source Analysis</h4>
+              <div className="bg-elec-card p-6 rounded-lg border border-elec-yellow/20">
+                <div className="space-y-3">
+                  <div className="flex justify-between items-center text-sm">
+                    <span className="text-white">Engine Alternator:</span>
+                    <span className="text-elec-yellow font-medium">{inputs.alternatorRating}W ({Math.round((inputs.alternatorRating / results.totalChargingCapacity) * 100)}%)</span>
+                  </div>
+                  <div className="flex justify-between items-center text-sm">
+                    <span className="text-white">Solar Panels:</span>
+                    <span className="text-elec-yellow font-medium">{inputs.solarPanels}W ({Math.round((inputs.solarPanels / results.totalChargingCapacity) * 100)}%)</span>
+                  </div>
+                  <div className="flex justify-between items-center text-sm">
+                    <span className="text-white">Wind Generator:</span>
+                    <span className="text-elec-yellow font-medium">{inputs.windGenerator}W ({Math.round((inputs.windGenerator / results.totalChargingCapacity) * 100)}%)</span>
+                  </div>
+                  <div className="flex justify-between items-center text-sm">
+                    <span className="text-white">Shore Charger:</span>
+                    <span className="text-elec-yellow font-medium">{inputs.shoreCharger}W ({Math.round((inputs.shoreCharger / results.totalChargingCapacity) * 100)}%)</span>
+                  </div>
+                  <div className="flex justify-between items-center text-sm font-bold border-t border-elec-yellow/30 pt-3">
+                    <span className="text-white">Total Capacity:</span>
+                    <span className="text-elec-yellow text-lg">{results.totalChargingCapacity}W</span>
+                  </div>
                 </div>
               </div>
             </div>
 
-            <div className="space-y-3">
-              <h4 className="font-medium">Charging Recommendations</h4>
-              <div className="space-y-2 text-sm text-muted-foreground">
-                <div className="p-3 bg-elec-card rounded border border-elec-yellow/10">
-                  <div className="font-medium text-elec-light mb-1">Alternator Sizing</div>
-                  <div>Minimum 20% of battery bank capacity (Ah) for adequate charging rate</div>
+            <div className="space-y-4">
+              <h4 className="font-semibold text-lg text-white">Charging Recommendations</h4>
+              <div className="space-y-4">
+                <div className="p-4 bg-elec-card rounded-lg border border-elec-yellow/10">
+                  <div className="font-semibold text-elec-yellow mb-2">Alternator Sizing</div>
+                  <div className="text-white text-sm">Minimum 20% of battery bank capacity (Ah) for adequate charging rate</div>
                 </div>
-                <div className="p-3 bg-elec-card rounded border border-elec-yellow/10">
-                  <div className="font-medium text-elec-light mb-1">Solar Array</div>
-                  <div>Size for 20-30% of daily consumption to extend battery life</div>
+                <div className="p-4 bg-elec-card rounded-lg border border-elec-yellow/10">
+                  <div className="font-semibold text-elec-yellow mb-2">Solar Array</div>
+                  <div className="text-white text-sm">Size for 20-30% of daily consumption to extend battery life</div>
                 </div>
-                <div className="p-3 bg-elec-card rounded border border-elec-yellow/10">
-                  <div className="font-medium text-elec-light mb-1">Charge Controllers</div>
-                  <div>Use MPPT controllers for solar, 3-stage charging for alternators</div>
+                <div className="p-4 bg-elec-card rounded-lg border border-elec-yellow/10">
+                  <div className="font-semibold text-elec-yellow mb-2">Charge Controllers</div>
+                  <div className="text-white text-sm">Use MPPT controllers for solar, 3-stage charging for alternators</div>
                 </div>
               </div>
             </div>
