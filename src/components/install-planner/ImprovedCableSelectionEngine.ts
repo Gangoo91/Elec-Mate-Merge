@@ -274,7 +274,9 @@ export class ImprovedCableSelectionEngine {
       "swa": "swa",
       "lsf": "pvc-single",
       "armored": "swa",
-      "heat-resistant": "xlpe-single"
+      "heat-resistant": "xlpe-single",
+      "micc": "xlpe-single", // Map MICC to available type
+      "mineral-insulated": "xlpe-single"
     };
     return mapping[cableType] || "pvc-twin-earth";
   }
@@ -345,7 +347,8 @@ export class ImprovedCableSelectionEngine {
   }
 
   private static getMaxVoltageDropPercentage(loadType: string): number {
-    const lightingLoads = ["lighting", "emergency"];
+    // BS 7671 Appendix 4 Section 6.4 - Voltage drop limits
+    const lightingLoads = ["lighting", "emergency", "emergency-lighting"];
     return lightingLoads.includes(loadType) ? 3 : 5;
   }
 
