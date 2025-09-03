@@ -41,24 +41,34 @@ class RAMSPDFGenerator {
   }
 
   private addHeader(data: RAMSData, options: PDFOptions): void {
-    // HSE-style header with border
-    this.doc.setDrawColor(0, 0, 0);
+    // Professional HSE-style header with enhanced design
+    this.doc.setDrawColor(41, 128, 185);
+    this.doc.setLineWidth(3);
+    this.doc.rect(this.MARGIN, this.yPosition, this.pageWidth - (2 * this.MARGIN), 40);
+    
+    // Header background
+    this.doc.setFillColor(248, 250, 252);
+    this.doc.rect(this.MARGIN, this.yPosition, this.pageWidth - (2 * this.MARGIN), 40, 'F');
+    
+    // Redraw border
+    this.doc.setDrawColor(41, 128, 185);
     this.doc.setLineWidth(2);
-    this.doc.rect(this.MARGIN, this.yPosition, this.pageWidth - (2 * this.MARGIN), 35);
+    this.doc.rect(this.MARGIN, this.yPosition, this.pageWidth - (2 * this.MARGIN), 40);
     
     // Main title
-    this.doc.setFontSize(20);
+    this.doc.setFontSize(22);
     this.doc.setFont("helvetica", "bold");
-    this.doc.setTextColor(0, 0, 0);
-    this.doc.text("HEALTH & SAFETY", this.pageWidth / 2, this.yPosition + 12, { align: "center" });
-    this.doc.text("RISK ASSESSMENT", this.pageWidth / 2, this.yPosition + 24, { align: "center" });
+    this.doc.setTextColor(41, 128, 185);
+    this.doc.text("HEALTH & SAFETY", this.pageWidth / 2, this.yPosition + 15, { align: "center" });
+    this.doc.text("RISK ASSESSMENT", this.pageWidth / 2, this.yPosition + 28, { align: "center" });
     
-    this.yPosition += 45;
+    this.yPosition += 50;
     
     // Company name if provided
     if (options.companyName) {
       this.doc.setFontSize(14);
-      this.doc.setFont("helvetica", "normal");
+      this.doc.setFont("helvetica", "bold");
+      this.doc.setTextColor(0, 0, 0);
       this.doc.text(safeText(options.companyName), this.pageWidth / 2, this.yPosition, { align: "center" });
       this.yPosition += 15;
     }
@@ -241,12 +251,24 @@ class RAMSPDFGenerator {
     
     if (risks.length === 0) return;
 
-    this.checkPageBreak(60);
+    // Add new page in landscape orientation for risks table
+    this.doc.addPage('a4', 'landscape');
+    this.yPosition = this.MARGIN;
     
-    this.doc.setFontSize(12);
+    // Update page dimensions for landscape
+    const landscapeWidth = this.doc.internal.pageSize.getHeight();
+    const landscapeHeight = this.doc.internal.pageSize.getWidth();
+    
+    this.doc.setFontSize(16);
     this.doc.setFont("helvetica", "bold");
     this.doc.setTextColor(0, 0, 0);
     this.doc.text("Detailed Risk Assessment", this.MARGIN, this.yPosition);
+    this.yPosition += 15;
+
+    // Add risk matrix legend
+    this.doc.setFontSize(10);
+    this.doc.setFont("helvetica", "normal");
+    this.doc.text("Risk Rating: L = Likelihood (1-5), S = Severity (1-5), Risk = L × S", this.MARGIN, this.yPosition);
     this.yPosition += 10;
 
     const riskTableData = risks.map((risk, index) => {
@@ -276,38 +298,59 @@ class RAMSPDFGenerator {
       body: riskTableData,
       theme: "grid",
       headStyles: {
-        fillColor: [0, 0, 0],
+        fillColor: [41, 128, 185],
         textColor: [255, 255, 255],
         fontStyle: "bold",
-        fontSize: 8,
+        fontSize: 9,
         halign: "center",
         valign: "middle"
       },
       styles: {
-        fontSize: 7,
-        cellPadding: 2,
+        fontSize: 8,
+        cellPadding: 4,
         lineColor: [0, 0, 0],
         lineWidth: 0.5,
         overflow: 'linebreak',
         valign: 'top'
       },
       columnStyles: {
-        0: { cellWidth: 12, halign: "center", fontStyle: "bold" },
-        1: { cellWidth: 25 },
-        2: { cellWidth: 25 },
-        3: { cellWidth: 8, halign: "center" },
-        4: { cellWidth: 8, halign: "center" },
-        5: { cellWidth: 16, halign: "center", fontSize: 6 },
-        6: { cellWidth: 32 },
-        7: { cellWidth: 16, halign: "center", fontSize: 6 },
-        8: { cellWidth: 20 },
-        9: { cellWidth: 18 },
-        10: { cellWidth: 15 }
+        0: { cellWidth: 20, halign: "center", fontStyle: "bold", fillColor: [245, 245, 245] },
+        1: { cellWidth: 60 },
+        2: { cellWidth: 60 },
+        3: { cellWidth: 15, halign: "center" },
+        4: { cellWidth: 15, halign: "center" },
+        5: { cellWidth: 35, halign: "center", fontSize: 7 },
+        6: { cellWidth: 90 },
+        7: { cellWidth: 35, halign: "center", fontSize: 7 },
+        8: { cellWidth: 70 },
+        9: { cellWidth: 50 },
+        10: { cellWidth: 40 }
       },
-      margin: { left: this.MARGIN, right: this.MARGIN }
+      margin: { left: this.MARGIN, right: this.MARGIN },
+      didDrawCell: (data) => {
+        // Add risk level colour coding for risk rating cells
+        if (data.column.index === 5 || data.column.index === 7) {
+          const cellText = data.cell.text[0];
+          const riskRating = parseInt(cellText.split('\n')[0]);
+          if (riskRating) {
+            const [r, g, b] = getRiskColor(riskRating);
+            // Apply lighter background colour for risk levels
+            const lightR = Math.min(255, r + 150);
+            const lightG = Math.min(255, g + 150);
+            const lightB = Math.min(255, b + 150);
+            
+            data.cell.styles.fillColor = [lightR, lightG, lightB];
+          }
+        }
+      }
     });
 
-    this.yPosition = (this.doc as any).lastAutoTable.finalY + 15;
+    // Add footer to landscape page
+    this.addFooter(data);
+    
+    // Return to portrait for subsequent pages
+    this.doc.addPage('a4', 'portrait');
+    this.yPosition = this.MARGIN;
   }
 
   private addSignatures(data: RAMSData, options: PDFOptions): void {
