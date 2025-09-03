@@ -1,5 +1,5 @@
 import jsPDF from "jspdf";
-import "jspdf-autotable";
+import autoTable from "jspdf-autotable";
 import { RAMSData, RAMSReportOptions } from "@/types/rams";
 import { 
   safeText, 
@@ -115,7 +115,7 @@ class RAMSPDFGenerator {
       ["Document Generated:", safeDatetime(new Date())]
     ];
 
-    (this.doc as any).autoTable({
+    autoTable(this.doc, {
       startY: this.yPosition,
       body: projectInfo,
       theme: "plain",
@@ -153,7 +153,7 @@ class RAMSPDFGenerator {
       safeText(activity)
     ]);
 
-    (this.doc as any).autoTable({
+    autoTable(this.doc, {
       startY: this.yPosition,
       body: activitiesData,
       theme: "striped",
@@ -203,7 +203,7 @@ class RAMSPDFGenerator {
       ["Very High Risk (17-25):", riskCounts.veryHigh.toString()]
     ];
 
-    (this.doc as any).autoTable({
+    autoTable(this.doc, {
       startY: this.yPosition,
       body: summaryData,
       theme: "plain",
@@ -254,7 +254,7 @@ class RAMSPDFGenerator {
       ];
     });
 
-    (this.doc as any).autoTable({
+    autoTable(this.doc, {
       startY: this.yPosition,
       head: [["#", "Hazard", "Risk/Consequence", "L", "S", "Initial Risk", "Control Measures", "Residual Risk"]],
       body: riskTableData,
