@@ -133,34 +133,60 @@ const PoolInputs = ({ inputs, errors, onInputChange }: PoolInputsProps) => {
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <MobileInput
-              label="Pool Heater Power"
-              type="number"
-              value={inputs.heaterPower || ''}
-              onChange={(e) => onInputChange('heaterPower', parseFloat(e.target.value) || 0)}
-              placeholder="6000"
-              unit="W"
-              error={errors.heaterPower}
-            />
-            <MobileInput
-              label="Pump Motor Power"
-              type="number"
-              value={inputs.pumpPower || ''}
-              onChange={(e) => onInputChange('pumpPower', parseFloat(e.target.value) || 0)}
-              placeholder="1500"
-              unit="W"
-              error={errors.pumpPower}
-            />
+            <MobileSelect 
+              value={(inputs.heaterPower / 1000).toString()} 
+              onValueChange={(value) => onInputChange('heaterPower', parseFloat(value) * 1000)}
+            >
+              <MobileSelectTrigger label="Pool Heater Power">
+                <MobileSelectValue />
+              </MobileSelectTrigger>
+              <MobileSelectContent>
+                <MobileSelectItem value="3">3 kW</MobileSelectItem>
+                <MobileSelectItem value="6">6 kW</MobileSelectItem>
+                <MobileSelectItem value="9">9 kW</MobileSelectItem>
+                <MobileSelectItem value="12">12 kW</MobileSelectItem>
+                <MobileSelectItem value="15">15 kW</MobileSelectItem>
+                <MobileSelectItem value="18">18 kW</MobileSelectItem>
+                <MobileSelectItem value="24">24 kW</MobileSelectItem>
+              </MobileSelectContent>
+            </MobileSelect>
+
+            <MobileSelect 
+              value={(inputs.pumpPower / 1000).toString()} 
+              onValueChange={(value) => onInputChange('pumpPower', parseFloat(value) * 1000)}
+            >
+              <MobileSelectTrigger label="Pump Motor Power">
+                <MobileSelectValue />
+              </MobileSelectTrigger>
+              <MobileSelectContent>
+                <MobileSelectItem value="0.75">0.75 kW</MobileSelectItem>
+                <MobileSelectItem value="1.1">1.1 kW</MobileSelectItem>
+                <MobileSelectItem value="1.5">1.5 kW</MobileSelectItem>
+                <MobileSelectItem value="2.2">2.2 kW</MobileSelectItem>
+                <MobileSelectItem value="3">3 kW</MobileSelectItem>
+                <MobileSelectItem value="4">4 kW</MobileSelectItem>
+                <MobileSelectItem value="5.5">5.5 kW</MobileSelectItem>
+              </MobileSelectContent>
+            </MobileSelect>
           </div>
 
-          <MobileInput
-            label="Pool Lighting"
-            type="number"
-            value={inputs.lighting || ''}
-            onChange={(e) => onInputChange('lighting', parseFloat(e.target.value) || 0)}
-            placeholder="300"
-            unit="W"
-          />
+          <MobileSelect 
+            value={(inputs.lighting / 1000).toString()} 
+            onValueChange={(value) => onInputChange('lighting', parseFloat(value) * 1000)}
+          >
+            <MobileSelectTrigger label="Pool Lighting">
+              <MobileSelectValue />
+            </MobileSelectTrigger>
+            <MobileSelectContent>
+              <MobileSelectItem value="0.1">0.1 kW</MobileSelectItem>
+              <MobileSelectItem value="0.3">0.3 kW</MobileSelectItem>
+              <MobileSelectItem value="0.5">0.5 kW</MobileSelectItem>
+              <MobileSelectItem value="0.75">0.75 kW</MobileSelectItem>
+              <MobileSelectItem value="1">1 kW</MobileSelectItem>
+              <MobileSelectItem value="1.5">1.5 kW</MobileSelectItem>
+              <MobileSelectItem value="2">2 kW</MobileSelectItem>
+            </MobileSelectContent>
+          </MobileSelect>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <MobileSelect value={inputs.filtrationSystem} onValueChange={(value) => onInputChange('filtrationSystem', value)}>

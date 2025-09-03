@@ -35,7 +35,7 @@ const SwimmingPoolCalculator = () => {
               onInputChange={handleInputChange}
             />
             
-            <div className="flex gap-2">
+            <div className="flex flex-col sm:flex-row gap-2">
               <MobileButton 
                 onClick={calculateValues}
                 variant="elec"
@@ -45,7 +45,11 @@ const SwimmingPoolCalculator = () => {
               >
                 Calculate Pool Installation
               </MobileButton>
-              <MobileButton variant="elec-outline" onClick={resetCalculator}>
+              <MobileButton 
+                variant="elec-outline" 
+                onClick={resetCalculator}
+                className="w-full sm:w-auto flex items-center justify-center"
+              >
                 <RotateCcw className="h-4 w-4" />
               </MobileButton>
             </div>
