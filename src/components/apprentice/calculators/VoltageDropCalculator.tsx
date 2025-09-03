@@ -23,24 +23,38 @@ const VoltageDropCalculator = () => {
     limitPercent: number;
   } | null>(null);
 
-  // Cable resistance values (mΩ/m for copper T&E at 70°C)
+  const [cableType, setCableType] = useState<string>("copper-70");
+
+  // Extended cable resistance values (mΩ/m) covering different materials and temperatures
   const cableResistance = {
-    "1.0": 19.5,
-    "1.5": 13.3,
-    "2.5": 7.98,
-    "4.0": 4.95,
-    "6.0": 3.30,
-    "10.0": 1.95,
-    "16.0": 1.21,
-    "25.0": 0.795,
-    "35.0": 0.565
+    "copper-70": {
+      "1.0": 19.5, "1.5": 13.3, "2.5": 7.98, "4.0": 4.95, "6.0": 3.30, 
+      "10.0": 1.95, "16.0": 1.21, "25.0": 0.795, "35.0": 0.565, "50.0": 0.387,
+      "70.0": 0.278, "95.0": 0.206, "120.0": 0.164, "150.0": 0.132, 
+      "185.0": 0.107, "240.0": 0.0822
+    },
+    "copper-90": {
+      "1.0": 21.8, "1.5": 14.8, "2.5": 8.91, "4.0": 5.53, "6.0": 3.69,
+      "10.0": 2.18, "16.0": 1.35, "25.0": 0.888, "35.0": 0.631, "50.0": 0.432,
+      "70.0": 0.311, "95.0": 0.230, "120.0": 0.183, "150.0": 0.147,
+      "185.0": 0.119, "240.0": 0.0918
+    },
+    "aluminium-70": {
+      "16.0": 1.99, "25.0": 1.31, "35.0": 0.929, "50.0": 0.636, "70.0": 0.456,
+      "95.0": 0.338, "120.0": 0.269, "150.0": 0.216, "185.0": 0.175, "240.0": 0.135
+    },
+    "aluminium-90": {
+      "16.0": 2.22, "25.0": 1.46, "35.0": 1.04, "50.0": 0.711, "70.0": 0.509,
+      "95.0": 0.377, "120.0": 0.301, "150.0": 0.241, "185.0": 0.196, "240.0": 0.151
+    }
   };
 
 const calculateVoltageDrop = () => {
     const I = parseFloat(current);
     const L = parseFloat(length);
     const V = parseFloat(voltage);
-    const R = cableResistance[cableSize as keyof typeof cableResistance];
+    const resistanceData = cableResistance[cableType as keyof typeof cableResistance];
+    const R = resistanceData?.[cableSize as keyof typeof resistanceData];
 
     if (I > 0 && L > 0 && R && V > 0) {
       const limit = circuitType === "lighting" ? 3 : 5; // BS 7671 design limits
@@ -117,20 +131,26 @@ const reset = () => {
               unit="m"
             />
 
+            <MobileSelect value={cableType} onValueChange={setCableType}>
+              <MobileSelectTrigger label="Cable Type & Temperature">
+                <MobileSelectValue placeholder="Select cable type" />
+              </MobileSelectTrigger>
+              <MobileSelectContent>
+                <MobileSelectItem value="copper-70">Copper PVC (70°C)</MobileSelectItem>
+                <MobileSelectItem value="copper-90">Copper XLPE (90°C)</MobileSelectItem>
+                <MobileSelectItem value="aluminium-70">Aluminium PVC (70°C)</MobileSelectItem>
+                <MobileSelectItem value="aluminium-90">Aluminium XLPE (90°C)</MobileSelectItem>
+              </MobileSelectContent>
+            </MobileSelect>
+
             <MobileSelect value={cableSize} onValueChange={setCableSize}>
               <MobileSelectTrigger label="Cable Size (mm²)">
                 <MobileSelectValue placeholder="Select cable size" />
               </MobileSelectTrigger>
               <MobileSelectContent>
-                <MobileSelectItem value="1.0">1.0mm²</MobileSelectItem>
-                <MobileSelectItem value="1.5">1.5mm²</MobileSelectItem>
-                <MobileSelectItem value="2.5">2.5mm²</MobileSelectItem>
-                <MobileSelectItem value="4.0">4.0mm²</MobileSelectItem>
-                <MobileSelectItem value="6.0">6.0mm²</MobileSelectItem>
-                <MobileSelectItem value="10.0">10.0mm²</MobileSelectItem>
-                <MobileSelectItem value="16.0">16.0mm²</MobileSelectItem>
-                <MobileSelectItem value="25.0">25.0mm²</MobileSelectItem>
-                <MobileSelectItem value="35.0">35.0mm²</MobileSelectItem>
+                {cableType && Object.keys(cableResistance[cableType as keyof typeof cableResistance] || {}).map(size => (
+                  <MobileSelectItem key={size} value={size}>{size}mm²</MobileSelectItem>
+                ))}
               </MobileSelectContent>
             </MobileSelect>
 

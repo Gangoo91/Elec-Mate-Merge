@@ -192,9 +192,9 @@ const PowerFactorCalculator = () => {
                       <span className="text-white">{calculationMethod === 'power' ? 'Power Values' : 'V/I Parameters'}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-muted-foreground">BS 7671 Compliance:</span>
-                      <span className={parseFloat(powerFactor) >= 0.85 ? "text-green-400" : "text-red-400"}>
-                        {parseFloat(powerFactor) >= 0.85 ? "✓ Compliant" : "✗ Below minimum"}
+                      <span className="text-muted-foreground">Efficiency Rating:</span>
+                      <span className={parseFloat(powerFactor) >= 0.95 ? "text-green-400" : parseFloat(powerFactor) >= 0.85 ? "text-yellow-400" : "text-red-400"}>
+                        {parseFloat(powerFactor) >= 0.95 ? "✓ Excellent" : parseFloat(powerFactor) >= 0.85 ? "Good" : "Poor"}
                       </span>
                     </div>
                     {capacitorKVAr && targetPF && pfType === "lagging" && (
@@ -281,7 +281,7 @@ const PowerFactorCalculator = () => {
         <Alert className="border-blue-500/20 bg-blue-500/10">
           <Info className="h-4 w-4 text-blue-500" />
           <AlertDescription className="text-blue-200">
-            Power Factor = Active Power ÷ Apparent Power. BS 7671 requires minimum 0.85 for most installations. Ideal range: 0.95-1.0.
+            Power Factor = Active Power ÷ Apparent Power. Typical operating target: 0.95. BS 7671 considerations apply to voltage drop, protection sizing, and efficiency.
           </AlertDescription>
         </Alert>
       </CardContent>
