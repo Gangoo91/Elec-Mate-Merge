@@ -41,35 +41,27 @@ class RAMSPDFGenerator {
   }
 
   private addHeader(data: RAMSData, options: PDFOptions): void {
-    // Company logo if provided
-    if (options.logoUrl) {
-      try {
-        // Note: In real implementation, you'd need to load and add the image
-        // For now, we'll add a placeholder space
-        this.yPosition += 15;
-      } catch (error) {
-        console.warn('Could not load company logo:', error);
-      }
-    }
-
-    // Main title
-    this.doc.setFontSize(24);
-    this.doc.setFont("helvetica", "bold");
-    this.doc.setTextColor(41, 128, 185); // Professional blue
-    this.doc.text("RISK ASSESSMENT & METHOD STATEMENT", this.pageWidth / 2, this.yPosition, { align: "center" });
+    // HSE-style header with border
+    this.doc.setDrawColor(0, 0, 0);
+    this.doc.setLineWidth(2);
+    this.doc.rect(this.MARGIN, this.yPosition, this.pageWidth - (2 * this.MARGIN), 35);
     
-    this.yPosition += 15;
+    // Main title
+    this.doc.setFontSize(20);
+    this.doc.setFont("helvetica", "bold");
+    this.doc.setTextColor(0, 0, 0);
+    this.doc.text("HEALTH & SAFETY", this.pageWidth / 2, this.yPosition + 12, { align: "center" });
+    this.doc.text("RISK ASSESSMENT", this.pageWidth / 2, this.yPosition + 24, { align: "center" });
+    
+    this.yPosition += 45;
     
     // Company name if provided
     if (options.companyName) {
-      this.doc.setFontSize(16);
-      this.doc.setTextColor(0, 0, 0);
+      this.doc.setFontSize(14);
       this.doc.setFont("helvetica", "normal");
       this.doc.text(safeText(options.companyName), this.pageWidth / 2, this.yPosition, { align: "center" });
-      this.yPosition += 12;
+      this.yPosition += 15;
     }
-    
-    this.yPosition += 10;
   }
 
   private addFooter(data: RAMSData, pageNumber?: number): void {
@@ -96,27 +88,29 @@ class RAMSPDFGenerator {
   }
 
   private addPurposeStatement(): void {
-    this.doc.setFontSize(16);
+    this.doc.setFontSize(12);
     this.doc.setFont("helvetica", "bold");
     this.doc.setTextColor(0, 0, 0);
     this.doc.text("Purpose of this Assessment", this.MARGIN, this.yPosition);
-    this.yPosition += 10;
+    this.yPosition += 8;
 
-    this.doc.setFontSize(11);
+    this.doc.setFontSize(10);
     this.doc.setFont("helvetica", "normal");
-    const purposeText = [
-      "This Risk Assessment and Method Statement (RAMS) has been prepared to identify potential hazards",
-      "and risks associated with the electrical work activities, and to establish appropriate control measures",
-      "to ensure the safety of all personnel, visitors, and the public. This document ensures compliance",
-      "with health and safety regulations and best practices for safe working procedures."
+    const purposeLines = [
+      "This Health & Safety Risk Assessment identifies potential hazards and risks associated with electrical work activities.",
+      "It establishes appropriate control measures to ensure the safety of all personnel and the public, ensuring compliance",
+      "with the Health and Safety at Work Act 1974, CDM Regulations 2015, and BS 7671:2018+A2:2022 (18th Edition)."
     ];
 
-    purposeText.forEach(line => {
-      this.doc.text(line, this.MARGIN, this.yPosition, { maxWidth: this.pageWidth - (2 * this.MARGIN) });
-      this.yPosition += 6;
+    purposeLines.forEach(line => {
+      const splitLines = this.doc.splitTextToSize(line, this.pageWidth - (2 * this.MARGIN));
+      splitLines.forEach((splitLine: string) => {
+        this.doc.text(splitLine, this.MARGIN, this.yPosition);
+        this.yPosition += 5;
+      });
     });
 
-    this.yPosition += 15;
+    this.yPosition += 10;
   }
 
   private addProjectInfo(data: RAMSData): void {
@@ -249,11 +243,11 @@ class RAMSPDFGenerator {
 
     this.checkPageBreak(60);
     
-    this.doc.setFontSize(16);
+    this.doc.setFontSize(12);
     this.doc.setFont("helvetica", "bold");
     this.doc.setTextColor(0, 0, 0);
     this.doc.text("Detailed Risk Assessment", this.MARGIN, this.yPosition);
-    this.yPosition += 12;
+    this.yPosition += 10;
 
     const riskTableData = risks.map((risk, index) => {
       const likelihood = safeNumber(risk.likelihood);
@@ -263,51 +257,54 @@ class RAMSPDFGenerator {
 
       return [
         (index + 1).toString(),
-        truncateText(risk.hazard, 30),
-        truncateText(risk.risk, 30),
+        safeText(risk.hazard),
+        safeText(risk.risk),
         likelihood.toString(),
         severity.toString(),
-        `${riskRating} (${getRiskLevel(riskRating)})`,
-        truncateText(risk.controls || "No specific controls identified", 45),
-        `${residualRisk} (${getRiskLevel(residualRisk)})`
+        `${riskRating}\n${getRiskLevel(riskRating)}`,
+        safeText(risk.controls) || "No specific controls identified",
+        `${residualRisk}\n${getRiskLevel(residualRisk)}`,
+        safeText(risk.furtherAction) || "None required",
+        safeText(risk.responsible) || "Site Supervisor",
+        safeText(risk.actionBy) || "N/A"
       ];
     });
 
     autoTable(this.doc, {
       startY: this.yPosition,
-      head: [["#", "Hazard", "Risk/Consequence", "L", "S", "Initial Risk", "Control Measures/Mitigation", "Residual Risk"]],
+      head: [["Ref", "Hazard", "Risk/Harm", "L", "S", "Initial Risk\nRating", "Existing Controls", "Residual Risk\nRating", "Further Action\nRequired", "Person\nResponsible", "Action By\n(Date)"]],
       body: riskTableData,
-      theme: "striped",
+      theme: "grid",
       headStyles: {
-        fillColor: [41, 128, 185],
+        fillColor: [0, 0, 0],
         textColor: [255, 255, 255],
         fontStyle: "bold",
-        fontSize: 9,
-        halign: "center"
-      },
-      alternateRowStyles: { fillColor: [248, 250, 252] },
-      styles: {
         fontSize: 8,
-        cellPadding: 4,
-        lineColor: [220, 220, 220],
-        lineWidth: 0.1,
+        halign: "center",
+        valign: "middle"
+      },
+      styles: {
+        fontSize: 7,
+        cellPadding: 2,
+        lineColor: [0, 0, 0],
+        lineWidth: 0.5,
         overflow: 'linebreak',
         valign: 'top'
       },
       columnStyles: {
-        0: { cellWidth: 10, halign: "center", fontStyle: "bold" },
-        1: { cellWidth: 28 },
-        2: { cellWidth: 28 },
+        0: { cellWidth: 12, halign: "center", fontStyle: "bold" },
+        1: { cellWidth: 25 },
+        2: { cellWidth: 25 },
         3: { cellWidth: 8, halign: "center" },
         4: { cellWidth: 8, halign: "center" },
-        5: { cellWidth: 24, halign: "center", fontSize: 7 },
-        6: { cellWidth: 42 },
-        7: { cellWidth: 22, halign: "center", fontSize: 7 }
+        5: { cellWidth: 16, halign: "center", fontSize: 6 },
+        6: { cellWidth: 32 },
+        7: { cellWidth: 16, halign: "center", fontSize: 6 },
+        8: { cellWidth: 20 },
+        9: { cellWidth: 18 },
+        10: { cellWidth: 15 }
       },
-      margin: { left: this.MARGIN, right: this.MARGIN },
-        didDrawPage: (tableData) => {
-          this.addFooter(data, this.doc.getNumberOfPages());
-        }
+      margin: { left: this.MARGIN, right: this.MARGIN }
     });
 
     this.yPosition = (this.doc as any).lastAutoTable.finalY + 15;
@@ -316,131 +313,111 @@ class RAMSPDFGenerator {
   private addSignatures(data: RAMSData, options: PDFOptions): void {
     if (!options.signOff || !options.includeSignatures) return;
 
-    this.doc.addPage();
-    this.yPosition = this.MARGIN + 20;
+    this.checkPageBreak(120);
     
-    this.doc.setFontSize(18);
+    this.doc.setFontSize(14);
     this.doc.setFont("helvetica", "bold");
     this.doc.setTextColor(0, 0, 0);
-    this.doc.text("Document Approval & Sign-off", this.MARGIN, this.yPosition);
-    this.yPosition += 20;
+    this.doc.text("Assessment Approval", this.MARGIN, this.yPosition);
+    this.yPosition += 15;
 
     const signOffSections = [
       { title: "Prepared by:", data: options.signOff.preparedBy },
       { title: "Reviewed by:", data: options.signOff.reviewedBy },
       { title: "Approved by:", data: options.signOff.approvedBy }
-    ];
+    ].filter(section => section.data?.name);
 
-    signOffSections.forEach((section, index) => {
-      if (!section.data?.name) return;
+    if (signOffSections.length === 0) return;
 
-      this.checkPageBreak(100);
+    // Create signature table with all signatures in one row
+    const tableData = signOffSections.map(section => [
+      section.title,
+      section.data?.signatureDataUrl ? 'SIGNED' : 'PENDING',
+      safeText(section.data?.name),
+      safeDate(section.data?.date)
+    ]);
 
-      // Section title
-      this.doc.setFontSize(14);
-      this.doc.setFont("helvetica", "bold");
-      this.doc.text(section.title, this.MARGIN, this.yPosition);
-      this.yPosition += 15;
-
-      // Create signature box
-      const boxWidth = 160;
-      const boxHeight = 60;
-      
-      // Draw signature box
-      this.doc.setDrawColor(200, 200, 200);
-      this.doc.setLineWidth(0.5);
-      this.doc.rect(this.MARGIN, this.yPosition, boxWidth, boxHeight);
-
-      // Add signature if available
-      if (section.data.signatureDataUrl) {
-        try {
-          // Convert base64 to image and add to PDF
-          const img = new Image();
-          img.onload = () => {
-            this.doc.addImage(section.data.signatureDataUrl, 'PNG', 
-              this.MARGIN + 5, this.yPosition + 5, boxWidth - 10, boxHeight - 10);
-          };
-          img.src = section.data.signatureDataUrl;
-          
-          this.doc.setFontSize(8);
-          this.doc.setTextColor(100, 100, 100);
-          this.doc.text("Digitally Signed", this.MARGIN + 5, this.yPosition + boxHeight - 5);
-        } catch (error) {
-          console.warn('Could not add signature image:', error);
-          this.doc.setFontSize(10);
-          this.doc.setTextColor(150, 150, 150);
-          this.doc.text("Digital Signature Present", this.MARGIN + 5, this.yPosition + 30);
+    autoTable(this.doc, {
+      startY: this.yPosition,
+      head: [["Role", "Signature", "Name", "Date"]],
+      body: tableData,
+      theme: "grid",
+      headStyles: {
+        fillColor: [0, 0, 0],
+        textColor: [255, 255, 255],
+        fontStyle: "bold",
+        fontSize: 10,
+        halign: "center"
+      },
+      styles: {
+        fontSize: 9,
+        cellPadding: 8,
+        lineColor: [0, 0, 0],
+        lineWidth: 0.5,
+        valign: 'middle'
+      },
+      columnStyles: {
+        0: { cellWidth: 40, fontStyle: "bold" },
+        1: { cellWidth: 30, halign: "center" },
+        2: { cellWidth: 50 },
+        3: { cellWidth: 30, halign: "center" }
+      },
+      margin: { left: this.MARGIN, right: this.MARGIN },
+      didDrawCell: (data) => {
+        // Add actual signature images in the signature column
+        if (data.column.index === 1 && data.row.index >= 0) {
+          const sectionData = signOffSections[data.row.index]?.data;
+          if (sectionData?.signatureDataUrl) {
+            try {
+              // Synchronously add signature image
+              this.doc.addImage(
+                sectionData.signatureDataUrl, 
+                'PNG', 
+                data.cell.x + 2, 
+                data.cell.y + 2, 
+                data.cell.width - 4, 
+                data.cell.height - 4
+              );
+            } catch (error) {
+              console.warn('Could not add signature image:', error);
+            }
+          }
         }
-      } else {
-        // Placeholder text
-        this.doc.setFontSize(10);
-        this.doc.setTextColor(150, 150, 150);
-        this.doc.text("Signature", this.MARGIN + 5, this.yPosition + 30);
       }
-
-      // Add name and date below signature box
-      this.yPosition += boxHeight + 10;
-      
-      this.doc.setFontSize(11);
-      this.doc.setTextColor(0, 0, 0);
-      this.doc.setFont("helvetica", "normal");
-      this.doc.text(`Name: ${safeText(section.data.name)}`, this.MARGIN, this.yPosition);
-      
-      if (section.data.date) {
-        this.doc.text(`Date: ${safeDate(section.data.date)}`, this.MARGIN + 80, this.yPosition);
-      }
-      
-      this.yPosition += 30;
     });
 
-    // Add validation statement
-    this.yPosition += 10;
-    this.doc.setFontSize(12);
-    this.doc.setFont("helvetica", "bold");
-    this.doc.text("Declaration:", this.MARGIN, this.yPosition);
-    this.yPosition += 8;
-
-    const declarations = [
-      "I confirm that this Risk Assessment and Method Statement has been reviewed and approved.",
-      "All personnel involved in this work have been briefed on the identified risks and control measures.",
-      "This assessment is suitable and sufficient for the work activities described.",
-      "This document complies with current Health & Safety regulations and industry best practices."
-    ];
-
-    this.doc.setFontSize(10);
-    this.doc.setFont("helvetica", "normal");
-    declarations.forEach(declaration => {
-      this.doc.text(`• ${declaration}`, this.MARGIN, this.yPosition, { maxWidth: this.pageWidth - 40 });
-      this.yPosition += 6;
-    });
+    this.yPosition = (this.doc as any).lastAutoTable.finalY + 15;
   }
 
   private addImportantNotes(): void {
-    this.checkPageBreak(60);
+    this.checkPageBreak(50);
     
-    this.doc.setFontSize(14);
+    this.doc.setFontSize(12);
     this.doc.setFont("helvetica", "bold");
-    this.doc.setTextColor(220, 38, 127); // Important notice color
+    this.doc.setTextColor(0, 0, 0);
     this.doc.text("Important Safety Information", this.MARGIN, this.yPosition);
-    this.yPosition += 12;
+    this.yPosition += 10;
 
     const notes = [
-      "This RAMS document must be reviewed and understood by all personnel before work commences",
-      "All control measures must be implemented and maintained throughout the work activity",
+      "This assessment must be reviewed and understood by all personnel before work commences",
+      "All control measures must be implemented and maintained throughout the work activity", 
       "Any changes to work activities or site conditions must trigger a review of this assessment",
       "Report any incidents, near misses, or safety concerns immediately to the site supervisor",
-      "This document complies with BS 7671 18th Edition requirements and current CDM regulations",
       "Personal Protective Equipment (PPE) must be worn as specified in the control measures",
       "All electrical work must be carried out by competent, qualified electricians only"
     ];
 
     this.doc.setFont("helvetica", "normal");
-    this.doc.setFontSize(10);
+    this.doc.setFontSize(9);
     this.doc.setTextColor(0, 0, 0);
     
     notes.forEach(note => {
-      this.doc.text(`• ${note}`, this.MARGIN, this.yPosition, { maxWidth: this.pageWidth - 40 });
-      this.yPosition += 8;
+      const splitLines = this.doc.splitTextToSize(`• ${note}`, this.pageWidth - (2 * this.MARGIN));
+      splitLines.forEach((line: string) => {
+        this.doc.text(line, this.MARGIN, this.yPosition);
+        this.yPosition += 5;
+      });
+      this.yPosition += 2;
     });
   }
 

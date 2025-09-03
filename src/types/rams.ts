@@ -16,6 +16,11 @@ export interface RAMSRisk {
   riskRating: number;
   controls: string;
   residualRisk: number;
+  // HSE-style additional fields
+  furtherAction?: string;
+  responsible?: string;
+  actionBy?: string;
+  done?: boolean;
 }
 
 export interface RAMSReportOptions {
