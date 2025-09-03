@@ -242,26 +242,22 @@ const LoadDetailsStep = ({ planData, updatePlanData }: LoadDetailsStepProps) => 
         />
 
         <MobileSelectWrapper
-          label="Supply Voltage"
-          placeholder="Select supply voltage"
-          value={planData.voltage?.toString() || ""}
-          onValueChange={(value) => updatePlanData({ voltage: parseInt(value) })}
+          label="Supply System"
+          placeholder="Select supply system"
+          value={planData.voltage && planData.phases ? `${planData.voltage}-${planData.phases}` : ""}
+          onValueChange={(value) => {
+            const [voltage, phases] = value.split('-');
+            updatePlanData({ 
+              voltage: parseInt(voltage), 
+              phases: phases as "single" | "three"
+            });
+          }}
           options={[
-            ...(guidance.voltageOptions.includes("110") ? [{ value: "110", label: "110V (Site Supply)" }] : []),
-            ...(guidance.voltageOptions.includes("230") ? [{ value: "230", label: "230V (Single Phase)" }] : []),
-            ...(guidance.voltageOptions.includes("400") ? [{ value: "400", label: "400V (Three Phase)" }] : [])
+            { value: "110-single", label: "110V Single Phase (CTE/Site)" },
+            { value: "230-single", label: "230V Single Phase" },
+            { value: "400-three", label: "400V Three Phase" }
           ]}
-        />
-
-        <MobileSelectWrapper
-          label="System Type"
-          placeholder="Select system type"
-          value={planData.phases || ""}
-          onValueChange={(value: "single" | "three") => updatePlanData({ phases: value })}
-          options={[
-            ...(guidance.phaseOptions.includes("single") ? [{ value: "single", label: "Single Phase" }] : []),
-            ...(guidance.phaseOptions.includes("three") ? [{ value: "three", label: "Three Phase" }] : [])
-          ]}
+          hint="Combined voltage and phase configuration"
         />
 
         <MobileInputWrapper
