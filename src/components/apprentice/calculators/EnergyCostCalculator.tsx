@@ -8,9 +8,15 @@ import { Separator } from "@/components/ui/separator";
 import { ResultCard } from "@/components/ui/result-card";
 import WhyThisMatters from "@/components/common/WhyThisMatters";
 import { formatCurrency } from "@/lib/format";
-import { PoundSterling, Info, Calculator, RotateCcw, Zap, Leaf, Clock, Plus, Trash2, Home } from "lucide-react";
+import { PoundSterling, Info, Calculator, RotateCcw, Zap, Leaf, Clock, Plus, Trash2, Home, Building, Factory } from "lucide-react";
 import { useState, useEffect, useMemo } from "react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { 
+  environmentPresets, 
+  getCategoriesForEnvironment, 
+  getAppliancesForCategory,
+  type AppliancePreset 
+} from "@/data/presets";
 
 interface Appliance {
   id: string;
@@ -24,28 +30,12 @@ interface Appliance {
   cyclesPerWeek?: number;
 }
 
-interface AppliancePreset {
-  name: string;
-  powerW: number;
-  standbyW: number;
-  usageMode: "hoursPerDay" | "cyclesPerWeek";
-  hoursPerDay?: number;
-  cycleHours?: number;
-  cyclesPerWeek?: number;
-}
-
-const appliancePresets: Record<string, AppliancePreset> = {
-  oven: { name: "Oven", powerW: 2400, standbyW: 0, usageMode: "hoursPerDay", hoursPerDay: 1.0 },
-  airfryer: { name: "Air Fryer", powerW: 1500, standbyW: 0, usageMode: "hoursPerDay", hoursPerDay: 0.5 },
-  washingmachine: { name: "Washing Machine", powerW: 700, standbyW: 2, usageMode: "cyclesPerWeek", cycleHours: 1.5, cyclesPerWeek: 4 },
-  tumbledryer: { name: "Tumble Dryer", powerW: 2500, standbyW: 2, usageMode: "cyclesPerWeek", cycleHours: 1.0, cyclesPerWeek: 3 },
-  dishwasher: { name: "Dishwasher", powerW: 1800, standbyW: 2, usageMode: "cyclesPerWeek", cycleHours: 1.0, cyclesPerWeek: 3 },
-  fridge: { name: "Fridge/Freezer", powerW: 150, standbyW: 0, usageMode: "hoursPerDay", hoursPerDay: 24 },
-  tv: { name: "TV", powerW: 100, standbyW: 10, usageMode: "hoursPerDay", hoursPerDay: 4 },
-  kettle: { name: "Kettle", powerW: 3000, standbyW: 0, usageMode: "hoursPerDay", hoursPerDay: 0.2 },
-};
+// Environment and category state
+type Environment = "domestic" | "commercial" | "industrial";
 
 const EnergyCostCalculator = () => {
+  const [environment, setEnvironment] = useState<Environment>("domestic");
+  const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [appliances, setAppliances] = useState<Appliance[]>([]);
   const [dayRate, setDayRate] = useState<string>("0.30");
   const [nightRate, setNightRate] = useState<string>("0.15");
@@ -81,9 +71,12 @@ const EnergyCostCalculator = () => {
     }>;
   } | null>(null);
 
-  // Load appliances from localStorage on mount
+  // Load state from localStorage on mount
   useEffect(() => {
     const savedAppliances = localStorage.getItem('energyCost.appliances');
+    const savedEnvironment = localStorage.getItem('energyCost.environment');
+    const savedCategory = localStorage.getItem('energyCost.category');
+    
     if (savedAppliances) {
       try {
         setAppliances(JSON.parse(savedAppliances));
@@ -91,12 +84,33 @@ const EnergyCostCalculator = () => {
         console.error('Failed to load saved appliances:', error);
       }
     }
+    
+    if (savedEnvironment && (savedEnvironment === "domestic" || savedEnvironment === "commercial" || savedEnvironment === "industrial")) {
+      setEnvironment(savedEnvironment as Environment);
+    }
+    
+    if (savedCategory) {
+      setSelectedCategory(savedCategory);
+    }
   }, []);
 
-  // Save appliances to localStorage when they change
+  // Save state to localStorage when they change
   useEffect(() => {
     localStorage.setItem('energyCost.appliances', JSON.stringify(appliances));
   }, [appliances]);
+
+  useEffect(() => {
+    localStorage.setItem('energyCost.environment', environment);
+  }, [environment]);
+
+  useEffect(() => {
+    localStorage.setItem('energyCost.category', selectedCategory);
+  }, [selectedCategory]);
+
+  // Reset category when environment changes
+  useEffect(() => {
+    setSelectedCategory("");
+  }, [environment]);
 
   const calculateApplianceCosts = useMemo(() => {
     const dayRatePerKWh = parseFloat(dayRate);
@@ -203,7 +217,16 @@ const EnergyCostCalculator = () => {
   };
 
   const addAppliance = (presetKey?: string) => {
-    const preset = presetKey ? appliancePresets[presetKey] : null;
+    let preset: AppliancePreset | null = null;
+    
+    if (presetKey) {
+      // Get the appliances for the selected category
+      const categoryAppliances = selectedCategory 
+        ? getAppliancesForCategory(environment, selectedCategory)
+        : {};
+      preset = categoryAppliances[presetKey] || null;
+    }
+    
     const newAppliance: Appliance = {
       id: Date.now().toString(),
       name: preset?.name || "Custom Appliance",
@@ -227,6 +250,8 @@ const EnergyCostCalculator = () => {
   };
 
   const reset = () => {
+    setEnvironment("domestic");
+    setSelectedCategory("");
     setAppliances([]);
     setDayRate("0.30");
     setNightRate("0.15");
@@ -235,6 +260,31 @@ const EnergyCostCalculator = () => {
     setVatRate("5");
     setUseDualRate(false);
     setResult(null);
+  };
+
+  // Get available categories for current environment
+  const availableCategories = useMemo(() => {
+    return getCategoriesForEnvironment(environment);
+  }, [environment]);
+
+  // Get available appliances for current environment and category
+  const availableAppliances = useMemo(() => {
+    if (!selectedCategory) return {};
+    return getAppliancesForCategory(environment, selectedCategory);
+  }, [environment, selectedCategory]);
+
+  // Get environment icon
+  const getEnvironmentIcon = (env: Environment) => {
+    switch (env) {
+      case "domestic":
+        return <Home className="h-4 w-4" />;
+      case "commercial":
+        return <Building className="h-4 w-4" />;
+      case "industrial":
+        return <Factory className="h-4 w-4" />;
+      default:
+        return <Home className="h-4 w-4" />;
+    }
   };
 
   return (
@@ -250,14 +300,58 @@ const EnergyCostCalculator = () => {
       </CardHeader>
       <CardContent>
         <div className="space-y-6">
+          {/* Environment Selection */}
+          <div>
+            <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+              {getEnvironmentIcon(environment)}
+              Environment & Appliances
+            </h3>
+            <p className="text-sm text-muted-foreground mb-4">
+              Choose your environment to see relevant appliance categories and presets.
+            </p>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+              {(Object.keys(environmentPresets) as Environment[]).map((env) => (
+                <MobileButton
+                  key={env}
+                  variant={environment === env ? "elec" : "outline"}
+                  onClick={() => setEnvironment(env)}
+                  className="flex items-center gap-2 h-12"
+                >
+                  {getEnvironmentIcon(env)}
+                  {environmentPresets[env].name}
+                </MobileButton>
+              ))}
+            </div>
+
+            {/* Category Selection */}
+            {availableCategories.length > 0 && (
+              <div className="mb-4">
+                <MobileSelectWrapper
+                  label="Choose appliance category"
+                  value={selectedCategory}
+                  onValueChange={setSelectedCategory}
+                  options={[
+                    { value: "", label: "Select a category..." },
+                    ...availableCategories.map(cat => ({
+                      value: cat.key,
+                      label: cat.name
+                    }))
+                  ]}
+                  placeholder="Select category..."
+                />
+              </div>
+            )}
+          </div>
+
           {/* Appliances Section */}
           <div>
             <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
-              <Home className="h-5 w-5 text-elec-yellow" />
-              Appliances & Usage
+              <Zap className="h-5 w-5 text-elec-yellow" />
+              Your Appliances
             </h3>
             <p className="text-sm text-muted-foreground mb-4">
-              Add multiple appliances to see which costs most to run. Edit usage to match your household.
+              Add appliances to calculate their running costs. Edit quantities and usage patterns.
             </p>
             
             <div className="space-y-4">
@@ -366,11 +460,16 @@ const EnergyCostCalculator = () => {
                   onValueChange={(value) => {
                     if (value) addAppliance(value);
                   }}
-                  options={Object.entries(appliancePresets).map(([key, preset]) => ({
-                    value: key,
-                    label: preset.name,
-                  }))}
-                  placeholder="Choose preset..."
+                  options={
+                    selectedCategory 
+                      ? Object.entries(availableAppliances).map(([key, preset]) => ({
+                          value: key,
+                          label: preset.name,
+                        }))
+                      : []
+                  }
+                  placeholder={selectedCategory ? "Choose appliance..." : "Select category first..."}
+                  disabled={!selectedCategory}
                 />
                 <MobileButton
                   variant="outline"
