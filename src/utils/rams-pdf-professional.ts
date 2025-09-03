@@ -80,8 +80,8 @@ class RAMSPDFGenerator {
     this.doc.setTextColor(100);
     this.doc.setFont("helvetica", "normal");
     
-    // Document info
-    const footerText = `RAMS Document - ${truncateText(data.projectName, 30)} - Generated ${safeDatetime(new Date())}`;
+    // Document info with better date formatting
+    const footerText = `RAMS Document - ${truncateText(data.projectName, 30)} - Generated ${safeDate(new Date())}`;
     this.doc.text(footerText, this.pageWidth / 2, footerY, { align: "center" });
     
     // Page number if provided
@@ -135,7 +135,7 @@ class RAMSPDFGenerator {
       ["Location:", safeText(data.location) || "Not specified"],
       ["Assessment Date:", safeDate(data.date)],
       ["Assessor:", safeText(data.assessor) || "Not specified"],
-      ["Document Generated:", safeDatetime(new Date())]
+      ["Document Generated:", safeDate(new Date())]
     ];
 
     autoTable(this.doc, {
@@ -301,30 +301,30 @@ class RAMSPDFGenerator {
         fillColor: [41, 128, 185],
         textColor: [255, 255, 255],
         fontStyle: "bold",
-        fontSize: 9,
+        fontSize: 10,
         halign: "center",
         valign: "middle"
       },
       styles: {
-        fontSize: 8,
-        cellPadding: 4,
+        fontSize: 9,
+        cellPadding: 3,
         lineColor: [0, 0, 0],
         lineWidth: 0.5,
         overflow: 'linebreak',
         valign: 'top'
       },
       columnStyles: {
-        0: { cellWidth: 20, halign: "center", fontStyle: "bold", fillColor: [245, 245, 245] },
-        1: { cellWidth: 60 },
-        2: { cellWidth: 60 },
-        3: { cellWidth: 15, halign: "center" },
-        4: { cellWidth: 15, halign: "center" },
-        5: { cellWidth: 35, halign: "center", fontSize: 7 },
-        6: { cellWidth: 90 },
-        7: { cellWidth: 35, halign: "center", fontSize: 7 },
-        8: { cellWidth: 70 },
-        9: { cellWidth: 50 },
-        10: { cellWidth: 40 }
+        0: { cellWidth: 18, halign: "center", fontStyle: "bold", fillColor: [245, 245, 245] },
+        1: { cellWidth: 55 },
+        2: { cellWidth: 55 },
+        3: { cellWidth: 12, halign: "center" },
+        4: { cellWidth: 12, halign: "center" },
+        5: { cellWidth: 30, halign: "center", fontSize: 8 },
+        6: { cellWidth: 80 },
+        7: { cellWidth: 30, halign: "center", fontSize: 8 },
+        8: { cellWidth: 60 },
+        9: { cellWidth: 45 },
+        10: { cellWidth: 35 }
       },
       margin: { left: this.MARGIN, right: this.MARGIN },
       didDrawCell: (data) => {
