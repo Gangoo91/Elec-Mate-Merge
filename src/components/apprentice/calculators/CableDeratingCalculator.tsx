@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { MobileInput } from "@/components/ui/mobile-input";
 import { MobileButton } from "@/components/ui/mobile-button";
@@ -260,28 +259,6 @@ const CableDeratingCalculator = () => {
         </div>
       </CardHeader>
       <CardContent className="space-y-6">
-        {/* Compliance Status */}
-        {result?.compliance && (
-          <Alert className={`${result.compliance.overallCompliant ? 'border-green-500/20 bg-green-950/20' : 'border-red-500/20 bg-red-950/20'}`}>
-            {result.compliance.overallCompliant ? (
-              <CheckCircle2 className="h-4 w-4 text-green-500" />
-            ) : (
-              <AlertTriangle className="h-4 w-4 text-red-500" />
-            )}
-            <AlertDescription>
-              <div className="font-medium mb-2">
-                {result.compliance.overallCompliant ? "Ib ≤ In ≤ Iz: ✓ COMPLIANT" : "Ib ≤ In ≤ Iz: ✗ NON-COMPLIANT"}
-              </div>
-              <div className="text-sm grid grid-cols-3 gap-4">
-                <div>Ib = {result.compliance.Ib}A</div>
-                <div>In = {result.compliance.In}A</div>
-                <div>Iz = {result.compliance.Iz.toFixed(1)}A</div>
-              </div>
-              <div className="text-xs mt-1">Safety margin: {result.compliance.safetyMargin.toFixed(1)}%</div>
-            </AlertDescription>
-          </Alert>
-        )}
-
         <div className="space-y-6">
           {/* Input Section */}
           <div className="space-y-4">
@@ -449,44 +426,55 @@ const CableDeratingCalculator = () => {
                   {/* Derating Factors with Visual Indicators */}
                   <div className="space-y-3">
                     <h4 className="text-sm font-medium text-white">Derating Factors</h4>
-                    <div className="grid grid-cols-2 gap-3 text-sm">
-                      <div className="bg-muted/30 p-2 rounded">
-                        <span className="text-muted-foreground block">Temperature:</span>
-                        <div className="font-mono text-elec-yellow">{result.temperatureFactor.toFixed(3)}</div>
-                        <div className="w-full bg-muted/50 rounded-full h-2 mt-1">
+                    <div className="space-y-3">
+                      <div className="bg-muted/30 p-3 rounded">
+                        <div className="flex justify-between items-center mb-2">
+                          <span className="text-muted-foreground text-sm">Temperature:</span>
+                          <span className="font-mono text-elec-yellow font-medium">{result.temperatureFactor.toFixed(3)}</span>
+                        </div>
+                        <div className="w-full bg-muted/50 rounded-full h-2">
                           <div 
-                            className="bg-elec-yellow h-2 rounded-full" 
-                            style={{ width: `${result.temperatureFactor * 100}%` }}
+                            className="bg-elec-yellow h-2 rounded-full transition-all duration-300" 
+                            style={{ width: `${Math.max(result.temperatureFactor * 100, 5)}%` }}
                           />
                         </div>
                       </div>
-                      <div className="bg-muted/30 p-2 rounded">
-                        <span className="text-muted-foreground block">Grouping:</span>
-                        <div className="font-mono text-elec-yellow">{result.groupingFactor.toFixed(3)}</div>
-                        <div className="w-full bg-muted/50 rounded-full h-2 mt-1">
+                      
+                      <div className="bg-muted/30 p-3 rounded">
+                        <div className="flex justify-between items-center mb-2">
+                          <span className="text-muted-foreground text-sm">Grouping:</span>
+                          <span className="font-mono text-elec-yellow font-medium">{result.groupingFactor.toFixed(3)}</span>
+                        </div>
+                        <div className="w-full bg-muted/50 rounded-full h-2">
                           <div 
-                            className="bg-elec-yellow h-2 rounded-full" 
-                            style={{ width: `${result.groupingFactor * 100}%` }}
+                            className="bg-elec-yellow h-2 rounded-full transition-all duration-300" 
+                            style={{ width: `${Math.max(result.groupingFactor * 100, 5)}%` }}
                           />
                         </div>
                       </div>
-                      <div className="bg-muted/30 p-2 rounded">
-                        <span className="text-muted-foreground block">Thermal Insul:</span>
-                        <div className="font-mono text-elec-yellow">{result.thermalInsulationFactor.toFixed(3)}</div>
-                        <div className="w-full bg-muted/50 rounded-full h-2 mt-1">
+                      
+                      <div className="bg-muted/30 p-3 rounded">
+                        <div className="flex justify-between items-center mb-2">
+                          <span className="text-muted-foreground text-sm">Thermal Insulation:</span>
+                          <span className="font-mono text-elec-yellow font-medium">{result.thermalInsulationFactor.toFixed(3)}</span>
+                        </div>
+                        <div className="w-full bg-muted/50 rounded-full h-2">
                           <div 
-                            className="bg-elec-yellow h-2 rounded-full" 
-                            style={{ width: `${result.thermalInsulationFactor * 100}%` }}
+                            className="bg-elec-yellow h-2 rounded-full transition-all duration-300" 
+                            style={{ width: `${Math.max(result.thermalInsulationFactor * 100, 5)}%` }}
                           />
                         </div>
                       </div>
-                      <div className="bg-muted/30 p-2 rounded">
-                        <span className="text-muted-foreground block">Soil:</span>
-                        <div className="font-mono text-elec-yellow">{result.soilFactor.toFixed(3)}</div>
-                        <div className="w-full bg-muted/50 rounded-full h-2 mt-1">
+                      
+                      <div className="bg-muted/30 p-3 rounded">
+                        <div className="flex justify-between items-center mb-2">
+                          <span className="text-muted-foreground text-sm">Soil:</span>
+                          <span className="font-mono text-elec-yellow font-medium">{result.soilFactor.toFixed(3)}</span>
+                        </div>
+                        <div className="w-full bg-muted/50 rounded-full h-2">
                           <div 
-                            className="bg-elec-yellow h-2 rounded-full" 
-                            style={{ width: `${result.soilFactor * 100}%` }}
+                            className="bg-elec-yellow h-2 rounded-full transition-all duration-300" 
+                            style={{ width: `${Math.max(result.soilFactor * 100, 5)}%` }}
                           />
                         </div>
                       </div>
@@ -587,6 +575,28 @@ const CableDeratingCalculator = () => {
                 </div>
               )}
             </div>
+
+            {/* Compliance Status - positioned after results */}
+            {result?.compliance && (
+              <Alert className={`${result.compliance.overallCompliant ? 'border-green-500/20 bg-green-950/20' : 'border-red-500/20 bg-red-950/20'}`}>
+                {result.compliance.overallCompliant ? (
+                  <CheckCircle2 className="h-4 w-4 text-green-500" />
+                ) : (
+                  <AlertTriangle className="h-4 w-4 text-red-500" />
+                )}
+                <AlertDescription>
+                  <div className="font-medium mb-2">
+                    {result.compliance.overallCompliant ? "Ib ≤ In ≤ Iz: ✓ COMPLIANT" : "Ib ≤ In ≤ Iz: ✗ NON-COMPLIANT"}
+                  </div>
+                  <div className="text-sm grid grid-cols-3 gap-4">
+                    <div>Ib = {result.compliance.Ib}A</div>
+                    <div>In = {result.compliance.In}A</div>
+                    <div>Iz = {result.compliance.Iz.toFixed(1)}A</div>
+                  </div>
+                  <div className="text-xs mt-1">Safety margin: {result.compliance.safetyMargin.toFixed(1)}%</div>
+                </AlertDescription>
+              </Alert>
+            )}
 
             {result && result.warnings.length > 0 && (
               <Alert className="border-orange-500/20 bg-orange-500/10">
