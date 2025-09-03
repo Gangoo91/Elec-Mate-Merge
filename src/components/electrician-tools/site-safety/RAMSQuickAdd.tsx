@@ -60,45 +60,42 @@ export const RAMSQuickAdd: React.FC = () => {
         </p>
       </CardHeader>
       <CardContent>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4">
           {ramsTemplates.map((template) => (
             <Card
               key={template.id}
-              className="border-green-500/30 bg-green-500/5 hover:bg-green-500/10 transition-colors cursor-pointer group"
+              className="border-green-500/30 bg-green-500/5 hover:bg-green-500/10 transition-colors cursor-pointer group h-full"
             >
-              <CardContent className="p-3 space-y-2">
-                <div className="flex items-start justify-between gap-2">
-                  <div className="flex items-center gap-2">
-                    <span className="text-lg">{template.icon}</span>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-green-200 truncate">
-                        {template.hazard}
-                      </p>
-                    </div>
+              <CardContent className="p-4 h-full flex flex-col">
+                <div className="flex items-start gap-3 mb-3">
+                  <span className="text-2xl flex-shrink-0">{template.icon}</span>
+                  <div className="flex-1 min-w-0">
+                    <h4 className="text-sm font-medium text-green-200 leading-tight mb-1 break-words">
+                      {template.hazard}
+                    </h4>
+                    <p className="text-xs text-muted-foreground leading-relaxed break-words">
+                      {template.description}
+                    </p>
                   </div>
                 </div>
                 
-                <p className="text-xs text-muted-foreground line-clamp-2">
-                  {template.description}
-                </p>
-                
-                <div className="flex items-center justify-between gap-2">
-                  <div className="flex items-center gap-1">
+                <div className="mt-auto pt-3 border-t border-green-500/20">
+                  <div className="flex items-center justify-between gap-2">
                     <Badge
-                      className={`${getRiskLevelColor(template.likelihood, template.severity)} text-white text-xs px-1.5 py-0.5`}
+                      className={`${getRiskLevelColor(template.likelihood, template.severity)} text-white text-xs px-2 py-1 flex-shrink-0`}
                     >
                       L{template.likelihood} S{template.severity}
                     </Badge>
+                    
+                    <Button
+                      onClick={() => handleAddTemplate(template)}
+                      size="sm"
+                      className="bg-green-600 text-white hover:bg-green-700 h-7 px-3 text-xs flex-shrink-0 opacity-80 group-hover:opacity-100 transition-opacity"
+                    >
+                      <Plus className="h-3 w-3 mr-1" />
+                      Add
+                    </Button>
                   </div>
-                  
-                  <Button
-                    onClick={() => handleAddTemplate(template)}
-                    size="sm"
-                    className="bg-green-600 text-white hover:bg-green-700 h-6 px-2 text-xs opacity-80 group-hover:opacity-100 transition-opacity"
-                  >
-                    <Plus className="h-3 w-3 mr-1" />
-                    Add
-                  </Button>
                 </div>
               </CardContent>
             </Card>

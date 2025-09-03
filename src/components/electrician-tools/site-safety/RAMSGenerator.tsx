@@ -184,7 +184,7 @@ const RAMSGenerator: React.FC = () => {
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             <div>
               <Label htmlFor="projectName" className="text-white">Project Name *</Label>
               <Input
@@ -235,32 +235,35 @@ const RAMSGenerator: React.FC = () => {
           <CardTitle className="text-white">Work Activities ({ramsData.activities.length})</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="flex gap-2">
+          <div className="flex flex-col sm:flex-row gap-2">
             <Input
               value={newActivity}
               onChange={(e) => setNewActivity(e.target.value)}
               placeholder="Enter work activity"
-              className="bg-elec-dark/50 border-elec-yellow/20 text-white"
+              className="bg-elec-dark/50 border-elec-yellow/20 text-white flex-1"
               onKeyPress={(e) => e.key === 'Enter' && handleAddActivity()}
             />
             <Button
               onClick={handleAddActivity}
-              className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
+              className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 sm:px-4"
             >
-              <Plus className="h-4 w-4" />
+              <Plus className="h-4 w-4 sm:mr-2" />
+              <span className="hidden sm:inline">Add</span>
             </Button>
           </div>
           
           {ramsData.activities.length > 0 && (
             <div className="space-y-2">
               {ramsData.activities.map((activity, index) => (
-                <div key={index} className="flex items-center justify-between p-3 bg-elec-dark/30 rounded-lg">
-                  <span className="text-white">{index + 1}. {activity}</span>
+                <div key={index} className="flex items-start gap-3 p-3 bg-elec-dark/30 rounded-lg">
+                  <span className="text-white text-sm leading-relaxed flex-1 break-words">
+                    {index + 1}. {activity}
+                  </span>
                   <Button
                     onClick={() => removeActivity(index)}
                     size="sm"
                     variant="outline"
-                    className="border-red-500/30 text-red-400 hover:bg-red-500/10"
+                    className="border-red-500/30 text-red-400 hover:bg-red-500/10 flex-shrink-0"
                   >
                     <X className="h-4 w-4" />
                   </Button>
@@ -280,34 +283,34 @@ const RAMSGenerator: React.FC = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 mb-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-3 mb-4">
             <Card className="border-blue-500/30 bg-elec-gray/50">
-              <CardContent className="p-3 text-center">
-                <div className="text-lg font-bold text-blue-400">{riskStats.total}</div>
+              <CardContent className="p-2 sm:p-3 text-center">
+                <div className="text-base sm:text-lg font-bold text-blue-400">{riskStats.total}</div>
                 <div className="text-xs text-muted-foreground">Total</div>
               </CardContent>
             </Card>
             <Card className="border-green-500/30 bg-elec-gray/50">
-              <CardContent className="p-3 text-center">
-                <div className="text-lg font-bold text-green-400">{riskStats.low}</div>
+              <CardContent className="p-2 sm:p-3 text-center">
+                <div className="text-base sm:text-lg font-bold text-green-400">{riskStats.low}</div>
                 <div className="text-xs text-muted-foreground">Low</div>
               </CardContent>
             </Card>
             <Card className="border-yellow-500/30 bg-elec-gray/50">
-              <CardContent className="p-3 text-center">
-                <div className="text-lg font-bold text-yellow-400">{riskStats.medium}</div>
+              <CardContent className="p-2 sm:p-3 text-center">
+                <div className="text-base sm:text-lg font-bold text-yellow-400">{riskStats.medium}</div>
                 <div className="text-xs text-muted-foreground">Medium</div>
               </CardContent>
             </Card>
             <Card className="border-orange-500/30 bg-elec-gray/50">
-              <CardContent className="p-3 text-center">
-                <div className="text-lg font-bold text-orange-400">{riskStats.high}</div>
+              <CardContent className="p-2 sm:p-3 text-center">
+                <div className="text-base sm:text-lg font-bold text-orange-400">{riskStats.high}</div>
                 <div className="text-xs text-muted-foreground">High</div>
               </CardContent>
             </Card>
-            <Card className="border-red-500/30 bg-elec-gray/50">
-              <CardContent className="p-3 text-center">
-                <div className="text-lg font-bold text-red-400">{riskStats.veryHigh}</div>
+            <Card className="border-red-500/30 bg-elec-gray/50 col-span-2 sm:col-span-1">
+              <CardContent className="p-2 sm:p-3 text-center">
+                <div className="text-base sm:text-lg font-bold text-red-400">{riskStats.veryHigh}</div>
                 <div className="text-xs text-muted-foreground">Very High</div>
               </CardContent>
             </Card>
@@ -445,11 +448,11 @@ const RAMSGenerator: React.FC = () => {
       {/* Action Bar */}
       <Card className="border-elec-yellow/20 bg-elec-gray/80 backdrop-blur-sm">
         <CardContent className="p-4">
-          <div className="flex flex-col sm:flex-row gap-3">
+          <div className="flex flex-col gap-3">
             <Button
               onClick={() => setShowPreview(true)}
               variant="outline"
-              className="flex-1 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+              className="w-full border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
               disabled={!validation.isValid}
             >
               <Eye className="h-4 w-4 mr-2" />
@@ -458,7 +461,7 @@ const RAMSGenerator: React.FC = () => {
             
             <Button
               onClick={handleGeneratePDF}
-              className="flex-1 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
+              className="w-full bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
               disabled={!validation.isValid || isGenerating}
             >
               {isGenerating ? (
@@ -472,9 +475,9 @@ const RAMSGenerator: React.FC = () => {
             <Button
               onClick={reset}
               variant="outline"
-              className="border-red-500/30 text-red-400 hover:bg-red-500/10"
+              className="w-full border-red-500/30 text-red-400 hover:bg-red-500/10"
             >
-              Reset
+              Reset All Data
             </Button>
           </div>
           
