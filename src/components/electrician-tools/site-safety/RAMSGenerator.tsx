@@ -159,10 +159,21 @@ const RAMSGenerator: React.FC = () => {
   };
 
   const handleGeneratePDF = async () => {
+    // Enhanced validation with specific guidance
     if (!validation.isValid) {
       toast({
         title: 'Validation Error',
-        description: validation.errors.join(', '),
+        description: validation.errors.join('. ') + '. Please complete these sections first.',
+        variant: 'destructive'
+      });
+      return;
+    }
+
+    // Ensure we have at least one risk
+    if (!ramsData.risks || ramsData.risks.length === 0) {
+      toast({
+        title: 'No Risks Identified',
+        description: 'Please add at least one risk assessment before generating the PDF.',
         variant: 'destructive'
       });
       return;
@@ -170,17 +181,21 @@ const RAMSGenerator: React.FC = () => {
 
     setIsGenerating(true);
     try {
-      await generateRAMSPDF(ramsData, { ...reportOptions, signOff });
+      await generateRAMSPDF(ramsData, { 
+        ...reportOptions, 
+        signOff,
+        includeSignatures: true 
+      });
       toast({
-        title: 'PDF Generated',
-        description: 'RAMS document has been downloaded successfully.',
+        title: 'PDF Generated Successfully',
+        description: 'Professional RAMS document has been downloaded.',
         variant: 'success'
       });
     } catch (error) {
       console.error('Error generating PDF:', error);
       toast({
         title: 'Generation Failed',
-        description: 'Failed to generate PDF. Please try again.',
+        description: error instanceof Error ? error.message : 'Failed to generate PDF. Please check your data and try again.',
         variant: 'destructive'
       });
     } finally {
