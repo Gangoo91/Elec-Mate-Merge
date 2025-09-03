@@ -195,8 +195,12 @@ const EnergyCostCalculator = () => {
   }, [appliances, dayRate, nightRate, nightHours, standingCharge, vatRate, useDualRate]);
 
   useEffect(() => {
+    // Remove automatic calculation - now manual only
+  }, []);
+
+  const calculateResults = () => {
     setResult(calculateApplianceCosts);
-  }, [calculateApplianceCosts]);
+  };
 
   const addAppliance = (presetKey?: string) => {
     const preset = presetKey ? appliancePresets[presetKey] : null;
@@ -259,24 +263,15 @@ const EnergyCostCalculator = () => {
             <div className="space-y-4">
               {appliances.map((appliance) => (
                 <div key={appliance.id} className="border border-elec-yellow/20 rounded-lg p-4 space-y-4">
-                  <div className="flex items-center justify-between">
-                    <MobileInput
-                      label="Name"
-                      value={appliance.name}
-                      onChange={(e) => updateAppliance(appliance.id, { name: e.target.value })}
-                      placeholder="Appliance name"
-                    />
-                    <MobileButton
-                      variant="destructive"
-                      size="icon"
-                      onClick={() => removeAppliance(appliance.id)}
-                      className="ml-2"
-                    >
-                      <Trash2 className="h-4 w-4" />
-                    </MobileButton>
-                  </div>
-                  
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 items-end">
+                    <div className="sm:col-span-2">
+                      <MobileInput
+                        label="Name"
+                        value={appliance.name}
+                        onChange={(e) => updateAppliance(appliance.id, { name: e.target.value })}
+                        placeholder="Appliance name"
+                      />
+                    </div>
                     <MobileInput
                       label="Quantity"
                       type="number"
@@ -284,6 +279,17 @@ const EnergyCostCalculator = () => {
                       value={appliance.quantity.toString()}
                       onChange={(e) => updateAppliance(appliance.id, { quantity: parseInt(e.target.value) || 1 })}
                     />
+                    <MobileButton
+                      variant="destructive"
+                      size="icon"
+                      onClick={() => removeAppliance(appliance.id)}
+                      className="h-11"
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </MobileButton>
+                  </div>
+                  
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <MobileInput
                       label="Power"
                       type="number"
@@ -301,20 +307,22 @@ const EnergyCostCalculator = () => {
                   </div>
 
                   <div className="space-y-4">
-                    <div className="flex items-center gap-4">
-                      <label className="flex items-center gap-2">
+                    <div className="grid grid-cols-2 gap-4">
+                      <label className="flex items-center gap-2 p-3 border border-elec-yellow/20 rounded-lg cursor-pointer hover:bg-elec-yellow/5">
                         <input
                           type="radio"
                           checked={appliance.usageMode === "hoursPerDay"}
                           onChange={() => updateAppliance(appliance.id, { usageMode: "hoursPerDay" })}
+                          className="text-elec-yellow"
                         />
                         <span className="text-sm">Hours per day</span>
                       </label>
-                      <label className="flex items-center gap-2">
+                      <label className="flex items-center gap-2 p-3 border border-elec-yellow/20 rounded-lg cursor-pointer hover:bg-elec-yellow/5">
                         <input
                           type="radio"
                           checked={appliance.usageMode === "cyclesPerWeek"}
                           onChange={() => updateAppliance(appliance.id, { usageMode: "cyclesPerWeek" })}
+                          className="text-elec-yellow"
                         />
                         <span className="text-sm">Cycles per week</span>
                       </label>
@@ -351,7 +359,7 @@ const EnergyCostCalculator = () => {
                 </div>
               ))}
 
-              <div className="flex flex-wrap gap-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <MobileSelectWrapper
                   label="Add preset appliance"
                   value=""
@@ -367,7 +375,7 @@ const EnergyCostCalculator = () => {
                 <MobileButton
                   variant="outline"
                   onClick={() => addAppliance()}
-                  className="flex items-center gap-2"
+                  className="flex items-center gap-2 h-11"
                 >
                   <Plus className="h-4 w-4" />
                   Custom Appliance
@@ -447,6 +455,15 @@ const EnergyCostCalculator = () => {
           </div>
 
           <div className="flex gap-2">
+            <MobileButton 
+              onClick={calculateResults} 
+              className="flex-1" 
+              variant="elec" 
+              icon={<Calculator className="h-4 w-4" />}
+              disabled={appliances.length === 0}
+            >
+              Calculate Energy Costs
+            </MobileButton>
             <MobileButton variant="elec-outline" onClick={reset} className="flex items-center gap-2">
               <RotateCcw className="h-4 w-4" />
               Reset All
