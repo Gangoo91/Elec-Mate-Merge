@@ -442,8 +442,8 @@ const RAMSGenerator: React.FC = () => {
         </AccordionItem>
       </Accordion>
 
-      {/* Sticky Action Bar */}
-      <Card className="border-elec-yellow/20 bg-elec-gray/80 backdrop-blur-sm sticky bottom-4 z-10">
+      {/* Action Bar */}
+      <Card className="border-elec-yellow/20 bg-elec-gray/80 backdrop-blur-sm">
         <CardContent className="p-4">
           <div className="flex flex-col sm:flex-row gap-3">
             <Button
