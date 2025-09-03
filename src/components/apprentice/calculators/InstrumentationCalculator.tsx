@@ -315,21 +315,44 @@ const InstrumentationCalculator = () => {
             step="any"
           />
           
-          <MobileInputWrapper
-            label="Or Target Current"
-            type="number"
-            value={targetCurrent}
-            onChange={(value) => {
-              setTargetCurrent(value);
-              clearError('targetCurrent');
-            }}
-            placeholder="4-20"
-            error={errors.targetCurrent}
-            unit="mA"
-            min="4"
-            max="20"
-            step="0.1"
-          />
+          <MobileSelect value={targetCurrent} onValueChange={(value) => {
+            setTargetCurrent(value);
+            clearError('targetCurrent');
+          }}>
+            <MobileSelectTrigger label="Or Target Current" error={errors.targetCurrent}>
+              <MobileSelectValue placeholder="Select current (mA)" />
+            </MobileSelectTrigger>
+            <MobileSelectContent>
+              <MobileSelectItem value="4">4.0 mA (0%)</MobileSelectItem>
+              <MobileSelectItem value="6">6.0 mA (12.5%)</MobileSelectItem>
+              <MobileSelectItem value="8">8.0 mA (25%)</MobileSelectItem>
+              <MobileSelectItem value="10">10.0 mA (37.5%)</MobileSelectItem>
+              <MobileSelectItem value="12">12.0 mA (50%)</MobileSelectItem>
+              <MobileSelectItem value="14">14.0 mA (62.5%)</MobileSelectItem>
+              <MobileSelectItem value="16">16.0 mA (75%)</MobileSelectItem>
+              <MobileSelectItem value="18">18.0 mA (87.5%)</MobileSelectItem>
+              <MobileSelectItem value="20">20.0 mA (100%)</MobileSelectItem>
+              <MobileSelectItem value="">Custom...</MobileSelectItem>
+            </MobileSelectContent>
+          </MobileSelect>
+          
+          {targetCurrent === "" && (
+            <MobileInputWrapper
+              label="Custom Current"
+              type="number"
+              value=""
+              onChange={(value) => {
+                setTargetCurrent(value);
+                clearError('targetCurrent');
+              }}
+              placeholder="4-20"
+              error={errors.targetCurrent}
+              unit="mA"
+              min="4"
+              max="20"
+              step="0.1"
+            />
+          )}
         </div>
 
         {/* Loop Analysis Inputs (Optional) */}
@@ -339,34 +362,77 @@ const InstrumentationCalculator = () => {
             <span>Loop Analysis (Optional)</span>
           </div>
           
-          <MobileInputWrapper
-            label="Supply Voltage"
-            type="number"
-            value={supplyVoltage}
-            onChange={(value) => {
-              setSupplyVoltage(value);
-              clearError('supplyVoltage');
-            }}
-            placeholder="24"
-            error={errors.supplyVoltage}
-            unit="V"
-            min="12"
-            max="48"
-            step="0.1"
-          />
+          <MobileSelect value={supplyVoltage} onValueChange={(value) => {
+            setSupplyVoltage(value);
+            clearError('supplyVoltage');
+          }}>
+            <MobileSelectTrigger label="Supply Voltage" error={errors.supplyVoltage}>
+              <MobileSelectValue placeholder="Select voltage" />
+            </MobileSelectTrigger>
+            <MobileSelectContent>
+              <MobileSelectItem value="12">12V DC</MobileSelectItem>
+              <MobileSelectItem value="15">15V DC</MobileSelectItem>
+              <MobileSelectItem value="18">18V DC</MobileSelectItem>
+              <MobileSelectItem value="24">24V DC (Standard)</MobileSelectItem>
+              <MobileSelectItem value="30">30V DC</MobileSelectItem>
+              <MobileSelectItem value="36">36V DC</MobileSelectItem>
+              <MobileSelectItem value="42">42V DC</MobileSelectItem>
+              <MobileSelectItem value="48">48V DC</MobileSelectItem>
+              <MobileSelectItem value="">Custom...</MobileSelectItem>
+            </MobileSelectContent>
+          </MobileSelect>
           
-          <MobileInputWrapper
-            label="Shunt Resistor"
-            type="number"
-            value={shuntResistor}
-            onChange={(value) => {
-              setShuntResistor(value);
-              clearError('shuntResistor');
-            }}
-            placeholder="250"
-            unit="Ω"
-            step="1"
-          />
+          {supplyVoltage === "" && (
+            <MobileInputWrapper
+              label="Custom Voltage"
+              type="number"
+              value=""
+              onChange={(value) => {
+                setSupplyVoltage(value);
+                clearError('supplyVoltage');
+              }}
+              placeholder="12-48"
+              error={errors.supplyVoltage}
+              unit="V"
+              min="12"
+              max="48"
+              step="0.1"
+            />
+          )}
+          
+          <MobileSelect value={shuntResistor} onValueChange={(value) => {
+            setShuntResistor(value);
+            clearError('shuntResistor');
+          }}>
+            <MobileSelectTrigger label="Shunt Resistor">
+              <MobileSelectValue placeholder="Select resistor" />
+            </MobileSelectTrigger>
+            <MobileSelectContent>
+              <MobileSelectItem value="100">100Ω (2V @ 20mA)</MobileSelectItem>
+              <MobileSelectItem value="125">125Ω (2.5V @ 20mA)</MobileSelectItem>
+              <MobileSelectItem value="150">150Ω (3V @ 20mA)</MobileSelectItem>
+              <MobileSelectItem value="200">200Ω (4V @ 20mA)</MobileSelectItem>
+              <MobileSelectItem value="250">250Ω (5V @ 20mA) - Standard</MobileSelectItem>
+              <MobileSelectItem value="300">300Ω (6V @ 20mA)</MobileSelectItem>
+              <MobileSelectItem value="500">500Ω (10V @ 20mA)</MobileSelectItem>
+              <MobileSelectItem value="">Custom...</MobileSelectItem>
+            </MobileSelectContent>
+          </MobileSelect>
+          
+          {shuntResistor === "" && (
+            <MobileInputWrapper
+              label="Custom Resistor"
+              type="number"
+              value=""
+              onChange={(value) => {
+                setShuntResistor(value);
+                clearError('shuntResistor');
+              }}
+              placeholder="100-1000"
+              unit="Ω"
+              step="1"
+            />
+          )}
 
           <MobileInputWrapper
             label="Cable Length"
