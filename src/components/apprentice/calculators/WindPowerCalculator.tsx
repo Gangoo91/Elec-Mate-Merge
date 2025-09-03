@@ -19,6 +19,22 @@ interface WindPowerResult {
   co2Savings: number;
   paybackPeriod: number;
   windSpeedAtHub: number;
+  costEstimate: {
+    totalCost: number;
+    breakdown: {
+      turbine: number;
+      tower: number;
+      foundation: number;
+      electrical: number;
+      planning: number;
+      installation: number;
+      commissioning: number;
+      vat: number;
+    };
+    costPerKw: number;
+    category: string;
+    annualMaintenance: number;
+  };
 }
 
 export function WindPowerCalculator() {
@@ -113,6 +129,60 @@ export function WindPowerCalculator() {
     return parseFloat(turbineModel.split('kW')[0]);
   };
 
+  const calculateCostEstimate = (rating: number, height: number) => {
+    // 2025 UK Wind Turbine Cost Estimates
+    let baseCostPerKw = 0;
+    let category = "";
+    
+    // Cost per kW based on turbine size (economies of scale)
+    if (rating <= 5) {
+      baseCostPerKw = 4500; // Small domestic turbines
+      category = "Small Domestic System";
+    } else if (rating <= 15) {
+      baseCostPerKw = 3500; // Medium domestic/small commercial
+      category = "Medium Domestic System";
+    } else if (rating <= 30) {
+      baseCostPerKw = 2800; // Small commercial
+      category = "Small Commercial System";
+    } else {
+      baseCostPerKw = 2200; // Large commercial
+      category = "Commercial System";
+    }
+
+    // Component breakdown (2025 costs)
+    const turbine = rating * baseCostPerKw * 0.45; // 45% turbine cost
+    const tower = Math.max(15000, height * 800); // Minimum £15k or £800/m
+    const foundation = Math.max(8000, rating * 600); // Minimum £8k or £600/kW
+    const electrical = 5000 + (rating * 400); // Base £5k + £400/kW
+    const planning = rating <= 10 ? 3000 : 8000; // Planning costs
+    const installation = rating * 800; // Installation labour
+    const commissioning = Math.max(2000, rating * 150); // Commissioning
+    
+    const subtotal = turbine + tower + foundation + electrical + planning + installation + commissioning;
+    const vat = subtotal * 0.20; // 20% VAT on wind installations
+    const totalCost = subtotal + vat;
+
+    // Annual maintenance (2-4% of CAPEX)
+    const annualMaintenance = totalCost * 0.03;
+
+    return {
+      totalCost: Math.round(totalCost),
+      breakdown: {
+        turbine: Math.round(turbine),
+        tower: Math.round(tower),
+        foundation: Math.round(foundation),
+        electrical: Math.round(electrical),
+        planning: Math.round(planning),
+        installation: Math.round(installation),
+        commissioning: Math.round(commissioning),
+        vat: Math.round(vat)
+      },
+      costPerKw: Math.round(totalCost / rating),
+      category,
+      annualMaintenance: Math.round(annualMaintenance)
+    };
+  };
+
   const calculateWindPower = () => {
     const rating = getTurbineRating();
     const height = parseFloat(hubHeight);
@@ -191,12 +261,14 @@ export function WindPowerCalculator() {
     const exportPrice = price * 0.75; // Assume 75% of import price for export
     const yearlyValue = (selfConsumption * price) + (gridExport * exportPrice);
     
-    // 10. Environmental impact
+    // 10. Get realistic cost estimate
+    const costEstimate = calculateCostEstimate(rating, height);
+    
+    // 11. Environmental impact
     const co2Savings = netAEP * 0.193; // kg CO2 per kWh (UK grid factor 2024)
     
-    // 11. Simple payback (assuming £3000/kW installed cost)
-    const installCost = rating * 3000;
-    const paybackPeriod = installCost / yearlyValue;
+    // 12. Payback calculation using realistic costs
+    const paybackPeriod = costEstimate.totalCost / yearlyValue;
 
     setResult({
       grossAEP,
@@ -211,7 +283,8 @@ export function WindPowerCalculator() {
       gridExport,
       co2Savings,
       paybackPeriod,
-      windSpeedAtHub
+      windSpeedAtHub,
+      costEstimate
     });
   };
 
@@ -436,6 +509,71 @@ export function WindPowerCalculator() {
                   <div className="text-xs text-muted-foreground">
                     {result.paybackPeriod > 15 ? "Poor ROI" : result.paybackPeriod > 10 ? "Moderate ROI" : "Good ROI"}
                   </div>
+                </div>
+              </div>
+            </div>
+
+            {/* 2025 Cost Estimate Section */}
+            <div className="p-6 bg-elec-dark/20 rounded-lg border border-elec-yellow/20">
+              <h3 className="text-xl font-semibold mb-6 text-elec-yellow flex items-center gap-2">
+                <span className="w-2 h-2 bg-yellow-400 rounded-full"></span>
+                2025 Installation Cost Estimate
+              </h3>
+              
+              {/* Mobile-First Stacked Layout */}
+              <div className="space-y-4 mb-6">
+                <div className="text-center">
+                  <p className="text-3xl font-bold text-elec-yellow mb-1">£{result.costEstimate.totalCost.toLocaleString()}</p>
+                  <p className="text-base text-white font-medium">Total System Cost</p>
+                  <p className="text-sm text-white/60">{result.costEstimate.category}</p>
+                </div>
+                
+                <div className="text-center pt-2">
+                  <p className="text-2xl font-bold text-yellow-400 mb-1">£{result.costEstimate.costPerKw.toLocaleString()}</p>
+                  <p className="text-base text-white font-medium">Cost per kW</p>
+                  <p className="text-sm text-white/60">Including VAT & installation</p>
+                </div>
+              </div>
+
+              <div className="space-y-3">
+                <p className="text-base font-semibold text-white mb-3">Cost Breakdown:</p>
+                <div className="space-y-3">
+                  <div className="flex justify-between items-center py-1">
+                    <span className="text-white/80">Turbine:</span>
+                    <span className="text-white font-semibold">£{result.costEstimate.breakdown.turbine.toLocaleString()}</span>
+                  </div>
+                  <div className="flex justify-between items-center py-1">
+                    <span className="text-white/80">Tower:</span>
+                    <span className="text-white font-semibold">£{result.costEstimate.breakdown.tower.toLocaleString()}</span>
+                  </div>
+                  <div className="flex justify-between items-center py-1">
+                    <span className="text-white/80">Foundation:</span>
+                    <span className="text-white font-semibold">£{result.costEstimate.breakdown.foundation.toLocaleString()}</span>
+                  </div>
+                  <div className="flex justify-between items-center py-1">
+                    <span className="text-white/80">Electrical:</span>
+                    <span className="text-white font-semibold">£{result.costEstimate.breakdown.electrical.toLocaleString()}</span>
+                  </div>
+                  <div className="flex justify-between items-center py-1">
+                    <span className="text-white/80">Planning:</span>
+                    <span className="text-white font-semibold">£{result.costEstimate.breakdown.planning.toLocaleString()}</span>
+                  </div>
+                  <div className="flex justify-between items-center py-1">
+                    <span className="text-white/80">Installation:</span>
+                    <span className="text-white font-semibold">£{result.costEstimate.breakdown.installation.toLocaleString()}</span>
+                  </div>
+                  <div className="flex justify-between items-center py-1">
+                    <span className="text-white/80">Commissioning:</span>
+                    <span className="text-white font-semibold">£{result.costEstimate.breakdown.commissioning.toLocaleString()}</span>
+                  </div>
+                </div>
+                <div className="flex justify-between items-center pt-3 mt-3 border-t border-elec-yellow/20">
+                  <span className="text-white font-medium">VAT (20%):</span>
+                  <span className="text-elec-yellow font-bold text-lg">£{result.costEstimate.breakdown.vat.toLocaleString()}</span>
+                </div>
+                <div className="flex justify-between items-center pt-2">
+                  <span className="text-white/80">Annual Maintenance:</span>
+                  <span className="text-yellow-400 font-semibold">£{result.costEstimate.annualMaintenance.toLocaleString()}</span>
                 </div>
               </div>
             </div>
