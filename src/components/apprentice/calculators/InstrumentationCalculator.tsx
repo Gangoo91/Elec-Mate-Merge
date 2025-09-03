@@ -26,7 +26,7 @@ const InstrumentationCalculator = () => {
   // Core inputs
   const [minScale, setMinScale] = useState("");
   const [maxScale, setMaxScale] = useState("");
-  const [inputType, setInputType] = useState<"engineering" | "percentage">("percentage");
+  const [inputType, setInputType] = useState<"engineering" | "percentage">("engineering");
   const [inputValue, setInputValue] = useState("");
   const [targetCurrent, setTargetCurrent] = useState("");
   const [unit, setUnit] = useState("bar");
@@ -171,7 +171,7 @@ const InstrumentationCalculator = () => {
     setMaxScale("");
     setInputValue("");
     setTargetCurrent("");
-    setInputType("percentage");
+    setInputType("engineering");
     setUnit("bar");
     setSupplyVoltage("24");
     setShuntResistor("250");
@@ -197,16 +197,17 @@ const InstrumentationCalculator = () => {
     if (!result) return [];
     
     const points = [
-      `${formatNumber(result.current, 1)}mA represents ${formatNumber(result.percentage, 1)}% of your measurement range`,
-      `This corresponds to ${formatNumber(result.engineeringValue, 2)} ${unit} on your instrument scale`
+      `Set your calibrator/source to ${formatNumber(result.current, 1)}mA to simulate ${formatNumber(result.engineeringValue, 2)} ${unit}`,
+      `This represents ${formatNumber(result.percentage, 1)}% of scale - ideal for proving trip functionality`,
+      `Use this to verify the instrument displays correctly and alarms trigger as expected`
     ];
     
     if (result.shuntVoltage) {
-      points.push(`The voltage across your shunt resistor will be ${formatNumber(result.shuntVoltage * 1000, 1)}mV`);
+      points.push(`Monitor ${formatNumber(result.shuntVoltage * 1000, 1)}mV across your shunt resistor to confirm signal`);
     }
     
-    if (result.supplyMargin) {
-      points.push(`Your loop has ${formatNumber(result.supplyMargin, 1)}V available for the transmitter`);
+    if (result.supplyMargin && result.supplyMargin < 10) {
+      points.push(`⚠️ Supply margin only ${formatNumber(result.supplyMargin, 1)}V - verify adequate for transmitter operation`);
     }
     
     return points;
@@ -242,9 +243,9 @@ const InstrumentationCalculator = () => {
           <Gauge className="h-5 w-5 text-elec-yellow" />
           <CardTitle>4-20mA Instrumentation Calculator</CardTitle>
         </div>
-        <CardDescription>
-          Calculate current requirements or device trip points for 4-20mA instrumentation.
-        </CardDescription>
+          <CardDescription>
+            Find the mA output needed to trigger alarms and prove instrument functionality.
+          </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4 lg:space-y-6">
         {/* Core Inputs */}
@@ -302,14 +303,14 @@ const InstrumentationCalculator = () => {
           </MobileSelect>
 
           <MobileInputWrapper
-            label={inputType === "percentage" ? "Percentage" : `Value (${unit})`}
+            label={inputType === "percentage" ? "Percentage" : `Trip Setpoint (${unit})`}
             type="number"
             value={inputValue}
             onChange={(value) => {
               setInputValue(value);
               clearError('inputValue');
             }}
-            placeholder={inputType === "percentage" ? "0-100%" : "Enter value"}
+            placeholder={inputType === "percentage" ? "0-100%" : `Alarm point in ${unit}`}
             error={errors.inputValue}
             unit={inputType === "percentage" ? "%" : unit}
             step="any"
@@ -498,13 +499,14 @@ const InstrumentationCalculator = () => {
         {result ? (
           <div className="space-y-4">
             {/* Main Results Grid */}
-            <div className="grid grid-cols-2 gap-3 sm:gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
               <ResultCard
                 title="Current Output"
                 value={formatNumber(result.current, 1)}
                 unit="mA"
                 subtitle={`${formatNumber(result.percentage, 1)}% of scale`}
                 status={result.status}
+                className="min-h-[172px]"
               />
               <ResultCard
                 title="Engineering Value"
@@ -512,30 +514,33 @@ const InstrumentationCalculator = () => {
                 unit={unit}
                 subtitle={`At ${formatNumber(result.current, 1)}mA`}
                 status={result.status}
+                className="min-h-[172px]"
               />
             </div>
 
             {/* Trip Points */}
-            <div className="grid grid-cols-2 gap-3 sm:gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
               <ResultCard
                 title="Low Trip Point"
                 value={formatNumber(result.tripPoints.low, 1)}
                 unit="mA"
-                subtitle="10% of scale"
+                subtitle="Typical 10% reference"
                 status="success"
+                className="min-h-[172px]"
               />
               <ResultCard
                 title="High Trip Point"
                 value={formatNumber(result.tripPoints.high, 1)}
                 unit="mA"
-                subtitle="90% of scale"
+                subtitle="Typical 90% reference"
                 status="success"
+                className="min-h-[172px]"
               />
             </div>
 
             {/* Loop Analysis Results (if calculated) */}
             {(result.shuntVoltage || result.supplyMargin || result.cableDrop || result.powerInShunt) && (
-              <div className="grid grid-cols-2 gap-3 sm:gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                 {result.shuntVoltage && (
                   <ResultCard
                     title="Shunt Voltage"
@@ -543,6 +548,7 @@ const InstrumentationCalculator = () => {
                     unit="mV"
                     subtitle="Voltage drop across shunt"
                     status={result.shuntVoltage > 5 ? 'warning' : 'success'}
+                    className="min-h-[172px]"
                   />
                 )}
                 {result.supplyMargin && (
@@ -552,6 +558,7 @@ const InstrumentationCalculator = () => {
                     unit="V"
                     subtitle="Available for transmitter"
                     status={result.supplyMargin < 5 ? 'warning' : result.supplyMargin < 2 ? 'error' : 'success'}
+                    className="min-h-[172px]"
                   />
                 )}
                 {result.cableDrop && (
@@ -561,6 +568,7 @@ const InstrumentationCalculator = () => {
                     unit="V"
                     subtitle={`Over ${cableLength}m cable`}
                     status={result.cableDrop > 2 ? 'warning' : 'success'}
+                    className="min-h-[172px]"
                   />
                 )}
                 {result.powerInShunt && (
@@ -570,6 +578,7 @@ const InstrumentationCalculator = () => {
                     unit="mW"
                     subtitle="Power dissipated"
                     status={result.powerInShunt > 100 ? 'warning' : 'success'}
+                    className="min-h-[172px]"
                   />
                 )}
               </div>
