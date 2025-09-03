@@ -282,13 +282,13 @@ const CableDeratingCalculator = () => {
           </Alert>
         )}
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="space-y-6">
           {/* Input Section */}
           <div className="space-y-4">
             {/* Design Parameters */}
             <div className="space-y-4 p-4 border border-muted/40 rounded-lg bg-muted/20">
               <h4 className="font-medium">Circuit Design</h4>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 gap-4">
                 <MobileInput
                   label="Design Current Ib (A)"
                   type="number"
@@ -352,7 +352,7 @@ const CableDeratingCalculator = () => {
               </MobileSelectContent>
             </MobileSelect>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4">
               <MobileSelect value={ambientTemp} onValueChange={setAmbientTemp}>
                 <MobileSelectTrigger label="Ambient Temperature (°C)">
                   <MobileSelectValue placeholder="Select temperature" />
@@ -426,49 +426,81 @@ const CableDeratingCalculator = () => {
                     </Badge>
                   </div>
                   
-                  <Separator />
-                  
-                  <div className="grid grid-cols-2 gap-3 text-sm">
-                    <div>
-                      <span className="text-muted-foreground">Temperature:</span>
-                      <div className="font-mono text-elec-yellow">{result.temperatureFactor.toFixed(3)}</div>
-                    </div>
-                    <div>
-                      <span className="text-muted-foreground">Grouping:</span>
-                      <div className="font-mono text-elec-yellow">{result.groupingFactor.toFixed(3)}</div>
-                    </div>
-                    <div>
-                      <span className="text-muted-foreground">Thermal Insul:</span>
-                      <div className="font-mono text-elec-yellow">{result.thermalInsulationFactor.toFixed(3)}</div>
-                    </div>
-                    <div>
-                      <span className="text-muted-foreground">Soil:</span>
-                      <div className="font-mono text-elec-yellow">{result.soilFactor.toFixed(3)}</div>
+                  {/* Enhanced Final Result Display */}
+                  <div className="bg-gradient-to-r from-elec-dark/50 to-elec-gray/50 p-4 rounded-lg border border-elec-yellow/20">
+                    <div className="text-center">
+                      <div className="text-sm text-muted-foreground mb-1">Derated Cable Capacity</div>
+                      <div className="text-3xl font-bold text-elec-yellow mb-2">
+                        {result.finalRating.toFixed(1)} A
+                      </div>
+                      <div className="flex justify-center items-center gap-4 text-xs">
+                        <span className="text-muted-foreground">
+                          Base: {baseRating}A
+                        </span>
+                        <span className="text-red-400">
+                          -{result.deratingPercentage.toFixed(1)}%
+                        </span>
+                      </div>
                     </div>
                   </div>
                   
                   <Separator />
                   
-                  <div className="space-y-2">
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">Base Rating:</span>
-                      <span className="font-mono text-white">{baseRating} A</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">Total Derating:</span>
-                      <span className="font-mono text-white">{result.totalDerating.toFixed(3)}</span>
-                    </div>
-                    <div className="flex justify-between pt-2 border-t border-muted/40">
-                      <span className="text-muted-foreground font-semibold">Derated Capacity Iz:</span>
-                      <span className="font-mono text-elec-yellow text-xl font-bold">{result.finalRating.toFixed(1)} A</span>
-                    </div>
-                    <div className="text-center text-xs text-gray-400">
-                      Reduction: {result.deratingPercentage.toFixed(1)}%
+                  {/* Derating Factors with Visual Indicators */}
+                  <div className="space-y-3">
+                    <h4 className="text-sm font-medium text-white">Derating Factors</h4>
+                    <div className="grid grid-cols-2 gap-3 text-sm">
+                      <div className="bg-muted/30 p-2 rounded">
+                        <span className="text-muted-foreground block">Temperature:</span>
+                        <div className="font-mono text-elec-yellow">{result.temperatureFactor.toFixed(3)}</div>
+                        <div className="w-full bg-muted/50 rounded-full h-2 mt-1">
+                          <div 
+                            className="bg-elec-yellow h-2 rounded-full" 
+                            style={{ width: `${result.temperatureFactor * 100}%` }}
+                          />
+                        </div>
+                      </div>
+                      <div className="bg-muted/30 p-2 rounded">
+                        <span className="text-muted-foreground block">Grouping:</span>
+                        <div className="font-mono text-elec-yellow">{result.groupingFactor.toFixed(3)}</div>
+                        <div className="w-full bg-muted/50 rounded-full h-2 mt-1">
+                          <div 
+                            className="bg-elec-yellow h-2 rounded-full" 
+                            style={{ width: `${result.groupingFactor * 100}%` }}
+                          />
+                        </div>
+                      </div>
+                      <div className="bg-muted/30 p-2 rounded">
+                        <span className="text-muted-foreground block">Thermal Insul:</span>
+                        <div className="font-mono text-elec-yellow">{result.thermalInsulationFactor.toFixed(3)}</div>
+                        <div className="w-full bg-muted/50 rounded-full h-2 mt-1">
+                          <div 
+                            className="bg-elec-yellow h-2 rounded-full" 
+                            style={{ width: `${result.thermalInsulationFactor * 100}%` }}
+                          />
+                        </div>
+                      </div>
+                      <div className="bg-muted/30 p-2 rounded">
+                        <span className="text-muted-foreground block">Soil:</span>
+                        <div className="font-mono text-elec-yellow">{result.soilFactor.toFixed(3)}</div>
+                        <div className="w-full bg-muted/50 rounded-full h-2 mt-1">
+                          <div 
+                            className="bg-elec-yellow h-2 rounded-full" 
+                            style={{ width: `${result.soilFactor * 100}%` }}
+                          />
+                        </div>
+                      </div>
                     </div>
                   </div>
                   
-                  <div className="text-xs text-muted-foreground pt-2 border-t border-muted/40">
-                    Calculation: {baseRating} × {result.temperatureFactor.toFixed(3)} × {result.groupingFactor.toFixed(3)} × {result.thermalInsulationFactor.toFixed(3)} × {result.soilFactor.toFixed(3)}
+                  <Separator />
+                  
+                  {/* Calculation Summary */}
+                  <div className="bg-muted/30 p-3 rounded text-xs">
+                    <div className="text-center text-muted-foreground mb-2">Calculation</div>
+                    <div className="text-center font-mono text-white break-all">
+                      {baseRating} × {result.temperatureFactor.toFixed(3)} × {result.groupingFactor.toFixed(3)} × {result.thermalInsulationFactor.toFixed(3)} × {result.soilFactor.toFixed(3)} = {result.finalRating.toFixed(1)}A
+                    </div>
                   </div>
                 </div>
               ) : (
@@ -485,10 +517,13 @@ const CableDeratingCalculator = () => {
               <Alert className="border-orange-500/20 bg-orange-500/10">
                 <AlertTriangle className="h-4 w-4 text-orange-500" />
                 <AlertDescription className="text-orange-200">
-                  <div className="space-y-1">
-                    {result.warnings.map((warning, index) => (
-                      <div key={index}>• {warning}</div>
-                    ))}
+                  <div className="space-y-2">
+                    <div className="font-medium">⚠️ Warnings</div>
+                    <div className="space-y-1">
+                      {result.warnings.map((warning, index) => (
+                        <div key={index} className="text-sm">• {warning}</div>
+                      ))}
+                    </div>
                   </div>
                 </AlertDescription>
               </Alert>
