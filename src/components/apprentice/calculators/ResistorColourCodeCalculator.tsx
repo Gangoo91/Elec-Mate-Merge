@@ -289,18 +289,56 @@ const ResistorColourCodeCalculator = () => {
         </div>
 
         {/* Help section */}
-        <div className="bg-info/5 border border-info/20 rounded-lg p-4">
-          <div className="flex items-start gap-3">
-            <Info className="h-4 w-4 text-info mt-0.5 flex-shrink-0" />
-            <div>
-              <h4 className="text-sm font-medium text-info mb-2">Quick Reference</h4>
-              <ul className="text-xs text-muted-foreground space-y-1">
-                <li>• <strong>Bands 1 & 2:</strong> First and second significant digits</li>
-                <li>• <strong>Band 3:</strong> Multiplier (number of zeros or decimal factor)</li>
-                <li>• <strong>Band 4:</strong> Tolerance (accuracy percentage)</li>
-                <li>• Read left to right, tolerance band typically has a gap</li>
-                <li>• Common tolerances: Gold (±5%), Silver (±10%), Brown (±1%)</li>
-              </ul>
+        <div className="bg-info/5 border border-info/20 rounded-lg p-4 sm:p-6">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="flex-shrink-0 w-8 h-8 rounded-full bg-info/10 flex items-center justify-center">
+              <Info className="h-4 w-4 text-info" />
+            </div>
+            <h4 className="text-base font-semibold text-info">Quick Reference</h4>
+          </div>
+          
+          <div className="grid gap-3 sm:gap-4">
+            <div className="flex items-start gap-3 p-3 bg-card/50 rounded-md border border-border/50">
+              <div className="flex-shrink-0 w-6 h-6 rounded bg-elec-yellow/20 flex items-center justify-center">
+                <span className="text-xs font-bold text-elec-yellow">1-2</span>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-foreground">First & Second Bands</p>
+                <p className="text-xs text-muted-foreground mt-0.5">Significant digits that form the base value</p>
+              </div>
+            </div>
+            
+            <div className="flex items-start gap-3 p-3 bg-card/50 rounded-md border border-border/50">
+              <div className="flex-shrink-0 w-6 h-6 rounded bg-elec-yellow/20 flex items-center justify-center">
+                <span className="text-xs font-bold text-elec-yellow">3</span>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-foreground">Third Band</p>
+                <p className="text-xs text-muted-foreground mt-0.5">Multiplier (adds zeros or decimal factor)</p>
+              </div>
+            </div>
+            
+            <div className="flex items-start gap-3 p-3 bg-card/50 rounded-md border border-border/50">
+              <div className="flex-shrink-0 w-6 h-6 rounded bg-elec-yellow/20 flex items-center justify-center">
+                <span className="text-xs font-bold text-elec-yellow">4</span>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-foreground">Fourth Band</p>
+                <p className="text-xs text-muted-foreground mt-0.5">Tolerance (accuracy percentage)</p>
+              </div>
+            </div>
+          </div>
+          
+          <div className="mt-4 pt-4 border-t border-border/50">
+            <div className="grid gap-2 text-xs">
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 rounded-full bg-amber-500"></div>
+                <span className="text-muted-foreground">Read left to right, tolerance band typically has a gap</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 rounded-full bg-amber-500"></div>
+                <span className="text-muted-foreground">Common: Gold (±5%), Silver (±10%), Brown (±1%)</span>
+              </div>
             </div>
           </div>
         </div>
