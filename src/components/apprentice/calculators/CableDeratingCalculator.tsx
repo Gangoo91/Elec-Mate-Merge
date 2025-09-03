@@ -498,10 +498,85 @@ const CableDeratingCalculator = () => {
                   {/* Calculation Summary */}
                   <div className="bg-muted/30 p-3 rounded text-xs">
                     <div className="text-center text-muted-foreground mb-2">Calculation</div>
-                    <div className="text-center font-mono text-white break-all">
-                      {baseRating} × {result.temperatureFactor.toFixed(3)} × {result.groupingFactor.toFixed(3)} × {result.thermalInsulationFactor.toFixed(3)} × {result.soilFactor.toFixed(3)} = {result.finalRating.toFixed(1)}A
+                    <div className="text-center font-mono text-white text-xs leading-relaxed">
+                      <div className="break-words">
+                        {baseRating} × {result.temperatureFactor.toFixed(3)} × {result.groupingFactor.toFixed(3)}
+                      </div>
+                      <div className="break-words">
+                        × {result.thermalInsulationFactor.toFixed(3)} × {result.soilFactor.toFixed(3)} = {result.finalRating.toFixed(1)}A
+                      </div>
                     </div>
                   </div>
+
+                  {/* Next Steps Recommendations */}
+                  {result && (
+                    <div className="bg-blue-500/10 border border-blue-500/20 p-4 rounded-lg">
+                      <h4 className="text-blue-200 font-medium mb-3 flex items-center gap-2">
+                        <Info className="h-4 w-4" />
+                        Next Steps
+                      </h4>
+                      <div className="space-y-2 text-sm text-blue-100">
+                        {result.compliance?.overallCompliant ? (
+                          <>
+                            <div className="flex items-center gap-2 text-green-400">
+                              <CheckCircle2 className="h-4 w-4" />
+                              <span className="font-medium">Design is compliant with BS 7671</span>
+                            </div>
+                            <ul className="space-y-1 ml-6">
+                              <li>• Proceed with cable installation using {result.finalRating.toFixed(1)}A capacity</li>
+                              <li>• Document derating calculations for compliance records</li>
+                              <li>• Consider safety margin of {result.compliance?.safetyMargin.toFixed(1)}% in design</li>
+                              {result.deratingPercentage > 30 && (
+                                <li>• Review if alternative installation method could reduce derating</li>
+                              )}
+                            </ul>
+                          </>
+                        ) : result.compliance ? (
+                          <>
+                            <div className="flex items-center gap-2 text-red-400">
+                              <AlertTriangle className="h-4 w-4" />
+                              <span className="font-medium">Design requires modification</span>
+                            </div>
+                            <ul className="space-y-1 ml-6">
+                              {!result.compliance.ibInCompliant && (
+                                <li>• Increase protective device rating or reduce design current</li>
+                              )}
+                              {!result.compliance.inIzCompliant && (
+                                <li>• Use larger cable size to increase capacity</li>
+                              )}
+                              <li>• Review installation conditions to reduce derating</li>
+                              <li>• Consider alternative cable routing or installation method</li>
+                            </ul>
+                          </>
+                        ) : (
+                          <>
+                            <div className="flex items-center gap-2 text-yellow-400">
+                              <Info className="h-4 w-4" />
+                              <span className="font-medium">Complete circuit design verification</span>
+                            </div>
+                            <ul className="space-y-1 ml-6">
+                              <li>• Enter design current and device rating for compliance check</li>
+                              <li>• Verify Ib ≤ In ≤ Iz requirements per BS 7671</li>
+                              <li>• Document final cable capacity: {result.finalRating.toFixed(1)}A</li>
+                              {result.deratingPercentage > 50 && (
+                                <li>• Consider alternative installation to reduce severe derating</li>
+                              )}
+                            </ul>
+                          </>
+                        )}
+                        
+                        {/* Additional recommendations based on derating severity */}
+                        {result.deratingPercentage > 40 && (
+                          <div className="mt-3 p-2 bg-orange-500/10 border border-orange-500/20 rounded">
+                            <div className="text-orange-200 text-xs">
+                              <strong>High Derating Alert:</strong> {result.deratingPercentage.toFixed(1)}% capacity reduction detected.
+                              Consider improving installation conditions.
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )}
                 </div>
               ) : (
                 <div className="flex items-center justify-center h-full text-muted-foreground">
