@@ -465,13 +465,13 @@ const CableCurrentCapacityCalculator = () => {
       </CardHeader>
       <CardContent className="space-y-6">
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
           {/* Input Section */}
           <div className="space-y-4">
             {/* Design Parameters */}
-            <div className="space-y-4 p-4 border border-elec-yellow/20 rounded-lg bg-elec-card/50">
-              <h4 className="font-medium text-elec-light">Circuit Design</h4>
-              <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-4 p-3 sm:p-4 border border-elec-yellow/20 rounded-lg bg-elec-card/50">
+              <h4 className="font-medium text-elec-light text-sm sm:text-base">Circuit Design</h4>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                 <MobileInput
                   label="Design Current Ib (A) *"
                   type="number"
@@ -536,7 +536,7 @@ const CableCurrentCapacityCalculator = () => {
               </MobileSelectContent>
             </MobileSelect>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
               <MobileSelect value={ambientTemp} onValueChange={setAmbientTemp}>
                 <MobileSelectTrigger label="Ambient Temp (°C)">
                   <MobileSelectValue />
@@ -576,10 +576,10 @@ const CableCurrentCapacityCalculator = () => {
               />
             )}
 
-            <div className="flex gap-3">
+            <div className="flex flex-col sm:flex-row gap-3">
               <MobileButton
                 onClick={calculateCapacity}
-                className="flex-1"
+                className="flex-1 w-full"
                 icon={<Calculator className="h-4 w-4" />}
                 disabled={!isValidForCalculation()}
               >
@@ -589,13 +589,14 @@ const CableCurrentCapacityCalculator = () => {
                 variant="outline"
                 onClick={reset}
                 icon={<RotateCcw className="h-4 w-4" />}
+                className="w-full sm:w-auto"
               >
                 Reset
               </MobileButton>
             </div>
             
             {!isValidForCalculation() && (
-              <p className="text-sm text-muted-foreground text-center">
+              <p className="text-xs sm:text-sm text-muted-foreground text-center px-2">
                 Please enter design current, device rating, and select cable details to calculate
               </p>
             )}
@@ -605,54 +606,54 @@ const CableCurrentCapacityCalculator = () => {
           <div className="space-y-4">
             {result && (
               <>
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                   <div className="space-y-2 p-3 bg-elec-card/30 rounded-lg border border-elec-yellow/20">
-                    <p className="text-sm text-muted-foreground">Base Capacity</p>
-                    <p className="text-lg font-medium text-elec-light">{formatValue(result.baseCapacity, "A")}</p>
+                    <p className="text-xs sm:text-sm text-muted-foreground">Base Capacity</p>
+                    <p className="text-lg sm:text-xl font-medium text-elec-light">{formatValue(result.baseCapacity, "A")}</p>
                   </div>
                   <div className="space-y-2 p-3 bg-elec-card/30 rounded-lg border border-elec-yellow/20">
-                    <p className="text-sm text-muted-foreground">Final Capacity Iz</p>
-                    <p className="text-lg font-medium text-elec-yellow">{formatValue(result.finalCapacity, "A")}</p>
+                    <p className="text-xs sm:text-sm text-muted-foreground">Final Capacity Iz</p>
+                    <p className="text-lg sm:text-xl font-medium text-elec-yellow">{formatValue(result.finalCapacity, "A")}</p>
                   </div>
                 </div>
 
-                <div className="grid grid-cols-3 gap-3 text-sm">
-                  <div className="text-center p-2 bg-elec-card/30 rounded border border-elec-yellow/20">
-                    <p className="text-muted-foreground">Temp Factor</p>
-                    <p className="font-medium text-elec-light">{result.tempCorrectionFactor.toFixed(3)}</p>
+                <div className="grid grid-cols-3 gap-2 sm:gap-3 text-xs sm:text-sm">
+                  <div className="text-center p-2 sm:p-3 bg-elec-card/30 rounded border border-elec-yellow/20">
+                    <p className="text-muted-foreground text-xs">Temp Factor</p>
+                    <p className="font-medium text-elec-light text-sm sm:text-base">{result.tempCorrectionFactor.toFixed(3)}</p>
                   </div>
-                  <div className="text-center p-2 bg-elec-card/30 rounded border border-elec-yellow/20">
-                    <p className="text-muted-foreground">Group Factor</p>
-                    <p className="font-medium text-elec-light">{result.groupingCorrectionFactor.toFixed(2)}</p>
+                  <div className="text-center p-2 sm:p-3 bg-elec-card/30 rounded border border-elec-yellow/20">
+                    <p className="text-muted-foreground text-xs">Group Factor</p>
+                    <p className="font-medium text-elec-light text-sm sm:text-base">{result.groupingCorrectionFactor.toFixed(2)}</p>
                   </div>
-                  <div className="text-center p-2 bg-elec-card/30 rounded border border-elec-yellow/20">
-                    <p className="text-muted-foreground">Soil Factor</p>
-                    <p className="font-medium text-elec-light">{result.soilCorrectionFactor.toFixed(3)}</p>
+                  <div className="text-center p-2 sm:p-3 bg-elec-card/30 rounded border border-elec-yellow/20">
+                    <p className="text-muted-foreground text-xs">Soil Factor</p>
+                    <p className="font-medium text-elec-light text-sm sm:text-base">{result.soilCorrectionFactor.toFixed(3)}</p>
                   </div>
                 </div>
 
-                <div className="text-xs text-muted-foreground p-2 bg-elec-card/20 rounded border border-elec-yellow/20">
-                  <p>Iz = {result.baseCapacity} × {result.tempCorrectionFactor.toFixed(3)} × {result.groupingCorrectionFactor} × {result.soilCorrectionFactor.toFixed(3)} = {result.finalCapacity.toFixed(1)}A</p>
+                <div className="text-xs text-muted-foreground p-2 sm:p-3 bg-elec-card/20 rounded border border-elec-yellow/20 overflow-x-auto">
+                  <p className="whitespace-nowrap sm:whitespace-normal">Iz = {result.baseCapacity} × {result.tempCorrectionFactor.toFixed(3)} × {result.groupingCorrectionFactor} × {result.soilCorrectionFactor.toFixed(3)} = {result.finalCapacity.toFixed(1)}A</p>
                 </div>
 
                 {/* Compliance Status - Moved here under results */}
                 {result.compliance && (
                   <Alert className={`${result.compliance.overallCompliant ? 'border-green-500/20 bg-green-950/20' : 'border-red-500/20 bg-red-950/20'}`}>
                     {result.compliance.overallCompliant ? (
-                      <CheckCircle2 className="h-4 w-4 text-green-500" />
+                      <CheckCircle2 className="h-4 w-4 text-green-500 flex-shrink-0" />
                     ) : (
-                      <AlertTriangle className="h-4 w-4 text-red-500" />
+                      <AlertTriangle className="h-4 w-4 text-red-500 flex-shrink-0" />
                     )}
-                    <AlertDescription>
-                      <div className="font-medium mb-2">
+                    <AlertDescription className="w-full">
+                      <div className="font-medium mb-2 text-sm sm:text-base">
                         {result.compliance.overallCompliant ? "Ib ≤ In ≤ Iz: ✓ COMPLIANT" : "Ib ≤ In ≤ Iz: ✗ NON-COMPLIANT"}
                       </div>
-                      <div className="text-sm grid grid-cols-3 gap-4 mb-2">
+                      <div className="text-xs sm:text-sm grid grid-cols-3 gap-2 sm:gap-4 mb-2">
                         <div>Ib = {result.compliance.Ib}A</div>
                         <div>In = {result.compliance.In}A</div>
                         <div>Iz = {result.compliance.Iz.toFixed(1)}A</div>
                       </div>
-                      <div className="flex items-center gap-2">
+                      <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
                         <span className="text-xs">Safety margin:</span>
                         {getSafetyMarginBadge(result.compliance.safetyMargin)}
                       </div>
@@ -663,15 +664,15 @@ const CableCurrentCapacityCalculator = () => {
                 {/* Actionable Guidance */}
                 {result.actionableGuidance && (
                   <Alert className="border-blue-500/20 bg-blue-950/20">
-                    <ArrowRight className="h-4 w-4 text-blue-400" />
-                    <AlertDescription>
-                      <div className="font-medium mb-2 text-blue-400">What to do next:</div>
-                      <p className="text-sm mb-2 text-blue-300">{result.actionableGuidance.failureMode}</p>
-                      <ul className="text-sm space-y-1">
+                    <ArrowRight className="h-4 w-4 text-blue-400 flex-shrink-0" />
+                    <AlertDescription className="w-full">
+                      <div className="font-medium mb-2 text-blue-400 text-sm sm:text-base">What to do next:</div>
+                      <p className="text-xs sm:text-sm mb-2 text-blue-300">{result.actionableGuidance.failureMode}</p>
+                      <ul className="text-xs sm:text-sm space-y-1">
                         {result.actionableGuidance.suggestions.map((suggestion, i) => (
                           <li key={i} className="flex items-start gap-2">
-                            <span className="text-blue-400 mt-0.5">•</span>
-                            <span>{suggestion}</span>
+                            <span className="text-blue-400 mt-0.5 flex-shrink-0">•</span>
+                            <span className="flex-1">{suggestion}</span>
                           </li>
                         ))}
                       </ul>
@@ -682,14 +683,14 @@ const CableCurrentCapacityCalculator = () => {
                 {/* Warnings */}
                 {result.warnings.length > 0 && (
                   <Alert className="border-yellow-500/20 bg-yellow-950/20">
-                    <AlertTriangle className="h-4 w-4 text-yellow-500" />
-                    <AlertDescription>
-                      <div className="font-medium mb-1 text-yellow-400">Warnings:</div>
-                      <ul className="text-sm space-y-1">
+                    <AlertTriangle className="h-4 w-4 text-yellow-500 flex-shrink-0" />
+                    <AlertDescription className="w-full">
+                      <div className="font-medium mb-1 text-yellow-400 text-sm sm:text-base">Warnings:</div>
+                      <ul className="text-xs sm:text-sm space-y-1">
                         {result.warnings.map((warning, i) => (
                           <li key={i} className="flex items-start gap-2">
-                            <span className="text-yellow-400 mt-0.5">•</span>
-                            <span>{warning}</span>
+                            <span className="text-yellow-400 mt-0.5 flex-shrink-0">•</span>
+                            <span className="flex-1">{warning}</span>
                           </li>
                         ))}
                       </ul>
