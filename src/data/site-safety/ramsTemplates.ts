@@ -7,7 +7,6 @@ export interface RAMSTemplate {
   severity: number;
   controls: string;
   residualRisk: number;
-  icon: string;
   description: string;
 }
 
@@ -21,7 +20,6 @@ export const ramsTemplates: RAMSTemplate[] = [
     severity: 5,
     controls: 'Isolation and lock-off procedures, PPE (insulated gloves, boots), voltage testing, competent person supervision, emergency procedures in place.',
     residualRisk: 2,
-    icon: '⚡',
     description: 'Basic electrical shock protection'
   },
   {
@@ -33,7 +31,6 @@ export const ramsTemplates: RAMSTemplate[] = [
     severity: 5,
     controls: 'Use of proper access equipment, safety harnesses, edge protection, competent person supervision, regular equipment inspection.',
     residualRisk: 1,
-    icon: '🪜',
     description: 'Fall protection measures'
   },
   {
@@ -45,7 +42,6 @@ export const ramsTemplates: RAMSTemplate[] = [
     severity: 2,
     controls: 'Mechanical lifting aids where possible, team lifting for heavy items, proper lifting techniques, cut-resistant gloves for sharp materials.',
     residualRisk: 1,
-    icon: '📦',
     description: 'Safe lifting and handling'
   },
   {
@@ -57,7 +53,6 @@ export const ramsTemplates: RAMSTemplate[] = [
     severity: 4,
     controls: 'Hot work permits, fire watch, extinguishers on site, removal of combustible materials, proper ventilation.',
     residualRisk: 1,
-    icon: '🔥',
     description: 'Fire prevention and protection'
   },
   {
@@ -69,7 +64,6 @@ export const ramsTemplates: RAMSTemplate[] = [
     severity: 3,
     controls: 'Read safety data sheets, use appropriate PPE (gloves, masks), ensure adequate ventilation, eye wash facilities available.',
     residualRisk: 1,
-    icon: '🧪',
     description: 'Chemical safety protection'
   },
   {
@@ -81,7 +75,6 @@ export const ramsTemplates: RAMSTemplate[] = [
     severity: 2,
     controls: 'Hearing protection (ear defenders/plugs), regular breaks from noisy activities, noise level monitoring.',
     residualRisk: 1,
-    icon: '🔊',
     description: 'Hearing protection'
   },
   {
@@ -93,7 +86,6 @@ export const ramsTemplates: RAMSTemplate[] = [
     severity: 4,
     controls: 'Confined space entry procedures, atmospheric testing, emergency rescue plan, communication systems, trained attendant.',
     residualRisk: 1,
-    icon: '🕳️',
     description: 'Confined space safety'
   },
   {
@@ -105,7 +97,6 @@ export const ramsTemplates: RAMSTemplate[] = [
     severity: 3,
     controls: 'Daily tool inspections, PAT testing for electrical tools, proper storage and handling, training in correct use.',
     residualRisk: 1,
-    icon: '🔧',
     description: 'Tool and equipment safety'
   }
 ];

@@ -41,11 +41,14 @@ export const RAMSQuickAdd: React.FC = () => {
   return (
     <Card className="border-green-500/50 bg-green-500/10">
       <CardHeader>
-        <div className="flex items-center justify-between">
-          <CardTitle className="text-green-300 flex items-center gap-2">
-            <Zap className="h-5 w-5" />
-            Quick Add to RAMS
-          </CardTitle>
+        <CardTitle className="text-green-300 flex items-center gap-2">
+          <Zap className="h-5 w-5" />
+          Quick Add to RAMS
+        </CardTitle>
+        <p className="text-sm text-muted-foreground">
+          Pre-configured risk assessments for common electrical hazards
+        </p>
+        <div className="pt-2">
           <Button
             onClick={handleAddAll}
             size="sm"
@@ -55,9 +58,6 @@ export const RAMSQuickAdd: React.FC = () => {
             Add All
           </Button>
         </div>
-        <p className="text-sm text-muted-foreground">
-          Pre-configured risk assessments for common electrical hazards
-        </p>
       </CardHeader>
       <CardContent>
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4">
@@ -68,7 +68,6 @@ export const RAMSQuickAdd: React.FC = () => {
             >
               <CardContent className="p-4 h-full flex flex-col">
                 <div className="flex items-start gap-3 mb-3">
-                  <span className="text-2xl flex-shrink-0">{template.icon}</span>
                   <div className="flex-1 min-w-0">
                     <h4 className="text-sm font-medium text-green-200 leading-tight mb-1 break-words">
                       {template.hazard}
