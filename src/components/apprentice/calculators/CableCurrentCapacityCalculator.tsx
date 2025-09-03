@@ -9,6 +9,9 @@ import { Zap, Calculator, RotateCcw, CheckCircle2, AlertTriangle, BookOpen, Shie
 import { useState } from "react";
 import WhyThisMatters from "@/components/common/WhyThisMatters";
 import InfoBox from "@/components/common/InfoBox";
+import { calculateCableCapacity, getRecommendations, CableCapacityInputs, CableCapacityResult } from "@/lib/calculators/engines/cableCapacityEngine";
+import { CableType } from "@/lib/calculators/bs7671-data/cableCapacities";
+import { parseNumber, clamp } from "@/lib/calculators/utils/calculatorUtils";
 
 const CableCurrentCapacityCalculator = () => {
   const [cableSize, setCableSize] = useState<string>("");
