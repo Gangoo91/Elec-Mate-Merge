@@ -17,6 +17,7 @@ import {
   AlertTriangle, 
   Building, 
   Shield,
+  Edit3,
   Loader2
 } from 'lucide-react';
 import { useRAMS } from './rams/RAMSContext';
@@ -34,6 +35,7 @@ const RAMSGenerator: React.FC = () => {
     addActivity,
     removeActivity,
     addRisk,
+    updateRisk,
     removeRisk,
     setBranding,
     setSignatures,
@@ -52,6 +54,14 @@ const RAMSGenerator: React.FC = () => {
     controls: ''
   });
   const [showAddRisk, setShowAddRisk] = useState(false);
+  const [editingRisk, setEditingRisk] = useState<string | null>(null);
+  const [editRiskData, setEditRiskData] = useState({
+    hazard: '',
+    risk: '',
+    likelihood: 1,
+    severity: 1,
+    controls: ''
+  });
 
   const validation = validate();
 
@@ -96,6 +106,56 @@ const RAMSGenerator: React.FC = () => {
         variant: 'success'
       });
     }
+  };
+
+  const handleEditRisk = (risk: any) => {
+    setEditingRisk(risk.id);
+    setEditRiskData({
+      hazard: risk.hazard,
+      risk: risk.risk,
+      likelihood: risk.likelihood,
+      severity: risk.severity,
+      controls: risk.controls || ''
+    });
+  };
+
+  const handleSaveEdit = () => {
+    if (editingRisk && editRiskData.hazard && editRiskData.risk) {
+      const riskRating = editRiskData.likelihood * editRiskData.severity;
+      const residualRisk = Math.max(1, Math.floor(riskRating / 2));
+      
+      updateRisk(editingRisk, {
+        ...editRiskData,
+        riskRating,
+        residualRisk
+      });
+      
+      setEditingRisk(null);
+      setEditRiskData({
+        hazard: '',
+        risk: '',
+        likelihood: 1,
+        severity: 1,
+        controls: ''
+      });
+      
+      toast({
+        title: 'Risk Updated',
+        description: 'Risk assessment has been updated successfully.',
+        variant: 'success'
+      });
+    }
+  };
+
+  const handleCancelEdit = () => {
+    setEditingRisk(null);
+    setEditRiskData({
+      hazard: '',
+      risk: '',
+      likelihood: 1,
+      severity: 1,
+      controls: ''
+    });
   };
 
   const handleGeneratePDF = async () => {
@@ -322,31 +382,170 @@ const RAMSGenerator: React.FC = () => {
               <h4 className="font-medium text-white">Identified Risks ({ramsData.risks.length})</h4>
               {ramsData.risks.map((risk) => (
                 <Card key={risk.id} className="border-elec-yellow/30 bg-elec-dark/20">
-                  <CardContent className="p-4">
-                    <div className="flex items-start justify-between gap-3">
-                      <div className="flex-1 space-y-2">
-                        <div className="flex items-center gap-2">
-                          <Badge className={`${getRiskLevelColor(risk.riskRating)} text-white text-xs`}>
-                            {getRiskLevelText(risk.riskRating)} ({risk.riskRating})
-                          </Badge>
+                  <CardContent className="p-3 sm:p-4">
+                    {editingRisk === risk.id ? (
+                      // Edit Mode
+                      <div className="space-y-4">
+                        <div className="flex items-center justify-between mb-3">
+                          <h5 className="font-medium text-white">Edit Risk Assessment</h5>
+                          <div className="flex gap-2">
+                            <Button
+                              onClick={handleSaveEdit}
+                              size="sm"
+                              className="bg-green-600 text-white hover:bg-green-700"
+                              disabled={!editRiskData.hazard || !editRiskData.risk}
+                            >
+                              Save
+                            </Button>
+                            <Button
+                              onClick={handleCancelEdit}
+                              size="sm"
+                              variant="outline"
+                              className="border-gray-500/30 text-gray-400 hover:bg-gray-500/10"
+                            >
+                              Cancel
+                            </Button>
+                          </div>
                         </div>
-                        <div>
-                          <p className="font-medium text-white">{risk.hazard}</p>
-                          <p className="text-sm text-muted-foreground">{risk.risk}</p>
-                        </div>
-                        <div className="text-xs text-muted-foreground">
-                          L: {risk.likelihood} | S: {risk.severity} | Controls: {risk.controls || 'None specified'}
+                        
+                        <div className="space-y-3">
+                          <div>
+                            <Label className="text-white text-sm">Hazard</Label>
+                            <Input
+                              value={editRiskData.hazard}
+                              onChange={(e) => setEditRiskData(prev => ({ ...prev, hazard: e.target.value }))}
+                              className="mt-1 bg-elec-dark/50 border-elec-yellow/20 text-white"
+                            />
+                          </div>
+                          
+                          <div>
+                            <Label className="text-white text-sm">Risk/Consequence</Label>
+                            <Input
+                              value={editRiskData.risk}
+                              onChange={(e) => setEditRiskData(prev => ({ ...prev, risk: e.target.value }))}
+                              className="mt-1 bg-elec-dark/50 border-elec-yellow/20 text-white"
+                            />
+                          </div>
+                          
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div>
+                              <Label className="text-white text-sm">Likelihood (1-5)</Label>
+                              <Select
+                                value={editRiskData.likelihood.toString()}
+                                onValueChange={(value) => setEditRiskData(prev => ({ ...prev, likelihood: parseInt(value) }))}
+                              >
+                                <SelectTrigger className="mt-1 bg-elec-dark/50 border-elec-yellow/20">
+                                  <SelectValue />
+                                </SelectTrigger>
+                                <SelectContent>
+                                  <SelectItem value="1">1 - Very Unlikely</SelectItem>
+                                  <SelectItem value="2">2 - Unlikely</SelectItem>
+                                  <SelectItem value="3">3 - Possible</SelectItem>
+                                  <SelectItem value="4">4 - Likely</SelectItem>
+                                  <SelectItem value="5">5 - Very Likely</SelectItem>
+                                </SelectContent>
+                              </Select>
+                            </div>
+                            
+                            <div>
+                              <Label className="text-white text-sm">Severity (1-5)</Label>
+                              <Select
+                                value={editRiskData.severity.toString()}
+                                onValueChange={(value) => setEditRiskData(prev => ({ ...prev, severity: parseInt(value) }))}
+                              >
+                                <SelectTrigger className="mt-1 bg-elec-dark/50 border-elec-yellow/20">
+                                  <SelectValue />
+                                </SelectTrigger>
+                                <SelectContent>
+                                  <SelectItem value="1">1 - Negligible</SelectItem>
+                                  <SelectItem value="2">2 - Minor</SelectItem>
+                                  <SelectItem value="3">3 - Moderate</SelectItem>
+                                  <SelectItem value="4">4 - Major</SelectItem>
+                                  <SelectItem value="5">5 - Catastrophic</SelectItem>
+                                </SelectContent>
+                              </Select>
+                            </div>
+                          </div>
+                          
+                          <div>
+                            <Label className="text-white text-sm">Control Measures</Label>
+                            <Textarea
+                              value={editRiskData.controls}
+                              onChange={(e) => setEditRiskData(prev => ({ ...prev, controls: e.target.value }))}
+                              className="mt-1 bg-elec-dark/50 border-elec-yellow/20 text-white"
+                              rows={2}
+                            />
+                          </div>
+                          
+                          {editRiskData.likelihood > 0 && editRiskData.severity > 0 && (
+                            <div className="p-3 bg-elec-gray/30 rounded-lg">
+                              <div className="flex items-center gap-2">
+                                <span className="text-sm text-muted-foreground">Risk Level:</span>
+                                <Badge className={`${getRiskLevelColor(editRiskData.likelihood * editRiskData.severity)} text-white`}>
+                                  {getRiskLevelText(editRiskData.likelihood * editRiskData.severity)} ({editRiskData.likelihood * editRiskData.severity})
+                                </Badge>
+                              </div>
+                            </div>
+                          )}
                         </div>
                       </div>
-                      <Button
-                        onClick={() => removeRisk(risk.id)}
-                        size="sm"
-                        variant="outline"
-                        className="border-red-500/30 text-red-400 hover:bg-red-500/10"
-                      >
-                        <X className="h-4 w-4" />
-                      </Button>
-                    </div>
+                    ) : (
+                      // View Mode
+                      <div className="space-y-3">
+                        <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+                          <div className="flex-1 space-y-2">
+                            <div className="flex flex-wrap items-center gap-2">
+                              <Badge className={`${getRiskLevelColor(risk.riskRating)} text-white text-xs`}>
+                                {getRiskLevelText(risk.riskRating)} ({risk.riskRating})
+                              </Badge>
+                            </div>
+                            <div>
+                              <h5 className="font-medium text-white text-sm sm:text-base break-words leading-tight">
+                                {risk.hazard}
+                              </h5>
+                              <p className="text-xs sm:text-sm text-muted-foreground break-words leading-relaxed mt-1">
+                                {risk.risk}
+                              </p>
+                            </div>
+                          </div>
+                          
+                          <div className="flex flex-col sm:flex-row gap-2 flex-shrink-0">
+                            <Button
+                              onClick={() => handleEditRisk(risk)}
+                              size="sm"
+                              variant="outline"
+                              className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+                            >
+                              <Edit3 className="h-4 w-4 sm:mr-1" />
+                              <span className="hidden sm:inline">Edit</span>
+                            </Button>
+                            <Button
+                              onClick={() => removeRisk(risk.id)}
+                              size="sm"
+                              variant="outline"
+                              className="border-red-500/30 text-red-400 hover:bg-red-500/10"
+                            >
+                              <X className="h-4 w-4 sm:mr-1" />
+                              <span className="hidden sm:inline">Remove</span>
+                            </Button>
+                          </div>
+                        </div>
+                        
+                        <div className="text-xs text-muted-foreground bg-elec-dark/30 p-2 rounded">
+                          <div className="flex flex-wrap gap-4">
+                            <span>Likelihood: {risk.likelihood}/5</span>
+                            <span>Severity: {risk.severity}/5</span>
+                            <span>Score: {risk.riskRating}</span>
+                          </div>
+                          {risk.controls && (
+                            <div className="mt-2 pt-2 border-t border-elec-yellow/20">
+                              <span className="font-medium">Controls:</span>
+                              <p className="break-words leading-relaxed">{risk.controls}</p>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    )}
                   </CardContent>
                 </Card>
               ))}
