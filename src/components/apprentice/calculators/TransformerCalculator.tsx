@@ -103,7 +103,7 @@ const TransformerCalculator = () => {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="space-y-6">{/* Changed from grid layout to single column for better mobile experience */}
           {/* Input Section */}
           <div className="space-y-4">
             <MobileOptimizedInput
@@ -307,31 +307,36 @@ const TransformerCalculator = () => {
                       </Badge>
                     </div>
 
-                    {/* Key Metrics - Mobile Optimized */}
-                    <div className="space-y-3 text-sm">
-                      <div className="flex justify-between items-center py-1">
-                        <span className="text-muted-foreground">Primary Current:</span>
-                        <div className="font-mono text-elec-yellow text-base font-semibold">{result.primaryRatedCurrent.toFixed(1)} A</div>
+                    {/* Key Metrics - Mobile Optimized Stacked Layout */}
+                    <div className="space-y-4">
+                      <div className="space-y-2">
+                        <div className="text-sm text-muted-foreground">Primary Current:</div>
+                        <div className="font-mono text-elec-yellow text-xl font-bold">{result.primaryRatedCurrent.toFixed(1)} A</div>
                       </div>
-                      <div className="flex justify-between items-center py-1">
-                        <span className="text-muted-foreground">Secondary Current:</span>
-                        <div className="font-mono text-elec-yellow text-base font-semibold">{result.secondaryRatedCurrent.toFixed(1)} A</div>
+                      
+                      <div className="space-y-2">
+                        <div className="text-sm text-muted-foreground">Secondary Current:</div>
+                        <div className="font-mono text-elec-yellow text-xl font-bold">{result.secondaryRatedCurrent.toFixed(1)} A</div>
                       </div>
-                      <div className="flex justify-between items-center py-1">
-                        <span className="text-muted-foreground">Real Power:</span>
-                        <div className="font-mono text-elec-yellow text-base font-semibold">{result.kw.toFixed(1)} kW</div>
+                      
+                      <div className="space-y-2">
+                        <div className="text-sm text-muted-foreground">Real Power:</div>
+                        <div className="font-mono text-elec-yellow text-xl font-bold">{result.kw.toFixed(1)} kW</div>
                       </div>
-                      <div className="flex justify-between items-center py-1">
-                        <span className="text-muted-foreground">Efficiency:</span>
-                        <div className="font-mono text-elec-yellow text-base font-semibold">{(result.efficiency * 100).toFixed(1)}%</div>
+                      
+                      <div className="space-y-2">
+                        <div className="text-sm text-muted-foreground">Efficiency:</div>
+                        <div className="font-mono text-elec-yellow text-xl font-bold">{(result.efficiency * 100).toFixed(1)}%</div>
                       </div>
-                      <div className="flex justify-between items-center py-1">
-                        <span className="text-muted-foreground">Fault Current:</span>
-                        <div className="font-mono text-elec-yellow text-base font-semibold">{(result.transformerFaultCurrent / 1000).toFixed(1)} kA</div>
+                      
+                      <div className="space-y-2">
+                        <div className="text-sm text-muted-foreground">Fault Current:</div>
+                        <div className="font-mono text-elec-yellow text-xl font-bold">{(result.transformerFaultCurrent / 1000).toFixed(1)} kA</div>
                       </div>
-                      <div className="flex justify-between items-center py-1">
-                        <span className="text-muted-foreground">Voltage Regulation:</span>
-                        <div className="font-mono text-elec-yellow text-base font-semibold">{(result.voltageRegulation * 100).toFixed(1)}%</div>
+                      
+                      <div className="space-y-2">
+                        <div className="text-sm text-muted-foreground">Voltage Regulation:</div>
+                        <div className="font-mono text-elec-yellow text-xl font-bold">{(result.voltageRegulation * 100).toFixed(1)}%</div>
                       </div>
                     </div>
                   </CardContent>
@@ -346,33 +351,54 @@ const TransformerCalculator = () => {
                     </div>
                   </CardHeader>
                   <CardContent className="pt-0">
-                    <div className="space-y-3">
-                      <div className="flex justify-between items-center">
-                        <span className="text-sm text-muted-foreground">Recommended MCCB Rating:</span>
-                        <div className="font-medium text-elec-yellow font-semibold text-base">{getRecommendedMCCB(result.secondaryRatedCurrent)}A</div>
+                    <div className="space-y-4">
+                      <div className="space-y-2">
+                        <div className="text-sm text-muted-foreground">Recommended MCCB Rating:</div>
+                        <div className="font-mono text-elec-yellow text-xl font-bold">{getRecommendedMCCB(result.secondaryRatedCurrent)}A</div>
                       </div>
-                      <div className="flex justify-between items-start">
-                        <span className="text-sm text-muted-foreground flex-shrink-0 mr-2">Minimum Breaking Capacity:</span>
-                        <div className="font-medium text-elec-yellow font-semibold text-base text-right">{getSwitchgearBreakingCapacity(result.transformerFaultCurrent)}</div>
+                      
+                      <div className="space-y-2">
+                        <div className="text-sm text-muted-foreground">Minimum Breaking Capacity:</div>
+                        <div className="font-mono text-elec-yellow text-lg font-bold">{getSwitchgearBreakingCapacity(result.transformerFaultCurrent)}</div>
                       </div>
-                      <div className="flex justify-between items-start">
-                        <span className="text-sm text-muted-foreground flex-shrink-0 mr-2">Inrush Current:</span>
-                        <div className="font-medium text-elec-yellow font-semibold text-base text-right">{(result.inrushCurrent / 1000).toFixed(1)} kA for {result.inrushDuration}s</div>
+                      
+                      <div className="space-y-2">
+                        <div className="text-sm text-muted-foreground">Inrush Current:</div>
+                        <div className="font-mono text-elec-yellow text-lg font-bold">{(result.inrushCurrent / 1000).toFixed(1)} kA for {result.inrushDuration}s</div>
                       </div>
                     </div>
                   </CardContent>
                 </Card>
 
                 {/* What This Means */}
-                <WhyThisMatters
-                  title="What this means"
-                  points={[
-                    `${result.transformerType} configuration ${result.voltageRatio > 1 ? 'reduces' : result.voltageRatio < 1 ? 'increases' : 'maintains'} voltage level`,
-                    `${(result.efficiency * 100).toFixed(1)}% efficiency means ${((1 - result.efficiency) * 100).toFixed(1)}% energy lost as heat`,
-                    `${(result.transformerFaultCurrent / 1000).toFixed(1)} kA fault current requires appropriate breaking capacity`,
-                    `${(result.voltageRegulation * 100).toFixed(1)}% regulation indicates voltage drop under full load`
-                  ]}
-                />
+                <Card className="border-blue-500/20 bg-blue-500/10">
+                  <CardHeader className="pb-3">
+                    <div className="flex items-center gap-2">
+                      <Lightbulb className="h-5 w-5 text-blue-400" />
+                      <CardTitle className="text-base text-blue-200">What this means</CardTitle>
+                    </div>
+                  </CardHeader>
+                  <CardContent className="pt-0">
+                    <div className="space-y-2 text-sm text-blue-100">
+                      <div className="flex items-start gap-2">
+                        <span className="text-blue-400 mt-1">•</span>
+                        <span>{result.transformerType} configuration {result.voltageRatio > 1 ? 'reduces' : result.voltageRatio < 1 ? 'increases' : 'maintains'} voltage level</span>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <span className="text-blue-400 mt-1">•</span>
+                        <span>{(result.efficiency * 100).toFixed(1)}% efficiency means {((1 - result.efficiency) * 100).toFixed(1)}% energy lost as heat</span>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <span className="text-blue-400 mt-1">•</span>
+                        <span>{(result.transformerFaultCurrent / 1000).toFixed(1)} kA fault current requires appropriate breaking capacity</span>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <span className="text-blue-400 mt-1">•</span>
+                        <span>{(result.voltageRegulation * 100).toFixed(1)}% regulation indicates voltage drop under full load</span>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
 
                 {/* Practical Guidance */}
                 <Card className="border-elec-yellow/20">
