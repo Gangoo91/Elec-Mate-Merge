@@ -368,15 +368,17 @@ const EnhancedMultiCircuitEditor: React.FC<EnhancedMultiCircuitEditorProps> = ({
                           />
 
                           <MobileSelectWrapper
-                            label="Protective Device"
+                            label="Protective Device Type"
                             value={circuit.protectiveDevice}
                             onValueChange={(value) => updateCircuit(circuit.id, { protectiveDevice: value })}
                             options={[
-                              { value: "mcb-b", label: "MCB Type B (3-5 x In)" },
-                              { value: "mcb-c", label: "MCB Type C (5-10 x In)" },
-                              { value: "mcb-d", label: "MCB Type D (10-20 x In)" },
+                              { value: "mcb-b", label: "MCB Type B (up to 125A)" },
+                              { value: "mcb-c", label: "MCB Type C (up to 125A)" },
+                              { value: "mcb-d", label: "MCB Type D (up to 125A)" },
                               { value: "rcbo-b", label: "RCBO Type B (30mA)" },
                               { value: "rcbo-c", label: "RCBO Type C (30mA)" },
+                              { value: "bs88-gg", label: "BS88 HRC Fuse (up to 1250A)" },
+                              { value: "mccb", label: "MCCB (16A to 4000A)" },
                               { value: "rcbo-100ma", label: "RCBO 100mA (Fire Protection)" },
                               { value: "rcd-30ma", label: "RCD 30mA + MCB" },
                               { value: "rcd-100ma", label: "RCD 100mA + MCB" },

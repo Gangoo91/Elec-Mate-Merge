@@ -23,17 +23,17 @@ export const withUnits = (value: number, unit: string, decimals: number = 1): st
   return `${formatNumber(value, decimals)}${unit}`;
 };
 
-// Standard protective device ratings in accordance with BS EN 60898
-export const standardDeviceRatings = [
+// Standard protective device ratings in accordance with BS EN 60898 (legacy export)
+export const legacyStandardDeviceRatings = [
   1, 2, 3, 4, 6, 8, 10, 13, 16, 20, 25, 32, 40, 50, 63, 80, 100, 125, 160, 200, 250, 315, 400, 500, 630, 800, 1000, 1250, 1600
 ];
 
 export const getNextStandardRating = (current: number): number | null => {
-  return standardDeviceRatings.find(rating => rating >= current) || null;
+  return legacyStandardDeviceRatings.find(rating => rating >= current) || null;
 };
 
 export const getPreviousStandardRating = (current: number): number | null => {
-  const ratings = [...standardDeviceRatings].reverse();
+  const ratings = [...legacyStandardDeviceRatings].reverse();
   return ratings.find(rating => rating <= current) || null;
 };
 

@@ -3,7 +3,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { InstallPlanData } from "./types";
-import { Download, Calculator, AlertTriangle, CheckCircle, XCircle, Lightbulb } from "lucide-react";
+import { Download, Calculator, AlertTriangle, CheckCircle, XCircle, Lightbulb, Shield } from "lucide-react";
+import { getSuitableDevices, getDeviceInfo, getRecommendedDeviceType } from "@/lib/calculators/bs7671-data/protectiveDevices";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { CableSelectionEngine } from "./CableSelectionEngine";
 import CableRecommendationsCard from "./CableRecommendationsCard";
@@ -18,6 +19,50 @@ interface ResultsStepProps {
 }
 
 const ResultsStep = ({ planData }: ResultsStepProps) => {
+  
+  // Enhanced device recommendations function
+  const getEnhancedDeviceRecommendations = (
+    designCurrent: number, 
+    cableCapacity: number, 
+    currentDevice: string,
+    loadType: string,
+    voltage: number
+  ) => {
+    // Get all suitable devices from the enhanced database
+    const suitableDevices = getSuitableDevices(designCurrent, cableCapacity);
+    
+    // Determine the recommended device type for this application
+    const recommendedType = getRecommendedDeviceType(designCurrent, loadType, voltage);
+    
+    return suitableDevices.map(deviceOption => {
+      const deviceInfo = getDeviceInfo(deviceOption.deviceType);
+      const isRecommended = deviceOption.deviceType === recommendedType || 
+                           (currentDevice && deviceOption.deviceType === currentDevice);
+      
+      return {
+        name: deviceInfo?.type.toUpperCase() + (deviceInfo?.curve ? ` Type ${deviceInfo.curve}` : ''),
+        description: deviceInfo?.characteristics.applications.join(', ') || 'General purpose protection',
+        rating: deviceOption.recommended,
+        ratingRange: `${deviceInfo?.ratingRange[0]}A - ${deviceInfo?.ratingRange[1]}A`,
+        maxZs: deviceInfo?.maxZs[deviceOption.recommended] || 0,
+        breakingCapacity: deviceInfo?.characteristics.breakingCapacity || 10,
+        compliant: deviceOption.compliance,
+        recommended: isRecommended,
+        cost: deviceInfo?.procurement.costRange || 'medium',
+        procurement: {
+          suppliers: deviceInfo?.procurement.typical || 'Standard suppliers',
+          leadTime: deviceInfo?.procurement.leadTime || '1-2 weeks',
+          availability: deviceInfo?.procurement.availability || 'good'
+        }
+      };
+    }).sort((a, b) => {
+      // Sort recommended first, then by rating
+      if (a.recommended !== b.recommended) {
+        return a.recommended ? -1 : 1;
+      }
+      return a.rating - b.rating;
+    });
+  };
   // Calculate design current
   const designCurrent = planData.phases === "single" 
     ? planData.totalLoad / planData.voltage 
@@ -184,36 +229,67 @@ const ResultsStep = ({ planData }: ResultsStepProps) => {
               </div>
             </div>
 
-            {/* Protective Device Selection */}
+            {/* Enhanced Protective Device Selection */}
             <div className="p-4 bg-elec-dark/50 rounded border border-elec-yellow/20">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
-                <p className="text-sm font-medium text-elec-light">Compatible Protective Devices</p>
+                <div className="flex items-center gap-2">
+                  <Shield className="h-4 w-4 text-elec-yellow" />
+                  <p className="text-sm font-medium text-elec-light">Protective Device Options</p>
+                </div>
                 <Badge className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30 self-start sm:self-center">
                   BS 7671 COMPLIANT
                 </Badge>
               </div>
-              <div className="space-y-2">
-                {/* Primary recommendation - only show if Ib ≤ In */}
-                {designCurrent <= recommendedCable.ratedCurrent && (
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 p-3 bg-elec-yellow/10 rounded border border-elec-yellow/30">
-                    <span className="font-medium text-sm sm:text-base">{recommendedCable.ratedCurrent}A {planData.protectiveDevice.toUpperCase()}</span>
-                    <Badge variant="outline" className="text-green-400 border-green-400/30 self-start sm:self-center">OPTIMAL</Badge>
+              <div className="space-y-3">
+                {getEnhancedDeviceRecommendations(designCurrent, recommendedCable?.currentCarryingCapacity || 0, planData.protectiveDevice, planData.loadType, planData.voltage)
+                  .slice(0, 3).map((device, index) => (
+                  <div key={index} className={`p-3 rounded border ${
+                    device.recommended 
+                      ? 'bg-green-500/10 border-green-500/30' 
+                      : 'bg-blue-500/10 border-blue-500/30'
+                  }`}>
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <span className={`font-medium text-sm sm:text-base ${
+                            device.recommended ? 'text-green-300' : 'text-blue-300'
+                          }`}>
+                            {device.rating}A {device.name}
+                          </span>
+                          <Badge variant="outline" className={`text-xs ${
+                            device.recommended 
+                              ? 'text-green-400 border-green-400/30' 
+                              : 'text-blue-400 border-blue-400/30'
+                          } self-start sm:self-center`}>
+                            {device.recommended ? 'RECOMMENDED' : 'ALTERNATIVE'}
+                          </Badge>
+                        </div>
+                        <p className={`text-xs ${
+                          device.recommended ? 'text-green-200/60' : 'text-blue-200/60'
+                        }`}>
+                          Max Zs: {device.maxZs.toFixed(3)}Ω • Range: {device.ratingRange}
+                        </p>
+                      </div>
+                      {device.compliant ? (
+                        <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0" />
+                      ) : (
+                        <AlertTriangle className="h-4 w-4 text-amber-400 flex-shrink-0" />
+                      )}
+                    </div>
                   </div>
-                )}
+                ))}
                 
-                {/* Alternative RCBO if MCB selected */}
-                {planData.protectiveDevice === "mcb" && designCurrent <= recommendedCable.ratedCurrent && (
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 p-3 bg-elec-dark/30 rounded border border-gray-600">
-                    <span className="text-muted-foreground text-sm sm:text-base">{recommendedCable.ratedCurrent}A RCBO Type B</span>
-                    <Badge variant="outline" className="text-blue-400 border-blue-400/30 self-start sm:self-center">ENHANCED PROTECTION</Badge>
-                  </div>
-                )}
-                
-                {/* Show non-compliant warning if needed */}
-                {designCurrent > recommendedCable.ratedCurrent && (
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 p-3 bg-red-500/10 rounded border border-red-500/30">
-                    <span className="text-red-400 text-sm sm:text-base">Design current ({designCurrent.toFixed(1)}A) exceeds {recommendedCable.ratedCurrent}A device rating</span>
-                    <Badge variant="destructive" className="self-start sm:self-center">NON-COMPLIANT</Badge>
+                {/* Show critical non-compliance for high currents */}
+                {designCurrent > 125 && (
+                  <div className="p-3 bg-amber-500/10 rounded border border-amber-500/30">
+                    <div className="flex items-center gap-2 mb-2">
+                      <AlertTriangle className="h-4 w-4 text-amber-300" />
+                      <span className="text-amber-300 font-medium text-sm">High Current Design</span>
+                    </div>
+                    <p className="text-xs text-amber-200/80">
+                      Design current {designCurrent.toFixed(1)}A exceeds standard MCB range. 
+                      BS88 HRC fuses or MCCB recommended for currents above 125A.
+                    </p>
                   </div>
                 )}
               </div>

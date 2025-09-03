@@ -7,8 +7,9 @@ import {
   getRecommendations as getCableCapacityRecommendations,
   getVoltageDropRecommendations
 } from '@/lib/calculators';
-import { standardDeviceRatings, getNextStandardRating } from '@/lib/calculators/utils/calculatorUtils';
+import { legacyStandardDeviceRatings, getNextStandardRating } from '@/lib/calculators/utils/calculatorUtils';
 import { zsValues } from '@/components/apprentice/calculators/zs-values/ZsValuesData';
+import { getSuitableDevices, getMaxZs as getDeviceMaxZs, getRecommendedDeviceType } from '@/lib/calculators/bs7671-data/protectiveDevices';
 
 export class ImprovedCableSelectionEngine {
   
@@ -288,22 +289,32 @@ export class ImprovedCableSelectionEngine {
 
   private static getProposedDeviceRating(designCurrent: number, cableData: any): number {
     const minRating = Math.ceil(designCurrent * 1.1);
-    const maxRating = Math.min(Math.floor(cableData.currentCarryingCapacity?.["clipped-direct"] || 100), cableData.maxBreaker || 100);
-    return getNextStandardRating(minRating) || minRating;
+    const maxCapacity = cableData.currentCarryingCapacity?.["clipped-direct"] || 100;
+    
+    // Get suitable devices - this now includes BS88 and MCCB for higher currents
+    const suitableDevices = getSuitableDevices(designCurrent, maxCapacity);
+    
+    // Return the recommended rating from the most suitable device type
+    return suitableDevices.length > 0 ? suitableDevices[0].recommended : minRating;
   }
 
   private static getMaxZs(protectiveDevice: string, voltage: number, deviceRating: number): number {
-    // Extract device type and curve
-    const deviceInfo = this.parseProtectiveDevice(protectiveDevice);
+    // Use the enhanced protective device database for accurate Zs values
+    const maxZs = getDeviceMaxZs(protectiveDevice, deviceRating, voltage);
     
-    // Use ZsValuesData for accurate values
+    if (maxZs > 0) {
+      return maxZs;
+    }
+    
+    // Fallback to ZsValuesData for legacy compatibility
+    const deviceInfo = this.parseProtectiveDevice(protectiveDevice);
     const deviceKey = `${deviceInfo.curve}${deviceRating}`;
     
     if (zsValues[deviceKey]) {
       return zsValues[deviceKey];
     }
     
-    // Fallback to conservative values
+    // Conservative fallback values
     const conservativeValues: Record<string, number> = {
       'type-b': 2.3 / deviceRating * 32,
       'type-c': 1.15 / deviceRating * 32,

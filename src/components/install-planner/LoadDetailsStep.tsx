@@ -278,19 +278,20 @@ const LoadDetailsStep = ({ planData, updatePlanData }: LoadDetailsStepProps) => 
         />
 
         <MobileSelectWrapper
-          label="Protective Device"
-          placeholder="Select protective device"
+          label="Protective Device Type"
+          placeholder="Select protective device family"
           value={planData.protectiveDevice || "mcb-b"}
           onValueChange={(value) => updatePlanData({ protectiveDevice: value })}
           options={[
-            { value: "mcb-b", label: "MCB Type B (3-5 × In)" },
-            { value: "mcb-c", label: "MCB Type C (5-10 × In)" },
-            { value: "mcb-d", label: "MCB Type D (10-20 × In)" },
-            { value: "rcbo-b", label: "RCBO Type B (30mA)" },
-            { value: "rcbo-c", label: "RCBO Type C (30mA)" },
-            { value: "rcbo-100ma", label: "RCBO 100mA (Fire Protection)" }
+            { value: "mcb-b", label: "MCB Type B (up to 125A)" },
+            { value: "mcb-c", label: "MCB Type C (up to 125A)" },
+            { value: "mcb-d", label: "MCB Type D (up to 125A)" },
+            { value: "rcbo-b", label: "RCBO Type B (30mA RCD)" },
+            { value: "rcbo-c", label: "RCBO Type C (30mA RCD)" },
+            { value: "bs88-gg", label: "BS88 HRC Fuse (up to 1250A)" },
+            { value: "mccb", label: "MCCB (16A to 4000A)" }
           ]}
-          hint="Device curve affects Zs and disconnection times"
+          hint="Higher currents automatically suggest BS88/MCCB options"
         />
       </div>
 
