@@ -56,6 +56,7 @@ const RAMSGenerator: React.FC = () => {
   const validation = validate();
 
   const handleAddActivity = () => {
+    console.log('handleAddActivity called', { newActivity, ramsData });
     if (newActivity.trim()) {
       addActivity(newActivity.trim());
       setNewActivity('');
@@ -64,6 +65,8 @@ const RAMSGenerator: React.FC = () => {
         description: 'Work activity has been added to the RAMS.',
         variant: 'success'
       });
+    } else {
+      console.log('Activity is empty, not adding');
     }
   };
 
