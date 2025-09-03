@@ -2,8 +2,10 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { MobileButton } from "@/components/ui/mobile-button";
+import { ResultCard } from "@/components/ui/result-card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Sigma } from "lucide-react";
+import { Sigma, Info } from "lucide-react";
 
 // Define proper types for color values
 type ColorWithValue = {
@@ -64,13 +66,26 @@ const ResistorColourCodeCalculator = () => {
   };
 
   const formatResistance = (value: number): string => {
-    if (value >= 1000000) {
+    if (value >= 1000000000000) {
+      return `${(value / 1000000000000).toFixed(value % 1000000000000 === 0 ? 0 : 2)}TΩ`;
+    } else if (value >= 1000000000) {
+      return `${(value / 1000000000).toFixed(value % 1000000000 === 0 ? 0 : 2)}GΩ`;
+    } else if (value >= 1000000) {
       return `${(value / 1000000).toFixed(value % 1000000 === 0 ? 0 : 2)}MΩ`;
     } else if (value >= 1000) {
       return `${(value / 1000).toFixed(value % 1000 === 0 ? 0 : 2)}kΩ`;
     } else {
       return `${value.toFixed(value % 1 === 0 ? 0 : 2)}Ω`;
     }
+  };
+
+  const calculateToleranceRange = (resistance: number, tolerance: string): { min: number; max: number } => {
+    const percent = parseFloat(tolerance.replace('±', '').replace('%', '')) / 100;
+    const range = resistance * percent;
+    return {
+      min: resistance - range,
+      max: resistance + range
+    };
   };
 
   const calculateResistance = () => {
@@ -109,8 +124,9 @@ const ResistorColourCodeCalculator = () => {
   const ColorOption = ({ color, name }: { color: string; name: string }) => (
     <div className="flex items-center">
       <div 
-        className="w-4 h-4 rounded-full border border-gray-400 mr-2" 
+        className="w-4 h-4 rounded-full border-2 border-border mr-2 shadow-sm" 
         style={{ backgroundColor: colorValues[name]?.color }}
+        aria-label={`${name} color swatch`}
       />
       <span className="capitalize">{name}</span>
     </div>
@@ -124,128 +140,169 @@ const ResistorColourCodeCalculator = () => {
           <CardTitle>Resistor Colour Code Calculator</CardTitle>
         </div>
       </CardHeader>
-      <CardContent className="space-y-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <CardContent className="space-y-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
           <div className="space-y-4">
-            <div>
-              <label className="text-sm font-medium mb-2 block">1st Band (First Digit)</label>
-              <Select value={band1} onValueChange={setBand1}>
-                <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
-                  <SelectValue placeholder="Select color" />
-                </SelectTrigger>
-                <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                  {Object.entries(colorValues).slice(1, 10).map(([name]) => (
-                    <SelectItem key={name} value={name}>
-                      <ColorOption color={colorValues[name].color} name={name} />
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div>
-              <label className="text-sm font-medium mb-2 block">2nd Band (Second Digit)</label>
-              <Select value={band2} onValueChange={setBand2}>
-                <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
-                  <SelectValue placeholder="Select color" />
-                </SelectTrigger>
-                <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                  {Object.entries(colorValues).slice(0, 10).map(([name]) => (
-                    <SelectItem key={name} value={name}>
-                      <ColorOption color={colorValues[name].color} name={name} />
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div>
-              <label className="text-sm font-medium mb-2 block">3rd Band (Multiplier)</label>
-              <Select value={band3} onValueChange={setBand3}>
-                <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
-                  <SelectValue placeholder="Select color" />
-                </SelectTrigger>
-                <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                  {Object.entries(colorValues).map(([name]) => (
-                    <SelectItem key={name} value={name}>
-                      <ColorOption color={colorValues[name].color} name={name} />
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div>
-              <label className="text-sm font-medium mb-2 block">4th Band (Tolerance)</label>
-              <Select value={band4} onValueChange={setBand4}>
-                <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
-                  <SelectValue placeholder="Select color" />
-                </SelectTrigger>
-                <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                  {Object.entries(toleranceColors).map(([name, tolerance]) => (
-                    <SelectItem key={name} value={name}>
-                      <div className="flex items-center justify-between w-full">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label className="text-sm font-medium mb-2 block">1st Band (First Digit)</label>
+                <Select value={band1} onValueChange={setBand1}>
+                  <SelectTrigger className="bg-elec-dark border-elec-yellow/20 h-10">
+                    <SelectValue placeholder="Select colour" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-elec-dark border-elec-yellow/20">
+                    {Object.entries(colorValues).slice(1, 10).map(([name]) => (
+                      <SelectItem key={name} value={name}>
                         <ColorOption color={colorValues[name].color} name={name} />
-                        <span className="text-xs text-muted-foreground ml-2">{tolerance}</span>
-                      </div>
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div>
+                <label className="text-sm font-medium mb-2 block">2nd Band (Second Digit)</label>
+                <Select value={band2} onValueChange={setBand2}>
+                  <SelectTrigger className="bg-elec-dark border-elec-yellow/20 h-10">
+                    <SelectValue placeholder="Select colour" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-elec-dark border-elec-yellow/20">
+                    {Object.entries(colorValues).slice(0, 10).map(([name]) => (
+                      <SelectItem key={name} value={name}>
+                        <ColorOption color={colorValues[name].color} name={name} />
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div>
+                <label className="text-sm font-medium mb-2 block">3rd Band (Multiplier)</label>
+                <Select value={band3} onValueChange={setBand3}>
+                  <SelectTrigger className="bg-elec-dark border-elec-yellow/20 h-10">
+                    <SelectValue placeholder="Select colour" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-elec-dark border-elec-yellow/20">
+                    {Object.entries(colorValues).map(([name]) => (
+                      <SelectItem key={name} value={name}>
+                        <ColorOption color={colorValues[name].color} name={name} />
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div>
+                <label className="text-sm font-medium mb-2 block">4th Band (Tolerance)</label>
+                <Select value={band4} onValueChange={setBand4}>
+                  <SelectTrigger className="bg-elec-dark border-elec-yellow/20 h-10">
+                    <SelectValue placeholder="Select colour" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-elec-dark border-elec-yellow/20">
+                    {Object.entries(toleranceColors).map(([name, tolerance]) => (
+                      <SelectItem key={name} value={name}>
+                        <div className="flex items-center justify-between w-full">
+                          <ColorOption color={colorValues[name].color} name={name} />
+                          <span className="text-xs text-muted-foreground ml-2">{tolerance}</span>
+                        </div>
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
 
-            <div className="flex gap-2">
-              <Button 
+            <div className="grid grid-cols-2 gap-2 sm:flex sm:gap-2">
+              <MobileButton 
                 onClick={calculateResistance} 
-                className="bg-elec-yellow text-black hover:bg-elec-yellow/90"
+                variant="elec"
                 disabled={!band1 || !band2 || !band3 || !band4}
+                className="text-sm sm:text-base"
               >
                 <Sigma className="mr-2 h-4 w-4" />
                 Calculate
-              </Button>
-              <Button variant="outline" onClick={resetCalculator}>
+              </MobileButton>
+              <MobileButton variant="outline" onClick={resetCalculator} className="text-sm sm:text-base">
                 Reset
-              </Button>
+              </MobileButton>
             </div>
-          </div>
 
-          <div className="bg-elec-dark/50 rounded-lg p-4">
-            <h3 className="text-lg font-medium text-elec-yellow mb-4">Resistance Value</h3>
-            {result ? (
-              <div className="space-y-3">
-                <div className="text-2xl font-bold text-white">
-                  {result.formattedValue}
-                </div>
-                <div className="text-sm text-muted-foreground">
-                  <p>Tolerance: {result.tolerance}</p>
-                  <p>Exact value: {result.resistance}Ω</p>
-                </div>
-                
-                {/* Visual resistor representation */}
-                <div className="mt-4">
-                  <p className="text-xs text-muted-foreground mb-2">Resistor bands:</p>
-                  <div className="flex items-center gap-1 bg-amber-100 p-2 rounded">
-                    <div className="w-6 h-8 border border-gray-400" style={{ backgroundColor: band1 ? colorValues[band1]?.color : '#ccc' }} />
-                    <div className="w-6 h-8 border border-gray-400" style={{ backgroundColor: band2 ? colorValues[band2]?.color : '#ccc' }} />
-                    <div className="w-6 h-8 border border-gray-400" style={{ backgroundColor: band3 ? colorValues[band3]?.color : '#ccc' }} />
-                    <div className="w-2 bg-amber-100"></div>
-                    <div className="w-6 h-8 border border-gray-400" style={{ backgroundColor: band4 ? colorValues[band4]?.color : '#ccc' }} />
-                  </div>
+            {/* Visual resistor representation */}
+            {(band1 || band2 || band3 || band4) && (
+              <div className="bg-muted/30 rounded-lg p-3">
+                <p className="text-xs font-medium mb-2 text-muted-foreground">Resistor Preview:</p>
+                <div className="flex items-center justify-center gap-1 bg-amber-50 dark:bg-amber-950/20 p-3 rounded-md">
+                  <div className="w-3 h-6 sm:w-4 sm:h-8 border border-border rounded-sm" 
+                       style={{ backgroundColor: band1 ? colorValues[band1]?.color : 'transparent' }} 
+                       aria-label="First band" />
+                  <div className="w-3 h-6 sm:w-4 sm:h-8 border border-border rounded-sm" 
+                       style={{ backgroundColor: band2 ? colorValues[band2]?.color : 'transparent' }} 
+                       aria-label="Second band" />
+                  <div className="w-3 h-6 sm:w-4 sm:h-8 border border-border rounded-sm" 
+                       style={{ backgroundColor: band3 ? colorValues[band3]?.color : 'transparent' }} 
+                       aria-label="Multiplier band" />
+                  <div className="w-1 sm:w-2 bg-amber-50 dark:bg-amber-950/20"></div>
+                  <div className="w-3 h-6 sm:w-4 sm:h-8 border border-border rounded-sm" 
+                       style={{ backgroundColor: band4 ? colorValues[band4]?.color : 'transparent' }} 
+                       aria-label="Tolerance band" />
                 </div>
               </div>
+            )}
+          </div>
+
+          <div className="space-y-4">
+            {result ? (
+              <>
+                <ResultCard
+                  title="Resistance Value"
+                  value={result.formattedValue}
+                  status="success"
+                />
+                <ResultCard
+                  title="Tolerance"
+                  value={result.tolerance}
+                  subtitle="Accuracy range"
+                />
+                <ResultCard
+                  title="Value Range"
+                  value={(() => {
+                    const range = calculateToleranceRange(result.resistance, result.tolerance);
+                    return `${formatResistance(range.min)} - ${formatResistance(range.max)}`;
+                  })()}
+                  subtitle="Min - Max values"
+                />
+                <ResultCard
+                  title="Exact Value"
+                  value={`${result.resistance.toLocaleString('en-GB')}Ω`}
+                  subtitle="Precise calculation"
+                />
+              </>
             ) : (
-              <p className="text-muted-foreground">Select all four colour bands to calculate resistance</p>
+              <ResultCard
+                title="Resistance Calculator"
+                isEmpty={true}
+                emptyMessage="Select all four colour bands to calculate resistance value"
+                icon={<Sigma className="h-8 w-8" />}
+              />
             )}
           </div>
         </div>
 
-        <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
-          <h4 className="text-sm font-medium text-blue-300 mb-2">How to Read Resistor Colour Codes</h4>
-          <p className="text-xs text-muted-foreground">
-            Band 1 & 2: First and second significant digits<br/>
-            Band 3: Multiplier (number of zeros or decimal multiplier)<br/>
-            Band 4: Tolerance (accuracy of the resistor value)
-          </p>
+        {/* Help section */}
+        <div className="bg-info/5 border border-info/20 rounded-lg p-4">
+          <div className="flex items-start gap-3">
+            <Info className="h-4 w-4 text-info mt-0.5 flex-shrink-0" />
+            <div>
+              <h4 className="text-sm font-medium text-info mb-2">Quick Reference</h4>
+              <ul className="text-xs text-muted-foreground space-y-1">
+                <li>• <strong>Bands 1 & 2:</strong> First and second significant digits</li>
+                <li>• <strong>Band 3:</strong> Multiplier (number of zeros or decimal factor)</li>
+                <li>• <strong>Band 4:</strong> Tolerance (accuracy percentage)</li>
+                <li>• Read left to right, tolerance band typically has a gap</li>
+                <li>• Common tolerances: Gold (±5%), Silver (±10%), Brown (±1%)</li>
+              </ul>
+            </div>
+          </div>
         </div>
       </CardContent>
     </Card>
