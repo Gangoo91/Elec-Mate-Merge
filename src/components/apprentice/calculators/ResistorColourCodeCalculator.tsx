@@ -273,7 +273,7 @@ const ResistorColourCodeCalculator = () => {
                 />
                 <ResultCard
                   title="Exact Value"
-                  value={`${result.resistance.toLocaleString('en-GB')}Ω`}
+                  value={formatResistance(result.resistance)}
                   subtitle="Precise calculation"
                 />
               </>
