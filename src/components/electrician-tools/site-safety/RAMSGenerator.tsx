@@ -309,37 +309,23 @@ const RAMSGenerator = () => {
                 </CardContent>
               </Card>
             ) : (
-              <div className="space-y-4">
+              <div className="space-y-6">
                 {ramsData.risks.map((risk) => (
-                  <Card key={risk.id} className="border-elec-yellow/30">
-                    <CardContent className="p-4 space-y-4">
-                      <div className="flex justify-between items-start">
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 flex-1">
-                          <div>
-                            <Label className="text-sm">Hazard</Label>
-                            <HazardSelect
-                              value={risk.hazard}
-                              onValueChange={(value) => updateRisk(risk.id, 'hazard', value)}
-                              placeholder="Select or search hazards..."
-                              showQuickPicks={false}
-                            />
-                          </div>
-                          <div>
-                            <Label className="text-sm">Risk / Consequence</Label>
-                            <RiskSelect
-                              selectedHazard={risk.hazard}
-                              value={risk.risk}
-                              onValueChange={(value) => updateRisk(risk.id, 'risk', value)}
-                              onControlMeasuresChange={(controlMeasures) => updateRiskControlMeasures(risk.id, controlMeasures)}
-                              placeholder="Select potential consequence..."
-                            />
-                          </div>
+                  <Card key={risk.id} className="border-elec-yellow/30 bg-card/50 backdrop-blur-sm">
+                    <CardContent className="p-6">
+                      {/* Header with action buttons */}
+                      <div className="flex justify-between items-center mb-6">
+                        <div className="flex items-center gap-2">
+                          <Badge variant="outline" className="text-xs">
+                            Risk #{ramsData.risks.indexOf(risk) + 1}
+                          </Badge>
                         </div>
-                        <div className="flex gap-2 ml-2">
+                        <div className="flex gap-2">
                           <Button
                             onClick={() => duplicateRisk(risk.id)}
                             size="sm"
                             variant="outline"
+                            className="h-8 w-8 p-0"
                             title="Duplicate this risk"
                           >
                             <Copy className="h-4 w-4" />
@@ -348,23 +334,49 @@ const RAMSGenerator = () => {
                             onClick={() => removeRisk(risk.id)}
                             size="sm"
                             variant="outline"
+                            className="h-8 w-8 p-0 hover:bg-destructive/10 hover:border-destructive/50"
+                            title="Delete this risk"
                           >
                             <Trash2 className="h-4 w-4" />
                           </Button>
                         </div>
                       </div>
+
+                      {/* Main hazard and risk selection */}
+                      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                        <div className="space-y-2">
+                          <Label className="text-sm font-medium">Hazard *</Label>
+                          <HazardSelect
+                            value={risk.hazard}
+                            onValueChange={(value) => updateRisk(risk.id, 'hazard', value)}
+                            placeholder="Select or search hazards..."
+                            showQuickPicks={false}
+                          />
+                        </div>
+                        <div className="space-y-2">
+                          <Label className="text-sm font-medium">Risk / Consequence *</Label>
+                          <RiskSelect
+                            selectedHazard={risk.hazard}
+                            value={risk.risk}
+                            onValueChange={(value) => updateRisk(risk.id, 'risk', value)}
+                            onControlMeasuresChange={(controlMeasures) => updateRiskControlMeasures(risk.id, controlMeasures)}
+                            placeholder="Select potential consequence..."
+                          />
+                        </div>
+                      </div>
                       
-                      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
-                        <div>
-                          <Label className="text-sm">Likelihood</Label>
+                      {/* Risk assessment grid */}
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                        <div className="space-y-2">
+                          <Label className="text-sm font-medium">Likelihood</Label>
                           <Select 
                             value={risk.likelihood.toString()} 
                             onValueChange={(value) => updateRisk(risk.id, 'likelihood', parseInt(value))}
                           >
-                            <SelectTrigger className="bg-background/80 backdrop-blur-sm border-elec-yellow/20">
+                            <SelectTrigger className="bg-background/80 backdrop-blur-sm border-input">
                               <SelectValue />
                             </SelectTrigger>
-                            <SelectContent className="bg-background/95 backdrop-blur-sm border-elec-yellow/20 z-50">
+                            <SelectContent className="bg-background/95 backdrop-blur-sm border-border z-50">
                               <SelectItem value="1">1 - Very Unlikely</SelectItem>
                               <SelectItem value="2">2 - Unlikely</SelectItem>
                               <SelectItem value="3">3 - Possible</SelectItem>
@@ -372,20 +384,21 @@ const RAMSGenerator = () => {
                               <SelectItem value="5">5 - Very Likely</SelectItem>
                             </SelectContent>
                           </Select>
-                          <p className="text-xs text-muted-foreground mt-1">
+                          <p className="text-xs text-muted-foreground leading-tight">
                             {getLikelihoodDescription(risk.likelihood)}
                           </p>
                         </div>
-                        <div>
-                          <Label className="text-sm">Severity</Label>
+
+                        <div className="space-y-2">
+                          <Label className="text-sm font-medium">Severity</Label>
                           <Select 
                             value={risk.severity.toString()} 
                             onValueChange={(value) => updateRisk(risk.id, 'severity', parseInt(value))}
                           >
-                            <SelectTrigger className="bg-background/80 backdrop-blur-sm border-elec-yellow/20">
+                            <SelectTrigger className="bg-background/80 backdrop-blur-sm border-input">
                               <SelectValue />
                             </SelectTrigger>
-                            <SelectContent className="bg-background/95 backdrop-blur-sm border-elec-yellow/20 z-50">
+                            <SelectContent className="bg-background/95 backdrop-blur-sm border-border z-50">
                               <SelectItem value="1">1 - Negligible</SelectItem>
                               <SelectItem value="2">2 - Minor</SelectItem>
                               <SelectItem value="3">3 - Moderate</SelectItem>
@@ -393,28 +406,36 @@ const RAMSGenerator = () => {
                               <SelectItem value="5">5 - Catastrophic</SelectItem>
                             </SelectContent>
                           </Select>
-                          <p className="text-xs text-muted-foreground mt-1">
+                          <p className="text-xs text-muted-foreground leading-tight">
                             {getSeverityDescription(risk.severity)}
                           </p>
                         </div>
-                        <div>
-                          <Label className="text-sm">Risk Rating</Label>
-                          <div className="mt-2">
-                            <Badge className={`${getRiskColor(risk.riskRating)} bg-opacity-20 text-sm font-bold`}>
+
+                        <div className="space-y-2">
+                          <Label className="text-sm font-medium">Risk Rating</Label>
+                          <div className="flex items-center h-10">
+                            <Badge 
+                              className={`${getRiskColor(risk.riskRating)} border text-sm font-semibold px-3 py-1.5`}
+                              variant="outline"
+                            >
                               {risk.riskRating} - {getRiskLevel(risk.riskRating)}
                             </Badge>
                           </div>
+                          <p className="text-xs text-muted-foreground">
+                            Likelihood × Severity
+                          </p>
                         </div>
-                        <div>
-                          <Label className="text-sm">Residual Risk</Label>
+
+                        <div className="space-y-2">
+                          <Label className="text-sm font-medium">Residual Risk</Label>
                           <Select 
                             value={risk.residualRisk.toString()} 
                             onValueChange={(value) => updateRisk(risk.id, 'residualRisk', parseInt(value))}
                           >
-                            <SelectTrigger className="bg-background/80 backdrop-blur-sm border-elec-yellow/20">
+                            <SelectTrigger className="bg-background/80 backdrop-blur-sm border-input">
                               <SelectValue />
                             </SelectTrigger>
-                            <SelectContent className="bg-background/95 backdrop-blur-sm border-elec-yellow/20 z-50">
+                            <SelectContent className="bg-background/95 backdrop-blur-sm border-border z-50">
                               {[1,2,3,4,5,6,7,8,9,10,12,15,16,20,25].map(val => (
                                 <SelectItem key={val} value={val.toString()}>
                                   {val} - {getRiskLevel(val)}
@@ -422,17 +443,25 @@ const RAMSGenerator = () => {
                               ))}
                             </SelectContent>
                           </Select>
+                          <p className="text-xs text-muted-foreground">
+                            Risk after controls
+                          </p>
                         </div>
                       </div>
                       
-                      <div>
-                        <Label className="text-sm">Control Measures</Label>
+                      {/* Control measures */}
+                      <div className="space-y-2">
+                        <Label className="text-sm font-medium">Control Measures *</Label>
                         <Textarea
                           value={risk.controls}
                           onChange={(e) => updateRisk(risk.id, 'controls', e.target.value)}
-                          placeholder="Describe control measures to mitigate this risk"
-                          rows={3}
+                          placeholder="Describe control measures to mitigate this risk..."
+                          rows={4}
+                          className="resize-none bg-background/80 backdrop-blur-sm border-input"
                         />
+                        <p className="text-xs text-muted-foreground">
+                          Detail the specific actions, equipment, and procedures to reduce risk
+                        </p>
                       </div>
                     </CardContent>
                   </Card>
