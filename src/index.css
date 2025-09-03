@@ -143,18 +143,40 @@
   }
 }
 
-/* Completely hide scrollbars for all dropdowns */
+/* Hide scrollbars for specific dropdown and popover components only */
 @layer components {
-  .scrollbar-none {
+  .dropdown-scrollbar-none,
+  .popover-scrollbar-none,
+  .select-scrollbar-none {
     /* Firefox */
     scrollbar-width: none;
     /* IE and Edge */
     -ms-overflow-style: none;
   }
   
-  .scrollbar-none::-webkit-scrollbar {
+  .dropdown-scrollbar-none::-webkit-scrollbar,
+  .popover-scrollbar-none::-webkit-scrollbar,
+  .select-scrollbar-none::-webkit-scrollbar {
     /* Webkit browsers (Chrome, Safari, Edge) */
     display: none;
+  }
+  
+  /* Keep main scrollbar visible and styled */
+  body::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  body::-webkit-scrollbar-track {
+    background: hsl(var(--elec-dark));
+  }
+  
+  body::-webkit-scrollbar-thumb {
+    background: hsl(var(--elec-gray));
+    border-radius: 4px;
+  }
+  
+  body::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--muted-foreground));
   }
   
   .line-clamp-2 {
