@@ -170,8 +170,18 @@ const SolarPVCalculator = () => {
       // Get realistic cost estimate
       const costEstimate = calculateCostEstimate(size, efficiency);
 
-      // Financial calculations using realistic costs
-      const annualSavings = annualGeneration * rate;
+      // Financial calculations with realistic self-consumption
+      // Assume 35% self-consumption (typical UK average) and 5p/kWh export rate
+      const selfConsumptionRate = 0.35;
+      const exportRate = 0.05; // Typical SEG rate
+      
+      const selfConsumedEnergy = annualGeneration * selfConsumptionRate;
+      const exportedEnergy = annualGeneration * (1 - selfConsumptionRate);
+      
+      const savingsFromSelfConsumption = selfConsumedEnergy * rate;
+      const incomeFromExport = exportedEnergy * exportRate;
+      const annualSavings = savingsFromSelfConsumption + incomeFromExport;
+      
       const paybackPeriod = costEstimate.totalCost / annualSavings;
 
       // Environmental impact (UK grid factor: 0.233 kg CO2/kWh)
