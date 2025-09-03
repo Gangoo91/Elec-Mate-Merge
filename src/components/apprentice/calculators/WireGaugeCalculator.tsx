@@ -432,134 +432,179 @@ const WireGaugeCalculator = () => {
             />
           </div>
 
-          {/* Installation Performance */}
+          {/* Installation Performance - Mobile Optimized */}
           {parseFloat(length) > 0 && parseFloat(loadCurrent) > 0 && (
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-              <ResultCard
-                title="Voltage Drop"
-                value={formatNumber(result.analysis.voltageDropPercentage, 1)}
-                unit="%"
-                subtitle={`${formatNumber(result.analysis.voltageDrop, 1)}V drop`}
-                status={result.analysis.voltageDropPercentage > 5 ? 'error' : result.analysis.voltageDropPercentage > 3 ? 'warning' : 'success'}
-              />
-              <ResultCard
-                title="Power Loss"
-                value={formatNumber(result.analysis.powerLoss)}
-                unit="W"
-                subtitle="Cable losses"
-              />
+            <div className="grid grid-cols-2 gap-3 sm:gap-4">
               <ResultCard
                 title="Efficiency"
                 value={formatNumber(result.analysis.efficiency, 1)}
                 unit="%"
                 subtitle="System efficiency"
                 status={result.analysis.efficiency > 97 ? 'success' : result.analysis.efficiency > 95 ? 'warning' : 'error'}
+                className="bg-gradient-to-br from-green-900/60 to-green-800/40 border-green-500/40"
               />
               <ResultCard
                 title="Temperature"
                 value={formatNumber(result.analysis.temperatureDerating * 100)}
                 unit="%"
                 subtitle="Derating factor"
+                status={result.analysis.temperatureDerating < 0.8 ? 'warning' : 'success'}
+                className="bg-gradient-to-br from-amber-900/60 to-amber-800/40 border-amber-500/40"
               />
             </div>
           )}
 
-          {/* What This Means */}
+          {/* What This Means - Enhanced Mobile Design */}
           {(parseFloat(length) > 0 || parseFloat(loadCurrent) > 0) && (
-            <Alert className="border-blue-500/20 bg-blue-500/10">
-              <Info className="h-4 w-4 text-blue-400" />
-              <AlertDescription className="text-blue-100">
-                <div className="font-medium mb-2">What this means:</div>
-                <div className="space-y-1 text-sm">
+            <Card className="bg-gradient-to-br from-blue-900/40 to-blue-800/20 border-blue-500/30">
+              <CardHeader className="pb-3 px-4">
+                <CardTitle className="text-sm sm:text-base flex items-center gap-2 text-blue-200">
+                  <Info className="h-4 w-4 text-blue-400" />
+                  What this means:
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="px-4">
+                <div className="space-y-3">
                   {parseFloat(loadCurrent) > 0 && (
-                    <div>• Cable can safely carry <span className="font-medium">{formatNumber(result.analysis.effectiveAmpacity)}A</span> continuous load in {installationType} installation</div>
+                    <div className="flex items-start gap-3">
+                      <div className="w-2 h-2 bg-blue-400 rounded-full mt-1.5 flex-shrink-0" />
+                      <p className="text-sm text-blue-100 leading-relaxed">
+                        Cable can safely carry <span className="font-semibold text-blue-200">{formatNumber(result.analysis.effectiveAmpacity)}A</span> continuous load in {installationType} installation
+                      </p>
+                    </div>
                   )}
                   {result.analysis.voltageDropPercentage > 0 && (
-                    <div>• Voltage drop of <span className="font-medium">{formatNumber(result.analysis.voltageDropPercentage, 1)}%</span> {result.analysis.voltageDropPercentage <= 5 ? 'meets' : 'exceeds'} BS 7671 requirements</div>
+                    <div className="flex items-start gap-3">
+                      <div className="w-2 h-2 bg-blue-400 rounded-full mt-1.5 flex-shrink-0" />
+                      <p className="text-sm text-blue-100 leading-relaxed">
+                        Voltage drop of <span className="font-semibold text-blue-200">{formatNumber(result.analysis.voltageDropPercentage, 1)}%</span> {result.analysis.voltageDropPercentage <= 5 ? 'meets' : 'exceeds'} BS 7671 requirements
+                      </p>
+                    </div>
                   )}
                   {result.analysis.powerLoss > 0 && (
-                    <div>• Power losses of <span className="font-medium">{formatNumber(result.analysis.powerLoss)}W</span> reduce system efficiency</div>
+                    <div className="flex items-start gap-3">
+                      <div className="w-2 h-2 bg-blue-400 rounded-full mt-1.5 flex-shrink-0" />
+                      <p className="text-sm text-blue-100 leading-relaxed">
+                        Power losses of <span className="font-semibold text-blue-200">{formatNumber(result.analysis.powerLoss)}W</span> reduce system efficiency
+                      </p>
+                    </div>
                   )}
                 </div>
-              </AlertDescription>
-            </Alert>
+              </CardContent>
+            </Card>
           )}
 
-          {/* Warnings */}
-          {result.warnings.length > 0 && (
-            <Alert className="border-amber-500/20 bg-amber-500/10">
-              <AlertTriangle className="h-4 w-4 text-amber-400" />
-              <AlertDescription className="text-amber-100">
-                <div className="font-medium mb-2">Attention Required:</div>
-                <ul className="space-y-1 text-sm">
-                  {result.warnings.map((warning, index) => (
-                    <li key={index}>• {warning}</li>
-                  ))}
-                </ul>
-              </AlertDescription>
-            </Alert>
+          {/* Warnings and Recommendations - Enhanced Design */}
+          {(result.warnings.length > 0 || result.recommendations.length > 0) && (
+            <div className="space-y-3">
+              {result.warnings.length > 0 && (
+                <Alert className="border-red-500/40 bg-gradient-to-br from-red-900/50 to-red-800/30">
+                  <AlertTriangle className="h-4 w-4 text-red-400" />
+                  <AlertDescription className="space-y-3">
+                    <p className="font-medium text-red-300 text-sm">Safety Warnings:</p>
+                    <div className="space-y-2">
+                      {result.warnings.map((warning, i) => (
+                        <div key={i} className="flex items-start gap-2">
+                          <div className="w-1.5 h-1.5 bg-red-400 rounded-full mt-1.5 flex-shrink-0" />
+                          <p className="text-sm text-red-200 leading-relaxed">{warning}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </AlertDescription>
+                </Alert>
+              )}
+              
+              {result.recommendations.length > 0 && (
+                <Alert className="border-amber-500/40 bg-gradient-to-br from-amber-900/50 to-amber-800/30">
+                  <Info className="h-4 w-4 text-amber-400" />
+                  <AlertDescription className="space-y-3">
+                    <p className="font-medium text-amber-300 text-sm">Recommendations:</p>
+                    <div className="space-y-2">
+                      {result.recommendations.map((rec, i) => (
+                        <div key={i} className="flex items-start gap-2">
+                          <div className="w-1.5 h-1.5 bg-amber-400 rounded-full mt-1.5 flex-shrink-0" />
+                          <p className="text-sm text-amber-200 leading-relaxed">{rec}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </AlertDescription>
+                </Alert>
+              )}
+            </div>
           )}
 
-          {/* Recommendations */}
-          {result.recommendations.length > 0 && (
-            <Alert className="border-green-500/20 bg-green-500/10">
-              <CheckCircle className="h-4 w-4 text-green-400" />
-              <AlertDescription className="text-green-100">
-                <div className="font-medium mb-2">Recommendations:</div>
-                <ul className="space-y-1 text-sm">
-                  {result.recommendations.map((rec, index) => (
-                    <li key={index}>• {rec}</li>
-                  ))}
-                </ul>
-              </AlertDescription>
-            </Alert>
-          )}
-
-          {/* Why This Matters */}
-          <WhyThisMatters
-            points={[
-              "Undersized cables cause voltage drop, reducing equipment performance and wasting energy",
-              "Oversized cables increase installation costs unnecessarily",
-              "Proper cable sizing ensures safety and regulatory compliance",
-              "Temperature and grouping factors prevent overheating in real installations",
-              "BS 7671 limits voltage drop to 5% for lighting and 5% for other uses"
-            ]}
-          />
-
-          {/* BS 7671 Compliance */}
-          <Card className="border-green-500/20 bg-green-500/10">
-            <CardHeader className="pb-3">
-              <CardTitle className="text-sm text-green-100 flex items-center gap-2">
-                <CheckCircle className="h-4 w-4" />
-                BS 7671 18th Edition Guidance
+          {/* Why This Matters - Enhanced Design */}
+          <Card className="bg-gradient-to-br from-amber-900/40 to-amber-800/20 border-amber-500/30">
+            <CardHeader className="pb-3 px-4">
+              <CardTitle className="text-sm sm:text-base flex items-center gap-2 text-amber-200">
+                <AlertTriangle className="h-4 w-4 text-amber-400" />
+                Why this matters
               </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-2 text-sm text-green-100">
-              {result.compliance.bs7671.map((item, index) => (
-                <div key={index}>• {item}</div>
-              ))}
-              <Separator className="my-2 bg-green-500/20" />
-              <div className="text-xs text-green-200">
-                Key considerations: Regulation 411 (protective measures), Section 433 (overload protection), 
-                Section 523 (current-carrying capacity), Appendix 4 (voltage drop)
+            <CardContent className="px-4">
+              <div className="space-y-3">
+                {[
+                  "Undersized cables cause voltage drop, reducing equipment performance and wasting energy",
+                  "Oversized cables increase installation costs unnecessarily",
+                  "Proper cable sizing ensures safety and regulatory compliance",
+                  "Temperature and grouping factors prevent overheating in real installations",
+                  "BS 7671 limits voltage drop to 5% for lighting and 5% for other uses"
+                ].map((point, i) => (
+                  <div key={i} className="flex items-start gap-3">
+                    <div className="w-2 h-2 bg-amber-400 rounded-full mt-1.5 flex-shrink-0" />
+                    <p className="text-sm text-amber-100 leading-relaxed">{point}</p>
+                  </div>
+                ))}
               </div>
             </CardContent>
           </Card>
 
-          {/* Practical Guidance */}
-          <Card className="border-purple-500/20 bg-purple-500/10">
-            <CardHeader className="pb-3">
-              <CardTitle className="text-sm text-purple-100">Practical Installation Tips</CardTitle>
+          {/* BS 7671 Compliance - Enhanced Design */}
+          <Card className="bg-gradient-to-br from-green-900/40 to-green-800/20 border-green-500/30">
+            <CardHeader className="pb-3 px-4">
+              <CardTitle className="text-sm sm:text-base flex items-center gap-2 text-green-200">
+                {getStatusIcon(getOverallStatus())}
+                BS 7671 18th Edition Guidance
+              </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-2 text-sm text-purple-100">
-              <div>• Always verify actual installation conditions match your calculations</div>
-              <div>• Consider future load increases when selecting cable size</div>
-              <div>• Use appropriate protective devices rated for cable ampacity</div>
-              <div>• Ensure adequate mechanical protection for installation method</div>
-              <div>• Check cable termination ratings match conductor ampacity</div>
-              {parseFloat(ambientTemp) > 40 && (
-                <div>• High ambient temperature requires careful derating - consider ventilation</div>
-              )}
+            <CardContent className="px-4 space-y-3">
+              {result.compliance.bs7671.map((point, i) => (
+                <div key={i} className="flex items-start gap-3">
+                  <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
+                  <p className="text-sm text-green-100 leading-relaxed">{point}</p>
+                </div>
+              ))}
+              
+              <div className="pt-3 border-t border-green-500/20">
+                <p className="text-xs text-green-300/80 leading-relaxed">
+                  Key considerations: Regulation 411 (protective measures), Section 433 (overload protection), 
+                  Section 523 (current-carrying capacity), Appendix 4 (voltage drop)
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Practical Guidance - Enhanced Design */}
+          <Card className="bg-gradient-to-br from-purple-900/40 to-purple-800/20 border-purple-500/30">
+            <CardHeader className="pb-3 px-4">
+              <CardTitle className="text-sm sm:text-base text-purple-200">Practical Installation Tips</CardTitle>
+            </CardHeader>
+            <CardContent className="px-4">
+              <div className="space-y-3">
+                {[
+                  "Always verify actual installation conditions match your calculations",
+                  "Consider future load increases when selecting cable size",
+                  "Use appropriate protective devices rated for cable ampacity",
+                  "Ensure adequate mechanical protection for installation method",
+                  "Check cable termination ratings match conductor ampacity",
+                  ...(parseFloat(ambientTemp) > 40 ? ["High ambient temperature requires careful derating - consider ventilation"] : [])
+                ].map((tip, i) => (
+                  <div key={i} className="flex items-start gap-3">
+                    <div className="w-2 h-2 bg-purple-400 rounded-full mt-1.5 flex-shrink-0" />
+                    <p className="text-sm text-purple-100 leading-relaxed">{tip}</p>
+                  </div>
+                ))}
+              </div>
             </CardContent>
           </Card>
         </div>
