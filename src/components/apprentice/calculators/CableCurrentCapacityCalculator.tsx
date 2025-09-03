@@ -441,7 +441,8 @@ const CableCurrentCapacityCalculator = () => {
     return `${value.toFixed(1)}${unit || ""}`;
   };
 
-  const getSafetyMarginBadge = (margin: number) => {
+  const getSafetyMarginBadge = (margin: number, isCompliant: boolean) => {
+    if (!isCompliant) return <Badge className="text-xs bg-red-500/20 text-red-600 border-red-500/30">Non-compliant</Badge>;
     if (margin >= 25) return <Badge className="text-xs bg-green-500/20 text-green-600 border-green-500/30">Excellent ({margin.toFixed(1)}%)</Badge>;
     if (margin >= 10) return <Badge className="text-xs bg-yellow-500/20 text-yellow-600 border-yellow-500/30">Adequate ({margin.toFixed(1)}%)</Badge>;
     return <Badge className="text-xs bg-red-500/20 text-red-600 border-red-500/30">Low ({margin.toFixed(1)}%)</Badge>;
@@ -654,8 +655,10 @@ const CableCurrentCapacityCalculator = () => {
                         <div>Iz = {result.compliance.Iz.toFixed(1)}A</div>
                       </div>
                       <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
-                        <span className="text-xs">Safety margin:</span>
-                        {getSafetyMarginBadge(result.compliance.safetyMargin)}
+                        <span className="text-xs">
+                          {result.compliance.overallCompliant ? "Safety margin:" : "Status:"}
+                        </span>
+                        {getSafetyMarginBadge(result.compliance.safetyMargin, result.compliance.overallCompliant)}
                       </div>
                     </AlertDescription>
                   </Alert>
