@@ -5,7 +5,8 @@ export interface ValidationResult {
   errors: string[];
   warnings: string[];
   standardsCompliance: {
-    bs7671: boolean;
+    bs7671?: boolean;
+    bestPractice?: boolean;
     iet: boolean;
     safety: boolean;
   };
@@ -137,7 +138,7 @@ export class CalculatorValidator {
       errors,
       warnings,
       standardsCompliance: {
-        bs7671: calculatedPF >= 0.85,
+        bestPractice: calculatedPF >= 0.85,
         iet: calculatedPF >= 0.8,
         safety: calculatedPF >= 0.7
       }

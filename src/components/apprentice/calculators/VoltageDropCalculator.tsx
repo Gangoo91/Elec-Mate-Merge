@@ -16,6 +16,7 @@ const VoltageDropCalculator = () => {
   const [voltage, setVoltage] = useState<string>("230");
   const [phase, setPhase] = useState<"single" | "three">("single");
   const [circuitType, setCircuitType] = useState<"lighting" | "other">("lighting");
+  const [powerFactor, setPowerFactor] = useState<string>("0.95");
   const [result, setResult] = useState<{
     voltageDrop: number;
     percentageDrop: number;
@@ -53,15 +54,21 @@ const calculateVoltageDrop = () => {
     const I = parseFloat(current);
     const L = parseFloat(length);
     const V = parseFloat(voltage);
+    const pf = parseFloat(powerFactor);
     const resistanceData = cableResistance[cableType as keyof typeof cableResistance];
     const R = resistanceData?.[cableSize as keyof typeof resistanceData];
 
-    if (I > 0 && L > 0 && R && V > 0) {
+    if (I > 0 && L > 0 && R && V > 0 && pf > 0) {
       const limit = circuitType === "lighting" ? 3 : 5; // BS 7671 design limits
+      
+      // Approximate reactance (simplified for apprentice level)
+      const X = R * 0.1; // Typical reactance is about 10% of resistance for most cables
+      
       const vdVolts =
         phase === "single"
-          ? (2 * I * L * R) / 1000 // line and neutral return path
-          : (Math.sqrt(3) * I * L * R) / 1000; // three-phase
+          ? (2 * I * L * (R * pf + X * Math.sqrt(1 - pf * pf))) / 1000
+          : (Math.sqrt(3) * I * L * (R * pf + X * Math.sqrt(1 - pf * pf))) / 1000;
+      
       const percentageDrop = (vdVolts / V) * 100;
       const acceptable = percentageDrop <= limit;
 
@@ -81,6 +88,7 @@ const reset = () => {
     setVoltage("230");
     setPhase("single");
     setCircuitType("lighting");
+    setPowerFactor("0.95");
     setResult(null);
   };
 
@@ -173,6 +181,17 @@ const reset = () => {
                 <MobileSelectItem value="other">Other final circuits (5%)</MobileSelectItem>
               </MobileSelectContent>
             </MobileSelect>
+
+            <MobileInput
+              label="Power Factor"
+              type="number"
+              step="0.01"
+              min="0.1"
+              max="1.0"
+              value={powerFactor}
+              onChange={(e) => setPowerFactor(e.target.value)}
+              placeholder="e.g., 0.95"
+            />
 
             <div className="flex gap-2">
               <MobileButton onClick={calculateVoltageDrop} className="flex-1" variant="elec" icon={<Calculator className="h-4 w-4" />}>

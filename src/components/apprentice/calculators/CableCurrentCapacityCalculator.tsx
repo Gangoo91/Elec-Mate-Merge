@@ -12,6 +12,7 @@ import InfoBox from "@/components/common/InfoBox";
 import { calculateCableCapacity, getRecommendations, CableCapacityInputs, CableCapacityResult } from "@/lib/calculators/engines/cableCapacityEngine";
 import { CableType } from "@/lib/calculators/bs7671-data/cableCapacities";
 import { parseNumber, clamp } from "@/lib/calculators/utils/calculatorUtils";
+import { getTemperatureFactor, getGroupingFactor } from "@/lib/calculators/bs7671-data/temperatureFactors";
 
 const CableCurrentCapacityCalculator = () => {
   const [cableSize, setCableSize] = useState<string>("");
@@ -256,17 +257,13 @@ const CableCurrentCapacityCalculator = () => {
         const baseCapacity = sizeData[installationMethod as keyof typeof sizeData] || 0;
         
         if (baseCapacity > 0) {
-          // Temperature correction factor based on cable type
-          let tempFactor = 1.0;
-          
-          if (ambient !== 30) {
-            const tempDiff = ambient - 30;
-            if (cableType.includes('xlpe')) {
-              tempFactor = 1.0 - (tempDiff * 0.0067); // For 90°C cables
-            } else {
-              tempFactor = 1.0 - (tempDiff * 0.0125); // For 70°C cables
-            }
-          }
+        // Temperature correction factor using BS 7671 Appendix 4 lookup
+        let tempFactor = 1.0;
+        
+        if (ambient !== 30) {
+          const cableRating = cableType.includes('xlpe') ? '90C' : '70C';
+          tempFactor = getTemperatureFactor(ambient, cableRating);
+        }
           
           // Soil thermal resistivity correction (for buried cables)
           let soilFactor = 1.0;
