@@ -56,15 +56,13 @@ const SwimmingPoolCalculator = () => {
           </div>
 
           <div className="space-y-4">
-            <div className="rounded-md bg-elec-gray p-6 min-h-[600px]">
-              {result ? (
-                <PoolResults result={result} />
-              ) : (
-                <div className="flex items-center justify-center h-full text-muted-foreground">
-                  Enter pool details to calculate electrical requirements
-                </div>
-              )}
-            </div>
+            {result ? (
+              <PoolResults result={result} />
+            ) : (
+              <div className="flex items-center justify-center h-full text-muted-foreground min-h-[400px]">
+                Enter pool details to calculate electrical requirements
+              </div>
+            )}
           </div>
         </div>
       )
