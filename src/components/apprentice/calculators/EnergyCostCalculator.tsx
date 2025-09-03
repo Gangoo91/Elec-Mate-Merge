@@ -331,13 +331,10 @@ const EnergyCostCalculator = () => {
                   label="Choose appliance category"
                   value={selectedCategory}
                   onValueChange={setSelectedCategory}
-                  options={[
-                    { value: "", label: "Select a category..." },
-                    ...availableCategories.map(cat => ({
-                      value: cat.key,
-                      label: cat.name
-                    }))
-                  ]}
+                  options={availableCategories.map(cat => ({
+                    value: cat.key,
+                    label: cat.name
+                  }))}
                   placeholder="Select category..."
                 />
               </div>

@@ -49,7 +49,7 @@ export function MobileSelectWrapper({
             </div>
           )}
           
-          <Select value={value} onValueChange={onValueChange} disabled={disabled}>
+          <Select value={value || undefined} onValueChange={onValueChange} disabled={disabled}>
             <SelectTrigger className={cn(
               "h-14 bg-card border-2 border-elec-gray/50 rounded-xl text-elec-light",
               "hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200",
@@ -60,7 +60,7 @@ export function MobileSelectWrapper({
               <SelectValue placeholder={placeholder} />
             </SelectTrigger>
             <SelectContent className="bg-card border-elec-yellow/30">
-              {options.map((option) => (
+              {options.filter(option => option.value !== "").map((option) => (
                 <SelectItem 
                   key={option.value} 
                   value={option.value}
