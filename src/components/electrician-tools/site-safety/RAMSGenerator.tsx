@@ -11,24 +11,8 @@ import { FileText, Download, Plus, Trash2, Copy } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { HazardSelect } from "./common/HazardSelect";
 import { RiskSelect } from "./common/RiskSelect";
-
-interface RAMSData {
-  projectName: string;
-  location: string;
-  date: string;
-  assessor: string;
-  activities: string[];
-  risks: Array<{
-    id: string;
-    hazard: string;
-    risk: string;
-    likelihood: number;
-    severity: number;
-    riskRating: number;
-    controls: string;
-    residualRisk: number;
-  }>;
-}
+import { RAMSData } from "@/types/rams";
+import { generateRAMSPDF } from "@/utils/rams-pdf";
 
 const RAMSGenerator = () => {
   const [ramsData, setRAMSData] = useState<RAMSData>({
@@ -163,11 +147,30 @@ const RAMSGenerator = () => {
     return descriptions[level] || "";
   };
 
+  const validateRAMSData = () => {
+    const errors = [];
+    
+    if (!ramsData.projectName.trim()) errors.push("Project Name");
+    if (!ramsData.location.trim()) errors.push("Location");
+    if (!ramsData.assessor.trim()) errors.push("Assessor Name");
+    if (ramsData.activities.filter(a => a.trim()).length === 0) errors.push("At least one Work Activity");
+    if (ramsData.risks.length === 0) errors.push("At least one Risk Assessment");
+    
+    const incompleteRisks = ramsData.risks.filter(risk => 
+      !risk.hazard.trim() || !risk.risk.trim() || !risk.controls.trim()
+    );
+    if (incompleteRisks.length > 0) errors.push(`${incompleteRisks.length} incomplete risk assessment(s)`);
+    
+    return errors;
+  };
+
   const generateRAMS = () => {
-    if (!ramsData.projectName || !ramsData.location || !ramsData.assessor) {
+    const errors = validateRAMSData();
+    
+    if (errors.length > 0) {
       toast({
-        title: "Missing Information",
-        description: "Please fill in all required fields before generating RAMS",
+        title: "Validation Failed",
+        description: `Please complete: ${errors.join(", ")}`,
         variant: "destructive"
       });
       return;
@@ -177,6 +180,35 @@ const RAMSGenerator = () => {
       title: "RAMS Generated",
       description: "Your Risk Assessment & Method Statement has been generated successfully"
     });
+  };
+
+  const exportToPDF = () => {
+    const errors = validateRAMSData();
+    
+    if (errors.length > 0) {
+      toast({
+        title: "Cannot Export PDF",
+        description: `Please complete: ${errors.join(", ")}`,
+        variant: "destructive"
+      });
+      return;
+    }
+
+    try {
+      generateRAMSPDF(ramsData);
+      toast({
+        title: "PDF Exported",
+        description: "Your RAMS document has been downloaded successfully",
+        variant: "success"
+      });
+    } catch (error) {
+      console.error("PDF generation error:", error);
+      toast({
+        title: "Export Failed",
+        description: "There was an error generating the PDF. Please try again.",
+        variant: "destructive"
+      });
+    }
   };
 
   return (
@@ -416,6 +448,7 @@ const RAMSGenerator = () => {
               Generate RAMS Document
             </Button>
             <Button 
+              onClick={exportToPDF}
               variant="outline" 
               className="w-full sm:w-auto h-12 border-elec-yellow/40 text-elec-yellow hover:bg-elec-yellow/10 font-medium px-6"
             >
