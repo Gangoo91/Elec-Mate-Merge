@@ -5,6 +5,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import RecordingIndicator from "../apprentice/timer/RecordingIndicator";
 import NotificationDropdown from "../notifications/NotificationDropdown";
 import UserProfileDropdown from "../auth/UserProfileDropdown";
+import { useRef, useEffect } from "react";
 
 interface HeaderProps {
   toggleSidebar: () => void;
@@ -12,9 +13,20 @@ interface HeaderProps {
 
 const Header = ({ toggleSidebar }: HeaderProps) => {
   const isMobile = useIsMobile();
+  const headerRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    if (headerRef.current) {
+      const height = headerRef.current.offsetHeight;
+      document.documentElement.style.setProperty('--header-height', `${height}px`);
+    }
+  }, [isMobile]); // Recalculate when mobile state changes
   
   return (
-    <header className="bg-[#1e1e1e] border-b border-elec-yellow/10 py-2 sm:py-3 px-3 sm:px-4 flex justify-between items-center fixed top-0 left-0 right-0 z-50">
+    <header 
+      ref={headerRef}
+      className="bg-[#1e1e1e] border-b border-elec-yellow/10 py-2 sm:py-3 px-3 sm:px-4 flex justify-between items-center fixed top-0 left-0 right-0 z-50"
+    >
       <div className="flex items-center gap-2 sm:gap-4 pl-0 sm:pl-1">
         {isMobile && (
           <Button 
