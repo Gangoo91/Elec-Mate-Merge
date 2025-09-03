@@ -22,21 +22,21 @@ interface PoolGuidanceProps {
 
 const PoolGuidance = ({ result }: PoolGuidanceProps) => {
   return (
-    <div className="space-y-8">
+    <div className="space-y-6 lg:space-y-8">
       {/* Regulatory Overview */}
       <div className="space-y-4">
-        <div className="flex items-center gap-2 mb-6">
+        <div className="flex items-center gap-2 mb-4 lg:mb-6">
           <BookOpen className="h-5 w-5 text-elec-yellow" />
-          <h3 className="text-lg font-semibold text-white">Regulatory Requirements</h3>
+          <h3 className="text-base lg:text-lg font-semibold text-white">Regulatory Requirements</h3>
         </div>
         
-        <div className="space-y-6">
+        <div className="space-y-4 lg:space-y-6">
           <div>
             <h4 className="font-medium text-elec-yellow mb-3 flex items-center gap-2">
               <Shield className="h-4 w-4" />
               BS 7671:2018 Section 702 - Swimming Pools
             </h4>
-            <p className="text-sm text-white mb-4 ml-6">
+            <p className="text-sm text-white mb-3 lg:mb-4 ml-6">
               The primary standard governing swimming pool electrical installations in the UK.
             </p>
             <ul className="space-y-2 ml-6">
@@ -143,18 +143,18 @@ const PoolGuidance = ({ result }: PoolGuidanceProps) => {
 
       {/* Zone Classifications */}
       <div className="space-y-4">
-        <div className="flex items-center gap-2 mb-6">
+        <div className="flex items-center gap-2 mb-4 lg:mb-6">
           <Eye className="h-5 w-5 text-elec-yellow" />
-          <h3 className="text-lg font-semibold text-white">Zone Classifications Guide</h3>
+          <h3 className="text-base lg:text-lg font-semibold text-white">Zone Classifications Guide</h3>
         </div>
         
-        <div className="space-y-6">
+        <div className="space-y-4 lg:space-y-6">
           <div>
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
+            <div className="flex flex-col gap-2 mb-3">
               <h4 className="font-medium text-red-300">Zone 0 - Highest Risk</h4>
-              <Badge variant="outline" className="border-red-500/30 text-red-300 self-start sm:self-center">IPX8 Required</Badge>
+              <Badge variant="outline" className="border-red-500/30 text-red-300 self-start text-xs">IPX8 Required</Badge>
             </div>
-            <p className="text-sm text-white mb-4 ml-6">Interior of pool, fountain, or water feature</p>
+            <p className="text-sm text-white mb-3 lg:mb-4 ml-6">Interior of pool, fountain, or water feature</p>
             <ul className="space-y-2 ml-6">
               <li className="flex items-start gap-3 text-sm text-white">
                 <span className="text-elec-yellow mt-1">•</span>

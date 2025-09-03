@@ -43,11 +43,11 @@ const PoolResults = ({ result }: PoolResultsProps) => {
   return (
     <div className="space-y-6">
       {/* Overview */}
-      <div className="space-y-6">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
+      <div className="space-y-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
           <div className="flex items-center gap-2">
             <Zap className="h-5 w-5 text-elec-yellow" />
-            <h3 className="text-lg sm:text-xl font-semibold text-white">Installation Overview</h3>
+            <h3 className="text-base lg:text-lg font-semibold text-white">Installation Overview</h3>
           </div>
           <Badge 
             variant={result.regulatoryCompliance.bs7671Section702 ? "default" : "destructive"}
@@ -58,33 +58,33 @@ const PoolResults = ({ result }: PoolResultsProps) => {
         </div>
 
         {/* Key Metrics Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-          <div className="text-center space-y-2 p-4 rounded-lg border border-elec-yellow/20 bg-elec-gray/50">
-            <div className="text-xs sm:text-sm text-white/60 uppercase tracking-wide">Total Load</div>
-            <div className="text-2xl sm:text-3xl font-bold text-elec-yellow">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
+          <div className="text-center space-y-2 p-3 lg:p-4 rounded-lg border border-elec-yellow/20 bg-elec-gray/50">
+            <div className="text-xs text-white/60 uppercase tracking-wide">Total Load</div>
+            <div className="text-lg lg:text-2xl font-bold text-elec-yellow">
               {result.totalLoad.toLocaleString()}
-              <span className="text-lg text-white/70 ml-1">W</span>
+              <span className="text-sm text-white/70 ml-1">W</span>
             </div>
           </div>
           
-          <div className="text-center space-y-2 p-4 rounded-lg border border-elec-yellow/20 bg-elec-gray/50">
-            <div className="text-xs sm:text-sm text-white/60 uppercase tracking-wide">Total Current</div>
-            <div className="text-2xl sm:text-3xl font-bold text-elec-yellow">
+          <div className="text-center space-y-2 p-3 lg:p-4 rounded-lg border border-elec-yellow/20 bg-elec-gray/50">
+            <div className="text-xs text-white/60 uppercase tracking-wide">Total Current</div>
+            <div className="text-lg lg:text-2xl font-bold text-elec-yellow">
               {result.totalCurrent}
-              <span className="text-lg text-white/70 ml-1">A</span>
+              <span className="text-sm text-white/70 ml-1">A</span>
             </div>
           </div>
           
-          <div className="text-center space-y-2 p-4 rounded-lg border border-elec-yellow/20 bg-elec-gray/50">
-            <div className="text-xs sm:text-sm text-white/60 uppercase tracking-wide">Diversity Factor</div>
-            <div className="text-2xl sm:text-3xl font-bold text-elec-yellow">
+          <div className="text-center space-y-2 p-3 lg:p-4 rounded-lg border border-elec-yellow/20 bg-elec-gray/50">
+            <div className="text-xs text-white/60 uppercase tracking-wide">Diversity Factor</div>
+            <div className="text-lg lg:text-2xl font-bold text-elec-yellow">
               {result.safetyFactors.diversityFactor}
             </div>
           </div>
           
-          <div className="text-center space-y-2 p-4 rounded-lg border border-elec-yellow/20 bg-elec-gray/50">
-            <div className="text-xs sm:text-sm text-white/60 uppercase tracking-wide">Safety Margin</div>
-            <div className="text-2xl sm:text-3xl font-bold text-elec-yellow">
+          <div className="text-center space-y-2 p-3 lg:p-4 rounded-lg border border-elec-yellow/20 bg-elec-gray/50">
+            <div className="text-xs text-white/60 uppercase tracking-wide">Safety Margin</div>
+            <div className="text-lg lg:text-2xl font-bold text-elec-yellow">
               {result.safetyFactors.safetyMargin}
             </div>
           </div>
@@ -113,43 +113,43 @@ const PoolResults = ({ result }: PoolResultsProps) => {
       <div className="space-y-4">
         <div className="flex items-center gap-2 mb-4">
           <Cable className="h-5 w-5 text-elec-yellow" />
-          <h3 className="text-lg sm:text-xl font-semibold text-white">Circuit Schedule</h3>
+          <h3 className="text-base lg:text-lg font-semibold text-white">Circuit Schedule</h3>
         </div>
         
-        <div className="space-y-4">
+        <div className="space-y-3">
           {result.circuits.map((circuit, index) => (
-            <div key={index} className={`${getComplianceColor(circuit.complianceStatus)} border transition-all hover:border-opacity-60 p-4 sm:p-6 rounded-lg`}>
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
-                <h4 className="font-semibold flex items-center gap-2 text-base sm:text-lg text-white">
+            <div key={index} className={`${getComplianceColor(circuit.complianceStatus)} border transition-all hover:border-opacity-60 p-3 lg:p-4 rounded-lg`}>
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
+                <h4 className="font-semibold flex items-center gap-2 text-sm lg:text-base text-white">
                   {getComplianceIcon(circuit.complianceStatus)}
                   {circuit.name}
                 </h4>
-                <Badge variant="outline" className="self-start sm:self-center border-gray-500 text-white/70">
+                <Badge variant="outline" className="self-start sm:self-center border-gray-500 text-white/70 text-xs">
                   {circuit.ipRating}
                 </Badge>
               </div>
               
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 text-sm">
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 lg:gap-3 text-sm">
                 <div>
                   <div className="text-white/60 text-xs mb-1">Load</div>
-                  <div className="font-mono text-elec-yellow font-semibold">{circuit.load}W</div>
+                  <div className="font-mono text-elec-yellow font-semibold text-xs lg:text-sm">{circuit.load}W</div>
                 </div>
                 <div>
                   <div className="text-white/60 text-xs mb-1">Current</div>
-                  <div className="font-mono text-elec-yellow font-semibold">{circuit.current.toFixed(1)}A</div>
+                  <div className="font-mono text-elec-yellow font-semibold text-xs lg:text-sm">{circuit.current.toFixed(1)}A</div>
                 </div>
                 <div>
                   <div className="text-white/60 text-xs mb-1">Cable</div>
-                  <div className="font-mono text-elec-yellow font-semibold">{circuit.cableSize}</div>
+                  <div className="font-mono text-elec-yellow font-semibold text-xs lg:text-sm">{circuit.cableSize}</div>
                 </div>
                 <div>
                   <div className="text-white/60 text-xs mb-1">Protection</div>
-                  <div className="font-mono text-elec-yellow font-semibold">{circuit.protectionRating}A</div>
+                  <div className="font-mono text-elec-yellow font-semibold text-xs lg:text-sm">{circuit.protectionRating}A</div>
                 </div>
               </div>
 
               {circuit.specialRequirements.length > 0 && (
-                <div className="mt-4">
+                <div className="mt-3">
                   <div className="text-xs text-white/60 mb-2 font-medium">Special Requirements:</div>
                   <ul className="text-xs text-white space-y-1">
                     {circuit.specialRequirements.map((req, i) => (
