@@ -152,94 +152,94 @@ const VisualCircuitDesigner: React.FC<VisualCircuitDesignerProps> = ({
           <p className="text-sm text-muted-foreground">Supply → Protection → Cable → Load</p>
         </div>
 
-        {/* Vertical Circuit Flow - Mobile First */}
-        <div className="space-y-3">
+        {/* Vertical Circuit Flow - Enhanced Mobile Design */}
+        <div className="space-y-2">
           {/* Supply */}
-          <div className="w-full p-4 bg-elec-yellow/10 rounded-lg border border-elec-yellow/30">
+          <div className="w-full p-5 bg-gradient-to-r from-elec-yellow/15 to-elec-yellow/5 rounded-xl border border-elec-yellow/40 shadow-lg">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3 min-w-0 flex-1">
-                <div className="w-12 h-12 bg-elec-yellow/20 border-2 border-elec-yellow rounded-lg flex items-center justify-center flex-shrink-0">
-                  <Power className="h-6 w-6 text-elec-yellow" />
+              <div className="flex items-center gap-4 min-w-0 flex-1">
+                <div className="w-14 h-14 bg-gradient-to-br from-elec-yellow/30 to-elec-yellow/10 border-2 border-elec-yellow rounded-xl flex items-center justify-center flex-shrink-0 shadow-inner">
+                  <Power className="h-7 w-7 text-elec-yellow" />
                 </div>
                 <div className="min-w-0 flex-1">
-                  <p className="font-medium text-elec-yellow text-lg">Supply</p>
-                  <p className="text-sm text-muted-foreground">{getSupplyVoltage()}</p>
+                  <p className="font-semibold text-elec-yellow text-xl mb-1">Supply</p>
+                  <p className="text-base text-elec-light/80 font-medium">{getSupplyVoltage()}</p>
                 </div>
               </div>
-              <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow ml-2 flex-shrink-0">
+              <Badge variant="outline" className="border-elec-yellow/50 text-elec-yellow bg-elec-yellow/10 px-3 py-1 font-medium ml-4 flex-shrink-0">
                 ORIGIN
               </Badge>
             </div>
           </div>
 
           {/* Connection Line */}
-          <div className="flex justify-center">
-            <div className="w-1 h-4 bg-gradient-to-b from-elec-yellow to-blue-400"></div>
+          <div className="flex justify-center py-1">
+            <div className="w-1 h-6 bg-gradient-to-b from-elec-yellow via-elec-yellow/70 to-blue-400 rounded-full shadow-sm"></div>
           </div>
 
           {/* Protection */}
-          <div className="w-full p-4 bg-blue-500/10 rounded-lg border border-blue-400/30">
+          <div className="w-full p-5 bg-gradient-to-r from-blue-500/15 to-blue-500/5 rounded-xl border border-blue-400/40 shadow-lg">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3 min-w-0 flex-1">
-                <div className="w-12 h-12 bg-blue-500/20 border-2 border-blue-400 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <Shield className="h-6 w-6 text-blue-400" />
+              <div className="flex items-center gap-4 min-w-0 flex-1">
+                <div className="w-14 h-14 bg-gradient-to-br from-blue-500/30 to-blue-500/10 border-2 border-blue-400 rounded-xl flex items-center justify-center flex-shrink-0 shadow-inner">
+                  <Shield className="h-7 w-7 text-blue-400" />
                 </div>
                 <div className="min-w-0 flex-1">
-                  <p className="font-medium text-blue-400 text-lg">Protection</p>
-                  <p className="text-sm text-muted-foreground">{recommendedCable?.ratedCurrent || 32}A</p>
+                  <p className="font-semibold text-blue-400 text-xl mb-1">Protection</p>
+                  <p className="text-base text-elec-light/80 font-medium">{recommendedCable?.ratedCurrent || 32}A</p>
                 </div>
               </div>
-              <Badge variant="outline" className="border-blue-400/30 text-blue-400 ml-2 flex-shrink-0">
+              <Badge variant="outline" className="border-blue-400/50 text-blue-400 bg-blue-400/10 px-3 py-1 font-medium ml-4 flex-shrink-0">
                 {currentCircuit.protectiveDevice.toUpperCase()}
               </Badge>
             </div>
           </div>
 
           {/* Connection Line */}
-          <div className="flex justify-center">
-            <div className="w-1 h-4 bg-gradient-to-b from-blue-400 to-gray-400"></div>
+          <div className="flex justify-center py-1">
+            <div className="w-1 h-6 bg-gradient-to-b from-blue-400 via-blue-400/70 to-gray-400 rounded-full shadow-sm"></div>
           </div>
 
           {/* Cable */}
-          <div className="w-full p-4 bg-gray-500/10 rounded-lg border border-gray-400/30">
+          <div className="w-full p-5 bg-gradient-to-r from-gray-500/15 to-gray-500/5 rounded-xl border border-gray-400/40 shadow-lg">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3 min-w-0 flex-1">
-                <div className="w-12 h-12 bg-gray-500/20 border-2 border-gray-400 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <Cable className="h-6 w-6 text-gray-400" />
+              <div className="flex items-center gap-4 min-w-0 flex-1">
+                <div className="w-14 h-14 bg-gradient-to-br from-gray-500/30 to-gray-500/10 border-2 border-gray-400 rounded-xl flex items-center justify-center flex-shrink-0 shadow-inner">
+                  <Cable className="h-7 w-7 text-gray-300" />
                 </div>
                 <div className="min-w-0 flex-1">
-                  <p className="font-medium text-gray-300 text-lg">Cable</p>
-                  <p className="text-sm text-muted-foreground">{recommendedCable?.size || "TBD"} {currentCircuit.cableType.toUpperCase()}</p>
-                  <p className="text-xs text-muted-foreground truncate">{currentCircuit.cableLength}m · {currentCircuit.installationMethod.replace('-', ' ')}</p>
+                  <p className="font-semibold text-gray-300 text-xl mb-1">Cable</p>
+                  <p className="text-base text-elec-light/80 font-medium">{recommendedCable?.size || "TBD"} {currentCircuit.cableType.toUpperCase()}</p>
+                  <p className="text-sm text-elec-light/60 mt-1">{currentCircuit.cableLength}m · {currentCircuit.installationMethod.replace('-', ' ')}</p>
                 </div>
               </div>
-              <Badge variant="outline" className="border-gray-400/30 text-gray-400 ml-2 flex-shrink-0">
+              <Badge variant="outline" className="border-gray-400/50 text-gray-300 bg-gray-400/10 px-3 py-1 font-medium ml-4 flex-shrink-0">
                 CONDUCTOR
               </Badge>
             </div>
           </div>
 
           {/* Connection Line */}
-          <div className="flex justify-center">
-            <div className="w-1 h-4 bg-gradient-to-b from-gray-400 to-green-400"></div>
+          <div className="flex justify-center py-1">
+            <div className="w-1 h-6 bg-gradient-to-b from-gray-400 via-gray-400/70 to-green-400 rounded-full shadow-sm"></div>
           </div>
 
           {/* Load */}
-          <div className="w-full p-4 bg-green-500/10 rounded-lg border border-green-400/30">
+          <div className="w-full p-5 bg-gradient-to-r from-green-500/15 to-green-500/5 rounded-xl border border-green-400/40 shadow-lg">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3 min-w-0 flex-1">
-                <div className="w-12 h-12 bg-green-500/20 border-2 border-green-400 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <Zap className="h-6 w-6 text-green-400" />
+              <div className="flex items-center gap-4 min-w-0 flex-1">
+                <div className="w-14 h-14 bg-gradient-to-br from-green-500/30 to-green-500/10 border-2 border-green-400 rounded-xl flex items-center justify-center flex-shrink-0 shadow-inner">
+                  <Zap className="h-7 w-7 text-green-400" />
                 </div>
                 <div className="min-w-0 flex-1">
-                  <p className="font-medium text-green-400 text-lg">Load</p>
-                  <div className="flex flex-col gap-1 text-sm text-muted-foreground">
-                    <div>Power: {currentCircuit.totalLoad}W</div>
-                    <div className="truncate">Type: {getLoadTypeName(currentCircuit.loadType)}</div>
+                  <p className="font-semibold text-green-400 text-xl mb-1">Load</p>
+                  <div className="space-y-1">
+                    <p className="text-base text-elec-light/80 font-medium">Power: {currentCircuit.totalLoad}W</p>
+                    <p className="text-sm text-elec-light/60">Type: {getLoadTypeName(currentCircuit.loadType)}</p>
                   </div>
                 </div>
               </div>
-              <Badge variant="outline" className="border-green-400/30 text-green-400 ml-2 flex-shrink-0">
+              <Badge variant="outline" className="border-green-400/50 text-green-400 bg-green-400/10 px-3 py-1 font-medium ml-4 flex-shrink-0">
                 EQUIPMENT
               </Badge>
             </div>
