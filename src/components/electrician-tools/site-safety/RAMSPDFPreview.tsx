@@ -142,18 +142,35 @@ export const RAMSPDFPreview: React.FC<RAMSPDFPreviewProps> = ({
           )}
 
           {pdfUrl && !isLoading && !error && (
-            <iframe
-              src={pdfUrl}
-              className="w-full h-full border-0 bg-white"
-              title="RAMS PDF Preview"
-              style={{ minHeight: '500px' }}
-            />
+            <>
+              <iframe
+                src={pdfUrl}
+                className="w-full h-full border-0 bg-white"
+                title="RAMS PDF Preview"
+                style={{ minHeight: '500px' }}
+                onError={() => {
+                  // Fallback: open in new tab if iframe fails
+                  window.open(pdfUrl, '_blank');
+                }}
+              />
+              {/* Fallback buttons if PDF doesn't load */}
+              <div className="absolute bottom-4 right-4 opacity-75">
+                <Button
+                  onClick={() => window.open(pdfUrl, '_blank')}
+                  size="sm"
+                  variant="outline"
+                  className="bg-white/90 border-gray-300 text-gray-700 hover:bg-white"
+                >
+                  Open in New Tab
+                </Button>
+              </div>
+            </>
           )}
         </div>
 
         <div className="flex flex-col sm:flex-row justify-between items-center gap-3 p-4 border-t border-elec-yellow/20 bg-elec-dark/50">
           <p className="text-xs text-muted-foreground text-center sm:text-left">
-            Professional-grade PDF with BS 7671 compliance
+            Professional-grade PDF with comprehensive risk management
           </p>
           <div className="flex gap-2 w-full sm:w-auto">
             {pdfUrl && !isLoading && (

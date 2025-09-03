@@ -235,7 +235,7 @@ const RAMSGenerator: React.FC = () => {
             RAMS Generator
           </CardTitle>
           <p className="text-sm text-muted-foreground">
-            Create comprehensive Risk Assessment & Method Statement documents compliant with BS 7671 18th Edition
+            Create comprehensive Risk Assessment & Method Statement documents for safe electrical work
           </p>
         </CardHeader>
       </Card>
