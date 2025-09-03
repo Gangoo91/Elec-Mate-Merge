@@ -425,12 +425,32 @@ const WireGaugeCalculator = () => {
             />
             <ResultCard
               title="Current Capacity"
-              value={formatNumber(result.analysis.effectiveAmpacity)}
+              value={formatNumber(result.analysis.effectiveAmpacity, 0)}
               unit="A"
               subtitle={`${installationType} installation`}
               status={result.analysis.adequateCapacity ? 'success' : 'error'}
             />
           </div>
+
+          {/* Voltage Drop and Power Loss - Mobile Optimized */}
+          {parseFloat(length) > 0 && parseFloat(loadCurrent) > 0 && (
+            <div className="grid grid-cols-2 gap-3 sm:gap-4">
+              <ResultCard
+                title="Voltage Drop"
+                value={formatNumber(result.analysis.voltageDropPercentage, 1)}
+                unit="%"
+                subtitle={`${formatNumber(result.analysis.voltageDrop, 1)}V drop`}
+                status={result.analysis.voltageDropPercentage > 5 ? 'error' : result.analysis.voltageDropPercentage > 3 ? 'warning' : 'success'}
+              />
+              <ResultCard
+                title="Power Loss"
+                value={result.analysis.powerLoss >= 1000 ? formatNumber(result.analysis.powerLoss / 1000, 1) : formatNumber(result.analysis.powerLoss, 0)}
+                unit={result.analysis.powerLoss >= 1000 ? "kW" : "W"}
+                subtitle="Cable losses"
+                status={result.analysis.powerLoss > 100 ? 'warning' : 'success'}
+              />
+            </div>
+          )}
 
           {/* Installation Performance - Mobile Optimized */}
           {parseFloat(length) > 0 && parseFloat(loadCurrent) > 0 && (
