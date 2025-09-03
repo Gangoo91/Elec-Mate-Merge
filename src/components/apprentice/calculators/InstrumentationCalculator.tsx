@@ -249,91 +249,87 @@ const InstrumentationCalculator = () => {
       <CardContent className="space-y-4 lg:space-y-6">
         {/* Core Inputs */}
         <div className="space-y-4">
-          <div className="grid grid-cols-2 gap-3">
-            <MobileInputWrapper
-              label="Min Scale"
-              type="number"
-              value={minScale}
-              onChange={(value) => {
-                setMinScale(value);
-                clearError('minScale');
-              }}
-              placeholder="0"
-              error={errors.minScale}
-              step="any"
-            />
-            <MobileInputWrapper
-              label="Max Scale"
-              type="number"
-              value={maxScale}
-              onChange={(value) => {
-                setMaxScale(value);
-                clearError('maxScale');
-              }}
-              placeholder="100"
-              error={errors.maxScale}
-              step="any"
-            />
-          </div>
+          <MobileInputWrapper
+            label="Min Scale"
+            type="number"
+            value={minScale}
+            onChange={(value) => {
+              setMinScale(value);
+              clearError('minScale');
+            }}
+            placeholder="0"
+            error={errors.minScale}
+            step="any"
+          />
+          
+          <MobileInputWrapper
+            label="Max Scale"
+            type="number"
+            value={maxScale}
+            onChange={(value) => {
+              setMaxScale(value);
+              clearError('maxScale');
+            }}
+            placeholder="100"
+            error={errors.maxScale}
+            step="any"
+          />
 
-          <div className="grid grid-cols-2 gap-3">
-            <MobileSelect value={unit} onValueChange={setUnit}>
-              <MobileSelectTrigger>
-                <MobileSelectValue placeholder="Units" />
-              </MobileSelectTrigger>
-              <MobileSelectContent>
-                <MobileSelectItem value="bar">bar (Pressure)</MobileSelectItem>
-                <MobileSelectItem value="°C">°C (Temperature)</MobileSelectItem>
-                <MobileSelectItem value="°F">°F (Temperature)</MobileSelectItem>
-                <MobileSelectItem value="L/min">L/min (Flow)</MobileSelectItem>
-                <MobileSelectItem value="m³/h">m³/h (Flow)</MobileSelectItem>
-                <MobileSelectItem value="rpm">rpm (Speed)</MobileSelectItem>
-                <MobileSelectItem value="pH">pH (Acidity)</MobileSelectItem>
-                <MobileSelectItem value="%">% (Level/Humidity)</MobileSelectItem>
-              </MobileSelectContent>
-            </MobileSelect>
+          <MobileSelect value={unit} onValueChange={setUnit}>
+            <MobileSelectTrigger label="Units">
+              <MobileSelectValue placeholder="Select units" />
+            </MobileSelectTrigger>
+            <MobileSelectContent>
+              <MobileSelectItem value="bar">bar (Pressure)</MobileSelectItem>
+              <MobileSelectItem value="°C">°C (Temperature)</MobileSelectItem>
+              <MobileSelectItem value="°F">°F (Temperature)</MobileSelectItem>
+              <MobileSelectItem value="L/min">L/min (Flow)</MobileSelectItem>
+              <MobileSelectItem value="m³/h">m³/h (Flow)</MobileSelectItem>
+              <MobileSelectItem value="rpm">rpm (Speed)</MobileSelectItem>
+              <MobileSelectItem value="pH">pH (Acidity)</MobileSelectItem>
+              <MobileSelectItem value="%">% (Level/Humidity)</MobileSelectItem>
+            </MobileSelectContent>
+          </MobileSelect>
 
-            <MobileSelect value={inputType} onValueChange={(value) => setInputType(value as "engineering" | "percentage")}>
-              <MobileSelectTrigger>
-                <MobileSelectValue />
-              </MobileSelectTrigger>
-              <MobileSelectContent>
-                <MobileSelectItem value="percentage">Percentage</MobileSelectItem>
-                <MobileSelectItem value="engineering">Engineering Units</MobileSelectItem>
-              </MobileSelectContent>
-            </MobileSelect>
-          </div>
+          <MobileSelect value={inputType} onValueChange={(value) => setInputType(value as "engineering" | "percentage")}>
+            <MobileSelectTrigger label="Input Type">
+              <MobileSelectValue />
+            </MobileSelectTrigger>
+            <MobileSelectContent>
+              <MobileSelectItem value="percentage">Percentage</MobileSelectItem>
+              <MobileSelectItem value="engineering">Engineering Units</MobileSelectItem>
+            </MobileSelectContent>
+          </MobileSelect>
 
-          <div className="grid grid-cols-2 gap-3">
-            <MobileInputWrapper
-              label={inputType === "percentage" ? "Percentage" : `Value (${unit})`}
-              type="number"
-              value={inputValue}
-              onChange={(value) => {
-                setInputValue(value);
-                clearError('inputValue');
-              }}
-              placeholder={inputType === "percentage" ? "0-100%" : "Enter value"}
-              error={errors.inputValue}
-              unit={inputType === "percentage" ? "%" : unit}
-              step="any"
-            />
-            <MobileInputWrapper
-              label="Or Target Current"
-              type="number"
-              value={targetCurrent}
-              onChange={(value) => {
-                setTargetCurrent(value);
-                clearError('targetCurrent');
-              }}
-              placeholder="4-20"
-              error={errors.targetCurrent}
-              unit="mA"
-              min="4"
-              max="20"
-              step="0.1"
-            />
-          </div>
+          <MobileInputWrapper
+            label={inputType === "percentage" ? "Percentage" : `Value (${unit})`}
+            type="number"
+            value={inputValue}
+            onChange={(value) => {
+              setInputValue(value);
+              clearError('inputValue');
+            }}
+            placeholder={inputType === "percentage" ? "0-100%" : "Enter value"}
+            error={errors.inputValue}
+            unit={inputType === "percentage" ? "%" : unit}
+            step="any"
+          />
+          
+          <MobileInputWrapper
+            label="Or Target Current"
+            type="number"
+            value={targetCurrent}
+            onChange={(value) => {
+              setTargetCurrent(value);
+              clearError('targetCurrent');
+            }}
+            placeholder="4-20"
+            error={errors.targetCurrent}
+            unit="mA"
+            min="4"
+            max="20"
+            step="0.1"
+          />
         </div>
 
         {/* Loop Analysis Inputs (Optional) */}
@@ -343,62 +339,60 @@ const InstrumentationCalculator = () => {
             <span>Loop Analysis (Optional)</span>
           </div>
           
-          <div className="grid grid-cols-2 gap-3">
-            <MobileInputWrapper
-              label="Supply Voltage"
-              type="number"
-              value={supplyVoltage}
-              onChange={(value) => {
-                setSupplyVoltage(value);
-                clearError('supplyVoltage');
-              }}
-              placeholder="24"
-              error={errors.supplyVoltage}
-              unit="V"
-              min="12"
-              max="48"
-              step="0.1"
-            />
-            <MobileInputWrapper
-              label="Shunt Resistor"
-              type="number"
-              value={shuntResistor}
-              onChange={(value) => {
-                setShuntResistor(value);
-                clearError('shuntResistor');
-              }}
-              placeholder="250"
-              unit="Ω"
-              step="1"
-            />
-          </div>
+          <MobileInputWrapper
+            label="Supply Voltage"
+            type="number"
+            value={supplyVoltage}
+            onChange={(value) => {
+              setSupplyVoltage(value);
+              clearError('supplyVoltage');
+            }}
+            placeholder="24"
+            error={errors.supplyVoltage}
+            unit="V"
+            min="12"
+            max="48"
+            step="0.1"
+          />
+          
+          <MobileInputWrapper
+            label="Shunt Resistor"
+            type="number"
+            value={shuntResistor}
+            onChange={(value) => {
+              setShuntResistor(value);
+              clearError('shuntResistor');
+            }}
+            placeholder="250"
+            unit="Ω"
+            step="1"
+          />
 
-          <div className="grid grid-cols-2 gap-3">
-            <MobileInputWrapper
-              label="Cable Length"
-              type="number"
-              value={cableLength}
-              onChange={(value) => {
-                setCableLength(value);
-                clearError('cableLength');
-              }}
-              placeholder="Optional"
-              unit="m"
-              step="1"
-            />
-            <MobileInputWrapper
-              label="Cable Resistance"
-              type="number"
-              value={cableResistance}
-              onChange={(value) => {
-                setCableResistance(value);
-                clearError('cableResistance');
-              }}
-              placeholder="0.1"
-              unit="Ω/m"
-              step="0.01"
-            />
-          </div>
+          <MobileInputWrapper
+            label="Cable Length"
+            type="number"
+            value={cableLength}
+            onChange={(value) => {
+              setCableLength(value);
+              clearError('cableLength');
+            }}
+            placeholder="Optional"
+            unit="m"
+            step="1"
+          />
+          
+          <MobileInputWrapper
+            label="Cable Resistance"
+            type="number"
+            value={cableResistance}
+            onChange={(value) => {
+              setCableResistance(value);
+              clearError('cableResistance');
+            }}
+            placeholder="0.1"
+            unit="Ω/m"
+            step="0.01"
+          />
         </div>
 
         {/* Calculate Button */}
