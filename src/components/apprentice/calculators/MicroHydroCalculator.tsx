@@ -390,17 +390,17 @@ const MicroHydroCalculator = () => {
                 className="border-elec-yellow/20"
               >
                 <div className="space-y-3">
-                  <div className="flex justify-between">
+                  <div className="flex justify-between items-center">
                     <span>Theoretical Power:</span>
-                    <span className="font-medium">{result.theoreticalPower.toFixed(1)} kW</span>
+                    <span className="font-medium text-right">{result.theoreticalPower.toFixed(1)} kW</span>
                   </div>
-                  <div className="flex justify-between">
+                  <div className="flex justify-between items-center">
                     <span>Practical Power:</span>
-                    <span className="font-medium text-elec-yellow">{result.practicalPower.toFixed(1)} kW</span>
+                    <span className="font-medium text-elec-yellow text-right">{result.practicalPower.toFixed(1)} kW</span>
                   </div>
-                  <div className="flex justify-between">
+                  <div className="flex justify-between items-center">
                     <span>Annual Generation:</span>
-                    <span className="font-medium">{(result.annualGeneration / 1000).toFixed(0)} MWh/year</span>
+                    <span className="font-medium text-right">{(result.annualGeneration / 1000).toFixed(0)} MWh/year</span>
                   </div>
                 </div>
               </ResultCard>
@@ -412,15 +412,15 @@ const MicroHydroCalculator = () => {
                 className="border-blue-500/20"
               >
                 <div className="space-y-3">
-                  <div className="flex justify-between">
+                  <div className="flex justify-between items-center">
                     <span>Recommended:</span>
-                    <span className="font-medium">{result.recommendedTurbine}</span>
+                    <span className="font-medium text-right">{result.recommendedTurbine}</span>
                   </div>
-                  <div className="flex justify-between">
+                  <div className="flex justify-between items-center">
                     <span>Efficiency:</span>
-                    <span className="font-medium">{(result.turbineEfficiency * 100).toFixed(0)}%</span>
+                    <span className="font-medium text-right">{(result.turbineEfficiency * 100).toFixed(0)}%</span>
                   </div>
-                  <div className="text-sm">
+                  <div className="text-sm p-2 bg-muted/20 rounded">
                     <span className="font-medium">Suitability: </span>
                     <span>{result.turbineSuitability}</span>
                   </div>
@@ -434,24 +434,49 @@ const MicroHydroCalculator = () => {
                 className="border-green-500/20"
               >
                 <div className="space-y-3">
-                  <div className="flex justify-between">
-                    <span>Estimated Cost:</span>
-                    <span className="font-medium">£{result.estimatedCost.toLocaleString()}</span>
+                  <div className="flex justify-between items-center">
+                    <span>Total Cost:</span>
+                    <span className="font-medium text-right">£{Math.round(result.estimatedCost).toLocaleString()}</span>
                   </div>
-                  <div className="flex justify-between">
+                  
+                  {/* Cost Breakdown */}
+                  <div className="text-xs text-muted-foreground space-y-1 pl-2 border-l border-muted/20">
+                    <div className="flex justify-between">
+                      <span>• Turbine & Generator:</span>
+                      <span>£{Math.round(result.practicalPower * TURBINE_TYPES[turbineType as keyof typeof TURBINE_TYPES]?.costPerKw || 3000).toLocaleString()}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>• Civil Works:</span>
+                      <span>£{Math.round(Math.max(20000, result.practicalPower * 800)).toLocaleString()}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>• Electrical Systems:</span>
+                      <span>£{Math.round(result.practicalPower * 600).toLocaleString()}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>• Penstock ({result.penstock.length}m):</span>
+                      <span>£{Math.round(result.penstock.cost).toLocaleString()}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>• Installation (25%):</span>
+                      <span>£{Math.round((result.estimatedCost - result.penstock.cost) * 0.2).toLocaleString()}</span>
+                    </div>
+                  </div>
+                  
+                  <div className="flex justify-between items-center">
                     <span>Cost per kW:</span>
-                    <span className="font-medium">£{result.costPerKw.toLocaleString()}</span>
+                    <span className="font-medium text-right">£{Math.round(result.costPerKw).toLocaleString()}</span>
                   </div>
-                  <div className="flex justify-between">
+                  <div className="flex justify-between items-center">
                     <span>Annual Revenue:</span>
-                    <span className="font-medium">£{result.annualRevenue.toLocaleString()}</span>
+                    <span className="font-medium text-right">£{Math.round(result.annualRevenue).toLocaleString()}</span>
                   </div>
-                  <div className="flex justify-between">
+                  <div className="flex justify-between items-center">
                     <span>Payback Period:</span>
-                    <span className="font-medium">{result.paybackPeriod.toFixed(1)} years</span>
+                    <span className="font-medium text-right">{result.paybackPeriod.toFixed(1)} years</span>
                   </div>
-                  <div className="text-sm mt-2">
-                    <span className="font-medium">Viability: </span>
+                  <div className="text-sm mt-2 p-2 bg-muted/20 rounded">
+                    <span className="font-medium">Assessment: </span>
                     <span>{result.viabilityAssessment}</span>
                   </div>
                 </div>
@@ -464,21 +489,21 @@ const MicroHydroCalculator = () => {
                 className="border-cyan-500/20"
               >
                 <div className="space-y-3">
-                  <div className="flex justify-between">
+                  <div className="flex justify-between items-center">
                     <span>Diameter:</span>
-                    <span className="font-medium">{result.penstock.diameter}mm</span>
+                    <span className="font-medium text-right">{result.penstock.diameter}mm</span>
                   </div>
-                  <div className="flex justify-between">
+                  <div className="flex justify-between items-center">
                     <span>Material:</span>
-                    <span className="font-medium">{result.penstock.material}</span>
+                    <span className="font-medium text-right">{result.penstock.material}</span>
                   </div>
-                  <div className="flex justify-between">
+                  <div className="flex justify-between items-center">
                     <span>Length:</span>
-                    <span className="font-medium">{result.penstock.length}m</span>
+                    <span className="font-medium text-right">{result.penstock.length}m</span>
                   </div>
-                  <div className="flex justify-between">
+                  <div className="flex justify-between items-center">
                     <span>Estimated Cost:</span>
-                    <span className="font-medium">£{result.penstock.cost.toLocaleString()}</span>
+                    <span className="font-medium text-right">£{Math.round(result.penstock.cost).toLocaleString()}</span>
                   </div>
                 </div>
               </ResultCard>
