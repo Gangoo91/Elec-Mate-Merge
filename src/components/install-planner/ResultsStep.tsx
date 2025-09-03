@@ -75,15 +75,18 @@ const ResultsStep = ({ planData }: ResultsStepProps) => {
   const closestNonCompliant = suitableCables.length === 0 ? cableOptions[0] : null;
   const alternativeCables = suitableCables.slice(1, 4);
 
+  // Safe cable for calculations - use recommended or closest non-compliant
+  const baseCable = recommendedCable || closestNonCompliant;
+  
   // Calculate Zs (enhanced calculation)
   const r1r2 = planData.cableLength * (
-    recommendedCable?.size === "1.5mm²" ? 24.2 : 
-    recommendedCable?.size === "2.5mm²" ? 14.8 : 
-    recommendedCable?.size === "4.0mm²" ? 9.2 : 
-    recommendedCable?.size === "6.0mm²" ? 6.2 : 
-    recommendedCable?.size === "10.0mm²" ? 3.66 : 
-    recommendedCable?.size === "16.0mm²" ? 2.3 : 
-    recommendedCable?.size === "25.0mm²" ? 1.454 : 1.0
+    baseCable?.size === "1.5mm²" ? 24.2 : 
+    baseCable?.size === "2.5mm²" ? 14.8 : 
+    baseCable?.size === "4.0mm²" ? 9.2 : 
+    baseCable?.size === "6.0mm²" ? 6.2 : 
+    baseCable?.size === "10.0mm²" ? 3.66 : 
+    baseCable?.size === "16.0mm²" ? 2.3 : 
+    baseCable?.size === "25.0mm²" ? 1.454 : 1.0
   ) / 1000;
   
   const zsValue = planData.ze + r1r2;
@@ -241,7 +244,7 @@ const ResultsStep = ({ planData }: ResultsStepProps) => {
                 </Badge>
               </div>
               <div className="space-y-3">
-                {getEnhancedDeviceRecommendations(designCurrent, recommendedCable?.currentCarryingCapacity || 0, planData.protectiveDevice, planData.loadType, planData.voltage)
+                {getEnhancedDeviceRecommendations(designCurrent, baseCable?.currentCarryingCapacity || 0, planData.protectiveDevice, planData.loadType, planData.voltage)
                   .slice(0, 3).map((device, index) => (
                   <div key={index} className={`p-3 rounded border ${
                     device.recommended 
@@ -313,61 +316,67 @@ const ResultsStep = ({ planData }: ResultsStepProps) => {
                 <p className="text-xs text-muted-foreground">({(diversityFactor * 100).toFixed(0)}% applied)</p>
               </div>
 
-              <div className="p-3 bg-elec-dark/50 rounded border border-elec-yellow/20">
-                <p className="text-sm text-muted-foreground">Expected Cost</p>
-                <p className="font-medium text-green-400 text-sm sm:text-base">£{(recommendedCable.size === "1.5mm²" ? 45 : recommendedCable.size === "2.5mm²" ? 65 : 85)}-{(recommendedCable.size === "1.5mm²" ? 85 : recommendedCable.size === "2.5mm²" ? 125 : 165)}</p>
-                <p className="text-xs text-muted-foreground">Per 100m estimate</p>
-              </div>
+              {baseCable && (
+                <div className="p-3 bg-elec-dark/50 rounded border border-elec-yellow/20">
+                  <p className="text-sm text-muted-foreground">Expected Cost</p>
+                  <p className="font-medium text-green-400 text-sm sm:text-base">£{(baseCable.size === "1.5mm²" ? 45 : baseCable.size === "2.5mm²" ? 65 : 85)}-{(baseCable.size === "1.5mm²" ? 85 : baseCable.size === "2.5mm²" ? 125 : 165)}</p>
+                  <p className="text-xs text-muted-foreground">Per 100m estimate</p>
+                </div>
+              )}
             </div>
 
             {/* Quick Status Indicators */}
-            <div className="pt-4 border-t border-elec-yellow/20">
-              <div className="space-y-3">
-                <div className="flex items-center justify-between text-sm">
-                  <span>Current Capacity</span>
-                  <div className="flex items-center gap-1">
-                    {recommendedCable.currentCarryingCapacity >= designCurrent * 1.1 ? 
-                      <CheckCircle className="h-4 w-4 text-green-400" /> : 
-                      <XCircle className="h-4 w-4 text-red-400" />
-                    }
-                    <span className={`text-xs sm:text-sm ${recommendedCable.currentCarryingCapacity >= designCurrent * 1.1 ? 
-                      "text-green-400" : "text-red-400"}`}>
-                      {recommendedCable.currentCarryingCapacity >= designCurrent * 1.1 ? "OK" : "INSUFFICIENT"}
-                    </span>
+            {baseCable && (
+              <div className="pt-4 border-t border-elec-yellow/20">
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between text-sm">
+                    <span>Current Capacity</span>
+                    <div className="flex items-center gap-1">
+                      {baseCable.currentCarryingCapacity >= designCurrent * 1.1 ? 
+                        <CheckCircle className="h-4 w-4 text-green-400" /> : 
+                        <XCircle className="h-4 w-4 text-red-400" />
+                      }
+                      <span className={`text-xs sm:text-sm ${baseCable.currentCarryingCapacity >= designCurrent * 1.1 ? 
+                        "text-green-400" : "text-red-400"}`}>
+                        {baseCable.currentCarryingCapacity >= designCurrent * 1.1 ? "OK" : "INSUFFICIENT"}
+                        {!recommendedCable && " (NON-COMPLIANT)"}
+                      </span>
+                    </div>
                   </div>
-                </div>
+                  
+                  <div className="flex items-center justify-between text-sm">
+                    <span>Voltage Drop</span>
+                    <div className="flex items-center gap-1">
+                      {baseCable.voltageDropPercentage <= 
+                        (planData.loadType === "lighting" ? 3 : 5) ? 
+                        <CheckCircle className="h-4 w-4 text-green-400" /> : 
+                        <XCircle className="h-4 w-4 text-red-400" />
+                      }
+                      <span className={`text-xs sm:text-sm ${baseCable.voltageDropPercentage <= 
+                        (planData.loadType === "lighting" ? 3 : 5) ? 
+                        "text-green-400" : "text-red-400"}`}>
+                        {baseCable.voltageDropPercentage <= 
+                          (planData.loadType === "lighting" ? 3 : 5) ? "OK" : "EXCESSIVE"}
+                        {!recommendedCable && " (NON-COMPLIANT)"}
+                      </span>
+                    </div>
+                  </div>
                 
-                <div className="flex items-center justify-between text-sm">
-                  <span>Voltage Drop</span>
-                  <div className="flex items-center gap-1">
-                    {recommendedCable.voltageDropPercentage <= 
-                      (planData.loadType === "lighting" ? 3 : 5) ? 
-                      <CheckCircle className="h-4 w-4 text-green-400" /> : 
-                      <XCircle className="h-4 w-4 text-red-400" />
-                    }
-                    <span className={`text-xs sm:text-sm ${recommendedCable.voltageDropPercentage <= 
-                      (planData.loadType === "lighting" ? 3 : 5) ? 
-                      "text-green-400" : "text-red-400"}`}>
-                      {recommendedCable.voltageDropPercentage <= 
-                        (planData.loadType === "lighting" ? 3 : 5) ? "OK" : "EXCESSIVE"}
-                    </span>
-                  </div>
-                </div>
-                
-                <div className="flex items-center justify-between text-sm">
-                  <span>Earth Fault Loop</span>
-                  <div className="flex items-center gap-1">
-                    {zsCompliance ? 
-                      <CheckCircle className="h-4 w-4 text-green-400" /> : 
-                      <XCircle className="h-4 w-4 text-red-400" />
-                    }
-                    <span className={`text-xs sm:text-sm ${zsCompliance ? "text-green-400" : "text-red-400"}`}>
-                      {zsCompliance ? "COMPLIANT" : "NON-COMPLIANT"}
-                    </span>
-                  </div>
+                 <div className="flex items-center justify-between text-sm">
+                   <span>Earth Fault Loop</span>
+                   <div className="flex items-center gap-1">
+                     {zsCompliance ? 
+                       <CheckCircle className="h-4 w-4 text-green-400" /> : 
+                       <XCircle className="h-4 w-4 text-red-400" />
+                     }
+                     <span className={`text-xs sm:text-sm ${zsCompliance ? "text-green-400" : "text-red-400"}`}>
+                       {zsCompliance ? "COMPLIANT" : "NON-COMPLIANT"}
+                     </span>
+                   </div>
+                 </div>
                 </div>
               </div>
-            </div>
+            )}
           </CardContent>
         </Card>
 
