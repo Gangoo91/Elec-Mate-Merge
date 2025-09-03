@@ -128,13 +128,19 @@ export const aluminiumXlpeCapacities: CableCapacity[] = [
 export const cableCapacityData = {
   'pvc-single': pvcSingleCapacities,
   'xlpe-single': xlpeSingleCapacities,
-  'pvc-twin': pvcTwinEarthCapacities,
+  'pvc-twin-earth': pvcTwinEarthCapacities,
   'swa': swaCapacities,
   'micc': miccCapacities,
   'aluminium-xlpe': aluminiumXlpeCapacities,
 };
 
-export type CableType = keyof typeof cableCapacityData;
+export type CableType = 
+  | 'pvc-single' 
+  | 'xlpe-single'
+  | 'pvc-twin-earth'
+  | 'swa'
+  | 'micc'
+  | 'aluminium-xlpe';
 
 export const getCableCapacity = (
   cableType: CableType,
