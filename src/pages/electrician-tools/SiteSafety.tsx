@@ -7,6 +7,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { ArrowLeft, Shield, FileText, AlertTriangle, Camera, Users, ClipboardCheck, Wrench, Phone, ChevronDown } from "lucide-react";
 import { Link } from "react-router-dom";
 import BackButton from "@/components/common/BackButton";
+import { RAMSProvider } from "@/components/electrician-tools/site-safety/rams/RAMSContext";
+import { RAMSQuickAdd } from "@/components/electrician-tools/site-safety/RAMSQuickAdd";
 import RAMSGenerator from "@/components/electrician-tools/site-safety/RAMSGenerator";
 import RiskAssessmentBuilder from "@/components/electrician-tools/site-safety/RiskAssessmentBuilder";
 import MethodStatementGenerator from "@/components/electrician-tools/site-safety/MethodStatementGenerator";
@@ -38,16 +40,17 @@ const SiteSafety = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto space-y-8 animate-fade-in">
-      <div className="flex flex-col items-center justify-center mb-6">
-        <h1 className="text-3xl font-bold tracking-tight mb-4">Site Safety & Risk Assessment</h1>
-        <p className="text-muted-foreground text-center max-w-2xl mb-4">
-          Comprehensive safety management tools for electrical contractors. Generate RAMS documents, 
-          assess risks, and maintain safety compliance on all your projects.
-        </p>
-        <BackButton customUrl="/electrician" label="Back to Electrical Hub" />
-      </div>
-      <Tabs defaultValue="rams" value={activeTab} onValueChange={setActiveTab} className="w-full">
+    <RAMSProvider>
+      <div className="max-w-7xl mx-auto space-y-8 animate-fade-in">
+        <div className="flex flex-col items-center justify-center mb-6">
+          <h1 className="text-3xl font-bold tracking-tight mb-4">Site Safety & Risk Assessment</h1>
+          <p className="text-muted-foreground text-center max-w-2xl mb-4">
+            Comprehensive safety management tools for electrical contractors. Generate RAMS documents, 
+            assess risks, and maintain safety compliance on all your projects.
+          </p>
+          <BackButton customUrl="/electrician" label="Back to Electrical Hub" />
+        </div>
+        <Tabs defaultValue="rams" value={activeTab} onValueChange={setActiveTab} className="w-full">
         {/* Mobile Dropdown */}
         <div className="lg:hidden mb-6">
           <Select value={activeTab} onValueChange={setActiveTab}>
@@ -150,40 +153,44 @@ const SiteSafety = () => {
         <TabsContent value="emergency" className="mt-6">
           <EmergencyProcedures />
         </TabsContent>
-      </Tabs>
+        </Tabs>
 
-      {/* Safety Best Practices Card */}
-      <Card className="border-green-500/50 bg-green-500/10">
-        <CardHeader>
-          <CardTitle className="text-green-300 flex items-center gap-2">
-            <Shield className="h-5 w-5" />
-            Safety Best Practices
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-muted-foreground">
-            <div>
-              <h4 className="font-medium text-green-300 mb-2">Before Starting Work:</h4>
-              <ul className="space-y-1">
-                <li>• Complete risk assessment for each task</li>
-                <li>• Brief all team members on hazards</li>
-                <li>• Check all safety equipment</li>
-                <li>• Document site conditions</li>
-              </ul>
+        {/* RAMS Quick Add Section */}
+        <RAMSQuickAdd />
+
+        {/* Safety Best Practices Card */}
+        <Card className="border-green-500/50 bg-green-500/10">
+          <CardHeader>
+            <CardTitle className="text-green-300 flex items-center gap-2">
+              <Shield className="h-5 w-5" />
+              Safety Best Practices
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-muted-foreground">
+              <div>
+                <h4 className="font-medium text-green-300 mb-2">Before Starting Work:</h4>
+                <ul className="space-y-1">
+                  <li>• Complete risk assessment for each task</li>
+                  <li>• Brief all team members on hazards</li>
+                  <li>• Check all safety equipment</li>
+                  <li>• Document site conditions</li>
+                </ul>
+              </div>
+              <div>
+                <h4 className="font-medium text-green-300 mb-2">During Work:</h4>
+                <ul className="space-y-1">
+                  <li>• Follow method statements precisely</li>
+                  <li>• Report near misses immediately</li>
+                  <li>• Take photos of safety concerns</li>
+                  <li>• Update risk assessments if conditions change</li>
+                </ul>
+              </div>
             </div>
-            <div>
-              <h4 className="font-medium text-green-300 mb-2">During Work:</h4>
-              <ul className="space-y-1">
-                <li>• Follow method statements precisely</li>
-                <li>• Report near misses immediately</li>
-                <li>• Take photos of safety concerns</li>
-                <li>• Update risk assessments if conditions change</li>
-              </ul>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-    </div>
+          </CardContent>
+        </Card>
+      </div>
+    </RAMSProvider>
   );
 };
 

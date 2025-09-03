@@ -1,493 +1,496 @@
+import React, { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Badge } from '@/components/ui/badge';
+import { Textarea } from '@/components/ui/textarea';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { 
+  FileText, 
+  Plus, 
+  X, 
+  Download, 
+  Eye, 
+  AlertTriangle, 
+  Building, 
+  Shield,
+  Loader2
+} from 'lucide-react';
+import { useRAMS } from './rams/RAMSContext';
+import { generateRAMSPDF } from '@/utils/rams-pdf';
+import { RAMSPDFPreview } from './RAMSPDFPreview';
+import { SignaturePad } from './common/SignaturePad';
+import { toast } from '@/hooks/use-toast';
 
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Badge } from "@/components/ui/badge";
-import { FileText, Download, Plus, Trash2, Copy } from "lucide-react";
-import { toast } from "@/hooks/use-toast";
-import { HazardSelect } from "./common/HazardSelect";
-import { RiskSelect } from "./common/RiskSelect";
-import { RAMSData } from "@/types/rams";
-import { generateRAMSPDF } from "@/utils/rams-pdf";
+const RAMSGenerator: React.FC = () => {
+  const {
+    ramsData,
+    reportOptions,
+    signOff,
+    updateProjectInfo,
+    addActivity,
+    removeActivity,
+    addRisk,
+    removeRisk,
+    setBranding,
+    setSignatures,
+    validate,
+    reset
+  } = useRAMS();
 
-const RAMSGenerator = () => {
-  const [ramsData, setRAMSData] = useState<RAMSData>({
-    projectName: "",
-    location: "",
-    date: new Date().toISOString().split('T')[0],
-    assessor: "",
-    activities: [""],
-    risks: []
+  const [showPreview, setShowPreview] = useState(false);
+  const [newActivity, setNewActivity] = useState('');
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [newRisk, setNewRisk] = useState({
+    hazard: '',
+    risk: '',
+    likelihood: 1,
+    severity: 1,
+    controls: ''
   });
+  const [showAddRisk, setShowAddRisk] = useState(false);
 
-  const addActivity = () => {
-    setRAMSData(prev => ({
-      ...prev,
-      activities: [...prev.activities, ""]
-    }));
-  };
+  const validation = validate();
 
-  const updateActivity = (index: number, value: string) => {
-    setRAMSData(prev => ({
-      ...prev,
-      activities: prev.activities.map((activity, i) => i === index ? value : activity)
-    }));
-  };
-
-  const removeActivity = (index: number) => {
-    setRAMSData(prev => ({
-      ...prev,
-      activities: prev.activities.filter((_, i) => i !== index)
-    }));
-  };
-
-  const addRisk = () => {
-    const newRisk = {
-      id: Date.now().toString(),
-      hazard: "",
-      risk: "",
-      likelihood: 1,
-      severity: 1,
-      riskRating: 1,
-      controls: "",
-      residualRisk: 1
-    };
-    setRAMSData(prev => ({
-      ...prev,
-      risks: [...prev.risks, newRisk]
-    }));
-  };
-
-  const duplicateRisk = (riskId: string) => {
-    const riskToDuplicate = ramsData.risks.find(r => r.id === riskId);
-    if (riskToDuplicate) {
-      const duplicatedRisk = {
-        ...riskToDuplicate,
-        id: Date.now().toString(),
-        hazard: `${riskToDuplicate.hazard} (Copy)`
-      };
-      setRAMSData(prev => ({
-        ...prev,
-        risks: [...prev.risks, duplicatedRisk]
-      }));
+  const handleAddActivity = () => {
+    if (newActivity.trim()) {
+      addActivity(newActivity.trim());
+      setNewActivity('');
       toast({
-        title: "Risk Duplicated",
-        description: "Risk assessment row has been duplicated successfully"
+        title: 'Activity Added',
+        description: 'Work activity has been added to the RAMS.',
+        variant: 'success'
       });
     }
   };
 
-  const updateRisk = (id: string, field: string, value: any) => {
-    setRAMSData(prev => ({
-      ...prev,
-      risks: prev.risks.map(risk => {
-        if (risk.id === id) {
-          const updatedRisk = { ...risk, [field]: value };
-          if (field === 'likelihood' || field === 'severity') {
-            updatedRisk.riskRating = updatedRisk.likelihood * updatedRisk.severity;
-          }
-          return updatedRisk;
-        }
-        return risk;
-      })
-    }));
-  };
-
-  const updateRiskControlMeasures = (id: string, controlMeasures: string[]) => {
-    const suggestedControls = controlMeasures.join('\n• ');
-    updateRisk(id, 'controls', `• ${suggestedControls}`);
-  };
-
-  const removeRisk = (id: string) => {
-    setRAMSData(prev => ({
-      ...prev,
-      risks: prev.risks.filter(risk => risk.id !== id)
-    }));
-  };
-
-  const getRiskColor = (rating: number) => {
-    if (rating <= 4) return "bg-green-500/20 text-green-400 border-green-500/30";
-    if (rating <= 9) return "bg-amber-500/20 text-amber-400 border-amber-500/30";
-    if (rating <= 16) return "bg-orange-500/20 text-orange-400 border-orange-500/30";
-    return "bg-red-500/20 text-red-400 border-red-500/30";
-  };
-
-  const getRiskLevel = (rating: number) => {
-    if (rating <= 4) return "Low";
-    if (rating <= 9) return "Medium";
-    if (rating <= 16) return "High";
-    return "Very High";
-  };
-
-  const getLikelihoodDescription = (level: number) => {
-    const descriptions = [
-      "", 
-      "Very Unlikely - Rare occurrence",
-      "Unlikely - Could happen occasionally", 
-      "Possible - Might happen sometimes",
-      "Likely - Will probably happen",
-      "Very Likely - Expected to happen regularly"
-    ];
-    return descriptions[level] || "";
-  };
-
-  const getSeverityDescription = (level: number) => {
-    const descriptions = [
-      "",
-      "Negligible - Minor bruising or discomfort",
-      "Minor - First aid treatment required", 
-      "Moderate - Medical treatment required",
-      "Major - Serious injury, hospitalisation",
-      "Catastrophic - Fatality or permanent disability"
-    ];
-    return descriptions[level] || "";
-  };
-
-  const validateRAMSData = () => {
-    const errors = [];
-    
-    if (!ramsData.projectName.trim()) errors.push("Project Name");
-    if (!ramsData.location.trim()) errors.push("Location");
-    if (!ramsData.assessor.trim()) errors.push("Assessor Name");
-    if (ramsData.activities.filter(a => a.trim()).length === 0) errors.push("At least one Work Activity");
-    if (ramsData.risks.length === 0) errors.push("At least one Risk Assessment");
-    
-    const incompleteRisks = ramsData.risks.filter(risk => 
-      !risk.hazard.trim() || !risk.risk.trim() || !risk.controls.trim()
-    );
-    if (incompleteRisks.length > 0) errors.push(`${incompleteRisks.length} incomplete risk assessment(s)`);
-    
-    return errors;
-  };
-
-  const generateRAMS = () => {
-    const errors = validateRAMSData();
-    
-    if (errors.length > 0) {
+  const handleAddRisk = () => {
+    if (newRisk.hazard && newRisk.risk) {
+      const riskRating = newRisk.likelihood * newRisk.severity;
+      const residualRisk = Math.max(1, Math.floor(riskRating / 2));
+      
+      addRisk({
+        ...newRisk,
+        riskRating,
+        residualRisk
+      });
+      
+      setNewRisk({
+        hazard: '',
+        risk: '',
+        likelihood: 1,
+        severity: 1,
+        controls: ''
+      });
+      setShowAddRisk(false);
+      
       toast({
-        title: "Validation Failed",
-        description: `Please complete: ${errors.join(", ")}`,
-        variant: "destructive"
+        title: 'Risk Added',
+        description: 'Risk assessment has been added to the RAMS.',
+        variant: 'success'
+      });
+    }
+  };
+
+  const handleGeneratePDF = async () => {
+    if (!validation.isValid) {
+      toast({
+        title: 'Validation Error',
+        description: validation.errors.join(', '),
+        variant: 'destructive'
       });
       return;
     }
 
-    toast({
-      title: "RAMS Generated",
-      description: "Your Risk Assessment & Method Statement has been generated successfully"
-    });
-  };
-
-  const exportToPDF = () => {
-    const errors = validateRAMSData();
-    
-    if (errors.length > 0) {
-      toast({
-        title: "Cannot Export PDF",
-        description: `Please complete: ${errors.join(", ")}`,
-        variant: "destructive"
-      });
-      return;
-    }
-
+    setIsGenerating(true);
     try {
-      generateRAMSPDF(ramsData);
+      await generateRAMSPDF(ramsData, { ...reportOptions, signOff });
       toast({
-        title: "PDF Exported",
-        description: "Your RAMS document has been downloaded successfully",
-        variant: "success"
+        title: 'PDF Generated',
+        description: 'RAMS document has been downloaded successfully.',
+        variant: 'success'
       });
     } catch (error) {
-      console.error("PDF generation error:", error);
+      console.error('Error generating PDF:', error);
       toast({
-        title: "Export Failed",
-        description: "There was an error generating the PDF. Please try again.",
-        variant: "destructive"
+        title: 'Generation Failed',
+        description: 'Failed to generate PDF. Please try again.',
+        variant: 'destructive'
       });
+    } finally {
+      setIsGenerating(false);
     }
+  };
+
+  const getRiskLevelColor = (rating: number) => {
+    if (rating <= 4) return 'bg-green-500';
+    if (rating <= 9) return 'bg-yellow-500';
+    if (rating <= 16) return 'bg-orange-500';
+    return 'bg-red-500';
+  };
+
+  const getRiskLevelText = (rating: number) => {
+    if (rating <= 4) return 'Low';
+    if (rating <= 9) return 'Medium';
+    if (rating <= 16) return 'High';
+    return 'Very High';
+  };
+
+  const riskStats = {
+    total: ramsData.risks.length,
+    low: ramsData.risks.filter(r => r.riskRating <= 4).length,
+    medium: ramsData.risks.filter(r => r.riskRating > 4 && r.riskRating <= 9).length,
+    high: ramsData.risks.filter(r => r.riskRating > 9 && r.riskRating <= 16).length,
+    veryHigh: ramsData.risks.filter(r => r.riskRating > 16).length
   };
 
   return (
     <div className="space-y-6">
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      {/* Header */}
+      <Card className="border-elec-yellow/20 bg-elec-gray/80 backdrop-blur-sm">
         <CardHeader>
           <CardTitle className="text-elec-yellow flex items-center gap-2">
             <FileText className="h-5 w-5" />
             RAMS Generator
           </CardTitle>
+          <p className="text-sm text-muted-foreground">
+            Create comprehensive Risk Assessment & Method Statement documents compliant with BS 7671 18th Edition
+          </p>
         </CardHeader>
-        <CardContent className="space-y-6">
-          {/* Project Information */}
+      </Card>
+
+      {/* Validation Alert */}
+      {!validation.isValid && (
+        <Alert className="border-yellow-500/50 bg-yellow-500/10">
+          <AlertTriangle className="h-4 w-4" />
+          <AlertDescription>
+            <strong>Incomplete RAMS:</strong> {validation.errors.join(', ')}
+          </AlertDescription>
+        </Alert>
+      )}
+
+      {/* Project Information */}
+      <Card className="border-elec-yellow/20 bg-elec-gray/60">
+        <CardHeader>
+          <CardTitle className="text-white flex items-center gap-2">
+            <Building className="h-5 w-5" />
+            Project Information
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <Label htmlFor="projectName">Project Name *</Label>
+              <Label htmlFor="projectName" className="text-white">Project Name *</Label>
               <Input
                 id="projectName"
                 value={ramsData.projectName}
-                onChange={(e) => setRAMSData(prev => ({ ...prev, projectName: e.target.value }))}
+                onChange={(e) => updateProjectInfo({ projectName: e.target.value })}
                 placeholder="Enter project name"
+                className="mt-1 bg-elec-dark/50 border-elec-yellow/20 text-white"
               />
             </div>
             <div>
-              <Label htmlFor="location">Location *</Label>
+              <Label htmlFor="location" className="text-white">Location *</Label>
               <Input
                 id="location"
                 value={ramsData.location}
-                onChange={(e) => setRAMSData(prev => ({ ...prev, location: e.target.value }))}
-                placeholder="Site location"
+                onChange={(e) => updateProjectInfo({ location: e.target.value })}
+                placeholder="Enter project location"
+                className="mt-1 bg-elec-dark/50 border-elec-yellow/20 text-white"
               />
             </div>
             <div>
-              <Label htmlFor="date">Assessment Date</Label>
+              <Label htmlFor="assessor" className="text-white">Assessor *</Label>
+              <Input
+                id="assessor"
+                value={ramsData.assessor}
+                onChange={(e) => updateProjectInfo({ assessor: e.target.value })}
+                placeholder="Enter assessor name"
+                className="mt-1 bg-elec-dark/50 border-elec-yellow/20 text-white"
+              />
+            </div>
+            <div>
+              <Label htmlFor="date" className="text-white">Assessment Date *</Label>
               <Input
                 id="date"
                 type="date"
                 value={ramsData.date}
-                onChange={(e) => setRAMSData(prev => ({ ...prev, date: e.target.value }))}
+                onChange={(e) => updateProjectInfo({ date: e.target.value })}
+                className="mt-1 bg-elec-dark/50 border-elec-yellow/20 text-white"
               />
             </div>
-            <div>
-              <Label htmlFor="assessor">Assessor Name *</Label>
-              <Input
-                id="assessor"
-                value={ramsData.assessor}
-                onChange={(e) => setRAMSData(prev => ({ ...prev, assessor: e.target.value }))}
-                placeholder="Name of person conducting assessment"
-              />
-            </div>
-          </div>
-
-          {/* Activities Section */}
-          <div>
-            <div className="flex items-center justify-between mb-4">
-              <Label className="text-lg">Work Activities</Label>
-              <Button onClick={addActivity} size="sm" variant="outline">
-                <Plus className="h-4 w-4 mr-2" />
-                Add Activity
-              </Button>
-            </div>
-            <div className="space-y-3">
-              {ramsData.activities.map((activity, index) => (
-                <div key={index} className="flex gap-2">
-                  <Input
-                    value={activity}
-                    onChange={(e) => updateActivity(index, e.target.value)}
-                    placeholder={`Activity ${index + 1}`}
-                  />
-                  {ramsData.activities.length > 1 && (
-                    <Button
-                      onClick={() => removeActivity(index)}
-                      size="sm"
-                      variant="outline"
-                    >
-                      <Trash2 className="h-4 w-4" />
-                    </Button>
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Risk Assessment Section */}
-          <div>
-            <div className="flex items-center justify-between mb-4">
-              <Label className="text-lg">Risk Assessment</Label>
-              <Button onClick={addRisk} size="sm" variant="outline">
-                <Plus className="h-4 w-4 mr-2" />
-                Add Risk
-              </Button>
-            </div>
-            
-            {ramsData.risks.length === 0 ? (
-              <Card className="border-dashed border-elec-yellow/50">
-                <CardContent className="p-6 text-center">
-                  <p className="text-muted-foreground">No risks added yet. Click "Add Risk" to start your assessment.</p>
-                </CardContent>
-              </Card>
-            ) : (
-              <div className="space-y-6">
-                {ramsData.risks.map((risk) => (
-                  <Card key={risk.id} className="border-elec-yellow/30 bg-card/50 backdrop-blur-sm">
-                    <CardContent className="p-6">
-                      {/* Header with action buttons */}
-                      <div className="flex justify-between items-center mb-6">
-                        <div className="flex items-center gap-2">
-                          <Badge variant="outline" className="text-xs">
-                            Risk #{ramsData.risks.indexOf(risk) + 1}
-                          </Badge>
-                        </div>
-                        <div className="flex gap-2">
-                          <Button
-                            onClick={() => duplicateRisk(risk.id)}
-                            size="sm"
-                            variant="outline"
-                            className="h-8 w-8 p-0"
-                            title="Duplicate this risk"
-                          >
-                            <Copy className="h-4 w-4" />
-                          </Button>
-                          <Button
-                            onClick={() => removeRisk(risk.id)}
-                            size="sm"
-                            variant="outline"
-                            className="h-8 w-8 p-0 hover:bg-destructive/10 hover:border-destructive/50"
-                            title="Delete this risk"
-                          >
-                            <Trash2 className="h-4 w-4" />
-                          </Button>
-                        </div>
-                      </div>
-
-                      {/* Main hazard and risk selection */}
-                      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-                        <div className="space-y-2">
-                          <Label className="text-sm font-medium">Hazard *</Label>
-                          <HazardSelect
-                            value={risk.hazard}
-                            onValueChange={(value) => updateRisk(risk.id, 'hazard', value)}
-                            placeholder="Select or search hazards..."
-                            showQuickPicks={false}
-                          />
-                        </div>
-                        <div className="space-y-2">
-                          <Label className="text-sm font-medium">Risk / Consequence *</Label>
-                          <RiskSelect
-                            selectedHazard={risk.hazard}
-                            value={risk.risk}
-                            onValueChange={(value) => updateRisk(risk.id, 'risk', value)}
-                            onControlMeasuresChange={(controlMeasures) => updateRiskControlMeasures(risk.id, controlMeasures)}
-                            placeholder="Select potential consequence..."
-                          />
-                        </div>
-                      </div>
-                      
-                      {/* Risk assessment grid */}
-                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-                        <div className="space-y-2">
-                          <Label className="text-sm font-medium">Likelihood</Label>
-                          <Select 
-                            value={risk.likelihood.toString()} 
-                            onValueChange={(value) => updateRisk(risk.id, 'likelihood', parseInt(value))}
-                          >
-                            <SelectTrigger className="bg-background/80 backdrop-blur-sm border-input">
-                              <SelectValue />
-                            </SelectTrigger>
-                            <SelectContent className="bg-background/95 backdrop-blur-sm border-border z-50">
-                              <SelectItem value="1">1 - Very Unlikely</SelectItem>
-                              <SelectItem value="2">2 - Unlikely</SelectItem>
-                              <SelectItem value="3">3 - Possible</SelectItem>
-                              <SelectItem value="4">4 - Likely</SelectItem>
-                              <SelectItem value="5">5 - Very Likely</SelectItem>
-                            </SelectContent>
-                          </Select>
-                          <p className="text-xs text-muted-foreground leading-tight">
-                            {getLikelihoodDescription(risk.likelihood)}
-                          </p>
-                        </div>
-
-                        <div className="space-y-2">
-                          <Label className="text-sm font-medium">Severity</Label>
-                          <Select 
-                            value={risk.severity.toString()} 
-                            onValueChange={(value) => updateRisk(risk.id, 'severity', parseInt(value))}
-                          >
-                            <SelectTrigger className="bg-background/80 backdrop-blur-sm border-input">
-                              <SelectValue />
-                            </SelectTrigger>
-                            <SelectContent className="bg-background/95 backdrop-blur-sm border-border z-50">
-                              <SelectItem value="1">1 - Negligible</SelectItem>
-                              <SelectItem value="2">2 - Minor</SelectItem>
-                              <SelectItem value="3">3 - Moderate</SelectItem>
-                              <SelectItem value="4">4 - Major</SelectItem>
-                              <SelectItem value="5">5 - Catastrophic</SelectItem>
-                            </SelectContent>
-                          </Select>
-                          <p className="text-xs text-muted-foreground leading-tight">
-                            {getSeverityDescription(risk.severity)}
-                          </p>
-                        </div>
-
-                        <div className="space-y-2">
-                          <Label className="text-sm font-medium">Risk Rating</Label>
-                          <div className="flex items-center h-10">
-                            <Badge 
-                              className={`${getRiskColor(risk.riskRating)} border text-sm font-semibold px-3 py-1.5`}
-                              variant="outline"
-                            >
-                              {risk.riskRating} - {getRiskLevel(risk.riskRating)}
-                            </Badge>
-                          </div>
-                          <p className="text-xs text-muted-foreground">
-                            Likelihood × Severity
-                          </p>
-                        </div>
-
-                        <div className="space-y-2">
-                          <Label className="text-sm font-medium">Residual Risk</Label>
-                          <Select 
-                            value={risk.residualRisk.toString()} 
-                            onValueChange={(value) => updateRisk(risk.id, 'residualRisk', parseInt(value))}
-                          >
-                            <SelectTrigger className="bg-background/80 backdrop-blur-sm border-input">
-                              <SelectValue />
-                            </SelectTrigger>
-                            <SelectContent className="bg-background/95 backdrop-blur-sm border-border z-50">
-                              {[1,2,3,4,5,6,7,8,9,10,12,15,16,20,25].map(val => (
-                                <SelectItem key={val} value={val.toString()}>
-                                  {val} - {getRiskLevel(val)}
-                                </SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
-                          <p className="text-xs text-muted-foreground">
-                            Risk after controls
-                          </p>
-                        </div>
-                      </div>
-                      
-                      {/* Control measures */}
-                      <div className="space-y-2">
-                        <Label className="text-sm font-medium">Control Measures *</Label>
-                        <Textarea
-                          value={risk.controls}
-                          onChange={(e) => updateRisk(risk.id, 'controls', e.target.value)}
-                          placeholder="Describe control measures to mitigate this risk..."
-                          rows={4}
-                          className="resize-none bg-background/80 backdrop-blur-sm border-input"
-                        />
-                        <p className="text-xs text-muted-foreground">
-                          Detail the specific actions, equipment, and procedures to reduce risk
-                        </p>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            )}
-          </div>
-
-          {/* Mobile-First Action Buttons */}
-          <div className="space-y-3 sm:space-y-0 sm:flex sm:gap-4">
-            <Button onClick={generateRAMS} className="w-full sm:flex-1 h-12 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 font-medium">
-              <FileText className="h-4 w-4 mr-2" />
-              Generate RAMS Document
-            </Button>
-            <Button 
-              onClick={exportToPDF}
-              variant="outline" 
-              className="w-full sm:w-auto h-12 border-elec-yellow/40 text-elec-yellow hover:bg-elec-yellow/10 font-medium px-6"
-            >
-              <Download className="h-4 w-4 mr-2" />
-              <span className="hidden sm:inline">Export PDF</span>
-              <span className="sm:hidden">Export</span>
-            </Button>
           </div>
         </CardContent>
       </Card>
+
+      {/* Work Activities */}
+      <Card className="border-elec-yellow/20 bg-elec-gray/60">
+        <CardHeader>
+          <CardTitle className="text-white">Work Activities ({ramsData.activities.length})</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="flex gap-2">
+            <Input
+              value={newActivity}
+              onChange={(e) => setNewActivity(e.target.value)}
+              placeholder="Enter work activity"
+              className="bg-elec-dark/50 border-elec-yellow/20 text-white"
+              onKeyPress={(e) => e.key === 'Enter' && handleAddActivity()}
+            />
+            <Button
+              onClick={handleAddActivity}
+              className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
+            >
+              <Plus className="h-4 w-4" />
+            </Button>
+          </div>
+          
+          {ramsData.activities.length > 0 && (
+            <div className="space-y-2">
+              {ramsData.activities.map((activity, index) => (
+                <div key={index} className="flex items-center justify-between p-3 bg-elec-dark/30 rounded-lg">
+                  <span className="text-white">{index + 1}. {activity}</span>
+                  <Button
+                    onClick={() => removeActivity(index)}
+                    size="sm"
+                    variant="outline"
+                    className="border-red-500/30 text-red-400 hover:bg-red-500/10"
+                  >
+                    <X className="h-4 w-4" />
+                  </Button>
+                </div>
+              ))}
+            </div>
+          )}
+        </CardContent>
+      </Card>
+
+      {/* Risk Assessment Summary */}
+      <Card className="border-elec-yellow/20 bg-elec-gray/60">
+        <CardHeader>
+          <CardTitle className="text-white flex items-center gap-2">
+            <Shield className="h-5 w-5" />
+            Risk Assessment Summary
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 mb-4">
+            <Card className="border-blue-500/30 bg-elec-gray/50">
+              <CardContent className="p-3 text-center">
+                <div className="text-lg font-bold text-blue-400">{riskStats.total}</div>
+                <div className="text-xs text-muted-foreground">Total</div>
+              </CardContent>
+            </Card>
+            <Card className="border-green-500/30 bg-elec-gray/50">
+              <CardContent className="p-3 text-center">
+                <div className="text-lg font-bold text-green-400">{riskStats.low}</div>
+                <div className="text-xs text-muted-foreground">Low</div>
+              </CardContent>
+            </Card>
+            <Card className="border-yellow-500/30 bg-elec-gray/50">
+              <CardContent className="p-3 text-center">
+                <div className="text-lg font-bold text-yellow-400">{riskStats.medium}</div>
+                <div className="text-xs text-muted-foreground">Medium</div>
+              </CardContent>
+            </Card>
+            <Card className="border-orange-500/30 bg-elec-gray/50">
+              <CardContent className="p-3 text-center">
+                <div className="text-lg font-bold text-orange-400">{riskStats.high}</div>
+                <div className="text-xs text-muted-foreground">High</div>
+              </CardContent>
+            </Card>
+            <Card className="border-red-500/30 bg-elec-gray/50">
+              <CardContent className="p-3 text-center">
+                <div className="text-lg font-bold text-red-400">{riskStats.veryHigh}</div>
+                <div className="text-xs text-muted-foreground">Very High</div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Risk List */}
+          {ramsData.risks.length > 0 && (
+            <div className="space-y-3">
+              <h4 className="font-medium text-white">Identified Risks ({ramsData.risks.length})</h4>
+              {ramsData.risks.map((risk) => (
+                <Card key={risk.id} className="border-elec-yellow/30 bg-elec-dark/20">
+                  <CardContent className="p-4">
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="flex-1 space-y-2">
+                        <div className="flex items-center gap-2">
+                          <Badge className={`${getRiskLevelColor(risk.riskRating)} text-white text-xs`}>
+                            {getRiskLevelText(risk.riskRating)} ({risk.riskRating})
+                          </Badge>
+                        </div>
+                        <div>
+                          <p className="font-medium text-white">{risk.hazard}</p>
+                          <p className="text-sm text-muted-foreground">{risk.risk}</p>
+                        </div>
+                        <div className="text-xs text-muted-foreground">
+                          L: {risk.likelihood} | S: {risk.severity} | Controls: {risk.controls || 'None specified'}
+                        </div>
+                      </div>
+                      <Button
+                        onClick={() => removeRisk(risk.id)}
+                        size="sm"
+                        variant="outline"
+                        className="border-red-500/30 text-red-400 hover:bg-red-500/10"
+                      >
+                        <X className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          )}
+        </CardContent>
+      </Card>
+
+      {/* Optional Sections */}
+      <Accordion type="single" collapsible className="space-y-4">
+        {/* Branding Section */}
+        <AccordionItem value="branding" className="border-elec-yellow/20 bg-elec-gray/60 rounded-lg px-4">
+          <AccordionTrigger className="text-white hover:text-elec-yellow">
+            Company Branding (Optional)
+          </AccordionTrigger>
+          <AccordionContent className="space-y-4 pt-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <Label className="text-white">Company Name</Label>
+                <Input
+                  value={reportOptions.companyName || ''}
+                  onChange={(e) => setBranding({ companyName: e.target.value })}
+                  placeholder="Enter company name"
+                  className="mt-1 bg-elec-dark/50 border-elec-yellow/20 text-white"
+                />
+              </div>
+              <div>
+                <Label className="text-white">Logo URL</Label>
+                <Input
+                  value={reportOptions.logoUrl || ''}
+                  onChange={(e) => setBranding({ logoUrl: e.target.value })}
+                  placeholder="Enter logo URL (optional)"
+                  className="mt-1 bg-elec-dark/50 border-elec-yellow/20 text-white"
+                />
+              </div>
+            </div>
+          </AccordionContent>
+        </AccordionItem>
+
+        {/* Electronic Signatures */}
+        <AccordionItem value="signatures" className="border-elec-yellow/20 bg-elec-gray/60 rounded-lg px-4">
+          <AccordionTrigger className="text-white hover:text-elec-yellow">
+            Electronic Signatures (Optional)
+          </AccordionTrigger>
+          <AccordionContent className="space-y-6 pt-4">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              <SignaturePad
+                label="Prepared By"
+                name={signOff.preparedBy?.name || ''}
+                date={signOff.preparedBy?.date || ''}
+                signatureDataUrl={signOff.preparedBy?.signatureDataUrl}
+                onNameChange={(name) => setSignatures({ 
+                  preparedBy: { ...signOff.preparedBy, name } 
+                })}
+                onDateChange={(date) => setSignatures({ 
+                  preparedBy: { ...signOff.preparedBy, date } 
+                })}
+                onSignatureChange={(signatureDataUrl) => setSignatures({ 
+                  preparedBy: { ...signOff.preparedBy, signatureDataUrl } 
+                })}
+              />
+              
+              <SignaturePad
+                label="Reviewed By"
+                name={signOff.reviewedBy?.name || ''}
+                date={signOff.reviewedBy?.date || ''}
+                signatureDataUrl={signOff.reviewedBy?.signatureDataUrl}
+                onNameChange={(name) => setSignatures({ 
+                  reviewedBy: { ...signOff.reviewedBy, name } 
+                })}
+                onDateChange={(date) => setSignatures({ 
+                  reviewedBy: { ...signOff.reviewedBy, date } 
+                })}
+                onSignatureChange={(signatureDataUrl) => setSignatures({ 
+                  reviewedBy: { ...signOff.reviewedBy, signatureDataUrl } 
+                })}
+              />
+              
+              <SignaturePad
+                label="Approved By"
+                name={signOff.approvedBy?.name || ''}
+                date={signOff.approvedBy?.date || ''}
+                signatureDataUrl={signOff.approvedBy?.signatureDataUrl}
+                onNameChange={(name) => setSignatures({ 
+                  approvedBy: { ...signOff.approvedBy, name } 
+                })}
+                onDateChange={(date) => setSignatures({ 
+                  approvedBy: { ...signOff.approvedBy, date } 
+                })}
+                onSignatureChange={(signatureDataUrl) => setSignatures({ 
+                  approvedBy: { ...signOff.approvedBy, signatureDataUrl } 
+                })}
+              />
+            </div>
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
+
+      {/* Sticky Action Bar */}
+      <Card className="border-elec-yellow/20 bg-elec-gray/80 backdrop-blur-sm sticky bottom-4 z-10">
+        <CardContent className="p-4">
+          <div className="flex flex-col sm:flex-row gap-3">
+            <Button
+              onClick={() => setShowPreview(true)}
+              variant="outline"
+              className="flex-1 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+              disabled={!validation.isValid}
+            >
+              <Eye className="h-4 w-4 mr-2" />
+              Preview PDF
+            </Button>
+            
+            <Button
+              onClick={handleGeneratePDF}
+              className="flex-1 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
+              disabled={!validation.isValid || isGenerating}
+            >
+              {isGenerating ? (
+                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+              ) : (
+                <Download className="h-4 w-4 mr-2" />
+              )}
+              {isGenerating ? 'Generating...' : 'Download PDF'}
+            </Button>
+            
+            <Button
+              onClick={reset}
+              variant="outline"
+              className="border-red-500/30 text-red-400 hover:bg-red-500/10"
+            >
+              Reset
+            </Button>
+          </div>
+          
+          {!validation.isValid && (
+            <p className="text-xs text-red-400 mt-2 text-center">
+              Complete all required fields to generate PDF
+            </p>
+          )}
+        </CardContent>
+      </Card>
+
+      {/* PDF Preview Modal */}
+      <RAMSPDFPreview
+        isOpen={showPreview}
+        onClose={() => setShowPreview(false)}
+        ramsData={ramsData}
+        reportOptions={reportOptions}
+        signOff={signOff}
+      />
     </div>
   );
 };
