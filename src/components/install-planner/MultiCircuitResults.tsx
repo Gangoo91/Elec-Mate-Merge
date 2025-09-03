@@ -3,7 +3,7 @@ import React from "react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AlertTriangle } from "lucide-react";
 import { InstallPlanData } from "./types";
-import { EnhancedCableSelectionEngine } from "./EnhancedCableSelectionEngine";
+import { ImprovedCableSelectionEngine } from "./ImprovedCableSelectionEngine";
 import { SystemSummaryCard } from "./system-summary-card";
 import { CircuitAnalysisCard } from "./circuit-analysis-card";
 import { SupplyRequirementsCard } from "./supply-requirements-card";
@@ -30,7 +30,7 @@ const MultiCircuitResults: React.FC<MultiCircuitResultsProps> = ({ planData }) =
     );
   }
 
-  const circuitAnalysis = EnhancedCableSelectionEngine.calculateMultiCircuitOptions(
+  const circuitAnalysis = ImprovedCableSelectionEngine.calculateMultiCircuitOptions(
     circuits, 
     planData.environmentalSettings
   );

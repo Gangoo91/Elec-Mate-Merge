@@ -10,6 +10,7 @@ import CableRecommendationsCard from "./CableRecommendationsCard";
 import InstallationSuggestionsCard from "./InstallationSuggestionsCard";
 import ComplianceChecksCard from "./ComplianceChecksCard";
 import VisualCircuitDesigner from "./VisualCircuitDesigner";
+import PostResultGuidance from "./PostResultGuidance";
 
 interface ResultsStepProps {
   planData: InstallPlanData;
@@ -302,6 +303,14 @@ const ResultsStep = ({ planData }: ResultsStepProps) => {
           <ComplianceChecksCard checks={complianceChecks} />
           <InstallationSuggestionsCard suggestions={suggestions} />
         </div>
+        
+        {/* Professional Guidance */}
+        {recommendedCable && (
+          <PostResultGuidance 
+            planData={planData} 
+            recommendedCable={recommendedCable}
+          />
+        )}
       </div>
 
       {/* Professional Notice */}

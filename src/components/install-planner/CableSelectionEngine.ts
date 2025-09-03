@@ -1,6 +1,6 @@
 
-// Legacy wrapper for backward compatibility
-import { EnhancedCableSelectionEngine } from "./EnhancedCableSelectionEngine";
+// Updated to use improved BS7671 compliant calculations
+import { ImprovedCableSelectionEngine } from "./ImprovedCableSelectionEngine";
 import { InstallPlanData, CableRecommendation, InstallationSuggestion, ComplianceCheck } from "./types";
 
 export class CableSelectionEngine {
@@ -10,7 +10,7 @@ export class CableSelectionEngine {
                          planData.cableLength <= 106 && 
                          planData.totalLoad <= 7200;
     
-    return EnhancedCableSelectionEngine.calculateCableOptions(planData, isRingCircuit);
+    return ImprovedCableSelectionEngine.calculateCableOptions(planData, isRingCircuit);
   }
 
   static generateSuggestions(planData: InstallPlanData, cableOptions: CableRecommendation[]): InstallationSuggestion[] {
@@ -18,7 +18,7 @@ export class CableSelectionEngine {
                          planData.cableLength <= 106 && 
                          planData.totalLoad <= 7200;
     
-    return EnhancedCableSelectionEngine.generateEnhancedSuggestions(planData, cableOptions, isRingCircuit);
+    return ImprovedCableSelectionEngine.generateEnhancedSuggestions(planData, cableOptions, isRingCircuit);
   }
 
   static performComplianceChecks(planData: InstallPlanData, zsValue: number, recommendedCable: CableRecommendation): ComplianceCheck[] {
@@ -26,6 +26,6 @@ export class CableSelectionEngine {
                          planData.cableLength <= 106 && 
                          planData.totalLoad <= 7200;
     
-    return EnhancedCableSelectionEngine.performEnhancedComplianceChecks(planData, zsValue, recommendedCable, isRingCircuit);
+    return ImprovedCableSelectionEngine.performEnhancedComplianceChecks(planData, zsValue, recommendedCable, isRingCircuit);
   }
 }
