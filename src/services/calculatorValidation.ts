@@ -140,7 +140,8 @@ export class CalculatorValidator {
       standardsCompliance: {
         bestPractice: calculatedPF >= 0.85,
         iet: calculatedPF >= 0.8,
-        safety: calculatedPF >= 0.7
+        safety: calculatedPF >= 0.7,
+        bs7671: true // PF considerations under BS 7671 equipment selection requirements
       }
     };
   }

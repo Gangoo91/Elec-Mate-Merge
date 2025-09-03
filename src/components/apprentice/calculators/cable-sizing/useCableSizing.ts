@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { cableSizes, CableSizeOption } from "./cableSizeData";
 import { CalculatorValidator, ValidationResult } from "@/services/calculatorValidation";
+import { getTemperatureFactor, getGroupingFactor } from "@/lib/calculators/bs7671-data/temperatureFactors";
 
 export interface CableSizingInputs {
   current: string;
@@ -220,11 +221,12 @@ export const useCableSizing = () => {
     // Get the appropriate current rating for each cable with enhanced derating factors
     const safetyMargin = 1.25; // BS 7671 derating factor
     
-    // Apply temperature derating (simplified calculation)
-    const tempDerating = ambientTemp > 30 ? 1 - ((ambientTemp - 30) * 0.01) : 1;
+    // Apply temperature derating using BS 7671 Appendix 4 tables
+    const cableRating = inputs.installationType === 'xlpe' ? '90C' : '70C';
+    const tempDerating = getTemperatureFactor(ambientTemp, cableRating);
     
-    // Apply grouping derating (simplified calculation)  
-    const groupingDerating = cableGrouping > 1 ? 1 - ((cableGrouping - 1) * 0.05) : 1;
+    // Apply grouping derating using BS 7671 tables
+    const groupingDerating = getGroupingFactor(cableGrouping);
     
     const totalDerating = tempDerating * groupingDerating;
     const requiredCurrentCapacity = effectiveCurrent * safetyMargin / totalDerating;
