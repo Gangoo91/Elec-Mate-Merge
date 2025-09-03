@@ -450,32 +450,37 @@ const EnergyCostCalculator = () => {
                 </div>
               ))}
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <MobileSelectWrapper
-                  label="Add preset appliance"
-                  value=""
-                  onValueChange={(value) => {
-                    if (value) addAppliance(value);
-                  }}
-                  options={
-                    selectedCategory 
-                      ? Object.entries(availableAppliances).map(([key, preset]) => ({
-                          value: key,
-                          label: preset.name,
-                        }))
-                      : []
-                  }
-                  placeholder={selectedCategory ? "Choose appliance..." : "Select category first..."}
-                  disabled={!selectedCategory}
-                />
-                <MobileButton
-                  variant="outline"
-                  onClick={() => addAppliance()}
-                  className="flex items-center gap-2 h-11"
-                >
-                  <Plus className="h-4 w-4" />
-                  Custom Appliance
-                </MobileButton>
+              <div className="flex flex-col sm:flex-row gap-3">
+                <div className="flex-1">
+                  <MobileSelectWrapper
+                    label="Add preset appliance"
+                    value=""
+                    onValueChange={(value) => {
+                      if (value) addAppliance(value);
+                    }}
+                    options={
+                      selectedCategory 
+                        ? Object.entries(availableAppliances).map(([key, preset]) => ({
+                            value: key,
+                            label: preset.name,
+                          }))
+                        : []
+                    }
+                    placeholder={selectedCategory ? "Choose appliance..." : "Select category first..."}
+                    disabled={!selectedCategory}
+                  />
+                </div>
+                <div className="sm:w-auto">
+                  <MobileButton
+                    variant="outline"
+                    onClick={() => addAppliance()}
+                    className="w-full sm:w-auto flex items-center justify-center gap-2 h-14"
+                  >
+                    <Plus className="h-4 w-4" />
+                    <span className="sm:hidden">Add Custom Appliance</span>
+                    <span className="hidden sm:inline">Custom</span>
+                  </MobileButton>
+                </div>
               </div>
             </div>
           </div>
