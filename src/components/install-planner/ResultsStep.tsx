@@ -189,18 +189,33 @@ const ResultsStep = ({ planData }: ResultsStepProps) => {
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
                 <p className="text-sm font-medium text-elec-light">Compatible Protective Devices</p>
                 <Badge className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30 self-start sm:self-center">
-                  RECOMMENDED
+                  BS 7671 COMPLIANT
                 </Badge>
               </div>
               <div className="space-y-2">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 p-3 bg-elec-yellow/10 rounded border border-elec-yellow/30">
-                  <span className="font-medium text-sm sm:text-base">{recommendedCable.ratedCurrent}A {planData.protectiveDevice.toUpperCase()}</span>
-                  <Badge variant="outline" className="text-green-400 border-green-400/30 self-start sm:self-center">OPTIMAL</Badge>
-                </div>
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 p-3 bg-elec-dark/30 rounded border border-gray-600">
-                  <span className="text-muted-foreground text-sm sm:text-base">{Math.max(recommendedCable.ratedCurrent - 10, 16)}A MCB</span>
-                  <Badge variant="outline" className="text-amber-400 border-amber-400/30 self-start sm:self-center">ALTERNATIVE</Badge>
-                </div>
+                {/* Primary recommendation - only show if Ib ≤ In */}
+                {designCurrent <= recommendedCable.ratedCurrent && (
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 p-3 bg-elec-yellow/10 rounded border border-elec-yellow/30">
+                    <span className="font-medium text-sm sm:text-base">{recommendedCable.ratedCurrent}A {planData.protectiveDevice.toUpperCase()}</span>
+                    <Badge variant="outline" className="text-green-400 border-green-400/30 self-start sm:self-center">OPTIMAL</Badge>
+                  </div>
+                )}
+                
+                {/* Alternative RCBO if MCB selected */}
+                {planData.protectiveDevice === "mcb" && designCurrent <= recommendedCable.ratedCurrent && (
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 p-3 bg-elec-dark/30 rounded border border-gray-600">
+                    <span className="text-muted-foreground text-sm sm:text-base">{recommendedCable.ratedCurrent}A RCBO Type B</span>
+                    <Badge variant="outline" className="text-blue-400 border-blue-400/30 self-start sm:self-center">ENHANCED PROTECTION</Badge>
+                  </div>
+                )}
+                
+                {/* Show non-compliant warning if needed */}
+                {designCurrent > recommendedCable.ratedCurrent && (
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 p-3 bg-red-500/10 rounded border border-red-500/30">
+                    <span className="text-red-400 text-sm sm:text-base">Design current ({designCurrent.toFixed(1)}A) exceeds {recommendedCable.ratedCurrent}A device rating</span>
+                    <Badge variant="destructive" className="self-start sm:self-center">NON-COMPLIANT</Badge>
+                  </div>
+                )}
               </div>
             </div>
             

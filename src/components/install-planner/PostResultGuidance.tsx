@@ -74,86 +74,205 @@ const PostResultGuidance: React.FC<PostResultGuidanceProps> = ({
   const getProcurementSummary = () => {
     const cable = recommendedCable;
     const length = Math.ceil(planData.cableLength * 1.1); // Add 10% contingency
+    const isRingCircuit = planData.loadType === "power" && planData.cableLength <= 106;
+    const isSWA = planData.cableType?.toLowerCase().includes('swa');
+    const isUnderground = planData.installationMethod?.includes('buried');
+    
+    const accessories = [
+      "Cable glands/connectors",
+      "Terminations and joints",
+      "Testing equipment access"
+    ];
+    
+    // Add specific accessories based on installation
+    if (isSWA) {
+      accessories.push("SWA glands", "Earth tags", "Mechanical protection");
+    } else {
+      accessories.push("Containment (conduit/trunking)");
+    }
+    
+    if (isUnderground) {
+      accessories.push("Warning tape", "Sand/aggregate bedding", "Ducting (if applicable)");
+    }
+    
+    if (isRingCircuit) {
+      accessories.push("Junction boxes", "Socket outlet accessories");
+    }
     
     return {
       primaryCable: {
-        specification: `${cable.size}mm² ${planData.cableType}`,
-        length: `${length}m`,
+        specification: `${cable.size} ${planData.cableType || 'T&E'}`,
+        length: `${length}m ${isRingCircuit ? '(ring main)' : '(radial)'}`,
         installationMethod: planData.installationMethod,
-        estimate: cable.cost === "low" ? "£2-4/m" : cable.cost === "medium" ? "£4-8/m" : "£8-15/m"
+        estimate: cable.cost === "low" ? "£2-4/m" : cable.cost === "medium" ? "£4-8/m" : "£8-15/m",
+        totalEstimate: cable.cost === "low" ? `£${(length * 3).toFixed(0)}-${(length * 4).toFixed(0)}` : 
+                       cable.cost === "medium" ? `£${(length * 6).toFixed(0)}-${(length * 8).toFixed(0)}` : 
+                       `£${(length * 12).toFixed(0)}-${(length * 15).toFixed(0)}`
       },
       protectiveDevice: {
-        type: planData.protectiveDevice || "MCB Type B",
-        rating: `${cable.ratedCurrent}A`,
-        estimate: "£15-35 each"
+        type: `${cable.ratedCurrent}A ${planData.protectiveDevice?.toUpperCase() || "MCB"} Type B`,
+        characteristics: "10kA breaking capacity, 30mA RCD (if required)",
+        estimate: planData.protectiveDevice?.includes('rcbo') ? "£25-45" : "£15-35",
+        quantity: isMultiCircuit ? `${totalCircuits} required` : "1 required"
       },
-      accessories: [
-        "Cable glands/connectors",
-        "Containment (conduit/trunking)",
-        "Terminations and joints",
-        "Testing equipment access"
-      ]
+      accessories,
+      totalProjectEstimate: {
+        materials: cable.cost === "low" ? "£150-300" : cable.cost === "medium" ? "£300-600" : "£600-1200",
+        labour: isRingCircuit ? "£200-400" : "£150-300",
+        testing: "£100-200"
+      }
     };
   };
 
   const getTestingChecklist = () => {
-    const tests = [
+    const isRingCircuit = planData.loadType === "power" && planData.cableLength <= 106;
+    const maxZs = planData.voltage === 230 ? 1.44 : 0.83; // For 32A Type B MCB
+    const expectedZs = planData.ze + (planData.cableLength * 0.02);
+    
+    const preEnergisationTests = [
       {
         test: "Continuity of Protective Conductors",
-        reference: "BS 7671 Part 6",
-        requirement: "R1+R2 measurement",
-        status: "required"
+        reference: "BS 7671 Section 643.2",
+        requirement: isRingCircuit ? "R1+R2 for each leg" : "R1+R2 end-to-end",
+        expectedValue: `≤${(planData.cableLength * 0.02).toFixed(2)}Ω`,
+        status: "required",
+        category: "pre"
+      },
+      {
+        test: "Continuity of Ring Final Circuit Conductors",
+        reference: "BS 7671 Section 643.2.2", 
+        requirement: "Line and neutral continuity",
+        expectedValue: "Within 0.05Ω difference",
+        status: isRingCircuit ? "required" : "n/a",
+        category: "pre"
       },
       {
         test: "Insulation Resistance", 
-        reference: "BS 7671 Section 643",
-        requirement: "≥1MΩ at 500V DC",
-        status: "required"
+        reference: "BS 7671 Section 643.3",
+        requirement: "Line to neutral, line to earth, neutral to earth",
+        expectedValue: "≥1MΩ at 500V DC",
+        status: "required",
+        category: "pre"
       },
       {
-        test: "Earth Fault Loop Impedance (Zs)",
-        reference: "BS 7671 Section 643.7", 
-        requirement: `≤${(planData.ze + (planData.cableLength * 0.02)).toFixed(2)}Ω`,
-        status: "required"
-      },
-      {
-        test: "RCD Operation (if applicable)",
-        reference: "BS 7671 Section 643.8",
-        requirement: "30mA in ≤40ms",
-        status: planData.protectiveDevice?.includes('RCD') ? "required" : "n/a"
+        test: "Protection by Automatic Disconnection",
+        reference: "BS 7671 Section 643.4",
+        requirement: "Verify protective device ratings",
+        expectedValue: "Ib ≤ In ≤ Iz verification",
+        status: "required",
+        category: "pre"
       }
     ];
     
-    if (planData.loadType === "power" && planData.cableLength <= 106) {
-      tests.push({
-        test: "Ring Circuit Continuity",
-        reference: "BS 7671 Section 643.2.2",
-        requirement: "Each leg measurement",
-        status: "required"
-      });
-    }
+    const liveTests = [
+      {
+        test: "Earth Fault Loop Impedance (Zs)",
+        reference: "BS 7671 Section 643.7",
+        requirement: "Measured at furthest point",
+        expectedValue: `≤${maxZs.toFixed(2)}Ω (actual: ~${expectedZs.toFixed(2)}Ω)`,
+        status: "required",
+        category: "live"
+      },
+      {
+        test: "RCD Operation Test",
+        reference: "BS 7671 Section 643.8",
+        requirement: "½×IΔn, 1×IΔn, 5×IΔn tests",
+        expectedValue: "30mA in ≤40ms (30mA RCD)",
+        status: planData.protectiveDevice?.includes('rcd') || planData.protectiveDevice?.includes('rcbo') ? "required" : "recommended",
+        category: "live"
+      },
+      {
+        test: "Functional Testing",
+        reference: "BS 7671 Section 643.10",
+        requirement: "All switches, isolators, controls",
+        expectedValue: "Correct operation verified",
+        status: "required",
+        category: "live"
+      },
+      {
+        test: "Verification of Phase Sequence",
+        reference: "BS 7671 Section 643.6",
+        requirement: "Three-phase installations only",
+        expectedValue: "L1, L2, L3 rotation",
+        status: planData.phases === "three" ? "required" : "n/a",
+        category: "live"
+      }
+    ];
     
-    return tests;
+    return { preEnergisationTests, liveTests };
   };
 
   const getRegulatoryReferences = () => [
     {
       title: "BS 7671:2018+A2:2022",
-      description: "Requirements for Electrical Installations",
-      sections: ["Part 4: Protection for Safety", "Part 5: Selection & Erection"],
-      link: "https://electrical.theiet.org/bs-7671/"
+      subtitle: "Requirements for Electrical Installations (IET Wiring Regulations)",
+      description: "The fundamental standard for electrical installation design, selection and verification in the UK",
+      keyClauses: [
+        "Section 411 - Protection against electric shock",
+        "Section 433 - Protection against overcurrent",
+        "Section 523 - Current-carrying capacity",
+        "Section 525 - Voltage drop",
+        "Part 6 - Inspection and testing"
+      ],
+      relevantSections: planData.loadType === "power" ? 
+        ["Ring final circuits (Annex 15)", "Socket outlet circuits", "Part P compliance"] :
+        ["Lighting circuits", "Switch control", "Emergency lighting"],
+      compliance: "Mandatory for all electrical installations",
+      icon: Shield
     },
     {
       title: "Part P Building Regulations",
-      description: "Electrical Safety in Dwellings",
-      sections: ["Notifiable work requirements", "Competent person schemes"],
-      link: "https://www.gov.uk/building-regulations-approval"
+      subtitle: "Electrical Safety in Dwellings",
+      description: "Legal requirements for electrical work in domestic properties in England and Wales",
+      keyClauses: [
+        "New circuits and consumer units - Notifiable",
+        "Kitchen/bathroom additions - Notifiable", 
+        "Like-for-like replacements - Non-notifiable",
+        "Competent person self-certification"
+      ],
+      relevantSections: planData.installationType === "domestic" ?
+        ["Self-certification via NICEIC/NAPIT", "Building control notification", "EIC requirements"] :
+        ["Commercial installations exempt", "BS 7671 compliance still required"],
+      compliance: planData.installationType === "domestic" ? "Notifiable work" : "Not applicable",
+      icon: FileText
     },
     {
       title: "IET Guidance Note 1",
-      description: "Selection & Erection of Equipment",
-      sections: ["Cable selection", "Environmental factors"],
-      link: "https://electrical.theiet.org/guidance-notes/"
+      subtitle: "Selection & Erection of Equipment",
+      description: "Practical guidance on implementing BS 7671 requirements for equipment selection",
+      keyClauses: [
+        "Cable selection criteria",
+        "Environmental factor application",
+        "Grouping and derating methods",
+        "Voltage drop calculations"
+      ],
+      relevantSections: [
+        "Tables for current-carrying capacity",
+        "Installation method references",
+        "Temperature correction factors",
+        "Mechanical protection requirements"
+      ],
+      compliance: "Best practice guidance",
+      icon: BookOpen
+    },
+    {
+      title: "IET Guidance Note 3",
+      subtitle: "Inspection & Testing",
+      description: "Comprehensive guide to electrical installation testing and certification",
+      keyClauses: [
+        "Test sequence and methods",
+        "Acceptable test results",
+        "Certification requirements",
+        "Periodic inspection intervals"
+      ],
+      relevantSections: [
+        "Initial verification procedures",
+        "Test instrument requirements",
+        "EIC and EICR documentation",
+        "Remedial action priorities"
+      ],
+      compliance: "Required for certification",
+      icon: CheckCircle2
     }
   ];
 
@@ -203,50 +322,132 @@ const PostResultGuidance: React.FC<PostResultGuidanceProps> = ({
             Procurement Summary
           </CardTitle>
           <CardDescription>
-            Material requirements and cost estimates
+            Material requirements and cost estimates for this installation
           </CardDescription>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="grid md:grid-cols-2 gap-4">
-            <div className="space-y-3">
-              <div>
-                <h4 className="font-medium flex items-center gap-2">
-                  <Zap className="h-4 w-4" />
+        <CardContent className="space-y-6">
+          {/* Main Items Grid */}
+          <div className="grid md:grid-cols-2 gap-6">
+            {/* Primary Cable */}
+            <div className="space-y-4">
+              <div className="p-4 bg-elec-dark/30 rounded-lg border border-elec-yellow/20">
+                <h4 className="font-semibold flex items-center gap-2 mb-3">
+                  <Zap className="h-4 w-4 text-elec-yellow" />
                   Primary Cable
                 </h4>
-                <div className="text-sm space-y-1 mt-2">
-                  <p><strong>Specification:</strong> {procurement.primaryCable.specification}</p>
-                  <p><strong>Length Required:</strong> {procurement.primaryCable.length}</p>
-                  <p><strong>Installation:</strong> {procurement.primaryCable.installationMethod}</p>
-                  <p><strong>Est. Cost:</strong> {procurement.primaryCable.estimate}</p>
+                <div className="space-y-2 text-sm">
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Specification:</span>
+                    <span className="font-medium">{procurement.primaryCable.specification}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Length Required:</span>
+                    <span className="font-medium">{procurement.primaryCable.length}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Installation:</span>
+                    <span className="font-medium capitalize">{procurement.primaryCable.installationMethod?.replace('-', ' ')}</span>
+                  </div>
+                  <Separator className="my-2" />
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Rate:</span>
+                    <span className="font-medium text-green-400">{procurement.primaryCable.estimate}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Total Cable:</span>
+                    <span className="font-bold text-green-400">{procurement.primaryCable.totalEstimate}</span>
+                  </div>
                 </div>
               </div>
               
-              <div>
-                <h4 className="font-medium flex items-center gap-2">
-                  <Shield className="h-4 w-4" />
+              {/* Protective Device */}
+              <div className="p-4 bg-elec-dark/30 rounded-lg border border-elec-blue/20">
+                <h4 className="font-semibold flex items-center gap-2 mb-3">
+                  <Shield className="h-4 w-4 text-elec-blue" />
                   Protective Device
                 </h4>
-                <div className="text-sm space-y-1 mt-2">
-                  <p><strong>Type:</strong> {procurement.protectiveDevice.type}</p>
-                  <p><strong>Rating:</strong> {procurement.protectiveDevice.rating}</p>
-                  <p><strong>Est. Cost:</strong> {procurement.protectiveDevice.estimate}</p>
+                <div className="space-y-2 text-sm">
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Type:</span>
+                    <span className="font-medium">{procurement.protectiveDevice.type}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Features:</span>
+                    <span className="font-medium text-xs">{procurement.protectiveDevice.characteristics}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Quantity:</span>
+                    <span className="font-medium">{procurement.protectiveDevice.quantity}</span>
+                  </div>
+                  <Separator className="my-2" />
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Unit Cost:</span>
+                    <span className="font-bold text-blue-400">{procurement.protectiveDevice.estimate}</span>
+                  </div>
                 </div>
               </div>
             </div>
             
-            <div>
-              <h4 className="font-medium">Additional Items</h4>
-              <ul className="text-sm space-y-1 mt-2">
-                {procurement.accessories.map((item, index) => (
-                  <li key={index} className="flex items-center gap-2">
-                    <CheckCircle2 className="h-3 w-3 text-elec-green" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
+            {/* Accessories and Project Total */}
+            <div className="space-y-4">
+              {/* Additional Items */}
+              <div className="p-4 bg-elec-dark/30 rounded-lg border border-gray-600">
+                <h4 className="font-semibold mb-3">Installation Accessories</h4>
+                <div className="space-y-2">
+                  {procurement.accessories.map((item, index) => (
+                    <div key={index} className="flex items-center gap-2 text-sm">
+                      <CheckCircle2 className="h-3 w-3 text-elec-green flex-shrink-0" />
+                      <span className="text-muted-foreground">{item}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              
+              {/* Project Total */}
+              <div className="p-4 bg-elec-yellow/10 rounded-lg border border-elec-yellow/30">
+                <h4 className="font-semibold text-elec-yellow mb-3">Estimated Project Cost</h4>
+                <div className="space-y-2 text-sm">
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Materials:</span>
+                    <span className="font-medium">{procurement.totalProjectEstimate.materials}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Labour:</span>
+                    <span className="font-medium">{procurement.totalProjectEstimate.labour}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Testing/Cert:</span>
+                    <span className="font-medium">{procurement.totalProjectEstimate.testing}</span>
+                  </div>
+                  <Separator className="my-2" />
+                  <div className="flex justify-between text-base">
+                    <span className="font-semibold">Total Range:</span>
+                    <span className="font-bold text-elec-yellow">
+                      £{(
+                        parseInt(procurement.totalProjectEstimate.materials.split('-')[0].replace('£', '')) + 
+                        parseInt(procurement.totalProjectEstimate.labour.split('-')[0].replace('£', '')) + 
+                        parseInt(procurement.totalProjectEstimate.testing.split('-')[0].replace('£', ''))
+                      ).toFixed(0)} - £{(
+                        parseInt(procurement.totalProjectEstimate.materials.split('-')[1]) + 
+                        parseInt(procurement.totalProjectEstimate.labour.split('-')[1]) + 
+                        parseInt(procurement.totalProjectEstimate.testing.split('-')[1])
+                      ).toFixed(0)}
+                    </span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
+          
+          {/* Additional Notes */}
+          <Alert className="bg-blue-500/5 border-blue-500/20">
+            <Calculator className="h-4 w-4 text-blue-400" />
+            <AlertDescription className="text-blue-200">
+              <strong>Cost Estimates:</strong> Prices are indicative and based on typical UK market rates. 
+              Actual costs may vary based on supplier, location, quantity, and specific product selection. 
+              Always obtain formal quotations before procurement.
+            </AlertDescription>
+          </Alert>
         </CardContent>
       </Card>
 
@@ -258,24 +459,73 @@ const PostResultGuidance: React.FC<PostResultGuidanceProps> = ({
             Testing & Verification Requirements
           </CardTitle>
           <CardDescription>
-            BS 7671 Part 6 testing requirements for this installation
+            BS 7671 Part 6 testing schedule for this installation type
           </CardDescription>
         </CardHeader>
-        <CardContent>
-          <div className="space-y-3">
-            {tests.map((test, index) => (
-              <div key={index} className="flex items-center justify-between p-3 border rounded-lg">
-                <div className="flex-1">
-                  <h4 className="font-medium">{test.test}</h4>
-                  <p className="text-sm text-muted-foreground">{test.requirement}</p>
-                  <p className="text-xs text-muted-foreground">{test.reference}</p>
+        <CardContent className="space-y-6">
+          {/* Pre-Energisation Tests */}
+          <div>
+            <h4 className="font-semibold flex items-center gap-2 mb-4">
+              <Shield className="h-4 w-4 text-amber-500" />
+              Pre-Energisation Tests
+              <Badge variant="outline" className="text-amber-500 border-amber-500/30">POWER OFF</Badge>
+            </h4>
+            <div className="grid gap-3">
+              {tests.preEnergisationTests.filter(test => test.status !== "n/a").map((test, index) => (
+                <div key={index} className="p-4 border rounded-lg bg-amber-500/5 border-amber-500/20">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                    <div className="flex-1">
+                      <h5 className="font-medium text-sm">{test.test}</h5>
+                      <p className="text-xs text-muted-foreground mt-1">{test.requirement}</p>
+                      <p className="text-xs font-medium text-amber-400 mt-1">{test.expectedValue}</p>
+                    </div>
+                    <div className="flex flex-col items-end gap-1">
+                      <Badge variant={test.status === "required" ? "default" : "secondary"} className="text-xs">
+                        {test.status.toUpperCase()}
+                      </Badge>
+                      <span className="text-xs text-muted-foreground">{test.reference}</span>
+                    </div>
+                  </div>
                 </div>
-                <Badge variant={test.status === "required" ? "default" : "secondary"}>
-                  {test.status}
-                </Badge>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
+          
+          {/* Live Tests */}
+          <div>
+            <h4 className="font-semibold flex items-center gap-2 mb-4">
+              <Zap className="h-4 w-4 text-red-500" />
+              Live Tests
+              <Badge variant="outline" className="text-red-500 border-red-500/30">POWER ON</Badge>
+            </h4>
+            <div className="grid gap-3">
+              {tests.liveTests.filter(test => test.status !== "n/a").map((test, index) => (
+                <div key={index} className="p-4 border rounded-lg bg-red-500/5 border-red-500/20">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                    <div className="flex-1">
+                      <h5 className="font-medium text-sm">{test.test}</h5>
+                      <p className="text-xs text-muted-foreground mt-1">{test.requirement}</p>
+                      <p className="text-xs font-medium text-red-400 mt-1">{test.expectedValue}</p>
+                    </div>
+                    <div className="flex flex-col items-end gap-1">
+                      <Badge variant={test.status === "required" ? "default" : "secondary"} className="text-xs">
+                        {test.status.toUpperCase()}
+                      </Badge>
+                      <span className="text-xs text-muted-foreground">{test.reference}</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          
+          <Alert className="bg-red-500/5 border-red-500/20">
+            <AlertTriangle className="h-4 w-4 text-red-400" />
+            <AlertDescription className="text-red-200">
+              <strong>Safety Warning:</strong> Live testing must only be performed by qualified electricians 
+              with appropriate test equipment. Ensure safe isolation procedures and use of appropriate PPE.
+            </AlertDescription>
+          </Alert>
         </CardContent>
       </Card>
 
@@ -284,34 +534,79 @@ const PostResultGuidance: React.FC<PostResultGuidanceProps> = ({
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <BookOpen className="h-5 w-5 text-elec-primary" />
-            Regulatory References
+            Regulatory Framework
           </CardTitle>
           <CardDescription>
-            Key regulations and guidance documents
+            Essential regulations and standards governing this installation
           </CardDescription>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-6">
           {regulations.map((reg, index) => (
-            <div key={index} className="border rounded-lg p-4 space-y-2">
-              <div className="flex items-center justify-between">
-                <h4 className="font-medium">{reg.title}</h4>
-                <Button variant="outline" size="sm" asChild>
-                  <a href={reg.link} target="_blank" rel="noopener noreferrer">
-                    <ExternalLink className="h-3 w-3 mr-1" />
-                    View
-                  </a>
-                </Button>
-              </div>
-              <p className="text-sm text-muted-foreground">{reg.description}</p>
-              <div className="flex flex-wrap gap-1">
-                {reg.sections.map((section, idx) => (
-                  <Badge key={idx} variant="outline" className="text-xs">
-                    {section}
+            <div key={index} className="border rounded-lg overflow-hidden">
+              {/* Header */}
+              <div className="p-4 bg-elec-dark/30 border-b">
+                <div className="flex items-start gap-3">
+                  <reg.icon className="h-5 w-5 text-elec-primary mt-0.5 flex-shrink-0" />
+                  <div className="flex-1">
+                    <h4 className="font-semibold text-elec-light">{reg.title}</h4>
+                    <p className="text-sm text-elec-blue font-medium">{reg.subtitle}</p>
+                    <p className="text-sm text-muted-foreground mt-1">{reg.description}</p>
+                  </div>
+                  <Badge 
+                    variant={reg.compliance === "Mandatory for all electrical installations" ? "default" : 
+                            reg.compliance === "Notifiable work" ? "destructive" : "secondary"}
+                    className="text-xs"
+                  >
+                    {reg.compliance}
                   </Badge>
-                ))}
+                </div>
+              </div>
+              
+              {/* Content Grid */}
+              <div className="p-4">
+                <div className="grid md:grid-cols-2 gap-4">
+                  {/* Key Clauses */}
+                  <div>
+                    <h5 className="font-medium text-sm mb-2 text-elec-yellow">Key Requirements</h5>
+                    <ul className="space-y-1">
+                      {reg.keyClauses.map((clause, idx) => (
+                        <li key={idx} className="text-xs text-muted-foreground flex items-start gap-2">
+                          <span className="text-elec-primary mt-1 flex-shrink-0">•</span>
+                          <span>{clause}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  
+                  {/* Relevant Sections */}
+                  <div>
+                    <h5 className="font-medium text-sm mb-2 text-elec-green">This Installation</h5>
+                    <ul className="space-y-1">
+                      {reg.relevantSections.map((section, idx) => (
+                        <li key={idx} className="text-xs text-muted-foreground flex items-start gap-2">
+                          <CheckCircle2 className="h-3 w-3 text-elec-green mt-0.5 flex-shrink-0" />
+                          <span>{section}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
               </div>
             </div>
           ))}
+          
+          {/* Professional Resources */}
+          <Alert className="bg-elec-primary/5 border-elec-primary/20">
+            <BookOpen className="h-4 w-4 text-elec-primary" />
+            <AlertDescription>
+              <strong>Professional Resources:</strong> Access the latest standards through the{' '}
+              <a href="https://electrical.theiet.org/" target="_blank" rel="noopener noreferrer" 
+                 className="text-elec-primary hover:underline">
+                IET website
+              </a>, or consult your local building control authority for Part P requirements. 
+              Consider membership of professional bodies (NICEIC, NAPIT, ECA) for ongoing support.
+            </AlertDescription>
+          </Alert>
         </CardContent>
       </Card>
 

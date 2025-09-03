@@ -58,73 +58,87 @@ const CableRecommendationsCard = ({ recommendations, onSelectCable, showNonCompl
           Cable Recommendations
         </CardTitle>
       </CardHeader>
-      <CardContent className="space-y-4">
+      <CardContent className="space-y-3">
         {recommendations.slice(0, 5).map((cable, index) => (
           <div
             key={`${cable.size}-${index}`}
-            className={`p-4 rounded-lg border-2 cursor-pointer transition-all hover:border-elec-yellow/50 ${
-              index === 0 ? getSuitabilityColor(cable.suitability) : "border-gray-600"
-            } ${index === 0 ? "ring-2 ring-elec-yellow/30" : ""}`}
+            className={`p-4 rounded-lg border transition-all hover:border-elec-yellow/50 ${
+              index === 0 ? getSuitabilityColor(cable.suitability) : "border-gray-600 hover:border-gray-500"
+            } ${index === 0 ? "ring-1 ring-elec-yellow/20" : ""}`}
             onClick={() => onSelectCable?.(cable)}
           >
-            <div className="flex flex-col gap-3 mb-3">
-              <div className="flex flex-col gap-2">
+            {/* Header Row */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+              <div className="flex items-center gap-3">
+                <div className="text-xl font-bold text-elec-light">{cable.size}</div>
+                {getSuitabilityIcon(cable.suitability)}
                 {index === 0 && (
-                  <Badge className={`w-fit ${
+                  <Badge className={`text-xs px-2 py-1 ${
                     showNonCompliant || cable.suitability !== "suitable" 
                       ? "bg-red-500/20 text-red-300 border-red-500/30" 
                       : "bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30"
                   }`}>
-                    {showNonCompliant || cable.suitability !== "suitable" ? "NON-COMPLIANT - CLOSEST" : "RECOMMENDED"}
+                    {showNonCompliant || cable.suitability !== "suitable" ? "NON-COMPLIANT" : "RECOMMENDED"}
                   </Badge>
                 )}
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="text-xl font-bold">{cable.size}</div>
-                    {getSuitabilityIcon(cable.suitability)}
+              </div>
+              <Badge variant={cable.suitability === "suitable" ? "default" : "destructive"} className="self-start sm:self-center">
+                {cable.suitability.toUpperCase()}
+              </Badge>
+            </div>
+
+            {/* Technical Specifications - 2 Column Grid */}
+            <div className="grid grid-cols-2 gap-4 mb-4">
+              <div className="space-y-3">
+                <div className="flex justify-between items-center">
+                  <span className="text-xs text-muted-foreground uppercase tracking-wide">Capacity</span>
+                  <span className="font-semibold text-sm">{cable.currentCarryingCapacity}A</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-xs text-muted-foreground uppercase tracking-wide">Voltage Drop</span>
+                  <span className="font-semibold text-sm">{cable.voltageDropPercentage.toFixed(2)}%</span>
+                </div>
+              </div>
+              
+              <div className="space-y-3">
+                <div className="flex justify-between items-center">
+                  <span className="text-xs text-muted-foreground uppercase tracking-wide">Cost</span>
+                  <div className={`flex items-center gap-1 font-semibold text-sm ${getCostColor(cable.cost || "medium")}`}>
+                    <PoundSterling className="h-3 w-3" />
+                    <span>{cable.cost?.toUpperCase() || "MEDIUM"}</span>
                   </div>
-                  <Badge variant={cable.suitability === "suitable" ? "default" : "destructive"}>
-                    {cable.suitability.toUpperCase()}
-                  </Badge>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-xs text-muted-foreground uppercase tracking-wide">Install</span>
+                  <div className={`flex items-center gap-1 font-semibold text-sm ${
+                    cable.installationComplexity === "simple" ? "text-green-400" :
+                    cable.installationComplexity === "moderate" ? "text-amber-400" : "text-red-400"
+                  }`}>
+                    <Clock className="h-3 w-3" />
+                    <span>{cable.installationComplexity?.toUpperCase() || "MODERATE"}</span>
+                  </div>
                 </div>
               </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm mb-3">
-              <div>
-                <div className="text-muted-foreground">Capacity</div>
-                <div className="font-medium">{cable.currentCarryingCapacity}A</div>
-              </div>
-              <div>
-                <div className="text-muted-foreground">Voltage Drop</div>
-                <div className="font-medium">{cable.voltageDropPercentage.toFixed(2)}%</div>
-              </div>
-              <div>
-                <div className="text-muted-foreground">Cost Category</div>
-                <div className={`font-medium flex items-center gap-1 ${getCostColor(cable.cost || "medium")}`}>
-                  <PoundSterling className="h-3 w-3" />
-                  <span className="truncate">{cable.cost?.toUpperCase() || "MEDIUM"}</span>
+            {/* Notes Section */}
+            {cable.notes.length > 0 && (
+              <div className="pt-3 border-t border-gray-700">
+                <div className="space-y-1">
+                  {cable.notes.slice(0, 3).map((note, noteIndex) => (
+                    <div key={noteIndex} className="text-xs text-muted-foreground flex items-start gap-2">
+                      <span className="text-elec-yellow mt-0.5">•</span>
+                      <span className="flex-1">{note}</span>
+                    </div>
+                  ))}
+                  {cable.notes.length > 3 && (
+                    <div className="text-xs text-muted-foreground/70 mt-2">
+                      +{cable.notes.length - 3} more considerations...
+                    </div>
+                  )}
                 </div>
               </div>
-              <div>
-                <div className="text-muted-foreground">Complexity</div>
-                <div className={`font-medium flex items-center gap-1 ${
-                  cable.installationComplexity === "simple" ? "text-green-400" :
-                  cable.installationComplexity === "moderate" ? "text-amber-400" : "text-red-400"
-                }`}>
-                  <Clock className="h-3 w-3" />
-                  <span className="truncate">{cable.installationComplexity?.toUpperCase() || "MODERATE"}</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="space-y-1">
-              {cable.notes.map((note, noteIndex) => (
-                <div key={noteIndex} className="text-xs text-muted-foreground">
-                  • {note}
-                </div>
-              ))}
-            </div>
+            )}
           </div>
         ))}
       </CardContent>
