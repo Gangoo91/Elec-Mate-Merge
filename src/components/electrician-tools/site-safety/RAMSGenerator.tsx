@@ -409,14 +409,19 @@ const RAMSGenerator = () => {
             )}
           </div>
 
-          <div className="flex gap-4">
-            <Button onClick={generateRAMS} className="flex-1">
+          {/* Mobile-First Action Buttons */}
+          <div className="space-y-3 sm:space-y-0 sm:flex sm:gap-4">
+            <Button onClick={generateRAMS} className="w-full sm:flex-1 h-12 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 font-medium">
               <FileText className="h-4 w-4 mr-2" />
               Generate RAMS Document
             </Button>
-            <Button variant="outline">
+            <Button 
+              variant="outline" 
+              className="w-full sm:w-auto h-12 border-elec-yellow/40 text-elec-yellow hover:bg-elec-yellow/10 font-medium px-6"
+            >
               <Download className="h-4 w-4 mr-2" />
-              Export PDF
+              <span className="hidden sm:inline">Export PDF</span>
+              <span className="sm:hidden">Export</span>
             </Button>
           </div>
         </CardContent>

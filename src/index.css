@@ -251,5 +251,29 @@
   .mobile-focus {
     @apply focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:outline-none;
   }
+  
+  /* Enhanced mobile button styles */
+  .mobile-button-primary {
+    @apply h-12 px-6 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 font-medium rounded-lg transition-colors duration-200 active:scale-[0.98] touch-manipulation;
+  }
+  
+  .mobile-button-secondary {
+    @apply h-12 px-6 border-elec-yellow/40 text-elec-yellow hover:bg-elec-yellow/10 font-medium rounded-lg transition-colors duration-200 active:scale-[0.98] touch-manipulation;
+  }
+  
+  /* Mobile-optimized action areas */
+  .mobile-action-bar {
+    @apply flex flex-col space-y-3 sm:flex-row sm:space-y-0 sm:space-x-4 p-4 sm:p-6;
+  }
+  
+  /* Enhanced mobile spacing */
+  .mobile-section-spacing {
+    @apply space-y-6 sm:space-y-8;
+  }
+  
+  /* Mobile-safe bottom spacing */
+  .mobile-bottom-safe {
+    @apply pb-safe-bottom;
+  }
 }
 
