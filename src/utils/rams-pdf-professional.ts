@@ -30,6 +30,12 @@ class RAMSPDFGenerator {
   private pageHeight: number;
   private yPosition: number;
   private readonly MARGIN = 20;
+
+  private updatePageMetrics(): void {
+    const pageInfo = this.doc.internal.pageSize;
+    this.pageWidth = pageInfo.getWidth();
+    this.pageHeight = pageInfo.getHeight();
+  }
   private readonly HEADER_HEIGHT = 40;
   private readonly FOOTER_HEIGHT = 20;
 
@@ -253,11 +259,8 @@ class RAMSPDFGenerator {
 
     // Add new page in landscape orientation for risks table
     this.doc.addPage('a4', 'landscape');
+    this.updatePageMetrics(); // Update page dimensions for landscape
     this.yPosition = this.MARGIN;
-    
-    // Update page dimensions for landscape
-    const landscapeWidth = this.doc.internal.pageSize.getHeight();
-    const landscapeHeight = this.doc.internal.pageSize.getWidth();
     
     this.doc.setFontSize(16);
     this.doc.setFont("helvetica", "bold");
@@ -271,6 +274,9 @@ class RAMSPDFGenerator {
     this.doc.text("Risk Rating: L = Likelihood (1-5), S = Severity (1-5), Risk = L × S", this.MARGIN, this.yPosition);
     this.yPosition += 10;
 
+    // Calculate available width for better column sizing (percentage-based)
+    const availableWidth = this.pageWidth - (2 * this.MARGIN);
+    
     const riskTableData = risks.map((risk, index) => {
       const likelihood = safeNumber(risk.likelihood);
       const severity = safeNumber(risk.severity);
@@ -287,46 +293,83 @@ class RAMSPDFGenerator {
         safeText(risk.controls) || "No specific controls identified",
         `${residualRisk}\n${getRiskLevel(residualRisk)}`,
         safeText(risk.furtherAction) || "None required",
-        safeText(risk.responsible) || "Site Supervisor",
-        safeText(risk.actionBy) || "N/A"
+        `${safeText(risk.responsible) || "Site Supervisor"}\n${safeText(risk.actionBy) || "N/A"}`
       ];
     });
 
     autoTable(this.doc, {
       startY: this.yPosition,
-      head: [["Ref", "Hazard", "Risk/Harm", "L", "S", "Initial Risk\nRating", "Existing Controls", "Residual Risk\nRating", "Further Action\nRequired", "Person\nResponsible", "Action By\n(Date)"]],
+      head: [["Ref", "Hazard", "Risk/Harm", "L", "S", "Initial Risk\nRating", "Existing Controls", "Residual Risk\nRating", "Further Action\nRequired", "Responsible /\nAction By"]],
       body: riskTableData,
       theme: "grid",
       headStyles: {
         fillColor: [41, 128, 185],
         textColor: [255, 255, 255],
         fontStyle: "bold",
-        fontSize: 10,
+        fontSize: 9,
         halign: "center",
-        valign: "middle"
+        valign: "middle",
+        lineWidth: 1.2,
+        lineColor: [0, 0, 0]
       },
       styles: {
-        fontSize: 9,
+        fontSize: 8,
         cellPadding: 3,
         lineColor: [0, 0, 0],
-        lineWidth: 0.5,
+        lineWidth: 1.0,
         overflow: 'linebreak',
-        valign: 'top'
+        valign: 'top',
+        minCellHeight: 20
       },
       columnStyles: {
-        0: { cellWidth: 18, halign: "center", fontStyle: "bold", fillColor: [245, 245, 245] },
-        1: { cellWidth: 55 },
-        2: { cellWidth: 55 },
-        3: { cellWidth: 12, halign: "center" },
-        4: { cellWidth: 12, halign: "center" },
-        5: { cellWidth: 30, halign: "center", fontSize: 8 },
-        6: { cellWidth: 80 },
-        7: { cellWidth: 30, halign: "center", fontSize: 8 },
-        8: { cellWidth: 60 },
-        9: { cellWidth: 45 },
-        10: { cellWidth: 35 }
+        0: { 
+          cellWidth: availableWidth * 0.05, 
+          halign: "center", 
+          fontStyle: "bold", 
+          fillColor: [245, 245, 245] 
+        },
+        1: { 
+          cellWidth: availableWidth * 0.18,
+          fontStyle: "bold"
+        },
+        2: { 
+          cellWidth: availableWidth * 0.18 
+        },
+        3: { 
+          cellWidth: availableWidth * 0.04, 
+          halign: "center",
+          fontStyle: "bold"
+        },
+        4: { 
+          cellWidth: availableWidth * 0.04, 
+          halign: "center",
+          fontStyle: "bold"
+        },
+        5: { 
+          cellWidth: availableWidth * 0.09, 
+          halign: "center", 
+          fontSize: 7,
+          fontStyle: "bold"
+        },
+        6: { 
+          cellWidth: availableWidth * 0.26 
+        },
+        7: { 
+          cellWidth: availableWidth * 0.08, 
+          halign: "center", 
+          fontSize: 7,
+          fontStyle: "bold"
+        },
+        8: { 
+          cellWidth: availableWidth * 0.08 
+        },
+        9: { 
+          cellWidth: availableWidth * 0.10,
+          fontSize: 7
+        }
       },
       margin: { left: this.MARGIN, right: this.MARGIN },
+      showHead: 'everyPage',
       didDrawCell: (data) => {
         // Add risk level colour coding for risk rating cells
         if (data.column.index === 5 || data.column.index === 7) {
@@ -335,9 +378,9 @@ class RAMSPDFGenerator {
           if (riskRating) {
             const [r, g, b] = getRiskColor(riskRating);
             // Apply lighter background colour for risk levels
-            const lightR = Math.min(255, r + 150);
-            const lightG = Math.min(255, g + 150);
-            const lightB = Math.min(255, b + 150);
+            const lightR = Math.min(255, r + 100);
+            const lightG = Math.min(255, g + 100);
+            const lightB = Math.min(255, b + 100);
             
             data.cell.styles.fillColor = [lightR, lightG, lightB];
           }
@@ -350,6 +393,7 @@ class RAMSPDFGenerator {
     
     // Return to portrait for subsequent pages
     this.doc.addPage('a4', 'portrait');
+    this.updatePageMetrics(); // Update metrics for portrait page
     this.yPosition = this.MARGIN;
   }
 
