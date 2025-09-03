@@ -316,7 +316,11 @@ const InstrumentationCalculator = () => {
           />
           
           <MobileSelect value={targetCurrent} onValueChange={(value) => {
-            setTargetCurrent(value);
+            if (value === "custom") {
+              setTargetCurrent("");
+            } else {
+              setTargetCurrent(value);
+            }
             clearError('targetCurrent');
           }}>
             <MobileSelectTrigger label="Or Target Current" error={errors.targetCurrent}>
@@ -332,15 +336,15 @@ const InstrumentationCalculator = () => {
               <MobileSelectItem value="16">16.0 mA (75%)</MobileSelectItem>
               <MobileSelectItem value="18">18.0 mA (87.5%)</MobileSelectItem>
               <MobileSelectItem value="20">20.0 mA (100%)</MobileSelectItem>
-              <MobileSelectItem value="">Custom...</MobileSelectItem>
+              <MobileSelectItem value="custom">Custom...</MobileSelectItem>
             </MobileSelectContent>
           </MobileSelect>
           
-          {targetCurrent === "" && (
+          {(targetCurrent === "" || targetCurrent === "custom") && (
             <MobileInputWrapper
               label="Custom Current"
               type="number"
-              value=""
+              value={targetCurrent === "custom" ? "" : targetCurrent}
               onChange={(value) => {
                 setTargetCurrent(value);
                 clearError('targetCurrent');
@@ -363,7 +367,11 @@ const InstrumentationCalculator = () => {
           </div>
           
           <MobileSelect value={supplyVoltage} onValueChange={(value) => {
-            setSupplyVoltage(value);
+            if (value === "custom") {
+              setSupplyVoltage("");
+            } else {
+              setSupplyVoltage(value);
+            }
             clearError('supplyVoltage');
           }}>
             <MobileSelectTrigger label="Supply Voltage" error={errors.supplyVoltage}>
@@ -378,15 +386,15 @@ const InstrumentationCalculator = () => {
               <MobileSelectItem value="36">36V DC</MobileSelectItem>
               <MobileSelectItem value="42">42V DC</MobileSelectItem>
               <MobileSelectItem value="48">48V DC</MobileSelectItem>
-              <MobileSelectItem value="">Custom...</MobileSelectItem>
+              <MobileSelectItem value="custom">Custom...</MobileSelectItem>
             </MobileSelectContent>
           </MobileSelect>
           
-          {supplyVoltage === "" && (
+          {(supplyVoltage === "" || supplyVoltage === "custom") && (
             <MobileInputWrapper
               label="Custom Voltage"
               type="number"
-              value=""
+              value={supplyVoltage === "custom" ? "" : supplyVoltage}
               onChange={(value) => {
                 setSupplyVoltage(value);
                 clearError('supplyVoltage');
@@ -401,7 +409,11 @@ const InstrumentationCalculator = () => {
           )}
           
           <MobileSelect value={shuntResistor} onValueChange={(value) => {
-            setShuntResistor(value);
+            if (value === "custom") {
+              setShuntResistor("");
+            } else {
+              setShuntResistor(value);
+            }
             clearError('shuntResistor');
           }}>
             <MobileSelectTrigger label="Shunt Resistor">
@@ -415,15 +427,15 @@ const InstrumentationCalculator = () => {
               <MobileSelectItem value="250">250Ω (5V @ 20mA) - Standard</MobileSelectItem>
               <MobileSelectItem value="300">300Ω (6V @ 20mA)</MobileSelectItem>
               <MobileSelectItem value="500">500Ω (10V @ 20mA)</MobileSelectItem>
-              <MobileSelectItem value="">Custom...</MobileSelectItem>
+              <MobileSelectItem value="custom">Custom...</MobileSelectItem>
             </MobileSelectContent>
           </MobileSelect>
           
-          {shuntResistor === "" && (
+          {(shuntResistor === "" || shuntResistor === "custom") && (
             <MobileInputWrapper
               label="Custom Resistor"
               type="number"
-              value=""
+              value={shuntResistor === "custom" ? "" : shuntResistor}
               onChange={(value) => {
                 setShuntResistor(value);
                 clearError('shuntResistor');
