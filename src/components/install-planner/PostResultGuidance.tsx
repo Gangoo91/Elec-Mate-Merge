@@ -1,4 +1,5 @@
 import React from 'react';
+import EnhancedInstallationGuidance from './EnhancedInstallationGuidance';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -615,10 +616,16 @@ const PostResultGuidance: React.FC<PostResultGuidanceProps> = ({
         <Users className="h-4 w-4" />
         <AlertDescription>
           <strong>Professional Verification Required:</strong> This calculation tool provides guidance based on BS 7671 
-          but does not replace professional electrical design and verification. All installations must be designed, 
-          installed, and certified by qualified electrical personnel in accordance with current regulations.
+         but does not replace professional electrical design and verification. All installations must be designed, 
+         installed, and certified by qualified electrical personnel in accordance with current regulations.
         </AlertDescription>
       </Alert>
+      
+      {/* Enhanced Installation Guidance */}
+      <EnhancedInstallationGuidance 
+        planData={planData}
+        recommendedCable={recommendedCable}
+      />
     </div>
   );
 };
