@@ -22,118 +22,118 @@ interface PoolGuidanceProps {
 
 const PoolGuidance = ({ result }: PoolGuidanceProps) => {
   return (
-    <div className="space-y-6 lg:space-y-8">
+    <div className="space-y-5">
       {/* Regulatory Overview */}
-      <div className="space-y-4">
-        <div className="flex items-center gap-2 mb-4 lg:mb-6">
+      <div className="space-y-3">
+        <div className="flex items-center gap-2 mb-3">
           <BookOpen className="h-5 w-5 text-elec-yellow" />
-          <h3 className="text-base lg:text-lg font-semibold text-white">Regulatory Requirements</h3>
+          <h3 className="text-base font-semibold text-white">Regulatory Requirements</h3>
         </div>
         
-        <div className="space-y-4 lg:space-y-6">
+        <div className="space-y-4">
           <div>
-            <h4 className="font-medium text-elec-yellow mb-3 flex items-center gap-2">
+            <h4 className="font-medium text-elec-yellow mb-2 flex items-center gap-2">
               <Shield className="h-4 w-4" />
               BS 7671:2018 Section 702 - Swimming Pools
             </h4>
-            <p className="text-sm text-white mb-3 lg:mb-4 ml-6">
+            <p className="text-sm text-white mb-3">
               The primary standard governing swimming pool electrical installations in the UK.
             </p>
-            <ul className="space-y-2 ml-6">
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+            <ul className="space-y-1.5">
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Zone classifications and IP rating requirements</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>RCD protection mandatory for all circuits</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Supplementary equipotential bonding requirements</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>SELV systems for underwater equipment</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Socket outlet placement restrictions</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Specific earthing arrangements for pool areas</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Emergency isolation requirements</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Special consideration for heating systems</span>
               </li>
             </ul>
           </div>
 
           <div>
-            <h4 className="font-medium text-blue-300 mb-3">IET Code of Practice for Electrical Installations</h4>
-            <ul className="space-y-2 ml-6">
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+            <h4 className="font-medium text-blue-300 mb-2">IET Code of Practice for Electrical Installations</h4>
+            <ul className="space-y-1.5">
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Guidance on domestic swimming pool installations</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Risk assessment requirements and procedures</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Installation and testing procedures</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Maintenance recommendations and schedules</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Selection of appropriate equipment and materials</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Design considerations for different pool types</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Documentation and certification requirements</span>
               </li>
             </ul>
           </div>
 
           <div>
-            <h4 className="font-medium text-purple-300 mb-3">Building Regulations Part P</h4>
-            <ul className="space-y-2 ml-6">
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+            <h4 className="font-medium text-purple-300 mb-2">Building Regulations Part P</h4>
+            <ul className="space-y-1.5">
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Notification requirements for new pool installations</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Competent person scheme compliance</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Electrical installation certificates required</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Local authority building control involvement</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Third-party certification for non-registered installers</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Inspection and testing requirements</span>
               </li>
             </ul>
@@ -142,110 +142,110 @@ const PoolGuidance = ({ result }: PoolGuidanceProps) => {
       </div>
 
       {/* Zone Classifications */}
-      <div className="space-y-4">
-        <div className="flex items-center gap-2 mb-4 lg:mb-6">
+      <div className="space-y-3">
+        <div className="flex items-center gap-2 mb-3">
           <Eye className="h-5 w-5 text-elec-yellow" />
-          <h3 className="text-base lg:text-lg font-semibold text-white">Zone Classifications Guide</h3>
+          <h3 className="text-base font-semibold text-white">Zone Classifications Guide</h3>
         </div>
         
-        <div className="space-y-4 lg:space-y-6">
+        <div className="space-y-4">
           <div>
-            <div className="flex flex-col gap-2 mb-3">
+            <div className="flex flex-col gap-2 mb-2">
               <h4 className="font-medium text-red-300">Zone 0 - Highest Risk</h4>
               <Badge variant="outline" className="border-red-500/30 text-red-300 self-start text-xs">IPX8 Required</Badge>
             </div>
-            <p className="text-sm text-white mb-3 lg:mb-4 ml-6">Interior of pool, fountain, or water feature</p>
-            <ul className="space-y-2 ml-6">
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+            <p className="text-sm text-white mb-2">Interior of pool, fountain, or water feature</p>
+            <ul className="space-y-1.5">
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Maximum 12V SELV only</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Safety isolating transformer required</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>No socket outlets permitted</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Underwater lighting maximum 12V</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Equipment must be permanently fixed</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Cable entries must be waterproof</span>
               </li>
             </ul>
           </div>
 
           <div>
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
+            <div className="flex flex-col gap-2 mb-2">
               <h4 className="font-medium text-yellow-300">Zone 1 - Medium Risk</h4>
-              <Badge variant="outline" className="border-yellow-500/30 text-yellow-300 self-start sm:self-center">IPX4 Minimum</Badge>
+              <Badge variant="outline" className="border-yellow-500/30 text-yellow-300 self-start text-xs">IPX4 Minimum</Badge>
             </div>
-            <p className="text-sm text-white mb-4 ml-6">2m horizontally from pool edge, up to 2.5m height</p>
-            <ul className="space-y-2 ml-6">
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+            <p className="text-sm text-white mb-2">2m horizontally from pool edge, up to 2.5m height</p>
+            <ul className="space-y-1.5">
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>12V SELV systems preferred</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Limited 230V with additional protection</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>No socket outlets within 2m of pool</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>RCD protection mandatory</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Fixed equipment only (no portable appliances)</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>All metalwork must be bonded</span>
               </li>
             </ul>
           </div>
 
           <div>
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
+            <div className="flex flex-col gap-2 mb-2">
               <h4 className="font-medium text-green-300">Zone 2 - Lower Risk</h4>
-              <Badge variant="outline" className="border-green-500/30 text-green-300 self-start sm:self-center">IPX2 Minimum</Badge>
+              <Badge variant="outline" className="border-green-500/30 text-green-300 self-start text-xs">IPX2 Minimum</Badge>
             </div>
-            <p className="text-sm text-white mb-4 ml-6">1.5m beyond Zone 1, up to 2.5m height</p>
-            <ul className="space-y-2 ml-6">
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+            <p className="text-sm text-white mb-2">1.5m beyond Zone 1, up to 2.5m height</p>
+            <ul className="space-y-1.5">
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>230V equipment permitted with RCD</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Socket outlets allowed with RCD protection</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Standard wiring methods acceptable</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>All circuits require 30mA RCD</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Standard electrical accessories permitted</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Normal installation methods apply</span>
               </li>
             </ul>
@@ -255,74 +255,74 @@ const PoolGuidance = ({ result }: PoolGuidanceProps) => {
 
       {/* Installation Steps */}
       {result && (
-        <div className="space-y-4">
-          <div className="flex items-center gap-2 mb-6">
+        <div className="space-y-3">
+          <div className="flex items-center gap-2 mb-3">
             <Wrench className="h-5 w-5 text-elec-yellow" />
-            <h3 className="text-lg font-semibold text-white">Installation Procedure</h3>
+            <h3 className="text-base font-semibold text-white">Installation Procedure</h3>
           </div>
           
-          <div className="space-y-3 ml-6">
+          <ul className="space-y-1.5">
             {result.practicalGuidance.installationSteps.map((step, index) => (
-              <div key={index} className="flex items-start gap-3">
-                <span className="text-elec-yellow mt-1">•</span>
-                <p className="text-sm text-white">{step}</p>
-              </div>
+              <li key={index} className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
+                <span>{step}</span>
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
       )}
 
       {/* Testing Requirements */}
       {result && (
-        <div className="space-y-4">
-          <div className="flex items-center gap-2 mb-6">
+        <div className="space-y-3">
+          <div className="flex items-center gap-2 mb-3">
             <TestTube className="h-5 w-5 text-elec-yellow" />
-            <h3 className="text-lg font-semibold text-white">Testing & Verification</h3>
+            <h3 className="text-base font-semibold text-white">Testing & Verification</h3>
           </div>
           
-          <div className="space-y-3 ml-6">
+          <ul className="space-y-1.5">
             {result.practicalGuidance.testingRequirements.map((test, index) => (
-              <div key={index} className="flex items-start gap-3">
-                <span className="text-elec-yellow mt-1">•</span>
-                <p className="text-sm text-white">{test}</p>
-              </div>
+              <li key={index} className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
+                <span>{test}</span>
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
       )}
 
       {/* Maintenance */}
       {result && (
-        <div className="space-y-4">
-          <div className="flex items-center gap-2 mb-6">
+        <div className="space-y-3">
+          <div className="flex items-center gap-2 mb-3">
             <Clock className="h-5 w-5 text-elec-yellow" />
-            <h3 className="text-lg font-semibold text-white">Ongoing Maintenance</h3>
+            <h3 className="text-base font-semibold text-white">Ongoing Maintenance</h3>
           </div>
           
-          <div className="space-y-3 ml-6">
+          <ul className="space-y-1.5">
             {result.practicalGuidance.maintenancePoints.map((point, index) => (
-              <div key={index} className="flex items-start gap-3">
-                <span className="text-elec-yellow mt-1">•</span>
-                <p className="text-sm text-white">{point}</p>
-              </div>
+              <li key={index} className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
+                <span>{point}</span>
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
       )}
 
       {/* Common Pitfalls */}
       {result && (
-        <div className="space-y-4">
-          <div className="flex items-center gap-2 mb-6">
+        <div className="space-y-3">
+          <div className="flex items-center gap-2 mb-3">
             <AlertTriangle className="h-5 w-5 text-elec-yellow" />
-            <h3 className="text-lg font-semibold text-white">Common Pitfalls to Avoid</h3>
+            <h3 className="text-base font-semibold text-white">Common Pitfalls to Avoid</h3>
           </div>
           
-          <div className="space-y-3">
+          <div className="space-y-2">
             {result.practicalGuidance.commonPitfalls.map((pitfall, index) => (
               <Alert key={index} className="border-orange-500/20 bg-orange-500/10">
                 <AlertTriangle className="h-4 w-4 text-orange-400" />
-                <AlertDescription className="text-orange-200">
+                <AlertDescription className="text-orange-200 text-sm">
                   {pitfall}
                 </AlertDescription>
               </Alert>
@@ -332,90 +332,90 @@ const PoolGuidance = ({ result }: PoolGuidanceProps) => {
       )}
 
       {/* Equipment Selection Guide */}
-      <div className="space-y-4">
-        <div className="flex items-center gap-2 mb-6">
+      <div className="space-y-3">
+        <div className="flex items-center gap-2 mb-3">
           <Lightbulb className="h-5 w-5 text-elec-yellow" />
-          <h3 className="text-lg font-semibold text-white">Equipment Selection Guide</h3>
+          <h3 className="text-base font-semibold text-white">Equipment Selection Guide</h3>
         </div>
         
-        <div className="space-y-6">
+        <div className="space-y-4">
           <div>
-            <h4 className="font-medium text-elec-yellow mb-3">Pool Pumps & Filtration</h4>
-            <ul className="space-y-2 ml-6">
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+            <h4 className="font-medium text-elec-yellow mb-2">Pool Pumps & Filtration</h4>
+            <ul className="space-y-1.5">
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Single-phase pumps up to 3kW, three-phase for larger installations</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Variable speed drives recommended for energy efficiency</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Motor protection against overload and earth fault required</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Emergency isolation within sight of equipment</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Weatherproof enclosures for outdoor installations</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Consider starting current when sizing supply cables</span>
               </li>
             </ul>
           </div>
 
           <div>
-            <h4 className="font-medium text-blue-300 mb-3">Pool Heating Systems</h4>
-            <ul className="space-y-2 ml-6">
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+            <h4 className="font-medium text-blue-300 mb-2">Pool Heating Systems</h4>
+            <ul className="space-y-1.5">
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Electric heaters: High load circuits, diversity factors apply</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Heat pumps: Consider defrost cycle loads and starting currents</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Gas heaters: Electrical supply for controls and fans only</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Solar controllers: Weather-resistant outdoor rated equipment</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Thermostats and sensors: Low voltage control circuits preferred</span>
               </li>
             </ul>
           </div>
 
           <div>
-            <h4 className="font-medium text-green-300 mb-3">Lighting Systems</h4>
-            <ul className="space-y-2 ml-6">
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+            <h4 className="font-medium text-green-300 mb-2">Lighting Systems</h4>
+            <ul className="space-y-1.5">
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Underwater: 12V SELV only, IPX8 rated, safety isolating transformer</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Pool area: LED recommended, dimming controls permitted in Zone 2</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Emergency lighting: SELV systems preferred, battery backup required</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Control systems: Smart controls must maintain safety isolation</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Cable runs: Special pool cable types required for underwater feeds</span>
               </li>
             </ul>
@@ -424,98 +424,98 @@ const PoolGuidance = ({ result }: PoolGuidanceProps) => {
       </div>
 
       {/* Design Considerations */}
-      <div className="space-y-4">
-        <div className="flex items-center gap-2 mb-6">
+      <div className="space-y-3">
+        <div className="flex items-center gap-2 mb-3">
           <Lightbulb className="h-5 w-5 text-elec-yellow" />
-          <h3 className="text-lg font-semibold text-white">Design Considerations</h3>
+          <h3 className="text-base font-semibold text-white">Design Considerations</h3>
         </div>
         
-        <div className="space-y-6">
+        <div className="space-y-4">
           <div>
-            <h4 className="font-medium text-elec-yellow mb-3">Load Calculations</h4>
-            <ul className="space-y-2 ml-6">
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+            <h4 className="font-medium text-elec-yellow mb-2">Load Calculations</h4>
+            <ul className="space-y-1.5">
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Apply diversity factors: Heating 75% (domestic), Pumps 100%, Lighting 80%</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Consider simultaneous operation patterns</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Include future load expansion requirements</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Motor starting current calculations essential</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Temperature derating for cable capacity in hot climates</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Voltage drop calculations critical for long cable runs</span>
               </li>
             </ul>
           </div>
 
           <div>
-            <h4 className="font-medium text-amber-300 mb-3">Cable Selection & Installation</h4>
-            <ul className="space-y-2 ml-6">
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+            <h4 className="font-medium text-amber-300 mb-2">Cable Selection & Installation</h4>
+            <ul className="space-y-1.5">
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Underground: SWA armoured cables or XLPE in ducting</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Pool equipment: H07RN-F flexible cables for connections</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Underwater: Special pool cables with enhanced insulation</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Minimum burial depth: 600mm for cables, 450mm for ducting</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Cable route marking and warning tape essential</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Avoid cable routes under pool or decking where possible</span>
               </li>
             </ul>
           </div>
 
           <div>
-            <h4 className="font-medium text-purple-300 mb-3">Earthing & Bonding Strategy</h4>
-            <ul className="space-y-2 ml-6">
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+            <h4 className="font-medium text-purple-300 mb-2">Earthing & Bonding Strategy</h4>
+            <ul className="space-y-1.5">
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Main earth electrode (TT systems): Resistance ≤ 200Ω maximum</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Supplementary bonding: 4mm² minimum, all metalwork within 2m</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Pool structure bonding: Reinforcing steel, ladders, handrails</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Water system bonding: Inlet/outlet pipes, heating pipes</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Equipotential bonding conductor routing and protection</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Test points for ongoing verification of bonding integrity</span>
               </li>
             </ul>
@@ -524,98 +524,98 @@ const PoolGuidance = ({ result }: PoolGuidanceProps) => {
       </div>
 
       {/* Advanced Topics */}
-      <div className="space-y-4">
-        <div className="flex items-center gap-2 mb-6">
+      <div className="space-y-3">
+        <div className="flex items-center gap-2 mb-3">
           <Shield className="h-5 w-5 text-elec-yellow" />
-          <h3 className="text-lg font-semibold text-white">Advanced Design Topics</h3>
+          <h3 className="text-base font-semibold text-white">Advanced Design Topics</h3>
         </div>
         
-        <div className="space-y-6">
+        <div className="space-y-4">
           <div>
-            <h4 className="font-medium text-red-300 mb-3">Commercial Pool Requirements</h4>
-            <ul className="space-y-2 ml-6">
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+            <h4 className="font-medium text-red-300 mb-2">Commercial Pool Requirements</h4>
+            <ul className="space-y-1.5">
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Additional 10mA RCD protection for underwater equipment</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Emergency stop systems for all pool equipment</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Backup power supplies for essential safety systems</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Professional design certification and periodic inspection</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Enhanced IP ratings: IPX5 minimum in Zone 1</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Fire alarm system integration and emergency lighting</span>
               </li>
             </ul>
           </div>
 
           <div>
-            <h4 className="font-medium text-blue-300 mb-3">Smart Pool Systems</h4>
-            <ul className="space-y-2 ml-6">
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+            <h4 className="font-medium text-blue-300 mb-2">Smart Pool Systems</h4>
+            <ul className="space-y-1.5">
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Control systems must maintain safety isolation principles</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Remote monitoring: Secure communications, fail-safe operation</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Automation: Override capabilities for safety systems</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Integration with building management systems</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Cybersecurity considerations for connected equipment</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Backup manual controls for all automated functions</span>
               </li>
             </ul>
           </div>
 
           <div>
-            <h4 className="font-medium text-green-300 mb-3">Energy Efficiency</h4>
-            <ul className="space-y-2 ml-6">
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+            <h4 className="font-medium text-green-300 mb-2">Energy Efficiency</h4>
+            <ul className="space-y-1.5">
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Variable speed pump drives: 30-70% energy savings possible</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>LED lighting systems: Lower heat generation, longer life</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Smart heating controls: Optimised scheduling and zoning</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Power factor correction for large motor loads</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Energy monitoring systems for consumption analysis</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Solar integration: Grid-tie considerations and safety</span>
               </li>
             </ul>
@@ -624,68 +624,68 @@ const PoolGuidance = ({ result }: PoolGuidanceProps) => {
       </div>
 
       {/* Documentation & Certification */}
-      <div className="space-y-4">
-        <div className="flex items-center gap-2 mb-6">
+      <div className="space-y-3">
+        <div className="flex items-center gap-2 mb-3">
           <BookOpen className="h-5 w-5 text-elec-yellow" />
-          <h3 className="text-lg font-semibold text-white">Documentation & Certification</h3>
+          <h3 className="text-base font-semibold text-white">Documentation & Certification</h3>
         </div>
         
-        <div className="space-y-6">
+        <div className="space-y-4">
           <div>
-            <h4 className="font-medium text-elec-yellow mb-3">Required Documentation</h4>
-            <ul className="space-y-2 ml-6">
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+            <h4 className="font-medium text-elec-yellow mb-2">Required Documentation</h4>
+            <ul className="space-y-1.5">
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Electrical Installation Certificate (EIC) for new installations</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Minor Electrical Installation Works Certificate for additions</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Electrical Installation Condition Report (EICR) for existing systems</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Pool equipment operation and maintenance manuals</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Risk assessments and method statements</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Building control completion certificates</span>
               </li>
             </ul>
           </div>
           
           <div>
-            <h4 className="font-medium text-blue-300 mb-3">Testing Schedules</h4>
-            <ul className="space-y-2 ml-6">
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+            <h4 className="font-medium text-blue-300 mb-2">Testing Schedules</h4>
+            <ul className="space-y-1.5">
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Initial verification: Complete test schedule as per BS 7671</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Periodic inspection: Every 5 years (or as recommended)</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>RCD testing: 6-monthly functional tests recommended</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>PAT testing: Annual for portable pool equipment</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Earth electrode testing: Annual (TT systems)</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white">
-                <span className="text-elec-yellow mt-1">•</span>
+              <li className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow mt-0.5 text-xs">•</span>
                 <span>Emergency system testing: Monthly functional checks</span>
               </li>
             </ul>
