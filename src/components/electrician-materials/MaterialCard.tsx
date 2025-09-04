@@ -1,7 +1,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { ExternalLink, Plus, Minus, Check } from "lucide-react";
-import { MobileButton } from "@/components/ui/mobile-button";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 import { MaterialItem as BaseMaterialItem } from "@/data/electrician/productData";
@@ -207,7 +207,7 @@ const MaterialCard: React.FC<MaterialCardProps> = ({
         {/* Action buttons */}
         <div className="space-y-2">
           {onAddToCompare && (
-            <MobileButton
+            <Button
               onClick={() => {
                 if (isSelected && onRemoveFromCompare) {
                   onRemoveFromCompare(String(item.id || item.name));
@@ -216,8 +216,9 @@ const MaterialCard: React.FC<MaterialCardProps> = ({
                 }
               }}
               disabled={isCompareDisabled && !isSelected}
-              variant={isSelected ? "elec" : "elec-outline"}
-              size="wide"
+              variant={isSelected ? "gold" : "outline"}
+              size="sm"
+              className={`w-full ${isSelected ? '' : 'bg-elec-yellow/10 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/20'}`}
             >
               {isSelected ? (
                 <>
@@ -230,14 +231,14 @@ const MaterialCard: React.FC<MaterialCardProps> = ({
                   Compare
                 </>
               )}
-            </MobileButton>
+            </Button>
           )}
           
           <a href={getProductUrl()} target="_blank" rel="noopener noreferrer" className="block w-full">
-            <MobileButton variant="elec" size="wide">
+            <Button variant="gold" size="sm" className="w-full">
               View Deal
               <ExternalLink className="h-4 w-4 ml-2" />
-            </MobileButton>
+            </Button>
           </a>
         </div>
       </CardContent>
