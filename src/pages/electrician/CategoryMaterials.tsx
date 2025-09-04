@@ -48,7 +48,7 @@ const CategoryMaterials = () => {
   const meta = CATEGORY_META[categoryId] || { title: "Materials", description: "Browse curated products by category" };
   
   // Use comprehensive materials data
-  const { materials, categoryData, isLoading, error, refetch } = useCategoryMaterials(categoryId);
+  const { materials, categoryData, isLoading, isRefetching, error, refetch } = useCategoryMaterials(categoryId);
 
   // Filter state for the materials
   const [searchTerm, setSearchTerm] = useState("");
@@ -255,11 +255,11 @@ const CategoryMaterials = () => {
                   variant="elec-outline"
                   size={isMobile ? "wide" : "sm"}
                   onClick={() => refetch()}
-                  disabled={isLoading}
+                  disabled={isRefetching}
                   className="h-12"
                 >
-                  <RefreshCw className="h-4 w-4 mr-2" />
-                  Refresh
+                  <RefreshCw className={`h-4 w-4 mr-2 ${isRefetching ? 'animate-spin' : ''}`} />
+                  {isRefetching ? 'Refreshing…' : 'Refresh'}
                 </MobileButton>
               </div>
             </div>

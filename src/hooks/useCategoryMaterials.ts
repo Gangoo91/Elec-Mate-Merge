@@ -5,13 +5,14 @@ interface UseCategoryMaterialsResult {
   materials: any[];
   categoryData: ProcessedCategoryData | undefined;
   isLoading: boolean;
+  isRefetching: boolean;
   error: any;
   refetch: () => void;
 }
 
 export const useCategoryMaterials = (categoryId: string): UseCategoryMaterialsResult => {
   const materialsQuery = useMaterialsData();
-  const { data: categories, isLoading, error, refetch } = materialsQuery;
+  const { data: categories, isLoading, isRefetching, error, refetch } = materialsQuery;
   const rawMaterials = materialsQuery.rawMaterials;
 
   // Filter materials by category
@@ -68,6 +69,7 @@ export const useCategoryMaterials = (categoryId: string): UseCategoryMaterialsRe
     materials: categoryMaterials,
     categoryData,
     isLoading,
+    isRefetching,
     error,
     refetch
   };
