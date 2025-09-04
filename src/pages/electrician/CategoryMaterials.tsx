@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Package, ArrowLeft, Filter, RefreshCw, Loader2, Search, Scale, TrendingUp, Calculator, AlertTriangle, Brain, ChevronDown } from "lucide-react";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { MobileButton } from "@/components/ui/mobile-button";
+
 import { MobileInputWrapper } from "@/components/ui/mobile-input-wrapper";
 import { useIsMobile } from "@/hooks/use-mobile";
 import MaterialCard from "@/components/electrician-materials/MaterialCard";
@@ -131,9 +131,9 @@ const CategoryMaterials = () => {
       <header className="mobile-card-spacing">
         <div className="flex flex-wrap gap-2">
           <Link to="/materials">
-            <MobileButton variant="outline" size={isMobile ? "wide" : "sm"} className="flex items-center gap-1.5 mobile-interactive">
-              <ArrowLeft className="h-3.5 w-3.5 sm:h-4 sm:w-4" /> Back to Materials
-            </MobileButton>
+            <Button variant="outline" size="sm" className="flex items-center gap-1.5">
+              <ArrowLeft className="h-4 w-4" /> Back to Materials
+            </Button>
           </Link>
         </div>
         <div className="space-y-3">
@@ -251,16 +251,16 @@ const CategoryMaterials = () => {
                 />
               </div>
               <div className="flex items-end">
-                <MobileButton
-                  variant="elec-outline"
-                  size={isMobile ? "wide" : "sm"}
+                <Button
+                  variant="outline"
+                  size="sm"
                   onClick={() => refetch()}
                   disabled={isRefetching}
-                  className="h-12"
+                  className="bg-elec-yellow/10 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/20"
                 >
                   <RefreshCw className={`h-4 w-4 mr-2 ${isRefetching ? 'animate-spin' : ''}`} />
                   {isRefetching ? 'Refreshing…' : 'Refresh'}
-                </MobileButton>
+                </Button>
               </div>
             </div>
           )}
@@ -274,21 +274,22 @@ const CategoryMaterials = () => {
                     <Scale className="h-5 w-5 text-elec-yellow" />
                     <span className="font-medium">{selectedItems.length}/3 items selected for comparison</span>
                   </div>
-                  <div className={`${isMobile ? 'flex flex-col gap-2' : 'flex items-center gap-2'}`}>
-                    <MobileButton
-                      size={isMobile ? "wide" : "sm"}
+                  <div className="flex items-center gap-2">
+                    <Button
+                      size="sm"
                       onClick={() => setActiveTab("compare")}
-                      variant="elec"
+                      variant="gold"
                     >
                       Compare Now
-                    </MobileButton>
-                    <MobileButton
-                      size={isMobile ? "wide" : "sm"}
-                      variant="elec-outline"
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="outline"
                       onClick={clearComparison}
+                      className="bg-elec-yellow/10 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/20"
                     >
                       Clear
-                    </MobileButton>
+                    </Button>
                   </div>
                 </div>
               </CardContent>
@@ -325,13 +326,13 @@ const CategoryMaterials = () => {
                         }
                       </p>
                       {searchTerm && (
-                        <MobileButton
+                        <Button
                           variant="outline"
-                          size={isMobile ? "wide" : "default"}
+                          size="sm"
                           onClick={() => setSearchTerm("")}
                         >
                           Clear search
-                        </MobileButton>
+                        </Button>
                       )}
                     </CardContent>
                   </Card>
@@ -390,13 +391,13 @@ const CategoryMaterials = () => {
                 <p className="text-muted-foreground">
                   Get personalised recommendations, value analysis, and purchase suggestions for {meta.title.toLowerCase()}.
                 </p>
-                <MobileButton
-                  variant="elec"
-                  size={isMobile ? "wide" : "default"}
+                <Button
+                  variant="gold"
+                  size="sm"
                   onClick={() => setActiveTab("compare")}
                 >
                   Try AI Recommendations in Compare
-                </MobileButton>
+                </Button>
               </CardContent>
             </Card>
           </TabsContent>
