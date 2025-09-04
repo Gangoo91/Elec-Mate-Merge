@@ -150,50 +150,35 @@ function processMaterialsData(materials: MaterialItem[]): ProcessedCategoryData[
   });
 }
 
-// Cache-first approach using weekly cache
-const fetchMaterialsFromCache = async (category?: string, supplier?: string, searchTerm?: string): Promise<{ data: ProcessedCategoryData[]; rawMaterials: MaterialItem[] }> => {
-  console.log('🔧 Fetching materials with cache-first strategy...');
-  
-  const { data, error } = await supabase.functions.invoke('materials-weekly-cache', {
-    body: { category, supplier, searchTerm }
+export const useMaterialsData = () => {
+  const rawQuery = useQuery({
+    queryKey: ['comprehensive-materials-raw'],
+    queryFn: async () => {
+  const { data, error } = await supabase.functions.invoke('comprehensive-materials-scraper', {
+    body: {}
   });
-  
-  if (error) {
-    console.error('❌ Error fetching materials from cache:', error);
-    throw new Error(error.message || 'Failed to fetch materials data');
-  }
-
-  console.log(`✅ Materials fetched from ${data.source} with ${data.materials?.length || 0} items`);
-  
-  if (data.success && data.materials && Array.isArray(data.materials)) {
-    const processed = processMaterialsData(data.materials);
-    return {
-      data: processed,
-      rawMaterials: data.materials
-    };
-  }
-
-  console.log('📊 No materials data received');
-  return { data: defaultCategoryData, rawMaterials: [] };
-};
-
-export const useMaterialsData = (category?: string, supplier?: string, searchTerm?: string) => {
-  const query = useQuery({
-    queryKey: ['materials', 'weekly-cache', category, supplier, searchTerm],
-    queryFn: () => fetchMaterialsFromCache(category, supplier, searchTerm),
-    staleTime: 60 * 60 * 1000, // 1 hour (longer since we have weekly cache)
-    gcTime: 24 * 60 * 60 * 1000, // 24 hours
-    retry: 2,
-    refetchOnWindowFocus: false, // Disable since we have weekly cache
-    refetchOnReconnect: true,
+      
+      if (error) {
+        console.error('Error fetching materials:', error);
+        throw error;
+      }
+      
+      return data?.materials as MaterialItem[] || [];
+    },
+    staleTime: 1000 * 60 * 10, // 10 minutes
+    gcTime: 1000 * 60 * 30, // 30 minutes
+    retry: 3,
+    refetchOnWindowFocus: true,
   });
+
+  const processedData = rawQuery.data ? processMaterialsData(rawQuery.data) : defaultCategoryData;
 
   return {
-    data: query.data?.data || defaultCategoryData,
-    rawMaterials: query.data?.rawMaterials || [],
-    isLoading: query.isLoading,
-    error: query.error,
-    refetch: query.refetch,
-    isRefetching: query.isRefetching,
+    data: processedData,
+    rawMaterials: rawQuery.data || [],
+    isLoading: rawQuery.isLoading,
+    error: rawQuery.error,
+    refetch: rawQuery.refetch,
+    isRefetching: rawQuery.isRefetching,
   };
 };
