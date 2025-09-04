@@ -67,7 +67,7 @@ export const QuoteWizard = () => {
 
   return (
     <section aria-labelledby="quote-wizard" className="space-y-6">
-      <Card className="mobile-card bg-gradient-to-br from-elec-gray/50 via-elec-card/60 to-elec-gray/40 border-elec-yellow/30 shadow-lg shadow-elec-yellow/5">
+      <Card className="mobile-card p-0 bg-gradient-to-br from-elec-gray/50 via-elec-card/60 to-elec-gray/40 border-elec-yellow/30 shadow-lg shadow-elec-yellow/5">
         <CardHeader className="pb-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
