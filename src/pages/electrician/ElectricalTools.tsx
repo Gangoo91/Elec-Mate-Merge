@@ -138,8 +138,8 @@ const ElectricalTools = () => {
               </div>
             )}
 
-            {/* Search */}
-            <Card className="border-elec-yellow/20 bg-elec-gray/50">
+            {/* Search - Hidden for now */}
+            {/* <Card className="border-elec-yellow/20 bg-elec-gray/50">
               <CardHeader>
                 <CardTitle>Quick Search</CardTitle>
               </CardHeader>
@@ -178,7 +178,7 @@ const ElectricalTools = () => {
                   </div>
                 </div>
               </CardContent>
-            </Card>
+            </Card> */}
           </TabsContent>
 
           <TabsContent value="suppliers" className="space-y-4">
