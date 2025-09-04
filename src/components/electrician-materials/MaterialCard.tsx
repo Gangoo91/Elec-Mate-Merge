@@ -1,6 +1,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { ExternalLink, Plus, Minus, Check } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 
@@ -118,18 +119,21 @@ const MaterialCard: React.FC<MaterialCardProps> = ({
         {/* Header with stock status */}
         <div className="flex justify-between items-center mb-3">
           <div className="flex items-center gap-2">
-            <span className="inline-flex items-center bg-elec-yellow/10 border border-elec-yellow/30 text-elec-yellow text-xs px-3 py-1.5 rounded-full font-medium shadow-sm transition-colors hover:bg-elec-yellow/20">
+            <Badge variant="outline" className="bg-elec-yellow/10 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/20">
               {item.category}
-            </span>
+            </Badge>
           </div>
           {item.stockStatus && (
-            <span className={`text-xs px-2 py-1 rounded-full font-medium ${
-              item.stockStatus === "In Stock" ? "bg-green-500/20 text-green-400" :
-              item.stockStatus === "Low Stock" ? "bg-orange-500/20 text-orange-400" :
-              "bg-red-500/20 text-red-400"
-            }`}>
+            <Badge 
+              variant={
+                item.stockStatus === "In Stock" ? "success" :
+                item.stockStatus === "Low Stock" ? "warning" :
+                "destructive"
+              }
+              className="text-xs"
+            >
               {item.stockStatus}
-            </span>
+            </Badge>
           )}
         </div>
 
@@ -154,19 +158,19 @@ const MaterialCard: React.FC<MaterialCardProps> = ({
           <div className="mb-3">
             <div className="flex flex-wrap gap-1 text-xs">
               {cableInfo.type && (
-                <span className="bg-muted text-muted-foreground px-2 py-1 rounded">
+                <Badge variant="secondary" className="text-xs">
                   {cableInfo.type}
-                </span>
+                </Badge>
               )}
               {cableInfo.size && (
-                <span className="bg-muted text-muted-foreground px-2 py-1 rounded">
+                <Badge variant="secondary" className="text-xs">
                   {cableInfo.size}
-                </span>
+                </Badge>
               )}
               {cableInfo.length && (
-                <span className="bg-muted text-muted-foreground px-2 py-1 rounded">
+                <Badge variant="secondary" className="text-xs">
                   {cableInfo.length}
-                </span>
+                </Badge>
               )}
             </div>
           </div>
@@ -197,7 +201,7 @@ const MaterialCard: React.FC<MaterialCardProps> = ({
             <div className="flex items-center gap-2">
               <span className="text-xl font-bold text-elec-yellow">{item.salePrice}</span>
               <span className="line-through text-muted-foreground text-sm">{item.price}</span>
-              <span className="bg-red-500/20 text-red-400 text-xs px-2 py-1 rounded font-medium">SALE</span>
+              <Badge variant="destructive" className="text-xs">SALE</Badge>
             </div>
           ) : (
             <span className="text-xl font-bold text-elec-yellow">{item.price}</span>
