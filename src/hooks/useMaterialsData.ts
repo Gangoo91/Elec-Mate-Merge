@@ -152,33 +152,42 @@ function processMaterialsData(materials: MaterialItem[]): ProcessedCategoryData[
 
 export const useMaterialsData = () => {
   const rawQuery = useQuery({
-    queryKey: ['comprehensive-materials-raw'],
+    queryKey: ['materials-weekly-cache'],
     queryFn: async () => {
-  const { data, error } = await supabase.functions.invoke('comprehensive-materials-scraper', {
-    body: {}
-  });
+      console.log('🔍 Fetching materials via weekly cache...');
+      
+      const { data, error } = await supabase.functions.invoke('materials-weekly-cache', {
+        body: {}
+      });
       
       if (error) {
-        console.error('Error fetching materials:', error);
+        console.error('Error fetching cached materials:', error);
         throw error;
       }
       
-      return data?.materials as MaterialItem[] || [];
+      console.log(`✅ Received materials data: ${data?.totalMaterials || 0} materials, from cache: ${data?.fromCache}`);
+      
+      return {
+        data: data?.data || defaultCategoryData,
+        rawMaterials: data?.rawMaterials || [],
+        fromCache: data?.fromCache || false,
+        totalMaterials: data?.totalMaterials || 0
+      };
     },
-    staleTime: 1000 * 60 * 10, // 10 minutes
-    gcTime: 1000 * 60 * 30, // 30 minutes
-    retry: 3,
-    refetchOnWindowFocus: true,
+    staleTime: 1000 * 60 * 60, // 1 hour (data is cached weekly)
+    gcTime: 1000 * 60 * 60 * 2, // 2 hours
+    retry: 2,
+    refetchOnWindowFocus: false, // Don't refetch on focus since data is cached
   });
 
-  const processedData = rawQuery.data ? processMaterialsData(rawQuery.data) : defaultCategoryData;
-
   return {
-    data: processedData,
-    rawMaterials: rawQuery.data || [],
+    data: rawQuery.data?.data || defaultCategoryData,
+    rawMaterials: rawQuery.data?.rawMaterials || [],
     isLoading: rawQuery.isLoading,
     error: rawQuery.error,
     refetch: rawQuery.refetch,
     isRefetching: rawQuery.isRefetching,
+    fromCache: rawQuery.data?.fromCache || false,
+    totalMaterials: rawQuery.data?.totalMaterials || 0,
   };
 };

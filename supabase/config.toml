@@ -4,6 +4,12 @@ project_id = "jtwygbeceundfgnkirof"
 [functions.comprehensive-materials-scraper]
 verify_jwt = false
 
+[functions.materials-weekly-cache]
+verify_jwt = false
+
+[functions.materials-cache-updater]
+verify_jwt = false
+
 [functions.find-training-providers]
 verify_jwt = false
 
