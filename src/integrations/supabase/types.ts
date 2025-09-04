@@ -2528,27 +2528,75 @@ export type Database = {
       }
       tool_guide_cache: {
         Row: {
+          cache_version: number | null
           created_at: string
           expires_at: string
           guide_data: Json
           guide_type: string
           id: string
+          last_refreshed: string | null
+          refresh_scheduled_for: string | null
+          refresh_status: string | null
           updated_at: string
         }
         Insert: {
+          cache_version?: number | null
           created_at?: string
           expires_at?: string
           guide_data?: Json
           guide_type: string
           id?: string
+          last_refreshed?: string | null
+          refresh_scheduled_for?: string | null
+          refresh_status?: string | null
           updated_at?: string
         }
         Update: {
+          cache_version?: number | null
           created_at?: string
           expires_at?: string
           guide_data?: Json
           guide_type?: string
           id?: string
+          last_refreshed?: string | null
+          refresh_scheduled_for?: string | null
+          refresh_status?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      tool_guide_metadata: {
+        Row: {
+          created_at: string
+          description: string | null
+          development_status: string | null
+          estimated_availability: string | null
+          guide_type: string
+          id: string
+          priority: number | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          development_status?: string | null
+          estimated_availability?: string | null
+          guide_type: string
+          id?: string
+          priority?: number | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          development_status?: string | null
+          estimated_availability?: string | null
+          guide_type?: string
+          id?: string
+          priority?: number | null
+          status?: string
           updated_at?: string
         }
         Relationships: []
@@ -2827,6 +2875,10 @@ export type Database = {
         Args: Record<PropertyKey, never>
         Returns: undefined
       }
+      cleanup_expired_tool_cache: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
       generate_content_hash: {
         Args: { content: string; source_url: string; title: string }
         Returns: string
@@ -2847,6 +2899,10 @@ export type Database = {
         }[]
       }
       get_current_user_role: {
+        Args: Record<PropertyKey, never>
+        Returns: string
+      }
+      get_next_sunday_refresh: {
         Args: Record<PropertyKey, never>
         Returns: string
       }
