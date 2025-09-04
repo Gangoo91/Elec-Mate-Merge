@@ -29,7 +29,7 @@ const DesignModeSelector: React.FC<DesignModeSelectorProps> = ({
     <div className="space-y-6">
       <div className="text-center space-y-3">
         <h2 className="text-xl sm:text-2xl font-bold">Choose Design Mode</h2>
-        <p className="text-muted-foreground text-sm sm:text-base max-w-2xl mx-auto">
+        <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
           Select your installation type to get started with professional electrical design.
         </p>
       </div>
@@ -51,7 +51,7 @@ const DesignModeSelector: React.FC<DesignModeSelectorProps> = ({
                 <h3 className="font-semibold text-base sm:text-lg text-elec-yellow">Single Circuit</h3>
                 {currentMode === "single" && <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5 text-green-400" />}
               </div>
-              <p className="text-xs sm:text-sm text-muted-foreground">Individual appliance or circuit</p>
+              <p className="text-xs sm:text-sm text-white">Individual appliance or circuit</p>
             </div>
           </CardContent>
         </Card>
@@ -71,7 +71,7 @@ const DesignModeSelector: React.FC<DesignModeSelectorProps> = ({
                 <h3 className="font-semibold text-base sm:text-lg text-elec-yellow">Multi-Circuit</h3>
                 {currentMode === "multi" && <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5 text-green-400" />}
               </div>
-              <p className="text-xs sm:text-sm text-muted-foreground">Complete installation system</p>
+              <p className="text-xs sm:text-sm text-white">Complete installation system</p>
             </div>
           </CardContent>
         </Card>
@@ -86,34 +86,34 @@ const DesignModeSelector: React.FC<DesignModeSelectorProps> = ({
                 {currentMode === "single" ? "Single Circuit Design" : "Multi-Circuit Installation"}
               </h4>
               
-              <div className="space-y-3 text-sm text-muted-foreground">
-                {currentMode === "single" ? (
-                  <>
-                    <div>
-                      <p className="font-medium text-elec-yellow mb-2">Ideal for:</p>
-                      <p>Individual appliances, socket circuits, lighting circuits, or simple upgrades.</p>
-                    </div>
-                    <div>
-                      <p className="font-medium text-elec-yellow mb-2">Features:</p>
-                      <p>Fast cable sizing, protection calculations, and BS 7671 compliance checking.</p>
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    <div>
-                      <p className="font-medium text-elec-yellow mb-2">Ideal for:</p>
-                      <p>New builds, rewires, commercial installations, or complex multi-zone systems.</p>
-                    </div>
-                    <div>
-                      <p className="font-medium text-elec-yellow mb-2">Features:</p>
-                      <p>System-wide analysis, diversity calculations, supply sizing, and environmental zoning.</p>
-                    </div>
-                    <div>
-                      <p className="font-medium text-elec-yellow mb-2">Benefits:</p>
-                      <p>Optimised load balancing, consumer unit selection, and comprehensive compliance documentation.</p>
-                    </div>
-                  </>
-                )}
+               <div className="space-y-3 text-sm text-white">
+                 {currentMode === "single" ? (
+                   <>
+                     <div>
+                       <p className="font-medium text-elec-yellow mb-2">Ideal for:</p>
+                       <p>Individual appliances, socket circuits, lighting circuits, or simple upgrades.</p>
+                     </div>
+                     <div>
+                       <p className="font-medium text-elec-yellow mb-2">Features:</p>
+                       <p>Fast cable sizing, protection calculations, and BS 7671 compliance checking.</p>
+                     </div>
+                   </>
+                 ) : (
+                   <>
+                     <div>
+                       <p className="font-medium text-elec-yellow mb-2">Ideal for:</p>
+                       <p>New builds, rewires, commercial installations, or complex multi-zone systems.</p>
+                     </div>
+                     <div>
+                       <p className="font-medium text-elec-yellow mb-2">Features:</p>
+                       <p>System-wide analysis, diversity calculations, supply sizing, and environmental zoning.</p>
+                     </div>
+                     <div>
+                       <p className="font-medium text-elec-yellow mb-2">Benefits:</p>
+                       <p>Optimised load balancing, consumer unit selection, and comprehensive compliance documentation.</p>
+                     </div>
+                   </>
+                 )}
               </div>
             </div>
           </CardContent>
