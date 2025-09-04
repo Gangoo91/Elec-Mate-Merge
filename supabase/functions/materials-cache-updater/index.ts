@@ -1,166 +1,8 @@
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4'
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
-};
-
-// Categories to process for materials caching
-const MATERIAL_CATEGORIES = [
-  'cables',
-  'components', 
-  'protection',
-  'accessories',
-  'lighting',
-  'tools'
-];
-
-interface MaterialItem {
-  id: number;
-  name: string;
-  category: string;
-  price: string;
-  supplier: string;
-  image?: string;
-  stockStatus?: "In Stock" | "Low Stock" | "Out of Stock";
-  highlights?: string[];
-  productUrl?: string;
-  description?: string;
-  reviews?: string;
-}
-
-interface ProcessedCategoryData {
-  title: string;
-  productCount: number;
-  priceRange: { min: number; max: number };
-  topBrands: string[];
-  popularItems: MaterialItem[];
-  trending: boolean;
-}
-
-function extractPriceNumber(priceString: string): number {
-  const cleanPrice = priceString.replace(/[£,]/g, '');
-  return parseFloat(cleanPrice) || 0;
-}
-
-function processMaterialsData(materials: MaterialItem[]): Record<string, ProcessedCategoryData> {
-  const categoryMap: Record<string, string> = {
-    'cables': 'cables',
-    'components': 'components',
-    'protection': 'protection',
-    'accessories': 'accessories',
-    'lighting': 'lighting',
-    'tools': 'tools'
-  };
-
-  const processed: Record<string, ProcessedCategoryData> = {};
-
-  for (const [key, category] of Object.entries(categoryMap)) {
-    const categoryMaterials = materials.filter(m => 
-      m.category?.toLowerCase().includes(category) || 
-      m.name?.toLowerCase().includes(category)
-    );
-
-    const prices = categoryMaterials
-      .map(m => extractPriceNumber(m.price))
-      .filter(p => p > 0);
-
-    const suppliers = [...new Set(categoryMaterials.map(m => m.supplier).filter(Boolean))];
-    
-    // Get popular items (first 6 items)
-    const popularItems = categoryMaterials.slice(0, 6);
-
-    processed[category] = {
-      title: category.charAt(0).toUpperCase() + category.slice(1),
-      productCount: categoryMaterials.length,
-      priceRange: {
-        min: prices.length > 0 ? Math.min(...prices) : 0,
-        max: prices.length > 0 ? Math.max(...prices) : 0
-      },
-      topBrands: suppliers.slice(0, 5),
-      popularItems,
-      trending: Math.random() > 0.5 // Random trending flag
-    };
-  }
-
-  return processed;
-}
-
-async function fetchMaterialsFromComprehensiveSource(supabase: any) {
-  console.log('🔄 Fetching materials from comprehensive scraper...');
-  
-  try {
-    const { data, error } = await supabase.functions.invoke('comprehensive-materials-scraper');
-    
-    if (error) {
-      console.error('❌ Error from comprehensive scraper:', error);
-      throw error;
-    }
-
-    if (data?.success && Array.isArray(data.materials)) {
-      console.log(`✅ Fetched ${data.materials.length} materials from comprehensive scraper`);
-      return data.materials;
-    }
-
-    console.log('⚠️ No materials returned from comprehensive scraper');
-    return [];
-  } catch (error) {
-    console.error('❌ Failed to fetch from comprehensive scraper:', error);
-    throw error;
-  }
-}
-
-async function updateCacheForCategory(
-  supabase: any,
-  category: string,
-  materials: MaterialItem[],
-  processedData: ProcessedCategoryData
-) {
-  console.log(`💾 Updating cache for category: ${category}`);
-  
-  try {
-    const { error } = await supabase
-      .from('materials_weekly_cache')
-      .upsert({
-        category,
-        cache_data: materials,
-        total_products: processedData.productCount,
-        price_range: processedData.priceRange,
-        top_brands: processedData.topBrands,
-        popular_items: processedData.popularItems,
-        update_status: 'completed',
-        error_message: null,
-        expires_at: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(), // 7 days
-      }, {
-        onConflict: 'category'
-      });
-
-    if (error) {
-      console.error(`❌ Error updating cache for ${category}:`, error);
-      throw error;
-    }
-
-    console.log(`✅ Successfully updated cache for ${category} with ${materials.length} items`);
-  } catch (error) {
-    // Update cache with error status
-    await supabase
-      .from('materials_weekly_cache')
-      .upsert({
-        category,
-        cache_data: [],
-        total_products: 0,
-        price_range: { min: 0, max: 0 },
-        top_brands: [],
-        popular_items: [],
-        update_status: 'error',
-        error_message: error.message,
-        expires_at: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
-      }, {
-        onConflict: 'category'
-      });
-    
-    throw error;
-  }
 }
 
 Deno.serve(async (req) => {
@@ -170,92 +12,144 @@ Deno.serve(async (req) => {
   }
 
   try {
-    console.log('🚀 Starting materials cache update process...');
+    console.log('🔄 Materials Cache Updater - Starting weekly cache refresh...');
     
-    const supabase = createClient(
-      Deno.env.get('SUPABASE_URL') ?? '',
-      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
-    );
+    // Initialize Supabase client
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+    const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+    const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-    // Cleanup expired cache first
-    console.log('🧹 Cleaning up expired cache...');
-    await supabase.rpc('cleanup_expired_materials_weekly_cache');
-
-    // Fetch fresh materials data
-    const allMaterials = await fetchMaterialsFromComprehensiveSource(supabase);
-    
-    if (allMaterials.length === 0) {
-      console.log('⚠️ No materials data available, skipping cache update');
-      return new Response(
-        JSON.stringify({ 
-          success: false, 
-          message: 'No materials data available',
-          categoriesUpdated: 0
-        }),
-        { 
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-          status: 400
-        }
-      );
+    // Parse request body for trigger info
+    let triggerInfo: any = {};
+    try {
+      const body = await req.text();
+      if (body) {
+        triggerInfo = JSON.parse(body);
+      }
+    } catch (e) {
+      console.log('No trigger info provided');
     }
 
-    // Process the materials into categories
-    const processedData = processMaterialsData(allMaterials);
-    
-    // Update cache for each category
-    const updatePromises = MATERIAL_CATEGORIES.map(async (category) => {
-      try {
-        const categoryMaterials = allMaterials.filter(m => 
-          m.category?.toLowerCase().includes(category) || 
-          m.name?.toLowerCase().includes(category)
-        );
-        
-        const processed = processedData[category];
-        if (processed) {
-          await updateCacheForCategory(supabase, category, categoryMaterials, processed);
-          return { category, success: true, count: categoryMaterials.length };
-        }
-        
-        return { category, success: false, error: 'No processed data' };
-      } catch (error) {
-        console.error(`❌ Error updating ${category}:`, error);
-        return { category, success: false, error: error.message };
+    const triggeredBy = triggerInfo.triggered_by || 'manual';
+    console.log(`📋 Cache update triggered by: ${triggeredBy}`);
+
+    // Start comprehensive materials scraping
+    console.log('🕷️ Starting comprehensive materials scraping...');
+    const startTime = Date.now();
+
+    const { data: scrapedData, error: scrapeError } = await supabase.functions.invoke('comprehensive-materials-scraper', {
+      body: { 
+        cache_update: true,
+        triggered_by: triggeredBy,
+        timestamp: new Date().toISOString()
       }
     });
 
-    const results = await Promise.allSettled(updatePromises);
-    const successful = results.filter(r => r.status === 'fulfilled' && r.value.success).length;
-    
-    console.log(`✅ Cache update completed. ${successful}/${MATERIAL_CATEGORIES.length} categories updated successfully`);
+    if (scrapeError) {
+      console.error('❌ Error during comprehensive scraping:', scrapeError);
+      throw scrapeError;
+    }
 
-    return new Response(
-      JSON.stringify({
-        success: true,
-        message: `Cache updated successfully for ${successful} categories`,
-        categoriesUpdated: successful,
-        totalCategories: MATERIAL_CATEGORIES.length,
-        totalMaterials: allMaterials.length,
-        results: results.map(r => r.status === 'fulfilled' ? r.value : { error: 'Promise rejected' })
-      }),
-      { 
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        status: 200
-      }
-    );
+    if (!scrapedData?.materials || !Array.isArray(scrapedData.materials)) {
+      throw new Error('No valid materials data received from scraper');
+    }
+
+    const materialsCount = scrapedData.materials.length;
+    const executionTime = Date.now() - startTime;
+    
+    console.log(`✅ Scraping completed: ${materialsCount} materials in ${executionTime}ms`);
+
+    // Deactivate previous cache entries
+    console.log('🗑️ Deactivating previous cache entries...');
+    const { error: deactivateError } = await supabase
+      .from('materials_weekly_cache')
+      .update({ is_active: false })
+      .eq('is_active', true);
+
+    if (deactivateError) {
+      console.error('❌ Error deactivating previous cache:', deactivateError);
+      // Continue anyway - we can still insert the new cache
+    }
+
+    // Insert new cache entry
+    console.log('💾 Inserting new cache entry...');
+    const expiresAt = new Date();
+    expiresAt.setDate(expiresAt.getDate() + 7); // Expires in 7 days
+
+    const { data: insertData, error: insertError } = await supabase
+      .from('materials_weekly_cache')
+      .insert({
+        materials_data: scrapedData.materials,
+        source: 'comprehensive-materials-scraper',
+        expires_at: expiresAt.toISOString(),
+        is_active: true,
+        last_updated: new Date().toISOString(),
+        materials_count: materialsCount,
+        execution_time_ms: executionTime,
+        triggered_by: triggeredBy,
+        scraper_version: scrapedData.version || '1.0',
+        suppliers_scraped: scrapedData.suppliers_scraped || [],
+        categories_updated: scrapedData.categories || []
+      })
+      .select()
+      .single();
+
+    if (insertError) {
+      console.error('❌ Error inserting cache entry:', insertError);
+      throw insertError;
+    }
+
+    console.log(`✅ Cache update completed successfully!`);
+    console.log(`📊 Cache statistics:`);
+    console.log(`   - Materials cached: ${materialsCount}`);
+    console.log(`   - Execution time: ${executionTime}ms`);
+    console.log(`   - Cache ID: ${insertData.id}`);
+    console.log(`   - Expires at: ${expiresAt.toISOString()}`);
+    console.log(`   - Triggered by: ${triggeredBy}`);
+
+    // Update cache metadata
+    const cacheStats = {
+      materials_count: materialsCount,
+      execution_time_ms: executionTime,
+      suppliers_scraped: scrapedData.suppliers_scraped || [],
+      categories_updated: scrapedData.categories || [],
+      cache_size_mb: JSON.stringify(scrapedData.materials).length / (1024 * 1024),
+      last_successful_update: new Date().toISOString()
+    };
+
+    return new Response(JSON.stringify({
+      success: true,
+      message: 'Materials cache updated successfully',
+      cache_id: insertData.id,
+      materials_count: materialsCount,
+      execution_time_ms: executionTime,
+      expires_at: expiresAt.toISOString(),
+      triggered_by: triggeredBy,
+      stats: cacheStats,
+      timestamp: new Date().toISOString()
+    }), {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
 
   } catch (error) {
-    console.error('❌ Cache update failed:', error);
+    console.error('❌ Materials Cache Updater Error:', error);
     
-    return new Response(
-      JSON.stringify({
-        success: false,
-        error: error.message,
-        categoriesUpdated: 0
-      }),
-      { 
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        status: 500
-      }
-    );
+    // Log the error for monitoring
+    const errorDetails = {
+      error_message: error.message || 'Unknown error',
+      error_type: error.name || 'UnknownError',
+      timestamp: new Date().toISOString(),
+      function: 'materials-cache-updater'
+    };
+
+    return new Response(JSON.stringify({
+      success: false,
+      error: error.message || 'Unknown error occurred during cache update',
+      details: errorDetails,
+      timestamp: new Date().toISOString()
+    }), {
+      status: 500,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
   }
 });
