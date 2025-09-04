@@ -4,12 +4,15 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { Search, Filter, MapPin, Clock, Zap, Building2 } from "lucide-react";
+import { Search, Filter, MapPin, Clock, Zap, Building2, Star, Truck, CheckCircle, PoundSterling, Leaf, X } from "lucide-react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const MaterialSearchWidget = () => {
+  const isMobile = useIsMobile();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
   const [selectedLocation, setSelectedLocation] = useState("");
+  const [isAdvancedOpen, setIsAdvancedOpen] = useState(false);
 
   const quickSearches = [
     "Twin & Earth 2.5mm",
@@ -23,12 +26,12 @@ const MaterialSearchWidget = () => {
   ];
 
   const filterOptions = [
-    { id: "in-stock", label: "In Stock", icon: "📦" },
-    { id: "next-day", label: "Next Day Delivery", icon: "🚚" },
-    { id: "local", label: "Local Supplier", icon: "📍" },
-    { id: "trade-price", label: "Trade Price", icon: "💷" },
-    { id: "brand-verified", label: "Brand Verified", icon: "✓" },
-    { id: "eco-friendly", label: "Eco-Friendly", icon: "🌱" }
+    { id: "in-stock", label: "In Stock", icon: CheckCircle, color: "text-green-400" },
+    { id: "next-day", label: "Next Day", icon: Truck, color: "text-blue-400" },
+    { id: "local", label: "Local Supplier", icon: MapPin, color: "text-purple-400" },
+    { id: "trade-price", label: "Trade Price", icon: PoundSterling, color: "text-yellow-400" },
+    { id: "brand-verified", label: "Verified", icon: Star, color: "text-orange-400" },
+    { id: "eco-friendly", label: "Eco-Friendly", icon: Leaf, color: "text-green-400" }
   ];
 
   const popularLocations = [
@@ -49,29 +52,52 @@ const MaterialSearchWidget = () => {
   };
 
   return (
-    <Card className="border-elec-yellow/20 bg-elec-gray">
-      <CardHeader>
-        <CardTitle className="text-xl flex items-center gap-2 text-white">
-          <Search className="h-5 w-5 text-elec-yellow" />
-          Advanced Material Search
-        </CardTitle>
+    <Card className="border-elec-yellow/20 bg-gradient-to-br from-elec-gray to-elec-gray/70 backdrop-blur-sm">
+      <CardHeader className="pb-4">
+        <div className="flex items-center justify-between">
+          <CardTitle className="text-lg sm:text-xl flex items-center gap-2 text-white">
+            <Search className="h-5 w-5 text-elec-yellow" />
+            Material Search
+          </CardTitle>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => setIsAdvancedOpen(!isAdvancedOpen)}
+            className="text-elec-yellow hover:text-elec-yellow/80 text-xs"
+          >
+            {isAdvancedOpen ? "Simple" : "Advanced"}
+          </Button>
+        </div>
       </CardHeader>
-      <CardContent className="space-y-6">
+      <CardContent className="space-y-4">
         {/* Main Search Bar */}
-        <div className="flex gap-2">
+        <div className="flex flex-col sm:flex-row gap-3">
           <div className="flex-1 relative">
             <Search className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
             <Input 
-              placeholder="Search by product name, code, brand, or description..." 
-              className="pl-10 bg-elec-dark/50 border-elec-yellow/30"
+              placeholder="Search electrical materials..." 
+              className="pl-10 bg-elec-dark/50 border-elec-yellow/30 focus:border-elec-yellow/50"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
+              onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
             />
+            {searchQuery && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setSearchQuery("")}
+                className="absolute right-2 top-1 h-8 w-8 p-0 text-muted-foreground hover:text-white"
+              >
+                <X className="h-4 w-4" />
+              </Button>
+            )}
           </div>
           <Button 
             onClick={handleSearch}
-            className="bg-elec-yellow text-black hover:bg-elec-yellow/90 px-6"
+            className="bg-elec-yellow text-black hover:bg-elec-yellow/90 px-6 w-full sm:w-auto"
+            size={isMobile ? "lg" : "default"}
           >
+            <Search className="h-4 w-4 mr-2" />
             Search
           </Button>
         </div>
@@ -79,81 +105,116 @@ const MaterialSearchWidget = () => {
         {/* Quick Searches */}
         <div className="space-y-3">
           <h4 className="text-sm font-medium text-white flex items-center gap-2">
-            <Zap className="h-4 w-4" />
-            Quick Searches:
+            <Zap className="h-4 w-4 text-elec-yellow" />
+            Popular Searches:
           </h4>
-          <div className="flex flex-wrap gap-2">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
             {quickSearches.map((search) => (
-              <Badge 
+              <Button
                 key={search}
-                variant="outline" 
-                className="cursor-pointer hover:bg-elec-yellow/20 border-elec-yellow/30 text-white hover:text-elec-yellow transition-colors"
+                variant="outline"
+                size="sm"
+                className="text-xs border-elec-yellow/30 text-white hover:bg-elec-yellow/20 hover:text-elec-yellow transition-colors h-auto py-2 px-3 justify-start"
                 onClick={() => setSearchQuery(search)}
               >
                 {search}
-              </Badge>
+              </Button>
             ))}
           </div>
         </div>
 
-        {/* Filters */}
-        <div className="space-y-3">
-          <h4 className="text-sm font-medium text-white flex items-center gap-2">
-            <Filter className="h-4 w-4" />
-            Filters:
-          </h4>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
-            {filterOptions.map((filter) => (
-              <Badge 
-                key={filter.id}
-                variant={selectedFilters.includes(filter.id) ? "default" : "outline"}
-                className={`cursor-pointer transition-all text-center justify-center py-2 ${
-                  selectedFilters.includes(filter.id)
-                    ? "bg-elec-yellow text-black hover:bg-elec-yellow/90"
-                    : "hover:bg-elec-yellow/20 border-elec-yellow/30 text-white hover:text-elec-yellow"
-                }`}
-                onClick={() => toggleFilter(filter.id)}
-              >
-                <span className="mr-1">{filter.icon}</span>
-                {filter.label}
-              </Badge>
-            ))}
+        {/* Filters - Show based on advanced toggle */}
+        {isAdvancedOpen && (
+          <div className="space-y-3 border-t border-elec-yellow/20 pt-4">
+            <h4 className="text-sm font-medium text-white flex items-center gap-2">
+              <Filter className="h-4 w-4 text-elec-yellow" />
+              Advanced Filters:
+            </h4>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+              {filterOptions.map((filter) => (
+                <Button
+                  key={filter.id}
+                  variant={selectedFilters.includes(filter.id) ? "default" : "outline"}
+                  size="sm"
+                  className={`text-xs h-auto py-2 px-3 flex items-center gap-2 ${
+                    selectedFilters.includes(filter.id)
+                      ? "bg-elec-yellow text-black hover:bg-elec-yellow/90"
+                      : "border-elec-yellow/30 text-white hover:bg-elec-yellow/20 hover:text-elec-yellow"
+                  }`}
+                  onClick={() => toggleFilter(filter.id)}
+                >
+                  <filter.icon className={`h-3 w-3 ${filter.color}`} />
+                  {filter.label}
+                </Button>
+              ))}
+            </div>
+            
+            {/* Selected filters display */}
+            {selectedFilters.length > 0 && (
+              <div className="flex flex-wrap gap-2">
+                {selectedFilters.map((filterId) => {
+                  const filter = filterOptions.find(f => f.id === filterId);
+                  return filter ? (
+                    <Badge
+                      key={filterId}
+                      className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30 text-xs flex items-center gap-1"
+                    >
+                      <filter.icon className="h-3 w-3" />
+                      {filter.label}
+                      <X
+                        className="h-3 w-3 cursor-pointer hover:text-white"
+                        onClick={() => toggleFilter(filterId)}
+                      />
+                    </Badge>
+                  ) : null;
+                })}
+              </div>
+            )}
           </div>
-        </div>
+        )}
 
-        {/* Location Filter */}
-        <div className="space-y-3">
-          <h4 className="text-sm font-medium text-white flex items-center gap-2">
-            <Building2 className="h-4 w-4" />
-            Preferred Location:
-          </h4>
-          <div className="flex flex-wrap gap-2">
-            {popularLocations.map((location) => (
-              <Badge 
-                key={location}
-                variant={selectedLocation === location ? "default" : "outline"}
-                className={`cursor-pointer transition-colors ${
-                  selectedLocation === location
-                    ? "bg-elec-yellow text-black"
-                    : "hover:bg-elec-yellow/20 border-elec-yellow/30 text-white hover:text-elec-yellow"
-                }`}
-                onClick={() => setSelectedLocation(selectedLocation === location ? "" : location)}
-              >
-                {location}
-              </Badge>
-            ))}
+        {/* Location Filter - Show based on advanced toggle */}
+        {isAdvancedOpen && (
+          <div className="space-y-3">
+            <h4 className="text-sm font-medium text-white flex items-center gap-2">
+              <Building2 className="h-4 w-4 text-elec-yellow" />
+              Preferred Location:
+            </h4>
+            <div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
+              {popularLocations.map((location) => (
+                <Button
+                  key={location}
+                  variant={selectedLocation === location ? "default" : "outline"}
+                  size="sm"
+                  className={`text-xs h-auto py-2 px-3 ${
+                    selectedLocation === location
+                      ? "bg-elec-yellow text-black hover:bg-elec-yellow/90"
+                      : "border-elec-yellow/30 text-white hover:bg-elec-yellow/20 hover:text-elec-yellow"
+                  }`}
+                  onClick={() => setSelectedLocation(selectedLocation === location ? "" : location)}
+                >
+                  {location}
+                </Button>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
 
-        {/* Quick Info */}
-        <div className="grid grid-cols-2 gap-4 pt-2 border-t border-elec-yellow/20">
-          <div className="flex items-center gap-2 text-xs text-muted-foreground">
-            <MapPin className="h-3 w-3 text-elec-yellow" />
-            <span>Local suppliers available</span>
+        {/* Quick Info Footer */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-4 border-t border-elec-yellow/20">
+          <div className="flex items-center gap-2 text-xs text-muted-foreground bg-elec-dark/30 p-3 rounded-lg">
+            <MapPin className="h-4 w-4 text-elec-yellow" />
+            <div>
+              <div className="text-white font-medium">Local Suppliers</div>
+              <div>Available nationwide</div>
+            </div>
           </div>
-          <div className="flex items-center gap-2 text-xs text-muted-foreground">
-            <Clock className="h-3 w-3 text-elec-yellow" />
-            <span>Same day collection options</span>
+          <div className="flex items-center gap-2 text-xs text-muted-foreground bg-elec-dark/30 p-3 rounded-lg">
+            <Clock className="h-4 w-4 text-elec-yellow" />
+            <div>
+              <div className="text-white font-medium">Fast Delivery</div>
+              <div>Next day & same day options</div>
+            </div>
           </div>
         </div>
       </CardContent>
