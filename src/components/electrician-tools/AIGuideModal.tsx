@@ -14,7 +14,9 @@ import {
   Zap,
   ShoppingCart,
   TrendingUp,
-  Clock
+  Clock,
+  Database,
+  RefreshCw
 } from "lucide-react";
 
 interface GuideRecommendation {
@@ -52,6 +54,7 @@ interface AIGuideModalProps {
 
 const AIGuideModal = ({ isOpen, onClose, guideType, guideTitle }: AIGuideModalProps) => {
   const [guideData, setGuideData] = useState<GuideData | null>(null);
+  const [cacheInfo, setCacheInfo] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [hasGenerated, setHasGenerated] = useState(false);
   const [isInitialLoad, setIsInitialLoad] = useState(true);
@@ -85,6 +88,7 @@ const AIGuideModal = ({ isOpen, onClose, guideType, guideTitle }: AIGuideModalPr
       }
 
       setGuideData(data.guide);
+      setCacheInfo(data.cacheInfo || null);
       setHasGenerated(true);
       setIsInitialLoad(false);
     } catch (error) {
@@ -143,6 +147,42 @@ const AIGuideModal = ({ isOpen, onClose, guideType, guideTitle }: AIGuideModalPr
 
           {guideData && (
             <>
+              {/* Cache Information */}
+              {cacheInfo && (
+                <Card className="border-blue-500/20 bg-blue-500/10">
+                  <CardContent className="pt-4">
+                    <div className="flex items-center gap-2 text-sm text-blue-300 mb-2">
+                      <Database className="h-4 w-4" />
+                      <span className="font-medium">Cache Information</span>
+                    </div>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs">
+                      <div>
+                        <span className="text-muted-foreground">Last Updated:</span>
+                        <p className="text-white font-medium">
+                          {new Date(cacheInfo.lastRefreshed).toLocaleDateString()}
+                        </p>
+                      </div>
+                      <div>
+                        <span className="text-muted-foreground">Expires:</span>
+                        <p className="text-white font-medium">
+                          {new Date(cacheInfo.expiresAt).toLocaleDateString()}
+                        </p>
+                      </div>
+                      <div>
+                        <span className="text-muted-foreground">Next Refresh:</span>
+                        <p className="text-white font-medium">
+                          {cacheInfo.nextRefresh ? new Date(cacheInfo.nextRefresh).toLocaleDateString() : 'N/A'}
+                        </p>
+                      </div>
+                      <div>
+                        <span className="text-muted-foreground">Version:</span>
+                        <p className="text-white font-medium">v{cacheInfo.cacheVersion}</p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
+
               {/* Guide Summary */}
               <Card className="border-elec-yellow/30 bg-elec-yellow/10">
                 <CardContent className="pt-4">

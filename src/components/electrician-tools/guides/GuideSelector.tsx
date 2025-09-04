@@ -1,7 +1,18 @@
 
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { BookOpen, Users, Clock, Star, Wrench, TestTube, HardHat, Package, Cable, FolderOpen } from "lucide-react";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { BookOpen, Users, Clock, Star, Wrench, TestTube, HardHat, Package, Cable, FolderOpen, CalendarDays, AlertCircle } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+
+interface GuideMetadata {
+  guide_type: string;
+  status: string;
+  estimated_availability?: string;
+  development_status?: string;
+  description?: string;
+}
 
 interface Guide {
   id: string;
@@ -16,6 +27,7 @@ interface Guide {
   badge: string;
   icon: any;
   status: "complete" | "coming-soon";
+  metadata?: GuideMetadata;
 }
 
 interface GuideSelectorProps {
@@ -23,10 +35,36 @@ interface GuideSelectorProps {
 }
 
 const GuideSelector = ({ onSelectGuide }: GuideSelectorProps) => {
+  const [guidesMetadata, setGuidesMetadata] = useState<GuideMetadata[]>([]);
+  const [isLoadingMetadata, setIsLoadingMetadata] = useState(true);
+
+  // Fetch guide metadata from the database
+  useEffect(() => {
+    const fetchGuideMetadata = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('tool_guide_metadata')
+          .select('*');
+        
+        if (error) {
+          console.error('Error fetching guide metadata:', error);
+        } else {
+          setGuidesMetadata(data || []);
+        }
+      } catch (error) {
+        console.error('Failed to fetch guide metadata:', error);
+      } finally {
+        setIsLoadingMetadata(false);
+      }
+    };
+
+    fetchGuideMetadata();
+  }, []);
+
   const guides: Guide[] = [
     {
       id: "testing-equipment",
-      title: "Essential Testing Equipment Guide 2024",
+      title: "Essential Testing Equipment Guide 2025",
       description: "Complete guide to choosing multifunction testers, PAT testers, and calibration requirements for compliance.",
       category: "Testing Equipment",
       readTime: "8 min",
@@ -89,10 +127,10 @@ const GuideSelector = ({ onSelectGuide }: GuideSelectorProps) => {
       difficulty: "Intermediate",
       rating: 4.5,
       readers: 890,
-      updated: "Coming Soon",
+      updated: "Available Now",
       badge: "New Guide",
       icon: Cable,
-      status: "coming-soon"
+      status: "complete"
     },
     {
       id: "storage",
@@ -107,91 +145,215 @@ const GuideSelector = ({ onSelectGuide }: GuideSelectorProps) => {
       badge: "Productivity",
       icon: FolderOpen,
       status: "coming-soon"
+    },
+    {
+      id: "inspection",
+      title: "Inspection Tools & Equipment Guide",
+      description: "Comprehensive guide to inspection cameras, thermal imaging, and testing equipment for fault finding.",
+      category: "Inspection Equipment",
+      readTime: "10 min",
+      difficulty: "Intermediate",
+      rating: 0,
+      readers: 0,
+      updated: "Coming Soon",
+      badge: "In Development",
+      icon: TestTube,
+      status: "coming-soon"
+    },
+    {
+      id: "smart-tools",
+      title: "Smart & IoT Electrical Tools",
+      description: "Next-generation tools with app connectivity, remote monitoring, and automated diagnostics.",
+      category: "Smart Tools",
+      readTime: "12 min",
+      difficulty: "Advanced",
+      rating: 0,
+      readers: 0,
+      updated: "Coming Soon",
+      badge: "Future Tech",
+      icon: Wrench,
+      status: "coming-soon"
     }
   ];
 
+  // Merge guides with metadata
+  const enrichedGuides = guides.map(guide => {
+    const metadata = guidesMetadata.find(m => m.guide_type === guide.id);
+    return {
+      ...guide,
+      status: metadata?.status === 'coming-soon' ? 'coming-soon' : guide.status,
+      metadata
+    } as Guide;
+  });
+
+  const handleGuideClick = (guide: Guide) => {
+    if (guide.status === "coming-soon") {
+      // Prevent interaction for coming soon guides
+      return;
+    }
+    onSelectGuide(guide.id, guide.title);
+  };
+
+  const formatEstimatedDate = (dateString?: string) => {
+    if (!dateString) return null;
+    
+    try {
+      const date = new Date(dateString);
+      return date.toLocaleDateString('en-GB', { 
+        month: 'short', 
+        year: 'numeric' 
+      });
+    } catch {
+      return dateString;
+    }
+  };
+
+  const getDevelopmentStatusColor = (status?: string) => {
+    switch (status) {
+      case 'completed': return 'text-green-400';
+      case 'in-development': return 'text-blue-400';
+      case 'planning': return 'text-amber-400';
+      case 'research': return 'text-purple-400';
+      default: return 'text-gray-400';
+    }
+  };
+
   return (
-    <div className="space-y-4">
-      {guides.map((guide) => (
-        <Card 
-          key={guide.id} 
-          className={`border-elec-yellow/20 bg-elec-gray transition-all cursor-pointer ${
-            guide.status === "complete" 
-              ? "hover:border-elec-yellow/50" 
-              : "opacity-75 hover:border-elec-yellow/30"
-          }`}
-          onClick={() => onSelectGuide(guide.id, guide.title)}
-        >
-          <CardHeader className="pb-3">
-            <div className="flex items-start justify-between mb-2">
-              <div className="flex items-center gap-2">
-                <Badge className={`${
-                  guide.badge === "Most Popular" ? "bg-elec-yellow/20 text-elec-yellow" :
-                  guide.badge === "Beginner Guide" ? "bg-green-500/20 text-green-400" :
-                  guide.badge === "Professional Choice" ? "bg-purple-500/20 text-purple-400" :
-                  guide.badge === "Safety Focus" ? "bg-red-500/20 text-red-400" :
-                  guide.badge === "New Guide" ? "bg-blue-500/20 text-blue-400" :
-                  "bg-amber-500/20 text-amber-400"
-                }`}>
-                  {guide.badge}
-                </Badge>
-                {guide.status === "coming-soon" && (
-                  <Badge className="bg-gray-500/20 text-gray-400">
-                    Coming Soon
-                  </Badge>
-                )}
-              </div>
-              <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                <Clock className="h-3 w-3" />
-                {guide.readTime}
-              </div>
-            </div>
-            
-            <div className="flex items-start gap-3">
-              <div className="p-2 bg-elec-yellow/20 rounded-lg">
-                <guide.icon className="h-5 w-5 text-elec-yellow" />
-              </div>
-              <div className="flex-1">
-                <CardTitle className="text-lg text-white leading-tight">
-                  {guide.title}
-                </CardTitle>
-                <p className="text-sm text-muted-foreground mt-1">{guide.description}</p>
-              </div>
-            </div>
-          </CardHeader>
+    <TooltipProvider>
+      <div className="space-y-4">
+        {enrichedGuides.map((guide) => {
+          const isComingSoon = guide.status === "coming-soon";
+          const estimatedDate = formatEstimatedDate(guide.metadata?.estimated_availability);
           
-          <CardContent className="space-y-4">
-            <div className="flex items-center justify-between text-xs text-muted-foreground">
-              <span>{guide.category}</span>
-              <span>{guide.difficulty}</span>
-              <span>Updated {guide.updated}</span>
+          return (
+            <div key={guide.id} className="relative">
+              <Card 
+                className={`border-elec-yellow/20 bg-elec-gray transition-all duration-300 ${
+                  isComingSoon 
+                    ? "opacity-50 grayscale cursor-not-allowed" 
+                    : "hover:border-elec-yellow/50 cursor-pointer hover:shadow-lg hover:scale-[1.02]"
+                }`}
+                onClick={() => handleGuideClick(guide)}
+              >
+                {/* Coming Soon Overlay */}
+                {isComingSoon && (
+                  <div className="absolute inset-0 bg-black/20 rounded-lg pointer-events-none z-10 flex items-center justify-center">
+                    <div className="bg-elec-gray/90 border border-elec-yellow/30 rounded-lg px-4 py-2 text-center">
+                      <AlertCircle className="h-5 w-5 text-amber-400 mx-auto mb-1" />
+                      <p className="text-sm font-medium text-white">Guide In Development</p>
+                      {estimatedDate && (
+                        <p className="text-xs text-muted-foreground">Expected: {estimatedDate}</p>
+                      )}
+                    </div>
+                  </div>
+                )}
+
+                <CardHeader className="pb-3">
+                  <div className="flex items-start justify-between mb-2">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <Badge className={`${
+                        guide.badge === "Most Popular" ? "bg-elec-yellow/20 text-elec-yellow" :
+                        guide.badge === "Beginner Guide" ? "bg-green-500/20 text-green-400" :
+                        guide.badge === "Professional Choice" ? "bg-purple-500/20 text-purple-400" :
+                        guide.badge === "Safety Focus" ? "bg-red-500/20 text-red-400" :
+                        guide.badge === "New Guide" ? "bg-blue-500/20 text-blue-400" :
+                        guide.badge === "In Development" ? "bg-amber-500/20 text-amber-400" :
+                        guide.badge === "Future Tech" ? "bg-purple-500/20 text-purple-400" :
+                        "bg-amber-500/20 text-amber-400"
+                      }`}>
+                        {guide.badge}
+                      </Badge>
+                      
+                      {isComingSoon && (
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Badge variant="outline" className="bg-gray-500/20 text-gray-400 border-gray-500/30">
+                              <CalendarDays className="h-3 w-3 mr-1" />
+                              Coming Soon
+                            </Badge>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <div className="text-center">
+                              <p className="font-medium">Guide Status: {guide.metadata?.development_status || 'In Development'}</p>
+                              {estimatedDate && <p className="text-sm">Expected: {estimatedDate}</p>}
+                              {guide.metadata?.description && (
+                                <p className="text-sm mt-1 max-w-xs">{guide.metadata.description}</p>
+                              )}
+                            </div>
+                          </TooltipContent>
+                        </Tooltip>
+                      )}
+                    </div>
+                    
+                    <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                      <Clock className="h-3 w-3" />
+                      {guide.readTime}
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start gap-3">
+                    <div className={`p-2 rounded-lg ${
+                      isComingSoon ? "bg-gray-500/20" : "bg-elec-yellow/20"
+                    }`}>
+                      <guide.icon className={`h-5 w-5 ${
+                        isComingSoon ? "text-gray-400" : "text-elec-yellow"
+                      }`} />
+                    </div>
+                    <div className="flex-1">
+                      <CardTitle className={`text-lg leading-tight ${
+                        isComingSoon ? "text-gray-300" : "text-white"
+                      }`}>
+                        {guide.title}
+                      </CardTitle>
+                      <p className="text-sm text-muted-foreground mt-1">{guide.description}</p>
+                    </div>
+                  </div>
+                </CardHeader>
+                
+                <CardContent className="space-y-4">
+                  <div className="flex items-center justify-between text-xs text-muted-foreground">
+                    <span>{guide.category}</span>
+                    <span>{guide.difficulty}</span>
+                    <span>Updated {guide.updated}</span>
+                  </div>
+                  
+                  {guide.status === "complete" && (
+                    <div className="flex items-center gap-4 text-sm">
+                      <div className="flex items-center gap-1">
+                        <Star className="h-4 w-4 text-amber-400 fill-current" />
+                        <span>{guide.rating}</span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <Users className="h-4 w-4 text-blue-400" />
+                        <span>{guide.readers.toLocaleString()} readers</span>
+                      </div>
+                    </div>
+                  )}
+
+                  {isComingSoon && guide.metadata && (
+                    <div className="flex items-center gap-2 text-sm">
+                      <span className="text-muted-foreground">Development Status:</span>
+                      <span className={`font-medium capitalize ${getDevelopmentStatusColor(guide.metadata.development_status)}`}>
+                        {guide.metadata.development_status?.replace('-', ' ') || 'In Progress'}
+                      </span>
+                    </div>
+                  )}
+                  
+                  <div className={`flex items-center text-sm font-medium ${
+                    guide.status === "complete" 
+                      ? "text-elec-yellow hover:text-elec-yellow/80" 
+                      : "text-gray-400"
+                  }`}>
+                    <BookOpen className="h-4 w-4 mr-2" />
+                    {guide.status === "complete" ? "Read Complete Guide" : "Guide In Development"}
+                  </div>
+                </CardContent>
+              </Card>
             </div>
-            
-            {guide.status === "complete" && (
-              <div className="flex items-center gap-4 text-sm">
-                <div className="flex items-center gap-1">
-                  <Star className="h-4 w-4 text-amber-400 fill-current" />
-                  <span>{guide.rating}</span>
-                </div>
-                <div className="flex items-center gap-1">
-                  <Users className="h-4 w-4 text-blue-400" />
-                  <span>{guide.readers.toLocaleString()} readers</span>
-                </div>
-              </div>
-            )}
-            
-            <div className={`flex items-center text-sm font-medium ${
-              guide.status === "complete" 
-                ? "text-elec-yellow hover:text-elec-yellow/80" 
-                : "text-gray-400"
-            }`}>
-              <BookOpen className="h-4 w-4 mr-2" />
-              {guide.status === "complete" ? "Read Complete Guide" : "Guide In Development"}
-            </div>
-          </CardContent>
-        </Card>
-      ))}
-    </div>
+          );
+        })}
+      </div>
+    </TooltipProvider>
   );
 };
 

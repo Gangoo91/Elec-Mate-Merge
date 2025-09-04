@@ -96,3 +96,15 @@ verify_jwt = false
 
 [functions.price-history-alerts]
 verify_jwt = false
+
+[functions.generate-tool-guide]
+verify_jwt = false
+
+[functions.weekly-cache-refresh]
+verify_jwt = false
+
+[functions.firecrawl-tools-scraper]
+verify_jwt = false
+
+[functions.refresh-guide-cache]
+verify_jwt = false
