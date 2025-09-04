@@ -34,8 +34,18 @@ serve(async (req) => {
         .single();
       
       if (cachedGuide) {
-        console.log(`✅ Returning cached guide for ${guideType}`);
-        return new Response(JSON.stringify({ guide: cachedGuide.guide_data }), {
+        console.log(`✅ Returning cached guide for ${guideType} (cached until ${cachedGuide.expires_at})`);
+        
+        // Include cache metadata in response
+        return new Response(JSON.stringify({ 
+          guide: cachedGuide.guide_data,
+          cacheInfo: {
+            lastRefreshed: cachedGuide.last_refreshed,
+            expiresAt: cachedGuide.expires_at,
+            nextRefresh: cachedGuide.refresh_scheduled_for,
+            cacheVersion: cachedGuide.cache_version
+          }
+        }), {
           headers: { ...corsHeaders, 'Content-Type': 'application/json' },
         });
       }
@@ -164,18 +174,27 @@ serve(async (req) => {
 
     console.log(`✅ Generated guide for ${guideType}`);
 
-    // Cache the generated guide
+    // Cache the generated guide with Sunday-based expiration
     try {
+      // Calculate next Sunday at 2 AM for cache expiration
+      const { data: nextSunday } = await supabase.rpc('get_next_sunday_refresh');
+      
       await supabase
         .from('tool_guide_cache')
         .upsert({
           guide_type: guideType,
           guide_data: guide,
-          expires_at: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString() // 7 days
+          expires_at: nextSunday,
+          refresh_scheduled_for: nextSunday,
+          last_refreshed: new Date().toISOString(),
+          cache_version: (forceRefresh ? 
+            (await supabase.from('tool_guide_cache').select('cache_version').eq('guide_type', guideType).single()).data?.cache_version + 1 || 1 
+            : 1),
+          refresh_status: 'completed'
         }, {
           onConflict: 'guide_type'
         });
-      console.log(`💾 Cached guide for ${guideType}`);
+      console.log(`💾 Cached guide for ${guideType} until next Sunday (${nextSunday})`);
     } catch (cacheError) {
       console.error('Failed to cache guide:', cacheError);
       // Continue even if caching fails
