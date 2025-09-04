@@ -1100,6 +1100,51 @@ export type Database = {
         }
         Relationships: []
       }
+      materials_weekly_cache: {
+        Row: {
+          cache_data: Json
+          category: string
+          created_at: string
+          error_message: string | null
+          expires_at: string
+          id: string
+          last_updated: string
+          popular_items: Json | null
+          price_range: Json | null
+          top_brands: string[] | null
+          total_products: number | null
+          update_status: string | null
+        }
+        Insert: {
+          cache_data?: Json
+          category: string
+          created_at?: string
+          error_message?: string | null
+          expires_at?: string
+          id?: string
+          last_updated?: string
+          popular_items?: Json | null
+          price_range?: Json | null
+          top_brands?: string[] | null
+          total_products?: number | null
+          update_status?: string | null
+        }
+        Update: {
+          cache_data?: Json
+          category?: string
+          created_at?: string
+          error_message?: string | null
+          expires_at?: string
+          id?: string
+          last_updated?: string
+          popular_items?: Json | null
+          price_range?: Json | null
+          top_brands?: string[] | null
+          total_products?: number | null
+          update_status?: string | null
+        }
+        Relationships: []
+      }
       mentor_connections: {
         Row: {
           apprentice_id: string
@@ -2775,6 +2820,10 @@ export type Database = {
         Returns: undefined
       }
       cleanup_expired_guide_cache: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
+      cleanup_expired_materials_weekly_cache: {
         Args: Record<PropertyKey, never>
         Returns: undefined
       }
