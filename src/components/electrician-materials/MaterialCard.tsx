@@ -119,7 +119,7 @@ const MaterialCard: React.FC<MaterialCardProps> = ({
         {/* Header with stock status */}
         <div className="flex justify-between items-center mb-3">
           <div className="flex items-center gap-2">
-            <Badge variant="outline" className="bg-elec-yellow/10 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/20">
+            <Badge variant="outline" className="bg-elec-yellow/10 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/20 text-[10px]">
               {item.category}
             </Badge>
           </div>
@@ -130,7 +130,7 @@ const MaterialCard: React.FC<MaterialCardProps> = ({
                 item.stockStatus === "Low Stock" ? "warning" :
                 "destructive"
               }
-              className="text-xs"
+              className="text-[10px]"
             >
               {item.stockStatus}
             </Badge>
@@ -158,17 +158,17 @@ const MaterialCard: React.FC<MaterialCardProps> = ({
           <div className="mb-3">
             <div className="flex flex-wrap gap-1 text-xs">
               {cableInfo.type && (
-                <Badge variant="secondary" className="text-xs">
+                <Badge variant="secondary" className="text-[10px]">
                   {cableInfo.type}
                 </Badge>
               )}
               {cableInfo.size && (
-                <Badge variant="secondary" className="text-xs">
+                <Badge variant="secondary" className="text-[10px]">
                   {cableInfo.size}
                 </Badge>
               )}
               {cableInfo.length && (
-                <Badge variant="secondary" className="text-xs">
+                <Badge variant="secondary" className="text-[10px]">
                   {cableInfo.length}
                 </Badge>
               )}
@@ -201,7 +201,7 @@ const MaterialCard: React.FC<MaterialCardProps> = ({
             <div className="flex items-center gap-2">
               <span className="text-xl font-bold text-elec-yellow">{item.salePrice}</span>
               <span className="line-through text-muted-foreground text-sm">{item.price}</span>
-              <Badge variant="destructive" className="text-xs">SALE</Badge>
+              <Badge variant="destructive" className="text-[10px]">SALE</Badge>
             </div>
           ) : (
             <span className="text-xl font-bold text-elec-yellow">{item.price}</span>
