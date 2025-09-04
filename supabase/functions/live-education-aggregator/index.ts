@@ -269,10 +269,21 @@ const removeDuplicates = (courses: EducationData[]): EducationData[] => {
   });
 };
 
-// Cache education data in database
+// Calculate next Sunday refresh date
+const getNextSundayRefresh = (): string => {
+  const now = new Date();
+  const nextSunday = new Date(now);
+  nextSunday.setDate(now.getDate() + (7 - now.getDay()));
+  nextSunday.setHours(2, 0, 0, 0); // 2 AM UTC
+  return nextSunday.toISOString();
+};
+
+// Cache education data in database with Sunday-based expiration
 const cacheEducationData = async (category: string, searchQuery: string, courses: EducationData[], analytics: MarketStats) => {
   try {
-    console.log(`💾 Caching education data for category: ${category}`);
+    console.log(`💾 Caching education data for category: ${category} with Sunday refresh`);
+    
+    const nextRefreshDate = getNextSundayRefresh();
     
     // Delete existing cache entries for this category
     await supabase
@@ -280,7 +291,7 @@ const cacheEducationData = async (category: string, searchQuery: string, courses
       .delete()
       .eq('category', category);
 
-    // Insert new cache entry
+    // Insert new cache entry with Sunday-based expiration
     const { error } = await supabase
       .from('live_education_cache')
       .insert({
@@ -288,14 +299,29 @@ const cacheEducationData = async (category: string, searchQuery: string, courses
         search_query: searchQuery,
         education_data: courses,
         analytics_data: analytics,
-        expires_at: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString() // 24 hours
+        expires_at: nextRefreshDate,
+        next_refresh_date: nextRefreshDate,
+        last_refreshed: new Date().toISOString(),
+        cache_version: 1,
+        refresh_status: 'completed'
       });
 
     if (error) {
       console.error('❌ Error caching education data:', error);
     } else {
-      console.log('✅ Education data cached successfully');
+      console.log(`✅ Education data cached successfully, expires: ${nextRefreshDate}`);
     }
+    
+    // Also cache market stats separately for better performance
+    await supabase
+      .from('education_market_stats')
+      .upsert({
+        category,
+        stats_data: analytics,
+        expires_at: nextRefreshDate,
+        last_updated: new Date().toISOString()
+      });
+      
   } catch (error) {
     console.error('❌ Error caching education data:', error);
   }
@@ -597,6 +623,8 @@ Deno.serve(async (req) => {
 
     console.log(`📊 Education aggregation complete: ${uniqueCourses.length} unique courses from ${sourceResults.length} sources`);
 
+    const nextRefresh = getNextSundayRefresh();
+    
     return new Response(
       JSON.stringify({
         success: true,
@@ -606,7 +634,13 @@ Deno.serve(async (req) => {
         originalCount,
         duplicatesRemoved,
         cached: false,
-        lastUpdated: new Date().toISOString()
+        lastUpdated: new Date().toISOString(),
+        cacheInfo: {
+          nextRefresh,
+          cacheVersion: 1,
+          refreshStatus: 'completed',
+          daysUntilRefresh: Math.ceil((new Date(nextRefresh).getTime() - Date.now()) / (1000 * 60 * 60 * 24))
+        }
       }),
       { 
         status: 200, 

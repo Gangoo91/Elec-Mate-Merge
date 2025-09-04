@@ -108,3 +108,6 @@ verify_jwt = false
 
 [functions.refresh-guide-cache]
 verify_jwt = false
+
+[functions.weekly-education-cache-refresh]
+verify_jwt = false

@@ -971,29 +971,41 @@ export type Database = {
       live_education_cache: {
         Row: {
           analytics_data: Json
+          cache_version: number | null
           category: string
           created_at: string
           education_data: Json
           expires_at: string
           id: string
+          last_refreshed: string | null
+          next_refresh_date: string | null
+          refresh_status: string | null
           search_query: string
         }
         Insert: {
           analytics_data?: Json
+          cache_version?: number | null
           category: string
           created_at?: string
           education_data?: Json
           expires_at?: string
           id?: string
+          last_refreshed?: string | null
+          next_refresh_date?: string | null
+          refresh_status?: string | null
           search_query: string
         }
         Update: {
           analytics_data?: Json
+          cache_version?: number | null
           category?: string
           created_at?: string
           education_data?: Json
           expires_at?: string
           id?: string
+          last_refreshed?: string | null
+          next_refresh_date?: string | null
+          refresh_status?: string | null
           search_query?: string
         }
         Relationships: []
@@ -2899,6 +2911,10 @@ export type Database = {
         }[]
       }
       get_current_user_role: {
+        Args: Record<PropertyKey, never>
+        Returns: string
+      }
+      get_next_sunday_education_refresh: {
         Args: Record<PropertyKey, never>
         Returns: string
       }

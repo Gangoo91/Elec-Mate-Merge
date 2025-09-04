@@ -97,6 +97,7 @@ const ElectricianCareerCourses = () => {
     loading: isLoadingLive,
     error: liveError,
     isFromCache,
+    cacheInfo,
     refreshData: refreshCourses
   } = useLiveEducationData('electrical');
 
@@ -773,10 +774,38 @@ const ElectricianCareerCourses = () => {
               </p>
               
               {isLiveData && liveSummary && (
-                <p className="text-xs text-elec-yellow">
-                  ✅ Live UK data: {liveSummary.liveCourses} courses from {liveSummary.sourceBreakdown.filter(s => s.success).length} providers
-                  {liveSummary.lastUpdated && ` • Updated ${new Date(liveSummary.lastUpdated).toLocaleTimeString()}`}
-                </p>
+                <div className="space-y-1">
+                  <p className="text-xs text-elec-yellow">
+                    ✅ Live UK data: {liveSummary.liveCourses} courses from {liveSummary.sourceBreakdown.filter(s => s.success).length} providers
+                    {liveSummary.lastUpdated && ` • Updated ${new Date(liveSummary.lastUpdated).toLocaleTimeString()}`}
+                  </p>
+                  
+                  {/* Cache Information Display */}
+                  {cacheInfo && (
+                    <div className="text-xs text-muted-foreground flex items-center gap-2 flex-wrap">
+                      <span className="flex items-center gap-1">
+                        <Wifi className="h-3 w-3" />
+                        {isFromCache ? 'Cached data' : 'Fresh data'}
+                      </span>
+                      
+                      {cacheInfo.daysUntilRefresh > 0 ? (
+                        <span>• Refreshes in {cacheInfo.daysUntilRefresh} day{cacheInfo.daysUntilRefresh !== 1 ? 's' : ''}</span>
+                      ) : (
+                        <span>• Next refresh: Sunday 2 AM</span>
+                      )}
+                      
+                      <span>• Cache v{cacheInfo.cacheVersion}</span>
+                      
+                      {cacheInfo.refreshStatus === 'in_progress' && (
+                        <span className="text-amber-400">• Refreshing...</span>
+                      )}
+                      
+                      {cacheInfo.refreshStatus === 'failed' && (
+                        <span className="text-red-400">• Last refresh failed</span>
+                      )}
+                    </div>
+                  )}
+                </div>
               )}
               {isUsingFallback && (
                 <div className="text-xs text-muted-foreground flex items-center gap-1">

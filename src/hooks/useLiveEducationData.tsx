@@ -40,6 +40,13 @@ export interface LiveEducationAnalytics {
   };
 }
 
+interface CacheInfo {
+  nextRefresh: string;
+  cacheVersion: number;
+  refreshStatus: string;
+  daysUntilRefresh: number;
+}
+
 interface UseLiveEducationDataResult {
   educationData: LiveEducationData[];
   analytics: LiveEducationAnalytics | null;
@@ -47,6 +54,7 @@ interface UseLiveEducationDataResult {
   error: string | null;
   lastUpdated: string | null;
   isFromCache: boolean;
+  cacheInfo: CacheInfo | null;
   refreshData: (forceRefresh?: boolean) => Promise<void>;
 }
 
@@ -57,6 +65,7 @@ export const useLiveEducationData = (category: string = 'all'): UseLiveEducation
   const [error, setError] = useState<string | null>(null);
   const [lastUpdated, setLastUpdated] = useState<string | null>(null);
   const [isFromCache, setIsFromCache] = useState(false);
+  const [cacheInfo, setCacheInfo] = useState<CacheInfo | null>(null);
 
   const fetchEducationData = async (forceRefresh: boolean = false) => {
     try {
@@ -93,6 +102,18 @@ export const useLiveEducationData = (category: string = 'all'): UseLiveEducation
           setAnalytics((cachedData.analytics_data as unknown as LiveEducationAnalytics) || null);
           setLastUpdated(cachedData.created_at);
           setIsFromCache(true);
+          
+          // Set cache info from database
+          if (cachedData.next_refresh_date) {
+            const daysUntilRefresh = Math.ceil((new Date(cachedData.next_refresh_date).getTime() - Date.now()) / (1000 * 60 * 60 * 24));
+            setCacheInfo({
+              nextRefresh: cachedData.next_refresh_date,
+              cacheVersion: cachedData.cache_version || 1,
+              refreshStatus: cachedData.refresh_status || 'completed',
+              daysUntilRefresh: Math.max(0, daysUntilRefresh)
+            });
+          }
+          
           setLoading(false);
           return;
         }
@@ -113,6 +134,12 @@ export const useLiveEducationData = (category: string = 'all'): UseLiveEducation
         setAnalytics(data.analytics || null);
         setLastUpdated(data.lastUpdated);
         setIsFromCache(data.cached || false);
+        
+        // Set cache info from fresh data response
+        if (data.cacheInfo) {
+          setCacheInfo(data.cacheInfo);
+        }
+        
         console.log(`✅ Loaded ${data.data?.length || 0} education programmes`);
       } else {
         throw new Error(data.error || 'Failed to fetch education data');
@@ -161,6 +188,7 @@ export const useLiveEducationData = (category: string = 'all'): UseLiveEducation
     error,
     lastUpdated,
     isFromCache,
+    cacheInfo,
     refreshData
   };
 };
