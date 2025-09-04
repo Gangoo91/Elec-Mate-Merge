@@ -7,6 +7,7 @@ import { ArrowLeft, Wrench, Search, MapPin, BookOpen, Calculator, FileText, Zap,
 import { useState } from "react";
 import { useToolCategories } from "@/hooks/useToolCategories";
 import ToolBuyingGuides from "@/components/electrician-tools/ToolBuyingGuides";
+import ToolCategoriesSkeleton from "@/components/electrician-tools/ToolCategoriesSkeleton";
 
 // ToolCategory interface is now imported from useToolCategories hook
 
@@ -78,10 +79,7 @@ const ElectricalTools = () => {
           <TabsContent value="browse" className="space-y-6">
             {/* Tool Categories */}
             {isLoading ? (
-              <div className="flex items-center justify-center py-12">
-                <Loader2 className="h-8 w-8 animate-spin text-elec-yellow" />
-                <span className="ml-2 text-muted-foreground">Loading live tool data...</span>
-              </div>
+              <ToolCategoriesSkeleton count={6} />
             ) : error ? (
               <div className="flex flex-col items-center justify-center py-12 space-y-4">
                 <p className="text-muted-foreground">Failed to load tool data</p>
