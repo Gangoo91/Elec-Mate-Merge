@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { GraduationCap, ArrowLeft, BookOpen, PoundSterling, Users, Target, Calculator, RefreshCw, Loader2, AlertCircle } from "lucide-react";
+import { GraduationCap, ArrowLeft, BookOpen, PoundSterling, Calculator, RefreshCw, Loader2, AlertCircle } from "lucide-react";
 import EducationSearchForm, { SearchFilters } from "../../../apprentice/career/education/EducationSearchForm";
 import FundingCalculator from "../../../apprentice/career/education/FundingCalculator";
 import { useLiveEducationData, LiveEducationData } from "@/hooks/useLiveEducationData";
-import LiveEducationAnalyticsDashboard from "./LiveEducationAnalyticsDashboard";
 import LiveEducationCard from "./LiveEducationCard";
+import KpiStrip from "./KpiStrip";
+import InsightsAccordion from "./InsightsAccordion";
 
 const ElectricianFurtherEducation = () => {
   const { educationData, analytics, loading, error, lastUpdated, isFromCache, refreshData } = useLiveEducationData('all');
@@ -143,15 +144,15 @@ const ElectricianFurtherEducation = () => {
         </p>
       </div>
 
-      {/* Analytics Dashboard */}
-      <LiveEducationAnalyticsDashboard 
-        analytics={analytics} 
-        loading={loading}
-        error={error}
-        lastUpdated={lastUpdated}
+      {/* Quick KPIs */}
+      <KpiStrip 
+        analytics={analytics}
         isFromCache={isFromCache}
-        onRefresh={() => refreshData(true)}
+        lastUpdated={lastUpdated}
       />
+
+      {/* Market Insights - Collapsible */}
+      <InsightsAccordion analytics={analytics} />
 
       {/* Action Buttons */}
       <div className="flex flex-wrap gap-2">
@@ -177,21 +178,6 @@ const ElectricianFurtherEducation = () => {
           Force Refresh Live Data
         </Button>
       </div>
-
-      {/* Status Indicators */}
-      {lastUpdated && (
-        <div className="flex items-center gap-4 text-sm text-muted-foreground">
-          <span>
-            Last updated: {new Date(lastUpdated).toLocaleString()}
-          </span>
-          {isFromCache && (
-            <span className="flex items-center gap-1 text-amber-400">
-              <AlertCircle className="h-3 w-3" />
-              Cached data
-            </span>
-          )}
-        </div>
-      )}
 
       {/* Error Message */}
       {error && (
@@ -262,7 +248,7 @@ const ElectricianFurtherEducation = () => {
         </Card>
       )}
 
-      {/* Enhanced Funding Information Card */}
+      {/* Funding Information Card - Moved to bottom */}
       <Card className="border-elec-yellow/20 bg-elec-gray/50">
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-lg">
@@ -321,28 +307,6 @@ const ElectricianFurtherEducation = () => {
           </div>
         </CardContent>
       </Card>
-
-      {/* Quick Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Card className="border-elec-yellow/20 bg-elec-gray/50">
-          <CardContent className="p-4 text-center">
-            <div className="text-2xl font-bold text-elec-yellow">{analytics?.averageEmploymentRate || 96}%</div>
-            <div className="text-sm text-muted-foreground">Electrician Employment Rate</div>
-          </CardContent>
-        </Card>
-        <Card className="border-elec-yellow/20 bg-elec-gray/50">
-          <CardContent className="p-4 text-center">
-            <div className="text-2xl font-bold text-elec-yellow">£15k+</div>
-            <div className="text-sm text-muted-foreground">Average Salary Increase</div>
-          </CardContent>
-        </Card>
-        <Card className="border-elec-yellow/20 bg-elec-gray/50">
-          <CardContent className="p-4 text-center">
-            <div className="text-2xl font-bold text-elec-yellow">82%</div>
-            <div className="text-sm text-muted-foreground">Get Jobs Before Graduating</div>
-          </CardContent>
-        </Card>
-      </div>
     </div>
   );
 };
