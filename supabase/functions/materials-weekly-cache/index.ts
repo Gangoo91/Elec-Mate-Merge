@@ -281,13 +281,20 @@ serve(async (req) => {
           lastUpdated: new Date().toISOString()
         };
 
+        console.log('📊 Preparing cache entry:', {
+          materialsCount: rawMaterials.length,
+          priceRange,
+          topBrandsCount: topBrands.length,
+          popularItemsCount: popularItems.length
+        });
+
         const cacheEntry = {
           cache_data: cachePayload, // Store both processed data and raw materials
           category: 'comprehensive',
           total_products: rawMaterials.length,
-          price_range: priceRange,
-          top_brands: JSON.stringify(topBrands),
-          popular_items: JSON.stringify(popularItems),
+          price_range: priceRange, // Store as plain text
+          top_brands: topBrands, // Store as array directly (not JSON string)
+          popular_items: popularItems, // Store as JSONB directly (not JSON string)
           expires_at: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(), // 7 days
           update_status: 'completed'
         };
@@ -297,10 +304,12 @@ serve(async (req) => {
           .insert(cacheEntry);
 
         if (cacheError) {
-          console.error('Failed to store cache:', cacheError);
+          console.error('❌ Failed to store cache:', cacheError);
+          console.error('❌ Cache entry that failed:', JSON.stringify(cacheEntry, null, 2));
           // Don't throw error, just log it - we still have the data to return
         } else {
           console.log('✅ Cache stored successfully');
+          console.log(`✅ Stored ${rawMaterials.length} materials with ${processedData.length} categories`);
         }
       }
     }

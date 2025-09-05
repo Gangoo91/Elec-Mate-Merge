@@ -86,16 +86,18 @@ serve(async (req) => {
               sales: Math.floor(Math.random() * 200) + 50
             }));
 
-          // Insert into cache
+          // Insert into cache with fixed data types
+          const priceRangeText = `£${minPrice.toFixed(0)} - £${maxPrice.toFixed(0)}`;
+          
           const { error: insertError } = await supabase
             .from('materials_weekly_cache')
             .insert({
               category,
               cache_data: materials,
               total_products: materials.length,
-              price_range: { min: minPrice, max: maxPrice },
-              top_brands: topBrands,
-              popular_items: popularItems,
+              price_range: priceRangeText, // Store as plain text
+              top_brands: topBrands, // Store as array directly
+              popular_items: popularItems, // Store as JSONB directly
               update_status: 'completed',
               expires_at: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString() // 7 days
             });
