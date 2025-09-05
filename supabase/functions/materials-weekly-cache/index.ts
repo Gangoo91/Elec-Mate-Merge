@@ -220,20 +220,20 @@ serve(async (req) => {
 
       console.log(`📊 Serving ${rawMaterials.length} materials from cache`);
     } else {
-      console.log('🔄 No valid cache found, fetching from Firecrawl...');
+      console.log('🔄 No valid cache found, fetching from comprehensive scraper...');
       
-      // Fetch from Firecrawl using firecrawl-tools-scraper
-      const { data: firecrawlData, error: firecrawlError } = await supabase.functions.invoke(
-        'firecrawl-tools-scraper',
+      // Fetch from comprehensive-materials-scraper
+      const { data: scraperData, error: scraperError } = await supabase.functions.invoke(
+        'comprehensive-materials-scraper',
         { body: { category, supplier, search } }
       );
 
-      if (firecrawlError) {
-        console.error('Firecrawl error:', firecrawlError);
-        throw new Error(`Firecrawl failed: ${firecrawlError.message}`);
+      if (scraperError) {
+        console.error('Comprehensive scraper error:', scraperError);
+        throw new Error(`Comprehensive scraper failed: ${scraperError.message}`);
       }
 
-      rawMaterials = firecrawlData?.tools || [];
+      rawMaterials = scraperData?.materials || [];
       console.log(`📊 Fetched ${rawMaterials.length} materials from Firecrawl`);
       
       // Store fetched data in cache if we have materials
