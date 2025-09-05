@@ -235,6 +235,31 @@ serve(async (req) => {
 
       rawMaterials = liveData?.materials || [];
       console.log(`📊 Serving ${rawMaterials.length} materials from live scraper`);
+      
+      // Store the fresh data in cache for future requests
+      if (rawMaterials.length > 0) {
+        console.log('💾 Storing fresh data in cache...');
+        
+        const cacheEntry = {
+          cache_data: rawMaterials,
+          category: category || 'all',
+          total_products: rawMaterials.length,
+          expires_at: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(), // 7 days
+          update_status: 'completed',
+          search_filters: JSON.stringify({ category, supplier, search })
+        };
+
+        const { error: cacheError } = await supabase
+          .from('materials_weekly_cache')
+          .insert(cacheEntry);
+
+        if (cacheError) {
+          console.error('Failed to store cache:', cacheError);
+          // Don't throw error, just log it - we still have the data to return
+        } else {
+          console.log('✅ Cache stored successfully');
+        }
+      }
     }
 
     // Process the materials data
