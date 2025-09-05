@@ -82,16 +82,36 @@ async function fetchProductsFromSupplier(supplier: any, query: string, category:
   };
 
   try {
+    console.log(`🔄 Making request to ${supplier.name}...`);
     const response = await fetch(firecrawl_url, options);
-    if (!response.ok) throw new Error(`❌ API request failed: ${response.status}`);
+    
+    if (!response.ok) {
+      console.error(`❌ HTTP ${response.status}: ${response.statusText} for ${supplier.name}`);
+      return [];
+    }
     
     const responseText = await response.text();
+    console.log(`📥 Response length from ${supplier.name}: ${responseText.length} characters`);
+    
     if (!responseText.trim()) {
       console.warn(`⚠️ Empty response from ${supplier.name} for ${query}`);
       return [];
     }
-    
-    const data = JSON.parse(responseText);
+
+    // Validate JSON before parsing
+    let data;
+    try {
+      data = JSON.parse(responseText);
+    } catch (parseError) {
+      console.error(`❌ JSON Parse Error for ${supplier.name}:`, parseError);
+      console.error(`📄 Response preview: ${responseText.substring(0, 200)}...`);
+      return [];
+    }
+
+    if (!data || typeof data !== 'object') {
+      console.warn(`⚠️ Invalid data structure from ${supplier.name}`);
+      return [];
+    }
 
     const products = data.data?.json || [];
     return products.map((item: any, index: number) => ({
