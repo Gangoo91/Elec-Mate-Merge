@@ -59,6 +59,10 @@ const productSchema = {
 async function fetchProductsFromSupplier(supplier: any, query: string, category: string, FIRECRAWL_API_KEY: string) {
   console.log(`🔍 Fetching ${query} from ${supplier.name}`);
 
+  // Test a simple request first
+  const testUrl = `${supplier.url}${encodeURIComponent(query)}`;
+  console.log(`🔗 Target URL: ${testUrl}`);
+
   const firecrawl_url = "https://api.firecrawl.dev/v2/scrape";
 
   const options = {
@@ -68,16 +72,10 @@ async function fetchProductsFromSupplier(supplier: any, query: string, category:
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      url: `${supplier.url}${encodeURIComponent(query)}`,
+      url: testUrl,
       onlyMainContent: true,
       maxAge: 0,
-      formats: [
-        {
-          type: "json",
-          prompt: `Extract product details for ${query} in category ${category}`,
-          schema: productSchema,
-        },
-      ],
+      formats: ["markdown"] // Simplified to just markdown first
     }),
   };
 
@@ -85,8 +83,13 @@ async function fetchProductsFromSupplier(supplier: any, query: string, category:
     console.log(`🔄 Making request to ${supplier.name}...`);
     const response = await fetch(firecrawl_url, options);
     
+    console.log(`📊 HTTP Status: ${response.status}`);
+    console.log(`📊 Content-Type: ${response.headers.get('content-type')}`);
+    
     if (!response.ok) {
       console.error(`❌ HTTP ${response.status}: ${response.statusText} for ${supplier.name}`);
+      const errorText = await response.text();
+      console.error(`❌ Error response preview: ${errorText.substring(0, 300)}`);
       return [];
     }
     
@@ -102,6 +105,8 @@ async function fetchProductsFromSupplier(supplier: any, query: string, category:
     let data;
     try {
       data = JSON.parse(responseText);
+      console.log(`✅ JSON parsing successful for ${supplier.name}`);
+      console.log(`📊 Response structure keys: ${Object.keys(data).join(', ')}`);
     } catch (parseError) {
       console.error(`❌ JSON Parse Error for ${supplier.name}:`, parseError);
       console.error(`📄 Response preview: ${responseText.substring(0, 200)}...`);
@@ -113,21 +118,28 @@ async function fetchProductsFromSupplier(supplier: any, query: string, category:
       return [];
     }
 
-    const products = data.data?.json || [];
-    return products.map((item: any, index: number) => ({
-      id: Date.now() + Math.random() * 1000 + index,
-      name: item.name || 'Unknown Product',
-      category: category,
-      price: item.price || '£0.00',
-      supplier: supplier.name,
-      image: item.image || '/placeholder.svg',
-      searched_product: query,
-      productUrl: item.view_product_url,
-      highlights: item.highlights || [],
-      description: item.description,
-      reviews: item.reviews,
-      stockStatus: 'In Stock' as const,
-    }));
+    // For now, just return basic info since we're testing with markdown
+    if (data.success && data.data) {
+      console.log(`✅ Successfully scraped ${supplier.name}, processing data...`);
+      return [{
+        id: Date.now() + Math.random() * 1000,
+        name: `Test Product from ${supplier.name}`,
+        category: category,
+        price: '£Test.Price',
+        supplier: supplier.name,
+        image: '/placeholder.svg',
+        searched_product: query,
+        productUrl: testUrl,
+        highlights: [],
+        description: `Test description for ${query}`,
+        reviews: '',
+        stockStatus: 'In Stock' as const,
+      }];
+    }
+
+    console.warn(`⚠️ No valid data found for ${supplier.name}`);
+    return [];
+    
   } catch (error) {
     console.error(`⚠️ Error fetching ${query} from ${supplier.name}:`, error);
     return [];
@@ -138,39 +150,20 @@ async function fetchProductsFromSupplier(supplier: any, query: string, category:
 async function getMaterials(FIRECRAWL_API_KEY: string, categoryFilter?: string, supplierFilter?: string, searchTerm?: string) {
   console.log('🚀 Starting comprehensive materials scraping...');
   
-  const jobs = [];
-  const filteredSuppliers = supplierFilter
-    ? suppliers.filter(supplier => supplier.name === supplierFilter)
-    : suppliers;
-
-  // If searchTerm is provided, use it directly instead of predefined queries
-  if (searchTerm && searchTerm.trim()) {
-    for (const supplier of filteredSuppliers) {
-      jobs.push(fetchProductsFromSupplier(supplier, searchTerm.trim(), 'search', FIRECRAWL_API_KEY));
-    }
-  } else {
-    // Use predefined product queries
-    const filteredProductList = categoryFilter 
-      ? productList.filter(group => group.category === categoryFilter)
-      : productList;
-
-    for (const group of filteredProductList) {
-      for (const product of group.items) {
-        for (const supplier of filteredSuppliers) {
-          jobs.push(fetchProductsFromSupplier(supplier, product, group.category, FIRECRAWL_API_KEY));
-        }
-      }
-    }
-  }
-
-  console.log(`📋 Processing ${jobs.length} scraping jobs...`);
-  const results = await Promise.allSettled(jobs);
-  const materials = results
-    .map((material) => (material.status === "fulfilled" ? material.value : []))
-    .flat();
+  // Test with just one supplier and one simple query for debugging
+  const testSupplier = suppliers[0]; // Screwfix
+  const testQuery = searchTerm || "cable";
   
-  console.log(`✅ Successfully fetched ${materials.length} products`);
-  return materials;
+  console.log(`🧪 Testing with ${testSupplier.name} for query: ${testQuery}`);
+  
+  try {
+    const result = await fetchProductsFromSupplier(testSupplier, testQuery, 'test', FIRECRAWL_API_KEY);
+    console.log(`✅ Test completed, got ${result.length} results`);
+    return result;
+  } catch (error) {
+    console.error('❌ Test failed:', error);
+    return [];
+  }
 }
 
 // --- Save Prices to Historical Database ---
