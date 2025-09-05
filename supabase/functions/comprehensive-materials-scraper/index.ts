@@ -84,7 +84,14 @@ async function fetchProductsFromSupplier(supplier: any, query: string, category:
   try {
     const response = await fetch(firecrawl_url, options);
     if (!response.ok) throw new Error(`❌ API request failed: ${response.status}`);
-    const data = await response.json();
+    
+    const responseText = await response.text();
+    if (!responseText.trim()) {
+      console.warn(`⚠️ Empty response from ${supplier.name} for ${query}`);
+      return [];
+    }
+    
+    const data = JSON.parse(responseText);
 
     const products = data.data?.json || [];
     return products.map((item: any, index: number) => ({

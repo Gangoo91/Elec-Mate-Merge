@@ -62,13 +62,64 @@ Deno.serve(async (req) => {
       }
     }
 
-    // Fetch fresh data from comprehensive scraper
+    // Try to get fresh data from scraper with fallback to existing cache
     console.log('🔄 Fetching fresh data from scraper...');
-    const { data: scraperData, error: scraperError } = await supabase.functions.invoke('comprehensive-materials-scraper');
-
-    if (scraperError) {
-      console.error('Live scraper error:', scraperError);
-      throw new Error(`Live scraper failed: ${scraperError.message}`);
+    let scraperData;
+    
+    try {
+      const { data, error: scraperError } = await supabase.functions.invoke('comprehensive-materials-scraper');
+      
+      if (scraperError) {
+        console.error('Live scraper error:', scraperError);
+        throw new Error(`Live scraper failed: ${scraperError.message}`);
+      }
+      
+      scraperData = data;
+    } catch (error) {
+      console.error('Scraper invocation failed:', error);
+      
+      // Try to use existing cache data (even if expired) as fallback
+      const { data: fallbackCache } = await supabase
+        .from('materials_weekly_cache')
+        .select('*')
+        .order('created_at', { ascending: false })
+        .limit(1);
+      
+      if (fallbackCache && fallbackCache.length > 0) {
+        console.log('📋 Using fallback cache data due to scraper failure');
+        const cacheEntry = fallbackCache[0];
+        return new Response(
+          JSON.stringify({
+            processedData: [],
+            rawMaterials: cacheEntry.scraper_response || [],
+            fromCache: true,
+            fromFallback: true,
+            totalMaterials: cacheEntry.total_materials || 0,
+            lastUpdated: cacheEntry.last_updated,
+            categories: cacheEntry.categories || [],
+            suppliers: cacheEntry.suppliers || [],
+            cacheExpiry: cacheEntry.expires_at
+          }),
+          { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      }
+      
+      // If no fallback available, return minimal default data
+      console.log('⚠️ No cache available, returning minimal default data');
+      return new Response(
+        JSON.stringify({
+          processedData: [],
+          rawMaterials: [],
+          fromCache: false,
+          fromFallback: true,
+          totalMaterials: 0,
+          lastUpdated: new Date().toISOString(),
+          categories: ['Cables & Wiring', 'Electrical Components', 'Protection Equipment', 'Installation Accessories', 'Lighting Solutions', 'Electrical Tools'],
+          suppliers: ['Screwfix', 'Toolstation', 'RS Components', 'CEF - City Electrical Factors'],
+          error: 'Unable to fetch fresh data - please try again later'
+        }),
+        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
     }
 
     if (!Array.isArray(scraperData) || scraperData.length === 0) {
