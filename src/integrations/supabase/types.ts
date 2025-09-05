@@ -1122,7 +1122,7 @@ export type Database = {
           id: string
           last_updated: string
           popular_items: Json | null
-          price_range: Json | null
+          price_range: string | null
           top_brands: string[] | null
           total_products: number | null
           update_status: string | null
@@ -1136,7 +1136,7 @@ export type Database = {
           id?: string
           last_updated?: string
           popular_items?: Json | null
-          price_range?: Json | null
+          price_range?: string | null
           top_brands?: string[] | null
           total_products?: number | null
           update_status?: string | null
@@ -1150,7 +1150,7 @@ export type Database = {
           id?: string
           last_updated?: string
           popular_items?: Json | null
-          price_range?: Json | null
+          price_range?: string | null
           top_brands?: string[] | null
           total_products?: number | null
           update_status?: string | null

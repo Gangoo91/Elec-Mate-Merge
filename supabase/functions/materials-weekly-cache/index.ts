@@ -40,13 +40,14 @@ interface ProcessedCategoryData {
   trending: boolean;
 }
 
+// Comprehensive category mapping to align with frontend
 const categoryMapping = {
   "Cables & Wiring": "cables",
   "Electrical Components": "components", 
   "Protection Equipment": "protection",
   "Installation Accessories": "accessories",
   "Lighting Solutions": "lighting",
-  "Electrical Tools": "tools"
+  "Testing & Tools": "tools"
 };
 
 const defaultCategoryData: ProcessedCategoryData[] = [
@@ -189,31 +190,41 @@ serve(async (req) => {
     if (cacheData && cacheData.length > 0) {
       console.log('✅ Found valid cache data, serving from cache...');
       
-      // If we have processed data in cache, use it directly
       const latestCache = cacheData[0];
-      const processedData = latestCache.cache_data as ProcessedCategoryData[];
+      let cachePayload = latestCache.cache_data;
       
-      // If filtered request, we need raw materials to apply filters
-      if (category || supplier || search) {
-        console.log('🔍 Filters detected, need to fall back to scraper for filtering...');
-        fromCache = false;
-      } else {
-        // Return cached processed data directly
+      // Handle both new comprehensive cache format and legacy format
+      if (Array.isArray(cachePayload)) {
+        // Legacy format - just processed data
+        cachePayload = {
+          processedData: cachePayload,
+          rawMaterials: [],
+          fromCache: true,
+          totalMaterials: latestCache.total_products || 0,
+          lastUpdated: latestCache.created_at
+        };
+      }
+      
+      // If no filters, return cached data with both processed and raw materials
+      if (!category && !supplier && !search) {
         fromCache = true;
         
         const response = {
-          data: processedData,
-          rawMaterials: [], // Not needed when serving from cache
+          data: cachePayload.processedData || cachePayload,
+          rawMaterials: cachePayload.rawMaterials || [],
           fromCache: true,
           timestamp: new Date().toISOString(),
-          totalMaterials: latestCache.total_products || 0
+          totalMaterials: cachePayload.totalMaterials || latestCache.total_products || 0
         };
 
-        console.log(`✅ Serving ${processedData.length} categories from cache`);
+        console.log(`✅ Serving ${response.data.length} categories and ${response.rawMaterials.length} raw materials from cache`);
         
         return new Response(JSON.stringify(response), {
           headers: { ...corsHeaders, 'Content-Type': 'application/json' },
         });
+      } else {
+        console.log('🔍 Filters detected, need to fall back to scraper for filtering...');
+        fromCache = false;
       }
     }
 
@@ -261,13 +272,22 @@ serve(async (req) => {
             sales: Math.floor(Math.random() * 200) + 50
           }));
 
+        // Store comprehensive cache with both processed and raw data
+        const cachePayload = {
+          processedData,
+          rawMaterials,
+          fromCache: false,
+          totalMaterials: rawMaterials.length,
+          lastUpdated: new Date().toISOString()
+        };
+
         const cacheEntry = {
-          cache_data: processedData, // Store processed data, not raw materials
-          category: category || 'all',
+          cache_data: cachePayload, // Store both processed data and raw materials
+          category: 'comprehensive',
           total_products: rawMaterials.length,
           price_range: priceRange,
-          top_brands: topBrands,
-          popular_items: popularItems,
+          top_brands: JSON.stringify(topBrands),
+          popular_items: JSON.stringify(popularItems),
           expires_at: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(), // 7 days
           update_status: 'completed'
         };

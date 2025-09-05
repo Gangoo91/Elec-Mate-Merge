@@ -31,13 +31,14 @@ export interface ProcessedCategoryData {
   trending: boolean;
 }
 
-const categoryMapping = {
+// Updated category mapping to match backend logic
+const categoryMapping: Record<string, string> = {
   "Cables & Wiring": "cables",
   "Electrical Components": "components", 
   "Protection Equipment": "protection",
   "Installation Accessories": "accessories",
   "Lighting Solutions": "lighting",
-  "Electrical Tools": "tools"
+  "Testing & Tools": "tools"
 };
 
 const defaultCategoryData: ProcessedCategoryData[] = [
