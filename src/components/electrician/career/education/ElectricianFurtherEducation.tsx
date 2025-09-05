@@ -131,14 +131,14 @@ const ElectricianFurtherEducation = () => {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="mobile-container mobile-section-spacing">
       {/* Header */}
-      <div className="space-y-4">
-        <h2 className="text-2xl font-semibold flex items-center gap-2">
-          <GraduationCap className="h-6 w-6 text-elec-yellow" />
-          Further Education for Electricians
-        </h2>
-        <p className="text-muted-foreground">
+      <div className="mobile-card-spacing">
+        <h1 className="mobile-heading flex items-center gap-3">
+          <GraduationCap className="h-6 w-6 sm:h-7 sm:w-7 text-elec-yellow flex-shrink-0" />
+          <span className="leading-tight">Further Education for Electricians</span>
+        </h1>
+        <p className="mobile-text text-text-muted max-w-4xl">
           Discover comprehensive educational pathways to advance your electrical career. 
           From HNC certificates to master's degrees, find the right qualification to achieve your professional goals.
         </p>
@@ -155,11 +155,11 @@ const ElectricianFurtherEducation = () => {
       <InsightsAccordion analytics={analytics} />
 
       {/* Action Buttons */}
-      <div className="flex flex-wrap gap-2">
+      <div className="mobile-action-bar">
         <Button 
           onClick={handleShowFundingCalculator}
           variant="outline"
-          className="border-elec-yellow/30 hover:bg-elec-yellow/10"
+          className="mobile-button-secondary w-full sm:w-auto"
         >
           <Calculator className="mr-2 h-4 w-4" />
           Funding Calculator
@@ -167,7 +167,7 @@ const ElectricianFurtherEducation = () => {
         <Button 
           onClick={() => refreshData(true)}
           variant="outline"
-          className="border-elec-yellow/30 hover:bg-elec-yellow/10"
+          className="mobile-button-secondary w-full sm:w-auto"
           disabled={loading}
         >
           {loading ? (
@@ -181,13 +181,13 @@ const ElectricianFurtherEducation = () => {
 
       {/* Error Message */}
       {error && (
-        <Card className="border-red-500/20 bg-red-900/10">
+        <Card className="mobile-card border-destructive/20 bg-destructive/5">
           <CardContent className="p-4">
-            <div className="flex items-center gap-2 text-red-400">
-              <AlertCircle className="h-4 w-4" />
-              <span className="text-sm">
-                {error} - Showing cached data if available.
-              </span>
+            <div className="flex items-start gap-3 text-destructive">
+              <AlertCircle className="h-5 w-5 flex-shrink-0 mt-0.5" />
+              <div className="mobile-small-text leading-relaxed">
+                <strong>Connection Issue:</strong> {error} - Showing cached data if available.
+              </div>
             </div>
           </CardContent>
         </Card>
@@ -197,22 +197,22 @@ const ElectricianFurtherEducation = () => {
       <EducationSearchForm onSearch={handleSearch} onReset={handleReset} />
 
       {/* Results Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-4">
         <div className="flex items-center gap-2">
-          <h3 className="text-lg font-medium">Available Programmes</h3>
-          <span className="text-sm text-muted-foreground">
-            ({filteredOptions.length} {filteredOptions.length === 1 ? 'result' : 'results'})
+          <h2 className="mobile-subheading">Available Programmes</h2>
+          <span className="mobile-small-text text-text-subtle bg-elec-card px-2 py-1 rounded-md">
+            {filteredOptions.length} {filteredOptions.length === 1 ? 'result' : 'results'}
           </span>
         </div>
       </div>
 
       {/* Loading State */}
       {loading && (
-        <div className="flex flex-col items-center justify-center py-12 space-y-4">
-          <Loader2 className="h-8 w-8 animate-spin text-elec-yellow" />
-          <div className="text-center space-y-2">
-            <span className="text-muted-foreground">Scraping live education data...</span>
-            <div className="text-xs text-muted-foreground max-w-md">
+        <div className="mobile-card flex flex-col items-center justify-center py-8 space-y-4">
+          <Loader2 className="h-10 w-10 animate-spin text-elec-yellow" />
+          <div className="text-center space-y-3">
+            <span className="mobile-text text-text-muted font-medium">Scraping live education data...</span>
+            <div className="mobile-small-text text-text-subtle max-w-sm mx-auto leading-relaxed">
               Fetching latest courses from IDP Education, National Careers Service, and TradeSkills4U
             </div>
           </div>
@@ -221,7 +221,7 @@ const ElectricianFurtherEducation = () => {
 
       {/* Education Options Grid */}
       {!loading && (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="mobile-grid-responsive">
           {filteredOptions.map((option) => (
             <LiveEducationCard
               key={option.id}
@@ -233,73 +233,77 @@ const ElectricianFurtherEducation = () => {
       )}
 
       {/* Empty State */}
-      {filteredOptions.length === 0 && (
-        <Card className="border-elec-yellow/20 bg-elec-gray">
-          <CardContent className="p-8 text-center">
-            <BookOpen className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-            <h3 className="text-lg font-medium mb-2">No programmes found</h3>
-            <p className="text-muted-foreground mb-4">
+      {filteredOptions.length === 0 && !loading && (
+        <Card className="mobile-card">
+          <CardContent className="p-6 sm:p-8 text-center">
+            <BookOpen className="h-12 w-12 sm:h-16 sm:w-16 text-muted-foreground mx-auto mb-4" />
+            <h3 className="mobile-subheading mb-3">No programmes found</h3>
+            <p className="mobile-text text-text-muted mb-6 max-w-md mx-auto">
               Try adjusting your search criteria or explore different categories.
             </p>
-            <Button variant="outline" onClick={handleReset}>
+            <Button 
+              variant="outline" 
+              onClick={handleReset}
+              className="mobile-button-secondary"
+            >
               Reset Filters
             </Button>
           </CardContent>
         </Card>
       )}
 
-      {/* Funding Information Card - Moved to bottom */}
-      <Card className="border-elec-yellow/20 bg-elec-gray/50">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-lg">
-            <PoundSterling className="h-5 w-5 text-elec-yellow" />
+      {/* Funding Information Card - Mobile optimized */}
+      <Card className="mobile-card bg-elec-card/60">
+        <CardHeader className="mobile-padding">
+          <CardTitle className="flex items-center gap-3 mobile-subheading">
+            <PoundSterling className="h-5 w-5 text-elec-yellow flex-shrink-0" />
             UK Education Funding Support
           </CardTitle>
         </CardHeader>
-        <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <h4 className="font-medium mb-3 text-amber-400">Government Support</h4>
-            <div className="space-y-3 text-sm">
-              <div>
-                <h5 className="font-medium text-white">Advanced Learner Loan (19+)</h5>
-                <p className="text-xs text-muted-foreground mt-1">
+        <CardContent className="mobile-padding grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="space-y-4">
+            <h4 className="font-medium text-elec-yellow mobile-text">Government Support</h4>
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <h5 className="font-medium text-foreground mobile-small-text">Advanced Learner Loan (19+)</h5>
+                <p className="text-text-subtle mobile-small-text leading-relaxed">
                   Available for Level 3-6 qualifications. No upfront fees, only repay when earning £25,000+. 
                   9% of income above threshold.
                 </p>
               </div>
-              <div>
-                <h5 className="font-medium text-white">Student Finance England</h5>
-                <p className="text-xs text-muted-foreground mt-1">
+              <div className="space-y-2">
+                <h5 className="font-medium text-foreground mobile-small-text">Student Finance England</h5>
+                <p className="text-text-subtle mobile-small-text leading-relaxed">
                   Tuition fee loans up to £9,250 for degrees. Maintenance loans available based on household income. 
                   Repayment at 9% above £27,295.
                 </p>
               </div>
-              <div>
-                <h5 className="font-medium text-white">Postgraduate Loan</h5>
-                <p className="text-xs text-muted-foreground mt-1">
+              <div className="space-y-2">
+                <h5 className="font-medium text-foreground mobile-small-text">Postgraduate Loan</h5>
+                <p className="text-text-subtle mobile-small-text leading-relaxed">
                   Up to £12,167 for Master's study. 6% interest rate. Same repayment terms as undergraduate loans.
                 </p>
               </div>
             </div>
           </div>
-          <div>
-            <h4 className="font-medium mb-3 text-amber-400">Industry & Employer Support</h4>
-            <div className="space-y-3 text-sm">
-              <div>
-                <h5 className="font-medium text-white">Apprenticeship Levy</h5>
-                <p className="text-xs text-muted-foreground mt-1">
+          <div className="space-y-4">
+            <h4 className="font-medium text-elec-yellow mobile-text">Industry & Employer Support</h4>
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <h5 className="font-medium text-foreground mobile-small-text">Apprenticeship Levy</h5>
+                <p className="text-text-subtle mobile-small-text leading-relaxed">
                   Large employers (£3M+ payroll) contribute 0.5% to apprenticeship levy. Can fund degree apprenticeships.
                 </p>
               </div>
-              <div>
-                <h5 className="font-medium text-white">Professional Body Grants</h5>
-                <p className="text-xs text-muted-foreground mt-1">
+              <div className="space-y-2">
+                <h5 className="font-medium text-foreground mobile-small-text">Professional Body Grants</h5>
+                <p className="text-text-subtle mobile-small-text leading-relaxed">
                   IET scholarships (£1,000-£10,000), ECA Educational Trust grants, NECA bursaries for electrical study.
                 </p>
               </div>
-              <div>
-                <h5 className="font-medium text-white">Career Development Loans</h5>
-                <p className="text-xs text-muted-foreground mt-1">
+              <div className="space-y-2">
+                <h5 className="font-medium text-foreground mobile-small-text">Career Development Loans</h5>
+                <p className="text-text-subtle mobile-small-text leading-relaxed">
                   Bank loans for vocational training. Government pays interest during study and one month after.
                 </p>
               </div>

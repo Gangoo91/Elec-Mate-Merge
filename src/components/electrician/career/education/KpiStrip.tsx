@@ -20,63 +20,63 @@ const KpiStrip = ({ analytics, isFromCache, lastUpdated }: KpiStripProps) => {
   const data = analytics || defaultAnalytics;
 
   return (
-    <Card className="border-elec-yellow/10 bg-elec-card">
-      <CardContent className="p-4">
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+    <Card className="mobile-card">
+      <CardContent className="mobile-padding">
+        <div className="flex flex-col gap-4">
           {/* KPIs */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 flex-1">
-            <div className="text-center">
-              <div className="flex items-center justify-center gap-1 mb-1">
-                <TrendingUp className="h-4 w-4 text-elec-yellow" />
-                <span className="text-lg font-semibold text-elec-yellow">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="text-center space-y-2">
+              <div className="flex items-center justify-center gap-2">
+                <TrendingUp className="h-4 w-4 text-elec-yellow flex-shrink-0" />
+                <span className="text-lg sm:text-xl font-semibold text-elec-yellow">
                   {data.averageEmploymentRate}%
                 </span>
               </div>
-              <div className="text-xs text-muted-foreground">Employment Rate</div>
+              <div className="mobile-small-text text-text-subtle">Employment Rate</div>
             </div>
             
-            <div className="text-center">
-              <div className="flex items-center justify-center gap-1 mb-1">
-                <Users className="h-4 w-4 text-elec-yellow" />
-                <span className="text-lg font-semibold text-elec-yellow">
+            <div className="text-center space-y-2">
+              <div className="flex items-center justify-center gap-2">
+                <Users className="h-4 w-4 text-elec-yellow flex-shrink-0" />
+                <span className="text-lg sm:text-xl font-semibold text-elec-yellow">
                   {data.totalProviders}+
                 </span>
               </div>
-              <div className="text-xs text-muted-foreground">Providers</div>
+              <div className="mobile-small-text text-text-subtle">Providers</div>
             </div>
             
-            <div className="text-center">
-              <div className="flex items-center justify-center gap-1 mb-1">
-                <Award className="h-4 w-4 text-elec-yellow" />
-                <span className="text-lg font-semibold text-elec-yellow">
+            <div className="text-center space-y-2">
+              <div className="flex items-center justify-center gap-2">
+                <Award className="h-4 w-4 text-elec-yellow flex-shrink-0" />
+                <span className="text-lg sm:text-xl font-semibold text-elec-yellow">
                   {data.averageRating}/5
                 </span>
               </div>
-              <div className="text-xs text-muted-foreground">Avg Rating</div>
+              <div className="mobile-small-text text-text-subtle">Avg Rating</div>
             </div>
             
-            <div className="text-center">
-              <div className="flex items-center justify-center gap-1 mb-1">
-                <TrendingUp className="h-4 w-4 text-elec-yellow" />
-                <span className="text-lg font-semibold text-elec-yellow">
+            <div className="text-center space-y-2">
+              <div className="flex items-center justify-center gap-2">
+                <TrendingUp className="h-4 w-4 text-elec-yellow flex-shrink-0" />
+                <span className="text-lg sm:text-xl font-semibold text-elec-yellow">
                   {data.highDemandPrograms}+
                 </span>
               </div>
-              <div className="text-xs text-muted-foreground">High Demand</div>
+              <div className="mobile-small-text text-text-subtle">High Demand</div>
             </div>
           </div>
 
           {/* Status */}
-          <div className="flex flex-col items-end text-right gap-1">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-end gap-2">
             {isFromCache && (
-              <Badge variant="warning" className="text-xs">
+              <Badge variant="warning" className="mobile-small-text w-fit">
                 Cached Data
               </Badge>
             )}
             {lastUpdated && (
-              <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                <Clock className="h-3 w-3" />
-                {new Date(lastUpdated).toLocaleDateString()}
+              <div className="flex items-center gap-2 mobile-small-text text-text-subtle">
+                <Clock className="h-3 w-3 flex-shrink-0" />
+                <span>Updated {new Date(lastUpdated).toLocaleDateString()}</span>
               </div>
             )}
           </div>
