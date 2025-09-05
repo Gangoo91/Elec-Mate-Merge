@@ -85,15 +85,10 @@ async function fetchProductsFromSupplier(supplier: any, query: string, category:
     const response = await fetch(firecrawl_url, options);
     if (!response.ok) throw new Error(`❌ API request failed: ${response.status}`);
     
-    const responseText = await response.text();
-    if (!responseText.trim()) {
-      console.warn(`⚠️ Empty response from ${supplier.name} for ${query}`);
-      return [];
-    }
-    
-    const data = JSON.parse(responseText);
+    const data = await response.json();
 
     const products = data.data?.json || [];
+    
     return products.map((item: any, index: number) => ({
       id: Date.now() + Math.random() * 1000 + index,
       name: item.name || 'Unknown Product',
@@ -108,6 +103,7 @@ async function fetchProductsFromSupplier(supplier: any, query: string, category:
       reviews: item.reviews,
       stockStatus: 'In Stock' as const,
     }));
+    
   } catch (error) {
     console.error(`⚠️ Error fetching ${query} from ${supplier.name}:`, error);
     return [];
