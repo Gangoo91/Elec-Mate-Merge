@@ -106,7 +106,7 @@ async function fetchProductsFromSupplier(supplier: any, query: string, category:
     
   } catch (error) {
     console.error(`⚠️ Error fetching ${query} from ${supplier.name}:`, error);
-    return [{
+    return [ {
         "name": "Philex Black Unshielded RJ45 Cat 6 Ethernet Cable 10m",
         "category": "Cables & Wiring",
         "highlights": [
