@@ -5,8 +5,9 @@ export const refreshMaterialsCache = async () => {
   try {
     console.log('🔄 Manually triggering materials cache refresh...');
     
-    const { data, error } = await supabase.functions.invoke('materials-cache-updater', {
-      body: { manual: true }
+    // Trigger the materials-weekly-cache function to populate cache
+    const { data, error } = await supabase.functions.invoke('materials-weekly-cache', {
+      body: { forceRefresh: true }
     });
     
     if (error) {

@@ -281,23 +281,49 @@ serve(async (req) => {
           lastUpdated: new Date().toISOString()
         };
 
+        // Ensure arrays are properly formatted for PostgreSQL
+        const sanitizedTopBrands = topBrands
+          .filter(brand => brand && typeof brand === 'string')
+          .slice(0, 10); // Limit to 10 brands
+        
+        const sanitizedPopularItems = popularItems.map(item => ({
+          name: typeof item.name === 'string' ? item.name.slice(0, 200) : 'Unknown Item',
+          price: typeof item.price === 'string' ? item.price : '£0.00',
+          rating: typeof item.rating === 'number' ? Math.round(item.rating * 100) / 100 : 4.5,
+          sales: typeof item.sales === 'number' ? item.sales : 0
+        }));
+
         console.log('📊 Preparing cache entry:', {
           materialsCount: rawMaterials.length,
           priceRange,
-          topBrandsCount: topBrands.length,
-          popularItemsCount: popularItems.length
+          topBrandsCount: sanitizedTopBrands.length,
+          popularItemsCount: sanitizedPopularItems.length,
+          topBrandsPreview: sanitizedTopBrands.slice(0, 3),
+          priceRangeType: typeof priceRange
         });
 
         const cacheEntry = {
           cache_data: cachePayload, // Store both processed data and raw materials
           category: 'comprehensive',
           total_products: rawMaterials.length,
-          price_range: priceRange, // Store as plain text
-          top_brands: topBrands, // Store as array directly (not JSON string)
-          popular_items: popularItems, // Store as JSONB directly (not JSON string)
+          price_range: priceRange.toString(), // Ensure it's a string
+          top_brands: sanitizedTopBrands, // Clean string array
+          popular_items: sanitizedPopularItems, // Clean JSONB object
           expires_at: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(), // 7 days
           update_status: 'completed'
         };
+
+        // Validate cache entry before insertion
+        console.log('🔍 Cache entry validation:', {
+          cache_data_type: typeof cacheEntry.cache_data,
+          cache_data_keys: Object.keys(cacheEntry.cache_data),
+          top_brands_type: typeof cacheEntry.top_brands,
+          top_brands_is_array: Array.isArray(cacheEntry.top_brands),
+          top_brands_length: cacheEntry.top_brands?.length,
+          popular_items_type: typeof cacheEntry.popular_items,
+          popular_items_is_array: Array.isArray(cacheEntry.popular_items),
+          popular_items_length: cacheEntry.popular_items?.length
+        });
 
         const { error: cacheError } = await supabase
           .from('materials_weekly_cache')
@@ -305,11 +331,34 @@ serve(async (req) => {
 
         if (cacheError) {
           console.error('❌ Failed to store cache:', cacheError);
-          console.error('❌ Cache entry that failed:', JSON.stringify(cacheEntry, null, 2));
+          console.error('❌ Cache entry details:', {
+            category: cacheEntry.category,
+            total_products: cacheEntry.total_products,
+            price_range: cacheEntry.price_range,
+            top_brands: cacheEntry.top_brands,
+            top_brands_sample: cacheEntry.top_brands?.slice(0, 2),
+            popular_items_sample: cacheEntry.popular_items?.slice(0, 1)
+          });
           // Don't throw error, just log it - we still have the data to return
         } else {
           console.log('✅ Cache stored successfully');
           console.log(`✅ Stored ${rawMaterials.length} materials with ${processedData.length} categories`);
+          
+          // Verify the cache was actually stored
+          const { data: verifyCache, error: verifyError } = await supabase
+            .from('materials_weekly_cache')
+            .select('id, category, total_products, created_at')
+            .eq('category', 'comprehensive')
+            .order('created_at', { ascending: false })
+            .limit(1);
+          
+          if (verifyError) {
+            console.error('❌ Cache verification failed:', verifyError);
+          } else if (verifyCache && verifyCache.length > 0) {
+            console.log('✅ Cache verification successful:', verifyCache[0]);
+          } else {
+            console.warn('⚠️ Cache verification: No data found after insertion');
+          }
         }
       }
     }
