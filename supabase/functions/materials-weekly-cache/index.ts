@@ -222,19 +222,49 @@ serve(async (req) => {
     } else {
       console.log('🔄 No valid cache found, fetching from comprehensive scraper...');
       
-      // Fetch from comprehensive-materials-scraper
-      const { data: scraperData, error: scraperError } = await supabase.functions.invoke(
-        'comprehensive-materials-scraper',
-        { body: { category, supplier, search } }
-      );
+      try {
+        // Fetch from comprehensive-materials-scraper with timeout
+        console.log('📡 Calling comprehensive-materials-scraper directly...');
+        const scraperPromise = supabase.functions.invoke(
+          'comprehensive-materials-scraper',
+          { body: { category, supplier, search } }
+        );
+        
+        // Add timeout of 45 seconds (less than edge function limit)
+        const timeoutPromise = new Promise((_, reject) => 
+          setTimeout(() => reject(new Error('Scraper timeout after 45 seconds')), 45000)
+        );
+        
+        const { data: scraperData, error: scraperError } = await Promise.race([
+          scraperPromise,
+          timeoutPromise
+        ]) as any;
 
-      if (scraperError) {
-        console.error('Comprehensive scraper error:', scraperError);
-        throw new Error(`Comprehensive scraper failed: ${scraperError.message}`);
+        if (scraperError) {
+          console.error('Comprehensive scraper error:', scraperError);
+          throw new Error(`Comprehensive scraper failed: ${scraperError.message}`);
+        }
+
+        rawMaterials = scraperData?.materials || [];
+        console.log(`📊 Fetched ${rawMaterials.length} materials from comprehensive scraper`);
+        
+      } catch (error) {
+        console.error('❌ Scraper failed:', error);
+        // Return default data if scraper fails
+        const fallbackResponse = {
+          data: defaultCategoryData,
+          rawMaterials: [],
+          fromCache: false,
+          error: `Scraper error: ${error.message}`,
+          timestamp: new Date().toISOString(),
+          totalMaterials: 0
+        };
+
+        return new Response(JSON.stringify(fallbackResponse), {
+          status: 200,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        });
       }
-
-      rawMaterials = scraperData?.materials || [];
-      console.log(`📊 Fetched ${rawMaterials.length} materials from Firecrawl`);
       
       // Store fetched data in cache if we have materials
       if (rawMaterials.length > 0) {
