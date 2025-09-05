@@ -220,21 +220,66 @@ serve(async (req) => {
 
       console.log(`📊 Serving ${rawMaterials.length} materials from cache`);
     } else {
-      console.log('🔄 No valid cache found, falling back to live scraper...');
+      console.log('🔄 No valid cache found, fetching from comprehensive scraper...');
       
-      // Fallback to live comprehensive scraper
-      const { data: liveData, error: liveError } = await supabase.functions.invoke(
+      // Fetch from comprehensive-materials-scraper
+      const { data: scraperData, error: scraperError } = await supabase.functions.invoke(
         'comprehensive-materials-scraper',
         { body: { category, supplier, search } }
       );
 
-      if (liveError) {
-        console.error('Live scraper error:', liveError);
-        throw new Error(`Live scraper failed: ${liveError.message}`);
+      if (scraperError) {
+        console.error('Comprehensive scraper error:', scraperError);
+        throw new Error(`Comprehensive scraper failed: ${scraperError.message}`);
       }
 
-      rawMaterials = liveData?.materials || [];
-      console.log(`📊 Serving ${rawMaterials.length} materials from live scraper`);
+      rawMaterials = scraperData?.materials || [];
+      console.log(`📊 Fetched ${rawMaterials.length} materials from Firecrawl`);
+      
+      // Store fetched data in cache if we have materials
+      if (rawMaterials.length > 0) {
+        console.log('💾 Storing fresh data in cache...');
+        
+        const expiresAt = new Date();
+        expiresAt.setDate(expiresAt.getDate() + 7); // 7 days from now
+        
+        // Group materials by category for more efficient storage
+        const materialsByCategory = rawMaterials.reduce((acc, material) => {
+          const mappedCategory = categoryMapping[material.category as keyof typeof categoryMapping] || 'general';
+          if (!acc[mappedCategory]) acc[mappedCategory] = [];
+          acc[mappedCategory].push(material);
+          return acc;
+        }, {} as Record<string, MaterialItem[]>);
+        
+        // Insert cache entries for each category
+        for (const [categoryId, categoryMaterials] of Object.entries(materialsByCategory)) {
+          const prices = categoryMaterials
+            .map(m => extractPriceNumber(m.price))
+            .filter(p => p > 0);
+          
+          const minPrice = prices.length > 0 ? Math.min(...prices) : 0;
+          const maxPrice = prices.length > 0 ? Math.max(...prices) : 0;
+          const suppliers = [...new Set(categoryMaterials.map(m => m.supplier))];
+          
+          const { error: insertError } = await supabase
+            .from('materials_weekly_cache')
+            .insert({
+              category: categoryId,
+              total_products: categoryMaterials.length,
+              cache_data: categoryMaterials,
+              price_range: { min: minPrice, max: maxPrice },
+              top_suppliers: suppliers.slice(0, 5),
+              expires_at: expiresAt.toISOString(),
+              update_status: 'completed'
+            });
+            
+          if (insertError) {
+            console.error(`Error inserting cache for ${categoryId}:`, insertError);
+          } else {
+            console.log(`✅ Cached ${categoryMaterials.length} materials for ${categoryId}`);
+          }
+        }
+      }
     }
 
     // Process the materials data
