@@ -84,11 +84,9 @@ async function fetchProductsFromSupplier(supplier: any, query: string, category:
   try {
     const response = await fetch(firecrawl_url, options);
     if (!response.ok) throw new Error(`❌ API request failed: ${response.status}`);
-    
     const data = await response.json();
 
     const products = data.data?.json || [];
-    
     return products.map((item: any, index: number) => ({
       id: Date.now() + Math.random() * 1000 + index,
       name: item.name || 'Unknown Product',
@@ -103,21 +101,9 @@ async function fetchProductsFromSupplier(supplier: any, query: string, category:
       reviews: item.reviews,
       stockStatus: 'In Stock' as const,
     }));
-    
   } catch (error) {
     console.error(`⚠️ Error fetching ${query} from ${supplier.name}:`, error);
-    return [
-      {
-        name: "Philex Black Unshielded RJ45 Cat 6 Ethernet Cable 10m",
-        category: "Cables & Wiring",
-        highlights: ["Black PVC Cable", "Max. 1000Mbps Ethernet Speed", "Moulded RJ45 Connectors"],
-        price: "£15.99",
-        description: "Philex Black Unshielded RJ45 Cat 6 Ethernet Cable 10m",
-        reviews: "4.7 stars out of 5",
-        image: "https://media.screwfix.com/is/image/ae235/20524_P?$autoprodblock$=&wid=136&hei=136&dpr=on",
-        view_product_url: "https://www.screwfix.com/p/philex-black-unshielded-rj45-cat-6-ethernet-cable-10m/20524",
-      },
-    ];
+    return [];
   }
 }
 

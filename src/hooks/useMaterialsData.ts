@@ -157,70 +157,27 @@ export const useMaterialsData = () => {
     queryFn: async () => {
       console.log('🔍 Fetching materials via weekly cache...');
       
-      try {
-        const { data, error } = await supabase.functions.invoke('materials-weekly-cache', {
-          body: {}
-        });
-        
-        if (error) {
-          console.error('Error fetching cached materials:', error);
-          throw error;
-        }
-        
-        const rawMaterials = data?.rawMaterials || [];
-        const totalMaterials = data?.totalMaterials || 0;
-        const fromCache = data?.fromCache || false;
-        const fromFallback = data?.fromFallback || false;
-        const categories = data?.categories || [];
-
-        if (fromFallback) {
-          console.log('⚠️ Using fallback data - some features may be limited');
-        }
-
-        // Process raw materials into category data on the frontend
-        let processedData;
-        if (rawMaterials.length > 0) {
-          processedData = processMaterialsData(rawMaterials);
-        } else if (categories.length > 0) {
-          // Create empty category structure from fallback
-          processedData = categories.map((category: string) => ({
-            id: category.toLowerCase().replace(/\s+/g, '-'),
-            title: category,
-            productCount: 0,
-            priceRange: 'N/A',
-            topBrands: [],
-            popularItems: [],
-            trending: false
-          }));
-        } else {
-          processedData = defaultCategoryData;
-        }
-
-        console.log(`✅ Processed ${processedData.length} categories from ${totalMaterials} materials (cache: ${fromCache}, fallback: ${fromFallback})`);
-        
-        return {
-          data: processedData,
-          rawMaterials,
-          fromCache,
-          fromFallback,
-          totalMaterials
-        };
-      } catch (error) {
-        console.error('Failed to fetch materials data:', error);
-        // Return minimal default structure on error
-        return {
-          data: defaultCategoryData,
-          rawMaterials: [],
-          fromCache: false,
-          fromFallback: true,
-          totalMaterials: 0
-        };
+      const { data, error } = await supabase.functions.invoke('materials-weekly-cache', {
+        body: {}
+      });
+      
+      if (error) {
+        console.error('Error fetching cached materials:', error);
+        throw error;
       }
+      
+      console.log(`✅ Received materials data: ${data?.totalMaterials || 0} materials, from cache: ${data?.fromCache}`);
+      
+      return {
+        data: data?.data || defaultCategoryData,
+        rawMaterials: data?.rawMaterials || [],
+        fromCache: data?.fromCache || false,
+        totalMaterials: data?.totalMaterials || 0
+      };
     },
     staleTime: 1000 * 60 * 60, // 1 hour (data is cached weekly)
     gcTime: 1000 * 60 * 60 * 2, // 2 hours
-    retry: 3,
-    retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
+    retry: 2,
     refetchOnWindowFocus: false, // Don't refetch on focus since data is cached
   });
 

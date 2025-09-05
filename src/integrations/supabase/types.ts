@@ -1114,37 +1114,46 @@ export type Database = {
       }
       materials_weekly_cache: {
         Row: {
-          cache_key: string
-          categories: string[]
+          cache_data: Json
+          category: string
           created_at: string
+          error_message: string | null
           expires_at: string
           id: string
           last_updated: string
-          scraper_response: Json
-          suppliers: string[]
-          total_materials: number
+          popular_items: Json | null
+          price_range: string | null
+          top_brands: string[] | null
+          total_products: number | null
+          update_status: string | null
         }
         Insert: {
-          cache_key?: string
-          categories?: string[]
+          cache_data?: Json
+          category: string
           created_at?: string
+          error_message?: string | null
           expires_at?: string
           id?: string
           last_updated?: string
-          scraper_response?: Json
-          suppliers?: string[]
-          total_materials?: number
+          popular_items?: Json | null
+          price_range?: string | null
+          top_brands?: string[] | null
+          total_products?: number | null
+          update_status?: string | null
         }
         Update: {
-          cache_key?: string
-          categories?: string[]
+          cache_data?: Json
+          category?: string
           created_at?: string
+          error_message?: string | null
           expires_at?: string
           id?: string
           last_updated?: string
-          scraper_response?: Json
-          suppliers?: string[]
-          total_materials?: number
+          popular_items?: Json | null
+          price_range?: string | null
+          top_brands?: string[] | null
+          total_products?: number | null
+          update_status?: string | null
         }
         Relationships: []
       }
