@@ -55,8 +55,8 @@ const productSchema = {
   },
 };
 
-// --- Enhanced Scraper Function with Retry Logic ---
-async function fetchProductsFromSupplier(supplier: any, query: string, category: string, FIRECRAWL_API_KEY: string, retries = 3) {
+// --- Scraper Function ---
+async function fetchProductsFromSupplier(supplier: any, query: string, category: string, FIRECRAWL_API_KEY: string) {
   console.log(`🔍 Fetching ${query} from ${supplier.name}`);
 
   const firecrawl_url = "https://api.firecrawl.dev/v2/scrape";
@@ -81,99 +81,45 @@ async function fetchProductsFromSupplier(supplier: any, query: string, category:
     }),
   };
 
-  for (let attempt = 1; attempt <= retries; attempt++) {
-    try {
-      const response = await fetch(firecrawl_url, options);
-      
-      if (!response.ok) {
-        if (response.status >= 500 && attempt < retries) {
-          console.log(`⚠️ Server error ${response.status} for ${query} from ${supplier.name}, retrying (${attempt}/${retries})...`);
-          await new Promise(resolve => setTimeout(resolve, 1000 * attempt)); // Exponential backoff
-          continue;
-        }
-        throw new Error(`❌ API request failed: ${response.status}`);
-      }
-      
-      const data = await response.json();
-      const products = data.data?.json || [];
-      
-      if (products.length === 0) {
-        console.log(`📭 No products found for ${query} from ${supplier.name}`);
-        return [];
-      }
-      
-      const processedProducts = products.map((item: any, index: number) => ({
-        id: Date.now() + Math.random() * 1000 + index,
-        name: item.name || 'Unknown Product',
-        category: category,
-        price: item.price || '£0.00',
-        supplier: supplier.name,
-        image: item.image || '/placeholder.svg',
-        searched_product: query,
-        productUrl: item.view_product_url,
-        highlights: item.highlights || [],
-        description: item.description,
-        reviews: item.reviews,
-        stockStatus: 'In Stock' as const,
-      }));
-      
-      console.log(`✅ Found ${processedProducts.length} products for ${query} from ${supplier.name}`);
-      return processedProducts;
-      
-    } catch (error) {
-      if (attempt === retries) {
-        console.error(`⚠️ Error fetching ${query} from ${supplier.name} after ${retries} attempts:`, error);
-        return [];
-      } else {
-        console.log(`⚠️ Attempt ${attempt} failed for ${query} from ${supplier.name}, retrying...`);
-        await new Promise(resolve => setTimeout(resolve, 1000 * attempt));
-      }
-    }
+  try {
+    const response = await fetch(firecrawl_url, options);
+    if (!response.ok) throw new Error(`❌ API request failed: ${response.status}`);
+    const data = await response.json();
+
+    const products = data.data?.json || [];
+    return products.map((item: any, index: number) => ({
+      id: Date.now() + Math.random() * 1000 + index,
+      name: item.name || 'Unknown Product',
+      category: category,
+      price: item.price || '£0.00',
+      supplier: supplier.name,
+      image: item.image || '/placeholder.svg',
+      searched_product: query,
+      productUrl: item.view_product_url,
+      highlights: item.highlights || [],
+      description: item.description,
+      reviews: item.reviews,
+      stockStatus: 'In Stock' as const,
+    }));
+  } catch (error) {
+    console.error(`⚠️ Error fetching ${query} from ${supplier.name}:`, error);
+    return [];
   }
-  
-  return [];
 }
 
-// --- Rate limited batch processing ---
-async function processBatch<T>(items: T[], batchSize: number, delayMs: number, processor: (item: T) => Promise<any>) {
-  const results = [];
-  for (let i = 0; i < items.length; i += batchSize) {
-    const batch = items.slice(i, i + batchSize);
-    console.log(`📦 Processing batch ${Math.floor(i / batchSize) + 1}/${Math.ceil(items.length / batchSize)} (${batch.length} items)`);
-    
-    const batchResults = await Promise.allSettled(
-      batch.map(item => processor(item))
-    );
-    
-    results.push(...batchResults);
-    
-    // Add delay between batches to avoid rate limiting
-    if (i + batchSize < items.length) {
-      console.log(`⏳ Waiting ${delayMs}ms before next batch...`);
-      await new Promise(resolve => setTimeout(resolve, delayMs));
-    }
-  }
-  return results;
-}
-
-// --- Main Function with Optimized Batching ---
+// --- Main Function with Grouped Output ---
 async function getMaterials(FIRECRAWL_API_KEY: string, categoryFilter?: string, supplierFilter?: string, searchTerm?: string) {
   console.log('🚀 Starting comprehensive materials scraping...');
   
+  const jobs = [];
   const filteredSuppliers = supplierFilter
     ? suppliers.filter(supplier => supplier.name === supplierFilter)
     : suppliers;
 
-  let jobParams: Array<{supplier: any, query: string, category: string}> = [];
-
   // If searchTerm is provided, use it directly instead of predefined queries
   if (searchTerm && searchTerm.trim()) {
     for (const supplier of filteredSuppliers) {
-      jobParams.push({
-        supplier,
-        query: searchTerm.trim(),
-        category: 'search'
-      });
+      jobs.push(fetchProductsFromSupplier(supplier, searchTerm.trim(), 'search', FIRECRAWL_API_KEY));
     }
   } else {
     // Use predefined product queries
@@ -184,37 +130,19 @@ async function getMaterials(FIRECRAWL_API_KEY: string, categoryFilter?: string, 
     for (const group of filteredProductList) {
       for (const product of group.items) {
         for (const supplier of filteredSuppliers) {
-          jobParams.push({
-            supplier,
-            query: product,
-            category: group.category
-          });
+          jobs.push(fetchProductsFromSupplier(supplier, product, group.category, FIRECRAWL_API_KEY));
         }
       }
     }
   }
 
-  console.log(`📋 Processing ${jobParams.length} scraping jobs in optimized batches...`);
-  
-  // Process in smaller batches with delays to avoid overwhelming the API
-  const BATCH_SIZE = 8; // Reduced from 88 concurrent requests
-  const BATCH_DELAY = 2000; // 2 second delay between batches
-  
-  const results = await processBatch(
-    jobParams,
-    BATCH_SIZE,
-    BATCH_DELAY,
-    (params) => fetchProductsFromSupplier(params.supplier, params.query, params.category, FIRECRAWL_API_KEY)
-  );
-  
+  console.log(`📋 Processing ${jobs.length} scraping jobs...`);
+  const results = await Promise.allSettled(jobs);
   const materials = results
-    .map((result) => (result.status === "fulfilled" ? result.value : []))
+    .map((material) => (material.status === "fulfilled" ? material.value : []))
     .flat();
   
-  const successfulJobs = results.filter(r => r.status === "fulfilled").length;
-  const failedJobs = results.filter(r => r.status === "rejected").length;
-  
-  console.log(`✅ Successfully fetched ${materials.length} products (${successfulJobs} successful, ${failedJobs} failed jobs)`);
+  console.log(`✅ Successfully fetched ${materials.length} products`);
   return materials;
 }
 
