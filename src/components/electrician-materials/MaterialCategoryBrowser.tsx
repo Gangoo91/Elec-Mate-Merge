@@ -2,12 +2,16 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Link } from "react-router-dom";
-import { Cable, Zap, Shield, Package, Building, TrendingUp, Star, ArrowRight, Users, Award, Loader2, RefreshCw } from "lucide-react";
+import { Cable, Zap, Shield, Package, Building, TrendingUp, Star, ArrowRight, Users, Award, Loader2, RefreshCw, Database, AlertTriangle } from "lucide-react";
 import { useMaterialsData } from "@/hooks/useMaterialsData";
+import MaterialCacheStatus from "./MaterialCacheStatus";
+import { useState } from "react";
 
 const MaterialCategoryBrowser = () => {
   const { data: categories, isLoading, error, refetch, isRefetching } = useMaterialsData();
+  const [showCacheStatus, setShowCacheStatus] = useState(false);
 
   const categoryIcons = {
     cables: Cable,
@@ -29,23 +33,45 @@ const MaterialCategoryBrowser = () => {
 
   if (error) {
     return (
-      <div className="space-y-6 text-center">
-        <div className="text-red-400">
-          <p>Failed to load materials data</p>
-          <Button 
-            variant="outline" 
-            onClick={() => refetch()} 
-            className="mt-4"
-            disabled={isRefetching}
-          >
-            {isRefetching ? (
-              <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-            ) : (
-              <RefreshCw className="h-4 w-4 mr-2" />
+      <div className="space-y-6">
+        <Alert variant="destructive">
+          <AlertTriangle className="h-4 w-4" />
+          <AlertDescription className="space-y-4">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+              <span>Failed to load materials data. The cache system may need attention.</span>
+              <div className="flex gap-2">
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  onClick={() => setShowCacheStatus(!showCacheStatus)}
+                  className="flex items-center gap-2"
+                >
+                  <Database className="h-4 w-4" />
+                  {showCacheStatus ? 'Hide' : 'Show'} Cache Status
+                </Button>
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  onClick={() => refetch()}
+                  disabled={isRefetching}
+                  className="flex items-center gap-2"
+                >
+                  {isRefetching ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : (
+                    <RefreshCw className="h-4 w-4" />
+                  )}
+                  Retry
+                </Button>
+              </div>
+            </div>
+            {showCacheStatus && (
+              <div className="mt-4">
+                <MaterialCacheStatus />
+              </div>
             )}
-            Try Again
-          </Button>
-        </div>
+          </AlertDescription>
+        </Alert>
       </div>
     );
   }
@@ -77,25 +103,58 @@ const MaterialCategoryBrowser = () => {
         </p>
       </div>
 
+      {categories && categories.length > 0 && (
+        <div className="flex items-center justify-between">
+          <div className="text-sm text-muted-foreground">
+            {categories.reduce((total, cat) => total + cat.productCount, 0).toLocaleString()} materials available
+          </div>
+          <Button 
+            variant="ghost" 
+            size="sm" 
+            onClick={() => setShowCacheStatus(!showCacheStatus)}
+            className="flex items-center gap-2 text-muted-foreground hover:text-white"
+          >
+            <Database className="h-4 w-4" />
+            {showCacheStatus ? 'Hide' : 'Show'} Cache Status
+          </Button>
+        </div>
+      )}
+      
+      {showCacheStatus && (
+        <MaterialCacheStatus />
+      )}
+
       {isLoading ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {Array.from({ length: 6 }).map((_, i) => (
-            <Card key={i} className="border-elec-yellow/20 bg-elec-gray">
-              <CardHeader>
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-elec-yellow/20 rounded-lg animate-pulse" />
-                  <div className="space-y-2">
-                    <div className="h-4 w-24 bg-muted-foreground/20 rounded animate-pulse" />
-                    <div className="h-3 w-16 bg-muted-foreground/20 rounded animate-pulse" />
+        <div className="space-y-6">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 p-4 bg-muted/50 rounded-lg">
+            <div className="flex items-center gap-2">
+              <RefreshCw className="h-5 w-5 animate-spin text-primary" />
+              <span className="text-sm font-medium">Loading materials data...</span>
+            </div>
+            <div className="text-xs text-muted-foreground">
+              This may take 30-60 seconds for fresh data
+            </div>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <Card key={i} className="border-elec-yellow/20 bg-elec-gray">
+                <CardHeader>
+                  <div className="flex items-center gap-3">
+                    <div className="w-12 h-12 bg-elec-yellow/20 rounded-lg animate-pulse" />
+                    <div className="space-y-2">
+                      <div className="h-4 w-24 bg-muted-foreground/20 rounded animate-pulse" />
+                      <div className="h-3 w-16 bg-muted-foreground/20 rounded animate-pulse" />
+                    </div>
                   </div>
-                </div>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="h-3 w-full bg-muted-foreground/20 rounded animate-pulse" />
-                <div className="h-8 w-full bg-muted-foreground/20 rounded animate-pulse" />
-              </CardContent>
-            </Card>
-          ))}
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="h-3 w-full bg-muted-foreground/20 rounded animate-pulse" />
+                  <div className="h-8 w-full bg-muted-foreground/20 rounded animate-pulse" />
+                </CardContent>
+              </Card>
+            ))}
+          </div>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
