@@ -166,13 +166,20 @@ export const useMaterialsData = () => {
         throw error;
       }
       
-      console.log(`✅ Received materials data: ${data?.totalMaterials || 0} materials, from cache: ${data?.fromCache}`);
+      const rawMaterials = data?.rawMaterials || [];
+      const totalMaterials = data?.totalMaterials || 0;
+      const fromCache = data?.fromCache || false;
+
+      // Process raw materials into category data on the frontend
+      const processedData = rawMaterials.length > 0 ? processMaterialsData(rawMaterials) : defaultCategoryData;
+
+      console.log(`✅ Processed ${processedData.length} categories from ${totalMaterials} materials (cache: ${fromCache})`);
       
       return {
-        data: data?.data || defaultCategoryData,
-        rawMaterials: data?.rawMaterials || [],
-        fromCache: data?.fromCache || false,
-        totalMaterials: data?.totalMaterials || 0
+        data: processedData,
+        rawMaterials,
+        fromCache,
+        totalMaterials
       };
     },
     staleTime: 1000 * 60 * 60, // 1 hour (data is cached weekly)
