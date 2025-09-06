@@ -1,44 +1,73 @@
 import { supabase } from '@/integrations/supabase/client';
 
-// Manual cache refresh utility for testing and administration
-export const refreshMaterialsCache = async () => {
+// Trigger weekly cache update using the new materials-cache-updater function
+export const updateMaterialsCache = async () => {
   try {
-    console.log('🔄 Manually triggering materials cache refresh...');
+    console.log('🔄 Triggering weekly materials cache update...');
     
-    // Trigger the materials-weekly-cache function to populate cache
-    const { data, error } = await supabase.functions.invoke('materials-weekly-cache', {
-      body: { forceRefresh: true }
+    const { data, error } = await supabase.functions.invoke('materials-cache-updater', {
+      body: {}
     });
     
     if (error) {
-      console.error('Cache refresh error:', error);
+      console.error('Cache update error:', error);
       return { success: false, error: error.message };
     }
     
-    console.log('✅ Cache refresh completed:', data);
+    console.log('✅ Cache update completed:', data);
     return { success: true, data };
   } catch (error) {
-    console.error('Cache refresh failed:', error);
+    console.error('Cache update failed:', error);
     return { success: false, error: error.message };
   }
 };
 
-// Check cache status utility
+// Check cache status and determine if refresh is allowed
 export const getCacheStatus = async () => {
   try {
     const { data, error } = await supabase
       .from('materials_weekly_cache')
       .select('category, total_products, created_at, expires_at, update_status')
-      .order('created_at', { ascending: false });
+      .order('created_at', { ascending: false })
+      .limit(1);
     
     if (error) {
       console.error('Error fetching cache status:', error);
       return { success: false, error: error.message };
     }
+
+    if (!data || data.length === 0) {
+      return { 
+        success: true, 
+        cacheEntries: [], 
+        canRefresh: true,
+        cacheAge: null,
+        nextRefreshAvailable: null
+      };
+    }
+
+    const latestCache = data[0];
+    const cacheAge = Date.now() - new Date(latestCache.created_at).getTime();
+    const sevenDaysInMs = 7 * 24 * 60 * 60 * 1000; // 7 days
+    const canRefresh = cacheAge >= sevenDaysInMs;
     
-    return { success: true, cacheEntries: data };
+    const nextRefreshAvailable = canRefresh 
+      ? null 
+      : new Date(new Date(latestCache.created_at).getTime() + sevenDaysInMs);
+    
+    return { 
+      success: true, 
+      cacheEntries: data,
+      canRefresh,
+      cacheAge: Math.floor(cacheAge / (24 * 60 * 60 * 1000)), // in days
+      nextRefreshAvailable,
+      isExpired: new Date() > new Date(latestCache.expires_at)
+    };
   } catch (error) {
     console.error('Failed to get cache status:', error);
     return { success: false, error: error.message };
   }
 };
+
+// Legacy function for backward compatibility
+export const refreshMaterialsCache = updateMaterialsCache;
