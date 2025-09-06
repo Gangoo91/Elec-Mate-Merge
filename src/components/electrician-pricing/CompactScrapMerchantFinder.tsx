@@ -144,7 +144,7 @@ const CompactScrapMerchantFinder = () => {
       )}
       
       {!searchPerformed && (
-        <p className="text-xs text-muted-foreground">
+        <p className="text-xs text-white">
           Enter your postcode to find nearby scrap merchants with current material prices.
         </p>
       )}

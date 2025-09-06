@@ -108,7 +108,7 @@ const EnhancedRegionalPricing = () => {
           <MapPin className="h-5 w-5 text-elec-yellow" />
           UK Regional Job Pricing
         </CardTitle>
-        <p className="text-sm text-muted-foreground">
+        <p className="text-sm text-white">
           Search for current UK electrical job pricing by location and job type
         </p>
       </CardHeader>
