@@ -62,7 +62,7 @@ serve(async (req) => {
 
     // Call the comprehensive materials scraper
     console.log('📞 Calling comprehensive-materials-scraper...');
-    const { data: scrapedData, error: scraperError } = await supabase.functions.invoke(
+    const { data: scraperResponse, error: scraperError } = await supabase.functions.invoke(
       'comprehensive-materials-scraper',
       { body: {} }
     );
@@ -72,9 +72,21 @@ serve(async (req) => {
       throw new Error(`Scraper error: ${scraperError.message}`);
     }
 
+    console.log('📊 Scraper response received:', scraperResponse);
+
+    // Extract the actual data from the scraper response
+    let scrapedData = scraperResponse;
+    
+    // Handle different response formats
+    if (scraperResponse && scraperResponse.data) {
+      scrapedData = scraperResponse.data;
+    } else if (scraperResponse && Array.isArray(scraperResponse)) {
+      scrapedData = scraperResponse;
+    }
+
     if (!scrapedData || !Array.isArray(scrapedData) || scrapedData.length === 0) {
-      console.error('❌ Scraper returned no data');
-      throw new Error('No data returned from scraper');
+      console.error('❌ Scraper returned no usable data. Response:', scraperResponse);
+      throw new Error(`No data returned from scraper. Response type: ${typeof scraperResponse}, Array: ${Array.isArray(scraperResponse)}`);
     }
 
     console.log(`📊 Got ${scrapedData.length} materials from scraper`);
