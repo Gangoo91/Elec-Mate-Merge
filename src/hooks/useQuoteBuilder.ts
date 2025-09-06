@@ -1,6 +1,8 @@
 import { useState, useCallback } from 'react';
 import { Quote, QuoteItem, QuoteClient, QuoteSettings } from '@/types/quote';
 import { v4 as uuidv4 } from 'uuid';
+import { generateQuotePDF } from '@/components/electrician/quote-builder/QuotePDFGenerator';
+import { toast } from '@/hooks/use-toast';
 
 export const useQuoteBuilder = () => {
   const [quote, setQuote] = useState<Partial<Quote>>({
@@ -89,6 +91,53 @@ export const useQuoteBuilder = () => {
     setCurrentStep(prev => Math.max(prev - 1, 0));
   }, []);
 
+  const generateQuote = useCallback(() => {
+    try {
+      const finalQuote = calculateTotals();
+      
+      // Validate quote before generation
+      if (!finalQuote.client || !finalQuote.items || finalQuote.items.length === 0 || !finalQuote.settings) {
+        toast({
+          title: "Cannot Generate Quote",
+          description: "Please complete all required fields before generating the quote.",
+          variant: "destructive"
+        });
+        return;
+      }
+
+      // Update quote status and expiry
+      const updatedQuote = {
+        ...finalQuote,
+        status: 'sent' as const,
+        expiryDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 days from now
+        updatedAt: new Date(),
+      };
+
+      setQuote(updatedQuote);
+
+      // Generate and download PDF
+      generateQuotePDF(updatedQuote);
+
+      toast({
+        title: "Quote Generated Successfully",
+        description: `Quote ${updatedQuote.quoteNumber} has been generated and downloaded.`,
+        variant: "success"
+      });
+
+      // Move to review step if not already there
+      if (currentStep < 3) {
+        setCurrentStep(3);
+      }
+    } catch (error) {
+      console.error('Error generating quote:', error);
+      toast({
+        title: "Generation Failed",
+        description: "There was an error generating the quote. Please try again.",
+        variant: "destructive"
+      });
+    }
+  }, [quote, currentStep]);
+
   const resetQuote = useCallback(() => {
     setQuote({
       id: uuidv4(),
@@ -111,6 +160,7 @@ export const useQuoteBuilder = () => {
     removeItem,
     nextStep,
     prevStep,
+    generateQuote,
     resetQuote,
   };
 };

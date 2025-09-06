@@ -27,6 +27,7 @@ export const QuoteWizard = () => {
     removeItem,
     nextStep,
     prevStep,
+    generateQuote,
     resetQuote,
   } = useQuoteBuilder();
 
@@ -202,9 +203,10 @@ export const QuoteWizard = () => {
                 </Button>
               ) : (
                 <Button 
-                  onClick={nextStep}
+                  onClick={generateQuote}
+                  disabled={!canProceed()}
                   size="lg"
-                  className="w-full sm:w-auto max-w-xs bg-gradient-to-r from-green-600 to-green-500 hover:from-green-500 hover:to-green-400 text-white shadow-lg"
+                  className="w-full sm:w-auto max-w-xs bg-gradient-to-r from-green-600 to-green-500 hover:from-green-500 hover:to-green-400 text-white shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <Calculator className="mr-2 h-4 w-4" />
                   Generate Quote
