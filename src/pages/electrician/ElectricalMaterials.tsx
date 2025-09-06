@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -16,44 +16,12 @@ import {
   Loader2
 } from "lucide-react";
 import { useNavigate, Link } from "react-router-dom";
-import { supabase } from "@/integrations/supabase/client";
+import { useMaterialsData } from "@/hooks/useMaterialsData";
 
 const ElectricalMaterials = () => {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
-  const [materialCounts, setMaterialCounts] = useState({
-    cables: 324,
-    components: 186,
-    protection: 95,
-    accessories: 412,
-    lighting: 278,
-    tools: 156
-  });
-  const [isLoadingCounts, setIsLoadingCounts] = useState(false);
-
-  useEffect(() => {
-    const fetchMaterialCounts = async () => {
-      setIsLoadingCounts(true);
-      try {
-        const { data, error } = await supabase.functions.invoke('ai-materials-counter');
-        
-        if (error) {
-          console.error('Error fetching material counts:', error);
-          return;
-        }
-
-        if (data?.counts) {
-          setMaterialCounts(data.counts);
-        }
-      } catch (error) {
-        console.error('Failed to fetch material counts:', error);
-      } finally {
-        setIsLoadingCounts(false);
-      }
-    };
-
-    fetchMaterialCounts();
-  }, []);
+  const { data: categories, isLoading: isLoadingCounts } = useMaterialsData();
 
   const materialCategories = [
     {
@@ -62,7 +30,7 @@ const ElectricalMaterials = () => {
       description: "Twin & Earth, SWA, flex cables and data cables",
       icon: <Cable className="h-6 w-6 text-elec-yellow" />,
       path: "/electrician/materials/category/cables",
-      productCount: materialCounts.cables
+      productCount: categories?.find(cat => cat.id === "cables")?.productCount || 0
     },
     {
       id: "components",
@@ -70,7 +38,7 @@ const ElectricalMaterials = () => {
       description: "Consumer units, MCBs, RCDs and isolators",
       icon: <Zap className="h-6 w-6 text-elec-yellow" />,
       path: "/electrician/materials/category/components",
-      productCount: materialCounts.components
+      productCount: categories?.find(cat => cat.id === "components")?.productCount || 0
     },
     {
       id: "protection",
@@ -78,7 +46,7 @@ const ElectricalMaterials = () => {
       description: "Earth rods, surge protectors and circuit breakers",
       icon: <Shield className="h-6 w-6 text-elec-yellow" />,
       path: "/electrician/materials/category/protection",
-      productCount: materialCounts.protection
+      productCount: categories?.find(cat => cat.id === "protection")?.productCount || 0
     },
     {
       id: "accessories",
@@ -86,7 +54,7 @@ const ElectricalMaterials = () => {
       description: "Junction boxes, cable glands and trunking",
       icon: <Settings className="h-6 w-6 text-elec-yellow" />,
       path: "/electrician/materials/category/accessories",
-      productCount: materialCounts.accessories
+      productCount: categories?.find(cat => cat.id === "accessories")?.productCount || 0
     },
     {
       id: "lighting",
@@ -94,7 +62,7 @@ const ElectricalMaterials = () => {
       description: "LED downlights, battens and emergency lighting",
       icon: <Building className="h-6 w-6 text-elec-yellow" />,
       path: "/electrician/materials/category/lighting",
-      productCount: materialCounts.lighting
+      productCount: categories?.find(cat => cat.id === "lighting")?.productCount || 0
     },
     {
       id: "tools",
@@ -102,7 +70,7 @@ const ElectricalMaterials = () => {
       description: "Testing equipment, hand tools and power tools",
       icon: <Wrench className="h-6 w-6 text-elec-yellow" />,
       path: "/electrician/materials/category/tools",
-      productCount: materialCounts.tools
+      productCount: categories?.find(cat => cat.id === "tools")?.productCount || 0
     }
   ];
 
@@ -158,11 +126,15 @@ const ElectricalMaterials = () => {
                     <Loader2 className="h-3 w-3 animate-spin" />
                     Loading...
                   </>
-                ) : (
+                ) : material.productCount > 0 ? (
                   <>
                     <Package className="h-3 w-3" />
                     {material.productCount} products available
                   </>
+                ) : (
+                  <span className="text-muted-foreground italic">
+                    Data being collected
+                  </span>
                 )}
               </div>
             </CardContent>
