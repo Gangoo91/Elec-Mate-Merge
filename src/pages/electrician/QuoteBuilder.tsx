@@ -141,7 +141,7 @@ const QuoteBuilder = () => {
               </p>
             </div>
             <Card className="border-0 shadow-2xl bg-gradient-to-br from-card to-card/80">
-              <CardContent className="p-6 lg:p-8">
+              <CardContent className="p-6 lg:p-8 bg-card">
                 <QuoteWizard />
               </CardContent>
             </Card>
