@@ -165,46 +165,52 @@ export const QuoteWizard = () => {
 
       {/* Enhanced Navigation */}
       <Card className="border-0 bg-gradient-to-r from-muted/50 to-muted/30">
-        <CardContent className="p-6">
-          <div className="flex flex-col sm:flex-row justify-between items-center gap-4 w-full min-w-0">
-            <Button
-              variant="outline"
-              onClick={prevStep}
-              disabled={currentStep === 0}
-              size="lg"
-              className="flex items-center gap-2 w-full sm:w-auto disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              <ArrowLeft className="h-4 w-4" />
-              Previous Step
-            </Button>
-            
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <span className="hidden sm:inline">Need help?</span>
-              <Button variant="ghost" size="sm" onClick={resetQuote}>
-                Start Over
+        <CardContent className="p-4 sm:p-6 overflow-hidden">
+          <div className="flex flex-col gap-4 w-full">
+            {/* Top row - Previous button and help text */}
+            <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
+              <Button
+                variant="outline"
+                onClick={prevStep}
+                disabled={currentStep === 0}
+                size="lg"
+                className="flex items-center gap-2 w-full sm:w-auto disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <ArrowLeft className="h-4 w-4" />
+                Previous Step
               </Button>
+              
+              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                <span className="hidden sm:inline">Need help?</span>
+                <Button variant="ghost" size="sm" onClick={resetQuote}>
+                  Start Over
+                </Button>
+              </div>
             </div>
             
-            {currentStep < steps.length - 1 ? (
-              <Button
-                onClick={nextStep}
-                disabled={!canProceed()}
-                size="lg"
-                className="flex items-center gap-2 w-full sm:w-auto bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                Continue to {steps[currentStep + 1]?.title}
-                <ArrowRight className="h-4 w-4" />
-              </Button>
-            ) : (
-              <Button 
-                onClick={nextStep}
-                size="lg"
-                className="w-full sm:w-auto bg-gradient-to-r from-green-600 to-green-500 hover:from-green-500 hover:to-green-400 text-white shadow-lg"
-              >
-                <Calculator className="mr-2 h-4 w-4" />
-                Generate Quote
-              </Button>
-            )}
+            {/* Bottom row - Next/Generate button */}
+            <div className="flex justify-center sm:justify-end">
+              {currentStep < steps.length - 1 ? (
+                <Button
+                  onClick={nextStep}
+                  disabled={!canProceed()}
+                  size="lg"
+                  className="flex items-center gap-2 w-full sm:w-auto max-w-xs bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Continue to {steps[currentStep + 1]?.title}
+                  <ArrowRight className="h-4 w-4" />
+                </Button>
+              ) : (
+                <Button 
+                  onClick={nextStep}
+                  size="lg"
+                  className="w-full sm:w-auto max-w-xs bg-gradient-to-r from-green-600 to-green-500 hover:from-green-500 hover:to-green-400 text-white shadow-lg"
+                >
+                  <Calculator className="mr-2 h-4 w-4" />
+                  Generate Quote
+                </Button>
+              )}
+            </div>
           </div>
         </CardContent>
       </Card>
