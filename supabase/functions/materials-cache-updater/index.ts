@@ -75,13 +75,17 @@ serve(async (req) => {
     console.log('📊 Scraper response received:', scraperResponse);
 
     // Extract the actual data from the scraper response
-    let scrapedData = scraperResponse;
+    let scrapedData;
     
-    // Handle different response formats
-    if (scraperResponse && scraperResponse.data) {
+    // Handle different response formats - check for materials property first
+    if (scraperResponse && scraperResponse.materials && Array.isArray(scraperResponse.materials)) {
+      scrapedData = scraperResponse.materials;
+    } else if (scraperResponse && scraperResponse.data) {
       scrapedData = scraperResponse.data;
     } else if (scraperResponse && Array.isArray(scraperResponse)) {
       scrapedData = scraperResponse;
+    } else {
+      scrapedData = null;
     }
 
     if (!scrapedData || !Array.isArray(scrapedData) || scrapedData.length === 0) {
