@@ -49,14 +49,9 @@ const QuotesPage = () => {
               </p>
             </div>
             <div className="flex gap-3 w-full sm:w-auto">
-              <Link to="/electrician/quote-builder" className="flex-1 sm:flex-initial">
+              <Link to="/electrician/quote-builder" className="w-full sm:w-auto">
                 <Button variant="outline" size="lg" className="w-full sm:w-auto">
                   <ArrowLeft className="mr-2 h-4 w-4" /> Back to Quote Builder
-                </Button>
-              </Link>
-              <Link to="/electrician/quote-builder" className="flex-1 sm:flex-initial">
-                <Button size="lg" className="w-full sm:w-auto">
-                  <Plus className="mr-2 h-4 w-4" /> New Quote
                 </Button>
               </Link>
             </div>
