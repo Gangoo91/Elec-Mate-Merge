@@ -146,7 +146,7 @@ export const QuoteWizard = () => {
       </div>
 
       {/* Enhanced Step Content */}
-      <Card className="border-0 bg-gradient-to-br from-card to-card/50 shadow-lg">
+      <Card className="border-0 bg-gradient-to-br from-card to-card/50">
         <CardHeader className="pb-4">
           <div className="flex items-center gap-3">
             <div className="p-2 bg-primary/10 rounded-lg">
@@ -158,7 +158,7 @@ export const QuoteWizard = () => {
             </div>
           </div>
         </CardHeader>
-        <CardContent className="space-y-6">
+        <CardContent className="space-y-6 p-0">
           {renderStep()}
         </CardContent>
       </Card>
