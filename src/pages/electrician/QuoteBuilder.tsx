@@ -4,31 +4,36 @@ import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Plus, FileText, Clock, CheckCircle, TrendingUp, ArrowLeft } from "lucide-react";
 import { QuoteWizard } from "@/components/electrician/quote-builder/QuoteWizard";
+import RecentQuotesList from "@/components/electrician/quote-builder/RecentQuotesList";
+import { useQuoteStorage } from "@/hooks/useQuoteStorage";
 import React from "react";
 
 const QuoteBuilder = () => {
+  const { savedQuotes, deleteQuote, getQuoteStats } = useQuoteStorage();
+  const quoteStats = getQuoteStats();
+
   const stats = [
     {
       title: "Pending Quotes",
-      value: "0",
+      value: quoteStats.pending.toString(),
       icon: Clock,
       color: "text-elec-yellow",
     },
     {
       title: "Sent Quotes",
-      value: "0", 
+      value: quoteStats.sent.toString(), 
       icon: FileText,
       color: "text-blue-400",
     },
     {
       title: "Approved Quotes",
-      value: "0",
+      value: quoteStats.approved.toString(),
       icon: CheckCircle,
       color: "text-green-400",
     },
     {
       title: "This Month",
-      value: "£0",
+      value: `£${quoteStats.monthlyTotal.toLocaleString()}`,
       icon: TrendingUp,
       color: "text-elec-yellow",
     },
@@ -155,26 +160,10 @@ const QuoteBuilder = () => {
                 View All
               </Button>
             </div>
-            <Card className="border-0 shadow-lg bg-gradient-to-br from-card to-card/50">
-              <CardContent className="p-8">
-                <div className="text-center py-12 space-y-6">
-                  <div className="relative">
-                    <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-accent/20 rounded-full blur-2xl"></div>
-                    <FileText className="relative h-16 w-16 text-muted-foreground mx-auto" />
-                  </div>
-                  <div className="space-y-2">
-                    <h3 className="text-xl font-semibold">No quotes created yet</h3>
-                    <p className="text-muted-foreground max-w-md mx-auto">
-                      Start building professional quotes for your electrical projects. Our wizard makes it quick and easy.
-                    </p>
-                  </div>
-                  <Button size="lg" className="bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary shadow-lg">
-                    <Plus className="mr-2 h-5 w-5" />
-                    Create Your First Quote
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
+            <RecentQuotesList 
+              quotes={savedQuotes}
+              onDeleteQuote={deleteQuote}
+            />
           </section>
         </main>
       </div>

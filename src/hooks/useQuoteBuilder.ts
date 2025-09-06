@@ -3,8 +3,11 @@ import { Quote, QuoteItem, QuoteClient, QuoteSettings } from '@/types/quote';
 import { v4 as uuidv4 } from 'uuid';
 import { generateQuotePDF } from '@/components/electrician/quote-builder/QuotePDFGenerator';
 import { toast } from '@/hooks/use-toast';
+import { useQuoteStorage } from './useQuoteStorage';
 
 export const useQuoteBuilder = () => {
+  const { saveQuote } = useQuoteStorage();
+  
   const [quote, setQuote] = useState<Partial<Quote>>({
     id: uuidv4(),
     quoteNumber: `Q${Date.now()}`,
@@ -118,11 +121,22 @@ export const useQuoteBuilder = () => {
       // Generate and download PDF
       generateQuotePDF(updatedQuote);
 
-      toast({
-        title: "Quote Generated Successfully",
-        description: `Quote ${updatedQuote.quoteNumber} has been generated and downloaded.`,
-        variant: "success"
-      });
+      // Save quote to localStorage
+      const saved = saveQuote(updatedQuote as Quote);
+      
+      if (saved) {
+        toast({
+          title: "Quote Generated Successfully",
+          description: `Quote ${updatedQuote.quoteNumber} has been generated, downloaded, and saved to recent quotes.`,
+          variant: "success"
+        });
+      } else {
+        toast({
+          title: "Quote Generated",
+          description: `Quote ${updatedQuote.quoteNumber} has been generated and downloaded, but could not be saved to recent quotes.`,
+          variant: "default"
+        });
+      }
 
       // Move to review step if not already there
       if (currentStep < 3) {
