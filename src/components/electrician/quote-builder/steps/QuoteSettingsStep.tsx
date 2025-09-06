@@ -2,12 +2,13 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+import { MobileInput } from "@/components/ui/mobile-input";
 import { Switch } from "@/components/ui/switch";
 import { QuoteSettings } from "@/types/quote";
 import { useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Settings, Percent, Calculator } from "lucide-react";
+import { useMobileEnhanced } from "@/hooks/use-mobile-enhanced";
 
 const settingsSchema = z.object({
   labourRate: z.number().min(1, "Labour rate must be greater than £0"),
@@ -23,6 +24,8 @@ interface QuoteSettingsStepProps {
 }
 
 export const QuoteSettingsStep = ({ settings, onUpdate }: QuoteSettingsStepProps) => {
+  const { isMobile } = useMobileEnhanced();
+  
   const form = useForm<QuoteSettings>({
     resolver: zodResolver(settingsSchema),
     defaultValues: settings || {
@@ -46,32 +49,35 @@ export const QuoteSettingsStep = ({ settings, onUpdate }: QuoteSettingsStepProps
 
   return (
     <Form {...form}>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className={`mobile-section-spacing ${isMobile ? 'space-y-6' : 'grid grid-cols-1 md:grid-cols-2 gap-6'}`}>
         {/* Pricing Settings */}
-        <Card className="bg-elec-gray/50 border-elec-yellow/20">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-lg">
+        <Card className="mobile-card bg-background/80 border-primary/20">
+          <CardHeader className="mobile-card-spacing pb-4">
+            <CardTitle className="mobile-subheading flex items-center gap-2">
               <Calculator className="h-5 w-5" />
               Pricing Settings
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="mobile-card-spacing space-y-4">
             <FormField
               control={form.control}
               name="labourRate"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Labour Rate (£/hour) *</FormLabel>
                   <FormControl>
-                    <Input 
-                      type="number" 
+                    <MobileInput 
+                      label="Labour Rate"
+                      type="number"
+                      inputMode="decimal"
                       step="0.01"
                       placeholder="45.00"
+                      unit="£/hour"
+                      error={form.formState.errors.labourRate?.message}
+                      clearError={() => form.clearErrors('labourRate')}
                       {...field}
                       onChange={(e) => field.onChange(parseFloat(e.target.value) || 0)}
                     />
                   </FormControl>
-                  <FormMessage />
                 </FormItem>
               )}
             />
@@ -81,17 +87,20 @@ export const QuoteSettingsStep = ({ settings, onUpdate }: QuoteSettingsStepProps
               name="overheadPercentage"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Overhead Percentage (%) *</FormLabel>
                   <FormControl>
-                    <Input 
-                      type="number" 
+                    <MobileInput 
+                      label="Overhead Percentage"
+                      type="number"
+                      inputMode="decimal"
                       step="0.1"
                       placeholder="15"
+                      unit="%"
+                      error={form.formState.errors.overheadPercentage?.message}
+                      clearError={() => form.clearErrors('overheadPercentage')}
                       {...field}
                       onChange={(e) => field.onChange(parseFloat(e.target.value) || 0)}
                     />
                   </FormControl>
-                  <FormMessage />
                 </FormItem>
               )}
             />
@@ -101,17 +110,20 @@ export const QuoteSettingsStep = ({ settings, onUpdate }: QuoteSettingsStepProps
               name="profitMargin"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Profit Margin (%) *</FormLabel>
                   <FormControl>
-                    <Input 
-                      type="number" 
+                    <MobileInput 
+                      label="Profit Margin"
+                      type="number"
+                      inputMode="decimal"
                       step="0.1"
                       placeholder="20"
+                      unit="%"
+                      error={form.formState.errors.profitMargin?.message}
+                      clearError={() => form.clearErrors('profitMargin')}
                       {...field}
                       onChange={(e) => field.onChange(parseFloat(e.target.value) || 0)}
                     />
                   </FormControl>
-                  <FormMessage />
                 </FormItem>
               )}
             />
@@ -119,22 +131,22 @@ export const QuoteSettingsStep = ({ settings, onUpdate }: QuoteSettingsStepProps
         </Card>
 
         {/* VAT Settings */}
-        <Card className="bg-elec-gray/50 border-elec-yellow/20">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-lg">
+        <Card className="mobile-card bg-background/80 border-primary/20">
+          <CardHeader className="mobile-card-spacing pb-4">
+            <CardTitle className="mobile-subheading flex items-center gap-2">
               <Percent className="h-5 w-5" />
               VAT Settings
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="mobile-card-spacing space-y-4">
             <FormField
               control={form.control}
               name="vatRegistered"
               render={({ field }) => (
-                <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
-                  <div className="space-y-0.5">
-                    <FormLabel className="text-base">VAT Registered</FormLabel>
-                    <div className="text-sm text-muted-foreground">
+                <FormItem className="mobile-interactive flex flex-row items-center justify-between rounded-lg border mobile-card-spacing">
+                  <div className="space-y-1">
+                    <FormLabel className="mobile-text font-medium">VAT Registered</FormLabel>
+                    <div className="mobile-small-text text-muted-foreground">
                       Are you VAT registered?
                     </div>
                   </div>
@@ -142,6 +154,7 @@ export const QuoteSettingsStep = ({ settings, onUpdate }: QuoteSettingsStepProps
                     <Switch
                       checked={field.value}
                       onCheckedChange={field.onChange}
+                      className="touch-target"
                     />
                   </FormControl>
                 </FormItem>
@@ -153,18 +166,21 @@ export const QuoteSettingsStep = ({ settings, onUpdate }: QuoteSettingsStepProps
               name="vatRate"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>VAT Rate (%)</FormLabel>
                   <FormControl>
-                    <Input 
-                      type="number" 
+                    <MobileInput 
+                      label="VAT Rate"
+                      type="number"
+                      inputMode="decimal"
                       step="0.1"
                       placeholder="20"
+                      unit="%"
                       disabled={!form.watch('vatRegistered')}
+                      error={form.formState.errors.vatRate?.message}
+                      clearError={() => form.clearErrors('vatRate')}
                       {...field}
                       onChange={(e) => field.onChange(parseFloat(e.target.value) || 0)}
                     />
                   </FormControl>
-                  <FormMessage />
                 </FormItem>
               )}
             />

@@ -2,9 +2,10 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+import { MobileInput } from "@/components/ui/mobile-input";
 import { QuoteClient } from "@/types/quote";
 import { useEffect } from "react";
+import { useMobileEnhanced } from "@/hooks/use-mobile-enhanced";
 
 const clientSchema = z.object({
   name: z.string().min(1, "Client name is required"),
@@ -20,6 +21,8 @@ interface ClientDetailsStepProps {
 }
 
 export const ClientDetailsStep = ({ client, onUpdate }: ClientDetailsStepProps) => {
+  const { isMobile } = useMobileEnhanced();
+  
   const form = useForm<QuoteClient>({
     resolver: zodResolver(clientSchema),
     defaultValues: client || {
@@ -47,17 +50,21 @@ export const ClientDetailsStep = ({ client, onUpdate }: ClientDetailsStepProps) 
 
   return (
     <Form {...form}>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className={`mobile-section-spacing ${isMobile ? 'space-y-4' : 'grid grid-cols-1 md:grid-cols-2 gap-4'}`}>
         <FormField
           control={form.control}
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Client Name *</FormLabel>
               <FormControl>
-                <Input placeholder="Enter client name" {...field} />
+                <MobileInput 
+                  label="Client Name"
+                  placeholder="Enter client name" 
+                  error={form.formState.errors.name?.message}
+                  clearError={() => form.clearErrors('name')}
+                  {...field} 
+                />
               </FormControl>
-              <FormMessage />
             </FormItem>
           )}
         />
@@ -67,11 +74,17 @@ export const ClientDetailsStep = ({ client, onUpdate }: ClientDetailsStepProps) 
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email Address *</FormLabel>
               <FormControl>
-                <Input type="email" placeholder="client@example.com" {...field} />
+                <MobileInput 
+                  label="Email Address"
+                  type="email"
+                  inputMode="email"
+                  placeholder="client@example.com"
+                  error={form.formState.errors.email?.message}
+                  clearError={() => form.clearErrors('email')}
+                  {...field} 
+                />
               </FormControl>
-              <FormMessage />
             </FormItem>
           )}
         />
@@ -81,11 +94,17 @@ export const ClientDetailsStep = ({ client, onUpdate }: ClientDetailsStepProps) 
           name="phone"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Phone Number *</FormLabel>
               <FormControl>
-                <Input placeholder="Enter phone number" {...field} />
+                <MobileInput 
+                  label="Phone Number"
+                  type="tel"
+                  inputMode="tel"
+                  placeholder="07123 456789"
+                  error={form.formState.errors.phone?.message}
+                  clearError={() => form.clearErrors('phone')}
+                  {...field} 
+                />
               </FormControl>
-              <FormMessage />
             </FormItem>
           )}
         />
@@ -95,11 +114,15 @@ export const ClientDetailsStep = ({ client, onUpdate }: ClientDetailsStepProps) 
           name="postcode"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Postcode *</FormLabel>
               <FormControl>
-                <Input placeholder="Enter postcode" {...field} />
+                <MobileInput 
+                  label="Postcode"
+                  placeholder="SW1A 1AA"
+                  error={form.formState.errors.postcode?.message}
+                  clearError={() => form.clearErrors('postcode')}
+                  {...field} 
+                />
               </FormControl>
-              <FormMessage />
             </FormItem>
           )}
         />
@@ -108,12 +131,16 @@ export const ClientDetailsStep = ({ client, onUpdate }: ClientDetailsStepProps) 
           control={form.control}
           name="address"
           render={({ field }) => (
-            <FormItem className="md:col-span-2">
-              <FormLabel>Address *</FormLabel>
+            <FormItem className={isMobile ? '' : 'md:col-span-2'}>
               <FormControl>
-                <Input placeholder="Enter full address" {...field} />
+                <MobileInput 
+                  label="Address"
+                  placeholder="Enter full address"
+                  error={form.formState.errors.address?.message}
+                  clearError={() => form.clearErrors('address')}
+                  {...field} 
+                />
               </FormControl>
-              <FormMessage />
             </FormItem>
           )}
         />

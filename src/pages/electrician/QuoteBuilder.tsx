@@ -4,9 +4,12 @@ import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Plus, FileText, Clock, CheckCircle, TrendingUp, ArrowLeft } from "lucide-react";
 import { QuoteWizard } from "@/components/electrician/quote-builder/QuoteWizard";
+import { useMobileEnhanced } from "@/hooks/use-mobile-enhanced";
 import React from "react";
 
 const QuoteBuilder = () => {
+  const { isMobile, isTablet } = useMobileEnhanced();
+  
   const stats = [
     {
       title: "Pending Quotes",
@@ -59,71 +62,88 @@ const QuoteBuilder = () => {
           name="description"
           content="Professional quote builder for UK electricians. Create, manage and track electrical quotes with BS 7671 compliant templates and pricing tools."
         />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="canonical" href={canonical} />
       </Helmet>
 
-      {/* Enhanced Header with Gradient Background */}
+      {/* Mobile-Enhanced Header with Gradient Background */}
       <header className="relative bg-gradient-to-r from-primary via-primary/90 to-primary/80 text-primary-foreground">
         <div className="absolute inset-0 bg-grid-pattern opacity-20"></div>
-        <div className="relative px-4 py-8 space-y-6">
-          {/* Breadcrumb Navigation */}
-          <nav className="flex items-center gap-2 text-sm opacity-90">
-            <Link to="/electrician/business" className="hover:text-accent-foreground transition-colors">
-              Business Hub
-            </Link>
-            <span>/</span>
-            <span>Quote Builder</span>
-          </nav>
+        <div className="relative mobile-padding mobile-safe-area space-y-4 sm:space-y-6">
+          {/* Breadcrumb Navigation - Hidden on mobile to save space */}
+          {!isMobile && (
+            <nav className="flex items-center gap-2 mobile-small-text opacity-90">
+              <Link to="/electrician/business" className="hover:text-accent-foreground transition-colors">
+                Business Hub
+              </Link>
+              <span>/</span>
+              <span>Quote Builder</span>
+            </nav>
+          )}
 
-          {/* Title and Back Button */}
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          {/* Mobile-Optimized Title and Back Button */}
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
             <div className="space-y-2">
-              <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
+              <h1 className={`font-bold tracking-tight ${isMobile ? 'mobile-heading text-2xl' : 'text-3xl sm:text-4xl'}`}>
                 Quote Builder
               </h1>
-              <p className="text-primary-foreground/80 text-lg">
+              <p className={`text-primary-foreground/80 ${isMobile ? 'mobile-text' : 'text-lg'}`}>
                 Create professional electrical quotes with ease
               </p>
             </div>
             <Link to="/electrician/business" className="w-full sm:w-auto">
-              <Button variant="secondary" size="lg" className="w-full sm:w-auto shadow-lg">
-                <ArrowLeft className="mr-2 h-4 w-4" /> Back to Business Hub
+              <Button 
+                variant="secondary" 
+                size={isMobile ? "default" : "lg"}
+                className="w-full sm:w-auto shadow-lg touch-target"
+              >
+                <ArrowLeft className="mr-2 h-4 w-4" /> 
+                {isMobile ? 'Back' : 'Back to Business Hub'}
               </Button>
             </Link>
           </div>
         </div>
       </header>
 
-      <div className="px-4 py-8 space-y-8 animate-fade-in">
+      <div className="mobile-container mobile-padding mobile-section-spacing animate-fade-in">
 
-        <main className="space-y-8">
-          {/* Enhanced Stats Dashboard */}
-          <section aria-labelledby="stats-overview" className="space-y-6">
-            <div className="flex items-center justify-between">
-              <h2 id="stats-overview" className="text-2xl font-bold">Dashboard Overview</h2>
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+        <main className="mobile-section-spacing">
+          {/* Mobile-Enhanced Stats Dashboard */}
+          <section aria-labelledby="stats-overview" className="space-y-4 sm:space-y-6">
+            <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+              <h2 id="stats-overview" className={`font-bold ${isMobile ? 'mobile-subheading' : 'text-2xl'}`}>
+                Dashboard Overview
+              </h2>
+              <div className="flex items-center gap-2 mobile-small-text text-muted-foreground">
                 <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
                 Live data
               </div>
             </div>
             
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
+            <div className={`mobile-grid-responsive gap-3 sm:gap-4 lg:gap-6`}>
               {stats.map((stat, index) => (
-                <Card key={index} className="group relative overflow-hidden border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] bg-gradient-to-br from-card to-card/50">
+                <Card 
+                  key={index} 
+                  className={`mobile-card mobile-interactive group relative overflow-hidden border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] bg-gradient-to-br from-card to-card/50`}
+                >
                   <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  <CardContent className="relative p-6">
+                  <CardContent className="mobile-card-spacing relative">
                     <div className="flex items-start justify-between">
-                      <div className="space-y-2">
-                        <p className="text-sm font-medium text-muted-foreground">{stat.title}</p>
-                        <p className="text-3xl font-bold">{stat.value}</p>
+                      <div className="space-y-2 flex-1 min-w-0">
+                        <p className={`font-medium text-muted-foreground truncate ${isMobile ? 'mobile-small-text' : 'text-sm'}`}>
+                          {stat.title}
+                        </p>
+                        <p className={`font-bold ${isMobile ? 'text-2xl' : 'text-3xl'}`}>
+                          {stat.value}
+                        </p>
                         <div className="flex items-center gap-2">
                           <div className="w-full bg-muted rounded-full h-1">
                             <div className="bg-primary h-1 rounded-full" style={{ width: `${Math.random() * 100}%` }}></div>
                           </div>
                         </div>
                       </div>
-                      <div className={`p-3 rounded-xl bg-gradient-to-br ${index % 2 === 0 ? 'from-primary/10 to-primary/5' : 'from-accent/10 to-accent/5'}`}>
-                        <stat.icon className={`h-6 w-6 ${stat.color} group-hover:scale-110 transition-transform duration-300`} />
+                      <div className={`p-2 sm:p-3 rounded-xl bg-gradient-to-br flex-shrink-0 ${index % 2 === 0 ? 'from-primary/10 to-primary/5' : 'from-accent/10 to-accent/5'}`}>
+                        <stat.icon className={`h-5 w-5 sm:h-6 sm:w-6 ${stat.color} group-hover:scale-110 transition-transform duration-300`} />
                       </div>
                     </div>
                   </CardContent>
@@ -132,44 +152,57 @@ const QuoteBuilder = () => {
             </div>
           </section>
 
-          {/* Enhanced Quote Wizard Section */}
-          <section className="space-y-6">
+          {/* Mobile-Enhanced Quote Wizard Section */}
+          <section className="space-y-4 sm:space-y-6">
             <div className="text-center space-y-2">
-              <h2 className="text-2xl font-bold">Create New Quote</h2>
-              <p className="text-muted-foreground">
+              <h2 className={`font-bold ${isMobile ? 'mobile-subheading' : 'text-2xl'}`}>
+                Create New Quote
+              </h2>
+              <p className={`text-muted-foreground ${isMobile ? 'mobile-text' : ''}`}>
                 Follow our guided process to create professional electrical quotes
               </p>
             </div>
-            <Card className="border-0 shadow-2xl bg-gradient-to-br from-card to-card/80">
-              <CardContent className="p-6 lg:p-8 bg-card">
+            <Card className="mobile-card border-0 shadow-2xl bg-gradient-to-br from-card to-card/80">
+              <CardContent className={`bg-card ${isMobile ? 'mobile-card-spacing' : 'p-6 lg:p-8'}`}>
                 <QuoteWizard />
               </CardContent>
             </Card>
           </section>
 
-          {/* Enhanced Recent Quotes */}
-          <section aria-labelledby="recent-quotes" className="space-y-6">
-            <div className="flex items-center justify-between">
-              <h2 id="recent-quotes" className="text-2xl font-bold">Recent Quotes</h2>
-              <Button variant="outline" size="sm">
+          {/* Mobile-Enhanced Recent Quotes */}
+          <section aria-labelledby="recent-quotes" className="space-y-4 sm:space-y-6">
+            <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+              <h2 id="recent-quotes" className={`font-bold ${isMobile ? 'mobile-subheading' : 'text-2xl'}`}>
+                Recent Quotes
+              </h2>
+              <Button 
+                variant="outline" 
+                size={isMobile ? "default" : "sm"}
+                className={isMobile ? "touch-target w-full sm:w-auto" : ""}
+              >
                 View All
               </Button>
             </div>
-            <Card className="border-0 shadow-lg bg-gradient-to-br from-card to-card/50">
-              <CardContent className="p-8">
-                <div className="text-center py-12 space-y-6">
+            <Card className="mobile-card border-0 shadow-lg bg-gradient-to-br from-card to-card/50">
+              <CardContent className={isMobile ? 'mobile-card-spacing' : 'p-8'}>
+                <div className={`text-center space-y-4 sm:space-y-6 ${isMobile ? 'py-8' : 'py-12'}`}>
                   <div className="relative">
                     <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-accent/20 rounded-full blur-2xl"></div>
-                    <FileText className="relative h-16 w-16 text-muted-foreground mx-auto" />
+                    <FileText className={`relative text-muted-foreground mx-auto ${isMobile ? 'h-12 w-12' : 'h-16 w-16'}`} />
                   </div>
                   <div className="space-y-2">
-                    <h3 className="text-xl font-semibold">No quotes created yet</h3>
-                    <p className="text-muted-foreground max-w-md mx-auto">
+                    <h3 className={`font-semibold ${isMobile ? 'mobile-subheading' : 'text-xl'}`}>
+                      No quotes created yet
+                    </h3>
+                    <p className={`text-muted-foreground max-w-md mx-auto ${isMobile ? 'mobile-text' : ''}`}>
                       Start building professional quotes for your electrical projects. Our wizard makes it quick and easy.
                     </p>
                   </div>
-                  <Button size="lg" className="bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary shadow-lg">
-                    <Plus className="mr-2 h-5 w-5" />
+                  <Button 
+                    size={isMobile ? "default" : "lg"}
+                    className={`bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary shadow-lg ${isMobile ? 'touch-target w-full sm:w-auto' : ''}`}
+                  >
+                    <Plus className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
                     Create Your First Quote
                   </Button>
                 </div>

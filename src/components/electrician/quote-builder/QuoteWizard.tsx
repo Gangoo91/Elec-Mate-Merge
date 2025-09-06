@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { ArrowLeft, ArrowRight, User, Settings, FileText, Calculator } from "lucide-react";
 import { useQuoteBuilder } from "@/hooks/useQuoteBuilder";
+import { useMobileEnhanced } from "@/hooks/use-mobile-enhanced";
 import { ClientDetailsStep } from "./steps/ClientDetailsStep";
 import { EnhancedQuoteItemsStep } from "./steps/EnhancedQuoteItemsStep";
 import { QuoteSettingsStep } from "./steps/QuoteSettingsStep";
@@ -29,6 +30,8 @@ export const QuoteWizard = () => {
     prevStep,
     resetQuote,
   } = useQuoteBuilder();
+
+  const { isMobile, isTablet, touchSupport } = useMobileEnhanced();
 
   const canProceed = () => {
     console.log('Checking canProceed for step:', currentStep);
@@ -64,56 +67,53 @@ export const QuoteWizard = () => {
   };
 
   return (
-    <div className="space-y-8">
-      {/* Enhanced Progress Section */}
-      <div className="space-y-6">
-        <div className="flex items-center justify-between">
+    <div className="mobile-section-spacing">
+      {/* Mobile-Optimized Progress Section */}
+      <div className="space-y-4 sm:space-y-6">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div className="space-y-1">
-            <h3 className="text-lg font-semibold">Progress Overview</h3>
-            <p className="text-sm text-muted-foreground">
+            <h3 className="mobile-subheading">Progress Overview</h3>
+            <p className="mobile-small-text text-muted-foreground">
               Step {currentStep + 1} of {steps.length} completed
             </p>
           </div>
-          <div className="flex items-center gap-2 px-3 py-1 bg-primary/10 text-primary rounded-full text-sm font-medium">
+          <div className="flex items-center gap-2 px-3 py-2 bg-primary/10 text-primary rounded-full mobile-small-text font-medium self-start sm:self-auto">
             <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
             {Math.round(((currentStep + 1) / steps.length) * 100)}% Complete
           </div>
         </div>
         
-        {/* Enhanced Progress Bar */}
+        {/* Mobile-Enhanced Progress Bar */}
         <div className="space-y-2">
-          <Progress value={((currentStep + 1) / steps.length) * 100} className="h-3 bg-muted" />
-          <div className="flex justify-between text-xs text-muted-foreground">
+          <Progress value={((currentStep + 1) / steps.length) * 100} className="h-2 sm:h-3 bg-muted" />
+          <div className="flex justify-between mobile-small-text text-muted-foreground">
             <span>Started</span>
             <span>Complete</span>
           </div>
         </div>
         
-        {/* Enhanced Step Indicators */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-          {steps.map((step, index) => {
-            const StepIcon = step.icon;
-            const isActive = index === currentStep;
-            const isCompleted = index < currentStep;
-            const isFuture = index > currentStep;
-            
-            return (
-              <Card
-                key={index}
-                className={`relative overflow-hidden border-2 transition-all duration-300 hover:shadow-md ${
-                  isActive 
-                    ? 'border-primary bg-primary/5 shadow-lg scale-105' 
-                    : isCompleted 
-                    ? 'border-green-500/50 bg-green-50 dark:bg-green-950/20'
-                    : 'border-muted bg-muted/30'
-                }`}
-              >
-                {isActive && (
-                  <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-accent/10 animate-pulse"></div>
-                )}
-                <CardContent className="relative p-4">
-                  <div className="flex flex-col items-center text-center space-y-2">
-                    <div className={`p-2 rounded-full ${
+        {/* Mobile-Optimized Step Indicators */}
+        {isMobile ? (
+          // Mobile: Horizontal scrollable step indicators
+          <div className="overflow-x-auto pb-2">
+            <div className="flex gap-3 min-w-max px-1">
+              {steps.map((step, index) => {
+                const StepIcon = step.icon;
+                const isActive = index === currentStep;
+                const isCompleted = index < currentStep;
+                
+                return (
+                  <div
+                    key={index}
+                    className={`flex flex-col items-center text-center space-y-2 p-3 rounded-lg border-2 transition-all duration-300 min-w-[100px] ${
+                      isActive 
+                        ? 'border-primary bg-primary/5 shadow-lg' 
+                        : isCompleted 
+                        ? 'border-green-500/50 bg-green-50 dark:bg-green-950/20'
+                        : 'border-muted bg-muted/30'
+                    }`}
+                  >
+                    <div className={`p-2 rounded-full touch-target ${
                       isActive 
                         ? 'bg-primary text-primary-foreground' 
                         : isCompleted 
@@ -123,7 +123,7 @@ export const QuoteWizard = () => {
                       <StepIcon className="h-4 w-4" />
                     </div>
                     <div className="space-y-1">
-                      <span className={`text-sm font-medium ${
+                      <span className={`mobile-small-text font-medium ${
                         isActive ? 'text-primary' : isCompleted ? 'text-green-600 dark:text-green-400' : 'text-muted-foreground'
                       }`}>
                         {step.title}
@@ -138,76 +138,187 @@ export const QuoteWizard = () => {
                       </div>
                     )}
                   </div>
-                </CardContent>
-              </Card>
-            );
-          })}
-        </div>
+                );
+              })}
+            </div>
+          </div>
+        ) : (
+          // Desktop/Tablet: Grid layout
+          <div className={`grid ${isTablet ? 'grid-cols-2 gap-3' : 'grid-cols-4 gap-4'}`}>
+            {steps.map((step, index) => {
+              const StepIcon = step.icon;
+              const isActive = index === currentStep;
+              const isCompleted = index < currentStep;
+              
+              return (
+                <Card
+                  key={index}
+                  className={`relative overflow-hidden border-2 transition-all duration-300 hover:shadow-md ${
+                    isActive 
+                      ? 'border-primary bg-primary/5 shadow-lg scale-105' 
+                      : isCompleted 
+                      ? 'border-green-500/50 bg-green-50 dark:bg-green-950/20'
+                      : 'border-muted bg-muted/30'
+                  }`}
+                >
+                  {isActive && (
+                    <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-accent/10 animate-pulse"></div>
+                  )}
+                  <CardContent className="relative p-4">
+                    <div className="flex flex-col items-center text-center space-y-2">
+                      <div className={`p-2 rounded-full ${
+                        isActive 
+                          ? 'bg-primary text-primary-foreground' 
+                          : isCompleted 
+                          ? 'bg-green-500 text-white'
+                          : 'bg-muted text-muted-foreground'
+                      }`}>
+                        <StepIcon className="h-4 w-4" />
+                      </div>
+                      <div className="space-y-1">
+                        <span className={`text-sm font-medium ${
+                          isActive ? 'text-primary' : isCompleted ? 'text-green-600 dark:text-green-400' : 'text-muted-foreground'
+                        }`}>
+                          {step.title}
+                        </span>
+                        <p className="text-xs text-muted-foreground leading-tight">
+                          {step.description}
+                        </p>
+                      </div>
+                      {isCompleted && (
+                        <div className="w-full h-1 bg-green-500/20 rounded-full">
+                          <div className="w-full h-1 bg-green-500 rounded-full"></div>
+                        </div>
+                      )}
+                    </div>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
+        )}
       </div>
 
-      {/* Enhanced Step Content */}
-      <Card className="border-0 bg-gradient-to-br from-card to-card/50 shadow-lg">
-        <CardHeader className="pb-4">
+      {/* Mobile-Enhanced Step Content */}
+      <Card className="mobile-card border-0 bg-gradient-to-br from-card to-card/50 shadow-lg">
+        <CardHeader className={`${isMobile ? 'mobile-card-spacing pb-2' : 'pb-4'}`}>
           <div className="flex items-center gap-3">
-            <div className="p-2 bg-primary/10 rounded-lg">
+            <div className="p-2 bg-primary/10 rounded-lg touch-target">
               {React.createElement(steps[currentStep].icon, { className: "h-5 w-5 text-primary" })}
             </div>
-            <div className="space-y-1">
-              <CardTitle className="text-xl">{steps[currentStep].title}</CardTitle>
-              <p className="text-sm text-muted-foreground">{steps[currentStep].description}</p>
+            <div className="space-y-1 flex-1 min-w-0">
+              <CardTitle className={`${isMobile ? 'mobile-subheading' : 'text-xl'} truncate`}>
+                {steps[currentStep].title}
+              </CardTitle>
+              <p className={`text-muted-foreground ${isMobile ? 'mobile-small-text' : 'text-sm'}`}>
+                {steps[currentStep].description}
+              </p>
             </div>
           </div>
         </CardHeader>
-        <CardContent className="space-y-6">
+        <CardContent className={`${isMobile ? 'mobile-card-spacing space-y-4' : 'space-y-6'}`}>
           {renderStep()}
         </CardContent>
       </Card>
 
-      {/* Enhanced Navigation */}
-      <Card className="border-0 bg-gradient-to-r from-muted/50 to-muted/30">
-        <CardContent className="p-6">
-          <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
+      {/* Mobile bottom padding to ensure content isn't hidden behind fixed navigation */}
+      {isMobile && <div className="h-20"></div>}
+
+      {/* Mobile-Enhanced Navigation */}
+      {isMobile ? (
+        // Mobile: Fixed bottom navigation
+        <div className="mobile-action-bar fixed bottom-0 left-0 right-0 bg-background border-t border-border shadow-lg z-50">
+          <div className="mobile-container flex items-center justify-between gap-3 py-3">
             <Button
               variant="outline"
               onClick={prevStep}
               disabled={currentStep === 0}
               size="lg"
-              className="flex items-center gap-2 w-full sm:w-auto disabled:opacity-50 disabled:cursor-not-allowed"
+              className="touch-target flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <ArrowLeft className="h-4 w-4" />
-              Previous Step
+              {isMobile ? 'Back' : 'Previous Step'}
             </Button>
             
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <span className="hidden sm:inline">Need help?</span>
-              <Button variant="ghost" size="sm" onClick={resetQuote}>
-                Start Over
-              </Button>
-            </div>
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              onClick={resetQuote}
+              className="touch-target mobile-small-text"
+            >
+              Reset
+            </Button>
             
             {currentStep < steps.length - 1 ? (
               <Button
                 onClick={nextStep}
                 disabled={!canProceed()}
                 size="lg"
-                className="flex items-center gap-2 w-full sm:w-auto bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                className="touch-target flex items-center gap-2 bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Continue to {steps[currentStep + 1]?.title}
+                Next
                 <ArrowRight className="h-4 w-4" />
               </Button>
             ) : (
               <Button 
                 onClick={nextStep}
                 size="lg"
-                className="w-full sm:w-auto bg-gradient-to-r from-green-600 to-green-500 hover:from-green-500 hover:to-green-400 text-white shadow-lg"
+                className="touch-target bg-gradient-to-r from-green-600 to-green-500 hover:from-green-500 hover:to-green-400 text-white shadow-lg"
               >
                 <Calculator className="mr-2 h-4 w-4" />
-                Generate Quote
+                Generate
               </Button>
             )}
           </div>
-        </CardContent>
-      </Card>
+          <div className="mobile-bottom-safe"></div>
+        </div>
+      ) : (
+        // Desktop/Tablet: Standard navigation
+        <Card className="border-0 bg-gradient-to-r from-muted/50 to-muted/30">
+          <CardContent className="p-6">
+            <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
+              <Button
+                variant="outline"
+                onClick={prevStep}
+                disabled={currentStep === 0}
+                size="lg"
+                className="flex items-center gap-2 w-full sm:w-auto disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <ArrowLeft className="h-4 w-4" />
+                Previous Step
+              </Button>
+              
+              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                <span className="hidden sm:inline">Need help?</span>
+                <Button variant="ghost" size="sm" onClick={resetQuote}>
+                  Start Over
+                </Button>
+              </div>
+              
+              {currentStep < steps.length - 1 ? (
+                <Button
+                  onClick={nextStep}
+                  disabled={!canProceed()}
+                  size="lg"
+                  className="flex items-center gap-2 w-full sm:w-auto bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Continue to {steps[currentStep + 1]?.title}
+                  <ArrowRight className="h-4 w-4" />
+                </Button>
+              ) : (
+                <Button 
+                  onClick={nextStep}
+                  size="lg"
+                  className="w-full sm:w-auto bg-gradient-to-r from-green-600 to-green-500 hover:from-green-500 hover:to-green-400 text-white shadow-lg"
+                >
+                  <Calculator className="mr-2 h-4 w-4" />
+                  Generate Quote
+                </Button>
+              )}
+            </div>
+          </CardContent>
+        </Card>
+      )}
     </div>
   );
 };
