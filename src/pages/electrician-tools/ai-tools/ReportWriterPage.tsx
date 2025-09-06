@@ -1,7 +1,7 @@
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import ReportWriter from "@/components/electrician-tools/ai-tools/ReportWriter";
+import ReportWizard from "@/components/electrician-tools/ai-tools/modern-report-writer/ReportWizard";
 
 const ReportWriterPage = () => {
   return (
@@ -23,7 +23,7 @@ const ReportWriterPage = () => {
           </div>
 
           {/* Content */}
-          <ReportWriter />
+          <ReportWizard />
         </div>
       </div>
     </div>
