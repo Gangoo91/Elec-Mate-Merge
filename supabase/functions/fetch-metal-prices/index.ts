@@ -2,8 +2,8 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 
-// Force redeployment - Version 2.1 - Fix secret propagation issue
-// Updated: 2025-08-17T17:55:00Z
+// Force redeployment - Version 2.2 - Updated mobile display format
+// Updated: 2025-09-06T17:47:00Z
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
