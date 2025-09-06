@@ -215,9 +215,9 @@ const TemplateSelectionStep: React.FC<TemplateStepProps> = ({
                     }`} />
                   </div>
                   <div className="flex-1 min-w-0 mr-20">
-                    <h3 className={`font-semibold text-sm leading-tight truncate ${
+                    <h3 className={`font-semibold text-sm leading-tight ${
                       isSelected ? 'text-elec-yellow' : 'text-white'
-                    }`} title={template.name}>
+                    }`}>
                       {template.name}
                     </h3>
                     <p className="text-xs text-muted-foreground mt-1 line-clamp-2">
