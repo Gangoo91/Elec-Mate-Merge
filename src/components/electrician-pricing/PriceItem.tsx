@@ -51,7 +51,7 @@ const PriceItem = ({ name, value, change, trend, isLarge = false, badge, supplie
       <div className={`group flex items-center justify-between p-3 rounded-lg border transition-all duration-200 hover:scale-[1.02] hover:shadow-md ${getTrendBg()}`}>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2">
-            <p className={`${isLarge ? 'text-base' : 'text-sm'} font-medium text-foreground truncate`}>
+            <p className={`${isLarge ? 'text-sm' : 'text-xs'} font-medium text-foreground truncate`}>
               {name}
             </p>
             {badge && (
@@ -88,7 +88,7 @@ const PriceItem = ({ name, value, change, trend, isLarge = false, badge, supplie
             <div className="flex-1 min-w-0 flex items-center gap-2">
               <div className="flex-1">
                 <div className="flex items-center gap-2">
-                  <p className={`${isLarge ? 'text-base' : 'text-sm'} font-medium text-foreground truncate`}>
+                  <p className={`${isLarge ? 'text-sm' : 'text-xs'} font-medium text-foreground truncate`}>
                     {name}
                   </p>
                   {badge && (
