@@ -319,7 +319,7 @@ const CommunityPriceSubmission = () => {
           </Button>
 
           {/* Disclaimer */}
-          <div className="text-xs text-muted-foreground bg-elec-yellow/5 p-3 rounded-lg">
+          <div className="text-xs text-white bg-elec-yellow/5 p-3 rounded-lg">
             <strong>Privacy Notice:</strong> Submissions are reviewed before publication. 
             No personal information is stored. Prices help create accurate regional estimates for the community.
           </div>
