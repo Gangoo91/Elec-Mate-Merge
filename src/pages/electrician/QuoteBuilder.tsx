@@ -156,9 +156,11 @@ const QuoteBuilder = () => {
           <section aria-labelledby="recent-quotes" className="space-y-6">
             <div className="flex items-center justify-between">
               <h2 id="recent-quotes" className="text-2xl font-bold">Recent Quotes</h2>
-              <Button variant="outline" size="sm">
-                View All
-              </Button>
+              <Link to="/electrician/quotes">
+                <Button variant="outline" size="sm">
+                  View All
+                </Button>
+              </Link>
             </div>
             <RecentQuotesList 
               quotes={savedQuotes}
