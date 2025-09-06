@@ -253,59 +253,90 @@ const ElectricianFurtherEducation = () => {
       )}
 
       {/* Funding Information Card - Mobile optimized */}
-      <Card className="mobile-card bg-elec-card/60">
+      <Card className="mobile-card bg-gradient-to-br from-elec-card to-elec-card/80 border-elec-yellow/20">
         <CardHeader className="mobile-padding">
           <CardTitle className="flex items-center gap-3 mobile-subheading">
-            <PoundSterling className="h-5 w-5 text-elec-yellow flex-shrink-0" />
+            <div className="p-2 rounded-full bg-elec-yellow/10">
+              <PoundSterling className="h-5 w-5 text-elec-yellow flex-shrink-0" />
+            </div>
             UK Education Funding Support
           </CardTitle>
         </CardHeader>
-        <CardContent className="mobile-padding grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="space-y-4">
-            <h4 className="font-medium text-elec-yellow mobile-text">Government Support</h4>
+        <CardContent className="mobile-padding space-y-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {/* Government Support Section */}
             <div className="space-y-4">
-              <div className="space-y-2">
-                <h5 className="font-medium text-foreground mobile-small-text">Advanced Learner Loan (19+)</h5>
-                <p className="text-text-subtle mobile-small-text leading-relaxed">
-                  Available for Level 3-6 qualifications. No upfront fees, only repay when earning £25,000+. 
-                  9% of income above threshold.
-                </p>
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
+                <h4 className="font-semibold text-elec-yellow mobile-text">Government Support</h4>
               </div>
-              <div className="space-y-2">
-                <h5 className="font-medium text-foreground mobile-small-text">Student Finance England</h5>
-                <p className="text-text-subtle mobile-small-text leading-relaxed">
-                  Tuition fee loans up to £9,250 for degrees. Maintenance loans available based on household income. 
-                  Repayment at 9% above £27,295.
-                </p>
-              </div>
-              <div className="space-y-2">
-                <h5 className="font-medium text-foreground mobile-small-text">Postgraduate Loan</h5>
-                <p className="text-text-subtle mobile-small-text leading-relaxed">
-                  Up to £12,167 for Master's study. 6% interest rate. Same repayment terms as undergraduate loans.
-                </p>
+              <div className="space-y-4">
+                <div className="bg-background/30 rounded-lg p-4 border border-elec-yellow/10">
+                  <h5 className="font-semibold text-foreground mobile-small-text mb-2 flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
+                    Advanced Learner Loan (19+)
+                  </h5>
+                  <p className="text-text-subtle mobile-small-text leading-relaxed">
+                    Available for Level 3-6 qualifications. No upfront fees, only repay when earning £25,000+. 
+                    9% of income above threshold.
+                  </p>
+                </div>
+                <div className="bg-background/30 rounded-lg p-4 border border-elec-yellow/10">
+                  <h5 className="font-semibold text-foreground mobile-small-text mb-2 flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
+                    Student Finance England
+                  </h5>
+                  <p className="text-text-subtle mobile-small-text leading-relaxed">
+                    Tuition fee loans up to £9,250 for degrees. Maintenance loans available based on household income. 
+                    Repayment at 9% above £27,295.
+                  </p>
+                </div>
+                <div className="bg-background/30 rounded-lg p-4 border border-elec-yellow/10">
+                  <h5 className="font-semibold text-foreground mobile-small-text mb-2 flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
+                    Postgraduate Loan
+                  </h5>
+                  <p className="text-text-subtle mobile-small-text leading-relaxed">
+                    Up to £12,167 for Master's study. 6% interest rate. Same repayment terms as undergraduate loans.
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
-          <div className="space-y-4">
-            <h4 className="font-medium text-elec-yellow mobile-text">Industry & Employer Support</h4>
+
+            {/* Industry & Employer Support Section */}
             <div className="space-y-4">
-              <div className="space-y-2">
-                <h5 className="font-medium text-foreground mobile-small-text">Apprenticeship Levy</h5>
-                <p className="text-text-subtle mobile-small-text leading-relaxed">
-                  Large employers (£3M+ payroll) contribute 0.5% to apprenticeship levy. Can fund degree apprenticeships.
-                </p>
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
+                <h4 className="font-semibold text-elec-yellow mobile-text">Industry & Employer Support</h4>
               </div>
-              <div className="space-y-2">
-                <h5 className="font-medium text-foreground mobile-small-text">Professional Body Grants</h5>
-                <p className="text-text-subtle mobile-small-text leading-relaxed">
-                  IET scholarships (£1,000-£10,000), ECA Educational Trust grants, NECA bursaries for electrical study.
-                </p>
-              </div>
-              <div className="space-y-2">
-                <h5 className="font-medium text-foreground mobile-small-text">Career Development Loans</h5>
-                <p className="text-text-subtle mobile-small-text leading-relaxed">
-                  Bank loans for vocational training. Government pays interest during study and one month after.
-                </p>
+              <div className="space-y-4">
+                <div className="bg-background/30 rounded-lg p-4 border border-elec-yellow/10">
+                  <h5 className="font-semibold text-foreground mobile-small-text mb-2 flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
+                    Apprenticeship Levy
+                  </h5>
+                  <p className="text-text-subtle mobile-small-text leading-relaxed">
+                    Large employers (£3M+ payroll) contribute 0.5% to apprenticeship levy. Can fund degree apprenticeships.
+                  </p>
+                </div>
+                <div className="bg-background/30 rounded-lg p-4 border border-elec-yellow/10">
+                  <h5 className="font-semibold text-foreground mobile-small-text mb-2 flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
+                    Professional Body Grants
+                  </h5>
+                  <p className="text-text-subtle mobile-small-text leading-relaxed">
+                    IET scholarships (£1,000-£10,000), ECA Educational Trust grants, NECA bursaries for electrical study.
+                  </p>
+                </div>
+                <div className="bg-background/30 rounded-lg p-4 border border-elec-yellow/10">
+                  <h5 className="font-semibold text-foreground mobile-small-text mb-2 flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
+                    Career Development Loans
+                  </h5>
+                  <p className="text-text-subtle mobile-small-text leading-relaxed">
+                    Bank loans for vocational training. Government pays interest during study and one month after.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
