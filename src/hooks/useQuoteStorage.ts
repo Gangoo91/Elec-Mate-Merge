@@ -11,25 +11,50 @@ export const useQuoteStorage = () => {
     try {
       const stored = localStorage.getItem(QUOTES_STORAGE_KEY);
       if (stored) {
-        const quotes = JSON.parse(stored).map((quote: any) => ({
+        const parsedQuotes = JSON.parse(stored);
+        console.log('Loading quotes from localStorage:', parsedQuotes.length);
+        
+        const quotes = parsedQuotes.map((quote: any) => ({
           ...quote,
           createdAt: new Date(quote.createdAt),
           updatedAt: new Date(quote.updatedAt),
           expiryDate: new Date(quote.expiryDate),
         }));
+        
         setSavedQuotes(quotes);
+        console.log('Quotes loaded successfully:', quotes.length);
       }
     } catch (error) {
       console.error('Error loading quotes from storage:', error);
+      // Clear corrupted data
+      localStorage.removeItem(QUOTES_STORAGE_KEY);
     }
   }, []);
 
   // Save a new quote
   const saveQuote = useCallback((quote: Quote) => {
     try {
+      // Serialize dates properly for localStorage
+      const serializedQuote = {
+        ...quote,
+        createdAt: quote.createdAt.toISOString(),
+        updatedAt: quote.updatedAt.toISOString(),
+        expiryDate: quote.expiryDate.toISOString(),
+      };
+      
       const updatedQuotes = [quote, ...savedQuotes.filter(q => q.id !== quote.id)];
       setSavedQuotes(updatedQuotes);
-      localStorage.setItem(QUOTES_STORAGE_KEY, JSON.stringify(updatedQuotes));
+      
+      // Save serialized version to localStorage
+      const serializedQuotes = updatedQuotes.map(q => ({
+        ...q,
+        createdAt: q.createdAt.toISOString(),
+        updatedAt: q.updatedAt.toISOString(),
+        expiryDate: q.expiryDate.toISOString(),
+      }));
+      
+      localStorage.setItem(QUOTES_STORAGE_KEY, JSON.stringify(serializedQuotes));
+      console.log('Quote saved successfully:', quote.id);
       return true;
     } catch (error) {
       console.error('Error saving quote:', error);
