@@ -72,11 +72,8 @@ const PriceItem = ({ name, value, change, trend, isLarge = false, badge, supplie
             {value}
           </span>
           
-          <div className={`flex items-center gap-1 px-2 py-1 rounded-full ${getTrendBg()} ${getTrendColor()} min-w-[65px] justify-center`}>
+          <div className={`flex items-center gap-1 px-2 py-1 rounded-full ${getTrendBg()} ${getTrendColor()}`}>
             {getTrendIcon()}
-            <span className="text-xs font-medium">
-              {change}
-            </span>
           </div>
         </div>
       </div>
@@ -118,11 +115,8 @@ const PriceItem = ({ name, value, change, trend, isLarge = false, badge, supplie
                 {value}
               </span>
               
-              <div className={`flex items-center gap-1 px-2 py-1 rounded-full ${getTrendBg()} ${getTrendColor()} min-w-[65px] justify-center`}>
+              <div className={`flex items-center gap-1 px-2 py-1 rounded-full ${getTrendBg()} ${getTrendColor()}`}>
                 {getTrendIcon()}
-                <span className="text-xs font-medium">
-                  {change}
-                </span>
               </div>
             </div>
           </div>
@@ -135,11 +129,10 @@ const PriceItem = ({ name, value, change, trend, isLarge = false, badge, supplie
                 <span className="text-sm text-foreground/90">{subItem.name}</span>
                 <div className="flex items-center gap-2 flex-shrink-0">
                   <span className="text-sm font-medium text-elec-yellow text-right min-w-[60px]">{subItem.value}</span>
-                  <div className={`flex items-center gap-1 px-1.5 py-0.5 rounded-full text-xs ${getTrendBg()} min-w-[50px] justify-center`}>
+                  <div className={`flex items-center gap-1 px-1.5 py-0.5 rounded-full text-xs ${getTrendBg()}`}>
                     {subItem.trend === "up" ? <TrendingUp className="h-2.5 w-2.5" /> : 
                      subItem.trend === "down" ? <TrendingDown className="h-2.5 w-2.5" /> : 
                      <Minus className="h-2.5 w-2.5" />}
-                    <span className={getTrendColor()}>{subItem.change}</span>
                   </div>
                 </div>
               </div>
