@@ -14,6 +14,7 @@ import MaterialCard from "@/components/electrician-materials/MaterialCard";
 import MaterialPriceComparison from "@/components/electrician-materials/MaterialPriceComparison";
 import BulkPricingCalculator from "@/components/electrician-materials/BulkPricingCalculator";
 import PriceHistoryAlerts from "@/components/electrician-materials/PriceHistoryAlerts";
+import RefreshButton from "@/components/electrician-materials/RefreshButton";
 import { useCategoryMaterials } from "@/hooks/useCategoryMaterials";
 
 const CATEGORY_META: Record<string, { title: string; description: string }> = {
@@ -251,16 +252,13 @@ const CategoryMaterials = () => {
                 />
               </div>
               <div className="flex items-end">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => refetch()}
-                  disabled={isRefetching}
-                  className="bg-elec-yellow/10 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/20"
-                >
-                  <RefreshCw className={`h-4 w-4 mr-2 ${isRefetching ? 'animate-spin' : ''}`} />
-                  {isRefetching ? 'Refreshing…' : 'Refresh'}
-                </Button>
+                <RefreshButton
+                  isFetching={isRefetching}
+                  lastFetchTime={0}
+                  onRefresh={refetch}
+                  categoryId={categoryId}
+                  className="shrink-0"
+                />
               </div>
             </div>
           )}
