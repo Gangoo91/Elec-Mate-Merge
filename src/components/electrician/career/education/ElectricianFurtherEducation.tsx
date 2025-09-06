@@ -221,7 +221,7 @@ const ElectricianFurtherEducation = () => {
 
       {/* Education Options Grid */}
       {!loading && (
-        <div className="mobile-grid-responsive">
+        <div className="mobile-grid-responsive md:grid-cols-2">
           {filteredOptions.map((option) => (
             <LiveEducationCard
               key={option.id}
