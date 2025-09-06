@@ -155,7 +155,7 @@ const ElectricianFurtherEducation = () => {
       <InsightsAccordion analytics={analytics} />
 
       {/* Action Buttons */}
-      <div className="mobile-action-bar">
+      <div className="mobile-action-bar p-0">
         <Button 
           onClick={handleShowFundingCalculator}
           variant="outline"
