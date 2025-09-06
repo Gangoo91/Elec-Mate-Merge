@@ -28,7 +28,7 @@ import VisualAnalysisPage from "@/pages/electrician-tools/ai-tools/VisualAnalysi
 import ReportWriterPage from "@/pages/electrician-tools/ai-tools/ReportWriterPage";
 import RegulationsPage from "@/pages/electrician-tools/ai-tools/RegulationsPage";
 import CircuitDesignerPage from "@/pages/electrician-tools/ai-tools/CircuitDesignerPage";
-import QuotesPage from "@/pages/electrician/QuotesPage";
+
 
 
 const ElectricianRoutes = () => (
@@ -43,7 +43,6 @@ const ElectricianRoutes = () => (
     <Route path="business-management" element={<BusinessManagement />} />
     <Route path="compliance" element={<ComplianceManager />} />
     <Route path="cable-sizing" element={<CableSizingCalculator />} />
-    <Route path="quotes" element={<QuotesPage />} />
     
     {/* Redirects to new canonical paths */}
     <Route path="calculations" element={<Navigate to="/electrician/calculations" replace />} />
