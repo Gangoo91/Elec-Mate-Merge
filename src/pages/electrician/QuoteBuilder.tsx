@@ -70,7 +70,7 @@ const QuoteBuilder = () => {
       {/* Enhanced Header with Gradient Background */}
       <header className="relative bg-gradient-to-r from-primary via-primary/90 to-primary/80 text-primary-foreground">
         <div className="absolute inset-0 bg-grid-pattern opacity-20"></div>
-        <div className="relative px-4 py-8 space-y-6">
+        <div className="relative px-4 py-8 space-y-6 bg-transparent">
           {/* Breadcrumb Navigation */}
           <nav className="flex items-center gap-2 text-sm opacity-90">
             <Link to="/electrician/business" className="hover:text-accent-foreground transition-colors">
