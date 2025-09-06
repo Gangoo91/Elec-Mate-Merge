@@ -272,7 +272,7 @@ const EnhancedRegionalPricing = () => {
             <Info className="h-4 w-4" />
             About UK Regional Pricing
           </h4>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-white">
             Prices combine market research, live job board data, and community submissions. 
             Community-verified prices come from real UK electricians and are updated regularly. 
             Always obtain multiple local quotes for your specific requirements.
