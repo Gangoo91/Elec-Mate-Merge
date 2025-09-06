@@ -57,7 +57,7 @@ const InsightsAccordion = ({ analytics }: InsightsAccordionProps) => {
       </CardHeader>
       
       {isExpanded && (
-        <CardContent className="mobile-padding pt-0 mobile-card-spacing">
+        <CardContent className="p-3 sm:p-4 md:p-5 lg:p-6 pt-0 space-y-3 sm:space-y-4 md:space-y-5 lg:space-y-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
             {/* Salary Expectations */}
             <div className="bg-gradient-to-br from-background/50 to-background/20 rounded-lg p-4 border border-elec-yellow/10 hover:border-elec-yellow/20 transition-colors">
