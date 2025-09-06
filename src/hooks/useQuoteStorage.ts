@@ -1,60 +1,105 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Quote } from '@/types/quote';
+import { supabase } from '@/integrations/supabase/client';
 
-const QUOTES_STORAGE_KEY = 'elec-mate-quotes';
+// Database storage for quotes (no longer using localStorage)
 
 export const useQuoteStorage = () => {
   const [savedQuotes, setSavedQuotes] = useState<Quote[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  // Load quotes from localStorage on mount
+  // Convert database row to Quote object
+  const convertDbRowToQuote = useCallback((row: any): Quote => ({
+    id: row.id,
+    quoteNumber: row.quote_number,
+    client: row.client_data,
+    items: row.items,
+    settings: row.settings,
+    subtotal: parseFloat(row.subtotal),
+    overhead: parseFloat(row.overhead),
+    profit: parseFloat(row.profit),
+    vatAmount: parseFloat(row.vat_amount),
+    total: parseFloat(row.total),
+    status: row.status,
+    createdAt: new Date(row.created_at),
+    updatedAt: new Date(row.updated_at),
+    expiryDate: new Date(row.expiry_date),
+    notes: row.notes,
+  }), []);
+
+  // Load quotes from Supabase on mount
   useEffect(() => {
-    try {
-      const stored = localStorage.getItem(QUOTES_STORAGE_KEY);
-      if (stored) {
-        const parsedQuotes = JSON.parse(stored);
-        console.log('Loading quotes from localStorage:', parsedQuotes.length);
-        
-        const quotes = parsedQuotes.map((quote: any) => ({
-          ...quote,
-          createdAt: new Date(quote.createdAt),
-          updatedAt: new Date(quote.updatedAt),
-          expiryDate: new Date(quote.expiryDate),
-        }));
-        
-        setSavedQuotes(quotes);
-        console.log('Quotes loaded successfully:', quotes.length);
-      }
-    } catch (error) {
-      console.error('Error loading quotes from storage:', error);
-      // Clear corrupted data
-      localStorage.removeItem(QUOTES_STORAGE_KEY);
-    }
-  }, []);
+    const loadQuotes = async () => {
+      try {
+        const { data: { user } } = await supabase.auth.getUser();
+        if (!user) {
+          console.log('No user authenticated');
+          setLoading(false);
+          return;
+        }
 
-  // Save a new quote
-  const saveQuote = useCallback((quote: Quote) => {
+        const { data, error } = await supabase
+          .from('quotes')
+          .select('*')
+          .order('created_at', { ascending: false });
+
+        if (error) {
+          console.error('Error loading quotes:', error);
+          return;
+        }
+
+        const quotes = data?.map(convertDbRowToQuote) || [];
+        setSavedQuotes(quotes);
+        console.log('Quotes loaded from Supabase:', quotes.length);
+      } catch (error) {
+        console.error('Error loading quotes:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadQuotes();
+  }, [convertDbRowToQuote]);
+
+  // Save a new quote to Supabase
+  const saveQuote = useCallback(async (quote: Quote) => {
     try {
-      // Serialize dates properly for localStorage
-      const serializedQuote = {
-        ...quote,
-        createdAt: quote.createdAt.toISOString(),
-        updatedAt: quote.updatedAt.toISOString(),
-        expiryDate: quote.expiryDate.toISOString(),
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        console.error('User not authenticated');
+        return false;
+      }
+
+      const quoteData = {
+        id: quote.id,
+        user_id: user.id,
+        quote_number: quote.quoteNumber,
+        client_data: quote.client as any,
+        items: quote.items as any,
+        settings: quote.settings as any,
+        subtotal: quote.subtotal,
+        overhead: quote.overhead,
+        profit: quote.profit,
+        vat_amount: quote.vatAmount,
+        total: quote.total,
+        status: quote.status,
+        notes: quote.notes,
+        expiry_date: quote.expiryDate.toISOString(),
       };
-      
+
+      const { error } = await supabase
+        .from('quotes')
+        .upsert(quoteData, { onConflict: 'id' });
+
+      if (error) {
+        console.error('Error saving quote:', error);
+        return false;
+      }
+
+      // Update local state
       const updatedQuotes = [quote, ...savedQuotes.filter(q => q.id !== quote.id)];
       setSavedQuotes(updatedQuotes);
-      
-      // Save serialized version to localStorage
-      const serializedQuotes = updatedQuotes.map(q => ({
-        ...q,
-        createdAt: q.createdAt.toISOString(),
-        updatedAt: q.updatedAt.toISOString(),
-        expiryDate: q.expiryDate.toISOString(),
-      }));
-      
-      localStorage.setItem(QUOTES_STORAGE_KEY, JSON.stringify(serializedQuotes));
-      console.log('Quote saved successfully:', quote.id);
+      console.log('Quote saved to Supabase:', quote.id);
       return true;
     } catch (error) {
       console.error('Error saving quote:', error);
@@ -62,12 +107,23 @@ export const useQuoteStorage = () => {
     }
   }, [savedQuotes]);
 
-  // Delete a quote
-  const deleteQuote = useCallback((quoteId: string) => {
+  // Delete a quote from Supabase
+  const deleteQuote = useCallback(async (quoteId: string) => {
     try {
+      const { error } = await supabase
+        .from('quotes')
+        .delete()
+        .eq('id', quoteId);
+
+      if (error) {
+        console.error('Error deleting quote:', error);
+        return false;
+      }
+
+      // Update local state
       const updatedQuotes = savedQuotes.filter(q => q.id !== quoteId);
       setSavedQuotes(updatedQuotes);
-      localStorage.setItem(QUOTES_STORAGE_KEY, JSON.stringify(updatedQuotes));
+      console.log('Quote deleted from Supabase:', quoteId);
       return true;
     } catch (error) {
       console.error('Error deleting quote:', error);
@@ -102,5 +158,6 @@ export const useQuoteStorage = () => {
     saveQuote,
     deleteQuote,
     getQuoteStats,
+    loading,
   };
 };

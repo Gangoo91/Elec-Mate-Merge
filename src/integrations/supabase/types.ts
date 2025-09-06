@@ -1836,6 +1836,63 @@ export type Database = {
         }
         Relationships: []
       }
+      quotes: {
+        Row: {
+          client_data: Json
+          created_at: string
+          expiry_date: string
+          id: string
+          items: Json
+          notes: string | null
+          overhead: number
+          profit: number
+          quote_number: string
+          settings: Json
+          status: string
+          subtotal: number
+          total: number
+          updated_at: string
+          user_id: string
+          vat_amount: number
+        }
+        Insert: {
+          client_data: Json
+          created_at?: string
+          expiry_date: string
+          id?: string
+          items?: Json
+          notes?: string | null
+          overhead?: number
+          profit?: number
+          quote_number: string
+          settings: Json
+          status?: string
+          subtotal?: number
+          total?: number
+          updated_at?: string
+          user_id: string
+          vat_amount?: number
+        }
+        Update: {
+          client_data?: Json
+          created_at?: string
+          expiry_date?: string
+          id?: string
+          items?: Json
+          notes?: string | null
+          overhead?: number
+          profit?: number
+          quote_number?: string
+          settings?: Json
+          status?: string
+          subtotal?: number
+          total?: number
+          updated_at?: string
+          user_id?: string
+          vat_amount?: number
+        }
+        Relationships: []
+      }
       regional_job_pricing: {
         Row: {
           average_price: number

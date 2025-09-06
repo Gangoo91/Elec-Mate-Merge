@@ -10,7 +10,7 @@ import { format } from 'date-fns';
 
 interface RecentQuotesListProps {
   quotes: Quote[];
-  onDeleteQuote: (quoteId: string) => void;
+  onDeleteQuote: (quoteId: string) => Promise<boolean>;
 }
 
 const RecentQuotesList = ({ quotes, onDeleteQuote }: RecentQuotesListProps) => {
@@ -31,14 +31,22 @@ const RecentQuotesList = ({ quotes, onDeleteQuote }: RecentQuotesListProps) => {
     }
   };
 
-  const handleDeleteQuote = (quote: Quote) => {
+  const handleDeleteQuote = async (quote: Quote) => {
     if (window.confirm(`Are you sure you want to delete quote ${quote.quoteNumber}?`)) {
-      onDeleteQuote(quote.id);
-      toast({
-        title: "Quote Deleted",
-        description: `Quote ${quote.quoteNumber} has been deleted.`,
-        variant: "success"
-      });
+      const success = await onDeleteQuote(quote.id);
+      if (success) {
+        toast({
+          title: "Quote Deleted",
+          description: `Quote ${quote.quoteNumber} has been deleted.`,
+          variant: "success"
+        });
+      } else {
+        toast({
+          title: "Error",
+          description: "Failed to delete quote. Please try again.",
+          variant: "destructive"
+        });
+      }
     }
   };
 

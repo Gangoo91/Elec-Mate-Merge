@@ -94,7 +94,7 @@ export const useQuoteBuilder = () => {
     setCurrentStep(prev => Math.max(prev - 1, 0));
   }, []);
 
-  const generateQuote = useCallback(() => {
+  const generateQuote = useCallback(async () => {
     try {
       const finalQuote = calculateTotals();
       
@@ -121,8 +121,8 @@ export const useQuoteBuilder = () => {
       // Generate and download PDF
       generateQuotePDF(updatedQuote);
 
-      // Save quote to localStorage
-      const saved = saveQuote(updatedQuote as Quote);
+      // Save quote to Supabase
+      const saved = await saveQuote(updatedQuote as Quote);
       
       if (saved) {
         toast({

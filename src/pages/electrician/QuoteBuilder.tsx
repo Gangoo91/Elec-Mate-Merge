@@ -9,7 +9,7 @@ import { useQuoteStorage } from "@/hooks/useQuoteStorage";
 import React from "react";
 
 const QuoteBuilder = () => {
-  const { savedQuotes, deleteQuote, getQuoteStats } = useQuoteStorage();
+  const { savedQuotes, deleteQuote, getQuoteStats, loading } = useQuoteStorage();
   const quoteStats = getQuoteStats();
 
   const stats = [
