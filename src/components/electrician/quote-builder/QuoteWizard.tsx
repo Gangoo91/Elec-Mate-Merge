@@ -166,7 +166,7 @@ export const QuoteWizard = () => {
       {/* Enhanced Navigation */}
       <Card className="border-0 bg-gradient-to-r from-muted/50 to-muted/30">
         <CardContent className="p-6">
-          <div className="flex flex-col sm:flex-row lg:justify-between lg:items-center gap-4 w-full">
+          <div className="flex flex-col sm:flex-row justify-between items-center gap-4 w-full min-w-0">
             <Button
               variant="outline"
               onClick={prevStep}
