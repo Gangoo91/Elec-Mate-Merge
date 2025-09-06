@@ -83,11 +83,11 @@ const LivePricing = () => {
                   <Users className="h-5 w-5 text-elec-yellow" />
                   <h3 className="font-medium text-white">Share Pricing with Fellow Electricians</h3>
                 </div>
-                <p className="text-sm text-gray-400 mb-3">
+                <p className="text-sm text-white mb-3">
                   Help build the most accurate UK electrical pricing database by sharing recent job quotes from your area. 
                   Your submissions help fellow electricians stay competitive.
                 </p>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs text-gray-400">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs text-white">
                   <div className="flex items-center gap-2">
                     <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                     <span>Anonymous submissions</span>
@@ -111,8 +111,8 @@ const LivePricing = () => {
             <Card className="border-elec-yellow/20 bg-elec-gray p-6">
               <div className="text-center">
                 <div className="animate-spin h-8 w-8 border-2 border-elec-yellow border-t-transparent rounded-full mx-auto mb-4"></div>
-                <p className="text-gray-400">Loading UK metal prices...</p>
-                <p className="text-xs text-gray-500 mt-2">Fetching live pricing data from MetalPriceAPI</p>
+                <p className="text-white">Loading UK metal prices...</p>
+                <p className="text-xs text-white mt-2">Fetching live pricing data from MetalPriceAPI</p>
               </div>
             </Card>
           ) : data ? (
@@ -132,7 +132,7 @@ const LivePricing = () => {
                 </div>
                 <div>
                   <h3 className="font-medium text-white mb-2">Metal Pricing Temporarily Unavailable</h3>
-                  <p className="text-gray-400 text-sm mb-4">
+                  <p className="text-white text-sm mb-4">
                     We're experiencing issues with the live pricing API. This typically resolves within a few minutes.
                   </p>
                   <Button onClick={() => refreshPrices(true)} size="sm" className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90">
@@ -180,7 +180,7 @@ const LivePricing = () => {
             {data && (
               <div className="mt-4 pt-3 border-t border-elec-yellow/10 text-xs opacity-75">
                 <details className="cursor-pointer">
-                  <summary className="font-medium text-gray-400 hover:text-white">Debug Information</summary>
+                  <summary className="font-medium text-white hover:text-white">Debug Information</summary>
                   <div className="mt-2 space-y-1">
                     <div>API Provider: {data.apiProvider}</div>
                     <div>API Key: ...{data.apiKeySuffix}</div>
