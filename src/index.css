@@ -206,7 +206,7 @@
   }
   
   .mobile-container {
-    @apply w-full max-w-full mx-auto px-4 sm:px-6;
+    @apply w-full max-w-full mx-auto px-4 sm:px-6 lg:px-8;
   }
   
   /* Enhanced mobile layout */
@@ -215,7 +215,7 @@
   }
   
   .mobile-card-spacing {
-    @apply space-y-3 sm:space-y-4;
+    @apply space-y-3 sm:space-y-4 md:space-y-5 lg:space-y-6;
   }
   
   /* Touch-friendly button sizing - 44px minimum */
@@ -292,12 +292,12 @@
   
   /* Mobile-optimized action areas */
   .mobile-action-bar {
-    @apply flex flex-col space-y-3 sm:flex-row sm:space-y-0 sm:space-x-4 p-4 sm:p-6;
+    @apply flex flex-col space-y-3 sm:flex-row sm:space-y-0 sm:space-x-4 p-4 sm:p-6 lg:p-8;
   }
   
   /* Enhanced mobile spacing */
   .mobile-section-spacing {
-    @apply space-y-6 sm:space-y-8;
+    @apply space-y-4 sm:space-y-6 md:space-y-8 lg:space-y-10;
   }
   
   /* Mobile-safe bottom spacing */
