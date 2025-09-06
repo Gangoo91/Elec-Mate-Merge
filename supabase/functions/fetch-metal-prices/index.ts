@@ -307,7 +307,7 @@ serve(async (req) => {
     const metalPrices = (commodityData || []).map((item, index) => {
       const basePrice = {
         id: index + 1,
-        name: `${item.metal_type} (per kg)`,
+        name: `${item.metal_type} (kg)`,
         value: `£${item.price_per_kg}`,
         change: item.daily_change_percent ? `${item.daily_change_percent > 0 ? '+' : ''}${item.daily_change_percent}%` : '0%',
         trend: item.daily_change_percent > 0 ? 'up' as const : item.daily_change_percent < 0 ? 'down' as const : 'neutral' as const
@@ -457,7 +457,7 @@ serve(async (req) => {
       console.log('No copper found in database, adding fallback copper data');
       metalPrices.unshift({
         id: 999,
-        name: 'Copper (per kg)',
+        name: 'Copper (kg)',
         value: '£8.45',
         change: '+2.3%',
         trend: 'up' as const,
@@ -491,7 +491,7 @@ serve(async (req) => {
       console.log('No aluminum found in database, adding fallback aluminum data');
       metalPrices.push({
         id: 998,
-        name: 'Aluminium (per kg)',
+        name: 'Aluminium (kg)',
         value: '£1.85',
         change: '+1.8%',
         trend: 'up' as const,
@@ -525,7 +525,7 @@ serve(async (req) => {
       console.log('No steel found in database, adding fallback steel data');
       metalPrices.push({
         id: 997,
-        name: 'Steel (per kg)',
+        name: 'Steel (kg)',
         value: '£0.15',
         change: '-0.5%',
         trend: 'down' as const,
@@ -559,7 +559,7 @@ serve(async (req) => {
       console.log('No brass found in database, adding fallback brass data');
       metalPrices.push({
         id: 996,
-        name: 'Brass (per kg)',
+        name: 'Brass (kg)',
         value: '£5.20',
         change: '+0.8%',
         trend: 'up' as const,

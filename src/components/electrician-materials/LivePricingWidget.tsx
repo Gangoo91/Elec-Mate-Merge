@@ -43,42 +43,42 @@ const LivePricingWidget = () => {
       setPricingData([
         {
           id: 1,
-          name: "Copper - Bright (per kg)",
+          name: "Copper - Bright (kg)",
           value: "£7.75",
           change: "+2.3%",
           trend: "up"
         },
         {
           id: 2,
-          name: "Copper - Clean (per kg)",
+          name: "Copper - Clean (kg)",
           value: "£7.25",
           change: "+1.8%",
           trend: "up"
         },
         {
           id: 3,
-          name: "Copper - Mixed (per kg)",
+          name: "Copper - Mixed (kg)",
           value: "£6.85",
           change: "+1.2%",
           trend: "up"
         },
         {
           id: 5,
-          name: "Aluminium (per kg)",
+          name: "Aluminium (kg)",
           value: "£2.19",
           change: "+1.5%",
           trend: "up"
         },
         {
           id: 6,
-          name: "Brass (per kg)",
+          name: "Brass (kg)",
           value: "£5.12",
           change: "+0.8%",
           trend: "up"
         },
         {
           id: 8,
-          name: "Steel (per kg)",
+          name: "Steel (kg)",
           value: "£0.68",
           change: "-0.3%",
           trend: "down"
