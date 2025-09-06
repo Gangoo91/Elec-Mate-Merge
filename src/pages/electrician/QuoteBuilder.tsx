@@ -86,7 +86,7 @@ const QuoteBuilder = () => {
               <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
                 Quote Builder
               </h1>
-              <p className="text-primary-foreground/80 text-lg">
+              <p className="text-white text-lg">
                 Create professional electrical quotes with ease
               </p>
             </div>
