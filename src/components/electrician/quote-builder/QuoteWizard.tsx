@@ -197,6 +197,7 @@ export const QuoteWizard = () => {
               </Button>
             ) : (
               <Button 
+                onClick={nextStep}
                 size="lg"
                 className="w-full sm:w-auto bg-gradient-to-r from-green-600 to-green-500 hover:from-green-500 hover:to-green-400 text-white shadow-lg"
               >
