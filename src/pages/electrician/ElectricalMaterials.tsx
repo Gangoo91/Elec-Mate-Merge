@@ -152,14 +152,17 @@ const ElectricalMaterials = () => {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="text-xs text-muted-foreground flex items-center gap-2 hidden">
+              <div className="text-xs text-elec-yellow/80 flex items-center gap-2 font-medium">
                 {isLoadingCounts ? (
                   <>
                     <Loader2 className="h-3 w-3 animate-spin" />
                     Loading...
                   </>
                 ) : (
-                  `${material.productCount} products available`
+                  <>
+                    <Package className="h-3 w-3" />
+                    {material.productCount} products available
+                  </>
                 )}
               </div>
             </CardContent>
