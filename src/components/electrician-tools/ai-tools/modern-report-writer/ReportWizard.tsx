@@ -267,27 +267,25 @@ const ReportWizard = () => {
 
           {/* Quick Actions (Mobile Floating) */}
           <div className="fixed bottom-6 right-6 lg:hidden">
-            <div className="flex flex-col gap-2">
-              {currentStepIndex > 0 && (
-                <Button
-                  variant="outline"
-                  size="icon"
-                  onClick={goToPreviousStep}
-                  className="h-12 w-12 rounded-full bg-elec-gray border-elec-yellow/30 hover:bg-elec-yellow/10"
-                >
-                  <ChevronLeft className="h-5 w-5" />
-                </Button>
-              )}
-              {currentStepIndex < steps.length - 1 && steps[currentStepIndex + 1].isAccessible && (
-                <Button
-                  size="icon"
-                  onClick={goToNextStep}
-                  className="h-12 w-12 rounded-full bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
-                >
-                  <ChevronRight className="h-5 w-5" />
-                </Button>
-              )}
-            </div>
+            {currentStepIndex > 0 && (
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={goToPreviousStep}
+                className="h-12 w-12 rounded-full bg-elec-gray border-elec-yellow/30 hover:bg-elec-yellow/10 mr-2"
+              >
+                <ChevronLeft className="h-5 w-5" />
+              </Button>
+            )}
+            {currentStepIndex < steps.length - 1 && steps[currentStepIndex + 1].isAccessible && (
+              <Button
+                size="icon"
+                onClick={goToNextStep}
+                className="h-12 w-12 rounded-full bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
+              >
+                <ChevronRight className="h-5 w-5" />
+              </Button>
+            )}
           </div>
         </div>
       </div>
