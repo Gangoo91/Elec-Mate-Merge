@@ -19,18 +19,23 @@ export interface ToolItem {
 }
 
 const fetchToolsData = async (): Promise<ToolItem[]> => {
-  console.log('🔧 Fetching live tool data via React Query...');
+  console.log('🔧 Fetching tools data from materials cache...');
   
-  const { data, error } = await supabase.functions.invoke('firecrawl-tools-scraper');
+  const { data, error } = await supabase
+    .from('materials_weekly_cache')
+    .select('materials_data')
+    .order('created_at', { ascending: false })
+    .limit(1)
+    .single();
   
   if (error) {
-    console.error('❌ Error fetching tools:', error);
-    throw new Error(error.message || 'Failed to fetch tools data');
+    console.error('❌ Error fetching cached tools:', error);
+    throw new Error(error.message || 'Failed to fetch cached tools data');
   }
 
-  if (Array.isArray(data) && data.length > 0) {
-    // Transform the data to ensure consistent interface
-    const transformedTools = data.map((tool: any, index: number) => ({
+  if (data?.materials_data && Array.isArray(data.materials_data)) {
+    // Transform the cached data to ensure consistent interface
+    const transformedTools = data.materials_data.map((tool: any, index: number) => ({
       id: tool.id || index + 1000,
       name: tool.name || 'Unknown Tool',
       category: tool.category || 'Tools',
@@ -46,17 +51,17 @@ const fetchToolsData = async (): Promise<ToolItem[]> => {
       reviews: tool.reviews
     }));
 
-    console.log(`✅ Transformed ${transformedTools.length} tools`);
+    console.log(`✅ Loaded ${transformedTools.length} tools from cache`);
     return transformedTools;
   }
 
-  console.log('📊 No tools data received');
+  console.log('📊 No cached tools data found');
   return [];
 };
 
 export const useToolsData = () => {
   return useQuery({
-    queryKey: ['tools', 'firecrawl-data'],
+    queryKey: ['tools', 'cache-data'],
     queryFn: fetchToolsData,
     staleTime: 30 * 60 * 1000, // 30 minutes - tool data doesn't change frequently
     gcTime: 60 * 60 * 1000, // 1 hour cache time
