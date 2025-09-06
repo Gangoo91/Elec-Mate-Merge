@@ -2,38 +2,15 @@ import { corsHeaders } from '../_shared/cors.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.7.1';
 
 const suppliers = [
-  { name: "Screwfix", url: "https://www.screwfix.com/search?search=" },
-  { name: "Toolstation", url: "https://www.toolstation.com/search?q=" },
-  { name: "RS Components", url: "https://uk.rs-online.com/web/c/?searchTerm=" },
-  { name: "CEF - City Electrical Factors", url: "https://www.cef.co.uk/catalogue/products/search?q=" },
+  { name: "Screwfix", url: "https://www.screwfix.com/search?search=" }
 ];
 
 // --- Product Categories ---
 const productList = [
   {
     category: "Cables & Wiring",
-    items: ["Twin & Earth cable", "SWA cable", "Flex cable", "Data cable"],
-  },
-  {
-    category: "Electrical Components",
-    items: ["Consumer unit", "MCB", "RCD", "Isolator", "Surge protector", "Circuit breaker"],
-  },
-  {
-    category: "Protection Equipment",
-    items: ["Earth rod", "surge protectors", "circuit breakers"],
-  },
-  {
-    category: "Installation Accessories",
-    items: ["Junction box", "Cable gland", "Trunking"],
-  },
-  {
-    category: "Lighting Solutions",
-    items: ["LED downlight", "Lighting batten", "Emergency lighting"],
-  },
-  {
-    category: "Electrical Tools",
-    items: ["Testing equipment", "Hand tools", "Power tools"],
-  },
+    items: ["Twin & Earth cable"],
+  }
 ];
 
 // --- Firecrawl Schema ---
