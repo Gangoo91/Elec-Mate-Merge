@@ -58,57 +58,90 @@ const InsightsAccordion = ({ analytics }: InsightsAccordionProps) => {
       
       {isExpanded && (
         <CardContent className="mobile-padding pt-0 mobile-card-spacing">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div className="space-y-4">
-              <div className="flex items-center gap-3">
-                <PoundSterling className="h-4 w-4 text-elec-yellow flex-shrink-0" />
-                <span className="font-medium mobile-text">Salary Expectations</span>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
+            {/* Salary Expectations */}
+            <div className="bg-gradient-to-br from-background/50 to-background/20 rounded-lg p-4 border border-elec-yellow/10 hover:border-elec-yellow/20 transition-colors">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="p-2 rounded-full bg-elec-yellow/10">
+                  <PoundSterling className="h-4 w-4 text-elec-yellow flex-shrink-0" />
+                </div>
+                <span className="font-semibold mobile-text text-foreground">Salary Expectations</span>
               </div>
-              <div className="mobile-small-text text-text-subtle ml-7 space-y-1 leading-relaxed">
-                <div>Starting salaries: {data.averageStartingSalary}</div>
-                <div>With qualifications: £35,000 - £55,000+</div>
-                <div>Senior roles: £55,000 - £85,000+</div>
+              <div className="mobile-small-text text-text-subtle space-y-2 leading-relaxed">
+                <div className="flex justify-between items-center">
+                  <span>Starting salaries:</span>
+                  <span className="font-medium text-elec-yellow">{data.averageStartingSalary}</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span>With qualifications:</span>
+                  <span className="font-medium">£35,000 - £55,000+</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span>Senior roles:</span>
+                  <span className="font-medium">£55,000 - £85,000+</span>
+                </div>
               </div>
             </div>
 
-            <div className="space-y-4">
-              <div className="flex items-center gap-3">
-                <Target className="h-4 w-4 text-elec-yellow flex-shrink-0" />
-                <span className="font-medium mobile-text">Popular Categories</span>
+            {/* Popular Categories */}
+            <div className="bg-gradient-to-br from-background/50 to-background/20 rounded-lg p-4 border border-elec-yellow/10 hover:border-elec-yellow/20 transition-colors">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="p-2 rounded-full bg-elec-yellow/10">
+                  <Target className="h-4 w-4 text-elec-yellow flex-shrink-0" />
+                </div>
+                <span className="font-semibold mobile-text text-foreground">Popular Categories</span>
               </div>
-              <div className="mobile-small-text text-text-subtle ml-7 space-y-1">
+              <div className="mobile-small-text text-text-subtle space-y-2">
                 {data.topCategories?.map((category, index) => (
-                  <div key={index} className="flex justify-between items-center">
+                  <div key={index} className="flex justify-between items-center py-1">
                     <span>• {typeof category === 'string' ? category : category.name}</span>
                     {typeof category === 'object' && category.count && (
-                      <span className="text-xs text-text-subtle">({category.count} courses)</span>
+                      <span className="text-xs bg-elec-yellow/10 text-elec-yellow px-2 py-1 rounded-full">
+                        {category.count} courses
+                      </span>
                     )}
                   </div>
                 ))}
               </div>
             </div>
 
-            <div className="space-y-4">
-              <div className="flex items-center gap-3">
-                <TrendingUp className="h-4 w-4 text-elec-yellow flex-shrink-0" />
-                <span className="font-medium mobile-text">Study Trends</span>
+            {/* Study Trends */}
+            <div className="bg-gradient-to-br from-background/50 to-background/20 rounded-lg p-4 border border-elec-yellow/10 hover:border-elec-yellow/20 transition-colors">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="p-2 rounded-full bg-elec-yellow/10">
+                  <TrendingUp className="h-4 w-4 text-elec-yellow flex-shrink-0" />
+                </div>
+                <span className="font-semibold mobile-text text-foreground">Study Trends</span>
               </div>
-              <div className="mobile-small-text text-text-subtle ml-7 space-y-1 leading-relaxed">
-                <div>Most choose: {(data as any).popularStudyModes?.join(", ") || "Part-time, Online, Evening"}</div>
-                <div>Average duration: {(data as any).averageCourseDuration || "18 months"}</div>
-                <div>82% complete within planned timeframe</div>
+              <div className="mobile-small-text text-text-subtle space-y-2 leading-relaxed">
+                <div>
+                  <span className="text-foreground font-medium">Most popular:</span> {(data as any).popularStudyModes?.join(", ") || "Part-time, Online, Evening"}
+                </div>
+                <div>
+                  <span className="text-foreground font-medium">Average duration:</span> {(data as any).averageCourseDuration || "18 months"}
+                </div>
+                <div className="text-elec-yellow font-medium">
+                  82% complete within planned timeframe
+                </div>
               </div>
             </div>
 
-            <div className="space-y-4">
-              <div className="flex items-center gap-3">
-                <PoundSterling className="h-4 w-4 text-elec-yellow flex-shrink-0" />
-                <span className="font-medium mobile-text">Funding Support</span>
+            {/* Funding Support */}
+            <div className="bg-gradient-to-br from-background/50 to-background/20 rounded-lg p-4 border border-elec-yellow/10 hover:border-elec-yellow/20 transition-colors">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="p-2 rounded-full bg-elec-yellow/10">
+                  <PoundSterling className="h-4 w-4 text-elec-yellow flex-shrink-0" />
+                </div>
+                <span className="font-semibold mobile-text text-foreground">Funding Support</span>
               </div>
-              <div className="mobile-small-text text-text-subtle ml-7 space-y-1 leading-relaxed">
-                <div>{data.fundingOptionsAvailable}+ funding options available</div>
+              <div className="mobile-small-text text-text-subtle space-y-2 leading-relaxed">
+                <div>
+                  <span className="text-elec-yellow font-bold">{data.fundingOptionsAvailable}+</span> funding options available
+                </div>
                 <div>Advanced Learner Loans for Level 3-6</div>
-                <div>Government grants up to £12,167</div>
+                <div className="text-elec-yellow font-medium">
+                  Government grants up to £12,167
+                </div>
               </div>
             </div>
           </div>
