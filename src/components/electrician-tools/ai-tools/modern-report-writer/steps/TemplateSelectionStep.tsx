@@ -204,7 +204,7 @@ const TemplateSelectionStep: React.FC<TemplateStepProps> = ({
                 )}
               </div>
 
-              <div className="p-6">
+              <div className="p-6 pt-12">
                 {/* Icon and Title */}
                 <div className="flex items-start gap-3 mb-4">
                   <div className={`p-3 rounded-lg ${
@@ -214,13 +214,13 @@ const TemplateSelectionStep: React.FC<TemplateStepProps> = ({
                       isSelected ? 'text-elec-yellow' : 'text-white'
                     }`} />
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <h3 className={`font-semibold text-sm leading-tight ${
+                  <div className="flex-1 min-w-0 mr-20">
+                    <h3 className={`font-semibold text-sm leading-tight truncate ${
                       isSelected ? 'text-elec-yellow' : 'text-white'
-                    }`}>
+                    }`} title={template.name}>
                       {template.name}
                     </h3>
-                    <p className="text-xs text-muted-foreground mt-1">
+                    <p className="text-xs text-muted-foreground mt-1 line-clamp-2">
                       {template.description}
                     </p>
                   </div>
