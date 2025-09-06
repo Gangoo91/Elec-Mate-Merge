@@ -30,7 +30,6 @@ import RegulationsPage from "@/pages/electrician-tools/ai-tools/RegulationsPage"
 import CircuitDesignerPage from "@/pages/electrician-tools/ai-tools/CircuitDesignerPage";
 
 
-
 const ElectricianRoutes = () => (
   <Routes>
     <Route index element={<ProjectManagement />} />
