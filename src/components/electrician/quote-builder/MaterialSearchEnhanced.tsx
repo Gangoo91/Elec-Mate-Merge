@@ -17,6 +17,7 @@ import {
   Settings
 } from "lucide-react";
 import { enhancedMaterials, materialCombinations, EnhancedMaterialItem } from "@/data/electrician/enhancedPricingData";
+import { useToast } from "@/hooks/use-toast";
 
 
 interface MaterialSearchEnhancedProps {
@@ -28,6 +29,7 @@ export const MaterialSearchEnhanced = ({ onAddMaterial }: MaterialSearchEnhanced
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [sortBy, setSortBy] = useState("name");
   const [showFavourites, setShowFavourites] = useState(false);
+  const { toast } = useToast();
 
   // Get unique categories
   const categories = useMemo(() => {
@@ -70,6 +72,7 @@ export const MaterialSearchEnhanced = ({ onAddMaterial }: MaterialSearchEnhanced
 
   const handleQuickAddCombination = (combinationKey: string) => {
     const combination = materialCombinations[combinationKey as keyof typeof materialCombinations];
+    let addedCount = 0;
     
     combination.forEach(item => {
       const material = enhancedMaterials.find(m => m.id === item.id);
@@ -81,8 +84,16 @@ export const MaterialSearchEnhanced = ({ onAddMaterial }: MaterialSearchEnhanced
           quantity: item.quantity
         };
         onAddMaterial(material, item.quantity, pricing);
+        addedCount++;
       }
     });
+    
+    if (addedCount > 0) {
+      toast({
+        title: "Package Added",
+        description: `${addedCount} materials from package added to quote`,
+      });
+    }
   };
 
   const getConfidenceBadgeColor = (level: string) => {
@@ -170,6 +181,10 @@ export const MaterialSearchEnhanced = ({ onAddMaterial }: MaterialSearchEnhanced
                         quantity: 1
                       };
                       onAddMaterial(material, 1, pricing);
+                      toast({
+                        title: "Material Added",
+                        description: `${material.name} added to quote (£${material.defaultPrice.toFixed(2)})`,
+                      });
                     }}
                   >
                     <CardContent className="p-6">
@@ -237,6 +252,10 @@ export const MaterialSearchEnhanced = ({ onAddMaterial }: MaterialSearchEnhanced
                             quantity: 1
                           };
                           onAddMaterial(material, 1, pricing);
+                          toast({
+                            title: "Material Added",
+                            description: `${material.name} added to quote (£${material.defaultPrice.toFixed(2)})`,
+                          });
                         }}
                       >
                         <CardContent className="p-4">
