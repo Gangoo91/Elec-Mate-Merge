@@ -52,7 +52,7 @@ const QuoteBuilder = () => {
   const canonical = `${window.location.origin}/electrician/quote-builder`;
 
   return (
-    <div className="space-y-6 md:space-y-8 animate-fade-in p-4">
+    <div className="min-h-screen bg-gradient-to-br from-background to-background/95">
       <Helmet>
         <title>Quote Builder for Electricians | Create Professional Quotes</title>
         <meta
@@ -62,58 +62,122 @@ const QuoteBuilder = () => {
         <link rel="canonical" href={canonical} />
       </Helmet>
 
-      <header className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-2">
-        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-center sm:text-left">
-          Quote Builder
-        </h1>
-        <Link to="/electrician/business" className="w-full sm:w-auto">
-          <Button variant="outline" className="w-full sm:w-auto">
-            <ArrowLeft className="mr-2 h-4 w-4" /> Back to Business Hub
-          </Button>
-        </Link>
+      {/* Enhanced Header with Gradient Background */}
+      <header className="relative bg-gradient-to-r from-primary via-primary/90 to-primary/80 text-primary-foreground">
+        <div className="absolute inset-0 bg-grid-pattern opacity-20"></div>
+        <div className="relative px-4 py-8 space-y-6">
+          {/* Breadcrumb Navigation */}
+          <nav className="flex items-center gap-2 text-sm opacity-90">
+            <Link to="/electrician/business" className="hover:text-accent-foreground transition-colors">
+              Business Hub
+            </Link>
+            <span>/</span>
+            <span>Quote Builder</span>
+          </nav>
+
+          {/* Title and Back Button */}
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div className="space-y-2">
+              <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
+                Quote Builder
+              </h1>
+              <p className="text-primary-foreground/80 text-lg">
+                Create professional electrical quotes with ease
+              </p>
+            </div>
+            <Link to="/electrician/business" className="w-full sm:w-auto">
+              <Button variant="secondary" size="lg" className="w-full sm:w-auto shadow-lg">
+                <ArrowLeft className="mr-2 h-4 w-4" /> Back to Business Hub
+              </Button>
+            </Link>
+          </div>
+        </div>
       </header>
 
-      <main className="space-y-6">
-        {/* Stats Overview */}
-        <section aria-labelledby="stats-overview">
-          <h2 id="stats-overview" className="text-lg font-semibold mb-4">Quote Overview</h2>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-            {stats.map((stat, index) => (
-              <Card key={index} className="bg-elec-gray border-elec-yellow/20">
-                <CardContent className="p-4">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm text-muted-foreground">{stat.title}</p>
-                      <p className="text-2xl font-bold">{stat.value}</p>
-                    </div>
-                    <stat.icon className={`h-8 w-8 ${stat.color}`} />
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </section>
+      <div className="px-4 py-8 space-y-8 animate-fade-in">
 
-        {/* New Quote Section */}
-        <QuoteWizard />
-
-        {/* Recent Quotes */}
-        <section aria-labelledby="recent-quotes">
-          <h2 id="recent-quotes" className="text-lg font-semibold mb-4">Recent Quotes</h2>
-          <Card className="bg-elec-gray border-elec-yellow/20">
-            <CardContent className="p-6">
-              <div className="text-center py-8">
-                <FileText className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                <p className="text-muted-foreground mb-4">No quotes created yet</p>
-                <Button className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90">
-                  <Plus className="mr-2 h-4 w-4" />
-                  Create Your First Quote
-                </Button>
+        <main className="space-y-8">
+          {/* Enhanced Stats Dashboard */}
+          <section aria-labelledby="stats-overview" className="space-y-6">
+            <div className="flex items-center justify-between">
+              <h2 id="stats-overview" className="text-2xl font-bold">Dashboard Overview</h2>
+              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                Live data
               </div>
-            </CardContent>
-          </Card>
-        </section>
-      </main>
+            </div>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
+              {stats.map((stat, index) => (
+                <Card key={index} className="group relative overflow-hidden border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] bg-gradient-to-br from-card to-card/50">
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <CardContent className="relative p-6">
+                    <div className="flex items-start justify-between">
+                      <div className="space-y-2">
+                        <p className="text-sm font-medium text-muted-foreground">{stat.title}</p>
+                        <p className="text-3xl font-bold">{stat.value}</p>
+                        <div className="flex items-center gap-2">
+                          <div className="w-full bg-muted rounded-full h-1">
+                            <div className="bg-primary h-1 rounded-full" style={{ width: `${Math.random() * 100}%` }}></div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className={`p-3 rounded-xl bg-gradient-to-br ${index % 2 === 0 ? 'from-primary/10 to-primary/5' : 'from-accent/10 to-accent/5'}`}>
+                        <stat.icon className={`h-6 w-6 ${stat.color} group-hover:scale-110 transition-transform duration-300`} />
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </section>
+
+          {/* Enhanced Quote Wizard Section */}
+          <section className="space-y-6">
+            <div className="text-center space-y-2">
+              <h2 className="text-2xl font-bold">Create New Quote</h2>
+              <p className="text-muted-foreground">
+                Follow our guided process to create professional electrical quotes
+              </p>
+            </div>
+            <Card className="border-0 shadow-2xl bg-gradient-to-br from-card to-card/80">
+              <CardContent className="p-6 lg:p-8">
+                <QuoteWizard />
+              </CardContent>
+            </Card>
+          </section>
+
+          {/* Enhanced Recent Quotes */}
+          <section aria-labelledby="recent-quotes" className="space-y-6">
+            <div className="flex items-center justify-between">
+              <h2 id="recent-quotes" className="text-2xl font-bold">Recent Quotes</h2>
+              <Button variant="outline" size="sm">
+                View All
+              </Button>
+            </div>
+            <Card className="border-0 shadow-lg bg-gradient-to-br from-card to-card/50">
+              <CardContent className="p-8">
+                <div className="text-center py-12 space-y-6">
+                  <div className="relative">
+                    <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-accent/20 rounded-full blur-2xl"></div>
+                    <FileText className="relative h-16 w-16 text-muted-foreground mx-auto" />
+                  </div>
+                  <div className="space-y-2">
+                    <h3 className="text-xl font-semibold">No quotes created yet</h3>
+                    <p className="text-muted-foreground max-w-md mx-auto">
+                      Start building professional quotes for your electrical projects. Our wizard makes it quick and easy.
+                    </p>
+                  </div>
+                  <Button size="lg" className="bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary shadow-lg">
+                    <Plus className="mr-2 h-5 w-5" />
+                    Create Your First Quote
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          </section>
+        </main>
+      </div>
     </div>
   );
 };

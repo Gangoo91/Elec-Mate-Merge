@@ -64,90 +64,149 @@ export const QuoteWizard = () => {
   };
 
   return (
-    <>
-      {/* Progress Bar */}
-      <div className="px-4 md:px-6 space-y-4">
+    <div className="space-y-8">
+      {/* Enhanced Progress Section */}
+      <div className="space-y-6">
         <div className="flex items-center justify-between">
-          <h2 className="text-xl font-semibold">Create New Quote</h2>
-          <span className="text-sm text-muted-foreground">
-            Step {currentStep + 1} of {steps.length}
-          </span>
+          <div className="space-y-1">
+            <h3 className="text-lg font-semibold">Progress Overview</h3>
+            <p className="text-sm text-muted-foreground">
+              Step {currentStep + 1} of {steps.length} completed
+            </p>
+          </div>
+          <div className="flex items-center gap-2 px-3 py-1 bg-primary/10 text-primary rounded-full text-sm font-medium">
+            <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
+            {Math.round(((currentStep + 1) / steps.length) * 100)}% Complete
+          </div>
         </div>
-        <Progress value={(currentStep / (steps.length - 1)) * 100} className="h-2" />
         
-        {/* Step Indicators */}
-        <div className="grid grid-cols-4 gap-2">
+        {/* Enhanced Progress Bar */}
+        <div className="space-y-2">
+          <Progress value={((currentStep + 1) / steps.length) * 100} className="h-3 bg-muted" />
+          <div className="flex justify-between text-xs text-muted-foreground">
+            <span>Started</span>
+            <span>Complete</span>
+          </div>
+        </div>
+        
+        {/* Enhanced Step Indicators */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
           {steps.map((step, index) => {
             const StepIcon = step.icon;
             const isActive = index === currentStep;
             const isCompleted = index < currentStep;
+            const isFuture = index > currentStep;
             
             return (
-              <div
+              <Card
                 key={index}
-                className={`flex flex-col items-center p-2 rounded-lg transition-all ${
+                className={`relative overflow-hidden border-2 transition-all duration-300 hover:shadow-md ${
                   isActive 
-                    ? 'bg-elec-yellow/20 text-elec-yellow' 
+                    ? 'border-primary bg-primary/5 shadow-lg scale-105' 
                     : isCompleted 
-                    ? 'bg-green-100 text-green-600 dark:bg-green-900/20 dark:text-green-400'
-                    : 'bg-muted text-muted-foreground'
+                    ? 'border-green-500/50 bg-green-50 dark:bg-green-950/20'
+                    : 'border-muted bg-muted/30'
                 }`}
               >
-                <StepIcon className="h-5 w-5 mb-1" />
-                <span className="text-xs font-medium text-center">{step.title}</span>
-              </div>
+                {isActive && (
+                  <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-accent/10 animate-pulse"></div>
+                )}
+                <CardContent className="relative p-4">
+                  <div className="flex flex-col items-center text-center space-y-2">
+                    <div className={`p-2 rounded-full ${
+                      isActive 
+                        ? 'bg-primary text-primary-foreground' 
+                        : isCompleted 
+                        ? 'bg-green-500 text-white'
+                        : 'bg-muted text-muted-foreground'
+                    }`}>
+                      <StepIcon className="h-4 w-4" />
+                    </div>
+                    <div className="space-y-1">
+                      <span className={`text-sm font-medium ${
+                        isActive ? 'text-primary' : isCompleted ? 'text-green-600 dark:text-green-400' : 'text-muted-foreground'
+                      }`}>
+                        {step.title}
+                      </span>
+                      <p className="text-xs text-muted-foreground leading-tight">
+                        {step.description}
+                      </p>
+                    </div>
+                    {isCompleted && (
+                      <div className="w-full h-1 bg-green-500/20 rounded-full">
+                        <div className="w-full h-1 bg-green-500 rounded-full"></div>
+                      </div>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
             );
           })}
         </div>
       </div>
 
-      {/* Step Content */}
-      <div className="space-y-4">
-        <div className="flex items-center gap-2 px-4 md:px-0">
-          {React.createElement(steps[currentStep].icon, { className: "h-5 w-5" })}
-          <h3 className="text-lg font-semibold">{steps[currentStep].title}</h3>
-        </div>
-        <p className="text-sm text-muted-foreground px-4 md:px-0">{steps[currentStep].description}</p>
-        {renderStep()}
-      </div>
+      {/* Enhanced Step Content */}
+      <Card className="border-0 bg-gradient-to-br from-card to-card/50 shadow-lg">
+        <CardHeader className="pb-4">
+          <div className="flex items-center gap-3">
+            <div className="p-2 bg-primary/10 rounded-lg">
+              {React.createElement(steps[currentStep].icon, { className: "h-5 w-5 text-primary" })}
+            </div>
+            <div className="space-y-1">
+              <CardTitle className="text-xl">{steps[currentStep].title}</CardTitle>
+              <p className="text-sm text-muted-foreground">{steps[currentStep].description}</p>
+            </div>
+          </div>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          {renderStep()}
+        </CardContent>
+      </Card>
 
-      {/* Navigation */}
-      <div className="flex flex-col sm:flex-row justify-between gap-3 px-4 md:px-6">
-        <Button
-          variant="outline"
-          onClick={prevStep}
-          disabled={currentStep === 0}
-          className="flex items-center justify-center gap-2 w-full sm:w-auto"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          Previous
-        </Button>
-        
-        <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
-          <Button 
-            variant="outline" 
-            onClick={resetQuote}
-            className="w-full sm:w-auto"
-          >
-            Start Over
-          </Button>
-          
-          {currentStep < steps.length - 1 ? (
+      {/* Enhanced Navigation */}
+      <Card className="border-0 bg-gradient-to-r from-muted/50 to-muted/30">
+        <CardContent className="p-6">
+          <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
             <Button
-              onClick={nextStep}
-              disabled={!canProceed()}
-              className="flex items-center justify-center gap-2 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 w-full sm:w-auto"
+              variant="outline"
+              onClick={prevStep}
+              disabled={currentStep === 0}
+              size="lg"
+              className="flex items-center gap-2 w-full sm:w-auto disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Next
-              <ArrowRight className="h-4 w-4" />
+              <ArrowLeft className="h-4 w-4" />
+              Previous Step
             </Button>
-          ) : (
-            <Button className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 w-full sm:w-auto">
-              Generate Quote
-            </Button>
-          )}
-        </div>
-      </div>
-    </>
+            
+            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+              <span className="hidden sm:inline">Need help?</span>
+              <Button variant="ghost" size="sm" onClick={resetQuote}>
+                Start Over
+              </Button>
+            </div>
+            
+            {currentStep < steps.length - 1 ? (
+              <Button
+                onClick={nextStep}
+                disabled={!canProceed()}
+                size="lg"
+                className="flex items-center gap-2 w-full sm:w-auto bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                Continue to {steps[currentStep + 1]?.title}
+                <ArrowRight className="h-4 w-4" />
+              </Button>
+            ) : (
+              <Button 
+                size="lg"
+                className="w-full sm:w-auto bg-gradient-to-r from-green-600 to-green-500 hover:from-green-500 hover:to-green-400 text-white shadow-lg"
+              >
+                <Calculator className="mr-2 h-4 w-4" />
+                Generate Quote
+              </Button>
+            )}
+          </div>
+        </CardContent>
+      </Card>
+    </div>
   );
 };
