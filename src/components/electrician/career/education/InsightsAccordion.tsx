@@ -22,7 +22,11 @@ const InsightsAccordion = ({ analytics }: InsightsAccordionProps) => {
   const defaultAnalytics = {
     averageStartingSalary: "£28,000 - £35,000",
     fundingOptionsAvailable: 12,
-    topCategories: ["Electrical Engineering", "Renewable Energy", "Building Services"],
+    topCategories: [
+      { name: "Electrical Engineering", count: 156 },
+      { name: "Renewable Energy", count: 89 },
+      { name: "Building Services", count: 67 }
+    ],
     popularStudyModes: ["Part-time", "Online", "Evening"],
     averageCourseDuration: "18 months"
   };
@@ -74,7 +78,12 @@ const InsightsAccordion = ({ analytics }: InsightsAccordionProps) => {
               </div>
               <div className="mobile-small-text text-text-subtle ml-7 space-y-1">
                 {data.topCategories?.map((category, index) => (
-                  <div key={index}>• {category}</div>
+                  <div key={index} className="flex justify-between items-center">
+                    <span>• {typeof category === 'string' ? category : category.name}</span>
+                    {typeof category === 'object' && category.count && (
+                      <span className="text-xs text-text-subtle">({category.count} courses)</span>
+                    )}
+                  </div>
                 ))}
               </div>
             </div>
