@@ -83,8 +83,27 @@ async function fetchProductsFromSupplier(supplier: any, query: string, category:
 
   try {
     const response = await fetch(firecrawl_url, options);
-    if (!response.ok) throw new Error(`❌ API request failed: ${response.status}`);
-    const data = await response.json();
+    if (!response.ok) {
+      console.error(`❌ API request failed: ${response.status} ${response.statusText}`);
+      const errorText = await response.text();
+      console.error(`❌ Error response: ${errorText}`);
+      throw new Error(`API request failed: ${response.status}`);
+    }
+    
+    const responseText = await response.text();
+    if (!responseText || responseText.trim() === '') {
+      console.error(`❌ Empty response from Firecrawl API for ${supplier.name}`);
+      return [];
+    }
+    
+    let data;
+    try {
+      data = JSON.parse(responseText);
+    } catch (parseError) {
+      console.error(`❌ JSON parse error for ${supplier.name}:`, parseError);
+      console.error(`❌ Response text: ${responseText.substring(0, 500)}...`);
+      return [];
+    }
 
     const products = data.data?.json || [];
     return products.map((item: any, index: number) => ({
@@ -206,10 +225,14 @@ Deno.serve(async (req) => {
     let searchTerm: string | undefined;
     
     if (req.method === 'POST') {
-      const body = await req.json();
-      categoryFilter = body.category;
-      supplierFilter = body.supplier;
-      searchTerm = body.searchTerm;
+      try {
+        const body = await req.json();
+        categoryFilter = body.category;
+        supplierFilter = body.supplier;
+        searchTerm = body.searchTerm || body.search; // Handle both naming conventions
+      } catch (jsonError) {
+        console.warn('⚠️ Failed to parse request body, using defaults');
+      }
     }
 
     console.log(`📋 Request filters - Category: ${categoryFilter || 'all'}, Supplier: ${supplierFilter || 'all'}, SearchTerm: ${searchTerm || 'none'}`);

@@ -231,15 +231,55 @@ serve(async (req) => {
     // If no cache or filters applied, fetch fresh data
     if (!fromCache) {
       console.log('🔄 Fetching fresh data from scraper...');
-    // Fallback to live comprehensive scraper
-    const { data: liveData, error: liveError } = await supabase.functions.invoke(
-      'comprehensive-materials-scraper',
-      { body: { category, supplier, search } }
-    );
+    // Try to call the comprehensive scraper directly with proper error handling
+    try {
+      const { data: liveData, error: liveError } = await supabase.functions.invoke(
+        'comprehensive-materials-scraper',
+        { 
+          body: { 
+            category, 
+            supplier, 
+            searchTerm: search 
+          }
+        }
+      );
 
-    if (liveError) {
-      console.error('Live scraper error:', liveError);
-      throw new Error(`Live scraper failed: ${liveError.message}`);
+      if (liveError) {
+        console.error('Live scraper error:', liveError);
+        // Fall back to cached data or fallback
+        const { data: fallbackCache } = await supabase
+          .from('cables_materials_cache')
+          .select('*')
+          .order('created_at', { ascending: false })
+          .limit(1);
+        
+        if (fallbackCache && fallbackCache.length > 0) {
+          console.log('📦 Using fallback cache from cables_materials_cache');
+          rawMaterials = fallbackCache[0].cache_data || [];
+        } else {
+          console.warn('⚠️ No fallback cache available, using empty data');
+          rawMaterials = [];
+        }
+      } else {
+        rawMaterials = liveData?.materials || [];
+        console.log(`📊 Serving ${rawMaterials.length} materials from live scraper`);
+      }
+    } catch (invokeError) {
+      console.error('Function invoke error:', invokeError);
+      // Fall back to cached data
+      const { data: fallbackCache } = await supabase
+        .from('cables_materials_cache')
+        .select('*')
+        .order('created_at', { ascending: false })
+        .limit(1);
+      
+      if (fallbackCache && fallbackCache.length > 0) {
+        console.log('📦 Using fallback cache due to invoke error');
+        rawMaterials = fallbackCache[0].cache_data || [];
+      } else {
+        console.warn('⚠️ No fallback cache available, using empty data');
+        rawMaterials = [];
+      }
     }
 
     rawMaterials = liveData?.materials || [];

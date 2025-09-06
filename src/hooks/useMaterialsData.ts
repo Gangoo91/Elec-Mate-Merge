@@ -157,23 +157,68 @@ export const useMaterialsData = () => {
     queryFn: async () => {
       console.log('🔍 Fetching materials via weekly cache...');
       
-      const { data, error } = await supabase.functions.invoke('materials-weekly-cache', {
-        body: {}
-      });
-      
-      if (error) {
-        console.error('Error fetching cached materials:', error);
-        throw error;
+      try {
+        // Try the weekly cache first
+        const { data, error } = await supabase.functions.invoke('materials-weekly-cache', {
+          body: {}
+        });
+        
+        if (error) {
+          console.error('❌ Error from materials-weekly-cache:', error);
+          throw error;
+        }
+
+        if (data && data.data && data.data.length > 0) {
+          console.log(`✅ Received ${data.data?.length || 0} categories and ${data.rawMaterials?.length || 0} raw materials from cache`);
+          return {
+            data: data.data || defaultCategoryData,
+            rawMaterials: data.rawMaterials || [],
+            fromCache: data.fromCache || false,
+            totalMaterials: data.totalMaterials || 0
+          };
+        }
+
+        // If cache fails or returns empty data, try direct scraper call
+        console.log('🔄 Cache empty, trying direct scraper call...');
+        const { data: scraperData, error: scraperError } = await supabase.functions.invoke('comprehensive-materials-scraper');
+        
+        if (scraperError) {
+          console.error('❌ Error from comprehensive-materials-scraper:', scraperError);
+          throw scraperError;
+        }
+
+        if (scraperData && scraperData.materials) {
+          console.log(`✅ Received ${scraperData.materials.length} materials from direct scraper`);
+          
+          // Process the materials into category data
+          const processedData = processMaterialsData(scraperData.materials);
+          
+          return {
+            data: processedData,
+            rawMaterials: scraperData.materials,
+            fromCache: false,
+            totalMaterials: scraperData.materials.length
+          };
+        }
+
+        console.log('📊 No data from either source, using defaults');
+        return {
+          data: defaultCategoryData,
+          rawMaterials: [],
+          fromCache: false,
+          totalMaterials: 0
+        };
+        
+      } catch (error) {
+        console.error('❌ Error in fetchMaterialsData:', error);
+        // Return default data instead of throwing to prevent complete failure
+        return {
+          data: defaultCategoryData,
+          rawMaterials: [],
+          fromCache: false,
+          totalMaterials: 0
+        };
       }
-      
-      console.log(`✅ Received materials data: ${data?.totalMaterials || 0} materials, from cache: ${data?.fromCache}`);
-      
-      return {
-        data: data?.data || defaultCategoryData,
-        rawMaterials: data?.rawMaterials || [],
-        fromCache: data?.fromCache || false,
-        totalMaterials: data?.totalMaterials || 0
-      };
     },
     staleTime: 1000 * 60 * 60, // 1 hour (data is cached weekly)
     gcTime: 1000 * 60 * 60 * 2, // 2 hours
