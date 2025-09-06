@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { RefreshCw, Clock, AlertCircle } from "lucide-react";
 import { useState, useEffect } from "react";
 import { updateMaterialsCache, getCacheStatus } from "@/utils/materialsCache";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
 
 interface RefreshButtonProps {
   isFetching: boolean;

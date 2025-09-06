@@ -1114,44 +1114,47 @@ export type Database = {
       }
       materials_weekly_cache: {
         Row: {
-          cache_data: Json
-          category: string
+          cache_key: string
+          categories: string[]
+          category: string | null
           created_at: string
-          error_message: string | null
           expires_at: string
           id: string
           last_updated: string
-          popular_items: Json | null
-          price_range: string | null
-          top_brands: string[] | null
+          materials_data: Json | null
+          scraper_response: Json
+          suppliers: string[]
+          total_materials: number
           total_products: number | null
           update_status: string | null
         }
         Insert: {
-          cache_data?: Json
-          category: string
+          cache_key?: string
+          categories?: string[]
+          category?: string | null
           created_at?: string
-          error_message?: string | null
           expires_at?: string
           id?: string
           last_updated?: string
-          popular_items?: Json | null
-          price_range?: string | null
-          top_brands?: string[] | null
+          materials_data?: Json | null
+          scraper_response?: Json
+          suppliers?: string[]
+          total_materials?: number
           total_products?: number | null
           update_status?: string | null
         }
         Update: {
-          cache_data?: Json
-          category?: string
+          cache_key?: string
+          categories?: string[]
+          category?: string | null
           created_at?: string
-          error_message?: string | null
           expires_at?: string
           id?: string
           last_updated?: string
-          popular_items?: Json | null
-          price_range?: string | null
-          top_brands?: string[] | null
+          materials_data?: Json | null
+          scraper_response?: Json
+          suppliers?: string[]
+          total_materials?: number
           total_products?: number | null
           update_status?: string | null
         }

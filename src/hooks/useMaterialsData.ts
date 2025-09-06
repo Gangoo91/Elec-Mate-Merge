@@ -168,7 +168,7 @@ export const useMaterialsData = () => {
         
         if (!cacheError && cacheEntries && cacheEntries.length > 0) {
           // Combine all materials from different categories
-          const allMaterials = cacheEntries.flatMap(entry => entry.materials_data || []);
+          const allMaterials = cacheEntries.flatMap((entry: any) => entry.materials_data || []) as MaterialItem[];
           if (allMaterials.length > 0) {
             console.log(`✅ Got ${allMaterials.length} materials from weekly cache table`);
             const processedData = processMaterialsData(allMaterials);
@@ -201,19 +201,20 @@ export const useMaterialsData = () => {
         console.log('⚠️ Cache sources empty, checking cables cache...');
         const { data: cablesCache, error: cablesCacheError } = await supabase
           .from('cables_materials_cache')
-          .select('materials_data')
+          .select('product_data')
           .order('created_at', { ascending: false })
           .limit(1)
           .single();
         
-        if (!cablesCacheError && cablesCache?.materials_data && Array.isArray(cablesCache.materials_data)) {
-          console.log(`✅ Got ${cablesCache.materials_data.length} materials from cables cache fallback`);
-          const processedData = processMaterialsData(cablesCache.materials_data);
+        if (!cablesCacheError && cablesCache?.product_data && Array.isArray(cablesCache.product_data)) {
+          const materialsData = cablesCache.product_data as unknown as MaterialItem[];
+          console.log(`✅ Got ${materialsData.length} materials from cables cache fallback`);
+          const processedData = processMaterialsData(materialsData);
           return {
             data: processedData,
-            rawMaterials: cablesCache.materials_data,
+            rawMaterials: materialsData,
             fromCache: true,
-            totalMaterials: cablesCache.materials_data.length
+            totalMaterials: materialsData.length
           };
         }
 
