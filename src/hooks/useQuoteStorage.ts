@@ -153,11 +153,39 @@ export const useQuoteStorage = () => {
     };
   }, [savedQuotes]);
 
+  // Manually refresh quotes from database
+  const refreshQuotes = useCallback(async () => {
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        console.log('No user authenticated');
+        return;
+      }
+
+      const { data, error } = await supabase
+        .from('quotes')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        console.error('Error refreshing quotes:', error);
+        return;
+      }
+
+      const quotes = data?.map(convertDbRowToQuote) || [];
+      setSavedQuotes(quotes);
+      console.log('Quotes refreshed:', quotes.length);
+    } catch (error) {
+      console.error('Error refreshing quotes:', error);
+    }
+  }, [convertDbRowToQuote]);
+
   return {
     savedQuotes,
     saveQuote,
     deleteQuote,
     getQuoteStats,
     loading,
+    refreshQuotes,
   };
 };

@@ -9,7 +9,7 @@ import { useQuoteStorage } from "@/hooks/useQuoteStorage";
 import React from "react";
 
 const QuoteBuilder = () => {
-  const { savedQuotes, deleteQuote, getQuoteStats, loading } = useQuoteStorage();
+  const { savedQuotes, deleteQuote, getQuoteStats, loading, refreshQuotes } = useQuoteStorage();
   const quoteStats = getQuoteStats();
 
   const stats = [
@@ -147,7 +147,7 @@ const QuoteBuilder = () => {
             </div>
             <Card className="border-0 shadow-2xl bg-gradient-to-br from-card to-card/80">
               <CardContent className="p-6 lg:p-8 bg-card">
-                <QuoteWizard />
+                <QuoteWizard onQuoteGenerated={refreshQuotes} />
               </CardContent>
             </Card>
           </section>

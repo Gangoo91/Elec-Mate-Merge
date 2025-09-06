@@ -16,7 +16,11 @@ const steps = [
   { title: "Review", icon: Calculator, description: "Review and finalise" },
 ];
 
-export const QuoteWizard = () => {
+interface QuoteWizardProps {
+  onQuoteGenerated?: () => void;
+}
+
+export const QuoteWizard = ({ onQuoteGenerated }: QuoteWizardProps) => {
   const {
     quote,
     currentStep,
@@ -29,7 +33,7 @@ export const QuoteWizard = () => {
     prevStep,
     generateQuote,
     resetQuote,
-  } = useQuoteBuilder();
+  } = useQuoteBuilder(onQuoteGenerated);
 
   const canProceed = () => {
     console.log('Checking canProceed for step:', currentStep);

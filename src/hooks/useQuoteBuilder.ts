@@ -5,7 +5,7 @@ import { generateQuotePDF } from '@/components/electrician/quote-builder/QuotePD
 import { toast } from '@/hooks/use-toast';
 import { useQuoteStorage } from './useQuoteStorage';
 
-export const useQuoteBuilder = () => {
+export const useQuoteBuilder = (onQuoteGenerated?: () => void) => {
   const { saveQuote } = useQuoteStorage();
   
   const [quote, setQuote] = useState<Partial<Quote>>({
@@ -130,6 +130,7 @@ export const useQuoteBuilder = () => {
           description: `Quote ${updatedQuote.quoteNumber} has been generated, downloaded, and saved to recent quotes.`,
           variant: "success"
         });
+        onQuoteGenerated?.(); // Trigger refresh of quotes list
       } else {
         toast({
           title: "Quote Generated",
