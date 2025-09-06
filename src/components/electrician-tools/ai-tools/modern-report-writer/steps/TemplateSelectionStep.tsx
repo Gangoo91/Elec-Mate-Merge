@@ -163,7 +163,13 @@ const TemplateSelectionStep: React.FC<TemplateStepProps> = ({
                 }
               >
                 {category.label}
-                <Badge variant="secondary" className="ml-2 text-xs">
+                <Badge 
+                  className={`ml-2 text-xs font-medium px-2 py-0.5 rounded-full ${
+                    selectedCategory === category.id 
+                      ? 'bg-elec-dark text-elec-yellow border border-elec-yellow/30' 
+                      : 'bg-elec-yellow/10 text-elec-yellow border border-elec-yellow/30'
+                  }`}
+                >
                   {category.count}
                 </Badge>
               </Button>
