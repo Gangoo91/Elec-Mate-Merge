@@ -7,73 +7,62 @@ import { QuoteWizard } from "@/components/electrician/quote-builder/QuoteWizard"
 import RecentQuotesList from "@/components/electrician/quote-builder/RecentQuotesList";
 import { useQuoteStorage } from "@/hooks/useQuoteStorage";
 import React from "react";
-
 const QuoteBuilder = () => {
-  const { savedQuotes, deleteQuote, getQuoteStats, loading, refreshQuotes } = useQuoteStorage();
+  const {
+    savedQuotes,
+    deleteQuote,
+    getQuoteStats,
+    loading,
+    refreshQuotes
+  } = useQuoteStorage();
   const quoteStats = getQuoteStats();
-
-  const stats = [
-    {
-      title: "Pending Quotes",
-      value: quoteStats.pending.toString(),
-      icon: Clock,
-      color: "text-elec-yellow",
-    },
-    {
-      title: "Sent Quotes",
-      value: quoteStats.sent.toString(), 
-      icon: FileText,
-      color: "text-blue-400",
-    },
-    {
-      title: "Approved Quotes",
-      value: quoteStats.approved.toString(),
-      icon: CheckCircle,
-      color: "text-green-400",
-    },
-    {
-      title: "This Month",
-      value: `£${quoteStats.monthlyTotal.toLocaleString()}`,
-      icon: TrendingUp,
-      color: "text-elec-yellow",
-    },
-  ];
-
-  const quickActions = [
-    {
-      title: "New Quote",
-      description: "Create a new electrical quote",
-      icon: Plus,
-      action: "primary",
-    },
-    {
-      title: "Quote Templates",
-      description: "Use pre-built quote templates",
-      icon: FileText,
-      action: "secondary",
-    },
-  ];
-
+  const stats = [{
+    title: "Pending Quotes",
+    value: quoteStats.pending.toString(),
+    icon: Clock,
+    color: "text-elec-yellow"
+  }, {
+    title: "Sent Quotes",
+    value: quoteStats.sent.toString(),
+    icon: FileText,
+    color: "text-blue-400"
+  }, {
+    title: "Approved Quotes",
+    value: quoteStats.approved.toString(),
+    icon: CheckCircle,
+    color: "text-green-400"
+  }, {
+    title: "This Month",
+    value: `£${quoteStats.monthlyTotal.toLocaleString()}`,
+    icon: TrendingUp,
+    color: "text-elec-yellow"
+  }];
+  const quickActions = [{
+    title: "New Quote",
+    description: "Create a new electrical quote",
+    icon: Plus,
+    action: "primary"
+  }, {
+    title: "Quote Templates",
+    description: "Use pre-built quote templates",
+    icon: FileText,
+    action: "secondary"
+  }];
   const canonical = `${window.location.origin}/electrician/quote-builder`;
-
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-background to-background/95">
+  return <div className="min-h-screen bg-gradient-to-br from-background to-background/95">
       <Helmet>
         <title>Quote Builder for Electricians | Create Professional Quotes</title>
-        <meta
-          name="description"
-          content="Professional quote builder for UK electricians. Create, manage and track electrical quotes with BS 7671 compliant templates and pricing tools."
-        />
+        <meta name="description" content="Professional quote builder for UK electricians. Create, manage and track electrical quotes with BS 7671 compliant templates and pricing tools." />
         <link rel="canonical" href={canonical} />
       </Helmet>
 
-      {/* Enhanced Header */}
-      <header className="relative bg-card border-b">
-        <div className="absolute inset-0 bg-grid-pattern opacity-10"></div>
-        <div className="relative px-4 py-8 space-y-6">
+      {/* Enhanced Header with Gradient Background */}
+      <header className="relative bg-gradient-to-r from-primary via-primary/90 to-primary/80 text-primary-foreground">
+        <div className="absolute inset-0 bg-grid-pattern opacity-20"></div>
+        <div className="relative px-4 py-8 space-y-6 bg-transparent">
           {/* Breadcrumb Navigation */}
-          <nav className="flex items-center gap-2 text-sm text-muted-foreground">
-            <Link to="/electrician/business" className="hover:text-foreground transition-colors">
+          <nav className="flex items-center gap-2 text-sm opacity-90">
+            <Link to="/electrician/business" className="hover:text-accent-foreground transition-colors">
               Business Hub
             </Link>
             <span>/</span>
@@ -86,7 +75,7 @@ const QuoteBuilder = () => {
               <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
                 Quote Builder
               </h1>
-              <p className="text-primary-foreground/80 text-lg">
+              <p className="text-lg text-white">
                 Create professional electrical quotes with ease
               </p>
             </div>
@@ -113,8 +102,7 @@ const QuoteBuilder = () => {
             </div>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
-              {stats.map((stat, index) => (
-                <Card key={index} className="group relative overflow-hidden border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] bg-gradient-to-br from-card to-card/50">
+              {stats.map((stat, index) => <Card key={index} className="group relative overflow-hidden border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] bg-gradient-to-br from-card to-card/50">
                   <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   <CardContent className="relative p-6">
                     <div className="flex items-start justify-between">
@@ -123,7 +111,9 @@ const QuoteBuilder = () => {
                         <p className="text-3xl font-bold">{stat.value}</p>
                         <div className="flex items-center gap-2">
                           <div className="w-full bg-muted rounded-full h-1">
-                            <div className="bg-primary h-1 rounded-full" style={{ width: `${Math.random() * 100}%` }}></div>
+                            <div className="bg-primary h-1 rounded-full" style={{
+                          width: `${Math.random() * 100}%`
+                        }}></div>
                           </div>
                         </div>
                       </div>
@@ -132,8 +122,7 @@ const QuoteBuilder = () => {
                       </div>
                     </div>
                   </CardContent>
-                </Card>
-              ))}
+                </Card>)}
             </div>
           </section>
 
@@ -160,15 +149,10 @@ const QuoteBuilder = () => {
                 View All
               </Button>
             </div>
-            <RecentQuotesList 
-              quotes={savedQuotes}
-              onDeleteQuote={deleteQuote}
-            />
+            <RecentQuotesList quotes={savedQuotes} onDeleteQuote={deleteQuote} />
           </section>
         </main>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default QuoteBuilder;
