@@ -123,6 +123,9 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove }: Enh
         unit: "hour",
         notes: preset.notes
       }));
+      
+      // Show feedback that preset was selected
+      console.log('Labour preset selected:', preset.description);
     }
   };
 
@@ -556,7 +559,7 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove }: Enh
                 <CardContent>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {labourPresets.map((preset, index) => (
-                      <Card key={index} className="bg-muted/30 border-muted cursor-pointer hover:border-primary/40 transition-colors" 
+                      <Card key={index} className="bg-muted/30 border-muted cursor-pointer hover:border-primary/40 hover:bg-muted/50 transition-all duration-200 active:scale-95" 
                             onClick={() => handleLabourPresetSelect(preset)}>
                         <CardContent className="p-4">
                           <h4 className="font-medium">{preset.description}</h4>
@@ -566,6 +569,9 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove }: Enh
                           {preset.notes && (
                             <p className="text-xs text-muted-foreground mt-2">{preset.notes}</p>
                           )}
+                          <div className="mt-2 text-xs text-primary font-medium">
+                            Click to apply to form
+                          </div>
                         </CardContent>
                       </Card>
                     ))}

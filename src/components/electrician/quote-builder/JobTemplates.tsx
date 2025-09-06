@@ -5,7 +5,7 @@ import { Clock, Plus, Wrench, Package, Zap, Loader2 } from "lucide-react";
 import { jobTemplates } from "@/data/jobTemplates";
 import { JobTemplate } from "@/types/quote";
 import { useState } from "react";
-import { toast } from "sonner";
+import { useToast } from "@/hooks/use-toast";
 
 interface JobTemplatesProps {
   onSelectTemplate: (template: JobTemplate) => void;
@@ -13,6 +13,7 @@ interface JobTemplatesProps {
 
 export const JobTemplates = ({ onSelectTemplate }: JobTemplatesProps) => {
   const [loadingTemplate, setLoadingTemplate] = useState<string | null>(null);
+  const { toast } = useToast();
 
   const getCategoryColor = (category: string) => {
     switch (category) {
@@ -28,9 +29,16 @@ export const JobTemplates = ({ onSelectTemplate }: JobTemplatesProps) => {
     try {
       await new Promise(resolve => setTimeout(resolve, 500)); // Brief loading simulation
       onSelectTemplate(template);
-      toast.success(`Template "${template.name}" applied successfully!`);
+      toast({
+        title: "Template Applied",
+        description: `Template "${template.name}" applied successfully!`,
+      });
     } catch (error) {
-      toast.error("Failed to apply template. Please try again.");
+      toast({
+        title: "Error",
+        description: "Failed to apply template. Please try again.",
+        variant: "destructive",
+      });
     } finally {
       setLoadingTemplate(null);
     }
