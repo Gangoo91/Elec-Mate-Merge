@@ -111,7 +111,7 @@ const ElectricalMaterials = () => {
             onClick={() => navigate(material.path)}
           >
             <CardHeader className="pb-3">
-              <CardTitle className="flex items-center gap-3 text-lg">
+              <CardTitle className="flex items-center justify-center gap-3 text-lg text-center">
                 {material.icon}
                 {material.title}
               </CardTitle>
