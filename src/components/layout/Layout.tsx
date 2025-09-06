@@ -32,8 +32,8 @@ const Layout = () => {
         <Header toggleSidebar={toggleSidebar} />
         
         <main 
-          className="flex-1 overflow-y-auto overflow-x-hidden px-4 sm:p-4 lg:p-6 pb-4"
-          style={{ paddingTop: 'calc(var(--header-height, 96px) + env(safe-area-inset-top, 0px) + 40px)' }}
+          className="flex-1 overflow-y-auto overflow-x-hidden p-3 sm:p-4 md:p-5 lg:p-6 xl:p-8"
+          style={{ paddingTop: 'calc(var(--header-height, 96px) + env(safe-area-inset-top, 0px) + 16px)' }}
         >
           <div className={cn("mobile-container mobile-safe-area p-0 max-w-7xl min-w-0")}>
             <Outlet />
