@@ -215,7 +215,7 @@ const updateMarketInsights = async (keywords: string, location: string) => {
         data: metrics,
         data_source: 'live_aggregator_5_sources',
         last_updated: new Date().toISOString(),
-        expires_at: new Date(Date.now() + 30 * 60 * 1000).toISOString() // 30 minutes
+        expires_at: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString() // 7 days
       }, {
         onConflict: 'keywords,location'
       });

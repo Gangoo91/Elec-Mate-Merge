@@ -2943,6 +2943,10 @@ export type Database = {
         Args: Record<PropertyKey, never>
         Returns: undefined
       }
+      cleanup_expired_market_insights_cache: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
       cleanup_expired_materials_weekly_cache: {
         Args: Record<PropertyKey, never>
         Returns: undefined

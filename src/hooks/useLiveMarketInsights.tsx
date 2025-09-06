@@ -158,19 +158,19 @@ export const useLiveMarketInsights = (keywords = 'electrician', location = 'UK')
     };
   }, [keywords, location, toast]);
 
-  // Auto-refresh every 30 minutes if data is stale
+  // Auto-refresh weekly if data is stale
   useEffect(() => {
     const interval = setInterval(() => {
       if (lastUpdated) {
         const dataAge = Date.now() - new Date(lastUpdated).getTime();
-        const thirtyMinutes = 30 * 60 * 1000;
+        const oneWeek = 7 * 24 * 60 * 60 * 1000;
         
-        if (dataAge > thirtyMinutes) {
-          console.log('Auto-refreshing stale market insights data');
+        if (dataAge > oneWeek) {
+          console.log('Auto-refreshing weekly market insights data');
           fetchMarketInsights(false);
         }
       }
-    }, 5 * 60 * 1000); // Check every 5 minutes
+    }, 24 * 60 * 60 * 1000); // Check daily
 
     return () => clearInterval(interval);
   }, [lastUpdated, fetchMarketInsights]);
@@ -200,7 +200,7 @@ export const useLiveMarketInsights = (keywords = 'electrician', location = 'UK')
   const isDataFresh = useCallback(() => {
     if (!lastUpdated) return false;
     const age = Date.now() - new Date(lastUpdated).getTime();
-    return age < 30 * 60 * 1000; // Fresh if less than 30 minutes old
+    return age < 7 * 24 * 60 * 60 * 1000; // Fresh if less than 7 days old
   }, [lastUpdated]);
 
   return {
