@@ -302,8 +302,7 @@
   
   /* Mobile-safe bottom spacing */
   .mobile-bottom-safe {
-    @apply pb-16 sm:pb-0;
-    padding-bottom: env(safe-area-inset-bottom);
+    @apply pb-safe-bottom;
   }
 }
 
