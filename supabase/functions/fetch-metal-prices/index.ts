@@ -92,7 +92,7 @@ function transformMetalData(apiData: any) {
   
   console.log('Parsing MetalPriceAPI rates:', Object.keys(rates))
   
-  // Copper (per kg) - MetalPriceAPI returns rates as USDXCU (USD to Copper per oz)
+  // Copper (kg) - MetalPriceAPI returns rates as USDXCU (USD to Copper per oz)
   const copperRate = rates.USDXCU || rates.XCU
   if (copperRate) {
     // MetalPriceAPI gives price per troy ounce, convert to per kg in GBP
@@ -105,7 +105,7 @@ function transformMetalData(apiData: any) {
     console.log(`Copper: $${copperRate}/oz -> £${copperPricePerKg.toFixed(2)}/kg`)
   }
   
-  // Aluminium (per kg) - MetalPriceAPI returns as USDALU or ALU
+  // Aluminium (kg) - MetalPriceAPI returns as USDALU or ALU
   const aluRate = rates.USDALU || rates.ALU
   if (aluRate) {
     const aluPricePerKg = (aluRate * 32.15 * usdToGbp)
@@ -117,7 +117,7 @@ function transformMetalData(apiData: any) {
     console.log(`Aluminium: $${aluRate}/oz -> £${aluPricePerKg.toFixed(2)}/kg`)
   }
   
-  // Lead (per kg) - MetalPriceAPI returns as USDXPB or XPB
+  // Lead (kg) - MetalPriceAPI returns as USDXPB or XPB
   const leadRate = rates.USDXPB || rates.XPB
   if (leadRate) {
     const leadPricePerKg = (leadRate * 32.15 * usdToGbp)
@@ -129,10 +129,10 @@ function transformMetalData(apiData: any) {
     console.log(`Lead: $${leadRate}/oz -> £${leadPricePerKg.toFixed(2)}/kg`)
   }
   
-  // Zinc (per kg) - MetalPriceAPI returns as USDZNC or ZNC
+  // Zinc (kg) - MetalPriceAPI returns as USDZNC or ZNC
   const zincRate = rates.USDZNC || rates.ZNC
   
-  // Brass (per kg) - estimate based on copper and zinc if available
+  // Brass (kg) - estimate based on copper and zinc if available
   if (copperRate && zincRate) {
     const brassPricePerKg = ((copperRate * 0.65 + zincRate * 0.35) * 32.15 * usdToGbp)
     metals.push({
