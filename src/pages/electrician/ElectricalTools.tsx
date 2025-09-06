@@ -270,16 +270,13 @@ const ElectricalTools = () => {
                     return (
                       <Card 
                         key={category.name} 
-                        className={`group border-elec-yellow/20 bg-gradient-to-br from-elec-gray/70 to-elec-gray/50 hover:from-elec-gray/80 hover:to-elec-gray/60 backdrop-blur-sm transition-all duration-500 hover:scale-[1.02] hover:shadow-xl hover:shadow-elec-yellow/10 relative overflow-hidden ${
+                        className={`group border-elec-yellow/20 bg-elec-gray/60 hover:bg-elec-gray/70 backdrop-blur-sm transition-all duration-500 hover:scale-[1.02] hover:border-elec-yellow/30 relative overflow-hidden ${
                           viewMode === 'list' ? 'flex flex-row' : ''
                         }`}
                       >
-                        {/* Gradient overlay on hover */}
-                        <div className="absolute inset-0 bg-gradient-to-r from-elec-yellow/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                        
                         {category.trending && (
                           <div className="absolute top-3 right-3 z-10">
-                            <Badge className="bg-gradient-to-r from-green-500 to-emerald-500 text-white border-0 shadow-lg animate-pulse">
+                            <Badge className="bg-green-500 text-white border-0 animate-pulse">
                               <Sparkles className="h-3 w-3 mr-1" />
                               Trending
                             </Badge>
@@ -320,7 +317,7 @@ const ElectricalTools = () => {
                           <Link to={`/electrician/materials/Tools?category=${encodeURIComponent(category.name)}`} className="block">
                             <Button 
                               size="sm" 
-                              className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90 transition-all duration-300 group-hover:shadow-lg font-medium"
+                              className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90 transition-all duration-300 font-medium"
                             >
                               Browse {category.name}
                               <Search className="h-4 w-4 ml-2" />
@@ -363,14 +360,14 @@ const ElectricalTools = () => {
                     <Badge variant="outline" className="text-xs">Next Day</Badge>
                   </div>
                   <a href="https://www.screwfix.com/" target="_blank" rel="noopener noreferrer" className="block">
-                    <Button size="sm" className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90 transition-all duration-300 group-hover:shadow-lg">
+                    <Button size="sm" className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90 transition-all duration-300">
                       Visit Screwfix
                     </Button>
                   </a>
                 </CardContent>
               </Card>
 
-              <Card className="group border-elec-yellow/20 bg-gradient-to-br from-elec-gray/70 to-elec-gray/50 hover:from-elec-gray/80 hover:to-elec-gray/60 backdrop-blur-sm transition-all duration-500 hover:scale-[1.02] hover:shadow-xl hover:shadow-elec-yellow/10">
+              <Card className="group border-elec-yellow/20 bg-elec-gray/60 hover:bg-elec-gray/70 backdrop-blur-sm transition-all duration-500 hover:scale-[1.02] hover:border-elec-yellow/30">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-3 group-hover:text-elec-yellow transition-colors">
                     <div className="p-2 bg-red-500/20 rounded-xl">
@@ -390,14 +387,14 @@ const ElectricalTools = () => {
                     <Badge variant="outline" className="text-xs">Bulk Orders</Badge>
                   </div>
                   <a href="https://in.rsdelivers.com/" target="_blank" rel="noopener noreferrer" className="block">
-                    <Button size="sm" className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90 transition-all duration-300 group-hover:shadow-lg">
+                    <Button size="sm" className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90 transition-all duration-300">
                       Visit RS Components
                     </Button>
                   </a>
                 </CardContent>
               </Card>
 
-              <Card className="group border-elec-yellow/20 bg-gradient-to-br from-elec-gray/70 to-elec-gray/50 hover:from-elec-gray/80 hover:to-elec-gray/60 backdrop-blur-sm transition-all duration-500 hover:scale-[1.02] hover:shadow-xl hover:shadow-elec-yellow/10">
+              <Card className="group border-elec-yellow/20 bg-elec-gray/60 hover:bg-elec-gray/70 backdrop-blur-sm transition-all duration-500 hover:scale-[1.02] hover:border-elec-yellow/30">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-3 group-hover:text-elec-yellow transition-colors">
                     <div className="p-2 bg-green-500/20 rounded-xl">
@@ -417,14 +414,14 @@ const ElectricalTools = () => {
                     <Badge variant="outline" className="text-xs">500+ Stores</Badge>
                   </div>
                   <a href="https://www.toolstation.com/" target="_blank" rel="noopener noreferrer" className="block">
-                    <Button size="sm" className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90 transition-all duration-300 group-hover:shadow-lg">
+                    <Button size="sm" className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90 transition-all duration-300">
                       Visit Toolstation
                     </Button>
                   </a>
                 </CardContent>
               </Card>
 
-              <Card className="group border-elec-yellow/20 bg-gradient-to-br from-elec-gray/70 to-elec-gray/50 hover:from-elec-gray/80 hover:to-elec-gray/60 backdrop-blur-sm transition-all duration-500 hover:scale-[1.02] hover:shadow-xl hover:shadow-elec-yellow/10">
+              <Card className="group border-elec-yellow/20 bg-elec-gray/60 hover:bg-elec-gray/70 backdrop-blur-sm transition-all duration-500 hover:scale-[1.02] hover:border-elec-yellow/30">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-3 group-hover:text-elec-yellow transition-colors">
                     <div className="p-2 bg-purple-500/20 rounded-xl">
@@ -444,7 +441,7 @@ const ElectricalTools = () => {
                     <Badge variant="outline" className="text-xs">Specialist</Badge>
                   </div>
                   <a href="https://www.cef.co.uk/" target="_blank" rel="noopener noreferrer" className="block">
-                    <Button size="sm" className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90 transition-all duration-300 group-hover:shadow-lg">
+                    <Button size="sm" className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90 transition-all duration-300">
                       Visit CEF
                     </Button>
                   </a>
