@@ -149,7 +149,7 @@ const LivePricing = () => {
           )}
 
           {/* Compact Disclaimer */}
-          <div className="text-xs text-muted-foreground p-4 border border-elec-yellow/20 rounded bg-elec-gray/50">
+          <div className="text-xs text-white p-4 border border-elec-yellow/20 rounded bg-elec-gray/50">
             <div className="mb-3">
               <strong>Important Disclaimer:</strong> Prices shown are indicative of UK market rates and may vary significantly by supplier, region, and quantity. 
               Always confirm current prices with your local UK supplier before making purchasing decisions.
@@ -158,7 +158,7 @@ const LivePricing = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-3 border-t border-elec-yellow/10">
               <div>
                 <h4 className="font-medium text-white text-sm mb-2">For Scrap Metal Sales:</h4>
-                <ul className="text-xs space-y-1 text-gray-400">
+                  <ul className="text-xs space-y-1 text-white">
                   <li>• Prices vary by metal grade and condition</li>
                   <li>• Call ahead to confirm current rates</li>
                   <li>• Bring ID and proof of ownership</li>
@@ -167,7 +167,7 @@ const LivePricing = () => {
               </div>
               <div>
                 <h4 className="font-medium text-white text-sm mb-2">Community Pricing:</h4>
-                <ul className="text-xs space-y-1 text-gray-400">
+                <ul className="text-xs space-y-1 text-white">
                   <li>• Job prices from real UK electricians</li>
                   <li>• Regional variations included</li>
                   <li>• Updated with new submissions</li>
