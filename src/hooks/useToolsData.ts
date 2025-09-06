@@ -58,10 +58,10 @@ export const useToolsData = () => {
   return useQuery({
     queryKey: ['tools', 'firecrawl-data'],
     queryFn: fetchToolsData,
-    staleTime: 5 * 60 * 1000, // 5 minutes
-    gcTime: 10 * 60 * 1000, // 10 minutes (was cacheTime)
+    staleTime: 30 * 60 * 1000, // 30 minutes - tool data doesn't change frequently
+    gcTime: 60 * 60 * 1000, // 1 hour cache time
     retry: 2,
-    refetchOnWindowFocus: true,
-    refetchOnReconnect: true,
+    refetchOnWindowFocus: false, // Prevent refetch on window focus
+    refetchOnReconnect: false, // Prevent refetch on network reconnect
   });
 };
