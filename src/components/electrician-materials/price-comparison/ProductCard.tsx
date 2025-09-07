@@ -55,8 +55,8 @@ export const ProductCard = ({ product, isCheapest, savings, onAddToQuote }: Prod
     <Card 
       className={`border transition-all hover:shadow-lg ${
         isCheapest 
-          ? 'border-green-500/50 bg-green-500/5 ring-1 ring-green-500/20' 
-          : 'border-elec-yellow/20 bg-elec-gray'
+          ? 'border-green-500/50 bg-gradient-to-br from-green-500/5 to-green-500/10 ring-1 ring-green-500/20' 
+          : 'border-elec-yellow/20 bg-gradient-to-br from-elec-gray to-elec-gray/80'
       }`}
     >
       <CardContent className="p-4">
@@ -64,9 +64,16 @@ export const ProductCard = ({ product, isCheapest, savings, onAddToQuote }: Prod
           {/* Mobile: Vertical layout */}
           {isMobile ? (
             <>
-              {/* Header */}
+              {/* Header with supplier and rating */}
               <div className="flex items-center justify-between">
-                <span className="text-xs text-muted-foreground">{product.supplier}</span>
+                <div className="flex items-center gap-2">
+                  <span className="text-sm font-medium text-elec-yellow">{product.supplier}</span>
+                  {isCheapest && (
+                    <Badge className="bg-green-500/20 text-green-400 border-green-500/30 text-xs px-2 py-0.5">
+                      Best Value
+                    </Badge>
+                  )}
+                </div>
                 {product.rating && (
                   <div className="flex items-center gap-1">
                     <Star className="h-3 w-3 text-amber-400 fill-current" />
@@ -76,22 +83,24 @@ export const ProductCard = ({ product, isCheapest, savings, onAddToQuote }: Prod
               </div>
               
               {/* Product name and specs */}
-              <div>
-                <h3 className="font-medium text-white text-sm leading-tight line-clamp-2 mb-1">{product.name}</h3>
+              <div className="space-y-3">
+                <h3 className="font-medium text-white text-sm leading-tight line-clamp-2">{product.name}</h3>
+                
+                {/* Specifications badges */}
                 {(product.length || product.cableSize || product.coreCount) && (
-                  <div className="flex flex-wrap gap-1 text-xs">
+                  <div className="flex flex-wrap gap-1.5">
                     {product.length && (
-                      <Badge variant="outline" className="text-xs px-1.5 py-0.5 border-elec-yellow/30 text-elec-yellow">
+                      <Badge variant="outline" className="text-xs px-2 py-1 border-elec-yellow/40 text-elec-yellow bg-elec-yellow/5">
                         {product.length}
                       </Badge>
                     )}
                     {product.cableSize && (
-                      <Badge variant="outline" className="text-xs px-1.5 py-0.5 border-elec-yellow/30 text-elec-yellow">
+                      <Badge variant="outline" className="text-xs px-2 py-1 border-blue-500/40 text-blue-400 bg-blue-500/5">
                         {product.cableSize}
                       </Badge>
                     )}
                     {product.coreCount && (
-                      <Badge variant="outline" className="text-xs px-1.5 py-0.5 border-elec-yellow/30 text-elec-yellow">
+                      <Badge variant="outline" className="text-xs px-2 py-1 border-purple-500/40 text-purple-400 bg-purple-500/5">
                         {product.coreCount}
                       </Badge>
                     )}
@@ -100,51 +109,61 @@ export const ProductCard = ({ product, isCheapest, savings, onAddToQuote }: Prod
               </div>
               
               {/* Product image */}
-              <div>
-                <img src={product.image || "/placeholder.svg"} alt={product.name} className="mx-auto" />
+              <div className="flex justify-center py-2">
+                <img 
+                  src={product.image || "/placeholder.svg"} 
+                  alt={product.name} 
+                  className="w-16 h-16 object-cover rounded-lg bg-elec-gray/50"
+                />
               </div>
               
-              {/* Stock and price */}
-              <div className="flex items-center justify-between">
-                <div className="text-left">
-                  <p className="text-sm font-medium text-elec-yellow">{product.price}</p>
+              {/* Price and stock info */}
+              <div className="bg-elec-gray/50 rounded-lg p-3 space-y-2">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <div className="text-lg font-bold text-elec-yellow">{product.price}</div>
+                    {savings > 0 && (
+                      <div className="text-xs text-red-400">+{savings}% more</div>
+                    )}
+                  </div>
                   <Badge 
                     variant="outline" 
                     className={`text-xs ${
                       product.stockStatus === 'In Stock' 
-                        ? 'border-green-500/30 text-green-400' 
+                        ? 'border-green-500/30 text-green-400 bg-green-500/5' 
                         : product.stockStatus === 'Low Stock'
-                        ? 'border-yellow-500/30 text-yellow-400'
-                        : 'border-red-500/30 text-red-400'
+                        ? 'border-yellow-500/30 text-yellow-400 bg-yellow-500/5'
+                        : 'border-red-500/30 text-red-400 bg-red-500/5'
                     }`}
                   >
                     {product.stockStatus}
                   </Badge>
                 </div>
-                
+              </div>
+              
+              {/* Action buttons */}
+              <div className="flex gap-2 pt-2">
                 {onAddToQuote && (
                   <Button
                     size="sm"
                     onClick={handleAddToQuote}
-                    className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 h-8 px-3 text-xs"
+                    className="flex-1 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 h-9 text-sm font-medium"
                   >
-                    <Plus className="h-3 w-3 mr-1" />
-                    Add
+                    <Plus className="h-3 w-3 mr-2" />
+                    Add to Quote
+                  </Button>
+                )}
+                {product.productUrl && (
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={() => window.open(product.productUrl, '_blank')}
+                    className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 h-9 px-3"
+                  >
+                    <ExternalLink className="h-3 w-3" />
                   </Button>
                 )}
               </div>
-              
-              {/* Optional view button */}
-              {product.productUrl && (
-                <MobileButton
-                  variant="outline"
-                  onClick={() => window.open(product.productUrl, '_blank')}
-                  className="w-full"
-                >
-                  <ExternalLink className="h-4 w-4 mr-2" />
-                  View Product
-                </MobileButton>
-              )}
             </>
           ) : (
             /* Desktop: Horizontal layout */
