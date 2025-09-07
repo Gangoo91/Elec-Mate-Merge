@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { useToolsData, type ToolItem } from './useToolsData';
-import { Wrench, Calculator, FileText, Package, Zap, HardHat, Shield, Settings } from 'lucide-react';
+import { Wrench, Calculator, FileText, Package, Zap, HardHat, Shield, Settings, ArrowUp } from 'lucide-react';
 
 export interface ToolCategory {
   name: string;
@@ -41,6 +41,12 @@ const categorizeToolByName = (toolName: string): string => {
     return 'Safety Tools';
   }
   
+  // Access Tools & Equipment
+  else if (name.includes('ladder') || name.includes('scaffold') || name.includes('platform') || name.includes('steps') ||
+           name.includes('tower') || name.includes('access') || name.includes('height') || name.includes('lift') ||
+           name.includes('trestle') || name.includes('hop up')) {
+    return 'Access Tools & Equipment';
+  }
   
   // Tool Storage
   else if (name.includes('bag') || name.includes('box') || name.includes('case') || name.includes('storage') ||
@@ -68,6 +74,7 @@ const getCategoryIcon = (category: string) => {
     case 'Test Equipment': return Calculator;
     case 'PPE': return HardHat;
     case 'Safety Tools': return Shield;
+    case 'Access Tools & Equipment': return ArrowUp;
     case 'Tool Storage': return Package;
     case 'Specialist Tools': return Settings;
     default: return Wrench;
@@ -81,6 +88,7 @@ const getCategoryDescription = (category: string): string => {
     case 'Test Equipment': return 'Testing and measurement equipment';
     case 'PPE': return 'Personal protective equipment';
     case 'Safety Tools': return 'Safety tools and equipment';
+    case 'Access Tools & Equipment': return 'Ladders, scaffolding and access equipment';
     case 'Tool Storage': return 'Tool bags, boxes and storage';
     case 'Specialist Tools': return 'Specialist electrical tools';
     default: return 'Essential hand tools for electrical work';
@@ -93,6 +101,7 @@ const getDefaultCategories = (): ToolCategory[] => [
   { name: 'Test Equipment', icon: Calculator, description: 'Testing and measurement equipment', count: 0 },
   { name: 'PPE', icon: HardHat, description: 'Personal protective equipment', count: 0 },
   { name: 'Safety Tools', icon: Shield, description: 'Safety tools and equipment', count: 0 },
+  { name: 'Access Tools & Equipment', icon: ArrowUp, description: 'Ladders, scaffolding and access equipment', count: 0 },
   { name: 'Tool Storage', icon: Package, description: 'Tool bags, boxes and storage', count: 0 },
   { name: 'Specialist Tools', icon: Settings, description: 'Specialist electrical tools', count: 0 }
 ];
