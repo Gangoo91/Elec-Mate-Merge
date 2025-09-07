@@ -29,15 +29,19 @@ const categorizeToolByName = (toolName: string): string => {
   }
   
   // PPE (Personal Protective Equipment)
-  else if (name.includes('helmet') || name.includes('glove') || name.includes('boot') || name.includes('goggle') ||
-           name.includes('mask') || name.includes('vest') || name.includes('harness') || name.includes('ear') ||
-           name.includes('protection') || name.includes('ppe')) {
+  else if (name.includes('helmet') || name.includes('hard hat') || name.includes('glove') || name.includes('boot') || 
+           name.includes('goggle') || name.includes('glasses') || name.includes('mask') || name.includes('respirator') ||
+           name.includes('vest') || name.includes('hi-vis') || name.includes('harness') || name.includes('ear') ||
+           name.includes('earmuff') || name.includes('earplug') || name.includes('protection') || name.includes('ppe')) {
     return 'PPE';
   }
   
-  // Safety Tools
-  else if (name.includes('safety') || name.includes('warning') || name.includes('sign') || name.includes('barrier') ||
-           name.includes('lock') || name.includes('tag') || name.includes('isolator') || name.includes('fuse')) {
+  // Safety Tools (excluding PPE items)
+  else if ((name.includes('safety') && !name.includes('helmet') && !name.includes('glove') && !name.includes('boot') && 
+            !name.includes('goggle') && !name.includes('vest') && !name.includes('harness')) ||
+           name.includes('warning') || name.includes('sign') || name.includes('barrier') ||
+           name.includes('lock') || name.includes('tag') || name.includes('isolator') || name.includes('fuse') ||
+           name.includes('mat') || name.includes('lockout')) {
     return 'Safety Tools';
   }
   
@@ -113,8 +117,8 @@ const mapDatabaseToFrontendCategory = (dbCategory: string): string => {
     'Test & Measurement': 'Test Equipment',
     'Testers': 'Test Equipment',
     'Safety Equipment': 'PPE',
-    'Personal Protective Equipment': 'Safety Tools',
-    'PPE': 'Safety Tools',
+    'Personal Protective Equipment': 'PPE',
+    'PPE': 'PPE',
     'Electric Tools': 'Power Tools',
     'Cordless Tools': 'Power Tools', 
     'Battery Tools': 'Power Tools',
@@ -139,8 +143,15 @@ const analyzeCategoryData = (tools: ToolItem[]): ToolCategory[] => {
   
   // Analyze tools and group by category using both database category and name-based categorization
   tools.forEach(tool => {
-    // First try to use the database category, then fall back to name-based categorization
-    let category = tool.category ? mapDatabaseToFrontendCategory(tool.category) : categorizeToolByName(tool.name || '');
+    let category: string;
+    
+    // Special handling for "Safety Tools" database category - split by name
+    if (tool.category === 'Safety Tools') {
+      category = categorizeToolByName(tool.name || '');
+    } else {
+      // First try to use the database category, then fall back to name-based categorization
+      category = tool.category ? mapDatabaseToFrontendCategory(tool.category) : categorizeToolByName(tool.name || '');
+    }
     
     if (!categoryMap.has(category)) {
       categoryMap.set(category, { count: 0, prices: [], tools: [] });
