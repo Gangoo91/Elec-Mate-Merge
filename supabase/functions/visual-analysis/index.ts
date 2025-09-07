@@ -41,45 +41,53 @@ serve(async (req) => {
 
     console.log('Starting visual analysis with settings:', analysis_settings);
 
-    // Construct the system prompt for BS 7671 compliance
-    const systemPrompt = `You are a highly experienced UK electrical safety inspector specialising in BS 7671 18th Edition compliance. 
+    // Construct the system prompt for BS 7671 compliance with EICR codes
+    const systemPrompt = `You are a highly experienced UK electrical safety inspector specialising in BS 7671 18th Edition compliance and EICR reporting. 
 
 Your role is to analyse electrical installation images and provide:
-1. Detailed safety assessments
-2. BS 7671 regulation compliance checks
-3. Risk identification with severity ratings
-4. Professional recommendations with cost estimates
+1. Detailed safety assessments with EICR fault classification
+2. BS 7671 regulation compliance checks with specific clause references
+3. Risk identification with EICR codes (C1, C2, C3, FI)
+4. Professional remedial guidance and cost estimates
 5. Bounding box coordinates for detected issues (when requested)
 
 Analysis Focus Areas: ${analysis_settings.focus_areas.join(', ')}
 Confidence Threshold: ${analysis_settings.confidence_threshold}
 Enable Bounding Boxes: ${analysis_settings.enable_bounding_boxes}
 
-When analysing images:
-- Look for immediate safety hazards (exposed conductors, damaged equipment, overheating, etc.)
-- Check compliance with BS 7671 requirements (earthing, bonding, circuit protection, etc.)
-- Assess installation quality and workmanship
-- Identify code violations and non-compliant installations
-- Consider environmental factors affecting safety
+EICR Classification Requirements:
+- C1 (Code 1): Danger present - immediate action required. Risk of injury.
+- C2 (Code 2): Potentially dangerous - urgent remedial action required.
+- C3 (Code 3): Improvement recommended to enhance safety.
+- FI (Further Investigation): Unable to verify compliance, further investigation required.
 
-For severity ratings:
-- CRITICAL: Immediate danger to life or property
-- HIGH: Significant safety concern requiring urgent attention
-- MEDIUM: Non-compliance that should be addressed soon
-- LOW: Minor issues or improvements recommended
+When analysing images:
+- Look for immediate safety hazards (exposed live parts, damaged protective devices, etc.)
+- Check compliance with BS 7671 requirements (earthing, bonding, circuit protection, isolation, etc.)
+- Assess installation quality and workmanship against current standards
+- Identify code violations and classify with appropriate EICR codes
+- Consider environmental factors affecting safety and compliance
+- Focus on visible defects that can be determined from the image
+
+For each finding, you MUST assign the appropriate EICR code based on severity:
+- Exposed live parts, missing earth connections, damaged protective devices = C1
+- Non-compliant installations without immediate danger = C2  
+- Outdated but functioning installations = C3
+- Unclear compliance status from image = FI
 
 IMPORTANT: You must respond in valid JSON format only. No markdown, no code blocks, just raw JSON.
 
 Response format:
 {
   "analysis": {
-    "issues": [
+    "findings": [
       {
-        "description": "Detailed description of the issue",
-        "severity": "critical|high|medium|low",
+        "description": "Detailed description of the issue found",
+        "eicr_code": "C1|C2|C3|FI",
         "confidence": 0.95,
-        "regulation": "BS 7671 section reference",
+        "bs7671_clauses": ["411.3.2", "526.3"],
         "location": "Specific location in image",
+        "fix_guidance": "Step-by-step remedial actions required",
         "bounding_box": {
           "x": 0.1,
           "y": 0.1,
@@ -92,22 +100,22 @@ Response format:
     ],
     "recommendations": [
       {
-        "action": "Specific action to take",
-        "priority": "high|medium|low",
-        "regulation": "BS 7671 reference",
-        "cost_estimate": "£50-100"
+        "action": "Specific remedial action required",
+        "priority": "immediate|urgent|recommended",
+        "bs7671_reference": "BS 7671 clause reference",
+        "cost_estimate": "£50-100",
+        "eicr_code": "C1|C2|C3"
       }
     ],
-    "regulations": [
-      {
-        "clause": "BS 7671 Section 411.3.2",
-        "description": "Requirement description",
-        "compliance_status": "compliant|non_compliant|requires_inspection"
-      }
-    ],
-    "overall_safety_rating": 7.5,
-    "summary": "Brief executive summary of findings",
-    "bounding_boxes": [...]
+    "compliance_summary": {
+      "overall_assessment": "satisfactory|unsatisfactory",
+      "c1_count": 0,
+      "c2_count": 1,
+      "c3_count": 2,
+      "fi_count": 0,
+      "safety_rating": 7.5
+    },
+    "summary": "Brief executive summary of EICR findings and overall installation condition"
   }
 }`;
 
@@ -133,7 +141,7 @@ Response format:
       });
     });
 
-    const userPrompt = `Analyse these electrical installation images for safety compliance and BS 7671 18th Edition requirements.
+    const userPrompt = `Analyse these electrical installation images for EICR compliance and BS 7671 18th Edition requirements.
 
 Primary focus areas: ${analysis_settings.focus_areas.join(', ')}
 
@@ -142,15 +150,20 @@ ${analysis_settings.enable_bounding_boxes ?
   'Bounding boxes are not required for this analysis.'
 }
 
-Look specifically for:
-- Electrical safety hazards and code violations
-- Component condition and installation quality
-- Compliance with BS 7671 earthing and bonding requirements
-- Circuit protection adequacy
-- Environmental and accessibility concerns
-- Labelling and identification compliance
+Look specifically for EICR reportable defects:
+- C1 Issues: Exposed live parts, missing protective devices, immediate dangers
+- C2 Issues: Non-compliant installations, deteriorated components, missing earthing
+- C3 Issues: Outdated installations, improvements recommended for enhanced safety
+- FI Issues: Installations requiring further investigation to determine compliance
 
-Provide detailed, actionable recommendations with regulation references and cost estimates where appropriate.`;
+For each finding:
+1. Classify with appropriate EICR code (C1, C2, C3, or FI)
+2. Reference specific BS 7671 clauses that apply
+3. Provide clear remedial guidance
+4. Include cost estimates for typical remedial work
+5. Assess overall installation condition
+
+Focus on visible defects and compliance issues that can be determined from the electrical installation images provided.`;
 
     console.log('Sending request to OpenAI...');
 
@@ -206,22 +219,30 @@ Provide detailed, actionable recommendations with regulation references and cost
       // Fallback response structure
       analysisResult = {
         analysis: {
-          issues: [
+          findings: [
             {
               description: "Analysis completed but response format was invalid. Please try again or contact support.",
-              severity: "medium",
+              eicr_code: "FI",
               confidence: 0.5,
-              regulation: "N/A"
+              bs7671_clauses: ["N/A"],
+              fix_guidance: "Re-run analysis or contact technical support"
             }
           ],
           recommendations: [
             {
               action: "Re-run analysis with different settings or contact technical support",
-              priority: "low"
+              priority: "recommended",
+              eicr_code: "FI"
             }
           ],
-          regulations: [],
-          overall_safety_rating: 5.0,
+          compliance_summary: {
+            overall_assessment: "unsatisfactory",
+            c1_count: 0,
+            c2_count: 0,
+            c3_count: 0,
+            fi_count: 1,
+            safety_rating: 5.0
+          },
           summary: "Analysis completed but encountered formatting issues. Results may be incomplete."
         }
       };
@@ -233,9 +254,9 @@ Provide detailed, actionable recommendations with regulation references and cost
     }
 
     // Apply confidence threshold filtering
-    if (analysisResult.analysis.issues) {
-      analysisResult.analysis.issues = analysisResult.analysis.issues.filter(
-        (issue: any) => (issue.confidence || 0) >= analysis_settings.confidence_threshold
+    if (analysisResult.analysis.findings) {
+      analysisResult.analysis.findings = analysisResult.analysis.findings.filter(
+        (finding: any) => (finding.confidence || 0) >= analysis_settings.confidence_threshold
       );
     }
 

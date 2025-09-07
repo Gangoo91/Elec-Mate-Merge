@@ -114,3 +114,6 @@ verify_jwt = false
 
 [functions.live-market-insights]
 verify_jwt = false
+
+[functions.visual-analysis]
+verify_jwt = false

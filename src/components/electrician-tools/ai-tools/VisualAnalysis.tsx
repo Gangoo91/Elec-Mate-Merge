@@ -20,6 +20,7 @@ import {
   RotateCcw,
   Save
 } from "lucide-react";
+import VisualAnalysisResults from "./VisualAnalysisResults";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
@@ -51,28 +52,31 @@ interface BoundingBox {
 }
 
 interface AnalysisResult {
-  issues: Array<{
+  findings: Array<{
     description: string;
-    severity: 'low' | 'medium' | 'high' | 'critical';
+    eicr_code: 'C1' | 'C2' | 'C3' | 'FI';
     confidence: number;
-    regulation?: string;
+    bs7671_clauses: string[];
     location?: string;
+    fix_guidance: string;
     bounding_box?: BoundingBox;
   }>;
   recommendations: Array<{
     action: string;
-    priority: 'low' | 'medium' | 'high';
-    regulation?: string;
+    priority: 'immediate' | 'urgent' | 'recommended';
+    bs7671_reference?: string;
     cost_estimate?: string;
+    eicr_code: 'C1' | 'C2' | 'C3';
   }>;
-  regulations: Array<{
-    clause: string;
-    description: string;
-    compliance_status: 'compliant' | 'non_compliant' | 'requires_inspection';
-  }>;
-  overall_safety_rating: number;
+  compliance_summary: {
+    overall_assessment: 'satisfactory' | 'unsatisfactory';
+    c1_count: number;
+    c2_count: number;
+    c3_count: number;
+    fi_count: number;
+    safety_rating: number;
+  };
   summary: string;
-  bounding_boxes?: BoundingBox[];
 }
 
 interface AnalysisPreset {
@@ -395,7 +399,7 @@ const VisualAnalysis = () => {
       doc.text('Visual Fault Analysis Report', 20, 20);
       doc.setFontSize(12);
       doc.text(`Generated: ${new Date().toLocaleDateString('en-GB')}`, 20, 30);
-      doc.text(`Safety Rating: ${analysisResult.overall_safety_rating}/10`, 20, 40);
+      doc.text(`Safety Rating: ${analysisResult.compliance_summary.safety_rating}/10`, 20, 40);
       doc.text(`BS 7671 18th Edition Compliance Assessment`, 20, 50);
       
       // Summary
@@ -412,15 +416,15 @@ const VisualAnalysis = () => {
       doc.text('Identified Issues', 20, yPosition);
       yPosition += 10;
       
-      const issueData = analysisResult.issues.map(issue => [
-        issue.description,
-        issue.severity.charAt(0).toUpperCase() + issue.severity.slice(1),
-        `${Math.round(issue.confidence * 100)}%`,
-        issue.regulation || 'N/A'
+      const issueData = analysisResult.findings.map(finding => [
+        finding.description,
+        finding.eicr_code,
+        `${Math.round(finding.confidence * 100)}%`,
+        finding.bs7671_clauses.join(', ') || 'N/A'
       ]);
       
       autoTable(doc, {
-        head: [['Issue', 'Severity', 'Confidence', 'Regulation']],
+        head: [['Finding', 'EICR Code', 'Confidence', 'BS 7671 Clauses']],
         body: issueData,
         startY: yPosition,
         margin: { left: 20 },
@@ -436,12 +440,12 @@ const VisualAnalysis = () => {
       const recData = analysisResult.recommendations.map(rec => [
         rec.action,
         rec.priority.charAt(0).toUpperCase() + rec.priority.slice(1),
-        rec.regulation || 'N/A',
+        rec.bs7671_reference || 'N/A',
         rec.cost_estimate || 'TBC'
       ]);
       
       autoTable(doc, {
-        head: [['Action', 'Priority', 'Regulation', 'Cost Estimate']],
+        head: [['Action', 'Priority', 'BS 7671 Reference', 'Cost Estimate']],
         body: recData,
         startY: yPosition,
         margin: { left: 20 },
@@ -463,21 +467,21 @@ const VisualAnalysis = () => {
     }
   };
 
-  const getSeverityColor = (severity: string) => {
-    switch (severity) {
-      case 'critical': return 'bg-destructive text-destructive-foreground';
-      case 'high': return 'bg-red-500/20 text-red-400 border border-red-500/30';
-      case 'medium': return 'bg-amber-500/20 text-amber-400 border border-amber-500/30';
-      case 'low': return 'bg-green-500/20 text-green-400 border border-green-500/30';
+  const getEicrCodeColor = (code: string) => {
+    switch (code) {
+      case 'C1': return 'bg-red-500 text-white border border-red-500';
+      case 'C2': return 'bg-amber-500 text-white border border-amber-500';
+      case 'C3': return 'bg-blue-500 text-white border border-blue-500';
+      case 'FI': return 'bg-slate-500 text-white border border-slate-500';
       default: return 'bg-muted text-muted-foreground';
     }
   };
 
   const getPriorityColor = (priority: string) => {
     switch (priority) {
-      case 'high': return 'bg-red-500/20 text-red-400 border border-red-500/30';
-      case 'medium': return 'bg-amber-500/20 text-amber-400 border border-amber-500/30';
-      case 'low': return 'bg-green-500/20 text-green-400 border border-green-500/30';
+      case 'immediate': return 'bg-red-500/20 text-red-400 border border-red-500/30';
+      case 'urgent': return 'bg-amber-500/20 text-amber-400 border border-amber-500/30';
+      case 'recommended': return 'bg-green-500/20 text-green-400 border border-green-500/30';
       default: return 'bg-muted text-muted-foreground';
     }
   };
@@ -829,159 +833,10 @@ const VisualAnalysis = () => {
 
         {/* Analysis Results */}
         {analysisResult && showResults && (
-          <Card className="bg-card border-border max-w-5xl mx-auto">
-            <CardHeader className="p-4 sm:p-6">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2 sm:gap-3">
-                  <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5 text-green-400" />
-                  <CardTitle className="text-lg sm:text-xl text-foreground">Analysis Results</CardTitle>
-                </div>
-                <div className="flex gap-2">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={exportReport}
-                    className="border-border hover:bg-accent/50"
-                  >
-                    <Download className="h-4 w-4 mr-2" />
-                    Export PDF
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="border-border hover:bg-accent/50"
-                  >
-                    <Save className="h-4 w-4 mr-2" />
-                    Save Report
-                  </Button>
-                </div>
-              </div>
-            </CardHeader>
-            
-            <CardContent className="p-4 sm:p-6 pt-0 space-y-6">
-              {/* Safety Rating */}
-              <div className="bg-accent/10 border border-border rounded-lg p-4">
-                <div className="flex items-center justify-between mb-2">
-                  <h3 className="font-semibold text-foreground">Overall Safety Rating</h3>
-                  <div className="flex items-center gap-2">
-                    <span className="text-2xl font-bold text-foreground">
-                      {analysisResult.overall_safety_rating}/10
-                    </span>
-                    {analysisResult.overall_safety_rating >= 8 ? (
-                      <CheckCircle className="h-5 w-5 text-green-400" />
-                    ) : analysisResult.overall_safety_rating >= 6 ? (
-                      <AlertTriangle className="h-5 w-5 text-amber-400" />
-                    ) : (
-                      <AlertTriangle className="h-5 w-5 text-red-400" />
-                    )}
-                  </div>
-                </div>
-                <p className="text-muted-foreground text-sm">{analysisResult.summary}</p>
-              </div>
-
-              {/* Issues */}
-              {analysisResult.issues.length > 0 && (
-                <div className="space-y-4">
-                  <h3 className="text-lg font-semibold text-foreground">Identified Issues</h3>
-                  <div className="space-y-3">
-                    {analysisResult.issues.map((issue, index) => (
-                      <div key={index} className="border border-border rounded-lg p-4 space-y-2">
-                        <div className="flex items-start justify-between gap-4">
-                          <div className="flex-1">
-                            <p className="font-medium text-foreground">{issue.description}</p>
-                            {issue.location && (
-                              <p className="text-sm text-muted-foreground">Location: {issue.location}</p>
-                            )}
-                            {issue.regulation && (
-                              <p className="text-sm text-muted-foreground">Regulation: {issue.regulation}</p>
-                            )}
-                          </div>
-                          <div className="flex flex-col gap-2 items-end">
-                            <Badge className={getSeverityColor(issue.severity)}>
-                              {issue.severity.charAt(0).toUpperCase() + issue.severity.slice(1)}
-                            </Badge>
-                            <span className="text-xs text-muted-foreground">
-                              {Math.round(issue.confidence * 100)}% confidence
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Recommendations */}
-              {analysisResult.recommendations.length > 0 && (
-                <div className="space-y-4">
-                  <h3 className="text-lg font-semibold text-foreground">Recommendations</h3>
-                  <div className="space-y-3">
-                    {analysisResult.recommendations.map((rec, index) => (
-                      <div key={index} className="border border-border rounded-lg p-4 space-y-2">
-                        <div className="flex items-start justify-between gap-4">
-                          <div className="flex-1">
-                            <p className="font-medium text-foreground">{rec.action}</p>
-                            {rec.regulation && (
-                              <p className="text-sm text-muted-foreground">Regulation: {rec.regulation}</p>
-                            )}
-                            {rec.cost_estimate && (
-                              <p className="text-sm text-muted-foreground">Estimated cost: {rec.cost_estimate}</p>
-                            )}
-                          </div>
-                          <Badge className={getPriorityColor(rec.priority)}>
-                            {rec.priority.charAt(0).toUpperCase() + rec.priority.slice(1)} Priority
-                          </Badge>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Compliance Status */}
-              {analysisResult.regulations.length > 0 && (
-                <div className="space-y-4">
-                  <h3 className="text-lg font-semibold text-foreground">BS 7671 Compliance Status</h3>
-                  <div className="space-y-3">
-                    {analysisResult.regulations.map((reg, index) => (
-                      <div key={index} className="border border-border rounded-lg p-4">
-                        <div className="flex items-start justify-between gap-4">
-                          <div className="flex-1">
-                            <p className="font-medium text-foreground">{reg.clause}</p>
-                            <p className="text-sm text-muted-foreground">{reg.description}</p>
-                          </div>
-                          <Badge className={
-                            reg.compliance_status === 'compliant' 
-                              ? 'bg-green-500/20 text-green-400 border border-green-500/30'
-                              : reg.compliance_status === 'non_compliant'
-                              ? 'bg-red-500/20 text-red-400 border border-red-500/30'
-                              : 'bg-amber-500/20 text-amber-400 border border-amber-500/30'
-                          }>
-                            {reg.compliance_status.replace('_', ' ').toUpperCase()}
-                          </Badge>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Disclaimer */}
-              <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4">
-                <div className="flex items-start gap-3">
-                  <Info className="h-5 w-5 text-amber-400 mt-0.5 flex-shrink-0" />
-                  <div className="text-sm text-amber-200">
-                    <p className="font-medium mb-1">Important Notice</p>
-                    <p>
-                      This AI analysis is for guidance only and should not replace professional electrical inspection. 
-                      Always consult a qualified electrician for definitive safety assessments and compliance verification.
-                      Results may vary and should be verified by competent persons as per BS 7671 requirements.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+          <VisualAnalysisResults 
+            analysisResult={analysisResult} 
+            onExportReport={exportReport}
+          />
         )}
 
         {/* Analysis History */}
@@ -1003,13 +858,13 @@ const VisualAnalysis = () => {
                         {entry.timestamp.toLocaleDateString('en-GB')} at {entry.timestamp.toLocaleTimeString('en-GB')}
                       </span>
                       <Badge variant="outline" className="text-xs">
-                        Safety: {entry.result.overall_safety_rating}/10
+                        Safety: {entry.result.compliance_summary.safety_rating}/10
                       </Badge>
                     </div>
                     <p className="text-sm text-foreground line-clamp-2">{entry.result.summary}</p>
                     <div className="flex gap-2 mt-2">
                       <Badge variant="outline" className="text-xs">
-                        {entry.result.issues.length} issues
+                        {entry.result.findings.length} findings
                       </Badge>
                       <Badge variant="outline" className="text-xs">
                         {entry.result.recommendations.length} recommendations
