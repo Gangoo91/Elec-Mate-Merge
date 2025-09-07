@@ -336,14 +336,6 @@ const CategoryMaterials = () => {
                   </Card>
                 ) : (
                   <section aria-label={`${meta.title} products`} className="space-y-4">
-                    <div className="flex items-center justify-between text-xs text-muted-foreground">
-                      <span>
-                        Showing {filteredMaterials.length} {filteredMaterials.length === 1 ? 'material' : 'materials'}
-                      </span>
-                      <span>
-                        📡 Live data from comprehensive materials database
-                      </span>
-                    </div>
                     
                     <div className={`grid gap-6 pb-6 ${isMobile ? 'grid-cols-1' : 'md:grid-cols-2 lg:grid-cols-3'}`}>
                       {filteredMaterials.map((item, index) => (

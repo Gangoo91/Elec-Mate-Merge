@@ -129,16 +129,6 @@ const RefreshButton = ({ isFetching, lastFetchTime, onRefresh, categoryId, class
         </span>
       </Button>
       
-      {(lastFetchTime > 0 || cacheAge !== null) && !isFetching && !isUpdating && (
-        <div className="flex items-center gap-1 text-xs text-muted-foreground whitespace-nowrap">
-          <Clock className="h-3 w-3" />
-          <span>
-            {cacheAge !== null 
-              ? `Cache: ${cacheAge} day${cacheAge !== 1 ? 's' : ''} old` 
-              : `Updated ${formatLastUpdate(lastFetchTime)}`}
-          </span>
-        </div>
-      )}
     </div>
   );
 };
