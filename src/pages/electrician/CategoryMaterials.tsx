@@ -144,18 +144,6 @@ const CategoryMaterials = () => {
           </h1>
           <p className="mobile-text text-muted-foreground leading-relaxed pl-7 sm:pl-8 lg:pl-10">{meta.description}</p>
           
-          {categoryData && (
-            <div className="flex flex-wrap items-center gap-3 sm:gap-4 pl-7 sm:pl-8 lg:pl-10">
-              <Badge variant="outline" className="text-elec-yellow border-elec-yellow/30 text-xs sm:text-sm">
-                {categoryData.productCount} products
-              </Badge>
-              {categoryData.priceRange && (
-                <span className="mobile-small-text text-muted-foreground">
-                  Price range: <span className="text-elec-yellow">{categoryData.priceRange}</span>
-                </span>
-              )}
-            </div>
-          )}
         </div>
       </header>
 
