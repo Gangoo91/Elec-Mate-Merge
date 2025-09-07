@@ -25,6 +25,27 @@ export interface ToolStats {
   }[];
 }
 
+const mapDatabaseCategoryToUI = (dbCategory: string): string => {
+  switch (dbCategory) {
+    case 'Safety Equipment':
+      return 'PPE';
+    case 'Measuring & Marking':
+      return 'Measuring & Marking';
+    case 'Power Tools':
+      return 'Power Tools';
+    case 'Testing Equipment':
+      return 'Testing Equipment';
+    case 'Hand Tools':
+      return 'Hand Tools';
+    case 'Cutting Tools':
+      return 'Cutting Tools';
+    case 'Installation Tools':
+      return 'Installation Tools';
+    default:
+      return dbCategory || 'Hand Tools';
+  }
+};
+
 const categorizeToolByName = (toolName: string): string => {
   const name = toolName.toLowerCase();
   
@@ -67,8 +88,10 @@ const calculateToolStats = (tools: ToolItem[]): ToolStats => {
   const prices: number[] = [];
   
   tools.forEach(tool => {
-    // Categories
-    const category = categorizeToolByName(tool.name || '');
+    // Categories - use database category first, fallback to name-based categorization
+    const category = tool.category 
+      ? mapDatabaseCategoryToUI(tool.category)
+      : categorizeToolByName(tool.name || '');
     categoryMap.set(category, (categoryMap.get(category) || 0) + 1);
     
     // Suppliers
