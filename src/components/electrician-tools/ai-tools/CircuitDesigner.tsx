@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { Zap, Loader, Copy, Eye, EyeOff } from "lucide-react";
+import { Zap, Loader, Copy, Eye, EyeOff, ArrowLeft } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Link } from "react-router-dom";
 
 const CircuitDesigner = () => {
   const [prompt, setPrompt] = useState("");
@@ -92,6 +93,19 @@ const CircuitDesigner = () => {
   return (
     <div className="min-h-screen bg-elec-dark text-white">
       <div className="max-w-6xl mx-auto p-3 sm:p-6 space-y-4 sm:space-y-8">
+        {/* Back Button */}
+        <div className="mb-4 sm:mb-6">
+          <Link to="/electrician-tools/ai-tooling">
+            <Button 
+              variant="outline" 
+              size="sm"
+              className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 hover:border-elec-yellow/50"
+            >
+              <ArrowLeft className="mr-2 h-4 w-4" />
+              Back to AI Tools
+            </Button>
+          </Link>
+        </div>
         {/* Hero Section */}
         <div className="text-center space-y-4 sm:space-y-6">
           <div className="inline-flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-yellow-500/30 to-yellow-600/30 rounded-2xl border border-yellow-400/30">
