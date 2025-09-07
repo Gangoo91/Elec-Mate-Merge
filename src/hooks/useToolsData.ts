@@ -63,8 +63,8 @@ export const useToolsData = () => {
   return useQuery({
     queryKey: ['tools', 'cache-data'],
     queryFn: fetchToolsData,
-    staleTime: 30 * 60 * 1000, // 30 minutes - tool data doesn't change frequently
-    gcTime: 60 * 60 * 1000, // 1 hour cache time
+    staleTime: 5 * 60 * 1000, // 5 minutes - allow more frequent updates
+    gcTime: 30 * 60 * 1000, // 30 minutes cache time
     retry: 2,
     refetchOnWindowFocus: false, // Prevent refetch on window focus
     refetchOnReconnect: false, // Prevent refetch on network reconnect

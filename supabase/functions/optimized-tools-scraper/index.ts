@@ -34,13 +34,13 @@ const optimizedCategories = [
     ]
   },
   {
-    name: "Testing Equipment",
+    name: "Test Equipment",
     suppliers: [
       { name: "Screwfix", url: "https://www.screwfix.com/search?search=electrical+testers+multimeter&page_size=50" }
     ]
   },
   {
-    name: "Safety Equipment",
+    name: "Safety Tools",
     suppliers: [
       { name: "Screwfix", url: "https://www.screwfix.com/search?search=electrical+safety+equipment+PPE&page_size=50" }
     ]

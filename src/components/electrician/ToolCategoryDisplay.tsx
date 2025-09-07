@@ -34,12 +34,18 @@ const ToolCategoryDisplay = ({ categoryName }: ToolCategoryDisplayProps) => {
     }
   }, [allTools, categoryName]);
 
-  // Filter tools by category and search term
-  const categoryTools = allTools?.filter(tool => 
-    tool.category === categoryName &&
-    (tool.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-     tool.description?.toLowerCase().includes(searchTerm.toLowerCase()))
-  ) || [];
+  // Filter tools by category and search term with fallback for legacy naming
+  const categoryTools = allTools?.filter(tool => {
+    const toolCategory = tool.category;
+    const matchesCategory = toolCategory === categoryName || 
+      (categoryName === "Test Equipment" && toolCategory === "Testing Equipment") ||
+      (categoryName === "Safety Tools" && toolCategory === "Safety Equipment");
+    
+    const matchesSearch = tool.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      tool.description?.toLowerCase().includes(searchTerm.toLowerCase());
+    
+    return matchesCategory && matchesSearch;
+  }) || [];
 
   if (error) {
     return (
