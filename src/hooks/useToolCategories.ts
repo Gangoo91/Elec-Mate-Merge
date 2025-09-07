@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { useToolsData, type ToolItem } from './useToolsData';
-import { Wrench, Calculator, FileText, Package, Zap } from 'lucide-react';
+import { Wrench, Calculator, FileText, Package, Zap, HardHat, Shield, Gauge, Settings } from 'lucide-react';
 
 export interface ToolCategory {
   name: string;
@@ -14,37 +14,81 @@ export interface ToolCategory {
 const categorizeToolByName = (toolName: string): string => {
   const name = toolName.toLowerCase();
   
-  if (name.includes('drill') || name.includes('driver') || name.includes('saw') || name.includes('grinder')) {
+  // Power Tools
+  if (name.includes('drill') || name.includes('driver') || name.includes('saw') || name.includes('grinder') || 
+      name.includes('sander') || name.includes('router') || name.includes('impact') || name.includes('cordless') ||
+      name.includes('battery') || name.includes('charger') || name.includes('angle grinder')) {
     return 'Power Tools';
-  } else if (name.includes('test') || name.includes('meter') || name.includes('detector') || name.includes('measure')) {
+  }
+  
+  // Test Equipment
+  else if (name.includes('test') || name.includes('meter') || name.includes('detector') || name.includes('measure') ||
+           name.includes('multimeter') || name.includes('voltage') || name.includes('current') || name.includes('earth') ||
+           name.includes('loop') || name.includes('rcd') || name.includes('pat') || name.includes('insulation')) {
     return 'Test Equipment';
-  } else if (name.includes('safety') || name.includes('helmet') || name.includes('glove') || name.includes('ppe')) {
-    return 'Safety Equipment';
-  } else if (name.includes('bag') || name.includes('box') || name.includes('case') || name.includes('storage')) {
+  }
+  
+  // PPE (Personal Protective Equipment)
+  else if (name.includes('helmet') || name.includes('glove') || name.includes('boot') || name.includes('goggle') ||
+           name.includes('mask') || name.includes('vest') || name.includes('harness') || name.includes('ear') ||
+           name.includes('protection') || name.includes('ppe')) {
+    return 'PPE';
+  }
+  
+  // Safety Tools
+  else if (name.includes('safety') || name.includes('warning') || name.includes('sign') || name.includes('barrier') ||
+           name.includes('lock') || name.includes('tag') || name.includes('isolator') || name.includes('fuse')) {
+    return 'Safety Tools';
+  }
+  
+  // Electrical Equipment
+  else if (name.includes('socket') || name.includes('switch') || name.includes('consumer') || name.includes('mcb') ||
+           name.includes('rcbo') || name.includes('rcd') || name.includes('distribution') || name.includes('panel') ||
+           name.includes('junction') || name.includes('connector') || name.includes('terminal')) {
+    return 'Electrical Equipment';
+  }
+  
+  // Tool Storage
+  else if (name.includes('bag') || name.includes('box') || name.includes('case') || name.includes('storage') ||
+           name.includes('organiser') || name.includes('pouch') || name.includes('belt') || name.includes('trolley')) {
     return 'Tool Storage';
-  } else if (name.includes('wire') || name.includes('cable') || name.includes('conduit') || name.includes('specialist')) {
+  }
+  
+  // Specialist Tools
+  else if (name.includes('wire') || name.includes('cable') || name.includes('conduit') || name.includes('specialist') ||
+           name.includes('crimper') || name.includes('stripper') || name.includes('puller') || name.includes('fish') ||
+           name.includes('knockout') || name.includes('bender')) {
     return 'Specialist Tools';
-  } else {
+  }
+  
+  // Default to Hand Tools
+  else {
     return 'Hand Tools';
   }
 };
 
 const getCategoryIcon = (category: string) => {
   switch (category) {
+    case 'Hand Tools': return Wrench;
     case 'Power Tools': return Zap;
     case 'Test Equipment': return Calculator;
-    case 'Safety Equipment': return FileText;
+    case 'PPE': return HardHat;
+    case 'Safety Tools': return Shield;
+    case 'Electrical Equipment': return Gauge;
     case 'Tool Storage': return Package;
-    case 'Specialist Tools': return Wrench;
+    case 'Specialist Tools': return Settings;
     default: return Wrench;
   }
 };
 
 const getCategoryDescription = (category: string): string => {
   switch (category) {
+    case 'Hand Tools': return 'Essential hand tools for electrical work';
     case 'Power Tools': return 'Power tools and accessories';
     case 'Test Equipment': return 'Testing and measurement equipment';
-    case 'Safety Equipment': return 'PPE and safety equipment';
+    case 'PPE': return 'Personal protective equipment';
+    case 'Safety Tools': return 'Safety tools and equipment';
+    case 'Electrical Equipment': return 'Electrical components and fittings';
     case 'Tool Storage': return 'Tool bags, boxes and storage';
     case 'Specialist Tools': return 'Specialist electrical tools';
     default: return 'Essential hand tools for electrical work';
@@ -53,11 +97,13 @@ const getCategoryDescription = (category: string): string => {
 
 const getDefaultCategories = (): ToolCategory[] => [
   { name: 'Hand Tools', icon: Wrench, description: 'Essential hand tools for electrical work', count: 0 },
-  { name: 'Test Equipment', icon: Calculator, description: 'Testing and measurement equipment', count: 0 },
   { name: 'Power Tools', icon: Zap, description: 'Power tools and accessories', count: 0 },
-  { name: 'Safety Equipment', icon: FileText, description: 'PPE and safety equipment', count: 0 },
-  { name: 'Specialist Tools', icon: Wrench, description: 'Specialist electrical tools', count: 0 },
-  { name: 'Tool Storage', icon: Package, description: 'Tool bags, boxes and storage', count: 0 }
+  { name: 'Test Equipment', icon: Calculator, description: 'Testing and measurement equipment', count: 0 },
+  { name: 'PPE', icon: HardHat, description: 'Personal protective equipment', count: 0 },
+  { name: 'Safety Tools', icon: Shield, description: 'Safety tools and equipment', count: 0 },
+  { name: 'Electrical Equipment', icon: Gauge, description: 'Electrical components and fittings', count: 0 },
+  { name: 'Tool Storage', icon: Package, description: 'Tool bags, boxes and storage', count: 0 },
+  { name: 'Specialist Tools', icon: Settings, description: 'Specialist electrical tools', count: 0 }
 ];
 
 const analyzeCategoryData = (tools: ToolItem[]): ToolCategory[] => {
@@ -103,10 +149,22 @@ export const useToolCategories = () => {
   const { data: tools, isLoading, error, refetch } = useToolsData();
 
   const categories = useMemo(() => {
+    const defaultCategories = getDefaultCategories();
+    
     if (!tools || tools.length === 0) {
-      return getDefaultCategories();
+      return defaultCategories;
     }
-    return analyzeCategoryData(tools);
+    
+    // Get dynamic categories from tools data
+    const dynamicCategories = analyzeCategoryData(tools);
+    
+    // Merge default categories with dynamic data
+    const categoryMap = new Map(dynamicCategories.map(cat => [cat.name, cat]));
+    
+    return defaultCategories.map(defaultCat => {
+      const dynamicCat = categoryMap.get(defaultCat.name);
+      return dynamicCat || defaultCat;
+    });
   }, [tools]);
 
   return {

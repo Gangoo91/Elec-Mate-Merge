@@ -5,10 +5,6 @@ import { Button } from "@/components/ui/button";
 import { 
   Wrench, 
   Search,
-  Calculator,
-  FileText,
-  Package,
-  Zap,
   ArrowLeft,
   Loader2
 } from "lucide-react";
@@ -19,15 +15,6 @@ const ElectricalTools = () => {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
   const { categories: toolCategories, isLoading } = useToolCategories();
-
-  const getIconForCategory = (name: string) => {
-    const lowerName = name.toLowerCase();
-    if (lowerName.includes('power') || lowerName.includes('electric')) return Zap;
-    if (lowerName.includes('test') || lowerName.includes('measure')) return Calculator;
-    if (lowerName.includes('safety') || lowerName.includes('ppe')) return FileText;
-    if (lowerName.includes('storage') || lowerName.includes('bag')) return Package;
-    return Wrench;
-  };
 
   const filteredCategories = toolCategories.filter(category =>
     category.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -60,7 +47,7 @@ const ElectricalTools = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 md:gap-6">
         {filteredCategories.map((category) => {
-          const IconComponent = getIconForCategory(category.name);
+          const IconComponent = category.icon;
           return (
             <Card 
               key={category.name}
