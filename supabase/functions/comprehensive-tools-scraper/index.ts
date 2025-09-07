@@ -19,7 +19,7 @@ interface ToolProduct {
   reviews?: string;
 }
 
-// Reduced categories to prevent timeout - focus on most essential tools
+// All tool categories for comprehensive scraping - processed in batches to prevent timeouts
 const toolCategories = [
   {
     name: "Hand Tools",
@@ -43,6 +43,38 @@ const toolCategories = [
     suppliers: [
       { name: "Screwfix", url: "https://www.screwfix.com/search?search=electrical+testers&page_size=50" },
       { name: "Toolstation", url: "https://www.toolstation.com/search?q=electrical+testing+equipment" }
+    ]
+  },
+  {
+    name: "Safety Equipment",
+    searchTerms: ["hard hats", "safety boots", "gloves", "high vis", "PPE"],
+    suppliers: [
+      { name: "Screwfix", url: "https://www.screwfix.com/search?search=electrical+safety+PPE&page_size=50" },
+      { name: "Toolstation", url: "https://www.toolstation.com/search?q=electrical+safety+equipment" }
+    ]
+  },
+  {
+    name: "Measuring & Marking",
+    searchTerms: ["tape measures", "levels", "markers", "measuring tools"],
+    suppliers: [
+      { name: "Screwfix", url: "https://www.screwfix.com/search?search=measuring+marking+tools&page_size=50" },
+      { name: "Toolstation", url: "https://www.toolstation.com/search?q=measuring+marking+tools" }
+    ]
+  },
+  {
+    name: "Cutting Tools",
+    searchTerms: ["wire cutters", "strippers", "cable knives", "hole saws"],
+    suppliers: [
+      { name: "Screwfix", url: "https://www.screwfix.com/search?search=electrical+cutting+tools&page_size=50" },
+      { name: "Toolstation", url: "https://www.toolstation.com/search?q=electrical+cutting+tools" }
+    ]
+  },
+  {
+    name: "Installation Tools",
+    searchTerms: ["cable pullers", "conduit benders", "fish tapes", "installation accessories"],
+    suppliers: [
+      { name: "Screwfix", url: "https://www.screwfix.com/search?search=electrical+installation+tools&page_size=50" },
+      { name: "Toolstation", url: "https://www.toolstation.com/search?q=electrical+installation+tools" }
     ]
   }
 ];
@@ -138,32 +170,61 @@ async function scrapeToolsFromSupplier(supplierUrl: string, supplierName: string
 async function scrapeAllToolCategories(): Promise<ToolProduct[]> {
   const allProducts: ToolProduct[] = [];
   
-  // Process all categories and suppliers in parallel for speed
-  const scrapePromises: Promise<ToolProduct[]>[] = [];
+  // Define batches to process categories in smaller chunks
+  const BATCH_SIZE = 2; // Process 2 categories at a time (4 requests per batch)
+  const batches: typeof toolCategories[] = [];
   
-  for (const category of toolCategories) {
-    console.log(`📂 Processing category: ${category.name}`);
+  // Split categories into batches
+  for (let i = 0; i < toolCategories.length; i += BATCH_SIZE) {
+    batches.push(toolCategories.slice(i, i + BATCH_SIZE));
+  }
+  
+  console.log(`📊 Processing ${toolCategories.length} categories in ${batches.length} batches...`);
+  
+  // Process each batch sequentially to prevent overwhelming the API
+  for (let batchIndex = 0; batchIndex < batches.length; batchIndex++) {
+    const batch = batches[batchIndex];
+    console.log(`📦 Processing batch ${batchIndex + 1}/${batches.length} (${batch.map(c => c.name).join(', ')})...`);
     
-    for (const supplier of category.suppliers) {
-      scrapePromises.push(
-        scrapeToolsFromSupplier(supplier.url, supplier.name, category.name)
-      );
+    // Process all suppliers within a batch in parallel
+    const batchPromises: Promise<ToolProduct[]>[] = [];
+    
+    for (const category of batch) {
+      console.log(`📂 Processing category: ${category.name}`);
+      
+      for (const supplier of category.suppliers) {
+        batchPromises.push(
+          scrapeToolsFromSupplier(supplier.url, supplier.name, category.name)
+        );
+      }
+    }
+    
+    console.log(`⚡ Starting ${batchPromises.length} parallel scraping operations for batch ${batchIndex + 1}...`);
+    
+    // Wait for all operations in this batch to complete
+    const results = await Promise.allSettled(batchPromises);
+    
+    // Collect successful results from this batch
+    let batchProductCount = 0;
+    results.forEach((result, index) => {
+      if (result.status === 'fulfilled') {
+        allProducts.push(...result.value);
+        batchProductCount += result.value.length;
+      } else {
+        console.error(`❌ Scraping operation ${index + 1} in batch ${batchIndex + 1} failed:`, result.reason);
+      }
+    });
+    
+    console.log(`✅ Batch ${batchIndex + 1} completed: ${batchProductCount} products collected`);
+    
+    // Add delay between batches to prevent overwhelming the API (except for the last batch)
+    if (batchIndex < batches.length - 1) {
+      console.log(`⏸️ Waiting 3 seconds before next batch...`);
+      await new Promise(resolve => setTimeout(resolve, 3000));
     }
   }
   
-  // Wait for all scraping operations to complete
-  console.log(`⚡ Starting ${scrapePromises.length} parallel scraping operations...`);
-  const results = await Promise.allSettled(scrapePromises);
-  
-  // Collect all successful results
-  results.forEach((result, index) => {
-    if (result.status === 'fulfilled') {
-      allProducts.push(...result.value);
-    } else {
-      console.error(`❌ Scraping operation ${index + 1} failed:`, result.reason);
-    }
-  });
-  
+  console.log(`🎯 Total products collected: ${allProducts.length}`);
   return allProducts;
 }
 
