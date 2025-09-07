@@ -106,12 +106,42 @@ const getDefaultCategories = (): ToolCategory[] => [
   { name: 'Specialist Tools', icon: Settings, description: 'Specialist electrical tools', count: 0 }
 ];
 
+// Map database categories to frontend display categories
+const mapDatabaseToFrontendCategory = (dbCategory: string): string => {
+  const categoryMappings: Record<string, string> = {
+    'Testing Equipment': 'Test Equipment',
+    'Test & Measurement': 'Test Equipment',
+    'Testers': 'Test Equipment',
+    'Safety Equipment': 'Safety Tools',
+    'Personal Protective Equipment': 'Safety Tools',
+    'PPE': 'Safety Tools',
+    'Electric Tools': 'Power Tools',
+    'Cordless Tools': 'Power Tools', 
+    'Battery Tools': 'Power Tools',
+    'Manual Tools': 'Hand Tools',
+    'Basic Tools': 'Hand Tools',
+    'Access Equipment': 'Access Tools & Equipment',
+    'Ladders & Steps': 'Access Tools & Equipment',
+    'Access': 'Access Tools & Equipment',
+    'Storage': 'Tool Storage',
+    'Tool Bags': 'Tool Storage',
+    'Cases & Bags': 'Tool Storage',
+    'Electrical Tools': 'Specialist Tools',
+    'Cable Tools': 'Specialist Tools',
+    'Wiring Tools': 'Specialist Tools'
+  };
+  
+  return categoryMappings[dbCategory] || dbCategory;
+};
+
 const analyzeCategoryData = (tools: ToolItem[]): ToolCategory[] => {
   const categoryMap = new Map<string, { count: number; prices: number[]; tools: ToolItem[] }>();
   
-  // Analyze tools and group by category
+  // Analyze tools and group by category using both database category and name-based categorization
   tools.forEach(tool => {
-    const category = categorizeToolByName(tool.name || '');
+    // First try to use the database category, then fall back to name-based categorization
+    let category = tool.category ? mapDatabaseToFrontendCategory(tool.category) : categorizeToolByName(tool.name || '');
+    
     if (!categoryMap.has(category)) {
       categoryMap.set(category, { count: 0, prices: [], tools: [] });
     }

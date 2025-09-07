@@ -34,12 +34,30 @@ const ToolCategoryDisplay = ({ categoryName }: ToolCategoryDisplayProps) => {
     }
   }, [allTools, categoryName]);
 
-  // Filter tools by category and search term with fallback for legacy naming
+  // Comprehensive category mapping function
+  const getCategoryMappings = (frontendCategory: string): string[] => {
+    const mappings: Record<string, string[]> = {
+      'Test Equipment': ['Test Equipment', 'Testing Equipment', 'Test & Measurement', 'Testers'],
+      'Safety Tools': ['Safety Tools', 'Safety Equipment', 'PPE', 'Personal Protective Equipment'],
+      'Power Tools': ['Power Tools', 'Electric Tools', 'Cordless Tools', 'Battery Tools'],
+      'Hand Tools': ['Hand Tools', 'Manual Tools', 'Basic Tools'],
+      'Access Tools & Equipment': ['Access Tools & Equipment', 'Access Equipment', 'Ladders & Steps', 'Access'],
+      'Tool Storage': ['Tool Storage', 'Storage', 'Tool Bags', 'Cases & Bags'],
+      'Specialist Tools': ['Specialist Tools', 'Electrical Tools', 'Cable Tools', 'Wiring Tools']
+    };
+    
+    return mappings[frontendCategory] || [frontendCategory];
+  };
+
+  // Filter tools by category and search term with comprehensive mapping
   const categoryTools = allTools?.filter(tool => {
     const toolCategory = tool.category;
-    const matchesCategory = toolCategory === categoryName || 
-      (categoryName === "Test Equipment" && toolCategory === "Testing Equipment") ||
-      (categoryName === "Safety Tools" && toolCategory === "Safety Equipment");
+    const possibleMatches = getCategoryMappings(categoryName);
+    const matchesCategory = possibleMatches.some(match => 
+      toolCategory === match || 
+      toolCategory?.toLowerCase().includes(match.toLowerCase()) ||
+      match.toLowerCase().includes(toolCategory?.toLowerCase() || '')
+    );
     
     const matchesSearch = tool.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       tool.description?.toLowerCase().includes(searchTerm.toLowerCase());
