@@ -71,12 +71,30 @@ export const useOptimizedToolsData = (): OptimizedToolsReturn => {
     refetchOnWindowFocus: false,
   });
 
-  // Determine which data to use
+  // Merge cached and static data - always include static as base
   const tools = useMemo(() => {
     if (cachedData?.tools && cachedData.tools.length > 0) {
+      console.log('🔀 Merging cached data with static data...');
+      
+      // Get categories that exist in cached data
+      const cachedCategories = new Set(cachedData.tools.map(tool => tool.category));
+      
+      // Start with static data for categories not in cache
+      const staticToolsForMissingCategories = staticToolsData.filter(
+        tool => !cachedCategories.has(tool.category)
+      );
+      
+      // Combine cached tools with static tools for missing categories
+      const mergedTools = [...cachedData.tools, ...staticToolsForMissingCategories];
+      
+      console.log(`✅ Merged data: ${cachedData.tools.length} cached + ${staticToolsForMissingCategories.length} static = ${mergedTools.length} total tools`);
+      console.log('📋 Available categories:', [...new Set(mergedTools.map(t => t.category))].sort());
+      
       setIsUsingStaticData(false);
-      return cachedData.tools;
+      return mergedTools;
     }
+    
+    console.log('📊 Using static data only');
     setIsUsingStaticData(true);
     return staticToolsData;
   }, [cachedData]);
