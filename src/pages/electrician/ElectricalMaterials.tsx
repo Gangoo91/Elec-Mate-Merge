@@ -10,10 +10,16 @@ import {
   Zap,
   Shield,
   Settings,
-  Wrench,
   Building,
   ArrowLeft,
-  Loader2
+  Loader2,
+  Boxes,
+  Wifi,
+  Flame,
+  Car,
+  Home,
+  Thermometer,
+  Wrench
 } from "lucide-react";
 import { useNavigate, Link } from "react-router-dom";
 import { useMaterialsData } from "@/hooks/useMaterialsData";
@@ -63,6 +69,62 @@ const ElectricalMaterials = () => {
       icon: <Building className="h-6 w-6 text-elec-yellow" />,
       path: "/electrician/materials/category/lighting",
       productCount: categories?.find(cat => cat.id === "lighting")?.productCount || 0
+    },
+    {
+      id: "cable-management",
+      title: "Cable Management & Conduit",
+      description: "Trunking, conduit, cable trays and management systems",
+      icon: <Boxes className="h-6 w-6 text-elec-yellow" />,
+      path: "/electrician/materials/category/cable-management",
+      productCount: categories?.find(cat => cat.id === "cable-management")?.productCount || 0
+    },
+    {
+      id: "data-networking",
+      title: "Data & Networking",
+      description: "Cat6 cables, patch panels, switches and network accessories",
+      icon: <Wifi className="h-6 w-6 text-elec-yellow" />,
+      path: "/electrician/materials/category/data-networking",
+      productCount: categories?.find(cat => cat.id === "data-networking")?.productCount || 0
+    },
+    {
+      id: "fire-security",
+      title: "Fire & Security",
+      description: "Fire alarms, smoke detectors, security systems and panels",
+      icon: <Flame className="h-6 w-6 text-elec-yellow" />,
+      path: "/electrician/materials/category/fire-security",
+      productCount: categories?.find(cat => cat.id === "fire-security")?.productCount || 0
+    },
+    {
+      id: "ev-charging",
+      title: "EV Charging",
+      description: "Electric vehicle charging points and installation accessories",
+      icon: <Car className="h-6 w-6 text-elec-yellow" />,
+      path: "/electrician/materials/category/ev-charging",
+      productCount: categories?.find(cat => cat.id === "ev-charging")?.productCount || 0
+    },
+    {
+      id: "smart-controls",
+      title: "Smart Home & Controls",
+      description: "Smart switches, dimmers, automation and control systems",
+      icon: <Home className="h-6 w-6 text-elec-yellow" />,
+      path: "/electrician/materials/category/smart-controls",
+      productCount: categories?.find(cat => cat.id === "smart-controls")?.productCount || 0
+    },
+    {
+      id: "heating-controls",
+      title: "Heating Controls",
+      description: "Thermostats, zone valves, heating timers and controls",
+      icon: <Thermometer className="h-6 w-6 text-elec-yellow" />,
+      path: "/electrician/materials/category/heating-controls",
+      productCount: categories?.find(cat => cat.id === "heating-controls")?.productCount || 0
+    },
+    {
+      id: "fixings-consumables",
+      title: "Fixings & Consumables",
+      description: "Screws, plugs, cable ties, tape and installation consumables",
+      icon: <Wrench className="h-6 w-6 text-elec-yellow" />,
+      path: "/electrician/materials/category/fixings-consumables",
+      productCount: categories?.find(cat => cat.id === "fixings-consumables")?.productCount || 0
     }
   ];
 
@@ -95,7 +157,7 @@ const ElectricalMaterials = () => {
         />
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 md:gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
         {filteredMaterials.map((material) => (
           <Card 
             key={material.id}
