@@ -112,7 +112,7 @@ const mapDatabaseToFrontendCategory = (dbCategory: string): string => {
     'Testing Equipment': 'Test Equipment',
     'Test & Measurement': 'Test Equipment',
     'Testers': 'Test Equipment',
-    'Safety Equipment': 'Safety Tools',
+    'Safety Equipment': 'PPE',
     'Personal Protective Equipment': 'Safety Tools',
     'PPE': 'Safety Tools',
     'Electric Tools': 'Power Tools',
