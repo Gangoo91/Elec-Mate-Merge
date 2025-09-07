@@ -14,6 +14,10 @@ serve(async (req) => {
   try {
     console.log('🔄 Tools Weekly Refresh started');
     
+    // Parse request body to check for force refresh
+    const body = req.method === 'POST' ? await req.json().catch(() => ({})) : {};
+    const forceRefresh = body.forceRefresh === true;
+    
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     
@@ -35,7 +39,7 @@ serve(async (req) => {
     }
 
     const now = new Date();
-    const needsRefresh = !existingCache || 
+    const needsRefresh = forceRefresh || !existingCache || 
       !existingCache.expires_at || 
       new Date(existingCache.expires_at) <= now;
 
@@ -54,6 +58,10 @@ serve(async (req) => {
           headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
         }
       );
+    }
+
+    if (forceRefresh) {
+      console.log('🔄 Force refresh requested, bypassing cache expiry checks...');
     }
 
     console.log('🔄 Cache expired or missing, triggering refresh...');

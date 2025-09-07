@@ -1,23 +1,23 @@
 import { supabase } from '@/integrations/supabase/client';
 
-// Trigger weekly cache update using the new materials-cache-updater function
+// Trigger weekly cache update using the tools-weekly-refresh function
 export const updateMaterialsCache = async () => {
   try {
-    console.log('🔄 Triggering weekly materials cache update...');
+    console.log('🔄 Triggering tools weekly refresh with force refresh...');
     
-    const { data, error } = await supabase.functions.invoke('materials-cache-updater', {
-      body: {}
+    const { data, error } = await supabase.functions.invoke('tools-weekly-refresh', {
+      body: { forceRefresh: true }
     });
     
     if (error) {
-      console.error('Cache update error:', error);
+      console.error('Tools refresh error:', error);
       return { success: false, error: error.message };
     }
     
-    console.log('✅ Cache update completed:', data);
+    console.log('✅ Tools refresh completed:', data);
     return { success: true, data };
   } catch (error) {
-    console.error('Cache update failed:', error);
+    console.error('Tools refresh failed:', error);
     return { success: false, error: error.message };
   }
 };
