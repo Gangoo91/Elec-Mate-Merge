@@ -14,6 +14,26 @@ const CircuitDesigner = () => {
   const [designResults, setDesignResults] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
 
+  // Clean text formatting (remove LaTeX, markdown, etc.)
+  const cleanText = (text: string) => {
+    return text
+      // Remove LaTeX formatting
+      .replace(/\\text\{([^}]+)\}/g, '$1')
+      .replace(/\\frac\{([^}]+)\}\{([^}]+)\}/g, '$1/$2')
+      .replace(/\\sqrt\{([^}]+)\}/g, '√($1)')
+      .replace(/\\\\/g, '')
+      .replace(/\$([^$]+)\$/g, '$1')
+      // Remove markdown formatting
+      .replace(/\*\*([^*]+)\*\*/g, '$1')
+      .replace(/\*([^*]+)\*/g, '$1')
+      .replace(/`([^`]+)`/g, '$1')
+      // Remove hash symbols and dashes at start
+      .replace(/^[#\-•*]+\s*/, '')
+      // Clean up multiple spaces
+      .replace(/\s+/g, ' ')
+      .trim();
+  };
+
   // Parse the response into structured sections
   const parseDesignResults = (response: string) => {
     const sections = [];
@@ -23,7 +43,7 @@ const CircuitDesigner = () => {
     let currentContent = [];
     
     for (const line of lines) {
-      const cleanLine = line.replace(/^[#\-•*]+\s*/, '').trim();
+      const cleanLine = cleanText(line);
       
       if (cleanLine.match(/^(CIRCUIT DESIGN|CABLE SPECIFICATION|PROTECTION DEVICES|EARTHING REQUIREMENTS|CALCULATIONS|COMPLIANCE|AT A GLANCE|SUMMARY):/i) ||
           cleanLine.match(/^(Circuit Design|Cable Specification|Protection Devices|Earthing Requirements|Calculations|Compliance|Summary)$/i)) {
@@ -289,12 +309,12 @@ const CircuitDesigner = () => {
                                   <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" /> :
                                   <AlertTriangle className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
                               )}
-                              <p className={`text-sm leading-relaxed ${
+                               <p className={`text-sm leading-relaxed ${
                                 section.type === 'compliance' ? 
                                   (isCompliant ? 'text-green-200' : 'text-amber-200') :
                                 'text-elec-light/90'
                               }`}>
-                                {item}
+                                {cleanText(item)}
                               </p>
                             </div>
                             
