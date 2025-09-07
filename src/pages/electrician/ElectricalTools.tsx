@@ -12,15 +12,14 @@ import {
 import { useNavigate, Link, useSearchParams } from "react-router-dom";
 import { useToolCategories } from "@/hooks/useToolCategories";
 import ToolCategoryDisplay from "@/components/electrician/ToolCategoryDisplay";
-import { testToolsRefresh } from "@/utils/testToolsRefresh";
+import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 
 const ElectricalTools = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [searchTerm, setSearchTerm] = useState("");
-  const [isRefreshing, setIsRefreshing] = useState(false);
-  const { categories: toolCategories, isLoading } = useToolCategories();
+  const { categories: toolCategories, isLoading, refetch } = useToolCategories();
   const { toast } = useToast();
   
   const selectedCategory = searchParams.get('category');
@@ -36,36 +35,25 @@ const ElectricalTools = () => {
   );
 
   const handleToolsRefresh = async () => {
-    setIsRefreshing(true);
     try {
       toast({
-        title: "Updating Tools Data",
-        description: "Fetching latest tools from suppliers... This may take 1-2 minutes.",
+        title: "Refreshing Tools",
+        description: "Updating tools data in background...",
       });
-
-      const result = await testToolsRefresh();
       
-      if (result.success) {
-        toast({
-          title: "Tools Updated Successfully",
-          description: "Tool categories and products have been refreshed.",
-          variant: "success",
-        });
-      } else {
-        toast({
-          title: "Update Failed",
-          description: result.error || "Failed to refresh tools data.",
-          variant: "destructive",
-        });
-      }
-    } catch (error) {
+      await refetch();
+      
       toast({
-        title: "Update Error",
-        description: "An error occurred while updating tools data.",
+        title: "Refresh Initiated",
+        description: "Latest tools data will update shortly",
+      });
+    } catch (error) {
+      console.error('Refresh error:', error);
+      toast({
+        title: "Error",
+        description: "Failed to refresh tools data",
         variant: "destructive",
       });
-    } finally {
-      setIsRefreshing(false);
     }
   };
 
@@ -75,20 +63,23 @@ const ElectricalTools = () => {
         <div className="space-y-2">
           <h1 className="text-2xl md:text-3xl font-bold tracking-tight">Tools</h1>
           <p className="text-muted-foreground text-sm md:text-base">Browse electrical tools for your projects</p>
+          <div className="flex flex-wrap gap-2 mt-2">
+            <Badge variant="secondary" className="text-xs">
+              ⚡ Instant Load
+            </Badge>
+            <Badge variant="outline" className="text-xs">
+              📦 24+ Categories
+            </Badge>
+          </div>
         </div>
         <div className="flex flex-col sm:flex-row gap-2">
           <Button 
             variant="outline" 
             onClick={handleToolsRefresh}
-            disabled={isRefreshing}
             className="flex items-center gap-2"
           >
-            {isRefreshing ? (
-              <Loader2 className="h-4 w-4 animate-spin" />
-            ) : (
-              <RefreshCw className="h-4 w-4" />
-            )}
-            {isRefreshing ? "Updating..." : "Force Refresh Tools"}
+            <RefreshCw className="h-4 w-4" />
+            Update Data
           </Button>
           <Link to="/electrician/business">
             <Button variant="outline" className="flex items-center gap-2">
