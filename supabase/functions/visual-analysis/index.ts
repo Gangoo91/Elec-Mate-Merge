@@ -165,45 +165,60 @@ For each finding:
 
 Focus on visible defects and compliance issues that can be determined from the electrical installation images provided.`;
 
-    console.log('Sending request to OpenAI...');
+    console.log('Sending request to OpenAI with GPT-5...');
 
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${openAIApiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        model: 'o4-mini-2025-04-16',
-        messages: [
-          {
-            role: 'system',
-            content: systemPrompt
-          },
-          {
-            role: 'user',
-            content: [
-              {
-                type: "text",
-                text: userPrompt
-              },
-              ...images
-            ]
-          }
-        ],
-        max_completion_tokens: 4000,
-        response_format: { type: "json_object" }
-      }),
-    });
+    // Helper function for OpenAI API call with retry logic
+    const callOpenAI = async (attempt = 1): Promise<Response> => {
+      const response = await fetch('https://api.openai.com/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${openAIApiKey}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          model: 'gpt-5-2025-08-07',
+          messages: [
+            {
+              role: 'system',
+              content: systemPrompt
+            },
+            {
+              role: 'user',
+              content: [
+                {
+                  type: "text",
+                  text: userPrompt
+                },
+                ...images
+              ]
+            }
+          ],
+          max_completion_tokens: 4000,
+          response_format: { type: "json_object" }
+        }),
+      });
+
+      // Retry on transient errors (429, 5xx) but only once
+      if (!response.ok && attempt === 1 && (response.status === 429 || response.status >= 500)) {
+        console.log(`Transient error ${response.status}, retrying...`);
+        await new Promise(resolve => setTimeout(resolve, 1000)); // 1 second delay
+        return callOpenAI(2);
+      }
+
+      return response;
+    };
+
+    const response = await callOpenAI();
 
     if (!response.ok) {
       const errorText = await response.text();
       console.error('OpenAI API error:', response.status, errorText);
-      throw new Error(`OpenAI API error: ${response.status} ${errorText}`);
+      console.log('Analysis failed with model: gpt-5-2025-08-07');
+      throw new Error('Analysis failed, please try again');
     }
 
     const data = await response.json();
-    console.log('OpenAI response received');
+    console.log('GPT-5 analysis completed successfully', { model_used: 'gpt-5-2025-08-07' });
 
     if (!data.choices || !data.choices[0] || !data.choices[0].message) {
       throw new Error('Invalid response from OpenAI API');
