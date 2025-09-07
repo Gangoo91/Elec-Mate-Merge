@@ -39,7 +39,7 @@ const CircuitDesigner = () => {
     try {
       const enhancedPrompt = `Circuit Design Request: ${prompt}
 
-Supply Context: ${hasExistingSupply ? 'There is an existing electrical supply available' : 'This is a new installation requiring a new supply from the main distribution board'}
+Before providing your response, first determine: Does this sound like an outbuilding/remote location (shed, garage, workshop, etc.) or a standard domestic circuit? If outbuilding, assume there's an existing adequate supply unless specifically stated otherwise.
 
 Please provide a comprehensive response in the following format:
 
@@ -47,9 +47,10 @@ Please provide a comprehensive response in the following format:
 Brief summary of the circuit requirements and approach
 
 ## SUPPLY ARRANGEMENT
-${hasExistingSupply ? 
-  '• Utilising existing supply - describe connection method\n• Required isolation and protection upgrades if needed' : 
-  '• New sub-main cable run from main DB\n• Sub-distribution board requirements\n• Earthing and bonding considerations'}
+Based on your assessment of the installation type:
+• If outbuilding: utilising existing supply or new sub-main as appropriate
+• If standard domestic: connection from existing consumer unit
+• Include isolation, protection, and earthing requirements
 
 ## CABLE SIZING & PROTECTION
 • Design current calculations
@@ -204,41 +205,6 @@ Please provide exhaustive detail for materials - include everything from the sma
           </p>
         </div>
 
-        {/* Supply Context Toggle */}
-        <Card className="bg-elec-grey border border-elec-yellow/20 max-w-5xl mx-auto">
-          <CardContent className="p-4 sm:p-6">
-            <div className="flex items-center justify-between">
-              <div className="space-y-1">
-                <Label htmlFor="supply-toggle" className="text-white font-medium">
-                  Outbuilding/Remote Location Supply
-                </Label>
-                <p className="text-gray-400 text-sm">
-                  Toggle if this installation is for an outbuilding (shed, garage, etc.)
-                </p>
-              </div>
-              <Switch
-                id="supply-toggle"
-                checked={hasExistingSupply}
-                onCheckedChange={setHasExistingSupply}
-                className="data-[state=checked]:bg-elec-yellow"
-              />
-            </div>
-            {hasExistingSupply && (
-              <div className="mt-3 p-3 bg-yellow-500/10 border border-yellow-500/20 rounded-lg">
-                <p className="text-yellow-300 text-sm">
-                  ✓ Will provide guidance for utilising existing supply with local distribution
-                </p>
-              </div>
-            )}
-            {!hasExistingSupply && (
-              <div className="mt-3 p-3 bg-blue-500/10 border border-blue-500/20 rounded-lg">
-                <p className="text-blue-300 text-sm">
-                  ➤ Will include new sub-main installation from main distribution board
-                </p>
-              </div>
-            )}
-          </CardContent>
-        </Card>
 
         {/* Circuit Design Interface */}
         <Card className="bg-elec-grey border border-elec-yellow/20 max-w-5xl mx-auto">
