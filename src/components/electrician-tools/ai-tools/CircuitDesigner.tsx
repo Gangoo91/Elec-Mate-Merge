@@ -1,9 +1,10 @@
 
 import { useState } from "react";
-import { Zap, Loader, Calculator, Settings, Lightbulb } from "lucide-react";
+import { Zap, Loader, Calculator, Settings, Lightbulb, CheckCircle, AlertTriangle, Shield, Info } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { Badge } from "@/components/ui/badge";
 import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -12,6 +13,54 @@ const CircuitDesigner = () => {
   const [designPrompt, setDesignPrompt] = useState("");
   const [designResults, setDesignResults] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
+
+  // Parse the response into structured sections
+  const parseDesignResults = (response: string) => {
+    const sections = [];
+    const lines = response.split('\n').filter(line => line.trim());
+    
+    let currentSection = null;
+    let currentContent = [];
+    
+    for (const line of lines) {
+      const cleanLine = line.replace(/^[#\-•*]+\s*/, '').trim();
+      
+      if (cleanLine.match(/^(CIRCUIT DESIGN|CABLE SPECIFICATION|PROTECTION DEVICES|EARTHING REQUIREMENTS|CALCULATIONS|COMPLIANCE|AT A GLANCE|SUMMARY):/i) ||
+          cleanLine.match(/^(Circuit Design|Cable Specification|Protection Devices|Earthing Requirements|Calculations|Compliance|Summary)$/i)) {
+        
+        if (currentSection) {
+          sections.push({ ...currentSection, content: currentContent });
+        }
+        
+        currentSection = {
+          title: cleanLine.replace(':', ''),
+          type: cleanLine.toLowerCase().includes('compliance') ? 'compliance' :
+                cleanLine.toLowerCase().includes('summary') || cleanLine.toLowerCase().includes('at a glance') ? 'summary' :
+                'normal'
+        };
+        currentContent = [];
+      } else if (cleanLine && currentSection) {
+        currentContent.push(cleanLine);
+      } else if (cleanLine && !currentSection) {
+        // Handle content before any section headers
+        if (!sections.find(s => s.title === 'Overview')) {
+          sections.push({
+            title: 'Overview',
+            type: 'summary',
+            content: [cleanLine]
+          });
+        } else {
+          sections[0].content.push(cleanLine);
+        }
+      }
+    }
+    
+    if (currentSection) {
+      sections.push({ ...currentSection, content: currentContent });
+    }
+    
+    return sections;
+  };
 
   const handleGenerateDesign = async () => {
     if (designPrompt.trim() === "") {
@@ -190,33 +239,96 @@ const CircuitDesigner = () => {
 
           {/* Design Results */}
           {designResults && !isGenerating && (
-            <div className="mt-6 p-6 bg-gradient-to-br from-elec-dark/60 to-elec-dark/80 rounded-lg border border-purple-500/20">
-              <div className="flex items-center gap-3 mb-4">
+            <div className="mt-6 space-y-6">
+              <div className="flex items-center gap-3 mb-6">
                 <div className="w-8 h-8 bg-purple-500/20 rounded-full flex items-center justify-center">
                   <Zap className="h-4 w-4 text-purple-400" />
                 </div>
-                <h3 className="text-lg font-semibold text-purple-400">Circuit Design Specifications</h3>
+                <h3 className="text-xl font-semibold text-purple-400">Circuit Design Analysis</h3>
               </div>
-              <div className="prose prose-invert max-w-none">
-                <div className="text-sm text-elec-light/90 whitespace-pre-wrap leading-relaxed">
-                  {designResults.split('\n').map((line, index) => (
-                    <p 
-                      key={index}
-                      className={
-                        line.match(/^(CIRCUIT DESIGN|CABLE SPECIFICATION|PROTECTION DEVICES|EARTHING REQUIREMENTS|CALCULATIONS):/) ?
-                        'text-purple-400 font-semibold text-base mt-6 mb-3 first:mt-0' :
-                        line.endsWith(':') && line.length < 50 ?
-                        'font-medium text-elec-yellow mt-4 mb-2' :
-                        line.startsWith('•') || line.startsWith('-') ?
-                        'text-elec-light/80 ml-4 my-1' :
-                        'my-2'
-                      }
-                    >
-                      {line}
-                    </p>
-                  ))}
-                </div>
-              </div>
+
+              {parseDesignResults(designResults).map((section, index) => (
+                <Card key={index} className={`border-l-4 ${
+                  section.type === 'compliance' ? 'border-l-green-500 bg-green-500/5 border-green-500/20' :
+                  section.type === 'summary' ? 'border-l-purple-500 bg-purple-500/5 border-purple-500/20' :
+                  'border-l-elec-yellow bg-elec-yellow/5 border-elec-yellow/20'
+                }`}>
+                  <CardHeader className="pb-3">
+                    <CardTitle className={`text-lg flex items-center gap-3 ${
+                      section.type === 'compliance' ? 'text-green-400' :
+                      section.type === 'summary' ? 'text-purple-400' :
+                      'text-elec-yellow'
+                    }`}>
+                      {section.type === 'compliance' && <Shield className="h-5 w-5" />}
+                      {section.type === 'summary' && <Info className="h-5 w-5" />}
+                      {section.type === 'normal' && <Settings className="h-5 w-5" />}
+                      {section.title}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-3">
+                      {section.content.map((item, itemIndex) => {
+                        // Check if this looks like a compliance statement
+                        const isCompliant = item.toLowerCase().includes('compliant') || 
+                                          item.toLowerCase().includes('meets') ||
+                                          item.toLowerCase().includes('satisfies');
+                        const isWarning = item.toLowerCase().includes('exceed') || 
+                                        item.toLowerCase().includes('warning') ||
+                                        item.toLowerCase().includes('consider');
+                        
+                        return (
+                          <div key={itemIndex} className={`p-3 rounded-lg ${
+                            section.type === 'summary' ? 'bg-purple-500/10' :
+                            isCompliant ? 'bg-green-500/10' :
+                            isWarning ? 'bg-amber-500/10' :
+                            'bg-muted/30'
+                          }`}>
+                            <div className="flex items-start gap-3">
+                              {section.type === 'compliance' && (
+                                isCompliant ? 
+                                  <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" /> :
+                                  <AlertTriangle className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
+                              )}
+                              <p className={`text-sm leading-relaxed ${
+                                section.type === 'compliance' ? 
+                                  (isCompliant ? 'text-green-200' : 'text-amber-200') :
+                                'text-elec-light/90'
+                              }`}>
+                                {item}
+                              </p>
+                            </div>
+                            
+                            {/* Add regulation reference if this looks like a regulation */}
+                            {item.match(/BS\s*7671|IET|regulation|regulation\s*\d+/i) && (
+                              <div className="mt-2 pt-2 border-t border-current/20">
+                                <Badge variant="outline" className="text-xs bg-purple-500/20 text-purple-300 border-purple-500/30">
+                                  BS 7671 Reference
+                                </Badge>
+                              </div>
+                            )}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+
+              {/* Practical Guidance Footer */}
+              <Card className="border-amber-500/20 bg-amber-500/5">
+                <CardContent className="pt-6">
+                  <div className="flex items-start gap-3">
+                    <Lightbulb className="h-5 w-5 text-amber-400 mt-0.5 flex-shrink-0" />
+                    <div>
+                      <h4 className="font-medium text-amber-400 mb-2">Practical Guidance</h4>
+                      <p className="text-sm text-amber-200/80">
+                        Always verify calculations with manufacturer specifications and consider site-specific conditions. 
+                        Ensure all work complies with current BS 7671 regulations and local building regulations.
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
             </div>
           )}
         </CardContent>
