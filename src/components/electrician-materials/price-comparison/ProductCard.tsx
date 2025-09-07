@@ -20,6 +20,12 @@ export interface PriceComparisonItem {
   deliveryInfo?: string;
   originalPrice?: string;
   discount?: string;
+  length?: string;
+  specifications?: string;
+  quantity?: string;
+  cableType?: string;
+  coreCount?: string;
+  cableSize?: string;
 }
 
 interface ProductCardProps {
@@ -69,9 +75,28 @@ export const ProductCard = ({ product, isCheapest, savings, onAddToQuote }: Prod
                 )}
               </div>
               
-              {/* Product name */}
+              {/* Product name and specs */}
               <div>
-                <h3 className="font-medium text-white text-sm leading-tight line-clamp-2">{product.name}</h3>
+                <h3 className="font-medium text-white text-sm leading-tight line-clamp-2 mb-1">{product.name}</h3>
+                {(product.length || product.cableSize || product.coreCount) && (
+                  <div className="flex flex-wrap gap-1 text-xs">
+                    {product.length && (
+                      <Badge variant="outline" className="text-xs px-1.5 py-0.5 border-elec-yellow/30 text-elec-yellow">
+                        {product.length}
+                      </Badge>
+                    )}
+                    {product.cableSize && (
+                      <Badge variant="outline" className="text-xs px-1.5 py-0.5 border-elec-yellow/30 text-elec-yellow">
+                        {product.cableSize}
+                      </Badge>
+                    )}
+                    {product.coreCount && (
+                      <Badge variant="outline" className="text-xs px-1.5 py-0.5 border-elec-yellow/30 text-elec-yellow">
+                        {product.coreCount}
+                      </Badge>
+                    )}
+                  </div>
+                )}
               </div>
               
               {/* Product image */}
@@ -132,7 +157,7 @@ export const ProductCard = ({ product, isCheapest, savings, onAddToQuote }: Prod
                 />
                 <div className="flex-1 min-w-0">
                   <h3 className="font-medium text-white text-wrap leading-tight line-clamp-2 mb-2">{product.name}</h3>
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-3 mb-2">
                     <span className="text-sm text-muted-foreground">{product.supplier}</span>
                     <Badge 
                       variant="outline" 
@@ -153,6 +178,31 @@ export const ProductCard = ({ product, isCheapest, savings, onAddToQuote }: Prod
                       </div>
                     )}
                   </div>
+                  {/* Product specifications */}
+                  {(product.length || product.cableSize || product.coreCount || product.quantity) && (
+                    <div className="flex flex-wrap gap-1">
+                      {product.length && (
+                        <Badge variant="outline" className="text-xs px-2 py-0.5 border-elec-yellow/30 text-elec-yellow">
+                          {product.length}
+                        </Badge>
+                      )}
+                      {product.cableSize && (
+                        <Badge variant="outline" className="text-xs px-2 py-0.5 border-elec-yellow/30 text-elec-yellow">
+                          {product.cableSize}
+                        </Badge>
+                      )}
+                      {product.coreCount && (
+                        <Badge variant="outline" className="text-xs px-2 py-0.5 border-elec-yellow/30 text-elec-yellow">
+                          {product.coreCount}
+                        </Badge>
+                      )}
+                      {product.quantity && (
+                        <Badge variant="outline" className="text-xs px-2 py-0.5 border-blue-500/30 text-blue-400">
+                          {product.quantity}
+                        </Badge>
+                      )}
+                    </div>
+                  )}
                 </div>
               </div>
               

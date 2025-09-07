@@ -95,7 +95,7 @@ const MaterialPriceComparison = ({
     };
   };
 
-  // Enhanced product processing with supplier-specific data enrichment
+  // Enhanced product processing with supplier-specific data enrichment and spec extraction
   const enrichProductData = (product: any): PriceComparisonItem => {
     const supplierData = {
       'Screwfix': { rating: 4.6, deliveryInfo: 'Click & Collect' },
@@ -107,11 +107,54 @@ const MaterialPriceComparison = ({
     const enrichment = supplierData[product.supplier as keyof typeof supplierData] || 
                      { rating: 4.4, deliveryInfo: 'Standard' };
 
+    // Extract specifications from product name
+    const extractSpecs = (name: string) => {
+      const specs: any = {};
+      
+      // Extract length (e.g., "100m", "50m", "25 metre")
+      const lengthMatch = name.match(/(\d+(?:\.\d+)?)\s*(?:m|metre|meter)(?!\w)/i);
+      if (lengthMatch) {
+        specs.length = lengthMatch[1] + 'm';
+      }
+      
+      // Extract cable size (e.g., "6mm", "2.5mm²", "4.0mm²")
+      const sizeMatch = name.match(/(\d+(?:\.\d+)?)\s*mm[²²]?/i);
+      if (sizeMatch) {
+        specs.cableSize = sizeMatch[0];
+      }
+      
+      // Extract core count (e.g., "3 Core", "2-Core", "3+E")
+      const coreMatch = name.match(/(\d+)(?:\s*[-+]\s*\w+)?\s*core/i) || name.match(/(\d+)\+[EeNn]/);
+      if (coreMatch) {
+        specs.coreCount = coreMatch[0];
+      }
+      
+      // Extract quantity if mentioned
+      const quantityMatch = name.match(/(\d+)\s*(?:pack|pcs?|pieces?|units?)/i);
+      if (quantityMatch) {
+        specs.quantity = quantityMatch[0];
+      }
+      
+      // Extract cable type
+      if (name.match(/swa|armoured|steel\s*wire/i)) {
+        specs.cableType = 'SWA';
+      } else if (name.match(/pvc/i)) {
+        specs.cableType = 'PVC';
+      } else if (name.match(/xlpe/i)) {
+        specs.cableType = 'XLPE';
+      }
+      
+      return specs;
+    };
+
+    const specs = extractSpecs(product.name);
+
     return {
       ...product,
       numericPrice: extractPrice(product.price),
       rating: enrichment.rating,
-      deliveryInfo: enrichment.deliveryInfo
+      deliveryInfo: enrichment.deliveryInfo,
+      ...specs
     };
   };
 
@@ -195,9 +238,62 @@ const MaterialPriceComparison = ({
         // Process and enrich the results
         const processedProducts: PriceComparisonItem[] = data.materials.map(enrichProductData);
 
-        // Filter out items with 0 price and sort by price
+        // Filter out items with 0 price
         const validProducts = processedProducts.filter(p => p.numericPrice > 0);
-        const sortedProducts = validProducts.sort((a, b) => a.numericPrice - b.numericPrice);
+        
+        // Smart sorting: prioritize relevance over price
+        const smartSortProducts = (products: PriceComparisonItem[], searchTerm: string) => {
+          const searchLower = searchTerm.toLowerCase();
+          const searchTerms = searchLower.split(/\s+/);
+          
+          // Calculate relevance score for each product
+          const scoredProducts = products.map(product => {
+            let relevanceScore = 0;
+            const productName = product.name.toLowerCase();
+            
+            // Exact match bonus
+            if (productName.includes(searchLower)) {
+              relevanceScore += 100;
+            }
+            
+            // Individual term matches
+            searchTerms.forEach(term => {
+              if (productName.includes(term)) {
+                relevanceScore += 20;
+              }
+            });
+            
+            // Cable-specific matching for SWA, armoured, etc.
+            if (searchLower.includes('swa') && productName.includes('swa')) {
+              relevanceScore += 50;
+            }
+            if (searchLower.includes('armoured') && (productName.includes('armoured') || productName.includes('swa'))) {
+              relevanceScore += 50;
+            }
+            
+            // Size/spec matching (6mm, 100m, etc.)
+            const sizeMatches = searchLower.match(/(\d+(?:\.\d+)?)\s*(mm|m|core)/g);
+            if (sizeMatches) {
+              sizeMatches.forEach(match => {
+                if (productName.includes(match.replace(/\s/g, ''))) {
+                  relevanceScore += 30;
+                }
+              });
+            }
+            
+            return { ...product, relevanceScore };
+          });
+          
+          // Sort by relevance first, then by price within relevance groups
+          return scoredProducts.sort((a, b) => {
+            if (a.relevanceScore !== b.relevanceScore) {
+              return b.relevanceScore - a.relevanceScore; // Higher relevance first
+            }
+            return a.numericPrice - b.numericPrice; // Lower price within same relevance
+          });
+        };
+        
+        const sortedProducts = smartSortProducts(validProducts, searchQuery);
 
         const prices = sortedProducts.map(p => p.numericPrice);
         const cheapestPrice = Math.min(...prices);
