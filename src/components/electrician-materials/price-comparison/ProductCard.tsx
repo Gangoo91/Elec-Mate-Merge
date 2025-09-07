@@ -38,6 +38,21 @@ interface ProductCardProps {
 export const ProductCard = ({ product, isCheapest, savings, onAddToQuote }: ProductCardProps) => {
   const isMobile = useIsMobile();
 
+  // Process image URL to set width and height to 236
+  const imageSrc = (() => {
+    if (!product.image) return "/placeholder.svg";
+    
+    try {
+      const url = new URL(product.image, window.location.origin);
+      url.searchParams.set('wid', '236');
+      url.searchParams.set('hei', '236');
+      return url.toString();
+    } catch {
+      // If URL parsing fails, return original or placeholder
+      return product.image || "/placeholder.svg";
+    }
+  })();
+
   const handleAddToQuote = () => {
     if (onAddToQuote) {
       onAddToQuote({
@@ -109,7 +124,7 @@ export const ProductCard = ({ product, isCheapest, savings, onAddToQuote }: Prod
               {/* Product image centered */}
               <div className="flex justify-center py-2">
                 <img 
-                  src={product.image || "/placeholder.svg"} 
+                  src={imageSrc} 
                   alt={product.name} 
                   className="w-20 h-20 object-cover rounded-lg bg-elec-gray/50"
                 />
@@ -174,7 +189,7 @@ export const ProductCard = ({ product, isCheapest, savings, onAddToQuote }: Prod
             <>
               <div className="flex items-center gap-4 flex-1">
                 <img 
-                  src={product.image} 
+                  src={imageSrc} 
                   alt={product.name}
                   className="w-16 h-16 object-cover rounded-lg bg-elec-gray"
                 />
