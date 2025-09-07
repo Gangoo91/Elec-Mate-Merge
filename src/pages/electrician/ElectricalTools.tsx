@@ -88,7 +88,7 @@ const ElectricalTools = () => {
             ) : (
               <RefreshCw className="h-4 w-4" />
             )}
-            {isRefreshing ? "Updating..." : "Update Tools Data"}
+            {isRefreshing ? "Updating..." : "Force Refresh Tools"}
           </Button>
           <Link to="/electrician/business">
             <Button variant="outline" className="flex items-center gap-2">

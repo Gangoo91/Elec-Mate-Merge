@@ -2,7 +2,8 @@ import { supabase } from '@/integrations/supabase/client';
 
 export const testToolsRefresh = async () => {
   try {
-    console.log('🔄 Testing tools refresh via tools-weekly-refresh...');
+    console.log('🔄 Force refreshing tools data via tools-weekly-refresh...');
+    console.log('⏱️ This may take 1-2 minutes to complete...');
     
     const { data, error } = await supabase.functions.invoke('tools-weekly-refresh', {
       body: { forceRefresh: true }
@@ -13,7 +14,7 @@ export const testToolsRefresh = async () => {
       return { success: false, error: error.message };
     }
     
-    console.log('✅ Tools refresh completed:', data);
+    console.log('✅ Tools refresh completed successfully:', data);
     return { success: true, data };
   } catch (error) {
     console.error('❌ Tools refresh failed:', error);
