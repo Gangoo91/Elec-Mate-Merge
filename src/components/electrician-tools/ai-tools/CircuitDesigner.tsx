@@ -90,7 +90,7 @@ const CircuitDesigner = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-neutral-900 text-white">
+    <div className="min-h-screen bg-elec-dark text-white">
       <div className="max-w-6xl mx-auto p-3 sm:p-6 space-y-4 sm:space-y-8">
         {/* Hero Section */}
         <div className="text-center space-y-4 sm:space-y-6">
@@ -107,7 +107,7 @@ const CircuitDesigner = () => {
         </div>
 
         {/* Circuit Analysis Interface */}
-        <Card className="bg-gradient-to-r from-neutral-800/50 to-neutral-700/50 border border-neutral-600 max-w-5xl mx-auto">
+        <Card className="bg-elec-grey border border-elec-yellow/20 max-w-5xl mx-auto">
           <CardHeader className="p-4 sm:p-6">
             <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
               <Zap className="h-4 w-4 sm:h-5 sm:w-5 text-yellow-400" />
@@ -123,7 +123,7 @@ const CircuitDesigner = () => {
             <div className="space-y-3 sm:space-y-4">
               <Textarea
                 placeholder="e.g. 'I need to design a circuit for a 9.5kW electric shower. The cable run is 18 metres from the consumer unit through a loft space. What are my options?'"
-                className="min-h-[80px] sm:min-h-[100px] bg-neutral-700/50 border-neutral-600 focus:border-yellow-400 text-white placeholder:text-gray-400 resize-none text-sm sm:text-base"
+                className="min-h-[80px] sm:min-h-[100px] bg-elec-dark border-elec-yellow/30 focus:border-elec-yellow text-white placeholder:text-gray-400 resize-none text-sm sm:text-base"
                 value={prompt}
                 onChange={(e) => setPrompt(e.target.value)}
               />
@@ -149,7 +149,7 @@ const CircuitDesigner = () => {
                 
                 <Button 
                   variant="outline" 
-                  className="border-neutral-600 text-gray-300 hover:bg-neutral-700/50 px-4 sm:px-6 h-10 sm:h-12 text-sm sm:text-base"
+                  className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/20 px-4 sm:px-6 h-10 sm:h-12 text-sm sm:text-base"
                   onClick={() => setShowResults(!showResults)}
                 >
                   {showResults ? <EyeOff className="h-4 w-4 sm:h-5 sm:w-5" /> : <Eye className="h-4 w-4 sm:h-5 sm:w-5" />}
@@ -162,7 +162,7 @@ const CircuitDesigner = () => {
 
             {/* Loading State */}
             {isLoading && (
-              <div className="p-4 sm:p-6 bg-yellow-900/30 rounded-lg border border-yellow-500/20">
+              <div className="p-4 sm:p-6 bg-elec-dark rounded-lg border border-elec-yellow/30">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="w-6 h-6 sm:w-8 sm:h-8 bg-yellow-500/20 rounded-full flex items-center justify-center">
                     <Zap className="h-3 w-3 sm:h-4 sm:w-4 text-yellow-400" />
@@ -170,9 +170,9 @@ const CircuitDesigner = () => {
                   <span className="text-white font-medium text-sm sm:text-base">Circuit Analyser is working...</span>
                 </div>
                 <div className="space-y-2 sm:space-y-3">
-                  <Skeleton className="h-3 sm:h-4 w-full bg-neutral-700/50" />
-                  <Skeleton className="h-3 sm:h-4 w-3/4 bg-neutral-700/50" />
-                  <Skeleton className="h-3 sm:h-4 w-5/6 bg-neutral-700/50" />
+                  <Skeleton className="h-3 sm:h-4 w-full bg-elec-dark" />
+                  <Skeleton className="h-3 sm:h-4 w-3/4 bg-elec-dark" />
+                  <Skeleton className="h-3 sm:h-4 w-5/6 bg-elec-dark" />
                 </div>
               </div>
             )}
@@ -186,7 +186,7 @@ const CircuitDesigner = () => {
                     key={index}
                     variant="outline"
                     size="sm"
-                    className="border-neutral-600/50 text-gray-300 hover:bg-neutral-700/50 hover:border-neutral-500 h-auto py-2 sm:py-3 px-3 sm:px-4 text-left justify-start text-xs sm:text-sm"
+                    className="border-elec-yellow/30 text-elec-light hover:bg-elec-yellow/20 hover:border-elec-yellow/50 h-auto py-2 sm:py-3 px-3 sm:px-4 text-left justify-start text-xs sm:text-sm"
                     onClick={() => setPrompt(example)}
                   >
                     {example}
@@ -200,7 +200,7 @@ const CircuitDesigner = () => {
         {/* Results Section */}
         {analysisResult && !isLoading && showResults && (
           <div className="max-w-5xl mx-auto">
-            <Card className="bg-gradient-to-r from-neutral-800/50 to-neutral-700/50 border border-neutral-600">
+            <Card className="bg-elec-grey border border-elec-yellow/20">
               <CardHeader className="p-3 sm:p-4">
                 <div className="flex items-center justify-between">
                   <CardTitle className="text-base sm:text-lg flex items-center gap-2 sm:gap-3 text-white">
@@ -213,7 +213,7 @@ const CircuitDesigner = () => {
                     variant="outline"
                     size="sm"
                     onClick={copyToClipboard}
-                    className="border-neutral-600 text-gray-300 hover:bg-neutral-700/50"
+                    className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/20"
                   >
                     <Copy className="h-4 w-4 mr-2" />
                     Copy
@@ -249,7 +249,7 @@ const CircuitDesigner = () => {
 
         {/* Benefits Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 max-w-6xl mx-auto mt-8 sm:mt-12">
-          <Card className="bg-gradient-to-r from-neutral-800/50 to-neutral-700/50 border border-neutral-600">
+          <Card className="bg-elec-grey border border-elec-yellow/20">
             <CardContent className="p-3 sm:p-4">
               <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3">
                 <div className="w-8 h-8 bg-yellow-500/20 rounded-lg flex items-center justify-center">
@@ -263,7 +263,7 @@ const CircuitDesigner = () => {
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-to-r from-neutral-800/50 to-neutral-700/50 border border-neutral-600">
+          <Card className="bg-elec-grey border border-elec-yellow/20">
             <CardContent className="p-3 sm:p-4">
               <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3">
                 <div className="w-8 h-8 bg-green-500/20 rounded-lg flex items-center justify-center">
@@ -277,7 +277,7 @@ const CircuitDesigner = () => {
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-to-r from-neutral-800/50 to-neutral-700/50 border border-neutral-600 sm:col-span-2 lg:col-span-1">
+          <Card className="bg-elec-grey border border-elec-yellow/20 sm:col-span-2 lg:col-span-1">
             <CardContent className="p-3 sm:p-4">
               <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3">
                 <div className="w-8 h-8 bg-blue-500/20 rounded-lg flex items-center justify-center">
