@@ -13,8 +13,7 @@ import {
   AlertCircle
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { useOptimizedToolsData } from "@/hooks/useOptimizedToolsData";
-import type { StaticToolItem } from "@/data/staticToolsData";
+import { useToolsData, type ToolItem } from "@/hooks/useToolsData";
 
 interface ToolCategoryDisplayProps {
   categoryName: string;
@@ -23,7 +22,7 @@ interface ToolCategoryDisplayProps {
 const ToolCategoryDisplay = ({ categoryName }: ToolCategoryDisplayProps) => {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
-  const { tools: allTools, isLoading, error, isUsingStaticData } = useOptimizedToolsData();
+  const { data: allTools, isLoading, error } = useToolsData();
 
   // Debug: Log available categories and tools
   useEffect(() => {
@@ -36,7 +35,7 @@ const ToolCategoryDisplay = ({ categoryName }: ToolCategoryDisplayProps) => {
   }, [allTools, categoryName]);
 
   // Filter tools by category and search term
-  const categoryTools: StaticToolItem[] = allTools?.filter(tool => 
+  const categoryTools = allTools?.filter(tool => 
     tool.category === categoryName &&
     (tool.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
      tool.description?.toLowerCase().includes(searchTerm.toLowerCase()))
@@ -196,6 +195,12 @@ const ToolCategoryDisplay = ({ categoryName }: ToolCategoryDisplayProps) => {
                         tool.price
                       )}
                     </div>
+                    {tool.reviews && (
+                      <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                        <Star className="h-3 w-3 fill-current text-yellow-500" />
+                        {tool.reviews}
+                      </div>
+                    )}
                   </div>
                   
                   {tool.stockStatus && (
@@ -208,7 +213,7 @@ const ToolCategoryDisplay = ({ categoryName }: ToolCategoryDisplayProps) => {
                   )}
                 </div>
                 
-                {tool.productUrl && (
+                {(tool.productUrl || tool.view_product_url) && (
                   <Button 
                     asChild 
                     variant="outline" 
@@ -216,7 +221,7 @@ const ToolCategoryDisplay = ({ categoryName }: ToolCategoryDisplayProps) => {
                     className="w-full mt-3"
                   >
                     <a 
-                      href={tool.productUrl} 
+                      href={tool.productUrl || tool.view_product_url} 
                       target="_blank" 
                       rel="noopener noreferrer"
                     >

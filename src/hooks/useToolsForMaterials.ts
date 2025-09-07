@@ -1,6 +1,5 @@
 import { useMemo } from 'react';
-import { useOptimizedToolsData } from './useOptimizedToolsData';
-import type { StaticToolItem } from '@/data/staticToolsData';
+import { useToolsData, type ToolItem } from './useToolsData';
 
 export interface MaterialItem {
   id: number;
@@ -16,33 +15,29 @@ export interface MaterialItem {
   productUrl?: string;
 }
 
-const transformToolsToMaterials = (tools: StaticToolItem[]): MaterialItem[] => {
-  return tools.map((tool) => ({
-    id: tool.id,
+const transformToolsToMaterials = (tools: ToolItem[]): MaterialItem[] => {
+  return tools.map((tool, index) => ({
+    id: tool.id || index + 1000,
     name: tool.name,
-    category: tool.category,
+    category: tool.category || 'Tools',
     price: tool.price,
-    supplier: tool.supplier,
-    image: tool.image,
-    stockStatus: tool.stockStatus,
+    supplier: tool.supplier || 'Screwfix',
+    image: tool.image || '/placeholder.svg',
+    stockStatus: tool.stockStatus || 'In Stock',
     isOnSale: tool.isOnSale,
     salePrice: tool.salePrice,
     highlights: tool.highlights,
-    productUrl: tool.productUrl
+    productUrl: tool.productUrl || tool.view_product_url
   }));
 };
 
 export const useToolsForMaterials = () => {
-  const { 
-    tools, 
-    isLoading, 
-    error, 
-    isUsingStaticData, 
-    lastUpdated, 
-    refreshTools 
-  } = useOptimizedToolsData();
+  const { data: tools, isLoading, error, refetch } = useToolsData();
 
   const materialItems = useMemo(() => {
+    if (!tools || tools.length === 0) {
+      return [];
+    }
     return transformToolsToMaterials(tools);
   }, [tools]);
 
@@ -50,8 +45,6 @@ export const useToolsForMaterials = () => {
     materials: materialItems,
     isLoading,
     error,
-    isUsingStaticData,
-    lastUpdated,
-    refetch: refreshTools
+    refetch
   };
 };

@@ -71,9 +71,9 @@ serve(async (req) => {
       console.log('🔄 Cache expired or missing, triggering refresh...');
     }
 
-    // Call the optimized tools scraper (faster, targeted approach)
+    // Call the comprehensive tools scraper
     const { data: refreshResult, error: refreshError } = await supabase.functions.invoke(
-      'optimized-tools-scraper',
+      'comprehensive-tools-scraper',
       { body: {} }
     );
 

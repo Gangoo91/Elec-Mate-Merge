@@ -1,6 +1,5 @@
 import { useMemo } from 'react';
-import { useOptimizedToolsData } from './useOptimizedToolsData';
-import type { StaticToolItem } from '@/data/staticToolsData';
+import { useToolsData, type ToolItem } from './useToolsData';
 import { Wrench, Calculator, FileText, Package, Zap, HardHat, Shield, Settings, ArrowUp } from 'lucide-react';
 
 export interface ToolCategory {
@@ -107,8 +106,8 @@ const getDefaultCategories = (): ToolCategory[] => [
   { name: 'Specialist Tools', icon: Settings, description: 'Specialist electrical tools', count: 0 }
 ];
 
-const analyzeCategoryData = (tools: StaticToolItem[]): ToolCategory[] => {
-  const categoryMap = new Map<string, { count: number; prices: number[]; tools: StaticToolItem[] }>();
+const analyzeCategoryData = (tools: ToolItem[]): ToolCategory[] => {
+  const categoryMap = new Map<string, { count: number; prices: number[]; tools: ToolItem[] }>();
   
   // Analyze tools and group by category
   tools.forEach(tool => {
@@ -147,7 +146,7 @@ const analyzeCategoryData = (tools: StaticToolItem[]): ToolCategory[] => {
 };
 
 export const useToolCategories = () => {
-  const { tools, isLoading, error, refreshTools } = useOptimizedToolsData();
+  const { data: tools, isLoading, error, refetch } = useToolsData();
 
   const categories = useMemo(() => {
     const defaultCategories = getDefaultCategories();
@@ -172,6 +171,6 @@ export const useToolCategories = () => {
     categories,
     isLoading,
     error,
-    refetch: refreshTools
+    refetch
   };
 };
