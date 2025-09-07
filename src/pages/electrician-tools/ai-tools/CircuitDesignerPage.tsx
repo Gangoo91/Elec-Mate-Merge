@@ -6,15 +6,15 @@ import CircuitDesigner from "@/components/electrician-tools/ai-tools/CircuitDesi
 const CircuitDesignerPage = () => {
   return (
     <div className="min-h-screen bg-elec-dark">
-      <div className="px-4 py-6">
+      <div className="px-2 py-4 sm:px-4 sm:py-6">
         <div className="max-w-4xl mx-auto">
           {/* Navigation */}
-          <div className="mb-8">
+          <div className="mb-4 sm:mb-8">
             <Link to="/electrician-tools/ai-tooling">
               <Button 
                 variant="outline" 
                 size="sm"
-                className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 hover:border-elec-yellow/50"
+                className="border-elec-yellow/50 text-elec-yellow hover:bg-elec-yellow/20 hover:border-elec-yellow/70"
               >
                 <ArrowLeft className="mr-2 h-4 w-4" />
                 Back to AI Tools

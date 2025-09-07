@@ -143,45 +143,49 @@ const CircuitDesigner = () => {
   const examplePrompts = [
     "9.5kW electric shower, 18m cable run, loft space",
     "32A cooker circuit, 12m run, kitchen installation", 
-    "EV charger 7.4kW, 25m garage run, outdoor cable"
+    "EV charger 7.4kW, 25m garage run, outdoor cable",
+    "16A radial circuit, 8 sockets, office extension",
+    "Garage supply 20A, 30m SWA underground cable",
+    "Immersion heater 3kW, airing cupboard, 15m run",
+    "Workshop supply 32A, outbuilding, 40m distance"
   ];
 
   return (
-    <div className="space-y-6">
-      <Card className="border-elec-yellow/20 bg-gradient-to-br from-elec-gray/80 to-elec-card/60 backdrop-blur-sm shadow-xl">
-        <CardHeader className="bg-gradient-to-r from-elec-yellow/10 to-transparent">
-          <CardTitle className="text-2xl flex items-center gap-3">
-            <div className="p-2 bg-elec-yellow/20 rounded-lg">
-              <Brain className="h-6 w-6 text-elec-yellow" />
+    <div className="space-y-4 px-4 pb-4 sm:px-0 sm:pb-0">
+      <Card className="border-elec-yellow/40 bg-gradient-to-br from-elec-gray/90 to-elec-card/80 backdrop-blur-sm shadow-2xl">
+        <CardHeader className="bg-gradient-to-r from-elec-yellow/20 to-transparent p-4 sm:p-6">
+          <CardTitle className="text-xl sm:text-2xl flex items-center gap-3">
+            <div className="p-2 bg-elec-yellow/30 rounded-lg">
+              <Brain className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow" />
             </div>
             Circuit Analyser
           </CardTitle>
-          <CardDescription className="text-elec-light/70 text-base">
+          <CardDescription className="text-elec-light/80 text-sm sm:text-base">
             Professional circuit analysis with BS 7671 compliance and practical guidance
           </CardDescription>
         </CardHeader>
-        <CardContent className="space-y-6 p-6">
+        <CardContent className="space-y-4 sm:space-y-6 p-4 sm:p-6">
           {/* At a glance info */}
-          <div className="bg-elec-yellow/10 border border-elec-yellow/20 rounded-lg p-4">
+          <div className="bg-elec-yellow/20 border border-elec-yellow/40 rounded-lg p-4">
             <div className="flex items-center gap-2 mb-2">
               <FileText className="h-4 w-4 text-elec-yellow" />
               <span className="font-medium text-elec-light">Professional Analysis</span>
             </div>
-            <p className="text-sm text-elec-light/70">
+            <p className="text-sm text-elec-light/80">
               Get comprehensive circuit analysis with clear recommendations, compliance explanations, and practical installation guidance
             </p>
           </div>
 
           {/* Example prompts */}
           <div className="space-y-3">
-            <h4 className="font-medium text-elec-light">Common scenarios:</h4>
-            <div className="flex flex-wrap gap-2">
+            <h4 className="font-medium text-elec-light text-sm sm:text-base">Common scenarios:</h4>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
               {examplePrompts.map((prompt, index) => (
                 <Button
                   key={index}
                   variant="outline"
                   size="sm"
-                  className="text-xs border-elec-yellow/30 text-elec-light/80 hover:bg-elec-yellow/10 hover:border-elec-yellow/50"
+                  className="text-xs sm:text-sm border-elec-yellow/50 text-elec-light/90 hover:bg-elec-yellow/20 hover:border-elec-yellow/70 h-auto py-2 px-3 text-left justify-start whitespace-normal"
                   onClick={() => setDesignPrompt(prompt)}
                 >
                   {prompt}
@@ -194,24 +198,24 @@ const CircuitDesigner = () => {
           <div className="space-y-4">
             <Textarea
               placeholder="Describe your circuit requirements... e.g., I need to design a circuit for a 9.5kW electric shower. The cable run is 18 metres from the consumer unit through a loft space. What are my options?"
-              className="min-h-[120px] bg-elec-dark/50 border-elec-yellow/20 focus:border-elec-yellow/40 text-elec-light placeholder:text-elec-light/50 resize-none"
+              className="min-h-[100px] sm:min-h-[120px] bg-elec-dark/60 border-elec-yellow/40 focus:border-elec-yellow/60 text-elec-light placeholder:text-elec-light/60 resize-none text-sm sm:text-base"
               value={designPrompt}
               onChange={(e) => setDesignPrompt(e.target.value)}
             />
             
             <Button 
-              className="w-full bg-gradient-to-r from-elec-yellow to-elec-yellow/80 hover:from-elec-yellow/90 hover:to-elec-yellow/70 text-elec-dark font-semibold py-3 shadow-lg shadow-elec-yellow/20" 
+              className="w-full bg-gradient-to-r from-elec-yellow to-elec-yellow/90 hover:from-elec-yellow/90 hover:to-elec-yellow/80 text-elec-dark font-semibold py-3 sm:py-4 shadow-lg shadow-elec-yellow/30 text-sm sm:text-base" 
               onClick={handleGenerateAnalysis} 
               disabled={isGenerating}
             >
               {isGenerating ? (
                 <>
-                  <Loader className="h-5 w-5 mr-2 animate-spin" /> 
+                  <Loader className="h-4 w-4 sm:h-5 sm:w-5 mr-2 animate-spin" /> 
                   Analysing Circuit...
                 </>
               ) : (
                 <>
-                  <Brain className="h-5 w-5 mr-2" />
+                  <Brain className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
                   Analyse Circuit
                 </>
               )}
@@ -220,14 +224,14 @@ const CircuitDesigner = () => {
 
           {/* Loading state */}
           {isGenerating && (
-            <div className="mt-6 p-6 bg-elec-dark/30 rounded-lg border border-elec-yellow/10">
+            <div className="mt-4 sm:mt-6 p-4 sm:p-6 bg-elec-dark/40 rounded-lg border border-elec-yellow/30">
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-8 h-8 bg-elec-yellow/20 rounded-full flex items-center justify-center">
+                <div className="w-8 h-8 bg-elec-yellow/30 rounded-full flex items-center justify-center">
                   <Brain className="h-4 w-4 text-elec-yellow animate-pulse" />
                 </div>
-                <div className="text-elec-light font-medium">Generating Professional Analysis...</div>
+                <div className="text-elec-light font-medium text-sm sm:text-base">Generating Professional Analysis...</div>
               </div>
-              <div className="space-y-2 text-sm text-elec-light/60">
+              <div className="space-y-2 text-xs sm:text-sm text-elec-light/80">
                 <div className="flex items-center gap-2">
                   <div className="w-1 h-1 bg-elec-yellow rounded-full animate-pulse"></div>
                   <span>Calculating load requirements</span>
@@ -246,19 +250,19 @@ const CircuitDesigner = () => {
 
           {/* Analysis results */}
           {designResults && !isGenerating && (
-            <div className="mt-6 space-y-6">
-              <div className="flex items-center justify-between">
+            <div className="mt-4 sm:mt-6 space-y-4 sm:space-y-6">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                 <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 bg-elec-yellow/20 rounded-full flex items-center justify-center">
+                  <div className="w-8 h-8 bg-elec-yellow/30 rounded-full flex items-center justify-center">
                     <FileText className="h-4 w-4 text-elec-yellow" />
                   </div>
-                  <h3 className="text-xl font-semibold text-elec-yellow">Circuit Analysis Report</h3>
+                  <h3 className="text-lg sm:text-xl font-semibold text-elec-yellow">Circuit Analysis Report</h3>
                 </div>
                 <Button
                   variant="outline"
                   size="sm"
                   onClick={handleCopyReport}
-                  className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+                  className="border-elec-yellow/50 text-elec-yellow hover:bg-elec-yellow/20 self-start sm:self-auto"
                 >
                   {copied ? (
                     <Check className="h-4 w-4 mr-2" />
@@ -269,12 +273,12 @@ const CircuitDesigner = () => {
                 </Button>
               </div>
 
-              <Card className="border-elec-yellow/20 bg-gradient-to-br from-elec-card/60 to-elec-dark/40 backdrop-blur-sm">
-                <CardContent className="p-6">
-                  <div className="space-y-6">
+              <Card className="border-elec-yellow/40 bg-gradient-to-br from-elec-card/80 to-elec-dark/60 backdrop-blur-sm">
+                <CardContent className="p-4 sm:p-6">
+                  <div className="space-y-4 sm:space-y-6">
                     {parseAnalysisResults(designResults).map((section, index) => (
                       <div key={index} className="space-y-3">
-                        <h4 className={`text-lg font-semibold ${
+                        <h4 className={`text-base sm:text-lg font-semibold ${
                           section.type === 'compliance' ? 'text-green-400' :
                           section.type === 'recommendation' ? 'text-elec-yellow' :
                           section.type === 'overview' ? 'text-blue-400' :
@@ -282,13 +286,13 @@ const CircuitDesigner = () => {
                         }`}>
                           {section.title}
                         </h4>
-                        <div className={`p-4 rounded-lg border-l-4 ${
-                          section.type === 'compliance' ? 'bg-green-500/5 border-l-green-500' :
-                          section.type === 'recommendation' ? 'bg-elec-yellow/5 border-l-elec-yellow' :
-                          section.type === 'overview' ? 'bg-blue-500/5 border-l-blue-500' :
-                          'bg-purple-500/5 border-l-purple-500'
+                        <div className={`p-3 sm:p-4 rounded-lg border-l-4 ${
+                          section.type === 'compliance' ? 'bg-green-500/10 border-l-green-500' :
+                          section.type === 'recommendation' ? 'bg-elec-yellow/10 border-l-elec-yellow' :
+                          section.type === 'overview' ? 'bg-blue-500/10 border-l-blue-500' :
+                          'bg-purple-500/10 border-l-purple-500'
                         }`}>
-                          <p className="text-elec-light/90 leading-relaxed whitespace-pre-wrap">
+                          <p className="text-elec-light/95 leading-relaxed whitespace-pre-wrap text-sm sm:text-base">
                             {section.content}
                           </p>
                         </div>
