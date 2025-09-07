@@ -525,7 +525,7 @@ const VisualAnalysisRedesigned = () => {
 
   return (
     <TooltipProvider>
-      <div className="space-y-6">
+      <div className="space-y-6 min-h-screen bg-elec-grey">
         {/* Header with Stepper */}
         <Card className="bg-card border-border">
           <CardHeader className="pb-4">
