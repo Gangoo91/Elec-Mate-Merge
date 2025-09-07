@@ -25,45 +25,91 @@ export interface ToolStats {
   }[];
 }
 
-const mapDatabaseCategoryToUI = (dbCategory: string): string => {
-  switch (dbCategory) {
-    case 'Safety Equipment':
-      return 'PPE';
-    case 'Measuring & Marking':
-      return 'Measuring & Marking';
-    case 'Power Tools':
-      return 'Power Tools';
-    case 'Testing Equipment':
-      return 'Testing Equipment';
-    case 'Hand Tools':
-      return 'Hand Tools';
-    case 'Cutting Tools':
-      return 'Cutting Tools';
-    case 'Installation Tools':
-      return 'Installation Tools';
-    default:
-      return dbCategory || 'Hand Tools';
-  }
+// Map database categories to frontend display categories (must match useToolCategories)
+const mapDatabaseToFrontendCategory = (dbCategory: string): string => {
+  const categoryMappings: Record<string, string> = {
+    // Handle legacy category names from database
+    'Testing Equipment': 'Test Equipment',
+    'Test & Measurement': 'Test Equipment',
+    'Testers': 'Test Equipment',
+    'Safety Equipment': 'PPE',
+    'Personal Protective Equipment': 'PPE',
+    'Electric Tools': 'Power Tools',
+    'Cordless Tools': 'Power Tools', 
+    'Battery Tools': 'Power Tools',
+    'Manual Tools': 'Hand Tools',
+    'Basic Tools': 'Hand Tools',
+    'Access Equipment': 'Access Tools & Equipment',
+    'Ladders & Steps': 'Access Tools & Equipment',
+    'Access': 'Access Tools & Equipment',
+    'Storage': 'Tool Storage',
+    'Tool Bags': 'Tool Storage',
+    'Cases & Bags': 'Tool Storage',
+    'Electrical Tools': 'Specialist Tools',
+    'Cable Tools': 'Specialist Tools',
+    'Wiring Tools': 'Specialist Tools',
+    // Legacy categories that need to be mapped to current 8 categories
+    'Measuring & Marking': 'Hand Tools',
+    'Cutting Tools': 'Hand Tools',
+    'Installation Tools': 'Specialist Tools'
+  };
+  
+  return categoryMappings[dbCategory] || dbCategory;
 };
 
 const categorizeToolByName = (toolName: string): string => {
   const name = toolName.toLowerCase();
   
-  if (name.includes('drill') || name.includes('driver') || name.includes('saw') || name.includes('grinder')) {
+  // Power Tools
+  if (name.includes('drill') || name.includes('driver') || name.includes('saw') || name.includes('grinder') || 
+      name.includes('sander') || name.includes('router') || name.includes('impact') || name.includes('cordless') ||
+      name.includes('battery') || name.includes('charger') || name.includes('angle grinder')) {
     return 'Power Tools';
-  } else if (name.includes('test') || name.includes('meter') || name.includes('detector') || name.includes('measure')) {
-    return 'Testing Equipment';
-  } else if (name.includes('safety') || name.includes('helmet') || name.includes('glove') || name.includes('ppe')) {
+  }
+  
+  // Test Equipment
+  else if (name.includes('test') || name.includes('meter') || name.includes('detector') || name.includes('measure') ||
+           name.includes('multimeter') || name.includes('voltage') || name.includes('current') || name.includes('earth') ||
+           name.includes('loop') || name.includes('rcd') || name.includes('pat') || name.includes('insulation')) {
+    return 'Test Equipment';
+  }
+  
+  // PPE (Personal Protective Equipment)
+  else if (name.includes('helmet') || name.includes('glove') || name.includes('boot') || name.includes('goggle') ||
+           name.includes('mask') || name.includes('vest') || name.includes('harness') || name.includes('ear') ||
+           name.includes('protection') || name.includes('ppe')) {
     return 'PPE';
-  } else if (name.includes('bag') || name.includes('box') || name.includes('case') || name.includes('storage')) {
+  }
+  
+  // Safety Tools
+  else if (name.includes('safety') || name.includes('warning') || name.includes('sign') || name.includes('barrier') ||
+           name.includes('lock') || name.includes('tag') || name.includes('isolator') || name.includes('fuse')) {
+    return 'Safety Tools';
+  }
+  
+  // Access Tools & Equipment
+  else if (name.includes('ladder') || name.includes('scaffold') || name.includes('platform') || name.includes('steps') ||
+           name.includes('tower') || name.includes('access') || name.includes('height') || name.includes('lift') ||
+           name.includes('trestle') || name.includes('hop up')) {
+    return 'Access Tools & Equipment';
+  }
+  
+  // Tool Storage
+  else if (name.includes('bag') || name.includes('box') || name.includes('case') || name.includes('storage') ||
+           name.includes('organiser') || name.includes('pouch') || name.includes('belt') || name.includes('trolley')) {
     return 'Tool Storage';
-  } else if (name.includes('wire') || name.includes('cable') || name.includes('conduit') || name.includes('specialist') || name.includes('access') || name.includes('ladder') || name.includes('platform')) {
+  }
+  
+  // Specialist Tools (including legacy cutting and installation tools)
+  else if (name.includes('wire') || name.includes('cable') || name.includes('conduit') || name.includes('specialist') ||
+           name.includes('crimper') || name.includes('stripper') || name.includes('puller') || name.includes('fish') ||
+           name.includes('knockout') || name.includes('bender') || name.includes('cutting') || name.includes('knife') || 
+           name.includes('blade') || name.includes('install') || name.includes('mount') || name.includes('bracket')) {
     return 'Specialist Tools';
-  } else if (name.includes('cutting') || name.includes('knife') || name.includes('blade')) {
-    return 'Cutting Tools';
-  } else if (name.includes('install') || name.includes('mount') || name.includes('bracket')) {
-    return 'Installation Tools';
-  } else {
+  }
+  
+  // Default to Hand Tools
+  else {
     return 'Hand Tools';
   }
 };
@@ -90,7 +136,7 @@ const calculateToolStats = (tools: ToolItem[]): ToolStats => {
   tools.forEach(tool => {
     // Categories - use database category first, fallback to name-based categorization
     const category = tool.category 
-      ? mapDatabaseCategoryToUI(tool.category)
+      ? mapDatabaseToFrontendCategory(tool.category)
       : categorizeToolByName(tool.name || '');
     categoryMap.set(category, (categoryMap.get(category) || 0) + 1);
     
