@@ -19,6 +19,7 @@ interface ToolProduct {
   reviews?: string;
 }
 
+// Reduced categories to prevent timeout - focus on most essential tools
 const toolCategories = [
   {
     name: "Hand Tools",
@@ -42,46 +43,6 @@ const toolCategories = [
     suppliers: [
       { name: "Screwfix", url: "https://www.screwfix.com/search?search=electrical+testers&page_size=50" },
       { name: "Toolstation", url: "https://www.toolstation.com/search?q=electrical+testing+equipment" }
-    ]
-  },
-  {
-    name: "Safety Equipment",
-    searchTerms: ["hard hats", "safety boots", "gloves", "high vis", "PPE"],
-    suppliers: [
-      { name: "Screwfix", url: "https://www.screwfix.com/search?search=electrical+safety+PPE&page_size=50" },
-      { name: "Toolstation", url: "https://www.toolstation.com/search?q=electrical+safety+equipment" }
-    ]
-  },
-  {
-    name: "Measuring & Marking",
-    searchTerms: ["tape measures", "levels", "markers", "measuring tools"],
-    suppliers: [
-      { name: "Screwfix", url: "https://www.screwfix.com/search?search=measuring+marking+tools&page_size=50" },
-      { name: "Toolstation", url: "https://www.toolstation.com/search?q=measuring+marking+tools" }
-    ]
-  },
-  {
-    name: "Cutting Tools",
-    searchTerms: ["wire cutters", "strippers", "cable knives", "hole saws"],
-    suppliers: [
-      { name: "Screwfix", url: "https://www.screwfix.com/search?search=electrical+cutting+tools&page_size=50" },
-      { name: "Toolstation", url: "https://www.toolstation.com/search?q=electrical+cutting+tools" }
-    ]
-  },
-  {
-    name: "Installation Tools",
-    searchTerms: ["cable pullers", "conduit benders", "fish tapes", "installation accessories"],
-    suppliers: [
-      { name: "Screwfix", url: "https://www.screwfix.com/search?search=electrical+installation+tools&page_size=50" },
-      { name: "Toolstation", url: "https://www.toolstation.com/search?q=electrical+installation+tools" }
-    ]
-  },
-  {
-    name: "Ladder & Access",
-    searchTerms: ["ladders", "steps", "platforms", "access equipment"],
-    suppliers: [
-      { name: "Screwfix", url: "https://www.screwfix.com/search?search=ladders+access+equipment&page_size=50" },
-      { name: "Toolstation", url: "https://www.toolstation.com/search?q=ladders+access+equipment" }
     ]
   }
 ];
@@ -134,7 +95,17 @@ async function scrapeToolsFromSupplier(supplierUrl: string, supplierName: string
 
   try {
     console.log(`🔧 Scraping ${category} from ${supplierName}...`);
-    const response = await fetch("https://api.firecrawl.dev/v2/scrape", options);
+    
+    // Add timeout handling for individual requests
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 45000); // 45 second timeout per request
+    
+    const response = await fetch("https://api.firecrawl.dev/v2/scrape", {
+      ...options,
+      signal: controller.signal
+    });
+    
+    clearTimeout(timeoutId);
 
     if (!response.ok) {
       console.error(`❌ API request failed for ${supplierName}: ${response.status}`);
@@ -155,7 +126,11 @@ async function scrapeToolsFromSupplier(supplierUrl: string, supplierName: string
     console.log(`✅ Retrieved ${processedProducts.length} ${category} products from ${supplierName}`);
     return processedProducts;
   } catch (error) {
-    console.error(`⚠️ Error scraping ${category} from ${supplierName}:`, error);
+    if (error.name === 'AbortError') {
+      console.error(`⏰ Timeout scraping ${category} from ${supplierName}`);
+    } else {
+      console.error(`⚠️ Error scraping ${category} from ${supplierName}:`, error);
+    }
     return [];
   }
 }
@@ -163,17 +138,31 @@ async function scrapeToolsFromSupplier(supplierUrl: string, supplierName: string
 async function scrapeAllToolCategories(): Promise<ToolProduct[]> {
   const allProducts: ToolProduct[] = [];
   
+  // Process all categories and suppliers in parallel for speed
+  const scrapePromises: Promise<ToolProduct[]>[] = [];
+  
   for (const category of toolCategories) {
     console.log(`📂 Processing category: ${category.name}`);
     
     for (const supplier of category.suppliers) {
-      // Add delay between requests to respect rate limits
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      const products = await scrapeToolsFromSupplier(supplier.url, supplier.name, category.name);
-      allProducts.push(...products);
+      scrapePromises.push(
+        scrapeToolsFromSupplier(supplier.url, supplier.name, category.name)
+      );
     }
   }
+  
+  // Wait for all scraping operations to complete
+  console.log(`⚡ Starting ${scrapePromises.length} parallel scraping operations...`);
+  const results = await Promise.allSettled(scrapePromises);
+  
+  // Collect all successful results
+  results.forEach((result, index) => {
+    if (result.status === 'fulfilled') {
+      allProducts.push(...result.value);
+    } else {
+      console.error(`❌ Scraping operation ${index + 1} failed:`, result.reason);
+    }
+  });
   
   return allProducts;
 }
