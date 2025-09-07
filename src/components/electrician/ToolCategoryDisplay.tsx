@@ -24,6 +24,16 @@ const ToolCategoryDisplay = ({ categoryName }: ToolCategoryDisplayProps) => {
   const [searchTerm, setSearchTerm] = useState("");
   const { data: allTools, isLoading, error } = useToolsData();
 
+  // Debug: Log available categories and tools
+  useEffect(() => {
+    if (allTools) {
+      const availableCategories = [...new Set(allTools.map(tool => tool.category))];
+      console.log('🔧 Available categories:', availableCategories);
+      console.log('🔧 Looking for category:', categoryName);
+      console.log('🔧 Total tools:', allTools.length);
+    }
+  }, [allTools, categoryName]);
+
   // Filter tools by category and search term
   const categoryTools = allTools?.filter(tool => 
     tool.category === categoryName &&
@@ -100,9 +110,23 @@ const ToolCategoryDisplay = ({ categoryName }: ToolCategoryDisplayProps) => {
           <p className="text-muted-foreground">
             {searchTerm 
               ? 'Try adjusting your search terms or browse all available tools.'
-              : 'Tool data for this category is being collected. Check back soon.'
+              : 'Tool data for this category is being populated. The system is now fetching tools from multiple suppliers.'
             }
           </p>
+          {!searchTerm && allTools && allTools.length > 0 && (
+            <div className="mt-4 p-4 bg-elec-gray/50 rounded-lg border">
+              <p className="text-sm text-muted-foreground mb-2">
+                Available categories in database:
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {[...new Set(allTools.map(tool => tool.category))].map(category => (
+                  <Badge key={category} variant="outline" className="text-xs">
+                    {category}
+                  </Badge>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
