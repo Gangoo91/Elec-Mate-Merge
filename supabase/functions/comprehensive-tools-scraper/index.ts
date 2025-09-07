@@ -19,12 +19,11 @@ interface ToolProduct {
   reviews?: string;
 }
 
-// All tool categories for comprehensive scraping - processed in batches to prevent timeouts
-// Updated to match the 9 categories expected by the tools page
+// All tool categories for comprehensive scraping - matches the exact 8 categories from tools page
 const toolCategories = [
   {
     name: "Hand Tools",
-    searchTerms: ["screwdrivers", "hammers", "pliers", "spanners", "hand tools"],
+    searchTerms: ["screwdrivers", "hammers", "pliers", "spanners", "hand tools", "wire strippers", "cutters"],
     suppliers: [
       { name: "Screwfix", url: "https://www.screwfix.com/search?search=hand+tools+electrical&page_size=50" },
       { name: "Toolstation", url: "https://www.toolstation.com/search?q=hand+tools+electrical" }
@@ -32,7 +31,7 @@ const toolCategories = [
   },
   {
     name: "Power Tools",
-    searchTerms: ["drills", "saws", "grinders", "power tools", "cordless"],
+    searchTerms: ["drills", "saws", "grinders", "power tools", "cordless", "sanders"],
     suppliers: [
       { name: "Screwfix", url: "https://www.screwfix.com/search?search=power+tools+electrical&page_size=50" },
       { name: "Toolstation", url: "https://www.toolstation.com/search?q=power+tools+electrical" }
@@ -55,27 +54,19 @@ const toolCategories = [
     ]
   },
   {
-    name: "Measuring & Marking",
-    searchTerms: ["tape measures", "levels", "markers", "measuring tools"],
+    name: "Safety Tools",
+    searchTerms: ["safety", "warning", "signs", "barriers", "locks", "tags", "isolators", "fuses"],
     suppliers: [
-      { name: "Screwfix", url: "https://www.screwfix.com/search?search=measuring+marking+tools&page_size=50" },
-      { name: "Toolstation", url: "https://www.toolstation.com/search?q=measuring+marking+tools" }
+      { name: "Screwfix", url: "https://www.screwfix.com/search?search=electrical+safety+tools&page_size=50" },
+      { name: "Toolstation", url: "https://www.toolstation.com/search?q=electrical+safety+tools" }
     ]
   },
   {
-    name: "Cutting Tools",
-    searchTerms: ["wire cutters", "strippers", "cable knives", "hole saws"],
+    name: "Access Tools & Equipment",
+    searchTerms: ["ladders", "step ladders", "platforms", "scaffolding", "access equipment"],
     suppliers: [
-      { name: "Screwfix", url: "https://www.screwfix.com/search?search=electrical+cutting+tools&page_size=50" },
-      { name: "Toolstation", url: "https://www.toolstation.com/search?q=electrical+cutting+tools" }
-    ]
-  },
-  {
-    name: "Installation Tools",
-    searchTerms: ["cable pullers", "conduit benders", "fish tapes", "installation accessories"],
-    suppliers: [
-      { name: "Screwfix", url: "https://www.screwfix.com/search?search=electrical+installation+tools&page_size=50" },
-      { name: "Toolstation", url: "https://www.toolstation.com/search?q=electrical+installation+tools" }
+      { name: "Screwfix", url: "https://www.screwfix.com/search?search=ladders+access+equipment&page_size=50" },
+      { name: "Toolstation", url: "https://www.toolstation.com/search?q=ladders+access+equipment" }
     ]
   },
   {
@@ -87,11 +78,11 @@ const toolCategories = [
     ]
   },
   {
-    name: "Access Tools & Equipment",
-    searchTerms: ["ladders", "step ladders", "platforms", "scaffolding", "access equipment"],
+    name: "Specialist Tools",
+    searchTerms: ["wire", "cable", "conduit", "specialist", "crimpers", "strippers", "pullers", "fish", "knockout", "benders"],
     suppliers: [
-      { name: "Screwfix", url: "https://www.screwfix.com/search?search=ladders+access+equipment&page_size=50" },
-      { name: "Toolstation", url: "https://www.toolstation.com/search?q=ladders+access+equipment" }
+      { name: "Screwfix", url: "https://www.screwfix.com/search?search=electrical+specialist+tools&page_size=50" },
+      { name: "Toolstation", url: "https://www.toolstation.com/search?q=electrical+specialist+tools" }
     ]
   }
 ];
