@@ -39,20 +39,20 @@ const ElectricalMaterials = () => {
       productCount: categories?.find(cat => cat.id === "cables")?.productCount || 0
     },
     {
+      id: "fixings-consumables",
+      title: "Fixings & Consumables",
+      description: "Screws, plugs, cable ties, tape and installation consumables",
+      icon: <Wrench className="h-6 w-6 text-elec-yellow" />,
+      path: "/electrician/materials/category/fixings-consumables",
+      productCount: categories?.find(cat => cat.id === "fixings-consumables")?.productCount || 0
+    },
+    {
       id: "components",
       title: "Electrical Components",
       description: "Consumer units, MCBs, RCDs and isolators",
       icon: <Zap className="h-6 w-6 text-elec-yellow" />,
       path: "/electrician/materials/category/components",
       productCount: categories?.find(cat => cat.id === "components")?.productCount || 0
-    },
-    {
-      id: "protection",
-      title: "Protection Equipment",
-      description: "Earth rods, surge protectors and circuit breakers",
-      icon: <Shield className="h-6 w-6 text-elec-yellow" />,
-      path: "/electrician/materials/category/protection",
-      productCount: categories?.find(cat => cat.id === "protection")?.productCount || 0
     },
     {
       id: "accessories",
@@ -63,14 +63,6 @@ const ElectricalMaterials = () => {
       productCount: categories?.find(cat => cat.id === "accessories")?.productCount || 0
     },
     {
-      id: "lighting",
-      title: "Lighting Solutions",
-      description: "LED downlights, battens and emergency lighting",
-      icon: <Building className="h-6 w-6 text-elec-yellow" />,
-      path: "/electrician/materials/category/lighting",
-      productCount: categories?.find(cat => cat.id === "lighting")?.productCount || 0
-    },
-    {
       id: "cable-management",
       title: "Cable Management & Conduit",
       description: "Trunking, conduit, cable trays and management systems",
@@ -79,28 +71,20 @@ const ElectricalMaterials = () => {
       productCount: categories?.find(cat => cat.id === "cable-management")?.productCount || 0
     },
     {
-      id: "data-networking",
-      title: "Data & Networking",
-      description: "Cat6 cables, patch panels, switches and network accessories",
-      icon: <Wifi className="h-6 w-6 text-elec-yellow" />,
-      path: "/electrician/materials/category/data-networking",
-      productCount: categories?.find(cat => cat.id === "data-networking")?.productCount || 0
+      id: "protection",
+      title: "Protection Equipment",
+      description: "Earth rods, surge protectors and circuit breakers",
+      icon: <Shield className="h-6 w-6 text-elec-yellow" />,
+      path: "/electrician/materials/category/protection",
+      productCount: categories?.find(cat => cat.id === "protection")?.productCount || 0
     },
     {
-      id: "fire-security",
-      title: "Fire & Security",
-      description: "Fire alarms, smoke detectors, security systems and panels",
-      icon: <Flame className="h-6 w-6 text-elec-yellow" />,
-      path: "/electrician/materials/category/fire-security",
-      productCount: categories?.find(cat => cat.id === "fire-security")?.productCount || 0
-    },
-    {
-      id: "ev-charging",
-      title: "EV Charging",
-      description: "Electric vehicle charging points and installation accessories",
-      icon: <Car className="h-6 w-6 text-elec-yellow" />,
-      path: "/electrician/materials/category/ev-charging",
-      productCount: categories?.find(cat => cat.id === "ev-charging")?.productCount || 0
+      id: "lighting",
+      title: "Lighting Solutions",
+      description: "LED downlights, battens and emergency lighting",
+      icon: <Building className="h-6 w-6 text-elec-yellow" />,
+      path: "/electrician/materials/category/lighting",
+      productCount: categories?.find(cat => cat.id === "lighting")?.productCount || 0
     },
     {
       id: "smart-controls",
@@ -111,6 +95,14 @@ const ElectricalMaterials = () => {
       productCount: categories?.find(cat => cat.id === "smart-controls")?.productCount || 0
     },
     {
+      id: "data-networking",
+      title: "Data & Networking",
+      description: "Cat6 cables, patch panels, switches and network accessories",
+      icon: <Wifi className="h-6 w-6 text-elec-yellow" />,
+      path: "/electrician/materials/category/data-networking",
+      productCount: categories?.find(cat => cat.id === "data-networking")?.productCount || 0
+    },
+    {
       id: "heating-controls",
       title: "Heating Controls",
       description: "Thermostats, zone valves, heating timers and controls",
@@ -119,12 +111,20 @@ const ElectricalMaterials = () => {
       productCount: categories?.find(cat => cat.id === "heating-controls")?.productCount || 0
     },
     {
-      id: "fixings-consumables",
-      title: "Fixings & Consumables",
-      description: "Screws, plugs, cable ties, tape and installation consumables",
-      icon: <Wrench className="h-6 w-6 text-elec-yellow" />,
-      path: "/electrician/materials/category/fixings-consumables",
-      productCount: categories?.find(cat => cat.id === "fixings-consumables")?.productCount || 0
+      id: "ev-charging",
+      title: "EV Charging",
+      description: "Electric vehicle charging points and installation accessories",
+      icon: <Car className="h-6 w-6 text-elec-yellow" />,
+      path: "/electrician/materials/category/ev-charging",
+      productCount: categories?.find(cat => cat.id === "ev-charging")?.productCount || 0
+    },
+    {
+      id: "fire-security",
+      title: "Fire & Security",
+      description: "Fire alarms, smoke detectors, security systems and panels",
+      icon: <Flame className="h-6 w-6 text-elec-yellow" />,
+      path: "/electrician/materials/category/fire-security",
+      productCount: categories?.find(cat => cat.id === "fire-security")?.productCount || 0
     }
   ];
 
