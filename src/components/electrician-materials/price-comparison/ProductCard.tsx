@@ -64,31 +64,29 @@ export const ProductCard = ({ product, isCheapest, savings, onAddToQuote }: Prod
           {/* Mobile: Vertical layout */}
           {isMobile ? (
             <>
-              {/* Header with supplier and rating */}
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <span className="text-sm font-medium text-elec-yellow">{product.supplier}</span>
-                  {isCheapest && (
-                    <Badge className="bg-green-500/20 text-green-400 border-green-500/30 text-xs px-2 py-0.5">
-                      Best Value
-                    </Badge>
-                  )}
-                </div>
-                {product.rating && (
-                  <div className="flex items-center gap-1">
-                    <Star className="h-3 w-3 text-amber-400 fill-current" />
-                    <span className="text-xs text-muted-foreground">{product.rating}</span>
-                  </div>
-                )}
+              {/* Price at top */}
+              <div className="text-center py-2 border-b border-elec-yellow/10">
+                <div className="text-xl font-bold text-elec-yellow">{product.price}</div>
+                <div className="text-xs text-muted-foreground">per each</div>
               </div>
               
-              {/* Product name and specs */}
-              <div className="space-y-3">
-                <h3 className="font-medium text-white text-sm leading-tight line-clamp-2">{product.name}</h3>
+              {/* Product name centered */}
+              <div className="text-center py-4">
+                <h3 className="font-semibold text-white text-base leading-tight line-clamp-2 mb-2">{product.name}</h3>
+                
+                {/* Brand and model info */}
+                <div className="text-sm text-elec-yellow font-medium mb-1">
+                  {product.supplier} • {product.name.split(' ')[0]}
+                </div>
+                
+                {/* Category */}
+                <div className="text-xs text-muted-foreground mb-3">
+                  {product.category}
+                </div>
                 
                 {/* Specifications badges */}
                 {(product.length || product.cableSize || product.coreCount) && (
-                  <div className="flex flex-wrap gap-1.5">
+                  <div className="flex flex-wrap justify-center gap-1.5 mb-3">
                     {product.length && (
                       <Badge variant="outline" className="text-xs px-2 py-1 border-elec-yellow/40 text-elec-yellow bg-elec-yellow/5">
                         {product.length}
@@ -108,24 +106,18 @@ export const ProductCard = ({ product, isCheapest, savings, onAddToQuote }: Prod
                 )}
               </div>
               
-              {/* Product image */}
+              {/* Product image centered */}
               <div className="flex justify-center py-2">
                 <img 
                   src={product.image || "/placeholder.svg"} 
                   alt={product.name} 
-                  className="w-16 h-16 object-cover rounded-lg bg-elec-gray/50"
+                  className="w-20 h-20 object-cover rounded-lg bg-elec-gray/50"
                 />
               </div>
               
-              {/* Price and stock info */}
-              <div className="bg-elec-gray/50 rounded-lg p-3 space-y-2">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <div className="text-lg font-bold text-elec-yellow">{product.price}</div>
-                    {savings > 0 && (
-                      <div className="text-xs text-red-400">+{savings}% more</div>
-                    )}
-                  </div>
+              {/* Stock status and rating */}
+              <div className="flex items-center justify-between py-3 border-t border-elec-yellow/10">
+                <div className="flex items-center gap-2">
                   <Badge 
                     variant="outline" 
                     className={`text-xs ${
@@ -138,7 +130,19 @@ export const ProductCard = ({ product, isCheapest, savings, onAddToQuote }: Prod
                   >
                     {product.stockStatus}
                   </Badge>
+                  {isCheapest && (
+                    <Badge className="bg-green-500/20 text-green-400 border-green-500/30 text-xs px-2 py-0.5">
+                      Best Value
+                    </Badge>
+                  )}
                 </div>
+                
+                {product.rating && (
+                  <div className="flex items-center gap-1">
+                    <Star className="h-3 w-3 text-amber-400 fill-current" />
+                    <span className="text-xs text-muted-foreground">{product.rating}</span>
+                  </div>
+                )}
               </div>
               
               {/* Action buttons */}
@@ -147,9 +151,9 @@ export const ProductCard = ({ product, isCheapest, savings, onAddToQuote }: Prod
                   <Button
                     size="sm"
                     onClick={handleAddToQuote}
-                    className="flex-1 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 h-9 text-sm font-medium"
+                    className="flex-1 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 h-10 text-sm font-medium"
                   >
-                    <Plus className="h-3 w-3 mr-2" />
+                    <Plus className="h-4 w-4 mr-2" />
                     Add to Quote
                   </Button>
                 )}
@@ -158,9 +162,9 @@ export const ProductCard = ({ product, isCheapest, savings, onAddToQuote }: Prod
                     size="sm"
                     variant="outline"
                     onClick={() => window.open(product.productUrl, '_blank')}
-                    className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 h-9 px-3"
+                    className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 h-10 px-4"
                   >
-                    <ExternalLink className="h-3 w-3" />
+                    <ExternalLink className="h-4 w-4" />
                   </Button>
                 )}
               </div>
