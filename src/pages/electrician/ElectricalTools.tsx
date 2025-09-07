@@ -6,17 +6,22 @@ import {
   Wrench, 
   Search,
   ArrowLeft,
-  Loader2
+  Loader2,
+  RefreshCw
 } from "lucide-react";
 import { useNavigate, Link, useSearchParams } from "react-router-dom";
 import { useToolCategories } from "@/hooks/useToolCategories";
 import ToolCategoryDisplay from "@/components/electrician/ToolCategoryDisplay";
+import { testToolsRefresh } from "@/utils/testToolsRefresh";
+import { useToast } from "@/hooks/use-toast";
 
 const ElectricalTools = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [searchTerm, setSearchTerm] = useState("");
+  const [isRefreshing, setIsRefreshing] = useState(false);
   const { categories: toolCategories, isLoading } = useToolCategories();
+  const { toast } = useToast();
   
   const selectedCategory = searchParams.get('category');
   
@@ -30,6 +35,40 @@ const ElectricalTools = () => {
     category.description.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  const handleToolsRefresh = async () => {
+    setIsRefreshing(true);
+    try {
+      toast({
+        title: "Updating Tools Data",
+        description: "Fetching latest tools from suppliers... This may take 1-2 minutes.",
+      });
+
+      const result = await testToolsRefresh();
+      
+      if (result.success) {
+        toast({
+          title: "Tools Updated Successfully",
+          description: "Tool categories and products have been refreshed.",
+          variant: "success",
+        });
+      } else {
+        toast({
+          title: "Update Failed",
+          description: result.error || "Failed to refresh tools data.",
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      toast({
+        title: "Update Error",
+        description: "An error occurred while updating tools data.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsRefreshing(false);
+    }
+  };
+
   return (
     <div className="space-y-6 animate-fade-in p-0">
       <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -37,11 +76,26 @@ const ElectricalTools = () => {
           <h1 className="text-2xl md:text-3xl font-bold tracking-tight">Tools</h1>
           <p className="text-muted-foreground text-sm md:text-base">Browse electrical tools for your projects</p>
         </div>
-        <Link to="/electrician/business">
-          <Button variant="outline" className="flex items-center gap-2">
-            <ArrowLeft className="h-4 w-4" /> Back to Business Hub
+        <div className="flex flex-col sm:flex-row gap-2">
+          <Button 
+            variant="outline" 
+            onClick={handleToolsRefresh}
+            disabled={isRefreshing}
+            className="flex items-center gap-2"
+          >
+            {isRefreshing ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              <RefreshCw className="h-4 w-4" />
+            )}
+            {isRefreshing ? "Updating..." : "Update Tools Data"}
           </Button>
-        </Link>
+          <Link to="/electrician/business">
+            <Button variant="outline" className="flex items-center gap-2">
+              <ArrowLeft className="h-4 w-4" /> Back to Business Hub
+            </Button>
+          </Link>
+        </div>
       </header>
 
       <div className="relative max-w-md">
