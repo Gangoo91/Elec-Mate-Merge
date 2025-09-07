@@ -8,13 +8,22 @@ import {
   ArrowLeft,
   Loader2
 } from "lucide-react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useSearchParams } from "react-router-dom";
 import { useToolCategories } from "@/hooks/useToolCategories";
+import ToolCategoryDisplay from "@/components/electrician/ToolCategoryDisplay";
 
 const ElectricalTools = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const [searchTerm, setSearchTerm] = useState("");
   const { categories: toolCategories, isLoading } = useToolCategories();
+  
+  const selectedCategory = searchParams.get('category');
+  
+  // If a category is selected, show the category display
+  if (selectedCategory) {
+    return <ToolCategoryDisplay categoryName={selectedCategory} />;
+  }
 
   const filteredCategories = toolCategories.filter(category =>
     category.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -52,7 +61,7 @@ const ElectricalTools = () => {
             <Card 
               key={category.name}
               className="border-elec-yellow/20 bg-elec-gray cursor-pointer hover:border-elec-yellow/50 transition-colors"
-              onClick={() => navigate(`/electrician/materials/Tools?category=${encodeURIComponent(category.name)}`)}
+              onClick={() => navigate(`/electrician/tools?category=${encodeURIComponent(category.name)}`)}
             >
               <CardHeader className="pb-3">
                 <CardTitle className="flex items-center justify-center gap-3 text-lg text-center">
