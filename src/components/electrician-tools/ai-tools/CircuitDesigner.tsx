@@ -190,19 +190,6 @@ Please provide exhaustive detail for materials - include everything from the sma
   return (
     <div className="min-h-screen bg-elec-dark text-white">
       <div className="max-w-6xl mx-auto p-3 sm:p-6 space-y-4 sm:space-y-6">
-        {/* Back Button */}
-        <div className="mb-4">
-          <Link to="/electrician-tools/ai-tooling">
-            <Button 
-              variant="outline" 
-              size="sm"
-              className="border-elec-yellow/50 text-elec-yellow hover:bg-elec-yellow/20 hover:border-elec-yellow/70"
-            >
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              Back to AI Tools
-            </Button>
-          </Link>
-        </div>
 
         {/* Hero Section */}
         <div className="text-center space-y-3 sm:space-y-4">
