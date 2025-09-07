@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, Navigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -37,15 +37,17 @@ const CATEGORY_META: Record<string, { title: string; description: string }> = {
   lighting: {
     title: "Lighting Solutions",
     description: "LED downlights, battens, emergency and controls"
-  },
-  tools: {
-    title: "Electrical Tools",
-    description: "Testers, hand tools and power tools for electricians"
   }
 };
 
 const CategoryMaterials = () => {
   const { categoryId = "" } = useParams<{ categoryId: string }>();
+  
+  // Redirect tools category to dedicated tools page
+  if (categoryId === "tools") {
+    return <Navigate to="/electrician/tools" replace />;
+  }
+  
   const meta = CATEGORY_META[categoryId] || { title: "Materials", description: "Browse curated products by category" };
   
   // Use comprehensive materials data
@@ -131,9 +133,9 @@ const CategoryMaterials = () => {
 
       <header className="mobile-card-spacing">
         <div className="flex flex-wrap gap-2">
-          <Link to={categoryId === 'tools' ? '/electrician/tools' : '/materials'}>
+          <Link to="/electrician/materials">
             <Button variant="outline" size="sm" className="flex items-center gap-1.5">
-              <ArrowLeft className="h-4 w-4" /> {categoryId === 'tools' ? 'Back to Tools' : 'Back to Materials'}
+              <ArrowLeft className="h-4 w-4" /> Back to Materials
             </Button>
           </Link>
         </div>

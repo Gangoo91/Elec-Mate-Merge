@@ -72,15 +72,6 @@ export const useCategoryMaterials = (categoryId: string): UseCategoryMaterialsRe
                  materialName.includes('light') ||
                  materialName.includes('led');
                  
-        case 'tools':
-          return materialCategory.includes('tools') ||
-                 materialCategory.includes('testing') ||
-                 materialCategory.includes('electrical tools') ||
-                 searchedProduct.includes('tool') ||
-                 searchedProduct.includes('test') ||
-                 searchedProduct.includes('meter') ||
-                 materialName.includes('tester') ||
-                 materialName.includes('meter');
                  
         default:
           return false;

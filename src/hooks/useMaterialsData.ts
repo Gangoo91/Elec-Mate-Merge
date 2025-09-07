@@ -37,8 +37,7 @@ const categoryMapping: Record<string, string> = {
   "Electrical Components": "components", 
   "Protection Equipment": "protection",
   "Installation Accessories": "accessories",
-  "Lighting Solutions": "lighting",
-  "Testing & Tools": "tools"
+  "Lighting Solutions": "lighting"
 };
 
 const defaultCategoryData: ProcessedCategoryData[] = [
@@ -86,15 +85,6 @@ const defaultCategoryData: ProcessedCategoryData[] = [
     topBrands: ["Ansell", "Kosnic", "Aurora"],
     popularItems: [],
     trending: true
-  },
-  {
-    id: "tools",
-    title: "Testing & Tools",
-    productCount: 0,
-    priceRange: "Loading...",
-    topBrands: ["Fluke", "Megger", "Kewtech"],
-    popularItems: [],
-    trending: false
   }
 ];
 

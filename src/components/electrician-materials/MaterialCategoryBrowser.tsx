@@ -14,8 +14,7 @@ const MaterialCategoryBrowser = () => {
     components: Zap,
     protection: Shield,
     accessories: Package,
-    lighting: Building,
-    tools: Package
+    lighting: Building
   };
 
   const categoryDescriptions = {
@@ -23,8 +22,7 @@ const MaterialCategoryBrowser = () => {
     components: "Consumer units, MCBs, RCDs and distribution boards",
     protection: "Earth rods, surge protectors and safety devices",
     accessories: "Junction boxes, cable glands and fixing accessories",
-    lighting: "LED downlights, emergency lighting and battens",
-    tools: "Multifunction testers, tools and measurement equipment"
+    lighting: "LED downlights, emergency lighting and battens"
   };
 
   if (error) {

@@ -63,14 +63,6 @@ const ElectricalMaterials = () => {
       icon: <Building className="h-6 w-6 text-elec-yellow" />,
       path: "/electrician/materials/category/lighting",
       productCount: categories?.find(cat => cat.id === "lighting")?.productCount || 0
-    },
-    {
-      id: "tools",
-      title: "Electrical Tools",
-      description: "Testing equipment, hand tools and power tools",
-      icon: <Wrench className="h-6 w-6 text-elec-yellow" />,
-      path: "/electrician/materials/category/tools",
-      productCount: categories?.find(cat => cat.id === "tools")?.productCount || 0
     }
   ];
 
