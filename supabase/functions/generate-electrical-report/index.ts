@@ -80,6 +80,35 @@ Format as a Periodic Inspection Report with:
 - Recommended interval to next inspection
 - Summary of inspection findings`;
 
+    case 'client-explainer':
+      return `You are an expert electrician who excels at explaining technical electrical work to clients in a clear, accessible way.
+
+Technical Notes to Explain:
+${formData.technicalNotes}
+
+Communication Preferences:
+- Tone: ${formData.tone}
+- Reading Level: ${formData.readingLevel}
+- Include Analogies: ${formData.includeAnalogy ? 'Yes' : 'No'}
+- Include Cost Information: ${formData.includeCostInfo ? 'Yes' : 'No'}
+- Emphasize Safety: ${formData.emphasizeSafety ? 'Yes' : 'No'}
+
+Please convert the technical notes into a client-friendly explanation that:
+
+1. Uses ${formData.tone} language throughout
+2. Is written at a ${formData.readingLevel} reading level
+3. ${formData.includeAnalogy ? 'Includes helpful analogies to explain complex concepts' : 'Avoids analogies and sticks to straightforward explanations'}
+4. ${formData.includeCostInfo ? 'Mentions potential cost implications where relevant' : 'Focuses on the technical work without cost details'}
+5. ${formData.emphasizeSafety ? 'Emphasizes safety implications and why the work is important' : 'Provides balanced information without over-emphasizing safety concerns'}
+
+The explanation should help the client understand:
+- What was found/done
+- Why it matters
+- What happens next (if applicable)
+- Any actions they might need to take
+
+Keep the explanation conversational and avoid technical jargon unless absolutely necessary (and then explain it clearly).`;
+
     case 'consumer-unit':
       return basePrompt + `
 

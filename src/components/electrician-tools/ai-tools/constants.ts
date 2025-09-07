@@ -1,5 +1,5 @@
 
-import { Brain, Image, FileText, Book, Zap } from "lucide-react";
+import { Brain, Image, FileText, Book, Zap, Megaphone } from "lucide-react";
 
 export const toolOptions = [
   { 
@@ -31,5 +31,11 @@ export const toolOptions = [
     label: "Circuit Design", 
     icon: Zap,
     description: "Design circuits, calculate loads, and size cables"
+  },
+  { 
+    value: "explainer", 
+    label: "Client Explainer", 
+    icon: Megaphone,
+    description: "Convert technical findings into client-friendly explanations"
   }
 ];
