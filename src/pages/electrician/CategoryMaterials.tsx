@@ -131,9 +131,9 @@ const CategoryMaterials = () => {
 
       <header className="mobile-card-spacing">
         <div className="flex flex-wrap gap-2">
-          <Link to="/materials">
+          <Link to={categoryId === 'tools' ? '/electrician/tools' : '/materials'}>
             <Button variant="outline" size="sm" className="flex items-center gap-1.5">
-              <ArrowLeft className="h-4 w-4" /> Back to Materials
+              <ArrowLeft className="h-4 w-4" /> {categoryId === 'tools' ? 'Back to Tools' : 'Back to Materials'}
             </Button>
           </Link>
         </div>
