@@ -107,20 +107,43 @@ export const useOptimizedToolsData = (): OptimizedToolsReturn => {
   }, [tools]);
 
   const refreshTools = async () => {
-    console.log('🔄 Triggering background tools refresh...');
+    console.log('🔄 Starting tools data refresh...');
+    
     try {
-      // Trigger background refresh without waiting
-      supabase.functions.invoke('tools-weekly-refresh', {
+      console.log('📡 Invoking tools-weekly-refresh edge function...');
+      
+      const { data, error } = await supabase.functions.invoke('tools-weekly-refresh', {
         body: { forceRefresh: true }
-      }).then(() => {
-        console.log('🔄 Background refresh initiated');
-        // Refetch data after a short delay
-        setTimeout(() => refetch(), 2000);
-      }).catch(err => {
-        console.warn('⚠️ Background refresh failed:', err);
       });
+      
+      console.log('📥 Edge function response:', { data, error });
+      
+      if (error) {
+        console.error('❌ Edge function error:', error);
+        throw new Error(`Edge function failed: ${error.message}`);
+      }
+      
+      if (data && !data.success) {
+        console.error('❌ Edge function returned failure:', data);
+        throw new Error(data.error || 'Unknown error from edge function');
+      }
+      
+      console.log('✅ Edge function succeeded:', data);
+      
+      // Wait a moment for the data to be written to the database
+      console.log('⏳ Waiting 3 seconds for database update...');
+      await new Promise(resolve => setTimeout(resolve, 3000));
+      
+      // Refetch the cached data
+      console.log('🔄 Refetching cached data...');
+      await refetch();
+      
+      console.log('✅ Tools refresh completed successfully');
+      
     } catch (error) {
-      console.warn('⚠️ Could not trigger refresh:', error);
+      console.error('❌ Tools refresh failed:', error);
+      console.error('🔍 Error details:', error);
+      throw error; // Re-throw so the UI can handle it
     }
   };
 

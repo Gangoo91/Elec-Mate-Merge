@@ -35,23 +35,29 @@ const ElectricalTools = () => {
   );
 
   const handleToolsRefresh = async () => {
+    console.log('🔄 Tools refresh requested from UI...');
+    
+    toast({
+      title: "Updating Tools",
+      description: "Fetching latest data from suppliers...",
+    });
+    
     try {
-      toast({
-        title: "Refreshing Tools",
-        description: "Updating tools data in background...",
-      });
-      
+      console.log('📡 Calling refetch() from UI...');
       await refetch();
       
+      console.log('✅ Refresh completed successfully');
       toast({
-        title: "Refresh Initiated",
-        description: "Latest tools data will update shortly",
+        title: "Tools Updated",
+        description: "Latest tools data has been loaded successfully",
       });
+      
     } catch (error) {
-      console.error('Refresh error:', error);
+      console.error('❌ Refresh failed:', error);
+      
       toast({
-        title: "Error",
-        description: "Failed to refresh tools data",
+        title: "Update Failed",
+        description: error instanceof Error ? error.message : "Failed to refresh tools data",
         variant: "destructive",
       });
     }
