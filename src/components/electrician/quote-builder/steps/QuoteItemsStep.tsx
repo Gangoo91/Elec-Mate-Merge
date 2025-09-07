@@ -123,7 +123,25 @@ export const QuoteItemsStep = ({ items, onAdd, onUpdate, onRemove }: QuoteItemsS
                 type="number"
                 placeholder="Qty"
                 value={newItem.quantity}
-                onChange={(e) => setNewItem(prev => ({ ...prev, quantity: parseInt(e.target.value) || 1 }))}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  // Allow empty string for deletion, otherwise parse the value
+                  if (value === '') {
+                    setNewItem(prev => ({ ...prev, quantity: 0 })); // Temporarily set to 0 to allow clearing
+                  } else {
+                    const parsed = parseInt(value);
+                    if (!isNaN(parsed) && parsed >= 0) {
+                      setNewItem(prev => ({ ...prev, quantity: parsed }));
+                    }
+                  }
+                }}
+                onBlur={(e) => {
+                  // Ensure minimum value on blur
+                  const value = parseInt(e.target.value);
+                  if (isNaN(value) || value <= 0) {
+                    setNewItem(prev => ({ ...prev, quantity: 1 }));
+                  }
+                }}
               />
             </div>
             
@@ -183,7 +201,25 @@ export const QuoteItemsStep = ({ items, onAdd, onUpdate, onRemove }: QuoteItemsS
                       <Input
                         type="number"
                         value={item.quantity}
-                        onChange={(e) => onUpdate(item.id, { quantity: parseInt(e.target.value) || 1 })}
+                        onChange={(e) => {
+                          const value = e.target.value;
+                          // Allow empty string for deletion, otherwise parse the value
+                          if (value === '') {
+                            onUpdate(item.id, { quantity: 0 }); // Temporarily set to 0 to allow clearing
+                          } else {
+                            const parsed = parseInt(value);
+                            if (!isNaN(parsed) && parsed >= 0) {
+                              onUpdate(item.id, { quantity: parsed });
+                            }
+                          }
+                        }}
+                        onBlur={(e) => {
+                          // Ensure minimum value on blur
+                          const value = parseInt(e.target.value);
+                          if (isNaN(value) || value <= 0) {
+                            onUpdate(item.id, { quantity: 1 });
+                          }
+                        }}
                         className="w-16"
                       />
                     </TableCell>

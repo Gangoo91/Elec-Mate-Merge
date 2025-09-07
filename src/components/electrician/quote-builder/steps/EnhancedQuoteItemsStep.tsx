@@ -484,7 +484,25 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove }: Enh
                       <Input
                         type="number"
                         value={newItem.quantity}
-                        onChange={(e) => setNewItem(prev => ({ ...prev, quantity: parseFloat(e.target.value) || 1 }))}
+                        onChange={(e) => {
+                          const value = e.target.value;
+                          // Allow empty string for deletion, otherwise parse the value
+                          if (value === '') {
+                            setNewItem(prev => ({ ...prev, quantity: 0 })); // Temporarily set to 0 to allow clearing
+                          } else {
+                            const parsed = parseFloat(value);
+                            if (!isNaN(parsed) && parsed >= 0) {
+                              setNewItem(prev => ({ ...prev, quantity: parsed }));
+                            }
+                          }
+                        }}
+                        onBlur={(e) => {
+                          // Ensure minimum value on blur
+                          const value = parseFloat(e.target.value);
+                          if (isNaN(value) || value <= 0) {
+                            setNewItem(prev => ({ ...prev, quantity: 1 }));
+                          }
+                        }}
                         min="0.1"
                         step="0.1"
                         className="h-12"
@@ -631,7 +649,25 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove }: Enh
                         <Input
                           type="number"
                           value={item.quantity}
-                          onChange={(e) => onUpdate(item.id, { quantity: parseFloat(e.target.value) || 1 })}
+                          onChange={(e) => {
+                            const value = e.target.value;
+                            // Allow empty string for deletion, otherwise parse the value
+                            if (value === '') {
+                              onUpdate(item.id, { quantity: 0 }); // Temporarily set to 0 to allow clearing
+                            } else {
+                              const parsed = parseFloat(value);
+                              if (!isNaN(parsed) && parsed >= 0) {
+                                onUpdate(item.id, { quantity: parsed });
+                              }
+                            }
+                          }}
+                          onBlur={(e) => {
+                            // Ensure minimum value on blur
+                            const value = parseFloat(e.target.value);
+                            if (isNaN(value) || value <= 0) {
+                              onUpdate(item.id, { quantity: 1 });
+                            }
+                          }}
                           className="w-16 text-center h-8"
                           min="0.1"
                           step="0.1"
