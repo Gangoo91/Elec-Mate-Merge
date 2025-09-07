@@ -40,17 +40,17 @@ export const ProductCard = ({ product, isCheapest, savings, onAddToQuote }: Prod
 
   // Process image URL to set width and height to 236
   const imageSrc = (() => {
-    if (!product.image) return "/placeholder.svg";
+    const src = product.image;
+    if (!src) return "/placeholder.svg";
     
-    try {
-      const url = new URL(product.image, window.location.origin);
-      url.searchParams.set('wid', '236');
-      url.searchParams.set('hei', '236');
-      return url.toString();
-    } catch {
-      // If URL parsing fails, return original or placeholder
-      return product.image || "/placeholder.svg";
+    let finalSrc = src;
+    
+    // Update image size parameters from 136x136 to 236x236
+    if (finalSrc.includes("wid=136") && finalSrc.includes("hei=136")) {
+      finalSrc = finalSrc.replace(/wid=136/g, "wid=236").replace(/hei=136/g, "hei=236");
     }
+    
+    return finalSrc;
   })();
 
   const handleAddToQuote = () => {
