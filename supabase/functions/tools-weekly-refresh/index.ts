@@ -14,14 +14,6 @@ serve(async (req) => {
   try {
     console.log('🔄 Tools Weekly Refresh started');
     
-    // Parse request body to check for forceRefresh parameter
-    const requestBody = req.method === 'POST' ? await req.json().catch(() => ({})) : {};
-    const forceRefresh = requestBody.forceRefresh === true;
-    
-    if (forceRefresh) {
-      console.log('🚀 Force refresh requested - bypassing cache check');
-    }
-    
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     
@@ -43,8 +35,7 @@ serve(async (req) => {
     }
 
     const now = new Date();
-    const needsRefresh = forceRefresh || 
-      !existingCache || 
+    const needsRefresh = !existingCache || 
       !existingCache.expires_at || 
       new Date(existingCache.expires_at) <= now;
 
@@ -65,11 +56,7 @@ serve(async (req) => {
       );
     }
 
-    if (forceRefresh) {
-      console.log('🔄 Force refresh triggered - updating tools data...');
-    } else {
-      console.log('🔄 Cache expired or missing, triggering refresh...');
-    }
+    console.log('🔄 Cache expired or missing, triggering refresh...');
 
     // Call the comprehensive tools scraper
     const { data: refreshResult, error: refreshError } = await supabase.functions.invoke(
