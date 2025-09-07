@@ -50,7 +50,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { useEICR } from "@/contexts/EICRContext";
+
 
 // Lazy load background removal for performance
 const loadBackgroundRemoval = async () => {
@@ -155,7 +155,7 @@ const VisualAnalysisRedesigned = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isCameraActive, setIsCameraActive] = useState(false);
 
-  const { addFault } = useEICR();
+  
 
   // Auto-advance to analyse step when images are present
   useEffect(() => {
@@ -512,27 +512,6 @@ const VisualAnalysisRedesigned = () => {
     }
   };
 
-  const addToEICR = () => {
-    if (!analysisResult) return;
-    
-    analysisResult.findings.forEach(finding => {
-      addFault({
-        id: Date.now().toString() + Math.random(),
-        circuitRef: 'TBC',
-        circuitType: 'other',
-        faultCode: finding.eicr_code,
-        description: finding.description,
-        location: finding.location || 'Visual inspection',
-        remedy: finding.fix_guidance,
-        timestamp: new Date()
-      });
-    });
-    
-    toast({
-      title: "Added to EICR",
-      description: `${analysisResult.findings.length} finding(s) added to EICR observations.`,
-    });
-  };
 
   const resetAnalysis = () => {
     setImages([]);
@@ -838,10 +817,6 @@ const VisualAnalysisRedesigned = () => {
                     <Button variant="outline" size="sm" onClick={exportReport}>
                       <Download className="h-4 w-4 mr-2" />
                       Export PDF
-                    </Button>
-                    <Button variant="outline" size="sm" onClick={addToEICR}>
-                      <Save className="h-4 w-4 mr-2" />
-                      Add to EICR
                     </Button>
                     <Button variant="outline" size="sm" onClick={resetAnalysis}>
                       <RefreshCw className="h-4 w-4 mr-2" />

@@ -12,9 +12,7 @@ import {
   Wrench,
   FileText
 } from "lucide-react";
-import { useEICR } from "@/contexts/EICRContext";
 import { toast } from "@/hooks/use-toast";
-import { EICRFault } from "@/types/eicr";
 
 interface BoundingBox {
   x: number;
@@ -62,7 +60,6 @@ const VisualAnalysisResults: React.FC<VisualAnalysisResultsProps> = ({
   analysisResult, 
   onExportReport 
 }) => {
-  const { addFault } = useEICR();
 
   const getEicrCodeColor = (code: string) => {
     switch (code) {
@@ -93,25 +90,27 @@ const VisualAnalysisResults: React.FC<VisualAnalysisResultsProps> = ({
     }
   };
 
-  const handleAddToEICR = (finding: AnalysisResult['findings'][0]) => {
-    const fault: Omit<EICRFault, 'id' | 'timestamp'> = {
-      circuitRef: 'TBC', // To be completed by user
-      circuitType: 'other',
-      faultCode: finding.eicr_code as 'C1' | 'C2' | 'C3' | 'FI',
-      description: finding.description,
-      location: finding.location || 'As per visual analysis',
-      remedy: finding.fix_guidance,
-      stepId: 'visual-analysis'
-    };
+  const copySummary = () => {
+    const summary = `VISUAL FAULT ANALYSIS REPORT
+Generated: ${new Date().toLocaleDateString('en-GB')}
+Safety Rating: ${analysisResult.compliance_summary.safety_rating}/10
 
-    addFault({
-      ...fault,
-      id: Date.now().toString(),
-      timestamp: new Date()
-    });
+IDENTIFIED ISSUES:
+${analysisResult.findings.map(finding => 
+  `• ${finding.description} (${finding.eicr_code}) - ${finding.bs7671_clauses.join(', ')}`
+).join('\n')}
+
+KEY ACTIONS REQUIRED:
+${analysisResult.recommendations.map(rec => 
+  `• ${rec.action} (${rec.priority})`
+).join('\n')}
+
+This analysis is for guidance only and must be verified by a qualified electrician.`;
+
+    navigator.clipboard.writeText(summary);
     toast({
-      title: "Added to EICR",
-      description: "Finding has been added to your EICR fault list.",
+      title: "Summary copied",
+      description: "Analysis summary copied to clipboard.",
     });
   };
 
@@ -121,7 +120,7 @@ const VisualAnalysisResults: React.FC<VisualAnalysisResultsProps> = ({
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2 sm:gap-3">
             <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5 text-green-400" />
-            <CardTitle className="text-lg sm:text-xl text-foreground">EICR Analysis Results</CardTitle>
+            <CardTitle className="text-lg sm:text-xl text-foreground">Visual Analysis Results</CardTitle>
           </div>
           <div className="flex gap-2">
             <Button
@@ -136,10 +135,11 @@ const VisualAnalysisResults: React.FC<VisualAnalysisResultsProps> = ({
             <Button
               variant="outline"
               size="sm"
+              onClick={copySummary}
               className="border-border hover:bg-accent/50"
             >
               <Save className="h-4 w-4 mr-2" />
-              Save Report
+              Copy Summary
             </Button>
           </div>
         </div>
@@ -149,7 +149,7 @@ const VisualAnalysisResults: React.FC<VisualAnalysisResultsProps> = ({
         {/* Compliance Summary */}
         <div className="bg-accent/10 border border-border rounded-lg p-4">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="font-semibold text-foreground">EICR Compliance Summary</h3>
+            <h3 className="font-semibold text-foreground">Assessment Summary</h3>
             <div className="flex items-center gap-2">
               <span className="text-2xl font-bold text-foreground">
                 {analysisResult.compliance_summary.safety_rating}/10
@@ -200,7 +200,7 @@ const VisualAnalysisResults: React.FC<VisualAnalysisResultsProps> = ({
         {/* Findings */}
         {analysisResult.findings.length > 0 && (
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-foreground">EICR Findings</h3>
+            <h3 className="text-lg font-semibold text-foreground">Findings</h3>
             <div className="space-y-3">
               {analysisResult.findings.map((finding, index) => (
                 <div key={index} className="border border-border rounded-lg p-4 space-y-3">
@@ -243,14 +243,6 @@ const VisualAnalysisResults: React.FC<VisualAnalysisResultsProps> = ({
                       </div>
                     </div>
                     
-                    <Button
-                      size="sm"
-                      onClick={() => handleAddToEICR(finding)}
-                      className="bg-blue-600 hover:bg-blue-700 text-white"
-                    >
-                      <Plus className="h-4 w-4 mr-2" />
-                      Add to EICR
-                    </Button>
                   </div>
                 </div>
               ))}
