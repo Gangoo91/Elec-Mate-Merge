@@ -20,6 +20,7 @@ interface ToolProduct {
 }
 
 // All tool categories for comprehensive scraping - processed in batches to prevent timeouts
+// Updated to match the 9 categories expected by the tools page
 const toolCategories = [
   {
     name: "Hand Tools",
@@ -38,7 +39,7 @@ const toolCategories = [
     ]
   },
   {
-    name: "Testing Equipment",
+    name: "Test Equipment",
     searchTerms: ["multimeters", "testers", "RCD testers", "insulation testers", "testing equipment"],
     suppliers: [
       { name: "Screwfix", url: "https://www.screwfix.com/search?search=electrical+testers&page_size=50" },
@@ -46,8 +47,8 @@ const toolCategories = [
     ]
   },
   {
-    name: "Safety Equipment",
-    searchTerms: ["hard hats", "safety boots", "gloves", "high vis", "PPE"],
+    name: "PPE",
+    searchTerms: ["hard hats", "safety boots", "gloves", "high vis", "PPE", "personal protective equipment"],
     suppliers: [
       { name: "Screwfix", url: "https://www.screwfix.com/search?search=electrical+safety+PPE&page_size=50" },
       { name: "Toolstation", url: "https://www.toolstation.com/search?q=electrical+safety+equipment" }
@@ -75,6 +76,22 @@ const toolCategories = [
     suppliers: [
       { name: "Screwfix", url: "https://www.screwfix.com/search?search=electrical+installation+tools&page_size=50" },
       { name: "Toolstation", url: "https://www.toolstation.com/search?q=electrical+installation+tools" }
+    ]
+  },
+  {
+    name: "Tool Storage",
+    searchTerms: ["tool bags", "tool boxes", "storage solutions", "tool cases", "tool belts"],
+    suppliers: [
+      { name: "Screwfix", url: "https://www.screwfix.com/search?search=tool+storage+bags+boxes&page_size=50" },
+      { name: "Toolstation", url: "https://www.toolstation.com/search?q=tool+storage+bags" }
+    ]
+  },
+  {
+    name: "Access Tools & Equipment",
+    searchTerms: ["ladders", "step ladders", "platforms", "scaffolding", "access equipment"],
+    suppliers: [
+      { name: "Screwfix", url: "https://www.screwfix.com/search?search=ladders+access+equipment&page_size=50" },
+      { name: "Toolstation", url: "https://www.toolstation.com/search?q=ladders+access+equipment" }
     ]
   }
 ];
