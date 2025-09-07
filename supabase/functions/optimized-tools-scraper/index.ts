@@ -19,7 +19,7 @@ interface ToolProduct {
   reviews?: string;
 }
 
-// Optimized scraping for key categories with higher success rates
+// Comprehensive scraping for all electrical tool categories with consistent naming
 const optimizedCategories = [
   {
     name: "Hand Tools",
@@ -43,6 +43,24 @@ const optimizedCategories = [
     name: "Safety Tools",
     suppliers: [
       { name: "Screwfix", url: "https://www.screwfix.com/search?search=electrical+safety+equipment+PPE&page_size=50" }
+    ]
+  },
+  {
+    name: "Specialist Tools",
+    suppliers: [
+      { name: "Screwfix", url: "https://www.screwfix.com/search?search=electrical+cables+wiring+tools&page_size=50" }
+    ]
+  },
+  {
+    name: "Access Tools & Equipment",
+    suppliers: [
+      { name: "Screwfix", url: "https://www.screwfix.com/search?search=ladders+steps+access+equipment&page_size=50" }
+    ]
+  },
+  {
+    name: "Tool Storage",
+    suppliers: [
+      { name: "Screwfix", url: "https://www.screwfix.com/search?search=tool+storage+bags+cases&page_size=50" }
     ]
   }
 ];
