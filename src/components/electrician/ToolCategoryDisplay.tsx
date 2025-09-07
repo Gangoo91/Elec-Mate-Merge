@@ -178,7 +178,19 @@ const ToolCategoryDisplay = ({ categoryName }: ToolCategoryDisplayProps) => {
                 {tool.image && (
                   <div className="aspect-square overflow-hidden rounded-md bg-muted">
                     <img 
-                      src={tool.image} 
+                      src={(() => {
+                        const src = tool.image;
+                        if (!src) return "/placeholder.svg";
+                        
+                        let finalSrc = src;
+                        
+                        // Update image size parameters from 136x136 to 236x236
+                        if (finalSrc.includes("wid=136") && finalSrc.includes("hei=136")) {
+                          finalSrc = finalSrc.replace(/wid=136/g, "wid=236").replace(/hei=136/g, "hei=236");
+                        }
+                        
+                        return finalSrc;
+                      })()} 
                       alt={tool.name}
                       className="w-full h-full object-cover"
                       onError={(e) => {
