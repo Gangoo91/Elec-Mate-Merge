@@ -18,9 +18,14 @@ import {
   Target,
   Settings,
   RotateCcw,
-  Save
+  Save,
+  Wand2,
+  Image as ImageIcon
 } from "lucide-react";
 import VisualAnalysisResults from "./VisualAnalysisResults";
+import EvidenceViewer from "./EvidenceViewer";
+import CaptureWizard from "./CaptureWizard";
+import FixPack from "./FixPack";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
@@ -29,6 +34,7 @@ import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Slider } from "@/components/ui/slider";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { 
   Tooltip,
   TooltipContent,
@@ -135,6 +141,9 @@ const VisualAnalysis = () => {
   const [confidenceThreshold, setConfidenceThreshold] = useState([0.8]);
   const [showBoundingBoxes, setShowBoundingBoxes] = useState(true);
   const [selectedBoundingBox, setSelectedBoundingBox] = useState<BoundingBox | null>(null);
+  const [currentMode, setCurrentMode] = useState<'capture' | 'analyze' | 'results'>('capture');
+  const [fixPacks, setFixPacks] = useState<any[]>([]);
+  const [uploadedImageUrls, setUploadedImageUrls] = useState<string[]>([]);
   
   const fileInputRef = useRef<HTMLInputElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -359,6 +368,32 @@ const VisualAnalysis = () => {
       
       const result: AnalysisResult = data.analysis;
       setAnalysisResult(result);
+      setUploadedImageUrls([primaryImageUrl, ...additionalImageUrls]);
+      
+      // Generate fix packs for findings
+      const generatedFixPacks = result.findings.map(finding => ({
+        eicr_code: finding.eicr_code,
+        finding: finding.description,
+        urgency: finding.eicr_code === 'C1' ? 'immediate' : finding.eicr_code === 'C2' ? 'urgent' : 'recommended',
+        estimated_time: finding.eicr_code === 'C1' ? '30-60 mins' : '1-2 hours',
+        estimated_cost: finding.eicr_code === 'C1' ? '£50-200' : '£100-500',
+        difficulty: 'electrician' as const,
+        safety_priority: finding.eicr_code === 'C1' ? 'critical' : 'high' as const,
+        steps: [{
+          id: `step-${finding.eicr_code}-1`,
+          title: 'Safe Isolation',
+          description: 'Safely isolate the circuit before commencing work',
+          duration: '10 mins',
+          safety_notes: ['Use approved voltage tester', 'Apply lock-off procedure'],
+          tools_required: ['Voltage tester', 'Lock-off kit'],
+          materials_needed: [],
+          regulation_reference: 'BS 7671 Regulation 537.2'
+        }],
+        materials_list: [],
+        verification_steps: ['Test installation', 'Visual inspection', 'Complete certification'],
+        compliance_notes: [`Repair must comply with ${finding.bs7671_clauses.join(', ')}`]
+      }));
+      setFixPacks(generatedFixPacks);
       
       // Save to history
       const historyEntry = {
@@ -368,6 +403,7 @@ const VisualAnalysis = () => {
         timestamp: new Date()
       };
       setAnalysisHistory(prev => [historyEntry, ...prev.slice(0, 4)]);
+      setCurrentMode('results');
       
       toast({
         title: "Analysis Complete",
@@ -831,12 +867,145 @@ const VisualAnalysis = () => {
           </CardContent>
         </Card>
 
-        {/* Analysis Results */}
+        {/* Revolutionary Analysis Interface */}
+        {currentMode === 'capture' && !analysisResult && (
+          <Card className="bg-card border-border max-w-5xl mx-auto">
+            <CardHeader className="p-4 sm:p-6">
+              <div className="flex items-center gap-2 sm:gap-3">
+                <Wand2 className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
+                <CardTitle className="text-lg sm:text-xl text-foreground">Guided Capture Mode</CardTitle>
+              </div>
+            </CardHeader>
+            <CardContent className="p-4 sm:p-6 pt-0">
+              <CaptureWizard 
+                onImagesCapture={(capturedImages) => {
+                  setImages(capturedImages);
+                  setCurrentMode('analyze');
+                }}
+                onPresetSelect={(capturePreset) => {
+                  // Convert CapturePreset to AnalysisPreset format
+                  const analysisPreset = ANALYSIS_PRESETS.find(p => 
+                    p.name.toLowerCase().includes(capturePreset.id.split('-')[0])
+                  ) || ANALYSIS_PRESETS[0];
+                  setSelectedPreset(analysisPreset);
+                }}
+              />
+            </CardContent>
+          </Card>
+        )}
+
+        {/* Analysis Results with Evidence Viewer */}
         {analysisResult && showResults && (
-          <VisualAnalysisResults 
-            analysisResult={analysisResult} 
-            onExportReport={exportReport}
-          />
+          <div className="space-y-6">
+            <Tabs defaultValue="analysis" className="max-w-5xl mx-auto">
+              <TabsList className="grid w-full grid-cols-4">
+                <TabsTrigger value="analysis">Analysis Results</TabsTrigger>
+                <TabsTrigger value="evidence">Evidence Viewer</TabsTrigger>
+                <TabsTrigger value="fixpacks">Fix Guidance</TabsTrigger>
+                <TabsTrigger value="compare">Compare & History</TabsTrigger>
+              </TabsList>
+              
+              <TabsContent value="analysis" className="mt-6">
+                <VisualAnalysisResults 
+                  analysisResult={analysisResult} 
+                  onExportReport={exportReport}
+                />
+              </TabsContent>
+              
+              <TabsContent value="evidence" className="mt-6">
+                {uploadedImageUrls.length > 0 && (
+                  <div className="space-y-6">
+                    <div className="text-center">
+                      <h3 className="text-xl font-semibold text-foreground mb-2">Evidence Gallery</h3>
+                      <p className="text-muted-foreground">Explore findings with visual overlays and bounding boxes</p>
+                    </div>
+                    <div className="grid gap-6">
+                      {uploadedImageUrls.map((imageUrl, index) => (
+                        <EvidenceViewer
+                          key={index}
+                          imageUrl={imageUrl}
+                          findings={analysisResult.findings}
+                          showOverlays={showBoundingBoxes}
+                          onBoundingBoxClick={(box) => setSelectedBoundingBox(box)}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </TabsContent>
+              
+              <TabsContent value="fixpacks" className="mt-6">
+                <div className="space-y-6">
+                  <div className="text-center">
+                    <h3 className="text-xl font-semibold text-foreground mb-2">Fix Guidance Packs</h3>
+                    <p className="text-muted-foreground">Step-by-step repair guidance with materials and compliance notes</p>
+                  </div>
+                  {fixPacks.length > 0 ? (
+                    <div className="space-y-4">
+                      {fixPacks.map((fixPack, index) => (
+                        <FixPack
+                          key={index}
+                          fixPack={fixPack}
+                          userRole="electrician"
+                          onStartWork={() => {
+                            toast({
+                              title: "Work Started",
+                              description: "Use the checklist to track your progress.",
+                            });
+                          }}
+                        />
+                      ))}
+                    </div>
+                  ) : (
+                    <Card className="p-8 text-center">
+                      <p className="text-muted-foreground">No fix guidance available. Perform analysis first.</p>
+                    </Card>
+                  )}
+                </div>
+              </TabsContent>
+              
+              <TabsContent value="compare" className="mt-6">
+                <div className="space-y-6">
+                  <div className="text-center">
+                    <h3 className="text-xl font-semibold text-foreground mb-2">Analysis History & Comparison</h3>
+                    <p className="text-muted-foreground">Track changes and compare results over time</p>
+                  </div>
+                  {analysisHistory.length > 0 ? (
+                    <div className="grid gap-4">
+                      {analysisHistory.map((entry) => (
+                        <Card key={entry.id} className="border-border">
+                          <CardContent className="p-4">
+                            <div className="flex items-center justify-between mb-2">
+                              <span className="text-sm text-muted-foreground">
+                                {entry.timestamp.toLocaleDateString('en-GB')} at {entry.timestamp.toLocaleTimeString('en-GB')}
+                              </span>
+                              <div className="flex gap-2">
+                                <Badge variant="outline" className="text-xs">
+                                  Safety: {entry.result.compliance_summary.safety_rating}/10
+                                </Badge>
+                                <Badge variant="outline" className="text-xs">
+                                  {entry.result.findings.length} findings
+                                </Badge>
+                              </div>
+                            </div>
+                            <p className="text-sm text-foreground mb-3">{entry.result.summary}</p>
+                            <Button variant="outline" size="sm">
+                              <Eye className="h-4 w-4 mr-2" />
+                              Compare with Current
+                            </Button>
+                          </CardContent>
+                        </Card>
+                      ))}
+                    </div>
+                  ) : (
+                    <Card className="p-8 text-center">
+                      <p className="text-muted-foreground">No analysis history available yet.</p>
+                    </Card>
+                  )}
+                </div>
+              </TabsContent>
+            </Tabs>
+          </div>
         )}
 
         {/* Analysis History */}
