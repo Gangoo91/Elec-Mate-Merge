@@ -65,6 +65,11 @@ const ToolCategoryDisplay = ({ categoryName }: ToolCategoryDisplayProps) => {
     return matchesCategory && matchesSearch;
   }) || [];
 
+  // Debug: Log sample tool images
+  if (categoryTools.length > 0) {
+    console.log("Sample tool images:", categoryTools.slice(0, 3).map(t => ({ name: t.name, image: t.image })));
+  }
+
   if (error) {
     return (
       <div className="space-y-6 animate-fade-in p-0">
@@ -180,6 +185,7 @@ const ToolCategoryDisplay = ({ categoryName }: ToolCategoryDisplayProps) => {
                     <img 
                       src={(() => {
                         const src = tool.image;
+                        console.log("Original URL:", src);
                         if (!src) return "/placeholder.svg";
                         
                         let finalSrc = src;
@@ -187,6 +193,9 @@ const ToolCategoryDisplay = ({ categoryName }: ToolCategoryDisplayProps) => {
                         // Update image size parameters from 136x136 to 236x236
                         if (finalSrc.includes("wid=136") && finalSrc.includes("hei=136")) {
                           finalSrc = finalSrc.replace(/wid=136/g, "wid=236").replace(/hei=136/g, "hei=236");
+                          console.log("Updated URL:", finalSrc);
+                        } else {
+                          console.log("No wid=136/hei=136 found in URL");
                         }
                         
                         return finalSrc;
