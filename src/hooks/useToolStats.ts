@@ -31,13 +31,17 @@ const categorizeToolByName = (toolName: string): string => {
   if (name.includes('drill') || name.includes('driver') || name.includes('saw') || name.includes('grinder')) {
     return 'Power Tools';
   } else if (name.includes('test') || name.includes('meter') || name.includes('detector') || name.includes('measure')) {
-    return 'Test Equipment';
+    return 'Testing Equipment';
   } else if (name.includes('safety') || name.includes('helmet') || name.includes('glove') || name.includes('ppe')) {
-    return 'Safety Equipment';
+    return 'PPE';
   } else if (name.includes('bag') || name.includes('box') || name.includes('case') || name.includes('storage')) {
     return 'Tool Storage';
-  } else if (name.includes('wire') || name.includes('cable') || name.includes('conduit') || name.includes('specialist')) {
+  } else if (name.includes('wire') || name.includes('cable') || name.includes('conduit') || name.includes('specialist') || name.includes('access') || name.includes('ladder') || name.includes('platform')) {
     return 'Specialist Tools';
+  } else if (name.includes('cutting') || name.includes('knife') || name.includes('blade')) {
+    return 'Cutting Tools';
+  } else if (name.includes('install') || name.includes('mount') || name.includes('bracket')) {
+    return 'Installation Tools';
   } else {
     return 'Hand Tools';
   }
