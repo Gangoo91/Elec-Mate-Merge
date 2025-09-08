@@ -1,203 +1,138 @@
-import { useState, useEffect } from "react";
-import { Card, CardContent } from "@/components/ui/card";
+import { useState, useEffect, useMemo } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Brain, Calculator, History, ChevronDown } from "lucide-react";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { supabase } from "@/integrations/supabase/client";
+import { CheckCircle, Loader2, Search, Star, ExternalLink, ShoppingCart, Filter, Plus } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
-import BulkPricingCalculator from "./BulkPricingCalculator";
-import PriceHistoryAlerts from "./PriceHistoryAlerts";
-import { SearchInterface } from "./price-comparison/SearchInterface";
-import { ProductCard, PriceComparisonItem } from "./price-comparison/ProductCard";
-import { AIInsightsComponent, AIInsights } from "./price-comparison/AIInsights";
-import { PriceStats, PriceComparisonResult } from "./price-comparison/PriceStats";
+import { 
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { supabase } from "@/integrations/supabase/client";
+import RefreshButton from "./RefreshButton";
+import { MaterialToQuoteItem } from "@/hooks/useQuoteMaterialIntegration";
 
-interface MaterialPriceComparisonProps {
-  initialQuery?: string;
-  selectedItems?: any[];
-  onClearSelection?: () => void;
-  onAddToQuote?: (material: any, quantity?: number) => void;
-  onAddMultipleToQuote?: (materials: any[]) => void;
+export interface PriceComparisonItem {
+  id: number;
+  name: string;
+  supplier: string;
+  price: string;
+  originalPrice?: string;
+  isOnSale?: boolean;
+  salePrice?: string;
+  stockStatus: 'In Stock' | 'Out of Stock' | 'Low Stock';
+  image: string;
+  category: string;
+  highlights?: string[];
+  pricePerUnit?: string;
+  numericPrice: number;
+  priceValue: number;
+  originalPriceValue?: number;
+  productUrl?: string;
+  view_product_url?: string;
+  description?: string;
+  reviews?: string;
 }
 
-const MaterialPriceComparison = ({ 
-  initialQuery = "", 
-  selectedItems = [], 
-  onClearSelection, 
-  onAddToQuote, 
-  onAddMultipleToQuote 
-}: MaterialPriceComparisonProps) => {
-  const isMobile = useIsMobile();
-  const [searchQuery, setSearchQuery] = useState(initialQuery);
+interface MaterialPriceComparisonProps {
+  onAddToQuote?: (material: MaterialToQuoteItem, quantity?: number) => void;
+  onAddMultipleToQuote?: (materials: MaterialToQuoteItem[]) => void;
+}
+
+const enrichProductData = (item: any): PriceComparisonItem => {
+  const priceStr = item.price || item.salePrice || "£0.00";
+  const originalPriceStr = item.originalPrice || item.price;
+  
+  // Extract numeric price for sorting and calculations
+  const priceMatch = priceStr.match(/£?([\d,]+\.?\d*)/);
+  const numericPrice = priceMatch ? parseFloat(priceMatch[1].replace(/,/g, '')) : 0;
+  
+  const originalPriceMatch = originalPriceStr?.match(/£?([\d,]+\.?\d*)/);
+  const originalPriceValue = originalPriceMatch ? parseFloat(originalPriceMatch[1].replace(/,/g, '')) : numericPrice;
+
+  return {
+    id: item.id || Math.random(),
+    name: item.name || 'Unknown Product',
+    supplier: item.supplier || 'Unknown Supplier',
+    price: priceStr,
+    originalPrice: item.originalPrice,
+    isOnSale: item.isOnSale || false,
+    salePrice: item.salePrice,
+    stockStatus: item.stockStatus || 'In Stock' as const,
+    image: item.image || '/placeholder.svg',
+    category: item.category || 'General',
+    highlights: item.highlights || [],
+    numericPrice,
+    priceValue: numericPrice,
+    originalPriceValue,
+    productUrl: item.productUrl || item.view_product_url,
+    description: item.description,
+    reviews: item.reviews
+  };
+};
+
+const defaultMaterials: PriceComparisonItem[] = [
+  {
+    id: 1,
+    name: "2.5mm² Twin & Earth Cable",
+    supplier: "Screwfix",
+    price: "£89.99",
+    stockStatus: "In Stock",
+    image: "/placeholder.svg",
+    category: "Cables",
+    highlights: ["BS 6004 compliant", "100m coil"],
+    numericPrice: 89.99,
+    priceValue: 89.99
+  },
+  {
+    id: 2,
+    name: "MCB 32A Type B",
+    supplier: "Toolstation",
+    price: "£12.50",
+    stockStatus: "In Stock",
+    image: "/placeholder.svg",
+    category: "Protection",
+    highlights: ["BS EN 60898", "10kA breaking capacity"],
+    numericPrice: 12.50,
+    priceValue: 12.50
+  },
+  {
+    id: 3,
+    name: "RCD 63A 30mA",
+    supplier: "CEF",
+    price: "£45.00",
+    stockStatus: "Low Stock",
+    image: "/placeholder.svg",
+    category: "Protection",
+    highlights: ["Type AC", "BS EN 61008"],
+    numericPrice: 45.00,
+    priceValue: 45.00
+  }
+];
+
+const MaterialPriceComparison = ({ onAddToQuote, onAddMultipleToQuote }: MaterialPriceComparisonProps) => {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [filteredMaterials, setFilteredMaterials] = useState<PriceComparisonItem[]>([]);
+  const [allMaterials, setAllMaterials] = useState<PriceComparisonItem[]>([]);
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedSupplier, setSelectedSupplier] = useState("all");
-  const [isLoading, setIsLoading] = useState(false);
-  const [isAiAnalyzing, setIsAiAnalyzing] = useState(false);
-  const [comparisonResult, setComparisonResult] = useState<PriceComparisonResult | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [aiEnabled, setAiEnabled] = useState(true);
-  const [activeTab, setActiveTab] = useState<'comparison' | 'bulk' | 'history'>('comparison');
-  const [selectedProductForAnalysis, setSelectedProductForAnalysis] = useState<PriceComparisonItem | null>(null);
-  const [showingPreSelected, setShowingPreSelected] = useState(false);
+  const [showingPreSelected, setShowingPreSelected] = useState(true);
+  const [hasSearched, setHasSearched] = useState(false);
+  const [sortBy, setSortBy] = useState<'relevance' | 'price-low' | 'price-high' | 'supplier'>('relevance');
+  const [selectedMaterials, setSelectedMaterials] = useState<Set<number>>(new Set());
 
-  // Helper functions
-  const extractPrice = (priceStr: string): number => {
-    const cleaned = priceStr.replace(/[£,]/g, '');
-    return parseFloat(cleaned) || 0;
-  };
-
-  const formatPrice = (price: number): string => {
-    return `£${price.toFixed(2)}`;
-  };
-
-  const calculateSavings = (currentPrice: number, cheapestPrice: number): number => {
-    if (cheapestPrice === 0) return 0;
-    return Math.round(((currentPrice - cheapestPrice) / cheapestPrice) * 100);
-  };
-
-  // Process selected items from the category page
-  const processSelectedItems = (items: any[]): PriceComparisonResult | null => {
-    if (!items || items.length === 0) return null;
-
-    const processedProducts: PriceComparisonItem[] = items.map((item, index) => ({
-      id: item.id || index,
-      name: item.name || 'Unknown Product',
-      category: item.category || 'Materials',
-      price: item.price || '£0.00',
-      supplier: item.supplier || 'Unknown',
-      image: item.image || '/placeholder.svg',
-      stockStatus: item.stockStatus || 'In Stock',
-      productUrl: item.productUrl,
-      highlights: item.highlights || [],
-      numericPrice: extractPrice(item.price || '£0.00'),
-      rating: 4.5,
-      deliveryInfo: 'Standard'
-    }));
-
-    // Filter out items with 0 price and sort by price
-    const validProducts = processedProducts.filter(p => p.numericPrice > 0);
-    const sortedProducts = validProducts.sort((a, b) => a.numericPrice - b.numericPrice);
-
-    if (sortedProducts.length === 0) return null;
-
-    const prices = sortedProducts.map(p => p.numericPrice);
-    const cheapestPrice = Math.min(...prices);
-    const averagePrice = prices.reduce((sum, price) => sum + price, 0) / prices.length;
-    const priceRange = `${formatPrice(cheapestPrice)} - ${formatPrice(Math.max(...prices))}`;
-
-    return {
-      searchTerm: `Selected Items (${items.length})`,
-      products: sortedProducts,
-      cheapestPrice,
-      averagePrice,
-      priceRange
-    };
-  };
-
-  // Enhanced product processing with supplier-specific data enrichment and spec extraction
-  const enrichProductData = (product: any): PriceComparisonItem => {
-    const supplierData = {
-      'Screwfix': { rating: 4.6, deliveryInfo: 'Click & Collect' },
-      'CEF': { rating: 4.8, deliveryInfo: 'Trade Counter' },
-      'RS Components': { rating: 4.7, deliveryInfo: 'Next Day' },
-      'Toolstation': { rating: 4.5, deliveryInfo: 'In Store' }
-    };
-
-    const enrichment = supplierData[product.supplier as keyof typeof supplierData] || 
-                     { rating: 4.4, deliveryInfo: 'Standard' };
-
-    // Extract specifications from product name
-    const extractSpecs = (name: string) => {
-      const specs: any = {};
-      
-      // Extract length (e.g., "100m", "50m", "25 metre")
-      const lengthMatch = name.match(/(\d+(?:\.\d+)?)\s*(?:m|metre|meter)(?!\w)/i);
-      if (lengthMatch) {
-        specs.length = lengthMatch[1] + 'm';
-      }
-      
-      // Extract cable size (e.g., "6mm", "2.5mm²", "4.0mm²")
-      const sizeMatch = name.match(/(\d+(?:\.\d+)?)\s*mm[²²]?/i);
-      if (sizeMatch) {
-        specs.cableSize = sizeMatch[0];
-      }
-      
-      // Extract core count (e.g., "3 Core", "2-Core", "3+E")
-      const coreMatch = name.match(/(\d+)(?:\s*[-+]\s*\w+)?\s*core/i) || name.match(/(\d+)\+[EeNn]/);
-      if (coreMatch) {
-        specs.coreCount = coreMatch[0];
-      }
-      
-      // Extract quantity if mentioned
-      const quantityMatch = name.match(/(\d+)\s*(?:pack|pcs?|pieces?|units?)/i);
-      if (quantityMatch) {
-        specs.quantity = quantityMatch[0];
-      }
-      
-      // Extract cable type
-      if (name.match(/swa|armoured|steel\s*wire/i)) {
-        specs.cableType = 'SWA';
-      } else if (name.match(/pvc/i)) {
-        specs.cableType = 'PVC';
-      } else if (name.match(/xlpe/i)) {
-        specs.cableType = 'XLPE';
-      }
-      
-      return specs;
-    };
-
-    const specs = extractSpecs(product.name);
-
-    return {
-      ...product,
-      numericPrice: extractPrice(product.price),
-      rating: enrichment.rating,
-      deliveryInfo: enrichment.deliveryInfo,
-      ...specs
-    };
-  };
-
-  // Enhanced AI Analysis
-  const runAiAnalysis = async (products: PriceComparisonItem[]) => {
-    if (!aiEnabled || products.length === 0) {
-      console.log('🚫 AI analysis skipped - disabled or no products');
-      return;
-    }
-    
-    console.log(`🤖 Running AI analysis on ${products.length} products...`);
-    setIsAiAnalyzing(true);
-    
-    try {
-      const { data, error } = await supabase.functions.invoke('ai-material-recommendations', {
-        body: { 
-          products, 
-          searchTerm: searchQuery,
-          userLocation: 'UK'
-        }
-      });
-
-      console.log('🤖 AI analysis response:', { data, error });
-
-      if (error) {
-        console.error('❌ AI analysis error:', error);
-        throw new Error(error.message);
-      }
-
-      console.log('✅ AI analysis successful');
-      return data;
-    } catch (err: any) {
-      console.error('❌ AI analysis failed:', err);
-      toast({
-        title: "AI Analysis Failed",
-        description: "Price comparison still available, but AI insights unavailable.",
-        variant: "destructive"
-      });
-      return null;
-    } finally {
-      setIsAiAnalyzing(false);
-    }
-  };
+  useEffect(() => {
+    // Show pre-selected materials on component mount
+    const enrichedDefaults = defaultMaterials.map(enrichProductData);
+    setFilteredMaterials(enrichedDefaults);
+    setAllMaterials(enrichedDefaults);
+  }, []);
 
   const handleSearch = async () => {
     if (!searchQuery.trim()) {
@@ -277,97 +212,21 @@ const MaterialPriceComparison = ({
       // Filter out items with 0 price
       const validProducts = processedProducts.filter(p => p.numericPrice > 0);
       
-      // Smart sorting: prioritize relevance over price
-      const smartSortProducts = (products: PriceComparisonItem[], searchTerm: string) => {
-        const searchLower = searchTerm.toLowerCase();
-        const searchTerms = searchLower.split(/\s+/);
-        
-        // Calculate relevance score for each product
-        const scoredProducts = products.map(product => {
-          let relevanceScore = 0;
-          const productName = product.name.toLowerCase();
-            
-            // Exact match bonus
-            if (productName.includes(searchLower)) {
-              relevanceScore += 100;
-            }
-            
-            // Individual term matches
-            searchTerms.forEach(term => {
-              if (productName.includes(term)) {
-                relevanceScore += 20;
-              }
-            });
-            
-            // Cable-specific matching for SWA, armoured, etc.
-            if (searchLower.includes('swa') && productName.includes('swa')) {
-              relevanceScore += 50;
-            }
-            if (searchLower.includes('armoured') && (productName.includes('armoured') || productName.includes('swa'))) {
-              relevanceScore += 50;
-            }
-            
-            // Size/spec matching (6mm, 100m, etc.)
-            const sizeMatches = searchLower.match(/(\d+(?:\.\d+)?)\s*(mm|m|core)/g);
-            if (sizeMatches) {
-              sizeMatches.forEach(match => {
-                if (productName.includes(match.replace(/\s/g, ''))) {
-                  relevanceScore += 30;
-                }
-              });
-            }
-            
-            return { ...product, relevanceScore };
-          });
-          
-          // Sort by relevance first, then by price within relevance groups
-          return scoredProducts.sort((a, b) => {
-            if (a.relevanceScore !== b.relevanceScore) {
-              return b.relevanceScore - a.relevanceScore; // Higher relevance first
-            }
-            return a.numericPrice - b.numericPrice; // Lower price within same relevance
-          });
-        };
-        
-        const sortedProducts = smartSortProducts(validProducts, searchQuery);
+      setAllMaterials(validProducts);
+      setFilteredMaterials(validProducts);
+      setHasSearched(true);
 
-        const prices = sortedProducts.map(p => p.numericPrice);
-        const cheapestPrice = Math.min(...prices);
-        const averagePrice = prices.reduce((sum, price) => sum + price, 0) / prices.length;
-        const priceRange = `${formatPrice(cheapestPrice)} - ${formatPrice(Math.max(...prices))}`;
-
-        // Create initial result
-        const result: PriceComparisonResult = {
-          searchTerm: searchQuery,
-          products: sortedProducts,
-          cheapestPrice,
-          averagePrice,
-          priceRange
-        };
-
-        setComparisonResult(result);
-
-        // Run AI analysis in parallel
-        if (aiEnabled) {
-          console.log('🤖 Starting AI analysis...');
-          runAiAnalysis(sortedProducts).then(aiInsights => {
-            if (aiInsights) {
-              console.log('✅ AI analysis completed');
-              setComparisonResult(prev => prev ? { ...prev, aiInsights } : null);
-            }
-          });
-        }
-      } else {
-        console.log('⚠️ No materials found in response');
-        setError("No products found for your search. Try different keywords or adjust filters.");
-      }
-    } catch (err: any) {
-      console.error('❌ Search failed:', err);
-      const errorMessage = err.message || "Failed to fetch price comparison data";
-      setError(errorMessage);
       toast({
-        title: "Search Failed",
-        description: errorMessage.includes('fetch') ? "Network error - please check your connection" : "Please try again in a moment.",
+        title: "Search Complete",
+        description: `Found ${validProducts.length} materials matching your search.`,
+      });
+
+    } catch (error: any) {
+      console.error('❌ Search error:', error);
+      setError(error.message || 'An unexpected error occurred');
+      toast({
+        title: "Error",
+        description: "Failed to search materials. Please try again.",
         variant: "destructive"
       });
     } finally {
@@ -375,246 +234,360 @@ const MaterialPriceComparison = ({
     }
   };
 
-  // PDF Export functionality
-  const exportToPDF = async () => {
-    if (!comparisonResult) return;
-    
-    try {
-      // Create a simple text-based export for now
-      const exportData = {
-        searchTerm: comparisonResult.searchTerm,
-        products: comparisonResult.products.map(p => ({
-          name: p.name,
-          supplier: p.supplier,
-          price: p.price,
-          stockStatus: p.stockStatus,
-          savings: p.numericPrice === comparisonResult.cheapestPrice ? 'Best Price' : 
-                   `+${calculateSavings(p.numericPrice, comparisonResult.cheapestPrice)}%`
-        })),
-        summary: {
-          totalProducts: comparisonResult.products.length,
-          priceRange: comparisonResult.priceRange,
-          cheapestPrice: formatPrice(comparisonResult.cheapestPrice)
-        },
-        exportDate: new Date().toLocaleDateString('en-GB')
-      };
-
-      // For now, download as JSON - could be enhanced to actual PDF
-      const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `material-price-comparison-${comparisonResult.searchTerm.replace(/\s+/g, '-')}-${new Date().toISOString().split('T')[0]}.json`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-
-      toast({
-        title: "Export Successful",
-        description: "Price comparison data exported successfully.",
-      });
-    } catch (error) {
-      toast({
-        title: "Export Failed",
-        description: "Failed to export comparison data.",
-        variant: "destructive"
-      });
-    }
+  const handleRefresh = () => {
+    console.log('🔄 Refresh triggered');
+    // This will be handled by the RefreshButton component
   };
 
-  // Handle clearing selection
-  const handleClearSelection = () => {
-    setComparisonResult(null);
-    setShowingPreSelected(false);
-    setSearchQuery("");
-    if (onClearSelection) {
-      onClearSelection();
-    }
-  };
+  const sortedMaterials = useMemo(() => {
+    if (!filteredMaterials.length) return filteredMaterials;
 
-  // Process selected items when component mounts or selectedItems changes
-  useEffect(() => {
-    if (selectedItems && selectedItems.length > 0) {
-      const result = processSelectedItems(selectedItems);
-      if (result) {
-        setComparisonResult(result);
-        setShowingPreSelected(true);
-        
-        // Run AI analysis on pre-selected items if enabled
-        if (aiEnabled) {
-          runAiAnalysis(result.products).then(aiInsights => {
-            if (aiInsights) {
-              setComparisonResult(prev => prev ? { ...prev, aiInsights } : null);
-            }
-          });
-        }
+    const sorted = [...filteredMaterials].sort((a, b) => {
+      switch (sortBy) {
+        case 'price-low':
+          return a.numericPrice - b.numericPrice;
+        case 'price-high':
+          return b.numericPrice - a.numericPrice;
+        case 'supplier':
+          return a.supplier.localeCompare(b.supplier);
+        case 'relevance':
+        default:
+          // Keep original order for relevance
+          return 0;
       }
+    });
+
+    return sorted;
+  }, [filteredMaterials, sortBy]);
+
+  const categories = useMemo(() => {
+    const cats = new Set(allMaterials.map(item => item.category));
+    return Array.from(cats).sort();
+  }, [allMaterials]);
+
+  const suppliers = useMemo(() => {
+    const sups = new Set(allMaterials.map(item => item.supplier));
+    return Array.from(sups).sort();
+  }, [allMaterials]);
+
+  const handleAddToQuote = (material: PriceComparisonItem, quantity: number = 1) => {
+    if (onAddToQuote) {
+      const quoteItem: MaterialToQuoteItem = {
+        id: material.id,
+        name: material.name,
+        price: material.price,
+        category: material.category,
+        supplier: material.supplier,
+        stockStatus: material.stockStatus,
+        productUrl: material.productUrl,
+        highlights: material.highlights
+      };
+      onAddToQuote(quoteItem, quantity);
+      toast({
+        title: "Added to Quote",
+        description: `${material.name} added to quote`,
+      });
     }
-  }, [selectedItems, aiEnabled]);
+  };
+
+  const handleAddMultipleToQuote = () => {
+    if (onAddMultipleToQuote && selectedMaterials.size > 0) {
+      const materialsToAdd = sortedMaterials
+        .filter(material => selectedMaterials.has(material.id))
+        .map(material => ({
+          id: material.id,
+          name: material.name,
+          price: material.price,
+          category: material.category,
+          supplier: material.supplier,
+          stockStatus: material.stockStatus,
+          productUrl: material.productUrl,
+          highlights: material.highlights
+        }));
+      
+      onAddMultipleToQuote(materialsToAdd);
+      setSelectedMaterials(new Set());
+      toast({
+        title: "Added to Quote",
+        description: `${materialsToAdd.length} materials added to quote`,
+      });
+    }
+  };
+
+  const toggleMaterialSelection = (materialId: number) => {
+    const newSelection = new Set(selectedMaterials);
+    if (newSelection.has(materialId)) {
+      newSelection.delete(materialId);
+    } else {
+      newSelection.add(materialId);
+    }
+    setSelectedMaterials(newSelection);
+  };
+
+  const getStockBadgeVariant = (status: string) => {
+    switch (status) {
+      case 'In Stock': return 'default';
+      case 'Low Stock': return 'destructive';
+      case 'Out of Stock': return 'secondary';
+      default: return 'default';
+    }
+  };
 
   return (
     <div className="space-y-6">
-      <div className="text-center space-y-4">
-        <h2 className="text-3xl font-bold text-white">AI-Powered Material Price Comparison</h2>
-        <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-          Compare prices across multiple suppliers with intelligent recommendations and value analysis
-        </p>
-        <div className="flex items-center justify-center gap-4">
-          <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30">
-            <Brain className="h-3 w-3 mr-1" />
-            AI-Enhanced
-          </Badge>
-          <label className="flex items-center gap-2 text-sm">
-            <input
-              type="checkbox"
-              checked={aiEnabled}
-              onChange={(e) => setAiEnabled(e.target.checked)}
-              className="rounded"
-            />
-            <span className="text-muted-foreground">Enable AI Recommendations</span>
-          </label>
+      {/* Header */}
+      <div className="flex flex-col gap-4">
+        <div className="flex items-center justify-between">
+          <div>
+            <h2 className="text-2xl font-bold text-white">Material Price Comparison</h2>
+            <p className="text-muted-foreground">Compare prices across multiple suppliers</p>
+          </div>
+          <RefreshButton 
+            isFetching={isLoading}
+            lastFetchTime={Date.now()}
+            onRefresh={handleRefresh}
+            categoryId="materials"
+            className="ml-auto"
+          />
         </div>
+
+        {/* Search Controls */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div className="md:col-span-2">
+            <div className="flex gap-2">
+              <Input
+                placeholder="Search materials (e.g., '2.5mm cable', 'MCB 32A')"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
+                className="flex-1"
+              />
+              <Button onClick={handleSearch} disabled={isLoading} className="px-4">
+                {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Search className="h-4 w-4" />}
+              </Button>
+            </div>
+          </div>
+          
+          <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+            <SelectTrigger>
+              <SelectValue placeholder="All Categories" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Categories</SelectItem>
+              {categories.map(cat => (
+                <SelectItem key={cat} value={cat}>{cat}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+
+          <Select value={selectedSupplier} onValueChange={setSelectedSupplier}>
+            <SelectTrigger>
+              <SelectValue placeholder="All Suppliers" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Suppliers</SelectItem>
+              {suppliers.map(sup => (
+                <SelectItem key={sup} value={sup}>{sup}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+        {/* Sort and Bulk Actions */}
+        {hasSearched && (
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <Select value={sortBy} onValueChange={(value: any) => setSortBy(value)}>
+                <SelectTrigger className="w-40">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="relevance">Relevance</SelectItem>
+                  <SelectItem value="price-low">Price: Low to High</SelectItem>
+                  <SelectItem value="price-high">Price: High to Low</SelectItem>
+                  <SelectItem value="supplier">Supplier</SelectItem>
+                </SelectContent>
+              </Select>
+              
+              {onAddMultipleToQuote && selectedMaterials.size > 0 && (
+                <Button onClick={handleAddMultipleToQuote} variant="outline">
+                  <Plus className="h-4 w-4 mr-2" />
+                  Add {selectedMaterials.size} to Quote
+                </Button>
+              )}
+            </div>
+            
+            <p className="text-sm text-muted-foreground">
+              {sortedMaterials.length} materials found
+            </p>
+          </div>
+        )}
       </div>
 
-      {/* Tab Navigation - Collapsible */}
-      <Collapsible className="mb-4">
-        <CollapsibleTrigger className="w-full flex items-center justify-between bg-elec-gray border border-elec-yellow/20 rounded-xl p-4 mobile-interactive touch-target hover:bg-elec-yellow/5 transition-colors">
-          <div className="flex items-center gap-3">
-            {activeTab === 'comparison' && <Brain className="h-4 w-4 text-elec-yellow" />}
-            {activeTab === 'bulk' && <Calculator className="h-4 w-4 text-elec-yellow" />}
-            {activeTab === 'history' && <History className="h-4 w-4 text-elec-yellow" />}
-            <span className="text-sm font-medium text-elec-light">
-              {activeTab === 'comparison' && "Price Comparison"}
-              {activeTab === 'bulk' && "Bulk Pricing"}
-              {activeTab === 'history' && "Price History & Alerts"}
-            </span>
+      {/* Error State */}
+      {error && (
+        <Card className="border-destructive bg-destructive/10">
+          <CardContent className="pt-6">
+            <p className="text-destructive">{error}</p>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Results */}
+      {showingPreSelected && (
+        <div className="space-y-4">
+          <div className="flex items-center gap-2">
+            <Star className="h-5 w-5 text-primary" />
+            <h3 className="text-lg font-semibold text-white">Popular Materials</h3>
           </div>
-          <ChevronDown className="h-4 w-4 text-elec-yellow transition-transform duration-200 group-data-[state=open]:rotate-180" />
-        </CollapsibleTrigger>
-        
-        <CollapsibleContent className="mt-2">
-          <div className="bg-elec-gray border border-elec-yellow/20 rounded-xl overflow-hidden">
-            {[
-              { key: 'comparison', label: 'Price Comparison', icon: Brain, disabled: false },
-              { key: 'bulk', label: 'Bulk Pricing', icon: Calculator, disabled: !comparisonResult?.products.length },
-              { key: 'history', label: 'Price History & Alerts', icon: History, disabled: !selectedProductForAnalysis }
-            ].filter(tab => tab.key !== activeTab).map((tab) => (
-              <button
-                key={tab.key}
-                onClick={() => setActiveTab(tab.key as any)}
-                disabled={tab.disabled}
-                className={`w-full flex items-center gap-3 p-4 text-left transition-all duration-200 mobile-interactive touch-target border-b border-elec-yellow/10 last:border-b-0 ${
-                  tab.disabled 
-                    ? "text-elec-light/50 cursor-not-allowed" 
-                    : "text-elec-light hover:bg-elec-yellow/10"
-                }`}
-              >
-                <tab.icon className="h-4 w-4" />
-                <span className="text-sm font-medium">{tab.label}</span>
-              </button>
-            ))}
-          </div>
-        </CollapsibleContent>
-      </Collapsible>
-
-      {/* Tab Content */}
-      {activeTab === 'comparison' && (
-        <div className="space-y-6">
-          {/* Search Interface */}
-          <SearchInterface 
-            searchQuery={searchQuery}
-            setSearchQuery={setSearchQuery}
-            selectedCategory={selectedCategory}
-            setSelectedCategory={setSelectedCategory}
-            selectedSupplier={selectedSupplier}
-            setSelectedSupplier={setSelectedSupplier}
-            isLoading={isLoading}
-            onSearch={handleSearch}
-            onClearSelection={onClearSelection}
-            showingPreSelected={showingPreSelected}
-          />
-
-          {/* Error Display */}
-          {error && (
-            <Card className="border-red-500/20 bg-red-500/5">
-              <CardContent className="p-6 text-center">
-                <p className="text-red-400">{error}</p>
-              </CardContent>
-            </Card>
-          )}
-
-          {/* Results */}
-          {comparisonResult && (
-            <div className="space-y-6 pb-4">
-              {/* Price Statistics */}
-              <PriceStats 
-                comparisonResult={comparisonResult}
-                onExportToPDF={exportToPDF}
-                onAddMultipleToQuote={onAddMultipleToQuote}
-              />
-
-              {/* AI Insights */}
-              {(comparisonResult.aiInsights || isAiAnalyzing) && (
-                <AIInsightsComponent 
-                  aiInsights={comparisonResult.aiInsights!}
-                  isAiAnalyzing={isAiAnalyzing}
-                  onAddToQuote={onAddToQuote}
-                  onAddMultipleToQuote={onAddMultipleToQuote}
-                />
-              )}
-
-              {/* Product Cards */}
-              <div className="space-y-4">
-                {comparisonResult.products.map((product) => {
-                  const isCheapest = product.numericPrice === comparisonResult.cheapestPrice;
-                  const savings = calculateSavings(product.numericPrice, comparisonResult.cheapestPrice);
-                  
-                  return (
-                    <ProductCard 
-                      key={product.id}
-                      product={product}
-                      isCheapest={isCheapest}
-                      savings={savings}
-                      onAddToQuote={onAddToQuote}
-                    />
-                  );
-                })}
-              </div>
-
-              {/* Trade Tips */}
-              <Card className="border-blue-500/30 bg-blue-500/5">
-                <CardContent className="p-4">
-                  <p className="text-sm text-blue-300">
-                    💡 <strong>Trade Tips:</strong> Prices include VAT where applicable. Check delivery costs and 
-                    availability before ordering. Trade account discounts may apply. Consider bulk pricing for larger projects.
-                  </p>
-                </CardContent>
-              </Card>
-            </div>
-          )}
+          <p className="text-sm text-muted-foreground">
+            These are some commonly searched electrical materials. Use the search above to find specific products.
+          </p>
         </div>
       )}
 
-      {/* Bulk Pricing Tab */}
-      {activeTab === 'bulk' && comparisonResult && (
-        <BulkPricingCalculator 
-          products={comparisonResult.products}
-          onCalculate={(data) => {
-            toast({
-              title: "Bulk Pricing Calculated",
-              description: `Calculated pricing for ${data.length} product(s)`,
-            });
-          }}
-        />
+      <div className="grid gap-4">
+        {sortedMaterials.map((item) => (
+          <Card key={item.id} className="overflow-hidden">
+            <CardContent className="p-6">
+              <div className="flex items-start gap-4">
+                {/* Checkbox for bulk selection */}
+                {onAddMultipleToQuote && (
+                  <input
+                    type="checkbox"
+                    checked={selectedMaterials.has(item.id)}
+                    onChange={() => toggleMaterialSelection(item.id)}
+                    className="mt-1"
+                  />
+                )}
+
+                {/* Product Image */}
+                <div className="w-16 h-16 bg-muted rounded-lg flex items-center justify-center flex-shrink-0">
+                  <img 
+                    src={item.image} 
+                    alt={item.name}
+                    className="w-full h-full object-cover rounded-lg"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.src = '/placeholder.svg';
+                    }}
+                  />
+                </div>
+
+                {/* Product Details */}
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1">
+                      <h3 className="font-semibold text-white text-lg leading-tight mb-1">
+                        {item.name}
+                      </h3>
+                      <div className="flex items-center gap-2 mb-2">
+                        <Badge variant="outline" className="text-xs">
+                          {item.supplier}
+                        </Badge>
+                        <Badge variant={getStockBadgeVariant(item.stockStatus)} className="text-xs">
+                          {item.stockStatus}
+                        </Badge>
+                        <Badge variant="secondary" className="text-xs">
+                          {item.category}
+                        </Badge>
+                      </div>
+                    </div>
+
+                    {/* Price */}
+                    <div className="text-right ml-4">
+                      <div className="flex items-center gap-2">
+                        {item.isOnSale && item.originalPrice && (
+                          <span className="text-sm text-muted-foreground line-through">
+                            {item.originalPrice}
+                          </span>
+                        )}
+                        <span className="text-2xl font-bold text-primary">
+                          {item.price}
+                        </span>
+                      </div>
+                      {item.isOnSale && (
+                        <Badge variant="destructive" className="text-xs mt-1">
+                          Sale
+                        </Badge>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Highlights */}
+                  {item.highlights && item.highlights.length > 0 && (
+                    <div className="flex flex-wrap gap-1 mb-3">
+                      {item.highlights.slice(0, 3).map((highlight, idx) => (
+                        <Badge key={idx} variant="secondary" className="text-xs">
+                          <CheckCircle className="h-3 w-3 mr-1" />
+                          {highlight}
+                        </Badge>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* Actions */}
+                  <div className="flex items-center gap-2 mt-4">
+                    {item.productUrl && (
+                      <Button variant="outline" size="sm" asChild>
+                        <a href={item.productUrl} target="_blank" rel="noopener noreferrer">
+                          <ExternalLink className="h-4 w-4 mr-2" />
+                          View Product
+                        </a>
+                      </Button>
+                    )}
+                    
+                    {onAddToQuote && (
+                      <Button 
+                        size="sm" 
+                        onClick={() => handleAddToQuote(item)}
+                        disabled={item.stockStatus === 'Out of Stock'}
+                      >
+                        <ShoppingCart className="h-4 w-4 mr-2" />
+                        Add to Quote
+                      </Button>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+
+      {/* Empty State */}
+      {!showingPreSelected && sortedMaterials.length === 0 && !isLoading && (
+        <Card>
+          <CardContent className="text-center py-12">
+            <Search className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+            <h3 className="text-lg font-semibold text-white mb-2">No materials found</h3>
+            <p className="text-muted-foreground mb-4">
+              Try adjusting your search terms or filters
+            </p>
+            <Button variant="outline" onClick={() => {
+              setSearchQuery('');
+              setSelectedCategory('all');
+              setSelectedSupplier('all');
+              setShowingPreSelected(true);
+              setHasSearched(false);
+            }}>
+              Reset Search
+            </Button>
+          </CardContent>
+        </Card>
       )}
 
-      {/* Price History & Alerts Tab */}
-      {activeTab === 'history' && (
-        <PriceHistoryAlerts 
-          selectedProduct={selectedProductForAnalysis}
-          currentUserId="demo-user" // In real app, get from auth context
-        />
+      {/* Loading State */}
+      {isLoading && (
+        <Card>
+          <CardContent className="text-center py-12">
+            <Loader2 className="h-12 w-12 text-primary mx-auto mb-4 animate-spin" />
+            <h3 className="text-lg font-semibold text-white mb-2">Searching materials...</h3>
+            <p className="text-muted-foreground">
+              Fetching the latest prices from suppliers
+            </p>
+          </CardContent>
+        </Card>
       )}
     </div>
   );
