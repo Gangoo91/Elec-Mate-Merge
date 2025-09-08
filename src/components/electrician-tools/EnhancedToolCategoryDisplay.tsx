@@ -14,6 +14,7 @@ import ToolCard from "@/components/electrician-tools/ToolCard";
 import ToolPriceComparison from "@/components/electrician-tools/ToolPriceComparison";
 import BulkToolPricingCalculator from "@/components/electrician-tools/BulkToolPricingCalculator";
 import ToolPriceHistoryAlerts from "@/components/electrician-tools/ToolPriceHistoryAlerts";
+import { ToolAIInsights } from "./ToolAIInsights";
 import ToolRefreshButton from "@/components/electrician-tools/ToolRefreshButton";
 import { useToolsData, type ToolItem } from "@/hooks/useToolsData";
 
@@ -396,24 +397,10 @@ const EnhancedToolCategoryDisplay = ({ categoryName }: EnhancedToolCategoryDispl
           </TabsContent>
 
           <TabsContent value="ai" className="space-y-6 mt-6">
-            <Card className="border-elec-yellow/20 bg-elec-gray">
-              <CardContent className="p-6 text-center space-y-4">
-                <div className="flex items-center justify-center gap-2">
-                  <Brain className="h-8 w-8 text-elec-yellow" />
-                  <h3 className="text-xl font-semibold">AI-Powered Tool Insights</h3>
-                </div>
-                <p className="text-muted-foreground">
-                  Get personalised recommendations, value analysis, and purchase suggestions for {meta.title.toLowerCase()}.
-                </p>
-                <Button
-                  variant="gold"
-                  size="sm"
-                  onClick={() => setActiveTab("compare")}
-                >
-                  Try AI Recommendations in Compare
-                </Button>
-              </CardContent>
-            </Card>
+            <ToolAIInsights 
+              tools={filteredTools} 
+              searchQuery={searchTerm || categoryName}
+            />
           </TabsContent>
         </Tabs>
       </section>
