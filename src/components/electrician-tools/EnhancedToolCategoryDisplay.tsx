@@ -274,8 +274,8 @@ const EnhancedToolCategoryDisplay = ({ categoryName }: EnhancedToolCategoryDispl
               </div>
               <div className="flex items-center">
                 <ToolRefreshButton
-                  isFetching={false}
-                  lastFetchTime={0}
+                  isFetching={isLoading}
+                  lastFetchTime={0} // No static data - would come from actual cache metadata
                   onRefresh={refetch}
                   categoryName={categoryName}
                   className="shrink-0 touch-target"

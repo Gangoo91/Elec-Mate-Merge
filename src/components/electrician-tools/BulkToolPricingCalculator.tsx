@@ -28,36 +28,8 @@ const BulkToolPricingCalculator: React.FC<BulkToolPricingCalculatorProps> = ({
   const [quantity, setQuantity] = useState(1);
   const isMobile = useIsMobile();
 
-  // Mock popular tools for the category if no tools provided
-  const availableTools: ToolItem[] = tools.length > 0 ? tools.slice(0, 10) : [
-    {
-      id: 1,
-      name: "Fluke 179 Digital Multimeter",
-      price: "£189.99",
-      supplier: "RS Components",
-      image: "/placeholder.svg",
-      stockStatus: "In Stock",
-      category: "Test Equipment"
-    },
-    {
-      id: 2,
-      name: "DeWalt DCD777 Drill Driver",
-      price: "£129.99",
-      supplier: "Screwfix",
-      image: "/placeholder.svg",
-      stockStatus: "In Stock",
-      category: "Power Tools"
-    },
-    {
-      id: 3,
-      name: "Klein Tools Electrician's Kit",
-      price: "£89.99",
-      supplier: "City Electrical Factors",
-      image: "/placeholder.svg",
-      stockStatus: "In Stock",
-      category: "Hand Tools"
-    }
-  ];
+  // Use only provided tools - no fallback mock data
+  const availableTools: ToolItem[] = tools.slice(0, 10);
 
   const parsePrice = (priceStr: string): number => {
     return parseFloat(priceStr.replace(/[£,]/g, '')) || 0;
@@ -180,8 +152,14 @@ const BulkToolPricingCalculator: React.FC<BulkToolPricingCalculatorProps> = ({
           {/* Tool Selection */}
           <div className="space-y-3">
             <label className="text-sm font-medium">Select Tool</label>
-            <div className="grid gap-2 max-h-48 overflow-y-auto">
-              {availableTools.map(tool => (
+            {availableTools.length === 0 ? (
+              <div className="text-center py-6 text-muted-foreground">
+                <div className="text-sm">No tools available for bulk pricing</div>
+                <div className="text-xs mt-1">Tools will appear here when category data loads</div>
+              </div>
+            ) : (
+              <div className="grid gap-2 max-h-48 overflow-y-auto">
+                {availableTools.map(tool => (
                 <div
                   key={tool.id}
                   onClick={() => setSelectedTool(tool)}
@@ -204,8 +182,9 @@ const BulkToolPricingCalculator: React.FC<BulkToolPricingCalculatorProps> = ({
                     </div>
                   </div>
                 </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* Quantity and Add */}

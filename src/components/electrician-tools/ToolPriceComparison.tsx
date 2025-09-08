@@ -21,42 +21,8 @@ const ToolPriceComparison: React.FC<ToolPriceComparisonProps> = ({
   const [searchTerm, setSearchTerm] = useState(initialQuery);
   const isMobile = useIsMobile();
 
-  // Mock comparison data for demo
-  const comparisonTools: ToolItem[] = selectedItems.length > 0 ? selectedItems : [
-    {
-      id: 1,
-      name: "Fluke 179 Digital Multimeter",
-      price: "£189.99",
-      supplier: "RS Components",
-      image: "/placeholder.svg",
-      stockStatus: "In Stock",
-      category: "Test Equipment",
-      highlights: ["True RMS", "CAT III 1000V", "Temperature measurement"],
-      reviews: "4.8/5 (127 reviews)"
-    },
-    {
-      id: 2,
-      name: "Kewtech KT65DL Multifunction Tester",
-      price: "£649.99",
-      supplier: "City Electrical Factors",
-      image: "/placeholder.svg",
-      stockStatus: "In Stock",
-      category: "Test Equipment",
-      highlights: ["17th & 18th Edition", "Bluetooth connectivity", "Large colour display"],
-      reviews: "4.6/5 (89 reviews)"
-    },
-    {
-      id: 3,
-      name: "Megger MIT400 Insulation Tester",
-      price: "£299.99",
-      supplier: "Screwfix",
-      image: "/placeholder.svg",
-      stockStatus: "Low Stock",
-      category: "Test Equipment",
-      highlights: ["250V, 500V, 1000V test", "CAT IV 600V", "IP54 rated"],
-      reviews: "4.7/5 (156 reviews)"
-    }
-  ];
+  // Use only selected items - no fallback mock data
+  const comparisonTools: ToolItem[] = selectedItems;
 
   const getToolSpecs = (tool: ToolItem) => {
     // Extract specifications from tool name and description

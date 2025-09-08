@@ -25,38 +25,7 @@ interface ToolPriceHistoryAlertsProps {
 const ToolPriceHistoryAlerts: React.FC<ToolPriceHistoryAlertsProps> = ({
   categoryName
 }) => {
-  const [alerts, setAlerts] = useState<PriceAlert[]>([
-    {
-      id: "1",
-      toolName: "Fluke 179 Digital Multimeter",
-      supplier: "RS Components",
-      currentPrice: 189.99,
-      targetPrice: 170.00,
-      isActive: true,
-      createdAt: new Date(2024, 0, 15),
-      priceHistory: [
-        { date: new Date(2024, 0, 1), price: 195.99 },
-        { date: new Date(2024, 0, 15), price: 189.99 },
-        { date: new Date(2024, 1, 1), price: 192.99 },
-        { date: new Date(2024, 1, 15), price: 189.99 }
-      ]
-    },
-    {
-      id: "2",
-      toolName: "DeWalt DCD777 Drill Driver",
-      supplier: "Screwfix",
-      currentPrice: 129.99,
-      targetPrice: 110.00,
-      isActive: true,
-      createdAt: new Date(2024, 1, 1),
-      priceHistory: [
-        { date: new Date(2024, 0, 1), price: 139.99 },
-        { date: new Date(2024, 0, 15), price: 134.99 },
-        { date: new Date(2024, 1, 1), price: 129.99 },
-        { date: new Date(2024, 1, 15), price: 129.99 }
-      ]
-    }
-  ]);
+  const [alerts, setAlerts] = useState<PriceAlert[]>([]);
 
   const [newAlertTool, setNewAlertTool] = useState("");
   const [newAlertPrice, setNewAlertPrice] = useState("");
@@ -139,7 +108,7 @@ const ToolPriceHistoryAlerts: React.FC<ToolPriceHistoryAlertsProps> = ({
         
         <Card className="border-elec-yellow/20 bg-elec-gray">
           <CardContent className="p-4 text-center">
-            <div className="text-2xl font-bold text-muted-foreground">£45</div>
+            <div className="text-2xl font-bold text-muted-foreground">-</div>
             <div className="text-sm text-muted-foreground">Avg. Savings</div>
           </CardContent>
         </Card>
