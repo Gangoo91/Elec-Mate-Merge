@@ -37,13 +37,7 @@ const categoryMapping: Record<string, string> = {
   "Electrical Components": "components", 
   "Protection Equipment": "protection",
   "Installation Accessories": "accessories",
-  "Lighting Solutions": "lighting",
-  // Tool category mapping as fallback
-  "Hand Tools": "components",
-  "Power Tools": "accessories",
-  "Testing Equipment": "protection",
-  "Safety Equipment": "protection",
-  "Measuring Tools": "accessories"
+  "Lighting Solutions": "lighting"
 };
 
 const defaultCategoryData: ProcessedCategoryData[] = [
@@ -106,20 +100,8 @@ function processMaterialsData(materials: MaterialItem[]): ProcessedCategoryData[
 
   return defaultCategoryData.map(defaultCategory => {
     const categoryMaterials = materials.filter(material => {
-      // Try exact category match first
       const mappedId = categoryMapping[material.category as keyof typeof categoryMapping];
-      if (mappedId === defaultCategory.id) return true;
-      
-      // Fallback: check if material name/searched_product contains relevant keywords
-      const materialText = `${material.name} ${material.searched_product || ''} ${material.category || ''}`.toLowerCase();
-      
-      if (defaultCategory.id === 'cables' && (materialText.includes('cable') || materialText.includes('wire'))) return true;
-      if (defaultCategory.id === 'components' && (materialText.includes('tool') || materialText.includes('drill') || materialText.includes('driver'))) return true;
-      if (defaultCategory.id === 'protection' && (materialText.includes('safety') || materialText.includes('test') || materialText.includes('meter'))) return true;
-      if (defaultCategory.id === 'accessories' && (materialText.includes('accessory') || materialText.includes('kit') || materialText.includes('set'))) return true;
-      if (defaultCategory.id === 'lighting' && (materialText.includes('light') || materialText.includes('lamp') || materialText.includes('led'))) return true;
-      
-      return false;
+      return mappedId === defaultCategory.id;
     });
 
     if (categoryMaterials.length === 0) {
@@ -180,14 +162,11 @@ export const useMaterialsData = () => {
           if (allMaterials.length > 0) {
             console.log(`✅ Got ${allMaterials.length} materials from weekly cache table`);
             const processedData = processMaterialsData(allMaterials);
-            // Detect if this is tool data being shown as materials
-            const isToolData = allMaterials.some(m => m.category && ['Hand Tools', 'Power Tools', 'Testing Equipment'].includes(m.category));
             return {
               data: processedData,
               rawMaterials: allMaterials,
               fromCache: true,
-              totalMaterials: allMaterials.length,
-              isToolData
+              totalMaterials: allMaterials.length
             };
           }
         }
@@ -262,6 +241,5 @@ export const useMaterialsData = () => {
     isRefetching: rawQuery.isRefetching,
     fromCache: rawQuery.data?.fromCache || false,
     totalMaterials: rawQuery.data?.totalMaterials || 0,
-    isToolData: rawQuery.data?.isToolData || false,
   };
 };
