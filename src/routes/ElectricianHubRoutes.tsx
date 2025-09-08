@@ -43,7 +43,6 @@ import SupplierMaterials from "@/pages/electrician/SupplierMaterials";
 import CategoryMaterials from "@/pages/electrician/CategoryMaterials";
 import MaterialsSlugRedirect from "@/pages/electrician/MaterialsSlugRedirect";
 import MaterialPriceComparisonPage from "@/pages/MaterialPriceComparison";
-import MaterialCategory from "@/pages/MaterialCategory";
 import BreakEvenCalculator from "@/pages/electrician/business-development/tools/BreakEvenCalculator";
 import StaffCostCalculator from "@/pages/electrician/business-development/tools/StaffCostCalculator";
 import QuoteVarianceTracker from "@/pages/electrician/business-development/tools/QuoteVarianceTracker";
@@ -65,7 +64,7 @@ const ElectricianHubRoutes = () => (
     <Route path="job-vacancies" element={<JobVacancies />} />
     <Route path="materials" element={<ElectricalMaterials />} />
     <Route path="materials/compare" element={<MaterialPriceComparisonPage />} />
-    <Route path="materials/category/:categoryId" element={<MaterialCategory />} />
+    <Route path="materials/category/:categoryId" element={<CategoryMaterials />} />
     <Route path="materials/supplier/:supplierSlug" element={<SupplierMaterials />} />
     <Route path="materials/:slug" element={<MaterialsSlugRedirect />} />
     <Route path="tools" element={<ElectricalTools />} />

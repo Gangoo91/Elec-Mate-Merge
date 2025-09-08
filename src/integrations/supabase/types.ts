@@ -2673,39 +2673,6 @@ export type Database = {
         }
         Relationships: []
       }
-      tools_weekly_cache: {
-        Row: {
-          category: string
-          created_at: string
-          expires_at: string
-          id: string
-          last_updated: string | null
-          tools_data: Json
-          total_products: number
-          update_status: string | null
-        }
-        Insert: {
-          category: string
-          created_at?: string
-          expires_at?: string
-          id?: string
-          last_updated?: string | null
-          tools_data?: Json
-          total_products?: number
-          update_status?: string | null
-        }
-        Update: {
-          category?: string
-          created_at?: string
-          expires_at?: string
-          id?: string
-          last_updated?: string | null
-          tools_data?: Json
-          total_products?: number
-          update_status?: string | null
-        }
-        Relationships: []
-      }
       training_evidence: {
         Row: {
           assessment_criteria: string[] | null
@@ -2985,10 +2952,6 @@ export type Database = {
         Returns: undefined
       }
       cleanup_expired_tool_cache: {
-        Args: Record<PropertyKey, never>
-        Returns: undefined
-      }
-      cleanup_expired_tools_cache: {
         Args: Record<PropertyKey, never>
         Returns: undefined
       }

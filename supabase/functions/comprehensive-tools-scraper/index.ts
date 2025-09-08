@@ -24,23 +24,23 @@ serve(async (req) => {
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    // Get cached tools from tools_weekly_cache
+    // Get cached tools from materials_weekly_cache
     const { data: cacheData, error: cacheError } = await supabase
-      .from('tools_weekly_cache')
-      .select('tools_data')
+      .from('materials_weekly_cache')
+      .select('materials_data')
       .order('created_at', { ascending: false })
       .limit(1)
       .single();
 
     if (cacheError) {
-      console.error('❌ Tools cache error:', cacheError);
-      throw new Error('Failed to fetch cached tools data');
+      console.error('❌ Cache error:', cacheError);
+      throw new Error('Failed to fetch cached tool data');
     }
 
     let allTools = [];
 
-    if (cacheData?.tools_data && Array.isArray(cacheData.tools_data)) {
-      allTools = cacheData.tools_data.map((item, index) => ({
+    if (cacheData?.materials_data && Array.isArray(cacheData.materials_data)) {
+      allTools = cacheData.materials_data.map((item, index) => ({
         id: item.id || index + 1000,
         name: item.name || 'Unknown Tool',
         category: item.category || 'Tools',

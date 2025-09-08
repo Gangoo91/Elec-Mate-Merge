@@ -1,80 +1,38 @@
-const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
-};
+import { corsHeaders } from '../_shared/cors.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.7.1';
 
-const electricalSuppliers = [
-  { name: "CEF - City Electrical Factors", url: "https://www.cef.co.uk/catalogue/products/search?q=" },
-  { name: "Rexel", url: "https://www.rexel.co.uk/search?search=" },
-  { name: "Edmundson Electrical", url: "https://www.edmundsonelectrical.com/search?q=" },
-  { name: "TLC Electrical", url: "https://www.tlc-direct.co.uk/Main_Index/Search/Index.html?keywords=" },
+const suppliers = [
+  { name: "Screwfix", url: "https://www.screwfix.com/search?search=" },
+  { name: "Toolstation", url: "https://www.toolstation.com/search?q=" },
   { name: "RS Components", url: "https://uk.rs-online.com/web/c/?searchTerm=" },
+  { name: "CEF - City Electrical Factors", url: "https://www.cef.co.uk/catalogue/products/search?q=" },
 ];
 
-// --- Electrical Materials Categories ---
-const electricalMaterialsList = [
+// --- Product Categories ---
+const productList = [
   {
     category: "Cables & Wiring",
-    items: [
-      "Twin & Earth cable 2.5mm",
-      "Twin & Earth cable 1.5mm", 
-      "Twin & Earth cable 4mm",
-      "SWA cable",
-      "Cat 6 data cable",
-      "Coaxial cable",
-      "Fire resistant cable"
-    ],
+    items: ["Twin & Earth cable"],
   },
   {
-    category: "Electrical Components", 
-    items: [
-      "MCB 32A",
-      "MCB 16A",
-      "MCB 6A",
-      "RCD 30mA",
-      "Consumer unit",
-      "Distribution board",
-      "Isolator switch",
-      "Time delay switch",
-      "PIR sensor"
-    ],
+    category: "Electrical Components",
+    items: ["Consumer unit", "MCB", "RCD", "Isolator", "Surge protector", "Circuit breaker"],
   },
   {
     category: "Protection Equipment",
-    items: [
-      "Earth rod 1.2m",
-      "Surge protector",
-      "Circuit breaker",
-      "RCBO",
-      "Emergency lighting",
-      "Fire alarm detector"
-    ],
+    items: ["Earth rod", "surge protectors", "circuit breakers"],
   },
   {
     category: "Installation Accessories",
-    items: [
-      "Junction box",
-      "Cable gland",
-      "Trunking 50mm",
-      "Conduit 20mm",
-      "Back box",
-      "Socket outlet",
-      "Light switch",
-      "Dimmer switch"
-    ],
+    items: ["Junction box", "Cable gland", "Trunking"],
   },
   {
     category: "Lighting Solutions",
-    items: [
-      "LED downlight",
-      "LED batten 4ft",
-      "Emergency lighting",
-      "PIR floodlight",
-      "Pendant light fitting",
-      "Ceiling rose",
-      "LED strip lights"
-    ],
+    items: ["LED downlight", "Lighting batten", "Emergency lighting"],
+  },
+  {
+    category: "Electrical Tools",
+    items: ["Testing equipment", "Hand tools", "Power tools"],
   }
 ];
 
@@ -174,8 +132,8 @@ async function getMaterials(FIRECRAWL_API_KEY: string, categoryFilter?: string, 
   
   const jobs = [];
   const filteredSuppliers = supplierFilter
-    ? electricalSuppliers.filter(supplier => supplier.name === supplierFilter)
-    : electricalSuppliers;
+    ? suppliers.filter(supplier => supplier.name === supplierFilter)
+    : suppliers;
 
   // If searchTerm is provided, use it directly instead of predefined queries
   if (searchTerm && searchTerm.trim()) {
@@ -183,10 +141,10 @@ async function getMaterials(FIRECRAWL_API_KEY: string, categoryFilter?: string, 
       jobs.push(fetchProductsFromSupplier(supplier, searchTerm.trim(), 'search', FIRECRAWL_API_KEY));
     }
   } else {
-    // Use predefined electrical materials queries
+    // Use predefined product queries
     const filteredProductList = categoryFilter 
-      ? electricalMaterialsList.filter(group => group.category === categoryFilter)
-      : electricalMaterialsList;
+      ? productList.filter(group => group.category === categoryFilter)
+      : productList;
 
     for (const group of filteredProductList) {
       for (const product of group.items) {
@@ -288,8 +246,8 @@ Deno.serve(async (req) => {
       success: true,
       count: materials.length,
       materials: materials,
-      categories: electricalMaterialsList.map(p => p.category),
-      suppliers: electricalSuppliers.map(s => s.name),
+      categories: productList.map(p => p.category),
+      suppliers: suppliers.map(s => s.name),
       timestamp: new Date().toISOString()
     };
 

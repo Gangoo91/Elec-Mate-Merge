@@ -1,7 +1,6 @@
 
 import { Helmet } from "react-helmet";
 import MaterialCategoryBrowser from "@/components/electrician-materials/MaterialCategoryBrowser";
-import MaterialsCacheUpdater from "@/components/admin/MaterialsCacheUpdater";
 
 const Materials = () => {
   return (
@@ -21,11 +20,6 @@ const Materials = () => {
         </div>
 
         <MaterialCategoryBrowser />
-        
-        {/* Temporary cache updater - remove after cache is populated */}
-        <div className="mt-8 p-4 border border-elec-yellow/20 rounded-lg bg-elec-dark/50">
-          <MaterialsCacheUpdater />
-        </div>
       </div>
     </div>
   );

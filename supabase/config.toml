@@ -120,12 +120,3 @@ verify_jwt = false
 
 [functions.comprehensive-tools-scraper]
 verify_jwt = false
-
-[functions.firecrawl-materials-scraper]
-verify_jwt = false
-
-[functions.materials-weekly-refresh]
-verify_jwt = false
-
-[functions.tools-weekly-refresh]
-verify_jwt = false

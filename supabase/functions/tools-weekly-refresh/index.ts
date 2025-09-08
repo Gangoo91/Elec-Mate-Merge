@@ -23,18 +23,18 @@ serve(async (req) => {
     
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-    // Check if tools cache needs refresh (expired or doesn't exist)
-    console.log('📊 Checking tools cache status...');
+    // Check if cache needs refresh (expired or doesn't exist)
+    console.log('📊 Checking cache status...');
     
     const { data: existingCache, error: cacheError } = await supabase
-      .from('tools_weekly_cache')
+      .from('materials_weekly_cache')
       .select('*')
       .order('created_at', { ascending: false })
       .limit(1)
       .single();
 
     if (cacheError && cacheError.code !== 'PGRST116') {
-      console.error('❌ Error checking tools cache:', cacheError);
+      console.error('❌ Error checking cache:', cacheError);
       throw cacheError;
     }
 
@@ -45,14 +45,14 @@ serve(async (req) => {
 
     if (!needsRefresh) {
       const expiresAt = new Date(existingCache.expires_at);
-      console.log(`✅ Tools cache is still fresh, expires at: ${expiresAt.toISOString()}`);
+      console.log(`✅ Cache is still fresh, expires at: ${expiresAt.toISOString()}`);
       
       return new Response(
         JSON.stringify({ 
           success: true, 
-          message: 'Tools cache is still fresh, no refresh needed',
+          message: 'Cache is still fresh, no refresh needed',
           expiresAt: expiresAt.toISOString(),
-          toolsCount: existingCache.tools_data?.length || 0
+          toolsCount: existingCache.materials_data?.length || 0
         }),
         { 
           headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
@@ -83,11 +83,11 @@ serve(async (req) => {
 
     console.log('✅ Tools refresh completed:', refreshResult);
 
-    // Clean up old tools cache entries (keep only the latest 3)
-    console.log('🧹 Cleaning up old tools cache entries...');
+    // Clean up old cache entries (keep only the latest 3)
+    console.log('🧹 Cleaning up old cache entries...');
     
     const { data: allCacheEntries } = await supabase
-      .from('tools_weekly_cache')
+      .from('materials_weekly_cache')
       .select('id, created_at')
       .order('created_at', { ascending: false });
 
@@ -96,14 +96,14 @@ serve(async (req) => {
       const idsToDelete = entriesToDelete.map(entry => entry.id);
       
       const { error: deleteError } = await supabase
-        .from('tools_weekly_cache')
+        .from('materials_weekly_cache')
         .delete()
         .in('id', idsToDelete);
 
       if (deleteError) {
-        console.error('⚠️ Error cleaning up old tools cache entries:', deleteError);
+        console.error('⚠️ Error cleaning up old cache entries:', deleteError);
       } else {
-        console.log(`🗑️ Cleaned up ${entriesToDelete.length} old tools cache entries`);
+        console.log(`🗑️ Cleaned up ${entriesToDelete.length} old cache entries`);
       }
     }
 

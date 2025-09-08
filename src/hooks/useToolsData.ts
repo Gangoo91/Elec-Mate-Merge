@@ -19,11 +19,11 @@ export interface ToolItem {
 }
 
 const fetchToolsData = async (): Promise<ToolItem[]> => {
-  console.log('🔧 Fetching tools data from tools cache...');
+  console.log('🔧 Fetching tools data from materials cache...');
   
   const { data, error } = await supabase
-    .from('tools_weekly_cache')
-    .select('tools_data')
+    .from('materials_weekly_cache')
+    .select('materials_data')
     .order('created_at', { ascending: false })
     .limit(1)
     .single();
@@ -33,9 +33,9 @@ const fetchToolsData = async (): Promise<ToolItem[]> => {
     throw new Error(error.message || 'Failed to fetch cached tools data');
   }
 
-  if (data?.tools_data && Array.isArray(data.tools_data)) {
+  if (data?.materials_data && Array.isArray(data.materials_data)) {
     // Transform the cached data to ensure consistent interface
-    const transformedTools = data.tools_data.map((tool: any, index: number) => ({
+    const transformedTools = data.materials_data.map((tool: any, index: number) => ({
       id: tool.id || index + 1000,
       name: tool.name || 'Unknown Tool',
       category: tool.category || 'Tools',
@@ -51,7 +51,7 @@ const fetchToolsData = async (): Promise<ToolItem[]> => {
       reviews: tool.reviews
     }));
 
-    console.log(`✅ Loaded ${transformedTools.length} tools from tools cache`);
+    console.log(`✅ Loaded ${transformedTools.length} tools from cache`);
     return transformedTools;
   }
 

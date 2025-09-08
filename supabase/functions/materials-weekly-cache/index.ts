@@ -282,6 +282,8 @@ serve(async (req) => {
       }
     }
 
+        rawMaterials = liveData?.materials || [];
+        console.log(`📊 Serving ${rawMaterials.length} materials from live scraper`);
       
       // Store the fresh data in cache for future requests
       if (rawMaterials.length > 0) {

@@ -1,8 +1,8 @@
-import { useQuery } from '@tanstack/react-query';
-import { supabase } from '@/integrations/supabase/client';
+import { useMemo } from 'react';
+import { useToolsData, type ToolItem } from './useToolsData';
 
 export interface MaterialItem {
-  id: string | number;
+  id: number;
   name: string;
   category: string;
   price: string;
@@ -13,55 +13,36 @@ export interface MaterialItem {
   salePrice?: string;
   highlights?: string[];
   productUrl?: string;
-  description?: string;
 }
 
-export const useMaterialsFromCache = (category?: string) => {
-  return useQuery({
-    queryKey: ['materials-cache', category],
-    queryFn: async () => {
-      console.log('Fetching materials from cache for category:', category);
-      
-      // Fetch from materials_weekly_cache
-      const { data: cacheData, error } = await supabase
-        .from('materials_weekly_cache')
-        .select('*')
-        .order('created_at', { ascending: false })
-        .limit(1)
-        .single();
-
-      if (error || !cacheData) {
-        console.log('No materials cache found, returning empty array');
-        return [];
-      }
-
-      const materials = Array.isArray(cacheData.materials_data) ? cacheData.materials_data as unknown as MaterialItem[] : [];
-      
-      // Filter by category if specified
-      if (category && category !== 'all') {
-        const filtered = materials.filter((material: MaterialItem) => 
-          material.category.toLowerCase() === category.toLowerCase()
-        );
-        console.log(`Filtered ${filtered.length} materials for category ${category}`);
-        return filtered;
-      }
-      
-      console.log(`Returning ${materials.length} total materials`);
-      return materials;
-    },
-    staleTime: 5 * 60 * 1000, // 5 minutes
-    gcTime: 30 * 60 * 1000, // 30 minutes
-    retry: 1,
-    refetchOnWindowFocus: false,
-  });
+const transformToolsToMaterials = (tools: ToolItem[]): MaterialItem[] => {
+  return tools.map((tool, index) => ({
+    id: tool.id || index + 1000,
+    name: tool.name,
+    category: tool.category || 'Tools',
+    price: tool.price,
+    supplier: tool.supplier || 'Screwfix',
+    image: tool.image || '/placeholder.svg',
+    stockStatus: tool.stockStatus || 'In Stock',
+    isOnSale: tool.isOnSale,
+    salePrice: tool.salePrice,
+    highlights: tool.highlights,
+    productUrl: tool.productUrl || tool.view_product_url
+  }));
 };
 
-// Keep the old hook for backward compatibility
 export const useToolsForMaterials = () => {
-  const { data: materials, isLoading, error, refetch } = useMaterialsFromCache();
+  const { data: tools, isLoading, error, refetch } = useToolsData();
+
+  const materialItems = useMemo(() => {
+    if (!tools || tools.length === 0) {
+      return [];
+    }
+    return transformToolsToMaterials(tools);
+  }, [tools]);
 
   return {
-    materials: materials || [],
+    materials: materialItems,
     isLoading,
     error,
     refetch
