@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 import { useNavigate, Link, useSearchParams } from "react-router-dom";
 import { useToolCategories } from "@/hooks/useToolCategories";
-import ToolCategoryDisplay from "@/components/electrician/ToolCategoryDisplay";
+import EnhancedToolCategoryDisplay from "@/components/electrician-tools/EnhancedToolCategoryDisplay";
 import { testToolsRefresh } from "@/utils/testToolsRefresh";
 import { useToast } from "@/hooks/use-toast";
 
@@ -25,9 +25,9 @@ const ElectricalTools = () => {
   
   const selectedCategory = searchParams.get('category');
   
-  // If a category is selected, show the category display
+  // If a category is selected, show the enhanced category display
   if (selectedCategory) {
-    return <ToolCategoryDisplay categoryName={selectedCategory} />;
+    return <EnhancedToolCategoryDisplay categoryName={selectedCategory} />;
   }
 
   const filteredCategories = toolCategories.filter(category =>
