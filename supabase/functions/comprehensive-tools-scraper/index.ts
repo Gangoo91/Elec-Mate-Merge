@@ -63,9 +63,30 @@ serve(async (req) => {
     let filteredTools = allTools;
 
     if (categoryFilter && categoryFilter !== 'all') {
-      filteredTools = filteredTools.filter(tool => 
-        tool.category.toLowerCase().includes(categoryFilter.toLowerCase())
-      );
+      console.log(`📂 Applying category filter: ${categoryFilter}`);
+      const categoryLower = categoryFilter.toLowerCase();
+      filteredTools = filteredTools.filter(tool => {
+        if (!tool.category) return false;
+        const toolCategory = tool.category.toLowerCase();
+        
+        // Direct match or partial match
+        if (toolCategory.includes(categoryLower) || categoryLower.includes(toolCategory)) {
+          return true;
+        }
+        
+        // Special category mappings for better matches
+        const categoryMappings: Record<string, string[]> = {
+          'power tools': ['power', 'cordless', 'electric', 'drill', 'grinder', 'saw'],
+          'hand tools': ['hand', 'manual', 'pliers', 'screwdriver', 'spanner'],
+          'test equipment': ['test', 'meter', 'tester', 'measurement', 'electrical'],
+          'measuring tools': ['measuring', 'level', 'tape', 'ruler', 'detector'],
+          'safety equipment': ['safety', 'protection', 'ppe', 'helmet', 'gloves']
+        };
+        
+        const searchTerms = categoryMappings[categoryLower] || [];
+        return searchTerms.some(term => toolCategory.includes(term));
+      });
+      console.log(`🎯 Tools after category filter: ${filteredTools.length}`);
     }
 
     if (supplierFilter && supplierFilter !== 'all') {
@@ -75,10 +96,31 @@ serve(async (req) => {
     }
 
     if (searchTerm && searchTerm.trim()) {
+      console.log(`🔍 Applying search term: ${searchTerm}`);
       const searchLower = searchTerm.toLowerCase().trim();
-      filteredTools = filteredTools.filter(tool => 
-        tool.name.toLowerCase().includes(searchLower)
-      );
+      filteredTools = filteredTools.filter(tool => {
+        // Search in name (primary)
+        if (tool.name.toLowerCase().includes(searchLower)) return true;
+        
+        // Search in description
+        if (tool.description && tool.description.toLowerCase().includes(searchLower)) return true;
+        
+        // Search in highlights array
+        if (tool.highlights && Array.isArray(tool.highlights)) {
+          if (tool.highlights.some(highlight => 
+            typeof highlight === 'string' && highlight.toLowerCase().includes(searchLower)
+          )) return true;
+        }
+        
+        // Search in category
+        if (tool.category && tool.category.toLowerCase().includes(searchLower)) return true;
+        
+        // Search in supplier
+        if (tool.supplier && tool.supplier.toLowerCase().includes(searchLower)) return true;
+        
+        return false;
+      });
+      console.log(`📝 Tools after search filter: ${filteredTools.length}`);
     }
 
     // Sort by price

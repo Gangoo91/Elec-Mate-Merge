@@ -82,32 +82,79 @@ const EnhancedToolCategoryDisplay = ({ categoryName }: EnhancedToolCategoryDispl
     return mappings[frontendCategory] || [frontendCategory];
   };
 
-  // Filter and search the tools
+  // Filter and search the tools with fallback logic
   const filteredTools = useMemo(() => {
     if (!allTools) return [];
     
-    // Filter by category first
+    // Filter by category first with improved matching
     const possibleMatches = getCategoryMappings(categoryName);
     let categoryFiltered = allTools.filter(tool => {
       const toolCategory = tool.category;
-      return possibleMatches.some(match => 
+      const toolName = tool.name?.toLowerCase() || '';
+      const toolDescription = tool.description?.toLowerCase() || '';
+      
+      // Try exact and partial category matches
+      const categoryMatch = possibleMatches.some(match => 
         toolCategory === match || 
         toolCategory?.toLowerCase().includes(match.toLowerCase()) ||
         match.toLowerCase().includes(toolCategory?.toLowerCase() || '')
       );
+      
+      if (categoryMatch) return true;
+      
+      // Fallback: search by keywords in name/description for Power Tools
+      if (categoryName === 'Power Tools') {
+        const powerToolKeywords = ['drill', 'cordless', '18v', '12v', 'angle grinder', 'circular saw', 'impact driver', 'reciprocating saw', 'sds', 'battery'];
+        return powerToolKeywords.some(keyword => 
+          toolName.includes(keyword) || toolDescription.includes(keyword)
+        );
+      }
+      
+      // Fallback: search by keywords for other categories
+      const categoryKeywords = getCategoryKeywords(categoryName);
+      return categoryKeywords.some(keyword => 
+        toolName.includes(keyword) || toolDescription.includes(keyword)
+      );
     });
+    
+    // If no category-specific tools found, show related tools from Hand Tools for Power Tools
+    if (categoryFiltered.length === 0 && categoryName === 'Power Tools') {
+      categoryFiltered = allTools.filter(tool => {
+        const toolName = tool.name?.toLowerCase() || '';
+        const relatedKeywords = ['drill', 'driver', 'bit', 'battery', 'charger', 'grinder'];
+        return relatedKeywords.some(keyword => toolName.includes(keyword));
+      });
+    }
     
     // Apply search filter
     if (searchTerm) {
       categoryFiltered = categoryFiltered.filter(tool =>
         tool.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
         tool.description?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        tool.supplier?.toLowerCase().includes(searchTerm.toLowerCase())
+        tool.supplier?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        tool.highlights?.some(highlight => 
+          typeof highlight === 'string' && highlight.toLowerCase().includes(searchTerm.toLowerCase())
+        )
       );
     }
     
     return categoryFiltered;
   }, [allTools, categoryName, searchTerm]);
+
+  // Get keywords for category fallback searches
+  const getCategoryKeywords = (category: string): string[] => {
+    const keywordMap: Record<string, string[]> = {
+      'Test Equipment': ['multimeter', 'tester', 'meter', 'clamp', 'voltage', 'continuity', 'insulation'],
+      'Safety Tools': ['helmet', 'gloves', 'glasses', 'boots', 'harness', 'vest', 'safety'],
+      'Power Tools': ['drill', 'cordless', '18v', '12v', 'grinder', 'saw', 'impact', 'sds', 'battery'],
+      'Hand Tools': ['screwdriver', 'pliers', 'wire stripper', 'cable cutter', 'crimping', 'spanner'],
+      'Measuring Tools': ['level', 'tape measure', 'ruler', 'detector', 'spirit level', 'laser'],
+      'Cable Tools': ['cable', 'wire', 'stripper', 'cutter', 'puller', 'crimper'],
+      'Lighting Tools': ['torch', 'light', 'led', 'inspection', 'headlamp', 'work light']
+    };
+    
+    return keywordMap[category] || [category.toLowerCase()];
+  };
 
   const pageTitle = `${meta.title} | ElecMate Professional Tools`;
   const pageDescription = `${meta.title} for UK electricians — ${meta.description}. BS 7671 18th Edition compliant guidance.`.slice(0, 160);
@@ -342,22 +389,53 @@ const EnhancedToolCategoryDisplay = ({ categoryName }: EnhancedToolCategoryDispl
                 {filteredTools.length === 0 ? (
                   <Card className="mobile-card bg-elec-card/30 border-elec-yellow/20">
                     <CardContent className="p-6 text-center mobile-card-spacing">
-                      <p className="mobile-text text-text-muted mb-4">
-                        {searchTerm ? 
-                          `No tools found matching "${searchTerm}"` :
-                          `No tools found in ${meta.title.toLowerCase()} category`
-                        }
-                      </p>
-                      {searchTerm && (
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={() => setSearchTerm("")}
-                          className="touch-target mobile-interactive bg-elec-yellow/10 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/20"
-                        >
-                          Clear search
-                        </Button>
-                      )}
+                      <div className="space-y-4">
+                        <p className="mobile-text text-text-muted mb-4">
+                          {searchTerm ? 
+                            `No tools found matching "${searchTerm}"` :
+                            `No ${meta.title.toLowerCase()} available in our current database`
+                          }
+                        </p>
+                        <p className="mobile-small-text text-text-muted">
+                          {categoryName === 'Power Tools' 
+                            ? "Power Tools data is being collected. Try browsing Hand Tools or search for specific items like 'drill' or '18V'."
+                            : `${categoryName} data is being updated. Try searching for specific tools or browse available categories.`
+                          }
+                        </p>
+                        <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                          {categoryName === 'Power Tools' && (
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => setSearchTerm("drill")}
+                              className="touch-target mobile-interactive bg-green-500/10 border-green-500/30 text-green-400 hover:bg-green-500/20"
+                            >
+                              Search Drills
+                            </Button>
+                          )}
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => {
+                              setSearchTerm("");
+                              window.location.href = "/electrician/tools?category=Hand Tools";
+                            }}
+                            className="touch-target mobile-interactive bg-blue-500/10 border-blue-500/30 text-blue-400 hover:bg-blue-500/20"
+                          >
+                            Browse Hand Tools
+                          </Button>
+                          {searchTerm && (
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => setSearchTerm("")}
+                              className="touch-target mobile-interactive bg-elec-yellow/10 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/20"
+                            >
+                              Clear search
+                            </Button>
+                          )}
+                        </div>
+                      </div>
                     </CardContent>
                   </Card>
                 ) : (
