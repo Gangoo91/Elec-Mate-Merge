@@ -172,27 +172,27 @@ export const calculateVoltageDrop = (inputs: VoltageDropInputs): VoltageDropResu
 
   const { resistance, reactance } = resistanceData;
   
-  // Convert mΩ/m to Ω/km for calculation
-  const R = resistance / 1000; // Ω/km
-  const X = reactance / 1000; // Ω/km
-  const L = length / 1000; // km
+  // Convert mΩ/m to Ω for calculation 
+  const R = resistance * length / 1000; // Ω (total resistance)
+  const X = reactance * length / 1000; // Ω (total reactance)
+  const L = length; // m (for equation display)
   
   // Calculate voltage drop based on phase configuration
   let voltageDrop: number;
   let equation: string;
   
   if (phaseConfig === 'single') {
-    // Single phase: Vd = 2 × I × L × (R × cos φ + X × sin φ)
+    // Single phase: Vd = 2 × I × (R × cos φ + X × sin φ)
     const cosφ = powerFactor;
     const sinφ = Math.sqrt(1 - cosφ * cosφ);
-    voltageDrop = 2 * current * L * (R * cosφ + X * sinφ);
-    equation = `Vd = 2 × I × L × (R×cosφ + X×sinφ) = 2 × ${current} × ${length/1000} × (${R.toFixed(4)}×${cosφ.toFixed(3)} + ${X.toFixed(4)}×${sinφ.toFixed(3)}) = ${voltageDrop.toFixed(2)}V`;
+    voltageDrop = 2 * current * (R * cosφ + X * sinφ);
+    equation = `Vd = 2 × I × (R×cosφ + X×sinφ) = 2 × ${current.toFixed(1)} × (${R.toFixed(4)}×${cosφ.toFixed(3)} + ${X.toFixed(4)}×${sinφ.toFixed(3)}) = ${voltageDrop.toFixed(2)}V`;
   } else {
-    // Three phase: Vd = √3 × I × L × (R × cos φ + X × sin φ)
+    // Three phase: Vd = √3 × I × (R × cos φ + X × sin φ)
     const cosφ = powerFactor;
     const sinφ = Math.sqrt(1 - cosφ * cosφ);
-    voltageDrop = Math.sqrt(3) * current * L * (R * cosφ + X * sinφ);
-    equation = `Vd = √3 × I × L × (R×cosφ + X×sinφ) = 1.732 × ${current} × ${length/1000} × (${R.toFixed(4)}×${cosφ.toFixed(3)} + ${X.toFixed(4)}×${sinφ.toFixed(3)}) = ${voltageDrop.toFixed(2)}V`;
+    voltageDrop = Math.sqrt(3) * current * (R * cosφ + X * sinφ);
+    equation = `Vd = √3 × I × (R×cosφ + X×sinφ) = 1.732 × ${current.toFixed(1)} × (${R.toFixed(4)}×${cosφ.toFixed(3)} + ${X.toFixed(4)}×${sinφ.toFixed(3)}) = ${voltageDrop.toFixed(2)}V`;
   }
 
   const voltageDropPercent = (voltageDrop / voltage) * 100;

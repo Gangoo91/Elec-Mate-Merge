@@ -551,7 +551,7 @@ const PostResultGuidance: React.FC<PostResultGuidanceProps> = ({
                   <div className="flex-1">
                     <h4 className="font-semibold text-elec-light">{reg.title}</h4>
                     <p className="text-sm text-elec-blue font-medium">{reg.subtitle}</p>
-                    <p className="text-sm text-muted-foreground mt-1">{reg.description}</p>
+                    <p className="text-sm text-white/80 mt-1">{reg.description}</p>
                   </div>
                   <Badge 
                     variant={reg.compliance === "Mandatory for all electrical installations" ? "default" : 
@@ -565,17 +565,17 @@ const PostResultGuidance: React.FC<PostResultGuidanceProps> = ({
               
               {/* Content Grid */}
               <div className="p-4">
-                <div className="grid md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {/* Key Clauses */}
                   <div>
                     <h5 className="font-medium text-sm mb-2 text-elec-yellow">Key Requirements</h5>
                     <ul className="space-y-1">
-                      {reg.keyClauses.map((clause, idx) => (
-                        <li key={idx} className="text-xs text-muted-foreground flex items-start gap-2">
-                          <span className="text-elec-primary mt-1 flex-shrink-0">•</span>
-                          <span>{clause}</span>
-                        </li>
-                      ))}
+                       {reg.keyClauses.map((clause, idx) => (
+                         <li key={idx} className="text-xs text-white/80 flex items-start gap-2">
+                           <span className="text-elec-primary mt-1 flex-shrink-0">•</span>
+                           <span className="leading-tight">{clause}</span>
+                         </li>
+                       ))}
                     </ul>
                   </div>
                   
@@ -583,12 +583,12 @@ const PostResultGuidance: React.FC<PostResultGuidanceProps> = ({
                   <div>
                     <h5 className="font-medium text-sm mb-2 text-elec-green">This Installation</h5>
                     <ul className="space-y-1">
-                      {reg.relevantSections.map((section, idx) => (
-                        <li key={idx} className="text-xs text-muted-foreground flex items-start gap-2">
-                          <CheckCircle2 className="h-3 w-3 text-elec-green mt-0.5 flex-shrink-0" />
-                          <span>{section}</span>
-                        </li>
-                      ))}
+                       {reg.relevantSections.map((section, idx) => (
+                         <li key={idx} className="text-xs text-white/80 flex items-start gap-2">
+                           <CheckCircle2 className="h-3 w-3 text-elec-green mt-0.5 flex-shrink-0" />
+                           <span className="leading-tight">{section}</span>
+                         </li>
+                       ))}
                     </ul>
                   </div>
                 </div>

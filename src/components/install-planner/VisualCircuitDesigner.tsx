@@ -159,16 +159,12 @@ const VisualCircuitDesigner: React.FC<VisualCircuitDesignerProps> = ({
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-4 min-w-0 flex-1">
                 <div className="w-14 h-14 bg-gradient-to-br from-elec-yellow/30 to-elec-yellow/10 border-2 border-elec-yellow rounded-xl flex items-center justify-center flex-shrink-0 shadow-inner">
-                  <Power className="h-7 w-7 text-elec-yellow" />
                 </div>
                 <div className="min-w-0 flex-1">
                   <p className="font-semibold text-elec-yellow text-xl mb-1">Supply</p>
                   <p className="text-base text-elec-light/80 font-medium">{getSupplyVoltage()}</p>
                 </div>
               </div>
-              <Badge variant="outline" className="border-elec-yellow/50 text-elec-yellow bg-elec-yellow/10 px-3 py-1 font-medium ml-4 flex-shrink-0">
-                ORIGIN
-              </Badge>
             </div>
           </div>
 
@@ -182,16 +178,12 @@ const VisualCircuitDesigner: React.FC<VisualCircuitDesignerProps> = ({
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-4 min-w-0 flex-1">
                 <div className="w-14 h-14 bg-gradient-to-br from-blue-500/30 to-blue-500/10 border-2 border-blue-400 rounded-xl flex items-center justify-center flex-shrink-0 shadow-inner">
-                  <Shield className="h-7 w-7 text-blue-400" />
                 </div>
                 <div className="min-w-0 flex-1">
                   <p className="font-semibold text-blue-400 text-xl mb-1">Protection</p>
                   <p className="text-base text-elec-light/80 font-medium">{recommendedCable?.ratedCurrent || 32}A</p>
                 </div>
               </div>
-              <Badge variant="outline" className="border-blue-400/50 text-blue-400 bg-blue-400/10 px-3 py-1 font-medium ml-4 flex-shrink-0">
-                {currentCircuit.protectiveDevice.toUpperCase()}
-              </Badge>
             </div>
           </div>
 
@@ -205,7 +197,6 @@ const VisualCircuitDesigner: React.FC<VisualCircuitDesignerProps> = ({
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-4 min-w-0 flex-1">
                 <div className="w-14 h-14 bg-gradient-to-br from-gray-500/30 to-gray-500/10 border-2 border-gray-400 rounded-xl flex items-center justify-center flex-shrink-0 shadow-inner">
-                  <Cable className="h-7 w-7 text-gray-300" />
                 </div>
                 <div className="min-w-0 flex-1">
                   <p className="font-semibold text-gray-300 text-xl mb-1">Cable</p>
@@ -213,9 +204,6 @@ const VisualCircuitDesigner: React.FC<VisualCircuitDesignerProps> = ({
                   <p className="text-sm text-elec-light/60 mt-1">{currentCircuit.cableLength}m · {currentCircuit.installationMethod.replace('-', ' ')}</p>
                 </div>
               </div>
-              <Badge variant="outline" className="border-gray-400/50 text-gray-300 bg-gray-400/10 px-3 py-1 font-medium ml-4 flex-shrink-0">
-                CONDUCTOR
-              </Badge>
             </div>
           </div>
 
@@ -229,7 +217,6 @@ const VisualCircuitDesigner: React.FC<VisualCircuitDesignerProps> = ({
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-4 min-w-0 flex-1">
                 <div className="w-14 h-14 bg-gradient-to-br from-green-500/30 to-green-500/10 border-2 border-green-400 rounded-xl flex items-center justify-center flex-shrink-0 shadow-inner">
-                  <Zap className="h-7 w-7 text-green-400" />
                 </div>
                 <div className="min-w-0 flex-1">
                   <p className="font-semibold text-green-400 text-xl mb-1">Load</p>
@@ -239,9 +226,6 @@ const VisualCircuitDesigner: React.FC<VisualCircuitDesignerProps> = ({
                   </div>
                 </div>
               </div>
-              <Badge variant="outline" className="border-green-400/50 text-green-400 bg-green-400/10 px-3 py-1 font-medium ml-4 flex-shrink-0">
-                EQUIPMENT
-              </Badge>
             </div>
           </div>
         </div>

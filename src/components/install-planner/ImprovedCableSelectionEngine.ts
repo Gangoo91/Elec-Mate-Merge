@@ -9,7 +9,7 @@ import {
 } from '@/lib/calculators';
 import { legacyStandardDeviceRatings, getNextStandardRating } from '@/lib/calculators/utils/calculatorUtils';
 import { zsValues } from '@/components/apprentice/calculators/zs-values/ZsValuesData';
-import { getSuitableDevices, getMaxZs as getDeviceMaxZs, getRecommendedDeviceType } from '@/lib/calculators/bs7671-data/protectiveDevices';
+import { getSuitableDevices, getMaxZs, getRecommendedDeviceType } from '@/lib/calculators/bs7671-data/protectiveDevices';
 
 export class ImprovedCableSelectionEngine {
   
@@ -67,7 +67,7 @@ export class ImprovedCableSelectionEngine {
       let suitability: "suitable" | "marginal" | "unsuitable";
       if (currentOK && voltageDropOK && coordinationOK && zsOK && lengthOK) {
         suitability = "suitable";
-      } else if (currentOK && zsOK && (voltageDropResult.voltageDropPercent <= this.getMaxVoltageDropPercentage(planData.loadType) * 1.2)) {
+      } else if (currentOK && zsOK && (voltageDropResult.voltageDropPercent <= this.getMaxVoltageDropPercentage(planData.loadType, planData.specialRequirements) * 1.2)) {
         suitability = "marginal";
       } else {
         suitability = "unsuitable";
@@ -76,7 +76,7 @@ export class ImprovedCableSelectionEngine {
       // Generate comprehensive notes
       const notes: string[] = [];
       if (!currentOK) notes.push(`❌ ${capacityResult.compliance.InLeIz ? 'Current capacity adequate' : 'Current capacity insufficient'}`);
-      if (!voltageDropOK) notes.push(`❌ Voltage drop: ${voltageDropResult.voltageDropPercent.toFixed(2)}% (max: ${this.getMaxVoltageDropPercentage(planData.loadType)}%)`);
+      if (!voltageDropOK) notes.push(`❌ Voltage drop: ${voltageDropResult.voltageDropPercent.toFixed(2)}% (max: ${this.getMaxVoltageDropPercentage(planData.loadType, planData.specialRequirements)}%)`);
       if (!coordinationOK) notes.push(`❌ Device coordination: Ib (${capacityResult.Ib}A) > In (${capacityResult.In}A)`);
       if (!zsOK) notes.push(`❌ Zs too high: ${zsValue.toFixed(3)}Ω > ${maxZs.toFixed(3)}Ω max`);
       if (!lengthOK) notes.push(`❌ Cable length exceeds recommendations`);
@@ -212,7 +212,7 @@ export class ImprovedCableSelectionEngine {
     });
 
     // Voltage drop compliance
-    const maxVoltageDropPercentage = this.getMaxVoltageDropPercentage(planData.loadType);
+    const maxVoltageDropPercentage = this.getMaxVoltageDropPercentage(planData.loadType, planData.specialRequirements);
     const voltageDropStatus = recommendedCable.voltageDropPercentage <= maxVoltageDropPercentage ? "pass" : "fail";
     checks.push({
       regulation: "BS 7671",
@@ -302,10 +302,10 @@ export class ImprovedCableSelectionEngine {
 
   private static getMaxZs(protectiveDevice: string, voltage: number, deviceRating: number): number {
     // Use the enhanced protective device database for accurate Zs values
-    const maxZs = getDeviceMaxZs(protectiveDevice, deviceRating, voltage);
+    const maxZsValue = getMaxZs(protectiveDevice, deviceRating, voltage);
     
-    if (maxZs > 0) {
-      return maxZs;
+    if (maxZsValue > 0) {
+      return maxZsValue;
     }
     
     // Fallback to ZsValuesData for legacy compatibility
@@ -346,10 +346,21 @@ export class ImprovedCableSelectionEngine {
     return { type, curve };
   }
 
-  private static getMaxVoltageDropPercentage(loadType: string): number {
+  private static getMaxVoltageDropPercentage(loadType: string, specialRequirements?: string[]): number {
     // BS 7671 Appendix 4 Section 6.4 - Voltage drop limits
     const lightingLoads = ["lighting", "emergency", "emergency-lighting"];
-    return lightingLoads.includes(loadType) ? 3 : 5;
+    const emergencyRequirements = specialRequirements?.some(req => 
+      req.toLowerCase().includes('emergency') || 
+      req.toLowerCase().includes('fire safety') ||
+      req.toLowerCase().includes('life safety')
+    );
+    
+    // Emergency lighting and life safety circuits require 3% max
+    if (lightingLoads.includes(loadType) || emergencyRequirements) {
+      return 3;
+    }
+    
+    return 5;
   }
 
   private static getSpecialConsiderations(
