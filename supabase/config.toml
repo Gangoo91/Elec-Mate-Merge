@@ -117,3 +117,6 @@ verify_jwt = false
 
 [functions.visual-analysis]
 verify_jwt = false
+
+[functions.comprehensive-tools-scraper]
+verify_jwt = false

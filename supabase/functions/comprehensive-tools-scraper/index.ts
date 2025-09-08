@@ -1,332 +1,118 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
+import "https://deno.land/x/xhr@0.1.0/mod.ts";
+import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
-}
-
-interface ToolProduct {
-  name: string;
-  category: string;
-  price: string;
-  supplier: string;
-  image?: string;
-  description?: string;
-  stockStatus?: string;
-  highlights?: string[];
-  view_product_url?: string;
-  reviews?: string;
-}
-
-// All tool categories for comprehensive scraping - matches the exact 8 categories from tools page
-const toolCategories = [
-  {
-    name: "Hand Tools",
-    searchTerms: ["screwdrivers", "hammers", "pliers", "spanners", "hand tools", "wire strippers", "cutters"],
-    suppliers: [
-      { name: "Screwfix", url: "https://www.screwfix.com/search?search=hand+tools+electrical&page_size=50" },
-      { name: "Toolstation", url: "https://www.toolstation.com/search?q=hand+tools+electrical" }
-    ]
-  },
-  {
-    name: "Power Tools",
-    searchTerms: ["drills", "saws", "grinders", "power tools", "cordless", "sanders"],
-    suppliers: [
-      { name: "Screwfix", url: "https://www.screwfix.com/search?search=power+tools+electrical&page_size=50" },
-      { name: "Toolstation", url: "https://www.toolstation.com/search?q=power+tools+electrical" }
-    ]
-  },
-  {
-    name: "Test Equipment",
-    searchTerms: ["multimeters", "testers", "RCD testers", "insulation testers", "testing equipment"],
-    suppliers: [
-      { name: "Screwfix", url: "https://www.screwfix.com/search?search=electrical+testers&page_size=50" },
-      { name: "Toolstation", url: "https://www.toolstation.com/search?q=electrical+testing+equipment" }
-    ]
-  },
-  {
-    name: "PPE",
-    searchTerms: ["hard hats", "safety boots", "gloves", "high vis", "PPE", "personal protective equipment"],
-    suppliers: [
-      { name: "Screwfix", url: "https://www.screwfix.com/search?search=electrical+safety+PPE&page_size=50" },
-      { name: "Toolstation", url: "https://www.toolstation.com/search?q=electrical+safety+equipment" }
-    ]
-  },
-  {
-    name: "Safety Tools",
-    searchTerms: ["safety", "warning", "signs", "barriers", "locks", "tags", "isolators", "fuses"],
-    suppliers: [
-      { name: "Screwfix", url: "https://www.screwfix.com/search?search=electrical+safety+tools&page_size=50" },
-      { name: "Toolstation", url: "https://www.toolstation.com/search?q=electrical+safety+tools" }
-    ]
-  },
-  {
-    name: "Access Tools & Equipment",
-    searchTerms: ["ladders", "step ladders", "platforms", "scaffolding", "access equipment"],
-    suppliers: [
-      { name: "Screwfix", url: "https://www.screwfix.com/search?search=ladders+access+equipment&page_size=50" },
-      { name: "Toolstation", url: "https://www.toolstation.com/search?q=ladders+access+equipment" }
-    ]
-  },
-  {
-    name: "Tool Storage",
-    searchTerms: ["tool bags", "tool boxes", "storage solutions", "tool cases", "tool belts"],
-    suppliers: [
-      { name: "Screwfix", url: "https://www.screwfix.com/search?search=tool+storage+bags+boxes&page_size=50" },
-      { name: "Toolstation", url: "https://www.toolstation.com/search?q=tool+storage+bags" }
-    ]
-  },
-  {
-    name: "Specialist Tools",
-    searchTerms: ["wire", "cable", "conduit", "specialist", "crimpers", "strippers", "pullers", "fish", "knockout", "benders"],
-    suppliers: [
-      { name: "Screwfix", url: "https://www.screwfix.com/search?search=electrical+specialist+tools&page_size=50" },
-      { name: "Toolstation", url: "https://www.toolstation.com/search?q=electrical+specialist+tools" }
-    ]
-  }
-];
-
-const productSchema = {
-  type: "array",
-  items: {
-    type: "object",
-    required: ["name", "price"],
-    properties: {
-      name: { type: "string", description: "The complete product name or title" },
-      category: { type: "string", description: "The product category or type" },
-      price: { type: "string", description: "The price including currency (£) and any VAT info" },
-      description: { type: "string", description: "Key product features and specifications" },
-      highlights: { type: "array", items: { type: "string" }, description: "Key selling points or features" },
-      reviews: { type: "string", description: "Customer rating and review count" },
-      image: { type: "string", description: "Product image URL" },
-      view_product_url: { type: "string", description: "Direct link to the full product page" },
-      stockStatus: { type: "string", description: "Stock availability (In Stock, Out of Stock, Low Stock)" }
-    }
-  }
 };
 
-async function scrapeToolsFromSupplier(supplierUrl: string, supplierName: string, category: string): Promise<ToolProduct[]> {
-  const FIRECRAWL_API_KEY = Deno.env.get('FIRECRAWL_API_KEY');
-  
-  if (!FIRECRAWL_API_KEY) {
-    throw new Error('FIRECRAWL_API_KEY not found');
-  }
-
-  const options = {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${FIRECRAWL_API_KEY}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      url: supplierUrl,
-      onlyMainContent: true,
-      maxAge: 0,
-      formats: [
-        {
-          type: "json",
-          prompt: `Extract electrical ${category.toLowerCase()} products from this page. Focus on products relevant to electricians and electrical work.`,
-          schema: productSchema,
-        },
-      ],
-    }),
-  };
-
-  try {
-    console.log(`🔧 Scraping ${category} from ${supplierName}...`);
-    
-    // Add timeout handling for individual requests
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 45000); // 45 second timeout per request
-    
-    const response = await fetch("https://api.firecrawl.dev/v2/scrape", {
-      ...options,
-      signal: controller.signal
-    });
-    
-    clearTimeout(timeoutId);
-
-    if (!response.ok) {
-      console.error(`❌ API request failed for ${supplierName}: ${response.status}`);
-      return [];
-    }
-
-    const data = await response.json();
-    const products = data.data?.json || [];
-    
-    // Add supplier and category info to each product
-    const processedProducts = products.map((product: any) => ({
-      ...product,
-      supplier: supplierName,
-      category: category,
-      stockStatus: product.stockStatus || 'In Stock'
-    }));
-
-    console.log(`✅ Retrieved ${processedProducts.length} ${category} products from ${supplierName}`);
-    return processedProducts;
-  } catch (error) {
-    if (error.name === 'AbortError') {
-      console.error(`⏰ Timeout scraping ${category} from ${supplierName}`);
-    } else {
-      console.error(`⚠️ Error scraping ${category} from ${supplierName}:`, error);
-    }
-    return [];
-  }
-}
-
-async function scrapeAllToolCategories(): Promise<ToolProduct[]> {
-  const allProducts: ToolProduct[] = [];
-  
-  // Define batches to process categories in smaller chunks
-  const BATCH_SIZE = 2; // Process 2 categories at a time (4 requests per batch)
-  const batches: typeof toolCategories[] = [];
-  
-  // Split categories into batches
-  for (let i = 0; i < toolCategories.length; i += BATCH_SIZE) {
-    batches.push(toolCategories.slice(i, i + BATCH_SIZE));
-  }
-  
-  console.log(`📊 Processing ${toolCategories.length} categories in ${batches.length} batches...`);
-  
-  // Process each batch sequentially to prevent overwhelming the API
-  for (let batchIndex = 0; batchIndex < batches.length; batchIndex++) {
-    const batch = batches[batchIndex];
-    console.log(`📦 Processing batch ${batchIndex + 1}/${batches.length} (${batch.map(c => c.name).join(', ')})...`);
-    
-    // Process all suppliers within a batch in parallel
-    const batchPromises: Promise<ToolProduct[]>[] = [];
-    
-    for (const category of batch) {
-      console.log(`📂 Processing category: ${category.name}`);
-      
-      for (const supplier of category.suppliers) {
-        batchPromises.push(
-          scrapeToolsFromSupplier(supplier.url, supplier.name, category.name)
-        );
-      }
-    }
-    
-    console.log(`⚡ Starting ${batchPromises.length} parallel scraping operations for batch ${batchIndex + 1}...`);
-    
-    // Wait for all operations in this batch to complete
-    const results = await Promise.allSettled(batchPromises);
-    
-    // Collect successful results from this batch
-    let batchProductCount = 0;
-    results.forEach((result, index) => {
-      if (result.status === 'fulfilled') {
-        allProducts.push(...result.value);
-        batchProductCount += result.value.length;
-      } else {
-        console.error(`❌ Scraping operation ${index + 1} in batch ${batchIndex + 1} failed:`, result.reason);
-      }
-    });
-    
-    console.log(`✅ Batch ${batchIndex + 1} completed: ${batchProductCount} products collected`);
-    
-    // Add delay between batches to prevent overwhelming the API (except for the last batch)
-    if (batchIndex < batches.length - 1) {
-      console.log(`⏸️ Waiting 3 seconds before next batch...`);
-      await new Promise(resolve => setTimeout(resolve, 3000));
-    }
-  }
-  
-  console.log(`🎯 Total products collected: ${allProducts.length}`);
-  return allProducts;
-}
-
-async function saveToolsToDatabase(tools: ToolProduct[]) {
-  const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
-  const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
-  
-  const supabase = createClient(supabaseUrl, supabaseServiceKey);
-  
-  try {
-    console.log(`💾 Saving ${tools.length} tools to database...`);
-    
-    // Calculate expiry date (1 week from now)
-    const expiresAt = new Date();
-    expiresAt.setDate(expiresAt.getDate() + 7);
-    
-    // Save to materials_weekly_cache table
-    const { error } = await supabase
-      .from('materials_weekly_cache')
-      .upsert({
-        materials_data: tools,
-        expires_at: expiresAt.toISOString(),
-        last_updated: new Date().toISOString()
-      });
-    
-    if (error) {
-      console.error('❌ Error saving to database:', error);
-      throw error;
-    }
-    
-    console.log('✅ Tools successfully saved to database');
-    return true;
-  } catch (error) {
-    console.error('❌ Failed to save tools to database:', error);
-    throw error;
-  }
-}
-
 serve(async (req) => {
+  console.log('🔧 [COMPREHENSIVE-TOOLS-SCRAPER] Starting request...');
+
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
-    console.log('🚀 Comprehensive Tools Scraper started');
+    const { searchTerm, categoryFilter, supplierFilter } = await req.json();
     
-    // Scrape all tool categories from multiple suppliers
-    const allTools = await scrapeAllToolCategories();
-    
-    if (allTools.length === 0) {
-      console.log('⚠️ No tools were scraped from any source');
-      return new Response(
-        JSON.stringify({ 
-          success: false, 
-          message: 'No tools found',
-          toolsCount: 0 
-        }),
-        { 
-          status: 200, 
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
-        }
+    console.log(`🔍 Searching for tools: "${searchTerm}" | Category: ${categoryFilter || 'all'} | Supplier: ${supplierFilter || 'all'}`);
+
+    // Initialize Supabase client
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+    const supabase = createClient(supabaseUrl, supabaseKey);
+
+    // Get cached tools from materials_weekly_cache
+    const { data: cacheData, error: cacheError } = await supabase
+      .from('materials_weekly_cache')
+      .select('materials_data')
+      .order('created_at', { ascending: false })
+      .limit(1)
+      .single();
+
+    if (cacheError) {
+      console.error('❌ Cache error:', cacheError);
+      throw new Error('Failed to fetch cached tool data');
+    }
+
+    let allTools = [];
+
+    if (cacheData?.materials_data && Array.isArray(cacheData.materials_data)) {
+      allTools = cacheData.materials_data.map((item, index) => ({
+        id: item.id || index + 1000,
+        name: item.name || 'Unknown Tool',
+        category: item.category || 'Tools',
+        price: item.price || '£0.00',
+        supplier: item.supplier || 'Screwfix',
+        image: item.image || '/placeholder.svg',
+        stockStatus: item.stockStatus || 'In Stock',
+        isOnSale: item.isOnSale || false,
+        salePrice: item.salePrice,
+        highlights: item.highlights || [],
+        productUrl: item.view_product_url || item.productUrl,
+        description: item.description,
+        reviews: item.reviews
+      }));
+
+      console.log(`📊 Loaded ${allTools.length} tools from cache`);
+    }
+
+    // Apply filters
+    let filteredTools = allTools;
+
+    if (categoryFilter && categoryFilter !== 'all') {
+      filteredTools = filteredTools.filter(tool => 
+        tool.category.toLowerCase().includes(categoryFilter.toLowerCase())
       );
     }
-    
-    // Save to database
-    await saveToolsToDatabase(allTools);
-    
-    console.log(`🎉 Successfully processed ${allTools.length} tools across all categories`);
-    
-    return new Response(
-      JSON.stringify({ 
-        success: true, 
-        message: `Successfully scraped and saved ${allTools.length} tools`,
-        toolsCount: allTools.length,
-        categoriesProcessed: toolCategories.length
-      }),
-      { 
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
-      }
-    );
+
+    if (supplierFilter && supplierFilter !== 'all') {
+      filteredTools = filteredTools.filter(tool => 
+        tool.supplier.toLowerCase().includes(supplierFilter.toLowerCase())
+      );
+    }
+
+    if (searchTerm && searchTerm.trim()) {
+      const searchLower = searchTerm.toLowerCase().trim();
+      filteredTools = filteredTools.filter(tool => 
+        tool.name.toLowerCase().includes(searchLower)
+      );
+    }
+
+    // Sort by price
+    filteredTools.sort((a, b) => {
+      const priceA = parseFloat(a.price.replace(/[£,]/g, ''));
+      const priceB = parseFloat(b.price.replace(/[£,]/g, ''));
+      return priceA - priceB;
+    });
+
+    // Limit results
+    if (filteredTools.length > 50) {
+      filteredTools = filteredTools.slice(0, 50);
+    }
+
+    console.log(`✅ Returning ${filteredTools.length} filtered tools`);
+
+    return new Response(JSON.stringify({
+      success: true,
+      tools: filteredTools,
+      searchTerm,
+      total: filteredTools.length
+    }), {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
 
   } catch (error) {
     console.error('❌ Error in comprehensive-tools-scraper:', error);
-    
-    return new Response(
-      JSON.stringify({ 
-        success: false,
-        error: 'Failed to scrape tools', 
-        details: error.message 
-      }),
-      {
-        status: 500,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      }
-    );
+    return new Response(JSON.stringify({
+      success: false,
+      error: error.message,
+      tools: []
+    }), {
+      status: 500,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
   }
 });

@@ -1,21 +1,14 @@
-import { useState, useMemo, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import { Switch } from "@/components/ui/switch";
+import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Brain, Calculator, History, ChevronDown, Download, TrendingUp, Zap, Wrench, BatteryCharging, AlertTriangle } from "lucide-react";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { 
-  Scale, Search, ExternalLink, X, Star, Zap, Wrench, 
-  Brain, TrendingUp, Download, Filter, ChevronDown,
-  Loader2, AlertTriangle, BarChart3, Target
-} from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
-import { ToolItem } from "@/hooks/useToolsData";
+import { ToolSearchInterface } from "./price-comparison/ToolSearchInterface";
 
 interface AIEnhancedToolPriceComparisonProps {
   initialQuery?: string;
