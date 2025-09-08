@@ -11,7 +11,7 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/component
 import { MobileInputWrapper } from "@/components/ui/mobile-input-wrapper";
 import { useIsMobile } from "@/hooks/use-mobile";
 import ToolCard from "@/components/electrician-tools/ToolCard";
-import ToolPriceComparison from "@/components/electrician-tools/ToolPriceComparison";
+import AIEnhancedToolPriceComparison from "@/components/electrician-tools/AIEnhancedToolPriceComparison";
 import BulkToolPricingCalculator from "@/components/electrician-tools/BulkToolPricingCalculator";
 import ToolPriceHistoryAlerts from "@/components/electrician-tools/ToolPriceHistoryAlerts";
 import { ToolAIInsights } from "./ToolAIInsights";
@@ -381,7 +381,7 @@ const EnhancedToolCategoryDisplay = ({ categoryName }: EnhancedToolCategoryDispl
           </TabsContent>
 
           <TabsContent value="compare" className="space-y-6 mt-6">
-            <ToolPriceComparison 
+            <AIEnhancedToolPriceComparison 
               initialQuery={categoryName}
               selectedItems={selectedItems}
               onClearSelection={clearComparison}
