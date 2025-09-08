@@ -440,7 +440,7 @@ const EnhancedToolCategoryDisplay = ({ categoryName }: EnhancedToolCategoryDispl
                   </Card>
                 ) : (
                   <section aria-label={`${meta.title} products`} className="mobile-section-spacing">
-                    <div className="mobile-grid-responsive pb-6">
+                    <div className="mobile-grid-responsive md:grid-cols-2 pb-6">
                       {filteredTools.map((item, index) => (
                         <ToolCard 
                           key={item.id || `${item.supplier}-${item.name}-${index}`} 
