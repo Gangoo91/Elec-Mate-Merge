@@ -222,7 +222,7 @@ const EnhancedToolCategoryDisplay = ({ categoryName }: EnhancedToolCategoryDispl
             <Wrench className="h-6 w-6 sm:h-7 sm:w-7 lg:h-8 lg:w-8 text-elec-yellow flex-shrink-0" />
             <span className="min-w-0 text-elec-light">{meta.title}</span>
           </h1>
-          <p className="mobile-text text-text-muted leading-relaxed pl-9 sm:pl-10 lg:pl-11">{meta.description}</p>
+          <p className="mobile-text text-text-muted leading-relaxed pl-9 sm:pl-10 lg:pl-11 pb-6">{meta.description}</p>
         </div>
       </header>
 
