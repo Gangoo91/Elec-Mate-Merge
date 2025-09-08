@@ -82,6 +82,21 @@ const EnhancedToolCategoryDisplay = ({ categoryName }: EnhancedToolCategoryDispl
     return mappings[frontendCategory] || [frontendCategory];
   };
 
+  // Get keywords for category fallback searches
+  const getCategoryKeywords = (category: string): string[] => {
+    const keywordMap: Record<string, string[]> = {
+      'Test Equipment': ['multimeter', 'tester', 'meter', 'clamp', 'voltage', 'continuity', 'insulation'],
+      'Safety Tools': ['helmet', 'gloves', 'glasses', 'boots', 'harness', 'vest', 'safety'],
+      'Power Tools': ['drill', 'cordless', '18v', '12v', 'grinder', 'saw', 'impact', 'sds', 'battery'],
+      'Hand Tools': ['screwdriver', 'pliers', 'wire stripper', 'cable cutter', 'crimping', 'spanner'],
+      'Measuring Tools': ['level', 'tape measure', 'ruler', 'detector', 'spirit level', 'laser'],
+      'Cable Tools': ['cable', 'wire', 'stripper', 'cutter', 'puller', 'crimper'],
+      'Lighting Tools': ['torch', 'light', 'led', 'inspection', 'headlamp', 'work light']
+    };
+    
+    return keywordMap[category] || [category.toLowerCase()];
+  };
+
   // Filter and search the tools with fallback logic
   const filteredTools = useMemo(() => {
     if (!allTools) return [];
@@ -141,20 +156,6 @@ const EnhancedToolCategoryDisplay = ({ categoryName }: EnhancedToolCategoryDispl
     return categoryFiltered;
   }, [allTools, categoryName, searchTerm]);
 
-  // Get keywords for category fallback searches
-  const getCategoryKeywords = (category: string): string[] => {
-    const keywordMap: Record<string, string[]> = {
-      'Test Equipment': ['multimeter', 'tester', 'meter', 'clamp', 'voltage', 'continuity', 'insulation'],
-      'Safety Tools': ['helmet', 'gloves', 'glasses', 'boots', 'harness', 'vest', 'safety'],
-      'Power Tools': ['drill', 'cordless', '18v', '12v', 'grinder', 'saw', 'impact', 'sds', 'battery'],
-      'Hand Tools': ['screwdriver', 'pliers', 'wire stripper', 'cable cutter', 'crimping', 'spanner'],
-      'Measuring Tools': ['level', 'tape measure', 'ruler', 'detector', 'spirit level', 'laser'],
-      'Cable Tools': ['cable', 'wire', 'stripper', 'cutter', 'puller', 'crimper'],
-      'Lighting Tools': ['torch', 'light', 'led', 'inspection', 'headlamp', 'work light']
-    };
-    
-    return keywordMap[category] || [category.toLowerCase()];
-  };
 
   const pageTitle = `${meta.title} | ElecMate Professional Tools`;
   const pageDescription = `${meta.title} for UK electricians — ${meta.description}. BS 7671 18th Edition compliant guidance.`.slice(0, 160);
