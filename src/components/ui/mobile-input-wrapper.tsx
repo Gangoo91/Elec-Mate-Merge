@@ -17,6 +17,7 @@ interface MobileInputWrapperProps {
   max?: string;
   icon?: React.ReactNode;
   unit?: string;
+  className?: string;
 }
 
 export function MobileInputWrapper({
@@ -32,10 +33,11 @@ export function MobileInputWrapper({
   min,
   max,
   icon,
-  unit
+  unit,
+  className
 }: MobileInputWrapperProps) {
   return (
-    <div className="space-y-3">
+    <div className={cn("space-y-3", className)}>
       {label && (
         <Label className="text-sm font-semibold text-elec-light flex items-center gap-2">
           <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>

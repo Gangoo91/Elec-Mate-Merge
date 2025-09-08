@@ -154,72 +154,74 @@ const EnhancedToolCategoryDisplay = ({ categoryName }: EnhancedToolCategoryDispl
   }
 
   return (
-    <main className="mobile-card-spacing animate-fade-in">
+    <main className="mobile-container mobile-safe-area">
       <Helmet>
         <title>{pageTitle}</title>
         <meta name="description" content={pageDescription} />
         <link rel="canonical" href={typeof window !== 'undefined' ? window.location.href : ''} />
       </Helmet>
 
-      <header className="mobile-card-spacing">
-        <div className="flex flex-wrap gap-2">
+      <header className="mobile-section-spacing">
+        <div className="flex flex-wrap gap-2 mb-4">
           <Link to="/electrician/tools">
-            <Button variant="outline" size="sm" className="flex items-center gap-1.5">
+            <Button variant="outline" size="sm" className="touch-target mobile-interactive bg-elec-gray/50 border-elec-yellow/30 text-elec-light hover:bg-elec-yellow/10">
               <ArrowLeft className="h-4 w-4" /> Back to Tools
             </Button>
           </Link>
         </div>
         <div className="space-y-3">
-          <h1 className="mobile-heading font-bold tracking-tight flex items-center gap-2">
-            <Wrench className="h-5 w-5 sm:h-6 sm:w-6 lg:h-8 lg:w-8 text-elec-yellow flex-shrink-0" />
-            <span className="min-w-0">{meta.title}</span>
+          <h1 className="mobile-heading font-bold tracking-tight flex items-center gap-3">
+            <Wrench className="h-6 w-6 sm:h-7 sm:w-7 lg:h-8 lg:w-8 text-elec-yellow flex-shrink-0" />
+            <span className="min-w-0 text-elec-light">{meta.title}</span>
           </h1>
-          <p className="mobile-text text-muted-foreground leading-relaxed pl-7 sm:pl-8 lg:pl-10">{meta.description}</p>
+          <p className="mobile-text text-text-muted leading-relaxed pl-9 sm:pl-10 lg:pl-11">{meta.description}</p>
         </div>
       </header>
 
       {/* Advanced Features Navigation */}
-      <section className="space-y-4 relative z-10">
+      <section className="mobile-section-spacing relative z-10">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full relative">
           {/* Mobile Collapsible Tabs */}
           {isMobile ? (
-            <div className="space-y-2">
+            <div className="mobile-card-spacing">
               <Collapsible open={isTabSelectorOpen} onOpenChange={setIsTabSelectorOpen}>
-                <CollapsibleTrigger className="w-full flex items-center justify-between bg-elec-gray border border-elec-yellow/20 rounded-xl p-4 mobile-interactive touch-target hover:bg-elec-yellow/5 transition-colors">
-                  <div className="flex items-center gap-3">
-                    {activeTab === "browse" && <Wrench className="h-4 w-4 text-elec-yellow" />}
-                    {activeTab === "compare" && <Scale className="h-4 w-4 text-elec-yellow" />}
-                    {activeTab === "bulk" && <Calculator className="h-4 w-4 text-elec-yellow" />}
-                    {activeTab === "alerts" && <TrendingUp className="h-4 w-4 text-elec-yellow" />}
-                    {activeTab === "ai" && <Brain className="h-4 w-4 text-elec-yellow" />}
-                    <span className="text-sm sm:text-base font-medium text-elec-light">
-                      {activeTab === "browse" && "Browse Tools"}
-                      {activeTab === "compare" && "Compare Tools"}
-                      {activeTab === "bulk" && "Bulk Pricing"}
-                      {activeTab === "alerts" && "Price Alerts"}
-                      {activeTab === "ai" && "AI Insights"}
-                    </span>
+                <CollapsibleTrigger className="w-full mobile-card bg-elec-card/50 border-elec-yellow/20 mobile-interactive touch-target hover:bg-elec-yellow/5 mobile-tap-highlight">
+                  <div className="flex items-center justify-between p-4">
+                    <div className="flex items-center gap-3">
+                      {activeTab === "browse" && <Wrench className="h-5 w-5 text-elec-yellow" />}
+                      {activeTab === "compare" && <Scale className="h-5 w-5 text-elec-yellow" />}
+                      {activeTab === "bulk" && <Calculator className="h-5 w-5 text-elec-yellow" />}
+                      {activeTab === "alerts" && <TrendingUp className="h-5 w-5 text-elec-yellow" />}
+                      {activeTab === "ai" && <Brain className="h-5 w-5 text-elec-yellow" />}
+                      <span className="mobile-text font-medium text-elec-light">
+                        {activeTab === "browse" && "Browse Tools"}
+                        {activeTab === "compare" && "Compare Tools"}
+                        {activeTab === "bulk" && "Bulk Pricing"}
+                        {activeTab === "alerts" && "Price Alerts"}
+                        {activeTab === "ai" && "AI Insights"}
+                      </span>
+                    </div>
+                    <ChevronDown className="h-5 w-5 text-elec-yellow transition-transform duration-200 group-data-[state=open]:rotate-180" />
                   </div>
-                  <ChevronDown className="h-4 w-4 text-elec-yellow transition-transform duration-200 group-data-[state=open]:rotate-180" />
                 </CollapsibleTrigger>
                 
                 <CollapsibleContent className="mt-2">
-                  <div className="bg-elec-gray border border-elec-yellow/20 rounded-xl overflow-hidden">
+                  <div className="mobile-card bg-elec-card/30 border-elec-yellow/10 overflow-hidden">
                     {["browse", "compare", "bulk", "alerts", "ai"].filter(tab => tab !== activeTab).map((tab) => (
                       <button
                         key={tab}
                         onClick={() => {
                           setActiveTab(tab);
-                          setIsTabSelectorOpen(false); // Auto-collapse after selection
+                          setIsTabSelectorOpen(false);
                         }}
-                        className="w-full flex items-center gap-3 p-4 text-left transition-all duration-200 mobile-interactive touch-target border-b border-elec-yellow/10 last:border-b-0 text-elec-light hover:bg-elec-yellow/10"
+                        className="w-full flex items-center gap-3 p-4 text-left mobile-interactive touch-target border-b border-elec-yellow/10 last:border-b-0 text-elec-light hover:bg-elec-yellow/10 mobile-tap-highlight"
                       >
-                        {tab === "browse" && <Wrench className="h-4 w-4" />}
-                        {tab === "compare" && <Scale className="h-4 w-4" />}
-                        {tab === "bulk" && <Calculator className="h-4 w-4" />}
-                        {tab === "alerts" && <TrendingUp className="h-4 w-4" />}
-                        {tab === "ai" && <Brain className="h-4 w-4" />}
-                        <span className="text-sm sm:text-base font-medium">
+                        {tab === "browse" && <Wrench className="h-5 w-5 text-elec-yellow/70" />}
+                        {tab === "compare" && <Scale className="h-5 w-5 text-elec-yellow/70" />}
+                        {tab === "bulk" && <Calculator className="h-5 w-5 text-elec-yellow/70" />}
+                        {tab === "alerts" && <TrendingUp className="h-5 w-5 text-elec-yellow/70" />}
+                        {tab === "ai" && <Brain className="h-5 w-5 text-elec-yellow/70" />}
+                        <span className="mobile-text font-medium">
                           {tab === "browse" && "Browse Tools"}
                           {tab === "compare" && "Compare Tools"}
                           {tab === "bulk" && "Bulk Pricing"}
@@ -234,24 +236,24 @@ const EnhancedToolCategoryDisplay = ({ categoryName }: EnhancedToolCategoryDispl
             </div>
           ) : (
             /* Desktop Tabs */
-            <TabsList className="flex w-full flex-wrap grid grid-cols-3 lg:grid-cols-5 bg-elec-gray border border-elec-yellow/20 relative z-20 p-[0.3rem] h-fit">
-              <TabsTrigger value="browse" className="flex-shrink-0 whitespace-nowrap px-4 py-3 text-sm min-w-fit data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark">
+            <TabsList className="mobile-grid-responsive grid grid-cols-3 lg:grid-cols-5 bg-elec-card/50 border border-elec-yellow/20 p-1 h-fit rounded-xl">
+              <TabsTrigger value="browse" className="mobile-interactive touch-target px-4 py-3 text-sm font-medium data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark data-[state=active]:shadow-sm transition-all duration-200 text-elec-light hover:text-elec-yellow">
                 <Wrench className="h-4 w-4 mr-2" />
                 Browse
               </TabsTrigger>
-              <TabsTrigger value="compare" className="flex-shrink-0 whitespace-nowrap px-4 py-3 text-sm min-w-fit data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark">
+              <TabsTrigger value="compare" className="mobile-interactive touch-target px-4 py-3 text-sm font-medium data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark data-[state=active]:shadow-sm transition-all duration-200 text-elec-light hover:text-elec-yellow">
                 <Scale className="h-4 w-4 mr-2" />
                 Compare
               </TabsTrigger>
-              <TabsTrigger value="bulk" className="flex-shrink-0 whitespace-nowrap px-4 py-3 text-sm min-w-fit data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark">
+              <TabsTrigger value="bulk" className="mobile-interactive touch-target px-4 py-3 text-sm font-medium data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark data-[state=active]:shadow-sm transition-all duration-200 text-elec-light hover:text-elec-yellow">
                 <Calculator className="h-4 w-4 mr-2" />
                 Bulk
               </TabsTrigger>
-              <TabsTrigger value="alerts" className="flex-shrink-0 whitespace-nowrap px-4 py-3 text-sm min-w-fit data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark">
+              <TabsTrigger value="alerts" className="mobile-interactive touch-target px-4 py-3 text-sm font-medium data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark data-[state=active]:shadow-sm transition-all duration-200 text-elec-light hover:text-elec-yellow">
                 <TrendingUp className="h-4 w-4 mr-2" />
                 Alerts
               </TabsTrigger>
-              <TabsTrigger value="ai" className="flex-shrink-0 whitespace-nowrap px-4 py-3 text-sm min-w-fit data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark">
+              <TabsTrigger value="ai" className="mobile-interactive touch-target px-4 py-3 text-sm font-medium data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark data-[state=active]:shadow-sm transition-all duration-200 text-elec-light hover:text-elec-yellow">
                 <Brain className="h-4 w-4 mr-2" />
                 AI
               </TabsTrigger>
@@ -260,23 +262,23 @@ const EnhancedToolCategoryDisplay = ({ categoryName }: EnhancedToolCategoryDispl
 
           {/* Search and filters for Browse tab */}
           {activeTab === "browse" && (
-            <div className="flex flex-col sm:flex-row gap-3 items-start mt-4">
-              <div className="flex-1">
+            <div className="mobile-action-bar">
+              <div className="flex-1 w-full">
                 <MobileInputWrapper
                   placeholder="Search tools..."
                   value={searchTerm}
                   onChange={setSearchTerm}
-                  icon={<Search className="h-4 w-4" />}
+                  icon={<Search className="h-4 w-4 text-elec-yellow/70" />}
                   hint="Search by tool name, supplier, or description"
                 />
               </div>
-              <div className="flex items-end">
+              <div className="flex items-center">
                 <ToolRefreshButton
                   isFetching={false}
                   lastFetchTime={0}
                   onRefresh={refetch}
                   categoryName={categoryName}
-                  className="shrink-0"
+                  className="shrink-0 touch-target"
                 />
               </div>
             </div>
@@ -284,18 +286,21 @@ const EnhancedToolCategoryDisplay = ({ categoryName }: EnhancedToolCategoryDispl
 
           {/* Quick Compare Bar */}
           {selectedItems.length > 0 && (
-            <Card className="bg-elec-yellow/10 border-elec-yellow/30 mt-4">
+            <Card className="mobile-card bg-elec-yellow/10 border-elec-yellow/30 mt-4">
               <CardContent className="p-4">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <Scale className="h-5 w-5 text-elec-yellow" />
-                    <span className="font-medium">{selectedItems.length}/3 tools selected for comparison</span>
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                  <div className="flex items-center gap-3">
+                    <Scale className="h-5 w-5 text-elec-yellow flex-shrink-0" />
+                    <span className="mobile-text font-medium text-elec-light">
+                      {selectedItems.length}/3 tools selected for comparison
+                    </span>
                   </div>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 w-full sm:w-auto">
                     <Button
                       size="sm"
                       onClick={() => setActiveTab("compare")}
                       variant="gold"
+                      className="touch-target mobile-interactive flex-1 sm:flex-none"
                     >
                       Compare Now
                     </Button>
@@ -303,7 +308,7 @@ const EnhancedToolCategoryDisplay = ({ categoryName }: EnhancedToolCategoryDispl
                       size="sm"
                       variant="outline"
                       onClick={clearComparison}
-                      className="bg-elec-yellow/10 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/20"
+                      className="touch-target mobile-interactive bg-elec-yellow/10 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/20 flex-1 sm:flex-none"
                     >
                       Clear
                     </Button>
@@ -314,16 +319,16 @@ const EnhancedToolCategoryDisplay = ({ categoryName }: EnhancedToolCategoryDispl
           )}
 
           {/* Tab Content */}
-          <TabsContent value="browse" className="space-y-6 mt-6">
+          <TabsContent value="browse" className="mobile-section-spacing mt-6">
             {/* Loading state */}
             {isLoading && (
-              <Card className="border-elec-yellow/20 bg-elec-gray">
-                <CardContent className="p-6 text-center">
-                  <div className="flex items-center justify-center gap-2 mb-4">
-                    <Loader2 className="h-5 w-5 animate-spin text-elec-yellow" />
-                    <p className="text-elec-yellow font-medium">Loading {meta.title.toLowerCase()}...</p>
+              <Card className="mobile-card bg-elec-card/30 border-elec-yellow/20">
+                <CardContent className="p-6 text-center space-y-4">
+                  <div className="flex items-center justify-center gap-3">
+                    <Loader2 className="h-6 w-6 animate-spin text-elec-yellow" />
+                    <p className="mobile-text text-elec-yellow font-medium">Loading {meta.title.toLowerCase()}...</p>
                   </div>
-                  <p className="text-muted-foreground text-sm">
+                  <p className="mobile-small-text text-text-muted">
                     Fetching data from comprehensive tools database
                   </p>
                 </CardContent>
@@ -334,9 +339,9 @@ const EnhancedToolCategoryDisplay = ({ categoryName }: EnhancedToolCategoryDispl
             {!isLoading && (
               <>
                 {filteredTools.length === 0 ? (
-                  <Card className="border-elec-yellow/20 bg-elec-gray">
-                    <CardContent className="p-6 text-center space-y-3">
-                      <p className="text-muted-foreground">
+                  <Card className="mobile-card bg-elec-card/30 border-elec-yellow/20">
+                    <CardContent className="p-6 text-center mobile-card-spacing">
+                      <p className="mobile-text text-text-muted mb-4">
                         {searchTerm ? 
                           `No tools found matching "${searchTerm}"` :
                           `No tools found in ${meta.title.toLowerCase()} category`
@@ -347,6 +352,7 @@ const EnhancedToolCategoryDisplay = ({ categoryName }: EnhancedToolCategoryDispl
                           variant="outline"
                           size="sm"
                           onClick={() => setSearchTerm("")}
+                          className="touch-target mobile-interactive bg-elec-yellow/10 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/20"
                         >
                           Clear search
                         </Button>
@@ -354,8 +360,8 @@ const EnhancedToolCategoryDisplay = ({ categoryName }: EnhancedToolCategoryDispl
                     </CardContent>
                   </Card>
                 ) : (
-                  <section aria-label={`${meta.title} products`} className="space-y-4">
-                    <div className={`grid gap-6 pb-6 ${isMobile ? 'grid-cols-1' : 'md:grid-cols-2 lg:grid-cols-3'}`}>
+                  <section aria-label={`${meta.title} products`} className="mobile-section-spacing">
+                    <div className="mobile-grid-responsive pb-6">
                       {filteredTools.map((item, index) => (
                         <ToolCard 
                           key={item.id || `${item.supplier}-${item.name}-${index}`} 
