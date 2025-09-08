@@ -227,28 +227,65 @@ const MaterialPriceComparison = ({
       console.log('📊 Cache query response:', { cacheEntries, error });
 
       if (error) {
-        console.error('❌ Scraper error:', error);
-        throw new Error(error.message);
+        console.error('❌ Materials cache error:', error);
+        setError(error.message || 'Failed to fetch materials data');
+        toast({
+          title: "Error",
+          description: "Failed to fetch materials from cache. Please try refreshing.",
+          variant: "destructive"
+        });
+        return;
       }
 
-      if (data?.materials && data.materials.length > 0) {
-        console.log(`✅ Found ${data.materials.length} materials`);
-        
-        // Process and enrich the results
-        const processedProducts: PriceComparisonItem[] = data.materials.map(enrichProductData);
+      let allMaterials: any[] = [];
+      
+      if (cacheEntries && cacheEntries.length > 0) {
+        // Combine all materials from different cache entries
+        allMaterials = cacheEntries.flatMap((entry: any) => entry.materials_data || []);
+        console.log(`✅ Found ${allMaterials.length} materials in cache`);
+      }
 
-        // Filter out items with 0 price
-        const validProducts = processedProducts.filter(p => p.numericPrice > 0);
+      if (allMaterials.length === 0) {
+        console.log('⚠️ No materials found in cache');
+        setFilteredMaterials([]);
+        toast({
+          title: "No Data",
+          description: "No materials found in cache. Try refreshing to load new data.",
+        });
+        return;
+      }
+
+      // Filter materials based on search criteria
+      const filteredResults = allMaterials.filter((material: any) => {
+        const matchesSearch = material.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                             material.description?.toLowerCase().includes(searchQuery.toLowerCase());
         
-        // Smart sorting: prioritize relevance over price
-        const smartSortProducts = (products: PriceComparisonItem[], searchTerm: string) => {
-          const searchLower = searchTerm.toLowerCase();
-          const searchTerms = searchLower.split(/\s+/);
-          
-          // Calculate relevance score for each product
-          const scoredProducts = products.map(product => {
-            let relevanceScore = 0;
-            const productName = product.name.toLowerCase();
+        const matchesCategory = selectedCategory === 'all' || 
+                               material.category?.toLowerCase() === selectedCategory.toLowerCase();
+        
+        const matchesSupplier = selectedSupplier === 'all' || 
+                               material.supplier?.toLowerCase() === selectedSupplier.toLowerCase();
+        
+        return matchesSearch && matchesCategory && matchesSupplier;
+      });
+
+      console.log(`✅ Filtered to ${filteredResults.length} materials matching criteria`);
+      
+      // Process and enrich the results
+      const processedProducts: PriceComparisonItem[] = filteredResults.map(enrichProductData);
+
+      // Filter out items with 0 price
+      const validProducts = processedProducts.filter(p => p.numericPrice > 0);
+      
+      // Smart sorting: prioritize relevance over price
+      const smartSortProducts = (products: PriceComparisonItem[], searchTerm: string) => {
+        const searchLower = searchTerm.toLowerCase();
+        const searchTerms = searchLower.split(/\s+/);
+        
+        // Calculate relevance score for each product
+        const scoredProducts = products.map(product => {
+          let relevanceScore = 0;
+          const productName = product.name.toLowerCase();
             
             // Exact match bonus
             if (productName.includes(searchLower)) {
