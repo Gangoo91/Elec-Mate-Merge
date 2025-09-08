@@ -27,7 +27,7 @@ serve(async (req) => {
     console.log('📊 Checking cache status...');
     
     const { data: existingCache, error: cacheError } = await supabase
-      .from('materials_weekly_cache')
+      .from('tools_weekly_cache')
       .select('*')
       .order('created_at', { ascending: false })
       .limit(1)
@@ -52,7 +52,7 @@ serve(async (req) => {
           success: true, 
           message: 'Cache is still fresh, no refresh needed',
           expiresAt: expiresAt.toISOString(),
-          toolsCount: existingCache.materials_data?.length || 0
+          toolsCount: existingCache.tools_data?.length || 0
         }),
         { 
           headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
@@ -87,7 +87,7 @@ serve(async (req) => {
     console.log('🧹 Cleaning up old cache entries...');
     
     const { data: allCacheEntries } = await supabase
-      .from('materials_weekly_cache')
+      .from('tools_weekly_cache')
       .select('id, created_at')
       .order('created_at', { ascending: false });
 
@@ -96,7 +96,7 @@ serve(async (req) => {
       const idsToDelete = entriesToDelete.map(entry => entry.id);
       
       const { error: deleteError } = await supabase
-        .from('materials_weekly_cache')
+        .from('tools_weekly_cache')
         .delete()
         .in('id', idsToDelete);
 
