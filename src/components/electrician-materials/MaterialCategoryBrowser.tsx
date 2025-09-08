@@ -5,9 +5,10 @@ import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
 import { Cable, Zap, Shield, Package, Building, TrendingUp, Star, ArrowRight, Users, Award, Loader2, RefreshCw, Wrench, Anchor, Settings, Router, Thermometer, Car, AlertTriangle } from "lucide-react";
 import { useMaterialsData } from "@/hooks/useMaterialsData";
+import RefreshButton from "@/components/electrician-materials/RefreshButton";
 
 const MaterialCategoryBrowser = () => {
-  const { data: categories, isLoading, error, refetch, isRefetching } = useMaterialsData();
+  const { data: categories, isLoading, error, refetch, isRefetching, totalMaterials } = useMaterialsData();
 
   const categoryIcons = {
     cables: Cable,
@@ -69,26 +70,25 @@ const MaterialCategoryBrowser = () => {
       <div className="text-center space-y-3">
         <div className="flex items-center justify-center gap-3">
           <h2 className="text-3xl font-bold text-white">Browse by Category</h2>
-          {!isLoading && (
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => refetch()}
-              disabled={isRefetching}
-              className="text-elec-yellow hover:text-elec-yellow/80"
-            >
-              {isRefetching ? (
-                <Loader2 className="h-4 w-4 animate-spin" />
-              ) : (
-                <RefreshCw className="h-4 w-4" />
-              )}
-            </Button>
-          )}
         </div>
         <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
           Explore our comprehensive range of electrical materials organised by category. 
           Find everything you need for professional electrical installations.
         </p>
+        {totalMaterials === 0 && !isLoading && (
+          <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-4 max-w-md mx-auto">
+            <p className="text-white text-sm mb-3">
+              No materials data available. Click below to fetch the latest pricing and product information.
+            </p>
+            <RefreshButton
+              isFetching={isRefetching}
+              lastFetchTime={0}
+              onRefresh={refetch}
+              categoryId="all"
+              className="justify-center"
+            />
+          </div>
+        )}
       </div>
 
       {isLoading ? (

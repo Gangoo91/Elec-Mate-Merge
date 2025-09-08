@@ -251,44 +251,8 @@ export const useMaterialsData = () => {
           }
         }
         
-        // If no valid cache data, fall back to the cache function
-        console.log('⚠️ No valid cache found, trying materials-weekly-cache function...');
-        const { data, error } = await supabase.functions.invoke('materials-weekly-cache', {
-          body: {}
-        });
-        
-        if (!error && data && data.data && data.data.length > 0) {
-          console.log(`✅ Received ${data.data?.length || 0} categories from cache function`);
-          return {
-            data: data.data || defaultCategoryData,
-            rawMaterials: data.rawMaterials || [],
-            fromCache: data.fromCache || false,
-            totalMaterials: data.totalMaterials || 0
-          };
-        }
-
-        // Final fallback to cables cache or defaults
-        console.log('⚠️ Cache sources empty, checking cables cache...');
-        const { data: cablesCache, error: cablesCacheError } = await supabase
-          .from('cables_materials_cache')
-          .select('product_data')
-          .order('created_at', { ascending: false })
-          .limit(1)
-          .single();
-        
-        if (!cablesCacheError && cablesCache?.product_data && Array.isArray(cablesCache.product_data)) {
-          const materialsData = cablesCache.product_data as unknown as MaterialItem[];
-          console.log(`✅ Got ${materialsData.length} materials from cables cache fallback`);
-          const processedData = processMaterialsData(materialsData);
-          return {
-            data: processedData,
-            rawMaterials: materialsData,
-            fromCache: true,
-            totalMaterials: materialsData.length
-          };
-        }
-
-        console.log('📊 All cache sources failed, using default categories');
+        // No API calls - just return default data
+        console.log('📊 No cache data found, returning defaults (manual refresh required)');
         return {
           data: defaultCategoryData,
           rawMaterials: [],
