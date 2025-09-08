@@ -12,7 +12,7 @@ const suppliers = [
 const productList = [
   {
     category: "Cables & Wiring",
-    items: ["Twin & Earth cable"],
+    items: ["Twin & Earth cable", "SWA cable", "armoured cable", "data cable"],
   },
   {
     category: "Electrical Components",
@@ -33,6 +33,34 @@ const productList = [
   {
     category: "Electrical Tools",
     items: ["Testing equipment", "Hand tools", "Power tools"],
+  },
+  {
+    category: "Fixings & Consumables",
+    items: ["screws", "plugs", "cable ties", "electrical tape", "installation consumables"],
+  },
+  {
+    category: "Cable Management & Conduit",
+    items: ["trunking", "conduit", "cable trays", "cable management", "cable ladder"],
+  },
+  {
+    category: "Smart Home & Controls",
+    items: ["smart switches", "dimmers", "automation", "smart thermostats", "control systems"],
+  },
+  {
+    category: "Data & Networking",
+    items: ["Cat6 cable", "patch panels", "network switches", "ethernet cable", "fibre optic"],
+  },
+  {
+    category: "Heating Controls",
+    items: ["thermostats", "zone valves", "heating timers", "boiler controls", "room stats"],
+  },
+  {
+    category: "EV Charging",
+    items: ["EV charging points", "electric vehicle charger", "Type 2 cable", "charging station"],
+  },
+  {
+    category: "Fire & Security",
+    items: ["fire alarms", "smoke detectors", "security panels", "fire extinguisher", "alarm systems"],
   }
 ];
 

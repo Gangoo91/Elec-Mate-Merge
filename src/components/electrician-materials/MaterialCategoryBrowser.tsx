@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
-import { Cable, Zap, Shield, Package, Building, TrendingUp, Star, ArrowRight, Users, Award, Loader2, RefreshCw } from "lucide-react";
+import { Cable, Zap, Shield, Package, Building, TrendingUp, Star, ArrowRight, Users, Award, Loader2, RefreshCw, Wrench, Anchor, Settings, Router, Thermometer, Car, AlertTriangle } from "lucide-react";
 import { useMaterialsData } from "@/hooks/useMaterialsData";
 
 const MaterialCategoryBrowser = () => {
@@ -14,7 +14,15 @@ const MaterialCategoryBrowser = () => {
     components: Zap,
     protection: Shield,
     accessories: Package,
-    lighting: Building
+    lighting: Building,
+    tools: Wrench,
+    fixings: Anchor,
+    "cable-management": Settings,
+    "smart-home": Router,
+    "data-networking": Router,
+    "heating-controls": Thermometer,
+    "ev-charging": Car,
+    "fire-security": AlertTriangle
   };
 
   const categoryDescriptions = {
@@ -22,7 +30,15 @@ const MaterialCategoryBrowser = () => {
     components: "Consumer units, MCBs, RCDs and distribution boards",
     protection: "Earth rods, surge protectors and safety devices",
     accessories: "Junction boxes, cable glands and fixing accessories",
-    lighting: "LED downlights, emergency lighting and battens"
+    lighting: "LED downlights, emergency lighting and battens",
+    tools: "Testing equipment, hand tools and power tools",
+    fixings: "Screws, plugs, cable ties and installation consumables",
+    "cable-management": "Trunking, conduit, cable trays and management systems",
+    "smart-home": "Smart switches, dimmers and automation controls",
+    "data-networking": "Cat6 cables, patch panels and network equipment",
+    "heating-controls": "Thermostats, zone valves and heating timers",
+    "ev-charging": "Electric vehicle charging points and accessories",
+    "fire-security": "Fire alarms, smoke detectors and security systems"
   };
 
   if (error) {

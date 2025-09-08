@@ -37,7 +37,15 @@ const categoryMapping: Record<string, string> = {
   "Electrical Components": "components", 
   "Protection Equipment": "protection",
   "Installation Accessories": "accessories",
-  "Lighting Solutions": "lighting"
+  "Lighting Solutions": "lighting",
+  "Electrical Tools": "tools",
+  "Fixings & Consumables": "fixings",
+  "Cable Management & Conduit": "cable-management",
+  "Smart Home & Controls": "smart-home",
+  "Data & Networking": "data-networking",
+  "Heating Controls": "heating-controls",
+  "EV Charging": "ev-charging",
+  "Fire & Security": "fire-security"
 };
 
 const defaultCategoryData: ProcessedCategoryData[] = [
@@ -85,6 +93,78 @@ const defaultCategoryData: ProcessedCategoryData[] = [
     topBrands: ["Ansell", "Kosnic", "Aurora"],
     popularItems: [],
     trending: true
+  },
+  {
+    id: "tools",
+    title: "Electrical Tools",
+    productCount: 0,
+    priceRange: "Loading...",
+    topBrands: ["Fluke", "Megger", "DeWalt"],
+    popularItems: [],
+    trending: false
+  },
+  {
+    id: "fixings",
+    title: "Fixings & Consumables",
+    productCount: 0,
+    priceRange: "Loading...",
+    topBrands: ["Fischer", "Rawlplug", "Hellermann"],
+    popularItems: [],
+    trending: true
+  },
+  {
+    id: "cable-management",
+    title: "Cable Management & Conduit",
+    productCount: 0,
+    priceRange: "Loading...",
+    topBrands: ["Marshall Tufflex", "Legrand", "Deta"],
+    popularItems: [],
+    trending: false
+  },
+  {
+    id: "smart-home",
+    title: "Smart Home & Controls",
+    productCount: 0,
+    priceRange: "Loading...",
+    topBrands: ["Philips Hue", "Nest", "Schneider"],
+    popularItems: [],
+    trending: true
+  },
+  {
+    id: "data-networking",
+    title: "Data & Networking",
+    productCount: 0,
+    priceRange: "Loading...",
+    topBrands: ["Panduit", "Excel", "Connectix"],
+    popularItems: [],
+    trending: false
+  },
+  {
+    id: "heating-controls",
+    title: "Heating Controls",
+    productCount: 0,
+    priceRange: "Loading...",
+    topBrands: ["Honeywell", "Drayton", "Salus"],
+    popularItems: [],
+    trending: true
+  },
+  {
+    id: "ev-charging",
+    title: "EV Charging",
+    productCount: 0,
+    priceRange: "Loading...",
+    topBrands: ["Zappi", "Pod Point", "Rolec"],
+    popularItems: [],
+    trending: true
+  },
+  {
+    id: "fire-security",
+    title: "Fire & Security",
+    productCount: 0,
+    priceRange: "Loading...",
+    topBrands: ["Aico", "Apollo", "Texecom"],
+    popularItems: [],
+    trending: false
   }
 ];
 
