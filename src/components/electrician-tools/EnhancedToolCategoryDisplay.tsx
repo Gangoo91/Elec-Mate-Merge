@@ -5,7 +5,9 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Wrench, ArrowLeft, Filter, RefreshCw, Loader2, Search, Scale, TrendingUp, Calculator, AlertTriangle, Brain, ChevronDown } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Slider } from "@/components/ui/slider";
+import { Wrench, ArrowLeft, Filter, RefreshCw, Loader2, Search, Scale, TrendingUp, Calculator, AlertTriangle, Brain, ChevronDown, SlidersHorizontal } from "lucide-react";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 
 import { MobileInputWrapper } from "@/components/ui/mobile-input-wrapper";
@@ -16,6 +18,8 @@ import BulkToolPricingCalculator from "@/components/electrician-tools/BulkToolPr
 import ToolPriceHistoryAlerts from "@/components/electrician-tools/ToolPriceHistoryAlerts";
 import { ToolAIInsights } from "./ToolAIInsights";
 import ToolRefreshButton from "@/components/electrician-tools/ToolRefreshButton";
+import ToolSearchWidget from "./ToolSearchWidget";
+import AdvancedToolSearch from "./AdvancedToolSearch";
 import { useToolsData, type ToolItem } from "@/hooks/useToolsData";
 
 const CATEGORY_META: Record<string, { title: string; description: string }> = {
@@ -60,11 +64,17 @@ const EnhancedToolCategoryDisplay = ({ categoryName }: EnhancedToolCategoryDispl
   // Use comprehensive tools data
   const { data: allTools, isLoading, error, refetch } = useToolsData();
 
-  // Filter state for the tools
+  // Enhanced filter state for the tools
   const [searchTerm, setSearchTerm] = useState("");
   const [activeTab, setActiveTab] = useState("browse");
   const [selectedItems, setSelectedItems] = useState<ToolItem[]>([]);
   const [isTabSelectorOpen, setIsTabSelectorOpen] = useState(false);
+  const [showAdvancedFilters, setShowAdvancedFilters] = useState(false);
+  const [priceRange, setPriceRange] = useState([0, 1000]);
+  const [selectedSupplier, setSelectedSupplier] = useState<string>("all");
+  const [selectedPowerSource, setSelectedPowerSource] = useState<string>("all");
+  const [selectedBrand, setSelectedBrand] = useState<string>("all");
+  const [stockStatusFilter, setStockStatusFilter] = useState<string>("all");
   const isMobile = useIsMobile();
   
   // Comprehensive category mapping function
@@ -82,7 +92,7 @@ const EnhancedToolCategoryDisplay = ({ categoryName }: EnhancedToolCategoryDispl
     return mappings[frontendCategory] || [frontendCategory];
   };
 
-  // Filter and search the tools
+  // Enhanced filter and search the tools
   const filteredTools = useMemo(() => {
     if (!allTools) return [];
     
@@ -105,9 +115,89 @@ const EnhancedToolCategoryDisplay = ({ categoryName }: EnhancedToolCategoryDispl
         tool.supplier?.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
+
+    // Apply advanced filters
+    if (selectedSupplier !== "all") {
+      categoryFiltered = categoryFiltered.filter(tool => 
+        tool.supplier?.toLowerCase() === selectedSupplier.toLowerCase()
+      );
+    }
+
+    if (selectedBrand !== "all") {
+      categoryFiltered = categoryFiltered.filter(tool => 
+        tool.name?.toLowerCase().includes(selectedBrand.toLowerCase())
+      );
+    }
+
+    if (selectedPowerSource !== "all") {
+      if (selectedPowerSource === "cordless") {
+        categoryFiltered = categoryFiltered.filter(tool => 
+          tool.name?.toLowerCase().includes("cordless") || 
+          tool.name?.toLowerCase().includes("18v") ||
+          tool.name?.toLowerCase().includes("12v") ||
+          tool.description?.toLowerCase().includes("battery")
+        );
+      } else if (selectedPowerSource === "corded") {
+        categoryFiltered = categoryFiltered.filter(tool => 
+          !tool.name?.toLowerCase().includes("cordless") && 
+          !tool.name?.toLowerCase().includes("18v") &&
+          !tool.name?.toLowerCase().includes("12v")
+        );
+      }
+    }
+
+    if (stockStatusFilter !== "all") {
+      categoryFiltered = categoryFiltered.filter(tool => 
+        tool.stockStatus?.toLowerCase() === stockStatusFilter.toLowerCase()
+      );
+    }
+
+    // Apply price range filter
+    categoryFiltered = categoryFiltered.filter(tool => {
+      const price = parseFloat(tool.price?.replace(/[£,]/g, '') || '0');
+      return price >= priceRange[0] && price <= priceRange[1];
+    });
     
     return categoryFiltered;
-  }, [allTools, categoryName, searchTerm]);
+  }, [allTools, categoryName, searchTerm, selectedSupplier, selectedBrand, selectedPowerSource, stockStatusFilter, priceRange]);
+
+  // Get unique values for filter options
+  const supplierOptions = useMemo(() => {
+    const suppliers = new Set(allTools?.map(tool => tool.supplier).filter(Boolean) || []);
+    return Array.from(suppliers);
+  }, [allTools]);
+
+  const brandOptions = useMemo(() => {
+    const brands = new Set();
+    allTools?.forEach(tool => {
+      const name = tool.name?.toLowerCase() || '';
+      if (name.includes('dewalt')) brands.add('DeWalt');
+      if (name.includes('bosch')) brands.add('Bosch');
+      if (name.includes('makita')) brands.add('Makita');
+      if (name.includes('milwaukee')) brands.add('Milwaukee');
+      if (name.includes('fluke')) brands.add('Fluke');
+      if (name.includes('kewtech')) brands.add('Kewtech');
+    });
+    return Array.from(brands) as string[];
+  }, [allTools]);
+
+  const resetFilters = () => {
+    setSearchTerm("");
+    setSelectedSupplier("all");
+    setSelectedBrand("all");
+    setSelectedPowerSource("all");
+    setStockStatusFilter("all");
+    setPriceRange([0, 1000]);
+  };
+
+  const activeFilterCount = [
+    searchTerm ? 1 : 0,
+    selectedSupplier !== "all" ? 1 : 0,
+    selectedBrand !== "all" ? 1 : 0,
+    selectedPowerSource !== "all" ? 1 : 0,
+    stockStatusFilter !== "all" ? 1 : 0,
+    priceRange[0] > 0 || priceRange[1] < 1000 ? 1 : 0
+  ].reduce((sum, count) => sum + count, 0);
 
   const pageTitle = `${meta.title} | ElecMate Professional Tools`;
   const pageDescription = `${meta.title} for UK electricians — ${meta.description}. BS 7671 18th Edition compliant guidance.`.slice(0, 160);
@@ -261,28 +351,152 @@ const EnhancedToolCategoryDisplay = ({ categoryName }: EnhancedToolCategoryDispl
             </TabsList>
           )}
 
-          {/* Search and filters for Browse tab */}
+          {/* Enhanced Search and filters for Browse tab */}
           {activeTab === "browse" && (
-            <div className="mobile-action-bar">
-              <div className="flex-1 w-full">
-                <MobileInputWrapper
-                  placeholder="Search tools..."
-                  value={searchTerm}
-                  onChange={setSearchTerm}
-                  icon={<Search className="h-4 w-4 text-elec-yellow/70" />}
-                  hint="Search by tool name, supplier, or description"
-                />
+            <>
+              <div className="mobile-action-bar">
+                <div className="flex-1 w-full">
+                  <MobileInputWrapper
+                    placeholder="Search tools..."
+                    value={searchTerm}
+                    onChange={setSearchTerm}
+                    icon={<Search className="h-4 w-4 text-elec-yellow/70" />}
+                    hint="Search by tool name, supplier, or description"
+                  />
+                </div>
+                <div className="flex items-center gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setShowAdvancedFilters(!showAdvancedFilters)}
+                    className="shrink-0 touch-target bg-elec-gray/50 border-elec-yellow/30 text-elec-light hover:bg-elec-yellow/10 relative"
+                  >
+                    <SlidersHorizontal className="h-4 w-4" />
+                    {activeFilterCount > 0 && (
+                      <Badge className="absolute -top-2 -right-2 h-5 w-5 rounded-full p-0 flex items-center justify-center bg-elec-yellow text-elec-dark text-xs">
+                        {activeFilterCount}
+                      </Badge>
+                    )}
+                  </Button>
+                  <ToolRefreshButton
+                    isFetching={isLoading}
+                    lastFetchTime={0}
+                    onRefresh={refetch}
+                    categoryName={categoryName}
+                    className="shrink-0 touch-target"
+                  />
+                </div>
               </div>
-              <div className="flex items-center">
-                <ToolRefreshButton
-                  isFetching={isLoading}
-                  lastFetchTime={0} // No static data - would come from actual cache metadata
-                  onRefresh={refetch}
-                  categoryName={categoryName}
-                  className="shrink-0 touch-target"
-                />
-              </div>
-            </div>
+
+              {/* Advanced Filters Panel */}
+              {showAdvancedFilters && (
+                <Card className="mobile-card bg-elec-card/50 border-elec-yellow/20 mt-4">
+                  <CardContent className="p-4 space-y-4">
+                    <div className="flex items-center justify-between">
+                      <h3 className="text-lg font-semibold text-elec-light">Advanced Filters</h3>
+                      {activeFilterCount > 0 && (
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={resetFilters}
+                          className="bg-elec-yellow/10 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/20"
+                        >
+                          Reset ({activeFilterCount})
+                        </Button>
+                      )}
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                      {/* Supplier Filter */}
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium text-elec-light">Supplier</label>
+                        <Select value={selectedSupplier} onValueChange={setSelectedSupplier}>
+                          <SelectTrigger className="bg-elec-dark/50 border-elec-yellow/30">
+                            <SelectValue placeholder="All suppliers" />
+                          </SelectTrigger>
+                          <SelectContent className="bg-elec-dark border-elec-yellow/30 z-50">
+                            <SelectItem value="all">All Suppliers</SelectItem>
+                            {supplierOptions.map(supplier => (
+                              <SelectItem key={supplier} value={supplier}>{supplier}</SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+
+                      {/* Brand Filter */}
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium text-elec-light">Brand</label>
+                        <Select value={selectedBrand} onValueChange={setSelectedBrand}>
+                          <SelectTrigger className="bg-elec-dark/50 border-elec-yellow/30">
+                            <SelectValue placeholder="All brands" />
+                          </SelectTrigger>
+                          <SelectContent className="bg-elec-dark border-elec-yellow/30 z-50">
+                            <SelectItem value="all">All Brands</SelectItem>
+                            {brandOptions.map(brand => (
+                              <SelectItem key={brand} value={brand}>{brand}</SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+
+                      {/* Power Source Filter */}
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium text-elec-light">Power Source</label>
+                        <Select value={selectedPowerSource} onValueChange={setSelectedPowerSource}>
+                          <SelectTrigger className="bg-elec-dark/50 border-elec-yellow/30">
+                            <SelectValue placeholder="All power sources" />
+                          </SelectTrigger>
+                          <SelectContent className="bg-elec-dark border-elec-yellow/30 z-50">
+                            <SelectItem value="all">All Power Sources</SelectItem>
+                            <SelectItem value="cordless">Cordless/Battery</SelectItem>
+                            <SelectItem value="corded">Corded/Mains</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+
+                      {/* Stock Status Filter */}
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium text-elec-light">Stock Status</label>
+                        <Select value={stockStatusFilter} onValueChange={setStockStatusFilter}>
+                          <SelectTrigger className="bg-elec-dark/50 border-elec-yellow/30">
+                            <SelectValue placeholder="All stock levels" />
+                          </SelectTrigger>
+                          <SelectContent className="bg-elec-dark border-elec-yellow/30 z-50">
+                            <SelectItem value="all">All Stock Levels</SelectItem>
+                            <SelectItem value="in stock">In Stock</SelectItem>
+                            <SelectItem value="low stock">Low Stock</SelectItem>
+                            <SelectItem value="out of stock">Out of Stock</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                    </div>
+
+                    {/* Price Range Slider */}
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium text-elec-light">
+                        Price Range: £{priceRange[0]} - £{priceRange[1]}
+                      </label>
+                      <Slider
+                        value={priceRange}
+                        onValueChange={setPriceRange}
+                        max={1000}
+                        min={0}
+                        step={10}
+                        className="w-full"
+                      />
+                    </div>
+
+                    {/* Tool Search Widget */}
+                    <div className="pt-4 border-t border-elec-yellow/20">
+                      <ToolSearchWidget onSearch={(query, filters, location) => {
+                        setSearchTerm(query);
+                        // Handle additional filters from widget
+                      }} />
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
+            </>
           )}
 
           {/* Quick Compare Bar */}
