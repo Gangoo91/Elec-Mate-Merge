@@ -7,7 +7,7 @@ import { Cable, Zap, Shield, Package, Building, TrendingUp, Star, ArrowRight, Us
 import { useMaterialsData } from "@/hooks/useMaterialsData";
 
 const MaterialCategoryBrowser = () => {
-  const { data: categories, isLoading, error, refetch, isRefetching, isToolData, totalMaterials } = useMaterialsData();
+  const { data: categories, isLoading, error, refetch, isRefetching } = useMaterialsData();
 
   const categoryIcons = {
     cables: Cable,
@@ -69,16 +69,6 @@ const MaterialCategoryBrowser = () => {
             </Button>
           )}
         </div>
-        {isToolData && (
-          <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg p-4 max-w-2xl mx-auto">
-            <p className="text-amber-400 text-sm font-medium">
-              📦 Showing tools data as interim materials catalog ({totalMaterials} items available)
-            </p>
-            <p className="text-amber-300/80 text-xs mt-1">
-              We're currently displaying electrical tools organized by material categories. Full electrical materials coming soon!
-            </p>
-          </div>
-        )}
         <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
           Explore our comprehensive range of electrical materials organised by category. 
           Find everything you need for professional electrical installations.
