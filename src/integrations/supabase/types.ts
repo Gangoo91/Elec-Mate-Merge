@@ -62,6 +62,107 @@ export type Database = {
         }
         Relationships: []
       }
+      batch_jobs: {
+        Row: {
+          completed_at: string | null
+          completed_batches: number
+          created_at: string
+          current_batch: number
+          error_message: string | null
+          failed_batches: number
+          id: string
+          job_type: string
+          metadata: Json | null
+          progress_percentage: number
+          started_at: string | null
+          status: string
+          total_batches: number
+          updated_at: string
+        }
+        Insert: {
+          completed_at?: string | null
+          completed_batches?: number
+          created_at?: string
+          current_batch?: number
+          error_message?: string | null
+          failed_batches?: number
+          id?: string
+          job_type: string
+          metadata?: Json | null
+          progress_percentage?: number
+          started_at?: string | null
+          status?: string
+          total_batches?: number
+          updated_at?: string
+        }
+        Update: {
+          completed_at?: string | null
+          completed_batches?: number
+          created_at?: string
+          current_batch?: number
+          error_message?: string | null
+          failed_batches?: number
+          id?: string
+          job_type?: string
+          metadata?: Json | null
+          progress_percentage?: number
+          started_at?: string | null
+          status?: string
+          total_batches?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      batch_progress: {
+        Row: {
+          batch_number: number
+          completed_at: string | null
+          created_at: string
+          data: Json | null
+          error_message: string | null
+          id: string
+          items_processed: number
+          job_id: string
+          started_at: string | null
+          status: string
+          total_items: number
+        }
+        Insert: {
+          batch_number: number
+          completed_at?: string | null
+          created_at?: string
+          data?: Json | null
+          error_message?: string | null
+          id?: string
+          items_processed?: number
+          job_id: string
+          started_at?: string | null
+          status?: string
+          total_items?: number
+        }
+        Update: {
+          batch_number?: number
+          completed_at?: string | null
+          created_at?: string
+          data?: Json | null
+          error_message?: string | null
+          id?: string
+          items_processed?: number
+          job_id?: string
+          started_at?: string | null
+          status?: string
+          total_items?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "batch_progress_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: false
+            referencedRelation: "batch_jobs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       cables_materials_cache: {
         Row: {
           category: string
@@ -2673,6 +2774,39 @@ export type Database = {
         }
         Relationships: []
       }
+      tools_weekly_cache: {
+        Row: {
+          category: string
+          created_at: string
+          expires_at: string
+          id: string
+          last_updated: string | null
+          tools_data: Json
+          total_products: number
+          update_status: string | null
+        }
+        Insert: {
+          category: string
+          created_at?: string
+          expires_at?: string
+          id?: string
+          last_updated?: string | null
+          tools_data?: Json
+          total_products?: number
+          update_status?: string | null
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          expires_at?: string
+          id?: string
+          last_updated?: string | null
+          tools_data?: Json
+          total_products?: number
+          update_status?: string | null
+        }
+        Relationships: []
+      }
       training_evidence: {
         Row: {
           assessment_criteria: string[] | null
@@ -2952,6 +3086,10 @@ export type Database = {
         Returns: undefined
       }
       cleanup_expired_tool_cache: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
+      cleanup_expired_tools_cache: {
         Args: Record<PropertyKey, never>
         Returns: undefined
       }
