@@ -12,7 +12,7 @@ serve(async (req) => {
   }
 
   try {
-    console.log('🔄 Tools Weekly Refresh started');
+    console.log('🔄 Tools Bi-weekly Refresh started');
     
     // Parse request body to check for force refresh
     const body = req.method === 'POST' ? await req.json().catch(() => ({})) : {};
@@ -23,7 +23,7 @@ serve(async (req) => {
     
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-    // Check if cache needs refresh (expired or doesn't exist)
+    // Check if cache needs refresh (expired or doesn't exist) - now 14 days
     console.log('📊 Checking cache status...');
     
     const { data: existingCache, error: cacheError } = await supabase
@@ -50,7 +50,7 @@ serve(async (req) => {
       return new Response(
         JSON.stringify({ 
           success: true, 
-          message: 'Cache is still fresh, no refresh needed',
+          message: 'Cache is still fresh, no refresh needed (bi-weekly cycle)',
           expiresAt: expiresAt.toISOString(),
           toolsCount: existingCache.tools_data?.length || 0
         }),
@@ -64,24 +64,47 @@ serve(async (req) => {
       console.log('🔄 Force refresh requested, bypassing cache expiry checks...');
     }
 
-    console.log('🔄 Cache expired or missing, triggering refresh...');
+    console.log('🔄 Cache expired or missing, triggering bi-weekly batch refresh...');
 
-    // Call the comprehensive tools scraper
-    console.log('🔄 Invoking comprehensive-tools-scraper...');
+    // Check if there's already a batch job running
+    const { data: runningJobs } = await supabase
+      .from('batch_jobs')
+      .select('*')
+      .eq('job_type', 'tools_scraping')
+      .in('status', ['pending', 'processing'])
+      .order('created_at', { ascending: false })
+      .limit(1);
+
+    if (runningJobs && runningJobs.length > 0) {
+      const runningJob = runningJobs[0];
+      console.log(`⏳ Batch job already running: ${runningJob.id}`);
+      
+      return new Response(JSON.stringify({
+        success: true,
+        message: 'Batch refresh already in progress',
+        jobId: runningJob.id,
+        status: runningJob.status,
+        progress: runningJob.progress_percentage || 0
+      }), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      });
+    }
+
+    // Call the tools batch processor
+    console.log('🔄 Invoking tools-batch-processor...');
     const { data: refreshResult, error: refreshError } = await supabase.functions.invoke(
-      'comprehensive-tools-scraper',
-      { body: {} }
+      'tools-batch-processor',
+      { body: { forceRefresh } }
     );
     
-    console.log('📊 Scraper result:', refreshResult);
-    console.log('⚠️ Scraper error:', refreshError);
+    console.log('📊 Batch processor result:', refreshResult);
 
     if (refreshError) {
-      console.error('❌ Error calling comprehensive-tools-scraper:', refreshError);
+      console.error('❌ Error calling tools-batch-processor:', refreshError);
       throw refreshError;
     }
 
-    console.log('✅ Tools refresh completed:', refreshResult);
+    console.log('✅ Tools bi-weekly refresh completed:', refreshResult);
 
     // Clean up old cache entries (keep only the latest 3)
     console.log('🧹 Cleaning up old cache entries...');
@@ -109,12 +132,12 @@ serve(async (req) => {
 
     const responseData = {
       success: true,
-      message: 'Tools weekly refresh completed successfully',
+      message: 'Tools bi-weekly refresh completed successfully',
       refreshedAt: now.toISOString(),
       ...refreshResult
     };
 
-    console.log('🎉 Tools weekly refresh completed successfully');
+    console.log('🎉 Tools bi-weekly refresh completed successfully');
 
     return new Response(
       JSON.stringify(responseData),
@@ -124,7 +147,7 @@ serve(async (req) => {
     );
 
   } catch (error) {
-    console.error('❌ Error in tools-weekly-refresh:', error);
+    console.error('❌ Error in tools-bi-weekly-refresh:', error);
     
     return new Response(
       JSON.stringify({ 

@@ -3116,6 +3116,10 @@ export type Database = {
         Args: Record<PropertyKey, never>
         Returns: string
       }
+      get_next_biweekly_refresh: {
+        Args: Record<PropertyKey, never>
+        Returns: string
+      }
       get_next_sunday_education_refresh: {
         Args: Record<PropertyKey, never>
         Returns: string

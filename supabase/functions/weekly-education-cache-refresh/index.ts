@@ -26,7 +26,7 @@ Deno.serve(async (req) => {
   }
 
   try {
-    console.log('🔄 Weekly Education Cache Refresh starting...');
+    console.log('🔄 Bi-weekly Education Cache Refresh starting...');
     
     // Get all cache entries that need refreshing (expired or scheduled)
     const { data: cacheEntries, error: fetchError } = await supabase
@@ -133,11 +133,11 @@ Deno.serve(async (req) => {
     const failedCount = refreshResults.filter(r => r.status === 'failed').length;
     const totalCourses = refreshResults.reduce((sum, r) => sum + (r.courseCount || 0), 0);
 
-    console.log(`📊 Weekly refresh complete: ${successCount} successful, ${failedCount} failed, ${totalCourses} total courses`);
+    console.log(`📊 Bi-weekly refresh complete: ${successCount} successful, ${failedCount} failed, ${totalCourses} total courses`);
 
     return new Response(JSON.stringify({
       success: true,
-      message: 'Weekly education cache refresh completed',
+      message: 'Bi-weekly education cache refresh completed',
       summary: {
         categories_processed: categoriesToRefresh.length,
         successful_refreshes: successCount,
@@ -151,7 +151,7 @@ Deno.serve(async (req) => {
     });
 
   } catch (error) {
-    console.error('❌ Error in weekly education cache refresh:', error);
+    console.error('❌ Error in bi-weekly education cache refresh:', error);
     
     return new Response(JSON.stringify({
       success: false,

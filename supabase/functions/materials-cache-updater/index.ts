@@ -20,7 +20,7 @@ serve(async (req) => {
     const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-    // Check if cache was recently updated (within last 6 days)
+    // Check if cache was recently updated (within last 13 days for bi-weekly cycle)
     const { data: existingCache, error: cacheError } = await supabase
       .from('materials_weekly_cache')
       .select('created_at, expires_at')
@@ -30,14 +30,14 @@ serve(async (req) => {
 
     if (!cacheError && existingCache) {
       const cacheAge = Date.now() - new Date(existingCache.created_at).getTime();
-      const sixDaysInMs = 6 * 24 * 60 * 60 * 1000; // 6 days
+      const thirteenDaysInMs = 13 * 24 * 60 * 60 * 1000; // 13 days (bi-weekly with 1 day buffer)
       
-      if (cacheAge < sixDaysInMs) {
+      if (cacheAge < thirteenDaysInMs) {
         console.log('⏰ Cache is still fresh, skipping update');
         return new Response(
           JSON.stringify({ 
             success: true, 
-            message: 'Cache is still fresh',
+            message: 'Cache is still fresh (bi-weekly cycle)',
             cacheAge: Math.floor(cacheAge / (24 * 60 * 60 * 1000)),
             nextUpdateDue: existingCache.expires_at
           }),

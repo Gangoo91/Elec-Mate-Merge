@@ -16,7 +16,7 @@ serve(async (req) => {
   }
 
   try {
-    console.log('🔄 Starting weekly cache refresh process...');
+    console.log('🔄 Starting bi-weekly cache refresh process...');
     
     // Create Supabase client
     const supabase = createClient(supabaseUrl!, supabaseServiceKey!);
@@ -36,7 +36,7 @@ serve(async (req) => {
       console.log('✅ No guides need refreshing at this time');
       return new Response(JSON.stringify({ 
         success: true, 
-        message: 'No guides needed refreshing',
+        message: 'No guides needed refreshing (bi-weekly cycle)',
         refreshedCount: 0,
         timestamp: new Date().toISOString()
       }), {
@@ -109,21 +109,21 @@ serve(async (req) => {
 
     const result = {
       success: true,
-      message: `Weekly cache refresh completed`,
+      message: `Bi-weekly cache refresh completed`,
       refreshedCount,
       totalGuides: guidesToRefresh.length,
       errors: errors.length > 0 ? errors : undefined,
       timestamp: new Date().toISOString()
     };
 
-    console.log('📊 Weekly refresh summary:', result);
+    console.log('📊 Bi-weekly refresh summary:', result);
 
     return new Response(JSON.stringify(result), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
 
   } catch (error) {
-    console.error('❌ Weekly cache refresh failed:', error);
+    console.error('❌ Bi-weekly cache refresh failed:', error);
     
     return new Response(JSON.stringify({ 
       success: false,
