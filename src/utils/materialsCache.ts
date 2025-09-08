@@ -1,23 +1,23 @@
 import { supabase } from '@/integrations/supabase/client';
 
-// Trigger weekly materials cache update using the materials-weekly-cache function
+// Trigger weekly materials cache update using the materials-cache-updater function
 export const updateMaterialsCache = async () => {
   try {
-    console.log('🔄 Triggering materials weekly refresh with force refresh...');
+    console.log('🔄 Triggering materials cache updater to populate with electrical materials...');
     
-    const { data, error } = await supabase.functions.invoke('materials-weekly-cache', {
-      body: { forceRefresh: true }
+    const { data, error } = await supabase.functions.invoke('materials-cache-updater', {
+      body: {}
     });
     
     if (error) {
-      console.error('Materials refresh error:', error);
+      console.error('Materials cache update error:', error);
       return { success: false, error: error.message };
     }
     
-    console.log('✅ Materials refresh completed:', data);
+    console.log('✅ Materials cache update completed:', data);
     return { success: true, data };
   } catch (error) {
-    console.error('Materials refresh failed:', error);
+    console.error('Materials cache update failed:', error);
     return { success: false, error: error.message };
   }
 };
