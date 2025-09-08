@@ -126,13 +126,71 @@ const MaterialPriceComparison = ({ onAddToQuote, onAddMultipleToQuote }: Materia
   const [hasSearched, setHasSearched] = useState(false);
   const [sortBy, setSortBy] = useState<'relevance' | 'price-low' | 'price-high' | 'supplier'>('relevance');
   const [selectedMaterials, setSelectedMaterials] = useState<Set<number>>(new Set());
+  const [isInitializing, setIsInitializing] = useState(true);
+  const [hasAttemptedAutoRefresh, setHasAttemptedAutoRefresh] = useState(false);
 
   useEffect(() => {
-    // Show pre-selected materials on component mount
-    const enrichedDefaults = defaultMaterials.map(enrichProductData);
-    setFilteredMaterials(enrichedDefaults);
-    setAllMaterials(enrichedDefaults);
-  }, []);
+    // Check cache on component mount and auto-trigger refresh if empty
+    const checkCacheAndAutoRefresh = async () => {
+      setIsInitializing(true);
+      try {
+        console.log('🔍 Checking cache on component mount...');
+        const { data: cacheEntries, error } = await supabase
+          .from('materials_weekly_cache')
+          .select('materials_data, created_at')
+          .gt('expires_at', new Date().toISOString())
+          .order('created_at', { ascending: false });
+
+        if (!error && cacheEntries && cacheEntries.length > 0) {
+          const allMaterials = cacheEntries.flatMap((entry: any) => entry.materials_data || []);
+          if (allMaterials.length > 0) {
+            console.log(`✅ Found ${allMaterials.length} materials in cache`);
+            const enrichedMaterials = allMaterials.map(enrichProductData);
+            setAllMaterials(enrichedMaterials);
+            setFilteredMaterials(enrichedMaterials.slice(0, 10)); // Show first 10 as samples
+            setShowingPreSelected(false);
+            setIsInitializing(false);
+            return;
+          }
+        }
+
+        // Cache is empty - auto-trigger refresh if not already attempted
+        if (!hasAttemptedAutoRefresh) {
+          console.log('⚠️ Cache is empty, triggering auto-refresh...');
+          setHasAttemptedAutoRefresh(true);
+          
+          toast({
+            title: "Loading Materials",
+            description: "No cached data found. Starting background refresh...",
+          });
+          
+          try {
+            await handleAutoRefresh();
+          } catch (refreshError) {
+            console.error('❌ Auto-refresh failed:', refreshError);
+            // Fall back to defaults
+            const enrichedDefaults = defaultMaterials.map(enrichProductData);
+            setFilteredMaterials(enrichedDefaults);
+            setAllMaterials(enrichedDefaults);
+          }
+        } else {
+          // Show defaults if auto-refresh already attempted
+          const enrichedDefaults = defaultMaterials.map(enrichProductData);
+          setFilteredMaterials(enrichedDefaults);
+          setAllMaterials(enrichedDefaults);
+        }
+      } catch (error) {
+        console.error('❌ Error checking cache:', error);
+        const enrichedDefaults = defaultMaterials.map(enrichProductData);
+        setFilteredMaterials(enrichedDefaults);
+        setAllMaterials(enrichedDefaults);
+      } finally {
+        setIsInitializing(false);
+      }
+    };
+
+    checkCacheAndAutoRefresh();
+  }, [hasAttemptedAutoRefresh]);
 
   const handleSearch = async () => {
     if (!searchQuery.trim()) {
@@ -234,9 +292,43 @@ const MaterialPriceComparison = ({ onAddToQuote, onAddMultipleToQuote }: Materia
     }
   };
 
+  const handleAutoRefresh = async () => {
+    try {
+      console.log('🔄 Auto-triggering materials cache refresh...');
+      
+      const { data, error } = await supabase.functions.invoke('materials-cache-updater', {
+        body: { refresh: true }
+      });
+
+      if (error) {
+        console.error('❌ Auto-refresh failed:', error);
+        throw error;
+      }
+
+      console.log('✅ Auto-refresh triggered successfully:', data);
+      
+      if (data?.action === 'skipped') {
+        toast({
+          title: "Cache Already Fresh",
+          description: "Materials data is already up to date.",
+        });
+      } else if (data?.job_id) {
+        toast({
+          title: "Background Refresh Started",
+          description: "Materials are being updated in the background. This may take a few minutes.",
+        });
+      }
+
+      return data;
+    } catch (error) {
+      console.error('❌ Auto-refresh error:', error);
+      throw error;
+    }
+  };
+
   const handleRefresh = () => {
-    console.log('🔄 Refresh triggered');
-    // This will be handled by the RefreshButton component
+    console.log('🔄 Manual refresh triggered');
+    setHasAttemptedAutoRefresh(false); // Reset so auto-refresh can run again
   };
 
   const sortedMaterials = useMemo(() => {
@@ -433,8 +525,18 @@ const MaterialPriceComparison = ({ onAddToQuote, onAddMultipleToQuote }: Materia
         </Card>
       )}
 
+      {/* Loading State */}
+      {isInitializing && (
+        <div className="flex items-center justify-center py-8">
+          <div className="flex items-center gap-3">
+            <Loader2 className="h-6 w-6 animate-spin text-primary" />
+            <span className="text-muted-foreground">Loading materials cache...</span>
+          </div>
+        </div>
+      )}
+
       {/* Results */}
-      {showingPreSelected && (
+      {!isInitializing && showingPreSelected && (
         <div className="space-y-4">
           <div className="flex items-center gap-2">
             <Star className="h-5 w-5 text-primary" />
@@ -446,117 +548,146 @@ const MaterialPriceComparison = ({ onAddToQuote, onAddMultipleToQuote }: Materia
         </div>
       )}
 
-      <div className="grid gap-4">
-        {sortedMaterials.map((item) => (
-          <Card key={item.id} className="overflow-hidden">
-            <CardContent className="p-6">
-              <div className="flex items-start gap-4">
-                {/* Checkbox for bulk selection */}
-                {onAddMultipleToQuote && (
-                  <input
-                    type="checkbox"
-                    checked={selectedMaterials.has(item.id)}
-                    onChange={() => toggleMaterialSelection(item.id)}
-                    className="mt-1"
-                  />
-                )}
+      {/* Empty Cache Warning */}
+      {!isInitializing && !showingPreSelected && sortedMaterials.length === 0 && !hasSearched && (
+        <Card className="border-yellow-500/50 bg-yellow-500/10">
+          <CardContent className="pt-6">
+            <div className="flex items-center gap-3">
+              <Loader2 className="h-5 w-5 animate-spin text-yellow-500" />
+              <div>
+                <p className="text-yellow-200 font-medium">Materials cache is being refreshed</p>
+                <p className="text-yellow-300/80 text-sm">
+                  This usually takes 5-10 minutes. You can search existing data or wait for the refresh to complete.
+                </p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
-                {/* Product Image */}
-                <div className="w-16 h-16 bg-muted rounded-lg flex items-center justify-center flex-shrink-0">
-                  <img 
-                    src={item.image} 
-                    alt={item.name}
-                    className="w-full h-full object-cover rounded-lg"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.src = '/placeholder.svg';
-                    }}
-                  />
-                </div>
-
-                {/* Product Details */}
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-start justify-between">
-                    <div className="flex-1">
-                      <h3 className="font-semibold text-white text-lg leading-tight mb-1">
-                        {item.name}
-                      </h3>
-                      <div className="flex items-center gap-2 mb-2">
-                        <Badge variant="outline" className="text-xs">
-                          {item.supplier}
-                        </Badge>
-                        <Badge variant={getStockBadgeVariant(item.stockStatus)} className="text-xs">
-                          {item.stockStatus}
-                        </Badge>
-                        <Badge variant="secondary" className="text-xs">
-                          {item.category}
-                        </Badge>
-                      </div>
-                    </div>
-
-                    {/* Price */}
-                    <div className="text-right ml-4">
-                      <div className="flex items-center gap-2">
-                        {item.isOnSale && item.originalPrice && (
-                          <span className="text-sm text-muted-foreground line-through">
-                            {item.originalPrice}
-                          </span>
-                        )}
-                        <span className="text-2xl font-bold text-primary">
-                          {item.price}
-                        </span>
-                      </div>
-                      {item.isOnSale && (
-                        <Badge variant="destructive" className="text-xs mt-1">
-                          Sale
-                        </Badge>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Highlights */}
-                  {item.highlights && item.highlights.length > 0 && (
-                    <div className="flex flex-wrap gap-1 mb-3">
-                      {item.highlights.slice(0, 3).map((highlight, idx) => (
-                        <Badge key={idx} variant="secondary" className="text-xs">
-                          <CheckCircle className="h-3 w-3 mr-1" />
-                          {highlight}
-                        </Badge>
-                      ))}
-                    </div>
+      {!isInitializing && (
+        <div className="grid gap-4">
+          {sortedMaterials.map((item) => (
+            <Card key={item.id} className="overflow-hidden">
+              <CardContent className="p-6">
+                <div className="flex items-start gap-4">
+                  {/* Checkbox for bulk selection */}
+                  {onAddMultipleToQuote && (
+                    <input
+                      type="checkbox"
+                      checked={selectedMaterials.has(item.id)}
+                      onChange={() => toggleMaterialSelection(item.id)}
+                      className="mt-1"
+                    />
                   )}
 
-                  {/* Actions */}
-                  <div className="flex items-center gap-2 mt-4">
-                    {item.productUrl && (
-                      <Button variant="outline" size="sm" asChild>
-                        <a href={item.productUrl} target="_blank" rel="noopener noreferrer">
-                          <ExternalLink className="h-4 w-4 mr-2" />
-                          View Product
-                        </a>
-                      </Button>
-                    )}
-                    
-                    {onAddToQuote && (
-                      <Button 
-                        size="sm" 
-                        onClick={() => handleAddToQuote(item)}
-                        disabled={item.stockStatus === 'Out of Stock'}
-                      >
-                        <ShoppingCart className="h-4 w-4 mr-2" />
-                        Add to Quote
-                      </Button>
-                    )}
+                  {/* Product Image */}
+                  <div className="w-16 h-16 bg-muted rounded-lg flex items-center justify-center flex-shrink-0">
+                    <img 
+                      src={item.image} 
+                      alt={item.name}
+                      className="w-full h-full object-cover rounded-lg"
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        target.src = '/placeholder.svg';
+                      }}
+                    />
+                  </div>
+
+                  {/* Product Details */}
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-start justify-between">
+                      <div className="flex-1">
+                        <h3 className="font-semibold text-white text-lg leading-tight mb-1">
+                          {item.name}
+                        </h3>
+                        <div className="flex items-center gap-2 mb-2">
+                          <Badge variant="outline" className="text-xs">
+                            {item.supplier}
+                          </Badge>
+                          <Badge variant={getStockBadgeVariant(item.stockStatus)} className="text-xs">
+                            {item.stockStatus}
+                          </Badge>
+                          <Badge variant="secondary" className="text-xs">
+                            {item.category}
+                          </Badge>
+                        </div>
+                        
+                        {/* Highlights */}
+                        {item.highlights && item.highlights.length > 0 && (
+                          <div className="flex flex-wrap gap-1 mb-2">
+                            {item.highlights.map((highlight, index) => (
+                              <span key={index} className="text-xs bg-muted text-muted-foreground px-2 py-1 rounded">
+                                {highlight}
+                              </span>
+                            ))}
+                          </div>
+                        )}
+
+                        {/* Description */}
+                        {item.description && (
+                          <p className="text-sm text-muted-foreground mb-2 line-clamp-2">
+                            {item.description}
+                          </p>
+                        )}
+                      </div>
+
+                      {/* Price and Actions */}
+                      <div className="flex flex-col items-end gap-2 ml-4">
+                        <div className="text-right">
+                          {item.isOnSale && item.originalPrice && (
+                            <div className="text-sm text-muted-foreground line-through">
+                              {item.originalPrice}
+                            </div>
+                          )}
+                          <div className="text-2xl font-bold text-white">
+                            {item.price}
+                          </div>
+                          {item.pricePerUnit && (
+                            <div className="text-xs text-muted-foreground">
+                              {item.pricePerUnit}
+                            </div>
+                          )}
+                        </div>
+
+                        <div className="flex gap-2">
+                          {item.productUrl && (
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              className="h-8 px-3"
+                              asChild
+                            >
+                              <a href={item.productUrl} target="_blank" rel="noopener noreferrer">
+                                <ExternalLink className="h-3 w-3" />
+                              </a>
+                            </Button>
+                          )}
+                          
+                          {onAddToQuote && (
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              className="h-8 px-3"
+                              onClick={() => handleAddToQuote(item)}
+                            >
+                              <Plus className="h-3 w-3 mr-1" />
+                              Quote
+                            </Button>
+                          )}
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      )}
 
       {/* Empty State */}
-      {!showingPreSelected && sortedMaterials.length === 0 && !isLoading && (
+      {!isInitializing && !showingPreSelected && sortedMaterials.length === 0 && !isLoading && hasSearched && (
         <Card>
           <CardContent className="text-center py-12">
             <Search className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
@@ -568,6 +699,9 @@ const MaterialPriceComparison = ({ onAddToQuote, onAddMultipleToQuote }: Materia
               setSearchQuery('');
               setSelectedCategory('all');
               setSelectedSupplier('all');
+              const enrichedDefaults = defaultMaterials.map(enrichProductData);
+              setFilteredMaterials(enrichedDefaults);
+              setAllMaterials(enrichedDefaults);
               setShowingPreSelected(true);
               setHasSearched(false);
             }}>
