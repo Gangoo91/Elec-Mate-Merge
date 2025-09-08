@@ -216,16 +216,15 @@ const MaterialPriceComparison = ({
     setShowingPreSelected(false);
     
     try {
-      console.log('📡 Fetching from materials cache...');
-      const { data, error } = await supabase.functions.invoke('materials-weekly-cache', {
-        body: { 
-          categoryFilter: selectedCategory === 'all' ? null : selectedCategory, 
-          supplierFilter: selectedSupplier === 'all' ? null : selectedSupplier, 
-          searchTerm: searchQuery.trim()
-        }
-      });
+      // Use the cache-first strategy by directly querying the database
+      console.log('📊 Searching materials from cache...');
+      const { data: cacheEntries, error } = await supabase
+        .from('materials_weekly_cache')
+        .select('materials_data')
+        .gt('expires_at', new Date().toISOString())
+        .order('created_at', { ascending: false });
 
-      console.log('📡 Scraper response:', { data, error });
+      console.log('📊 Cache query response:', { cacheEntries, error });
 
       if (error) {
         console.error('❌ Scraper error:', error);
