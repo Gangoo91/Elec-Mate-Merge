@@ -182,7 +182,7 @@ const MaterialCategoryBrowser = () => {
                   )}
 
                   <Button asChild className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90 transition-colors">
-                    <Link to={`/materials/category/${category.id}`}>
+                    <Link to={`/electrician/materials/category/${category.id}`}>
                       Browse {category.title}
                       <ArrowRight className="h-4 w-4 ml-2" />
                     </Link>
