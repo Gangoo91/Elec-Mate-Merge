@@ -216,8 +216,8 @@ const MaterialPriceComparison = ({
     setShowingPreSelected(false);
     
     try {
-      console.log('📡 Calling comprehensive-materials-scraper...');
-      const { data, error } = await supabase.functions.invoke('comprehensive-materials-scraper', {
+      console.log('📡 Fetching from materials cache...');
+      const { data, error } = await supabase.functions.invoke('materials-weekly-cache', {
         body: { 
           categoryFilter: selectedCategory === 'all' ? null : selectedCategory, 
           supplierFilter: selectedSupplier === 'all' ? null : selectedSupplier, 

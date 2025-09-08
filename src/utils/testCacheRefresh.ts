@@ -4,7 +4,7 @@ export const testCacheRefresh = async () => {
   try {
     console.log('🔄 Testing cache refresh via materials-weekly-cache...');
     
-    const { data, error } = await supabase.functions.invoke('materials-weekly-cache', {
+    const { data, error } = await supabase.functions.invoke('materials-cache-updater', {
       body: { forceRefresh: true }
     });
     
