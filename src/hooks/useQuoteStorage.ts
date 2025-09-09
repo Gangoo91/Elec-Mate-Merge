@@ -140,6 +140,8 @@ export const useQuoteStorage = () => {
     const pending = savedQuotes.filter(q => q.status === 'pending').length;
     const sent = savedQuotes.filter(q => q.status === 'sent').length;
     const completed = savedQuotes.filter(q => q.status === 'completed').length;
+    const rejected = savedQuotes.filter(q => q.status === 'rejected').length;
+    const draft = savedQuotes.filter(q => q.status === 'draft').length;
     const awaitingPayment = savedQuotes.filter(q => q.tags?.includes('awaiting_payment')).length;
     
     // Calculate this month's total from completed quotes
@@ -153,6 +155,8 @@ export const useQuoteStorage = () => {
       pending,
       sent,
       completed,
+      rejected,
+      draft,
       awaitingPayment,
       monthlyTotal,
       totalQuotes: savedQuotes.length

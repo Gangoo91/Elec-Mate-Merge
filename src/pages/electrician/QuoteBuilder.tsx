@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { Plus, FileText, Clock, CheckCircle, TrendingUp, ArrowLeft } from "lucide-react";
+import { Plus, FileText, Clock, CheckCircle, TrendingUp, ArrowLeft, XCircle } from "lucide-react";
 import { QuoteWizard } from "@/components/electrician/quote-builder/QuoteWizard";
 import RecentQuotesList from "@/components/electrician/quote-builder/RecentQuotesList";
 import { useQuoteStorage } from "@/hooks/useQuoteStorage";
@@ -43,6 +43,12 @@ const QuoteBuilder = () => {
       value: stats.completed.toString(),
       icon: CheckCircle,
       color: "text-green-400",
+    },
+    {
+      title: "Rejected Quotes",
+      value: stats.rejected.toString(),
+      icon: XCircle,
+      color: "text-red-400",
     },
     {
       title: "This Month",
@@ -125,7 +131,7 @@ const QuoteBuilder = () => {
               </div>
             </div>
             
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 lg:gap-6">
               {statCards.map((stat, index) => (
                 <Card key={index} className="group relative overflow-hidden border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] bg-gradient-to-br from-card to-card/50">
                   <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
