@@ -20,30 +20,39 @@ serve(async (req) => {
     const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-    // Check if cache was recently updated (within last 13 days for bi-weekly cycle)
-    const { data: existingCache, error: cacheError } = await supabase
-      .from('materials_weekly_cache')
-      .select('created_at, expires_at')
-      .order('created_at', { ascending: false })
-      .limit(1)
-      .single();
+    // Parse request body to check for force refresh
+    const body = req.method === 'POST' ? await req.json().catch(() => ({})) : {};
+    const forceRefresh = body.refresh === true || body.forceRefresh === true;
 
-    if (!cacheError && existingCache) {
-      const cacheAge = Date.now() - new Date(existingCache.created_at).getTime();
-      const thirteenDaysInMs = 13 * 24 * 60 * 60 * 1000; // 13 days (bi-weekly with 1 day buffer)
-      
-      if (cacheAge < thirteenDaysInMs) {
-        console.log('⏰ Cache is still fresh, skipping update');
-        return new Response(
-          JSON.stringify({ 
-            success: true, 
-            message: 'Cache is still fresh (bi-weekly cycle)',
-            cacheAge: Math.floor(cacheAge / (24 * 60 * 60 * 1000)),
-            nextUpdateDue: existingCache.expires_at
-          }),
-          { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-        );
+    if (!forceRefresh) {
+      // Check if cache was recently updated (within last 7 days for weekly cycle)
+      const { data: existingCache, error: cacheError } = await supabase
+        .from('materials_weekly_cache')
+        .select('created_at, expires_at')
+        .order('created_at', { ascending: false })
+        .limit(1)
+        .single();
+
+      if (!cacheError && existingCache) {
+        const cacheAge = Date.now() - new Date(existingCache.created_at).getTime();
+        const sevenDaysInMs = 7 * 24 * 60 * 60 * 1000; // 7 days
+        
+        if (cacheAge < sevenDaysInMs) {
+          console.log('⏰ Cache is still fresh, skipping update');
+          return new Response(
+            JSON.stringify({ 
+              success: true, 
+              message: 'Cache is still fresh (weekly cycle)',
+              cacheAge: Math.floor(cacheAge / (24 * 60 * 60 * 1000)),
+              nextUpdateDue: existingCache.expires_at,
+              skipReason: 'cache_fresh'
+            }),
+            { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+          );
+        }
       }
+    } else {
+      console.log('🔄 Force refresh requested, bypassing cache freshness check');
     }
 
     console.log('🔄 Starting batch processing for materials data...');

@@ -200,6 +200,12 @@ async function processAllBatches(supabase: any, jobId: string) {
   try {
     console.log('🚀 Starting batch processing for materials scraping...');
     
+    // Validate FIRECRAWL_API_KEY early
+    const FIRECRAWL_API_KEY = Deno.env.get('FIRECRAWL_API_KEY');
+    if (!FIRECRAWL_API_KEY) {
+      throw new Error('FIRECRAWL_API_KEY not found in environment variables');
+    }
+    
     // Split suppliers into batches of 2 (to avoid overwhelming the API)
     const BATCH_SIZE = 2;
     const batches = [];
@@ -209,14 +215,22 @@ async function processAllBatches(supabase: any, jobId: string) {
 
     console.log(`📊 Created ${batches.length} batches of max ${BATCH_SIZE} suppliers each`);
 
-    // Update job with batch info
-    await supabase.from('batch_jobs')
-      .update({
-        status: 'processing',
-        total_batches: batches.length,
-        started_at: new Date().toISOString()
-      })
-      .eq('id', jobId);
+    // Update job status - only update if batch_jobs table exists and has these fields
+    try {
+      const { error: updateError } = await supabase.from('batch_jobs')
+        .update({
+          status: 'processing',
+          total_batches: batches.length,
+          started_at: new Date().toISOString()
+        })
+        .eq('id', jobId);
+      
+      if (updateError) {
+        console.warn('Could not update batch_jobs table:', updateError.message);
+      }
+    } catch (error) {
+      console.warn('batch_jobs table may not exist, continuing with processing:', error);
+    }
 
     const allProducts = [];
     let completedBatches = 0;
@@ -246,69 +260,122 @@ async function processAllBatches(supabase: any, jobId: string) {
 
     // Store final results in materials cache
     if (allProducts.length > 0) {
-      // Clear existing cache
-      await supabase.from('materials_weekly_cache').delete().neq('id', '00000000-0000-0000-0000-000000000000');
-
-      // Group products by category
-      const categorizedData = {
-        'Cables & Conduits': allProducts.filter(p => 
-          p.category?.toLowerCase().includes('cable') || 
-          p.name?.toLowerCase().includes('cable') ||
-          p.name?.toLowerCase().includes('conduit')
-        ),
-        'Switches & Sockets': allProducts.filter(p => 
-          p.category?.toLowerCase().includes('switch') || 
-          p.category?.toLowerCase().includes('socket') ||
-          p.name?.toLowerCase().includes('switch') ||
-          p.name?.toLowerCase().includes('socket')
-        ),
-        'Protection & Control': allProducts.filter(p => 
-          p.category?.toLowerCase().includes('protection') || 
-          p.category?.toLowerCase().includes('control') ||
-          p.name?.toLowerCase().includes('mcb') ||
-          p.name?.toLowerCase().includes('rcd')
-        ),
-        'Lighting': allProducts.filter(p => 
-          p.category?.toLowerCase().includes('light') || 
-          p.name?.toLowerCase().includes('light') ||
-          p.name?.toLowerCase().includes('led')
-        ),
-        'Tools & Testing': allProducts.filter(p => 
-          p.category?.toLowerCase().includes('tool') || 
-          p.category?.toLowerCase().includes('test') ||
-          p.name?.toLowerCase().includes('tool') ||
-          p.name?.toLowerCase().includes('tester')
-        )
-      };
-
-      // Insert categorized data
-      for (const [category, products] of Object.entries(categorizedData)) {
-        if (products.length > 0) {
-          await supabase.from('materials_weekly_cache').insert({
-            category,
-            materials_data: products,
-            total_products: products.length,
-            expires_at: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString() // 7 days
-          });
+      console.log(`💾 Storing ${allProducts.length} products in materials cache...`);
+      
+      try {
+        // Clear existing cache
+        const { error: deleteError } = await supabase
+          .from('materials_weekly_cache')
+          .delete()
+          .neq('id', '00000000-0000-0000-0000-000000000000');
+        
+        if (deleteError) {
+          console.warn('Could not clear existing cache:', deleteError.message);
+        } else {
+          console.log('✅ Cleared existing cache');
         }
-      }
 
-      console.log(`✅ Stored ${allProducts.length} products in cache across ${Object.keys(categorizedData).length} categories`);
+        // Group products by category with better categorization
+        const categorizedData = {
+          'cables': allProducts.filter(p => {
+            const text = `${p.category || ''} ${p.name || ''}`.toLowerCase();
+            return text.includes('cable') || text.includes('conduit') || text.includes('wire');
+          }),
+          'switches': allProducts.filter(p => {
+            const text = `${p.category || ''} ${p.name || ''}`.toLowerCase();
+            return text.includes('switch') || text.includes('socket') || text.includes('outlet');
+          }),
+          'protection': allProducts.filter(p => {
+            const text = `${p.category || ''} ${p.name || ''}`.toLowerCase();
+            return text.includes('protection') || text.includes('mcb') || text.includes('rcd') || text.includes('breaker');
+          }),
+          'lighting': allProducts.filter(p => {
+            const text = `${p.category || ''} ${p.name || ''}`.toLowerCase();
+            return text.includes('light') || text.includes('led') || text.includes('lamp');
+          }),
+          'tools': allProducts.filter(p => {
+            const text = `${p.category || ''} ${p.name || ''}`.toLowerCase();
+            return text.includes('tool') || text.includes('test') || text.includes('meter');
+          })
+        };
+
+        // Assign uncategorized products to 'general'
+        const categorizedCount = Object.values(categorizedData).reduce((sum, products) => sum + products.length, 0);
+        if (categorizedCount < allProducts.length) {
+          const usedProducts = new Set();
+          Object.values(categorizedData).forEach(products => 
+            products.forEach(p => usedProducts.add(p))
+          );
+          categorizedData['general'] = allProducts.filter(p => !usedProducts.has(p));
+        }
+
+        // Insert categorized data
+        const insertPromises = [];
+        for (const [category, products] of Object.entries(categorizedData)) {
+          if (products && products.length > 0) {
+            console.log(`📦 Inserting ${products.length} products for category: ${category}`);
+            const insertPromise = supabase.from('materials_weekly_cache').insert({
+              category,
+              materials_data: products,
+              total_products: products.length,
+              expires_at: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString(), // 14 days
+              update_status: 'completed'
+            });
+            insertPromises.push(insertPromise);
+          }
+        }
+
+        // Execute all inserts
+        const insertResults = await Promise.allSettled(insertPromises);
+        let successCount = 0;
+        let errorCount = 0;
+
+        insertResults.forEach((result, index) => {
+          const category = Object.keys(categorizedData)[index];
+          if (result.status === 'fulfilled' && !result.value.error) {
+            successCount++;
+            console.log(`✅ Successfully inserted ${category} products`);
+          } else {
+            errorCount++;
+            const error = result.status === 'rejected' ? result.reason : result.value.error;
+            console.error(`❌ Failed to insert ${category} products:`, error);
+          }
+        });
+
+        console.log(`💾 Cache storage summary: ${successCount} categories succeeded, ${errorCount} failed`);
+        console.log(`✅ Stored ${allProducts.length} products in cache across ${successCount} categories`);
+        
+      } catch (error) {
+        console.error('❌ Error storing products in cache:', error);
+        // Don't throw - let the job complete even if cache storage fails
+      }
+    } else {
+      console.warn('⚠️ No products found to store in cache');
     }
 
     // Mark job as completed
-    await supabase.from('batch_jobs')
-      .update({
-        status: 'completed',
-        progress_percentage: 100,
-        completed_at: new Date().toISOString(),
-        metadata: { 
-          total_products: allProducts.length,
-          successful_batches: completedBatches,
-          failed_batches: failedBatches
-        }
-      })
-      .eq('id', jobId);
+    try {
+      const { error: jobUpdateError } = await supabase.from('batch_jobs')
+        .update({
+          status: 'completed',
+          progress_percentage: 100,
+          completed_at: new Date().toISOString(),
+          metadata: { 
+            total_products: allProducts.length,
+            successful_batches: completedBatches,
+            failed_batches: failedBatches
+          }
+        })
+        .eq('id', jobId);
+      
+      if (jobUpdateError) {
+        console.warn('Could not update job completion status:', jobUpdateError.message);
+      } else {
+        console.log('✅ Job marked as completed');
+      }
+    } catch (error) {
+      console.warn('Failed to update job status:', error);
+    }
 
     console.log(`🎉 Batch processing completed! Total products: ${allProducts.length}`);
     return allProducts;
@@ -317,13 +384,21 @@ async function processAllBatches(supabase: any, jobId: string) {
     console.error('❌ Batch processing failed:', error);
     
     // Mark job as failed
-    await supabase.from('batch_jobs')
-      .update({
-        status: 'failed',
-        error_message: error.message,
-        completed_at: new Date().toISOString()
-      })
-      .eq('id', jobId);
+    try {
+      const { error: jobFailError } = await supabase.from('batch_jobs')
+        .update({
+          status: 'failed',
+          error_message: error.message,
+          completed_at: new Date().toISOString()
+        })
+        .eq('id', jobId);
+      
+      if (jobFailError) {
+        console.warn('Could not update job failure status:', jobFailError.message);
+      }
+    } catch (updateError) {
+      console.warn('Failed to update job failure status:', updateError);
+    }
     
     throw error;
   }
@@ -342,35 +417,63 @@ serve(async (req) => {
     const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-    // Create a new batch job
-    const { data: job, error: jobError } = await supabase
-      .from('batch_jobs')
-      .insert({
-        job_type: 'materials_scraping',
-        status: 'pending',
-        metadata: { suppliers: SUPPLIERS.map(s => s.name) }
-      })
-      .select()
-      .single();
-
-    if (jobError || !job) {
-      throw new Error(`Failed to create batch job: ${jobError?.message}`);
+    // Check for FIRECRAWL_API_KEY early
+    const FIRECRAWL_API_KEY = Deno.env.get('FIRECRAWL_API_KEY');
+    if (!FIRECRAWL_API_KEY) {
+      throw new Error('FIRECRAWL_API_KEY not found in environment variables');
     }
 
-    console.log(`📝 Created batch job ${job.id}`);
+    // Try to create a batch job, but don't fail if the table doesn't exist
+    let jobId = `materials-job-${Date.now()}`;
+    try {
+      const { data: job, error: jobError } = await supabase
+        .from('batch_jobs')
+        .insert({
+          job_type: 'materials_scraping',
+          status: 'pending',
+          metadata: { suppliers: SUPPLIERS.map(s => s.name) }
+        })
+        .select()
+        .single();
+
+      if (!jobError && job) {
+        jobId = job.id;
+        console.log(`📝 Created batch job ${job.id}`);
+      } else {
+        console.warn('Could not create batch job, using generated ID:', jobError?.message);
+      }
+    } catch (error) {
+      console.warn('batch_jobs table may not be available, continuing with generated ID:', error);
+    }
 
     // Start background processing
-    EdgeRuntime.waitUntil(
-      processAllBatches(supabase, job.id).catch(error => {
-        console.error('Background processing failed:', error);
-      })
-    );
+    try {
+      if (typeof EdgeRuntime !== 'undefined' && EdgeRuntime.waitUntil) {
+        EdgeRuntime.waitUntil(
+          processAllBatches(supabase, jobId).catch(error => {
+            console.error('Background processing failed:', error);
+          })
+        );
+      } else {
+        // Fallback: start processing without waitUntil
+        processAllBatches(supabase, jobId).catch(error => {
+          console.error('Background processing failed:', error);
+        });
+      }
+    } catch (error) {
+      console.error('Failed to start background processing:', error);
+      // Try direct processing as fallback
+      processAllBatches(supabase, jobId).catch(err => {
+        console.error('Direct processing also failed:', err);
+      });
+    }
 
     return new Response(JSON.stringify({ 
       success: true,
-      job_id: job.id,
+      job_id: jobId,
       message: 'Batch processing started',
-      estimated_time: '5-10 minutes'
+      estimated_time: '5-10 minutes',
+      suppliers_count: SUPPLIERS.length
     }), {
       headers: { 
         ...corsHeaders,
