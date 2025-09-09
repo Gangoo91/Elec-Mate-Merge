@@ -3,8 +3,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { PostcodeFinder } from "@/components/ui/postcode-finder";
 import { QuoteClient } from "@/types/quote";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const clientSchema = z.object({
   name: z.string().min(1, "Client name is required"),
@@ -20,6 +21,8 @@ interface ClientDetailsStepProps {
 }
 
 export const ClientDetailsStep = ({ client, onUpdate }: ClientDetailsStepProps) => {
+  const [showAddressFinder, setShowAddressFinder] = useState(false);
+  
   const form = useForm<QuoteClient>({
     resolver: zodResolver(clientSchema),
     defaultValues: client || {
@@ -30,6 +33,12 @@ export const ClientDetailsStep = ({ client, onUpdate }: ClientDetailsStepProps) 
       postcode: "",
     },
   });
+
+  const handleAddressSelect = (address: any) => {
+    form.setValue("address", address.line_1);
+    form.setValue("postcode", address.postcode);
+    setShowAddressFinder(false);
+  };
 
   useEffect(() => {
     const subscription = form.watch((value) => {
@@ -103,12 +112,23 @@ export const ClientDetailsStep = ({ client, onUpdate }: ClientDetailsStepProps) 
             </FormItem>
           )}
         />
-        
+      </div>
+      
+      {/* Postcode Finder Section */}
+      <div className="mt-6 pt-4 border-t">
+        <PostcodeFinder 
+          onAddressSelect={handleAddressSelect}
+          placeholder="Search for address by postcode..."
+          className="mb-4"
+        />
+      </div>
+      
+      <div className="grid grid-cols-1 gap-4">
         <FormField
           control={form.control}
           name="address"
           render={({ field }) => (
-            <FormItem className="md:col-span-2">
+            <FormItem>
               <FormLabel>Address *</FormLabel>
               <FormControl>
                 <Input placeholder="Enter full address" {...field} />

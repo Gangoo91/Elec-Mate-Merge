@@ -110,65 +110,88 @@ const FinancialSnapshot: React.FC<FinancialSnapshotProps> = ({
             ))}
           </div>
 
-          {/* Breakdown Summary */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Financial Breakdown</CardTitle>
+           {/* Breakdown Summary */}
+          <Card className="overflow-hidden">
+            <CardHeader className="bg-gradient-to-r from-primary/10 to-primary/5 border-b">
+              <CardTitle className="flex items-center gap-2 text-xl">
+                <PieChart className="h-5 w-5" />
+                Financial Breakdown
+              </CardTitle>
             </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="space-y-3">
-                    <h4 className="font-semibold text-lg">Revenue Breakdown</h4>
-                    <div className="space-y-2">
-                      <div className="flex justify-between">
-                        <span>Subtotal:</span>
-                        <span className="font-mono">{formatCurrency(breakdown.totalRevenue - breakdown.vatTotal)}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span>VAT:</span>
-                        <span className="font-mono">{formatCurrency(breakdown.vatTotal)}</span>
-                      </div>
-                      <div className="flex justify-between border-t pt-2 font-semibold">
-                        <span>Total Revenue:</span>
-                        <span className="font-mono">{formatCurrency(breakdown.totalRevenue)}</span>
-                      </div>
+            <CardContent className="p-0">
+              <div className="grid grid-cols-1 lg:grid-cols-2">
+                {/* Revenue Breakdown */}
+                <div className="p-6 border-b lg:border-b-0 lg:border-r">
+                  <div className="space-y-4">
+                    <div className="flex items-center gap-2 mb-4">
+                      <div className="h-3 w-3 rounded-full bg-green-500"></div>
+                      <h4 className="font-semibold text-lg text-green-700 dark:text-green-400">Revenue Breakdown</h4>
                     </div>
-                  </div>
-                  
-                  <div className="space-y-3">
-                    <h4 className="font-semibold text-lg">Cost Breakdown</h4>
-                    <div className="space-y-2">
-                      <div className="flex justify-between">
-                        <span>Materials:</span>
-                        <span className="font-mono">{formatCurrency(breakdown.materialsTotal)}</span>
+                    <div className="space-y-3">
+                      <div className="flex justify-between items-center py-2 px-3 rounded-lg bg-gray-50 dark:bg-gray-800/50">
+                        <span className="text-sm font-medium">Subtotal:</span>
+                        <span className="font-mono text-sm font-semibold">{formatCurrency(breakdown.totalRevenue - breakdown.vatTotal)}</span>
                       </div>
-                      <div className="flex justify-between">
-                        <span>Labour:</span>
-                        <span className="font-mono">{formatCurrency(breakdown.labourTotal)}</span>
+                      <div className="flex justify-between items-center py-2 px-3 rounded-lg bg-gray-50 dark:bg-gray-800/50">
+                        <span className="text-sm font-medium">VAT:</span>
+                        <span className="font-mono text-sm font-semibold">{formatCurrency(breakdown.vatTotal)}</span>
                       </div>
-                      <div className="flex justify-between">
-                        <span>Overhead:</span>
-                        <span className="font-mono">{formatCurrency(breakdown.overheadTotal)}</span>
-                      </div>
-                      <div className="flex justify-between border-t pt-2 font-semibold">
-                        <span>Total Costs:</span>
-                        <span className="font-mono">{formatCurrency(breakdown.totalCosts)}</span>
+                      <div className="flex justify-between items-center py-3 px-3 rounded-lg bg-green-100 dark:bg-green-900/30 border border-green-200 dark:border-green-800">
+                        <span className="font-semibold text-green-800 dark:text-green-200">Total Revenue:</span>
+                        <span className="font-mono font-bold text-green-800 dark:text-green-200">{formatCurrency(breakdown.totalRevenue)}</span>
                       </div>
                     </div>
                   </div>
                 </div>
-
-                <div className="border-t pt-4">
-                  <div className="flex justify-between items-center text-lg font-bold">
-                    <span>Net Profit:</span>
-                    <span className={`font-mono ${breakdown.totalProfit >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                      {formatCurrency(breakdown.totalProfit)}
-                    </span>
+                
+                {/* Cost Breakdown */}
+                <div className="p-6">
+                  <div className="space-y-4">
+                    <div className="flex items-center gap-2 mb-4">
+                      <div className="h-3 w-3 rounded-full bg-red-500"></div>
+                      <h4 className="font-semibold text-lg text-red-700 dark:text-red-400">Cost Breakdown</h4>
+                    </div>
+                    <div className="space-y-3">
+                      <div className="flex justify-between items-center py-2 px-3 rounded-lg bg-gray-50 dark:bg-gray-800/50">
+                        <span className="text-sm font-medium">Materials:</span>
+                        <span className="font-mono text-sm font-semibold">{formatCurrency(breakdown.materialsTotal)}</span>
+                      </div>
+                      <div className="flex justify-between items-center py-2 px-3 rounded-lg bg-gray-50 dark:bg-gray-800/50">
+                        <span className="text-sm font-medium">Labour:</span>
+                        <span className="font-mono text-sm font-semibold">{formatCurrency(breakdown.labourTotal)}</span>
+                      </div>
+                      <div className="flex justify-between items-center py-2 px-3 rounded-lg bg-gray-50 dark:bg-gray-800/50">
+                        <span className="text-sm font-medium">Overhead:</span>
+                        <span className="font-mono text-sm font-semibold">{formatCurrency(breakdown.overheadTotal)}</span>
+                      </div>
+                      <div className="flex justify-between items-center py-3 px-3 rounded-lg bg-red-100 dark:bg-red-900/30 border border-red-200 dark:border-red-800">
+                        <span className="font-semibold text-red-800 dark:text-red-200">Total Costs:</span>
+                        <span className="font-mono font-bold text-red-800 dark:text-red-200">{formatCurrency(breakdown.totalCosts)}</span>
+                      </div>
+                    </div>
                   </div>
-                  <div className="flex justify-between items-center text-sm text-muted-foreground mt-1">
-                    <span>Profit Margin:</span>
-                    <span>{formatPercentage(breakdown.profitMargin)}</span>
+                </div>
+              </div>
+
+              {/* Net Profit Section */}
+              <div className="p-6 border-t bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20">
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2">
+                      <TrendingUp className={`h-5 w-5 ${breakdown.totalProfit >= 0 ? 'text-green-600' : 'text-red-600'}`} />
+                      <span className="text-lg font-bold">Net Profit:</span>
+                    </div>
+                    <div className="text-sm text-muted-foreground">
+                      Profit Margin: {formatPercentage(breakdown.profitMargin)}
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <div className={`text-2xl font-bold font-mono ${breakdown.totalProfit >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                      {formatCurrency(breakdown.totalProfit)}
+                    </div>
+                    <div className="text-sm text-muted-foreground">
+                      {breakdown.totalProfit >= 0 ? 'Profitable' : 'Loss'}
+                    </div>
                   </div>
                 </div>
               </div>
