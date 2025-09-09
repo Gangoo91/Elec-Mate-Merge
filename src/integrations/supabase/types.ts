@@ -301,6 +301,75 @@ export type Database = {
         }
         Relationships: []
       }
+      company_profiles: {
+        Row: {
+          bank_details: Json | null
+          company_address: string | null
+          company_email: string | null
+          company_name: string
+          company_phone: string | null
+          company_postcode: string | null
+          company_registration: string | null
+          company_website: string | null
+          created_at: string
+          currency: string | null
+          id: string
+          locale: string | null
+          logo_data_url: string | null
+          logo_url: string | null
+          payment_terms: string | null
+          primary_color: string | null
+          secondary_color: string | null
+          updated_at: string
+          user_id: string
+          vat_number: string | null
+        }
+        Insert: {
+          bank_details?: Json | null
+          company_address?: string | null
+          company_email?: string | null
+          company_name: string
+          company_phone?: string | null
+          company_postcode?: string | null
+          company_registration?: string | null
+          company_website?: string | null
+          created_at?: string
+          currency?: string | null
+          id?: string
+          locale?: string | null
+          logo_data_url?: string | null
+          logo_url?: string | null
+          payment_terms?: string | null
+          primary_color?: string | null
+          secondary_color?: string | null
+          updated_at?: string
+          user_id: string
+          vat_number?: string | null
+        }
+        Update: {
+          bank_details?: Json | null
+          company_address?: string | null
+          company_email?: string | null
+          company_name?: string
+          company_phone?: string | null
+          company_postcode?: string | null
+          company_registration?: string | null
+          company_website?: string | null
+          created_at?: string
+          currency?: string | null
+          id?: string
+          locale?: string | null
+          logo_data_url?: string | null
+          logo_url?: string | null
+          payment_terms?: string | null
+          primary_color?: string | null
+          secondary_color?: string | null
+          updated_at?: string
+          user_id?: string
+          vat_number?: string | null
+        }
+        Relationships: []
+      }
       completed_resources: {
         Row: {
           course_slug: string

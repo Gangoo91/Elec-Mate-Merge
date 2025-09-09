@@ -2,11 +2,14 @@ import { useState, useCallback } from 'react';
 import { Quote, QuoteItem, QuoteClient, QuoteSettings } from '@/types/quote';
 import { v4 as uuidv4 } from 'uuid';
 import { generateQuotePDF } from '@/components/electrician/quote-builder/QuotePDFGenerator';
+import { generateProfessionalQuotePDF } from '@/utils/quote-pdf-professional';
 import { toast } from '@/hooks/use-toast';
 import { useQuoteStorage } from './useQuoteStorage';
+import { useCompanyProfile } from './useCompanyProfile';
 
 export const useQuoteBuilder = (onQuoteGenerated?: () => void) => {
   const { saveQuote } = useQuoteStorage();
+  const { companyProfile } = useCompanyProfile();
   
   const [quote, setQuote] = useState<Partial<Quote>>({
     id: uuidv4(),
@@ -118,8 +121,16 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void) => {
 
       setQuote(updatedQuote);
 
-      // Generate and download PDF
-      generateQuotePDF(updatedQuote);
+      // Generate and download PDF using professional generator
+      const pdfGenerated = generateProfessionalQuotePDF({
+        quote: updatedQuote,
+        companyProfile
+      });
+
+      if (!pdfGenerated) {
+        // Fallback to basic PDF generator
+        generateQuotePDF(updatedQuote);
+      }
 
       // Save quote to Supabase
       const saved = await saveQuote(updatedQuote as Quote);

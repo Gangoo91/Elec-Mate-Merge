@@ -8,6 +8,7 @@ import AppearanceTab from './AppearanceTab';
 import PrivacyTab from './PrivacyTab';
 import SecurityTab from './SecurityTab';
 import HelpSupportTab from './HelpSupportTab';
+import { CompanyProfileSettings } from './CompanyProfileSettings';
 import { Card, CardHeader, CardTitle, CardContent, CardDescription } from "@/components/ui/card";
 import { 
   Select,
@@ -22,11 +23,13 @@ import {
   Palette, 
   Lock, 
   ShieldCheck,
-  HelpCircle 
+  HelpCircle,
+  Building 
 } from "lucide-react";
 
 const TABS = [
   { id: 'account', label: 'Account', icon: User, component: AccountTab, description: 'Manage your account preferences' },
+  { id: 'company', label: 'Company Profile', icon: Building, component: CompanyProfileSettings, description: 'Configure your company details and branding for professional quotes' },
   { id: 'notifications', label: 'Notifications', icon: Bell, component: NotificationsTab, description: 'Choose what notifications you want to receive' },
   { id: 'appearance', label: 'Appearance', icon: Palette, component: AppearanceTab, description: 'Customize how ElecMate looks for you' },
   { id: 'privacy', label: 'Privacy', icon: Lock, component: PrivacyTab, description: 'Control what information is visible to others' },
