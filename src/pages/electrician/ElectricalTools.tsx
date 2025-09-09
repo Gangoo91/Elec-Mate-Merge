@@ -127,7 +127,7 @@ const ElectricalTools = () => {
           return (
             <Card 
               key={category.name}
-              className="border-elec-yellow/20 bg-elec-gray/50 backdrop-blur cursor-pointer hover:border-elec-yellow/50 transition-all duration-300 hover:shadow-lg group"
+              className="border-elec-yellow/20 bg-elec-gray backdrop-blur cursor-pointer hover:border-elec-yellow/50 transition-all duration-300 hover:shadow-lg group"
               onClick={() => navigate(`/electrician/tools?category=${encodeURIComponent(category.name)}`)}
             >
               <CardHeader className="pb-3">
