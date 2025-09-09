@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { RefreshCw, Loader2, AlertCircle, CheckCircle2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 
 interface ToolRefreshButtonProps {
@@ -44,9 +44,20 @@ const ToolRefreshButton: React.FC<ToolRefreshButtonProps> = ({
       if (error) {
         console.error('❌ Refresh error:', error);
         setRefreshStatus('error');
+        
+        // Provide more specific error messages based on error type
+        let errorDescription = "Failed to refresh tools data. Please try again.";
+        if (error.message?.includes("FIRECRAWL_API_KEY")) {
+          errorDescription = "API key configuration issue. Please contact support.";
+        } else if (error.message?.includes("timeout")) {
+          errorDescription = "Request timed out. The suppliers may be temporarily unavailable.";
+        } else if (error.message?.includes("network")) {
+          errorDescription = "Network error. Please check your connection and try again.";
+        }
+        
         toast({
           title: "Refresh Failed",
-          description: "Failed to refresh tools data. Please try again.",
+          description: errorDescription,
           variant: "destructive",
           duration: 5000,
         });
@@ -57,6 +68,12 @@ const ToolRefreshButton: React.FC<ToolRefreshButtonProps> = ({
         // Call the parent refresh function to update local state
         onRefresh();
         
+        // Force React Query to refetch the tools data
+        setTimeout(() => {
+          // This triggers a fresh fetch from the cache
+          onRefresh();
+        }, 1000);
+        
         toast({
           title: "Tools Updated",
           description: data?.message || "Successfully refreshed tools data from suppliers.",
@@ -66,9 +83,20 @@ const ToolRefreshButton: React.FC<ToolRefreshButtonProps> = ({
     } catch (error) {
       console.error('❌ Refresh error:', error);
       setRefreshStatus('error');
+      
+      // Enhanced error handling with more context
+      let errorDescription = "An unexpected error occurred while refreshing tools data.";
+      if (error instanceof Error) {
+        if (error.message.includes("Failed to invoke function")) {
+          errorDescription = "Unable to connect to the tools update service. Please try again later.";
+        } else if (error.message.includes("API")) {
+          errorDescription = "API service error. The tools database may be temporarily unavailable.";
+        }
+      }
+      
       toast({
         title: "Refresh Failed", 
-        description: "An error occurred while refreshing tools data.",
+        description: errorDescription,
         variant: "destructive",
         duration: 5000,
       });

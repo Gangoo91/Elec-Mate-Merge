@@ -150,7 +150,8 @@ serve(async (req) => {
     // Initialize Firecrawl
     const firecrawlApiKey = Deno.env.get('FIRECRAWL_API_KEY');
     if (!firecrawlApiKey) {
-      throw new Error('FIRECRAWL_API_KEY environment variable is required');
+      console.error('❌ FIRECRAWL_API_KEY not found in environment variables');
+      throw new Error('FIRECRAWL_API_KEY configuration missing - please contact support');
     }
 
     const firecrawl = new FirecrawlApp({ apiKey: firecrawlApiKey });
