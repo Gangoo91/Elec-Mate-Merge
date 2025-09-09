@@ -117,29 +117,42 @@ This analysis is for guidance only and must be verified by a qualified electrici
   return (
     <Card className="bg-card border-border max-w-5xl mx-auto">
       <CardHeader className="p-4 sm:p-6">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div className="flex items-center gap-2 sm:gap-3">
-            <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5 text-green-400" />
-            <CardTitle className="text-lg sm:text-xl text-foreground">Visual Analysis Results</CardTitle>
+            {analysisResult.compliance_summary.overall_assessment === 'satisfactory' && 
+             analysisResult.compliance_summary.c1_count === 0 && 
+             analysisResult.compliance_summary.c2_count === 0 ? (
+              <>
+                <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5 text-green-400" />
+                <CardTitle className="text-lg sm:text-xl text-foreground">All Clear — Satisfactory</CardTitle>
+              </>
+            ) : (
+              <>
+                <AlertTriangle className="h-4 w-4 sm:h-5 sm:w-5 text-amber-400" />
+                <CardTitle className="text-lg sm:text-xl text-foreground">Issues Identified</CardTitle>
+              </>
+            )}
           </div>
-          <div className="flex gap-2">
+          <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
             <Button
               variant="outline"
               size="sm"
               onClick={onExportReport}
-              className="border-border hover:bg-accent/50"
+              className="border-border hover:bg-accent/50 w-full sm:w-auto"
             >
               <Download className="h-4 w-4 mr-2" />
-              Export PDF
+              <span className="hidden sm:inline">Export PDF</span>
+              <span className="sm:hidden">Export</span>
             </Button>
             <Button
               variant="outline"
               size="sm"
               onClick={copySummary}
-              className="border-border hover:bg-accent/50"
+              className="border-border hover:bg-accent/50 w-full sm:w-auto"
             >
               <Save className="h-4 w-4 mr-2" />
-              Copy Summary
+              <span className="hidden sm:inline">Copy Summary</span>
+              <span className="sm:hidden">Copy</span>
             </Button>
           </div>
         </div>
@@ -185,13 +198,23 @@ This analysis is for guidance only and must be verified by a qualified electrici
           </div>
           
           <div className="mb-4">
-            <Badge className={`${
-              analysisResult.compliance_summary.overall_assessment === 'satisfactory' 
-                ? 'bg-green-500/20 text-green-400 border border-green-500/30' 
-                : 'bg-red-500/20 text-red-400 border border-red-500/30'
-            }`}>
-              Overall Assessment: {analysisResult.compliance_summary.overall_assessment.charAt(0).toUpperCase() + analysisResult.compliance_summary.overall_assessment.slice(1)}
-            </Badge>
+            {analysisResult.compliance_summary.overall_assessment === 'satisfactory' && 
+             analysisResult.compliance_summary.c1_count === 0 && 
+             analysisResult.compliance_summary.c2_count === 0 ? (
+              <div className="bg-green-500/20 border border-green-500/30 rounded-lg p-4 text-center">
+                <CheckCircle className="h-8 w-8 text-green-400 mx-auto mb-2" />
+                <h3 className="text-lg font-semibold text-green-400 mb-1">All Clear — Satisfactory</h3>
+                <p className="text-green-300/80 text-sm">No immediate safety concerns identified</p>
+              </div>
+            ) : (
+              <Badge className={`${
+                analysisResult.compliance_summary.overall_assessment === 'satisfactory' 
+                  ? 'bg-green-500/20 text-green-400 border border-green-500/30' 
+                  : 'bg-red-500/20 text-red-400 border border-red-500/30'
+              }`}>
+                Overall Assessment: {analysisResult.compliance_summary.overall_assessment.charAt(0).toUpperCase() + analysisResult.compliance_summary.overall_assessment.slice(1)}
+              </Badge>
+            )}
           </div>
           
           <p className="text-muted-foreground text-sm">{analysisResult.summary}</p>

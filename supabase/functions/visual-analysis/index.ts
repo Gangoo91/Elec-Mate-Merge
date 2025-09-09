@@ -145,6 +145,8 @@ Response format:
 
 Primary focus areas: ${analysis_settings.focus_areas.join(', ')}
 
+FIRST: Identify what type of electrical installation/component this is (e.g., "This appears to be a consumer unit", "This is a socket outlet", "This shows lighting circuitry").
+
 ${analysis_settings.enable_bounding_boxes ? 
   'Please include bounding box coordinates (normalised 0-1) for any detected issues or components of interest.' : 
   'Bounding boxes are not required for this analysis.'
@@ -162,6 +164,8 @@ For each finding:
 3. Provide clear remedial guidance
 4. Include cost estimates for typical remedial work
 5. Assess overall installation condition
+
+IF NO ISSUES ARE FOUND: State clearly that the installation appears satisfactory and compliant with BS 7671 requirements, with an overall_assessment of "satisfactory" and zero defect counts.
 
 Focus on visible defects and compliance issues that can be determined from the electrical installation images provided.`;
 
@@ -193,7 +197,7 @@ Focus on visible defects and compliance issues that can be determined from the e
               ]
             }
           ],
-          max_completion_tokens: 4000,
+          max_completion_tokens: 2000,
           response_format: { type: "json_object" }
         }),
       });

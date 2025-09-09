@@ -18,7 +18,8 @@ import {
   TrendingUp,
   FileText,
   Layers,
-  Eye
+  Eye,
+  Brain
 } from "lucide-react";
 import VisualAnalysisResults from "./VisualAnalysisResults";
 import EvidenceViewer from "./EvidenceViewer";
@@ -50,6 +51,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
+import { useInstantIdentification } from "@/hooks/use-instant-identification";
 
 
 // Lazy load background removal for performance
@@ -154,6 +156,9 @@ const VisualAnalysisRedesigned = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isCameraActive, setIsCameraActive] = useState(false);
+  
+  // Instant identification hook
+  const { identifyObject, isLoading: isIdentifying, result: identificationResult } = useInstantIdentification();
 
   
 
@@ -221,6 +226,12 @@ const VisualAnalysisRedesigned = () => {
     );
 
     setImages(prev => [...prev, ...compressedImages]);
+    
+    // Instantly identify the first image
+    if (compressedImages.length > 0) {
+      identifyObject(compressedImages[0]);
+    }
+    
     toast({
       title: "Images added",
       description: `${compressedImages.length} image(s) added for analysis.`,
@@ -322,6 +333,10 @@ const VisualAnalysisRedesigned = () => {
         const file = new File([blob], `capture-${Date.now()}.jpg`, { type: 'image/jpeg' });
         const compressedFile = await compressImage(file);
         setImages(prev => [...prev, compressedFile]);
+        
+        // Instantly identify the captured image
+        identifyObject(compressedFile);
+        
         stopCamera();
         toast({
           title: "Image captured",
@@ -820,6 +835,25 @@ const VisualAnalysisRedesigned = () => {
               </div>
             </CardHeader>
             <CardContent className="space-y-6">
+              {/* Instant Identification */}
+              {identificationResult && (
+                <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4 mb-4">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Brain className="h-4 w-4 text-blue-400" />
+                    <span className="font-medium text-blue-400 text-sm">Instant Identification</span>
+                    <Badge variant="outline" className="text-xs">
+                      {Math.round(identificationResult.confidence * 100)}%
+                    </Badge>
+                  </div>
+                  <p className="text-sm text-blue-200/80">
+                    Detected object: <span className="font-medium">{identificationResult.object}</span>
+                    {identificationResult.isElectrical && (
+                      <span className="text-green-400 ml-2">✓ Electrical component</span>
+                    )}
+                  </p>
+                </div>
+              )}
+
               {/* Quick Summary */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <div className="text-center p-3 bg-muted/50 rounded-lg">
@@ -874,25 +908,27 @@ const VisualAnalysisRedesigned = () => {
             {/* Summary Card */}
             <Card className="bg-card border-border">
               <CardHeader>
-                <div className="flex items-center justify-between">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                   <div>
                     <CardTitle className="text-foreground">3. Analysis Results</CardTitle>
                     <CardDescription>
                       BS 7671 compliance findings and recommendations
                     </CardDescription>
                   </div>
-                  <div className="flex gap-2">
-                    <Button variant="outline" size="sm" onClick={exportReport}>
+                  <div className="flex flex-col sm:flex-row gap-2">
+                    <Button variant="outline" size="sm" onClick={exportReport} className="w-full sm:w-auto">
                       <Download className="h-4 w-4 mr-2" />
-                      Export PDF
+                      <span className="hidden sm:inline">Export PDF</span>
+                      <span className="sm:hidden">Export</span>
                     </Button>
-                    <Button variant="outline" size="sm" onClick={resetAnalysis}>
+                    <Button variant="outline" size="sm" onClick={resetAnalysis} className="w-full sm:w-auto">
                       <RefreshCw className="h-4 w-4 mr-2" />
-                      New Analysis
+                      <span className="hidden sm:inline">New Analysis</span>
+                      <span className="sm:hidden">New</span>
                     </Button>
                     <Drawer>
                       <DrawerTrigger asChild>
-                        <Button variant="outline" size="sm">
+                        <Button variant="outline" size="sm" className="w-full sm:w-auto">
                           <History className="h-4 w-4 mr-2" />
                           History
                         </Button>
