@@ -339,23 +339,35 @@ const VisualAnalysisRedesigned = () => {
   };
 
   const uploadImageToSupabase = async (file: File): Promise<string> => {
-    const fileExt = file.name.split('.').pop();
-    const fileName = `${Date.now()}-${Math.random().toString(36).substr(2, 9)}.${fileExt}`;
-    const filePath = `visual-analysis/${fileName}`;
+    try {
+      // Convert file to base64
+      const base64Data = await new Promise<string>((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result as string);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
 
-    const { error: uploadError } = await supabase.storage
-      .from('visual-uploads')
-      .upload(filePath, file);
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${Date.now()}-${Math.random().toString(36).substr(2, 9)}.${fileExt}`;
 
-    if (uploadError) {
-      throw new Error(`Upload failed: ${uploadError.message}`);
+      // Use edge function for secure upload
+      const { data, error } = await supabase.functions.invoke('visual-upload', {
+        body: { 
+          imageData: base64Data,
+          fileName: `visual-analysis/${fileName}`
+        },
+      });
+
+      if (error || !data.success) {
+        throw new Error(data?.error || 'Upload failed');
+      }
+
+      return data.url;
+    } catch (error) {
+      console.error('Upload error:', error);
+      throw new Error(`Upload failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
-
-    const { data: urlData } = supabase.storage
-      .from('visual-uploads')
-      .getPublicUrl(filePath);
-
-    return urlData.publicUrl;
   };
 
   const processImageForAnalysis = async (file: File): Promise<string> => {
@@ -640,7 +652,7 @@ const VisualAnalysisRedesigned = () => {
                   {isCameraActive ? 'Capture Photo' : 'Use Camera'}
                 </Button>
                 
-                {/* Native camera fallback */}
+                {/* Hidden file input for both regular upload and camera */}
                 <input
                   type="file"
                   accept="image/*"
@@ -650,15 +662,6 @@ const VisualAnalysisRedesigned = () => {
                   ref={fileInputRef}
                   onChange={(e) => handleFileSelect(e.target.files)}
                 />
-                
-                <Button 
-                  variant="outline" 
-                  onClick={() => fileInputRef.current?.click()}
-                  className="flex items-center gap-2"
-                >
-                  <Upload className="h-4 w-4" />
-                  Native Camera
-                </Button>
               </div>
               
               {/* Camera view */}
@@ -715,14 +718,14 @@ const VisualAnalysisRedesigned = () => {
         {currentStep === 'analyse' && (
           <Card className="bg-card border-border">
             <CardHeader>
-              <div className="flex items-center justify-between">
+              <div className="flex flex-col space-y-4">
                 <div>
                   <CardTitle className="text-foreground">2. Review & Analyse</CardTitle>
                   <CardDescription>
                     Configure analysis settings and run the inspection
                   </CardDescription>
                 </div>
-                <div className="flex gap-2">
+                <div className="flex justify-start">
                   <Drawer>
                     <DrawerTrigger asChild>
                       <Button variant="outline" size="sm">
@@ -824,7 +827,7 @@ const VisualAnalysisRedesigned = () => {
                   <p className="text-sm font-medium text-foreground">{images.length}</p>
                   <p className="text-xs text-muted-foreground">Images</p>
                 </div>
-                <div className="text-center p-3 bg-muted/50 rounded-lg">
+                <div className="text-center p-3 bg-muted/50 rounded-lg hidden sm:block">
                   <Target className="h-6 w-6 mx-auto mb-2 text-primary" />
                   <p className="text-sm font-medium text-foreground">{selectedPreset.name}</p>
                   <p className="text-xs text-muted-foreground">Preset</p>
