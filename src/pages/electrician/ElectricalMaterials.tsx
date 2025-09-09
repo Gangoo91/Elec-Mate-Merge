@@ -209,7 +209,7 @@ const ElectricalMaterials = () => {
       <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardContent className="p-6 text-center">
           <p className="text-muted-foreground">
-            Material sourcing and pricing features coming soon
+            Materials are automatically updated weekly using Firecrawl 2.0. Real-time pricing from major UK suppliers.
           </p>
         </CardContent>
       </Card>

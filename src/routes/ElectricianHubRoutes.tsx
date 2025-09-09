@@ -13,6 +13,7 @@ import LearningFromExperience from "@/pages/electrician/safety-shares/LearningFr
 import ApprenticeMentalHealth from "@/pages/apprentice/ApprenticeMentalHealth";
 import JobVacancies from "@/pages/electrician/JobVacancies";
 import ElectricalMaterials from "@/pages/electrician/ElectricalMaterials";
+import MaterialsCategoryProductList from "@/components/electrician-materials/MaterialsCategoryProductList";
 import ElectricalTools from "@/pages/electrician/ElectricalTools";
 import LivePricing from "@/pages/electrician/LivePricing";
 import ElectricalHub from "@/pages/ElectricalHub";
@@ -64,7 +65,7 @@ const ElectricianHubRoutes = () => (
     <Route path="job-vacancies" element={<JobVacancies />} />
     <Route path="materials" element={<ElectricalMaterials />} />
     <Route path="materials/compare" element={<MaterialPriceComparisonPage />} />
-    <Route path="materials/category/:categoryId" element={<CategoryMaterials />} />
+    <Route path="materials/category/:categoryId" element={<MaterialsCategoryProductList />} />
     <Route path="materials/supplier/:supplierSlug" element={<SupplierMaterials />} />
     <Route path="materials/:slug" element={<MaterialsSlugRedirect />} />
     <Route path="tools" element={<ElectricalTools />} />

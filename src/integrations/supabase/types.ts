@@ -3132,6 +3132,10 @@ export type Database = {
         Args: Record<PropertyKey, never>
         Returns: string
       }
+      trigger_materials_weekly_refresh: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
     }
     Enums: {
       incident_status:
