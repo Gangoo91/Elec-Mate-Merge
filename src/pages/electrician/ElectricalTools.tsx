@@ -131,7 +131,7 @@ const ElectricalTools = () => {
               onClick={() => navigate(`/electrician/tools?category=${encodeURIComponent(category.name)}`)}
             >
               <CardHeader className="pb-3">
-                <CardTitle className="flex items-center justify-center gap-3 text-lg text-center text-elec-yellow group-hover:text-elec-yellow/90 transition-colors">
+                <CardTitle className="flex items-center justify-center gap-3 text-lg text-center text-white group-hover:text-white/90 transition-colors">
                   <IconComponent className="h-6 w-6 text-elec-yellow group-hover:text-elec-yellow/90 transition-colors" />
                   {category.name}
                 </CardTitle>
