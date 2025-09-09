@@ -138,14 +138,51 @@ Required JSON structure:
       cleanedResponse = cleanedResponse.trim();
       
       try {
+        if (!cleanedResponse || cleanedResponse.trim() === '') {
+          throw new Error('Empty response from AI model');
+        }
         analysisResult = JSON.parse(cleanedResponse);
         console.log('Successfully parsed JSON response');
       } catch (parseError) {
         console.error('JSON parsing failed, attempting cleanup:', parseError);
-        // Try to extract JSON from response
+        
+        // Enhanced JSON extraction with multiple fallback strategies
+        let extractedJson = null;
+        
+        // Strategy 1: Find JSON object boundaries
         const jsonMatch = cleanedResponse.match(/\{[\s\S]*\}/);
         if (jsonMatch) {
-          analysisResult = JSON.parse(jsonMatch[0]);
+          try {
+            extractedJson = JSON.parse(jsonMatch[0]);
+          } catch (e) {
+            console.log('Strategy 1 failed, trying strategy 2');
+          }
+        }
+        
+        // Strategy 2: Find complete JSON with proper nesting
+        if (!extractedJson) {
+          const startIndex = cleanedResponse.indexOf('{');
+          if (startIndex !== -1) {
+            let braceCount = 0;
+            let endIndex = startIndex;
+            for (let i = startIndex; i < cleanedResponse.length; i++) {
+              if (cleanedResponse[i] === '{') braceCount++;
+              if (cleanedResponse[i] === '}') braceCount--;
+              if (braceCount === 0) {
+                endIndex = i;
+                break;
+              }
+            }
+            try {
+              extractedJson = JSON.parse(cleanedResponse.substring(startIndex, endIndex + 1));
+            } catch (e) {
+              console.log('Strategy 2 failed');
+            }
+          }
+        }
+        
+        if (extractedJson) {
+          analysisResult = extractedJson;
           console.log('Successfully parsed cleaned JSON');
         } else {
           throw new Error('Could not extract valid JSON from response');
@@ -209,8 +246,18 @@ JSON format:
         if (fallbackResponse.ok) {
           const fallbackResult = await fallbackResponse.json();
           const fallbackContent = fallbackResult.choices[0].message.content;
-          analysisResult = JSON.parse(fallbackContent);
-          console.log('Fallback analysis successful');
+          
+          if (!fallbackContent || fallbackContent.trim() === '') {
+            throw new Error('Empty response from fallback model');
+          }
+          
+          try {
+            analysisResult = JSON.parse(fallbackContent.trim());
+            console.log('Fallback analysis successful');
+          } catch (parseError) {
+            console.error('Fallback JSON parsing failed:', parseError);
+            throw new Error('Fallback response was not valid JSON');
+          }
         } else {
           throw new Error('Fallback analysis also failed');
         }
@@ -236,6 +283,55 @@ JSON format:
     if (!analysisResult.findings) analysisResult.findings = [];
     if (!analysisResult.recommendations) analysisResult.recommendations = [];
     if (!analysisResult.confidence_score) analysisResult.confidence_score = 0.7;
+    if (!analysisResult.detected_object) analysisResult.detected_object = "electrical installation";
+    
+    // Ensure compliance_summary structure
+    if (!analysisResult.compliance_summary) {
+      analysisResult.compliance_summary = {
+        verdict: "Analysis completed",
+        verdict_label: "FI", 
+        justification: "Standard analysis completed"
+      };
+    }
+    
+    // Map old format to new format if needed
+    if (!analysisResult.compliance_summary && analysisResult.overall_compliance) {
+      const c1Count = analysisResult.findings?.filter(f => f.eicr_code === 'C1').length || 0;
+      const c2Count = analysisResult.findings?.filter(f => f.eicr_code === 'C2').length || 0;
+      const c3Count = analysisResult.findings?.filter(f => f.eicr_code === 'C3').length || 0;
+      const fiCount = analysisResult.findings?.filter(f => f.eicr_code === 'FI').length || 0;
+      
+      let verdictLabel = "Satisfactory";
+      let verdictText = "Installation appears satisfactory";
+      
+      if (c1Count > 0) {
+        verdictLabel = "C1";
+        verdictText = `${c1Count} danger(s) present requiring immediate attention`;
+      } else if (c2Count > 0) {
+        verdictLabel = "C2";
+        verdictText = `${c2Count} potentially dangerous defect(s) requiring urgent remedial action`;
+      } else if (c3Count > 0) {
+        verdictLabel = "C3";
+        verdictText = `${c3Count} improvement(s) recommended`;
+      } else if (fiCount > 0) {
+        verdictLabel = "FI";
+        verdictText = `${fiCount} area(s) requiring further investigation`;
+      }
+      
+      analysisResult.compliance_summary = {
+        overall_assessment: analysisResult.overall_compliance,
+        c1_count: c1Count,
+        c2_count: c2Count,
+        c3_count: c3Count,
+        fi_count: fiCount,
+        safety_rating: Math.max(1, Math.min(10, 10 - (c1Count * 3) - (c2Count * 2) - (c3Count * 1))),
+        verdict: verdictText,
+        verdict_label: verdictLabel,
+        justification: verdictLabel === "Satisfactory" 
+          ? "No immediate safety concerns identified in visible installation"
+          : `Based on identified ${verdictLabel} classification findings`
+      };
+    }
 
     
     console.log('Analysis complete, returning results');

@@ -446,7 +446,8 @@ const VisualAnalysisRedesigned = () => {
         throw new Error(data.error);
       }
       
-      const result: AnalysisResult = data.analysis;
+      // Handle direct response or nested analysis property
+      const result: AnalysisResult = data.analysis || data;
       setAnalysisResult(result);
       setUploadedImageUrls([primaryImageUrl, ...additionalImageUrls]);
       
