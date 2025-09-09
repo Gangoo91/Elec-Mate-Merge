@@ -5,8 +5,9 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { ArrowLeft, Search, Filter, ExternalLink, Star, Package, Loader2 } from "lucide-react";
+import { ArrowLeft, Search, Filter, ExternalLink, Star, Package, Loader2, Users, Bot, BarChart3 } from "lucide-react";
 import { useCategoryMaterials } from "@/hooks/useCategoryMaterials";
+import { useMaterialsComparison } from "@/hooks/useMaterialsComparison";
 import MaterialCard from "./MaterialCard";
 
 const MaterialsCategoryProductList = () => {
@@ -16,6 +17,14 @@ const MaterialsCategoryProductList = () => {
   const [supplierFilter, setSupplierFilter] = useState("all");
 
   const { materials, categoryData, isLoading, error, refetch } = useCategoryMaterials(categoryId || "");
+  const { 
+    addToComparison, 
+    removeFromComparison, 
+    isInComparison, 
+    selectedCount, 
+    selectedMaterialData,
+    clearComparison 
+  } = useMaterialsComparison();
 
   // Filter and sort materials
   const filteredMaterials = materials
@@ -97,49 +106,72 @@ const MaterialsCategoryProductList = () => {
               Filters & Search
             </CardTitle>
           </CardHeader>
-          <CardContent className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div>
-              <label className="text-sm font-medium text-white mb-2 block">Search Products</label>
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <Input
-                  placeholder="Search by name or description..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10 bg-elec-dark border-elec-yellow/30"
-                />
+          <CardContent className="space-y-4">
+            {/* Comparison Actions */}
+            <div className="flex flex-wrap gap-2">
+              <Button variant="outline" size="sm" disabled={selectedCount === 0}>
+                <Users className="h-4 w-4 mr-2" />
+                Compare ({selectedCount}/3)
+              </Button>
+              <Button variant="outline" size="sm" disabled={selectedCount === 0}>
+                <Bot className="h-4 w-4 mr-2" />
+                AI Compare
+              </Button>
+              <Button variant="outline" size="sm" disabled={selectedCount === 0}>
+                <BarChart3 className="h-4 w-4 mr-2" />
+                Bulk Compare
+              </Button>
+              {selectedCount > 0 && (
+                <Button variant="ghost" size="sm" onClick={clearComparison}>
+                  Clear ({selectedCount})
+                </Button>
+              )}
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div>
+                <label className="text-sm font-medium text-white mb-2 block">Search Products</label>
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                  <Input
+                    placeholder="Search by name or description..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="pl-10 bg-elec-dark border-elec-yellow/30"
+                  />
+                </div>
               </div>
-            </div>
 
-            <div>
-              <label className="text-sm font-medium text-white mb-2 block">Sort By</label>
-              <Select value={sortBy} onValueChange={setSortBy}>
-                <SelectTrigger className="bg-elec-dark border-elec-yellow/30">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="name">Name (A-Z)</SelectItem>
-                  <SelectItem value="price">Price (Low to High)</SelectItem>
-                  <SelectItem value="supplier">Supplier</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+              <div>
+                <label className="text-sm font-medium text-white mb-2 block">Sort By</label>
+                <Select value={sortBy} onValueChange={setSortBy}>
+                  <SelectTrigger className="bg-elec-dark border-elec-yellow/30">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="name">Name (A-Z)</SelectItem>
+                    <SelectItem value="price">Price (Low to High)</SelectItem>
+                    <SelectItem value="supplier">Supplier</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
 
-            <div>
-              <label className="text-sm font-medium text-white mb-2 block">Supplier</label>
-              <Select value={supplierFilter} onValueChange={setSupplierFilter}>
-                <SelectTrigger className="bg-elec-dark border-elec-yellow/30">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All Suppliers</SelectItem>
-                  {suppliers.map(supplier => (
-                    <SelectItem key={supplier} value={supplier}>
-                      {supplier}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <div>
+                <label className="text-sm font-medium text-white mb-2 block">Supplier</label>
+                <Select value={supplierFilter} onValueChange={setSupplierFilter}>
+                  <SelectTrigger className="bg-elec-dark border-elec-yellow/30">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All Suppliers</SelectItem>
+                    {suppliers.map(supplier => (
+                      <SelectItem key={supplier} value={supplier}>
+                        {supplier}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
           </CardContent>
         </Card>
@@ -165,7 +197,14 @@ const MaterialsCategoryProductList = () => {
         ) : filteredMaterials && filteredMaterials.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {filteredMaterials.map((material) => (
-              <MaterialCard key={material.id} item={material} />
+              <MaterialCard 
+                key={material.id} 
+                item={material}
+                onAddToCompare={(item) => addToComparison(item.id, item)}
+                onRemoveFromCompare={(itemId) => removeFromComparison(itemId)}
+                isSelected={isInComparison(material.id)}
+                isCompareDisabled={selectedCount >= 3 && !isInComparison(material.id)}
+              />
             ))}
           </div>
         ) : (

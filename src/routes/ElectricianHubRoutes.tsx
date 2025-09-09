@@ -65,7 +65,7 @@ const ElectricianHubRoutes = () => (
     <Route path="job-vacancies" element={<JobVacancies />} />
     <Route path="materials" element={<ElectricalMaterials />} />
     <Route path="materials/compare" element={<MaterialPriceComparisonPage />} />
-    
+    <Route path="materials/category/:categoryId" element={<CategoryMaterials />} />
     <Route path="materials/supplier/:supplierSlug" element={<SupplierMaterials />} />
     <Route path="materials/:slug" element={<MaterialsSlugRedirect />} />
     <Route path="tools" element={<ElectricalTools />} />
