@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 const VisualAnalysisPage = () => {
   return (
-    <div className="min-h-screen text-foreground">
+    <div className="min-h-screen bg-elec-grey text-foreground">
       <div className="max-w-6xl mx-auto p-3 sm:p-6 space-y-4 sm:space-y-8">
         {/* Simple back navigation */}
         <div className="flex justify-start">

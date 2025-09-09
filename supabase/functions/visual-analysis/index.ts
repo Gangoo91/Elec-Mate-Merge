@@ -56,8 +56,9 @@ serve(async (req) => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          model: 'gpt-5-2025-08-07',
+          model: 'gpt-4.1-2025-04-14',
           max_completion_tokens: 3000,
+          temperature: 0.1,
           messages: [
             {
               role: 'system',
@@ -192,7 +193,7 @@ Required JSON structure:
     } catch (primaryError) {
       console.error('Primary analysis failed, trying fallback:', primaryError);
       
-      // Fallback to GPT-4.1 with simpler prompt
+      // Fallback to GPT-4o-mini with simpler prompt
       try {
         const fallbackResponse = await fetch('https://api.openai.com/v1/chat/completions', {
           method: 'POST',
@@ -201,8 +202,8 @@ Required JSON structure:
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            model: 'gpt-4.1-2025-04-14',
-            max_completion_tokens: 2000,
+            model: 'gpt-4o-mini',
+            max_tokens: 2000,
             temperature: 0.1,
             messages: [
               {
