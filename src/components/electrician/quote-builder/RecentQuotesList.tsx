@@ -2,7 +2,7 @@ import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { FileText, Download, Trash2, Eye, Calendar, DollarSign } from 'lucide-react';
+import { FileText, Download, Trash2, Eye, Calendar } from 'lucide-react';
 import { Quote } from '@/types/quote';
 import { generateQuotePDF } from './QuotePDFGenerator';
 import { toast } from '@/hooks/use-toast';
@@ -118,7 +118,6 @@ const RecentQuotesList = ({ quotes, onDeleteQuote }: RecentQuotesListProps) => {
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
                   <div className="flex items-center gap-2">
-                    <DollarSign className="h-4 w-4 text-muted-foreground" />
                     <span className="font-medium">{formatCurrency(quote.total)}</span>
                   </div>
                   <div className="flex items-center gap-2">
