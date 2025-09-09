@@ -8,27 +8,67 @@ const suppliers = [
   { name: "CEF - City Electrical Factors", url: "https://www.cef.co.uk/catalogue/products/search?q=" },
 ];
 
-// Electrical Materials Categories - BS7671 Compliant
+// Electrical Materials Categories - BS7671 Compliant (All 12 Categories)
 const materialCategories = [
   {
     category: "Cables & Wiring",
-    items: ["twin earth cable", "SWA cable", "armoured cable", "coaxial cable", "cat6 cable", "fire rated cable", "flex cable"],
+    categoryId: "cables",
+    items: ["twin earth cable", "SWA cable", "armoured cable", "coaxial cable", "cat6 cable", "fire rated cable", "flex cable", "data cable", "NYCY cable"],
   },
   {
     category: "Electrical Components", 
-    items: ["consumer unit", "MCB", "RCD", "RCBO", "distribution board", "switch", "socket outlet", "junction box"],
+    categoryId: "components",
+    items: ["consumer unit", "MCB", "RCD", "RCBO", "distribution board", "switch", "socket outlet", "junction box", "isolator switch", "meter box"],
   },
   {
     category: "Protection Equipment",
-    items: ["earth rod", "surge protector", "RCD protection", "SPD", "electrical enclosure", "weatherproof box"],
+    categoryId: "protection",
+    items: ["earth rod", "surge protector", "RCD protection", "SPD", "electrical enclosure", "weatherproof box", "IP65 box", "earth clamp"],
   },
   {
     category: "Installation Accessories",
-    items: ["cable gland", "cable tray", "conduit", "trunking", "back box", "mounting plate", "cable clip"],
+    categoryId: "accessories",
+    items: ["cable gland", "cable tray", "conduit", "trunking", "back box", "mounting plate", "cable clip", "grommets", "cable markers"],
   },
   {
     category: "Lighting Solutions",
-    items: ["LED downlight", "emergency lighting", "LED batten", "outdoor lighting", "PIR sensor", "dimmer switch"]
+    categoryId: "lighting",
+    items: ["LED downlight", "emergency lighting", "LED batten", "outdoor lighting", "PIR sensor", "dimmer switch", "LED panel", "flood light"]
+  },
+  {
+    category: "Fixings & Consumables",
+    categoryId: "fixings",
+    items: ["rawl plugs", "screws", "wall plugs", "cable ties", "electrical tape", "terminal blocks", "wire nuts", "crimps", "connectors"]
+  },
+  {
+    category: "Cable Management & Conduit",
+    categoryId: "cable-management",
+    items: ["plastic conduit", "metal conduit", "cable basket", "cable ladder", "trunking systems", "dado trunking", "mini trunking", "conduit fittings"]
+  },
+  {
+    category: "Smart Home & Controls",
+    categoryId: "smart-home",
+    items: ["smart switch", "smart socket", "PIR occupancy sensor", "timer switch", "motion detector", "smart thermostat", "home automation", "wireless controls"]
+  },
+  {
+    category: "Data & Networking",
+    categoryId: "data-networking",
+    items: ["cat6 cable", "cat6a cable", "ethernet cable", "data socket", "patch panel", "network cabinet", "fibre optic cable", "coaxial cable"]
+  },
+  {
+    category: "Heating Controls",
+    categoryId: "heating-controls",
+    items: ["room thermostat", "programmable thermostat", "TRV", "zone valve", "heating timer", "underfloor heating", "immersion heater timer", "frost stat"]
+  },
+  {
+    category: "EV Charging",
+    categoryId: "ev-charging",
+    items: ["EV charger", "electric vehicle charging point", "type 2 charger", "home EV charger", "7kw charger", "22kw charger", "EV cable", "charging station"]
+  },
+  {
+    category: "Fire & Security",
+    categoryId: "fire-security",
+    items: ["smoke detector", "fire alarm", "heat detector", "emergency lighting", "PIR security", "door entry", "CCTV", "intruder alarm", "fire rated cable"]
   }
 ];
 
@@ -192,9 +232,15 @@ async function saveMaterialsToCache(materials: any[]) {
     return acc;
   }, {} as Record<string, any[]>);
 
+  // Find category ID mapping
+  const getCategoryId = (categoryName: string) => {
+    const categoryConfig = materialCategories.find(cat => cat.category === categoryName);
+    return categoryConfig?.categoryId || categoryName.toLowerCase().replace(/\s+/g, '_').replace(/&/g, 'and');
+  };
+
   // Insert new cache entries
   const cacheEntries = Object.entries(groupedMaterials).map(([category, categoryMaterials]) => ({
-    category: category.toLowerCase().replace(/\s+/g, '_').replace(/&/g, 'and'),
+    category: getCategoryId(category),
     materials_data: categoryMaterials,
     total_products: categoryMaterials.length,
     last_updated: new Date().toISOString(),

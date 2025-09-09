@@ -31,13 +31,20 @@ export interface ProcessedCategoryData {
   trending: boolean;
 }
 
-// Updated category mapping to match backend logic
+// Updated category mapping to match backend logic (All 12 Categories)
 const categoryMapping: Record<string, string> = {
   "Cables & Wiring": "cables",
   "Electrical Components": "components", 
   "Protection Equipment": "protection",
   "Installation Accessories": "accessories",
-  "Lighting Solutions": "lighting"
+  "Lighting Solutions": "lighting",
+  "Fixings & Consumables": "fixings",
+  "Cable Management & Conduit": "cable-management",
+  "Smart Home & Controls": "smart-home",
+  "Data & Networking": "data-networking",
+  "Heating Controls": "heating-controls",
+  "EV Charging": "ev-charging",
+  "Fire & Security": "fire-security"
 };
 
 const defaultCategoryData: ProcessedCategoryData[] = [
@@ -85,6 +92,69 @@ const defaultCategoryData: ProcessedCategoryData[] = [
     topBrands: ["Ansell", "Kosnic", "Aurora"],
     popularItems: [],
     trending: true
+  },
+  {
+    id: "fixings",
+    title: "Fixings & Consumables",
+    productCount: 0,
+    priceRange: "Loading...",
+    topBrands: ["Fischer", "Rawlplug", "Hellermann"],
+    popularItems: [],
+    trending: false
+  },
+  {
+    id: "cable-management",
+    title: "Cable Management & Conduit",
+    productCount: 0,
+    priceRange: "Loading...",
+    topBrands: ["Marshall Tufflex", "Schneider", "Legrand"],
+    popularItems: [],
+    trending: false
+  },
+  {
+    id: "smart-home",
+    title: "Smart Home & Controls",
+    productCount: 0,
+    priceRange: "Loading...",
+    topBrands: ["Schneider Wiser", "Hive", "Lightwave"],
+    popularItems: [],
+    trending: true
+  },
+  {
+    id: "data-networking",
+    title: "Data & Networking",
+    productCount: 0,
+    priceRange: "Loading...",
+    topBrands: ["Excel", "Panduit", "CommScope"],
+    popularItems: [],
+    trending: true
+  },
+  {
+    id: "heating-controls",
+    title: "Heating Controls",
+    productCount: 0,
+    priceRange: "Loading...",
+    topBrands: ["Honeywell", "Danfoss", "Nest"],
+    popularItems: [],
+    trending: false
+  },
+  {
+    id: "ev-charging",
+    title: "EV Charging",
+    productCount: 0,
+    priceRange: "Loading...",
+    topBrands: ["Pod Point", "Zappi", "Rolec"],
+    popularItems: [],
+    trending: true
+  },
+  {
+    id: "fire-security",
+    title: "Fire & Security",
+    productCount: 0,
+    priceRange: "Loading...",
+    topBrands: ["Aico", "Honeywell", "Texecom"],
+    popularItems: [],
+    trending: false
   }
 ];
 

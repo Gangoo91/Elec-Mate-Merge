@@ -14,7 +14,14 @@ const MaterialCategoryBrowser = () => {
     components: Zap,
     protection: Shield,
     accessories: Package,
-    lighting: Building
+    lighting: Building,
+    fixings: Package,
+    'cable-management': Cable,
+    'smart-home': Zap,
+    'data-networking': Cable,
+    'heating-controls': Building,
+    'ev-charging': Zap,
+    'fire-security': Shield
   };
 
   const categoryDescriptions = {
@@ -22,7 +29,14 @@ const MaterialCategoryBrowser = () => {
     components: "Consumer units, MCBs, RCDs and distribution boards",
     protection: "Earth rods, surge protectors and safety devices",
     accessories: "Junction boxes, cable glands and fixing accessories",
-    lighting: "LED downlights, emergency lighting and battens"
+    lighting: "LED downlights, emergency lighting and battens",
+    fixings: "Cable ties, screws, plugs and electrical consumables",
+    'cable-management': "Conduit, trunking and cable management systems",
+    'smart-home': "Smart switches, sensors and home automation",
+    'data-networking': "Cat6 cables, data sockets and network equipment",
+    'heating-controls': "Thermostats, timers and heating control systems",
+    'ev-charging': "Electric vehicle chargers and charging equipment",
+    'fire-security': "Smoke detectors, alarms and security systems"
   };
 
   if (error) {
