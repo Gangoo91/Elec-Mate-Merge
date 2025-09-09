@@ -8,7 +8,81 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-// Supplier configurations for tools scraping
+// Enhanced electrical tools categorization
+const classifyElectricalTool = (tool: any): string => {
+  const name = (tool.name || '').toLowerCase();
+  const description = (tool.description || '').toLowerCase();
+  const category = (tool.category || '').toLowerCase();
+  const combined = `${name} ${description} ${category}`;
+
+  // Test Equipment
+  if (combined.match(/(test|meter|detector|measure|multimeter|voltage|current|earth|loop|rcd|pat|insulation|tester|calibrator|probe|clamp)/)) {
+    return 'Test Equipment';
+  }
+  
+  // Power Tools (electrical specific)
+  if (combined.match(/(drill|driver|saw|grinder|sander|router|impact|cordless|battery|charger|angle grinder|sds|combi|circular)/)) {
+    return 'Power Tools';
+  }
+  
+  // Specialist Electrical Tools
+  if (combined.match(/(wire|cable|conduit|crimper|stripper|puller|fish|knockout|bender|cutter|electrical|termination|junction|connector)/)) {
+    return 'Specialist Tools';
+  }
+  
+  // PPE
+  if (combined.match(/(helmet|hard hat|glove|boot|goggle|glasses|mask|respirator|vest|hi-vis|harness|ear|protection|ppe|safety wear)/)) {
+    return 'PPE';
+  }
+  
+  // Safety Tools
+  if (combined.match(/(safety|warning|sign|barrier|lock|tag|isolator|fuse|lockout|mat|switch|breaker)/)) {
+    return 'Safety Tools';
+  }
+  
+  // Access Equipment
+  if (combined.match(/(ladder|scaffold|platform|steps|tower|access|height|lift|trestle|hop up)/)) {
+    return 'Access Tools & Equipment';
+  }
+  
+  // Tool Storage
+  if (combined.match(/(bag|box|case|storage|organiser|pouch|belt|trolley|toolkit|carrier)/)) {
+    return 'Tool Storage';
+  }
+  
+  // Default to Hand Tools for electrical items
+  return 'Hand Tools';
+};
+
+// Filter function to validate electrical tools
+const isElectricalTool = (tool: any): boolean => {
+  const name = (tool.name || '').toLowerCase();
+  const description = (tool.description || '').toLowerCase();
+  const category = (tool.category || '').toLowerCase();
+  const combined = `${name} ${description} ${category}`;
+
+  // Reject obvious non-electrical items
+  const nonElectricalKeywords = [
+    'tile', 'plumbing', 'adhesive', 'sealant', 'foam', 'paint', 'decorating', 
+    'garden', 'outdoor', 'kitchen', 'bathroom', 'cleaning', 'automotive',
+    'concrete', 'masonry', 'plastering', 'roofing', 'flooring'
+  ];
+  
+  if (nonElectricalKeywords.some(keyword => combined.includes(keyword))) {
+    return false;
+  }
+
+  // Accept electrical-related items
+  const electricalKeywords = [
+    'electrical', 'electric', 'test', 'meter', 'voltage', 'current', 'wire', 'cable',
+    'conduit', 'circuit', 'switch', 'socket', 'fuse', 'breaker', 'rcd', 'mcb',
+    'drill', 'driver', 'tool', 'equipment', 'safety', 'ppe', 'protection'
+  ];
+  
+  return electricalKeywords.some(keyword => combined.includes(keyword));
+};
+
+// Supplier configurations for electrical tools scraping
 const SUPPLIER_CONFIGS = [
   {
     name: 'Screwfix',
@@ -169,15 +243,19 @@ serve(async (req) => {
             
             if (scrapeResult.success && scrapeResult.extract?.tools) {
               const tools = Array.isArray(scrapeResult.extract.tools) ? scrapeResult.extract.tools : [];
-              const processedTools = tools.map((tool: any) => ({
+              
+              // Filter and process electrical tools only
+              const electricalTools = tools.filter(isElectricalTool);
+              const processedTools = electricalTools.map((tool: any) => ({
                 ...tool,
                 supplier: supplier.name,
                 sourceUrl: url,
-                scrapedAt: new Date().toISOString()
+                scrapedAt: new Date().toISOString(),
+                category: classifyElectricalTool(tool)
               }));
               
               batchData.push(...processedTools);
-              console.log(`✅ Scraped ${processedTools.length} tools from ${url}`);
+              console.log(`✅ Scraped ${processedTools.length} electrical tools from ${url} (filtered from ${tools.length} total)`);
             }
             
             processedItems++;

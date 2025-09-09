@@ -113,26 +113,65 @@ const getDefaultCategories = (): ToolCategory[] => [
 // Map database categories to frontend display categories
 const mapDatabaseToFrontendCategory = (dbCategory: string): string => {
   const categoryMappings: Record<string, string> = {
+    // Test Equipment variants
     'Testing Equipment': 'Test Equipment',
     'Test & Measurement': 'Test Equipment',
     'Testers': 'Test Equipment',
-    'Safety Equipment': 'PPE',
+    'Meters': 'Test Equipment',
+    'Measurement': 'Test Equipment',
+    
+    // PPE variants  
     'Personal Protective Equipment': 'PPE',
     'PPE': 'PPE',
+    'Protective Wear': 'PPE',
+    'Safety Wear': 'PPE',
+    
+    // Power Tools variants
     'Electric Tools': 'Power Tools',
     'Cordless Tools': 'Power Tools', 
     'Battery Tools': 'Power Tools',
+    'Power Equipment': 'Power Tools',
+    'Drills': 'Power Tools',
+    'Drivers': 'Power Tools',
+    
+    // Hand Tools variants
     'Manual Tools': 'Hand Tools',
     'Basic Tools': 'Hand Tools',
+    'General Tools': 'Hand Tools',
+    'Essential Tools': 'Hand Tools',
+    
+    // Access Equipment variants
     'Access Equipment': 'Access Tools & Equipment',
     'Ladders & Steps': 'Access Tools & Equipment',
     'Access': 'Access Tools & Equipment',
+    'Height Equipment': 'Access Tools & Equipment',
+    'Working at Height': 'Access Tools & Equipment',
+    
+    // Storage variants
     'Storage': 'Tool Storage',
     'Tool Bags': 'Tool Storage',
     'Cases & Bags': 'Tool Storage',
+    'Organizers': 'Tool Storage',
+    'Carriers': 'Tool Storage',
+    
+    // Specialist Tools variants
     'Electrical Tools': 'Specialist Tools',
     'Cable Tools': 'Specialist Tools',
-    'Wiring Tools': 'Specialist Tools'
+    'Wiring Tools': 'Specialist Tools',
+    'Specialist Equipment': 'Specialist Tools',
+    'Professional Tools': 'Specialist Tools',
+    
+    // Safety Tools variants
+    'Safety Tools': 'Safety Tools',
+    'Warning Equipment': 'Safety Tools',
+    'Isolation Tools': 'Safety Tools',
+    
+    // Handle non-electrical items that shouldn't be categorized
+    'Tile Drill Bits': 'Other',
+    'Grab Adhesive': 'Other',
+    'Sealant & Foam Tools': 'Other',
+    'Adhesives': 'Other',
+    'Sealants': 'Other'
   };
   
   return categoryMappings[dbCategory] || dbCategory;
@@ -145,12 +184,35 @@ const analyzeCategoryData = (tools: ToolItem[]): ToolCategory[] => {
   tools.forEach(tool => {
     let category: string;
     
+    // Map database category first
+    const mappedCategory = tool.category ? mapDatabaseToFrontendCategory(tool.category) : null;
+    
+    // Skip tools categorized as "Other" (non-electrical items)
+    if (mappedCategory === 'Other') {
+      console.log(`Skipping non-electrical tool: ${tool.name} (category: ${tool.category})`);
+      return;
+    }
+    
     // Special handling for "Safety Tools" database category - split by name
     if (tool.category === 'Safety Tools') {
       category = categorizeToolByName(tool.name || '');
+    } else if (mappedCategory && mappedCategory !== tool.category) {
+      // Use mapped category if it's different from original
+      category = mappedCategory;
     } else {
-      // First try to use the database category, then fall back to name-based categorization
-      category = tool.category ? mapDatabaseToFrontendCategory(tool.category) : categorizeToolByName(tool.name || '');
+      // Fall back to name-based categorization
+      category = categorizeToolByName(tool.name || '');
+    }
+    
+    // Only include electrical tool categories
+    const validCategories = [
+      'Hand Tools', 'Power Tools', 'Test Equipment', 'PPE', 
+      'Safety Tools', 'Access Tools & Equipment', 'Tool Storage', 'Specialist Tools'
+    ];
+    
+    if (!validCategories.includes(category)) {
+      console.log(`Skipping tool with invalid category: ${tool.name} (category: ${category})`);
+      return;
     }
     
     if (!categoryMap.has(category)) {
@@ -169,21 +231,23 @@ const analyzeCategoryData = (tools: ToolItem[]): ToolCategory[] => {
     }
   });
 
-  // Convert to ToolCategory array
-  return Array.from(categoryMap.entries()).map(([name, data]) => {
-    const minPrice = data.prices.length > 0 ? Math.min(...data.prices) : 0;
-    const maxPrice = data.prices.length > 0 ? Math.max(...data.prices) : 0;
-    const priceRange = minPrice > 0 ? `£${minPrice}-£${maxPrice}` : 'Price varies';
-    
-    return {
-      name,
-      icon: getCategoryIcon(name),
-      description: getCategoryDescription(name),
-      count: data.count,
-      priceRange,
-      trending: data.count > 5 // Mark as trending if more than 5 tools
-    };
-  }).sort((a, b) => b.count - a.count); // Sort by count descending
+  // Convert to ToolCategory array, excluding empty categories
+  return Array.from(categoryMap.entries())
+    .filter(([name, data]) => data.count > 0)
+    .map(([name, data]) => {
+      const minPrice = data.prices.length > 0 ? Math.min(...data.prices) : 0;
+      const maxPrice = data.prices.length > 0 ? Math.max(...data.prices) : 0;
+      const priceRange = minPrice > 0 ? `£${minPrice}-£${maxPrice}` : 'Price varies';
+      
+      return {
+        name,
+        icon: getCategoryIcon(name),
+        description: getCategoryDescription(name),
+        count: data.count,
+        priceRange,
+        trending: data.count > 5 // Mark as trending if more than 5 tools
+      };
+    }).sort((a, b) => b.count - a.count); // Sort by count descending
 };
 
 export const useToolCategories = () => {
