@@ -106,36 +106,116 @@ Your Electrician`;
         </Card>
       </div>
 
-      {/* Quote Items */}
-      <Card className="bg-elec-gray border-elec-yellow/20">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Package className="h-5 w-5" />
-            Quote Items
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-3">
-            {quote.items?.map((item, index) => (
-              <div key={item.id} className="flex items-center justify-between p-3 bg-background rounded-lg">
-                <div className="flex items-center gap-3">
-                  {getCategoryIcon(item.category)}
-                  <div>
-                    <p className="font-medium">{item.description}</p>
-                    <p className="text-sm text-muted-foreground capitalize">{item.category}</p>
+      {/* Quote Items - Split by Category */}
+      <div className="space-y-4">
+        {/* Labour Items */}
+        {quote.items?.filter(item => item.category === 'labour').sort((a, b) => b.totalPrice - a.totalPrice).length > 0 && (
+          <Card className="bg-card border-border">
+            <CardHeader className="pb-3">
+              <CardTitle className="flex items-center justify-between text-base">
+                <div className="flex items-center gap-2">
+                  <Wrench className="h-5 w-5" />
+                  Labour ({quote.items?.filter(item => item.category === 'labour').length})
+                </div>
+                <span className="text-primary font-semibold">
+                  £{quote.items?.filter(item => item.category === 'labour').reduce((sum, item) => sum + item.totalPrice, 0).toFixed(2)}
+                </span>
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="pt-0">
+              <div className="space-y-3">
+                {quote.items?.filter(item => item.category === 'labour').sort((a, b) => b.totalPrice - a.totalPrice).map((item) => (
+                  <div key={item.id} className="bg-background border border-border rounded-lg p-3">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                      <div className="min-w-0 flex-1">
+                        <p className="font-medium text-sm">{item.description}</p>
+                        <p className="text-xs text-muted-foreground">
+                          {item.quantity} × £{item.unitPrice.toFixed(2)}
+                        </p>
+                      </div>
+                      <div className="text-right">
+                        <p className="font-semibold text-primary">£{item.totalPrice.toFixed(2)}</p>
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div className="text-right">
-                  <p className="font-medium">£{item.totalPrice.toFixed(2)}</p>
-                  <p className="text-sm text-muted-foreground">
-                    {item.quantity} × £{item.unitPrice.toFixed(2)}
-                  </p>
-                </div>
+                ))}
               </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+            </CardContent>
+          </Card>
+        )}
+
+        {/* Materials Items */}
+        {quote.items?.filter(item => item.category === 'materials').sort((a, b) => b.totalPrice - a.totalPrice).length > 0 && (
+          <Card className="bg-card border-border">
+            <CardHeader className="pb-3">
+              <CardTitle className="flex items-center justify-between text-base">
+                <div className="flex items-center gap-2">
+                  <Package className="h-5 w-5" />
+                  Materials ({quote.items?.filter(item => item.category === 'materials').length})
+                </div>
+                <span className="text-primary font-semibold">
+                  £{quote.items?.filter(item => item.category === 'materials').reduce((sum, item) => sum + item.totalPrice, 0).toFixed(2)}
+                </span>
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="pt-0">
+              <div className="space-y-3">
+                {quote.items?.filter(item => item.category === 'materials').sort((a, b) => b.totalPrice - a.totalPrice).map((item) => (
+                  <div key={item.id} className="bg-background border border-border rounded-lg p-3">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                      <div className="min-w-0 flex-1">
+                        <p className="font-medium text-sm">{item.description}</p>
+                        <p className="text-xs text-muted-foreground">
+                          {item.quantity} × £{item.unitPrice.toFixed(2)}
+                        </p>
+                      </div>
+                      <div className="text-right">
+                        <p className="font-semibold text-primary">£{item.totalPrice.toFixed(2)}</p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
+        {/* Equipment Items */}
+        {quote.items?.filter(item => item.category === 'equipment').sort((a, b) => b.totalPrice - a.totalPrice).length > 0 && (
+          <Card className="bg-card border-border">
+            <CardHeader className="pb-3">
+              <CardTitle className="flex items-center justify-between text-base">
+                <div className="flex items-center gap-2">
+                  <Zap className="h-5 w-5" />
+                  Equipment ({quote.items?.filter(item => item.category === 'equipment').length})
+                </div>
+                <span className="text-primary font-semibold">
+                  £{quote.items?.filter(item => item.category === 'equipment').reduce((sum, item) => sum + item.totalPrice, 0).toFixed(2)}
+                </span>
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="pt-0">
+              <div className="space-y-3">
+                {quote.items?.filter(item => item.category === 'equipment').sort((a, b) => b.totalPrice - a.totalPrice).map((item) => (
+                  <div key={item.id} className="bg-background border border-border rounded-lg p-3">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                      <div className="min-w-0 flex-1">
+                        <p className="font-medium text-sm">{item.description}</p>
+                        <p className="text-xs text-muted-foreground">
+                          {item.quantity} × £{item.unitPrice.toFixed(2)}
+                        </p>
+                      </div>
+                      <div className="text-right">
+                        <p className="font-semibold text-primary">£{item.totalPrice.toFixed(2)}</p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        )}
+      </div>
 
       {/* Quote Totals */}
       <Card className="bg-elec-gray border-elec-yellow/20">
