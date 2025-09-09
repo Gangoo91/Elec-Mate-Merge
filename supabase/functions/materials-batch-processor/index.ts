@@ -28,22 +28,22 @@ const SUPPLIERS: SupplierConfig[] = [
   {
     name: "Screwfix",
     baseUrl: "https://www.screwfix.com/search",
-    searchParams: { search: "cables+electrical+materials", page_size: 50 }
+    searchParams: { search: "electrical+cables+mcb+rcd+sockets+switches", page_size: 50 }
   },
   {
-    name: "Toolstation",
+    name: "Toolstation", 
     baseUrl: "https://www.toolstation.com/search",
-    searchParams: { q: "electrical+cable+conduit", limit: 50 }
+    searchParams: { q: "electrical+cables+conduit+mcb+switches+sockets", limit: 50 }
   },
   {
     name: "City Electrical Factors",
     baseUrl: "https://www.cef.co.uk/search",
-    searchParams: { q: "electrical+materials+cables", rows: 50 }
+    searchParams: { q: "electrical+cables+mcb+rcd+consumer+units", rows: 50 }
   },
   {
     name: "TLC Direct",
     baseUrl: "https://www.tlc-direct.co.uk/Search/Index.html",
-    searchParams: { search: "electrical+materials", pageSize: 50 }
+    searchParams: { search: "electrical+cables+mcb+switches", pageSize: 50 }
   },
   {
     name: "RS Components",
@@ -102,7 +102,7 @@ async function scrapeSupplierBatch(supplier: SupplierConfig, batchSize: number =
       formats: [
         {
           type: "json",
-          prompt: `Extract electrical materials and cables from ${supplier.name}. Focus on cables, conduits, switches, sockets, and electrical components.`,
+          prompt: `Extract electrical materials from ${supplier.name}. Focus on: cables (twin & earth, flex, armoured), protection devices (MCBs, RCDs, consumer units), switches & sockets, lighting (LED, downlights), conduits & trunking, junction boxes, electrical tools, and other electrical components. Include product name, price, description, category, and availability.`,
           schema: productSchema,
         },
       ],
@@ -275,39 +275,65 @@ async function processAllBatches(supabase: any, jobId: string) {
           console.log('✅ Cleared existing cache');
         }
 
-        // Group products by category with better categorization
-        const categorizedData = {
-          'cables': allProducts.filter(p => {
+        // Group products by category with improved categorization
+        const categorizedData = {};
+        const usedProducts = new Set();
+
+        // More inclusive categorization logic
+        const categories = {
+          'cables': (p) => {
             const text = `${p.category || ''} ${p.name || ''}`.toLowerCase();
-            return text.includes('cable') || text.includes('conduit') || text.includes('wire');
-          }),
-          'switches': allProducts.filter(p => {
+            return text.includes('cable') || text.includes('conduit') || text.includes('wire') || 
+                   text.includes('twin') || text.includes('earth') || text.includes('flex') ||
+                   text.includes('trunking') || text.includes('sleeving');
+          },
+          'switches-sockets': (p) => {
             const text = `${p.category || ''} ${p.name || ''}`.toLowerCase();
-            return text.includes('switch') || text.includes('socket') || text.includes('outlet');
-          }),
-          'protection': allProducts.filter(p => {
+            return text.includes('switch') || text.includes('socket') || text.includes('outlet') ||
+                   text.includes('dimmer') || text.includes('plug') || text.includes('gang');
+          },
+          'protection': (p) => {
             const text = `${p.category || ''} ${p.name || ''}`.toLowerCase();
-            return text.includes('protection') || text.includes('mcb') || text.includes('rcd') || text.includes('breaker');
-          }),
-          'lighting': allProducts.filter(p => {
+            return text.includes('protection') || text.includes('mcb') || text.includes('rcd') || 
+                   text.includes('breaker') || text.includes('fuse') || text.includes('isolator') ||
+                   text.includes('consumer') || text.includes('rcbo');
+          },
+          'lighting': (p) => {
             const text = `${p.category || ''} ${p.name || ''}`.toLowerCase();
-            return text.includes('light') || text.includes('led') || text.includes('lamp');
-          }),
-          'tools': allProducts.filter(p => {
+            return text.includes('light') || text.includes('led') || text.includes('lamp') ||
+                   text.includes('bulb') || text.includes('spot') || text.includes('downlight');
+          },
+          'tools': (p) => {
             const text = `${p.category || ''} ${p.name || ''}`.toLowerCase();
-            return text.includes('tool') || text.includes('test') || text.includes('meter');
-          })
+            return text.includes('tool') || text.includes('test') || text.includes('meter') ||
+                   text.includes('tape') && text.includes('draw') || text.includes('fish') ||
+                   text.includes('crimper') || text.includes('stripper');
+          },
+          'accessories': (p) => {
+            const text = `${p.category || ''} ${p.name || ''}`.toLowerCase();
+            return text.includes('junction') || text.includes('connector') || text.includes('terminal') ||
+                   text.includes('bracket') || text.includes('clip') || text.includes('fixing') ||
+                   text.includes('gland') || text.includes('box');
+          }
         };
 
-        // Assign uncategorized products to 'general'
-        const categorizedCount = Object.values(categorizedData).reduce((sum, products) => sum + products.length, 0);
-        if (categorizedCount < allProducts.length) {
-          const usedProducts = new Set();
-          Object.values(categorizedData).forEach(products => 
-            products.forEach(p => usedProducts.add(p))
-          );
-          categorizedData['general'] = allProducts.filter(p => !usedProducts.has(p));
+        // Categorize products (each product can only belong to one category)
+        for (const [category, filterFn] of Object.entries(categories)) {
+          categorizedData[category] = allProducts.filter(p => !usedProducts.has(p) && filterFn(p));
+          categorizedData[category].forEach(p => usedProducts.add(p));
         }
+
+        // Assign remaining products to 'general'
+        const remainingProducts = allProducts.filter(p => !usedProducts.has(p));
+        if (remainingProducts.length > 0) {
+          categorizedData['general'] = remainingProducts;
+        }
+
+        // Log categorization results
+        console.log('📊 Product categorization results:');
+        Object.entries(categorizedData).forEach(([category, products]) => {
+          console.log(`  ${category}: ${products.length} products`);
+        });
 
         // Insert categorized data
         const insertPromises = [];

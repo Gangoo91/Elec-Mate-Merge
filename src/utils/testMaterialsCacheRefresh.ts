@@ -2,10 +2,10 @@ import { supabase } from '@/integrations/supabase/client';
 
 export const testMaterialsCacheRefresh = async () => {
   try {
-    console.log('🔄 Testing materials cache refresh...');
+    console.log('🔄 Testing materials cache refresh with improved categorization...');
     
     const { data, error } = await supabase.functions.invoke('materials-cache-updater', {
-      body: { forceRefresh: true }
+      body: { refresh: true, forceRefresh: true }
     });
     
     if (error) {
