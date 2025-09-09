@@ -121,21 +121,21 @@ const ElectricalTools = () => {
         />
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 md:gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
         {filteredCategories.map((category) => {
           const IconComponent = category.icon;
           return (
             <Card 
               key={category.name}
-              className="border-elec-yellow/20 bg-elec-gray cursor-pointer hover:border-elec-yellow/50 transition-colors"
+              className="border-elec-yellow/20 bg-elec-gray/50 backdrop-blur cursor-pointer hover:border-elec-yellow/50 transition-all duration-300 hover:shadow-lg group"
               onClick={() => navigate(`/electrician/tools?category=${encodeURIComponent(category.name)}`)}
             >
               <CardHeader className="pb-3">
-                <CardTitle className="flex items-center justify-center gap-3 text-lg text-center">
-                  <IconComponent className="h-6 w-6 text-elec-yellow" />
+                <CardTitle className="flex items-center justify-center gap-3 text-lg text-center text-elec-yellow group-hover:text-elec-yellow/90 transition-colors">
+                  <IconComponent className="h-6 w-6 text-elec-yellow group-hover:text-elec-yellow/90 transition-colors" />
                   {category.name}
                 </CardTitle>
-                <CardDescription className="text-sm">
+                <CardDescription className="text-sm text-center leading-relaxed">
                   {category.description}
                 </CardDescription>
               </CardHeader>

@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useToolsData, type ToolItem } from './useToolsData';
 import { useMaterialsAsTools } from './useMaterialsAsTools';
-import { Wrench, Calculator, FileText, Package, Zap, HardHat, Shield, Settings, ArrowUp } from 'lucide-react';
+import { Wrench, Calculator, Package, Zap, HardHat, Shield, Settings, ArrowUp } from 'lucide-react';
 
 export interface ToolCategory {
   name: string;
@@ -77,10 +77,6 @@ const getCategoryIcon = (category: string) => {
     case 'Hand Tools': return Wrench;
     case 'Power Tools': return Zap;
     case 'Test Equipment': return Calculator;
-    case 'Installation Tools': return Settings;
-    case 'Cable & Wiring': return Package;
-    case 'Electrical Components': return Zap;
-    case 'Lighting': return FileText;
     case 'PPE': return HardHat;
     case 'Safety Tools': return Shield;
     case 'Access Tools & Equipment': return ArrowUp;
@@ -92,33 +88,27 @@ const getCategoryIcon = (category: string) => {
 
 const getCategoryDescription = (category: string): string => {
   switch (category) {
-    case 'Hand Tools': return 'Essential hand tools for electrical work';
-    case 'Power Tools': return 'Power tools and accessories';
-    case 'Test Equipment': return 'Testing and measurement equipment';
-    case 'Installation Tools': return 'Installation and cable management tools';
-    case 'Cable & Wiring': return 'Cables, wires and wiring accessories';
-    case 'Electrical Components': return 'Switches, sockets and electrical fittings';
-    case 'Lighting': return 'Lighting fixtures and accessories';
-    case 'PPE': return 'Personal protective equipment';
-    case 'Safety Tools': return 'Safety tools and equipment';
-    case 'Access Tools & Equipment': return 'Ladders, scaffolding and access equipment';
-    case 'Tool Storage': return 'Tool bags, boxes and storage';
-    case 'Specialist Tools': return 'Specialist electrical tools';
+    case 'Hand Tools': return 'Essential hand tools for electrical work including screwdrivers, pliers, and spanners';
+    case 'Power Tools': return 'Electric and cordless power tools for drilling, cutting, and installation work';
+    case 'Test Equipment': return 'Testing and measurement equipment for electrical safety and compliance';
+    case 'PPE': return 'Personal protective equipment for safe working practices';
+    case 'Safety Tools': return 'Safety tools and equipment for hazard identification and protection';
+    case 'Access Tools & Equipment': return 'Ladders, scaffolding and access equipment for working at height';
+    case 'Tool Storage': return 'Tool bags, boxes and storage solutions for organisation';
+    case 'Specialist Tools': return 'Specialist electrical tools for specific installation tasks';
     default: return 'Essential hand tools for electrical work';
   }
 };
 
 const getDefaultCategories = (): ToolCategory[] => [
-  { name: 'Hand Tools', icon: Wrench, description: 'Essential hand tools for electrical work', count: 0 },
-  { name: 'Power Tools', icon: Zap, description: 'Power tools and accessories', count: 0 },
-  { name: 'Test Equipment', icon: Calculator, description: 'Testing and measurement equipment', count: 0 },
-  { name: 'Installation Tools', icon: Settings, description: 'Installation and cable management tools', count: 0 },
-  { name: 'Cable & Wiring', icon: Package, description: 'Cables, wires and wiring accessories', count: 0 },
-  { name: 'Electrical Components', icon: Zap, description: 'Switches, sockets and electrical fittings', count: 0 },
-  { name: 'Lighting', icon: FileText, description: 'Lighting fixtures and accessories', count: 0 },
-  { name: 'PPE', icon: HardHat, description: 'Personal protective equipment', count: 0 },
-  { name: 'Safety Tools', icon: Shield, description: 'Safety tools and equipment', count: 0 },
-  { name: 'Specialist Tools', icon: Settings, description: 'Specialist electrical tools', count: 0 }
+  { name: 'Hand Tools', icon: Wrench, description: 'Essential hand tools for electrical work including screwdrivers, pliers, and spanners', count: 0 },
+  { name: 'Power Tools', icon: Zap, description: 'Electric and cordless power tools for drilling, cutting, and installation work', count: 0 },
+  { name: 'Test Equipment', icon: Calculator, description: 'Testing and measurement equipment for electrical safety and compliance', count: 0 },
+  { name: 'PPE', icon: HardHat, description: 'Personal protective equipment for safe working practices', count: 0 },
+  { name: 'Safety Tools', icon: Shield, description: 'Safety tools and equipment for hazard identification and protection', count: 0 },
+  { name: 'Access Tools & Equipment', icon: ArrowUp, description: 'Ladders, scaffolding and access equipment for working at height', count: 0 },
+  { name: 'Tool Storage', icon: Package, description: 'Tool bags, boxes and storage solutions for organisation', count: 0 },
+  { name: 'Specialist Tools', icon: Settings, description: 'Specialist electrical tools for specific installation tasks', count: 0 }
 ];
 
 // Map database categories to frontend display categories
@@ -232,7 +222,7 @@ export const useToolCategories = () => {
     return defaultCategories.map(defaultCat => {
       const dynamicCat = categoryMap.get(defaultCat.name);
       return dynamicCat || defaultCat;
-    });
+    }).filter(cat => defaultCategories.some(def => def.name === cat.name));
   }, [combinedTools]);
 
   return {
