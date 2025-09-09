@@ -72,12 +72,16 @@ export interface Quote {
   profit: number;
   vatAmount: number;
   total: number;
-  status: 'draft' | 'sent' | 'approved' | 'rejected';
+  status: 'draft' | 'sent' | 'pending' | 'completed' | 'rejected';
+  tags?: QuoteTag[];
+  lastReminderSentAt?: Date;
   createdAt: Date;
   updatedAt: Date;
   expiryDate: Date;
   notes?: string;
 }
+
+export type QuoteTag = 'awaiting_payment' | 'job_not_complete' | 'on_hold' | 'disputed';
 
 export interface JobTemplate {
   id: string;

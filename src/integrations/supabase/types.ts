@@ -1944,6 +1944,7 @@ export type Database = {
           expiry_date: string
           id: string
           items: Json
+          last_reminder_sent_at: string | null
           notes: string | null
           overhead: number
           profit: number
@@ -1951,6 +1952,7 @@ export type Database = {
           settings: Json
           status: string
           subtotal: number
+          tags: string[] | null
           total: number
           updated_at: string
           user_id: string
@@ -1962,6 +1964,7 @@ export type Database = {
           expiry_date: string
           id?: string
           items?: Json
+          last_reminder_sent_at?: string | null
           notes?: string | null
           overhead?: number
           profit?: number
@@ -1969,6 +1972,7 @@ export type Database = {
           settings: Json
           status?: string
           subtotal?: number
+          tags?: string[] | null
           total?: number
           updated_at?: string
           user_id: string
@@ -1980,6 +1984,7 @@ export type Database = {
           expiry_date?: string
           id?: string
           items?: Json
+          last_reminder_sent_at?: string | null
           notes?: string | null
           overhead?: number
           profit?: number
@@ -1987,6 +1992,7 @@ export type Database = {
           settings?: Json
           status?: string
           subtotal?: number
+          tags?: string[] | null
           total?: number
           updated_at?: string
           user_id?: string

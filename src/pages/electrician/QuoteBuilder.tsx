@@ -9,31 +9,44 @@ import { useQuoteStorage } from "@/hooks/useQuoteStorage";
 import React from "react";
 
 const QuoteBuilder = () => {
-  const { savedQuotes, deleteQuote, getQuoteStats, loading, refreshQuotes } = useQuoteStorage();
-  const quoteStats = getQuoteStats();
+  const { 
+    savedQuotes, 
+    deleteQuote, 
+    updateQuoteStatus,
+    sendPaymentReminder,
+    getQuoteStats, 
+    loading, 
+    refreshQuotes 
+  } = useQuoteStorage();
+  
+  const stats = getQuoteStats();
 
-  const stats = [
+  const handleQuoteGenerated = () => {
+    refreshQuotes();
+  };
+
+  const statCards = [
     {
       title: "Pending Quotes",
-      value: quoteStats.pending.toString(),
+      value: stats.pending.toString(),
       icon: Clock,
       color: "text-elec-yellow",
     },
     {
       title: "Sent Quotes",
-      value: quoteStats.sent.toString(), 
+      value: stats.sent.toString(), 
       icon: FileText,
       color: "text-blue-400",
     },
     {
-      title: "Approved Quotes",
-      value: quoteStats.approved.toString(),
+      title: "Completed Quotes",
+      value: stats.completed.toString(),
       icon: CheckCircle,
       color: "text-green-400",
     },
     {
       title: "This Month",
-      value: `£${quoteStats.monthlyTotal.toLocaleString()}`,
+      value: `£${stats.monthlyTotal.toLocaleString()}`,
       icon: TrendingUp,
       color: "text-elec-yellow",
     },
@@ -113,7 +126,7 @@ const QuoteBuilder = () => {
             </div>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
-              {stats.map((stat, index) => (
+              {statCards.map((stat, index) => (
                 <Card key={index} className="group relative overflow-hidden border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] bg-gradient-to-br from-card to-card/50">
                   <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   <CardContent className="relative p-6">
@@ -147,7 +160,7 @@ const QuoteBuilder = () => {
             </div>
             <Card className="border-0 shadow-2xl bg-gradient-to-br from-card to-card/80">
               <CardContent className="p-6 lg:p-8 bg-card">
-                <QuoteWizard onQuoteGenerated={refreshQuotes} />
+                <QuoteWizard onQuoteGenerated={handleQuoteGenerated} />
               </CardContent>
             </Card>
           </section>
@@ -165,6 +178,8 @@ const QuoteBuilder = () => {
             <RecentQuotesList 
               quotes={savedQuotes}
               onDeleteQuote={deleteQuote}
+              onUpdateQuoteStatus={updateQuoteStatus}
+              onSendPaymentReminder={sendPaymentReminder}
             />
           </section>
         </main>

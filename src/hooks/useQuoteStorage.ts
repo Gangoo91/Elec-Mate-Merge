@@ -21,6 +21,8 @@ export const useQuoteStorage = () => {
     vatAmount: parseFloat(row.vat_amount),
     total: parseFloat(row.total),
     status: row.status,
+    tags: row.tags || [],
+    lastReminderSentAt: row.last_reminder_sent_at ? new Date(row.last_reminder_sent_at) : undefined,
     createdAt: new Date(row.created_at),
     updatedAt: new Date(row.updated_at),
     expiryDate: new Date(row.expiry_date),
@@ -83,6 +85,8 @@ export const useQuoteStorage = () => {
         vat_amount: quote.vatAmount,
         total: quote.total,
         status: quote.status,
+        tags: quote.tags || [],
+        last_reminder_sent_at: quote.lastReminderSentAt?.toISOString(),
         notes: quote.notes,
         expiry_date: quote.expiryDate.toISOString(),
       };
@@ -133,21 +137,23 @@ export const useQuoteStorage = () => {
 
   // Get quote statistics
   const getQuoteStats = useCallback(() => {
-    const pending = savedQuotes.filter(q => q.status === 'draft').length;
+    const pending = savedQuotes.filter(q => q.status === 'pending').length;
     const sent = savedQuotes.filter(q => q.status === 'sent').length;
-    const approved = savedQuotes.filter(q => q.status === 'approved').length;
+    const completed = savedQuotes.filter(q => q.status === 'completed').length;
+    const awaitingPayment = savedQuotes.filter(q => q.tags?.includes('awaiting_payment')).length;
     
-    // Calculate this month's total
+    // Calculate this month's total from completed quotes
     const thisMonth = new Date();
     thisMonth.setDate(1);
     const monthlyTotal = savedQuotes
-      .filter(q => q.createdAt >= thisMonth)
+      .filter(q => q.status === 'completed' && q.createdAt >= thisMonth)
       .reduce((total, quote) => total + (quote.total || 0), 0);
 
     return {
       pending,
       sent,
-      approved,
+      completed,
+      awaitingPayment,
       monthlyTotal,
       totalQuotes: savedQuotes.length
     };
@@ -180,10 +186,65 @@ export const useQuoteStorage = () => {
     }
   }, [convertDbRowToQuote]);
 
+  const updateQuoteStatus = async (quoteId: string, status: Quote['status'], tags?: Quote['tags']): Promise<boolean> => {
+    try {
+      const updateData: any = {
+        status,
+        updated_at: new Date().toISOString(),
+      };
+      
+      if (tags !== undefined) {
+        updateData.tags = tags;
+      }
+
+      const { error } = await supabase
+        .from('quotes')
+        .update(updateData)
+        .eq('id', quoteId);
+
+      if (error) {
+        console.error('Error updating quote status:', error);
+        return false;
+      }
+
+      // Update local state
+      setSavedQuotes(prev => prev.map(quote => 
+        quote.id === quoteId 
+          ? { ...quote, status, tags: tags || quote.tags, updatedAt: new Date() }
+          : quote
+      ));
+
+      return true;
+    } catch (error) {
+      console.error('Error updating quote status:', error);
+      return false;
+    }
+  };
+
+  const sendPaymentReminder = async (quoteId: string, reminderType: 'gentle' | 'firm' | 'final'): Promise<boolean> => {
+    try {
+      const { error } = await supabase.functions.invoke('send-payment-reminder', {
+        body: { quoteId, reminderType }
+      });
+
+      if (error) {
+        console.error('Error sending payment reminder:', error);
+        return false;
+      }
+
+      return true;
+    } catch (error) {
+      console.error('Error sending payment reminder:', error);
+      return false;
+    }
+  };
+
   return {
     savedQuotes,
     saveQuote,
     deleteQuote,
+    updateQuoteStatus,
+    sendPaymentReminder,
     getQuoteStats,
     loading,
     refreshQuotes,

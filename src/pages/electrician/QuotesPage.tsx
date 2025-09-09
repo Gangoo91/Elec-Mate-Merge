@@ -6,7 +6,13 @@ import { useQuoteStorage } from "@/hooks/useQuoteStorage";
 import RecentQuotesList from "@/components/electrician/quote-builder/RecentQuotesList";
 
 const QuotesPage = () => {
-  const { savedQuotes, deleteQuote, loading } = useQuoteStorage();
+  const { 
+    savedQuotes, 
+    deleteQuote, 
+    updateQuoteStatus,
+    sendPaymentReminder,
+    loading 
+  } = useQuoteStorage();
 
   const canonical = `${window.location.origin}/electrician/quotes`;
 
@@ -69,15 +75,15 @@ const QuotesPage = () => {
             </div>
             <div className="bg-card border rounded-lg p-6 text-center">
               <div className="text-2xl font-bold text-green-400">
-                {savedQuotes.filter(q => q.status === 'approved').length}
+                {savedQuotes.filter(q => q.status === 'completed').length}
               </div>
-              <div className="text-muted-foreground">Approved</div>
+              <div className="text-muted-foreground">Completed</div>
             </div>
             <div className="bg-card border rounded-lg p-6 text-center">
               <div className="text-2xl font-bold text-blue-400">
-                {savedQuotes.filter(q => q.status === 'sent').length}
+                {savedQuotes.filter(q => q.status === 'pending').length}
               </div>
-              <div className="text-muted-foreground">Sent</div>
+              <div className="text-muted-foreground">Pending</div>
             </div>
           </section>
 
@@ -99,6 +105,8 @@ const QuotesPage = () => {
               <RecentQuotesList 
                 quotes={savedQuotes}
                 onDeleteQuote={deleteQuote}
+                onUpdateQuoteStatus={updateQuoteStatus}
+                onSendPaymentReminder={sendPaymentReminder}
               />
             )}
           </section>
