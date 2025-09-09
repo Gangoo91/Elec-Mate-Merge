@@ -8,41 +8,41 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-// Tool categories with their specific URLs for scraping
+// Tool categories with their specific URLs for electrical tools scraping
 const TOOL_CATEGORIES = {
-  'Hand Tools': {
+  'Electrical Hand Tools': {
     urls: [
-      'https://www.screwfix.com/c/tools/hand-tools/ct/25002',
-      'https://www.toolstation.com/electrical-hand-tools/c402',
-      'https://www.cef.co.uk/catalogue/categories/tools-and-testers/hand-tools'
-    ]
-  },
-  'Power Tools': {
-    urls: [
-      'https://www.screwfix.com/c/tools/power-tools/ct/25004',
-      'https://www.toolstation.com/power-tools/c147',
-      'https://www.cef.co.uk/catalogue/categories/tools-and-testers/power-tools'
+      'https://www.screwfix.com/search?search=wire+strippers+crimpers+electrical&page_size=50',
+      'https://www.screwfix.com/search?search=electrical+pliers+side+cutters&page_size=50',
+      'https://www.toolstation.com/search?q=electrical+hand+tools+wire+strippers'
     ]
   },
   'Test Equipment': {
     urls: [
-      'https://www.screwfix.com/c/electrical/electrical-testing/ct/12003',
-      'https://www.toolstation.com/electrical-testing/c405',
-      'https://www.cef.co.uk/catalogue/categories/tools-and-testers/test-equipment'
+      'https://www.screwfix.com/search?search=multimeter+voltage+tester+electrical&page_size=50',
+      'https://www.screwfix.com/search?search=electrical+testing+equipment&page_size=50',
+      'https://www.toolstation.com/search?q=multimeter+voltage+tester+electrical'
     ]
   },
-  'Installation Tools': {
+  'Power Tools': {
     urls: [
-      'https://www.screwfix.com/c/electrical/cable-management/ct/12004',
-      'https://www.toolstation.com/cable-management/c406',
-      'https://www.cef.co.uk/catalogue/categories/cable-management'
+      'https://www.screwfix.com/search?search=electrical+drill+sds+hammer&page_size=50',
+      'https://www.screwfix.com/search?search=angle+grinder+reciprocating+saw&page_size=50',
+      'https://www.toolstation.com/search?q=electrical+power+tools+drill'
     ]
   },
-  'Safety Tools': {
+  'Cable Installation': {
     urls: [
-      'https://www.screwfix.com/c/building-hardware/workwear-safety/ct/19004',
-      'https://www.toolstation.com/workwear-and-safety/c170',
-      'https://www.cef.co.uk/catalogue/categories/safety-and-workwear'
+      'https://www.screwfix.com/search?search=cable+stripper+fish+tape+electrical&page_size=50',
+      'https://www.screwfix.com/search?search=conduit+bender+cable+pulling&page_size=50',
+      'https://www.toolstation.com/search?q=cable+management+electrical+tools'
+    ]
+  },
+  'Electrical Safety': {
+    urls: [
+      'https://www.screwfix.com/search?search=electrical+safety+equipment+gloves&page_size=50',
+      'https://www.screwfix.com/search?search=lockout+tagout+electrical+safety&page_size=50',
+      'https://www.toolstation.com/search?q=electrical+safety+equipment'
     ]
   }
 };
@@ -99,7 +99,7 @@ const scrapeCategory = async (firecrawl: FirecrawlApp, category: string, urls: s
         formats: ['extract'],
         extract: {
           schema: productSchema,
-          prompt: `Extract electrical tools and equipment from this ${supplier} page. Focus on tools relevant to electricians and electrical work. Include prices, availability, and product details.`
+          prompt: `Extract ONLY electrical tools and equipment from this ${supplier} page. Focus exclusively on tools used by electricians: wire strippers, crimpers, multimeters, voltage testers, electrical drills, cable tools, conduit benders, electrical safety equipment. EXCLUDE: sealant guns, foam guns, general construction tools, non-electrical items. Include prices, availability, and product details.`
         },
         timeout: 30000
       });
