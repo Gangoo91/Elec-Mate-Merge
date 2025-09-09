@@ -66,11 +66,11 @@ serve(async (req) => {
 
     console.log('🔄 Cache expired or missing, triggering refresh...');
 
-    // Call the comprehensive materials scraper to get fresh electrical tools data
-    console.log('🔄 Invoking comprehensive-materials-scraper...');
+    // Call the comprehensive firecrawl scraper to get fresh electrical tools data
+    console.log('🔄 Invoking comprehensive-firecrawl-scraper...');
     const { data: refreshResult, error: refreshError } = await supabase.functions.invoke(
-      'comprehensive-materials-scraper',
-      { body: {} }
+      'comprehensive-firecrawl-scraper',
+      { body: { forceRefresh } }
     );
     
     console.log('📊 Scraper result:', refreshResult);
@@ -82,8 +82,8 @@ serve(async (req) => {
     }
 
     // Store the scraped data in tools_weekly_cache
-    if (refreshResult && refreshResult.materials && Array.isArray(refreshResult.materials)) {
-      console.log(`📊 Storing ${refreshResult.materials.length} tools in cache...`);
+    if (refreshResult && refreshResult.tools && Array.isArray(refreshResult.tools)) {
+      console.log(`📊 Storing ${refreshResult.tools.length} tools in cache...`);
       
       const expiresAt = new Date();
       expiresAt.setDate(expiresAt.getDate() + 7);
@@ -91,9 +91,12 @@ serve(async (req) => {
       const { error: storeError } = await supabase
         .from('tools_weekly_cache')
         .insert({
-          tools_data: refreshResult.materials,
+          tools_data: refreshResult.tools,
+          total_products: refreshResult.totalFound || refreshResult.tools.length,
+          category: 'weekly_refresh',
           expires_at: expiresAt.toISOString(),
-          created_at: now.toISOString()
+          created_at: now.toISOString(),
+          update_status: 'completed'
         });
       
       if (storeError) {

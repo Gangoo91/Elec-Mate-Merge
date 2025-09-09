@@ -12,7 +12,7 @@ import {
 import { useNavigate, Link, useSearchParams } from "react-router-dom";
 import { useToolCategories } from "@/hooks/useToolCategories";
 import EnhancedToolCategoryDisplay from "@/components/electrician-tools/EnhancedToolCategoryDisplay";
-import { testToolsRefresh } from "@/utils/testToolsRefresh";
+import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 
 const ElectricalTools = () => {
@@ -20,7 +20,7 @@ const ElectricalTools = () => {
   const [searchParams] = useSearchParams();
   const [searchTerm, setSearchTerm] = useState("");
   const [isRefreshing, setIsRefreshing] = useState(false);
-  const { categories: toolCategories, isLoading } = useToolCategories();
+  const { categories: toolCategories, isLoading, refetch } = useToolCategories();
   const { toast } = useToast();
   
   const selectedCategory = searchParams.get('category');
@@ -39,30 +39,43 @@ const ElectricalTools = () => {
     setIsRefreshing(true);
     try {
       toast({
-        title: "Updating Tools Data",
-        description: "Fetching latest tools from suppliers... This may take 1-2 minutes.",
+        title: "Refreshing Tools",
+        description: "Fetching latest data from all suppliers using Firecrawl...",
+        duration: 3000,
       });
 
-      const result = await testToolsRefresh();
+      // Trigger the comprehensive firecrawl scraper
+      const { data, error } = await supabase.functions.invoke('comprehensive-firecrawl-scraper', {
+        body: { forceRefresh: true }
+      });
       
-      if (result.success) {
+      if (error) {
+        console.error('❌ Tools refresh error:', error);
         toast({
-          title: "Tools Updated Successfully",
-          description: "Tool categories and products have been refreshed.",
-          variant: "success",
+          title: "Refresh Failed",
+          description: "Could not refresh tools data. Please try again.",
+          variant: "destructive",
+          duration: 5000,
         });
       } else {
+        console.log('✅ Tools refreshed:', data);
+        
+        // Call refetch to update local state with fresh data
+        refetch();
+        
         toast({
-          title: "Update Failed",
-          description: result.error || "Failed to refresh tools data.",
-          variant: "destructive",
+          title: "Tools Updated",
+          description: data?.message || "Successfully refreshed tools data from all suppliers!",
+          duration: 4000,
         });
       }
     } catch (error) {
+      console.error('❌ Tools refresh error:', error);
       toast({
-        title: "Update Error",
-        description: "An error occurred while updating tools data.",
+        title: "Refresh Failed",
+        description: "An error occurred while refreshing.",
         variant: "destructive",
+        duration: 5000,
       });
     } finally {
       setIsRefreshing(false);

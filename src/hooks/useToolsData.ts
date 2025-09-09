@@ -23,7 +23,7 @@ const fetchToolsData = async (): Promise<ToolItem[]> => {
   
   const { data, error } = await supabase
     .from('tools_weekly_cache' as any)
-    .select('tools_data')
+    .select('tools_data, total_products, category, update_status, created_at, expires_at')
     .order('created_at', { ascending: false })
     .limit(1)
     .single();
