@@ -143,6 +143,170 @@ export const jobTemplates: JobTemplate[] = [
     ]
   },
   {
+    id: '3-bed-house-rewire-kit',
+    name: '3-Bedroom House Rewire (Starter Kit)',
+    description: 'Complete material kit for 3-bedroom house rewire including sockets, lights, switches, cables and consumer unit',
+    category: 'Rewire',
+    estimatedHours: 40,
+    items: [
+      // Labour
+      {
+        description: 'House rewire labour',
+        quantity: 40,
+        unit: 'hours',
+        unitPrice: 50,
+        category: 'labour'
+      },
+      // Sockets - Bedrooms (2 per room)
+      {
+        description: '13A DP socket outlets - Bedrooms',
+        quantity: 6,
+        unit: 'each',
+        unitPrice: 12,
+        category: 'materials'
+      },
+      // Sockets - Living room
+      {
+        description: '13A DP socket outlets - Living room',
+        quantity: 3,
+        unit: 'each',
+        unitPrice: 12,
+        category: 'materials'
+      },
+      // Sockets - Kitchen
+      {
+        description: '13A DP socket outlets - Kitchen',
+        quantity: 4,
+        unit: 'each',
+        unitPrice: 12,
+        category: 'materials'
+      },
+      // Cooker outlet
+      {
+        description: '45A DP cooker outlet',
+        quantity: 1,
+        unit: 'each',
+        unitPrice: 25,
+        category: 'materials'
+      },
+      // Consumer unit
+      {
+        description: '10-way consumer unit with RCBOs',
+        quantity: 1,
+        unit: 'each',
+        unitPrice: 180,
+        category: 'materials'
+      },
+      // RCBOs
+      {
+        description: 'RCBO 32A Type B',
+        quantity: 6,
+        unit: 'each',
+        unitPrice: 45,
+        category: 'materials'
+      },
+      {
+        description: 'RCBO 16A Type B',
+        quantity: 4,
+        unit: 'each',
+        unitPrice: 42,
+        category: 'materials'
+      },
+      // Lights
+      {
+        description: 'LED ceiling lights',
+        quantity: 10,
+        unit: 'each',
+        unitPrice: 18,
+        category: 'materials'
+      },
+      // Light switches
+      {
+        description: '1-gang light switches',
+        quantity: 8,
+        unit: 'each',
+        unitPrice: 8,
+        category: 'materials'
+      },
+      {
+        description: '2-gang light switches',
+        quantity: 2,
+        unit: 'each',
+        unitPrice: 12,
+        category: 'materials'
+      },
+      // Cables
+      {
+        description: '1.5mm² T&E cable',
+        quantity: 100,
+        unit: 'metres',
+        unitPrice: 1.80,
+        category: 'materials'
+      },
+      {
+        description: '2.5mm² T&E cable',
+        quantity: 100,
+        unit: 'metres',
+        unitPrice: 2.50,
+        category: 'materials'
+      },
+      {
+        description: '10mm² T&E cable - Shower',
+        quantity: 50,
+        unit: 'metres',
+        unitPrice: 8.50,
+        category: 'materials'
+      },
+      // Back boxes
+      {
+        description: '35mm back boxes',
+        quantity: 15,
+        unit: 'each',
+        unitPrice: 1.20,
+        category: 'materials'
+      },
+      {
+        description: '47mm back boxes - deeper',
+        quantity: 8,
+        unit: 'each',
+        unitPrice: 1.80,
+        category: 'materials'
+      },
+      // Meter tails
+      {
+        description: '25mm² meter tails',
+        quantity: 3,
+        unit: 'metres',
+        unitPrice: 15.00,
+        category: 'materials'
+      },
+      // Fixings
+      {
+        description: 'Wall plugs and screws',
+        quantity: 1,
+        unit: 'pack',
+        unitPrice: 25,
+        category: 'materials'
+      },
+      // Cable cleats
+      {
+        description: 'Cable cleats and clips',
+        quantity: 50,
+        unit: 'each',
+        unitPrice: 0.75,
+        category: 'materials'
+      },
+      // Shower
+      {
+        description: '9.5kW electric shower unit',
+        quantity: 1,
+        unit: 'each',
+        unitPrice: 180,
+        category: 'equipment'
+      }
+    ]
+  },
+  {
     id: 'eicr-inspection',
     name: 'EICR Inspection',
     description: 'Electrical Installation Condition Report',

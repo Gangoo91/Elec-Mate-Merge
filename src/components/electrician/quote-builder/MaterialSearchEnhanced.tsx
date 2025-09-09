@@ -326,6 +326,29 @@ export const MaterialSearchEnhanced = ({ onAddMaterial }: MaterialSearchEnhanced
                   <Card className="bg-card/50 border-elec-yellow/20">
                     <CardHeader className="pb-3">
                       <CardTitle className="flex items-center gap-2 text-white">
+                        <Home className="h-5 w-5 text-elec-yellow" />
+                        3-Bed House Rewire Kit
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-sm text-elec-light/80 mb-3">
+                        Complete materials for 3-bedroom house: sockets, lights, switches, cables, consumer unit & shower
+                      </p>
+                      <div className="text-xs text-elec-light/60 mb-3">
+                        13 sockets • 10 lights • Consumer unit • 250m cables • Shower supply
+                      </div>
+                      <Button
+                        onClick={() => handleQuickAddCombination("house_rewire_3bed")}
+                        className="w-full bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
+                      >
+                        Add 3-Bed Kit (£2,800+)
+                      </Button>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="bg-card/50 border-elec-yellow/20">
+                    <CardHeader className="pb-3">
+                      <CardTitle className="flex items-center gap-2 text-white">
                         <Settings className="h-5 w-5 text-elec-yellow" />
                         Garage Supply
                       </CardTitle>
