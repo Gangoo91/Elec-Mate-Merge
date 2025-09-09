@@ -3,7 +3,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Quote } from '@/types/quote';
 import { calculateFinancialBreakdown } from '@/utils/quote-analytics';
-import { TrendingUp, DollarSign, PieChart, Target, Wrench, Clock, Receipt, CreditCard } from 'lucide-react';
+import { TrendingUp, PoundSterling, PieChart, Target, Wrench, Clock, Receipt, CreditCard } from 'lucide-react';
 
 interface FinancialSnapshotProps {
   isOpen: boolean;
@@ -33,7 +33,7 @@ const FinancialSnapshot: React.FC<FinancialSnapshotProps> = ({
     {
       title: "Total Revenue",
       value: formatCurrency(breakdown.totalRevenue),
-      icon: DollarSign,
+      icon: PoundSterling,
       color: "text-green-500"
     },
     {
