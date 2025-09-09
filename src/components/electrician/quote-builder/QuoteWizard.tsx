@@ -1,9 +1,10 @@
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, ArrowRight, User, Settings, FileText, Calculator, Building2 } from "lucide-react";
+import { ArrowLeft, ArrowRight, User, Settings, FileText, Calculator, Building2, Briefcase } from "lucide-react";
 import { useQuoteBuilder } from "@/hooks/useQuoteBuilder";
 import { ClientDetailsStep } from "./steps/ClientDetailsStep";
+import { JobDetailsStep } from "./steps/JobDetailsStep";
 import { EnhancedQuoteItemsStep } from "./steps/EnhancedQuoteItemsStep";
 import { QuoteSettingsStep } from "./steps/QuoteSettingsStep";
 import { QuoteReviewStep } from "./steps/QuoteReviewStep";
@@ -12,6 +13,7 @@ import { CompanyBrandingStep } from "@/components/company/CompanyBrandingStep";
 const steps = [
   { title: "Company Branding", icon: Building2, description: "Logo and company details" },
   { title: "Client Details", icon: User, description: "Customer information" },
+  { title: "Job Details", icon: Briefcase, description: "Scope of work" },
   { title: "Quote Items", icon: FileText, description: "Add labour and materials" },
   { title: "Settings", icon: Settings, description: "Pricing and VAT settings" },
   { title: "Review", icon: Calculator, description: "Review and finalise" },
@@ -26,6 +28,7 @@ export const QuoteWizard = ({ onQuoteGenerated }: QuoteWizardProps) => {
     quote,
     currentStep,
     updateClient,
+    updateJobDetails,
     updateSettings,
     addItem,
     updateItem,
@@ -48,8 +51,12 @@ export const QuoteWizard = ({ onQuoteGenerated }: QuoteWizardProps) => {
         console.log('Client valid:', clientValid, quote.client);
         return clientValid;
       case 2:
-        return quote.items && quote.items.length > 0;
+        const jobValid = quote.jobDetails?.title && quote.jobDetails?.description;
+        console.log('Job valid:', jobValid, quote.jobDetails);
+        return jobValid;
       case 3:
+        return quote.items && quote.items.length > 0;
+      case 4:
         return quote.settings?.labourRate && typeof quote.settings?.overheadPercentage === 'number' && typeof quote.settings?.profitMargin === 'number';
       default:
         return true;
@@ -63,10 +70,12 @@ export const QuoteWizard = ({ onQuoteGenerated }: QuoteWizardProps) => {
       case 1:
         return <ClientDetailsStep client={quote.client} onUpdate={updateClient} />;
       case 2:
-        return <EnhancedQuoteItemsStep items={quote.items || []} onAdd={addItem} onUpdate={updateItem} onRemove={removeItem} />;
+        return <JobDetailsStep jobDetails={quote.jobDetails} onUpdate={updateJobDetails} />;
       case 3:
-        return <QuoteSettingsStep settings={quote.settings} onUpdate={updateSettings} />;
+        return <EnhancedQuoteItemsStep items={quote.items || []} onAdd={addItem} onUpdate={updateItem} onRemove={removeItem} />;
       case 4:
+        return <QuoteSettingsStep settings={quote.settings} onUpdate={updateSettings} />;
+      case 5:
         return <QuoteReviewStep quote={quote} />;
       default:
         return null;

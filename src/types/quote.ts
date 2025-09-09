@@ -53,6 +53,15 @@ export interface QuoteClient {
   postcode: string;
 }
 
+export interface JobDetails {
+  title: string;
+  description: string;
+  location?: string;
+  estimatedDuration?: string;
+  workStartDate?: string;
+  specialRequirements?: string;
+}
+
 export interface QuoteSettings {
   labourRate: number;
   overheadPercentage: number;
@@ -65,6 +74,7 @@ export interface Quote {
   id: string;
   quoteNumber: string;
   client: QuoteClient;
+  jobDetails?: JobDetails;
   items: QuoteItem[];
   settings: QuoteSettings;
   subtotal: number;

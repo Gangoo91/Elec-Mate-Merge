@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { Quote, QuoteItem, QuoteClient, QuoteSettings } from '@/types/quote';
+import { Quote, QuoteItem, QuoteClient, QuoteSettings, JobDetails } from '@/types/quote';
 import { v4 as uuidv4 } from 'uuid';
 import { generateQuotePDF } from '@/components/electrician/quote-builder/QuotePDFGenerator';
 import { generateProfessionalQuotePDF } from '@/utils/quote-pdf-professional';
@@ -26,6 +26,15 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void) => {
     console.log('updateClient called with:', client);
     setQuote(prev => {
       const updated = { ...prev, client, updatedAt: new Date() };
+      console.log('Quote updated to:', updated);
+      return updated;
+    });
+  }, []);
+
+  const updateJobDetails = useCallback((jobDetails: JobDetails) => {
+    console.log('updateJobDetails called with:', jobDetails);
+    setQuote(prev => {
+      const updated = { ...prev, jobDetails, updatedAt: new Date() };
       console.log('Quote updated to:', updated);
       return updated;
     });
@@ -90,7 +99,7 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void) => {
   }, [quote]);
 
   const nextStep = useCallback(() => {
-    setCurrentStep(prev => Math.min(prev + 1, 3));
+    setCurrentStep(prev => Math.min(prev + 1, 5));
   }, []);
 
   const prevStep = useCallback(() => {
@@ -151,8 +160,8 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void) => {
       }
 
       // Move to review step if not already there
-      if (currentStep < 3) {
-        setCurrentStep(3);
+      if (currentStep < 5) {
+        setCurrentStep(5);
       }
     } catch (error) {
       console.error('Error generating quote:', error);
@@ -180,6 +189,7 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void) => {
     quote: calculateTotals(),
     currentStep,
     updateClient,
+    updateJobDetails,
     updateSettings,
     addItem,
     updateItem,

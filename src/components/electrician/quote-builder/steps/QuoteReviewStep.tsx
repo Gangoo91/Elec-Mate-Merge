@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { User, FileText, Calculator, Package, Wrench, Zap, Download, Mail } from "lucide-react";
+import { User, FileText, Calculator, Package, Wrench, Zap, Download, Mail, Briefcase } from "lucide-react";
 import { Quote } from "@/types/quote";
 import { generateQuotePDF } from "../QuotePDFGenerator";
 import { useToast } from "@/hooks/use-toast";
@@ -57,7 +57,7 @@ Your Electrician`;
       {/* Quote Header */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Client Information */}
-        <Card className="bg-elec-gray/50 border-elec-yellow/20">
+        <Card className="bg-card/50 border-border/20">
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-lg">
               <User className="h-5 w-5" />
@@ -78,7 +78,7 @@ Your Electrician`;
         </Card>
 
         {/* Quote Information */}
-        <Card className="bg-elec-gray/50 border-elec-yellow/20">
+        <Card className="bg-card/50 border-border/20">
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-lg">
               <FileText className="h-5 w-5" />
@@ -105,6 +105,54 @@ Your Electrician`;
           </CardContent>
         </Card>
       </div>
+
+      {/* Job Details */}
+      {quote.jobDetails && (
+        <Card className="bg-card/50 border-border/20">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2 text-lg">
+              <Briefcase className="h-5 w-5" />
+              Job Details
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            <div>
+              <h4 className="font-semibold text-lg">{quote.jobDetails.title}</h4>
+              <p className="text-muted-foreground mt-1">{quote.jobDetails.description}</p>
+            </div>
+            {(quote.jobDetails.location || quote.jobDetails.estimatedDuration || quote.jobDetails.workStartDate) && (
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2 border-t">
+                {quote.jobDetails.location && (
+                  <div>
+                    <span className="text-sm font-medium">Location:</span>
+                    <p className="text-sm text-muted-foreground">{quote.jobDetails.location}</p>
+                  </div>
+                )}
+                {quote.jobDetails.estimatedDuration && (
+                  <div>
+                    <span className="text-sm font-medium">Duration:</span>
+                    <p className="text-sm text-muted-foreground">{quote.jobDetails.estimatedDuration}</p>
+                  </div>
+                )}
+                {quote.jobDetails.workStartDate && (
+                  <div>
+                    <span className="text-sm font-medium">Start Date:</span>
+                    <p className="text-sm text-muted-foreground">
+                      {new Date(quote.jobDetails.workStartDate).toLocaleDateString()}
+                    </p>
+                  </div>
+                )}
+              </div>
+            )}
+            {quote.jobDetails.specialRequirements && (
+              <div className="pt-2 border-t">
+                <span className="text-sm font-medium">Special Requirements:</span>
+                <p className="text-sm text-muted-foreground mt-1">{quote.jobDetails.specialRequirements}</p>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      )}
 
       {/* Quote Items - Split by Category */}
       <div className="space-y-4">
