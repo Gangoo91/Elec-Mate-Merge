@@ -141,8 +141,7 @@ This analysis is for guidance only and must be verified by a qualified electrici
               className="border-border hover:bg-accent/50 w-full sm:w-auto"
             >
               <Download className="h-4 w-4 mr-2" />
-              <span className="hidden sm:inline">Export PDF</span>
-              <span className="sm:hidden">Export</span>
+              Export PDF
             </Button>
             <Button
               variant="outline"
@@ -151,8 +150,7 @@ This analysis is for guidance only and must be verified by a qualified electrici
               className="border-border hover:bg-accent/50 w-full sm:w-auto"
             >
               <Save className="h-4 w-4 mr-2" />
-              <span className="hidden sm:inline">Copy Summary</span>
-              <span className="sm:hidden">Copy</span>
+              Copy Summary
             </Button>
           </div>
         </div>

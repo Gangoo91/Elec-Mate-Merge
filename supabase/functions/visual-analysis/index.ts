@@ -41,139 +41,15 @@ serve(async (req) => {
 
     console.log('Starting visual analysis with settings:', analysis_settings);
 
-    // Construct the system prompt for BS 7671 compliance with EICR codes
-    const systemPrompt = `You are a highly experienced UK electrical safety inspector specialising in BS 7671 18th Edition compliance and EICR reporting. 
-
-Your role is to analyse electrical installation images and provide:
-1. Detailed safety assessments with EICR fault classification
-2. BS 7671 regulation compliance checks with specific clause references
-3. Risk identification with EICR codes (C1, C2, C3, FI)
-4. Professional remedial guidance and cost estimates
-5. Bounding box coordinates for detected issues (when requested)
-
-Analysis Focus Areas: ${analysis_settings.focus_areas.join(', ')}
-Confidence Threshold: ${analysis_settings.confidence_threshold}
-Enable Bounding Boxes: ${analysis_settings.enable_bounding_boxes}
-
-EICR Classification Requirements:
-- C1 (Code 1): Danger present - immediate action required. Risk of injury.
-- C2 (Code 2): Potentially dangerous - urgent remedial action required.
-- C3 (Code 3): Improvement recommended to enhance safety.
-- FI (Further Investigation): Unable to verify compliance, further investigation required.
-
-When analysing images:
-- Look for immediate safety hazards (exposed live parts, damaged protective devices, etc.)
-- Check compliance with BS 7671 requirements (earthing, bonding, circuit protection, isolation, etc.)
-- Assess installation quality and workmanship against current standards
-- Identify code violations and classify with appropriate EICR codes
-- Consider environmental factors affecting safety and compliance
-- Focus on visible defects that can be determined from the image
-
-For each finding, you MUST assign the appropriate EICR code based on severity:
-- Exposed live parts, missing earth connections, damaged protective devices = C1
-- Non-compliant installations without immediate danger = C2  
-- Outdated but functioning installations = C3
-- Unclear compliance status from image = FI
-
-IMPORTANT: You must respond in valid JSON format only. No markdown, no code blocks, just raw JSON.
-
-Response format:
-{
-  "analysis": {
-    "findings": [
-      {
-        "description": "Detailed description of the issue found",
-        "eicr_code": "C1|C2|C3|FI",
-        "confidence": 0.95,
-        "bs7671_clauses": ["411.3.2", "526.3"],
-        "location": "Specific location in image",
-        "fix_guidance": "Step-by-step remedial actions required",
-        "bounding_box": {
-          "x": 0.1,
-          "y": 0.1,
-          "width": 0.2,
-          "height": 0.2,
-          "confidence": 0.95,
-          "label": "Issue type"
-        }
-      }
-    ],
-    "recommendations": [
-      {
-        "action": "Specific remedial action required",
-        "priority": "immediate|urgent|recommended",
-        "bs7671_reference": "BS 7671 clause reference",
-        "cost_estimate": "£50-100",
-        "eicr_code": "C1|C2|C3"
-      }
-    ],
-    "compliance_summary": {
-      "overall_assessment": "satisfactory|unsatisfactory",
-      "c1_count": 0,
-      "c2_count": 1,
-      "c3_count": 2,
-      "fi_count": 0,
-      "safety_rating": 7.5
-    },
-    "summary": "Brief executive summary of EICR findings and overall installation condition"
-  }
-}`;
-
-    // Prepare images for analysis
-    const images = [
-      {
-        type: "image_url",
-        image_url: {
-          url: primary_image,
-          detail: "high"
-        }
-      }
-    ];
-
-    // Add additional images if provided
-    additional_images.forEach(imageUrl => {
-      images.push({
-        type: "image_url",
-        image_url: {
-          url: imageUrl,
-          detail: "medium"
-        }
-      });
-    });
-
-    const userPrompt = `Analyse these electrical installation images for EICR compliance and BS 7671 18th Edition requirements.
-
-Primary focus areas: ${analysis_settings.focus_areas.join(', ')}
-
-FIRST: Identify what type of electrical installation/component this is (e.g., "This appears to be a consumer unit", "This is a socket outlet", "This shows lighting circuitry").
-
-${analysis_settings.enable_bounding_boxes ? 
-  'Please include bounding box coordinates (normalised 0-1) for any detected issues or components of interest.' : 
-  'Bounding boxes are not required for this analysis.'
-}
-
-Look specifically for EICR reportable defects:
-- C1 Issues: Exposed live parts, missing protective devices, immediate dangers
-- C2 Issues: Non-compliant installations, deteriorated components, missing earthing
-- C3 Issues: Outdated installations, improvements recommended for enhanced safety
-- FI Issues: Installations requiring further investigation to determine compliance
-
-For each finding:
-1. Classify with appropriate EICR code (C1, C2, C3, or FI)
-2. Reference specific BS 7671 clauses that apply
-3. Provide clear remedial guidance
-4. Include cost estimates for typical remedial work
-5. Assess overall installation condition
-
-IF NO ISSUES ARE FOUND: State clearly that the installation appears satisfactory and compliant with BS 7671 requirements, with an overall_assessment of "satisfactory" and zero defect counts.
-
-Focus on visible defects and compliance issues that can be determined from the electrical installation images provided.`;
+    // Extract settings for easier access
+    const { confidence_threshold: confidenceThreshold, focus_areas: focusAreas, bs7671_compliance } = analysis_settings;
 
     console.log('Sending request to OpenAI with GPT-5...');
 
-    // Helper function for OpenAI API call with retry logic
-    const callOpenAI = async (attempt = 1): Promise<Response> => {
-      const response = await fetch('https://api.openai.com/v1/chat/completions', {
+    // Try primary analysis with GPT-5
+    let analysisResult;
+    try {
+      const openAIResponse = await fetch('https://api.openai.com/v1/chat/completions', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${openAIApiKey}`,
@@ -181,106 +57,188 @@ Focus on visible defects and compliance issues that can be determined from the e
         },
         body: JSON.stringify({
           model: 'gpt-5-2025-08-07',
+          max_completion_tokens: 3000,
           messages: [
             {
               role: 'system',
-              content: systemPrompt
+              content: `You are an expert electrical inspector specializing in BS 7671 18th Edition compliance analysis.
+
+Analyze the electrical installation image for compliance issues and safety concerns.
+
+Focus on these key areas based on the analysis settings:
+${focusAreas.map(area => `- ${area.replace('_', ' ')}`).join('\n')}
+
+CRITICAL INSTRUCTIONS:
+- You must respond with valid JSON only. No markdown, no explanations outside the JSON structure.
+- For classification: C1 = Danger present, C2 = Potentially dangerous, C3 = Improvement recommended, FI = Further investigation, Satisfactory = No issues
+- Include specific BS 7671 regulation references where applicable
+- Provide clear justification for your verdict
+- Give actionable next steps
+
+Required JSON structure:
+{
+  "detected_object": "brief description of main electrical component (e.g., 'Type B MCB in consumer unit', 'Socket outlet', 'RCD protection device')",
+  "overall_compliance": "compliant" | "non_compliant" | "needs_attention",
+  "compliance_summary": {
+    "verdict": "detailed verdict explanation with specific issues found",
+    "verdict_label": "C1" | "C2" | "C3" | "FI" | "Satisfactory",
+    "justification": "specific technical reason for this classification with regulation reference"
+  },
+  "findings": [
+    {
+      "id": "finding_1",
+      "severity": "high" | "medium" | "low",
+      "category": "Safety" | "Compliance" | "Installation" | "Labelling" | "Protection",
+      "description": "detailed technical description of the issue found",
+      "regulation": "specific BS 7671 regulation number (e.g., 'Regulation 411.3.2', 'Section 514')",
+      "justification": "technical explanation of why this violates BS 7671 and the safety implications",
+      "next_steps": "specific remedial action required to resolve this issue",
+      "location": "precise location in the image where this issue was identified"
+    }
+  ],
+  "recommendations": ["actionable recommendations for improvement"],
+  "confidence_score": 0.95
+}`
             },
             {
               role: 'user',
               content: [
                 {
-                  type: "text",
-                  text: userPrompt
+                  type: 'text',
+                  text: `Analyze this electrical installation image for BS 7671 compliance. Settings: confidence_threshold=${confidenceThreshold}, focus_areas=${focusAreas.join(', ')}, bs7671_compliance=${bs7671_compliance}`
                 },
-                ...images
+                {
+                  type: 'image_url',
+                  image_url: {
+                    url: primary_image,
+                    detail: 'high'
+                  }
+                }
               ]
             }
-          ],
-          max_completion_tokens: 2000,
-          response_format: { type: "json_object" }
-        }),
+          ]
+        })
       });
 
-      // Retry on transient errors (429, 5xx) but only once
-      if (!response.ok && attempt === 1 && (response.status === 429 || response.status >= 500)) {
-        console.log(`Transient error ${response.status}, retrying...`);
-        await new Promise(resolve => setTimeout(resolve, 1000)); // 1 second delay
-        return callOpenAI(2);
+      if (!openAIResponse.ok) {
+        throw new Error(`OpenAI API error: ${openAIResponse.status}`);
       }
 
-      return response;
-    };
-
-    const response = await callOpenAI();
-
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error('OpenAI API error:', response.status, errorText);
-      console.log('Analysis failed with model: gpt-5-2025-08-07');
-      throw new Error('Analysis failed, please try again');
-    }
-
-    const data = await response.json();
-    console.log('GPT-5 analysis completed successfully', { model_used: 'gpt-5-2025-08-07' });
-
-    if (!data.choices || !data.choices[0] || !data.choices[0].message) {
-      throw new Error('Invalid response from OpenAI API');
-    }
-
-    let analysisResult;
-    try {
-      analysisResult = JSON.parse(data.choices[0].message.content);
-    } catch (parseError) {
-      console.error('Failed to parse OpenAI response as JSON:', parseError);
-      console.error('Raw response:', data.choices[0].message.content);
+      const result = await openAIResponse.json();
+      console.log('GPT-5 analysis completed successfully', { model_used: 'gpt-5-2025-08-07' });
       
-      // Fallback response structure
-      analysisResult = {
-        analysis: {
-          findings: [
-            {
-              description: "Analysis completed but response format was invalid. Please try again or contact support.",
-              eicr_code: "FI",
-              confidence: 0.5,
-              bs7671_clauses: ["N/A"],
-              fix_guidance: "Re-run analysis or contact technical support"
-            }
-          ],
-          recommendations: [
-            {
-              action: "Re-run analysis with different settings or contact technical support",
-              priority: "recommended",
-              eicr_code: "FI"
-            }
-          ],
-          compliance_summary: {
-            overall_assessment: "unsatisfactory",
-            c1_count: 0,
-            c2_count: 0,
-            c3_count: 0,
-            fi_count: 1,
-            safety_rating: 5.0
-          },
-          summary: "Analysis completed but encountered formatting issues. Results may be incomplete."
+      const rawResponse = result.choices[0].message.content;
+      console.log('Raw response length:', rawResponse?.length || 0);
+      
+      // Clean and parse the JSON response
+      let cleanedResponse = rawResponse;
+      if (rawResponse.includes('```json')) {
+        cleanedResponse = rawResponse.replace(/```json\n?/g, '').replace(/```\n?/g, '');
+      }
+      cleanedResponse = cleanedResponse.trim();
+      
+      try {
+        analysisResult = JSON.parse(cleanedResponse);
+        console.log('Successfully parsed JSON response');
+      } catch (parseError) {
+        console.error('JSON parsing failed, attempting cleanup:', parseError);
+        // Try to extract JSON from response
+        const jsonMatch = cleanedResponse.match(/\{[\s\S]*\}/);
+        if (jsonMatch) {
+          analysisResult = JSON.parse(jsonMatch[0]);
+          console.log('Successfully parsed cleaned JSON');
+        } else {
+          throw new Error('Could not extract valid JSON from response');
         }
-      };
+      }
+      
+    } catch (primaryError) {
+      console.error('Primary analysis failed, trying fallback:', primaryError);
+      
+      // Fallback to GPT-4.1 with simpler prompt
+      try {
+        const fallbackResponse = await fetch('https://api.openai.com/v1/chat/completions', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${openAIApiKey}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            model: 'gpt-4.1-2025-04-14',
+            max_completion_tokens: 2000,
+            temperature: 0.1,
+            messages: [
+              {
+                role: 'system',
+                content: `You are an electrical inspector. Analyze the image and respond with valid JSON only.
+
+JSON format:
+{
+  "detected_object": "electrical component name",
+  "overall_compliance": "compliant",
+  "compliance_summary": {
+    "verdict": "analysis summary",
+    "verdict_label": "Satisfactory",
+    "justification": "reason for verdict"
+  },
+  "findings": [],
+  "recommendations": [],
+  "confidence_score": 0.8
+}`
+              },
+              {
+                role: 'user',
+                content: [
+                  {
+                    type: 'text',
+                    text: 'Analyze this electrical installation for BS 7671 compliance. Respond with JSON only.'
+                  },
+                  {
+                    type: 'image_url',
+                    image_url: {
+                      url: primary_image,
+                      detail: 'medium'
+                    }
+                  }
+                ]
+              }
+            ]
+          })
+        });
+
+        if (fallbackResponse.ok) {
+          const fallbackResult = await fallbackResponse.json();
+          const fallbackContent = fallbackResult.choices[0].message.content;
+          analysisResult = JSON.parse(fallbackContent);
+          console.log('Fallback analysis successful');
+        } else {
+          throw new Error('Fallback analysis also failed');
+        }
+      } catch (fallbackError) {
+        console.error('Both primary and fallback failed:', fallbackError);
+        // Return a structured error response
+        analysisResult = {
+          detected_object: "electrical installation",
+          overall_compliance: "needs_attention",
+          compliance_summary: {
+            verdict: "Analysis temporarily unavailable due to technical issues. Please try again.",
+            verdict_label: "FI",
+            justification: "Technical analysis could not be completed"
+          },
+          findings: [],
+          recommendations: ["Try uploading the image again", "Ensure image is clear and well-lit"],
+          confidence_score: 0.1
+        };
+      }
     }
 
-    // Ensure the response has the expected structure
-    if (!analysisResult.analysis) {
-      analysisResult = { analysis: analysisResult };
-    }
+    // Validate and enrich the result
+    if (!analysisResult.findings) analysisResult.findings = [];
+    if (!analysisResult.recommendations) analysisResult.recommendations = [];
+    if (!analysisResult.confidence_score) analysisResult.confidence_score = 0.7;
 
-    // Apply confidence threshold filtering
-    if (analysisResult.analysis.findings) {
-      analysisResult.analysis.findings = analysisResult.analysis.findings.filter(
-        (finding: any) => (finding.confidence || 0) >= analysis_settings.confidence_threshold
-      );
-    }
-
+    
     console.log('Analysis complete, returning results');
-
     return new Response(JSON.stringify(analysisResult), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
