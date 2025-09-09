@@ -35,6 +35,22 @@ const CATEGORY_META: Record<string, { title: string; description: string }> = {
     title: "Hand Tools",
     description: "Screwdrivers, pliers, strippers and manual tools"
   },
+  "installation-tools": {
+    title: "Installation Tools",
+    description: "Cable management, conduit, trunking and installation accessories"
+  },
+  "cable-wiring": {
+    title: "Cable & Wiring",
+    description: "Cables, wires, cable rods and wiring accessories"
+  },
+  "electrical-components": {
+    title: "Electrical Components",
+    description: "Switches, sockets, outlets and electrical fittings"
+  },
+  "lighting": {
+    title: "Lighting",
+    description: "LED lights, fittings, downlights and lighting accessories"
+  },
   "access-tools": {
     title: "Access Tools & Equipment",
     description: "Ladders, steps, access platforms and safety equipment"
@@ -73,7 +89,11 @@ const EnhancedToolCategoryDisplay = ({ categoryName }: EnhancedToolCategoryDispl
       'Test Equipment': ['Test Equipment', 'Testing Equipment', 'Test & Measurement', 'Testers'],
       'Safety Tools': ['Safety Tools', 'Safety Equipment', 'PPE', 'Personal Protective Equipment'],
       'Power Tools': ['Power Tools', 'Electric Tools', 'Cordless Tools', 'Battery Tools'],
-      'Hand Tools': ['Hand Tools', 'Manual Tools', 'Basic Tools'],
+      'Hand Tools': ['Hand Tools', 'Manual Tools', 'Basic Tools', 'Cable Rods', 'Cable Rod Sets', 'Fish Tape'],
+      'Installation Tools': ['Installation Tools', 'Cable Ties', 'Cable Clips', 'Conduit', 'Mini Trunking', 'Trunking', 'Accessories'],
+      'Cable & Wiring': ['Cable & Wiring', 'Hook Up Wire', 'Cable', 'Power Cable', 'Control Cable', 'Ethernet Cable', 'Coaxial Cable', 'SWA Cable', 'Fire Alarm Cable'],
+      'Electrical Components': ['Electrical Components', 'Switches', 'Sockets', 'Outlets', 'Light Switches', 'Dimmers', 'Electrical Accessories', 'Wiring Accessories', 'Plugs & Sockets', 'Junction Boxes', 'Consumer Units', 'Distribution', 'RCDs', 'MCBs', 'Fuses', 'Isolators'],
+      'Lighting': ['Lighting', 'LED Lighting', 'Light Fittings', 'Downlights', 'Emergency Lighting', 'Commercial Lighting', 'Outdoor Lighting'],
       'Access Tools & Equipment': ['Access Tools & Equipment', 'Access Equipment', 'Ladders & Steps', 'Access'],
       'Tool Storage': ['Tool Storage', 'Storage', 'Tool Bags', 'Cases & Bags'],
       'Specialist Tools': ['Specialist Tools', 'Electrical Tools', 'Cable Tools', 'Wiring Tools']
