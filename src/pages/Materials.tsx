@@ -2,13 +2,25 @@
 import { Helmet } from "react-helmet";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { RefreshCw } from "lucide-react";
+import { RefreshCw, Zap } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import MaterialCategoryBrowser from "@/components/electrician-materials/MaterialCategoryBrowser";
 
 const Materials = () => {
   const [isUpdating, setIsUpdating] = useState(false);
+  const [isForceUpdating, setIsForceUpdating] = useState(false);
   const { toast } = useToast();
 
   const handleUpdateProducts = async () => {
@@ -42,6 +54,39 @@ const Materials = () => {
     }
   };
 
+  const handleForceUpdate = async () => {
+    setIsForceUpdating(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('comprehensive-materials-scraper', {
+        body: { forceRefresh: true, bypassCache: true }
+      });
+      
+      if (error) {
+        console.error('Error forcing materials update:', error);
+        toast({
+          title: "Force Update Failed",
+          description: "Failed to force materials update. Please try again.",
+          variant: "destructive",
+        });
+      } else {
+        toast({
+          title: "Force Update Started",
+          description: "Materials cache is being forcefully refreshed. This may take 5-10 minutes to complete.",
+          variant: "success",
+        });
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      toast({
+        title: "Force Update Failed",
+        description: "An error occurred while forcing materials update.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsForceUpdating(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-elec-dark text-white">
       <Helmet>
@@ -58,15 +103,46 @@ const Materials = () => {
               Browse electrical materials from leading UK suppliers. Real-time pricing and availability from Screwfix, Toolstation, RS Components, and CEF.
             </p>
           </div>
-          <Button
-            onClick={handleUpdateProducts}
-            disabled={isUpdating}
-            variant="outline"
-            className="shrink-0"
-          >
-            <RefreshCw className={`w-4 h-4 mr-2 ${isUpdating ? 'animate-spin' : ''}`} />
-            {isUpdating ? 'Updating...' : 'Update Products'}
-          </Button>
+          <div className="flex gap-2">
+            <Button
+              onClick={handleUpdateProducts}
+              disabled={isUpdating || isForceUpdating}
+              variant="outline"
+              className="shrink-0"
+            >
+              <RefreshCw className={`w-4 h-4 mr-2 ${isUpdating ? 'animate-spin' : ''}`} />
+              {isUpdating ? 'Updating...' : 'Update Products'}
+            </Button>
+            
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button
+                  disabled={isUpdating || isForceUpdating}
+                  variant="destructive"
+                  className="shrink-0"
+                >
+                  <Zap className={`w-4 h-4 mr-2 ${isForceUpdating ? 'animate-pulse' : ''}`} />
+                  {isForceUpdating ? 'Force Updating...' : 'Force Update'}
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Force Update Materials Cache</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    This will bypass all cache logic and forcefully refresh the materials database. 
+                    This process may take 5-10 minutes and should only be used when absolutely necessary.
+                    Are you sure you want to proceed?
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogAction onClick={handleForceUpdate} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
+                    Force Update
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+          </div>
         </div>
 
         <MaterialCategoryBrowser />
