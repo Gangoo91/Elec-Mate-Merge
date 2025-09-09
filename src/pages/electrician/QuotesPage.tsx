@@ -1,11 +1,17 @@
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Plus } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { ArrowLeft, Plus, X } from "lucide-react";
 import { useQuoteStorage } from "@/hooks/useQuoteStorage";
 import RecentQuotesList from "@/components/electrician/quote-builder/RecentQuotesList";
+import { filterQuotesByStatus } from "@/utils/quote-analytics";
+import { useMemo } from "react";
 
 const QuotesPage = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const filter = searchParams.get('filter');
+  
   const { 
     savedQuotes, 
     deleteQuote, 
@@ -13,6 +19,27 @@ const QuotesPage = () => {
     sendPaymentReminder,
     loading 
   } = useQuoteStorage();
+
+  const filteredQuotes = useMemo(() => {
+    if (!filter || filter === 'all') return savedQuotes;
+    if (filter === 'monthly') return savedQuotes; // Monthly filter handled elsewhere
+    return filterQuotesByStatus(savedQuotes, filter as any);
+  }, [savedQuotes, filter]);
+
+  const clearFilter = () => {
+    setSearchParams({});
+  };
+
+  const getFilterLabel = (filterType: string) => {
+    switch (filterType) {
+      case 'pending': return 'Pending Quotes';
+      case 'sent': return 'Sent Quotes';
+      case 'completed': return 'Completed Quotes';
+      case 'rejected': return 'Rejected Quotes';
+      case 'draft': return 'Draft Quotes';
+      default: return 'All Quotes';
+    }
+  };
 
   const canonical = `${window.location.origin}/electrician/quotes`;
 
@@ -67,11 +94,33 @@ const QuotesPage = () => {
 
       <div className="px-4 py-8 space-y-8 animate-fade-in">
         <main className="space-y-8">
+          {/* Filter Badge */}
+          {filter && (
+            <section className="flex items-center gap-3">
+              <span className="text-sm text-muted-foreground">Filtered by:</span>
+              <Badge variant="secondary" className="flex items-center gap-2">
+                {getFilterLabel(filter)}
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="h-4 w-4 p-0 hover:bg-transparent"
+                  onClick={clearFilter}
+                >
+                  <X className="h-3 w-3" />
+                </Button>
+              </Badge>
+            </section>
+          )}
+
           {/* Quote Statistics */}
           <section className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div className="bg-card border rounded-lg p-6 text-center">
-              <div className="text-2xl font-bold text-primary">{savedQuotes.length}</div>
-              <div className="text-muted-foreground">Total Quotes</div>
+              <div className="text-2xl font-bold text-primary">
+                {filter ? filteredQuotes.length : savedQuotes.length}
+              </div>
+              <div className="text-muted-foreground">
+                {filter ? `${getFilterLabel(filter)}` : 'Total Quotes'}
+              </div>
             </div>
             <div className="bg-card border rounded-lg p-6 text-center">
               <div className="text-2xl font-bold text-green-400">
@@ -90,9 +139,12 @@ const QuotesPage = () => {
           {/* All Quotes List */}
           <section aria-labelledby="all-quotes" className="space-y-6">
             <div className="flex items-center justify-between">
-              <h2 id="all-quotes" className="text-2xl font-bold">Your Quotes</h2>
+              <h2 id="all-quotes" className="text-2xl font-bold">
+                {filter ? getFilterLabel(filter) : 'Your Quotes'}
+              </h2>
               <div className="text-sm text-muted-foreground">
-                {savedQuotes.length} quote{savedQuotes.length !== 1 ? 's' : ''} total
+                {filter ? filteredQuotes.length : savedQuotes.length} quote{(filter ? filteredQuotes.length : savedQuotes.length) !== 1 ? 's' : ''} 
+                {filter ? ' matching filter' : ' total'}
               </div>
             </div>
             
@@ -103,10 +155,11 @@ const QuotesPage = () => {
               </div>
             ) : (
               <RecentQuotesList 
-                quotes={savedQuotes}
+                quotes={filteredQuotes}
                 onDeleteQuote={deleteQuote}
                 onUpdateQuoteStatus={updateQuoteStatus}
                 onSendPaymentReminder={sendPaymentReminder}
+                showAll={true}
               />
             )}
           </section>

@@ -20,13 +20,15 @@ interface RecentQuotesListProps {
   onDeleteQuote: (quoteId: string) => Promise<boolean>;
   onUpdateQuoteStatus?: (quoteId: string, status: Quote['status'], tags?: Quote['tags']) => Promise<boolean>;
   onSendPaymentReminder?: (quoteId: string, reminderType: 'gentle' | 'firm' | 'final') => Promise<boolean>;
+  showAll?: boolean;
 }
 
 const RecentQuotesList: React.FC<RecentQuotesListProps> = ({ 
   quotes, 
   onDeleteQuote, 
   onUpdateQuoteStatus,
-  onSendPaymentReminder 
+  onSendPaymentReminder,
+  showAll = false
 }) => {
   const [loadingAction, setLoadingAction] = useState<string>('');
   const handleRegeneratePDF = (quote: Quote) => {
@@ -192,9 +194,11 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
     );
   }
 
+  const displayQuotes = showAll ? quotes : quotes.slice(0, 10);
+
   return (
     <div className="space-y-4">
-      {quotes.slice(0, 10).map((quote) => (
+      {displayQuotes.map((quote) => (
         <Card key={quote.id} className="border-elec-yellow/20 bg-elec-gray hover:bg-elec-gray/90 transition-colors">
           <CardContent className="p-6">
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
@@ -352,7 +356,7 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
         </Card>
       ))}
       
-      {quotes.length > 10 && (
+      {!showAll && quotes.length > 10 && (
         <Card className="border-elec-yellow/20 bg-elec-gray/50">
           <CardContent className="p-4 text-center">
             <p className="text-sm text-muted-foreground">
