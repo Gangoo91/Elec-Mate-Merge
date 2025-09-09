@@ -50,7 +50,9 @@ export const MaterialsCacheStatus = () => {
     setIsLoading(true);
     try {
       const result = await getCacheStatus();
-      setCacheStatus(result);
+      if (result.success) {
+        setCacheStatus(result.cacheEntries);
+      }
     } catch (error) {
       console.error('Failed to load cache status:', error);
     } finally {

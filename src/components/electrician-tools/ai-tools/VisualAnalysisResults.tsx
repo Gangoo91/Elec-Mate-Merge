@@ -10,10 +10,7 @@ import {
   Plus,
   Eye,
   Wrench,
-  FileText,
-  XCircle,
-  Shield,
-  Search
+  FileText
 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 
@@ -27,20 +24,13 @@ interface BoundingBox {
 }
 
 interface AnalysisResult {
-  detected_object?: string;
   findings: Array<{
-    id?: string;
     description: string;
-    eicr_code?: 'C1' | 'C2' | 'C3' | 'FI';
-    severity?: string;
-    category?: string;
+    eicr_code: 'C1' | 'C2' | 'C3' | 'FI';
     confidence: number;
-    bs7671_clauses?: string[];
-    regulation?: string;
+    bs7671_clauses: string[];
     location?: string;
-    fix_guidance?: string;
-    justification?: string;
-    next_steps?: string;
+    fix_guidance: string;
     bounding_box?: BoundingBox;
   }>;
   recommendations: Array<{
@@ -51,17 +41,14 @@ interface AnalysisResult {
     eicr_code: 'C1' | 'C2' | 'C3';
   }>;
   compliance_summary: {
-    overall_assessment?: 'satisfactory' | 'unsatisfactory';
+    overall_assessment: 'satisfactory' | 'unsatisfactory';
     c1_count: number;
     c2_count: number;
     c3_count: number;
     fi_count: number;
     safety_rating: number;
-    verdict?: string;
-    verdict_label?: 'C1' | 'C2' | 'C3' | 'FI' | 'Satisfactory';
-    justification?: string;
   };
-  summary?: string;
+  summary: string;
 }
 
 interface VisualAnalysisResultsProps {
@@ -130,87 +117,17 @@ This analysis is for guidance only and must be verified by a qualified electrici
   return (
     <Card className="bg-card border-border max-w-5xl mx-auto">
       <CardHeader className="p-4 sm:p-6">
-        {/* Detected Object */}
-        {analysisResult.detected_object && (
-          <div className="mb-4">
-            <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
-              <Eye className="h-4 w-4" />
-              <span>Detected:</span>
-            </div>
-            <Badge variant="outline" className="text-sm">
-              {analysisResult.detected_object}
-            </Badge>
-          </div>
-        )}
-
-        {/* Verdict Banner */}
-        {analysisResult.compliance_summary.verdict_label && (
-          <div className={`rounded-lg p-4 mb-6 border ${
-            analysisResult.compliance_summary.verdict_label === 'Satisfactory' 
-              ? 'bg-green-500/10 border-green-500/30' 
-              : analysisResult.compliance_summary.verdict_label === 'C1'
-              ? 'bg-red-500/10 border-red-500/30'
-              : analysisResult.compliance_summary.verdict_label === 'C2'
-              ? 'bg-amber-500/10 border-amber-500/30'
-              : 'bg-blue-500/10 border-blue-500/30'
-          }`}>
-            <div className="flex items-center gap-3">
-              {analysisResult.compliance_summary.verdict_label === 'Satisfactory' ? (
-                <CheckCircle className="h-6 w-6 text-green-400 flex-shrink-0" />
-              ) : analysisResult.compliance_summary.verdict_label === 'C1' ? (
-                <XCircle className="h-6 w-6 text-red-400 flex-shrink-0" />
-              ) : analysisResult.compliance_summary.verdict_label === 'C2' ? (
-                <AlertTriangle className="h-6 w-6 text-amber-400 flex-shrink-0" />
-              ) : analysisResult.compliance_summary.verdict_label === 'FI' ? (
-                <Search className="h-6 w-6 text-blue-400 flex-shrink-0" />
-              ) : (
-                <Shield className="h-6 w-6 text-blue-400 flex-shrink-0" />
-              )}
-              <div className="flex-1">
-                <div className="flex items-center gap-2 mb-1">
-                  <Badge className={`${
-                    analysisResult.compliance_summary.verdict_label === 'Satisfactory' 
-                      ? 'bg-green-500 text-white' 
-                      : analysisResult.compliance_summary.verdict_label === 'C1'
-                      ? 'bg-red-500 text-white'
-                      : analysisResult.compliance_summary.verdict_label === 'C2'
-                      ? 'bg-amber-500 text-white'
-                      : 'bg-blue-500 text-white'
-                  }`}>
-                    {analysisResult.compliance_summary.verdict_label}
-                  </Badge>
-                  <span className={`font-medium ${
-                    analysisResult.compliance_summary.verdict_label === 'Satisfactory' 
-                      ? 'text-green-400' 
-                      : analysisResult.compliance_summary.verdict_label === 'C1'
-                      ? 'text-red-400'
-                      : analysisResult.compliance_summary.verdict_label === 'C2'
-                      ? 'text-amber-400'
-                      : 'text-blue-400'
-                  }`}>
-                    {analysisResult.compliance_summary.verdict || 'Analysis completed'}
-                  </span>
-                </div>
-                {analysisResult.compliance_summary.justification && (
-                  <p className="text-sm text-muted-foreground">
-                    {analysisResult.compliance_summary.justification}
-                  </p>
-                )}
-              </div>
-            </div>
-          </div>
-        )}
-
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div className="flex items-center justify-between">
           <div className="flex items-center gap-2 sm:gap-3">
-            <CardTitle className="text-lg sm:text-xl text-foreground">Analysis Results</CardTitle>
+            <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5 text-green-400" />
+            <CardTitle className="text-lg sm:text-xl text-foreground">Visual Analysis Results</CardTitle>
           </div>
-          <div className="flex flex-col gap-2 w-full sm:w-auto">
+          <div className="flex gap-2">
             <Button
               variant="outline"
               size="sm"
               onClick={onExportReport}
-              className="border-border hover:bg-accent/50 w-full"
+              className="border-border hover:bg-accent/50"
             >
               <Download className="h-4 w-4 mr-2" />
               Export PDF
@@ -219,7 +136,7 @@ This analysis is for guidance only and must be verified by a qualified electrici
               variant="outline"
               size="sm"
               onClick={copySummary}
-              className="border-border hover:bg-accent/50 w-full"
+              className="border-border hover:bg-accent/50"
             >
               <Save className="h-4 w-4 mr-2" />
               Copy Summary
@@ -268,28 +185,16 @@ This analysis is for guidance only and must be verified by a qualified electrici
           </div>
           
           <div className="mb-4">
-            {analysisResult.compliance_summary.overall_assessment === 'satisfactory' && 
-             analysisResult.compliance_summary.c1_count === 0 && 
-             analysisResult.compliance_summary.c2_count === 0 ? (
-              <div className="bg-green-500/20 border border-green-500/30 rounded-lg p-4 text-center">
-                <CheckCircle className="h-8 w-8 text-green-400 mx-auto mb-2" />
-                <h3 className="text-lg font-semibold text-green-400 mb-1">All Clear — Satisfactory</h3>
-                <p className="text-green-300/80 text-sm">No immediate safety concerns identified</p>
-              </div>
-            ) : (
-              <Badge className={`${
-                analysisResult.compliance_summary.overall_assessment === 'satisfactory' 
-                  ? 'bg-green-500/20 text-green-400 border border-green-500/30' 
-                  : 'bg-red-500/20 text-red-400 border border-red-500/30'
-              }`}>
-                Overall Assessment: {analysisResult.compliance_summary.overall_assessment.charAt(0).toUpperCase() + analysisResult.compliance_summary.overall_assessment.slice(1)}
-              </Badge>
-            )}
+            <Badge className={`${
+              analysisResult.compliance_summary.overall_assessment === 'satisfactory' 
+                ? 'bg-green-500/20 text-green-400 border border-green-500/30' 
+                : 'bg-red-500/20 text-red-400 border border-red-500/30'
+            }`}>
+              Overall Assessment: {analysisResult.compliance_summary.overall_assessment.charAt(0).toUpperCase() + analysisResult.compliance_summary.overall_assessment.slice(1)}
+            </Badge>
           </div>
           
-          {analysisResult.summary && (
-            <p className="text-muted-foreground text-sm">{analysisResult.summary}</p>
-          )}
+          <p className="text-muted-foreground text-sm">{analysisResult.summary}</p>
         </div>
 
         {/* Findings */}
@@ -302,16 +207,12 @@ This analysis is for guidance only and must be verified by a qualified electrici
                   <div className="flex items-start justify-between gap-4">
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-2">
-                        {finding.eicr_code && (
-                          <Badge className={getEicrCodeColor(finding.eicr_code)}>
-                            {finding.eicr_code}
-                          </Badge>
-                        )}
-                        {finding.eicr_code && (
-                          <span className="text-sm text-muted-foreground">
-                            {getEicrCodeDescription(finding.eicr_code)}
-                          </span>
-                        )}
+                        <Badge className={getEicrCodeColor(finding.eicr_code)}>
+                          {finding.eicr_code}
+                        </Badge>
+                        <span className="text-sm text-muted-foreground">
+                          {getEicrCodeDescription(finding.eicr_code)}
+                        </span>
                         <Badge variant="outline" className="text-xs">
                           {Math.round(finding.confidence * 100)}% confidence
                         </Badge>
@@ -322,7 +223,7 @@ This analysis is for guidance only and must be verified by a qualified electrici
                       )}
                       
                       {/* BS 7671 Clauses */}
-                      {finding.bs7671_clauses && finding.bs7671_clauses.length > 0 && (
+                      {finding.bs7671_clauses.length > 0 && (
                         <div className="flex flex-wrap gap-1 mb-2">
                           {finding.bs7671_clauses.map((clause, idx) => (
                             <Badge key={idx} variant="secondary" className="text-xs">
@@ -332,47 +233,14 @@ This analysis is for guidance only and must be verified by a qualified electrici
                         </div>
                       )}
                       
-                      {/* Single regulation reference */}
-                      {finding.regulation && !finding.bs7671_clauses && (
-                        <div className="flex flex-wrap gap-1 mb-2">
-                          <Badge variant="secondary" className="text-xs">
-                            {finding.regulation}
-                          </Badge>
+                      {/* Fix Guidance */}
+                      <div className="bg-accent/10 rounded-lg p-3 mt-3">
+                        <div className="flex items-center gap-2 mb-2">
+                          <Wrench className="h-4 w-4 text-blue-400" />
+                          <span className="font-medium text-sm">How to Fix</span>
                         </div>
-                      )}
-                      
-                      {/* Justification */}
-                      {finding.justification && (
-                        <div className="bg-amber-500/10 rounded-lg p-3 mt-3">
-                          <div className="flex items-center gap-2 mb-2">
-                            <AlertTriangle className="h-4 w-4 text-amber-400" />
-                            <span className="font-medium text-sm">Why this matters</span>
-                          </div>
-                          <p className="text-sm text-muted-foreground">{finding.justification}</p>
-                        </div>
-                      )}
-                      
-                      {/* Next Steps */}
-                      {finding.next_steps && (
-                        <div className="bg-blue-500/10 rounded-lg p-3 mt-3">
-                          <div className="flex items-center gap-2 mb-2">
-                            <Wrench className="h-4 w-4 text-blue-400" />
-                            <span className="font-medium text-sm">Next steps</span>
-                          </div>
-                          <p className="text-sm text-muted-foreground">{finding.next_steps}</p>
-                        </div>
-                      )}
-                      
-                      {/* Legacy Fix Guidance */}
-                      {finding.fix_guidance && !finding.next_steps && (
-                        <div className="bg-accent/10 rounded-lg p-3 mt-3">
-                          <div className="flex items-center gap-2 mb-2">
-                            <Wrench className="h-4 w-4 text-blue-400" />
-                            <span className="font-medium text-sm">How to Fix</span>
-                          </div>
-                          <p className="text-sm text-muted-foreground">{finding.fix_guidance}</p>
-                        </div>
-                      )}
+                        <p className="text-sm text-muted-foreground">{finding.fix_guidance}</p>
+                      </div>
                     </div>
                     
                   </div>

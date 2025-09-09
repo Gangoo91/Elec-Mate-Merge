@@ -1,24 +1,24 @@
 import { supabase } from '@/integrations/supabase/client';
 
-// Trigger materials cache update using batch processing
+// Trigger weekly cache update using the tools-weekly-refresh function
 export const updateMaterialsCache = async () => {
   try {
-    console.log('🔄 Triggering materials cache update with batch processing...');
+    console.log('🔄 Triggering tools weekly refresh with force refresh...');
     
-    const { data, error } = await supabase.functions.invoke('materials-cache-updater', {
-      body: { refresh: true }
+    const { data, error } = await supabase.functions.invoke('tools-weekly-refresh', {
+      body: { forceRefresh: true }
     });
-
+    
     if (error) {
-      console.error('❌ Failed to update materials cache:', error);
-      throw error;
+      console.error('Tools refresh error:', error);
+      return { success: false, error: error.message };
     }
-
-    console.log('✅ Materials cache update triggered successfully:', data);
-    return data;
+    
+    console.log('✅ Tools refresh completed:', data);
+    return { success: true, data };
   } catch (error) {
-    console.error('❌ Error updating materials cache:', error);
-    throw error;
+    console.error('Tools refresh failed:', error);
+    return { success: false, error: error.message };
   }
 };
 
@@ -38,10 +38,11 @@ export const getCacheStatus = async () => {
 
     if (!data || data.length === 0) {
       return { 
+        success: true, 
+        cacheEntries: [], 
         canRefresh: true,
-        age: 'No data available',
-        nextRefreshAllowed: null,
-        isEmpty: true
+        cacheAge: null,
+        nextRefreshAvailable: null
       };
     }
 
@@ -50,27 +51,17 @@ export const getCacheStatus = async () => {
     const sevenDaysInMs = 7 * 24 * 60 * 60 * 1000; // 7 days
     const canRefresh = cacheAge >= sevenDaysInMs;
     
-    const nextRefreshAllowed = canRefresh 
+    const nextRefreshAvailable = canRefresh 
       ? null 
       : new Date(new Date(latestCache.created_at).getTime() + sevenDaysInMs);
     
-    const days = Math.floor(cacheAge / (24 * 60 * 60 * 1000));
-    const hours = Math.floor((cacheAge % (24 * 60 * 60 * 1000)) / (60 * 60 * 1000));
-    
-    let ageString = '';
-    if (days > 0) {
-      ageString = `${days} day${days !== 1 ? 's' : ''} ago`;
-    } else if (hours > 0) {
-      ageString = `${hours} hour${hours !== 1 ? 's' : ''} ago`;
-    } else {
-      ageString = 'Less than an hour ago';
-    }
-    
     return { 
+      success: true, 
+      cacheEntries: data,
       canRefresh,
-      age: ageString,
-      nextRefreshAllowed,
-      isEmpty: false
+      cacheAge: Math.floor(cacheAge / (24 * 60 * 60 * 1000)), // in days
+      nextRefreshAvailable,
+      isExpired: new Date() > new Date(latestCache.expires_at)
     };
   } catch (error) {
     console.error('Failed to get cache status:', error);

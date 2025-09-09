@@ -280,35 +280,23 @@ const VisualAnalysis = () => {
   };
 
   const uploadImageToSupabase = async (file: File): Promise<string> => {
-    try {
-      // Convert file to base64
-      const base64Data = await new Promise<string>((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve(reader.result as string);
-        reader.onerror = reject;
-        reader.readAsDataURL(file);
-      });
+    const fileExt = file.name.split('.').pop();
+    const fileName = `${Date.now()}-${Math.random().toString(36).substr(2, 9)}.${fileExt}`;
+    const filePath = `visual-analysis/${fileName}`;
 
-      const fileExt = file.name.split('.').pop();
-      const fileName = `${Date.now()}-${Math.random().toString(36).substr(2, 9)}.${fileExt}`;
+    const { error: uploadError } = await supabase.storage
+      .from('visual-uploads')
+      .upload(filePath, file);
 
-      // Use edge function for secure upload
-      const { data, error } = await supabase.functions.invoke('visual-upload', {
-        body: { 
-          imageData: base64Data,
-          fileName: `visual-analysis/${fileName}`
-        },
-      });
-
-      if (error || !data.success) {
-        throw new Error(data?.error || 'Upload failed');
-      }
-
-      return data.url;
-    } catch (error) {
-      console.error('Upload error:', error);
-      throw new Error(`Upload failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    if (uploadError) {
+      throw new Error(`Upload failed: ${uploadError.message}`);
     }
+
+    const { data: urlData } = supabase.storage
+      .from('visual-uploads')
+      .getPublicUrl(filePath);
+
+    return urlData.publicUrl;
   };
 
   const processImageForAnalysis = async (file: File): Promise<string> => {

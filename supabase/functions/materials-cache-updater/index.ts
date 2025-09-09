@@ -20,63 +20,122 @@ serve(async (req) => {
     const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-    // Parse request body to check for force refresh
-    const body = req.method === 'POST' ? await req.json().catch(() => ({})) : {};
-    const forceRefresh = body.refresh === true || body.forceRefresh === true;
+    // Check if cache was recently updated (within last 6 days)
+    const { data: existingCache, error: cacheError } = await supabase
+      .from('materials_weekly_cache')
+      .select('created_at, expires_at')
+      .order('created_at', { ascending: false })
+      .limit(1)
+      .single();
 
-    if (!forceRefresh) {
-      // Check if cache was recently updated (within last 7 days for weekly cycle)
-      const { data: existingCache, error: cacheError } = await supabase
-        .from('materials_weekly_cache')
-        .select('created_at, expires_at')
-        .order('created_at', { ascending: false })
-        .limit(1)
-        .single();
-
-      if (!cacheError && existingCache) {
-        const cacheAge = Date.now() - new Date(existingCache.created_at).getTime();
-        const sevenDaysInMs = 7 * 24 * 60 * 60 * 1000; // 7 days
-        
-        if (cacheAge < sevenDaysInMs) {
-          console.log('⏰ Cache is still fresh, skipping update');
-          return new Response(
-            JSON.stringify({ 
-              success: true, 
-              message: 'Cache is still fresh (weekly cycle)',
-              cacheAge: Math.floor(cacheAge / (24 * 60 * 60 * 1000)),
-              nextUpdateDue: existingCache.expires_at,
-              skipReason: 'cache_fresh'
-            }),
-            { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-          );
-        }
+    if (!cacheError && existingCache) {
+      const cacheAge = Date.now() - new Date(existingCache.created_at).getTime();
+      const sixDaysInMs = 6 * 24 * 60 * 60 * 1000; // 6 days
+      
+      if (cacheAge < sixDaysInMs) {
+        console.log('⏰ Cache is still fresh, skipping update');
+        return new Response(
+          JSON.stringify({ 
+            success: true, 
+            message: 'Cache is still fresh',
+            cacheAge: Math.floor(cacheAge / (24 * 60 * 60 * 1000)),
+            nextUpdateDue: existingCache.expires_at
+          }),
+          { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
       }
-    } else {
-      console.log('🔄 Force refresh requested, bypassing cache freshness check');
     }
 
-    console.log('🔄 Starting batch processing for materials data...');
+    console.log('🔄 Updating materials cache with fresh data...');
 
-    // Start batch processing instead of direct scraping
-    const { data: batchResponse, error: batchError } = await supabase.functions.invoke(
-      'materials-batch-processor',
-      { body: { refresh: true } }
+    // Clear old cache entries first
+    const { error: deleteError } = await supabase
+      .from('materials_weekly_cache')
+      .delete()
+      .neq('id', '00000000-0000-0000-0000-000000000000'); // Delete all
+
+    if (deleteError) {
+      console.error('⚠️ Error clearing old cache:', deleteError);
+    } else {
+      console.log('🗑️ Cleared old cache entries');
+    }
+
+    // Call the comprehensive materials scraper
+    console.log('📞 Calling comprehensive-materials-scraper...');
+    const { data: scraperResponse, error: scraperError } = await supabase.functions.invoke(
+      'comprehensive-materials-scraper',
+      { body: {} }
     );
 
-    if (batchError) {
-      console.error('❌ Error starting batch processor:', batchError);
-      throw new Error(`Batch processor error: ${batchError.message}`);
+    if (scraperError) {
+      console.error('❌ Error calling scraper:', scraperError);
+      throw new Error(`Scraper error: ${scraperError.message}`);
     }
 
-    console.log('✅ Batch processing started successfully:', batchResponse);
+    console.log('📊 Scraper response received:', scraperResponse);
+
+    // Extract the actual data from the scraper response
+    let scrapedData;
+    
+    // Handle different response formats - check for materials property first
+    if (scraperResponse && scraperResponse.materials && Array.isArray(scraperResponse.materials)) {
+      scrapedData = scraperResponse.materials;
+    } else if (scraperResponse && scraperResponse.data) {
+      scrapedData = scraperResponse.data;
+    } else if (scraperResponse && Array.isArray(scraperResponse)) {
+      scrapedData = scraperResponse;
+    } else {
+      scrapedData = null;
+    }
+
+    if (!scrapedData || !Array.isArray(scrapedData) || scrapedData.length === 0) {
+      console.error('❌ Scraper returned no usable data. Response:', scraperResponse);
+      throw new Error(`No data returned from scraper. Response type: ${typeof scraperResponse}, Array: ${Array.isArray(scraperResponse)}`);
+    }
+
+    console.log(`📊 Got ${scrapedData.length} materials from scraper`);
+
+    // Group materials by category for storage
+    const categoryData: Record<string, any[]> = {};
+    scrapedData.forEach((material: any) => {
+      const category = material.category?.toLowerCase() || 'other';
+      if (!categoryData[category]) {
+        categoryData[category] = [];
+      }
+      categoryData[category].push(material);
+    });
+
+    // Store data in cache with 7-day expiry
+    const expiresAt = new Date();
+    expiresAt.setDate(expiresAt.getDate() + 7);
+
+    const cacheEntries = Object.entries(categoryData).map(([category, materials]) => ({
+      category,
+      materials_data: materials,
+      total_products: materials.length,
+      expires_at: expiresAt.toISOString(),
+      update_status: 'completed'
+    }));
+
+    // Insert new cache entries
+    const { error: insertError } = await supabase
+      .from('materials_weekly_cache')
+      .insert(cacheEntries);
+
+    if (insertError) {
+      console.error('❌ Error storing cache data:', insertError);
+      throw new Error(`Cache storage error: ${insertError.message}`);
+    }
+
+    console.log(`✅ Successfully cached ${cacheEntries.length} categories with ${scrapedData.length} total materials`);
 
     return new Response(
       JSON.stringify({
         success: true,
-        message: 'Batch processing started',
-        job_id: batchResponse?.job_id,
-        estimated_time: batchResponse?.estimated_time || '5-10 minutes',
-        action: 'batch_started'
+        message: `Cache updated with ${scrapedData.length} materials across ${cacheEntries.length} categories`,
+        categoriesUpdated: Object.keys(categoryData),
+        totalMaterials: scrapedData.length,
+        expiresAt: expiresAt.toISOString()
       }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );

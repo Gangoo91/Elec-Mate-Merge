@@ -3,27 +3,18 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
-import { Cable, Zap, Shield, Package, Building, TrendingUp, Star, ArrowRight, Users, Award, Loader2, RefreshCw, Wrench, Anchor, Settings, Router, Thermometer, Car, AlertTriangle } from "lucide-react";
+import { Cable, Zap, Shield, Package, Building, TrendingUp, Star, ArrowRight, Users, Award, Loader2, RefreshCw } from "lucide-react";
 import { useMaterialsData } from "@/hooks/useMaterialsData";
-import RefreshButton from "@/components/electrician-materials/RefreshButton";
 
 const MaterialCategoryBrowser = () => {
-  const { data: categories, isLoading, error, refetch, isRefetching, totalMaterials } = useMaterialsData();
+  const { data: categories, isLoading, error, refetch, isRefetching } = useMaterialsData();
 
   const categoryIcons = {
     cables: Cable,
     components: Zap,
     protection: Shield,
     accessories: Package,
-    lighting: Building,
-    tools: Wrench,
-    fixings: Anchor,
-    "cable-management": Settings,
-    "smart-home": Router,
-    "data-networking": Router,
-    "heating-controls": Thermometer,
-    "ev-charging": Car,
-    "fire-security": AlertTriangle
+    lighting: Building
   };
 
   const categoryDescriptions = {
@@ -31,15 +22,7 @@ const MaterialCategoryBrowser = () => {
     components: "Consumer units, MCBs, RCDs and distribution boards",
     protection: "Earth rods, surge protectors and safety devices",
     accessories: "Junction boxes, cable glands and fixing accessories",
-    lighting: "LED downlights, emergency lighting and battens",
-    tools: "Testing equipment, hand tools and power tools",
-    fixings: "Screws, plugs, cable ties and installation consumables",
-    "cable-management": "Trunking, conduit, cable trays and management systems",
-    "smart-home": "Smart switches, dimmers and automation controls",
-    "data-networking": "Cat6 cables, patch panels and network equipment",
-    "heating-controls": "Thermostats, zone valves and heating timers",
-    "ev-charging": "Electric vehicle charging points and accessories",
-    "fire-security": "Fire alarms, smoke detectors and security systems"
+    lighting: "LED downlights, emergency lighting and battens"
   };
 
   if (error) {
@@ -70,25 +53,26 @@ const MaterialCategoryBrowser = () => {
       <div className="text-center space-y-3">
         <div className="flex items-center justify-center gap-3">
           <h2 className="text-3xl font-bold text-white">Browse by Category</h2>
+          {!isLoading && (
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => refetch()}
+              disabled={isRefetching}
+              className="text-elec-yellow hover:text-elec-yellow/80"
+            >
+              {isRefetching ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                <RefreshCw className="h-4 w-4" />
+              )}
+            </Button>
+          )}
         </div>
         <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
           Explore our comprehensive range of electrical materials organised by category. 
           Find everything you need for professional electrical installations.
         </p>
-        {totalMaterials === 0 && !isLoading && (
-          <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-4 max-w-md mx-auto">
-            <p className="text-white text-sm mb-3">
-              No materials data available. Click below to fetch the latest pricing and product information.
-            </p>
-            <RefreshButton
-              isFetching={isRefetching}
-              lastFetchTime={0}
-              onRefresh={refetch}
-              categoryId="all"
-              className="justify-center"
-            />
-          </div>
-        )}
       </div>
 
       {isLoading ? (

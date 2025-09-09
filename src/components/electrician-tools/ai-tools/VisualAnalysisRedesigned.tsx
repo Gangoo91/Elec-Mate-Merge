@@ -18,8 +18,7 @@ import {
   TrendingUp,
   FileText,
   Layers,
-  Eye,
-  Brain
+  Eye
 } from "lucide-react";
 import VisualAnalysisResults from "./VisualAnalysisResults";
 import EvidenceViewer from "./EvidenceViewer";
@@ -51,7 +50,6 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { useInstantIdentification } from "@/hooks/use-instant-identification";
 
 
 // Lazy load background removal for performance
@@ -156,9 +154,6 @@ const VisualAnalysisRedesigned = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isCameraActive, setIsCameraActive] = useState(false);
-  
-  // Instant identification hook
-  const { identifyObject, isLoading: isIdentifying, result: identificationResult } = useInstantIdentification();
 
   
 
@@ -226,12 +221,6 @@ const VisualAnalysisRedesigned = () => {
     );
 
     setImages(prev => [...prev, ...compressedImages]);
-    
-    // Instantly identify the first image
-    if (compressedImages.length > 0) {
-      identifyObject(compressedImages[0]);
-    }
-    
     toast({
       title: "Images added",
       description: `${compressedImages.length} image(s) added for analysis.`,
@@ -244,72 +233,27 @@ const VisualAnalysisRedesigned = () => {
   }, [handleFileSelect]);
 
   const startCamera = async () => {
-    console.log('Attempting to start camera...');
-    
-    // Feature detection
-    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-      console.log('Camera API not supported');
-      toast({
-        title: "Camera not supported",
-        description: "Your browser doesn't support camera access. Please use the file upload option instead.",
-        variant: "destructive",
-      });
-      return;
-    }
-
     try {
-      console.log('Requesting camera access...');
       const stream = await navigator.mediaDevices.getUserMedia({ 
-        video: { 
-          facingMode: 'environment', 
-          width: { ideal: 1920 }, 
-          height: { ideal: 1080 } 
-        } 
+        video: { facingMode: 'environment', width: { ideal: 1920 }, height: { ideal: 1080 } } 
       });
-      
-      console.log('Camera access granted');
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
         setIsCameraActive(true);
-        toast({
-          title: "Camera ready",
-          description: "You can now capture images directly from your camera.",
-        });
       }
-    } catch (error: any) {
-      console.error('Camera access error:', error);
-      
-      let errorMessage = "Please allow camera access to capture images.";
-      if (error.name === 'NotAllowedError') {
-        errorMessage = "Camera permission denied. Please enable camera access in your browser settings.";
-      } else if (error.name === 'NotFoundError') {
-        errorMessage = "No camera found. Please use the file upload option instead.";
-      } else if (error.name === 'NotSupportedError') {
-        errorMessage = "Camera not supported in this environment. Please use file upload.";
-      }
-      
+    } catch (error) {
       toast({
-        title: "Camera access failed",
-        description: errorMessage,
+        title: "Camera access denied",
+        description: "Please allow camera access to capture images.",
         variant: "destructive",
       });
-      
-      // Auto-click the hidden file input as fallback
-      if (fileInputRef.current) {
-        fileInputRef.current.click();
-      }
     }
   };
 
   const stopCamera = () => {
-    console.log('Stopping camera...');
     if (videoRef.current?.srcObject) {
-      const stream = videoRef.current.srcObject as MediaStream;
-      const tracks = stream.getTracks();
-      tracks.forEach(track => {
-        track.stop();
-        console.log(`Stopped ${track.kind} track`);
-      });
+      const tracks = (videoRef.current.srcObject as MediaStream).getTracks();
+      tracks.forEach(track => track.stop());
       videoRef.current.srcObject = null;
     }
     setIsCameraActive(false);
@@ -333,10 +277,6 @@ const VisualAnalysisRedesigned = () => {
         const file = new File([blob], `capture-${Date.now()}.jpg`, { type: 'image/jpeg' });
         const compressedFile = await compressImage(file);
         setImages(prev => [...prev, compressedFile]);
-        
-        // Instantly identify the captured image
-        identifyObject(compressedFile);
-        
         stopCamera();
         toast({
           title: "Image captured",
@@ -354,35 +294,23 @@ const VisualAnalysisRedesigned = () => {
   };
 
   const uploadImageToSupabase = async (file: File): Promise<string> => {
-    try {
-      // Convert file to base64
-      const base64Data = await new Promise<string>((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve(reader.result as string);
-        reader.onerror = reject;
-        reader.readAsDataURL(file);
-      });
+    const fileExt = file.name.split('.').pop();
+    const fileName = `${Date.now()}-${Math.random().toString(36).substr(2, 9)}.${fileExt}`;
+    const filePath = `visual-analysis/${fileName}`;
 
-      const fileExt = file.name.split('.').pop();
-      const fileName = `${Date.now()}-${Math.random().toString(36).substr(2, 9)}.${fileExt}`;
+    const { error: uploadError } = await supabase.storage
+      .from('visual-uploads')
+      .upload(filePath, file);
 
-      // Use edge function for secure upload
-      const { data, error } = await supabase.functions.invoke('visual-upload', {
-        body: { 
-          imageData: base64Data,
-          fileName: `visual-analysis/${fileName}`
-        },
-      });
-
-      if (error || !data.success) {
-        throw new Error(data?.error || 'Upload failed');
-      }
-
-      return data.url;
-    } catch (error) {
-      console.error('Upload error:', error);
-      throw new Error(`Upload failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    if (uploadError) {
+      throw new Error(`Upload failed: ${uploadError.message}`);
     }
+
+    const { data: urlData } = supabase.storage
+      .from('visual-uploads')
+      .getPublicUrl(filePath);
+
+    return urlData.publicUrl;
   };
 
   const processImageForAnalysis = async (file: File): Promise<string> => {
@@ -446,8 +374,7 @@ const VisualAnalysisRedesigned = () => {
         throw new Error(data.error);
       }
       
-      // Handle direct response or nested analysis property
-      const result: AnalysisResult = data.analysis || data;
+      const result: AnalysisResult = data.analysis;
       setAnalysisResult(result);
       setUploadedImageUrls([primaryImageUrl, ...additionalImageUrls]);
       
@@ -657,8 +584,8 @@ const VisualAnalysisRedesigned = () => {
                 </Button>
               </div>
               
-              {/* Camera capture with fallback */}
-              <div className="flex justify-center gap-2">
+              {/* Camera capture */}
+              <div className="flex justify-center">
                 <Button 
                   variant="outline" 
                   onClick={isCameraActive ? captureImage : startCamera}
@@ -667,17 +594,6 @@ const VisualAnalysisRedesigned = () => {
                   <Camera className="h-4 w-4" />
                   {isCameraActive ? 'Capture Photo' : 'Use Camera'}
                 </Button>
-                
-                {/* Hidden file input for both regular upload and camera */}
-                <input
-                  type="file"
-                  accept="image/*"
-                  capture="environment"
-                  multiple
-                  className="hidden"
-                  ref={fileInputRef}
-                  onChange={(e) => handleFileSelect(e.target.files)}
-                />
               </div>
               
               {/* Camera view */}
@@ -734,14 +650,14 @@ const VisualAnalysisRedesigned = () => {
         {currentStep === 'analyse' && (
           <Card className="bg-card border-border">
             <CardHeader>
-              <div className="flex flex-col space-y-4">
+              <div className="flex items-center justify-between">
                 <div>
                   <CardTitle className="text-foreground">2. Review & Analyse</CardTitle>
                   <CardDescription>
                     Configure analysis settings and run the inspection
                   </CardDescription>
                 </div>
-                <div className="flex justify-start">
+                <div className="flex gap-2">
                   <Drawer>
                     <DrawerTrigger asChild>
                       <Button variant="outline" size="sm">
@@ -836,25 +752,6 @@ const VisualAnalysisRedesigned = () => {
               </div>
             </CardHeader>
             <CardContent className="space-y-6">
-              {/* Instant Identification */}
-              {identificationResult && (
-                <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4 mb-4">
-                  <div className="flex items-center gap-2 mb-2">
-                    <Brain className="h-4 w-4 text-blue-400" />
-                    <span className="font-medium text-blue-400 text-sm">Instant Identification</span>
-                    <Badge variant="outline" className="text-xs">
-                      {Math.round(identificationResult.confidence * 100)}%
-                    </Badge>
-                  </div>
-                  <p className="text-sm text-blue-200/80">
-                    Detected object: <span className="font-medium">{identificationResult.object}</span>
-                    {identificationResult.isElectrical && (
-                      <span className="text-green-400 ml-2">✓ Electrical component</span>
-                    )}
-                  </p>
-                </div>
-              )}
-
               {/* Quick Summary */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <div className="text-center p-3 bg-muted/50 rounded-lg">
@@ -862,7 +759,7 @@ const VisualAnalysisRedesigned = () => {
                   <p className="text-sm font-medium text-foreground">{images.length}</p>
                   <p className="text-xs text-muted-foreground">Images</p>
                 </div>
-                <div className="text-center p-3 bg-muted/50 rounded-lg hidden sm:block">
+                <div className="text-center p-3 bg-muted/50 rounded-lg">
                   <Target className="h-6 w-6 mx-auto mb-2 text-primary" />
                   <p className="text-sm font-medium text-foreground">{selectedPreset.name}</p>
                   <p className="text-xs text-muted-foreground">Preset</p>
@@ -909,27 +806,25 @@ const VisualAnalysisRedesigned = () => {
             {/* Summary Card */}
             <Card className="bg-card border-border">
               <CardHeader>
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div className="flex items-center justify-between">
                   <div>
                     <CardTitle className="text-foreground">3. Analysis Results</CardTitle>
                     <CardDescription>
                       BS 7671 compliance findings and recommendations
                     </CardDescription>
                   </div>
-                  <div className="flex flex-col sm:flex-row gap-2">
-                    <Button variant="outline" size="sm" onClick={exportReport} className="w-full sm:w-auto">
+                  <div className="flex gap-2">
+                    <Button variant="outline" size="sm" onClick={exportReport}>
                       <Download className="h-4 w-4 mr-2" />
-                      <span className="hidden sm:inline">Export PDF</span>
-                      <span className="sm:hidden">Export</span>
+                      Export PDF
                     </Button>
-                    <Button variant="outline" size="sm" onClick={resetAnalysis} className="w-full sm:w-auto">
+                    <Button variant="outline" size="sm" onClick={resetAnalysis}>
                       <RefreshCw className="h-4 w-4 mr-2" />
-                      <span className="hidden sm:inline">New Analysis</span>
-                      <span className="sm:hidden">New</span>
+                      New Analysis
                     </Button>
                     <Drawer>
                       <DrawerTrigger asChild>
-                        <Button variant="outline" size="sm" className="w-full sm:w-auto">
+                        <Button variant="outline" size="sm">
                           <History className="h-4 w-4 mr-2" />
                           History
                         </Button>

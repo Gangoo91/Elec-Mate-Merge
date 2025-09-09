@@ -24,7 +24,7 @@ export const testToolsRefresh = async () => {
 export const checkToolsCache = async () => {
   try {
     const { data, error } = await supabase
-      .from('tools_weekly_cache')
+      .from('materials_weekly_cache')
       .select('*')
       .order('created_at', { ascending: false });
     
@@ -41,31 +41,8 @@ export const checkToolsCache = async () => {
   }
 };
 
-export const clearToolsCache = async () => {
-  try {
-    console.log('🗑️ Clearing tools cache...');
-    
-    const { error } = await supabase
-      .from('tools_weekly_cache')
-      .delete()
-      .neq('id', '00000000-0000-0000-0000-000000000000'); // Delete all
-    
-    if (error) {
-      console.error('❌ Error clearing tools cache:', error);
-      return { success: false, error: error.message };
-    }
-    
-    console.log('✅ Tools cache cleared successfully');
-    return { success: true };
-  } catch (error) {
-    console.error('❌ Failed to clear tools cache:', error);
-    return { success: false, error: error.message };
-  }
-};
-
 // Temporarily add to window for testing
 if (typeof window !== 'undefined') {
   (window as any).testToolsRefresh = testToolsRefresh;
   (window as any).checkToolsCache = checkToolsCache;
-  (window as any).clearToolsCache = clearToolsCache;
 }

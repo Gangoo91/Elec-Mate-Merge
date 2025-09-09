@@ -346,7 +346,11 @@ const CategoryMaterials = () => {
           </TabsContent>
 
           <TabsContent value="compare" className="space-y-6 mt-6">
-            <MaterialPriceComparison />
+            <MaterialPriceComparison 
+              initialQuery={categoryId}
+              selectedItems={selectedItems}
+              onClearSelection={clearComparison}
+            />
           </TabsContent>
 
           <TabsContent value="bulk" className="space-y-6 mt-6">
