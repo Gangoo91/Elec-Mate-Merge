@@ -189,7 +189,7 @@ async function getMaterials(FIRECRAWL_API_KEY: string) {
   for (const categoryGroup of materialCategories) {
     for (const material of categoryGroup.items) {
       for (const supplier of suppliers) {
-        jobs.push(fetchMaterialsFromSupplier(supplier, material, categoryGroup.category, FIRECRAWL_API_KEY));
+        jobs.push(fetchMaterialsFromSupplier(supplier, material, categoryGroup.categoryId, FIRECRAWL_API_KEY));
       }
     }
   }
@@ -212,15 +212,18 @@ async function saveMaterialsToCache(materials: any[]) {
   const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
   // Clear existing cache
+  console.log('🗑️ Clearing existing materials cache...');
   const { error: deleteError } = await supabase
     .from('materials_weekly_cache')
     .delete()
-    .neq('id', '00000000-0000-0000-0000-000000000000'); // Delete all rows
+    .gt('id', '00000000-0000-0000-0000-000000000000'); // Delete all rows
 
   if (deleteError) {
     console.error('❌ Error clearing cache:', deleteError);
     throw new Error('Failed to clear existing cache');
   }
+  
+  console.log('✅ Successfully cleared existing cache');
 
   // Group materials by category
   const groupedMaterials = materials.reduce((acc, material) => {
@@ -232,21 +235,18 @@ async function saveMaterialsToCache(materials: any[]) {
     return acc;
   }, {} as Record<string, any[]>);
 
-  // Find category ID mapping
-  const getCategoryId = (categoryName: string) => {
-    const categoryConfig = materialCategories.find(cat => cat.category === categoryName);
-    return categoryConfig?.categoryId || categoryName.toLowerCase().replace(/\s+/g, '_').replace(/&/g, 'and');
-  };
-
-  // Insert new cache entries
-  const cacheEntries = Object.entries(groupedMaterials).map(([category, categoryMaterials]) => ({
-    category: getCategoryId(category),
-    materials_data: categoryMaterials,
-    total_products: categoryMaterials.length,
-    last_updated: new Date().toISOString(),
-    expires_at: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(), // 7 days
-    update_status: 'completed'
-  }));
+  // Insert new cache entries - category is already the categoryId from the scraper
+  const cacheEntries = Object.entries(groupedMaterials).map(([category, categoryMaterials]) => {
+    console.log(`📦 Processing category: ${category} with ${categoryMaterials.length} products`);
+    return {
+      category: category, // Already using categoryId from the updated scraper
+      materials_data: categoryMaterials,
+      total_products: categoryMaterials.length,
+      last_updated: new Date().toISOString(),
+      expires_at: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(), // 7 days
+      update_status: 'completed'
+    };
+  });
 
   const { error: insertError } = await supabase
     .from('materials_weekly_cache')
