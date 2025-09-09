@@ -174,7 +174,7 @@ const FinancialSnapshot: React.FC<FinancialSnapshotProps> = ({
               </div>
 
               {/* Net Profit Section */}
-              <div className="p-6 border-t bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20">
+              <div className="p-6 border-t bg-gradient-to-r from-gray-50 to-blue-50 dark:from-gray-900/50 dark:to-blue-900/20">
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                   <div className="space-y-2">
                     <div className="flex items-center gap-2">
