@@ -66,10 +66,10 @@ serve(async (req) => {
 
     console.log('🔄 Cache expired or missing, triggering refresh...');
 
-    // Call the comprehensive tools scraper
-    console.log('🔄 Invoking comprehensive-tools-scraper...');
+    // Call the comprehensive materials scraper to get fresh electrical tools data
+    console.log('🔄 Invoking comprehensive-materials-scraper...');
     const { data: refreshResult, error: refreshError } = await supabase.functions.invoke(
-      'comprehensive-tools-scraper',
+      'comprehensive-materials-scraper',
       { body: {} }
     );
     
@@ -77,8 +77,30 @@ serve(async (req) => {
     console.log('⚠️ Scraper error:', refreshError);
 
     if (refreshError) {
-      console.error('❌ Error calling comprehensive-tools-scraper:', refreshError);
+      console.error('❌ Error calling comprehensive-materials-scraper:', refreshError);
       throw refreshError;
+    }
+
+    // Store the scraped data in tools_weekly_cache
+    if (refreshResult && refreshResult.materials && Array.isArray(refreshResult.materials)) {
+      console.log(`📊 Storing ${refreshResult.materials.length} tools in cache...`);
+      
+      const expiresAt = new Date();
+      expiresAt.setDate(expiresAt.getDate() + 7);
+      
+      const { error: storeError } = await supabase
+        .from('tools_weekly_cache')
+        .insert({
+          tools_data: refreshResult.materials,
+          expires_at: expiresAt.toISOString(),
+          created_at: now.toISOString()
+        });
+      
+      if (storeError) {
+        console.error('❌ Error storing tools data:', storeError);
+      } else {
+        console.log('✅ Tools data stored in cache successfully');
+      }
     }
 
     console.log('✅ Tools refresh completed:', refreshResult);

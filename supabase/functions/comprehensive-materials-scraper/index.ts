@@ -8,31 +8,39 @@ const suppliers = [
   { name: "CEF - City Electrical Factors", url: "https://www.cef.co.uk/catalogue/products/search?q=" },
 ];
 
-// --- Product Categories ---
+// --- Electrical Tools Categories (BS7671 Compliant) ---
 const productList = [
   {
-    category: "Cables & Wiring",
-    items: ["Twin & Earth cable"],
+    category: "Power Tools",
+    items: ["cordless drill", "impact driver", "SDS drill", "angle grinder", "circular saw", "reciprocating saw", "multi-tool"],
   },
   {
-    category: "Electrical Components",
-    items: ["Consumer unit", "MCB", "RCD", "Isolator", "Surge protector", "Circuit breaker"],
+    category: "Hand Tools", 
+    items: ["electrician pliers", "wire strippers", "screwdriver set", "side cutters", "long nose pliers", "combination pliers", "electrical knife"],
   },
   {
-    category: "Protection Equipment",
-    items: ["Earth rod", "surge protectors", "circuit breakers"],
+    category: "Test Equipment",
+    items: ["multimeter", "voltage tester", "insulation tester", "RCD tester", "PAT tester", "socket tester", "phase rotation tester", "earth loop tester"],
   },
   {
-    category: "Installation Accessories",
-    items: ["Junction box", "Cable gland", "Trunking"],
+    category: "Measuring Tools",
+    items: ["cable detector", "pipe detector", "stud finder", "laser level", "spirit level", "measuring tape", "digital caliper"],
   },
   {
-    category: "Lighting Solutions",
-    items: ["LED downlight", "Lighting batten", "Emergency lighting"],
+    category: "Safety Equipment",
+    items: ["safety helmet", "safety glasses", "work gloves", "high vis vest", "knee pads", "safety boots", "ear protection"],
   },
   {
-    category: "Electrical Tools",
-    items: ["Testing equipment", "Hand tools", "Power tools"],
+    category: "Specialist Tools",
+    items: ["cable pulling system", "fish tape", "conduit bender", "cable cutter", "crimping tool", "torque wrench", "hole saw kit"],
+  },
+  {
+    category: "Access Tools & Equipment",
+    items: ["step ladder", "extension ladder", "platform steps", "scaffold tower", "mobile platform", "roof ladder"],
+  },
+  {
+    category: "Tool Storage",
+    items: ["tool bag", "tool box", "tool belt", "tool case", "tool trolley", "tool vest", "storage cabinet"],
   }
 ];
 
@@ -106,7 +114,27 @@ async function fetchProductsFromSupplier(supplier: any, query: string, category:
     }
 
     const products = data.data?.json || [];
-    return products.map((item: any, index: number) => ({
+    
+    // Filter to ensure we only get electrical tools
+    const filteredProducts = products.filter((item: any) => {
+      const name = (item.name || '').toLowerCase();
+      const description = (item.description || '').toLowerCase();
+      
+      // Exclude non-electrical items
+      const exclusions = ['sealant', 'adhesive', 'glue', 'foam', 'tape measure', 'spirit level', 
+                         'general purpose', 'masonry', 'building', 'construction only'];
+      if (exclusions.some(exc => name.includes(exc) || description.includes(exc))) {
+        return false;
+      }
+      
+      // Include electrical tools
+      const inclusions = ['electrical', 'electric', 'voltage', 'current', 'wire', 'cable', 'circuit',
+                         'multimeter', 'tester', 'drill', 'driver', 'saw', 'grinder', 'pliers', 
+                         'screwdriver', 'cutter', 'stripper', 'tool', 'safety', 'protection'];
+      return inclusions.some(inc => name.includes(inc) || description.includes(inc) || query.toLowerCase().includes(inc));
+    });
+    
+    return filteredProducts.map((item: any, index: number) => ({
       id: Date.now() + Math.random() * 1000 + index,
       name: item.name || 'Unknown Product',
       category: category,
@@ -119,6 +147,7 @@ async function fetchProductsFromSupplier(supplier: any, query: string, category:
       description: item.description,
       reviews: item.reviews,
       stockStatus: 'In Stock' as const,
+      isOnSale: false
     }));
   } catch (error) {
     console.error(`⚠️ Error fetching ${query} from ${supplier.name}:`, error);
