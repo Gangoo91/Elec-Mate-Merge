@@ -1,13 +1,25 @@
 
+import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Link } from "react-router-dom";
-import { Cable, Zap, Shield, Package, Building, TrendingUp, Star, ArrowRight, Users, Award, Loader2, RefreshCw } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { Cable, Zap, Shield, Package, Building, TrendingUp, Star, ArrowRight, Users, Award, Loader2, RefreshCw, Search, Filter, ChevronDown } from "lucide-react";
 import { useMaterialsData } from "@/hooks/useMaterialsData";
+import { useCategoryMaterials } from "@/hooks/useCategoryMaterials";
+import MaterialCard from "./MaterialCard";
 
 const MaterialCategoryBrowser = () => {
   const { data: categories, isLoading, error, refetch, isRefetching } = useMaterialsData();
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [sortBy, setSortBy] = useState("name");
+  const [supplierFilter, setSupplierFilter] = useState("all");
+
+  // Get materials for the selected category
+  const { materials: categoryMaterials, isLoading: categoryLoading } = useCategoryMaterials(selectedCategory || "");
 
   const categoryIcons = {
     cables: Cable,
@@ -22,6 +34,42 @@ const MaterialCategoryBrowser = () => {
     'heating-controls': Building,
     'ev-charging': Zap,
     'fire-security': Shield
+  };
+
+  // Filter and sort materials for selected category
+  const filteredMaterials = categoryMaterials
+    ?.filter(material => {
+      const matchesSearch = material.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                           material.description?.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesSupplier = supplierFilter === "all" || material.supplier === supplierFilter;
+      return matchesSearch && matchesSupplier;
+    })
+    .sort((a, b) => {
+      switch (sortBy) {
+        case "price":
+          const priceA = parseFloat(a.price.replace(/[£,]/g, ''));
+          const priceB = parseFloat(b.price.replace(/[£,]/g, ''));
+          return priceA - priceB;
+        case "supplier":
+          return a.supplier.localeCompare(b.supplier);
+        case "name":
+        default:
+          return a.name.localeCompare(b.name);
+      }
+    });
+
+  // Get unique suppliers for filter
+  const suppliers = [...new Set(categoryMaterials?.map(m => m.supplier))].sort();
+
+  const handleCategoryClick = (categoryId: string) => {
+    if (selectedCategory === categoryId) {
+      setSelectedCategory(null);
+    } else {
+      setSelectedCategory(categoryId);
+      setSearchTerm("");
+      setSortBy("name");
+      setSupplierFilter("all");
+    }
   };
 
   const categoryDescriptions = {
@@ -195,12 +243,138 @@ const MaterialCategoryBrowser = () => {
                     </div>
                   )}
 
-                  <Button asChild className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90 transition-colors">
-                    <Link to={`/materials/category/${category.id}`}>
-                      Browse {category.title}
-                      <ArrowRight className="h-4 w-4 ml-2" />
-                    </Link>
-                  </Button>
+                  <Collapsible 
+                    open={selectedCategory === category.id} 
+                    onOpenChange={() => handleCategoryClick(category.id)}
+                  >
+                    <CollapsibleTrigger asChild>
+                      <Button className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90 transition-colors">
+                        Browse {category.title}
+                        <ChevronDown className={`h-4 w-4 ml-2 transition-transform ${selectedCategory === category.id ? 'rotate-180' : ''}`} />
+                      </Button>
+                    </CollapsibleTrigger>
+                    <CollapsibleContent className="mt-4">
+                      {selectedCategory === category.id && (
+                        <div className="space-y-4 border-t border-elec-yellow/20 pt-4">
+                          {/* Filters for category products */}
+                          <Card className="border-elec-yellow/20 bg-elec-dark">
+                            <CardHeader>
+                              <CardTitle className="flex items-center gap-2 text-sm">
+                                <Filter className="h-4 w-4" />
+                                Filter Products
+                              </CardTitle>
+                            </CardHeader>
+                            <CardContent className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                              <div>
+                                <label className="text-xs font-medium text-white mb-1 block">Search</label>
+                                <div className="relative">
+                                  <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 h-3 w-3 text-muted-foreground" />
+                                  <Input
+                                    placeholder="Search products..."
+                                    value={searchTerm}
+                                    onChange={(e) => setSearchTerm(e.target.value)}
+                                    className="pl-7 h-8 text-xs bg-elec-gray border-elec-yellow/30"
+                                  />
+                                </div>
+                              </div>
+
+                              <div>
+                                <label className="text-xs font-medium text-white mb-1 block">Sort</label>
+                                <Select value={sortBy} onValueChange={setSortBy}>
+                                  <SelectTrigger className="h-8 text-xs bg-elec-gray border-elec-yellow/30">
+                                    <SelectValue />
+                                  </SelectTrigger>
+                                  <SelectContent>
+                                    <SelectItem value="name">Name (A-Z)</SelectItem>
+                                    <SelectItem value="price">Price (Low to High)</SelectItem>
+                                    <SelectItem value="supplier">Supplier</SelectItem>
+                                  </SelectContent>
+                                </Select>
+                              </div>
+
+                              <div>
+                                <label className="text-xs font-medium text-white mb-1 block">Supplier</label>
+                                <Select value={supplierFilter} onValueChange={setSupplierFilter}>
+                                  <SelectTrigger className="h-8 text-xs bg-elec-gray border-elec-yellow/30">
+                                    <SelectValue />
+                                  </SelectTrigger>
+                                  <SelectContent>
+                                    <SelectItem value="all">All Suppliers</SelectItem>
+                                    {suppliers.map(supplier => (
+                                      <SelectItem key={supplier} value={supplier}>
+                                        {supplier}
+                                      </SelectItem>
+                                    ))}
+                                  </SelectContent>
+                                </Select>
+                              </div>
+                            </CardContent>
+                          </Card>
+
+                          {/* Products Grid */}
+                          {categoryLoading ? (
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                              {Array.from({ length: 6 }).map((_, i) => (
+                                <Card key={i} className="border-elec-yellow/20 bg-elec-gray">
+                                  <CardHeader>
+                                    <div className="space-y-2">
+                                      <div className="h-3 w-3/4 bg-muted-foreground/20 rounded animate-pulse" />
+                                      <div className="h-2 w-1/2 bg-muted-foreground/20 rounded animate-pulse" />
+                                    </div>
+                                  </CardHeader>
+                                  <CardContent className="space-y-3">
+                                    <div className="h-24 w-full bg-muted-foreground/20 rounded animate-pulse" />
+                                    <div className="h-6 w-full bg-muted-foreground/20 rounded animate-pulse" />
+                                  </CardContent>
+                                </Card>
+                              ))}
+                            </div>
+                          ) : filteredMaterials && filteredMaterials.length > 0 ? (
+                            <>
+                              <div className="text-sm text-muted-foreground mb-2">
+                                Showing {filteredMaterials.length} of {categoryMaterials?.length || 0} products
+                              </div>
+                              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-h-96 overflow-y-auto">
+                                {filteredMaterials.slice(0, 12).map((material) => (
+                                  <MaterialCard key={material.id} item={material} />
+                                ))}
+                              </div>
+                              {filteredMaterials.length > 12 && (
+                                <div className="text-center py-2">
+                                  <p className="text-sm text-muted-foreground">
+                                    Showing first 12 products. Use filters to find specific items.
+                                  </p>
+                                </div>
+                              )}
+                            </>
+                          ) : (
+                            <div className="text-center py-8">
+                              <Package className="h-12 w-12 text-muted-foreground mx-auto mb-3" />
+                              <p className="text-sm text-muted-foreground">
+                                {searchTerm || supplierFilter !== "all" 
+                                  ? "No products match your filters"
+                                  : "No products available for this category"
+                                }
+                              </p>
+                              {(searchTerm || supplierFilter !== "all") && (
+                                <Button 
+                                  onClick={() => {
+                                    setSearchTerm("");
+                                    setSupplierFilter("all");
+                                  }}
+                                  variant="outline"
+                                  size="sm"
+                                  className="mt-2"
+                                >
+                                  Clear Filters
+                                </Button>
+                              )}
+                            </div>
+                          )}
+                        </div>
+                      )}
+                    </CollapsibleContent>
+                  </Collapsible>
                 </CardContent>
               </Card>
             );
