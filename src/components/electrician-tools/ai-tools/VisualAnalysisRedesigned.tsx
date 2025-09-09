@@ -233,27 +233,72 @@ const VisualAnalysisRedesigned = () => {
   }, [handleFileSelect]);
 
   const startCamera = async () => {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ 
-        video: { facingMode: 'environment', width: { ideal: 1920 }, height: { ideal: 1080 } } 
+    console.log('Attempting to start camera...');
+    
+    // Feature detection
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      console.log('Camera API not supported');
+      toast({
+        title: "Camera not supported",
+        description: "Your browser doesn't support camera access. Please use the file upload option instead.",
+        variant: "destructive",
       });
+      return;
+    }
+
+    try {
+      console.log('Requesting camera access...');
+      const stream = await navigator.mediaDevices.getUserMedia({ 
+        video: { 
+          facingMode: 'environment', 
+          width: { ideal: 1920 }, 
+          height: { ideal: 1080 } 
+        } 
+      });
+      
+      console.log('Camera access granted');
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
         setIsCameraActive(true);
+        toast({
+          title: "Camera ready",
+          description: "You can now capture images directly from your camera.",
+        });
       }
-    } catch (error) {
+    } catch (error: any) {
+      console.error('Camera access error:', error);
+      
+      let errorMessage = "Please allow camera access to capture images.";
+      if (error.name === 'NotAllowedError') {
+        errorMessage = "Camera permission denied. Please enable camera access in your browser settings.";
+      } else if (error.name === 'NotFoundError') {
+        errorMessage = "No camera found. Please use the file upload option instead.";
+      } else if (error.name === 'NotSupportedError') {
+        errorMessage = "Camera not supported in this environment. Please use file upload.";
+      }
+      
       toast({
-        title: "Camera access denied",
-        description: "Please allow camera access to capture images.",
+        title: "Camera access failed",
+        description: errorMessage,
         variant: "destructive",
       });
+      
+      // Auto-click the hidden file input as fallback
+      if (fileInputRef.current) {
+        fileInputRef.current.click();
+      }
     }
   };
 
   const stopCamera = () => {
+    console.log('Stopping camera...');
     if (videoRef.current?.srcObject) {
-      const tracks = (videoRef.current.srcObject as MediaStream).getTracks();
-      tracks.forEach(track => track.stop());
+      const stream = videoRef.current.srcObject as MediaStream;
+      const tracks = stream.getTracks();
+      tracks.forEach(track => {
+        track.stop();
+        console.log(`Stopped ${track.kind} track`);
+      });
       videoRef.current.srcObject = null;
     }
     setIsCameraActive(false);
@@ -584,8 +629,8 @@ const VisualAnalysisRedesigned = () => {
                 </Button>
               </div>
               
-              {/* Camera capture */}
-              <div className="flex justify-center">
+              {/* Camera capture with fallback */}
+              <div className="flex justify-center gap-2">
                 <Button 
                   variant="outline" 
                   onClick={isCameraActive ? captureImage : startCamera}
@@ -593,6 +638,26 @@ const VisualAnalysisRedesigned = () => {
                 >
                   <Camera className="h-4 w-4" />
                   {isCameraActive ? 'Capture Photo' : 'Use Camera'}
+                </Button>
+                
+                {/* Native camera fallback */}
+                <input
+                  type="file"
+                  accept="image/*"
+                  capture="environment"
+                  multiple
+                  className="hidden"
+                  ref={fileInputRef}
+                  onChange={(e) => handleFileSelect(e.target.files)}
+                />
+                
+                <Button 
+                  variant="outline" 
+                  onClick={() => fileInputRef.current?.click()}
+                  className="flex items-center gap-2"
+                >
+                  <Upload className="h-4 w-4" />
+                  Native Camera
                 </Button>
               </div>
               

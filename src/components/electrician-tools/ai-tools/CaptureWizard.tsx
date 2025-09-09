@@ -124,7 +124,21 @@ const CaptureWizard: React.FC<CaptureWizardProps> = ({
   }, [onPresetSelect]);
 
   const startCamera = async () => {
+    console.log('CaptureWizard: Attempting to start camera...');
+    
+    // Feature detection
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      console.log('CaptureWizard: Camera API not supported');
+      toast({
+        title: "Camera not supported",
+        description: "Your browser doesn't support camera access. Wizard mode requires camera functionality.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     try {
+      console.log('CaptureWizard: Requesting camera access...');
       const stream = await navigator.mediaDevices.getUserMedia({ 
         video: { 
           facingMode: 'environment',
@@ -132,23 +146,45 @@ const CaptureWizard: React.FC<CaptureWizardProps> = ({
           height: { ideal: 1080 }
         } 
       });
+      
+      console.log('CaptureWizard: Camera access granted');
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
         setIsCameraActive(true);
+        toast({
+          title: "Camera ready",
+          description: "Follow the guided checklist to capture quality images.",
+        });
       }
-    } catch (error) {
+    } catch (error: any) {
+      console.error('CaptureWizard: Camera access error:', error);
+      
+      let errorMessage = "Please allow camera access to use guided capture.";
+      if (error.name === 'NotAllowedError') {
+        errorMessage = "Camera permission denied. Please enable camera access in your browser settings and try again.";
+      } else if (error.name === 'NotFoundError') {
+        errorMessage = "No camera found. Please use the standard upload mode instead.";
+      } else if (error.name === 'NotSupportedError') {
+        errorMessage = "Camera not supported in this environment. Please use standard upload mode.";
+      }
+      
       toast({
-        title: "Camera access denied",
-        description: "Please allow camera access to capture images.",
+        title: "Camera access failed",
+        description: errorMessage,
         variant: "destructive",
       });
     }
   };
 
   const stopCamera = () => {
+    console.log('CaptureWizard: Stopping camera...');
     if (videoRef.current?.srcObject) {
-      const tracks = (videoRef.current.srcObject as MediaStream).getTracks();
-      tracks.forEach(track => track.stop());
+      const stream = videoRef.current.srcObject as MediaStream;
+      const tracks = stream.getTracks();
+      tracks.forEach(track => {
+        track.stop();
+        console.log(`CaptureWizard: Stopped ${track.kind} track`);
+      });
       videoRef.current.srcObject = null;
     }
     setIsCameraActive(false);
@@ -349,10 +385,15 @@ const CaptureWizard: React.FC<CaptureWizardProps> = ({
               </div>
             ) : (
               <div className="aspect-video bg-muted rounded-lg flex items-center justify-center">
-                <Button onClick={startCamera}>
-                  <Camera className="h-4 w-4 mr-2" />
-                  Start Camera
-                </Button>
+                <div className="text-center space-y-4">
+                  <Button onClick={startCamera}>
+                    <Camera className="h-4 w-4 mr-2" />
+                    Start Camera
+                  </Button>
+                  <p className="text-xs text-muted-foreground max-w-xs">
+                    Camera access required for guided capture. If denied, please use the standard upload mode.
+                  </p>
+                </div>
               </div>
             )}
           </CardContent>
