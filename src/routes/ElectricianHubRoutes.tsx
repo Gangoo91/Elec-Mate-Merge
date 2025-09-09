@@ -12,7 +12,7 @@ import SafetyResourcesEnhanced from "@/pages/electrician/safety-shares/SafetyRes
 import LearningFromExperience from "@/pages/electrician/safety-shares/LearningFromExperience";
 import ApprenticeMentalHealth from "@/pages/apprentice/ApprenticeMentalHealth";
 import JobVacancies from "@/pages/electrician/JobVacancies";
-import ElectricalMaterials from "@/pages/electrician/ElectricalMaterials";
+import Materials from "@/pages/Materials";
 import MaterialsCategoryProductList from "@/components/electrician-materials/MaterialsCategoryProductList";
 import ElectricalTools from "@/pages/electrician/ElectricalTools";
 import LivePricing from "@/pages/electrician/LivePricing";
@@ -63,7 +63,7 @@ const ElectricianHubRoutes = () => (
     <Route index element={<ElectricalHub />} />
     
     <Route path="job-vacancies" element={<JobVacancies />} />
-    <Route path="materials" element={<ElectricalMaterials />} />
+    <Route path="materials" element={<Materials />} />
     <Route path="materials/compare" element={<MaterialPriceComparisonPage />} />
     <Route path="materials/category/:categoryId" element={<MaterialsCategoryProductList />} />
     <Route path="materials/supplier/:supplierSlug" element={<SupplierMaterials />} />
