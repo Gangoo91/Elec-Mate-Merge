@@ -366,30 +366,30 @@ const ACPowerCalculator = () => {
                 </div>
               </CardHeader>
               <CardContent className="space-y-3">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="flex justify-between">
-                    <span className="text-green-200">Active Power (P):</span>
-                    <span className="text-green-300 font-mono">{results.activePower?.toFixed(2)} W</span>
+                <div className="space-y-3">
+                  <div className="flex justify-between items-center border-b border-green-500/20 pb-2">
+                    <span className="text-green-200 text-sm">Active Power (P):</span>
+                    <span className="text-green-300 font-mono text-lg font-bold">{results.activePower?.toFixed(2)} W</span>
                   </div>
-                  <div className="flex justify-between">
-                    <span className="text-green-200">Reactive Power (Q):</span>
-                    <span className="text-green-300 font-mono">{results.reactivePower?.toFixed(2)} VAr</span>
+                  <div className="flex justify-between items-center border-b border-green-500/20 pb-2">
+                    <span className="text-green-200 text-sm">Reactive Power (Q):</span>
+                    <span className="text-green-300 font-mono text-lg font-bold">{results.reactivePower?.toFixed(2)} VAr</span>
                   </div>
-                  <div className="flex justify-between">
-                    <span className="text-green-200">Apparent Power (S):</span>
-                    <span className="text-green-300 font-mono">{results.apparentPower?.toFixed(2)} VA</span>
+                  <div className="flex justify-between items-center border-b border-green-500/20 pb-2">
+                    <span className="text-green-200 text-sm">Apparent Power (S):</span>
+                    <span className="text-green-300 font-mono text-lg font-bold">{results.apparentPower?.toFixed(2)} VA</span>
                   </div>
-                  <div className="flex justify-between">
-                    <span className="text-green-200">Power Factor:</span>
-                    <span className="text-green-300 font-mono">{results.powerFactor?.toFixed(3)}</span>
+                  <div className="flex justify-between items-center border-b border-green-500/20 pb-2">
+                    <span className="text-green-200 text-sm">Power Factor:</span>
+                    <span className="text-green-300 font-mono text-lg font-bold">{results.powerFactor?.toFixed(3)}</span>
                   </div>
-                  <div className="flex justify-between">
-                    <span className="text-green-200">Phase Angle:</span>
-                    <span className="text-green-300 font-mono">{results.phaseAngle?.toFixed(1)}°</span>
+                  <div className="flex justify-between items-center border-b border-green-500/20 pb-2">
+                    <span className="text-green-200 text-sm">Phase Angle:</span>
+                    <span className="text-green-300 font-mono text-lg font-bold">{results.phaseAngle?.toFixed(1)}°</span>
                   </div>
-                  <div className="flex justify-between">
-                    <span className="text-green-200">Current at Unity PF:</span>
-                    <span className="text-green-300 font-mono">{results.currentAtUnity?.toFixed(2)} A</span>
+                  <div className="flex justify-between items-center">
+                    <span className="text-green-200 text-sm">Current at Unity PF:</span>
+                    <span className="text-green-300 font-mono text-lg font-bold">{results.currentAtUnity?.toFixed(2)} A</span>
                   </div>
                 </div>
                 
