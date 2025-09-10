@@ -91,7 +91,22 @@ export const generateAIEnhancedQuotePDF = async ({
       pdf.setTextColor(0, 0, 0);
     }
     
-    const lines = pdf.splitTextToSize(text, maxWidth);
+    // Simple HTML to text conversion for PDF
+    const cleanText = text
+      .replace(/<p>/g, '')
+      .replace(/<\/p>/g, '\n\n')
+      .replace(/<strong>/g, '')
+      .replace(/<\/strong>/g, '')
+      .replace(/<em>/g, '')
+      .replace(/<\/em>/g, '')
+      .replace(/<ul>/g, '')
+      .replace(/<\/ul>/g, '')
+      .replace(/<li>/g, '• ')
+      .replace(/<\/li>/g, '\n')
+      .replace(/\n\n+/g, '\n\n')
+      .trim();
+    
+    const lines = pdf.splitTextToSize(cleanText, maxWidth);
     pdf.text(lines, x, y);
     
     return y + (lines.length * fontSize * 0.3528); // Convert pt to mm
@@ -428,11 +443,11 @@ export const generateAIEnhancedQuotePDF = async ({
 
     yPosition += 5;
 
-    aiContent.additionalServices.forEach(service => {
-      yPosition = addText(`• ${service}`, margin + 5, yPosition, {
-        fontSize: 9
-      });
-      yPosition += 3;
+    // Handle HTML formatted services or plain text
+    const servicesText = aiContent.additionalServices.join(' ');
+    yPosition = addText(servicesText, margin, yPosition, {
+      fontSize: 9,
+      maxWidth: contentWidth
     });
 
     yPosition += 5;

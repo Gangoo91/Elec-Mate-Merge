@@ -167,7 +167,9 @@ Create comprehensive CV content including professional summary, enhanced job des
 - Company: ${context.company}
 - Quote Details: ${JSON.stringify(context.personalInfo)}
 
-Write a compelling 2-3 paragraph executive summary that highlights the project scope, technical expertise required, and value proposition. Use professional electrical industry terminology and emphasise quality, safety, and compliance with UK standards.`;
+Write a compelling 2-3 paragraph executive summary that highlights the project scope, technical expertise required, and value proposition. Use professional electrical industry terminology and emphasise quality, safety, and compliance with UK standards.
+
+IMPORTANT: Return the response in clean HTML format with proper paragraph tags (<p>), emphasis tags (<strong>, <em>), and list tags (<ul>, <li>) where appropriate. Do not use markdown formatting.`;
 
       case 'job_description_enhancement':
         return `Enhance this electrical job description to be more professional and detailed:
@@ -181,7 +183,9 @@ Improve the description with:
 - Safety considerations and compliance standards
 - Clear scope of work
 - BS 7671:2018 and building regulation compliance
-Keep it concise but comprehensive.`;
+Keep it concise but comprehensive.
+
+IMPORTANT: Return the response in clean HTML format with proper paragraph tags (<p>), emphasis tags (<strong>, <em>), and list tags (<ul>, <li>) where appropriate. Do not use markdown formatting.`;
 
       case 'terms_conditions':
         return `Generate professional terms and conditions for this electrical project:
@@ -196,7 +200,9 @@ Include standard electrical industry terms covering:
 - Compliance with BS 7671:2018
 - Liability and insurance coverage
 - Change order procedures
-Keep it professional and legally appropriate for UK electrical contractors.`;
+Keep it professional and legally appropriate for UK electrical contractors.
+
+IMPORTANT: Return the response in clean HTML format with proper paragraph tags (<p>), emphasis tags (<strong>, <em>), and list tags (<ul>, <li>) where appropriate. Do not use markdown formatting.`;
 
       case 'additional_services':
         return `Suggest relevant additional services for this electrical project:
@@ -210,7 +216,9 @@ Suggest 3-5 complementary electrical services that would benefit the client, suc
 - Emergency call-out services
 - Energy efficiency improvements
 
-Format as short, clear service descriptions (one line each).`;
+Format as short, clear service descriptions (one line each).
+
+IMPORTANT: Return the response in clean HTML format with proper list tags (<ul>, <li>) for each service. Do not use markdown formatting.`;
 
       default:
         return `Help improve this CV content: ${userInput}`;
