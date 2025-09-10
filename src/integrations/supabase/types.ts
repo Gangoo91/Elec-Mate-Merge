@@ -2006,10 +2006,60 @@ export type Database = {
         }
         Relationships: []
       }
+      quote_views: {
+        Row: {
+          created_at: string
+          expires_at: string
+          id: string
+          is_active: boolean
+          last_viewed_at: string | null
+          public_token: string
+          quote_id: string
+          view_count: number | null
+        }
+        Insert: {
+          created_at?: string
+          expires_at?: string
+          id?: string
+          is_active?: boolean
+          last_viewed_at?: string | null
+          public_token: string
+          quote_id: string
+          view_count?: number | null
+        }
+        Update: {
+          created_at?: string
+          expires_at?: string
+          id?: string
+          is_active?: boolean
+          last_viewed_at?: string | null
+          public_token?: string
+          quote_id?: string
+          view_count?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "quote_views_quote_id_fkey"
+            columns: ["quote_id"]
+            isOneToOne: false
+            referencedRelation: "quotes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       quotes: {
         Row: {
+          acceptance_method: string | null
+          acceptance_status: string | null
+          accepted_at: string | null
+          accepted_by_email: string | null
+          accepted_by_name: string | null
+          accepted_ip: string | null
+          accepted_user_agent: string | null
           client_data: Json
           created_at: string
+          docusign_envelope_id: string | null
+          docusign_status: string | null
           expiry_date: string
           id: string
           items: Json
@@ -2017,8 +2067,10 @@ export type Database = {
           notes: string | null
           overhead: number
           profit: number
+          public_token: string | null
           quote_number: string
           settings: Json
+          signature_url: string | null
           status: string
           subtotal: number
           tags: string[] | null
@@ -2028,8 +2080,17 @@ export type Database = {
           vat_amount: number
         }
         Insert: {
+          acceptance_method?: string | null
+          acceptance_status?: string | null
+          accepted_at?: string | null
+          accepted_by_email?: string | null
+          accepted_by_name?: string | null
+          accepted_ip?: string | null
+          accepted_user_agent?: string | null
           client_data: Json
           created_at?: string
+          docusign_envelope_id?: string | null
+          docusign_status?: string | null
           expiry_date: string
           id?: string
           items?: Json
@@ -2037,8 +2098,10 @@ export type Database = {
           notes?: string | null
           overhead?: number
           profit?: number
+          public_token?: string | null
           quote_number: string
           settings: Json
+          signature_url?: string | null
           status?: string
           subtotal?: number
           tags?: string[] | null
@@ -2048,8 +2111,17 @@ export type Database = {
           vat_amount?: number
         }
         Update: {
+          acceptance_method?: string | null
+          acceptance_status?: string | null
+          accepted_at?: string | null
+          accepted_by_email?: string | null
+          accepted_by_name?: string | null
+          accepted_ip?: string | null
+          accepted_user_agent?: string | null
           client_data?: Json
           created_at?: string
+          docusign_envelope_id?: string | null
+          docusign_status?: string | null
           expiry_date?: string
           id?: string
           items?: Json
@@ -2057,8 +2129,10 @@ export type Database = {
           notes?: string | null
           overhead?: number
           profit?: number
+          public_token?: string | null
           quote_number?: string
           settings?: Json
+          signature_url?: string | null
           status?: string
           subtotal?: number
           tags?: string[] | null

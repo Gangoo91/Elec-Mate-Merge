@@ -18,6 +18,7 @@ import ElectricianRoutes from "@/routes/ElectricianRoutes";
 import ApprenticeMentalHealth from "@/pages/apprentice/ApprenticeMentalHealth";
 import RightsAndPay from "@/pages/apprentice/RightsAndPay";
 import NotificationsPage from "@/pages/NotificationsPage";
+import PublicQuote from "@/pages/PublicQuote";
 
 const LegacyRedirect = ({ from, to }: { from: string; to: string }) => {
   const location = useLocation();
@@ -34,6 +35,7 @@ const AppRouter = () => {
       <Route path="/index" element={<Index />} />
       <Route path="/auth/signin" element={<SignIn />} />
       <Route path="/auth/signup" element={<SignUp />} />
+      <Route path="/quote/:token" element={<PublicQuote />} />
       
       {/* Legacy/Direct Access Routes - Redirect to proper paths */}
       <Route path="/rights-and-pay" element={<Navigate to="/apprentice/rights-and-pay" replace />} />

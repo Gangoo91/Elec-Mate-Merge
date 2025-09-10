@@ -89,6 +89,17 @@ export interface Quote {
   updatedAt: Date;
   expiryDate: Date;
   notes?: string;
+  acceptance_status?: 'pending' | 'accepted' | 'rejected';
+  acceptance_method?: 'in_app_signature' | 'docusign';
+  accepted_at?: Date;
+  accepted_by_name?: string;
+  accepted_by_email?: string;
+  accepted_ip?: string;
+  accepted_user_agent?: string;
+  signature_url?: string;
+  docusign_envelope_id?: string;
+  docusign_status?: string;
+  public_token?: string;
 }
 
 export type QuoteTag = 'awaiting_payment' | 'job_not_complete' | 'on_hold' | 'disputed';
