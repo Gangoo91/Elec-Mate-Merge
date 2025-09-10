@@ -13,40 +13,130 @@ const hexToRgb = (hex: string): [number, number, number] => {
   ] : [0, 0, 0];
 };
 
-// Helper function to add a section separator line
+// Helper function to add professional typography
+const setFont = (doc: jsPDF, size: number, style: 'normal' | 'bold' = 'normal') => {
+  // Use Open Sans as primary font with fallback to system fonts
+  doc.setFont('helvetica', style);
+  doc.setFontSize(size);
+};
+
+// Helper function to add a section separator line with enhanced styling
 const addSectionSeparator = (doc: jsPDF, y: number, color: [number, number, number]) => {
   doc.setDrawColor(color[0], color[1], color[2]);
-  doc.setLineWidth(0.5);
+  doc.setLineWidth(1);
   doc.line(20, y, 190, y);
+  return y + 12;
+};
+
+// Helper function to create professional section headers
+const addSectionHeader = (doc: jsPDF, title: string, y: number, primaryColor: [number, number, number]) => {
+  setFont(doc, 14, 'bold');
+  doc.setTextColor(primaryColor[0], primaryColor[1], primaryColor[2]);
+  doc.text(title, 20, y);
   return y + 8;
 };
 
-// Helper function to create a styled table for client/job details
-const createInfoTable = (doc: jsPDF, data: Array<[string, string]>, startY: number, primaryColor: [number, number, number]) => {
+// Helper function to create a styled table for client/job details with enhanced design
+const createInfoTable = (doc: jsPDF, data: Array<[string, string]>, startY: number, primaryColor: [number, number, number], secondaryColor: [number, number, number]) => {
   autoTable(doc, {
     startY: startY,
     body: data,
     theme: 'grid',
     styles: {
       fontSize: 10,
-      cellPadding: 4,
-      lineColor: [200, 200, 200],
+      cellPadding: 6,
+      lineColor: [220, 220, 220],
       lineWidth: 0.5,
+      font: 'helvetica',
     },
     columnStyles: {
       0: { 
         fontStyle: 'bold', 
-        fillColor: [248, 250, 252],
-        cellWidth: 50 
+        fillColor: [primaryColor[0] * 0.05, primaryColor[1] * 0.05, primaryColor[2] * 0.05],
+        textColor: [60, 60, 60],
+        cellWidth: 60 
       },
       1: { 
-        cellWidth: 'auto' 
+        cellWidth: 'auto',
+        textColor: [40, 40, 40]
       }
     },
-    margin: { left: 20, right: 20 },
+    margin: { left: 20, right: 100 },
     tableWidth: 'wrap'
   });
-  return (doc as any).lastAutoTable.finalY + 15;
+  return (doc as any).lastAutoTable.finalY + 18;
+};
+
+// Helper function to create grid-based layout for details sections
+const createGridLayout = (doc: jsPDF, leftData: Array<[string, string]>, rightData: Array<[string, string]>, startY: number, primaryColor: [number, number, number], secondaryColor: [number, number, number]) => {
+  const leftWidth = 85;
+  const rightWidth = 85;
+  const spacing = 10;
+  
+  // Left column
+  if (leftData.length > 0) {
+    autoTable(doc, {
+      startY: startY,
+      body: leftData,
+      theme: 'grid',
+      styles: {
+        fontSize: 10,
+        cellPadding: 6,
+        lineColor: [220, 220, 220],
+        lineWidth: 0.5,
+        font: 'helvetica',
+      },
+      columnStyles: {
+        0: { 
+          fontStyle: 'bold', 
+          fillColor: [primaryColor[0] * 0.05, primaryColor[1] * 0.05, primaryColor[2] * 0.05],
+          textColor: [60, 60, 60],
+          cellWidth: 25 
+        },
+        1: { 
+          cellWidth: 60,
+          textColor: [40, 40, 40]
+        }
+      },
+      margin: { left: 20, right: 105 },
+      tableWidth: leftWidth
+    });
+  }
+  
+  // Right column
+  if (rightData.length > 0) {
+    autoTable(doc, {
+      startY: startY,
+      body: rightData,
+      theme: 'grid',
+      styles: {
+        fontSize: 10,
+        cellPadding: 6,
+        lineColor: [220, 220, 220],
+        lineWidth: 0.5,
+        font: 'helvetica',
+      },
+      columnStyles: {
+        0: { 
+          fontStyle: 'bold', 
+          fillColor: [primaryColor[0] * 0.05, primaryColor[1] * 0.05, primaryColor[2] * 0.05],
+          textColor: [60, 60, 60],
+          cellWidth: 25 
+        },
+        1: { 
+          cellWidth: 60,
+          textColor: [40, 40, 40]
+        }
+      },
+      margin: { left: 115, right: 20 },
+      tableWidth: rightWidth
+    });
+  }
+  
+  const leftFinalY = leftData.length > 0 ? (doc as any).lastAutoTable.finalY : startY;
+  const rightFinalY = rightData.length > 0 ? (doc as any).lastAutoTable.finalY : startY;
+  
+  return Math.max(leftFinalY, rightFinalY) + 18;
 };
 
 export const generateQuotePDF = (quote: Partial<Quote>, companyProfile?: CompanyProfile) => {
@@ -63,17 +153,22 @@ export const generateQuotePDF = (quote: Partial<Quote>, companyProfile?: Company
     hexToRgb(companyProfile.secondary_color) : [108, 117, 125]; // Subtle grey
   
   // === PROFESSIONAL HEADER SECTION ===
-  // Add subtle header band with primary color
+  // Add elegant header band with gradient effect simulation
   doc.setFillColor(primaryColor[0], primaryColor[1], primaryColor[2]);
-  doc.rect(0, 0, pageWidth, 12, 'F');
+  doc.rect(0, 0, pageWidth, 15, 'F');
   
-  currentY = 25;
+  // Add subtle shadow effect
+  doc.setFillColor(primaryColor[0] * 0.8, primaryColor[1] * 0.8, primaryColor[2] * 0.8);
+  doc.rect(0, 15, pageWidth, 2, 'F');
   
-  // Company Logo (top-left, properly scaled)
-  let logoHeight = 35;
+  currentY = 30;
+  
+  // Company Logo (top-left, optimally positioned and scaled)
+  let logoHeight = 40;
   if (companyProfile?.logo_data_url) {
     try {
-      doc.addImage(companyProfile.logo_data_url, 'JPEG', 20, currentY, 50, logoHeight);
+      // Better logo positioning with proper aspect ratio maintenance
+      doc.addImage(companyProfile.logo_data_url, 'JPEG', 20, currentY, 55, logoHeight);
     } catch (error) {
       console.warn('Could not add logo to PDF:', error);
       logoHeight = 0;
@@ -82,82 +177,99 @@ export const generateQuotePDF = (quote: Partial<Quote>, companyProfile?: Company
     logoHeight = 0;
   }
   
-  // Quote header info (top-right)
-  const headerRightX = pageWidth - 80;
-  doc.setFillColor(245, 245, 245);
-  doc.roundedRect(headerRightX - 10, currentY, 70, 45, 3, 3, 'F');
+  // Enhanced quote header info box (top-right)
+  const headerRightX = pageWidth - 85;
+  const boxWidth = 75;
+  const boxHeight = 50;
   
-  doc.setFontSize(24);
-  doc.setFont('helvetica', 'bold');
+  // Professional quote info box with shadow effect
+  doc.setFillColor(250, 250, 250);
+  doc.setDrawColor(primaryColor[0], primaryColor[1], primaryColor[2]);
+  doc.setLineWidth(1.5);
+  doc.roundedRect(headerRightX - 10, currentY, boxWidth, boxHeight, 4, 4, 'FD');
+  
+  // Main QUOTE title
+  setFont(doc, 22, 'bold');
   doc.setTextColor(primaryColor[0], primaryColor[1], primaryColor[2]);
-  doc.text('QUOTE', headerRightX, currentY + 12, { align: 'center' });
+  doc.text('QUOTE', headerRightX + (boxWidth/2) - 10, currentY + 15, { align: 'center' });
   
-  doc.setFontSize(10);
-  doc.setFont('helvetica', 'normal');
-  doc.setTextColor(0, 0, 0);
-  doc.text(`No: ${quote.quoteNumber || 'QT-001'}`, headerRightX, currentY + 22, { align: 'center' });
-  doc.text(`Date: ${quote.createdAt?.toLocaleDateString() || new Date().toLocaleDateString()}`, headerRightX, currentY + 32, { align: 'center' });
+  // Quote details with better typography
+  setFont(doc, 10, 'normal');
+  doc.setTextColor(60, 60, 60);
+  doc.text(`No: ${quote.quoteNumber || 'QT-001'}`, headerRightX + (boxWidth/2) - 10, currentY + 28, { align: 'center' });
+  doc.text(`Date: ${quote.createdAt?.toLocaleDateString() || new Date().toLocaleDateString()}`, headerRightX + (boxWidth/2) - 10, currentY + 38, { align: 'center' });
   
-  currentY = Math.max(currentY + logoHeight + 15, currentY + 55);
+  currentY = Math.max(currentY + logoHeight + 20, currentY + 60);
   
-  // Company Name and Details (below logo)
+  // Enhanced Company Name and Details section
   if (companyProfile) {
-    doc.setFontSize(18);
-    doc.setFont('helvetica', 'bold');
+    setFont(doc, 20, 'bold');
     doc.setTextColor(primaryColor[0], primaryColor[1], primaryColor[2]);
     doc.text(companyProfile.company_name, 20, currentY);
-    currentY += 12;
+    currentY += 15;
     
-    // Company details in structured format
-    doc.setFontSize(9);
-    doc.setFont('helvetica', 'normal');
-    doc.setTextColor(80, 80, 80);
+    // Company details with improved typography
+    setFont(doc, 10, 'normal');
+    doc.setTextColor(70, 70, 70);
     
+    // Enhanced address and contact layout
     if (companyProfile.company_address) {
       doc.text(companyProfile.company_address, 20, currentY);
-      currentY += 5;
+      currentY += 6;
     }
     if (companyProfile.company_postcode) {
       doc.text(companyProfile.company_postcode, 20, currentY);
-      currentY += 5;
+      currentY += 8;
     }
     
-    // Contact info in two columns
+    // Professional contact info grid layout
     const leftColX = 20;
-    const rightColX = 120;
-    let contactY = currentY + 3;
+    const rightColX = 130;
+    let contactY = currentY;
     
     if (companyProfile.company_phone) {
-      doc.text(`Tel: ${companyProfile.company_phone}`, leftColX, contactY);
-      contactY += 5;
+      setFont(doc, 9, 'normal');
+      doc.setTextColor(90, 90, 90);
+      doc.text('Tel:', leftColX, contactY);
+      doc.setTextColor(60, 60, 60);
+      doc.text(companyProfile.company_phone, leftColX + 15, contactY);
+      contactY += 6;
     }
     if (companyProfile.company_email) {
-      doc.text(`Email: ${companyProfile.company_email}`, leftColX, contactY);
+      setFont(doc, 9, 'normal');
+      doc.setTextColor(90, 90, 90);
+      doc.text('Email:', leftColX, contactY);
+      doc.setTextColor(60, 60, 60);
+      doc.text(companyProfile.company_email, leftColX + 20, contactY);
     }
     
-    contactY = currentY + 3;
+    contactY = currentY;
     if (companyProfile.vat_number) {
-      doc.text(`VAT: ${companyProfile.vat_number}`, rightColX, contactY);
-      contactY += 5;
+      setFont(doc, 9, 'normal');
+      doc.setTextColor(90, 90, 90);
+      doc.text('VAT:', rightColX, contactY);
+      doc.setTextColor(60, 60, 60);
+      doc.text(companyProfile.vat_number, rightColX + 15, contactY);
+      contactY += 6;
     }
     if (companyProfile.company_registration) {
-      doc.text(`Reg: ${companyProfile.company_registration}`, rightColX, contactY);
+      setFont(doc, 9, 'normal');
+      doc.setTextColor(90, 90, 90);
+      doc.text('Reg:', rightColX, contactY);
+      doc.setTextColor(60, 60, 60);
+      doc.text(companyProfile.company_registration, rightColX + 15, contactY);
     }
     
-    currentY += 20;
+    currentY += 25;
   }
   
   // Section separator
   currentY = addSectionSeparator(doc, currentY, secondaryColor);
   
-  // === CLIENT DETAILS SECTION ===
-  doc.setFontSize(16);
-  doc.setFont('helvetica', 'bold');
-  doc.setTextColor(primaryColor[0], primaryColor[1], primaryColor[2]);
-  doc.text('CLIENT DETAILS', 20, currentY);
-  currentY += 10;
+  // === CLIENT & JOB DETAILS GRID SECTION ===
+  currentY = addSectionHeader(doc, 'CLIENT & JOB DETAILS', currentY, primaryColor);
   
-  // Client details table
+  // Prepare client data
   const clientData: Array<[string, string]> = [];
   if (quote.client?.name) clientData.push(['Name', quote.client.name]);
   if (quote.client?.email) clientData.push(['Email', quote.client.email]);
@@ -165,64 +277,43 @@ export const generateQuotePDF = (quote: Partial<Quote>, companyProfile?: Company
   if (quote.client?.address) clientData.push(['Address', quote.client.address]);
   if (quote.client?.postcode) clientData.push(['Postcode', quote.client.postcode]);
   
-  if (clientData.length > 0) {
-    currentY = createInfoTable(doc, clientData, currentY, primaryColor);
-  } else {
-    currentY += 15;
-  }
-  
-  // === JOB DETAILS SECTION ===
+  // Prepare job data
+  const jobData: Array<[string, string]> = [];
   if (quote.jobDetails) {
-    doc.setFontSize(16);
-    doc.setFont('helvetica', 'bold');
-    doc.setTextColor(primaryColor[0], primaryColor[1], primaryColor[2]);
-    doc.text('JOB DETAILS', 20, currentY);
-    currentY += 10;
-    
-    const jobData: Array<[string, string]> = [];
-    
     if (quote.jobDetails.title) {
       jobData.push(['Job Title', quote.jobDetails.title]);
     }
-    
     if (quote.jobDetails.location) {
       jobData.push(['Work Location', quote.jobDetails.location]);
     }
-    
     if (quote.jobDetails.estimatedDuration) {
       const duration = quote.jobDetails.estimatedDuration === "Other" ? 
         quote.jobDetails.customDuration || "Custom duration" : 
         quote.jobDetails.estimatedDuration;
       jobData.push(['Duration', duration]);
     }
-    
     if (quote.jobDetails.workStartDate) {
       jobData.push(['Start Date', new Date(quote.jobDetails.workStartDate).toLocaleDateString()]);
     }
-    
     if (quote.jobDetails.description) {
       jobData.push(['Description', quote.jobDetails.description]);
     }
-    
     if (quote.jobDetails.specialRequirements) {
       jobData.push(['Special Requirements', quote.jobDetails.specialRequirements]);
     }
-    
-    if (jobData.length > 0) {
-      currentY = createInfoTable(doc, jobData, currentY, primaryColor);
-    } else {
-      currentY += 15;
-    }
+  }
+  
+  // Create grid-based layout for client and job details
+  if (clientData.length > 0 || jobData.length > 0) {
+    currentY = createGridLayout(doc, clientData, jobData, currentY, primaryColor, secondaryColor);
+  } else {
+    currentY += 15;
   }
   
   // === QUOTE ITEMS SECTION ===
-  doc.setFontSize(16);
-  doc.setFont('helvetica', 'bold');
-  doc.setTextColor(primaryColor[0], primaryColor[1], primaryColor[2]);
-  doc.text('QUOTE ITEMS', 20, currentY);
-  currentY += 10;
+  currentY = addSectionHeader(doc, 'QUOTE ITEMS', currentY, primaryColor);
   
-  // Quote Items Table
+  // Enhanced Quote Items Table with better styling
   const tableData = quote.items?.map(item => [
     item.description,
     item.quantity.toString(),
@@ -239,22 +330,24 @@ export const generateQuotePDF = (quote: Partial<Quote>, companyProfile?: Company
       fillColor: primaryColor, 
       textColor: [255, 255, 255],
       fontSize: 11,
-      fontStyle: 'bold'
+      fontStyle: 'bold',
+      halign: 'center'
     },
     alternateRowStyles: {
-      fillColor: [248, 250, 252]
+      fillColor: [secondaryColor[0] * 0.1, secondaryColor[1] * 0.1, secondaryColor[2] * 0.1]
     },
     styles: { 
       fontSize: 10,
-      cellPadding: 5,
-      lineColor: [200, 200, 200],
-      lineWidth: 0.5
+      cellPadding: 8,
+      lineColor: [primaryColor[0] * 0.3, primaryColor[1] * 0.3, primaryColor[2] * 0.3],
+      lineWidth: 0.75,
+      font: 'helvetica'
     },
     columnStyles: {
-      0: { cellWidth: 'auto' }, // Description
-      1: { cellWidth: 20, halign: 'center' }, // Qty
-      2: { cellWidth: 30, halign: 'right' }, // Unit Price
-      3: { cellWidth: 30, halign: 'right' }, // Total
+      0: { cellWidth: 85, halign: 'left' }, // Description - wider for better readability
+      1: { cellWidth: 25, halign: 'center' }, // Qty
+      2: { cellWidth: 35, halign: 'right' }, // Unit Price
+      3: { cellWidth: 35, halign: 'right', fontStyle: 'bold' }, // Total - bold for emphasis
     },
     margin: { left: 20, right: 20 }
   });
@@ -263,82 +356,79 @@ export const generateQuotePDF = (quote: Partial<Quote>, companyProfile?: Company
   const finalY = (doc as any).lastAutoTable.finalY + 20;
   currentY = finalY;
 
-  // === TOTALS SECTION ===
-  // Create a styled totals box
-  const totalsBoxX = pageWidth - 110;
+  // === ENHANCED TOTALS SECTION ===
+  // Create a premium styled totals box
+  const totalsBoxX = pageWidth - 120;
   const totalsBoxY = currentY;
-  const totalsBoxWidth = 90;
-  let totalsBoxHeight = 40;
+  const totalsBoxWidth = 100;
+  let totalsBoxHeight = 55;
   
   // Adjust height based on VAT
   if (quote.settings?.vatRegistered) {
-    totalsBoxHeight += 10;
+    totalsBoxHeight += 12;
   }
   
-  // Draw totals box background
-  doc.setFillColor(248, 250, 252);
+  // Draw sophisticated totals box with shadow effect
+  doc.setFillColor(250, 250, 250);
   doc.setDrawColor(primaryColor[0], primaryColor[1], primaryColor[2]);
-  doc.setLineWidth(1);
-  doc.roundedRect(totalsBoxX, totalsBoxY, totalsBoxWidth, totalsBoxHeight, 3, 3, 'FD');
+  doc.setLineWidth(1.5);
+  doc.roundedRect(totalsBoxX, totalsBoxY, totalsBoxWidth, totalsBoxHeight, 5, 5, 'FD');
   
-  let totalsY = totalsBoxY + 12;
-  
-  // Subtotal
-  doc.setFontSize(11);
-  doc.setFont('helvetica', 'normal');
-  doc.setTextColor(0, 0, 0);
-  doc.text('Subtotal:', totalsBoxX + 5, totalsY);
-  doc.text(`£${(quote.subtotal || 0).toFixed(2)}`, totalsBoxX + totalsBoxWidth - 5, totalsY, { align: 'right' });
-  totalsY += 8;
-  
-  // VAT
-  if (quote.settings?.vatRegistered) {
-    doc.text(`VAT (${quote.settings.vatRate}%):`, totalsBoxX + 5, totalsY);
-    doc.text(`£${(quote.vatAmount || 0).toFixed(2)}`, totalsBoxX + totalsBoxWidth - 5, totalsY, { align: 'right' });
-    totalsY += 8;
-  }
-  
-  // Add separator line
-  doc.setDrawColor(primaryColor[0], primaryColor[1], primaryColor[2]);
+  // Add subtle inner shadow effect
+  doc.setDrawColor(primaryColor[0] * 0.7, primaryColor[1] * 0.7, primaryColor[2] * 0.7);
   doc.setLineWidth(0.5);
-  doc.line(totalsBoxX + 5, totalsY - 2, totalsBoxX + totalsBoxWidth - 5, totalsY - 2);
+  doc.roundedRect(totalsBoxX + 1, totalsBoxY + 1, totalsBoxWidth - 2, totalsBoxHeight - 2, 4, 4, 'S');
   
-  // Total (bold and larger)
-  doc.setFontSize(14);
-  doc.setFont('helvetica', 'bold');
-  doc.setTextColor(primaryColor[0], primaryColor[1], primaryColor[2]);
-  doc.text('TOTAL:', totalsBoxX + 5, totalsY + 5);
-  doc.text(`£${(quote.total || 0).toFixed(2)}`, totalsBoxX + totalsBoxWidth - 5, totalsY + 5, { align: 'right' });
+  let totalsY = totalsBoxY + 15;
   
-  currentY = totalsBoxY + totalsBoxHeight + 25;
+  // Subtotal with enhanced typography
+  setFont(doc, 11, 'normal');
+  doc.setTextColor(60, 60, 60);
+  doc.text('Subtotal:', totalsBoxX + 8, totalsY);
+  doc.text(`£${(quote.subtotal || 0).toFixed(2)}`, totalsBoxX + totalsBoxWidth - 8, totalsY, { align: 'right' });
+  totalsY += 10;
   
-  // === PAYMENT TERMS SECTION ===
+  // VAT with enhanced styling
+  if (quote.settings?.vatRegistered) {
+    doc.text(`VAT (${quote.settings.vatRate}%):`, totalsBoxX + 8, totalsY);
+    doc.text(`£${(quote.vatAmount || 0).toFixed(2)}`, totalsBoxX + totalsBoxWidth - 8, totalsY, { align: 'right' });
+    totalsY += 10;
+  }
+  
+  // Professional separator line
+  doc.setDrawColor(secondaryColor[0], secondaryColor[1], secondaryColor[2]);
+  doc.setLineWidth(1);
+  doc.line(totalsBoxX + 8, totalsY - 2, totalsBoxX + totalsBoxWidth - 8, totalsY - 2);
+  
+  // Total with premium styling and secondary color background
+  doc.setFillColor(secondaryColor[0], secondaryColor[1], secondaryColor[2]);
+  doc.roundedRect(totalsBoxX + 3, totalsY, totalsBoxWidth - 6, 18, 3, 3, 'F');
+  
+  setFont(doc, 16, 'bold');
+  doc.setTextColor(255, 255, 255);
+  doc.text('TOTAL:', totalsBoxX + 8, totalsY + 12);
+  doc.text(`£${(quote.total || 0).toFixed(2)}`, totalsBoxX + totalsBoxWidth - 8, totalsY + 12, { align: 'right' });
+  
+  currentY = totalsBoxY + totalsBoxHeight + 30;
+  
+  // === ENHANCED PAYMENT TERMS SECTION ===
   if (companyProfile?.payment_terms) {
     currentY = addSectionSeparator(doc, currentY, secondaryColor);
     
-    doc.setFontSize(14);
-    doc.setFont('helvetica', 'bold');
-    doc.setTextColor(primaryColor[0], primaryColor[1], primaryColor[2]);
-    doc.text('PAYMENT TERMS', 20, currentY);
-    currentY += 10;
+    currentY = addSectionHeader(doc, 'PAYMENT TERMS', currentY, primaryColor);
     
-    doc.setFontSize(10);
-    doc.setFont('helvetica', 'normal');
-    doc.setTextColor(0, 0, 0);
+    setFont(doc, 10, 'normal');
+    doc.setTextColor(50, 50, 50);
     const paymentTermsLines = doc.splitTextToSize(companyProfile.payment_terms, 170);
     doc.text(paymentTermsLines, 20, currentY);
-    currentY += (paymentTermsLines.length * 6) + 15;
+    currentY += (paymentTermsLines.length * 6) + 18;
   }
   
-  // === BANK DETAILS SECTION ===
+  // === ENHANCED BANK DETAILS SECTION ===
   if (companyProfile?.bank_details && Object.keys(companyProfile.bank_details).length > 0) {
     currentY = addSectionSeparator(doc, currentY, secondaryColor);
     
-    doc.setFontSize(14);
-    doc.setFont('helvetica', 'bold');
-    doc.setTextColor(primaryColor[0], primaryColor[1], primaryColor[2]);
-    doc.text('PAYMENT INFORMATION', 20, currentY);
-    currentY += 10;
+    currentY = addSectionHeader(doc, 'PAYMENT INFORMATION', currentY, primaryColor);
     
     const bankData: Array<[string, string]> = [];
     if (companyProfile.bank_details.account_name) {
@@ -355,25 +445,34 @@ export const generateQuotePDF = (quote: Partial<Quote>, companyProfile?: Company
     }
     
     if (bankData.length > 0) {
-      currentY = createInfoTable(doc, bankData, currentY, primaryColor);
+      currentY = createInfoTable(doc, bankData, currentY, primaryColor, secondaryColor);
     }
   }
   
-  // === PROFESSIONAL FOOTER ===
-  const footerY = pageHeight - 25;
+  // === ENHANCED PROFESSIONAL FOOTER ===
+  const footerY = pageHeight - 30;
   
-  // Footer separator
-  addSectionSeparator(doc, footerY - 10, secondaryColor);
+  // Elegant footer separator
+  addSectionSeparator(doc, footerY - 15, secondaryColor);
   
-  // Footer text
-  doc.setFontSize(9);
-  doc.setFont('helvetica', 'normal');
-  doc.setTextColor(100, 100, 100);
+  // Enhanced footer text with better formatting
+  setFont(doc, 9, 'normal');
+  doc.setTextColor(120, 120, 120);
   doc.text('This quote is valid for 30 days from the date of issue.', 20, footerY);
   doc.text('All work will be carried out in accordance with BS 7671:2018 regulations.', 20, footerY + 8);
   
-  // Page number
+  // Professional page numbering
+  setFont(doc, 8, 'normal');
+  doc.setTextColor(140, 140, 140);
   doc.text(`Page 1 of 1`, pageWidth - 20, footerY, { align: 'right' });
+  
+  // Company summary in footer if space permits
+  if (companyProfile && footerY > 50) {
+    setFont(doc, 8, 'normal');
+    doc.setTextColor(160, 160, 160);
+    const footerCompanyText = `${companyProfile.company_name}${companyProfile.company_phone ? ' • ' + companyProfile.company_phone : ''}${companyProfile.company_email ? ' • ' + companyProfile.company_email : ''}`;
+    doc.text(footerCompanyText, pageWidth / 2, footerY + 16, { align: 'center' });
+  }
   
   // Save the PDF
   doc.save(`Quote-${quote.quoteNumber || 'QT-001'}.pdf`);
