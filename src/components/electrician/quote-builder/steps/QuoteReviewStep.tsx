@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { User, FileText, Calculator, Package, Wrench, Zap, Download, Mail, Briefcase } from "lucide-react";
 import { Quote } from "@/types/quote";
-import { generateQuotePDF } from "../QuotePDFGenerator";
+import { generateProfessionalQuotePDF } from "@/utils/quote-pdf-professional";
 import { useToast } from "@/hooks/use-toast";
 import { useCompanyProfile } from "@/hooks/useCompanyProfile";
 
@@ -16,7 +16,7 @@ export const QuoteReviewStep = ({ quote }: QuoteReviewStepProps) => {
   const { companyProfile } = useCompanyProfile();
 
   const handleDownloadPDF = () => {
-    generateQuotePDF(quote, companyProfile);
+    generateProfessionalQuotePDF({ quote, companyProfile });
     toast({
       title: "PDF Generated",
       description: "Quote PDF has been downloaded successfully.",
