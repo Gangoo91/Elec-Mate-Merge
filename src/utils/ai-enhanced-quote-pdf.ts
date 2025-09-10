@@ -372,61 +372,65 @@ export const generateAIEnhancedQuotePDF = async ({
 
   // Totals section
   const renderTotals = () => {
-    const totalsX = pageWidth - margin - 70;
-    const totalsWidth = 70;
+    const totalsX = pageWidth - margin - 80;
+    const totalsWidth = 80;
 
-    // Background for totals
-    pdf.setFillColor(248, 249, 250);
-    pdf.rect(totalsX - 5, yPosition - 5, totalsWidth + 10, 50, 'F');
+    // Clean background for totals
+    pdf.setFillColor(250, 250, 250);
+    pdf.rect(totalsX - 10, yPosition - 5, totalsWidth + 15, 60, 'F');
 
-    const totalsData = [
-      ['Subtotal:', formatCurrency(safeNumber(quote.subtotal))],
-    ];
+    const totalsData = [];
 
+    // Add subtotal
+    if (quote.subtotal && quote.subtotal > 0) {
+      totalsData.push(['Subtotal:', formatCurrency(safeNumber(quote.subtotal))]);
+    }
+
+    // Add overhead if exists
     if (quote.overhead && quote.overhead > 0) {
       totalsData.push(['Overhead:', formatCurrency(safeNumber(quote.overhead))]);
     }
 
+    // Add profit if exists
     if (quote.profit && quote.profit > 0) {
       totalsData.push(['Profit:', formatCurrency(safeNumber(quote.profit))]);
     }
 
+    // Add VAT if applicable
     if (quote.vatAmount && quote.vatAmount > 0) {
       totalsData.push(['VAT:', formatCurrency(safeNumber(quote.vatAmount))]);
     }
 
-    totalsData.forEach(([label, amount], index) => {
-      const isTotal = index === totalsData.length - 1 && label === 'Total:';
-      const fontSize = isTotal ? 12 : 10;
-      const fontStyle = isTotal ? 'bold' : 'normal';
-      const textColor = isTotal ? primaryColor : [0, 0, 0];
-
+    // Render subtotal, overhead, profit, VAT in regular style
+    totalsData.forEach(([label, amount]) => {
       addText(label, totalsX, yPosition, {
-        fontSize,
-        fontStyle,
-        color: textColor
+        fontSize: 11,
+        fontStyle: 'normal',
+        color: [0, 0, 0]
       });
-      addText(amount, totalsX + 35, yPosition, {
-        fontSize,
-        fontStyle,
-        color: textColor
+      addText(amount, totalsX + 45, yPosition, {
+        fontSize: 11,
+        fontStyle: 'normal',
+        color: [0, 0, 0]
       });
-      yPosition += fontSize === 12 ? 7 : 5;
+      yPosition += 6;
     });
 
-    // Final total
-    pdf.setDrawColor(primaryColor[0], primaryColor[1], primaryColor[2]);
-    pdf.setLineWidth(0.5);
-    pdf.line(totalsX, yPosition, totalsX + totalsWidth - 5, yPosition);
+    // Add line separator before total
     yPosition += 3;
+    pdf.setDrawColor(primaryColor[0], primaryColor[1], primaryColor[2]);
+    pdf.setLineWidth(1);
+    pdf.line(totalsX, yPosition, totalsX + totalsWidth - 10, yPosition);
+    yPosition += 8;
 
+    // Render TOTAL in emphasized style
     addText('TOTAL:', totalsX, yPosition, {
-      fontSize: 12,
+      fontSize: 14,
       fontStyle: 'bold',
       color: primaryColor
     });
-    addText(formatCurrency(safeNumber(quote.total)), totalsX + 35, yPosition, {
-      fontSize: 12,
+    addText(formatCurrency(safeNumber(quote.total)), totalsX + 45, yPosition, {
+      fontSize: 14,
       fontStyle: 'bold',
       color: primaryColor
     });
