@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useAuth } from '@/contexts/AuthContext';
-import { Lightbulb, ArrowRight, CheckCircle, Users, BookOpen, Wrench } from 'lucide-react';
+import { Lightbulb, ArrowRight, CheckCircle, TrendingUp, BookOpen, Wrench } from 'lucide-react';
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import MilestonesDisplay from '@/components/apprentice/MilestonesDisplay';
@@ -43,9 +43,9 @@ const LandingPage = () => {
       description: "Essential calculators and utilities for electrical work"
     },
     {
-      icon: Users,
-      title: "Community Support",
-      description: "Connect with mentors and fellow electricians"
+      icon: TrendingUp,
+      title: "Career Progression",
+      description: "Advanced career development and progression guidance"
     }
   ];
 
@@ -117,7 +117,7 @@ const LandingPage = () => {
             {features.map((feature, index) => {
               const IconComponent = feature.icon;
               return (
-                <div key={index} className="mobile-card-compact text-center bg-white/5 backdrop-blur-sm hover:bg-white/10 mobile-interactive">
+                <div key={index} className="mobile-card-compact text-center bg-elec-gray border border-elec-yellow/20 hover:border-elec-yellow/40 transition-colors mobile-interactive">
                   <div className="w-10 h-10 sm:w-12 sm:h-12 bg-elec-yellow/20 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
                     <IconComponent className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow" />
                   </div>
@@ -131,12 +131,12 @@ const LandingPage = () => {
 
         {/* Benefits Section */}
         <div className="mb-16">
-          <div className="bg-gradient-to-r from-elec-yellow/10 to-elec-yellow/5 rounded-lg p-8 border border-elec-yellow/20">
+          <div className="bg-elec-gray border border-elec-yellow/20 rounded-lg p-8">
             <h3 className="text-2xl font-bold text-center mb-8">
               Why choose <span className="text-elec-yellow">Elec-Mate?</span>
             </h3>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-4">
               {[
                 "Industry-leading training resources",
                 "Professional tools and calculators", 
@@ -146,8 +146,8 @@ const LandingPage = () => {
                 "Active community of professionals"
               ].map((benefit, index) => (
                 <div key={index} className="flex items-center gap-3">
-                  <CheckCircle className="h-5 w-5 text-elec-yellow flex-shrink-0" />
-                  <span className="text-gray-300">{benefit}</span>
+                  <CheckCircle className="h-6 w-6 text-elec-yellow flex-shrink-0" />
+                  <span className="text-white">{benefit}</span>
                 </div>
               ))}
             </div>
