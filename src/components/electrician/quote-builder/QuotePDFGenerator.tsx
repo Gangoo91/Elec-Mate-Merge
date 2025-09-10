@@ -13,235 +13,276 @@ const hexToRgb = (hex: string): [number, number, number] => {
   ] : [0, 0, 0];
 };
 
+// Debug function to log company profile data
+const debugCompanyProfile = (companyProfile?: CompanyProfile) => {
+  console.log('PDF Generation - Company Profile:', {
+    hasProfile: !!companyProfile,
+    name: companyProfile?.company_name,
+    email: companyProfile?.company_email,
+    phone: companyProfile?.company_phone,
+    hasLogo: !!companyProfile?.logo_data_url,
+    colors: {
+      primary: companyProfile?.primary_color,
+      secondary: companyProfile?.secondary_color
+    }
+  });
+};
+
 export const generateQuotePDF = (quote: Partial<Quote>, companyProfile?: CompanyProfile) => {
-  const doc = new jsPDF();
+  // Debug company profile data
+  debugCompanyProfile(companyProfile);
   
-  let currentY = 20;
+  const doc = new jsPDF('p', 'mm', 'a4');
+  
+  // Set default font to Helvetica for better PDF compatibility
+  doc.setFont('helvetica');
+  
+  let currentY = 15;
   const pageWidth = doc.internal.pageSize.width;
+  const margin = 15;
   
   // Extract colors from company profile (convert to RGB)
   const primaryColor = companyProfile?.primary_color ? 
-    hexToRgb(companyProfile.primary_color) : [255, 215, 0]; // Default electric yellow
+    hexToRgb(companyProfile.primary_color) : [245, 158, 11]; // Electric yellow
   const secondaryColor = companyProfile?.secondary_color ? 
-    hexToRgb(companyProfile.secondary_color) : [51, 51, 51]; // Default dark grey
+    hexToRgb(companyProfile.secondary_color) : [31, 41, 55]; // Dark grey
   
-  // Professional Header Design with two-column layout
-  if (companyProfile) {
-    // Header background band
+  // Compact Professional Header
+  if (companyProfile && companyProfile.company_name) {
+    // Thin header band for branding
     doc.setFillColor(primaryColor[0], primaryColor[1], primaryColor[2]);
-    doc.rect(0, 0, pageWidth, 8, 'F');
+    doc.rect(0, 0, pageWidth, 4, 'F');
     
-    currentY = 18;
+    currentY = 10;
     
-    // Two-column header layout
-    const leftColumnX = 20;
-    const rightColumnX = 110;
-    const logoSize = 35;
+    // Compact two-column header layout
+    const leftColumnX = margin;
+    const rightColumnX = pageWidth/2 + 5;
+    const logoSize = 25;
     
-    // Left column - Logo
+    // Left column - Logo (smaller and positioned better)
     if (companyProfile.logo_data_url) {
       try {
-        doc.addImage(companyProfile.logo_data_url, 'JPEG', leftColumnX, currentY, logoSize, logoSize);
+        doc.addImage(companyProfile.logo_data_url, 'PNG', leftColumnX, currentY, logoSize, logoSize);
       } catch (error) {
         console.warn('Could not add logo to PDF:', error);
+        // Add company name as fallback
+        doc.setFontSize(16);
+        doc.setFont('helvetica', 'bold');
+        doc.setTextColor(primaryColor[0], primaryColor[1], primaryColor[2]);
+        doc.text(companyProfile.company_name, leftColumnX, currentY + 12);
       }
+    } else {
+      // Fallback: Display company name prominently
+      doc.setFontSize(16);
+      doc.setFont('helvetica', 'bold');
+      doc.setTextColor(primaryColor[0], primaryColor[1], primaryColor[2]);
+      doc.text(companyProfile.company_name, leftColumnX, currentY + 12);
     }
     
-    // Right column - Company Information Box
-    doc.setFillColor(245, 245, 245); // Light grey background
-    doc.rect(rightColumnX, currentY, 80, 50, 'F');
-    doc.setDrawColor(200, 200, 200);
-    doc.rect(rightColumnX, currentY, 80, 50, 'S');
+    // Right column - Compact Company Information
+    let infoY = currentY + 2;
     
-    let infoY = currentY + 8;
-    
-    // Company name - prominent
-    doc.setFontSize(14);
-    doc.setFont(undefined, 'bold');
+    // Company name (smaller, top right)
+    doc.setFontSize(11);
+    doc.setFont('helvetica', 'bold');
     doc.setTextColor(primaryColor[0], primaryColor[1], primaryColor[2]);
-    doc.text(companyProfile.company_name, rightColumnX + 5, infoY);
-    infoY += 8;
+    doc.text(companyProfile.company_name, rightColumnX, infoY, { align: 'left' });
+    infoY += 5;
     
-    // Contact details
-    doc.setFontSize(9);
-    doc.setFont(undefined, 'normal');
+    // Contact details in compact format
+    doc.setFontSize(8);
+    doc.setFont('helvetica', 'normal');
     doc.setTextColor(0, 0, 0);
     
-    if (companyProfile.company_address) {
-      const addressLines = doc.splitTextToSize(companyProfile.company_address, 70);
-      doc.text(addressLines, rightColumnX + 5, infoY);
-      infoY += addressLines.length * 4;
-    }
-    if (companyProfile.company_postcode) {
-      doc.text(companyProfile.company_postcode, rightColumnX + 5, infoY);
-      infoY += 4;
-    }
-    if (companyProfile.company_phone) {
-      doc.text(`T: ${companyProfile.company_phone}`, rightColumnX + 5, infoY);
-      infoY += 4;
-    }
-    if (companyProfile.company_email) {
-      doc.text(`E: ${companyProfile.company_email}`, rightColumnX + 5, infoY);
-      infoY += 4;
-    }
-    if (companyProfile.company_website) {
-      doc.text(`W: ${companyProfile.company_website}`, rightColumnX + 5, infoY);
-      infoY += 4;
+    if (companyProfile.company_address && companyProfile.company_postcode) {
+      const fullAddress = `${companyProfile.company_address}, ${companyProfile.company_postcode}`;
+      const addressLines = doc.splitTextToSize(fullAddress, pageWidth - rightColumnX - margin);
+      doc.text(addressLines, rightColumnX, infoY);
+      infoY += addressLines.length * 3;
+    } else if (companyProfile.company_address) {
+      const addressLines = doc.splitTextToSize(companyProfile.company_address, pageWidth - rightColumnX - margin);
+      doc.text(addressLines, rightColumnX, infoY);
+      infoY += addressLines.length * 3;
     }
     
-    currentY = Math.max(currentY + logoSize + 10, infoY + 5);
-    
-    // Registration details in a separate line
-    if (companyProfile.vat_number || companyProfile.company_registration) {
-      doc.setFontSize(8);
-      doc.setTextColor(100, 100, 100);
-      let regText = '';
-      if (companyProfile.company_registration) regText += `Company Reg: ${companyProfile.company_registration}`;
-      if (companyProfile.vat_number) {
-        if (regText) regText += ' | ';
-        regText += `VAT: ${companyProfile.vat_number}`;
+    if (companyProfile.company_phone || companyProfile.company_email) {
+      const contactLine = [
+        companyProfile.company_phone ? `T: ${companyProfile.company_phone}` : '',
+        companyProfile.company_email ? `E: ${companyProfile.company_email}` : ''
+      ].filter(Boolean).join(' | ');
+      
+      if (contactLine) {
+        doc.text(contactLine, rightColumnX, infoY);
+        infoY += 3;
       }
-      doc.text(regText, rightColumnX + 5, currentY);
-      currentY += 8;
     }
+    
+    if (companyProfile.company_website) {
+      doc.text(`W: ${companyProfile.company_website}`, rightColumnX, infoY);
+      infoY += 3;
+    }
+    
+    // Registration details in one compact line
+    if (companyProfile.vat_number || companyProfile.company_registration) {
+      doc.setFontSize(7);
+      doc.setTextColor(100, 100, 100);
+      const regDetails = [
+        companyProfile.company_registration ? `Reg: ${companyProfile.company_registration}` : '',
+        companyProfile.vat_number ? `VAT: ${companyProfile.vat_number}` : ''
+      ].filter(Boolean).join(' | ');
+      
+      if (regDetails) {
+        doc.text(regDetails, rightColumnX, infoY);
+        infoY += 3;
+      }
+    }
+    
+    currentY = Math.max(currentY + logoSize + 5, infoY + 3);
+  } else {
+    // Fallback header if no company profile
+    doc.setFontSize(16);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(primaryColor[0], primaryColor[1], primaryColor[2]);
+    doc.text('ELECTRICAL CONTRACTOR', margin, currentY + 8);
+    currentY += 15;
   }
   
-  currentY += 5;
+  currentY += 3;
   
-  // Quote Information Box
+  // Compact Quote Information Header
   doc.setFillColor(primaryColor[0], primaryColor[1], primaryColor[2]);
-  doc.rect(20, currentY, 170, 25, 'F');
+  doc.rect(margin, currentY, pageWidth - (2 * margin), 12, 'F');
   
   // Quote title
-  doc.setFontSize(18);
-  doc.setFont(undefined, 'bold');
+  doc.setFontSize(14);
+  doc.setFont('helvetica', 'bold');
   doc.setTextColor(255, 255, 255);
-  doc.text('ELECTRICAL QUOTE', 25, currentY + 8);
+  doc.text('ELECTRICAL QUOTE', margin + 3, currentY + 8);
   
   // Quote details on right side
-  doc.setFontSize(11);
-  doc.setFont(undefined, 'normal');
-  doc.text(`Quote No: ${quote.quoteNumber}`, 130, currentY + 8);
-  doc.text(`Date: ${quote.createdAt?.toLocaleDateString() || new Date().toLocaleDateString()}`, 130, currentY + 18);
+  doc.setFontSize(9);
+  doc.setFont('helvetica', 'normal');
+  const quoteDetails = `Quote No: ${quote.quoteNumber} | Date: ${quote.createdAt?.toLocaleDateString('en-GB') || new Date().toLocaleDateString('en-GB')}`;
+  doc.text(quoteDetails, pageWidth - margin - 3, currentY + 8, { align: 'right' });
   
-  currentY += 35;
+  currentY += 18;
   
-  // Client and Job Details - Side by Side Layout
-  const leftColX = 20;
-  const rightColX = 110;
-  const colWidth = 80;
+  // Compact Client and Job Details - Side by Side Layout
+  const leftColX = margin;
+  const rightColX = pageWidth/2 + 2;
+  const colWidth = (pageWidth/2) - margin - 2;
   
-  // Client Details Box
-  doc.setFillColor(250, 250, 250);
-  doc.rect(leftColX, currentY, colWidth, 45, 'F');
-  doc.setDrawColor(200, 200, 200);
-  doc.rect(leftColX, currentY, colWidth, 45, 'S');
-  
-  doc.setFontSize(12);
-  doc.setFont(undefined, 'bold');
-  doc.setTextColor(primaryColor[0], primaryColor[1], primaryColor[2]);
-  doc.text('CLIENT DETAILS', leftColX + 5, currentY + 8);
-  
-  let clientY = currentY + 16;
+  // Client Details - Compact
   doc.setFontSize(10);
-  doc.setFont(undefined, 'normal');
+  doc.setFont('helvetica', 'bold');
+  doc.setTextColor(primaryColor[0], primaryColor[1], primaryColor[2]);
+  doc.text('CLIENT DETAILS', leftColX, currentY);
+  
+  let clientY = currentY + 5;
+  doc.setFontSize(8);
+  doc.setFont('helvetica', 'normal');
   doc.setTextColor(0, 0, 0);
   
   if (quote.client?.name) {
-    doc.text(quote.client.name, leftColX + 5, clientY);
-    clientY += 6;
+    doc.text(quote.client.name, leftColX, clientY);
+    clientY += 3;
   }
   if (quote.client?.email) {
-    doc.text(quote.client.email, leftColX + 5, clientY);
-    clientY += 6;
+    doc.text(quote.client.email, leftColX, clientY);
+    clientY += 3;
   }
   if (quote.client?.phone) {
-    doc.text(quote.client.phone, leftColX + 5, clientY);
-    clientY += 6;
+    doc.text(quote.client.phone, leftColX, clientY);
+    clientY += 3;
   }
   if (quote.client?.address) {
-    doc.text(quote.client.address, leftColX + 5, clientY);
-    clientY += 6;
-  }
-  if (quote.client?.postcode) {
-    doc.text(quote.client.postcode, leftColX + 5, clientY);
+    const addressText = quote.client.postcode ? 
+      `${quote.client.address}, ${quote.client.postcode}` : 
+      quote.client.address;
+    const addressLines = doc.splitTextToSize(addressText, colWidth);
+    doc.text(addressLines, leftColX, clientY);
+    clientY += addressLines.length * 3;
+  } else if (quote.client?.postcode) {
+    doc.text(quote.client.postcode, leftColX, clientY);
+    clientY += 3;
   }
   
-  // Job Details Box (right side)
+  // Job Details - Compact (right side)
   if (quote.jobDetails) {
-    doc.setFillColor(250, 250, 250);
-    doc.rect(rightColX, currentY, colWidth, 45, 'F');
-    doc.setDrawColor(200, 200, 200);
-    doc.rect(rightColX, currentY, colWidth, 45, 'S');
-    
-    doc.setFontSize(12);
-    doc.setFont(undefined, 'bold');
-    doc.setTextColor(primaryColor[0], primaryColor[1], primaryColor[2]);
-    doc.text('JOB DETAILS', rightColX + 5, currentY + 8);
-    
-    let jobY = currentY + 16;
     doc.setFontSize(10);
-    doc.setFont(undefined, 'normal');
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(primaryColor[0], primaryColor[1], primaryColor[2]);
+    doc.text('JOB DETAILS', rightColX, currentY);
+    
+    let jobY = currentY + 5;
+    doc.setFontSize(8);
+    doc.setFont('helvetica', 'normal');
     doc.setTextColor(0, 0, 0);
     
     if (quote.jobDetails.title) {
-      doc.text(`Job: ${quote.jobDetails.title}`, rightColX + 5, jobY);
-      jobY += 6;
+      const titleLines = doc.splitTextToSize(`Job: ${quote.jobDetails.title}`, colWidth);
+      doc.text(titleLines, rightColX, jobY);
+      jobY += titleLines.length * 3;
     }
     
     if (quote.jobDetails.location) {
-      doc.text(`Location: ${quote.jobDetails.location}`, rightColX + 5, jobY);
-      jobY += 6;
+      const locationLines = doc.splitTextToSize(`Location: ${quote.jobDetails.location}`, colWidth);
+      doc.text(locationLines, rightColX, jobY);
+      jobY += locationLines.length * 3;
     }
     
     if (quote.jobDetails.estimatedDuration) {
       const duration = quote.jobDetails.estimatedDuration === "Other" ? 
         quote.jobDetails.customDuration || "Custom duration" : 
         quote.jobDetails.estimatedDuration;
-      doc.text(`Duration: ${duration}`, rightColX + 5, jobY);
-      jobY += 6;
+      doc.text(`Duration: ${duration}`, rightColX, jobY);
+      jobY += 3;
     }
     
     if (quote.jobDetails.workStartDate) {
-      doc.text(`Start: ${new Date(quote.jobDetails.workStartDate).toLocaleDateString()}`, rightColX + 5, jobY);
+      doc.text(`Start: ${new Date(quote.jobDetails.workStartDate).toLocaleDateString('en-GB')}`, rightColX, jobY);
+      jobY += 3;
     }
+    
+    clientY = Math.max(clientY, jobY);
   }
   
-  currentY += 55;
+  currentY = clientY + 5;
   
-  // Job Description (full width if present)
+  // Compact descriptions if present
   if (quote.jobDetails?.description) {
-    doc.setFontSize(12);
-    doc.setFont(undefined, 'bold');
+    doc.setFontSize(9);
+    doc.setFont('helvetica', 'bold');
     doc.setTextColor(primaryColor[0], primaryColor[1], primaryColor[2]);
-    doc.text('PROJECT DESCRIPTION', 20, currentY);
-    currentY += 8;
+    doc.text('PROJECT DESCRIPTION', margin, currentY);
+    currentY += 4;
     
-    doc.setFontSize(10);
-    doc.setFont(undefined, 'normal');
+    doc.setFontSize(8);
+    doc.setFont('helvetica', 'normal');
     doc.setTextColor(0, 0, 0);
-    const descriptionLines = doc.splitTextToSize(quote.jobDetails.description, 170);
-    doc.text(descriptionLines, 20, currentY);
-    currentY += (descriptionLines.length * 6) + 4;
+    const descriptionLines = doc.splitTextToSize(quote.jobDetails.description, pageWidth - (2 * margin));
+    doc.text(descriptionLines, margin, currentY);
+    currentY += (descriptionLines.length * 3) + 2;
   }
   
-  // Special Requirements (full width if present)
+  // Special Requirements if present
   if (quote.jobDetails?.specialRequirements) {
-    doc.setFontSize(12);
-    doc.setFont(undefined, 'bold');
+    doc.setFontSize(9);
+    doc.setFont('helvetica', 'bold');
     doc.setTextColor(primaryColor[0], primaryColor[1], primaryColor[2]);
-    doc.text('SPECIAL REQUIREMENTS', 20, currentY);
-    currentY += 8;
+    doc.text('SPECIAL REQUIREMENTS', margin, currentY);
+    currentY += 4;
     
-    doc.setFontSize(10);
-    doc.setFont(undefined, 'normal');
+    doc.setFontSize(8);
+    doc.setFont('helvetica', 'normal');
     doc.setTextColor(0, 0, 0);
-    const requirementsLines = doc.splitTextToSize(quote.jobDetails.specialRequirements, 170);
-    doc.text(requirementsLines, 20, currentY);
-    currentY += (requirementsLines.length * 6) + 4;
+    const requirementsLines = doc.splitTextToSize(quote.jobDetails.specialRequirements, pageWidth - (2 * margin));
+    doc.text(requirementsLines, margin, currentY);
+    currentY += (requirementsLines.length * 3) + 2;
   }
   
-  currentY += 10;
+  currentY += 5;
   
   // Quote Items Table
   const tableData = quote.items?.map(item => [
@@ -259,22 +300,24 @@ export const generateQuotePDF = (quote: Partial<Quote>, companyProfile?: Company
     headStyles: { 
       fillColor: [primaryColor[0], primaryColor[1], primaryColor[2]], 
       textColor: [255, 255, 255],
-      fontSize: 11,
+      fontSize: 9,
       fontStyle: 'bold'
     },
     styles: { 
-      fontSize: 10,
-      cellPadding: 4
+      fontSize: 8,
+      cellPadding: 2,
+      font: 'helvetica'
     },
     alternateRowStyles: {
       fillColor: [248, 248, 248]
     },
     columnStyles: {
-      1: { halign: 'center' },
-      2: { halign: 'right' },
-      3: { halign: 'right', fontStyle: 'bold' }
+      0: { cellWidth: 'auto' },
+      1: { halign: 'center', cellWidth: 15 },
+      2: { halign: 'right', cellWidth: 25 },
+      3: { halign: 'right', fontStyle: 'bold', cellWidth: 25 }
     },
-    margin: { left: 20, right: 20 }
+    margin: { left: margin, right: margin }
   });
   
   // Calculate final Y position after table
