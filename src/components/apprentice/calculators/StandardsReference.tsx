@@ -37,9 +37,9 @@ const StandardsReference = () => {
             <MobileAccordion type="multiple" className="w-full space-y-2">
               {ukElectricalStandards.map((standard, index) => (
                 <MobileAccordionItem key={index} value={`standard-${index}`}>
-                  <MobileAccordionTrigger 
+                   <MobileAccordionTrigger 
                     icon={getStandardIcon(standard.code)}
-                    className="text-left"
+                    className="text-left bg-elec-gray hover:bg-elec-gray/80"
                   >
                     <div className="space-y-1">
                       <div className="font-medium">{standard.code}</div>
