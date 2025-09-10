@@ -258,22 +258,13 @@ export const generateQuotePDF = (quote: Partial<Quote>, companyProfile?: Company
   doc.text('QUOTE BREAKDOWN', margin, currentY);
   currentY += 15;
   
-  // Prepare table data with line items
+  // Main table with line items only
   const tableData = quote.items?.map(item => [
     item.description,
     item.quantity.toString(),
     `£${item.unitPrice.toFixed(2)}`,
     `£${item.totalPrice.toFixed(2)}`
   ]) || [];
-  
-  // Add totals rows to table data
-  tableData.push(['', '', 'Subtotal:', `£${(quote.subtotal || 0).toFixed(2)}`]);
-  
-  if (quote.settings?.vatRegistered) {
-    tableData.push(['', '', `VAT (${quote.settings.vatRate}%):`, `£${(quote.vatAmount || 0).toFixed(2)}`]);
-  }
-  
-  tableData.push(['', '', 'TOTAL:', `£${(quote.total || 0).toFixed(2)}`]);
   
   autoTable(doc, {
     startY: currentY,
@@ -301,22 +292,70 @@ export const generateQuotePDF = (quote: Partial<Quote>, companyProfile?: Company
       2: { halign: 'right', cellWidth: 30 },
       3: { halign: 'right', fontStyle: 'bold', cellWidth: 30, textColor: [40, 40, 40] }
     },
-    didParseCell: function (data) {
-      // Style the total row with orange background
-      if (data.row.index === tableData.length - 1) {
-        data.cell.styles.fillColor = primaryColor as [number, number, number];
-        data.cell.styles.textColor = [255, 255, 255];
-        data.cell.styles.fontStyle = 'bold';
-      }
-    },
     margin: { left: margin, right: margin },
     tableLineColor: [220, 220, 220],
     tableLineWidth: 0.5
   });
   
   // Calculate final Y position after table
-  const finalY = (doc as any).lastAutoTable.finalY + 20;
-  currentY = finalY;
+  const finalY = (doc as any).lastAutoTable.finalY + 15;
+
+  // Right-aligned totals box with borders (matching reference image)
+  const totalsBoxY = finalY;
+  const totalsBoxX = pageWidth - margin - 120;
+  const totalsBoxWidth = 120;
+  const rowHeight = 12;
+  
+  // Calculate number of rows needed
+  let totalRows = 2; // Subtotal + TOTAL
+  if (quote.settings?.vatRegistered) {
+    totalRows = 3; // Subtotal + VAT + TOTAL
+  }
+  
+  const boxHeight = totalRows * rowHeight;
+  
+  // Draw outer border
+  doc.setDrawColor(220, 220, 220);
+  doc.setLineWidth(0.5);
+  doc.rect(totalsBoxX, totalsBoxY, totalsBoxWidth, boxHeight);
+  
+  currentY = totalsBoxY + 8;
+  doc.setFontSize(11);
+  doc.setFont('helvetica', 'normal');
+  
+  // Subtotal row (white background)
+  doc.setFillColor(255, 255, 255);
+  doc.rect(totalsBoxX, totalsBoxY, totalsBoxWidth, rowHeight, 'F');
+  doc.setTextColor(40, 40, 40);
+  doc.text('Subtotal:', totalsBoxX + 5, currentY);
+  doc.text(`£${(quote.subtotal || 0).toFixed(2)}`, totalsBoxX + totalsBoxWidth - 5, currentY, { align: 'right' });
+  currentY += rowHeight;
+  
+  // VAT row (if applicable, white background)
+  if (quote.settings?.vatRegistered) {
+    doc.setFillColor(255, 255, 255);
+    doc.rect(totalsBoxX, totalsBoxY + rowHeight, totalsBoxWidth, rowHeight, 'F');
+    doc.text(`VAT (${quote.settings.vatRate}%):`, totalsBoxX + 5, currentY);
+    doc.text(`£${(quote.vatAmount || 0).toFixed(2)}`, totalsBoxX + totalsBoxWidth - 5, currentY, { align: 'right' });
+    currentY += rowHeight;
+  }
+  
+  // TOTAL row (orange background with white text)
+  const totalRowY = quote.settings?.vatRegistered ? totalsBoxY + (2 * rowHeight) : totalsBoxY + rowHeight;
+  doc.setFillColor(primaryColor[0], primaryColor[1], primaryColor[2]);
+  doc.rect(totalsBoxX, totalRowY, totalsBoxWidth, rowHeight, 'F');
+  doc.setFont('helvetica', 'bold');
+  doc.setTextColor(255, 255, 255);
+  doc.text('TOTAL:', totalsBoxX + 5, currentY);
+  doc.text(`£${(quote.total || 0).toFixed(2)}`, totalsBoxX + totalsBoxWidth - 5, currentY, { align: 'right' });
+  
+  // Draw internal horizontal lines
+  doc.setDrawColor(220, 220, 220);
+  for (let i = 1; i < totalRows; i++) {
+    doc.line(totalsBoxX, totalsBoxY + (i * rowHeight), totalsBoxX + totalsBoxWidth, totalsBoxY + (i * rowHeight));
+  }
+  
+  currentY = totalsBoxY + boxHeight + 20;
   
   // Clean Footer Section
   const footerStartY = Math.max(currentY + 30, doc.internal.pageSize.height - 60);
