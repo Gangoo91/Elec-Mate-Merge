@@ -22,9 +22,10 @@ import { useToast } from "@/hooks/use-toast";
 
 interface MaterialSearchEnhancedProps {
   onAddMaterial: (material: EnhancedMaterialItem, quantity: number, pricing: any) => void;
+  currentQuoteItems?: Array<{ description: string; materialCode?: string; id?: string }>;
 }
 
-export const MaterialSearchEnhanced = ({ onAddMaterial }: MaterialSearchEnhancedProps) => {
+export const MaterialSearchEnhanced = ({ onAddMaterial, currentQuoteItems = [] }: MaterialSearchEnhancedProps) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [sortBy, setSortBy] = useState("name");
@@ -105,6 +106,15 @@ export const MaterialSearchEnhanced = ({ onAddMaterial }: MaterialSearchEnhanced
     }
   };
 
+  // Check if material is already in quote
+  const isInQuote = (material: EnhancedMaterialItem) => {
+    return currentQuoteItems.some(item => 
+      item.materialCode === material.id || 
+      item.materialCode === material.code ||
+      item.description.toLowerCase().includes(material.name.toLowerCase())
+    );
+  };
+
   return (
     <div className="space-y-4 -mx-4 px-4">{/* Full width on mobile */}
       {/* Search and Filters */}
@@ -170,29 +180,38 @@ export const MaterialSearchEnhanced = ({ onAddMaterial }: MaterialSearchEnhanced
             icon: Search,
             content: (
               <div className="space-y-4 pb-4">
-                {filteredMaterials.map(material => (
-                  <Card
-                    key={material.id}
-                    className="bg-card/50 border-elec-yellow/20 cursor-pointer hover:border-elec-yellow/40 transition-colors"
-                    onClick={() => {
+                {filteredMaterials.map(material => {
+                  const alreadyInQuote = isInQuote(material);
+                  return (
+                    <Card
+                      key={material.id}
+                      className={`bg-card/50 cursor-pointer transition-colors ${
+                        alreadyInQuote 
+                          ? 'border-slate-600 dark:border-slate-400 border-2 opacity-75' 
+                          : 'border-elec-yellow/20 hover:border-elec-yellow/40'
+                      }`}
+                      onClick={() => {
                       const pricing = {
                         unitPrice: material.defaultPrice,
                         total: material.defaultPrice * 1.2,
                         quantity: 1
                       };
-                      onAddMaterial(material, 1, pricing);
-                      toast({
-                        title: "Material Added",
-                        description: `${material.name} added to quote (£${material.defaultPrice.toFixed(2)})`,
-                      });
-                    }}
-                  >
-                    <CardContent className="p-6">
-                      <div className="space-y-4">
-                        <div className="flex items-start justify-between gap-4">
-                          <div className="flex items-center gap-2">
-                            <h4 className="text-lg font-semibold text-white">{material.name}</h4>
-                            {material.isFavourite && (
+                        onAddMaterial(material, 1, pricing);
+                        toast({
+                          title: alreadyInQuote ? "Material Re-added" : "Material Added",
+                          description: `${material.name} ${alreadyInQuote ? 're-added to' : 'added to'} quote (£${material.defaultPrice.toFixed(2)})`,
+                        });
+                      }}
+                    >
+                      <CardContent className="p-6">
+                        <div className="space-y-4">
+                          <div className="flex items-start justify-between gap-4">
+                            <div className="flex items-center gap-2">
+                              <h4 className={`text-lg font-semibold ${alreadyInQuote ? 'text-slate-400' : 'text-white'}`}>
+                                {material.name}
+                                {alreadyInQuote && <span className="text-xs ml-2 text-slate-500">(In Quote)</span>}
+                              </h4>
+                              {material.isFavourite && (
                               <Star className="h-5 w-5 text-yellow-400 fill-current flex-shrink-0" />
                             )}
                           </div>
@@ -224,10 +243,11 @@ export const MaterialSearchEnhanced = ({ onAddMaterial }: MaterialSearchEnhanced
                             {material.estimatedInstallTime}min install
                           </div>
                         </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
+                        </div>
+                      </CardContent>
+                    </Card>
+                  );
+                })}
               </div>
             )
           },

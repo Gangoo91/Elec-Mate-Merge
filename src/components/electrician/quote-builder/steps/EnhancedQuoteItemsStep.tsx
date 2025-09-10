@@ -239,7 +239,7 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove }: Enh
                     Smart pricing with quantity discounts, waste factors, and regional adjustments
                   </p>
                 </div>
-                <MaterialSearchEnhanced onAddMaterial={handleEnhancedMaterialAdd} />
+                <MaterialSearchEnhanced onAddMaterial={handleEnhancedMaterialAdd} currentQuoteItems={items} />
               </div>
             )
           },
