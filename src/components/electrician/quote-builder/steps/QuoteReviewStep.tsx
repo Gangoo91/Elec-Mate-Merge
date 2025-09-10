@@ -1,7 +1,8 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { User, FileText, Calculator, Package, Wrench, Zap, Download, Mail, Briefcase } from "lucide-react";
+import { User, FileText, Calculator, Package, Wrench, Zap, Download, Mail, Briefcase, Loader2 } from "lucide-react";
+import { useState } from "react";
 import { Quote } from "@/types/quote";
 import { generateProfessionalQuotePDF } from "@/utils/quote-pdf-professional";
 import { generateAIEnhancedQuotePDF } from "@/utils/ai-enhanced-quote-pdf";
@@ -15,8 +16,10 @@ interface QuoteReviewStepProps {
 export const QuoteReviewStep = ({ quote }: QuoteReviewStepProps) => {
   const { toast } = useToast();
   const { companyProfile } = useCompanyProfile();
+  const [isDownloading, setIsDownloading] = useState(false);
 
   const handleDownloadPDF = async () => {
+    setIsDownloading(true);
     try {
       // Create a default company profile if none exists
       const effectiveCompanyProfile = companyProfile || {
@@ -101,6 +104,8 @@ export const QuoteReviewStep = ({ quote }: QuoteReviewStepProps) => {
         description: "Failed to generate PDF. Please try again.",
         variant: "destructive",
       });
+    } finally {
+      setIsDownloading(false);
     }
   };
 
@@ -379,9 +384,17 @@ Your Electrician`;
 
       {/* Quote Actions */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <Button onClick={handleDownloadPDF} className="flex items-center gap-2 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90">
-          <Download className="h-4 w-4" />
-          Download PDF
+        <Button 
+          onClick={handleDownloadPDF} 
+          disabled={isDownloading}
+          className="flex items-center gap-2 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 disabled:opacity-50"
+        >
+          {isDownloading ? (
+            <Loader2 className="h-4 w-4 animate-spin" />
+          ) : (
+            <Download className="h-4 w-4" />
+          )}
+          {isDownloading ? "Generating..." : "Download PDF"}
         </Button>
         
         <Button onClick={handleEmailQuote} variant="outline" className="flex items-center gap-2">
