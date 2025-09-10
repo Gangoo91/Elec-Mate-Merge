@@ -2,7 +2,7 @@
 import { supabase } from "@/integrations/supabase/client";
 
 interface AIGenerationRequest {
-  type: 'professional_summary' | 'job_description' | 'skills' | 'achievements' | 'complete_cv';
+  type: 'professional_summary' | 'job_description' | 'skills' | 'achievements' | 'complete_cv' | 'quote_summary' | 'job_description_enhancement' | 'terms_conditions' | 'additional_services';
   context: {
     jobTitle?: string;
     company?: string;
@@ -23,6 +23,55 @@ interface AIGenerationResponse {
 }
 
 export class AIService {
+  // New quote enhancement methods
+  static async generateQuoteSummary(quote: any, companyProfile: any): Promise<string> {
+    const response = await this.callAIAssistant({
+      type: 'quote_summary',
+      context: {
+        jobTitle: quote.jobDetails?.title,
+        company: companyProfile?.company_name,
+        targetRole: 'Executive Summary',
+        personalInfo: { quote, companyProfile }
+      }
+    });
+    return response.content;
+  }
+
+  static async enhanceJobDescription(jobDetails: any): Promise<string> {
+    const response = await this.callAIAssistant({
+      type: 'job_description_enhancement',
+      context: {
+        jobTitle: jobDetails.title,
+        personalInfo: jobDetails
+      },
+      userInput: jobDetails.description
+    });
+    return response.content;
+  }
+
+  static async generateTermsAndConditions(quote: any): Promise<string> {
+    const response = await this.callAIAssistant({
+      type: 'terms_conditions',
+      context: {
+        jobTitle: quote.jobDetails?.title,
+        experience: quote.jobDetails?.estimatedDuration,
+        personalInfo: quote
+      }
+    });
+    return response.content;
+  }
+
+  static async suggestAdditionalServices(quote: any): Promise<string[]> {
+    const response = await this.callAIAssistant({
+      type: 'additional_services',
+      context: {
+        jobTitle: quote.jobDetails?.title,
+        personalInfo: quote
+      }
+    });
+    return response.content.split('\n').filter((line: string) => line.trim().length > 0);
+  }
+
   private static async callAIAssistant(request: AIGenerationRequest): Promise<AIGenerationResponse> {
     try {
       const { data, error } = await supabase.functions.invoke('electrician-ai-assistant', {
@@ -111,6 +160,57 @@ Create 3-5 quantifiable achievements that demonstrate electrical expertise, safe
 - Previous Roles: ${JSON.stringify(context.previousRoles)}
 
 Create comprehensive CV content including professional summary, enhanced job descriptions, relevant skills, and suggested improvements. Focus on UK electrical industry requirements and best practices.`;
+
+      case 'quote_summary':
+        return `Create a professional executive summary for this electrical project quote:
+- Project: ${context.jobTitle}
+- Company: ${context.company}
+- Quote Details: ${JSON.stringify(context.personalInfo)}
+
+Write a compelling 2-3 paragraph executive summary that highlights the project scope, technical expertise required, and value proposition. Use professional electrical industry terminology and emphasise quality, safety, and compliance with UK standards.`;
+
+      case 'job_description_enhancement':
+        return `Enhance this electrical job description to be more professional and detailed:
+- Job Title: ${context.jobTitle}
+- Current Description: ${userInput}
+- Job Details: ${JSON.stringify(context.personalInfo)}
+
+Improve the description with:
+- Professional electrical terminology
+- Technical specifications and requirements
+- Safety considerations and compliance standards
+- Clear scope of work
+- BS 7671:2018 and building regulation compliance
+Keep it concise but comprehensive.`;
+
+      case 'terms_conditions':
+        return `Generate professional terms and conditions for this electrical project:
+- Project Type: ${context.jobTitle}
+- Duration: ${context.experience}
+- Quote Context: ${JSON.stringify(context.personalInfo)}
+
+Include standard electrical industry terms covering:
+- Payment terms and conditions
+- Health and safety requirements
+- Warranty and guarantee provisions
+- Compliance with BS 7671:2018
+- Liability and insurance coverage
+- Change order procedures
+Keep it professional and legally appropriate for UK electrical contractors.`;
+
+      case 'additional_services':
+        return `Suggest relevant additional services for this electrical project:
+- Main Project: ${context.jobTitle}
+- Project Context: ${JSON.stringify(context.personalInfo)}
+
+Suggest 3-5 complementary electrical services that would benefit the client, such as:
+- Maintenance contracts
+- Safety inspections
+- Upgrade recommendations
+- Emergency call-out services
+- Energy efficiency improvements
+
+Format as short, clear service descriptions (one line each).`;
 
       default:
         return `Help improve this CV content: ${userInput}`;

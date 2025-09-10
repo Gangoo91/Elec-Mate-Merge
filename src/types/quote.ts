@@ -69,6 +69,7 @@ export interface QuoteSettings {
   profitMargin: number;
   vatRate: number;
   vatRegistered: boolean;
+  aiEnhancedPDF?: boolean;
 }
 
 export interface Quote {

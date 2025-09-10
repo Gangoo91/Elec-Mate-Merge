@@ -3,7 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { User, FileText, Calculator, Package, Wrench, Zap, Download, Mail, Briefcase } from "lucide-react";
 import { Quote } from "@/types/quote";
-import { generateQuotePDF } from "../QuotePDFGenerator";
+import { generateProfessionalQuotePDF } from "@/utils/quote-pdf-professional";
+import { generateAIEnhancedQuotePDF } from "@/utils/ai-enhanced-quote-pdf";
 import { useToast } from "@/hooks/use-toast";
 import { useCompanyProfile } from "@/hooks/useCompanyProfile";
 
@@ -15,12 +16,64 @@ export const QuoteReviewStep = ({ quote }: QuoteReviewStepProps) => {
   const { toast } = useToast();
   const { companyProfile } = useCompanyProfile();
 
-  const handleDownloadPDF = () => {
-    generateQuotePDF(quote, companyProfile);
-    toast({
-      title: "PDF Generated",
-      description: "Quote PDF has been downloaded successfully.",
-    });
+  const handleDownloadPDF = async () => {
+    if (!quote || !companyProfile) {
+      toast({
+        title: "Error",
+        description: "Quote data or company profile is missing",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    try {
+      let success = false;
+      
+      if (quote.settings?.aiEnhancedPDF) {
+        toast({
+          title: "Generating AI-Enhanced PDF",
+          description: "Please wait while we create your professional quote...",
+        });
+        
+        success = await generateAIEnhancedQuotePDF({
+          quote,
+          companyProfile,
+          aiEnhancements: {
+            enhancedDescriptions: true,
+            executiveSummary: true,
+            smartTerms: true,
+            recommendations: true
+          }
+        });
+      } else {
+        success = generateProfessionalQuotePDF({
+          quote,
+          companyProfile
+        });
+      }
+
+      if (success) {
+        toast({
+          title: "Success",
+          description: quote.settings?.aiEnhancedPDF ? 
+            "AI-Enhanced Quote PDF downloaded successfully" : 
+            "Quote PDF downloaded successfully",
+        });
+      } else {
+        toast({
+          title: "Error", 
+          description: "Failed to generate PDF",
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      console.error('PDF generation error:', error);
+      toast({
+        title: "Error",
+        description: "Failed to generate PDF. Please try again.",
+        variant: "destructive",
+      });
+    }
   };
 
   const handleEmailQuote = () => {

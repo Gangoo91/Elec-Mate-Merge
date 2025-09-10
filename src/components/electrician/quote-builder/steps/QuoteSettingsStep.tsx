@@ -7,7 +7,7 @@ import { Switch } from "@/components/ui/switch";
 import { QuoteSettings } from "@/types/quote";
 import { useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Settings, Percent, Calculator } from "lucide-react";
+import { Settings, Percent, Calculator, Brain } from "lucide-react";
 
 const settingsSchema = z.object({
   labourRate: z.number().min(1, "Labour rate must be greater than £0"),
@@ -15,6 +15,7 @@ const settingsSchema = z.object({
   profitMargin: z.number().min(0).max(100, "Profit margin must be between 0-100%"),
   vatRate: z.number().min(0).max(100, "VAT rate must be between 0-100%"),
   vatRegistered: z.boolean(),
+  aiEnhancedPDF: z.boolean().optional(),
 });
 
 interface QuoteSettingsStepProps {
@@ -31,6 +32,7 @@ export const QuoteSettingsStep = ({ settings, onUpdate }: QuoteSettingsStepProps
       profitMargin: 20,
       vatRate: 20,
       vatRegistered: true,
+      aiEnhancedPDF: true,
     },
   });
 
@@ -165,6 +167,38 @@ export const QuoteSettingsStep = ({ settings, onUpdate }: QuoteSettingsStepProps
                     />
                   </FormControl>
                   <FormMessage />
+                </FormItem>
+              )}
+            />
+          </CardContent>
+        </Card>
+
+        {/* AI Enhancement Settings */}
+        <Card className="bg-elec-gray/50 border-elec-yellow/20 md:col-span-2">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2 text-lg">
+              <Brain className="h-5 w-5" />
+              AI Enhancement Settings
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <FormField
+              control={form.control}
+              name="aiEnhancedPDF"
+              render={({ field }) => (
+                <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
+                  <div className="space-y-0.5">
+                    <FormLabel className="text-base">AI-Enhanced PDF Generation</FormLabel>
+                    <div className="text-sm text-muted-foreground">
+                      Generate professional PDFs with AI-enhanced descriptions, executive summary, and smart terms & conditions
+                    </div>
+                  </div>
+                  <FormControl>
+                    <Switch
+                      checked={field.value || false}
+                      onCheckedChange={field.onChange}
+                    />
+                  </FormControl>
                 </FormItem>
               )}
             />
