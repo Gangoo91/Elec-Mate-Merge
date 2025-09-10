@@ -278,7 +278,7 @@ Your Electrician`;
         <CardContent>
           <div className="space-y-3">
             <div className="flex justify-between">
-              <span>Subtotal (inc. overheads & profit)</span>
+              <span>Subtotal</span>
               <span>£{(quote.subtotal || 0).toFixed(2)}</span>
             </div>
             {quote.settings?.vatRegistered && (
