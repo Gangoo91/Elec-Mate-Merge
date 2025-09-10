@@ -308,7 +308,7 @@ Your Electrician`;
       </Card>
 
       {/* Quote Actions */}
-      <div className="flex flex-col sm:flex-row gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <Button onClick={handleDownloadPDF} className="flex items-center gap-2 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90">
           <Download className="h-4 w-4" />
           Download PDF
@@ -317,6 +317,21 @@ Your Electrician`;
         <Button onClick={handleEmailQuote} variant="outline" className="flex items-center gap-2">
           <Mail className="h-4 w-4" />
           Email to Client
+        </Button>
+        
+        <Button 
+          onClick={() => {
+            toast({
+              title: "Amendment Feature",
+              description: "Amendment functionality coming soon - edit items above to modify quote.",
+              variant: "default"
+            });
+          }} 
+          variant="outline" 
+          className="flex items-center gap-2 border-elec-blue text-elec-blue hover:bg-elec-blue/10"
+        >
+          <FileText className="h-4 w-4" />
+          Amend Quote
         </Button>
       </div>
     </div>
