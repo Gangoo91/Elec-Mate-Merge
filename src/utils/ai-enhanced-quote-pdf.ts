@@ -187,19 +187,22 @@ export const generateAIEnhancedQuotePDF = async ({
   const renderExecutiveSummary = () => {
     if (!aiContent.executiveSummary) return yPosition;
 
+    // Add extra spacing before section
+    yPosition += 5;
+
     yPosition = addText('EXECUTIVE SUMMARY', margin, yPosition, {
       fontSize: 14,
       fontStyle: 'bold',
       color: primaryColor
     });
 
-    yPosition += 5;
+    yPosition += 8; // More spacing after heading
     yPosition = addText(aiContent.executiveSummary, margin, yPosition, {
       fontSize: 10,
       maxWidth: contentWidth
     });
 
-    yPosition += 10;
+    yPosition += 15; // More spacing after section
     return yPosition;
   };
 
@@ -208,19 +211,22 @@ export const generateAIEnhancedQuotePDF = async ({
     const description = aiContent.enhancedJobDescription || quote.jobDetails?.description || '';
     if (!description) return yPosition;
 
+    // Add extra spacing before section
+    yPosition += 5;
+
     yPosition = addText('PROJECT DESCRIPTION', margin, yPosition, {
       fontSize: 14,
       fontStyle: 'bold',
       color: primaryColor
     });
 
-    yPosition += 5;
+    yPosition += 8; // More spacing after heading
     yPosition = addText(description, margin, yPosition, {
       fontSize: 10,
       maxWidth: contentWidth
     });
 
-    yPosition += 10;
+    yPosition += 15; // More spacing after section
     return yPosition;
   };
 
@@ -358,7 +364,8 @@ export const generateAIEnhancedQuotePDF = async ({
       }
     });
 
-    yPosition = (pdf as any).lastAutoTable.finalY + 10;
+    // Ensure proper spacing after table
+    yPosition = (pdf as any).lastAutoTable.finalY + 15;
 
     return yPosition;
   };
@@ -424,7 +431,7 @@ export const generateAIEnhancedQuotePDF = async ({
       color: primaryColor
     });
 
-    yPosition += 20;
+    yPosition += 25; // More spacing after totals
 
     return yPosition;
   };
@@ -435,13 +442,16 @@ export const generateAIEnhancedQuotePDF = async ({
       return yPosition;
     }
 
+    // Add extra spacing before section
+    yPosition += 10;
+
     yPosition = addText('RECOMMENDED ADDITIONAL SERVICES', margin, yPosition, {
       fontSize: 11,
       fontStyle: 'bold',
       color: primaryColor
     });
 
-    yPosition += 5;
+    yPosition += 8; // More spacing after heading
 
     // Handle HTML formatted services or plain text
     const servicesText = aiContent.additionalServices.join(' ');
@@ -450,12 +460,21 @@ export const generateAIEnhancedQuotePDF = async ({
       maxWidth: contentWidth
     });
 
-    yPosition += 5;
+    yPosition += 15; // More spacing after section
     return yPosition;
   };
 
   // Enhanced Footer section
   const renderFooter = () => {
+    // Check if we need a new page
+    if (yPosition > pageHeight - 80) {
+      pdf.addPage();
+      yPosition = margin;
+    }
+
+    // Add extra spacing before footer sections
+    yPosition += 10;
+
     // AI-generated terms and conditions
     if (aiContent.termsAndConditions) {
       yPosition = addText('TERMS & CONDITIONS:', margin, yPosition, {
@@ -464,12 +483,12 @@ export const generateAIEnhancedQuotePDF = async ({
         color: primaryColor
       });
 
-      yPosition += 5;
+      yPosition += 8; // More spacing after heading
       yPosition = addText(aiContent.termsAndConditions, margin, yPosition, {
         fontSize: 9,
         maxWidth: contentWidth
       });
-      yPosition += 5;
+      yPosition += 10; // Spacing after T&Cs
     }
 
     // Payment terms and notes
@@ -478,19 +497,19 @@ export const generateAIEnhancedQuotePDF = async ({
         yPosition = addText(`Payment Terms: ${safeText(companyProfile.payment_terms)}`, margin, yPosition, {
           fontSize: 9
         });
-        yPosition += 3;
+        yPosition += 5; // Spacing after payment terms
       }
 
       if (quote.notes) {
         yPosition = addText(`Notes: ${safeText(quote.notes)}`, margin, yPosition, {
           fontSize: 9
         });
-        yPosition += 5;
+        yPosition += 10; // Spacing after notes
       }
     }
 
-    // Compliance footer
-    const footerY = pageHeight - 25;
+    // Ensure footer doesn't overlap with content
+    const footerY = Math.max(yPosition + 20, pageHeight - 25);
     pdf.setDrawColor(200, 200, 200);
     pdf.setLineWidth(0.5);
     pdf.line(margin, footerY, pageWidth - margin, footerY);
