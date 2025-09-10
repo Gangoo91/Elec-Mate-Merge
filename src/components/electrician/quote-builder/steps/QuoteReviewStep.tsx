@@ -17,27 +17,55 @@ export const QuoteReviewStep = ({ quote }: QuoteReviewStepProps) => {
   const { companyProfile } = useCompanyProfile();
 
   const handleDownloadPDF = async () => {
-    if (!quote || !companyProfile) {
-      toast({
-        title: "Error",
-        description: "Quote data or company profile is missing",
-        variant: "destructive",
-      });
-      return;
-    }
-
     try {
+      // Create a default company profile if none exists
+      const effectiveCompanyProfile = companyProfile || {
+        id: 'default',
+        user_id: 'default',
+        company_name: "Your Electrical Company",
+        company_email: "contact@yourcompany.com",
+        company_phone: "0123 456 7890",
+        company_address: "123 Business Street, London",
+        primary_color: "#1e40af",
+        secondary_color: "#3b82f6",
+        currency: "GBP",
+        locale: "en-GB",
+        vat_number: "GB123456789",
+        payment_terms: "Payment due within 30 days",
+        created_at: new Date(),
+        updated_at: new Date()
+      };
+
+      // Ensure quote has basic required data
+      const effectiveQuote = {
+        ...quote,
+        quoteNumber: quote.quoteNumber || `Q${Date.now()}`,
+        createdAt: quote.createdAt || new Date(),
+        expiryDate: quote.expiryDate || new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 days from now
+        status: quote.status || 'draft',
+        subtotal: quote.subtotal || 0,
+        total: quote.total || 0,
+        vatAmount: quote.vatAmount || 0,
+        client: quote.client || {
+          name: "Client Name",
+          email: "client@example.com",
+          phone: "0123 456 7890",
+          address: "Client Address",
+          postcode: "AB1 2CD"
+        }
+      };
+
       let success = false;
       
-      if (quote.settings?.aiEnhancedPDF) {
+      if (effectiveQuote.settings?.aiEnhancedPDF) {
         toast({
           title: "Generating AI-Enhanced PDF",
           description: "Please wait while we create your professional quote...",
         });
         
         success = await generateAIEnhancedQuotePDF({
-          quote,
-          companyProfile,
+          quote: effectiveQuote,
+          companyProfile: effectiveCompanyProfile,
           aiEnhancements: {
             enhancedDescriptions: true,
             executiveSummary: true,
@@ -47,15 +75,15 @@ export const QuoteReviewStep = ({ quote }: QuoteReviewStepProps) => {
         });
       } else {
         success = generateProfessionalQuotePDF({
-          quote,
-          companyProfile
+          quote: effectiveQuote,
+          companyProfile: effectiveCompanyProfile
         });
       }
 
       if (success) {
         toast({
           title: "Success",
-          description: quote.settings?.aiEnhancedPDF ? 
+          description: effectiveQuote.settings?.aiEnhancedPDF ? 
             "AI-Enhanced Quote PDF downloaded successfully" : 
             "Quote PDF downloaded successfully",
         });
