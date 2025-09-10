@@ -47,46 +47,46 @@ const StandardsReference = () => {
                     </div>
                   </MobileAccordionTrigger>
                   <MobileAccordionContent>
-                    <div className="p-4 bg-card border border-border/50 rounded-b-lg space-y-4">
-                      <div>
-                        <h4 className="font-medium text-foreground mb-1">{standard.title}</h4>
-                        <p className="text-sm text-muted-foreground">{standard.scope}</p>
+                    <div className="p-4 space-y-6">
+                      <div className="space-y-3">
+                        <h4 className="text-lg font-semibold text-white">{standard.title}</h4>
+                        <p className="text-white leading-relaxed">{standard.scope}</p>
                         {standard.notes && (
-                          <p className="text-xs text-primary mt-2 font-medium">{standard.notes}</p>
+                          <p className="text-primary font-medium">{standard.notes}</p>
                         )}
                       </div>
 
-                      <div>
-                        <h5 className="text-sm font-medium text-foreground mb-2">Common Use Cases:</h5>
-                        <ul className="text-sm text-muted-foreground space-y-1">
+                      <div className="space-y-3">
+                        <h5 className="text-base font-semibold text-white">Common Use Cases:</h5>
+                        <ul className="space-y-2">
                           {standard.useCases.map((useCase, idx) => (
-                            <li key={idx} className="flex items-start gap-2">
-                              <span className="text-primary mt-1 text-xs">•</span>
-                              {useCase}
+                            <li key={idx} className="flex items-start gap-3">
+                              <span className="text-primary mt-1 text-sm font-bold">•</span>
+                              <span className="text-white leading-relaxed">{useCase}</span>
                             </li>
                           ))}
                         </ul>
                       </div>
 
-                      <div>
-                        <h5 className="text-sm font-medium text-foreground mb-2">Key Points:</h5>
-                        <ul className="text-sm text-muted-foreground space-y-1">
+                      <div className="space-y-3">
+                        <h5 className="text-base font-semibold text-white">Key Points:</h5>
+                        <ul className="space-y-2">
                           {standard.keyPoints.map((point, idx) => (
-                            <li key={idx} className="flex items-start gap-2">
-                              <CheckCircle className="h-3 w-3 text-green-500 mt-1 flex-shrink-0" />
-                              {point}
+                            <li key={idx} className="flex items-start gap-3">
+                              <CheckCircle className="h-4 w-4 text-green-500 mt-1 flex-shrink-0" />
+                              <span className="text-white leading-relaxed">{point}</span>
                             </li>
                           ))}
                         </ul>
                       </div>
 
-                      <div>
-                        <h5 className="text-sm font-medium text-foreground mb-2">Key Sections:</h5>
-                        <ul className="text-sm text-muted-foreground space-y-1">
+                      <div className="space-y-3">
+                        <h5 className="text-base font-semibold text-white">Key Sections:</h5>
+                        <ul className="space-y-2">
                           {standard.sections.map((section, idx) => (
-                            <li key={idx} className="flex items-start gap-2">
-                              <span className="text-primary mt-1 text-xs">§</span>
-                              {section}
+                            <li key={idx} className="flex items-start gap-3">
+                              <span className="text-primary mt-1 text-sm font-bold">§</span>
+                              <span className="text-white leading-relaxed">{section}</span>
                             </li>
                           ))}
                         </ul>
@@ -101,17 +101,17 @@ const StandardsReference = () => {
           {/* Voltage Drop Limits */}
           <div className="space-y-3">
             <h3 className="font-semibold text-foreground">BS 7671 Voltage Drop Limits</h3>
-            <div className="space-y-3">
+            <div className="space-y-4">
               {voltageDropLimits.map((item, index) => (
                 <div key={index} className="border border-border rounded-lg p-4 bg-card">
-                  <div className="flex justify-between items-start mb-2">
-                    <span className="font-medium text-foreground">{item.circuit}</span>
-                    <span className="text-2xl font-bold text-primary">{item.limit}</span>
+                  <div className="flex justify-between items-start mb-3">
+                    <span className="font-semibold text-white text-base">{item.circuit}</span>
+                    <span className="text-3xl font-bold text-primary">{item.limit}</span>
                   </div>
-                  <div className="space-y-1 text-sm text-muted-foreground">
-                    <p><span className="font-medium">Reference:</span> {item.reference}</p>
-                    <p><span className="font-medium">Application:</span> {item.application}</p>
-                    <p><span className="font-medium">Calculation:</span> {item.calculation}</p>
+                  <div className="space-y-2">
+                    <p className="text-white"><span className="font-semibold">Reference:</span> {item.reference}</p>
+                    <p className="text-white"><span className="font-semibold">Application:</span> {item.application}</p>
+                    <p className="text-white"><span className="font-semibold">Calculation:</span> {item.calculation}</p>
                   </div>
                 </div>
               ))}
