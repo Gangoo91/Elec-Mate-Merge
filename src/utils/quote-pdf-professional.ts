@@ -365,24 +365,31 @@ export const generateProfessionalQuotePDF = ({ quote, companyProfile }: PDFGener
         yPosition += 5;
       }
     }
+  };
 
-    // Compliance footer
-    const footerY = pageHeight - 25;
-    pdf.setDrawColor(200, 200, 200);
-    pdf.setLineWidth(0.5);
-    pdf.line(margin, footerY, pageWidth - margin, footerY);
+  // Add footer to all pages
+  const addFooterToAllPages = () => {
+    const totalPages = pdf.getNumberOfPages();
+    
+    for (let i = 1; i <= totalPages; i++) {
+      pdf.setPage(i);
+      
+      const footerY = pageHeight - 25;
+      pdf.setDrawColor(200, 200, 200);
+      pdf.setLineWidth(0.5);
+      pdf.line(margin, footerY, pageWidth - margin, footerY);
 
-    addText('This quotation is valid for 30 days from the date of issue. All work will be carried out in accordance with BS 7671:2018 and current building regulations.', margin, footerY + 5, {
-      fontSize: 8,
-      color: [100, 100, 100]
-    });
+      addText('Please note: This quote is valid for 30 days from the date raised.', margin, footerY + 5, {
+        fontSize: 8,
+        color: [100, 100, 100]
+      });
 
-    // Page number
-    const pageCount = pdf.getNumberOfPages();
-    addText(`Page 1 of ${pageCount}`, pageWidth - margin - 20, footerY + 5, {
-      fontSize: 8,
-      color: [100, 100, 100]
-    });
+      // Page number
+      addText(`Page ${i} of ${totalPages}`, pageWidth - margin - 20, footerY + 5, {
+        fontSize: 8,
+        color: [100, 100, 100]
+      });
+    }
   };
 
   // Generate PDF
@@ -392,6 +399,9 @@ export const generateProfessionalQuotePDF = ({ quote, companyProfile }: PDFGener
     yPosition = renderItemsTable();
     yPosition = renderTotals();
     renderFooter();
+
+    // Add footer to all pages
+    addFooterToAllPages();
 
     // Save the PDF
     const fileName = `Quote_${safeText(quote.quoteNumber)}_${safeDate(quote.createdAt).replace(/\//g, '-')}.pdf`;
