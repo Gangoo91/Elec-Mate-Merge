@@ -326,115 +326,113 @@ const PostResultGuidance: React.FC<PostResultGuidanceProps> = ({
             Material requirements and cost estimates for this installation
           </CardDescription>
         </CardHeader>
-        <CardContent className="space-y-6">
+        <CardContent className="space-y-4">
           {/* Main Items Grid */}
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 gap-4">
             {/* Primary Cable */}
-            <div className="space-y-4">
-              <div className="p-4 bg-elec-dark/30 rounded-lg border border-elec-yellow/20">
-                <h4 className="font-semibold flex items-center gap-2 mb-3">
-                  <Zap className="h-4 w-4 text-elec-yellow" />
-                  Primary Cable
-                </h4>
-                <div className="space-y-2 text-sm">
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Specification:</span>
-                    <span className="font-medium">{procurement.primaryCable.specification}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Length Required:</span>
-                    <span className="font-medium">{procurement.primaryCable.length}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Installation:</span>
-                    <span className="font-medium capitalize">{procurement.primaryCable.installationMethod?.replace('-', ' ')}</span>
-                  </div>
-                  <Separator className="my-2" />
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Rate:</span>
-                    <span className="font-medium text-green-400">{procurement.primaryCable.estimate}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Total Cable:</span>
-                    <span className="font-bold text-green-400">{procurement.primaryCable.totalEstimate}</span>
-                  </div>
+            <div className="p-4 bg-elec-dark/30 rounded-lg border border-elec-yellow/20">
+              <h4 className="font-semibold flex items-center gap-2 mb-4 text-white">
+                <Zap className="h-5 w-5 text-elec-yellow" />
+                Primary Cable
+              </h4>
+              <div className="space-y-3">
+                <div className="flex flex-col sm:flex-row sm:justify-between gap-1">
+                  <span className="text-white/80 text-sm">Specification:</span>
+                  <span className="font-medium text-white text-right">{procurement.primaryCable.specification}</span>
                 </div>
-              </div>
-              
-              {/* Protective Device */}
-              <div className="p-4 bg-elec-dark/30 rounded-lg border border-elec-blue/20">
-                <h4 className="font-semibold flex items-center gap-2 mb-3">
-                  <Shield className="h-4 w-4 text-elec-blue" />
-                  Protective Device
-                </h4>
-                <div className="space-y-2 text-sm">
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Type:</span>
-                    <span className="font-medium">{procurement.protectiveDevice.type}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Features:</span>
-                    <span className="font-medium text-xs">{procurement.protectiveDevice.characteristics}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Quantity:</span>
-                    <span className="font-medium">{procurement.protectiveDevice.quantity}</span>
-                  </div>
-                  <Separator className="my-2" />
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Unit Cost:</span>
-                    <span className="font-bold text-blue-400">{procurement.protectiveDevice.estimate}</span>
-                  </div>
+                <div className="flex flex-col sm:flex-row sm:justify-between gap-1">
+                  <span className="text-white/80 text-sm">Length Required:</span>
+                  <span className="font-medium text-white text-right">{procurement.primaryCable.length}</span>
+                </div>
+                <div className="flex flex-col sm:flex-row sm:justify-between gap-1">
+                  <span className="text-white/80 text-sm">Installation:</span>
+                  <span className="font-medium text-white text-right capitalize">{procurement.primaryCable.installationMethod?.replace('-', ' ')}</span>
+                </div>
+                <Separator className="my-3 bg-elec-yellow/20" />
+                <div className="flex flex-col sm:flex-row sm:justify-between gap-1">
+                  <span className="text-white/80 text-sm">Rate:</span>
+                  <span className="font-medium text-elec-green text-right">{procurement.primaryCable.estimate}</span>
+                </div>
+                <div className="flex flex-col sm:flex-row sm:justify-between gap-1">
+                  <span className="text-white/80 text-sm">Total Cable:</span>
+                  <span className="font-bold text-elec-green text-right text-lg">{procurement.primaryCable.totalEstimate}</span>
                 </div>
               </div>
             </div>
             
-            {/* Accessories and Project Total */}
-            <div className="space-y-4">
-              {/* Additional Items */}
-              <div className="p-4 bg-elec-dark/30 rounded-lg border border-gray-600">
-                <h4 className="font-semibold mb-3">Installation Accessories</h4>
-                <div className="space-y-2">
-                  {procurement.accessories.map((item, index) => (
-                    <div key={index} className="flex items-center gap-2 text-sm">
-                      <CheckCircle2 className="h-3 w-3 text-elec-green flex-shrink-0" />
-                      <span className="text-muted-foreground">{item}</span>
-                    </div>
-                  ))}
+            {/* Protective Device */}
+            <div className="p-4 bg-elec-dark/30 rounded-lg border border-elec-blue/20">
+              <h4 className="font-semibold flex items-center gap-2 mb-4 text-white">
+                <Shield className="h-5 w-5 text-elec-blue" />
+                Protective Device
+              </h4>
+              <div className="space-y-3">
+                <div className="flex flex-col sm:flex-row sm:justify-between gap-1">
+                  <span className="text-white/80 text-sm">Type:</span>
+                  <span className="font-medium text-white text-right">{procurement.protectiveDevice.type}</span>
+                </div>
+                <div className="flex flex-col gap-1">
+                  <span className="text-white/80 text-sm">Features:</span>
+                  <span className="font-medium text-white text-sm leading-relaxed">{procurement.protectiveDevice.characteristics}</span>
+                </div>
+                <div className="flex flex-col sm:flex-row sm:justify-between gap-1">
+                  <span className="text-white/80 text-sm">Quantity:</span>
+                  <span className="font-medium text-white text-right">{procurement.protectiveDevice.quantity}</span>
+                </div>
+                <Separator className="my-3 bg-elec-blue/20" />
+                <div className="flex flex-col sm:flex-row sm:justify-between gap-1">
+                  <span className="text-white/80 text-sm">Unit Cost:</span>
+                  <span className="font-bold text-elec-blue text-right text-lg">{procurement.protectiveDevice.estimate}</span>
                 </div>
               </div>
-              
-              {/* Project Total */}
-              <div className="p-4 bg-elec-yellow/10 rounded-lg border border-elec-yellow/30">
-                <h4 className="font-semibold text-elec-yellow mb-3">Estimated Project Cost</h4>
-                <div className="space-y-2 text-sm">
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Materials:</span>
-                    <span className="font-medium">{procurement.totalProjectEstimate.materials}</span>
+            </div>
+          </div>
+
+          {/* Secondary Items Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            {/* Additional Items */}
+            <div className="p-4 bg-elec-dark/30 rounded-lg border border-elec-yellow/10">
+              <h4 className="font-semibold mb-4 text-white">Installation Accessories</h4>
+              <div className="space-y-3">
+                {procurement.accessories.map((item, index) => (
+                  <div key={index} className="flex items-start gap-3">
+                    <CheckCircle2 className="h-4 w-4 text-elec-green mt-0.5 flex-shrink-0" />
+                    <span className="text-white text-sm leading-relaxed">{item}</span>
                   </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Labour:</span>
-                    <span className="font-medium">{procurement.totalProjectEstimate.labour}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Testing/Cert:</span>
-                    <span className="font-medium">{procurement.totalProjectEstimate.testing}</span>
-                  </div>
-                  <Separator className="my-2" />
-                  <div className="flex justify-between text-base">
-                    <span className="font-semibold">Total Range:</span>
-                    <span className="font-bold text-elec-yellow">
-                      £{(
-                        parseInt(procurement.totalProjectEstimate.materials.split('-')[0].replace('£', '')) + 
-                        parseInt(procurement.totalProjectEstimate.labour.split('-')[0].replace('£', '')) + 
-                        parseInt(procurement.totalProjectEstimate.testing.split('-')[0].replace('£', ''))
-                      ).toFixed(0)} - £{(
-                        parseInt(procurement.totalProjectEstimate.materials.split('-')[1]) + 
-                        parseInt(procurement.totalProjectEstimate.labour.split('-')[1]) + 
-                        parseInt(procurement.totalProjectEstimate.testing.split('-')[1])
-                      ).toFixed(0)}
-                    </span>
-                  </div>
+                ))}
+              </div>
+            </div>
+            
+            {/* Project Total */}
+            <div className="p-4 bg-elec-yellow/10 rounded-lg border border-elec-yellow/30">
+              <h4 className="font-semibold text-elec-yellow mb-4">Estimated Project Cost</h4>
+              <div className="space-y-3">
+                <div className="flex flex-col sm:flex-row sm:justify-between gap-1">
+                  <span className="text-white/80 text-sm">Materials:</span>
+                  <span className="font-medium text-white text-right">{procurement.totalProjectEstimate.materials}</span>
+                </div>
+                <div className="flex flex-col sm:flex-row sm:justify-between gap-1">
+                  <span className="text-white/80 text-sm">Labour:</span>
+                  <span className="font-medium text-white text-right">{procurement.totalProjectEstimate.labour}</span>
+                </div>
+                <div className="flex flex-col sm:flex-row sm:justify-between gap-1">
+                  <span className="text-white/80 text-sm">Testing/Cert:</span>
+                  <span className="font-medium text-white text-right">{procurement.totalProjectEstimate.testing}</span>
+                </div>
+                <Separator className="my-3 bg-elec-yellow/30" />
+                <div className="flex flex-col sm:flex-row sm:justify-between gap-1">
+                  <span className="font-semibold text-white">Total Range:</span>
+                  <span className="font-bold text-elec-yellow text-right text-lg">
+                    £{(
+                      parseInt(procurement.totalProjectEstimate.materials.split('-')[0].replace('£', '')) + 
+                      parseInt(procurement.totalProjectEstimate.labour.split('-')[0].replace('£', '')) + 
+                      parseInt(procurement.totalProjectEstimate.testing.split('-')[0].replace('£', ''))
+                    ).toFixed(0)} - £{(
+                      parseInt(procurement.totalProjectEstimate.materials.split('-')[1]) + 
+                      parseInt(procurement.totalProjectEstimate.labour.split('-')[1]) + 
+                      parseInt(procurement.totalProjectEstimate.testing.split('-')[1])
+                    ).toFixed(0)}
+                  </span>
                 </div>
               </div>
             </div>
