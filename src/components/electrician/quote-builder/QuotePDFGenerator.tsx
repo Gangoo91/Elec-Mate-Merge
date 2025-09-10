@@ -3,10 +3,26 @@ import autoTable from 'jspdf-autotable';
 import { Quote } from '@/types/quote';
 import { CompanyProfile } from '@/types/company';
 
+// Helper function to convert hex color to RGB array
+const hexToRgb = (hex: string): [number, number, number] => {
+  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  return result ? [
+    parseInt(result[1], 16),
+    parseInt(result[2], 16),
+    parseInt(result[3], 16)
+  ] : [0, 0, 0];
+};
+
 export const generateQuotePDF = (quote: Partial<Quote>, companyProfile?: CompanyProfile) => {
   const doc = new jsPDF();
   
   let currentY = 20;
+  
+  // Extract colors from company profile (convert to RGB)
+  const primaryColor = companyProfile?.primary_color ? 
+    hexToRgb(companyProfile.primary_color) : [255, 215, 0]; // Default electric yellow
+  const secondaryColor = companyProfile?.secondary_color ? 
+    hexToRgb(companyProfile.secondary_color) : [51, 51, 51]; // Default dark grey
   
   // Company Logo (if available)
   if (companyProfile?.logo_data_url) {
@@ -21,11 +37,12 @@ export const generateQuotePDF = (quote: Partial<Quote>, companyProfile?: Company
   // Company Details
   if (companyProfile) {
     doc.setFontSize(16);
-    doc.setTextColor(0, 0, 0);
+    doc.setTextColor(primaryColor[0], primaryColor[1], primaryColor[2]);
     doc.text(companyProfile.company_name, 20, currentY);
     currentY += 8;
     
     doc.setFontSize(10);
+    doc.setTextColor(0, 0, 0);
     if (companyProfile.company_address) {
       doc.text(companyProfile.company_address, 20, currentY);
       currentY += 6;
@@ -42,8 +59,16 @@ export const generateQuotePDF = (quote: Partial<Quote>, companyProfile?: Company
       doc.text(`Email: ${companyProfile.company_email}`, 20, currentY);
       currentY += 6;
     }
+    if (companyProfile.company_website) {
+      doc.text(`Website: ${companyProfile.company_website}`, 20, currentY);
+      currentY += 6;
+    }
     if (companyProfile.vat_number) {
       doc.text(`VAT No: ${companyProfile.vat_number}`, 20, currentY);
+      currentY += 6;
+    }
+    if (companyProfile.company_registration) {
+      doc.text(`Company Reg: ${companyProfile.company_registration}`, 20, currentY);
       currentY += 6;
     }
     currentY += 10;
@@ -51,7 +76,7 @@ export const generateQuotePDF = (quote: Partial<Quote>, companyProfile?: Company
   
   // Header
   doc.setFontSize(20);
-  doc.setTextColor(255, 215, 0); // Electric yellow
+  doc.setTextColor(primaryColor[0], primaryColor[1], primaryColor[2]);
   doc.text('ELECTRICAL QUOTE', 20, currentY);
   currentY += 15;
   
@@ -140,7 +165,7 @@ export const generateQuotePDF = (quote: Partial<Quote>, companyProfile?: Company
     head: [['Description', 'Qty', 'Unit Price', 'Total']],
     body: tableData,
     theme: 'grid',
-    headStyles: { fillColor: [255, 215, 0], textColor: [0, 0, 0] },
+    headStyles: { fillColor: [primaryColor[0], primaryColor[1], primaryColor[2]], textColor: [255, 255, 255] },
     styles: { fontSize: 10 },
   });
   
@@ -168,9 +193,59 @@ export const generateQuotePDF = (quote: Partial<Quote>, companyProfile?: Company
   doc.text('TOTAL:', totalsX, currentY);
   doc.text(`£${(quote.total || 0).toFixed(2)}`, 170, currentY);
   
+  currentY += 20;
+  
+  // Payment Terms
+  if (companyProfile?.payment_terms) {
+    doc.setFontSize(12);
+    doc.setFont(undefined, 'bold');
+    doc.setTextColor(primaryColor[0], primaryColor[1], primaryColor[2]);
+    doc.text('PAYMENT TERMS', 20, currentY);
+    currentY += 8;
+    
+    doc.setFontSize(10);
+    doc.setFont(undefined, 'normal');
+    doc.setTextColor(0, 0, 0);
+    const paymentTermsLines = doc.splitTextToSize(companyProfile.payment_terms, 170);
+    doc.text(paymentTermsLines, 20, currentY);
+    currentY += (paymentTermsLines.length * 6) + 10;
+  }
+  
+  // Bank Details
+  if (companyProfile?.bank_details && Object.keys(companyProfile.bank_details).length > 0) {
+    doc.setFontSize(12);
+    doc.setFont(undefined, 'bold');
+    doc.setTextColor(primaryColor[0], primaryColor[1], primaryColor[2]);
+    doc.text('PAYMENT INFORMATION', 20, currentY);
+    currentY += 8;
+    
+    doc.setFontSize(10);
+    doc.setFont(undefined, 'normal');
+    doc.setTextColor(0, 0, 0);
+    
+    if (companyProfile.bank_details.account_name) {
+      doc.text(`Account Name: ${companyProfile.bank_details.account_name}`, 20, currentY);
+      currentY += 6;
+    }
+    if (companyProfile.bank_details.account_number) {
+      doc.text(`Account Number: ${companyProfile.bank_details.account_number}`, 20, currentY);
+      currentY += 6;
+    }
+    if (companyProfile.bank_details.sort_code) {
+      doc.text(`Sort Code: ${companyProfile.bank_details.sort_code}`, 20, currentY);
+      currentY += 6;
+    }
+    if (companyProfile.bank_details.bank_name) {
+      doc.text(`Bank: ${companyProfile.bank_details.bank_name}`, 20, currentY);
+      currentY += 6;
+    }
+    currentY += 10;
+  }
+  
   // Footer
   doc.setFontSize(10);
   doc.setFont(undefined, 'normal');
+  doc.setTextColor(0, 0, 0);
   doc.text('This quote is valid for 30 days from the date of issue.', 20, doc.internal.pageSize.height - 30);
   doc.text('All work will be carried out in accordance with BS 7671:2018 regulations.', 20, doc.internal.pageSize.height - 20);
   
