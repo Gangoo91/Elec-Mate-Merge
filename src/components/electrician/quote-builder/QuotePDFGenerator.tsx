@@ -351,6 +351,7 @@ export const generateQuotePDF = (quote: Partial<Quote>, companyProfile?: Company
   
   // Draw internal horizontal lines
   doc.setDrawColor(220, 220, 220);
+  doc.setLineWidth(0.5);
   for (let i = 1; i < totalRows; i++) {
     doc.line(totalsBoxX, totalsBoxY + (i * rowHeight), totalsBoxX + totalsBoxWidth, totalsBoxY + (i * rowHeight));
   }
