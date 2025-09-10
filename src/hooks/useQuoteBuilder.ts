@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { Quote, QuoteItem, QuoteClient, QuoteSettings, JobDetails } from '@/types/quote';
 import { v4 as uuidv4 } from 'uuid';
 import { generateQuotePDF } from '@/components/electrician/quote-builder/QuotePDFGenerator';
@@ -6,6 +6,7 @@ import { generateProfessionalQuotePDF } from '@/utils/quote-pdf-professional';
 import { toast } from '@/hooks/use-toast';
 import { useQuoteStorage } from './useQuoteStorage';
 import { useCompanyProfile } from './useCompanyProfile';
+import { generateSequentialQuoteNumber } from '@/utils/quote-number-generator';
 
 export const useQuoteBuilder = (onQuoteGenerated?: () => void) => {
   const { saveQuote } = useQuoteStorage();
@@ -13,7 +14,7 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void) => {
   
   const [quote, setQuote] = useState<Partial<Quote>>({
     id: uuidv4(),
-    quoteNumber: `Q${Date.now()}`,
+    quoteNumber: '', // Will be generated when needed
     items: [],
     status: 'draft',
     createdAt: new Date(),
@@ -21,6 +22,23 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void) => {
   });
 
   const [currentStep, setCurrentStep] = useState(0);
+
+  // Generate quote number when quote is first created
+  useEffect(() => {
+    const initializeQuoteNumber = async () => {
+      if (!quote.quoteNumber) {
+        try {
+          const newQuoteNumber = await generateSequentialQuoteNumber();
+          setQuote(prev => ({ ...prev, quoteNumber: newQuoteNumber }));
+        } catch (error) {
+          console.warn('Failed to generate sequential quote number, using fallback');
+          setQuote(prev => ({ ...prev, quoteNumber: `${new Date().getFullYear()}/T${Date.now().toString().slice(-6)}` }));
+        }
+      }
+    };
+
+    initializeQuoteNumber();
+  }, [quote.quoteNumber]);
 
   const updateClient = useCallback((client: QuoteClient) => {
     console.log('updateClient called with:', client);
@@ -173,15 +191,28 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void) => {
     }
   }, [quote, currentStep]);
 
-  const resetQuote = useCallback(() => {
-    setQuote({
-      id: uuidv4(),
-      quoteNumber: `Q${Date.now()}`,
-      items: [],
-      status: 'draft',
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    });
+  const resetQuote = useCallback(async () => {
+    try {
+      const newQuoteNumber = await generateSequentialQuoteNumber();
+      setQuote({
+        id: uuidv4(),
+        quoteNumber: newQuoteNumber,
+        items: [],
+        status: 'draft',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      });
+    } catch (error) {
+      console.warn('Failed to generate sequential quote number for reset, using fallback');
+      setQuote({
+        id: uuidv4(),
+        quoteNumber: `${new Date().getFullYear()}/T${Date.now().toString().slice(-6)}`,
+        items: [],
+        status: 'draft',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      });
+    }
     setCurrentStep(0);
   }, []);
 
