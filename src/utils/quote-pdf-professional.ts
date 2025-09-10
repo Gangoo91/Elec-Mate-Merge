@@ -1,8 +1,15 @@
 import jsPDF from 'jspdf';
-import autoTable from 'jspdf-autotable';
+import 'jspdf-autotable';
 import { Quote } from '@/types/quote';
 import { CompanyProfile } from '@/types/company';
 import { safeText, safeNumber, safeDate } from './rams-pdf-helpers';
+
+// Extend jsPDF with autoTable
+declare module 'jspdf' {
+  interface jsPDF {
+    autoTable: (options: any) => jsPDF;
+  }
+}
 
 interface PDFGenerationOptions {
   quote: Partial<Quote>;
@@ -221,11 +228,14 @@ export const generateProfessionalQuotePDF = ({ quote, companyProfile }: PDFGener
       formatCurrency(safeNumber(item.totalPrice))
     ]);
 
-    autoTable(pdf, {
+    const tableResult = pdf.autoTable({
       startY: yPosition,
       head: [['#', 'Description', 'Qty', 'Unit', 'Unit Price', 'Total']],
       body: tableData,
       theme: 'striped',
+      tableLineWidth: 0.5,
+      lineWidth: 0.5,
+      lineColor: [220, 220, 220],
       headStyles: {
         fillColor: [primaryColor[0], primaryColor[1], primaryColor[2]],
         textColor: [255, 255, 255],
@@ -258,7 +268,7 @@ export const generateProfessionalQuotePDF = ({ quote, companyProfile }: PDFGener
       }
     });
 
-    yPosition = (pdf as any).lastAutoTable.finalY + 10;
+    yPosition = (tableResult as any).finalY + 10;
 
     return yPosition;
   };
