@@ -531,13 +531,13 @@ const PostResultGuidance: React.FC<PostResultGuidanceProps> = ({
       </Card>
 
       {/* Regulatory References */}
-      <Card>
+      <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2">
+          <CardTitle className="flex items-center gap-2 text-white">
             <BookOpen className="h-5 w-5 text-elec-primary" />
             Regulatory Framework
           </CardTitle>
-          <CardDescription>
+          <CardDescription className="text-white">
             Essential regulations and standards governing this installation
           </CardDescription>
         </CardHeader>
