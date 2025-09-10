@@ -233,6 +233,9 @@ export const generateProfessionalQuotePDF = ({ quote, companyProfile }: PDFGener
       head: [['#', 'Description', 'Qty', 'Unit', 'Unit Price', 'Total']],
       body: tableData,
       theme: 'striped',
+      tableLineWidth: 0.5,
+      lineWidth: 0.5,
+      lineColor: [220, 220, 220],
       headStyles: {
         fillColor: [primaryColor[0], primaryColor[1], primaryColor[2]],
         textColor: [255, 255, 255],
@@ -254,6 +257,10 @@ export const generateProfessionalQuotePDF = ({ quote, companyProfile }: PDFGener
       },
       alternateRowStyles: {
         fillColor: [248, 249, 250]
+      },
+      styles: {
+        lineWidth: 0.5,
+        lineColor: [220, 220, 220]
       },
       margin: { left: margin, right: margin },
       didDrawPage: (data) => {
@@ -312,7 +319,7 @@ export const generateProfessionalQuotePDF = ({ quote, companyProfile }: PDFGener
 
     // Final total
     pdf.setDrawColor(primaryColor[0], primaryColor[1], primaryColor[2]);
-    pdf.setLineWidth(1);
+    pdf.setLineWidth(0.5);
     pdf.line(totalsX, yPosition, totalsX + totalsWidth - 5, yPosition);
     yPosition += 3;
 
