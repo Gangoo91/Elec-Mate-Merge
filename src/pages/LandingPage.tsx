@@ -131,12 +131,12 @@ const LandingPage = () => {
 
         {/* Benefits Section */}
         <div className="mb-16">
-          <div className="bg-elec-gray border border-elec-yellow/20 rounded-lg p-8">
-            <h3 className="text-2xl font-bold text-center mb-8">
+          <div className="bg-elec-gray border border-elec-yellow/20 rounded-lg p-6 sm:p-8">
+            <h3 className="text-xl sm:text-2xl font-bold text-center mb-6 sm:mb-8">
               Why choose <span className="text-elec-yellow">Elec-Mate?</span>
             </h3>
             
-            <div className="space-y-4">
+            <div className="space-y-4 sm:space-y-5">
               {[
                 "Industry-leading training resources",
                 "Professional tools and calculators", 
@@ -145,9 +145,9 @@ const LandingPage = () => {
                 "Career development guidance",
                 "Active community of professionals"
               ].map((benefit, index) => (
-                <div key={index} className="flex items-center gap-3">
-                  <CheckCircle className="h-6 w-6 text-elec-yellow flex-shrink-0" />
-                  <span className="text-white">{benefit}</span>
+                <div key={index} className="flex items-start gap-3 sm:gap-4">
+                  <CheckCircle className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow flex-shrink-0 mt-0.5" />
+                  <span className="text-sm sm:text-base text-white leading-relaxed">{benefit}</span>
                 </div>
               ))}
             </div>
