@@ -11,7 +11,6 @@ import { QuoteReviewStep } from "./steps/QuoteReviewStep";
 import { CompanyBrandingStep } from "@/components/company/CompanyBrandingStep";
 import { QuoteProgressIndicator } from "./QuoteProgressIndicator";
 import { SmartContinueButton } from "./SmartContinueButton";
-import { StepOverview } from "./StepOverview";
 
 const steps = [
   { title: "Company Branding", icon: Building2, description: "Logo and company details" },
@@ -61,58 +60,6 @@ export const QuoteWizard = ({ onQuoteGenerated }: QuoteWizardProps) => {
     }
   };
 
-  const getCompletedSteps = (): boolean[] => {
-    return steps.map((_, index) => {
-      if (index < currentStep) return true;
-      if (index === currentStep) return Boolean(canProceed());
-      return false;
-    });
-  };
-
-  const getStepSummaries = (): (string | null)[] => {
-    return [
-      null, // Company branding doesn't need summary
-      quote.client?.name ? `${quote.client.name} - ${quote.client.email}` : null,
-      quote.jobDetails?.title || null,
-      quote.items?.length ? `${quote.items.length} item${quote.items.length > 1 ? 's' : ''} added` : null,
-      quote.settings?.labourRate ? `£${quote.settings.labourRate}/hour` : null,
-      null // Review step doesn't need summary
-    ];
-  };
-
-  const getCurrentStepCompletion = () => {
-    switch (currentStep) {
-      case 1: {
-        const fields = ['name', 'email', 'phone', 'address', 'postcode'];
-        const completed = fields.filter(field => quote.client?.[field as keyof typeof quote.client]).length;
-        return (completed / fields.length) * 100;
-      }
-      case 2: {
-        const fields = ['title', 'description'];
-        const completed = fields.filter(field => quote.jobDetails?.[field as keyof typeof quote.jobDetails]).length;
-        return (completed / fields.length) * 100;
-      }
-      case 3:
-        return quote.items && quote.items.length > 0 ? 100 : 0;
-      case 4: {
-        const hasLabourRate = !!quote.settings?.labourRate;
-        const hasOverhead = typeof quote.settings?.overheadPercentage === 'number';
-        const hasProfit = typeof quote.settings?.profitMargin === 'number';
-        const completed = [hasLabourRate, hasOverhead, hasProfit].filter(Boolean).length;
-        return (completed / 3) * 100;
-      }
-      default:
-        return canProceed() ? 100 : 0;
-    }
-  };
-
-  const handleStepNavigation = (stepIndex: number) => {
-    // Only allow navigation to completed steps
-    if (stepIndex < currentStep) {
-      // Navigate to previous step logic would go here
-      // For now, we'll just focus on the UX improvements
-    }
-  };
 
   const renderStep = () => {
     switch (currentStep) {
@@ -134,67 +81,34 @@ export const QuoteWizard = ({ onQuoteGenerated }: QuoteWizardProps) => {
   };
 
   return (
-    <div className="space-y-6 max-w-4xl mx-auto">
-      {/* Progress Indicator */}
+    <div className="space-y-4 max-w-4xl mx-auto">
+      {/* Simple Progress */}
       <QuoteProgressIndicator
         currentStep={currentStep}
         totalSteps={steps.length}
         stepLabels={steps.map(s => s.title)}
-        completedSteps={getCompletedSteps()}
-        onStepClick={handleStepNavigation}
       />
 
-      {/* Step Overview - Collapsible */}
-      <StepOverview
-        currentStep={currentStep}
-        stepLabels={steps.map(s => s.title)}
-        completedSteps={getCompletedSteps()}
-        stepSummaries={getStepSummaries()}
-        onStepClick={handleStepNavigation}
-      />
-
-      {/* Enhanced Step Content */}
-      <Card className="border-0 bg-gradient-to-br from-card to-card/50 shadow-sm">
+      {/* Main Content */}
+      <Card>
         <CardHeader className="pb-4">
-          <div className="flex items-center gap-3">
-            <div className="p-2 bg-primary/10 rounded-lg">
-              {React.createElement(steps[currentStep].icon, { className: "h-5 w-5 text-primary" })}
-            </div>
-            <div className="space-y-1">
-              <CardTitle className="text-xl">{steps[currentStep].title}</CardTitle>
-              <p className="text-sm text-muted-foreground">{steps[currentStep].description}</p>
-            </div>
-          </div>
+          <CardTitle className="text-xl">{steps[currentStep].title}</CardTitle>
+          <p className="text-sm text-muted-foreground">{steps[currentStep].description}</p>
         </CardHeader>
         <CardContent className="space-y-6">
           {renderStep()}
-        </CardContent>
-      </Card>
-
-      {/* Enhanced Navigation */}
-      <Card className="border-0 bg-gradient-to-r from-muted/50 to-muted/30 shadow-sm">
-        <CardContent className="p-4 sm:p-6">
-          <div className="flex flex-col gap-6 w-full">
-            {/* Mobile: Stack navigation vertically */}
-            <div className="block sm:hidden space-y-4">
-              <SmartContinueButton
-                canProceed={Boolean(canProceed())}
-                isLastStep={currentStep === steps.length - 1}
-                nextStepTitle={steps[currentStep + 1]?.title}
-                onNext={nextStep}
-                onGenerate={generateQuote}
-                completionPercentage={getCurrentStepCompletion()}
-              />
-              
-              <div className="flex justify-between items-center">
+          
+          {/* Integrated Navigation */}
+          <div className="pt-4 border-t">
+            <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
+              <div className="flex items-center gap-2">
                 <Button
                   variant="outline"
                   onClick={prevStep}
                   disabled={currentStep === 0}
                   size="sm"
-                  className="flex items-center gap-2"
                 >
-                  <ArrowLeft className="h-4 w-4" />
+                  <ArrowLeft className="h-4 w-4 mr-2" />
                   Previous
                 </Button>
                 
@@ -202,35 +116,14 @@ export const QuoteWizard = ({ onQuoteGenerated }: QuoteWizardProps) => {
                   Start Over
                 </Button>
               </div>
-            </div>
-
-            {/* Desktop: Horizontal layout */}
-            <div className="hidden sm:flex justify-between items-center">
-              <Button
-                variant="outline"
-                onClick={prevStep}
-                disabled={currentStep === 0}
-                size="lg"
-                className="flex items-center gap-2"
-              >
-                <ArrowLeft className="h-4 w-4" />
-                Previous Step
-              </Button>
               
-              <div className="flex items-center gap-4">
-                <Button variant="ghost" size="sm" onClick={resetQuote}>
-                  Start Over
-                </Button>
-                
-                <SmartContinueButton
-                  canProceed={Boolean(canProceed())}
-                  isLastStep={currentStep === steps.length - 1}
-                  nextStepTitle={steps[currentStep + 1]?.title}
-                  onNext={nextStep}
-                  onGenerate={generateQuote}
-                  completionPercentage={getCurrentStepCompletion()}
-                />
-              </div>
+              <SmartContinueButton
+                canProceed={Boolean(canProceed())}
+                isLastStep={currentStep === steps.length - 1}
+                nextStepTitle={steps[currentStep + 1]?.title}
+                onNext={nextStep}
+                onGenerate={generateQuote}
+              />
             </div>
           </div>
         </CardContent>
