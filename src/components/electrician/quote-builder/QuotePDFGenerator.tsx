@@ -78,6 +78,55 @@ export const generateQuotePDF = (quote: Partial<Quote>, companyProfile?: Company
   doc.text(`${quote.client?.postcode}`, 20, currentY);
   currentY += 15;
   
+  // Job Details
+  if (quote.jobDetails) {
+    doc.setFontSize(14);
+    doc.text('JOB DETAILS', 20, currentY);
+    currentY += 10;
+    doc.setFontSize(10);
+    
+    if (quote.jobDetails.title) {
+      doc.text(`Job Title: ${quote.jobDetails.title}`, 20, currentY);
+      currentY += 8;
+    }
+    
+    if (quote.jobDetails.description) {
+      const descriptionLines = doc.splitTextToSize(quote.jobDetails.description, 170);
+      doc.text('Description:', 20, currentY);
+      currentY += 8;
+      doc.text(descriptionLines, 20, currentY);
+      currentY += (descriptionLines.length * 6) + 4;
+    }
+    
+    if (quote.jobDetails.location) {
+      doc.text(`Work Location: ${quote.jobDetails.location}`, 20, currentY);
+      currentY += 8;
+    }
+    
+    if (quote.jobDetails.estimatedDuration) {
+      const duration = quote.jobDetails.estimatedDuration === "Other" ? 
+        quote.jobDetails.customDuration || "Custom duration" : 
+        quote.jobDetails.estimatedDuration;
+      doc.text(`Estimated Duration: ${duration}`, 20, currentY);
+      currentY += 8;
+    }
+    
+    if (quote.jobDetails.workStartDate) {
+      doc.text(`Proposed Start Date: ${new Date(quote.jobDetails.workStartDate).toLocaleDateString()}`, 20, currentY);
+      currentY += 8;
+    }
+    
+    if (quote.jobDetails.specialRequirements) {
+      const requirementsLines = doc.splitTextToSize(quote.jobDetails.specialRequirements, 170);
+      doc.text('Special Requirements:', 20, currentY);
+      currentY += 8;
+      doc.text(requirementsLines, 20, currentY);
+      currentY += (requirementsLines.length * 6) + 4;
+    }
+    
+    currentY += 10;
+  }
+  
   // Quote Items Table
   const tableData = quote.items?.map(item => [
     item.description,

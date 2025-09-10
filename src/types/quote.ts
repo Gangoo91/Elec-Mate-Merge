@@ -58,6 +58,7 @@ export interface JobDetails {
   description: string;
   location?: string;
   estimatedDuration?: string;
+  customDuration?: string;
   workStartDate?: string;
   specialRequirements?: string;
 }

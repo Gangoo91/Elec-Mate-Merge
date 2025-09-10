@@ -483,12 +483,11 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove }: Enh
                       <Label htmlFor="quantity" className="text-sm font-medium">Quantity</Label>
                       <Input
                         type="number"
-                        value={newItem.quantity}
+                        value={newItem.quantity === 0 ? "" : newItem.quantity}
                         onChange={(e) => {
                           const value = e.target.value;
-                          // Allow empty string for deletion, otherwise parse the value
                           if (value === '') {
-                            setNewItem(prev => ({ ...prev, quantity: 0 })); // Temporarily set to 0 to allow clearing
+                            setNewItem(prev => ({ ...prev, quantity: 0 }));
                           } else {
                             const parsed = parseFloat(value);
                             if (!isNaN(parsed) && parsed >= 0) {
@@ -497,7 +496,6 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove }: Enh
                           }
                         }}
                         onBlur={(e) => {
-                          // Ensure minimum value on blur
                           const value = parseFloat(e.target.value);
                           if (isNaN(value) || value <= 0) {
                             setNewItem(prev => ({ ...prev, quantity: 1 }));
@@ -506,6 +504,7 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove }: Enh
                         min="0.1"
                         step="0.1"
                         className="h-12"
+                        placeholder="Enter quantity"
                       />
                     </div>
 

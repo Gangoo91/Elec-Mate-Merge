@@ -2,6 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Calendar, MapPin, Clock, AlertCircle, Briefcase } from "lucide-react";
 import { JobDetails } from "@/types/quote";
 
@@ -72,13 +73,35 @@ export const JobDetailsStep = ({ jobDetails, onUpdate }: JobDetailsStepProps) =>
             <Label htmlFor="estimated-duration">Estimated Duration</Label>
             <div className="relative">
               <Clock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-              <Input
-                id="estimated-duration"
-                value={jobDetails?.estimatedDuration || ""}
-                onChange={(e) => handleChange("estimatedDuration", e.target.value)}
-                placeholder="e.g. 2 days, 1 week"
-                className="pl-10"
-              />
+              {jobDetails?.estimatedDuration === "Other" ? (
+                <Input
+                  id="estimated-duration-custom"
+                  value={jobDetails?.customDuration || ""}
+                  onChange={(e) => handleChange("customDuration", e.target.value)}
+                  placeholder="Enter custom duration"
+                  className="pl-10"
+                />
+              ) : (
+                <Select
+                  value={jobDetails?.estimatedDuration || ""}
+                  onValueChange={(value) => handleChange("estimatedDuration", value)}
+                >
+                  <SelectTrigger className="pl-10">
+                    <SelectValue placeholder="Select duration" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="Half day">Half day</SelectItem>
+                    <SelectItem value="1 day">1 day</SelectItem>
+                    <SelectItem value="2 days">2 days</SelectItem>
+                    <SelectItem value="3 days">3 days</SelectItem>
+                    <SelectItem value="1 week">1 week</SelectItem>
+                    <SelectItem value="2 weeks">2 weeks</SelectItem>
+                    <SelectItem value="3 weeks">3 weeks</SelectItem>
+                    <SelectItem value="1 month">1 month</SelectItem>
+                    <SelectItem value="Other">Other...</SelectItem>
+                  </SelectContent>
+                </Select>
+              )}
             </div>
           </div>
         </div>
