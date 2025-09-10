@@ -198,10 +198,13 @@ export const calculateVoltageDrop = (inputs: VoltageDropInputs): VoltageDropResu
   const voltageDropPercent = (voltageDrop / voltage) * 100;
   const finalVoltage = voltage - voltageDrop;
 
-  // BS 7671 voltage drop limits based on circuit type
-  // Note: This is simplified - actual limits depend on specific circuit classification
-  const limit = 5; // Default to 5% for general circuits
-  const limitType = '5% (General circuits - refer to BS 7671 Table 4Db for specific requirements)';
+  // BS 7671 voltage drop limits - more precise implementation
+  // Check if inputs contain load type information for accurate limit determination
+  const isLightingCircuit = (inputs as any).loadType?.includes('lighting') || false;
+  const limit = isLightingCircuit ? 3 : 5; // 3% for lighting, 5% for power circuits
+  const limitType = isLightingCircuit ? 
+    '3% (Lighting circuits - BS 7671 Appendix 4)' : 
+    '5% (Power circuits - BS 7671 Appendix 4)';
   const isCompliant = voltageDropPercent <= limit;
 
   return {

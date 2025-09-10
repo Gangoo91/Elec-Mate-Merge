@@ -5,7 +5,7 @@ import { AlertTriangle } from "lucide-react";
 import { InstallPlanData } from "./types";
 import { ImprovedCableSelectionEngine } from "./ImprovedCableSelectionEngine";
 import { SystemSummaryCard } from "./system-summary-card";
-import { CircuitAnalysisCard } from "./circuit-analysis-card";
+import { UnifiedResultsCard } from "./unified-results-card";
 import { SupplyRequirementsCard } from "./supply-requirements-card";
 import { ConsumerUnitGuidance } from "./consumer-unit-guidance";
 import { ResultCard } from "@/components/ui/result-card";
@@ -91,16 +91,52 @@ const MultiCircuitResults: React.FC<MultiCircuitResultsProps> = ({ planData }) =
 
       {/* Individual Circuit Analysis */}
       <div className="space-y-4">
-        <h3 className="text-lg font-semibold">Circuit Analysis</h3>
+        <h3 className="text-lg font-semibold text-white">Circuit Analysis</h3>
         <div className="space-y-4">
-          {circuitAnalysis.map((analysis, index) => (
-            <CircuitAnalysisCard
-              key={analysis.circuit.id}
-              circuit={analysis.circuit}
-              analysis={analysis}
-              index={index}
-            />
-          ))}
+          {circuitAnalysis.map((analysis, index) => {
+            // Calculate Zs for each circuit using same logic as single circuit
+            const getR1R2 = (size: string, type: string) => {
+              const twinEarthResistances: Record<string, number> = {
+                "1.5": 24.2, "2.5": 14.8, "4.0": 9.22, "6.0": 6.16, 
+                "10.0": 3.66, "16.0": 2.30, "25.0": 1.454, "35.0": 1.045, "50.0": 0.772
+              };
+              
+              if (type.includes('twin') || type.includes('earth')) {
+                return twinEarthResistances[size] || 10;
+              }
+              
+              const singleCoreR1: Record<string, number> = {
+                "1.5": 12.1, "2.5": 7.41, "4.0": 4.61, "6.0": 3.08,
+                "10.0": 1.83, "16.0": 1.15, "25.0": 0.727, "35.0": 0.524, "50.0": 0.387
+              };
+              return (singleCoreR1[size] || 5) * 2;
+            };
+
+            const recommendedCable = analysis.recommendations.find(r => r.suitability === "suitable") || analysis.recommendations[0];
+            const r1r2PerKm = recommendedCable ? getR1R2(recommendedCable.size, recommendedCable.type) : 10;
+            const r1r2 = analysis.circuit.cableLength * r1r2PerKm / 1000;
+            const zsValue = (planData.environmentalSettings?.ze || 0.35) + r1r2;
+            
+            // Calculate max Zs (simplified for Type B MCB)
+            const maxZs = 1.44; // Conservative value for 230V Type B MCB
+
+            return (
+              <UnifiedResultsCard
+                key={analysis.circuit.id}
+                planData={{
+                  ...analysis.circuit,
+                  installationType: "multi-circuit",
+                  environmentalSettings: planData.environmentalSettings
+                }}
+                recommendations={analysis.recommendations}
+                designCurrent={analysis.designCurrent}
+                zsValue={zsValue}
+                maxZs={maxZs}
+                circuitName={analysis.circuit.name}
+                circuitIndex={index}
+              />
+            );
+          })}
         </div>
       </div>
 

@@ -12,6 +12,7 @@ import InstallationSuggestionsCard from "./InstallationSuggestionsCard";
 import ComplianceChecksCard from "./ComplianceChecksCard";
 import VisualCircuitDesigner from "./VisualCircuitDesigner";
 import PostResultGuidance from "./PostResultGuidance";
+import { UnifiedResultsCard } from "./unified-results-card";
 
 interface ResultsStepProps {
   planData: InstallPlanData;
@@ -180,6 +181,15 @@ const ResultsStep = ({ planData }: ResultsStepProps) => {
       <VisualCircuitDesigner 
         planData={planData} 
         recommendedCable={recommendedCable}
+      />
+
+      {/* Unified Results Card - Same as Multi-Circuit */}
+      <UnifiedResultsCard
+        planData={planData}
+        recommendations={cableOptions}
+        designCurrent={designCurrent}
+        zsValue={zsValue}
+        maxZs={maxZs}
       />
 
       {/* Main Results Grid - Mobile-First Layout */}

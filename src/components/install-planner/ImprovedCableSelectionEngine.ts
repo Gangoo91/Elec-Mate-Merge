@@ -52,9 +52,29 @@ export class ImprovedCableSelectionEngine {
       const voltageDropResult = calculateVoltageDrop(voltageDropInputs);
       if (!voltageDropResult) continue;
 
-      // Calculate Zs properly
-      const r1r2 = planData.cableLength * (cableData.resistance.r1 + cableData.resistance.r2) / 1000;
-      const zsValue = planData.ze + r1r2;
+      // Calculate Zs properly using more accurate resistance values for Twin & Earth
+      const getR1R2 = (size: string, type: string) => {
+        // Twin & Earth resistance values (r1 + r2) per km at 20°C
+        const twinEarthResistances: Record<string, number> = {
+          "1.5": 24.2, "2.5": 14.8, "4.0": 9.22, "6.0": 6.16, 
+          "10.0": 3.66, "16.0": 2.30, "25.0": 1.454, "35.0": 1.045, "50.0": 0.772
+        };
+        
+        if (type.includes('twin') || type.includes('earth')) {
+          return twinEarthResistances[size] || 10;
+        }
+        
+        // For single core or SWA - use tabulated conductor resistance x 2
+        const singleCoreR1: Record<string, number> = {
+          "1.5": 12.1, "2.5": 7.41, "4.0": 4.61, "6.0": 3.08,
+          "10.0": 1.83, "16.0": 1.15, "25.0": 0.727, "35.0": 0.524, "50.0": 0.387
+        };
+        return (singleCoreR1[size] || 5) * 2; // r1 + r2 for single core
+      };
+      
+      const r1r2PerKm = getR1R2(size, planData.cableType);
+      const r1r2 = planData.cableLength * r1r2PerKm / 1000;
+      const zsValue = (planData.ze || planData.environmentalSettings?.ze || 0.35) + r1r2;
       const maxZs = this.getMaxZs(planData.protectiveDevice, planData.voltage, capacityResult.In);
       const zsOK = zsValue <= maxZs;
 
@@ -296,7 +316,19 @@ export class ImprovedCableSelectionEngine {
   }
 
   private static getGroupingCircuits(planData: InstallPlanData): number {
-    return planData.groupingFactor ? Math.round(1 / planData.groupingFactor) : 1;
+    // Handle grouping factor correctly for both old and new data structures
+    const groupingFactor = planData.groupingFactor || 
+                          planData.environmentalSettings?.globalGroupingFactor || 
+                          1;
+    
+    // If grouping factor is 1, there's only one circuit (no grouping)
+    // If grouping factor is 0.8, there are approximately 2-3 circuits grouped together
+    // If grouping factor is 0.7, there are approximately 4-6 circuits grouped together
+    if (groupingFactor >= 0.95) return 1;
+    if (groupingFactor >= 0.75) return 2;
+    if (groupingFactor >= 0.65) return 4;
+    if (groupingFactor >= 0.55) return 6;
+    return 9; // For very low grouping factors
   }
 
   private static getProposedDeviceRating(designCurrent: number, cableData: any): number {
@@ -370,6 +402,7 @@ export class ImprovedCableSelectionEngine {
       return 3;
     }
     
+    // All other circuits: 5% for lighting, 5% for other circuits (BS 7671 simplified)
     return 5;
   }
 
