@@ -282,7 +282,7 @@ Your Electrician`;
 
         {/* Materials Items */}
         {quote.items?.filter(item => item.category === 'materials').sort((a, b) => b.totalPrice - a.totalPrice).length > 0 && (
-          <Card className="bg-card border-border">
+          <Card className="bg-card border-green-200 dark:border-green-800">{/* Updated border color for materials */}
             <CardHeader className="pb-3">
               <CardTitle className="flex items-center justify-between text-base">
                 <div className="flex items-center gap-2">
@@ -297,7 +297,7 @@ Your Electrician`;
             <CardContent className="pt-0">
               <div className="space-y-3">
                 {quote.items?.filter(item => item.category === 'materials').sort((a, b) => b.totalPrice - a.totalPrice).map((item) => (
-                  <div key={item.id} className="bg-background border border-border rounded-lg p-3">
+                  <div key={item.id} className="bg-background border border-green-200 dark:border-green-800 rounded-lg p-3">{/* Updated border color for individual material items */}
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                       <div className="min-w-0 flex-1">
                         <p className="font-medium text-sm">{item.description}</p>
