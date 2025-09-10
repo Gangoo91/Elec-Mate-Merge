@@ -1,29 +1,82 @@
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { Quote } from '@/types/quote';
+import { CompanyProfile } from '@/types/company';
 
-export const generateQuotePDF = (quote: Partial<Quote>) => {
+export const generateQuotePDF = (quote: Partial<Quote>, companyProfile?: CompanyProfile) => {
   const doc = new jsPDF();
+  
+  let currentY = 20;
+  
+  // Company Logo (if available)
+  if (companyProfile?.logo_data_url) {
+    try {
+      doc.addImage(companyProfile.logo_data_url, 'JPEG', 20, currentY, 40, 30);
+      currentY += 35;
+    } catch (error) {
+      console.warn('Could not add logo to PDF:', error);
+    }
+  }
+  
+  // Company Details
+  if (companyProfile) {
+    doc.setFontSize(16);
+    doc.setTextColor(0, 0, 0);
+    doc.text(companyProfile.company_name, 20, currentY);
+    currentY += 8;
+    
+    doc.setFontSize(10);
+    if (companyProfile.company_address) {
+      doc.text(companyProfile.company_address, 20, currentY);
+      currentY += 6;
+    }
+    if (companyProfile.company_postcode) {
+      doc.text(companyProfile.company_postcode, 20, currentY);
+      currentY += 6;
+    }
+    if (companyProfile.company_phone) {
+      doc.text(`Tel: ${companyProfile.company_phone}`, 20, currentY);
+      currentY += 6;
+    }
+    if (companyProfile.company_email) {
+      doc.text(`Email: ${companyProfile.company_email}`, 20, currentY);
+      currentY += 6;
+    }
+    if (companyProfile.vat_number) {
+      doc.text(`VAT No: ${companyProfile.vat_number}`, 20, currentY);
+      currentY += 6;
+    }
+    currentY += 10;
+  }
   
   // Header
   doc.setFontSize(20);
   doc.setTextColor(255, 215, 0); // Electric yellow
-  doc.text('ELECTRICAL QUOTE', 20, 30);
+  doc.text('ELECTRICAL QUOTE', 20, currentY);
+  currentY += 15;
   
   doc.setFontSize(12);
   doc.setTextColor(0, 0, 0);
-  doc.text(`Quote Number: ${quote.quoteNumber}`, 20, 45);
-  doc.text(`Date: ${quote.createdAt?.toLocaleDateString() || new Date().toLocaleDateString()}`, 20, 55);
+  doc.text(`Quote Number: ${quote.quoteNumber}`, 20, currentY);
+  currentY += 10;
+  doc.text(`Date: ${quote.createdAt?.toLocaleDateString() || new Date().toLocaleDateString()}`, 20, currentY);
+  currentY += 15;
   
   // Client Information
   doc.setFontSize(14);
-  doc.text('CLIENT DETAILS', 20, 75);
+  doc.text('CLIENT DETAILS', 20, currentY);
+  currentY += 10;
   doc.setFontSize(10);
-  doc.text(`${quote.client?.name}`, 20, 85);
-  doc.text(`${quote.client?.email}`, 20, 95);
-  doc.text(`${quote.client?.phone}`, 20, 105);
-  doc.text(`${quote.client?.address}`, 20, 115);
-  doc.text(`${quote.client?.postcode}`, 20, 125);
+  doc.text(`${quote.client?.name}`, 20, currentY);
+  currentY += 8;
+  doc.text(`${quote.client?.email}`, 20, currentY);
+  currentY += 8;
+  doc.text(`${quote.client?.phone}`, 20, currentY);
+  currentY += 8;
+  doc.text(`${quote.client?.address}`, 20, currentY);
+  currentY += 8;
+  doc.text(`${quote.client?.postcode}`, 20, currentY);
+  currentY += 15;
   
   // Quote Items Table
   const tableData = quote.items?.map(item => [
@@ -34,7 +87,7 @@ export const generateQuotePDF = (quote: Partial<Quote>) => {
   ]) || [];
   
   autoTable(doc, {
-    startY: 140,
+    startY: currentY,
     head: [['Description', 'Qty', 'Unit Price', 'Total']],
     body: tableData,
     theme: 'grid',
@@ -45,21 +98,13 @@ export const generateQuotePDF = (quote: Partial<Quote>) => {
   // Calculate final Y position after table
   const finalY = (doc as any).lastAutoTable.finalY + 12;
 
-  // Totals
+  // Totals (simplified - profit and overhead now built into hourly rates)
   doc.setFontSize(12);
   const totalsX = 120;
-  let currentY = finalY;
+  currentY = finalY;
 
   doc.text('Subtotal:', totalsX, currentY);
   doc.text(`£${(quote.subtotal || 0).toFixed(2)}`, 170, currentY);
-  currentY += 8;
-
-  doc.text(`Overhead (${quote.settings?.overheadPercentage}%):`, totalsX, currentY);
-  doc.text(`£${(quote.overhead || 0).toFixed(2)}`, 170, currentY);
-  currentY += 8;
-
-  doc.text(`Profit (${quote.settings?.profitMargin}%):`, totalsX, currentY);
-  doc.text(`£${(quote.profit || 0).toFixed(2)}`, 170, currentY);
   currentY += 8;
   
   if (quote.settings?.vatRegistered) {

@@ -81,18 +81,18 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void) => {
   const calculateTotals = useCallback(() => {
     if (!quote.items || !quote.settings) return quote;
 
+    // Calculate subtotal - profit and overhead are now built into unit prices
     const subtotal = quote.items.reduce((sum, item) => sum + item.totalPrice, 0);
-    const overhead = subtotal * (quote.settings.overheadPercentage / 100);
-    const profit = (subtotal + overhead) * (quote.settings.profitMargin / 100);
-    const beforeVat = subtotal + overhead + profit;
-    const vatAmount = quote.settings.vatRegistered ? beforeVat * (quote.settings.vatRate / 100) : 0;
-    const total = beforeVat + vatAmount;
+    
+    // Calculate VAT on the subtotal (which already includes profit and overhead)
+    const vatAmount = quote.settings.vatRegistered ? subtotal * (quote.settings.vatRate / 100) : 0;
+    const total = subtotal + vatAmount;
 
     return {
       ...quote,
       subtotal,
-      overhead,
-      profit,
+      overhead: 0, // No longer calculated separately
+      profit: 0,   // No longer calculated separately
       vatAmount,
       total,
     };
@@ -138,7 +138,7 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void) => {
 
       if (!pdfGenerated) {
         // Fallback to basic PDF generator
-        generateQuotePDF(updatedQuote);
+        generateQuotePDF(updatedQuote, companyProfile);
       }
 
       // Save quote to Supabase

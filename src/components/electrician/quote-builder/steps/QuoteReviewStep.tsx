@@ -5,6 +5,7 @@ import { User, FileText, Calculator, Package, Wrench, Zap, Download, Mail, Brief
 import { Quote } from "@/types/quote";
 import { generateQuotePDF } from "../QuotePDFGenerator";
 import { useToast } from "@/hooks/use-toast";
+import { useCompanyProfile } from "@/hooks/useCompanyProfile";
 
 interface QuoteReviewStepProps {
   quote: Partial<Quote>;
@@ -12,9 +13,10 @@ interface QuoteReviewStepProps {
 
 export const QuoteReviewStep = ({ quote }: QuoteReviewStepProps) => {
   const { toast } = useToast();
+  const { companyProfile } = useCompanyProfile();
 
   const handleDownloadPDF = () => {
-    generateQuotePDF(quote);
+    generateQuotePDF(quote, companyProfile);
     toast({
       title: "PDF Generated",
       description: "Quote PDF has been downloaded successfully.",
@@ -276,21 +278,8 @@ Your Electrician`;
         <CardContent>
           <div className="space-y-3">
             <div className="flex justify-between">
-              <span>Subtotal</span>
+              <span>Subtotal (inc. overheads & profit)</span>
               <span>£{(quote.subtotal || 0).toFixed(2)}</span>
-            </div>
-            <div className="flex justify-between">
-              <span>Overhead ({quote.settings?.overheadPercentage}%)</span>
-              <span>£{(quote.overhead || 0).toFixed(2)}</span>
-            </div>
-            <div className="flex justify-between">
-              <span>Profit ({quote.settings?.profitMargin}%)</span>
-              <span>£{(quote.profit || 0).toFixed(2)}</span>
-            </div>
-            <Separator />
-            <div className="flex justify-between">
-              <span>Net Amount</span>
-              <span>£{((quote.subtotal || 0) + (quote.overhead || 0) + (quote.profit || 0)).toFixed(2)}</span>
             </div>
             {quote.settings?.vatRegistered && (
               <div className="flex justify-between">
