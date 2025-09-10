@@ -105,20 +105,30 @@ export class ImprovedCableSelectionEngine {
       });
     }
 
-    // Sort by suitability, then voltage drop, then cost
+    // Sort by suitability, then cost, then cable size, then voltage drop as tiebreaker
     return options.sort((a, b) => {
       const suitabilityOrder = { "suitable": 0, "marginal": 1, "unsuitable": 2 };
       const costOrder = { "low": 0, "medium": 1, "high": 2 };
       
+      // Primary sort: suitability (suitable cables first)
       if (suitabilityOrder[a.suitability] !== suitabilityOrder[b.suitability]) {
         return suitabilityOrder[a.suitability] - suitabilityOrder[b.suitability];
       }
       
-      if (Math.abs(a.voltageDropPercentage - b.voltageDropPercentage) > 0.1) {
-        return a.voltageDropPercentage - b.voltageDropPercentage;
+      // Secondary sort: cost (prefer lower cost)
+      if (costOrder[a.cost || "medium"] !== costOrder[b.cost || "medium"]) {
+        return costOrder[a.cost || "medium"] - costOrder[b.cost || "medium"];
       }
       
-      return costOrder[a.cost || "medium"] - costOrder[b.cost || "medium"];
+      // Tertiary sort: cable size (prefer smaller cable)
+      const sizeA = parseFloat(a.size);
+      const sizeB = parseFloat(b.size);
+      if (Math.abs(sizeA - sizeB) > 0.1) {
+        return sizeA - sizeB;
+      }
+      
+      // Final tiebreaker: voltage drop (prefer lower voltage drop)
+      return a.voltageDropPercentage - b.voltageDropPercentage;
     });
   }
 
