@@ -280,7 +280,7 @@ export const generateQuotePDF = (quote: Partial<Quote>, companyProfile?: Company
     },
     styles: { 
       fontSize: 11,
-      cellPadding: 8,
+      cellPadding: 4,
       font: 'helvetica',
       lineColor: [220, 220, 220],
       lineWidth: 0.5,
