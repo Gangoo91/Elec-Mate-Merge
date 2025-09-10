@@ -258,6 +258,7 @@ export const generateQuotePDF = (quote: Partial<Quote>, companyProfile?: Company
   doc.text('QUOTE BREAKDOWN', margin, currentY);
   currentY += 15;
   
+  // Prepare table data with line items
   const tableData = quote.items?.map(item => [
     item.description,
     item.quantity.toString(),
@@ -265,14 +266,23 @@ export const generateQuotePDF = (quote: Partial<Quote>, companyProfile?: Company
     `£${item.totalPrice.toFixed(2)}`
   ]) || [];
   
+  // Add totals rows to table data
+  tableData.push(['', '', 'Subtotal:', `£${(quote.subtotal || 0).toFixed(2)}`]);
+  
+  if (quote.settings?.vatRegistered) {
+    tableData.push(['', '', `VAT (${quote.settings.vatRate}%):`, `£${(quote.vatAmount || 0).toFixed(2)}`]);
+  }
+  
+  tableData.push(['', '', 'TOTAL:', `£${(quote.total || 0).toFixed(2)}`]);
+  
   autoTable(doc, {
     startY: currentY,
     head: [['Description', 'Qty', 'Unit Price', 'Total']],
     body: tableData,
     theme: 'plain',
     headStyles: { 
-      fillColor: [255, 255, 255], 
-      textColor: [40, 40, 40],
+      fillColor: primaryColor as [number, number, number], 
+      textColor: [255, 255, 255],
       fontSize: 12,
       fontStyle: 'bold',
       halign: 'left'
@@ -291,6 +301,14 @@ export const generateQuotePDF = (quote: Partial<Quote>, companyProfile?: Company
       2: { halign: 'right', cellWidth: 30 },
       3: { halign: 'right', fontStyle: 'bold', cellWidth: 30, textColor: [40, 40, 40] }
     },
+    didParseCell: function (data) {
+      // Style the total row with orange background
+      if (data.row.index === tableData.length - 1) {
+        data.cell.styles.fillColor = primaryColor as [number, number, number];
+        data.cell.styles.textColor = [255, 255, 255];
+        data.cell.styles.fontStyle = 'bold';
+      }
+    },
     margin: { left: margin, right: margin },
     tableLineColor: [220, 220, 220],
     tableLineWidth: 0.5
@@ -298,41 +316,7 @@ export const generateQuotePDF = (quote: Partial<Quote>, companyProfile?: Company
   
   // Calculate final Y position after table
   const finalY = (doc as any).lastAutoTable.finalY + 20;
-
-  // Clean Totals Section (Right aligned, no boxes)
-  const totalsBoxY = finalY + 10;
-  const totalsBoxX = pageWidth - margin - 70;
-  const totalsBoxWidth = 70;
-
-  currentY = totalsBoxY;
-  doc.setFontSize(12);
-  doc.setFont('helvetica', 'normal');
-  doc.setTextColor(60, 60, 60);
-
-  doc.text('Subtotal:', totalsBoxX, currentY);
-  doc.text(`£${(quote.subtotal || 0).toFixed(2)}`, totalsBoxX + totalsBoxWidth, currentY, { align: 'right' });
-  currentY += 8;
-  
-  if (quote.settings?.vatRegistered) {
-    doc.text(`VAT (${quote.settings.vatRate}%):`, totalsBoxX, currentY);
-    doc.text(`£${(quote.vatAmount || 0).toFixed(2)}`, totalsBoxX + totalsBoxWidth, currentY, { align: 'right' });
-    currentY += 8;
-  }
-  
-  // Simple separator line
-  doc.setDrawColor(200, 200, 200);
-  doc.setLineWidth(0.5);
-  doc.line(totalsBoxX, currentY + 2, totalsBoxX + totalsBoxWidth, currentY + 2);
-  currentY += 8;
-  
-  // Total - clean and prominent
-  doc.setFontSize(16);
-  doc.setFont('helvetica', 'bold');
-  doc.setTextColor(40, 40, 40);
-  doc.text('TOTAL:', totalsBoxX, currentY);
-  doc.text(`£${(quote.total || 0).toFixed(2)}`, totalsBoxX + totalsBoxWidth, currentY, { align: 'right' });
-  
-  currentY = totalsBoxY + 65;
+  currentY = finalY;
   
   // Clean Footer Section
   const footerStartY = Math.max(currentY + 30, doc.internal.pageSize.height - 60);
