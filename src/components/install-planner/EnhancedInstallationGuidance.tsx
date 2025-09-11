@@ -490,14 +490,14 @@ const EnhancedInstallationGuidance: React.FC<EnhancedInstallationGuidanceProps> 
 
       {/* Testing & Commissioning */}
       <Card className="border-elec-green/30">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-3">
+        <CardHeader className="pb-4">
+          <CardTitle className="flex items-center gap-3 text-white">
             <div className="p-2 bg-elec-green/20 rounded-lg">
               <CheckCircle2 className="h-5 w-5 text-elec-green" />
             </div>
             <div>
-              <div className="text-lg">Testing & Commissioning</div>
-              <div className="text-sm font-normal text-elec-light/60">Step-by-step verification process</div>
+              <div className="text-lg font-semibold">Testing & Commissioning</div>
+              <div className="text-sm font-normal text-white/70">Step-by-step verification process</div>
             </div>
           </CardTitle>
         </CardHeader>
@@ -505,7 +505,7 @@ const EnhancedInstallationGuidance: React.FC<EnhancedInstallationGuidanceProps> 
           <div className="grid md:grid-cols-3 gap-6">
             {/* Pre-Installation */}
             <div>
-              <h4 className="font-semibold text-elec-green mb-4 flex items-center gap-2">
+              <h4 className="font-semibold text-elec-green mb-4 flex items-center gap-2 text-white">
                 <Clock className="h-4 w-4" />
                 Pre-Installation
               </h4>
@@ -513,7 +513,7 @@ const EnhancedInstallationGuidance: React.FC<EnhancedInstallationGuidanceProps> 
                 {testing.preInstallation.map((test, index) => (
                   <div key={index} className="p-3 bg-elec-dark/30 rounded border border-elec-green/20">
                     <div className="font-medium text-sm text-elec-green mb-1">{test.check}</div>
-                    <div className="text-xs text-elec-light/70 mb-2">{test.requirement}</div>
+                    <div className="text-xs text-white/70 mb-2">{test.requirement}</div>
                     <div className="text-xs text-elec-green/80">{test.action}</div>
                   </div>
                 ))}
@@ -522,7 +522,7 @@ const EnhancedInstallationGuidance: React.FC<EnhancedInstallationGuidanceProps> 
 
             {/* During Installation */}
             <div>
-              <h4 className="font-semibold text-elec-yellow mb-4 flex items-center gap-2">
+              <h4 className="font-semibold text-elec-yellow mb-4 flex items-center gap-2 text-white">
                 <Wrench className="h-4 w-4" />
                 During Installation
               </h4>
@@ -530,7 +530,7 @@ const EnhancedInstallationGuidance: React.FC<EnhancedInstallationGuidanceProps> 
                 {testing.duringInstallation.map((test, index) => (
                   <div key={index} className="p-3 bg-elec-dark/30 rounded border border-elec-yellow/20">
                     <div className="font-medium text-sm text-elec-yellow mb-1">{test.check}</div>
-                    <div className="text-xs text-elec-light/70 mb-2">{test.requirement}</div>
+                    <div className="text-xs text-white/70 mb-2">{test.requirement}</div>
                     <div className="text-xs text-elec-yellow/80">{test.action}</div>
                   </div>
                 ))}
@@ -539,7 +539,7 @@ const EnhancedInstallationGuidance: React.FC<EnhancedInstallationGuidanceProps> 
 
             {/* Post-Installation */}
             <div>
-              <h4 className="font-semibold text-elec-blue mb-4 flex items-center gap-2">
+              <h4 className="font-semibold text-elec-blue mb-4 flex items-center gap-2 text-white">
                 <FileText className="h-4 w-4" />
                 Post-Installation
               </h4>
@@ -547,7 +547,7 @@ const EnhancedInstallationGuidance: React.FC<EnhancedInstallationGuidanceProps> 
                 {testing.postInstallation.map((test, index) => (
                   <div key={index} className="p-3 bg-elec-dark/30 rounded border border-elec-blue/20">
                     <div className="font-medium text-sm text-elec-blue mb-1">{test.check}</div>
-                    <div className="text-xs text-elec-light/70 mb-2">{test.requirement}</div>
+                    <div className="text-xs text-white/70 mb-2">{test.requirement}</div>
                     <div className="text-xs text-elec-blue/80">{test.action}</div>
                   </div>
                 ))}

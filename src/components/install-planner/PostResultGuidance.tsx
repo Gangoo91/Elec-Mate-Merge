@@ -567,27 +567,27 @@ const PostResultGuidance: React.FC<PostResultGuidanceProps> = ({
                   {/* Key Clauses */}
                   <div>
                     <h5 className="font-medium text-sm mb-2 text-elec-yellow">Key Requirements</h5>
-                    <ul className="space-y-1">
-                       {reg.keyClauses.map((clause, idx) => (
-                         <li key={idx} className="text-xs text-white/80 flex items-start gap-2">
-                           <span className="text-elec-primary mt-1 flex-shrink-0">•</span>
-                           <span className="leading-tight">{clause}</span>
-                         </li>
-                       ))}
-                    </ul>
+                     <ul className="space-y-1">
+                        {reg.keyClauses.map((clause, idx) => (
+                          <li key={idx} className="text-xs text-white flex items-start gap-2">
+                            <span className="text-elec-primary mt-1 flex-shrink-0">•</span>
+                            <span className="leading-tight">{clause}</span>
+                          </li>
+                        ))}
+                     </ul>
                   </div>
                   
                   {/* Relevant Sections */}
                   <div>
                     <h5 className="font-medium text-sm mb-2 text-elec-green">This Installation</h5>
-                    <ul className="space-y-1">
-                       {reg.relevantSections.map((section, idx) => (
-                         <li key={idx} className="text-xs text-white/80 flex items-start gap-2">
-                           <CheckCircle2 className="h-3 w-3 text-elec-green mt-0.5 flex-shrink-0" />
-                           <span className="leading-tight">{section}</span>
-                         </li>
-                       ))}
-                    </ul>
+                     <ul className="space-y-1">
+                        {reg.relevantSections.map((section, idx) => (
+                          <li key={idx} className="text-xs text-white flex items-start gap-2">
+                            <CheckCircle2 className="h-3 w-3 text-elec-green mt-0.5 flex-shrink-0" />
+                            <span className="leading-tight">{section}</span>
+                          </li>
+                        ))}
+                     </ul>
                   </div>
                 </div>
               </div>

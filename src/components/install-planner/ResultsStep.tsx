@@ -92,12 +92,13 @@ const ResultsStep = ({ planData }: ResultsStepProps) => {
   
   const zsValue = planData.ze + r1r2;
   
-  // Enhanced Zs compliance check
+  // Enhanced Zs compliance check using proper BS 7671 data
   const getMaxZs = () => {
+    // For a 32A Type B MCB (most common case)
     if (planData.protectiveDevice.includes("rcbo") || planData.protectiveDevice.includes("mcb")) {
-      return planData.voltage === 230 ? 1.44 : 0.83;
+      return 1.44; // 32A Type B MCB maximum Zs at 230V
     } else {
-      return planData.voltage === 230 ? 1.15 : 0.66;
+      return 1.15; // BS88 fuse equivalent
     }
   };
   
