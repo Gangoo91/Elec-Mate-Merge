@@ -1,51 +1,70 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Camera, Upload, Download, Trash2, Eye } from "lucide-react";
+import { Camera, Upload, Download, Trash2, Eye, MapPin, Loader2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "@/hooks/use-toast";
 
 interface PhotoDoc {
   id: string;
   filename: string;
+  file_url: string;
   description: string;
   category: string;
-  timestamp: string;
   location: string;
   tags: string[];
+  gps_latitude?: number;
+  gps_longitude?: number;
+  file_size?: number;
+  mime_type?: string;
+  created_at: string;
 }
 
 const PhotoDocumentation = () => {
-  const [photos, setPhotos] = useState<PhotoDoc[]>([
-    {
-      id: "1",
-      filename: "consumer_unit_before.jpg", 
-      description: "Consumer unit condition before replacement",
-      category: "Before Work",
-      timestamp: "2024-01-15 09:30",
-      location: "Ground floor utility room",
-      tags: ["consumer unit", "before", "condition"]
-    },
-    {
-      id: "2",
-      filename: "isolation_procedure.jpg",
-      description: "Isolation and lock-off procedure documented",
-      category: "Safety Procedure",
-      timestamp: "2024-01-15 09:45", 
-      location: "Main electrical intake",
-      tags: ["isolation", "safety", "lock-off"]
-    }
-  ]);
+  const [photos, setPhotos] = useState<PhotoDoc[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [uploading, setUploading] = useState(false);
 
   const [newPhoto, setNewPhoto] = useState({
     description: "",
     category: "General",
     location: "",
-    tags: ""
+    tags: "",
+    gpsEnabled: false
   });
+
+  useEffect(() => {
+    fetchPhotos();
+  }, []);
+
+  const fetchPhotos = async () => {
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+
+      const { data, error } = await supabase
+        .from('safety_photos')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      setPhotos(data || []);
+    } catch (error) {
+      console.error('Error fetching photos:', error);
+      toast({
+        title: "Error",
+        description: "Failed to load photos",
+        variant: "destructive"
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const categories = [
     "Before Work",
@@ -58,26 +77,126 @@ const PhotoDocumentation = () => {
     "General"
   ];
 
-  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
-    if (file) {
-      const photoDoc: PhotoDoc = {
-        id: Date.now().toString(),
-        filename: file.name,
-        description: newPhoto.description,
-        category: newPhoto.category,
-        timestamp: new Date().toLocaleString(),
-        location: newPhoto.location,
-        tags: newPhoto.tags.split(',').map(tag => tag.trim()).filter(tag => tag)
-      };
+    if (!file) return;
+
+    if (!newPhoto.description.trim()) {
+      toast({
+        title: "Error",
+        description: "Please add a description for the photo",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    setUploading(true);
+
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) throw new Error('No user logged in');
+
+      // Get GPS location if enabled
+      let gpsCoords = null;
+      if (newPhoto.gpsEnabled && navigator.geolocation) {
+        try {
+          const position = await new Promise<GeolocationPosition>((resolve, reject) => {
+            navigator.geolocation.getCurrentPosition(resolve, reject, {
+              enableHighAccuracy: true,
+              timeout: 10000,
+              maximumAge: 60000
+            });
+          });
+          gpsCoords = {
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude
+          };
+        } catch (gpsError) {
+          console.warn('GPS location not available:', gpsError);
+        }
+      }
+
+      // Upload file to Supabase storage
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${user.id}/${Date.now()}.${fileExt}`;
       
-      setPhotos(prev => [...prev, photoDoc]);
-      setNewPhoto({ description: "", category: "General", location: "", tags: "" });
+      const { data: uploadData, error: uploadError } = await supabase.storage
+        .from('safety-resources')
+        .upload(fileName, file);
+
+      if (uploadError) throw uploadError;
+
+      // Get public URL
+      const { data: { publicUrl } } = supabase.storage
+        .from('safety-resources')
+        .getPublicUrl(fileName);
+
+      // Save photo metadata to database
+      const { data, error } = await supabase
+        .from('safety_photos')
+        .insert({
+          user_id: user.id,
+          filename: file.name,
+          file_url: publicUrl,
+          description: newPhoto.description,
+          category: newPhoto.category,
+          location: newPhoto.location,
+          tags: newPhoto.tags.split(',').map(tag => tag.trim()).filter(tag => tag),
+          gps_latitude: gpsCoords?.latitude,
+          gps_longitude: gpsCoords?.longitude,
+          file_size: file.size,
+          mime_type: file.type
+        })
+        .select()
+        .single();
+
+      if (error) throw error;
+
+      setPhotos(prev => [data, ...prev]);
+      setNewPhoto({ description: "", category: "General", location: "", tags: "", gpsEnabled: false });
+      
+      toast({
+        title: "Success",
+        description: "Photo uploaded successfully",
+        variant: "success"
+      });
+
+    } catch (error) {
+      console.error('Error uploading photo:', error);
+      toast({
+        title: "Error",
+        description: "Failed to upload photo",
+        variant: "destructive"
+      });
+    } finally {
+      setUploading(false);
     }
   };
 
-  const removePhoto = (id: string) => {
-    setPhotos(prev => prev.filter(photo => photo.id !== id));
+  const removePhoto = async (id: string) => {
+    try {
+      const { error } = await supabase
+        .from('safety_photos')
+        .delete()
+        .eq('id', id);
+
+      if (error) throw error;
+
+      setPhotos(prev => prev.filter(photo => photo.id !== id));
+      
+      toast({
+        title: "Success",
+        description: "Photo deleted successfully",
+        variant: "success"
+      });
+    } catch (error) {
+      console.error('Error deleting photo:', error);
+      toast({
+        title: "Error",
+        description: "Failed to delete photo",
+        variant: "destructive"
+      });
+    }
   };
 
   const getCategoryColor = (category: string) => {
@@ -93,6 +212,15 @@ const PhotoDocumentation = () => {
     };
     return colors[category] || "bg-gray-500";
   };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center py-8">
+        <Loader2 className="h-8 w-8 animate-spin text-elec-yellow" />
+        <span className="ml-2 text-muted-foreground">Loading photos...</span>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
@@ -147,6 +275,21 @@ const PhotoDocumentation = () => {
               />
             </div>
           </div>
+
+          {/* GPS Location Toggle */}
+          <div className="flex items-center gap-2 p-4 bg-background/50 rounded-lg">
+            <input
+              type="checkbox"
+              id="gps-enabled"
+              checked={newPhoto.gpsEnabled}
+              onChange={(e) => setNewPhoto(prev => ({ ...prev, gpsEnabled: e.target.checked }))}
+              className="rounded border-elec-yellow/30"
+            />
+            <Label htmlFor="gps-enabled" className="flex items-center gap-2 cursor-pointer">
+              <MapPin className="h-4 w-4 text-elec-yellow" />
+              Enable GPS location tagging
+            </Label>
+          </div>
           
           <div className="border-2 border-dashed border-elec-yellow/50 rounded-lg p-6 text-center">
             <input
@@ -155,12 +298,22 @@ const PhotoDocumentation = () => {
               onChange={handleFileUpload}
               className="hidden"
               id="photo-upload"
+              disabled={uploading}
             />
-            <Label htmlFor="photo-upload" className="cursor-pointer">
+            <Label htmlFor="photo-upload" className={`cursor-pointer ${uploading ? 'opacity-50' : ''}`}>
               <div className="flex flex-col items-center gap-2">
-                <Upload className="h-8 w-8 text-elec-yellow" />
-                <span className="text-sm font-medium">Click to upload photo</span>
-                <span className="text-xs text-muted-foreground">JPG, PNG up to 10MB</span>
+                {uploading ? (
+                  <>
+                    <Loader2 className="h-8 w-8 text-elec-yellow animate-spin" />
+                    <span className="text-sm font-medium">Uploading photo...</span>
+                  </>
+                ) : (
+                  <>
+                    <Upload className="h-8 w-8 text-elec-yellow" />
+                    <span className="text-sm font-medium">Click to upload photo</span>
+                    <span className="text-xs text-muted-foreground">JPG, PNG up to 10MB</span>
+                  </>
+                )}
               </div>
             </Label>
           </div>
@@ -236,12 +389,20 @@ const PhotoDocumentation = () => {
                     
                     <div className="space-y-2">
                       <div className="font-medium text-sm">{photo.filename}</div>
-                      <div className="text-xs text-muted-foreground">{photo.timestamp}</div>
+                      <div className="text-xs text-muted-foreground">
+                        {new Date(photo.created_at).toLocaleString()}
+                      </div>
                       <div className="text-sm">{photo.description}</div>
                       {photo.location && (
                         <div className="text-xs text-muted-foreground">📍 {photo.location}</div>
                       )}
-                      {photo.tags.length > 0 && (
+                      {(photo.gps_latitude && photo.gps_longitude) && (
+                        <div className="text-xs text-muted-foreground flex items-center gap-1">
+                          <MapPin className="h-3 w-3" />
+                          GPS: {photo.gps_latitude.toFixed(6)}, {photo.gps_longitude.toFixed(6)}
+                        </div>
+                      )}
+                      {photo.tags && photo.tags.length > 0 && (
                         <div className="flex flex-wrap gap-1 mt-2">
                           {photo.tags.map((tag, index) => (
                             <Badge key={index} variant="outline" className="text-xs">

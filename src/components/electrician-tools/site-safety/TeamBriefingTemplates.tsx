@@ -1,12 +1,14 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Users, FileText, Download, Plus, Edit, Copy } from "lucide-react";
+import { Users, FileText, Download, Plus, Edit, Copy, Clock, UserCheck, Loader2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "@/hooks/use-toast";
 
 interface BriefingTemplate {
   id: string;
@@ -19,7 +21,30 @@ interface BriefingTemplate {
   teamSize: string;
 }
 
+interface TeamBriefing {
+  id: string;
+  template_id: string;
+  briefing_name: string;
+  location: string;
+  briefing_date: string;
+  briefing_time: string;
+  attendees: Array<{ name: string; signature?: string; timestamp?: string }>;
+  key_points: string[];
+  safety_points: string[];
+  equipment_required: string[];
+  duration_minutes: number;
+  notes: string;
+  completed: boolean;
+  created_at: string;
+}
+
 const TeamBriefingTemplates = () => {
+  const [briefings, setBriefings] = useState<TeamBriefing[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [showAttendanceModal, setShowAttendanceModal] = useState(false);
+  const [selectedBriefing, setSelectedBriefing] = useState<TeamBriefing | null>(null);
+  const [newAttendee, setNewAttendee] = useState("");
+  
   const [templates, setTemplates] = useState<BriefingTemplate[]>([
     {
       id: "1",
@@ -75,6 +100,188 @@ const TeamBriefingTemplates = () => {
 
   const [selectedTemplate, setSelectedTemplate] = useState<BriefingTemplate | null>(null);
   const [isEditing, setIsEditing] = useState(false);
+  const [showNewBriefingForm, setShowNewBriefingForm] = useState(false);
+  const [newBriefing, setNewBriefing] = useState({
+    template_id: "",
+    briefing_name: "",
+    location: "",
+    briefing_date: new Date().toISOString().split('T')[0],
+    briefing_time: "09:00",
+    notes: ""
+  });
+
+  useEffect(() => {
+    fetchBriefings();
+  }, []);
+
+  const fetchBriefings = async () => {
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+
+      const { data, error } = await supabase
+        .from('team_briefings')
+        .select('*')
+        .order('briefing_date', { ascending: false });
+
+      if (error) throw error;
+      setBriefings((data || []).map(item => ({
+        ...item,
+        attendees: Array.isArray(item.attendees) ? item.attendees as Array<{ name: string; signature?: string; timestamp?: string }> : [],
+        key_points: item.key_points || [],
+        safety_points: item.safety_points || [],
+        equipment_required: item.equipment_required || [],
+        duration_minutes: item.duration_minutes || 10,
+        notes: item.notes || ""
+      })));
+    } catch (error) {
+      console.error('Error fetching briefings:', error);
+      toast({
+        title: "Error",
+        description: "Failed to load briefings",
+        variant: "destructive"
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const createBriefingFromTemplate = async (template: BriefingTemplate) => {
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) throw new Error('No user logged in');
+
+      if (!newBriefing.briefing_name.trim() || !newBriefing.location.trim()) {
+        toast({
+          title: "Error",
+          description: "Please fill in briefing name and location",
+          variant: "destructive"
+        });
+        return;
+      }
+
+      const { data, error } = await supabase
+        .from('team_briefings')
+        .insert({
+          user_id: user.id,
+          template_id: template.id,
+          briefing_name: newBriefing.briefing_name,
+          location: newBriefing.location,
+          briefing_date: newBriefing.briefing_date,
+          briefing_time: newBriefing.briefing_time,
+          attendees: [],
+          key_points: template.keyPoints,
+          safety_points: template.safetyPoints,
+          equipment_required: template.equipment,
+          duration_minutes: parseInt(template.duration.split(' ')[0]) || 10,
+          notes: newBriefing.notes
+        })
+        .select()
+        .single();
+
+      if (error) throw error;
+
+      setBriefings(prev => [{
+        ...data,
+        attendees: Array.isArray(data.attendees) ? data.attendees as Array<{ name: string; signature?: string; timestamp?: string }> : [],
+        key_points: data.key_points || [],
+        safety_points: data.safety_points || [],
+        equipment_required: data.equipment_required || [],
+        duration_minutes: data.duration_minutes || 10,
+        notes: data.notes || ""
+      }, ...prev]);
+      setShowNewBriefingForm(false);
+      setNewBriefing({
+        template_id: "",
+        briefing_name: "",
+        location: "",
+        briefing_date: new Date().toISOString().split('T')[0],
+        briefing_time: "09:00",
+        notes: ""
+      });
+
+      toast({
+        title: "Success",
+        description: "Briefing scheduled successfully",
+        variant: "success"
+      });
+    } catch (error) {
+      console.error('Error creating briefing:', error);
+      toast({
+        title: "Error",
+        description: "Failed to create briefing",
+        variant: "destructive"
+      });
+    }
+  };
+
+  const addAttendee = async () => {
+    if (!selectedBriefing || !newAttendee.trim()) return;
+
+    try {
+      const updatedAttendees = [
+        ...selectedBriefing.attendees,
+        { 
+          name: newAttendee, 
+          timestamp: new Date().toISOString() 
+        }
+      ];
+
+      const { error } = await supabase
+        .from('team_briefings')
+        .update({ attendees: updatedAttendees })
+        .eq('id', selectedBriefing.id);
+
+      if (error) throw error;
+
+      setSelectedBriefing(prev => prev ? { ...prev, attendees: updatedAttendees } : null);
+      setBriefings(prev => prev.map(b => 
+        b.id === selectedBriefing.id ? { ...b, attendees: updatedAttendees } : b
+      ));
+      setNewAttendee("");
+
+      toast({
+        title: "Success",
+        description: "Attendee added successfully",
+        variant: "success"
+      });
+    } catch (error) {
+      console.error('Error adding attendee:', error);
+      toast({
+        title: "Error",
+        description: "Failed to add attendee",
+        variant: "destructive"
+      });
+    }
+  };
+
+  const markBriefingComplete = async (briefingId: string) => {
+    try {
+      const { error } = await supabase
+        .from('team_briefings')
+        .update({ completed: true })
+        .eq('id', briefingId);
+
+      if (error) throw error;
+
+      setBriefings(prev => prev.map(b => 
+        b.id === briefingId ? { ...b, completed: true } : b
+      ));
+
+      toast({
+        title: "Success",
+        description: "Briefing marked as complete",
+        variant: "success"
+      });
+    } catch (error) {
+      console.error('Error completing briefing:', error);
+      toast({
+        title: "Error",
+        description: "Failed to complete briefing",
+        variant: "destructive"
+      });
+    }
+  };
 
   const categories = ["Installation", "Maintenance", "Testing", "Safety", "Emergency", "General"];
 
@@ -124,8 +331,122 @@ const TeamBriefingTemplates = () => {
     return colors[category] || "bg-gray-500";
   };
 
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center py-8">
+        <Loader2 className="h-8 w-8 animate-spin text-elec-yellow" />
+        <span className="ml-2 text-muted-foreground">Loading briefings...</span>
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-6">
+      {/* Statistics */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <Card className="border-blue-500/30">
+          <CardContent className="p-4 text-center">
+            <div className="text-2xl font-bold text-blue-400">{briefings.length}</div>
+            <div className="text-sm text-muted-foreground">Total Briefings</div>
+          </CardContent>
+        </Card>
+        <Card className="border-green-500/30">
+          <CardContent className="p-4 text-center">
+            <div className="text-2xl font-bold text-green-400">
+              {briefings.filter(b => b.completed).length}
+            </div>
+            <div className="text-sm text-muted-foreground">Completed</div>
+          </CardContent>
+        </Card>
+        <Card className="border-yellow-500/30">
+          <CardContent className="p-4 text-center">
+            <div className="text-2xl font-bold text-yellow-400">
+              {briefings.reduce((total, b) => total + b.attendees.length, 0)}
+            </div>
+            <div className="text-sm text-muted-foreground">Total Attendees</div>
+          </CardContent>
+        </Card>
+        <Card className="border-purple-500/30">
+          <CardContent className="p-4 text-center">
+            <div className="text-2xl font-bold text-purple-400">
+              {briefings.filter(b => new Date(b.briefing_date) >= new Date()).length}
+            </div>
+            <div className="text-sm text-muted-foreground">Upcoming</div>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Scheduled Briefings */}
+      <Card className="border-elec-yellow/20 bg-elec-gray">
+        <CardHeader>
+          <CardTitle className="text-elec-yellow flex items-center gap-2">
+            <Clock className="h-5 w-5" />
+            Scheduled Team Briefings
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          {briefings.length === 0 ? (
+            <div className="text-center py-8 text-muted-foreground">
+              No briefings scheduled yet. Create one from a template below.
+            </div>
+          ) : (
+            <div className="space-y-4">
+              {briefings.map((briefing) => (
+                <Card key={briefing.id} className="border-elec-yellow/30">
+                  <CardContent className="p-4">
+                    <div className="flex items-start justify-between mb-3">
+                      <div className="flex gap-2">
+                        <Badge className={briefing.completed ? "bg-green-500" : "bg-blue-500"}>
+                          {briefing.completed ? "Completed" : "Scheduled"}
+                        </Badge>
+                        <span className="text-sm text-muted-foreground">
+                          {briefing.briefing_date} at {briefing.briefing_time}
+                        </span>
+                      </div>
+                      <div className="flex gap-2">
+                        <Button 
+                          size="sm" 
+                          variant="outline"
+                          onClick={() => {
+                            setSelectedBriefing(briefing);
+                            setShowAttendanceModal(true);
+                          }}
+                        >
+                          <UserCheck className="h-3 w-3 mr-1" />
+                          Attendance
+                        </Button>
+                        {!briefing.completed && (
+                          <Button 
+                            size="sm" 
+                            variant="outline"
+                            onClick={() => markBriefingComplete(briefing.id)}
+                          >
+                            Complete
+                          </Button>
+                        )}
+                      </div>
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <h4 className="font-medium">{briefing.briefing_name}</h4>
+                      <div className="text-sm text-muted-foreground">📍 {briefing.location}</div>
+                      <div className="text-sm">
+                        <span className="font-medium">{briefing.attendees.length}</span> attendees
+                        {briefing.attendees.length > 0 && (
+                          <span className="ml-2">
+                            ({briefing.attendees.map(a => a.name).join(', ')})
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          )}
+        </CardContent>
+      </Card>
+
       {/* Header and Actions */}
       <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader>
@@ -201,6 +522,18 @@ const TeamBriefingTemplates = () => {
                           }}
                         >
                           <Edit className="h-3 w-3" />
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setSelectedTemplate(template);
+                            setNewBriefing(prev => ({ ...prev, template_id: template.id }));
+                            setShowNewBriefingForm(true);
+                          }}
+                        >
+                          <Plus className="h-3 w-3" />
                         </Button>
                       </div>
                     </div>

@@ -1439,6 +1439,75 @@ export type Database = {
         }
         Relationships: []
       }
+      near_miss_reports: {
+        Row: {
+          assigned_to: string | null
+          category: string
+          completed_date: string | null
+          created_at: string
+          description: string
+          due_date: string | null
+          follow_up_required: boolean
+          id: string
+          immediate_actions: string | null
+          incident_date: string
+          incident_time: string
+          location: string
+          photos_attached: string[] | null
+          potential_consequences: string | null
+          preventive_measures: string | null
+          reporter_name: string
+          severity: string
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          assigned_to?: string | null
+          category: string
+          completed_date?: string | null
+          created_at?: string
+          description: string
+          due_date?: string | null
+          follow_up_required?: boolean
+          id?: string
+          immediate_actions?: string | null
+          incident_date: string
+          incident_time: string
+          location: string
+          photos_attached?: string[] | null
+          potential_consequences?: string | null
+          preventive_measures?: string | null
+          reporter_name: string
+          severity: string
+          status?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          assigned_to?: string | null
+          category?: string
+          completed_date?: string | null
+          created_at?: string
+          description?: string
+          due_date?: string | null
+          follow_up_required?: boolean
+          id?: string
+          immediate_actions?: string | null
+          incident_date?: string
+          incident_time?: string
+          location?: string
+          photos_attached?: string[] | null
+          potential_consequences?: string | null
+          preventive_measures?: string | null
+          reporter_name?: string
+          severity?: string
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       ojt_assessments: {
         Row: {
           created_at: string
@@ -2410,6 +2479,57 @@ export type Database = {
         }
         Relationships: []
       }
+      safety_photos: {
+        Row: {
+          category: string
+          created_at: string
+          description: string
+          file_size: number | null
+          file_url: string
+          filename: string
+          gps_latitude: number | null
+          gps_longitude: number | null
+          id: string
+          location: string | null
+          mime_type: string | null
+          tags: string[] | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          category: string
+          created_at?: string
+          description: string
+          file_size?: number | null
+          file_url: string
+          filename: string
+          gps_latitude?: number | null
+          gps_longitude?: number | null
+          id?: string
+          location?: string | null
+          mime_type?: string | null
+          tags?: string[] | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          description?: string
+          file_size?: number | null
+          file_url?: string
+          filename?: string
+          gps_latitude?: number | null
+          gps_longitude?: number | null
+          id?: string
+          location?: string | null
+          mime_type?: string | null
+          tags?: string[] | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       safety_resources: {
         Row: {
           average_rating: number | null
@@ -2708,6 +2828,63 @@ export type Database = {
           sku?: string | null
           supplier_name?: string
           unit?: string
+        }
+        Relationships: []
+      }
+      team_briefings: {
+        Row: {
+          attendees: Json
+          briefing_date: string
+          briefing_name: string
+          briefing_time: string
+          completed: boolean
+          created_at: string
+          duration_minutes: number | null
+          equipment_required: string[] | null
+          id: string
+          key_points: string[] | null
+          location: string
+          notes: string | null
+          safety_points: string[] | null
+          template_id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          attendees?: Json
+          briefing_date: string
+          briefing_name: string
+          briefing_time: string
+          completed?: boolean
+          created_at?: string
+          duration_minutes?: number | null
+          equipment_required?: string[] | null
+          id?: string
+          key_points?: string[] | null
+          location: string
+          notes?: string | null
+          safety_points?: string[] | null
+          template_id: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          attendees?: Json
+          briefing_date?: string
+          briefing_name?: string
+          briefing_time?: string
+          completed?: boolean
+          created_at?: string
+          duration_minutes?: number | null
+          equipment_required?: string[] | null
+          id?: string
+          key_points?: string[] | null
+          location?: string
+          notes?: string | null
+          safety_points?: string[] | null
+          template_id?: string
+          updated_at?: string
+          user_id?: string
         }
         Relationships: []
       }
