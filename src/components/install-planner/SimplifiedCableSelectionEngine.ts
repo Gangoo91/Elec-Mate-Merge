@@ -181,7 +181,7 @@ export class SimplifiedCableSelectionEngine {
         type: planData.cableType,
         currentCarryingCapacity: Math.round(deratedCapacity),
         voltageDropPercentage: parseFloat(voltageDropPercent.toFixed(2)),
-        ratedCurrent: Math.ceil(designCurrent * 1.1), // Basic protection sizing
+        ratedCurrent: this.getStandardBreakerRating(designCurrent),
         suitability: overallOK ? "suitable" : "unsuitable",
         notes,
         cost: spec.costLevel,
@@ -221,7 +221,14 @@ export class SimplifiedCableSelectionEngine {
     return mapping[method] || "clipped-direct";
   }
 
-  // Generate simplified recommendations
+  // Get standard BS 7671 breaker rating
+  static getStandardBreakerRating(designCurrent: number): number {
+    // BS EN 60898 standard ratings
+    const standardRatings = [6, 10, 16, 20, 25, 32, 40, 50, 63, 80, 100, 125];
+    return standardRatings.find(rating => rating >= designCurrent) || standardRatings[standardRatings.length - 1];
+  }
+
+  // Generate simplified recommendations with multiple options
   static generateRecommendations(options: CableRecommendation[]): string[] {
     const recommendations: string[] = [];
     const suitableOptions = options.filter(opt => opt.suitability === "suitable");
@@ -233,10 +240,17 @@ export class SimplifiedCableSelectionEngine {
         recommendations.push(`Consider ${largestOption.size}mm² or review installation parameters`);
       }
     } else {
-      const recommended = suitableOptions[0];
-      recommendations.push(`Recommended: ${recommended.size}mm² ${recommended.type}`);
-      recommendations.push(`Current capacity: ${recommended.currentCarryingCapacity}A`);
-      recommendations.push(`Voltage drop: ${recommended.voltageDropPercentage}%`);
+      // Show multiple suitable options for professional choice
+      const primary = suitableOptions[0];
+      recommendations.push(`Primary choice: ${primary.size}mm² ${primary.type} (code minimum)`);
+      recommendations.push(`Protection: ${primary.ratedCurrent}A breaker required`);
+      
+      // Show alternative if available
+      if (suitableOptions.length > 1) {
+        const alternative = suitableOptions[1];
+        recommendations.push(`Alternative: ${alternative.size}mm² for enhanced performance`);
+        recommendations.push(`Trade-off: Higher cost but better voltage regulation`);
+      }
     }
     
     return recommendations;

@@ -125,8 +125,8 @@ const PostResultGuidance: React.FC<PostResultGuidanceProps> = ({
       );
     } else {
       accessories.push({
-        name: "Containment (conduit/trunking)",
-        description: "Cable routing and protection system",
+        name: "Conduit/trunking system",
+        description: "Cable routing and protection",
         quantity: `${Math.ceil(planData.cableLength * 1.2)}m`,
         importance: "Essential"
       });
@@ -157,12 +157,6 @@ const PostResultGuidance: React.FC<PostResultGuidanceProps> = ({
     
     if (isRingCircuit) {
       accessories.push(
-        {
-          name: "Junction boxes",
-          description: "Ring circuit maintenance joints",
-          quantity: "2-4 units",
-          importance: "Recommended"
-        },
         {
           name: "Socket outlet accessories",
           description: "Back boxes and mounting hardware",
