@@ -21,12 +21,6 @@ export const toolOptions = [
     description: "Generate professional electrical reports and documentation"
   },
   { 
-    value: "regulations", 
-    label: "Regulations", 
-    icon: Book,
-    description: "Access BS 7671 information and compliance guidance"
-  },
-  { 
     value: "circuit", 
     label: "Circuit Design", 
     icon: Zap,
