@@ -93,7 +93,7 @@ const CableRecommendationsCard = ({ recommendations, onSelectCable, showNonCompl
             </div>
 
             {/* Clean Specs Grid */}
-            <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2 text-sm">
               <div className="flex justify-between">
                 <span className="text-white/80">Capacity:</span>
                 <span className="font-medium text-white tabular-nums">{cable.currentCarryingCapacity}A</span>
