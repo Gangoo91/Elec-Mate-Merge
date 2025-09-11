@@ -221,7 +221,7 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove }: Enh
   };
 
   return (
-    <div className="mobile-section-spacing">
+    <div className="space-y-4">
       <DropdownTabs
         tabs={[
           {
@@ -229,13 +229,13 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove }: Enh
             label: "Smart Pricing",
             icon: Calculator,
             content: (
-              <div className="w-full bg-card/50 border border-primary/20 rounded-lg p-3 sm:p-4">
-                <div className="mb-3 sm:mb-4">
-                  <h3 className="mobile-subheading flex items-center gap-2">
-                    <Calculator className="h-4 w-4 sm:h-5 sm:w-5" />
+              <div className="w-full bg-card/50 border border-primary/20 rounded-lg p-4">
+                <div className="mb-4">
+                  <h3 className="text-lg font-semibold flex items-center gap-2">
+                    <Calculator className="h-5 w-5" />
                     Enhanced Materials Pricing
                   </h3>
-                  <p className="mobile-small-text text-muted-foreground mt-1 leading-relaxed">
+                  <p className="text-sm text-muted-foreground mt-1">
                     Smart pricing with quantity discounts, waste factors, and regional adjustments
                   </p>
                 </div>
@@ -248,7 +248,7 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove }: Enh
             label: "Live Pricing",
             icon: Search,
             content: (
-              <div className="w-full bg-card/50 border border-primary/20 rounded-lg p-3 sm:p-4">
+              <div className="w-full bg-card/50 border border-primary/20 rounded-lg p-4">
                 <LiveMaterialPricing 
                   onAddToQuote={addMaterialToQuote}
                   onAddMultipleToQuote={addMultipleMaterialsToQuote}
@@ -261,22 +261,22 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove }: Enh
             label: "Quick Add",
             icon: Clock,
             content: (
-              <div className="w-full bg-card/50 border border-primary/20 rounded-lg p-3 sm:p-4">
-                <div className="mb-3 sm:mb-4">
-                  <h3 className="mobile-subheading flex items-center gap-2">
-                    <Clock className="h-4 w-4 sm:h-5 sm:w-5" />
+              <div className="w-full bg-card/50 border border-primary/20 rounded-lg p-4">
+                <div className="mb-4">
+                  <h3 className="text-lg font-semibold flex items-center gap-2">
+                    <Clock className="h-5 w-5" />
                     Quick Add Items
                   </h3>
                 </div>
-                <div className="mobile-input-spacing">
+                <div className="space-y-4">
                   {/* Category Selection */}
                   <div className="space-y-2">
-                    <Label htmlFor="category" className="mobile-small-text font-medium">Category</Label>
+                    <Label htmlFor="category" className="text-sm font-medium">Category</Label>
                     <Select value={newItem.category} onValueChange={handleCategoryChange}>
-                      <SelectTrigger className="touch-target w-full mobile-focus">
+                      <SelectTrigger className="h-12 w-full">
                         <SelectValue placeholder="Select category" />
                       </SelectTrigger>
-                      <SelectContent className="z-50 bg-background border shadow-lg select-scrollbar-none">
+                      <SelectContent className="z-50 bg-background border shadow-lg">
                         <SelectItem value="labour">
                           <div className="flex items-center gap-2">
                             <Wrench className="h-4 w-4" />
@@ -603,116 +603,19 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove }: Enh
         className="mb-6"
       />
 
-      {/* Items List - Mobile Responsive */}
+      {/* Items List */}
       {items.length > 0 && (
-        <Card className="mobile-card bg-card border-primary/20">
-          <CardHeader className="p-2 sm:p-3 md:p-4 lg:p-6 pb-2 sm:pb-3 md:pb-4">
-            <CardTitle className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-              <span className="mobile-text">Quote Items ({items.length})</span>
-              <span className="text-lg sm:text-xl font-bold text-primary mobile-text">
+        <Card className="bg-card border-primary/20">
+          <CardHeader>
+            <CardTitle className="flex items-center justify-between">
+              <span>Quote Items ({items.length})</span>
+              <span className="text-xl font-bold text-primary">
                 Total: £{total.toFixed(2)}
               </span>
             </CardTitle>
           </CardHeader>
-          <CardContent className="p-2 sm:p-3 md:p-4 lg:p-6">
-            {/* Mobile Card View */}
-            <div className="block sm:hidden space-y-3">
-              {items.map((item) => (
-                <Card key={item.id} className="bg-background border border-border mobile-interactive">
-                  <CardContent className="p-2 sm:p-3">
-                    <div className="space-y-2 sm:space-y-3">
-                      <div className="flex items-start justify-between">
-                        <div className="flex items-center gap-2">
-                          {getCategoryIcon(item.category)}
-                          <div className="min-w-0 flex-1">
-                            <p className="font-medium mobile-small-text leading-relaxed">{item.description}</p>
-                            {item.notes && (
-                              <p className="mobile-small-text text-muted-foreground mt-1 leading-relaxed">{item.notes}</p>
-                            )}
-                          </div>
-                        </div>
-                        <div className="text-right flex-shrink-0">
-                          <p className="font-semibold text-primary mobile-small-text">£{item.totalPrice.toFixed(2)}</p>
-                        </div>
-                      </div>
-                      
-                      <div className="grid grid-cols-3 gap-1 sm:gap-2">
-                        <div>
-                          <label className="mobile-small-text text-muted-foreground">Qty</label>
-                          <Input
-                            type="number"
-                            value={item.quantity}
-                            onChange={(e) => {
-                              const value = e.target.value;
-                              if (value === '') {
-                                onUpdate(item.id, { quantity: 0 });
-                              } else {
-                                const parsed = parseFloat(value);
-                                if (!isNaN(parsed) && parsed >= 0) {
-                                  onUpdate(item.id, { quantity: parsed });
-                                }
-                              }
-                            }}
-                            onBlur={(e) => {
-                              const value = parseFloat(e.target.value);
-                              if (isNaN(value) || value <= 0) {
-                                onUpdate(item.id, { quantity: 1 });
-                              }
-                            }}
-                            className="touch-target text-center mobile-focus"
-                            min="0.1"
-                            step="0.1"
-                            inputMode="decimal"
-                          />
-                        </div>
-                        <div>
-                          <label className="mobile-small-text text-muted-foreground">Unit</label>
-                          <div className="touch-target flex items-center justify-center border rounded-md bg-muted/30 mobile-small-text">
-                            {item.unit}
-                          </div>
-                        </div>
-                        <div>
-                          <label className="mobile-small-text text-muted-foreground">Price</label>
-                          <Input
-                            type="number"
-                            value={item.unitPrice}
-                            onChange={(e) => onUpdate(item.id, { unitPrice: parseFloat(e.target.value) || 0 })}
-                            className="touch-target text-right mobile-focus"
-                            min="0"
-                            step="0.01"
-                            inputMode="decimal"
-                          />
-                        </div>
-                      </div>
-                      
-                      <div className="flex items-center justify-center gap-1 sm:gap-2 pt-2 border-t">
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => duplicateItem(item)}
-                          className="touch-target mobile-focus"
-                        >
-                          <Copy className="h-4 w-4 mr-1" />
-                          Copy
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => onRemove(item.id)}
-                          className="touch-target mobile-focus text-destructive hover:text-destructive"
-                        >
-                          <Trash2 className="h-4 w-4 mr-1" />
-                          Remove
-                        </Button>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-
-            {/* Desktop Table View */}
-            <div className="hidden sm:block overflow-x-auto">
+          <CardContent>
+            <div className="overflow-x-auto">
               <Table>
                 <TableHeader>
                   <TableRow className="border-muted">
@@ -747,8 +650,9 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove }: Enh
                           value={item.quantity}
                           onChange={(e) => {
                             const value = e.target.value;
+                            // Allow empty string for deletion, otherwise parse the value
                             if (value === '') {
-                              onUpdate(item.id, { quantity: 0 });
+                              onUpdate(item.id, { quantity: 0 }); // Temporarily set to 0 to allow clearing
                             } else {
                               const parsed = parseFloat(value);
                               if (!isNaN(parsed) && parsed >= 0) {
@@ -757,6 +661,7 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove }: Enh
                             }
                           }}
                           onBlur={(e) => {
+                            // Ensure minimum value on blur
                             const value = parseFloat(e.target.value);
                             if (isNaN(value) || value <= 0) {
                               onUpdate(item.id, { quantity: 1 });

@@ -141,54 +141,54 @@ Your Electrician`;
   };
 
   return (
-    <div className="mobile-section-spacing">
+    <div className="space-y-6">
       {/* Quote Header */}
-      <div className="mobile-grid-auto">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Client Information */}
-        <Card className="mobile-card-compact bg-card/50 border-border/20">
-          <CardHeader className="pb-3">
-            <CardTitle className="flex items-center gap-2 mobile-subheading">
-              <User className="h-4 w-4 sm:h-5 sm:w-5" />
+        <Card className="bg-card/50 border-border/20">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2 text-lg">
+              <User className="h-5 w-5" />
               Client Details
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-2 sm:space-y-3">
+          <CardContent className="space-y-2">
             <div>
-              <p className="font-semibold mobile-text">{quote.client?.name}</p>
-              <p className="mobile-small-text text-muted-foreground break-all">{quote.client?.email}</p>
-              <p className="mobile-small-text text-muted-foreground">{quote.client?.phone}</p>
+              <p className="font-semibold">{quote.client?.name}</p>
+              <p className="text-sm text-muted-foreground">{quote.client?.email}</p>
+              <p className="text-sm text-muted-foreground">{quote.client?.phone}</p>
             </div>
             <div>
-              <p className="mobile-small-text leading-relaxed">{quote.client?.address}</p>
-              <p className="mobile-small-text">{quote.client?.postcode}</p>
+              <p className="text-sm">{quote.client?.address}</p>
+              <p className="text-sm">{quote.client?.postcode}</p>
             </div>
           </CardContent>
         </Card>
 
         {/* Quote Information */}
-        <Card className="mobile-card-compact bg-card/50 border-border/20">
-          <CardHeader className="pb-3">
-            <CardTitle className="flex items-center gap-2 mobile-subheading">
-              <FileText className="h-4 w-4 sm:h-5 sm:w-5" />
+        <Card className="bg-card/50 border-border/20">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2 text-lg">
+              <FileText className="h-5 w-5" />
               Quote Details
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-2 sm:space-y-3">
-            <div className="flex justify-between items-center">
-              <span className="mobile-small-text text-muted-foreground">Quote Number:</span>
-              <span className="font-medium mobile-small-text break-all">{quote.quoteNumber}</span>
+          <CardContent className="space-y-2">
+            <div className="flex justify-between">
+              <span className="text-sm text-muted-foreground">Quote Number:</span>
+              <span className="font-medium">{quote.quoteNumber}</span>
             </div>
-            <div className="flex justify-between items-center">
-              <span className="mobile-small-text text-muted-foreground">Date:</span>
-              <span className="font-medium mobile-small-text">{quote.createdAt?.toLocaleDateString()}</span>
+            <div className="flex justify-between">
+              <span className="text-sm text-muted-foreground">Date:</span>
+              <span className="font-medium">{quote.createdAt?.toLocaleDateString()}</span>
             </div>
-            <div className="flex justify-between items-center">
-              <span className="mobile-small-text text-muted-foreground">Status:</span>
-              <span className="font-medium mobile-small-text capitalize">{quote.status}</span>
+            <div className="flex justify-between">
+              <span className="text-sm text-muted-foreground">Status:</span>
+              <span className="font-medium capitalize">{quote.status}</span>
             </div>
-            <div className="flex justify-between items-center">
-              <span className="mobile-small-text text-muted-foreground">Items:</span>
-              <span className="font-medium mobile-small-text">{quote.items?.length || 0}</span>
+            <div className="flex justify-between">
+              <span className="text-sm text-muted-foreground">Items:</span>
+              <span className="font-medium">{quote.items?.length || 0}</span>
             </div>
           </CardContent>
         </Card>
@@ -196,36 +196,36 @@ Your Electrician`;
 
       {/* Job Details */}
       {quote.jobDetails && (
-        <Card className="mobile-card-compact bg-card/50 border-border/20">
-          <CardHeader className="pb-3">
-            <CardTitle className="flex items-center gap-2 mobile-subheading">
-              <Briefcase className="h-4 w-4 sm:h-5 sm:w-5" />
+        <Card className="bg-card/50 border-border/20">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2 text-lg">
+              <Briefcase className="h-5 w-5" />
               Job Details
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-3 sm:space-y-4">
+          <CardContent className="space-y-3">
             <div>
-              <h4 className="font-semibold mobile-subheading">{quote.jobDetails.title}</h4>
-              <p className="text-muted-foreground mt-1 mobile-text leading-relaxed">{quote.jobDetails.description}</p>
+              <h4 className="font-semibold text-lg">{quote.jobDetails.title}</h4>
+              <p className="text-muted-foreground mt-1">{quote.jobDetails.description}</p>
             </div>
             {(quote.jobDetails.location || quote.jobDetails.estimatedDuration || quote.jobDetails.workStartDate) && (
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 pt-2 border-t">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2 border-t">
                 {quote.jobDetails.location && (
-                  <div className="min-w-0">
-                    <span className="mobile-small-text font-medium">Location:</span>
-                    <p className="mobile-small-text text-muted-foreground leading-relaxed break-words">{quote.jobDetails.location}</p>
+                  <div>
+                    <span className="text-sm font-medium">Location:</span>
+                    <p className="text-sm text-muted-foreground">{quote.jobDetails.location}</p>
                   </div>
                 )}
                 {quote.jobDetails.estimatedDuration && (
-                  <div className="min-w-0">
-                    <span className="mobile-small-text font-medium">Duration:</span>
-                    <p className="mobile-small-text text-muted-foreground">{quote.jobDetails.estimatedDuration}</p>
+                  <div>
+                    <span className="text-sm font-medium">Duration:</span>
+                    <p className="text-sm text-muted-foreground">{quote.jobDetails.estimatedDuration}</p>
                   </div>
                 )}
                 {quote.jobDetails.workStartDate && (
-                  <div className="min-w-0">
-                    <span className="mobile-small-text font-medium">Start Date:</span>
-                    <p className="mobile-small-text text-muted-foreground">
+                  <div>
+                    <span className="text-sm font-medium">Start Date:</span>
+                    <p className="text-sm text-muted-foreground">
                       {new Date(quote.jobDetails.workStartDate).toLocaleDateString()}
                     </p>
                   </div>
@@ -234,8 +234,8 @@ Your Electrician`;
             )}
             {quote.jobDetails.specialRequirements && (
               <div className="pt-2 border-t">
-                <span className="mobile-small-text font-medium">Special Requirements:</span>
-                <p className="mobile-small-text text-muted-foreground mt-1 leading-relaxed">{quote.jobDetails.specialRequirements}</p>
+                <span className="text-sm font-medium">Special Requirements:</span>
+                <p className="text-sm text-muted-foreground mt-1">{quote.jobDetails.specialRequirements}</p>
               </div>
             )}
           </CardContent>
@@ -243,17 +243,17 @@ Your Electrician`;
       )}
 
       {/* Quote Items - Split by Category */}
-      <div className="mobile-card-spacing">
+      <div className="space-y-4">
         {/* Labour Items */}
         {quote.items?.filter(item => item.category === 'labour').sort((a, b) => b.totalPrice - a.totalPrice).length > 0 && (
-          <Card className="mobile-card bg-card border-border">
+          <Card className="bg-card border-border">
             <CardHeader className="pb-3">
-              <CardTitle className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mobile-text">
+              <CardTitle className="flex items-center justify-between text-base">
                 <div className="flex items-center gap-2">
-                  <Wrench className="h-4 w-4 sm:h-5 sm:w-5" />
-                  <span>Labour ({quote.items?.filter(item => item.category === 'labour').length})</span>
+                  <Wrench className="h-5 w-5" />
+                  Labour ({quote.items?.filter(item => item.category === 'labour').length})
                 </div>
-                <span className="text-primary font-semibold mobile-text">
+                <span className="text-primary font-semibold">
                   £{quote.items?.filter(item => item.category === 'labour').reduce((sum, item) => sum + item.totalPrice, 0).toFixed(2)}
                 </span>
               </CardTitle>
@@ -261,16 +261,16 @@ Your Electrician`;
             <CardContent className="pt-0">
               <div className="space-y-3">
                 {quote.items?.filter(item => item.category === 'labour').sort((a, b) => b.totalPrice - a.totalPrice).map((item) => (
-                  <div key={item.id} className="bg-background border border-border rounded-lg p-3 mobile-interactive">
+                  <div key={item.id} className="bg-background border border-border rounded-lg p-3">
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                       <div className="min-w-0 flex-1">
-                        <p className="font-medium mobile-small-text leading-relaxed">{item.description}</p>
-                        <p className="mobile-small-text text-muted-foreground">
+                        <p className="font-medium text-sm">{item.description}</p>
+                        <p className="text-xs text-muted-foreground">
                           {item.quantity} × £{item.unitPrice.toFixed(2)}
                         </p>
                       </div>
-                      <div className="text-right flex-shrink-0">
-                        <p className="font-semibold text-primary mobile-small-text">£{item.totalPrice.toFixed(2)}</p>
+                      <div className="text-right">
+                        <p className="font-semibold text-primary">£{item.totalPrice.toFixed(2)}</p>
                       </div>
                     </div>
                   </div>
@@ -383,11 +383,11 @@ Your Electrician`;
       </Card>
 
       {/* Quote Actions */}
-      <div className="mobile-action-bar">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <Button 
           onClick={handleDownloadPDF} 
           disabled={isDownloading}
-          className="mobile-button-primary disabled:opacity-50 w-full"
+          className="flex items-center gap-2 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 disabled:opacity-50"
         >
           {isDownloading ? (
             <Loader2 className="h-4 w-4 animate-spin" />
@@ -397,7 +397,7 @@ Your Electrician`;
           {isDownloading ? "Generating..." : "Download PDF"}
         </Button>
         
-        <Button onClick={handleEmailQuote} variant="outline" className="mobile-button-secondary w-full">
+        <Button onClick={handleEmailQuote} variant="outline" className="flex items-center gap-2">
           <Mail className="h-4 w-4" />
           Email to Client
         </Button>
@@ -411,7 +411,7 @@ Your Electrician`;
             });
           }} 
           variant="outline" 
-          className="mobile-focus touch-target w-full border-elec-blue text-elec-blue hover:bg-elec-blue/10"
+          className="flex items-center gap-2 border-elec-blue text-elec-blue hover:bg-elec-blue/10"
         >
           <FileText className="h-4 w-4" />
           Amend Quote

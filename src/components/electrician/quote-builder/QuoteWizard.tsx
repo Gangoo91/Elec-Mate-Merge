@@ -81,7 +81,7 @@ export const QuoteWizard = ({ onQuoteGenerated }: QuoteWizardProps) => {
   };
 
   return (
-    <div className="space-y-2 sm:space-y-3 md:space-y-4 max-w-4xl mx-auto px-2 sm:px-4 md:px-6 lg:px-8">
+    <div className="space-y-4 max-w-4xl mx-auto">
       {/* Simple Progress */}
       <QuoteProgressIndicator
         currentStep={currentStep}
@@ -90,48 +90,40 @@ export const QuoteWizard = ({ onQuoteGenerated }: QuoteWizardProps) => {
       />
 
       {/* Main Content */}
-      <Card className="mobile-card">
-        <CardHeader className="p-2 xs:p-3 sm:p-4 md:p-6 lg:p-8 pb-1 xs:pb-2 sm:pb-3 md:pb-4">
-          <CardTitle className="text-lg xs:text-xl sm:text-2xl md:text-3xl font-semibold leading-tight">{steps[currentStep].title}</CardTitle>
-          <p className="text-xs xs:text-sm sm:text-base text-muted-foreground mt-1 xs:mt-1.5 sm:mt-2">{steps[currentStep].description}</p>
+      <Card>
+        <CardHeader className="pb-4">
+          <CardTitle className="text-xl">{steps[currentStep].title}</CardTitle>
+          <p className="text-sm text-muted-foreground">{steps[currentStep].description}</p>
         </CardHeader>
-        <CardContent className="p-2 xs:p-3 sm:p-4 md:p-6 lg:p-8 space-y-2 xs:space-y-3 sm:space-y-4 md:space-y-6 lg:space-y-8">
-          <div className="w-full overflow-hidden">
-            {renderStep()}
-          </div>
+        <CardContent className="space-y-6">
+          {renderStep()}
           
           {/* Integrated Navigation */}
-          <div className="pt-2 xs:pt-3 sm:pt-4 md:pt-6 lg:pt-8 border-t mt-4 xs:mt-6 sm:mt-8">
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2 xs:gap-3 sm:gap-4">
-              <div className="flex flex-col xs:flex-row items-stretch xs:items-center gap-2 xs:gap-3 order-2 sm:order-1">
+          <div className="pt-4 border-t">
+            <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
+              <div className="flex items-center gap-2">
                 <Button
                   variant="outline"
                   onClick={prevStep}
                   disabled={currentStep === 0}
-                  className="h-10 xs:h-11 sm:h-12 px-3 xs:px-4 sm:px-6 text-xs xs:text-sm sm:text-base touch-manipulation"
+                  size="sm"
                 >
-                  <ArrowLeft className="h-3 w-3 xs:h-4 xs:w-4 mr-1 xs:mr-2" />
+                  <ArrowLeft className="h-4 w-4 mr-2" />
                   Previous
                 </Button>
                 
-                <Button 
-                  variant="ghost" 
-                  onClick={resetQuote} 
-                  className="h-10 xs:h-11 sm:h-12 px-3 xs:px-4 sm:px-6 text-xs xs:text-sm sm:text-base touch-manipulation"
-                >
+                <Button variant="ghost" size="sm" onClick={resetQuote}>
                   Start Over
                 </Button>
               </div>
               
-              <div className="order-1 sm:order-2 w-full xs:w-auto">
-                <SmartContinueButton
-                  canProceed={Boolean(canProceed())}
-                  isLastStep={currentStep === steps.length - 1}
-                  nextStepTitle={steps[currentStep + 1]?.title}
-                  onNext={nextStep}
-                  onGenerate={generateQuote}
-                />
-              </div>
+              <SmartContinueButton
+                canProceed={Boolean(canProceed())}
+                isLastStep={currentStep === steps.length - 1}
+                nextStepTitle={steps[currentStep + 1]?.title}
+                onNext={nextStep}
+                onGenerate={generateQuote}
+              />
             </div>
           </div>
         </CardContent>
