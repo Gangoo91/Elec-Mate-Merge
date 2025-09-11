@@ -12,6 +12,7 @@ interface MobileInputWrapperProps {
   hint?: string;
   disabled?: boolean;
   type?: string;
+  inputMode?: 'text' | 'decimal' | 'numeric' | 'tel' | 'search' | 'email' | 'url';
   step?: string;
   min?: string;
   max?: string;
@@ -29,6 +30,7 @@ export function MobileInputWrapper({
   hint,
   disabled,
   type = "text",
+  inputMode = "text",
   step,
   min,
   max,
@@ -55,6 +57,7 @@ export function MobileInputWrapper({
           
           <Input
             type={type}
+            inputMode={inputMode}
             step={step}
             min={min}
             max={max}
@@ -62,6 +65,7 @@ export function MobileInputWrapper({
             onChange={(e) => onChange(e.target.value)}
             placeholder={placeholder}
             disabled={disabled}
+            autoComplete="off"
             className={cn(
               "h-14 bg-card border-2 border-elec-gray/50 rounded-xl text-elec-light",
               "hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200",
@@ -70,6 +74,7 @@ export function MobileInputWrapper({
               unit ? "pr-16" : "pr-4",
               error ? "border-destructive focus:border-destructive" : ""
             )}
+            style={{ fontSize: '16px' }} // Prevents zoom on iOS
           />
           
           {unit && (

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { MobileInput } from "@/components/ui/mobile-input";
 import { Label } from "@/components/ui/label";
 import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
 import { MobileInputWrapper } from "@/components/ui/mobile-input-wrapper";
@@ -15,10 +15,12 @@ import {
   ChevronRight, 
   Search,
   SortAsc,
-  Filter
+  Filter,
+  Smartphone
 } from "lucide-react";
 import { Circuit } from "./types";
 import CircuitControls from "./CircuitControls";
+import { useMobileEnhanced } from "@/hooks/use-mobile-enhanced";
 
 interface EnhancedMultiCircuitEditorProps {
   circuits: Circuit[];
@@ -31,10 +33,12 @@ const EnhancedMultiCircuitEditor: React.FC<EnhancedMultiCircuitEditorProps> = ({
   onUpdateCircuits,
   installationType 
 }) => {
+  const { isMobile, isTablet, screenSize, orientation, touchSupport } = useMobileEnhanced();
   const [expandedCircuit, setExpandedCircuit] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [sortBy, setSortBy] = useState("name");
   const [filterBy, setFilterBy] = useState("all");
+  const [mobileStep, setMobileStep] = useState<'overview' | 'edit'>('overview');
 
   const updateCircuit = (id: string, updates: Partial<Circuit>) => {
     const updatedCircuits = circuits.map(circuit => 
@@ -148,11 +152,12 @@ const EnhancedMultiCircuitEditor: React.FC<EnhancedMultiCircuitEditorProps> = ({
       <div className="space-y-4">
         <div className="relative">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-          <Input
+          <MobileInput
             placeholder="Search circuits..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-10 bg-elec-dark border-elec-yellow/30"
+            className="pl-10"
+            inputMode="search"
           />
         </div>
 
@@ -240,41 +245,31 @@ const EnhancedMultiCircuitEditor: React.FC<EnhancedMultiCircuitEditorProps> = ({
                       </h4>
                       
                       <div className="space-y-4">
-                        <div>
-                          <Label htmlFor={`name-${circuit.id}`}>Circuit Name</Label>
-                          <Input
-                            id={`name-${circuit.id}`}
-                            value={circuit.name}
-                            onChange={(e) => updateCircuit(circuit.id, { name: e.target.value })}
-                            className="mt-2 bg-elec-dark border-elec-yellow/30"
-                            placeholder="Enter circuit name"
+                        <MobileInputWrapper
+                          label="Circuit Name"
+                          placeholder="Enter circuit name"
+                          value={circuit.name}
+                          onChange={(value) => updateCircuit(circuit.id, { name: value })}
+                        />
+
+                        <div className={`grid gap-4 ${isMobile ? 'grid-cols-1' : 'grid-cols-1 sm:grid-cols-2'}`}>
+                          <MobileInputWrapper
+                            label="Total Load"
+                            placeholder="1000"
+                            value={circuit.totalLoad.toString()}
+                            onChange={(value) => updateCircuit(circuit.id, { totalLoad: Number(value) })}
+                            type="number"
+                            unit="W"
                           />
-                        </div>
 
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                          <div>
-                            <Label htmlFor={`load-${circuit.id}`}>Total Load (W)</Label>
-                            <Input
-                              id={`load-${circuit.id}`}
-                              type="number"
-                              value={circuit.totalLoad}
-                              onChange={(e) => updateCircuit(circuit.id, { totalLoad: Number(e.target.value) })}
-                              className="mt-2 bg-elec-dark border-elec-yellow/30"
-                              placeholder="1000"
-                            />
-                          </div>
-
-                          <div>
-                            <Label htmlFor={`length-${circuit.id}`}>Cable Length (m)</Label>
-                            <Input
-                              id={`length-${circuit.id}`}
-                              type="number"
-                              value={circuit.cableLength}
-                              onChange={(e) => updateCircuit(circuit.id, { cableLength: Number(e.target.value) })}
-                              className="mt-2 bg-elec-dark border-elec-yellow/30"
-                              placeholder="30"
-                            />
-                          </div>
+                          <MobileInputWrapper
+                            label="Cable Length"
+                            placeholder="30"
+                            value={circuit.cableLength.toString()}
+                            onChange={(value) => updateCircuit(circuit.id, { cableLength: Number(value) })}
+                            type="number"
+                            unit="m"
+                          />
                         </div>
 
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -300,21 +295,14 @@ const EnhancedMultiCircuitEditor: React.FC<EnhancedMultiCircuitEditorProps> = ({
                         </div>
 
                         {circuit.phases === "three" && (
-                          <div>
-                            <Label htmlFor={`pf-${circuit.id}`}>Power Factor</Label>
-                            <Input
-                              id={`pf-${circuit.id}`}
-                              type="number"
-                              step="0.01"
-                              min="0.1"
-                              max="1"
-                              value={circuit.powerFactor || 0.85}
-                              onChange={(e) => updateCircuit(circuit.id, { powerFactor: Number(e.target.value) })}
-                              className="mt-2 bg-elec-dark border-elec-yellow/30"
-                              placeholder="0.85"
-                            />
-                            <p className="text-xs text-muted-foreground mt-1">Typical range: 0.7 - 1.0</p>
-                          </div>
+                          <MobileInputWrapper
+                            label="Power Factor"
+                            placeholder="0.85"
+                            value={(circuit.powerFactor || 0.85).toString()}
+                            onChange={(value) => updateCircuit(circuit.id, { powerFactor: Number(value) })}
+                            type="number"
+                            hint="Typical range: 0.7 - 1.0"
+                          />
                         )}
                       </div>
                     </div>
