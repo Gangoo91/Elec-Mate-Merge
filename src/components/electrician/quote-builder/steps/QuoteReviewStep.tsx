@@ -8,6 +8,7 @@ import { generateProfessionalQuotePDF } from "@/utils/quote-pdf-professional";
 import { generateAIEnhancedQuotePDF } from "@/utils/ai-enhanced-quote-pdf";
 import { useToast } from "@/hooks/use-toast";
 import { useCompanyProfile } from "@/hooks/useCompanyProfile";
+import { supabase } from "@/integrations/supabase/client";
 
 interface QuoteReviewStepProps {
   quote: Partial<Quote>;
@@ -17,6 +18,7 @@ export const QuoteReviewStep = ({ quote }: QuoteReviewStepProps) => {
   const { toast } = useToast();
   const { companyProfile } = useCompanyProfile();
   const [isDownloading, setIsDownloading] = useState(false);
+  const [isSendingEmail, setIsSendingEmail] = useState(false);
 
   const handleDownloadPDF = async () => {
     setIsDownloading(true);
@@ -109,11 +111,72 @@ export const QuoteReviewStep = ({ quote }: QuoteReviewStepProps) => {
     }
   };
 
-  const handleEmailQuote = () => {
-    const subject = `Electrical Quote - ${quote.quoteNumber}`;
-    const body = `Dear ${quote.client?.name},
+  const handleEmailQuote = async () => {
+    if (!quote.client?.email) {
+      toast({
+        title: "Missing Email",
+        description: "Client email address is required to send the quote.",
+        variant: "destructive"
+      });
+      return;
+    }
 
-Please find attached your electrical quote for the work discussed.
+    if (!quote.id) {
+      toast({
+        title: "Error",
+        description: "Quote must be saved before sending via email.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    setIsSendingEmail(true);
+    
+    try {
+      // Get effective company profile
+      const effectiveCompanyProfile = companyProfile || {
+        company_name: "Your Electrical Company",
+        company_email: "contact@yourcompany.com"
+      };
+
+      toast({
+        title: "Sending Email",
+        description: "Preparing and sending your quote via Gmail...",
+      });
+
+      const { data, error } = await supabase.functions.invoke('send-quote-email', {
+        body: {
+          quoteId: quote.id,
+          clientEmail: quote.client.email,
+          clientName: quote.client.name,
+          companyName: effectiveCompanyProfile.company_name,
+          quoteNumber: quote.quoteNumber,
+          total: quote.total || 0
+        }
+      });
+
+      if (error) {
+        console.error('Email sending error:', error);
+        throw new Error(error.message || 'Failed to send email');
+      }
+
+      if (data?.success) {
+        toast({
+          title: "Email Sent Successfully",
+          description: `Quote ${quote.quoteNumber} has been sent to ${quote.client.email}`,
+          variant: "success"
+        });
+      } else {
+        throw new Error(data?.error || 'Failed to send email');
+      }
+    } catch (error: any) {
+      console.error('Error sending quote email:', error);
+      
+      // Fallback to mailto if Gmail API fails
+      const subject = `Electrical Quote - ${quote.quoteNumber}`;
+      const body = `Dear ${quote.client?.name},
+
+Please find your electrical quote details below.
 
 Quote Number: ${quote.quoteNumber}
 Total Amount: £${(quote.total || 0).toFixed(2)}
@@ -121,15 +184,19 @@ Total Amount: £${(quote.total || 0).toFixed(2)}
 This quote is valid for 30 days from the date of issue.
 
 Best regards,
-Your Electrician`;
+${companyProfile?.company_name || 'Your Electrician'}`;
 
-    const mailtoLink = `mailto:${quote.client?.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    window.open(mailtoLink);
-    
-    toast({
-      title: "Email Client",
-      description: "Opening email client to send quote.",
-    });
+      const mailtoLink = `mailto:${quote.client?.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      window.open(mailtoLink);
+      
+      toast({
+        title: "Gmail Error - Using Fallback",
+        description: "Gmail API failed. Opening default email client instead.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsSendingEmail(false);
+    }
   };
   const getCategoryIcon = (category: string) => {
     switch (category) {
@@ -397,9 +464,18 @@ Your Electrician`;
           {isDownloading ? "Generating..." : "Download PDF"}
         </Button>
         
-        <Button onClick={handleEmailQuote} variant="outline" className="flex items-center gap-2">
-          <Mail className="h-4 w-4" />
-          Email to Client
+        <Button 
+          onClick={handleEmailQuote} 
+          disabled={isSendingEmail || !quote.client?.email}
+          variant="outline" 
+          className="flex items-center gap-2"
+        >
+          {isSendingEmail ? (
+            <Loader2 className="h-4 w-4 animate-spin" />
+          ) : (
+            <Mail className="h-4 w-4" />
+          )}
+          {isSendingEmail ? "Sending..." : "Email to Client"}
         </Button>
         
         <Button 
