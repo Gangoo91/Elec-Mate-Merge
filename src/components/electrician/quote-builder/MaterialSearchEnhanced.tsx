@@ -2,7 +2,6 @@ import React, { useState, useMemo } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { CheckCircle } from "lucide-react";
 import { DropdownTabs } from "@/components/ui/dropdown-tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -204,22 +203,13 @@ export const MaterialSearchEnhanced = ({ onAddMaterial, currentQuoteItems = [] }
                         });
                       }}
                     >
-                      <CardContent className="p-6 relative">{/* Added relative positioning for chip */}
-                        {/* Selected chip */}
-                        {alreadyInQuote && (
-                          <div className="absolute top-3 right-3">
-                            <Badge className="bg-green-600 text-white border-green-600 flex items-center gap-1 text-xs">
-                              <CheckCircle className="h-3 w-3" />
-                              Selected
-                            </Badge>
-                          </div>
-                        )}
-                        
+                      <CardContent className="p-6">
                         <div className="space-y-4">
                           <div className="flex items-start justify-between gap-4">
                             <div className="flex items-center gap-2">
                               <h4 className={`text-lg font-semibold ${alreadyInQuote ? 'text-slate-400' : 'text-white'}`}>
                                 {material.name}
+                                {alreadyInQuote && <span className="text-xs ml-2 text-slate-500">(In Quote)</span>}
                               </h4>
                               {material.isFavourite && (
                               <Star className="h-5 w-5 text-yellow-400 fill-current flex-shrink-0" />
@@ -271,52 +261,36 @@ export const MaterialSearchEnhanced = ({ onAddMaterial, currentQuoteItems = [] }
                 <div className="grid gap-4">
                   {enhancedMaterials
                     .filter(m => ['socket-13a-dp', 'cable-te-2.5', 'mcb-32a-b', 'led-downlight-fire'].includes(m.id))
-                    .map(material => {
-                      const alreadyInQuote = isInQuote(material);
-                      return (
-                        <Card
-                          key={material.id}
-                          className={`cursor-pointer transition-colors relative ${
-                            alreadyInQuote 
-                              ? 'bg-card/30 border-slate-600 dark:border-slate-400 border-2 opacity-75' 
-                              : 'bg-card/50 border-elec-yellow/20 hover:border-elec-yellow/40'
-                          }`}
-                          onClick={() => {
-                            const pricing = {
-                              unitPrice: material.defaultPrice,
-                              total: material.defaultPrice * 1.2,
-                              quantity: 1
-                            };
-                            onAddMaterial(material, 1, pricing);
-                            toast({
-                              title: alreadyInQuote ? "Material Re-added" : "Material Added",
-                              description: `${material.name} ${alreadyInQuote ? 're-added to' : 'added to'} quote (£${material.defaultPrice.toFixed(2)})`,
-                            });
-                          }}
-                        >
-                          {/* Selected chip for popular items */}
-                          {alreadyInQuote && (
-                            <div className="absolute top-3 right-3 z-10">
-                              <Badge className="bg-green-600 text-white border-green-600 flex items-center gap-1 text-xs">
-                                <CheckCircle className="h-3 w-3" />
-                                Selected
-                              </Badge>
+                    .map(material => (
+                      <Card
+                        key={material.id}
+                        className="bg-card/50 border-elec-yellow/20 cursor-pointer hover:border-elec-yellow/40"
+                        onClick={() => {
+                          const pricing = {
+                            unitPrice: material.defaultPrice,
+                            total: material.defaultPrice * 1.2,
+                            quantity: 1
+                          };
+                          onAddMaterial(material, 1, pricing);
+                          toast({
+                            title: "Material Added",
+                            description: `${material.name} added to quote (£${material.defaultPrice.toFixed(2)})`,
+                          });
+                        }}
+                      >
+                        <CardContent className="p-4">
+                          <div className="flex justify-between items-center">
+                            <div>
+                              <h4 className="font-medium text-white">{material.name}</h4>
+                              <p className="text-sm text-elec-light/80">{material.brand}</p>
                             </div>
-                          )}
-                          <CardContent className="p-4">
-                            <div className="flex justify-between items-center">
-                              <div>
-                                <h4 className={`font-medium ${alreadyInQuote ? 'text-slate-400' : 'text-white'}`}>{material.name}</h4>
-                                <p className={`text-sm ${alreadyInQuote ? 'text-slate-500' : 'text-elec-light/80'}`}>{material.brand}</p>
-                              </div>
-                              <div className="text-lg font-bold text-elec-yellow">
-                                £{material.defaultPrice.toFixed(2)}
-                              </div>
+                            <div className="text-lg font-bold text-elec-yellow">
+                              £{material.defaultPrice.toFixed(2)}
                             </div>
-                          </CardContent>
-                        </Card>
-                      );
-                    })}
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))}
                 </div>
               </div>
             )
