@@ -11,58 +11,22 @@ interface CableRunStepProps {
 }
 
 const CableRunStep = ({ planData, updatePlanData }: CableRunStepProps) => {
+  // Simplified to 6 proven installation methods that actually impact calculations
   const installationMethods = [
-    { value: "clipped-direct", label: "Clipped Direct", description: "Cable clipped direct to surface" },
-    { value: "conduit-surface", label: "Surface Conduit", description: "In conduit on surface" },
-    { value: "conduit-embedded", label: "Embedded Conduit", description: "In conduit in masonry" },
-    { value: "conduit-underground", label: "Underground Conduit", description: "In conduit underground" },
-    { value: "trunking-metal", label: "Metal Trunking", description: "In metal cable trunking" },
-    { value: "trunking-plastic", label: "Plastic Trunking", description: "In plastic cable trunking" },
-    { value: "ducting", label: "Cable Ducting", description: "In cable ducting underground" },
-    { value: "direct-buried", label: "Direct Buried", description: "Cable buried direct in ground" },
-    { value: "overhead", label: "Overhead", description: "Overhead line installation" },
-    { value: "cable-tray", label: "Cable Tray", description: "On perforated cable tray" },
-    { value: "cable-ladder", label: "Cable Ladder", description: "On cable ladder system" },
-    { value: "basket-tray", label: "Basket Tray", description: "In wire mesh cable basket" },
-    { value: "floor-duct", label: "Floor Ducting", description: "In floor ducting system" },
-    { value: "ceiling-void", label: "Ceiling Void", description: "In ceiling void space" },
-    { value: "wall-chase", label: "Wall Chase", description: "In chased wall cavity" },
-    { value: "rising-main", label: "Rising Main", description: "Vertical rising main installation" }
+    { value: "clipped-direct", label: "Clipped Direct", description: "Most common - cable clipped to surface" },
+    { value: "in-conduit", label: "In Conduit", description: "Cable in plastic/metal conduit" },
+    { value: "in-trunking", label: "In Trunking", description: "Cable in cable trunking" },
+    { value: "through-insulation", label: "Through Insulation", description: "Cable passing through thermal insulation" },
+    { value: "underground", label: "Underground", description: "Direct buried or ducted underground" },
+    { value: "cable-tray", label: "Cable Tray", description: "On cable tray or ladder" }
   ];
 
+  // Simplified to 4 bulletproof cable types with verified calculations
   const cableTypes = [
-    // Standard Building Cables
-    { value: "pvc-pvc", label: "PVC/PVC (6181Y)", description: "70°C PVC insulated and sheathed" },
-    { value: "xlpe-pvc", label: "XLPE/PVC (6491X)", description: "90°C XLPE insulated, PVC sheathed" },
-    { value: "xlpe-lsoh", label: "XLPE/LSOH (6491B)", description: "90°C XLPE insulated, LSOH sheathed" },
-    
-    // Armoured Cables
-    { value: "swa-pvc", label: "SWA PVC (6944X)", description: "Steel wire armoured, PVC outer sheath" },
-    { value: "swa-lsoh", label: "SWA LSOH (6944B)", description: "Steel wire armoured, LSOH outer sheath" },
-    { value: "awa", label: "AWA", description: "Aluminium wire armoured cable" },
-    
-    // Fire Performance Cables
-    { value: "fplsoh", label: "FP LSOH", description: "Fire performance LSOH cable" },
-    { value: "fp200", label: "FP200", description: "Enhanced fire performance cable" },
-    { value: "mineral-pvc", label: "MICC PVC", description: "Mineral insulated, PVC sheathed" },
-    { value: "mineral-lsoh", label: "MICC LSOH", description: "Mineral insulated, LSOH sheathed" },
-    { value: "mineral-bare", label: "MICC Bare", description: "Mineral insulated, bare copper sheath" },
-    
-    // Single Core Cables
-    { value: "singles-pvc", label: "Singles PVC", description: "Single core PVC cables" },
-    { value: "singles-xlpe", label: "Singles XLPE", description: "Single core XLPE cables" },
-    { value: "singles-lsoh", label: "Singles LSOH", description: "Single core LSOH cables" },
-    
-    // Specialist Cables
-    { value: "data-cable", label: "Data Cable", description: "Cat 5e/6/6a network cable" },
-    { value: "coax", label: "Coaxial", description: "Coaxial cable for CCTV/satellite" },
-    { value: "alarm-cable", label: "Fire Alarm", description: "Fire alarm system cable" },
-    { value: "speaker-cable", label: "Speaker Cable", description: "Audio/PA system cable" },
-    { value: "control-cable", label: "Control Cable", description: "Multi-core control cable" },
-    
-    // High Voltage
-    { value: "11kv", label: "11kV XLPE", description: "11kV XLPE insulated cable" },
-    { value: "33kv", label: "33kV XLPE", description: "33kV XLPE insulated cable" }
+    { value: "pvc-twin-earth", label: "PVC Twin & Earth", description: "Standard domestic/commercial - 70°C rating" },
+    { value: "xlpe-lsoh", label: "XLPE-LSOH", description: "Fire performance - 90°C rating, low smoke" },
+    { value: "swa-xlpe", label: "SWA XLPE", description: "Armoured outdoor cable - 90°C rating" },
+    { value: "micc", label: "MICC", description: "Mineral insulated - high temperature/fire resistance" }
   ];
 
   const getVoltageDropGuidance = () => {

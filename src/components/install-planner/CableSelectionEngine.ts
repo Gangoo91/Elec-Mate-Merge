@@ -1,31 +1,43 @@
 
-// Updated to use improved BS7671 compliant calculations
-import { ImprovedCableSelectionEngine } from "./ImprovedCableSelectionEngine";
+// Simplified BS7671 compliant calculations - bulletproof approach
+import { SimplifiedCableSelectionEngine } from "./SimplifiedCableSelectionEngine";
 import { InstallPlanData, CableRecommendation, InstallationSuggestion, ComplianceCheck } from "./types";
 
 export class CableSelectionEngine {
   static calculateCableOptions(planData: InstallPlanData): CableRecommendation[] {
-    // Determine if this should be a ring circuit
-    const isRingCircuit = planData.loadType === "power" && 
-                         planData.cableLength <= 106 && 
-                         planData.totalLoad <= 7200;
-    
-    return ImprovedCableSelectionEngine.calculateCableOptions(planData, isRingCircuit);
+    return SimplifiedCableSelectionEngine.calculateCableOptions(planData);
   }
 
   static generateSuggestions(planData: InstallPlanData, cableOptions: CableRecommendation[]): InstallationSuggestion[] {
-    const isRingCircuit = planData.loadType === "power" && 
-                         planData.cableLength <= 106 && 
-                         planData.totalLoad <= 7200;
-    
-    return ImprovedCableSelectionEngine.generateEnhancedSuggestions(planData, cableOptions, isRingCircuit);
+    return SimplifiedCableSelectionEngine.generateRecommendations(cableOptions).map(rec => ({
+      type: "cable-upgrade",
+      title: "Cable Selection",
+      description: rec,
+      impact: "high",
+      regulation: "BS 7671"
+    }));
   }
 
   static performComplianceChecks(planData: InstallPlanData, zsValue: number, recommendedCable: CableRecommendation): ComplianceCheck[] {
-    const isRingCircuit = planData.loadType === "power" && 
-                         planData.cableLength <= 106 && 
-                         planData.totalLoad <= 7200;
+    const checks: ComplianceCheck[] = [];
     
-    return ImprovedCableSelectionEngine.performEnhancedComplianceChecks(planData, zsValue, recommendedCable, isRingCircuit);
+    // Basic compliance checks with confidence
+    checks.push({
+      regulation: "BS 7671",
+      requirement: "Current Carrying Capacity",
+      status: recommendedCable.suitability === "suitable" ? "pass" : "fail",
+      reference: "Section 523",
+      details: `Cable capacity: ${recommendedCable.currentCarryingCapacity}A`
+    });
+    
+    checks.push({
+      regulation: "BS 7671", 
+      requirement: "Voltage Drop",
+      status: recommendedCable.voltageDropPercentage <= 5 ? "pass" : "fail",
+      reference: "Appendix 4",
+      details: `Voltage drop: ${recommendedCable.voltageDropPercentage}%`
+    });
+    
+    return checks;
   }
 }

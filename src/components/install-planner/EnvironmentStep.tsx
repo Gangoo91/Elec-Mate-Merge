@@ -41,12 +41,11 @@ const EnvironmentStep = ({ planData, updatePlanData }: EnvironmentStepProps) => 
     updatePlanData({ circuits: updatedCircuits });
   };
 
-  // Check for environmental warnings
+  // Simplified environmental warnings that actually matter
   const hasHighTemperature = environmentalSettings.ambientTemperature > 40;
   const hasTTSystem = environmentalSettings.earthingSystem === "TT";
-  const hasSwimmingPoolRequirement = environmentalSettings.specialRequirements.includes("Swimming pool areas");
-  const hasHazardousEnvironment = environmentalSettings.environmentalConditions.includes("explosive") || 
-                                  environmentalSettings.environmentalConditions.includes("Corrosive");
+  const hasFireRequirement = environmentalSettings.specialRequirements.includes("Fire escape routes");
+  const hasWetArea = environmentalSettings.specialRequirements.includes("Wet/damp areas");
 
   if (planData.designMode === "single") {
     // For single circuit mode, show simplified environmental controls
@@ -115,22 +114,22 @@ const EnvironmentStep = ({ planData, updatePlanData }: EnvironmentStepProps) => 
           </Alert>
         )}
 
-        {hasSwimmingPoolRequirement && (
-          <Alert className="bg-blue-500/10 border-blue-500/30">
-            <Info className="h-4 w-4 text-blue-300" />
-            <AlertDescription className="text-blue-200">
-              <strong>Swimming Pool Installation:</strong> BS 7671 Section 702 applies. Zone classifications, 
-              additional protection, and special earthing arrangements required for affected circuits.
+        {hasFireRequirement && (
+          <Alert className="bg-orange-500/10 border-orange-500/30">
+            <Info className="h-4 w-4 text-orange-300" />
+            <AlertDescription className="text-orange-200">
+              <strong>Fire Escape Routes:</strong> XLPE-LSOH cables required for escape route circuits. 
+              Enhanced fire performance and low smoke emission mandatory.
             </AlertDescription>
           </Alert>
         )}
 
-        {hasHazardousEnvironment && (
-          <Alert className="bg-purple-500/10 border-purple-500/30">
-            <AlertTriangle className="h-4 w-4 text-purple-300" />
-            <AlertDescription className="text-purple-200">
-              <strong>Hazardous Environment:</strong> Special cable types, increased protection ratings, 
-              and additional safety measures required. Consider ATEX compliance where applicable.
+        {hasWetArea && (
+          <Alert className="bg-blue-500/10 border-blue-500/30">
+            <AlertTriangle className="h-4 w-4 text-blue-300" />
+            <AlertDescription className="text-blue-200">
+              <strong>Wet/Damp Areas:</strong> IP-rated equipment and RCD protection required. 
+              Consider special zones and additional earth bonding requirements.
             </AlertDescription>
           </Alert>
         )}

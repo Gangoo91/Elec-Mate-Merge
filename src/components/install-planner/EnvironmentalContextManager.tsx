@@ -25,30 +25,19 @@ const EnvironmentalContextManager: React.FC<EnvironmentalContextManagerProps> = 
   const [selectedZone, setSelectedZone] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<string>("global");
 
+  // Simplified environmental conditions that affect cable choice
   const environmentalConditions = [
     "Indoor dry locations",
-    "Indoor damp locations", 
-    "Outdoor protected",
-    "Outdoor exposed",
-    "Underground",
-    "Corrosive atmosphere",
-    "High temperature areas",
-    "Dusty environments",
-    "Potentially explosive atmospheres",
-    "Agricultural/farming environments"
+    "Outdoor locations", 
+    "Underground installations"
   ];
 
+  // Simplified special requirements that actually matter
   const specialRequirements = [
-    "Fire alarm circuits",
-    "Emergency lighting",
-    "Essential services",
-    "Medical equipment",
-    "Swimming pool areas",
-    "Bathroom zones",
-    "Sauna/steam rooms",
-    "Mobile equipment",
-    "Outdoor lighting",
-    "HVAC equipment"
+    "Fire escape routes",
+    "Wet/damp areas", 
+    "High temperature areas",
+    "Multiple circuits grouped"
   ];
 
   const addInstallationZone = () => {
