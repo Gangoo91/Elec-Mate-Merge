@@ -135,40 +135,40 @@ const QuoteBuilder = () => {
         </div>
       </header>
 
-      <div className="px-4 md:px-6 py-6 md:py-8 space-y-6 md:space-y-8 animate-fade-in">
+      <div className="mobile-container mobile-safe-area space-y-4 sm:space-y-6 md:space-y-8 animate-fade-in">
 
-        <main className="space-y-6 md:space-y-8">
+        <main className="mobile-section-spacing">
           {/* Enhanced Stats Dashboard */}
-          <section aria-labelledby="stats-overview" className="space-y-4 md:space-y-6">
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-              <h2 id="stats-overview" className="text-xl md:text-2xl font-bold">Dashboard Overview</h2>
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+          <section aria-labelledby="stats-overview" className="mobile-card-spacing">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4">
+              <h2 id="stats-overview" className="mobile-heading">Dashboard Overview</h2>
+              <div className="flex items-center gap-2 mobile-small-text text-muted-foreground">
                 <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
                 Live data
               </div>
             </div>
             
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3 md:gap-4 lg:gap-6">
+            <div className="mobile-grid-responsive">
               {statCards.map((stat, index) => (
                 <Card 
                   key={index} 
-                  className="group relative overflow-hidden border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] bg-gradient-to-br from-card to-card/50 cursor-pointer"
+                  className="group relative overflow-hidden border-0 shadow-lg hover:shadow-xl mobile-interactive mobile-tap-highlight bg-gradient-to-br from-card to-card/50 cursor-pointer touch-target"
                   onClick={() => handleCardClick(stat.type)}
                 >
                   <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  <CardContent className="relative p-4 md:p-6">
+                  <CardContent className="relative p-3 sm:p-4 md:p-6">
                     <div className="flex items-center justify-between">
-                      <div className="space-y-1 md:space-y-2 flex-1 min-w-0">
-                        <p className="text-xs md:text-sm font-medium text-muted-foreground truncate">{stat.title}</p>
-                        <p className="text-2xl md:text-3xl font-bold">{stat.value}</p>
+                      <div className="space-y-1 sm:space-y-2 flex-1 min-w-0">
+                        <p className="mobile-small-text font-medium text-muted-foreground truncate">{stat.title}</p>
+                        <p className="text-xl sm:text-2xl md:text-3xl font-bold leading-tight">{stat.value}</p>
                         <div className="flex items-center gap-2">
                           <div className="w-full bg-muted rounded-full h-1">
                             <div className="bg-primary h-1 rounded-full transition-all duration-500" style={{ width: `${Math.min(100, (parseInt(stat.value.replace(/[^\d]/g, '')) || 0) * 20)}%` }}></div>
                           </div>
                         </div>
                       </div>
-                      <div className={`p-2 md:p-3 rounded-xl bg-gradient-to-br flex-shrink-0 ml-3 ${index % 2 === 0 ? 'from-primary/10 to-primary/5' : 'from-accent/10 to-accent/5'}`}>
-                        <stat.icon className={`h-5 w-5 md:h-6 md:w-6 ${stat.color} group-hover:scale-110 transition-transform duration-300`} />
+                      <div className={`p-2 sm:p-3 rounded-xl bg-gradient-to-br flex-shrink-0 ml-2 sm:ml-3 ${index % 2 === 0 ? 'from-primary/10 to-primary/5' : 'from-accent/10 to-accent/5'}`}>
+                        <stat.icon className={`h-5 w-5 sm:h-6 sm:w-6 ${stat.color} group-hover:scale-110 transition-transform duration-300`} />
                       </div>
                     </div>
                   </CardContent>
@@ -178,26 +178,26 @@ const QuoteBuilder = () => {
           </section>
 
           {/* Enhanced Quote Wizard Section */}
-          <section className="space-y-4 md:space-y-6">
-            <div className="text-center space-y-2">
-              <h2 className="text-xl md:text-2xl font-bold">Create New Quote</h2>
-              <p className="text-sm md:text-base text-muted-foreground">
+          <section className="mobile-card-spacing">
+            <div className="text-center space-y-2 sm:space-y-3">
+              <h2 className="mobile-heading">Create New Quote</h2>
+              <p className="mobile-text text-muted-foreground max-w-2xl mx-auto">
                 Follow our guided process to create professional electrical quotes
               </p>
             </div>
             <Card className="border-0 shadow-2xl bg-gradient-to-br from-card to-card/80">
-              <CardContent className="p-4 md:p-6 lg:p-8 bg-card">
+              <CardContent className="p-3 sm:p-6 lg:p-8 bg-card">
                 <QuoteWizard onQuoteGenerated={handleQuoteGenerated} />
               </CardContent>
             </Card>
           </section>
 
           {/* Enhanced Recent Quotes */}
-          <section aria-labelledby="recent-quotes" className="space-y-4 md:space-y-6">
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-              <h2 id="recent-quotes" className="text-xl md:text-2xl font-bold">Recent Quotes</h2>
+          <section aria-labelledby="recent-quotes" className="mobile-card-spacing">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4">
+              <h2 id="recent-quotes" className="mobile-heading">Recent Quotes</h2>
               <Link to="/electrician/quotes">
-                <Button variant="outline" size="sm" className="w-full sm:w-auto">
+                <Button variant="outline" size="sm" className="w-full sm:w-auto mobile-focus touch-target">
                   View All
                 </Button>
               </Link>

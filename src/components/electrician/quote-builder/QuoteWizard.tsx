@@ -81,7 +81,7 @@ export const QuoteWizard = ({ onQuoteGenerated }: QuoteWizardProps) => {
   };
 
   return (
-    <div className="space-y-4 max-w-4xl mx-auto">
+    <div className="space-y-3 sm:space-y-4 max-w-4xl mx-auto">
       {/* Simple Progress */}
       <QuoteProgressIndicator
         currentStep={currentStep}
@@ -90,40 +90,42 @@ export const QuoteWizard = ({ onQuoteGenerated }: QuoteWizardProps) => {
       />
 
       {/* Main Content */}
-      <Card>
-        <CardHeader className="pb-4">
-          <CardTitle className="text-xl">{steps[currentStep].title}</CardTitle>
-          <p className="text-sm text-muted-foreground">{steps[currentStep].description}</p>
+      <Card className="mobile-card">
+        <CardHeader className="pb-3 sm:pb-4">
+          <CardTitle className="mobile-subheading">{steps[currentStep].title}</CardTitle>
+          <p className="mobile-small-text text-muted-foreground">{steps[currentStep].description}</p>
         </CardHeader>
-        <CardContent className="space-y-6">
+        <CardContent className="space-y-4 sm:space-y-6">
           {renderStep()}
           
           {/* Integrated Navigation */}
           <div className="pt-4 border-t">
-            <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-              <div className="flex items-center gap-2">
+            <div className="mobile-action-bar">
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-2 order-2 sm:order-1">
                 <Button
                   variant="outline"
                   onClick={prevStep}
                   disabled={currentStep === 0}
-                  size="sm"
+                  className="mobile-focus touch-target"
                 >
                   <ArrowLeft className="h-4 w-4 mr-2" />
                   Previous
                 </Button>
                 
-                <Button variant="ghost" size="sm" onClick={resetQuote}>
+                <Button variant="ghost" onClick={resetQuote} className="mobile-focus touch-target">
                   Start Over
                 </Button>
               </div>
               
-              <SmartContinueButton
-                canProceed={Boolean(canProceed())}
-                isLastStep={currentStep === steps.length - 1}
-                nextStepTitle={steps[currentStep + 1]?.title}
-                onNext={nextStep}
-                onGenerate={generateQuote}
-              />
+              <div className="order-1 sm:order-2 w-full sm:w-auto">
+                <SmartContinueButton
+                  canProceed={Boolean(canProceed())}
+                  isLastStep={currentStep === steps.length - 1}
+                  nextStepTitle={steps[currentStep + 1]?.title}
+                  onNext={nextStep}
+                  onGenerate={generateQuote}
+                />
+              </div>
             </div>
           </div>
         </CardContent>

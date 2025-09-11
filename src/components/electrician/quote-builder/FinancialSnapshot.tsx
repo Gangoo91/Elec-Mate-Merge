@@ -82,27 +82,27 @@ const FinancialSnapshot: React.FC<FinancialSnapshotProps> = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
-        <DialogHeader>
-          <DialogTitle className="flex items-center gap-2 text-2xl">
-            <TrendingUp className="h-6 w-6" />
+      <DialogContent className="w-[95vw] max-w-4xl h-[90vh] sm:h-auto max-h-[90vh] overflow-y-auto">
+        <DialogHeader className="pb-4">
+          <DialogTitle className="flex items-center gap-2 mobile-heading">
+            <TrendingUp className="h-5 w-5 sm:h-6 sm:w-6" />
             Financial Snapshot
           </DialogTitle>
         </DialogHeader>
         
-        <div className="space-y-6">
+        <div className="mobile-section-spacing">
           {/* Overview Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="mobile-grid-responsive">
             {metrics.map((metric, index) => (
-              <Card key={index} className="border-0 shadow-lg bg-gradient-to-br from-card to-card/50">
-                <CardContent className="p-4">
+              <Card key={index} className="border-0 shadow-lg bg-gradient-to-br from-card to-card/50 mobile-interactive">
+                <CardContent className="p-3 sm:p-4">
                   <div className="flex items-center justify-between">
-                    <div className="space-y-1">
-                      <p className="text-sm font-medium text-muted-foreground">{metric.title}</p>
-                      <p className="text-xl font-bold">{metric.value}</p>
+                    <div className="space-y-1 min-w-0 flex-1">
+                      <p className="mobile-small-text font-medium text-muted-foreground truncate">{metric.title}</p>
+                      <p className="text-lg sm:text-xl font-bold leading-tight">{metric.value}</p>
                     </div>
-                    <div className={`p-2 rounded-lg bg-gray-100 dark:bg-gray-800`}>
-                      <metric.icon className={`h-5 w-5 ${metric.color}`} />
+                    <div className={`p-2 rounded-lg bg-gray-100 dark:bg-gray-800 flex-shrink-0 ml-2`}>
+                      <metric.icon className={`h-4 w-4 sm:h-5 sm:w-5 ${metric.color}`} />
                     </div>
                   </div>
                 </CardContent>
@@ -112,61 +112,61 @@ const FinancialSnapshot: React.FC<FinancialSnapshotProps> = ({
 
            {/* Breakdown Summary */}
           <Card className="overflow-hidden">
-            <CardHeader className="bg-gradient-to-r from-primary/10 to-primary/5 border-b">
-              <CardTitle className="flex items-center gap-2 text-xl">
-                <PieChart className="h-5 w-5" />
+            <CardHeader className="bg-gradient-to-r from-primary/10 to-primary/5 border-b p-3 sm:p-6">
+              <CardTitle className="flex items-center gap-2 mobile-subheading">
+                <PieChart className="h-4 w-4 sm:h-5 sm:w-5" />
                 Financial Breakdown
               </CardTitle>
             </CardHeader>
             <CardContent className="p-0">
               <div className="grid grid-cols-1 lg:grid-cols-2">
                 {/* Revenue Breakdown */}
-                <div className="p-6 border-b lg:border-b-0 lg:border-r">
-                  <div className="space-y-4">
-                    <div className="flex items-center gap-2 mb-4">
+                <div className="p-4 sm:p-6 border-b lg:border-b-0 lg:border-r">
+                  <div className="space-y-3 sm:space-y-4">
+                    <div className="flex items-center gap-2 mb-3 sm:mb-4">
                       <div className="h-3 w-3 rounded-full bg-green-500"></div>
-                      <h4 className="font-semibold text-lg text-green-700 dark:text-green-400">Revenue Breakdown</h4>
+                      <h4 className="font-semibold mobile-text text-green-700 dark:text-green-400">Revenue Breakdown</h4>
                     </div>
-                    <div className="space-y-3">
+                    <div className="space-y-2 sm:space-y-3">
                       <div className="flex justify-between items-center py-2 px-3 rounded-lg bg-gray-50 dark:bg-gray-800/50">
-                        <span className="text-sm font-medium">Subtotal:</span>
-                        <span className="font-mono text-sm font-semibold">{formatCurrency(breakdown.totalRevenue - breakdown.vatTotal)}</span>
+                        <span className="mobile-small-text font-medium">Subtotal:</span>
+                        <span className="font-mono mobile-small-text font-semibold break-all">{formatCurrency(breakdown.totalRevenue - breakdown.vatTotal)}</span>
                       </div>
                       <div className="flex justify-between items-center py-2 px-3 rounded-lg bg-gray-50 dark:bg-gray-800/50">
-                        <span className="text-sm font-medium">VAT:</span>
-                        <span className="font-mono text-sm font-semibold">{formatCurrency(breakdown.vatTotal)}</span>
+                        <span className="mobile-small-text font-medium">VAT:</span>
+                        <span className="font-mono mobile-small-text font-semibold break-all">{formatCurrency(breakdown.vatTotal)}</span>
                       </div>
-                      <div className="flex justify-between items-center py-3 px-3 rounded-lg bg-green-100 dark:bg-green-900/30 border border-green-200 dark:border-green-800">
-                        <span className="font-semibold text-green-800 dark:text-green-200">Total Revenue:</span>
-                        <span className="font-mono font-bold text-green-800 dark:text-green-200">{formatCurrency(breakdown.totalRevenue)}</span>
+                      <div className="flex justify-between items-center py-2 sm:py-3 px-3 rounded-lg bg-green-100 dark:bg-green-900/30 border border-green-200 dark:border-green-800">
+                        <span className="font-semibold mobile-small-text text-green-800 dark:text-green-200">Total Revenue:</span>
+                        <span className="font-mono font-bold mobile-small-text text-green-800 dark:text-green-200 break-all">{formatCurrency(breakdown.totalRevenue)}</span>
                       </div>
                     </div>
                   </div>
                 </div>
                 
                 {/* Cost Breakdown */}
-                <div className="p-6">
-                  <div className="space-y-4">
-                    <div className="flex items-center gap-2 mb-4">
+                <div className="p-4 sm:p-6">
+                  <div className="space-y-3 sm:space-y-4">
+                    <div className="flex items-center gap-2 mb-3 sm:mb-4">
                       <div className="h-3 w-3 rounded-full bg-red-500"></div>
-                      <h4 className="font-semibold text-lg text-red-700 dark:text-red-400">Cost Breakdown</h4>
+                      <h4 className="font-semibold mobile-text text-red-700 dark:text-red-400">Cost Breakdown</h4>
                     </div>
-                    <div className="space-y-3">
+                    <div className="space-y-2 sm:space-y-3">
                       <div className="flex justify-between items-center py-2 px-3 rounded-lg bg-gray-50 dark:bg-gray-800/50">
-                        <span className="text-sm font-medium">Materials:</span>
-                        <span className="font-mono text-sm font-semibold">{formatCurrency(breakdown.materialsTotal)}</span>
+                        <span className="mobile-small-text font-medium">Materials:</span>
+                        <span className="font-mono mobile-small-text font-semibold break-all">{formatCurrency(breakdown.materialsTotal)}</span>
                       </div>
                       <div className="flex justify-between items-center py-2 px-3 rounded-lg bg-gray-50 dark:bg-gray-800/50">
-                        <span className="text-sm font-medium">Labour:</span>
-                        <span className="font-mono text-sm font-semibold">{formatCurrency(breakdown.labourTotal)}</span>
+                        <span className="mobile-small-text font-medium">Labour:</span>
+                        <span className="font-mono mobile-small-text font-semibold break-all">{formatCurrency(breakdown.labourTotal)}</span>
                       </div>
                       <div className="flex justify-between items-center py-2 px-3 rounded-lg bg-gray-50 dark:bg-gray-800/50">
-                        <span className="text-sm font-medium">Overhead:</span>
-                        <span className="font-mono text-sm font-semibold">{formatCurrency(breakdown.overheadTotal)}</span>
+                        <span className="mobile-small-text font-medium">Overhead:</span>
+                        <span className="font-mono mobile-small-text font-semibold break-all">{formatCurrency(breakdown.overheadTotal)}</span>
                       </div>
-                      <div className="flex justify-between items-center py-3 px-3 rounded-lg bg-red-100 dark:bg-red-900/30 border border-red-200 dark:border-red-800">
-                        <span className="font-semibold text-red-800 dark:text-red-200">Total Costs:</span>
-                        <span className="font-mono font-bold text-red-800 dark:text-red-200">{formatCurrency(breakdown.totalCosts)}</span>
+                      <div className="flex justify-between items-center py-2 sm:py-3 px-3 rounded-lg bg-red-100 dark:bg-red-900/30 border border-red-200 dark:border-red-800">
+                        <span className="font-semibold mobile-small-text text-red-800 dark:text-red-200">Total Costs:</span>
+                        <span className="font-mono font-bold mobile-small-text text-red-800 dark:text-red-200 break-all">{formatCurrency(breakdown.totalCosts)}</span>
                       </div>
                     </div>
                   </div>
