@@ -41,14 +41,26 @@ const handler = async (req: Request): Promise<Response> => {
 
     console.log(`Sending quote ${quoteNumber} to ${clientEmail}`);
 
-    // Get Gmail credentials from Supabase secrets
-    const gmailClientId = Deno.env.get('GMAIL_CLIENT_ID');
-    const gmailClientSecret = Deno.env.get('GMAIL_CLIENT_SECRET');
-    const gmailRefreshToken = Deno.env.get('GMAIL_REFRESH_TOKEN');
+    // Get Gmail credentials from Supabase secrets and sanitise them (strip accidental quotes/whitespace)
+    const rawClientId = Deno.env.get('GMAIL_CLIENT_ID') ?? '';
+    const rawClientSecret = Deno.env.get('GMAIL_CLIENT_SECRET') ?? '';
+    const rawRefreshToken = Deno.env.get('GMAIL_REFRESH_TOKEN') ?? '';
+
+    const sanitise = (v: string) => v.trim().replace(/^['"]|['"]$/g, '');
+    const gmailClientId = sanitise(rawClientId);
+    const gmailClientSecret = sanitise(rawClientSecret);
+    const gmailRefreshToken = sanitise(rawRefreshToken);
 
     if (!gmailClientId || !gmailClientSecret || !gmailRefreshToken) {
       throw new Error('Gmail credentials not configured. Please set GMAIL_CLIENT_ID, GMAIL_CLIENT_SECRET, and GMAIL_REFRESH_TOKEN in Supabase secrets.');
     }
+
+    // Helpful debugging (masked)
+    console.log('Gmail creds loaded:', {
+      clientIdSuffix: gmailClientId.slice(-6),
+      hasSecret: Boolean(gmailClientSecret),
+      refreshTokenPrefix: gmailRefreshToken.slice(0, 6)
+    });
 
     // Get access token using refresh token
     const tokenResponse = await fetch('https://oauth2.googleapis.com/token', {
