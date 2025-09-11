@@ -35,28 +35,37 @@ const ResultsStep = ({ planData }: ResultsStepProps) => {
     // Determine the recommended device type for this application
     const recommendedType = getRecommendedDeviceType(designCurrent, loadType, voltage);
     
-    return suitableDevices.map(deviceOption => {
-      const deviceInfo = getDeviceInfo(deviceOption.deviceType);
-      const isRecommended = deviceOption.deviceType === recommendedType || 
-                           (currentDevice && deviceOption.deviceType === currentDevice);
-      
-      return {
-        name: deviceInfo?.type.toUpperCase() + (deviceInfo?.curve ? ` Type ${deviceInfo.curve}` : ''),
-        description: deviceInfo?.characteristics.applications.join(', ') || 'General purpose protection',
-        rating: deviceOption.recommended,
-        ratingRange: `${deviceInfo?.ratingRange[0]}A - ${deviceInfo?.ratingRange[1]}A`,
-        maxZs: deviceInfo?.maxZs[deviceOption.recommended] || 0,
-        breakingCapacity: deviceInfo?.characteristics.breakingCapacity || 10,
-        compliant: deviceOption.compliance,
-        recommended: isRecommended,
-        cost: deviceInfo?.procurement.costRange || 'medium',
-        procurement: {
-          suppliers: deviceInfo?.procurement.typical || 'Standard suppliers',
-          leadTime: deviceInfo?.procurement.leadTime || '1-2 weeks',
-          availability: deviceInfo?.procurement.availability || 'good'
+    return suitableDevices
+      .map(deviceOption => {
+        const deviceInfo = getDeviceInfo(deviceOption.deviceType);
+        
+        // Filter out devices where getDeviceInfo returns null (undefined entries)
+        if (!deviceInfo) {
+          return null;
         }
-      };
-    }).sort((a, b) => {
+        
+        const isRecommended = deviceOption.deviceType === recommendedType || 
+                             (currentDevice && deviceOption.deviceType === currentDevice);
+        
+        return {
+          name: deviceInfo.type.toUpperCase() + (deviceInfo.curve ? ` Type ${deviceInfo.curve}` : ''),
+          description: deviceInfo.characteristics.applications.join(', ') || 'General purpose protection',
+          rating: deviceOption.recommended,
+          ratingRange: `${deviceInfo.ratingRange[0]}A - ${deviceInfo.ratingRange[1]}A`,
+          maxZs: deviceInfo.maxZs[deviceOption.recommended] || 0,
+          breakingCapacity: deviceInfo.characteristics.breakingCapacity || 10,
+          compliant: deviceOption.compliance,
+          recommended: isRecommended,
+          cost: deviceInfo.procurement.costRange || 'medium',
+          procurement: {
+            suppliers: deviceInfo.procurement.typical || 'Standard suppliers',
+            leadTime: deviceInfo.procurement.leadTime || '1-2 weeks',
+            availability: deviceInfo.procurement.availability || 'good'
+          }
+        };
+      })
+      .filter(device => device !== null) // Remove any null entries
+      .sort((a, b) => {
       // Sort recommended first, then by rating
       if (a.recommended !== b.recommended) {
         return a.recommended ? -1 : 1;

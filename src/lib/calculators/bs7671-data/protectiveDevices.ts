@@ -236,7 +236,15 @@ export const getSuitableDevices = (designCurrent: number, maxCurrent?: number): 
     compliance: boolean;
   }> = [];
 
-  Object.entries(standardDeviceRatings).forEach(([deviceType, ratings]) => {
+  // Map generic device types to specific device variants
+  const deviceTypeMapping: Record<string, string[]> = {
+    'mcb': ['mcb-b', 'mcb-c', 'mcb-d'],
+    'rcbo': ['rcbo-b', 'rcbo-c'],
+    'bs88': ['bs88-gg'],
+    'mccb': ['mccb']
+  };
+
+  Object.entries(standardDeviceRatings).forEach(([genericType, ratings]) => {
     // Find suitable ratings (must be >= design current)
     const suitableRatings = ratings.filter(rating => {
       const isAboveDesign = rating >= designCurrent;
@@ -248,11 +256,20 @@ export const getSuitableDevices = (designCurrent: number, maxCurrent?: number): 
       const recommended = suitableRatings[0]; // Smallest suitable rating
       const compliance = recommended >= designCurrent * 1.0 && recommended <= designCurrent * 1.45; // BS7671 coordination
       
-      results.push({
-        deviceType,
-        ratings: suitableRatings.slice(0, 3), // Show first 3 options
-        recommended,
-        compliance
+      // Get the specific device variants for this generic type
+      const deviceVariants = deviceTypeMapping[genericType] || [genericType];
+      
+      // Add each variant to results
+      deviceVariants.forEach(specificType => {
+        // Only add if this specific device type exists in our protectiveDevices database
+        if (protectiveDevices[specificType]) {
+          results.push({
+            deviceType: specificType,
+            ratings: suitableRatings.slice(0, 3), // Show first 3 options
+            recommended,
+            compliance
+          });
+        }
       });
     }
   });
