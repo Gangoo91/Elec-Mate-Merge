@@ -70,6 +70,20 @@ export const pvcTwinEarthCapacities: CableCapacity[] = [
   { size: 50, capacity: 125, resistance: 0.387, reactance: 0.082 }
 ];
 
+// BS 7671 Table 4D4B - XLPE insulated twin and earth cables (90°C)
+export const xlpeTwinEarthCapacities: CableCapacity[] = [
+  { size: 1.0, capacity: 15, resistance: 18.1, reactance: 0.14 },
+  { size: 1.5, capacity: 20, resistance: 12.1, reactance: 0.13 },
+  { size: 2.5, capacity: 27, resistance: 7.41, reactance: 0.12 },
+  { size: 4, capacity: 37, resistance: 4.61, reactance: 0.11 },
+  { size: 6, capacity: 47, resistance: 3.08, reactance: 0.11 },
+  { size: 10, capacity: 65, resistance: 1.83, reactance: 0.10 },
+  { size: 16, capacity: 87, resistance: 1.15, reactance: 0.095 },
+  { size: 25, capacity: 114, resistance: 0.727, reactance: 0.090 },
+  { size: 35, capacity: 141, resistance: 0.524, reactance: 0.085 },
+  { size: 50, capacity: 169, resistance: 0.387, reactance: 0.082 }
+];
+
 // BS 7671 Table 4D5A - SWA cables, multicore (70°C/90°C)
 export const swaCapacities: CableCapacity[] = [
   { size: 1.5, capacity: 19, resistance: 12.1, reactance: 0.13 },
@@ -129,6 +143,7 @@ export const cableCapacityData = {
   'pvc-single': pvcSingleCapacities,
   'xlpe-single': xlpeSingleCapacities,
   'pvc-twin-earth': pvcTwinEarthCapacities,
+  'xlpe-twin-earth': xlpeTwinEarthCapacities, // Proper XLPE twin & earth capacities
   'swa': swaCapacities,
   'micc': miccCapacities,
   'aluminium-xlpe': aluminiumXlpeCapacities,
@@ -138,6 +153,7 @@ export type CableType =
   | 'pvc-single' 
   | 'xlpe-single'
   | 'pvc-twin-earth'
+  | 'xlpe-twin-earth'  // Added for XLPE twin and earth cables
   | 'swa'
   | 'micc'
   | 'aluminium-xlpe';

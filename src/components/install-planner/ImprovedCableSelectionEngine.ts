@@ -1,5 +1,6 @@
 import { InstallPlanData, CableRecommendation, InstallationSuggestion, ComplianceCheck, Circuit } from "./types";
 import { getCableDatabase, BS7671_CABLE_DATABASE } from "./EnhancedCableDatabase";
+import { getCableSpecification, checkFireCompliance, COMPREHENSIVE_CABLE_DATABASE } from "./ComprehensiveCableDatabase";
 import { 
   calculateCableCapacity, 
   calculateVoltageDrop, 
@@ -16,17 +17,39 @@ export class ImprovedCableSelectionEngine {
   static calculateCableOptions(planData: InstallPlanData, isRingCircuit: boolean = false): CableRecommendation[] {
     const designCurrent = this.calculateDesignCurrent(planData);
     const options: CableRecommendation[] = [];
-    const cableDatabase = getCableDatabase(isRingCircuit);
+    
+    // Use comprehensive cable database that includes XLPE-LSOH specifications
+    const cableTypeDatabase = COMPREHENSIVE_CABLE_DATABASE[planData.cableType];
+    const fallbackDatabase = getCableDatabase(isRingCircuit);
+    
+    // Get available sizes for the selected cable type
+    const availableSizes = cableTypeDatabase ? 
+      Object.keys(cableTypeDatabase) : 
+      Object.keys(fallbackDatabase);
 
-    for (const [size, cableData] of Object.entries(cableDatabase)) {
+    for (const size of availableSizes) {
       const cableSize = parseFloat(size);
       
-      // Use proper BS7671 cable capacity calculation
+      // Get comprehensive cable specification
+      const cableSpec = getCableSpecification(planData.cableType, size);
+      const cableData = cableSpec ? {
+        currentCarryingCapacity: cableSpec.currentCarryingCapacity,
+        cost: cableSpec.cost,
+        availability: cableSpec.availability,
+        installationComplexity: cableSpec.installationComplexity,
+        maxLength: cableSpec.maxLength
+      } : fallbackDatabase[size];
+      
+      if (!cableData) continue;
+      
+      // Use proper BS7671 cable capacity calculation with enhanced type mapping
       const cableType = this.mapCableType(planData.cableType);
       const capacityInputs = {
         cableType,
         cableSize,
-        ambientTemp: planData.ambientTemperature || 30,
+        ambientTemp: cableSpec?.maxOperatingTemp === 90 ? 
+          Math.min(planData.ambientTemperature || 30, 90) : // XLPE can handle higher temps
+          Math.min(planData.ambientTemperature || 30, 70),   // PVC limited to 70°C
         groupingCircuits: this.getGroupingCircuits(planData),
         designCurrent,
         deviceRating: this.getProposedDeviceRating(designCurrent, cableData),
@@ -93,8 +116,27 @@ export class ImprovedCableSelectionEngine {
         suitability = "unsuitable";
       }
 
-      // Generate comprehensive notes
+      // Generate comprehensive notes with enhanced XLPE-LSOH information
       const notes: string[] = [];
+      
+      // Add cable specification information for XLPE-LSOH
+      if (cableSpec) {
+        const tempRating = cableSpec.maxOperatingTemp;
+        const sheathType = cableSpec.sheathType;
+        const fireRating = cableSpec.firePerformance.rating;
+        
+        notes.push(`🔥 ${tempRating}°C rated ${cableSpec.insulationType}/${sheathType} - ${fireRating} fire performance`);
+        
+        if (cableSpec.sheathType === 'LSOH') {
+          notes.push(`🚭 Low smoke, zero halogen sheath - suitable for escape routes`);
+        }
+        
+        if (cableSpec.firePerformance.circuitIntegrity > 0) {
+          notes.push(`⏱️ ${cableSpec.firePerformance.circuitIntegrity}min circuit integrity at 842°C`);
+        }
+      }
+      
+      // Standard compliance checks
       if (!currentOK) notes.push(`❌ ${capacityResult.compliance.InLeIz ? 'Current capacity adequate' : 'Current capacity insufficient'}`);
       if (!voltageDropOK) notes.push(`❌ Voltage drop: ${voltageDropResult.voltageDropPercent.toFixed(2)}% (max: ${this.getMaxVoltageDropPercentage(planData.loadType, planData.specialRequirements)}%)`);
       if (!coordinationOK) notes.push(`❌ Device coordination: Ib (${capacityResult.Ib}A) > In (${capacityResult.In}A)`);
@@ -104,6 +146,18 @@ export class ImprovedCableSelectionEngine {
       if (suitability === "suitable") {
         notes.push(`✅ Complies with BS7671 - Safety margin: ${capacityResult.compliance.safetyMargin.toFixed(1)}%`);
         if (isRingCircuit) notes.push(`✅ Ring circuit validated`);
+        
+        // Add XLPE-LSOH specific benefits
+        if (cableSpec && cableSpec.maxOperatingTemp === 90) {
+          notes.push(`🌡️ Enhanced temperature performance - 90°C continuous rating`);
+        }
+      }
+
+      // Fire performance compliance check
+      if (cableSpec && planData.specialRequirements) {
+        const application = this.determineApplication(planData.specialRequirements);
+        const fireCompliance = checkFireCompliance(cableSpec, application);
+        fireCompliance.recommendations.forEach(rec => notes.push(rec));
       }
 
       // Add calculation equations for transparency
@@ -305,8 +359,16 @@ export class ImprovedCableSelectionEngine {
       "lsf": "pvc-single",
       "armored": "swa",
       "heat-resistant": "xlpe-single",
-      "micc": "xlpe-single", // Map MICC to available type
-      "mineral-insulated": "xlpe-single"
+      "micc": "xlpe-single",
+      "mineral-insulated": "xlpe-single",
+      // Enhanced cable type mappings for proper XLPE-LSOH support
+      "pvc-pvc": "pvc-twin-earth",
+      "xlpe-pvc": "xlpe-twin-earth", 
+      "xlpe-lsoh": "xlpe-twin-earth", // Properly map XLPE-LSOH
+      "swa-pvc": "swa",
+      "swa-lsoh": "swa",
+      "fplsoh": "xlpe-single", // Fire performance LSOH
+      "fp200": "xlpe-single"
     };
     return mapping[cableType] || "pvc-twin-earth";
   }
@@ -415,6 +477,9 @@ export class ImprovedCableSelectionEngine {
   ): string[] {
     const considerations: string[] = [];
     
+    // Get cable specification for enhanced recommendations
+    const cableSpec = getCableSpecification(planData.cableType, cableSize);
+    
     if (isRingCircuit) {
       considerations.push("Ring circuit: Test both legs for continuity and resistance");
       considerations.push("Socket outlets distributed evenly around ring");
@@ -422,6 +487,25 @@ export class ImprovedCableSelectionEngine {
     
     if (capacityResult.factors.overall < 0.8) {
       considerations.push(`Heavy derating applied (${(capacityResult.factors.overall * 100).toFixed(0)}%) - review installation conditions`);
+    }
+    
+    // XLPE-LSOH specific considerations
+    if (cableSpec && cableSpec.insulationType === 'XLPE') {
+      considerations.push("XLPE insulation provides enhanced thermal performance and overload capacity");
+      
+      if (cableSpec.sheathType === 'LSOH') {
+        considerations.push("LSOH sheath reduces toxic gas emission in fire conditions");
+        considerations.push("Suitable for public areas, escape routes, and enclosed spaces");
+      }
+      
+      if (cableSpec.maxOperatingTemp === 90) {
+        considerations.push("90°C continuous rating allows higher current capacity than PVC equivalent");
+      }
+    }
+    
+    // Fire performance considerations
+    if (cableSpec && cableSpec.firePerformance.rating === 'Superior') {
+      considerations.push("Enhanced fire performance cable - maintains circuit integrity during fire");
     }
     
     if (voltageDropResult.voltageDropPercent > 3) {
@@ -433,5 +517,17 @@ export class ImprovedCableSelectionEngine {
     }
     
     return considerations;
+  }
+
+  // Determine application type from special requirements for fire compliance
+  private static determineApplication(specialRequirements: string[]): string {
+    const reqText = specialRequirements.join(' ').toLowerCase();
+    
+    if (reqText.includes('escape') || reqText.includes('fire safety')) return 'escape-routes';
+    if (reqText.includes('public') || reqText.includes('assembly')) return 'public-buildings';
+    if (reqText.includes('healthcare') || reqText.includes('hospital')) return 'healthcare';
+    if (reqText.includes('high-rise') || reqText.includes('tower')) return 'high-rise';
+    
+    return 'general';
   }
 }
