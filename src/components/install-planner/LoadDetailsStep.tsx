@@ -5,7 +5,7 @@ import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
 import { InstallPlanData } from "./types";
 import { Calculator, Info, AlertTriangle, Zap, Activity, Settings } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { CIRCUIT_TEMPLATES } from "./CircuitDefaults";
+import { SIMPLIFIED_CIRCUIT_TEMPLATES } from "./SimplifiedCircuitDefaults";
 
 interface LoadDetailsStepProps {
   planData: InstallPlanData;
@@ -59,7 +59,7 @@ const LoadDetailsStep = ({ planData, updatePlanData }: LoadDetailsStepProps) => 
 
   const getLoadGuidance = () => {
     // First check if we have a template for this load type
-    const template = CIRCUIT_TEMPLATES[planData.loadType || ""];
+    const template = SIMPLIFIED_CIRCUIT_TEMPLATES[planData.loadType || ""];
     if (template) {
       return {
         typical: `${template.totalLoad}W (template default)`,

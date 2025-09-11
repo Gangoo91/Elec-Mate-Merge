@@ -25,7 +25,7 @@ export const CIRCUIT_TEMPLATES: Record<string, CircuitTemplate> = {
     phases: "single",
     cableLength: 30,
     recommendedInstallationMethod: "clipped-direct",
-    recommendedCableType: "t&e",
+    recommendedCableType: "pvc-twin-earth",
     recommendedProtectiveDevice: "mcb",
     description: "Standard domestic lighting circuit",
     typicalApplications: ["LED downlights", "Ceiling lights", "Wall lights", "Switches"]
@@ -38,7 +38,7 @@ export const CIRCUIT_TEMPLATES: Record<string, CircuitTemplate> = {
     phases: "single",
     cableLength: 80,
     recommendedInstallationMethod: "clipped-direct",
-    recommendedCableType: "t&e",
+    recommendedCableType: "pvc-twin-earth",
     recommendedProtectiveDevice: "rcbo",
     description: "13A socket outlet ring circuit",
     typicalApplications: ["13A socket outlets", "General purpose outlets", "Kitchen appliances"]
@@ -51,7 +51,7 @@ export const CIRCUIT_TEMPLATES: Record<string, CircuitTemplate> = {
     phases: "single",
     cableLength: 50,
     recommendedInstallationMethod: "clipped-direct",
-    recommendedCableType: "t&e",
+    recommendedCableType: "pvc-twin-earth",
     recommendedProtectiveDevice: "rcbo",
     description: "20A radial socket circuit",
     typicalApplications: ["Kitchen appliances", "Utility rooms", "Garage sockets"]
@@ -64,7 +64,7 @@ export const CIRCUIT_TEMPLATES: Record<string, CircuitTemplate> = {
     phases: "single",
     cableLength: 20,
     recommendedInstallationMethod: "clipped-direct",
-    recommendedCableType: "t&e",
+    recommendedCableType: "pvc-twin-earth",
     recommendedProtectiveDevice: "mcb",
     description: "Electric cooker dedicated circuit",
     typicalApplications: ["Electric cookers", "Hobs", "Built-in ovens"]
@@ -77,7 +77,7 @@ export const CIRCUIT_TEMPLATES: Record<string, CircuitTemplate> = {
     phases: "single",
     cableLength: 15,
     recommendedInstallationMethod: "clipped-direct",
-    recommendedCableType: "t&e",
+    recommendedCableType: "pvc-twin-earth",
     recommendedProtectiveDevice: "rcbo",
     description: "Electric shower dedicated circuit",
     typicalApplications: ["Electric showers", "Instantaneous water heaters"]
@@ -90,7 +90,7 @@ export const CIRCUIT_TEMPLATES: Record<string, CircuitTemplate> = {
     phases: "single",
     cableLength: 40,
     recommendedInstallationMethod: "clipped-direct",
-    recommendedCableType: "t&e",
+    recommendedCableType: "pvc-twin-earth",
     recommendedProtectiveDevice: "mcb",
     description: "Electric heating circuit",
     typicalApplications: ["Electric radiators", "UFH", "Storage heaters"]
@@ -102,8 +102,8 @@ export const CIRCUIT_TEMPLATES: Record<string, CircuitTemplate> = {
     voltage: 230,
     phases: "single",
     cableLength: 25,
-    recommendedInstallationMethod: "swa-direct",
-    recommendedCableType: "swa",
+    recommendedInstallationMethod: "underground-direct",
+    recommendedCableType: "swa-xlpe",
     recommendedProtectiveDevice: "rcbo",
     description: "Electric vehicle charging point",
     typicalApplications: ["Home EV chargers", "Workplace charging"]

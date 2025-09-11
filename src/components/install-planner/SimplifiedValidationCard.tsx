@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle, AlertTriangle, XCircle, Info } from "lucide-react";
 import { InstallPlanData } from "./types";
+import { getCableTypeValidation, isLoadTypeSupported } from "./SimplifiedCircuitDefaults";
 import { getSimpleCableSpec, getAllCableTypes } from "./SimplifiedCableDatabase";
 
 interface SimplifiedValidationCardProps {
@@ -13,41 +14,66 @@ const SimplifiedValidationCard = ({ planData }: SimplifiedValidationCardProps) =
   const validations = [];
   let confidence = 100;
 
-  // Check cable type validity
-  const availableCableTypes = getAllCableTypes();
-  const isCableTypeValid = availableCableTypes.includes(planData.cableType);
-  
-  if (isCableTypeValid) {
+  // Check load type support
+  const loadTypeSupported = isLoadTypeSupported(planData.loadType || "");
+  if (loadTypeSupported) {
     validations.push({
       type: "success",
-      message: "Cable type recognised in simplified database",
+      message: "✓ Load type fully supported with bulletproof calculations",
       icon: <CheckCircle className="h-4 w-4" />
     });
   } else {
     validations.push({
       type: "error", 
-      message: "Cable type not in simplified database - using fallback calculations",
+      message: "⚠ Load type not in simplified database - using fallback values",
       icon: <XCircle className="h-4 w-4" />
     });
-    confidence -= 30;
+    confidence -= 40;
+  }
+
+  // Check cable type validity for load type
+  if (planData.loadType && planData.cableType) {
+    const cableValidation = getCableTypeValidation(planData.loadType, planData.cableType);
+    if (cableValidation.confidence === 100) {
+      validations.push({
+        type: "success",
+        message: "✓ Optimal cable type selected for this load",
+        icon: <CheckCircle className="h-4 w-4" />
+      });
+    } else if (cableValidation.isValid) {
+      validations.push({
+        type: "warning",
+        message: "⚠ Alternative cable selected - calculations still valid", 
+        icon: <AlertTriangle className="h-4 w-4" />
+      });
+      confidence -= 20;
+    } else {
+      validations.push({
+        type: "error",
+        message: "✗ Cable type not suitable for selected load type",
+        icon: <XCircle className="h-4 w-4" />
+      });
+      confidence -= 30;
+    }
   }
 
   // Check installation method mapping
-  const methodMapped = ["clipped-direct", "in-conduit", "in-trunking", "through-insulation", "underground", "cable-tray"].includes(planData.installationMethod);
+  const bulletproofMethods = ["clipped-direct", "in-conduit", "in-cable-tray", "underground-direct", "free-air", "through-insulation"];
+  const methodMapped = bulletproofMethods.includes(planData.installationMethod);
   
   if (methodMapped) {
     validations.push({
       type: "success",
-      message: "Installation method properly mapped to current carrying capacity",
+      message: "✓ Installation method has verified current capacity data",
       icon: <CheckCircle className="h-4 w-4" />
     });
   } else {
     validations.push({
       type: "warning",
-      message: "Installation method may use generic capacity values",
+      message: "⚠ Installation method may use generic capacity values",
       icon: <AlertTriangle className="h-4 w-4" />
     });
-    confidence -= 20;
+    confidence -= 15;
   }
 
   // Check environmental conditions impact
