@@ -27,7 +27,7 @@ export const SmartContinueButton = ({
         disabled={!canProceed}
         size="lg"
         className={cn(
-          "w-full sm:w-auto min-w-48",
+          "w-full sm:w-auto sm:min-w-40 max-w-full",
           className
         )}
       >
@@ -43,7 +43,7 @@ export const SmartContinueButton = ({
       disabled={!canProceed}
       size="lg"
       className={cn(
-        "w-full sm:w-auto min-w-48",
+        "w-full sm:w-auto sm:min-w-40 max-w-full",
         className
       )}
     >
