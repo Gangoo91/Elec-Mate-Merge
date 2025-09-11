@@ -15,7 +15,8 @@ import {
   ExternalLink,
   Clock,
   Users,
-  BookOpen
+  BookOpen,
+  Wrench
 } from "lucide-react";
 import { InstallPlanData, CableRecommendation } from "./types";
 
@@ -80,24 +81,95 @@ const PostResultGuidance: React.FC<PostResultGuidanceProps> = ({
     const isUnderground = planData.installationMethod?.includes('buried');
     
     const accessories = [
-      "Cable glands/connectors",
-      "Terminations and joints",
-      "Testing equipment access"
+      {
+        name: "Cable glands/connectors",
+        description: "Secure cable entry and strain relief",
+        quantity: `${Math.ceil(planData.cableLength / 20)} - ${Math.ceil(planData.cableLength / 10)} units`,
+        importance: "Essential"
+      },
+      {
+        name: "Terminations and joints",
+        description: "Connection blocks and distribution points",
+        quantity: "6-12 pieces",
+        importance: "Essential"
+      },
+      {
+        name: "Testing equipment access",
+        description: "Test points and accessible connections",
+        quantity: "As required per circuit",
+        importance: "Mandatory"
+      }
     ];
     
     // Add specific accessories based on installation
     if (isSWA) {
-      accessories.push("SWA glands", "Earth tags", "Mechanical protection");
+      accessories.push(
+        {
+          name: "SWA glands",
+          description: "Armoured cable termination glands",
+          quantity: `${Math.ceil(planData.cableLength / 50)} - ${Math.ceil(planData.cableLength / 25)} units`,
+          importance: "Essential"
+        },
+        {
+          name: "Earth tags",
+          description: "Armour earth continuity tags",
+          quantity: "1 per gland",
+          importance: "Essential"
+        },
+        {
+          name: "Mechanical protection",
+          description: "Cable guards and impact protection",
+          quantity: "As required by route",
+          importance: "Recommended"
+        }
+      );
     } else {
-      accessories.push("Containment (conduit/trunking)");
+      accessories.push({
+        name: "Containment (conduit/trunking)",
+        description: "Cable routing and protection system",
+        quantity: `${Math.ceil(planData.cableLength * 1.2)}m`,
+        importance: "Essential"
+      });
     }
     
     if (isUnderground) {
-      accessories.push("Warning tape", "Sand/aggregate bedding", "Ducting (if applicable)");
+      accessories.push(
+        {
+          name: "Warning tape",
+          description: "Underground cable warning tape",
+          quantity: `${Math.ceil(planData.cableLength)}m`,
+          importance: "Mandatory"
+        },
+        {
+          name: "Sand/aggregate bedding",
+          description: "Cable protection bedding material",
+          quantity: `${Math.ceil(planData.cableLength * 0.1)}m³`,
+          importance: "Essential"
+        },
+        {
+          name: "Ducting (if applicable)",
+          description: "Underground cable ducting",
+          quantity: `${Math.ceil(planData.cableLength)}m`,
+          importance: "Optional"
+        }
+      );
     }
     
     if (isRingCircuit) {
-      accessories.push("Junction boxes", "Socket outlet accessories");
+      accessories.push(
+        {
+          name: "Junction boxes",
+          description: "Ring circuit maintenance joints",
+          quantity: "2-4 units",
+          importance: "Recommended"
+        },
+        {
+          name: "Socket outlet accessories",
+          description: "Back boxes and mounting hardware",
+          quantity: "As per socket count",
+          importance: "Essential"
+        }
+      );
     }
     
     return {
@@ -392,12 +464,36 @@ const PostResultGuidance: React.FC<PostResultGuidanceProps> = ({
           <div className="grid grid-cols-1 gap-4">
             {/* Installation Accessories */}
             <div className="p-4 bg-elec-dark/30 rounded-lg border border-elec-yellow/10">
-              <h4 className="font-semibold mb-4 text-white">Installation Accessories</h4>
-              <div className="space-y-4">
-                {procurement.accessories.map((item, index) => (
-                  <div key={index} className="flex items-start gap-3 p-2 hover:bg-elec-dark/20 rounded transition-colors">
-                    <CheckCircle2 className="h-5 w-5 text-elec-green mt-0.5 flex-shrink-0" />
-                    <span className="text-white text-sm leading-relaxed">{item}</span>
+              <h4 className="font-semibold mb-4 text-white flex items-center gap-2">
+                <Wrench className="h-5 w-5 text-elec-yellow" />
+                Installation Accessories
+              </h4>
+              <div className="space-y-3">
+                {procurement.accessories.map((item: any, index: number) => (
+                  <div key={index} className="grid grid-cols-1 sm:grid-cols-3 gap-3 p-3 bg-elec-dark/20 rounded-lg border border-elec-yellow/10">
+                    <div className="flex items-start gap-3">
+                      <CheckCircle2 className="h-5 w-5 text-elec-green mt-0.5 flex-shrink-0" />
+                      <div className="flex-1 min-w-0">
+                        <h5 className="font-medium text-white text-sm leading-tight">{item.name}</h5>
+                        <p className="text-white/70 text-xs mt-1 leading-relaxed">{item.description}</p>
+                      </div>
+                    </div>
+                    <div className="flex flex-col gap-1 sm:items-center">
+                      <span className="text-white/60 text-xs uppercase tracking-wide">Quantity</span>
+                      <span className="text-white text-sm font-medium">{item.quantity}</span>
+                    </div>
+                    <div className="flex flex-col gap-1 sm:items-center">
+                      <span className="text-white/60 text-xs uppercase tracking-wide">Priority</span>
+                      <Badge 
+                        className={`text-xs px-2 py-0.5 ${
+                          item.importance === 'Mandatory' ? 'bg-red-500/20 text-red-300 border-red-500/30' :
+                          item.importance === 'Essential' ? 'bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30' :
+                          'bg-blue-500/20 text-blue-300 border-blue-500/30'
+                        }`}
+                      >
+                        {item.importance}
+                      </Badge>
+                    </div>
                   </div>
                 ))}
               </div>
