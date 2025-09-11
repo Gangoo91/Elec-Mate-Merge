@@ -100,30 +100,33 @@ export const QuoteWizard = ({ onQuoteGenerated }: QuoteWizardProps) => {
           
           {/* Integrated Navigation */}
           <div className="pt-4 border-t">
-            <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-              <div className="flex items-center gap-2">
+            <div className="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-4">
+              <div className="flex flex-wrap items-center gap-2 min-w-0">
                 <Button
                   variant="outline"
                   onClick={prevStep}
                   disabled={currentStep === 0}
                   size="sm"
+                  className="flex-shrink-0"
                 >
                   <ArrowLeft className="h-4 w-4 mr-2" />
                   Previous
                 </Button>
                 
-                <Button variant="ghost" size="sm" onClick={resetQuote}>
+                <Button variant="ghost" size="sm" onClick={resetQuote} className="flex-shrink-0">
                   Start Over
                 </Button>
               </div>
               
-              <SmartContinueButton
-                canProceed={Boolean(canProceed())}
-                isLastStep={currentStep === steps.length - 1}
-                nextStepTitle={steps[currentStep + 1]?.title}
-                onNext={nextStep}
-                onGenerate={generateQuote}
-              />
+              <div className="flex-shrink-0 w-full sm:w-auto sm:max-w-xs">
+                <SmartContinueButton
+                  canProceed={Boolean(canProceed())}
+                  isLastStep={currentStep === steps.length - 1}
+                  nextStepTitle={steps[currentStep + 1]?.title}
+                  onNext={nextStep}
+                  onGenerate={generateQuote}
+                />
+              </div>
             </div>
           </div>
         </CardContent>

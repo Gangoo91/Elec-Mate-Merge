@@ -43,12 +43,14 @@ export const SmartContinueButton = ({
       disabled={!canProceed}
       size="lg"
       className={cn(
-        "w-full sm:w-auto sm:min-w-40 max-w-full",
+        "w-full sm:w-auto sm:min-w-40 max-w-full text-left justify-start sm:justify-center",
         className
       )}
     >
-      Continue to {nextStepTitle}
-      <ArrowRight className="ml-2 h-4 w-4" />
+      <span className="truncate">
+        Continue to {nextStepTitle}
+      </span>
+      <ArrowRight className="ml-2 h-4 w-4 flex-shrink-0" />
     </Button>
   );
 };
