@@ -70,7 +70,10 @@ export const QuoteSettingsStep = ({ settings, onUpdate }: QuoteSettingsStepProps
                       step="0.01"
                       placeholder="45.00"
                       {...field}
-                      onChange={(e) => field.onChange(parseFloat(e.target.value) || 0)}
+                       onChange={(e) => {
+                         const value = e.target.value;
+                         field.onChange(value === '' ? '' : parseFloat(value) || '');
+                       }}
                     />
                   </FormControl>
                   <FormMessage />
@@ -90,7 +93,10 @@ export const QuoteSettingsStep = ({ settings, onUpdate }: QuoteSettingsStepProps
                       step="0.1"
                       placeholder="15"
                       {...field}
-                      onChange={(e) => field.onChange(parseFloat(e.target.value) || 0)}
+                       onChange={(e) => {
+                         const value = e.target.value;
+                         field.onChange(value === '' ? '' : parseFloat(value) || '');
+                       }}
                     />
                   </FormControl>
                   <FormMessage />
@@ -110,7 +116,10 @@ export const QuoteSettingsStep = ({ settings, onUpdate }: QuoteSettingsStepProps
                       step="0.1"
                       placeholder="20"
                       {...field}
-                      onChange={(e) => field.onChange(parseFloat(e.target.value) || 0)}
+                       onChange={(e) => {
+                         const value = e.target.value;
+                         field.onChange(value === '' ? '' : parseFloat(value) || '');
+                       }}
                     />
                   </FormControl>
                   <FormMessage />
@@ -163,7 +172,10 @@ export const QuoteSettingsStep = ({ settings, onUpdate }: QuoteSettingsStepProps
                       placeholder="20"
                       disabled={!form.watch('vatRegistered')}
                       {...field}
-                      onChange={(e) => field.onChange(parseFloat(e.target.value) || 0)}
+                       onChange={(e) => {
+                         const value = e.target.value;
+                         field.onChange(value === '' ? '' : parseFloat(value) || '');
+                       }}
                     />
                   </FormControl>
                   <FormMessage />
