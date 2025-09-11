@@ -4,11 +4,18 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AlertTriangle } from "lucide-react";
 import { InstallPlanData } from "./types";
 import { SimplifiedCableSelectionEngine } from "./SimplifiedCableSelectionEngine";
+import { CableSelectionEngine } from "./CableSelectionEngine";
 import { SystemSummaryCard } from "./system-summary-card";
 import { UnifiedResultsCard } from "./unified-results-card";
 import { SupplyRequirementsCard } from "./supply-requirements-card";
 import { ConsumerUnitGuidance } from "./consumer-unit-guidance";
 import { ResultCard } from "@/components/ui/result-card";
+import CableRecommendationsCard from "./CableRecommendationsCard";
+import InstallationSuggestionsCard from "./InstallationSuggestionsCard";
+import ComplianceChecksCard from "./ComplianceChecksCard";
+import SimplifiedValidationCard from "./SimplifiedValidationCard";
+import VisualCircuitDesigner from "./VisualCircuitDesigner";
+import PostResultGuidance from "./PostResultGuidance";
 
 interface MultiCircuitResultsProps {
   planData: InstallPlanData;
@@ -137,21 +144,73 @@ const MultiCircuitResults: React.FC<MultiCircuitResultsProps> = ({ planData }) =
             // Calculate max Zs (simplified for Type B MCB)
             const maxZs = 1.44; // Conservative value for 230V Type B MCB
 
+            // Generate detailed analysis for each circuit - matching single circuit
+            const circuitPlanDataDetailed = {
+              ...analysis.circuit,
+              installationType: "multi-circuit",
+              environmentalSettings: planData.environmentalSettings,
+              ze: planData.environmentalSettings?.ze || 0.35,
+              ambientTemperature: planData.environmentalSettings?.ambientTemperature || 30,
+              groupingFactor: planData.environmentalSettings?.globalGroupingFactor || 1
+            };
+            
+            const suggestions = CableSelectionEngine.generateSuggestions(circuitPlanDataDetailed, analysis.recommendations);
+            const complianceChecks = recommendedCable ? 
+              CableSelectionEngine.performComplianceChecks(circuitPlanDataDetailed, zsValue, recommendedCable) : [];
+
             return (
-              <UnifiedResultsCard
-                key={analysis.circuit.id}
-                planData={{
-                  ...analysis.circuit,
-                  installationType: "multi-circuit",
-                  environmentalSettings: planData.environmentalSettings
-                }}
-                recommendations={analysis.recommendations}
-                designCurrent={analysis.designCurrent}
-                zsValue={zsValue}
-                maxZs={maxZs}
-                circuitName={analysis.circuit.name}
-                circuitIndex={index}
-              />
+              <div key={analysis.circuit.id} className="space-y-4">
+                {/* Circuit Header */}
+                <div className="text-center md:text-left border-b border-elec-yellow/20 pb-2">
+                  <h3 className="text-lg font-bold text-white">
+                    Circuit {index + 1}: {analysis.circuit.name}
+                  </h3>
+                  <p className="text-sm text-muted-foreground">
+                    {analysis.circuit.loadType} • {analysis.circuit.totalLoad}W • {analysis.circuit.cableLength}m
+                  </p>
+                </div>
+
+                {/* Visual Circuit Designer for each circuit */}
+                <VisualCircuitDesigner 
+                  planData={circuitPlanDataDetailed} 
+                  recommendedCable={recommendedCable}
+                />
+
+                {/* Unified Results Card */}
+                <UnifiedResultsCard
+                  planData={circuitPlanDataDetailed}
+                  recommendations={analysis.recommendations}
+                  designCurrent={analysis.designCurrent}
+                  zsValue={zsValue}
+                  maxZs={maxZs}
+                  circuitName={analysis.circuit.name}
+                  circuitIndex={index}
+                />
+
+                {/* Detailed Analysis Cards - matching single circuit */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                  <CableRecommendationsCard 
+                    recommendations={analysis.recommendations}
+                    showNonCompliant={true}
+                  />
+                  
+                  <SimplifiedValidationCard planData={circuitPlanDataDetailed} />
+                </div>
+
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                  <InstallationSuggestionsCard suggestions={suggestions} />
+                  
+                  <ComplianceChecksCard checks={complianceChecks} />
+                </div>
+
+                {/* Post Result Guidance for compliant circuits */}
+                {recommendedCable && zsValue <= maxZs && (
+                  <PostResultGuidance 
+                    planData={circuitPlanDataDetailed}
+                    recommendedCable={recommendedCable}
+                  />
+                )}
+              </div>
             );
           })}
         </div>
