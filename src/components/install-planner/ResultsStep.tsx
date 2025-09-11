@@ -213,8 +213,8 @@ const ResultsStep = ({ planData }: ResultsStepProps) => {
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4 sm:space-y-6">
-            {/* Key Metrics Grid - Mobile Responsive */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            {/* Key Metrics Grid - Mobile First: Stack 4 boxes vertically */}
+            <div className="grid grid-cols-1 sm:grid-cols-4 gap-3">
               <div className="p-4 bg-elec-dark/50 rounded border border-elec-yellow/20 text-center">
                 <p className="text-xs text-muted-foreground mb-1">Design Current</p>
                 <p className="text-xl sm:text-2xl font-bold text-elec-yellow">{designCurrent.toFixed(2)}A</p>

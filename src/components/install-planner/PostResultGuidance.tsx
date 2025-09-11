@@ -335,27 +335,27 @@ const PostResultGuidance: React.FC<PostResultGuidanceProps> = ({
                 <Zap className="h-5 w-5 text-elec-yellow" />
                 Primary Cable
               </h4>
-              <div className="space-y-3">
-                <div className="flex flex-col sm:flex-row sm:justify-between gap-1">
+              <div className="space-y-4">
+                <div className="flex flex-col gap-2">
                   <span className="text-white/80 text-sm">Specification:</span>
-                  <span className="font-medium text-white text-right">{procurement.primaryCable.specification}</span>
+                  <span className="font-medium text-white">{procurement.primaryCable.specification}</span>
                 </div>
-                <div className="flex flex-col sm:flex-row sm:justify-between gap-1">
+                <div className="flex flex-col gap-2">
                   <span className="text-white/80 text-sm">Length Required:</span>
-                  <span className="font-medium text-white text-right">{procurement.primaryCable.length}</span>
+                  <span className="font-medium text-white">{procurement.primaryCable.length}</span>
                 </div>
-                <div className="flex flex-col sm:flex-row sm:justify-between gap-1">
+                <div className="flex flex-col gap-2">
                   <span className="text-white/80 text-sm">Installation:</span>
-                  <span className="font-medium text-white text-right capitalize">{procurement.primaryCable.installationMethod?.replace('-', ' ')}</span>
+                  <span className="font-medium text-white capitalize">{procurement.primaryCable.installationMethod?.replace('-', ' ')}</span>
                 </div>
                 <Separator className="my-3 bg-elec-yellow/20" />
-                <div className="flex flex-col sm:flex-row sm:justify-between gap-1">
+                <div className="flex flex-col gap-2">
                   <span className="text-white/80 text-sm">Rate:</span>
-                  <span className="font-medium text-elec-green text-right">{procurement.primaryCable.estimate}</span>
+                  <span className="font-medium text-elec-green">{procurement.primaryCable.estimate}</span>
                 </div>
-                <div className="flex flex-col sm:flex-row sm:justify-between gap-1">
+                <div className="flex flex-col gap-2">
                   <span className="text-white/80 text-sm">Total Cable:</span>
-                  <span className="font-bold text-elec-green text-right text-lg">{procurement.primaryCable.totalEstimate}</span>
+                  <span className="font-bold text-elec-green text-lg">{procurement.primaryCable.totalEstimate}</span>
                 </div>
               </div>
             </div>
@@ -366,23 +366,23 @@ const PostResultGuidance: React.FC<PostResultGuidanceProps> = ({
                 <Shield className="h-5 w-5 text-elec-blue" />
                 Protective Device
               </h4>
-              <div className="space-y-3">
-                <div className="flex flex-col sm:flex-row sm:justify-between gap-1">
+              <div className="space-y-4">
+                <div className="flex flex-col gap-2">
                   <span className="text-white/80 text-sm">Type:</span>
-                  <span className="font-medium text-white text-right">{procurement.protectiveDevice.type}</span>
+                  <span className="font-medium text-white">{procurement.protectiveDevice.type}</span>
                 </div>
-                <div className="flex flex-col gap-1">
+                <div className="flex flex-col gap-2">
                   <span className="text-white/80 text-sm">Features:</span>
                   <span className="font-medium text-white text-sm leading-relaxed">{procurement.protectiveDevice.characteristics}</span>
                 </div>
-                <div className="flex flex-col sm:flex-row sm:justify-between gap-1">
+                <div className="flex flex-col gap-2">
                   <span className="text-white/80 text-sm">Quantity:</span>
-                  <span className="font-medium text-white text-right">{procurement.protectiveDevice.quantity}</span>
+                  <span className="font-medium text-white">{procurement.protectiveDevice.quantity}</span>
                 </div>
                 <Separator className="my-3 bg-elec-blue/20" />
-                <div className="flex flex-col sm:flex-row sm:justify-between gap-1">
+                <div className="flex flex-col gap-2">
                   <span className="text-white/80 text-sm">Unit Cost:</span>
-                  <span className="font-bold text-elec-blue text-right text-lg">{procurement.protectiveDevice.estimate}</span>
+                  <span className="font-bold text-elec-blue text-lg">{procurement.protectiveDevice.estimate}</span>
                 </div>
               </div>
             </div>
@@ -390,13 +390,13 @@ const PostResultGuidance: React.FC<PostResultGuidanceProps> = ({
 
           {/* Secondary Items */}
           <div className="grid grid-cols-1 gap-4">
-            {/* Additional Items */}
+            {/* Installation Accessories */}
             <div className="p-4 bg-elec-dark/30 rounded-lg border border-elec-yellow/10">
               <h4 className="font-semibold mb-4 text-white">Installation Accessories</h4>
-              <div className="space-y-3">
+              <div className="space-y-4">
                 {procurement.accessories.map((item, index) => (
-                  <div key={index} className="flex items-start gap-3">
-                    <CheckCircle2 className="h-4 w-4 text-elec-green mt-0.5 flex-shrink-0" />
+                  <div key={index} className="flex items-start gap-3 p-2 hover:bg-elec-dark/20 rounded transition-colors">
+                    <CheckCircle2 className="h-5 w-5 text-elec-green mt-0.5 flex-shrink-0" />
                     <span className="text-white text-sm leading-relaxed">{item}</span>
                   </div>
                 ))}
@@ -406,18 +406,18 @@ const PostResultGuidance: React.FC<PostResultGuidanceProps> = ({
             {/* Project Total */}
             <div className="p-4 bg-elec-yellow/10 rounded-lg border border-elec-yellow/30">
               <h4 className="font-semibold text-elec-yellow mb-4">Estimated Project Cost</h4>
-              <div className="space-y-3">
-                <div className="flex flex-col sm:flex-row sm:justify-between gap-1">
+              <div className="space-y-4">
+                <div className="flex flex-col gap-2">
                   <span className="text-white/80 text-sm">Materials:</span>
-                  <span className="font-medium text-white text-right">{procurement.totalProjectEstimate.materials}</span>
+                  <span className="font-medium text-white">{procurement.totalProjectEstimate.materials}</span>
                 </div>
-                <div className="flex flex-col sm:flex-row sm:justify-between gap-1">
+                <div className="flex flex-col gap-2">
                   <span className="text-white/80 text-sm">Labour:</span>
-                  <span className="font-medium text-white text-right">{procurement.totalProjectEstimate.labour}</span>
+                  <span className="font-medium text-white">{procurement.totalProjectEstimate.labour}</span>
                 </div>
-                <div className="flex flex-col sm:flex-row sm:justify-between gap-1">
+                <div className="flex flex-col gap-2">
                   <span className="text-white/80 text-sm">Testing/Cert:</span>
-                  <span className="font-medium text-white text-right">{procurement.totalProjectEstimate.testing}</span>
+                  <span className="font-medium text-white">{procurement.totalProjectEstimate.testing}</span>
                 </div>
                 <Separator className="my-3 bg-elec-yellow/30" />
                 <div className="flex flex-col sm:flex-row sm:justify-between gap-1">
