@@ -345,9 +345,9 @@ const EnhancedInstallationGuidance: React.FC<EnhancedInstallationGuidanceProps> 
               <CheckCircle2 className="h-4 w-4 text-elec-green" />
               Essential Requirements
             </h4>
-            <div className="grid md:grid-cols-2 gap-3">
+            <div className="space-y-2">
               {methodGuidance.requirements.map((req, index) => (
-                <div key={index} className="flex items-start gap-3 p-3 bg-elec-dark/30 rounded border border-elec-green/20">
+                <div key={index} className="flex items-start gap-3 p-3 bg-elec-dark/20 rounded">
                   <div className="w-2 h-2 bg-elec-green rounded-full mt-2 flex-shrink-0"></div>
                   <span className="text-sm text-elec-light/90">{req}</span>
                 </div>
@@ -363,7 +363,7 @@ const EnhancedInstallationGuidance: React.FC<EnhancedInstallationGuidanceProps> 
             </h4>
             <div className="space-y-2">
               {methodGuidance.considerations.map((consideration, index) => (
-                <div key={index} className="flex items-start gap-3 p-3 bg-blue-500/10 rounded border border-blue-500/20">
+                <div key={index} className="flex items-start gap-3 p-3 bg-blue-500/10 rounded">
                   <div className="w-2 h-2 bg-blue-400 rounded-full mt-2 flex-shrink-0"></div>
                   <span className="text-sm text-blue-100/90">{consideration}</span>
                 </div>
@@ -407,13 +407,13 @@ const EnhancedInstallationGuidance: React.FC<EnhancedInstallationGuidanceProps> 
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-6">
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="space-y-6">
             {/* Installation Requirements */}
             <div>
               <h4 className="font-semibold text-elec-blue mb-3">Installation Requirements</h4>
               <div className="space-y-2">
                 {cableGuidance.requirements.map((req, index) => (
-                  <div key={index} className="flex items-start gap-3 p-2 bg-elec-dark/30 rounded">
+                  <div key={index} className="flex items-start gap-3 p-2 bg-elec-dark/20 rounded">
                     <CheckCircle2 className="h-4 w-4 text-elec-blue mt-0.5 flex-shrink-0" />
                     <span className="text-sm text-elec-light/90">{req}</span>
                   </div>
@@ -502,7 +502,7 @@ const EnhancedInstallationGuidance: React.FC<EnhancedInstallationGuidanceProps> 
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-6">
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="space-y-6">
             {/* Pre-Installation */}
             <div>
               <h4 className="font-semibold text-elec-green mb-4 flex items-center gap-2 text-white">

@@ -327,8 +327,8 @@ const PostResultGuidance: React.FC<PostResultGuidanceProps> = ({
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          {/* Main Items Grid */}
-          <div className="grid grid-cols-1 gap-4">
+          {/* Main Items */}
+          <div className="space-y-4">
             {/* Primary Cable */}
             <div className="p-4 bg-elec-dark/30 rounded-lg border border-elec-yellow/20">
               <h4 className="font-semibold flex items-center gap-2 mb-4 text-white">
@@ -388,8 +388,8 @@ const PostResultGuidance: React.FC<PostResultGuidanceProps> = ({
             </div>
           </div>
 
-          {/* Secondary Items Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          {/* Secondary Items */}
+          <div className="grid grid-cols-1 gap-4">
             {/* Additional Items */}
             <div className="p-4 bg-elec-dark/30 rounded-lg border border-elec-yellow/10">
               <h4 className="font-semibold mb-4 text-white">Installation Accessories</h4>
@@ -539,58 +539,62 @@ const PostResultGuidance: React.FC<PostResultGuidanceProps> = ({
             Essential regulations and standards governing this installation
           </CardDescription>
         </CardHeader>
-        <CardContent className="space-y-6">
+        <CardContent className="space-y-4">
           {regulations.map((reg, index) => (
-            <div key={index} className="border rounded-lg overflow-hidden">
+            <div key={index} className="space-y-4">
               {/* Header */}
-              <div className="p-4 bg-elec-dark/30 border-b">
-                <div className="flex items-start gap-3">
-                  <reg.icon className="h-5 w-5 text-elec-primary mt-0.5 flex-shrink-0" />
-                  <div className="flex-1">
-                    <h4 className="font-semibold text-elec-light">{reg.title}</h4>
-                    <p className="text-sm text-elec-blue font-medium">{reg.subtitle}</p>
-                    <p className="text-sm text-white/80 mt-1">{reg.description}</p>
+              <div className="flex items-start gap-3 pb-3">
+                <reg.icon className="h-5 w-5 text-elec-primary mt-0.5 flex-shrink-0" />
+                <div className="flex-1 space-y-2">
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                    <div>
+                      <h4 className="font-semibold text-elec-light">{reg.title}</h4>
+                      <p className="text-sm text-elec-blue font-medium">{reg.subtitle}</p>
+                    </div>
+                    <Badge 
+                      variant={reg.compliance === "Mandatory for all electrical installations" ? "default" : 
+                              reg.compliance === "Notifiable work" ? "destructive" : "secondary"}
+                      className="text-xs self-start sm:self-center"
+                    >
+                      {reg.compliance}
+                    </Badge>
                   </div>
-                  <Badge 
-                    variant={reg.compliance === "Mandatory for all electrical installations" ? "default" : 
-                            reg.compliance === "Notifiable work" ? "destructive" : "secondary"}
-                    className="text-xs"
-                  >
-                    {reg.compliance}
-                  </Badge>
+                  <p className="text-sm text-white/80">{reg.description}</p>
                 </div>
               </div>
               
               {/* Content Grid */}
-              <div className="p-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {/* Key Clauses */}
-                  <div>
-                    <h5 className="font-medium text-sm mb-2 text-elec-yellow">Key Requirements</h5>
-                     <ul className="space-y-1">
-                        {reg.keyClauses.map((clause, idx) => (
-                          <li key={idx} className="text-xs text-white flex items-start gap-2">
-                            <span className="text-elec-primary mt-1 flex-shrink-0">•</span>
-                            <span className="leading-tight">{clause}</span>
-                          </li>
-                        ))}
-                     </ul>
-                  </div>
-                  
-                  {/* Relevant Sections */}
-                  <div>
-                    <h5 className="font-medium text-sm mb-2 text-elec-green">This Installation</h5>
-                     <ul className="space-y-1">
-                        {reg.relevantSections.map((section, idx) => (
-                          <li key={idx} className="text-xs text-white flex items-start gap-2">
-                            <CheckCircle2 className="h-3 w-3 text-elec-green mt-0.5 flex-shrink-0" />
-                            <span className="leading-tight">{section}</span>
-                          </li>
-                        ))}
-                     </ul>
-                  </div>
+              <div className="grid grid-cols-1 gap-4 pl-8">
+                {/* Key Clauses */}
+                <div>
+                  <h5 className="font-medium text-sm mb-2 text-elec-yellow">Key Requirements</h5>
+                   <ul className="space-y-1">
+                      {reg.keyClauses.map((clause, idx) => (
+                        <li key={idx} className="text-xs text-white flex items-start gap-2">
+                          <span className="text-elec-primary mt-1 flex-shrink-0">•</span>
+                          <span className="leading-tight">{clause}</span>
+                        </li>
+                      ))}
+                   </ul>
+                </div>
+                
+                {/* Relevant Sections */}
+                <div>
+                  <h5 className="font-medium text-sm mb-2 text-elec-blue">Relevant to This Installation</h5>
+                   <ul className="space-y-1">
+                      {reg.relevantSections.map((section, idx) => (
+                        <li key={idx} className="text-xs text-blue-200 flex items-start gap-2">
+                          <span className="text-elec-blue mt-1 flex-shrink-0">•</span>
+                          <span className="leading-tight">{section}</span>
+                        </li>
+                      ))}
+                   </ul>
                 </div>
               </div>
+              
+              {index < regulations.length - 1 && (
+                <Separator className="mt-6 bg-elec-yellow/20" />
+              )}
             </div>
           ))}
           
