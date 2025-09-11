@@ -3,7 +3,7 @@ import React from "react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AlertTriangle } from "lucide-react";
 import { InstallPlanData } from "./types";
-import { ImprovedCableSelectionEngine } from "./ImprovedCableSelectionEngine";
+import { SimplifiedCableSelectionEngine } from "./SimplifiedCableSelectionEngine";
 import { SystemSummaryCard } from "./system-summary-card";
 import { UnifiedResultsCard } from "./unified-results-card";
 import { SupplyRequirementsCard } from "./supply-requirements-card";
@@ -30,10 +30,27 @@ const MultiCircuitResults: React.FC<MultiCircuitResultsProps> = ({ planData }) =
     );
   }
 
-  const circuitAnalysis = ImprovedCableSelectionEngine.calculateMultiCircuitOptions(
-    circuits, 
-    planData.environmentalSettings
-  );
+  const circuitAnalysis = circuits.map(circuit => {
+    const circuitPlanData = {
+      installationType: "multi-circuit",
+      loadType: circuit.loadType,
+      totalLoad: circuit.totalLoad,
+      voltage: circuit.voltage,
+      phases: circuit.phases || "single",
+      powerFactor: circuit.powerFactor || 0.95,
+      cableType: circuit.cableType,
+      cableLength: circuit.cableLength,
+      installationMethod: circuit.installationMethod,
+      protectiveDevice: circuit.protectiveDevice,
+      deviceRating: 16, // Default fallback
+      ambientTemp: 30, // Default fallback
+      grouping: 1, // Default fallback
+      environmentalSettings: planData.environmentalSettings
+    };
+    const recommendations = SimplifiedCableSelectionEngine.calculateCableOptions(circuitPlanData);
+    const designCurrent = circuit.totalLoad / (circuit.voltage || 230) / (circuit.powerFactor || 0.95);
+    return { circuit, recommendations, designCurrent };
+  });
 
   const totalSystemLoad = circuits.reduce((sum, circuit) => sum + circuit.totalLoad, 0);
   const totalDesignCurrent = circuitAnalysis.reduce((sum, analysis) => sum + analysis.designCurrent, 0);

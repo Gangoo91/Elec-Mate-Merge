@@ -26,14 +26,12 @@ const QuickActionButtons: React.FC<QuickActionButtonsProps> = ({
     switch (installationType) {
       case "domestic":
         return [
-          { value: "lighting", label: "Lighting", description: "General lighting circuits" },
-          { value: "power", label: "Power", description: "Socket outlet circuits" },
+          { value: "domestic-lighting", label: "Lighting", description: "General lighting circuits" },
+          { value: "domestic-power", label: "Power", description: "Socket outlet circuits" },
           { value: "cooker", label: "Cooker", description: "Electric cooker circuits" },
           { value: "shower", label: "Shower", description: "Electric shower circuits" },
           { value: "heating", label: "Heating", description: "Electric heating circuits" },
-          { value: "ev-charging", label: "EV Charging", description: "EV charging points" },
-          { value: "smart-home", label: "Smart Home", description: "Home automation systems" },
-          { value: "renewable-solar", label: "Solar PV", description: "Solar photovoltaic installation" }
+          { value: "ev-charging", label: "EV Charging", description: "EV charging points" }
         ];
       case "commercial":
         return [
@@ -41,7 +39,6 @@ const QuickActionButtons: React.FC<QuickActionButtonsProps> = ({
           { value: "commercial-power", label: "Power", description: "Commercial power circuits" },
           { value: "hvac", label: "HVAC", description: "Air conditioning systems" },
           { value: "it-equipment", label: "IT Equipment", description: "Server and network power" },
-          { value: "emergency", label: "Emergency", description: "Emergency systems" },
           { value: "emergency-lighting", label: "Emergency Lighting", description: "Emergency exit lighting" }
         ];
       case "industrial":
@@ -49,11 +46,8 @@ const QuickActionButtons: React.FC<QuickActionButtonsProps> = ({
           { value: "motor-small", label: "Small Motor", description: "Small industrial motors" },
           { value: "motor-large", label: "Large Motor", description: "Large industrial motors" },
           { value: "welding", label: "Welding", description: "Welding equipment" },
-          { value: "crane", label: "Crane & Hoist", description: "Lifting equipment" },
-          { value: "furnace", label: "Furnace", description: "Industrial furnaces" },
-          { value: "hvac", label: "HVAC", description: "Industrial HVAC" },
-          { value: "emergency-lighting", label: "Emergency Lighting", description: "Emergency exit lighting" },
-          { value: "compressed-air", label: "Compressed Air", description: "Air compressor systems" }
+          { value: "industrial-lighting", label: "Industrial Lighting", description: "Industrial facility lighting" },
+          { value: "emergency-lighting", label: "Emergency Lighting", description: "Emergency exit lighting" }
         ];
       case "data-center":
         return [
@@ -154,8 +148,8 @@ const QuickActionButtons: React.FC<QuickActionButtonsProps> = ({
         ];
       default:
         return [
-          { value: "lighting", label: "Lighting", description: "General lighting" },
-          { value: "power", label: "Power", description: "Power circuits" }
+          { value: "domestic-lighting", label: "Lighting", description: "General lighting" },
+          { value: "domestic-power", label: "Power", description: "Power circuits" }
         ];
     }
   };

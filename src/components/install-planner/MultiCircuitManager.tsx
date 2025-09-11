@@ -9,7 +9,7 @@ import EnhancedMultiCircuitEditor from "./EnhancedMultiCircuitEditor";
 import QuickActionButtons from "./QuickActionButtons";
 import BulkCircuitActions from "./BulkCircuitActions";
 import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
-import { createCircuitFromTemplate, getAvailableTemplatesForInstallationType } from "./CircuitDefaults";
+import { SIMPLIFIED_CIRCUIT_TEMPLATES } from "./SimplifiedCircuitDefaults";
 
 interface MultiCircuitManagerProps {
   planData: InstallPlanData;
@@ -31,32 +31,38 @@ const MultiCircuitManager: React.FC<MultiCircuitManagerProps> = ({
   ];
 
   const addCircuitFromType = (circuitType: string) => {
-    try {
-      const newCircuit = createCircuitFromTemplate(circuitType, planData.installationType);
-      const updatedCircuits = [...circuits, newCircuit];
-      updatePlanData({ circuits: updatedCircuits });
-      setActiveView("editor");
-    } catch (error) {
-      console.error("Failed to create circuit from template:", error);
-      // Fallback to basic circuit creation
-      const basicCircuit: Circuit = {
-        id: crypto.randomUUID(),
-        name: `${circuitType.charAt(0).toUpperCase() + circuitType.slice(1)} Circuit`,
-        loadType: circuitType,
-        totalLoad: 1000,
-        voltage: 230,
-        phases: "single",
-        cableLength: 30,
-        installationMethod: planData.installationType === "industrial" ? "tray" : 
-                           planData.installationType === "commercial" ? "trunking" : "clipped-direct",
-        cableType: planData.installationType === "domestic" ? "t&e" : "swa",
-        protectiveDevice: "mcb",
-        enabled: true
-      };
-      const updatedCircuits = [...circuits, basicCircuit];
-      updatePlanData({ circuits: updatedCircuits });
-      setActiveView("editor");
-    }
+    const template = SIMPLIFIED_CIRCUIT_TEMPLATES[circuitType as keyof typeof SIMPLIFIED_CIRCUIT_TEMPLATES];
+    const newCircuit: Circuit = template ? {
+      id: crypto.randomUUID(),
+      name: `Circuit ${circuits.length + 1}`,
+      enabled: true,
+      loadType: circuitType,
+      totalLoad: template.totalLoad,
+      voltage: template.voltage,
+      phases: template.phases,
+      powerFactor: template.powerFactor,
+      cableType: template.recommendedCableType,
+      cableLength: template.cableLength,
+      installationMethod: template.recommendedInstallationMethod,
+      protectiveDevice: template.recommendedProtectiveDevice
+    } : {
+      id: crypto.randomUUID(),
+      name: `Circuit ${circuits.length + 1}`,
+      enabled: true,
+      loadType: circuitType,
+      totalLoad: 3000,
+      voltage: 230,
+      phases: "single",
+      powerFactor: 0.95,
+      cableType: "pvc-twin-earth",
+      cableLength: 20,
+      installationMethod: "clips-direct-on-surface",
+      protectiveDevice: "mcb-b"
+    };
+
+    const updatedCircuits = [...circuits, newCircuit];
+    updatePlanData({ circuits: updatedCircuits });
+    setActiveView("editor");
   };
 
   const removeLastCircuit = () => {
