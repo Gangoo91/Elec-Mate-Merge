@@ -606,7 +606,7 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove }: Enh
       {/* Items List - Mobile Responsive */}
       {items.length > 0 && (
         <Card className="mobile-card bg-card border-primary/20">
-          <CardHeader className="pb-3 sm:pb-6">
+          <CardHeader className="p-2 sm:p-3 md:p-4 lg:p-6 pb-2 sm:pb-3 md:pb-4">
             <CardTitle className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
               <span className="mobile-text">Quote Items ({items.length})</span>
               <span className="text-lg sm:text-xl font-bold text-primary mobile-text">
@@ -614,13 +614,13 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove }: Enh
               </span>
             </CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="p-2 sm:p-3 md:p-4 lg:p-6">
             {/* Mobile Card View */}
             <div className="block sm:hidden space-y-3">
               {items.map((item) => (
                 <Card key={item.id} className="bg-background border border-border mobile-interactive">
-                  <CardContent className="p-3">
-                    <div className="space-y-3">
+                  <CardContent className="p-2 sm:p-3">
+                    <div className="space-y-2 sm:space-y-3">
                       <div className="flex items-start justify-between">
                         <div className="flex items-center gap-2">
                           {getCategoryIcon(item.category)}
@@ -636,7 +636,7 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove }: Enh
                         </div>
                       </div>
                       
-                      <div className="grid grid-cols-3 gap-2">
+                      <div className="grid grid-cols-3 gap-1 sm:gap-2">
                         <div>
                           <label className="mobile-small-text text-muted-foreground">Qty</label>
                           <Input
@@ -685,7 +685,7 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove }: Enh
                         </div>
                       </div>
                       
-                      <div className="flex items-center justify-center gap-2 pt-2 border-t">
+                      <div className="flex items-center justify-center gap-1 sm:gap-2 pt-2 border-t">
                         <Button
                           variant="ghost"
                           size="sm"

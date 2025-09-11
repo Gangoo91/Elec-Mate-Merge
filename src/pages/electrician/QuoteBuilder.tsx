@@ -135,11 +135,11 @@ const QuoteBuilder = () => {
         </div>
       </header>
 
-      <div className="mobile-container mobile-safe-area space-y-4 sm:space-y-6 md:space-y-8 animate-fade-in">
+      <div className="px-2 sm:px-4 md:px-6 lg:px-8 py-2 sm:py-4 md:py-6 lg:py-8 space-y-3 sm:space-y-4 md:space-y-6 lg:space-y-8 animate-fade-in">
 
-        <main className="mobile-section-spacing">
+        <main className="space-y-4 sm:space-y-6 md:space-y-8 lg:space-y-10">
           {/* Enhanced Stats Dashboard */}
-          <section aria-labelledby="stats-overview" className="mobile-card-spacing">
+          <section aria-labelledby="stats-overview" className="space-y-3 sm:space-y-4 md:space-y-5 lg:space-y-6">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4">
               <h2 id="stats-overview" className="mobile-heading">Dashboard Overview</h2>
               <div className="flex items-center gap-2 mobile-small-text text-muted-foreground">
@@ -156,7 +156,7 @@ const QuoteBuilder = () => {
                   onClick={() => handleCardClick(stat.type)}
                 >
                   <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  <CardContent className="relative p-3 sm:p-4 md:p-6">
+                  <CardContent className="relative p-2 sm:p-3 md:p-4 lg:p-6">
                     <div className="flex items-center justify-between">
                       <div className="space-y-1 sm:space-y-2 flex-1 min-w-0">
                         <p className="mobile-small-text font-medium text-muted-foreground truncate">{stat.title}</p>
@@ -186,7 +186,7 @@ const QuoteBuilder = () => {
               </p>
             </div>
             <Card className="border-0 shadow-2xl bg-gradient-to-br from-card to-card/80">
-              <CardContent className="p-3 sm:p-6 lg:p-8 bg-card">
+              <CardContent className="p-2 sm:p-4 md:p-6 lg:p-8 bg-card">
                 <QuoteWizard onQuoteGenerated={handleQuoteGenerated} />
               </CardContent>
             </Card>

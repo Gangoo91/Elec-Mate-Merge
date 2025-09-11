@@ -81,7 +81,7 @@ export const QuoteWizard = ({ onQuoteGenerated }: QuoteWizardProps) => {
   };
 
   return (
-    <div className="space-y-3 sm:space-y-4 max-w-4xl mx-auto">
+    <div className="space-y-2 sm:space-y-3 md:space-y-4 max-w-4xl mx-auto px-2 sm:px-4 md:px-6 lg:px-8">
       {/* Simple Progress */}
       <QuoteProgressIndicator
         currentStep={currentStep}
@@ -91,15 +91,15 @@ export const QuoteWizard = ({ onQuoteGenerated }: QuoteWizardProps) => {
 
       {/* Main Content */}
       <Card className="mobile-card">
-        <CardHeader className="pb-3 sm:pb-4">
+        <CardHeader className="p-3 sm:p-4 md:p-6 pb-2 sm:pb-3 md:pb-4">
           <CardTitle className="mobile-subheading">{steps[currentStep].title}</CardTitle>
           <p className="mobile-small-text text-muted-foreground">{steps[currentStep].description}</p>
         </CardHeader>
-        <CardContent className="space-y-4 sm:space-y-6">
+        <CardContent className="p-3 sm:p-4 md:p-6 space-y-3 sm:space-y-4 md:space-y-6">
           {renderStep()}
           
           {/* Integrated Navigation */}
-          <div className="pt-4 border-t">
+          <div className="pt-3 sm:pt-4 md:pt-6 border-t">
             <div className="mobile-action-bar">
               <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-2 order-2 sm:order-1">
                 <Button

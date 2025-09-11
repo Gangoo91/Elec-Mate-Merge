@@ -82,20 +82,20 @@ const FinancialSnapshot: React.FC<FinancialSnapshotProps> = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="w-[95vw] max-w-4xl h-[90vh] sm:h-auto max-h-[90vh] overflow-y-auto">
-        <DialogHeader className="pb-4">
+      <DialogContent className="w-[95vw] max-w-4xl h-[90vh] sm:h-auto max-h-[90vh] overflow-y-auto p-3 sm:p-4 md:p-6">
+        <DialogHeader className="pb-2 sm:pb-3 md:pb-4">
           <DialogTitle className="flex items-center gap-2 mobile-heading">
             <TrendingUp className="h-5 w-5 sm:h-6 sm:w-6" />
             Financial Snapshot
           </DialogTitle>
         </DialogHeader>
         
-        <div className="mobile-section-spacing">
+        <div className="space-y-3 sm:space-y-4 md:space-y-6">
           {/* Overview Cards */}
-          <div className="mobile-grid-responsive">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-3 md:gap-4">
             {metrics.map((metric, index) => (
               <Card key={index} className="border-0 shadow-lg bg-gradient-to-br from-card to-card/50 mobile-interactive">
-                <CardContent className="p-3 sm:p-4">
+                <CardContent className="p-2 sm:p-3 md:p-4">
                   <div className="flex items-center justify-between">
                     <div className="space-y-1 min-w-0 flex-1">
                       <p className="mobile-small-text font-medium text-muted-foreground truncate">{metric.title}</p>
@@ -112,7 +112,7 @@ const FinancialSnapshot: React.FC<FinancialSnapshotProps> = ({
 
            {/* Breakdown Summary */}
           <Card className="overflow-hidden">
-            <CardHeader className="bg-gradient-to-r from-primary/10 to-primary/5 border-b p-3 sm:p-6">
+            <CardHeader className="bg-gradient-to-r from-primary/10 to-primary/5 border-b p-2 sm:p-3 md:p-4 lg:p-6">
               <CardTitle className="flex items-center gap-2 mobile-subheading">
                 <PieChart className="h-4 w-4 sm:h-5 sm:w-5" />
                 Financial Breakdown
@@ -121,7 +121,7 @@ const FinancialSnapshot: React.FC<FinancialSnapshotProps> = ({
             <CardContent className="p-0">
               <div className="grid grid-cols-1 lg:grid-cols-2">
                 {/* Revenue Breakdown */}
-                <div className="p-4 sm:p-6 border-b lg:border-b-0 lg:border-r">
+                <div className="p-2 sm:p-3 md:p-4 lg:p-6 border-b lg:border-b-0 lg:border-r">
                   <div className="space-y-3 sm:space-y-4">
                     <div className="flex items-center gap-2 mb-3 sm:mb-4">
                       <div className="h-3 w-3 rounded-full bg-green-500"></div>
@@ -145,7 +145,7 @@ const FinancialSnapshot: React.FC<FinancialSnapshotProps> = ({
                 </div>
                 
                 {/* Cost Breakdown */}
-                <div className="p-4 sm:p-6">
+                <div className="p-2 sm:p-3 md:p-4 lg:p-6">
                   <div className="space-y-3 sm:space-y-4">
                     <div className="flex items-center gap-2 mb-3 sm:mb-4">
                       <div className="h-3 w-3 rounded-full bg-red-500"></div>
@@ -174,7 +174,7 @@ const FinancialSnapshot: React.FC<FinancialSnapshotProps> = ({
               </div>
 
               {/* Net Profit Section */}
-              <div className="p-6 border-t bg-gradient-to-r from-gray-50 to-blue-50 dark:from-gray-900/50 dark:to-blue-900/20">
+              <div className="p-3 sm:p-4 md:p-6 border-t bg-gradient-to-r from-gray-50 to-blue-50 dark:from-gray-900/50 dark:to-blue-900/20">
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                   <div className="space-y-2">
                     <div className="flex items-center gap-2">
