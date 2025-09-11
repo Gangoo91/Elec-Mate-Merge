@@ -7,20 +7,49 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Copy, Download, Loader2, Megaphone, ArrowLeft } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+import { ArrowLeft, Loader2, Lightbulb, Zap, Brain } from "lucide-react";
 import { Link } from "react-router-dom";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import ElectricalHeroSection from "@/components/electrician-tools/ai-tools/client-explainer/ElectricalHeroSection";
+import ClientTypeSelector, { ClientType } from "@/components/electrician-tools/ai-tools/client-explainer/ClientTypeSelector";
+import TemplateSelector, { Template } from "@/components/electrician-tools/ai-tools/client-explainer/TemplateSelector";
+import LivePreview from "@/components/electrician-tools/ai-tools/client-explainer/LivePreview";
+import OutputPanel from "@/components/electrician-tools/ai-tools/client-explainer/OutputPanel";
 
 const ClientExplainerPage = () => {
   const { toast } = useToast();
   const [technicalNotes, setTechnicalNotes] = useState("");
   const [tone, setTone] = useState("professional");
   const [readingLevel, setReadingLevel] = useState("standard");
+  const [clientType, setClientType] = useState<ClientType>("homeowner");
+  const [urgencyLevel, setUrgencyLevel] = useState("medium");
   const [includeAnalogy, setIncludeAnalogy] = useState(true);
   const [includeCostInfo, setIncludeCostInfo] = useState(false);
   const [emphasizeSafety, setEmphasizeSafety] = useState(true);
+  const [includeBS7671, setIncludeBS7671] = useState(false);
   const [generatedExplanation, setGeneratedExplanation] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
+  const [showTemplates, setShowTemplates] = useState(false);
+  const [showAdvanced, setShowAdvanced] = useState(false);
+
+  const handleSelectTemplate = (template: Template) => {
+    setTechnicalNotes(template.sample);
+    // Set appropriate settings based on template
+    switch (template.urgency) {
+      case "high":
+        setTone("urgent");
+        setEmphasizeSafety(true);
+        break;
+      case "medium":
+        setTone("professional");
+        break;
+      case "low":
+        setTone("friendly");
+        break;
+    }
+    setUrgencyLevel(template.urgency);
+    setShowTemplates(false);
+  };
 
   const handleGenerate = async () => {
     if (!technicalNotes.trim()) {
@@ -41,9 +70,12 @@ const ClientExplainerPage = () => {
             technicalNotes,
             tone,
             readingLevel,
+            clientType,
+            urgencyLevel,
             includeAnalogy,
             includeCostInfo,
-            emphasizeSafety
+            emphasizeSafety,
+            includeBS7671
           }
         }
       });
@@ -68,45 +100,26 @@ const ClientExplainerPage = () => {
     }
   };
 
-  const handleCopy = async () => {
-    try {
-      await navigator.clipboard.writeText(generatedExplanation);
-      toast({
-        title: "Copied",
-        description: "Explanation copied to clipboard",
-        variant: "success"
-      });
-    } catch (error) {
-      toast({
-        title: "Error",
-        description: "Failed to copy to clipboard",
-        variant: "destructive"
-      });
-    }
-  };
-
-  const handleDownloadPDF = () => {
-    // Simple text-to-PDF conversion for now
-    const element = document.createElement('a');
-    const file = new Blob([generatedExplanation], { type: 'text/plain' });
-    element.href = URL.createObjectURL(file);
-    element.download = 'client-explanation.txt';
-    document.body.appendChild(element);
-    element.click();
-    document.body.removeChild(element);
-  };
+  const getCurrentSettings = () => ({
+    tone,
+    readingLevel,
+    clientType,
+    includeAnalogy,
+    emphasizeSafety,
+    includeCostInfo
+  });
 
   return (
-    <div className="min-h-screen bg-neutral-900 text-white">
-      <div className="px-4 py-6">
-        <div className="max-w-6xl mx-auto">
+    <div className="min-h-screen bg-background">
+      <div className="mobile-padding py-6">
+        <div className="max-w-7xl mx-auto">
           {/* Navigation */}
           <div className="mb-8">
             <Link to="/electrician-tools/ai-tooling">
               <Button 
                 variant="outline" 
                 size="sm"
-                className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 hover:border-elec-yellow/50"
+                className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
               >
                 <ArrowLeft className="mr-2 h-4 w-4" />
                 Back to AI Tools
@@ -115,182 +128,212 @@ const ClientExplainerPage = () => {
           </div>
 
           {/* Hero Section */}
-          <div className="text-center space-y-6 mb-8">
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-yellow-500/30 to-yellow-600/30 rounded-2xl border border-yellow-400/30">
-              <Megaphone className="h-8 w-8 text-yellow-400" />
-            </div>
-            <h1 className="text-3xl font-bold text-white">Client Explainer</h1>
-            <p className="text-gray-300 max-w-4xl mx-auto">
-              Convert technical findings into client-friendly explanations that are easy to understand and professional.
-            </p>
-          </div>
+          <ElectricalHeroSection />
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* Input Panel */}
-            <Card className="bg-gradient-to-r from-neutral-800/50 to-neutral-700/50 border border-neutral-600">
-              <CardHeader className="p-6">
-                <div className="flex items-center gap-3 mb-4">
-                  <Megaphone className="h-5 w-5 text-yellow-400" />
-                  <CardTitle className="text-xl text-white">Technical Input</CardTitle>
-                </div>
-              </CardHeader>
-              <CardContent className="p-6 pt-0 space-y-6">
-                <div>
-                  <Label htmlFor="technical-notes" className="text-white mb-3 block font-medium">
-                    Technical Notes
-                  </Label>
-                  <Textarea
-                    id="technical-notes"
-                    placeholder="Enter technical findings, test results, issues discovered, etc..."
-                    value={technicalNotes}
-                    onChange={(e) => setTechnicalNotes(e.target.value)}
-                    className="min-h-[120px] bg-neutral-700/50 border-neutral-600 focus:border-yellow-400 text-white placeholder:text-gray-400 resize-none"
-                  />
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <Label className="text-white mb-3 block font-medium">Tone</Label>
-                    <Select value={tone} onValueChange={setTone}>
-                      <SelectTrigger className="bg-neutral-700/50 border-neutral-600 text-white focus:border-yellow-400">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="professional">Professional</SelectItem>
-                        <SelectItem value="friendly">Friendly</SelectItem>
-                        <SelectItem value="reassuring">Reassuring</SelectItem>
-                        <SelectItem value="urgent">Urgent</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  <div>
-                    <Label className="text-white mb-3 block font-medium">Reading Level</Label>
-                    <Select value={readingLevel} onValueChange={setReadingLevel}>
-                      <SelectTrigger className="bg-neutral-700/50 border-neutral-600 text-white focus:border-yellow-400">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="simple">Simple</SelectItem>
-                        <SelectItem value="standard">Standard</SelectItem>
-                        <SelectItem value="technical">Technical</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </div>
-
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between p-4 bg-neutral-700/30 rounded-lg">
-                    <Label className="text-white font-medium">Include Analogies</Label>
-                    <Switch
-                      checked={includeAnalogy}
-                      onCheckedChange={setIncludeAnalogy}
-                    />
-                  </div>
-
-                  <div className="flex items-center justify-between p-4 bg-neutral-700/30 rounded-lg">
-                    <Label className="text-white font-medium">Include Cost Information</Label>
-                    <Switch
-                      checked={includeCostInfo}
-                      onCheckedChange={setIncludeCostInfo}
-                    />
-                  </div>
-
-                  <div className="flex items-center justify-between p-4 bg-neutral-700/30 rounded-lg">
-                    <Label className="text-white font-medium">Emphasize Safety</Label>
-                    <Switch
-                      checked={emphasizeSafety}
-                      onCheckedChange={setEmphasizeSafety}
-                    />
-                  </div>
-                </div>
-
-                <Button 
-                  onClick={handleGenerate}
-                  disabled={isGenerating}
-                  className="w-full bg-yellow-600 hover:bg-yellow-700 text-black font-medium py-3 h-12"
-                >
-                  {isGenerating ? (
-                    <>
-                      <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                      Generating...
-                    </>
-                  ) : (
-                    "Generate Explanation"
-                  )}
-                </Button>
-              </CardContent>
-            </Card>
-
-            {/* Output Panel */}
-            <Card className="bg-gradient-to-r from-neutral-800/50 to-neutral-700/50 border border-neutral-600">
-              <CardHeader className="p-6">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-yellow-500/20 rounded-lg flex items-center justify-center">
-                      <Megaphone className="h-4 w-4 text-yellow-400" />
+          <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 mt-8">
+            {/* Input Panel - Takes 2 columns on xl screens */}
+            <div className="xl:col-span-2 space-y-6">
+              {/* Smart Input Section */}
+              <Card className="border-border/50 bg-card/50">
+                <CardHeader>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-2">
+                      <Brain className="h-5 w-5 text-elec-yellow" />
+                      <CardTitle>Smart Input Assistant</CardTitle>
                     </div>
-                    <CardTitle className="text-xl text-white">Client-Friendly Explanation</CardTitle>
-                  </div>
-                  {generatedExplanation && (
                     <div className="flex gap-2">
                       <Button
                         variant="outline"
                         size="sm"
-                        onClick={handleCopy}
-                        className="border-neutral-600 text-gray-300 hover:bg-neutral-700/50"
+                        onClick={() => setShowTemplates(!showTemplates)}
+                        className="text-xs"
                       >
-                        <Copy className="h-4 w-4 mr-1" />
-                        Copy
+                        <Lightbulb className="h-3 w-3 mr-1" />
+                        Templates
                       </Button>
                       <Button
                         variant="outline"
                         size="sm"
-                        onClick={handleDownloadPDF}
-                        className="border-neutral-600 text-gray-300 hover:bg-neutral-700/50"
+                        onClick={() => setShowAdvanced(!showAdvanced)}
+                        className="text-xs"
                       >
-                        <Download className="h-4 w-4 mr-1" />
-                        Download
+                        <Zap className="h-3 w-3 mr-1" />
+                        Advanced
                       </Button>
                     </div>
-                  )}
-                </div>
-              </CardHeader>
-              <CardContent className="p-6 pt-0">
-                {generatedExplanation ? (
-                  <div className="bg-neutral-700/30 border border-neutral-600/50 rounded-lg p-6">
-                    <div className="mb-4 flex gap-2 flex-wrap">
-                      <Badge variant="outline" className="border-yellow-400 text-yellow-400 bg-yellow-400/10">
-                        {tone}
-                      </Badge>
-                      <Badge variant="outline" className="border-blue-400 text-blue-400 bg-blue-400/10">
-                        {readingLevel}
-                      </Badge>
-                      {includeAnalogy && (
-                        <Badge variant="outline" className="border-green-400 text-green-400 bg-green-400/10">
-                          analogies
-                        </Badge>
-                      )}
-                      {emphasizeSafety && (
-                        <Badge variant="outline" className="border-red-400 text-red-400 bg-red-400/10">
-                          safety focus
-                        </Badge>
-                      )}
-                    </div>
-                    <div className="text-gray-300 whitespace-pre-wrap leading-relaxed">
-                      {generatedExplanation}
-                    </div>
                   </div>
-                ) : (
-                  <div className="bg-neutral-700/30 border border-neutral-600/50 rounded-lg p-8 text-center">
-                    <Megaphone className="h-12 w-12 text-gray-500 mx-auto mb-4" />
-                    <p className="text-gray-400">
-                      Enter technical notes and click "Generate Explanation" to create a client-friendly version
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  {/* Client Type Selector */}
+                  <ClientTypeSelector
+                    selected={clientType}
+                    onSelect={setClientType}
+                  />
+
+                  {/* Templates Collapsible */}
+                  <Collapsible open={showTemplates} onOpenChange={setShowTemplates}>
+                    <CollapsibleContent className="space-y-4">
+                      <TemplateSelector onSelectTemplate={handleSelectTemplate} />
+                    </CollapsibleContent>
+                  </Collapsible>
+
+                  {/* Technical Notes Input */}
+                  <div className="space-y-3">
+                    <Label htmlFor="technical-notes" className="text-sm font-medium">
+                      Technical Notes or Findings
+                    </Label>
+                    <Textarea
+                      id="technical-notes"
+                      placeholder="Enter your technical findings, test results, issues discovered, or use a template above..."
+                      value={technicalNotes}
+                      onChange={(e) => setTechnicalNotes(e.target.value)}
+                      className="min-h-[120px] resize-none"
+                      rows={6}
+                    />
+                    <p className="text-xs text-muted-foreground">
+                      Be specific about what you found. Include test results, observations, and any safety concerns.
                     </p>
                   </div>
-                )}
-              </CardContent>
-            </Card>
+
+                  {/* Basic Settings */}
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div className="space-y-2">
+                      <Label className="text-sm font-medium">Tone</Label>
+                      <Select value={tone} onValueChange={setTone}>
+                        <SelectTrigger className="h-9">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="professional">Professional</SelectItem>
+                          <SelectItem value="friendly">Friendly</SelectItem>
+                          <SelectItem value="reassuring">Reassuring</SelectItem>
+                          <SelectItem value="urgent">Urgent</SelectItem>
+                          <SelectItem value="technical">Technical</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label className="text-sm font-medium">Reading Level</Label>
+                      <Select value={readingLevel} onValueChange={setReadingLevel}>
+                        <SelectTrigger className="h-9">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="simple">Simple (Grade 6-8)</SelectItem>
+                          <SelectItem value="standard">Standard (Grade 9-12)</SelectItem>
+                          <SelectItem value="technical">Technical (Professional)</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label className="text-sm font-medium">Urgency</Label>
+                      <Select value={urgencyLevel} onValueChange={setUrgencyLevel}>
+                        <SelectTrigger className="h-9">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="low">Low Priority</SelectItem>
+                          <SelectItem value="medium">Medium Priority</SelectItem>
+                          <SelectItem value="high">High Priority</SelectItem>
+                          <SelectItem value="immediate">Immediate Action</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+
+                  {/* Advanced Settings */}
+                  <Collapsible open={showAdvanced} onOpenChange={setShowAdvanced}>
+                    <CollapsibleContent className="space-y-4">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div className="flex items-center justify-between p-3 bg-muted/30 rounded-lg">
+                          <div className="space-y-1">
+                            <Label className="text-sm font-medium">Include Analogies</Label>
+                            <p className="text-xs text-muted-foreground">Use everyday comparisons</p>
+                          </div>
+                          <Switch
+                            checked={includeAnalogy}
+                            onCheckedChange={setIncludeAnalogy}
+                          />
+                        </div>
+
+                        <div className="flex items-center justify-between p-3 bg-muted/30 rounded-lg">
+                          <div className="space-y-1">
+                            <Label className="text-sm font-medium">Cost Information</Label>
+                            <p className="text-xs text-muted-foreground">Include pricing context</p>
+                          </div>
+                          <Switch
+                            checked={includeCostInfo}
+                            onCheckedChange={setIncludeCostInfo}
+                          />
+                        </div>
+
+                        <div className="flex items-center justify-between p-3 bg-muted/30 rounded-lg">
+                          <div className="space-y-1">
+                            <Label className="text-sm font-medium">Safety Emphasis</Label>
+                            <p className="text-xs text-muted-foreground">Highlight safety concerns</p>
+                          </div>
+                          <Switch
+                            checked={emphasizeSafety}
+                            onCheckedChange={setEmphasizeSafety}
+                          />
+                        </div>
+
+                        <div className="flex items-center justify-between p-3 bg-muted/30 rounded-lg">
+                          <div className="space-y-1">
+                            <Label className="text-sm font-medium">BS 7671 References</Label>
+                            <p className="text-xs text-muted-foreground">Include regulation references</p>
+                          </div>
+                          <Switch
+                            checked={includeBS7671}
+                            onCheckedChange={setIncludeBS7671}
+                          />
+                        </div>
+                      </div>
+                    </CollapsibleContent>
+                  </Collapsible>
+
+                  {/* Generate Button */}
+                  <Button 
+                    onClick={handleGenerate}
+                    disabled={isGenerating || !technicalNotes.trim()}
+                    className="w-full bg-elec-yellow hover:bg-elec-yellow/90 text-black font-medium h-12"
+                  >
+                    {isGenerating ? (
+                      <>
+                        <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                        Generating Professional Explanation...
+                      </>
+                    ) : (
+                      <>
+                        <Brain className="mr-2 h-5 w-5" />
+                        Generate Client Explanation
+                      </>
+                    )}
+                  </Button>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Right Column - Preview and Output */}
+            <div className="space-y-6">
+              {/* Live Preview */}
+              <LivePreview
+                content={technicalNotes}
+                tone={tone}
+                readingLevel={readingLevel}
+                clientType={clientType}
+                includeAnalogy={includeAnalogy}
+                emphasizeSafety={emphasizeSafety}
+              />
+
+              {/* Output Panel */}
+              <OutputPanel
+                content={generatedExplanation}
+                settings={getCurrentSettings()}
+              />
+            </div>
           </div>
         </div>
       </div>
