@@ -42,7 +42,7 @@ const Index = () => {
         <h1 className="text-2xl sm:text-3xl font-bold mb-2">
           Your comprehensive electrical apprenticeship companion
         </h1>
-        <p className="text-sm text-muted-foreground">
+        <p className="text-sm text-foreground">
           designed specifically for UK electrical apprentices in the electrical industry
         </p>
       </div>
