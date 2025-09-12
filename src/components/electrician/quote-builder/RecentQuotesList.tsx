@@ -5,7 +5,9 @@ import { MobileButton } from '@/components/ui/mobile-button';
 import { Badge } from '@/components/ui/badge';
 import { FileText, Download, Trash2, Eye, Calendar, Check, Mail, Tag, Clock, X } from 'lucide-react';
 import { Quote, QuoteTag } from '@/types/quote';
-import { generateQuotePDF } from './QuotePDFGenerator';
+import { generateProfessionalQuotePDF } from '@/utils/quote-pdf-professional';
+import { generateAIEnhancedQuotePDF } from '@/utils/ai-enhanced-quote-pdf';
+import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import { toast } from '@/hooks/use-toast';
 import { ConfirmationDialog } from '@/components/ui/confirmation-dialog';
 import {
@@ -32,24 +34,94 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
   onSendPaymentReminder,
   showAll = false
 }) => {
+  const { companyProfile } = useCompanyProfile();
   const [loadingAction, setLoadingAction] = useState<string>('');
   const [selectedQuote, setSelectedQuote] = useState<Quote | null>(null);
   const [confirmAction, setConfirmAction] = useState<'accept' | 'reject' | null>(null);
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
-  const handleRegeneratePDF = (quote: Quote) => {
+  
+  const handleRegeneratePDF = async (quote: Quote) => {
+    setLoadingAction(`pdf-${quote.id}`);
     try {
-      generateQuotePDF(quote);
-      toast({
-        title: "PDF Generated",
-        description: `Quote ${quote.quoteNumber} has been downloaded.`,
-        variant: "success"
-      });
+      // Create a default company profile if none exists
+      const effectiveCompanyProfile = companyProfile || {
+        id: 'default',
+        user_id: 'default',
+        company_name: "Your Electrical Company",
+        company_email: "contact@yourcompany.com",
+        company_phone: "0123 456 7890",
+        company_address: "123 Business Street, London",
+        primary_color: "#1e40af",
+        secondary_color: "#3b82f6",
+        currency: "GBP",
+        locale: "en-GB",
+        vat_number: "GB123456789",
+        payment_terms: "Payment due within 30 days",
+        created_at: new Date(),
+        updated_at: new Date()
+      };
+
+      // Ensure quote has basic required data
+      const effectiveQuote = {
+        ...quote,
+        quoteNumber: quote.quoteNumber || `Q${Date.now()}`,
+        createdAt: quote.createdAt || new Date(),
+        expiryDate: quote.expiryDate || new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+        status: quote.status || 'draft',
+        subtotal: quote.subtotal || 0,
+        total: quote.total || 0,
+        vatAmount: quote.vatAmount || 0,
+        client: quote.client || {
+          name: "Client Name",
+          email: "client@example.com",
+          phone: "0123 456 7890",
+          address: "Client Address",
+          postcode: "AB1 2CD"
+        }
+      };
+
+      let success = false;
+      
+      if (effectiveQuote.settings?.aiEnhancedPDF) {
+        success = await generateAIEnhancedQuotePDF({
+          quote: effectiveQuote,
+          companyProfile: effectiveCompanyProfile,
+          aiEnhancements: {
+            enhancedDescriptions: true,
+            executiveSummary: true,
+            smartTerms: true,
+            recommendations: true
+          }
+        });
+      } else {
+        success = generateProfessionalQuotePDF({
+          quote: effectiveQuote,
+          companyProfile: effectiveCompanyProfile
+        });
+      }
+
+      if (success) {
+        toast({
+          title: "PDF Generated",
+          description: `Quote ${quote.quoteNumber} has been downloaded.`,
+          variant: "success"
+        });
+      } else {
+        toast({
+          title: "Error",
+          description: "Failed to generate PDF. Please try again.",
+          variant: "destructive"
+        });
+      }
     } catch (error) {
+      console.error('PDF generation error:', error);
       toast({
         title: "Error",
         description: "Failed to generate PDF. Please try again.",
         variant: "destructive"
       });
+    } finally {
+      setLoadingAction('');
     }
   };
 
@@ -331,10 +403,11 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
                   variant="outline"
                   size="sm"
                   onClick={() => handleRegeneratePDF(quote)}
+                  disabled={loadingAction === `pdf-${quote.id}`}
                   className="hover:bg-elec-yellow/10"
                 >
                   <Download className="h-4 w-4 mr-1" />
-                  PDF
+                  {loadingAction === `pdf-${quote.id}` ? 'Generating...' : 'PDF'}
                 </Button>
                 
                 {/* Status Management Dropdown - hidden when status is 'sent' */}
