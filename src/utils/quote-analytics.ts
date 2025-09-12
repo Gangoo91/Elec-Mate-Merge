@@ -32,22 +32,20 @@ export const calculateFinancialBreakdown = (quotes: Quote[]): FinancialBreakdown
   }
 
   const totals = approvedQuotes.reduce((acc, quote) => {
+    // Calculate quoted material costs (including any markup)
     const materialsCost = quote.items.reduce((sum, item) => {
       return sum + (item.category === 'materials' ? item.quantity * item.unitPrice : 0);
     }, 0);
     
+    // Labour is pure income for the electrician (overhead already included in hourly rates)
     const labourIncome = quote.items.reduce((sum, item) => {
       return sum + (item.category === 'labour' ? item.quantity * item.unitPrice : 0);
     }, 0);
-
-    // Calculate overhead from settings percentage applied to subtotal
-    const calculatedOverhead = quote.subtotal * (quote.settings.overheadPercentage / 100);
 
     return {
       revenue: acc.revenue + quote.total,
       materials: acc.materials + materialsCost,
       labour: acc.labour + labourIncome,
-      overhead: acc.overhead + calculatedOverhead,
       vat: acc.vat + quote.vatAmount,
       subtotal: acc.subtotal + quote.subtotal
     };
@@ -55,19 +53,19 @@ export const calculateFinancialBreakdown = (quotes: Quote[]): FinancialBreakdown
     revenue: 0,
     materials: 0,
     labour: 0,
-    overhead: 0,
     vat: 0,
     subtotal: 0
   });
 
-  // Only materials and overhead are actual costs - labour is income for the electrician
-  const totalCosts = totals.materials + totals.overhead;
+  // Simplified approach: Only material costs are actual expenses
+  // Labour is income (overhead already built into hourly rates)
+  const totalCosts = totals.materials;
   
   // Calculate net revenue (excluding VAT for VAT-registered businesses)
   const netRevenue = totals.revenue - totals.vat;
   
-  // Profit calculation: Revenue minus actual costs
-  // For VAT-registered: use net revenue, for non-VAT: use total revenue
+  // Profit calculation: Net revenue minus material costs
+  // Labour is pure income, materials may include markup (5-20%) which becomes profit
   const revenueForProfit = totals.vat > 0 ? netRevenue : totals.revenue;
   const totalProfit = revenueForProfit - totalCosts;
   const profitMargin = revenueForProfit > 0 ? (totalProfit / revenueForProfit) * 100 : 0;
@@ -81,7 +79,7 @@ export const calculateFinancialBreakdown = (quotes: Quote[]): FinancialBreakdown
     averageQuoteValue: totals.revenue / approvedQuotes.length,
     materialsTotal: totals.materials,
     labourTotal: totals.labour,
-    overheadTotal: totals.overhead,
+    overheadTotal: 0, // Overhead is included in labour rates, not separate
     vatTotal: totals.vat
   };
 };
