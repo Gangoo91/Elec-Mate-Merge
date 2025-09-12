@@ -3383,6 +3383,10 @@ export type Database = {
       }
     }
     Functions: {
+      can_access_quote_via_token: {
+        Args: { q_id: string; token: string }
+        Returns: boolean
+      }
       cleanup_expired_cables_cache: {
         Args: Record<PropertyKey, never>
         Returns: undefined
@@ -3457,6 +3461,10 @@ export type Database = {
       get_next_sunday_refresh: {
         Args: Record<PropertyKey, never>
         Returns: string
+      }
+      is_owner_of_quote: {
+        Args: { q_id: string }
+        Returns: boolean
       }
       trigger_materials_weekly_refresh: {
         Args: Record<PropertyKey, never>
