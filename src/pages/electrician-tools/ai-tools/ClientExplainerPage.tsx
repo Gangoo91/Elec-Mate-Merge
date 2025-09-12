@@ -110,7 +110,7 @@ const ClientExplainerPage = () => {
   });
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-elec-grey">
       <div className="mobile-padding py-6">
         <div className="max-w-7xl mx-auto">
           {/* Navigation */}
