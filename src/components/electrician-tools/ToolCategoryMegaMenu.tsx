@@ -1,5 +1,4 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { 
   Wrench, 
@@ -10,7 +9,7 @@ import {
   Package, 
   ArrowUp, 
   Settings,
-  ArrowRight
+  Cable
 } from 'lucide-react';
 
 interface ToolCategory {
@@ -22,90 +21,86 @@ interface ToolCategory {
 
 const toolCategories: ToolCategory[] = [
   {
+    name: 'Cables & Wiring',
+    icon: Cable,
+    description: 'High-quality cables, wires and electrical connections',
+    count: '180+'
+  },
+  {
     name: 'Hand Tools',
     icon: Wrench,
-    description: 'Essential manual tools for electrical installations and maintenance',
-    count: '200+'
+    description: 'Essential manual tools for electrical work',
+    count: '120+'
   },
   {
     name: 'Power Tools',
     icon: Zap,
-    description: 'Cordless and corded power tools for drilling, cutting and installation',
-    count: '150+'
+    description: 'Professional cordless and corded power tools',
+    count: '85+'
   },
   {
     name: 'Test Equipment',
     icon: Calculator,
-    description: 'Testing and measurement equipment for electrical safety compliance',
-    count: '80+'
+    description: 'Testing and measurement equipment for compliance',
+    count: '60+'
   },
   {
     name: 'PPE',
     icon: HardHat,
-    description: 'Personal protective equipment for safe electrical working practices',
-    count: '120+'
+    description: 'Personal protective equipment for safety',
+    count: '95+'
   },
   {
     name: 'Safety Tools',
     icon: Shield,
-    description: 'Safety equipment and tools for hazard identification and protection',
-    count: '90+'
+    description: 'Safety equipment and hazard protection tools',
+    count: '70+'
   },
   {
-    name: 'Access Tools & Equipment',
+    name: 'Access Equipment',
     icon: ArrowUp,
-    description: 'Ladders, scaffolding and access equipment for working at height',
-    count: '60+'
+    description: 'Ladders, scaffolding and height access tools',
+    count: '45+'
   },
   {
     name: 'Tool Storage',
     icon: Package,
-    description: 'Tool bags, boxes and storage solutions for organisation and transport',
-    count: '75+'
-  },
-  {
-    name: 'Specialist Tools',
-    icon: Settings,
-    description: 'Specialist electrical tools for specific installation and maintenance tasks',
-    count: '95+'
+    description: 'Tool bags, boxes and storage solutions',
+    count: '55+'
   }
 ];
 
 export const ToolCategoryMegaMenu = () => {
   return (
     <div className="space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {toolCategories.map((category) => (
-          <Card 
+          <Link 
             key={category.name}
-            className="group hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
+            to={`/electrician/tools?category=${encodeURIComponent(category.name)}`}
+            className="block group"
           >
-            <CardContent className="p-6">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="p-2 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
-                  <category.icon className="h-6 w-6 text-primary" />
+            <Card className="bg-card border-elec-yellow/30 hover:border-elec-yellow/60 transition-all duration-300 hover:shadow-lg hover:shadow-elec-yellow/10 h-full">
+              <CardContent className="p-6">
+                <div className="flex items-start gap-4">
+                  <div className="flex-shrink-0">
+                    <category.icon className="h-8 w-8 text-elec-yellow" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h3 className="text-lg font-semibold text-foreground mb-2 group-hover:text-elec-yellow transition-colors">
+                      {category.name}
+                    </h3>
+                    <p className="text-sm text-muted-foreground mb-3 leading-relaxed">
+                      {category.description}
+                    </p>
+                    <p className="text-xs text-muted-foreground/80">
+                      {category.count} products
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="font-semibold text-foreground">{category.name}</h3>
-                  <p className="text-sm text-muted-foreground">{category.count} tools</p>
-                </div>
-              </div>
-              
-              <p className="text-sm text-muted-foreground mb-4">
-                {category.description}
-              </p>
-
-              <Link to={`/electrician/tools?category=${encodeURIComponent(category.name)}`}>
-                <Button 
-                  className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors"
-                  variant="outline"
-                >
-                  Browse {category.name}
-                  <ArrowRight className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
-                </Button>
-              </Link>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
+          </Link>
         ))}
       </div>
     </div>
