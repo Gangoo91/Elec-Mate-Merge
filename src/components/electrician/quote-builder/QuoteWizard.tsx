@@ -26,9 +26,12 @@ interface QuoteWizardProps {
 }
 
 export const QuoteWizard = ({ onQuoteGenerated }: QuoteWizardProps) => {
-  const {
+const {
     quote,
     currentStep,
+    priceAdjustment,
+    setPriceAdjustment,
+    calculateAdjustedPrice,
     updateClient,
     updateJobDetails,
     updateSettings,

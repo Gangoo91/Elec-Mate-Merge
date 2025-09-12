@@ -22,6 +22,7 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void) => {
   });
 
   const [currentStep, setCurrentStep] = useState(0);
+  const [priceAdjustment, setPriceAdjustment] = useState(0); // Percentage adjustment (0-20)
 
   // Generate quote number when quote is first created
   useEffect(() => {
@@ -256,9 +257,17 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void) => {
     setCurrentStep(0);
   }, []);
 
+  // Price adjustment helper
+  const calculateAdjustedPrice = useCallback((basePrice: number) => {
+    return basePrice * (1 + priceAdjustment / 100);
+  }, [priceAdjustment]);
+
   return {
     quote: calculateTotals(),
     currentStep,
+    priceAdjustment,
+    setPriceAdjustment,
+    calculateAdjustedPrice,
     updateClient,
     updateJobDetails,
     updateSettings,

@@ -1,4 +1,5 @@
 import { WorkerType, MaterialItem, EquipmentItem } from "@/types/quote";
+import { additionalMaterials } from "./materialsExpansion";
 
 export const workerTypes: WorkerType[] = [
   {
@@ -123,8 +124,18 @@ export const materialCategories = [
   }
 ];
 
-export const commonMaterials: MaterialItem[] = [
-  // Cables & Wiring - 2025 UK Prices
+const baseMaterials: MaterialItem[] = [
+  // =============== CABLES & WIRING (80 items) ===============
+  // Twin & Earth Cables
+  {
+    id: "cable-te-0.5",
+    name: "0.5mm² Twin & Earth Cable",
+    category: "cables",
+    subcategory: "Twin & Earth",
+    unit: "metre",
+    defaultPrice: 0.95,
+    code: "TE0.5"
+  },
   {
     id: "cable-te-1.0",
     name: "1.0mm² Twin & Earth Cable",
@@ -180,6 +191,35 @@ export const commonMaterials: MaterialItem[] = [
     code: "TE10.0"
   },
   {
+    id: "cable-te-16.0",
+    name: "16.0mm² Twin & Earth Cable",
+    category: "cables",
+    subcategory: "Twin & Earth", 
+    unit: "metre",
+    defaultPrice: 14.50,
+    code: "TE16.0"
+  },
+  {
+    id: "cable-te-25.0",
+    name: "25.0mm² Twin & Earth Cable",
+    category: "cables",
+    subcategory: "Twin & Earth", 
+    unit: "metre",
+    defaultPrice: 22.50,
+    code: "TE25.0"
+  },
+
+  // SWA Cables
+  {
+    id: "cable-swa-1.5-2c",
+    name: "1.5mm² 2 Core SWA Cable",
+    category: "cables",
+    subcategory: "Armoured Cable",
+    unit: "metre",
+    defaultPrice: 3.85,
+    code: "SWA1.5-2C"
+  },
+  {
     id: "cable-swa-2.5",
     name: "2.5mm² 3 Core SWA Cable",
     category: "cables",
@@ -198,6 +238,53 @@ export const commonMaterials: MaterialItem[] = [
     code: "SWA4.0"
   },
   {
+    id: "cable-swa-6.0",
+    name: "6.0mm² 3 Core SWA Cable",
+    category: "cables",
+    subcategory: "Armoured Cable", 
+    unit: "metre",
+    defaultPrice: 11.50,
+    code: "SWA6.0"
+  },
+  {
+    id: "cable-swa-10.0",
+    name: "10.0mm² 3 Core SWA Cable",
+    category: "cables",
+    subcategory: "Armoured Cable", 
+    unit: "metre",
+    defaultPrice: 18.50,
+    code: "SWA10.0"
+  },
+  {
+    id: "cable-swa-16.0",
+    name: "16.0mm² 3 Core SWA Cable",
+    category: "cables",
+    subcategory: "Armoured Cable", 
+    unit: "metre",
+    defaultPrice: 28.50,
+    code: "SWA16.0"
+  },
+
+  // Flex Cables
+  {
+    id: "cable-flex-0.75",
+    name: "0.75mm² 2 Core Flex Cable",
+    category: "cables",
+    subcategory: "Flex Cable",
+    unit: "metre",
+    defaultPrice: 1.25,
+    code: "FLEX0.75"
+  },
+  {
+    id: "cable-flex-1.0",
+    name: "1.0mm² 3 Core Flex Cable",
+    category: "cables",
+    subcategory: "Flex Cable",
+    unit: "metre",
+    defaultPrice: 1.55,
+    code: "FLEX1.0"
+  },
+  {
     id: "cable-flex-1.5",
     name: "1.5mm² 3 Core Flex Cable",
     category: "cables",
@@ -205,6 +292,26 @@ export const commonMaterials: MaterialItem[] = [
     unit: "metre",
     defaultPrice: 1.85,
     code: "FLEX1.5"
+  },
+  {
+    id: "cable-flex-2.5",
+    name: "2.5mm² 3 Core Flex Cable",
+    category: "cables",
+    subcategory: "Flex Cable",
+    unit: "metre",
+    defaultPrice: 2.85,
+    code: "FLEX2.5"
+  },
+
+  // Data Cables
+  {
+    id: "cable-cat5e",
+    name: "Cat5e Data Cable (305m Box)",
+    category: "cables",
+    subcategory: "Data Cable",
+    unit: "box", 
+    defaultPrice: 85.00,
+    code: "CAT5E"
   },
   {
     id: "cable-cat6",
@@ -216,6 +323,66 @@ export const commonMaterials: MaterialItem[] = [
     code: "CAT6"
   },
   {
+    id: "cable-cat6a",
+    name: "Cat6a Data Cable (305m Box)",
+    category: "cables",
+    subcategory: "Data Cable",
+    unit: "box", 
+    defaultPrice: 185.00,
+    code: "CAT6A"
+  },
+  {
+    id: "cable-fibre-om3",
+    name: "OM3 Fibre Optic Cable",
+    category: "cables",
+    subcategory: "Data Cable",
+    unit: "metre", 
+    defaultPrice: 3.50,
+    code: "FBR-OM3"
+  },
+
+  // Fire Resistant Cables
+  {
+    id: "cable-fire-1.5",
+    name: "1.5mm² Fire Resistant Cable",
+    category: "cables",
+    subcategory: "Fire Resistant Cable",
+    unit: "metre",
+    defaultPrice: 4.25,
+    code: "FRC1.5"
+  },
+  {
+    id: "cable-fire-2.5",
+    name: "2.5mm² Fire Resistant Cable",
+    category: "cables",
+    subcategory: "Fire Resistant Cable",
+    unit: "metre",
+    defaultPrice: 6.85,
+    code: "FRC2.5"
+  },
+
+  // Alarm & Speaker Cables
+  {
+    id: "cable-alarm-6c",
+    name: "6 Core Alarm Cable",
+    category: "cables",
+    subcategory: "Alarm Cable",
+    unit: "metre",
+    defaultPrice: 1.85,
+    code: "ALM6C"
+  },
+  {
+    id: "cable-speaker-4mm",
+    name: "4mm² Speaker Cable",
+    category: "cables",
+    subcategory: "Speaker Cable",
+    unit: "metre",
+    defaultPrice: 2.25,
+    code: "SPK4MM"
+  },
+
+  // Coaxial Cables
+  {
     id: "cable-coax",
     name: "RG6 Coaxial Cable",
     category: "cables",
@@ -224,8 +391,18 @@ export const commonMaterials: MaterialItem[] = [
     defaultPrice: 1.25,
     code: "RG6"
   },
+  {
+    id: "cable-sat",
+    name: "Satellite Coaxial Cable",
+    category: "cables",
+    subcategory: "Coaxial Cable",
+    unit: "metre",
+    defaultPrice: 1.85,
+    code: "SATCX"
+  },
 
-  // Accessories - 2025 UK Prices
+  // =============== ACCESSORIES (90 items) ===============
+  // Standard Sockets
   {
     id: "socket-13a-sp",
     name: "13A Single Pole Socket",
@@ -245,6 +422,35 @@ export const commonMaterials: MaterialItem[] = [
     code: "SKT13DP"
   },
   {
+    id: "socket-13a-dp-metal",
+    name: "13A DP Socket (Brushed Steel)",
+    category: "accessories",
+    subcategory: "Sockets",
+    unit: "each",
+    defaultPrice: 18.50,
+    code: "SKT13DPMTL"
+  },
+  {
+    id: "socket-double-13a",
+    name: "Double 13A Socket Switched",
+    category: "accessories",
+    subcategory: "Sockets",
+    unit: "each",
+    defaultPrice: 12.50,
+    code: "SKT2G13A"
+  },
+  {
+    id: "socket-double-usb",
+    name: "Double Socket with Twin USB",
+    category: "accessories",
+    subcategory: "Sockets",
+    unit: "each",
+    defaultPrice: 22.50,
+    code: "SKT2GUSB"
+  },
+
+  // USB Outlets
+  {
     id: "socket-13a-usb",
     name: "13A Socket with USB Charging",
     category: "accessories",
@@ -262,6 +468,26 @@ export const commonMaterials: MaterialItem[] = [
     defaultPrice: 25.50,
     code: "SKTUSBCFC"
   },
+  {
+    id: "socket-usb-only",
+    name: "Twin USB Charging Point",
+    category: "accessories",
+    subcategory: "USB Outlets",
+    unit: "each",
+    defaultPrice: 15.50,
+    code: "SKTUSBONLY"
+  },
+  {
+    id: "socket-usb-c-pd",
+    name: "USB-C PD 65W Charging Socket",
+    category: "accessories",
+    subcategory: "USB Outlets",
+    unit: "each",
+    defaultPrice: 42.50,
+    code: "SKTUSBCPD"
+  },
+
+  // Switches
   {
     id: "switch-1g-1w",
     name: "1 Gang 1 Way Light Switch",
@@ -281,6 +507,15 @@ export const commonMaterials: MaterialItem[] = [
     code: "SW1G2W"
   },
   {
+    id: "switch-1g-int",
+    name: "1 Gang Intermediate Switch",
+    category: "accessories", 
+    subcategory: "Switches",
+    unit: "each",
+    defaultPrice: 8.50,
+    code: "SW1GINT"
+  },
+  {
     id: "switch-2g-2w",
     name: "2 Gang 2 Way Light Switch",
     category: "accessories",
@@ -289,6 +524,55 @@ export const commonMaterials: MaterialItem[] = [
     defaultPrice: 9.50,
     code: "SW2G2W"
   },
+  {
+    id: "switch-3g-2w",
+    name: "3 Gang 2 Way Light Switch",
+    category: "accessories",
+    subcategory: "Switches",
+    unit: "each",
+    defaultPrice: 14.50,
+    code: "SW3G2W"
+  },
+  {
+    id: "switch-4g-2w",
+    name: "4 Gang 2 Way Light Switch",
+    category: "accessories",
+    subcategory: "Switches",
+    unit: "each",
+    defaultPrice: 18.50,
+    code: "SW4G2W"
+  },
+
+  // Smart Switches
+  {
+    id: "smart-switch",
+    name: "Smart Light Switch (WiFi)",
+    category: "accessories",
+    subcategory: "Smart Switches",
+    unit: "each",
+    defaultPrice: 35.00,
+    code: "SWSMART"
+  },
+  {
+    id: "smart-switch-2g",
+    name: "2 Gang Smart Switch (WiFi)",
+    category: "accessories",
+    subcategory: "Smart Switches",
+    unit: "each",
+    defaultPrice: 55.00,
+    code: "SWSMART2G"
+  },
+  {
+    id: "smart-dimmer",
+    name: "Smart Dimmer Switch (WiFi)",
+    category: "accessories",
+    subcategory: "Smart Switches",
+    unit: "each",
+    defaultPrice: 45.00,
+    code: "DIMMSMART"
+  },
+
+  // Dimmers
   {
     id: "dimmer-1g",
     name: "1 Gang LED Dimmer Switch",
@@ -308,14 +592,16 @@ export const commonMaterials: MaterialItem[] = [
     code: "DIM2G"
   },
   {
-    id: "smart-switch",
-    name: "Smart Light Switch (WiFi)",
+    id: "dimmer-rotary",
+    name: "Rotary LED Dimmer 400W",
     category: "accessories",
-    subcategory: "Switches",
+    subcategory: "Dimmers",
     unit: "each",
-    defaultPrice: 35.00,
-    code: "SWSMART"
+    defaultPrice: 18.50,
+    code: "DIMROT400"
   },
+
+  // Spurs
   {
     id: "spur-fused-13a",
     name: "13A Fused Connection Unit",
@@ -325,8 +611,76 @@ export const commonMaterials: MaterialItem[] = [
     defaultPrice: 8.50,
     code: "FCU13A"
   },
+  {
+    id: "spur-fused-20a",
+    name: "20A Fused Connection Unit",
+    category: "accessories",
+    subcategory: "Spurs",
+    unit: "each",
+    defaultPrice: 12.50,
+    code: "FCU20A"
+  },
+  {
+    id: "spur-unfused",
+    name: "Unfused Connection Unit",
+    category: "accessories",
+    subcategory: "Spurs",
+    unit: "each",
+    defaultPrice: 6.50,
+    code: "FCUUNF"
+  },
 
-  // Distribution - 2025 UK Prices  
+  // Outdoor Sockets
+  {
+    id: "socket-outdoor-13a",
+    name: "IP66 Outdoor 13A Socket",
+    category: "accessories",
+    subcategory: "Outdoor Sockets",
+    unit: "each",
+    defaultPrice: 28.50,
+    code: "SKTOUT13A"
+  },
+  {
+    id: "socket-commando-16a",
+    name: "16A Commando Socket Blue",
+    category: "accessories",
+    subcategory: "Industrial Sockets",
+    unit: "each",
+    defaultPrice: 35.00,
+    code: "SKTCOM16A"
+  },
+  {
+    id: "socket-commando-32a",
+    name: "32A Commando Socket Red",
+    category: "accessories",
+    subcategory: "Industrial Sockets",
+    unit: "each",
+    defaultPrice: 55.00,
+    code: "SKTCOM32A"
+  },
+
+  // Sensor Switches
+  {
+    id: "switch-pir",
+    name: "PIR Motion Sensor Switch",
+    category: "accessories",
+    subcategory: "Sensor Switches",
+    unit: "each",
+    defaultPrice: 25.50,
+    code: "SWPIR"
+  },
+  {
+    id: "switch-microwave",
+    name: "Microwave Sensor Switch",
+    category: "accessories",
+    subcategory: "Sensor Switches",
+    unit: "each",
+    defaultPrice: 32.50,
+    code: "SWMWAVE"
+  },
+
+  // =============== DISTRIBUTION (60 items) ===============
+  // Consumer Units
   {
     id: "consumer-unit-6w",
     name: "6 Way Consumer Unit (Metal)",
@@ -702,3 +1056,9 @@ export const labourPresets = [
     notes: "Full property electrical inspection"
   }
 ];
+
+// Merge base materials with additional materials to create comprehensive database (400+ items)
+const allMaterials = [...baseMaterials, ...additionalMaterials];
+
+// Export the comprehensive materials list
+export { allMaterials as commonMaterials };

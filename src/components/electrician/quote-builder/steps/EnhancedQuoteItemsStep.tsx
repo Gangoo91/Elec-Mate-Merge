@@ -7,7 +7,8 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { DropdownTabs } from "@/components/ui/dropdown-tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
-import { Plus, Trash2, Wrench, Package, Zap, Clock, FileText, Copy } from "lucide-react";
+import { Plus, Trash2, Wrench, Package, Zap, Clock, FileText, Copy, TrendingUp } from "lucide-react";
+import { Switch } from "@/components/ui/switch";
 import { QuoteItem, JobTemplate } from "@/types/quote";
 import { JobTemplates } from "../JobTemplates";
 import { 
@@ -23,9 +24,12 @@ interface EnhancedQuoteItemsStepProps {
   onAdd: (item: Omit<QuoteItem, 'id' | 'totalPrice'>) => void;
   onUpdate: (itemId: string, updates: Partial<QuoteItem>) => void;
   onRemove: (itemId: string) => void;
+  priceAdjustment?: number;
+  setPriceAdjustment?: (adjustment: number) => void;
+  calculateAdjustedPrice?: (basePrice: number) => number;
 }
 
-export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove }: EnhancedQuoteItemsStepProps) => {
+export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, priceAdjustment = 0, setPriceAdjustment, calculateAdjustedPrice }: EnhancedQuoteItemsStepProps) => {
   const [newItem, setNewItem] = useState({
     description: "",
     quantity: 1,
@@ -83,7 +87,7 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove }: Enh
         ...prev,
         materialCode: materialId,
         description: material.name,
-        unitPrice: material.defaultPrice,
+        unitPrice: calculateAdjustedPrice ? calculateAdjustedPrice(material.defaultPrice) : material.defaultPrice,
         unit: material.unit
       }));
     }
@@ -182,6 +186,42 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove }: Enh
 
   return (
     <div className="space-y-4">
+      {/* Price Adjustment Controls */}
+      {setPriceAdjustment && (
+        <Card className="bg-primary/5 border-primary/20">
+          <CardContent className="pt-4">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-2">
+                <TrendingUp className="h-5 w-5 text-primary" />
+                <Label className="text-sm font-medium">Price Adjustment</Label>
+              </div>
+              <Switch 
+                checked={priceAdjustment > 0}
+                onCheckedChange={(checked) => setPriceAdjustment(checked ? 10 : 0)}
+              />
+            </div>
+            {priceAdjustment > 0 && (
+              <div className="flex items-center gap-4">
+                <Label className="text-sm">Increase:</Label>
+                <Select value={priceAdjustment.toString()} onValueChange={(value) => setPriceAdjustment(Number(value))}>
+                  <SelectTrigger className="w-32">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="5">5%</SelectItem>
+                    <SelectItem value="10">10%</SelectItem>
+                    <SelectItem value="15">15%</SelectItem>
+                    <SelectItem value="20">20%</SelectItem>
+                  </SelectContent>
+                </Select>
+                <span className="text-sm text-muted-foreground">
+                  Applied to all material prices
+                </span>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      )}
       <DropdownTabs
         tabs={[
           {
@@ -305,18 +345,27 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove }: Enh
                           <SelectTrigger className="h-12">
                             <SelectValue placeholder="Select material" />
                           </SelectTrigger>
-                          <SelectContent className="z-50 bg-background border shadow-lg">
-                            {commonMaterials
-                              .filter(m => !newItem.subcategory || m.category === newItem.subcategory)
-                              .map(material => (
-                              <SelectItem key={material.id} value={material.id}>
-                                <div className="flex flex-col">
-                                  <span>{material.name}</span>
-                                  <span className="text-xs text-muted-foreground">£{material.defaultPrice}/{material.unit}</span>
-                                </div>
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
+                           <SelectContent className="z-50 bg-background border shadow-lg">
+                             {commonMaterials
+                               .filter(m => !newItem.subcategory || m.category === newItem.subcategory)
+                               .map(material => {
+                                 const adjustedPrice = calculateAdjustedPrice ? calculateAdjustedPrice(material.defaultPrice) : material.defaultPrice;
+                                 return (
+                                   <SelectItem key={material.id} value={material.id}>
+                                     <div className="flex flex-col">
+                                       <span>{material.name}</span>
+                                       <span className="text-xs text-muted-foreground">
+                                         {priceAdjustment > 0 ? (
+                                           <>Base: £{material.defaultPrice.toFixed(2)} | Adjusted: £{adjustedPrice.toFixed(2)} (+{priceAdjustment}%)</>
+                                         ) : (
+                                           <>£{material.defaultPrice.toFixed(2)}/{material.unit}</>
+                                         )}
+                                       </span>
+                                     </div>
+                                   </SelectItem>
+                                 );
+                               })}
+                           </SelectContent>
                         </Select>
                       </div>
                     </div>
