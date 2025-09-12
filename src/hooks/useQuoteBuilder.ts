@@ -130,6 +130,12 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void) => {
       
       // Validate quote before generation
       if (!finalQuote.client || !finalQuote.items || finalQuote.items.length === 0 || !finalQuote.settings) {
+        console.log('Quote Generation - Validation failed', {
+          hasClient: !!finalQuote.client,
+          hasJobDetails: !!finalQuote.jobDetails,
+          itemCount: finalQuote.items?.length || 0,
+          hasSettings: !!finalQuote.settings
+        });
         toast({
           title: "Cannot Generate Quote",
           description: "Please complete all required fields before generating the quote.",
@@ -137,6 +143,15 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void) => {
         });
         return;
       }
+
+      console.log('Quote Generation - Starting quote generation', {
+        quoteId: finalQuote.id,
+        quoteNumber: finalQuote.quoteNumber,
+        clientName: finalQuote.client?.name,
+        itemCount: finalQuote.items?.length,
+        total: finalQuote.total,
+        status: finalQuote.status
+      });
 
       // Update quote status and expiry
       const updatedQuote = {
@@ -146,30 +161,52 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void) => {
         updatedAt: new Date(),
       };
 
+      console.log('Quote Generation - Quote updated with sent status', {
+        id: updatedQuote.id,
+        status: updatedQuote.status,
+        expiryDate: updatedQuote.expiryDate
+      });
+
       setQuote(updatedQuote);
 
       // Generate and download PDF using professional generator
-      const pdfGenerated = generateProfessionalQuotePDF({
-        quote: updatedQuote,
-        companyProfile
-      });
+      let pdfGenerated = false;
+      try {
+        console.log('PDF Generation - Starting PDF generation');
+        pdfGenerated = generateProfessionalQuotePDF({
+          quote: updatedQuote,
+          companyProfile
+        });
+        console.log('PDF Generation - Professional PDF result:', pdfGenerated);
+      } catch (pdfError) {
+        console.error('PDF Generation - Error with professional generator:', pdfError);
+      }
 
       if (!pdfGenerated) {
-        // Fallback to basic PDF generator
-        generateQuotePDF(updatedQuote, companyProfile);
+        try {
+          console.log('PDF Generation - Falling back to basic generator');
+          generateQuotePDF(updatedQuote, companyProfile);
+          console.log('PDF Generation - Basic generator completed');
+        } catch (fallbackError) {
+          console.error('PDF Generation - Fallback generator also failed:', fallbackError);
+        }
       }
 
       // Save quote to Supabase
+      console.log('Quote Storage - Attempting to save quote to database');
       const saved = await saveQuote(updatedQuote as Quote);
       
       if (saved) {
+        console.log('Quote Storage - Quote saved successfully, notifying user');
         toast({
           title: "Quote Generated Successfully",
           description: `Quote ${updatedQuote.quoteNumber} has been generated, downloaded, and saved to recent quotes.`,
           variant: "success"
         });
+        console.log('Quote Storage - Calling onQuoteGenerated callback');
         onQuoteGenerated?.(); // Trigger refresh of quotes list
       } else {
+        console.log('Quote Storage - Quote generation completed but save failed');
         toast({
           title: "Quote Generated",
           description: `Quote ${updatedQuote.quoteNumber} has been generated and downloaded, but could not be saved to recent quotes.`,
@@ -179,8 +216,11 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void) => {
 
       // Move to review step if not already there
       if (currentStep < 5) {
+        console.log('Quote Generation - Moving to review step');
         setCurrentStep(5);
       }
+
+      console.log('Quote Generation - Process completed');
     } catch (error) {
       console.error('Error generating quote:', error);
       toast({

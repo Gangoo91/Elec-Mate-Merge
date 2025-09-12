@@ -219,6 +219,26 @@ export const generateProfessionalQuotePDF = ({ quote, companyProfile }: PDFGener
       return yPosition + 10;
     }
 
+    // Check if autoTable is available
+    if (typeof pdf.autoTable !== 'function') {
+      console.error('PDF Generation - autoTable not available, using fallback table rendering');
+      // Fallback to simple table rendering - render manually
+      yPosition = addText('Quote Items:', margin, yPosition, {
+        fontSize: 12,
+        fontStyle: 'bold'
+      }) + 10;
+
+      quote.items.forEach((item, index) => {
+        const itemText = `${index + 1}. ${item.description} - Qty: ${item.quantity} ${item.unit} @ ${formatCurrency(item.unitPrice)} = ${formatCurrency(item.totalPrice)}`;
+        yPosition = addText(itemText, margin, yPosition, {
+          fontSize: 9,
+          maxWidth: contentWidth
+        }) + 5;
+      });
+
+      return yPosition + 10;
+    }
+
     const tableData = quote.items.map((item, index) => [
       (index + 1).toString(),
       safeText(item.description),

@@ -71,11 +71,24 @@ export const useQuoteStorage = () => {
   // Save a new quote to Supabase
   const saveQuote = useCallback(async (quote: Quote) => {
     try {
+      console.log('Quote Storage - Starting save process', {
+        quoteId: quote.id,
+        quoteNumber: quote.quoteNumber,
+        status: quote.status,
+        clientName: quote.client?.name,
+        total: quote.total
+      });
+
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) {
-        console.error('User not authenticated');
+        console.error('Quote Storage - User not authenticated');
         return false;
       }
+
+      console.log('Quote Storage - User authenticated', {
+        userId: user.id,
+        userEmail: user.email
+      });
 
       const quoteData = {
         id: quote.id,
@@ -94,24 +107,54 @@ export const useQuoteStorage = () => {
         last_reminder_sent_at: quote.lastReminderSentAt?.toISOString(),
         notes: quote.notes,
         expiry_date: quote.expiryDate.toISOString(),
+        acceptance_status: quote.acceptance_status || 'pending',
+        accepted_at: quote.accepted_at?.toISOString(),
+        public_token: quote.public_token
       };
 
-      const { error } = await supabase
+      console.log('Quote Storage - Prepared data for database', {
+        id: quoteData.id,
+        user_id: quoteData.user_id,
+        quote_number: quoteData.quote_number,
+        status: quoteData.status,
+        total: quoteData.total,
+        acceptance_status: quoteData.acceptance_status
+      });
+
+      const { data, error } = await supabase
         .from('quotes')
-        .upsert(quoteData, { onConflict: 'id' });
+        .upsert(quoteData, { onConflict: 'id' })
+        .select();
 
       if (error) {
-        console.error('Error saving quote:', error);
+        console.error('Quote Storage - Database error:', error);
+        console.error('Quote Storage - Error details:', {
+          code: error.code,
+          message: error.message,
+          details: error.details,
+          hint: error.hint
+        });
         return false;
       }
+
+      console.log('Quote Storage - Database save successful', {
+        savedData: data,
+        recordCount: data?.length || 0
+      });
 
       // Update local state
       const updatedQuotes = [quote, ...savedQuotes.filter(q => q.id !== quote.id)];
       setSavedQuotes(updatedQuotes);
-      console.log('Quote saved to Supabase:', quote.id);
+      
+      console.log('Quote Storage - Local state updated', {
+        quoteId: quote.id,
+        totalQuotes: updatedQuotes.length,
+        isNewQuote: !savedQuotes.some(q => q.id === quote.id)
+      });
+
       return true;
     } catch (error) {
-      console.error('Error saving quote:', error);
+      console.error('Quote Storage - Unexpected error:', error);
       return false;
     }
   }, [savedQuotes]);
