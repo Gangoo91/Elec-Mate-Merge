@@ -5,7 +5,7 @@ import { Wrench, Star } from "lucide-react";
 
 const DealOfTheDay = () => {
   return (
-    <Card className="border-elec-yellow/20 bg-gradient-to-r from-elec-gray to-elec-gray/70 overflow-hidden">
+    <Card className="my-4 border-elec-yellow/20 bg-gradient-to-r from-elec-gray to-elec-gray/70 overflow-hidden">
       <CardHeader>
         <CardTitle className="text-2xl flex items-center gap-2">
           Tool Deal of the Day
