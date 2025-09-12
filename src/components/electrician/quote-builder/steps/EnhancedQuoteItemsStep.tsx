@@ -203,10 +203,10 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
                 
                 {/* Price Adjustment Controls */}
                 {setPriceAdjustment && (
-                  <div className="space-y-2 pb-4 border-b border-border/50">
-                    <div className="flex items-center justify-between">
+                  <div className="bg-primary/5 border border-primary/20 rounded-lg p-4 mb-4">
+                    <div className="flex items-center justify-between mb-3">
                       <div className="flex items-center gap-2">
-                        <TrendingUp className="h-4 w-4" />
+                        <TrendingUp className="h-4 w-4 text-primary" />
                         <Label className="text-sm font-medium">Price Adjustment</Label>
                       </div>
                       <Switch 
@@ -215,10 +215,10 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
                       />
                     </div>
                     {priceAdjustment > 0 && (
-                      <div className="flex items-center gap-3">
+                      <div className="flex items-center gap-3 text-sm">
                         <Label className="text-sm">Increase:</Label>
                         <Select value={priceAdjustment.toString()} onValueChange={(value) => setPriceAdjustment(Number(value))}>
-                          <SelectTrigger className="w-24 h-9">
+                          <SelectTrigger className="w-24 h-8">
                             <SelectValue />
                           </SelectTrigger>
                           <SelectContent>
@@ -228,7 +228,7 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
                             <SelectItem value="20">20%</SelectItem>
                           </SelectContent>
                         </Select>
-                        <span className="text-sm text-muted-foreground">
+                        <span className="text-xs text-muted-foreground">
                           Applied to all material prices
                         </span>
                       </div>
