@@ -126,19 +126,21 @@ export const QuoteDashboardCard = ({ quotes }: QuoteDashboardCardProps) => {
           {activeQuotes.map((quote) => (
             <div
               key={quote.id}
-              className="mobile-card border border-elec-yellow/20 rounded-lg mobile-interactive"
+              className="mobile-card border border-elec-yellow/20 rounded-lg mobile-interactive overflow-hidden"
             >
-              {/* Mobile-First Layout */}
-              <div className="space-y-4">
+              {/* Mobile-First Layout with contained overflow */}
+              <div className="space-y-4 min-w-0 w-full">
                 {/* Header Section - Quote Info */}
-                <div className="flex flex-col space-y-2">
-                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-                    <h4 className="mobile-heading text-lg font-semibold truncate">
+                <div className="flex flex-col space-y-2 min-w-0">
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 min-w-0">
+                    <h4 className="mobile-heading text-lg font-semibold truncate min-w-0 flex-1">
                       Quote #{quote.quoteNumber}
                     </h4>
-                    {getStatusBadge(quote)}
+                    <div className="flex-shrink-0">
+                      {getStatusBadge(quote)}
+                    </div>
                   </div>
-                  <p className="mobile-text text-muted-foreground truncate">
+                  <p className="mobile-text text-muted-foreground truncate min-w-0">
                     Client: {quote.client.name}
                   </p>
                 </div>
@@ -150,40 +152,40 @@ export const QuoteDashboardCard = ({ quotes }: QuoteDashboardCardProps) => {
                   </p>
                 </div>
 
-                {/* Action Buttons - Responsive Layout */}
-                <div className="space-y-3 sm:space-y-0">
+                {/* Action Buttons - Fully Contained Layout */}
+                <div className="w-full">
                   {/* Mobile: Full-width stacked buttons */}
-                  <div className="flex flex-col sm:hidden gap-3">
+                  <div className="flex flex-col sm:hidden gap-3 w-full">
                     <MobileButton
                       size="default"
                       variant="elec"
                       onClick={() => handleActionClick(quote, "accept")}
                       icon={<CheckCircle className="h-4 w-4" />}
-                      className="w-full touch-target bg-green-600 hover:bg-green-700 text-white border-green-600 font-medium"
+                      className="w-full touch-target bg-green-600 hover:bg-green-700 text-white border-green-600 font-medium min-w-0"
                       aria-label={`Accept quote ${quote.quoteNumber} from ${quote.client.name}`}
                     >
-                      Accept Quote
+                      <span className="truncate">Accept Quote</span>
                     </MobileButton>
                     <MobileButton
                       size="default"
                       variant="elec-outline"
                       onClick={() => handleActionClick(quote, "reject")}
                       icon={<XCircle className="h-4 w-4" />}
-                      className="w-full touch-target border-red-500 text-red-600 hover:bg-red-500 hover:text-white font-medium"
+                      className="w-full touch-target border-red-500 text-red-600 hover:bg-red-500 hover:text-white font-medium min-w-0"
                       aria-label={`Reject quote ${quote.quoteNumber} from ${quote.client.name}`}
                     >
-                      Reject Quote
+                      <span className="truncate">Reject Quote</span>
                     </MobileButton>
                   </div>
 
-                  {/* Desktop/Tablet: Compact side-by-side buttons */}
-                  <div className="hidden sm:flex gap-3 justify-end">
+                  {/* Desktop/Tablet: Compact side-by-side buttons with proper containment */}
+                  <div className="hidden sm:flex gap-2 justify-end w-full max-w-full">
                     <MobileButton
                       size="sm"
                       variant="elec"
                       onClick={() => handleActionClick(quote, "accept")}
                       icon={<CheckCircle className="h-4 w-4" />}
-                      className="bg-green-600 hover:bg-green-700 text-white border-green-600 font-medium px-4 py-2"
+                      className="bg-green-600 hover:bg-green-700 text-white border-green-600 font-medium px-3 py-2 flex-shrink-0"
                       aria-label={`Accept quote ${quote.quoteNumber} from ${quote.client.name}`}
                     >
                       Accept
@@ -193,7 +195,7 @@ export const QuoteDashboardCard = ({ quotes }: QuoteDashboardCardProps) => {
                       variant="elec-outline"
                       onClick={() => handleActionClick(quote, "reject")}
                       icon={<XCircle className="h-4 w-4" />}
-                      className="border-red-500 text-red-600 hover:bg-red-500 hover:text-white font-medium px-4 py-2"
+                      className="border-red-500 text-red-600 hover:bg-red-500 hover:text-white font-medium px-3 py-2 flex-shrink-0"
                       aria-label={`Reject quote ${quote.quoteNumber} from ${quote.client.name}`}
                     >
                       Reject
