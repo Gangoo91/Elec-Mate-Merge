@@ -139,6 +139,21 @@ const QuoteBuilder = () => {
 
       <div className="px-4 md:px-6 py-6 md:py-8 space-y-6 md:space-y-8 animate-fade-in">
 
+        {/* Prominent Create Quote Section */}
+        <section className="text-center space-y-4">
+          <Button 
+            onClick={() => setShowQuoteWizard(true)}
+            size="lg"
+            className="mobile-button-primary px-12 py-6 text-xl font-bold bg-gradient-to-r from-elec-yellow to-elec-yellow/90 hover:from-elec-yellow/90 hover:to-elec-yellow/80 text-elec-dark shadow-2xl hover:shadow-3xl transition-all duration-300 group transform hover:scale-105"
+          >
+            <Plus className="mr-3 h-6 w-6 group-hover:rotate-90 transition-transform duration-300" />
+            Create New Quote
+          </Button>
+          <p className="text-lg text-muted-foreground">
+            Professional electrical quotes in minutes
+          </p>
+        </section>
+
         <main className="space-y-6 md:space-y-8">
           {/* Enhanced Stats Dashboard */}
           <section aria-labelledby="stats-overview" className="space-y-4 md:space-y-6">
