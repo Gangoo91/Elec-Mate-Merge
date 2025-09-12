@@ -3,10 +3,11 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { MobileButton } from '@/components/ui/mobile-button';
 import { Badge } from '@/components/ui/badge';
-import { FileText, Download, Trash2, Eye, Calendar, Check, Mail, Tag, Clock } from 'lucide-react';
+import { FileText, Download, Trash2, Eye, Calendar, Check, Mail, Tag, Clock, X } from 'lucide-react';
 import { Quote, QuoteTag } from '@/types/quote';
 import { generateQuotePDF } from './QuotePDFGenerator';
 import { toast } from '@/hooks/use-toast';
+import { ConfirmationDialog } from '@/components/ui/confirmation-dialog';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -19,7 +20,7 @@ import { format } from 'date-fns';
 interface RecentQuotesListProps {
   quotes: Quote[];
   onDeleteQuote: (quoteId: string) => Promise<boolean>;
-  onUpdateQuoteStatus?: (quoteId: string, status: Quote['status'], tags?: Quote['tags']) => Promise<boolean>;
+  onUpdateQuoteStatus?: (quoteId: string, status: Quote['status'], tags?: Quote['tags'], acceptanceStatus?: Quote['acceptance_status']) => Promise<boolean>;
   onSendPaymentReminder?: (quoteId: string, reminderType: 'gentle' | 'firm' | 'final') => Promise<boolean>;
   showAll?: boolean;
 }
@@ -32,6 +33,9 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
   showAll = false
 }) => {
   const [loadingAction, setLoadingAction] = useState<string>('');
+  const [selectedQuote, setSelectedQuote] = useState<Quote | null>(null);
+  const [confirmAction, setConfirmAction] = useState<'accept' | 'reject' | null>(null);
+  const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const handleRegeneratePDF = (quote: Quote) => {
     try {
       generateQuotePDF(quote);
@@ -112,6 +116,48 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
         return 'Disputed';
       default:
         return tag;
+    }
+  };
+
+  const handleActionClick = (quote: Quote, action: 'accept' | 'reject') => {
+    setSelectedQuote(quote);
+    setConfirmAction(action);
+    setShowConfirmDialog(true);
+  };
+
+  const handleConfirmAction = async () => {
+    if (!selectedQuote || !confirmAction || !onUpdateQuoteStatus) return;
+    
+    setLoadingAction(`action-${selectedQuote.id}`);
+    try {
+      let success = false;
+      
+      if (confirmAction === 'accept') {
+        success = await onUpdateQuoteStatus(selectedQuote.id, 'completed', [], 'accepted');
+      } else if (confirmAction === 'reject') {
+        success = await onUpdateQuoteStatus(selectedQuote.id, 'rejected', [], 'rejected');
+      }
+      
+      if (success) {
+        toast({
+          title: confirmAction === 'accept' ? "Quote Accepted" : "Quote Rejected",
+          description: `Quote ${selectedQuote.quoteNumber} has been ${confirmAction}ed successfully.`,
+          variant: "success"
+        });
+      } else {
+        throw new Error(`Failed to ${confirmAction} quote`);
+      }
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: `Failed to ${confirmAction} quote. Please try again.`,
+        variant: "destructive"
+      });
+    } finally {
+      setLoadingAction('');
+      setShowConfirmDialog(false);
+      setSelectedQuote(null);
+      setConfirmAction(null);
     }
   };
 
@@ -259,8 +305,9 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
                     <MobileButton
                       size="sm"
                       variant="elec"
-                      onClick={() => handleStatusUpdate(quote.id, 'pending')}
-                      disabled={loadingAction.startsWith(`status-${quote.id}`)}
+                      onClick={() => handleActionClick(quote, 'accept')}
+                      disabled={loadingAction.startsWith(`action-${quote.id}`)}
+                      loading={loadingAction === `action-${quote.id}`}
                       aria-label={`Accept quote ${quote.quoteNumber}`}
                       icon={<Check className="h-4 w-4" />}
                     >
@@ -269,9 +316,11 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
                     <MobileButton
                       size="sm"
                       variant="destructive"
-                      onClick={() => handleStatusUpdate(quote.id, 'rejected')}
-                      disabled={loadingAction.startsWith(`status-${quote.id}`)}
+                      onClick={() => handleActionClick(quote, 'reject')}
+                      disabled={loadingAction.startsWith(`action-${quote.id}`)}
+                      loading={loadingAction === `action-${quote.id}`}
                       aria-label={`Reject quote ${quote.quoteNumber}`}
+                      icon={<X className="h-4 w-4" />}
                     >
                       Reject
                     </MobileButton>
@@ -384,6 +433,22 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
           </CardContent>
         </Card>
       )}
+
+      {/* Confirmation Dialog */}
+      <ConfirmationDialog
+        open={showConfirmDialog}
+        onOpenChange={setShowConfirmDialog}
+        title={confirmAction === 'accept' ? 'Accept Quote' : 'Reject Quote'}
+        description={
+          confirmAction === 'accept'
+            ? `Are you sure you want to accept quote ${selectedQuote?.quoteNumber}? This will mark the quote as completed and accepted.`
+            : `Are you sure you want to reject quote ${selectedQuote?.quoteNumber}? This action cannot be undone.`
+        }
+        confirmText={confirmAction === 'accept' ? 'Accept Quote' : 'Reject Quote'}
+        variant={confirmAction === 'reject' ? 'destructive' : 'default'}
+        onConfirm={handleConfirmAction}
+        loading={loadingAction.startsWith('action-')}
+      />
     </div>
   );
 };
