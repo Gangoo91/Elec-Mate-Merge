@@ -1,12 +1,16 @@
 import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { 
-  Cable, 
+  Wrench, 
   Zap, 
+  Calculator, 
+  HardHat, 
   Shield, 
-  Settings, 
-  Lightbulb,
-  Wrench
+  Package, 
+  ArrowUp, 
+  Settings,
+  ArrowRight
 } from 'lucide-react';
 
 interface ToolCategory {
@@ -18,74 +22,90 @@ interface ToolCategory {
 
 const toolCategories: ToolCategory[] = [
   {
-    name: 'Cables & Wiring',
-    icon: Cable,
-    description: 'Twin & Earth, SWA, flex cables and data cables',
-    count: '324 products available'
-  },
-  {
-    name: 'Electrical Components',
-    icon: Zap,
-    description: 'Consumer units, MCBs, RCDs and isolators',
-    count: '186 products available'
-  },
-  {
-    name: 'Protection Equipment',
-    icon: Shield,
-    description: 'Earth rods, surge protectors and circuit breakers',
-    count: '95 products available'
-  },
-  {
-    name: 'Installation Accessories',
-    icon: Settings,
-    description: 'Junction boxes, cable glands and trunking',
-    count: '412 products available'
-  },
-  {
-    name: 'Lighting Solutions',
-    icon: Lightbulb,
-    description: 'LED downlights, battens and emergency lighting',
-    count: '278 products available'
-  },
-  {
-    name: 'Electrical Tools',
+    name: 'Hand Tools',
     icon: Wrench,
-    description: 'Testing equipment, hand tools and power tools',
-    count: '156 products available'
+    description: 'Essential manual tools for electrical installations and maintenance',
+    count: '200+'
+  },
+  {
+    name: 'Power Tools',
+    icon: Zap,
+    description: 'Cordless and corded power tools for drilling, cutting and installation',
+    count: '150+'
+  },
+  {
+    name: 'Test Equipment',
+    icon: Calculator,
+    description: 'Testing and measurement equipment for electrical safety compliance',
+    count: '80+'
+  },
+  {
+    name: 'PPE',
+    icon: HardHat,
+    description: 'Personal protective equipment for safe electrical working practices',
+    count: '120+'
+  },
+  {
+    name: 'Safety Tools',
+    icon: Shield,
+    description: 'Safety equipment and tools for hazard identification and protection',
+    count: '90+'
+  },
+  {
+    name: 'Access Tools & Equipment',
+    icon: ArrowUp,
+    description: 'Ladders, scaffolding and access equipment for working at height',
+    count: '60+'
+  },
+  {
+    name: 'Tool Storage',
+    icon: Package,
+    description: 'Tool bags, boxes and storage solutions for organisation and transport',
+    count: '75+'
+  },
+  {
+    name: 'Specialist Tools',
+    icon: Settings,
+    description: 'Specialist electrical tools for specific installation and maintenance tasks',
+    count: '95+'
   }
 ];
 
 export const ToolCategoryMegaMenu = () => {
   return (
     <div className="space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-6xl mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {toolCategories.map((category) => (
-          <Link 
+          <Card 
             key={category.name}
-            to={`/electrician/tools?category=${encodeURIComponent(category.name)}`}
-            className="block"
+            className="group hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
           >
-            <Card className="group bg-slate-800/90 border-yellow-400/30 hover:border-yellow-400/60 transition-all duration-300 hover:shadow-lg hover:shadow-yellow-400/10 cursor-pointer">
-              <CardContent className="p-8">
-                <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0">
-                    <category.icon className="h-8 w-8 text-yellow-400" />
-                  </div>
-                  <div className="flex-1 space-y-3">
-                    <h3 className="text-xl font-semibold text-white group-hover:text-yellow-400 transition-colors">
-                      {category.name}
-                    </h3>
-                    <p className="text-gray-400 text-base leading-relaxed">
-                      {category.description}
-                    </p>
-                    <p className="text-gray-500 text-sm font-medium">
-                      {category.count}
-                    </p>
-                  </div>
+            <CardContent className="p-6">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="p-2 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
+                  <category.icon className="h-6 w-6 text-primary" />
                 </div>
-              </CardContent>
-            </Card>
-          </Link>
+                <div>
+                  <h3 className="font-semibold text-foreground">{category.name}</h3>
+                  <p className="text-sm text-muted-foreground">{category.count} tools</p>
+                </div>
+              </div>
+              
+              <p className="text-sm text-muted-foreground mb-4">
+                {category.description}
+              </p>
+
+              <Link to={`/electrician/tools?category=${encodeURIComponent(category.name)}`}>
+                <Button 
+                  className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors"
+                  variant="outline"
+                >
+                  Browse {category.name}
+                  <ArrowRight className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                </Button>
+              </Link>
+            </CardContent>
+          </Card>
         ))}
       </div>
     </div>
