@@ -7,7 +7,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { DropdownTabs } from "@/components/ui/dropdown-tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
-import { Plus, Trash2, Wrench, Package, Zap, Clock, Users, FileText, Copy, Calculator, Search } from "lucide-react";
+import { Plus, Trash2, Wrench, Package, Zap, Clock, FileText, Copy } from "lucide-react";
 import { QuoteItem, JobTemplate } from "@/types/quote";
 import { JobTemplates } from "../JobTemplates";
 import { 
@@ -15,13 +15,8 @@ import {
   materialCategories, 
   commonMaterials, 
   equipmentCategories, 
-  commonEquipment,
-  labourPresets
+  commonEquipment
 } from "@/data/electrician/presetData";
-import { enhancedMaterials, EnhancedMaterialItem } from "@/data/electrician/enhancedPricingData";
-import MaterialSearchEnhanced from "../MaterialSearchEnhanced";
-import { LiveMaterialPricing } from "./LiveMaterialPricing";
-import { useQuoteMaterialIntegration } from "@/hooks/useQuoteMaterialIntegration";
 
 interface EnhancedQuoteItemsStepProps {
   items: QuoteItem[];
@@ -46,8 +41,6 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove }: Enh
     notes: ""
   });
 
-  // Material integration hook
-  const { addMaterialToQuote, addMultipleMaterialsToQuote } = useQuoteMaterialIntegration(onAdd);
 
   const handleTemplateSelect = (template: JobTemplate) => {
     template.items.forEach(item => {
@@ -109,25 +102,6 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove }: Enh
     }
   };
 
-  const handleLabourPresetSelect = (preset: any) => {
-    const worker = workerTypes.find(w => w.id === preset.workerType);
-    if (worker) {
-      setNewItem(prev => ({
-        ...prev,
-        description: preset.description,
-        workerType: preset.workerType,
-        hours: preset.hours,
-        hourlyRate: worker.defaultHourlyRate,
-        unitPrice: worker.defaultHourlyRate,
-        quantity: preset.hours,
-        unit: "hour",
-        notes: preset.notes
-      }));
-      
-      // Show feedback that preset was selected
-      console.log('Labour preset selected:', preset.description);
-    }
-  };
 
   const handleHoursChange = (hours: number) => {
     setNewItem(prev => ({
@@ -205,57 +179,11 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove }: Enh
 
   const total = items.reduce((sum, item) => sum + item.totalPrice, 0);
 
-  // Handler for enhanced materials
-  const handleEnhancedMaterialAdd = (material: EnhancedMaterialItem, quantity: number, pricing: any) => {
-    const itemToAdd = {
-      description: material.name,
-      quantity,
-      unit: material.unit,
-      unitPrice: pricing.unitPrice,
-      category: "materials" as const,
-      subcategory: material.subcategory,
-      materialCode: material.code || material.id,
-      notes: `${material.brand} - ${material.priceSource}`
-    };
-    onAdd(itemToAdd);
-  };
 
   return (
     <div className="space-y-4">
       <DropdownTabs
         tabs={[
-          {
-            value: "enhanced",
-            label: "Smart Pricing",
-            icon: Calculator,
-            content: (
-              <div className="w-full bg-card/50 border border-primary/20 rounded-lg p-4">
-                <div className="mb-4">
-                  <h3 className="text-lg font-semibold flex items-center gap-2">
-                    <Calculator className="h-5 w-5" />
-                    Enhanced Materials Pricing
-                  </h3>
-                  <p className="text-sm text-muted-foreground mt-1">
-                    Smart pricing with quantity discounts, waste factors, and regional adjustments
-                  </p>
-                </div>
-                <MaterialSearchEnhanced onAddMaterial={handleEnhancedMaterialAdd} currentQuoteItems={items} />
-              </div>
-            )
-          },
-          {
-            value: "live",
-            label: "Live Pricing",
-            icon: Search,
-            content: (
-              <div className="w-full bg-card/50 border border-primary/20 rounded-lg p-4">
-                <LiveMaterialPricing 
-                  onAddToQuote={addMaterialToQuote}
-                  onAddMultipleToQuote={addMultipleMaterialsToQuote}
-                />
-              </div>
-            )
-          },
           {
             value: "quick",
             label: "Quick Add",
@@ -560,45 +488,9 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove }: Enh
             label: "Job Templates",
             icon: FileText,
             content: <JobTemplates onSelectTemplate={handleTemplateSelect} />
-          },
-          {
-            value: "presets",
-            label: "Labour Presets",
-            icon: Users,
-            content: (
-              <Card className="bg-card border-primary/20">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Users className="h-5 w-5" />
-                    Common Labour Tasks
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {labourPresets.map((preset, index) => (
-                      <Card key={index} className="bg-muted/30 border-muted cursor-pointer hover:border-primary/40 hover:bg-muted/50 transition-all duration-200 active:scale-95" 
-                            onClick={() => handleLabourPresetSelect(preset)}>
-                        <CardContent className="p-4">
-                          <h4 className="font-medium">{preset.description}</h4>
-                          <p className="text-sm text-muted-foreground mt-1">
-                            {workerTypes.find(w => w.id === preset.workerType)?.name} • {preset.hours} hours
-                          </p>
-                          {preset.notes && (
-                            <p className="text-xs text-muted-foreground mt-2">{preset.notes}</p>
-                          )}
-                          <div className="mt-2 text-xs text-primary font-medium">
-                            Click to apply to form
-                          </div>
-                        </CardContent>
-                      </Card>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            )
           }
         ]}
-        defaultValue="enhanced"
+        defaultValue="quick"
         placeholder="Select option"
         className="mb-6"
       />
