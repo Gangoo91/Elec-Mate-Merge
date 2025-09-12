@@ -298,7 +298,7 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
               </div>
 
               {/* Actions */}
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 flex-wrap">
                 {/* Inline Accept/Reject for sent quotes */}
                 {quote.status === 'sent' && onUpdateQuoteStatus && (
                   <div className="flex items-center gap-2">
