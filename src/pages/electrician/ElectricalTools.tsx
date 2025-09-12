@@ -6,7 +6,7 @@ import { Search } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 import EnhancedToolCategoryDisplay from "@/components/electrician-tools/EnhancedToolCategoryDisplay";
-import { ToolCategoryMegaMenu } from "@/components/electrician-tools/enhanced/ToolCategoryMegaMenu";
+import { ToolCategoryMegaMenu } from "@/components/electrician-tools/ToolCategoryMegaMenu";
 
 const ElectricalTools = () => {
   const [searchParams] = useSearchParams();
