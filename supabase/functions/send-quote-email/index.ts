@@ -52,7 +52,12 @@ const handler = async (req: Request): Promise<Response> => {
     const gmailRefreshToken = sanitise(rawRefreshToken);
 
     if (!gmailClientId || !gmailClientSecret || !gmailRefreshToken) {
-      throw new Error('Gmail credentials not configured. Please set GMAIL_CLIENT_ID, GMAIL_CLIENT_SECRET, and GMAIL_REFRESH_TOKEN in Supabase secrets.');
+      console.error('Gmail credentials missing:', {
+        hasClientId: Boolean(gmailClientId),
+        hasClientSecret: Boolean(gmailClientSecret), 
+        hasRefreshToken: Boolean(gmailRefreshToken)
+      });
+      throw new Error('Gmail API not configured - missing credentials');
     }
 
     // Helpful debugging (masked)
@@ -79,7 +84,22 @@ const handler = async (req: Request): Promise<Response> => {
     if (!tokenResponse.ok) {
       const errorText = await tokenResponse.text();
       console.error('Failed to get access token:', errorText);
-      throw new Error('Failed to authenticate with Gmail API');
+      console.error('Token request failed with status:', tokenResponse.status);
+      
+      // Parse the error response to provide more specific feedback
+      let errorDetails = 'Gmail API authentication failed';
+      try {
+        const errorData = JSON.parse(errorText);
+        if (errorData.error === 'invalid_client') {
+          errorDetails = 'Gmail OAuth client not found - check GMAIL_CLIENT_ID and GMAIL_CLIENT_SECRET';
+        } else if (errorData.error === 'invalid_grant') {
+          errorDetails = 'Gmail refresh token expired or invalid - regenerate GMAIL_REFRESH_TOKEN';
+        }
+      } catch (e) {
+        // Keep default error message
+      }
+      
+      throw new Error(errorDetails);
     }
 
     const tokenData = await tokenResponse.json();

@@ -190,8 +190,8 @@ ${companyProfile?.company_name || 'Your Electrician'}`;
       window.open(mailtoLink);
       
       toast({
-        title: "Gmail Error - Using Fallback",
-        description: "Gmail API failed. Opening default email client instead.",
+        title: "Gmail API Error",
+        description: "Gmail API authentication failed. Please configure Gmail credentials in settings. Opening default email client instead.",
         variant: "destructive"
       });
     } finally {
