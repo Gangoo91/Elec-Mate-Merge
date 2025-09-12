@@ -73,7 +73,7 @@ export const QuoteDashboardCard = ({ quotes }: QuoteDashboardCardProps) => {
   const getStatusBadge = (quote: Quote) => {
     if (quote.acceptance_status === "accepted") {
       return (
-        <Badge variant="secondary" className="bg-green-100 text-green-800 border-green-200">
+        <Badge variant="secondary" className="bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-950 dark:text-emerald-300 dark:border-emerald-800">
           <CheckCircle className="h-3 w-3 mr-1" />
           Accepted
         </Badge>
@@ -81,14 +81,14 @@ export const QuoteDashboardCard = ({ quotes }: QuoteDashboardCardProps) => {
     }
     if (quote.acceptance_status === "rejected") {
       return (
-        <Badge variant="destructive">
+        <Badge variant="destructive" className="bg-red-50 text-red-700 border-red-200 dark:bg-red-950 dark:text-red-300 dark:border-red-800">
           <XCircle className="h-3 w-3 mr-1" />
           Rejected
         </Badge>
       );
     }
     return (
-      <Badge variant="outline">
+      <Badge variant="outline" className="bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-950 dark:text-amber-300 dark:border-amber-800">
         <Clock className="h-3 w-3 mr-1" />
         Pending
       </Badge>
@@ -122,33 +122,68 @@ export const QuoteDashboardCard = ({ quotes }: QuoteDashboardCardProps) => {
             Active Quotes ({activeQuotes.length})
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="mobile-card-spacing">
           {activeQuotes.map((quote) => (
             <div
               key={quote.id}
-              className="border border-elec-yellow/20 rounded-lg p-4 space-y-3"
+              className="mobile-card border border-elec-yellow/20 rounded-lg mobile-interactive"
             >
-              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4">
-                <div className="space-y-1 flex-1">
-                  <h4 className="font-medium text-lg">Quote #{quote.quoteNumber}</h4>
-                  <p className="text-sm text-muted-foreground">
+              {/* Mobile-First Layout */}
+              <div className="space-y-4">
+                {/* Header Section - Quote Info */}
+                <div className="flex flex-col space-y-2">
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                    <h4 className="mobile-heading text-lg font-semibold truncate">
+                      Quote #{quote.quoteNumber}
+                    </h4>
+                    {getStatusBadge(quote)}
+                  </div>
+                  <p className="mobile-text text-muted-foreground truncate">
                     Client: {quote.client.name}
                   </p>
-                  <p className="text-xl font-bold text-primary">
+                </div>
+
+                {/* Amount Section - Prominent Display */}
+                <div className="py-2">
+                  <p className="text-2xl sm:text-3xl font-bold text-primary">
                     {formatCurrency(quote.total)}
                   </p>
                 </div>
-                <div className="flex flex-col items-start sm:items-end gap-3">
-                  {getStatusBadge(quote)}
-                  
-                  {/* Compact Action Buttons */}
-                  <div className="flex gap-2">
+
+                {/* Action Buttons - Responsive Layout */}
+                <div className="space-y-3 sm:space-y-0">
+                  {/* Mobile: Full-width stacked buttons */}
+                  <div className="flex flex-col sm:hidden gap-3">
+                    <MobileButton
+                      size="default"
+                      variant="elec"
+                      onClick={() => handleActionClick(quote, "accept")}
+                      icon={<CheckCircle className="h-4 w-4" />}
+                      className="w-full touch-target bg-green-600 hover:bg-green-700 text-white border-green-600 font-medium"
+                      aria-label={`Accept quote ${quote.quoteNumber} from ${quote.client.name}`}
+                    >
+                      Accept Quote
+                    </MobileButton>
+                    <MobileButton
+                      size="default"
+                      variant="elec-outline"
+                      onClick={() => handleActionClick(quote, "reject")}
+                      icon={<XCircle className="h-4 w-4" />}
+                      className="w-full touch-target border-red-500 text-red-600 hover:bg-red-500 hover:text-white font-medium"
+                      aria-label={`Reject quote ${quote.quoteNumber} from ${quote.client.name}`}
+                    >
+                      Reject Quote
+                    </MobileButton>
+                  </div>
+
+                  {/* Desktop/Tablet: Compact side-by-side buttons */}
+                  <div className="hidden sm:flex gap-3 justify-end">
                     <MobileButton
                       size="sm"
                       variant="elec"
                       onClick={() => handleActionClick(quote, "accept")}
                       icon={<CheckCircle className="h-4 w-4" />}
-                      className="bg-green-600 hover:bg-green-700 text-white border-green-600 font-medium px-3 py-2"
+                      className="bg-green-600 hover:bg-green-700 text-white border-green-600 font-medium px-4 py-2"
                       aria-label={`Accept quote ${quote.quoteNumber} from ${quote.client.name}`}
                     >
                       Accept
@@ -158,7 +193,7 @@ export const QuoteDashboardCard = ({ quotes }: QuoteDashboardCardProps) => {
                       variant="elec-outline"
                       onClick={() => handleActionClick(quote, "reject")}
                       icon={<XCircle className="h-4 w-4" />}
-                      className="border-red-500 text-red-600 hover:bg-red-500 hover:text-white font-medium px-3 py-2"
+                      className="border-red-500 text-red-600 hover:bg-red-500 hover:text-white font-medium px-4 py-2"
                       aria-label={`Reject quote ${quote.quoteNumber} from ${quote.client.name}`}
                     >
                       Reject
