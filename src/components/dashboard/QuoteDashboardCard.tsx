@@ -138,37 +138,32 @@ export const QuoteDashboardCard = ({ quotes }: QuoteDashboardCardProps) => {
                     {formatCurrency(quote.total)}
                   </p>
                 </div>
-                <div className="flex flex-col items-start sm:items-end gap-2">
+                <div className="flex flex-col items-start sm:items-end gap-3">
                   {getStatusBadge(quote)}
-                </div>
-              </div>
-              
-              {/* Mobile-Optimized Action Buttons */}
-              <div className="border-t pt-4 bg-muted/30 -mx-4 -mb-3 px-4 pb-4 rounded-b-lg">
-                <p className="text-sm font-medium text-foreground mb-4 text-center">
-                  📋 Action Required
-                </p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <MobileButton
-                    size="wide"
-                    variant="elec"
-                    onClick={() => handleActionClick(quote, "accept")}
-                    icon={<CheckCircle className="h-5 w-5" />}
-                    className="bg-green-600 hover:bg-green-700 text-white border-green-600 font-semibold"
-                    aria-label={`Accept quote ${quote.quoteNumber} from ${quote.client.name}`}
-                  >
-                    Accept Quote
-                  </MobileButton>
-                  <MobileButton
-                    size="wide"
-                    variant="elec-outline"
-                    onClick={() => handleActionClick(quote, "reject")}
-                    icon={<XCircle className="h-5 w-5" />}
-                    className="border-red-500 text-red-600 hover:bg-red-500 hover:text-white font-semibold"
-                    aria-label={`Reject quote ${quote.quoteNumber} from ${quote.client.name}`}
-                  >
-                    Reject Quote
-                  </MobileButton>
+                  
+                  {/* Compact Action Buttons */}
+                  <div className="flex gap-2">
+                    <MobileButton
+                      size="sm"
+                      variant="elec"
+                      onClick={() => handleActionClick(quote, "accept")}
+                      icon={<CheckCircle className="h-4 w-4" />}
+                      className="bg-green-600 hover:bg-green-700 text-white border-green-600 font-medium px-3 py-2"
+                      aria-label={`Accept quote ${quote.quoteNumber} from ${quote.client.name}`}
+                    >
+                      Accept
+                    </MobileButton>
+                    <MobileButton
+                      size="sm"
+                      variant="elec-outline"
+                      onClick={() => handleActionClick(quote, "reject")}
+                      icon={<XCircle className="h-4 w-4" />}
+                      className="border-red-500 text-red-600 hover:bg-red-500 hover:text-white font-medium px-3 py-2"
+                      aria-label={`Reject quote ${quote.quoteNumber} from ${quote.client.name}`}
+                    >
+                      Reject
+                    </MobileButton>
+                  </div>
                 </div>
               </div>
             </div>
