@@ -153,8 +153,6 @@ const ResultsStep = ({ planData }: ResultsStepProps) => {
       },
       recommendedCable,
       alternativeCables,
-      suggestions,
-      complianceChecks,
       timestamp: new Date().toISOString(),
       generatedBy: "Elec-Mate Installation Planner v2.0"
     };
@@ -450,19 +448,7 @@ const ResultsStep = ({ planData }: ResultsStepProps) => {
           showNonCompliant={!recommendedCable}
         />
 
-        {/* Suggestions and Compliance - Stacked for Mobile */}
-        <div className="space-y-4 sm:space-y-6">
-          <ComplianceChecksCard checks={complianceChecks} />
-          <InstallationSuggestionsCard suggestions={suggestions} />
-        </div>
-        
-        {/* Professional Guidance */}
-        {recommendedCable && (
-          <PostResultGuidance 
-            planData={planData} 
-            recommendedCable={recommendedCable}
-          />
-        )}
+        {/* Legacy components removed - now using IntelligentResultsCard */}
       </div>
 
       {/* Professional Notice */}
