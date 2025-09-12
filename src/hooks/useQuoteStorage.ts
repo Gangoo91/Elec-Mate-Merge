@@ -27,6 +27,11 @@ export const useQuoteStorage = () => {
     updatedAt: new Date(row.updated_at),
     expiryDate: new Date(row.expiry_date),
     notes: row.notes,
+    acceptance_status: row.acceptance_status,
+    accepted_at: row.accepted_at ? new Date(row.accepted_at) : undefined,
+    accepted_by_name: row.accepted_by_name,
+    accepted_by_email: row.accepted_by_email,
+    public_token: row.public_token,
   }), []);
 
   // Load quotes from Supabase on mount
@@ -190,7 +195,7 @@ export const useQuoteStorage = () => {
     }
   }, [convertDbRowToQuote]);
 
-  const updateQuoteStatus = async (quoteId: string, status: Quote['status'], tags?: Quote['tags']): Promise<boolean> => {
+  const updateQuoteStatus = async (quoteId: string, status: Quote['status'], tags?: Quote['tags'], acceptanceStatus?: Quote['acceptance_status']): Promise<boolean> => {
     try {
       const updateData: any = {
         status,
@@ -199,6 +204,11 @@ export const useQuoteStorage = () => {
       
       if (tags !== undefined) {
         updateData.tags = tags;
+      }
+
+      if (acceptanceStatus !== undefined) {
+        updateData.acceptance_status = acceptanceStatus;
+        updateData.accepted_at = new Date().toISOString();
       }
 
       const { error } = await supabase
@@ -214,7 +224,14 @@ export const useQuoteStorage = () => {
       // Update local state
       setSavedQuotes(prev => prev.map(quote => 
         quote.id === quoteId 
-          ? { ...quote, status, tags: tags || quote.tags, updatedAt: new Date() }
+          ? { 
+              ...quote, 
+              status, 
+              tags: tags || quote.tags, 
+              acceptance_status: acceptanceStatus || quote.acceptance_status,
+              accepted_at: acceptanceStatus ? new Date() : quote.accepted_at,
+              updatedAt: new Date() 
+            }
           : quote
       ));
 

@@ -4,16 +4,20 @@ import DashboardOverview from "@/components/dashboard/DashboardOverview";
 import TrialBanner from "@/components/dashboard/TrialBanner";
 import CourseTabs from "@/components/dashboard/CourseTabs";
 import DashboardQuickAccess from "@/components/dashboard/DashboardQuickAccess";
+import { QuoteDashboardCard } from "@/components/dashboard/QuoteDashboardCard";
+import { QuotesHistorySection } from "@/components/dashboard/QuotesHistorySection";
 import { getDashboardData } from "@/data/dashboardData";
 import { useAuth } from "@/contexts/AuthContext";
 import { Card } from "@/components/ui/card";
 import { BookOpen, Clock } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useQuoteStorage } from "@/hooks/useQuoteStorage";
 
 const Dashboard = () => {
   // Get dashboard data from our data model
   const { user: userData, recentCourses, popularCourses } = getDashboardData();
   const { profile } = useAuth();
+  const { savedQuotes } = useQuoteStorage();
   const [greeting, setGreeting] = useState("Good day");
   const isMobile = useIsMobile();
   
@@ -63,8 +67,14 @@ const Dashboard = () => {
       {/* Quick Access Section */}
       <DashboardQuickAccess />
 
+      {/* Active Quotes Section */}
+      <QuoteDashboardCard quotes={savedQuotes} />
+
       {/* Overview Cards */}
       <DashboardOverview user={userData} />
+
+      {/* Quotes History Section */}
+      <QuotesHistorySection quotes={savedQuotes} />
 
       {/* Trial Status */}
       <TrialBanner />
