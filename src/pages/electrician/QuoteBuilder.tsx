@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { Plus, FileText, Clock, CheckCircle, TrendingUp, ArrowLeft, XCircle } from "lucide-react";
+import { Plus, FileText, Clock, CheckCircle, TrendingUp, ArrowLeft, XCircle, X } from "lucide-react";
 import { QuoteWizard } from "@/components/electrician/quote-builder/QuoteWizard";
 import RecentQuotesList from "@/components/electrician/quote-builder/RecentQuotesList";
 import { useQuoteStorage } from "@/hooks/useQuoteStorage";
@@ -12,6 +12,7 @@ import React, { useState } from "react";
 const QuoteBuilder = () => {
   const navigate = useNavigate();
   const [showFinancialSnapshot, setShowFinancialSnapshot] = useState(false);
+  const [showQuoteWizard, setShowQuoteWizard] = useState(false);
   
   const { 
     savedQuotes, 
@@ -27,6 +28,7 @@ const QuoteBuilder = () => {
 
   const handleQuoteGenerated = () => {
     refreshQuotes();
+    setShowQuoteWizard(false);
   };
 
   const handleCardClick = (cardType: string) => {
@@ -175,22 +177,23 @@ const QuoteBuilder = () => {
                 </Card>
               ))}
             </div>
-          </section>
 
-          {/* Enhanced Quote Wizard Section */}
-          <section className="space-y-4 md:space-y-6">
-            <div className="text-center space-y-2">
-              <h2 className="text-xl md:text-2xl font-bold">Create New Quote</h2>
-              <p className="text-sm md:text-base text-muted-foreground">
-                Follow our guided process to create professional electrical quotes
+            {/* Create Quote Call-to-Action */}
+            <div className="mt-6 text-center">
+              <Button 
+                onClick={() => setShowQuoteWizard(true)}
+                size="lg"
+                className="mobile-button-primary w-full sm:w-auto px-8 py-4 text-lg font-semibold bg-gradient-to-r from-elec-yellow to-elec-yellow/90 hover:from-elec-yellow/90 hover:to-elec-yellow/80 text-elec-dark shadow-lg hover:shadow-xl transition-all duration-300 group"
+              >
+                <Plus className="mr-2 h-5 w-5 group-hover:rotate-90 transition-transform duration-300" />
+                Create New Quote
+              </Button>
+              <p className="mt-2 text-sm text-muted-foreground">
+                Professional electrical quotes in minutes
               </p>
             </div>
-            <Card className="border-0 shadow-2xl bg-gradient-to-br from-card to-card/80">
-              <CardContent className="p-4 md:p-6 lg:p-8 bg-card">
-                <QuoteWizard onQuoteGenerated={handleQuoteGenerated} />
-              </CardContent>
-            </Card>
           </section>
+
 
           {/* Enhanced Recent Quotes */}
           <section aria-labelledby="recent-quotes" className="space-y-4 md:space-y-6">
@@ -212,6 +215,38 @@ const QuoteBuilder = () => {
         </main>
       </div>
       
+      {/* Quote Wizard Modal */}
+      {showQuoteWizard && (
+        <div className="fixed inset-0 z-50 bg-background/80 backdrop-blur-sm animate-in fade-in-0">
+          <div className="fixed inset-0 overflow-y-auto">
+            <div className="flex min-h-full items-start justify-center p-4 text-center sm:p-0">
+              <div className="relative transform overflow-hidden rounded-lg bg-card shadow-xl transition-all animate-in zoom-in-95 fade-in-0 w-full max-w-4xl my-8">
+                {/* Modal Header */}
+                <div className="flex items-center justify-between p-6 border-b border-border">
+                  <div>
+                    <h3 className="text-2xl font-bold">Create New Quote</h3>
+                    <p className="text-muted-foreground">Follow our guided process to create professional electrical quotes</p>
+                  </div>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => setShowQuoteWizard(false)}
+                    className="hover:bg-muted"
+                  >
+                    <X className="h-4 w-4" />
+                  </Button>
+                </div>
+                
+                {/* Modal Content */}
+                <div className="p-6 max-h-[calc(90vh-200px)] overflow-y-auto">
+                  <QuoteWizard onQuoteGenerated={handleQuoteGenerated} />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       <FinancialSnapshot 
         isOpen={showFinancialSnapshot}
         onClose={() => setShowFinancialSnapshot(false)}
