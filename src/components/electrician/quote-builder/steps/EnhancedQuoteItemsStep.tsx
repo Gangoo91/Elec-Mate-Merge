@@ -253,7 +253,7 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove }: Enh
                         <Label htmlFor="hours" className="text-sm font-medium">Hours</Label>
                          <Select value={newItem.hours > 0 ? newItem.hours.toString() : ""} onValueChange={(value) => handleHoursChange(parseFloat(value))}>
                            <SelectTrigger className="h-12 w-full">
-                             <SelectValue placeholder="Select hours required" />
+                             <SelectValue placeholder="Select hours" />
                           </SelectTrigger>
                           <SelectContent className="z-50 bg-background border shadow-lg">
                             <SelectItem value="0.5">0.5 hours</SelectItem>
