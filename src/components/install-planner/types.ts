@@ -108,7 +108,7 @@ export interface CableRecommendation {
   ratedCurrent: number;
   suitability: "suitable" | "marginal" | "unsuitable";
   notes: string[];
-  cost?: "low" | "medium" | "high";
+  cost?: "low" | "medium" | "high" | "very-high";
   availability?: "common" | "limited" | "special-order";
   installationComplexity?: "simple" | "moderate" | "complex";
   specialConsiderations?: string[];
@@ -224,7 +224,7 @@ export interface InstallationSuggestion {
   title: string;
   description: string;
   impact: "high" | "medium" | "low";
-  cost?: "low" | "medium" | "high";
+  cost?: "low" | "medium" | "high" | "very-high";
   regulation?: string;
 }
 

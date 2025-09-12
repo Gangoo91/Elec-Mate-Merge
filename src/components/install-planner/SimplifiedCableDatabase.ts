@@ -7,7 +7,7 @@ export interface SimpleCableSpec {
   tempRating: 70 | 90; // °C
   capacity: { [method: string]: number }; // Current carrying capacity in Amps
   resistance: number; // mΩ/m at 20°C for voltage drop
-  costLevel: "low" | "medium" | "high";
+  costLevel: "low" | "medium" | "high" | "very-high";
   applications: string[];
   firePerformance: "standard" | "enhanced";
   maxLength: number; // Practical maximum length in metres
@@ -240,6 +240,114 @@ export const SIMPLIFIED_CABLE_DATABASE: Record<string, Record<string, SimpleCabl
       applications: ["Main incoming supplies", "Distribution boards"],
       firePerformance: "standard",
       maxLength: 300
+    },
+    "16.0": {
+      name: "16mm² SWA XLPE",
+      description: "High current distribution",
+      tempRating: 90,
+      capacity: {
+        "clipped-direct": 101,
+        "in-conduit": 80,
+        "in-trunking": 86,
+        "through-insulation": 66,
+        "underground": 115,
+        "cable-tray": 96
+      },
+      resistance: 2.8, // mV/A/m
+      costLevel: "medium",
+      applications: ["Sub-main distribution", "Industrial feeds", "High load circuits"],
+      firePerformance: "standard",
+      maxLength: 400
+    },
+    "25.0": {
+      name: "25mm² SWA XLPE",
+      description: "Heavy industrial distribution",
+      tempRating: 90,
+      capacity: {
+        "clipped-direct": 134,
+        "in-conduit": 106,
+        "in-trunking": 114,
+        "through-insulation": 87,
+        "underground": 150,
+        "cable-tray": 127
+      },
+      resistance: 1.8, // mV/A/m
+      costLevel: "high",
+      applications: ["Main distribution", "Industrial sub-mains", "Large motor feeds"],
+      firePerformance: "standard",
+      maxLength: 500
+    },
+    "35.0": {
+      name: "35mm² SWA XLPE",
+      description: "Heavy duty distribution",
+      tempRating: 90,
+      capacity: {
+        "clipped-direct": 171,
+        "in-conduit": 136,
+        "in-trunking": 146,
+        "through-insulation": 112,
+        "underground": 185,
+        "cable-tray": 162
+      },
+      resistance: 1.3, // mV/A/m
+      costLevel: "high",
+      applications: ["Main incomer feeds", "Heavy industrial loads", "Motor control centres"],
+      firePerformance: "standard",
+      maxLength: 600
+    },
+    "50.0": {
+      name: "50mm² SWA XLPE",
+      description: "Major distribution cables",
+      tempRating: 90,
+      capacity: {
+        "clipped-direct": 207,
+        "in-conduit": 164,
+        "in-trunking": 176,
+        "through-insulation": 135,
+        "underground": 225,
+        "cable-tray": 196
+      },
+      resistance: 0.93, // mV/A/m
+      costLevel: "high",
+      applications: ["Main distribution boards", "Large industrial supplies", "Primary distribution"],
+      firePerformance: "standard",
+      maxLength: 800
+    },
+    "70.0": {
+      name: "70mm² SWA XLPE",
+      description: "High capacity distribution",
+      tempRating: 90,
+      capacity: {
+        "clipped-direct": 268,
+        "in-conduit": 213,
+        "in-trunking": 228,
+        "through-insulation": 175,
+        "underground": 290,
+        "cable-tray": 254
+      },
+      resistance: 0.67, // mV/A/m
+      costLevel: "high",
+      applications: ["Primary distribution", "Main switchboard feeds", "High power installations"],
+      firePerformance: "standard",
+      maxLength: 1000
+    },
+    "95.0": {
+      name: "95mm² SWA XLPE",
+      description: "Very high capacity feeds",
+      tempRating: 90,
+      capacity: {
+        "clipped-direct": 328,
+        "in-conduit": 260,
+        "in-trunking": 279,
+        "through-insulation": 214,
+        "underground": 355,
+        "cable-tray": 311
+      },
+      resistance: 0.49, // mV/A/m
+      costLevel: "very-high",
+      applications: ["Main incoming supplies", "Primary switchboards", "Very high power loads"],
+      firePerformance: "standard",
+      maxLength: 1200
     }
   },
 

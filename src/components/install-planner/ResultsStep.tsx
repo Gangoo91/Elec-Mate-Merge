@@ -13,6 +13,7 @@ import ComplianceChecksCard from "./ComplianceChecksCard";
 import VisualCircuitDesigner from "./VisualCircuitDesigner";
 import PostResultGuidance from "./PostResultGuidance";
 import { UnifiedResultsCard } from "./unified-results-card";
+import { SafetyValidationCard } from "./SafetyValidationCard";
 
 interface ResultsStepProps {
   planData: InstallPlanData;
@@ -73,10 +74,10 @@ const ResultsStep = ({ planData }: ResultsStepProps) => {
       return a.rating - b.rating;
     });
   };
-  // Calculate design current
+  // Calculate design current - FIXED for three-phase
   const designCurrent = planData.phases === "single" 
     ? planData.totalLoad / planData.voltage 
-    : planData.totalLoad / (planData.voltage * Math.sqrt(3) * (planData.powerFactor || 0.85));
+    : planData.totalLoad / (planData.voltage * Math.sqrt(3) * (planData.powerFactor || 0.9));
 
   // Use the enhanced cable selection engine
   const cableOptions = CableSelectionEngine.calculateCableOptions(planData);
@@ -88,7 +89,7 @@ const ResultsStep = ({ planData }: ResultsStepProps) => {
   // Safe cable for calculations - use recommended or closest non-compliant
   const baseCable = recommendedCable || closestNonCompliant;
   
-  // Calculate Zs (enhanced calculation)
+  // Calculate Zs (enhanced calculation) - EXTENDED for larger cables
   const r1r2 = planData.cableLength * (
     baseCable?.size === "1.5mm²" ? 24.2 : 
     baseCable?.size === "2.5mm²" ? 14.8 : 
@@ -96,7 +97,11 @@ const ResultsStep = ({ planData }: ResultsStepProps) => {
     baseCable?.size === "6.0mm²" ? 6.2 : 
     baseCable?.size === "10.0mm²" ? 3.66 : 
     baseCable?.size === "16.0mm²" ? 2.3 : 
-    baseCable?.size === "25.0mm²" ? 1.454 : 1.0
+    baseCable?.size === "25.0mm²" ? 1.454 : 
+    baseCable?.size === "35.0mm²" ? 1.04 : 
+    baseCable?.size === "50.0mm²" ? 0.727 : 
+    baseCable?.size === "70.0mm²" ? 0.524 : 
+    baseCable?.size === "95.0mm²" ? 0.387 : 1.0
   ) / 1000;
   
   const zsValue = planData.ze + r1r2;
@@ -192,6 +197,20 @@ const ResultsStep = ({ planData }: ResultsStepProps) => {
         planData={planData} 
         recommendedCable={recommendedCable}
       />
+
+      {/* Safety Validation Card - NEW */}
+      {baseCable && (
+        <SafetyValidationCard
+          designCurrent={designCurrent}
+          recommendedProtection={baseCable.ratedCurrent}
+          cableCapacity={baseCable.currentCarryingCapacity}
+          zsValue={zsValue}
+          maxZs={maxZs}
+          voltageDropPercent={baseCable.voltageDropPercentage}
+          voltageDropLimit={planData.loadType === "lighting" ? 3 : 5}
+          loadType={planData.loadType}
+        />
+      )}
 
       {/* Unified Results Card - Same as Multi-Circuit */}
       <UnifiedResultsCard
@@ -302,7 +321,21 @@ const ResultsStep = ({ planData }: ResultsStepProps) => {
                   </div>
                 ))}
                 
-                {/* Show critical non-compliance for high currents */}
+                {/* Show critical safety warning for insufficient protection */}
+                {designCurrent > 32 && baseCable && baseCable.ratedCurrent === 32 && (
+                  <div className="p-3 bg-red-500/10 rounded border border-red-500/30">
+                    <div className="flex items-center gap-2 mb-2">
+                      <AlertTriangle className="h-4 w-4 text-red-300" />
+                      <span className="text-red-300 font-medium text-sm">CRITICAL SAFETY ERROR</span>
+                    </div>
+                    <p className="text-xs text-red-200/80">
+                      <strong>32A protection for {designCurrent.toFixed(1)}A load is UNSAFE!</strong><br/>
+                      Breaker will trip immediately. Use {baseCable.ratedCurrent}A+ protection device.
+                    </p>
+                  </div>
+                )}
+                
+                {/* Show warning for high currents */}
                 {designCurrent > 125 && (
                   <div className="p-3 bg-amber-500/10 rounded border border-amber-500/30">
                     <div className="flex items-center gap-2 mb-2">
@@ -310,8 +343,8 @@ const ResultsStep = ({ planData }: ResultsStepProps) => {
                       <span className="text-amber-300 font-medium text-sm">High Current Design</span>
                     </div>
                     <p className="text-xs text-amber-200/80">
-                      Design current {designCurrent.toFixed(1)}A exceeds standard MCB range. 
-                      BS88 HRC fuses or MCCB recommended for currents above 125A.
+                      Design current {designCurrent.toFixed(1)}A requires BS88 HRC fuses or MCCB protection.
+                      Standard MCBs only available up to 125A.
                     </p>
                   </div>
                 )}

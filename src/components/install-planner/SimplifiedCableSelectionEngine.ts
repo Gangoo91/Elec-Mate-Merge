@@ -108,10 +108,10 @@ export class SimplifiedCableSelectionEngine {
   static calculateCableOptions(planData: InstallPlanData): CableRecommendation[] {
     const options: CableRecommendation[] = [];
     
-    // Calculate design current
+    // Calculate design current - FIXED for three-phase
     const designCurrent = planData.phases === "single" 
       ? planData.totalLoad / planData.voltage
-      : planData.totalLoad / (planData.voltage * Math.sqrt(3) * (planData.powerFactor || 0.95));
+      : planData.totalLoad / (planData.voltage * Math.sqrt(3) * (planData.powerFactor || 0.9));
 
     // Get available sizes for the selected cable type
     const availableSizes = Object.keys(SIMPLIFIED_CABLE_DATABASE[planData.cableType] || {});
@@ -221,11 +221,14 @@ export class SimplifiedCableSelectionEngine {
     return mapping[method] || "clipped-direct";
   }
 
-  // Get standard BS 7671 breaker rating
+  // Get standard BS 7671 breaker rating - FIXED for high currents
   static getStandardBreakerRating(designCurrent: number): number {
-    // BS EN 60898 standard ratings
-    const standardRatings = [6, 10, 16, 20, 25, 32, 40, 50, 63, 80, 100, 125];
-    return standardRatings.find(rating => rating >= designCurrent) || standardRatings[standardRatings.length - 1];
+    // BS EN 60898 MCB ratings + BS88 HRC Fuse ratings + MCCB ratings
+    const standardRatings = [6, 10, 16, 20, 25, 32, 40, 50, 63, 80, 100, 125, 160, 200, 250, 315, 400, 500, 630, 800, 1000, 1250, 1600];
+    const selectedRating = standardRatings.find(rating => rating >= designCurrent);
+    
+    // Return the next suitable rating or the largest available
+    return selectedRating || standardRatings[standardRatings.length - 1];
   }
 
   // Generate simplified recommendations with multiple options
