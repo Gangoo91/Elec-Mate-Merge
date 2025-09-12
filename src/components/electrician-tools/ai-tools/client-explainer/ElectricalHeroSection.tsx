@@ -41,10 +41,10 @@ const ElectricalHeroSection = () => {
 
         {/* Title with electrical styling */}
         <div className="space-y-3">
-          <h1 className="text-4xl font-bold bg-gradient-to-r from-foreground via-elec-yellow to-foreground bg-clip-text text-transparent">
+          <h1 className="text-2xl font-bold bg-gradient-to-r from-foreground via-elec-yellow to-foreground bg-clip-text text-transparent">
             Client Explainer
           </h1>
-          <p className="text-muted-foreground max-w-2xl mx-auto text-lg leading-relaxed">
+          <p className="text-muted-foreground max-w-2xl mx-auto text-sm leading-relaxed">
             Transform technical electrical findings into clear, professional explanations 
             that clients can understand and trust.
           </p>
