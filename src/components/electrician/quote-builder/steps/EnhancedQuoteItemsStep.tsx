@@ -186,42 +186,6 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
 
   return (
     <div className="space-y-4">
-      {/* Price Adjustment Controls */}
-      {setPriceAdjustment && (
-        <Card className="bg-primary/5 border-primary/20">
-          <CardContent className="pt-4">
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-2">
-                <TrendingUp className="h-5 w-5 text-primary" />
-                <Label className="text-sm font-medium">Price Adjustment</Label>
-              </div>
-              <Switch 
-                checked={priceAdjustment > 0}
-                onCheckedChange={(checked) => setPriceAdjustment(checked ? 10 : 0)}
-              />
-            </div>
-            {priceAdjustment > 0 && (
-              <div className="flex items-center gap-4">
-                <Label className="text-sm">Increase:</Label>
-                <Select value={priceAdjustment.toString()} onValueChange={(value) => setPriceAdjustment(Number(value))}>
-                  <SelectTrigger className="w-32">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="5">5%</SelectItem>
-                    <SelectItem value="10">10%</SelectItem>
-                    <SelectItem value="15">15%</SelectItem>
-                    <SelectItem value="20">20%</SelectItem>
-                  </SelectContent>
-                </Select>
-                <span className="text-sm text-muted-foreground">
-                  Applied to all material prices
-                </span>
-              </div>
-            )}
-          </CardContent>
-        </Card>
-      )}
       <DropdownTabs
         tabs={[
           {
@@ -236,6 +200,42 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
                     Quick Add Items
                   </h3>
                 </div>
+                
+                {/* Price Adjustment Controls */}
+                {setPriceAdjustment && (
+                  <div className="bg-primary/5 border border-primary/20 rounded-lg p-4 mb-4">
+                    <div className="flex items-center justify-between mb-3">
+                      <div className="flex items-center gap-2">
+                        <TrendingUp className="h-4 w-4 text-primary" />
+                        <Label className="text-sm font-medium">Price Adjustment</Label>
+                      </div>
+                      <Switch 
+                        checked={priceAdjustment > 0}
+                        onCheckedChange={(checked) => setPriceAdjustment(checked ? 10 : 0)}
+                      />
+                    </div>
+                    {priceAdjustment > 0 && (
+                      <div className="flex items-center gap-3 text-sm">
+                        <Label className="text-sm">Increase:</Label>
+                        <Select value={priceAdjustment.toString()} onValueChange={(value) => setPriceAdjustment(Number(value))}>
+                          <SelectTrigger className="w-24 h-8">
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="5">5%</SelectItem>
+                            <SelectItem value="10">10%</SelectItem>
+                            <SelectItem value="15">15%</SelectItem>
+                            <SelectItem value="20">20%</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        <span className="text-xs text-muted-foreground">
+                          Applied to all material prices
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                )}
+                
                 <div className="space-y-4">
                   {/* Category Selection */}
                   <div className="space-y-2">
