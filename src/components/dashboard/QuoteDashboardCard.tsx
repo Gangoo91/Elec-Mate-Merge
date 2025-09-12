@@ -127,38 +127,48 @@ export const QuoteDashboardCard = ({ quotes }: QuoteDashboardCardProps) => {
               key={quote.id}
               className="border border-elec-yellow/20 rounded-lg p-4 space-y-3"
             >
-              <div className="flex justify-between items-start">
-                <div className="space-y-1">
-                  <h4 className="font-medium">Quote #{quote.quoteNumber}</h4>
+              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4">
+                <div className="space-y-1 flex-1">
+                  <h4 className="font-medium text-lg">Quote #{quote.quoteNumber}</h4>
                   <p className="text-sm text-muted-foreground">
-                    {quote.client.name}
+                    Client: {quote.client.name}
                   </p>
-                  <p className="text-lg font-semibold">
+                  <p className="text-xl font-bold text-primary">
                     {formatCurrency(quote.total)}
                   </p>
                 </div>
-                {getStatusBadge(quote)}
+                <div className="flex flex-col items-start sm:items-end gap-2">
+                  {getStatusBadge(quote)}
+                </div>
               </div>
               
-              <div className="flex gap-2">
-                <Button
-                  size="sm"
-                  variant="default"
-                  onClick={() => handleActionClick(quote, "accept")}
-                  className="flex items-center gap-1"
-                >
-                  <CheckCircle className="h-4 w-4" />
-                  Accept
-                </Button>
-                <Button
-                  size="sm"
-                  variant="destructive"
-                  onClick={() => handleActionClick(quote, "reject")}
-                  className="flex items-center gap-1"
-                >
-                  <XCircle className="h-4 w-4" />
-                  Reject
-                </Button>
+              {/* Prominent Action Buttons */}
+              <div className="border-t pt-4">
+                <p className="text-sm font-medium text-muted-foreground mb-3">
+                  Quote Action Required
+                </p>
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <Button
+                    size="lg"
+                    variant="default"
+                    onClick={() => handleActionClick(quote, "accept")}
+                    className="flex-1 h-12 text-base font-medium bg-green-600 hover:bg-green-700 text-white"
+                    aria-label={`Accept quote ${quote.quoteNumber} from ${quote.client.name}`}
+                  >
+                    <CheckCircle className="h-5 w-5 mr-2" />
+                    Accept Quote
+                  </Button>
+                  <Button
+                    size="lg"
+                    variant="destructive"
+                    onClick={() => handleActionClick(quote, "reject")}
+                    className="flex-1 h-12 text-base font-medium"
+                    aria-label={`Reject quote ${quote.quoteNumber} from ${quote.client.name}`}
+                  >
+                    <XCircle className="h-5 w-5 mr-2" />
+                    Reject Quote
+                  </Button>
+                </div>
               </div>
             </div>
           ))}
