@@ -1,81 +1,82 @@
 import { useState } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
+import { useSearchParams } from "react-router-dom";
+import { Helmet } from "react-helmet";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { 
-  Wrench, 
-  Search,
-  ArrowLeft,
-  Loader2,
-  RefreshCw
-} from "lucide-react";
-import { useNavigate, Link, useSearchParams } from "react-router-dom";
-import { useToolCategories } from "@/hooks/useToolCategories";
-import EnhancedToolCategoryDisplay from "@/components/electrician-tools/EnhancedToolCategoryDisplay";
-import { supabase } from "@/integrations/supabase/client";
+import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
+import { Wrench, ArrowLeft, RefreshCw, Loader2, Search, TrendingUp } from "lucide-react";
+import { Link } from "react-router-dom";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
+
+import EnhancedToolCategoryDisplay from "@/components/electrician-tools/EnhancedToolCategoryDisplay";
+import { useToolCategories, type ToolCategory } from "@/hooks/useToolCategories";
+import { ToolsNavigationHeader } from "@/components/electrician-tools/enhanced/ToolsNavigationHeader";
+import { EnhancedToolSearch } from "@/components/electrician-tools/enhanced/EnhancedToolSearch";
+import { ToolDealsCarousel } from "@/components/electrician-tools/enhanced/ToolDealsCarousel";
+import { ToolCategoryMegaMenu } from "@/components/electrician-tools/enhanced/ToolCategoryMegaMenu";
 
 const ElectricalTools = () => {
-  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+  const category = searchParams.get('category');
   const [searchTerm, setSearchTerm] = useState("");
   const [isRefreshing, setIsRefreshing] = useState(false);
-  const { categories: toolCategories, isLoading, refetch } = useToolCategories();
+  const isMobile = useIsMobile();
   const { toast } = useToast();
-  
-  const selectedCategory = searchParams.get('category');
-  
-  // If a category is selected, show the enhanced category display
-  if (selectedCategory) {
-    return <EnhancedToolCategoryDisplay categoryName={selectedCategory} />;
+
+  const { categories: toolCategories, isLoading, error, refetch } = useToolCategories();
+
+  // If a specific category is selected, show the enhanced category display
+  if (category) {
+    return <EnhancedToolCategoryDisplay categoryName={category} />;
   }
 
-  const filteredCategories = toolCategories.filter(category =>
-    category.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    category.description.toLowerCase().includes(searchTerm.toLowerCase())
+  // Filter categories based on search term
+  const filteredCategories = toolCategories.filter(cat =>
+    cat.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    cat.description.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  // Handle tools refresh
   const handleToolsRefresh = async () => {
     setIsRefreshing(true);
+    
     try {
       toast({
-        title: "Refreshing Tools",
-        description: "Fetching latest data from all suppliers using Firecrawl...",
-        duration: 3000,
+        title: "Refreshing Tools Data",
+        description: "Fetching the latest tool information...",
       });
 
-      // Trigger the comprehensive firecrawl scraper
-      const { data, error } = await supabase.functions.invoke('comprehensive-firecrawl-scraper', {
+      // Call the edge function to refresh tools data
+      const { data, error } = await supabase.functions.invoke('tools-weekly-refresh', {
         body: { forceRefresh: true }
       });
-      
+
       if (error) {
-        console.error('❌ Tools refresh error:', error);
+        console.error('Error refreshing tools:', error);
         toast({
           title: "Refresh Failed",
-          description: "Could not refresh tools data. Please try again.",
+          description: "There was an issue refreshing the tools data. Please try again.",
           variant: "destructive",
-          duration: 5000,
         });
       } else {
-        console.log('✅ Tools refreshed:', data);
-        
-        // Call refetch to update local state with fresh data
-        refetch();
-        
+        console.log('Tools refresh response:', data);
         toast({
-          title: "Tools Updated",
-          description: data?.message || "Successfully refreshed tools data from all suppliers!",
-          duration: 4000,
+          title: "Tools Data Refreshed",
+          description: `Successfully updated tool information. Found ${data?.totalProducts || 0} products.`,
         });
+        
+        // Trigger a refetch of the tools data
+        refetch();
       }
     } catch (error) {
-      console.error('❌ Tools refresh error:', error);
+      console.error('Unexpected error during tools refresh:', error);
       toast({
         title: "Refresh Failed",
-        description: "An error occurred while refreshing.",
+        description: "An unexpected error occurred. Please try again.",
         variant: "destructive",
-        duration: 5000,
       });
     } finally {
       setIsRefreshing(false);
@@ -83,103 +84,107 @@ const ElectricalTools = () => {
   };
 
   return (
-    <div className="space-y-6 animate-fade-in p-0">
-      <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <div className="space-y-2">
-          <h1 className="text-2xl md:text-3xl font-bold tracking-tight">Tools</h1>
-          <p className="text-muted-foreground text-sm md:text-base">Browse electrical tools for your projects</p>
-        </div>
-        <div className="flex flex-col sm:flex-row gap-2">
-          <Button 
-            variant="outline" 
-            onClick={handleToolsRefresh}
-            disabled={isRefreshing}
-            className="flex items-center gap-2"
-          >
-            {isRefreshing ? (
-              <Loader2 className="h-4 w-4 animate-spin" />
-            ) : (
-              <RefreshCw className="h-4 w-4" />
-            )}
-            {isRefreshing ? "Updating..." : "Update Tools Data"}
-          </Button>
-          <Link to="/electrician/business">
-            <Button variant="outline" className="flex items-center gap-2">
-              <ArrowLeft className="h-4 w-4" /> Back to Business Hub
-            </Button>
-          </Link>
-        </div>
-      </header>
+    <div className="min-h-screen bg-background">
+      <Helmet>
+        <title>Electrical Tools & Equipment | Professional Tools for UK Electricians</title>
+        <meta name="description" content="Professional electrical tools and equipment for UK electricians. Browse power tools, test equipment, safety gear and specialist tools from leading suppliers." />
+        <link rel="canonical" href={typeof window !== 'undefined' ? window.location.href : ''} />
+      </Helmet>
 
-      <div className="relative max-w-md">
-        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-        <Input
-          placeholder="Search tools..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="pl-10 bg-elec-gray border-elec-yellow/20"
+      {/* Enhanced Navigation Header */}
+      <ToolsNavigationHeader onRefresh={handleToolsRefresh} isRefreshing={isRefreshing} />
+
+      <main className="container mx-auto px-4 py-6 space-y-8">
+        {/* Enhanced Search */}
+        <EnhancedToolSearch 
+          searchQuery={searchTerm}
+          onSearchChange={setSearchTerm}
+          totalResults={filteredCategories.length}
         />
-      </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-        {filteredCategories.map((category) => {
-          const IconComponent = category.icon;
-          return (
-            <Card 
-              key={category.name}
-              className="border-elec-yellow/20 bg-elec-gray backdrop-blur cursor-pointer hover:border-elec-yellow/50 transition-all duration-300 hover:shadow-lg group"
-              onClick={() => navigate(`/electrician/tools?category=${encodeURIComponent(category.name)}`)}
-            >
-              <CardHeader className="pb-3">
-                <CardTitle className="flex items-center justify-center gap-3 text-lg text-center text-white group-hover:text-white/90 transition-colors">
-                  <IconComponent className="h-6 w-6 text-elec-yellow group-hover:text-elec-yellow/90 transition-colors" />
-                  {category.name}
-                </CardTitle>
-                <CardDescription className="text-sm text-center leading-relaxed">
-                  {category.description}
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="text-xs text-elec-yellow/80 flex items-center justify-center gap-2 font-medium">
-                  {isLoading ? (
-                    <>
-                      <Loader2 className="h-3 w-3 animate-spin" />
-                      Loading...
-                    </>
-                  ) : category.count > 0 ? (
-                    <>
-                      <Wrench className="h-3 w-3" />
-                      {category.count} tools available
-                    </>
-                  ) : (
-                    <span className="text-muted-foreground italic">
-                      Data being collected
-                    </span>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
-          );
-        })}
-      </div>
+        {/* Deals Section */}
+        <ToolDealsCarousel />
 
-      {filteredCategories.length === 0 && (
-        <div className="text-center py-12">
-          <Search className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-          <h3 className="text-lg font-medium mb-2">No tools found</h3>
-          <p className="text-muted-foreground">
-            Try adjusting your search terms or browse all available categories.
-          </p>
-        </div>
-      )}
+        {/* Category Mega Menu */}
+        <ToolCategoryMegaMenu />
 
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardContent className="p-6 text-center">
-          <p className="text-muted-foreground">
-            Tool sourcing and pricing features coming soon
-          </p>
-        </CardContent>
-      </Card>
+        {/* Legacy Category Grid - Shown when search is active */}
+        {searchTerm && (
+          <section className="space-y-4">
+            <h3 className="text-lg font-semibold">Search Results</h3>
+            {isLoading ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                {[...Array(8)].map((_, i) => (
+                  <Card key={i} className="p-6">
+                    <div className="animate-pulse">
+                      <div className="h-12 w-12 bg-muted rounded-lg mb-4"></div>
+                      <div className="h-5 bg-muted rounded mb-2"></div>
+                      <div className="h-4 bg-muted rounded mb-4"></div>
+                      <div className="h-8 bg-muted rounded"></div>
+                    </div>
+                  </Card>
+                ))}
+              </div>
+            ) : filteredCategories.length === 0 ? (
+              <div className="text-center py-12">
+                <Wrench className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                <h3 className="text-lg font-medium mb-2">No tool categories found</h3>
+                <p className="text-muted-foreground">Try a different search term or check back later.</p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                {filteredCategories.map((category) => (
+                  <Link 
+                    key={category.name}
+                    to={`/electrician/tools?category=${encodeURIComponent(category.name)}`}
+                    className="group block"
+                  >
+                    <Card className="hover:shadow-lg transition-all duration-300 group-hover:-translate-y-1">
+                      <CardContent className="p-6">
+                        <div className="flex items-start justify-between mb-4">
+                          <div className="p-3 rounded-xl bg-primary/10 group-hover:bg-primary/20 transition-colors">
+                            <category.icon className="h-7 w-7 text-primary" />
+                          </div>
+                          {category.trending && (
+                            <Badge className="bg-green-100 text-green-700 text-xs">
+                              <TrendingUp className="h-3 w-3 mr-1" />
+                              Hot
+                            </Badge>
+                          )}
+                        </div>
+                        
+                        <div className="space-y-3">
+                          <div>
+                            <h3 className="font-semibold group-hover:text-primary transition-colors">
+                              {category.name}
+                            </h3>
+                            <p className="text-sm text-muted-foreground mt-1 line-clamp-2">
+                              {category.description}
+                            </p>
+                          </div>
+                          
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-2">
+                              <Badge variant="outline" className="text-xs">
+                                {category.count} tools
+                              </Badge>
+                              {category.priceRange && (
+                                <span className="text-xs text-muted-foreground font-mono">
+                                  {category.priceRange}
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </Link>
+                ))}
+              </div>
+            )}
+          </section>
+        )}
+      </main>
     </div>
   );
 };
