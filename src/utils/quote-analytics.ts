@@ -2,6 +2,7 @@ import { Quote } from "@/types/quote";
 
 export interface FinancialBreakdown {
   totalRevenue: number;
+  netRevenue: number;
   totalCosts: number;
   totalProfit: number;
   profitMargin: number;
@@ -18,6 +19,7 @@ export const calculateFinancialBreakdown = (quotes: Quote[]): FinancialBreakdown
   if (approvedQuotes.length === 0) {
     return {
       totalRevenue: 0,
+      netRevenue: 0,
       totalCosts: 0,
       totalProfit: 0,
       profitMargin: 0,
@@ -31,18 +33,21 @@ export const calculateFinancialBreakdown = (quotes: Quote[]): FinancialBreakdown
 
   const totals = approvedQuotes.reduce((acc, quote) => {
     const materialsCost = quote.items.reduce((sum, item) => {
-      return sum + (item.quantity * item.unitPrice);
+      return sum + (item.category === 'materials' ? item.quantity * item.unitPrice : 0);
     }, 0);
     
-    const labourCost = quote.items.reduce((sum, item) => {
-      return sum + ((item.hours || 0) * (item.hourlyRate || 0));
+    const labourIncome = quote.items.reduce((sum, item) => {
+      return sum + (item.category === 'labour' ? item.quantity * item.unitPrice : 0);
     }, 0);
+
+    // Calculate overhead from settings percentage applied to subtotal
+    const calculatedOverhead = quote.subtotal * (quote.settings.overheadPercentage / 100);
 
     return {
       revenue: acc.revenue + quote.total,
       materials: acc.materials + materialsCost,
-      labour: acc.labour + labourCost,
-      overhead: acc.overhead + quote.overhead,
+      labour: acc.labour + labourIncome,
+      overhead: acc.overhead + calculatedOverhead,
       vat: acc.vat + quote.vatAmount,
       subtotal: acc.subtotal + quote.subtotal
     };
@@ -55,12 +60,21 @@ export const calculateFinancialBreakdown = (quotes: Quote[]): FinancialBreakdown
     subtotal: 0
   });
 
-  const totalCosts = totals.materials + totals.labour + totals.overhead;
-  const totalProfit = totals.revenue - totalCosts - totals.vat;
-  const profitMargin = totals.revenue > 0 ? (totalProfit / totals.revenue) * 100 : 0;
+  // Only materials and overhead are actual costs - labour is income for the electrician
+  const totalCosts = totals.materials + totals.overhead;
+  
+  // Calculate net revenue (excluding VAT for VAT-registered businesses)
+  const netRevenue = totals.revenue - totals.vat;
+  
+  // Profit calculation: Revenue minus actual costs
+  // For VAT-registered: use net revenue, for non-VAT: use total revenue
+  const revenueForProfit = totals.vat > 0 ? netRevenue : totals.revenue;
+  const totalProfit = revenueForProfit - totalCosts;
+  const profitMargin = revenueForProfit > 0 ? (totalProfit / revenueForProfit) * 100 : 0;
 
   return {
     totalRevenue: totals.revenue,
+    netRevenue,
     totalCosts,
     totalProfit,
     profitMargin,
