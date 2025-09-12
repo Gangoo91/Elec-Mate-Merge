@@ -255,7 +255,9 @@ const LoadDetailsStep = ({ planData, updatePlanData }: LoadDetailsStepProps) => 
           options={[
             { value: "110-single", label: "110V Single Phase (CTE/Site)" },
             { value: "230-single", label: "230V Single Phase" },
-            { value: "400-three", label: "400V Three Phase" }
+            { value: "400-single", label: "400V Single Phase (Industrial)" },
+            { value: "400-three", label: "400V Three Phase" },
+            { value: "415-three", label: "415V Three Phase (Legacy)" }
           ]}
           hint="Combined voltage and phase configuration"
         />
@@ -285,7 +287,9 @@ const LoadDetailsStep = ({ planData, updatePlanData }: LoadDetailsStepProps) => 
             { value: "rcbo-b", label: "RCBO Type B (30mA RCD)" },
             { value: "rcbo-c", label: "RCBO Type C (30mA RCD)" },
             { value: "bs88-gg", label: "BS88 HRC Fuse (up to 1250A)" },
-            { value: "mccb", label: "MCCB (16A to 4000A)" }
+            { value: "mccb", label: "MCCB (16A to 4000A)" },
+            { value: "acb", label: "ACB (630A to 6300A)" },
+            { value: "motor-starter", label: "Motor Protection (DOL/Star-Delta)" }
           ]}
           hint="Higher currents automatically suggest BS88/MCCB options"
         />
