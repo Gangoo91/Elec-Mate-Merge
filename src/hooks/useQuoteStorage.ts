@@ -121,10 +121,9 @@ export const useQuoteStorage = () => {
         acceptance_status: quoteData.acceptance_status
       });
 
-      const { data, error } = await supabase
+      const { error } = await supabase
         .from('quotes')
-        .upsert(quoteData, { onConflict: 'id' })
-        .select();
+        .upsert(quoteData, { onConflict: 'id' });
 
       if (error) {
         console.error('Quote Storage - Database error:', error);
@@ -137,10 +136,7 @@ export const useQuoteStorage = () => {
         return false;
       }
 
-      console.log('Quote Storage - Database save successful', {
-        savedData: data,
-        recordCount: data?.length || 0
-      });
+      console.log('Quote Storage - Database save successful');
 
       // Update local state
       const updatedQuotes = [quote, ...savedQuotes.filter(q => q.id !== quote.id)];
