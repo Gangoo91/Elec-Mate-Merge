@@ -4,7 +4,7 @@ import LoadTypeSelectionStep from "./LoadTypeSelectionStep";
 import LoadDetailsStep from "./LoadDetailsStep";
 import CableRunStep from "./CableRunStep";
 import InstallationTypeStep from "./InstallationTypeStep";
-import EnvironmentStep from "./EnvironmentStep";
+import EnvironmentalIntelligenceStep from "./EnvironmentalIntelligenceStep";
 import ResultsStep from "./ResultsStep";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, ArrowRight } from "lucide-react";
@@ -66,8 +66,8 @@ const InstallPlannerStep = ({ initialData, onPlanUpdate }: InstallPlannerStepPro
     },
     { 
       title: "Environment", 
-      component: EnvironmentStep,
-      description: "Set environmental conditions" 
+      component: EnvironmentalIntelligenceStep,
+      description: "Smart environmental analysis" 
     },
     { 
       title: "Results", 

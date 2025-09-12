@@ -6,13 +6,11 @@ import { InstallPlanData } from "./types";
 import { Download, Calculator, AlertTriangle, CheckCircle, XCircle, Lightbulb, Shield } from "lucide-react";
 import { getSuitableDevices, getDeviceInfo, getRecommendedDeviceType } from "@/lib/calculators/bs7671-data/protectiveDevices";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { CableSelectionEngine } from "./CableSelectionEngine";
+import { IntelligentCableEngine } from "./IntelligentCableEngine";
 import CableRecommendationsCard from "./CableRecommendationsCard";
 import InstallationSuggestionsCard from "./InstallationSuggestionsCard";
-import ComplianceChecksCard from "./ComplianceChecksCard";
+import IntelligentResultsCard from "./IntelligentResultsCard";
 import VisualCircuitDesigner from "./VisualCircuitDesigner";
-import PostResultGuidance from "./PostResultGuidance";
-import { UnifiedResultsCard } from "./unified-results-card";
 import { SafetyValidationCard } from "./SafetyValidationCard";
 
 interface ResultsStepProps {
@@ -79,8 +77,8 @@ const ResultsStep = ({ planData }: ResultsStepProps) => {
     ? planData.totalLoad / planData.voltage 
     : planData.totalLoad / (planData.voltage * Math.sqrt(3) * (planData.powerFactor || 0.9));
 
-  // Use the enhanced cable selection engine
-  const cableOptions = CableSelectionEngine.calculateCableOptions(planData);
+  // Use the intelligent cable selection engine
+  const cableOptions = IntelligentCableEngine.calculateIntelligentRecommendations(planData);
   const suitableCables = cableOptions.filter(cable => cable.suitability === "suitable");
   const recommendedCable = suitableCables.length > 0 ? suitableCables[0] : null;
   const closestNonCompliant = suitableCables.length === 0 ? cableOptions[0] : null;
@@ -119,10 +117,11 @@ const ResultsStep = ({ planData }: ResultsStepProps) => {
   const maxZs = getMaxZs();
   const zsCompliance = zsValue <= maxZs;
 
-  // Generate enhanced suggestions and compliance checks
-  const suggestions = CableSelectionEngine.generateSuggestions(planData, cableOptions);
-  const complianceChecks = recommendedCable ? 
-    CableSelectionEngine.performComplianceChecks(planData, zsValue, recommendedCable) : [];
+  // Generate intelligent protection device and cost recommendations
+  const protectionDevice = recommendedCable ? 
+    IntelligentCableEngine.selectOptimalProtectionDevice(designCurrent, recommendedCable.currentCarryingCapacity) : null;
+  const costEstimate = recommendedCable && protectionDevice ? 
+    IntelligentCableEngine.generateCostEstimate(planData, recommendedCable, protectionDevice) : null;
 
   // Calculate diversity factor based on installation type and load
   const getDiversityFactor = () => {
@@ -212,13 +211,13 @@ const ResultsStep = ({ planData }: ResultsStepProps) => {
         />
       )}
 
-      {/* Unified Results Card - Same as Multi-Circuit */}
-      <UnifiedResultsCard
+      {/* Intelligent Results Card - Professional Recommendations */}
+      <IntelligentResultsCard
         planData={planData}
         recommendations={cableOptions}
+        protectionDevice={protectionDevice}
+        costEstimate={costEstimate}
         designCurrent={designCurrent}
-        zsValue={zsValue}
-        maxZs={maxZs}
       />
 
       {/* Main Results Grid - Mobile-First Layout */}

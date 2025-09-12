@@ -21,13 +21,7 @@ const CableRunStep = ({ planData, updatePlanData }: CableRunStepProps) => {
     { value: "cable-tray", label: "Cable Tray", description: "On cable tray or ladder" }
   ];
 
-  // Simplified to 4 bulletproof cable types with verified calculations
-  const cableTypes = [
-    { value: "pvc-twin-earth", label: "PVC Twin & Earth", description: "Standard domestic/commercial - 70°C rating" },
-    { value: "xlpe-lsoh", label: "XLPE-LSOH", description: "Fire performance - 90°C rating, low smoke" },
-    { value: "swa-xlpe", label: "SWA XLPE", description: "Armoured outdoor cable - 90°C rating" },
-    { value: "micc", label: "MICC", description: "Mineral insulated - high temperature/fire resistance" }
-  ];
+  // Auto-selected cable type - removed manual selection
 
   const getVoltageDropGuidance = () => {
     const maxVoltageDropPercentage = planData.loadType === "lighting" ? 3 : 5;
@@ -82,19 +76,24 @@ const CableRunStep = ({ planData, updatePlanData }: CableRunStepProps) => {
             : "Choose the method that matches your cable route"}
         />
 
-        <MobileSelectWrapper
-          label="Cable Type"
-          placeholder="Select cable type"
-          value={planData.cableType || ""}
-          onValueChange={(value) => updatePlanData({ cableType: value })}
-          options={cableTypes.map(cable => ({
-            value: cable.value,
-            label: cable.label
-          }))}
-          hint={planData.cableType ? 
-            cableTypes.find(c => c.value === planData.cableType)?.description || "Choose cable type based on installation environment" 
-            : "Choose cable type based on installation environment"}
-        />
+        {/* Cable type auto-selected by environmental intelligence */}
+        {planData.cableType && (
+          <div className="p-4 bg-green-500/10 rounded-lg border border-green-500/30">
+            <div className="flex items-center gap-2 mb-2">
+              <Cable className="h-4 w-4 text-green-400" />
+              <span className="text-sm font-medium text-green-300">Auto-Selected Cable Type</span>
+            </div>
+            <p className="text-green-200 font-medium">
+              {planData.cableType === "pvc-twin-earth" ? "PVC Twin & Earth" :
+               planData.cableType === "xlpe-lsoh" ? "XLPE-LSOH" :
+               planData.cableType === "swa-xlpe" ? "SWA XLPE" :
+               planData.cableType === "micc" ? "MICC" : planData.cableType}
+            </p>
+            <p className="text-xs text-green-200/70 mt-1">
+              Automatically selected based on your environmental conditions
+            </p>
+          </div>
+        )}
       </div>
 
       {/* Voltage Drop Guidance */}
