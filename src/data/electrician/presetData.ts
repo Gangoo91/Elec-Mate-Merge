@@ -1058,7 +1058,33 @@ export const labourPresets = [
 ];
 
 // Merge base materials with additional materials to create comprehensive database (400+ items)
-const allMaterials = [...baseMaterials, ...additionalMaterials];
+// Ensure unique IDs by suffixing duplicates with variant info from name or '-v2'
+const createUniqueMaterials = (base: MaterialItem[], extras: MaterialItem[]): MaterialItem[] => {
+  const existing = new Set(base.map(m => m.id));
+
+  const makeUniqueId = (origId: string, name: string) => {
+    const packaging = name.match(/\(([^)]+)\)/)?.[1]?.replace(/\s+/g, '').toLowerCase() || 'v2';
+    let newId = `${origId}-${packaging}`;
+    let i = 2;
+    while (existing.has(newId)) {
+      newId = `${origId}-${packaging}-${i++}`;
+    }
+    return newId;
+  };
+
+  const adjustedExtras = extras.map(m => {
+    let id = m.id;
+    if (existing.has(id)) {
+      id = makeUniqueId(id, m.name);
+    }
+    existing.add(id);
+    return { ...m, id };
+  });
+
+  return [...base, ...adjustedExtras];
+};
+
+const allMaterials = createUniqueMaterials(baseMaterials, additionalMaterials);
 
 // Export the comprehensive materials list
 export { allMaterials as commonMaterials };
