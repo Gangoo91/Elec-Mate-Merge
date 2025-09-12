@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { MobileButton } from "@/components/ui/mobile-button";
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle, XCircle, Clock, FileText } from "lucide-react";
 import { Quote } from "@/types/quote";
@@ -142,32 +143,32 @@ export const QuoteDashboardCard = ({ quotes }: QuoteDashboardCardProps) => {
                 </div>
               </div>
               
-              {/* Prominent Action Buttons */}
-              <div className="border-t pt-4">
-                <p className="text-sm font-medium text-muted-foreground mb-3">
-                  Quote Action Required
+              {/* Mobile-Optimized Action Buttons */}
+              <div className="border-t pt-4 bg-muted/30 -mx-4 -mb-3 px-4 pb-4 rounded-b-lg">
+                <p className="text-sm font-medium text-foreground mb-4 text-center">
+                  📋 Action Required
                 </p>
-                <div className="flex flex-col sm:flex-row gap-3">
-                  <Button
-                    size="lg"
-                    variant="default"
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <MobileButton
+                    size="wide"
+                    variant="elec"
                     onClick={() => handleActionClick(quote, "accept")}
-                    className="flex-1 h-12 text-base font-medium bg-green-600 hover:bg-green-700 text-white"
+                    icon={<CheckCircle className="h-5 w-5" />}
+                    className="bg-green-600 hover:bg-green-700 text-white border-green-600 font-semibold"
                     aria-label={`Accept quote ${quote.quoteNumber} from ${quote.client.name}`}
                   >
-                    <CheckCircle className="h-5 w-5 mr-2" />
                     Accept Quote
-                  </Button>
-                  <Button
-                    size="lg"
-                    variant="destructive"
+                  </MobileButton>
+                  <MobileButton
+                    size="wide"
+                    variant="elec-outline"
                     onClick={() => handleActionClick(quote, "reject")}
-                    className="flex-1 h-12 text-base font-medium"
+                    icon={<XCircle className="h-5 w-5" />}
+                    className="border-red-500 text-red-600 hover:bg-red-500 hover:text-white font-semibold"
                     aria-label={`Reject quote ${quote.quoteNumber} from ${quote.client.name}`}
                   >
-                    <XCircle className="h-5 w-5 mr-2" />
                     Reject Quote
-                  </Button>
+                  </MobileButton>
                 </div>
               </div>
             </div>
