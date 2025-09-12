@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { MobileButton } from '@/components/ui/mobile-button';
 import { Badge } from '@/components/ui/badge';
 import { FileText, Download, Trash2, Eye, Calendar, Check, Mail, Tag, Clock } from 'lucide-react';
 import { Quote, QuoteTag } from '@/types/quote';
@@ -252,6 +253,31 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
 
               {/* Actions */}
               <div className="flex items-center gap-2">
+                {/* Inline Accept/Reject for sent quotes */}
+                {quote.status === 'sent' && onUpdateQuoteStatus && (
+                  <div className="flex items-center gap-2">
+                    <MobileButton
+                      size="sm"
+                      variant="elec"
+                      onClick={() => handleStatusUpdate(quote.id, 'pending')}
+                      disabled={loadingAction.startsWith(`status-${quote.id}`)}
+                      aria-label={`Accept quote ${quote.quoteNumber}`}
+                      icon={<Check className="h-4 w-4" />}
+                    >
+                      Accept
+                    </MobileButton>
+                    <MobileButton
+                      size="sm"
+                      variant="destructive"
+                      onClick={() => handleStatusUpdate(quote.id, 'rejected')}
+                      disabled={loadingAction.startsWith(`status-${quote.id}`)}
+                      aria-label={`Reject quote ${quote.quoteNumber}`}
+                    >
+                      Reject
+                    </MobileButton>
+                  </div>
+                )}
+
                 <Button
                   variant="outline"
                   size="sm"
@@ -262,8 +288,8 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
                   PDF
                 </Button>
                 
-                {/* Status Management Dropdown */}
-                {onUpdateQuoteStatus && (
+                {/* Status Management Dropdown - hidden when status is 'sent' */}
+                {onUpdateQuoteStatus && quote.status !== 'sent' && (
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <Button
@@ -276,16 +302,6 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
-                      {quote.status === 'sent' && (
-                        <>
-                          <DropdownMenuItem onClick={() => handleStatusUpdate(quote.id, 'pending')}>
-                            Accept Quote
-                          </DropdownMenuItem>
-                          <DropdownMenuItem onClick={() => handleStatusUpdate(quote.id, 'rejected')}>
-                            Reject Quote
-                          </DropdownMenuItem>
-                        </>
-                      )}
                       {quote.status === 'pending' && (
                         <>
                           <DropdownMenuItem onClick={() => handleStatusUpdate(quote.id, 'pending', ['job_not_complete'])}>
