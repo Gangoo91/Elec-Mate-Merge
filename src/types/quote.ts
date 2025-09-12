@@ -84,7 +84,7 @@ export interface Quote {
   profit: number;
   vatAmount: number;
   total: number;
-  status: 'draft' | 'sent' | 'pending' | 'completed' | 'rejected';
+  status: 'draft' | 'sent' | 'pending' | 'approved' | 'rejected';
   tags?: QuoteTag[];
   lastReminderSentAt?: Date;
   createdAt: Date;

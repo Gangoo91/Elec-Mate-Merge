@@ -13,9 +13,9 @@ export interface FinancialBreakdown {
 }
 
 export const calculateFinancialBreakdown = (quotes: Quote[]): FinancialBreakdown => {
-  const completedQuotes = quotes.filter(q => q.status === 'completed');
+  const approvedQuotes = quotes.filter(q => q.status === 'approved');
   
-  if (completedQuotes.length === 0) {
+  if (approvedQuotes.length === 0) {
     return {
       totalRevenue: 0,
       totalCosts: 0,
@@ -29,7 +29,7 @@ export const calculateFinancialBreakdown = (quotes: Quote[]): FinancialBreakdown
     };
   }
 
-  const totals = completedQuotes.reduce((acc, quote) => {
+  const totals = approvedQuotes.reduce((acc, quote) => {
     const materialsCost = quote.items.reduce((sum, item) => {
       return sum + (item.quantity * item.unitPrice);
     }, 0);
@@ -64,7 +64,7 @@ export const calculateFinancialBreakdown = (quotes: Quote[]): FinancialBreakdown
     totalCosts,
     totalProfit,
     profitMargin,
-    averageQuoteValue: totals.revenue / completedQuotes.length,
+    averageQuoteValue: totals.revenue / approvedQuotes.length,
     materialsTotal: totals.materials,
     labourTotal: totals.labour,
     overheadTotal: totals.overhead,

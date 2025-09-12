@@ -48,11 +48,11 @@ const QuoteBuilder = () => {
       type: "sent"
     },
     {
-      title: "Completed Quotes",
-      value: stats.completed.toString(),
+      title: "Approved Quotes",
+      value: stats.approved.toString(),
       icon: CheckCircle,
       color: "text-green-400",
-      type: "completed"
+      type: "approved"
     },
     {
       title: "Rejected Quotes",

@@ -80,7 +80,7 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
         return 'default';
       case 'pending':
         return 'outline';
-      case 'completed':
+      case 'approved':
         return 'success';
       case 'rejected':
         return 'destructive';
@@ -133,7 +133,7 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
       let success = false;
       
       if (confirmAction === 'accept') {
-        success = await onUpdateQuoteStatus(selectedQuote.id, 'completed', [], 'accepted');
+        success = await onUpdateQuoteStatus(selectedQuote.id, 'approved', [], 'accepted');
       } else if (confirmAction === 'reject') {
         success = await onUpdateQuoteStatus(selectedQuote.id, 'rejected', [], 'rejected');
       }
@@ -359,8 +359,8 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
                           <DropdownMenuItem onClick={() => handleStatusUpdate(quote.id, 'pending', ['awaiting_payment'])}>
                             Mark as Awaiting Payment
                           </DropdownMenuItem>
-                          <DropdownMenuItem onClick={() => handleStatusUpdate(quote.id, 'completed')}>
-                            Mark as Completed
+                          <DropdownMenuItem onClick={() => handleStatusUpdate(quote.id, 'approved')}>
+                            Mark as Approved
                           </DropdownMenuItem>
                           <DropdownMenuSeparator />
                           <DropdownMenuItem onClick={() => handleStatusUpdate(quote.id, 'pending', ['on_hold'])}>
@@ -371,8 +371,8 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
                           </DropdownMenuItem>
                         </>
                       )}
-                      {quote.status === 'completed' && quote.tags?.includes('awaiting_payment') && (
-                        <DropdownMenuItem onClick={() => handleStatusUpdate(quote.id, 'completed', [])}>
+                      {quote.status === 'approved' && quote.tags?.includes('awaiting_payment') && (
+                        <DropdownMenuItem onClick={() => handleStatusUpdate(quote.id, 'approved', [])}>
                           Mark as Paid
                         </DropdownMenuItem>
                       )}
@@ -441,7 +441,7 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
         title={confirmAction === 'accept' ? 'Accept Quote' : 'Reject Quote'}
         description={
           confirmAction === 'accept'
-            ? `Are you sure you want to accept quote ${selectedQuote?.quoteNumber}? This will mark the quote as completed and accepted.`
+            ? `Are you sure you want to accept quote ${selectedQuote?.quoteNumber}? This will mark the quote as approved and accepted.`
             : `Are you sure you want to reject quote ${selectedQuote?.quoteNumber}? This action cannot be undone.`
         }
         confirmText={confirmAction === 'accept' ? 'Accept Quote' : 'Reject Quote'}

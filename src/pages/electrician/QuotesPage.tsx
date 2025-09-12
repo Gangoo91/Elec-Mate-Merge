@@ -34,7 +34,7 @@ const QuotesPage = () => {
     switch (filterType) {
       case 'pending': return 'Pending Quotes';
       case 'sent': return 'Sent Quotes';
-      case 'completed': return 'Completed Quotes';
+      case 'approved': return 'Approved Quotes';
       case 'rejected': return 'Rejected Quotes';
       case 'draft': return 'Draft Quotes';
       default: return 'All Quotes';
@@ -124,9 +124,9 @@ const QuotesPage = () => {
             </div>
             <div className="bg-card border rounded-lg p-6 text-center">
               <div className="text-2xl font-bold text-green-400">
-                {savedQuotes.filter(q => q.status === 'completed').length}
+                {savedQuotes.filter(q => q.status === 'approved').length}
               </div>
-              <div className="text-muted-foreground">Completed</div>
+              <div className="text-muted-foreground">Approved</div>
             </div>
             <div className="bg-card border rounded-lg p-6 text-center">
               <div className="text-2xl font-bold text-blue-400">

@@ -36,7 +36,7 @@ export const QuoteDashboardCard = ({ quotes }: QuoteDashboardCardProps) => {
 
     setLoading(true);
     try {
-      const newStatus = action === "accept" ? "completed" : "rejected";
+      const newStatus = action === "accept" ? "approved" : "rejected";
       const newAcceptanceStatus = action === "accept" ? "accepted" : "rejected";
       
       const success = await updateQuoteStatus(

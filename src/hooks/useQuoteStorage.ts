@@ -183,7 +183,7 @@ export const useQuoteStorage = () => {
   const getQuoteStats = useCallback(() => {
     const pending = savedQuotes.filter(q => q.status === 'pending').length;
     const sent = savedQuotes.filter(q => q.status === 'sent').length;
-    const completed = savedQuotes.filter(q => q.status === 'completed').length;
+    const approved = savedQuotes.filter(q => q.status === 'approved').length;
     const rejected = savedQuotes.filter(q => q.status === 'rejected').length;
     const draft = savedQuotes.filter(q => q.status === 'draft').length;
     const awaitingPayment = savedQuotes.filter(q => q.tags?.includes('awaiting_payment')).length;
@@ -192,13 +192,13 @@ export const useQuoteStorage = () => {
     const thisMonth = new Date();
     thisMonth.setDate(1);
     const monthlyTotal = savedQuotes
-      .filter(q => q.status === 'completed' && q.createdAt >= thisMonth)
+      .filter(q => q.status === 'approved' && q.createdAt >= thisMonth)
       .reduce((total, quote) => total + (quote.total || 0), 0);
 
     return {
       pending,
       sent,
-      completed,
+      approved,
       rejected,
       draft,
       awaitingPayment,
