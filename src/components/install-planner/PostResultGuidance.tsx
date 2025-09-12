@@ -1,6 +1,5 @@
 import React from 'react';
 import EnhancedInstallationGuidance from './EnhancedInstallationGuidance';
-import EnhancedPracticalGuidance from './EnhancedPracticalGuidance';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -714,16 +713,10 @@ const PostResultGuidance: React.FC<PostResultGuidanceProps> = ({
         </AlertDescription>
       </Alert>
       
-      {/* Enhanced Practical Guidance */}
-      <EnhancedPracticalGuidance 
-        planData={planData} 
-        recommendedCable={recommendedCable} 
-      />
-
       {/* Enhanced Installation Guidance */}
       <EnhancedInstallationGuidance 
-        planData={planData} 
-        recommendedCable={recommendedCable} 
+        planData={planData}
+        recommendedCable={recommendedCable}
       />
     </div>
   );
