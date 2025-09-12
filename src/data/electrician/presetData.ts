@@ -49,32 +49,77 @@ export const materialCategories = [
   {
     id: "cables",
     name: "Cables & Wiring",
-    subcategories: ["Twin & Earth", "Armoured Cable", "Flex Cable", "Data Cable", "Coaxial Cable"]
+    subcategories: ["Twin & Earth", "Armoured Cable", "Flex Cable", "Data Cable", "Coaxial Cable", "MICC Cable", "Fire Resistant Cable", "Alarm Cable", "Speaker Cable", "Multicore Cable"]
   },
   {
     id: "accessories",
     name: "Accessories",
-    subcategories: ["Sockets", "Switches", "Dimmers", "USB Outlets", "Spurs"]
+    subcategories: ["Sockets", "Switches", "Dimmers", "USB Outlets", "Spurs", "Smart Switches", "Sensor Switches", "Outdoor Sockets", "Industrial Sockets"]
   },
   {
     id: "distribution",
     name: "Distribution",
-    subcategories: ["Consumer Units", "MCBs", "RCDs", "RCBOs", "Isolators"]
+    subcategories: ["Consumer Units", "MCBs", "RCDs", "RCBOs", "Isolators", "Surge Protectors", "Time Clocks", "Contactors", "Phase Monitors", "Distribution Boards"]
   },
   {
     id: "lighting",
     name: "Lighting",
-    subcategories: ["LED Downlights", "Ceiling Lights", "Wall Lights", "Emergency Lighting", "Outdoor Lighting"]
+    subcategories: ["LED Downlights", "Ceiling Lights", "Wall Lights", "Emergency Lighting", "Outdoor Lighting", "Smart Lighting", "Track Lighting", "Festoon Lighting", "Strip Lighting", "Decorative Fittings"]
   },
   {
     id: "containment",
     name: "Containment",
-    subcategories: ["Conduit", "Trunking", "Cable Tray", "Traywork", "Clips & Fixings"]
+    subcategories: ["Conduit", "Trunking", "Cable Tray", "Traywork", "Clips & Fixings", "Steel Conduit", "Flexible Conduit", "Dado Trunking", "Floor Boxes", "Cable Glands"]
   },
   {
     id: "heating",
-    name: "Heating",
-    subcategories: ["Electric Radiators", "Underfloor Heating", "Storage Heaters", "Towel Rails", "Thermostats"]
+    name: "Heating & HVAC",
+    subcategories: ["Electric Radiators", "Underfloor Heating", "Storage Heaters", "Towel Rails", "Thermostats", "Electric Boilers", "Immersion Heaters", "Heat Pumps", "Fan Controllers", "Heating Controls"]
+  },
+  {
+    id: "fire-safety",
+    name: "Fire Safety & Detection",
+    subcategories: ["Smoke Alarms", "Heat Detectors", "Fire Alarm Panels", "Emergency Lighting", "Fire Exit Signs", "Sounders & Strobes", "Call Points", "Fire Cables", "Smoke Detectors", "CO Detectors"]
+  },
+  {
+    id: "security",
+    name: "Security & Access Control",
+    subcategories: ["Door Entry Systems", "CCTV Systems", "Burglar Alarms", "Access Keypads", "Intercom Systems", "Security Lighting", "PIR Sensors", "Magnetic Locks", "Door Contacts", "Control Panels"]
+  },
+  {
+    id: "ev-charging",
+    name: "EV Charging",
+    subcategories: ["EV Charge Points", "Type 1 Cables", "Type 2 Cables", "Dedicated Supplies", "EV Isolators", "Earth Electrodes", "Load Management", "Smart Chargers", "Commercial Chargers", "Charging Pedestals"]
+  },
+  {
+    id: "renewable-energy",
+    name: "Renewable Energy",
+    subcategories: ["Solar Panels", "Inverters", "Battery Storage", "PV Switches", "Generation Meters", "DC Isolators", "Monitoring Systems", "Mounting Systems", "AC Isolators", "String Monitors"]
+  },
+  {
+    id: "industrial",
+    name: "Industrial & Commercial",
+    subcategories: ["Contactors", "Motor Starters", "Transformers", "Busbar Systems", "Industrial Sockets", "DOL Starters", "Star Delta Starters", "Variable Speed Drives", "Power Factor Correction", "Switchgear"]
+  },
+  {
+    id: "data-comms",
+    name: "Data & Communications",
+    subcategories: ["Network Equipment", "Fibre Optic Cables", "Telephone Systems", "Wi-Fi Access Points", "Network Cabinets", "Patch Panels", "RJ45 Connectors", "HDMI Systems", "AV Equipment", "Structured Cabling"]
+  },
+  {
+    id: "specialist",
+    name: "Specialist Systems",
+    subcategories: ["Swimming Pool Equipment", "Garden Lighting", "Temporary Supplies", "Stage Lighting", "Agricultural Systems", "Caravan Supplies", "Boat Electrics", "Workshop Equipment", "Garage Supplies", "Shed Electrics"]
+  },
+  {
+    id: "testing",
+    name: "Testing & Certification",
+    subcategories: ["Testing Equipment", "Certificates", "Inspection Tools", "PAT Testing", "RCD Testing", "Insulation Testing", "Earth Loop Testing", "Calibration", "Test Labels", "Compliance Documents"]
+  },
+  {
+    id: "safety-ppe",
+    name: "Safety & PPE",
+    subcategories: ["Hard Hats", "Safety Boots", "High Vis Clothing", "Voltage Testers", "Lockout Devices", "Safety Signs", "First Aid Kits", "Protective Gloves", "Safety Glasses", "Rescue Equipment"]
   }
 ];
 
