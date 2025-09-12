@@ -51,6 +51,7 @@ import MinimumChargeCalculator from "@/pages/electrician/business-development/to
 import VATSchemeComparison from "@/pages/electrician/business-development/tools/VATSchemeComparison";
 import CISDRCHelper from "@/pages/electrician/business-development/tools/CISDRCHelper";
 import QuoteBuilder from "@/pages/electrician/QuoteBuilder";
+import QuoteBuilderCreate from "@/pages/electrician/QuoteBuilderCreate";
 import QuotesPage from "@/pages/electrician/QuotesPage";
 import Calculations from "@/pages/electrician-tools/Calculations";
 import InstallPlanner from "@/pages/electrician-tools/InstallPlanner";
@@ -89,6 +90,7 @@ const ElectricianHubRoutes = () => (
     <Route path="business" element={<BusinessHub />} />
     <Route path="business-admin" element={<BusinessAdmin />} />
     <Route path="quote-builder" element={<QuoteBuilder />} />
+    <Route path="quote-builder/create" element={<QuoteBuilderCreate />} />
     <Route path="quotes" element={<QuotesPage />} />
     {/* Business Development Routes */}
     <Route path="business-development" element={<BusinessDevelopment />} />
