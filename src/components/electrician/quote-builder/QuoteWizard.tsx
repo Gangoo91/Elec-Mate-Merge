@@ -73,7 +73,15 @@ const {
       case 2:
         return <JobDetailsStep jobDetails={quote.jobDetails} onUpdate={updateJobDetails} />;
       case 3:
-        return <EnhancedQuoteItemsStep items={quote.items || []} onAdd={addItem} onUpdate={updateItem} onRemove={removeItem} />;
+        return <EnhancedQuoteItemsStep 
+          items={quote.items || []} 
+          onAdd={addItem} 
+          onUpdate={updateItem} 
+          onRemove={removeItem}
+          priceAdjustment={priceAdjustment}
+          setPriceAdjustment={setPriceAdjustment}
+          calculateAdjustedPrice={calculateAdjustedPrice}
+        />;
       case 4:
         return <QuoteSettingsStep settings={quote.settings} onUpdate={updateSettings} />;
       case 5:
