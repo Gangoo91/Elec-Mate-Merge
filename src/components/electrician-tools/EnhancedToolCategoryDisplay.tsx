@@ -8,10 +8,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Wrench, ArrowLeft, Filter, RefreshCw, Loader2, Search, Scale, TrendingUp, Calculator, AlertTriangle, Brain, ChevronDown } from "lucide-react";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 
-import { ToolsNavigationHeader } from "@/components/electrician-tools/enhanced/ToolsNavigationHeader";
-import { EnhancedToolSearch } from "@/components/electrician-tools/enhanced/EnhancedToolSearch";
-import { ToolDealsCarousel } from "@/components/electrician-tools/enhanced/ToolDealsCarousel";
-
 import { MobileInputWrapper } from "@/components/ui/mobile-input-wrapper";
 import { useIsMobile } from "@/hooks/use-mobile";
 import ToolCard from "@/components/electrician-tools/ToolCard";
@@ -85,7 +81,6 @@ const EnhancedToolCategoryDisplay = ({ categoryName }: EnhancedToolCategoryDispl
   const [activeTab, setActiveTab] = useState("browse");
   const [selectedItems, setSelectedItems] = useState<ToolItem[]>([]);
   const [isTabSelectorOpen, setIsTabSelectorOpen] = useState(false);
-  const [isRefreshing, setIsRefreshing] = useState(false);
   const isMobile = useIsMobile();
   
   // Comprehensive category mapping function
@@ -200,16 +195,6 @@ const EnhancedToolCategoryDisplay = ({ categoryName }: EnhancedToolCategoryDispl
     setSelectedItems([]);
   };
 
-  // Handle tools refresh
-  const handleToolsRefresh = async () => {
-    setIsRefreshing(true);
-    try {
-      await refetch();
-    } finally {
-      setIsRefreshing(false);
-    }
-  };
-
   if (error) {
     return (
       <main className="space-y-6 animate-fade-in">
@@ -245,37 +230,22 @@ const EnhancedToolCategoryDisplay = ({ categoryName }: EnhancedToolCategoryDispl
         <link rel="canonical" href={typeof window !== 'undefined' ? window.location.href : ''} />
       </Helmet>
 
-      {/* Enhanced Navigation Header */}
-      <ToolsNavigationHeader onRefresh={handleToolsRefresh} isRefreshing={isRefreshing} />
-
-      <div className="container mx-auto px-4 py-6 space-y-6">
-        {/* Enhanced Search */}
-        <EnhancedToolSearch 
-          searchQuery={searchTerm}
-          onSearchChange={setSearchTerm}
-          totalResults={filteredTools.length}
-        />
-
-        {/* Deals Section */}
-        <ToolDealsCarousel />
-
-        <header className="mobile-section-spacing">
-          <div className="flex flex-wrap gap-2 mb-4">
-            <Link to="/electrician/tools">
-              <Button variant="outline" size="sm" className="touch-target mobile-interactive bg-elec-gray/50 border-elec-yellow/30 text-elec-light hover:bg-elec-yellow/10">
-                <ArrowLeft className="h-4 w-4" /> Back to Tools
-              </Button>
-            </Link>
-          </div>
-          <div className="space-y-3">
-            <h1 className="mobile-heading font-bold tracking-tight flex items-center gap-3">
-              <Wrench className="h-6 w-6 sm:h-7 sm:w-7 lg:h-8 lg:w-8 text-elec-yellow flex-shrink-0" />
-              <span className="min-w-0 text-elec-light">{meta.title}</span>
-            </h1>
-            <p className="mobile-text text-text-muted leading-relaxed pl-9 sm:pl-10 lg:pl-11 pb-6">{meta.description}</p>
-          </div>
-        </header>
-      </div>
+      <header className="mobile-section-spacing">
+        <div className="flex flex-wrap gap-2 mb-4">
+          <Link to="/electrician/tools">
+            <Button variant="outline" size="sm" className="touch-target mobile-interactive bg-elec-gray/50 border-elec-yellow/30 text-elec-light hover:bg-elec-yellow/10">
+              <ArrowLeft className="h-4 w-4" /> Back to Tools
+            </Button>
+          </Link>
+        </div>
+        <div className="space-y-3">
+          <h1 className="mobile-heading font-bold tracking-tight flex items-center gap-3">
+            <Wrench className="h-6 w-6 sm:h-7 sm:w-7 lg:h-8 lg:w-8 text-elec-yellow flex-shrink-0" />
+            <span className="min-w-0 text-elec-light">{meta.title}</span>
+          </h1>
+          <p className="mobile-text text-text-muted leading-relaxed pl-9 sm:pl-10 lg:pl-11 pb-6">{meta.description}</p>
+        </div>
+      </header>
 
       {/* Advanced Features Navigation */}
       <section className="mobile-section-spacing relative z-10">
