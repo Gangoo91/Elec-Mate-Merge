@@ -120,21 +120,21 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove }: Enh
       };
       onAdd(itemToAdd);
       
-      // Reset form
-      setNewItem({
+      // Reset form while preserving category
+      setNewItem(prev => ({
         description: "",
         quantity: 1,
-        unit: "each",
+        unit: prev.category === "labour" ? "hour" : "each",
         unitPrice: 0,
-        category: "labour" as 'labour' | 'materials' | 'equipment',
-        subcategory: "",
+        category: prev.category, // Preserve the selected category
+        subcategory: "", // Reset subcategory for flexibility
         workerType: "",
         hours: 0,
         hourlyRate: 0,
         materialCode: "",
         equipmentCode: "",
         notes: ""
-      });
+      }));
     }
   };
 
