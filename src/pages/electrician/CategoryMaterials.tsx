@@ -13,7 +13,7 @@ import BulkPricingCalculator from "@/components/electrician-materials/BulkPricin
 import PriceHistoryAlerts from "@/components/electrician-materials/PriceHistoryAlerts";
 import RefreshButton from "@/components/electrician-materials/RefreshButton";
 import MaterialSmartSearch from "@/components/electrician-materials/MaterialSmartSearch";
-import MaterialFilters from "@/components/electrician-materials/MaterialFilters";
+import MaterialFilters, { MaterialFilterState } from "@/components/electrician-materials/MaterialFilters";
 import MaterialsMoreTools from "@/components/electrician-materials/MaterialsMoreTools";
 import MaterialDealsOfTheDay from "@/components/electrician-materials/MaterialDealsOfTheDay";
 import MaterialTopDiscounts from "@/components/electrician-materials/MaterialTopDiscounts";
@@ -58,7 +58,12 @@ const CategoryMaterials = () => {
 
   // Enhanced filter state
   const [searchTerm, setSearchTerm] = useState("");
-  const [activeFilters, setActiveFilters] = useState<string[]>([]);
+  const [filters, setFilters] = useState<MaterialFilterState>({
+    brands: [],
+    priceRanges: [],
+    availability: [],
+    suppliers: []
+  });
   const [selectedItems, setSelectedItems] = useState<any[]>([]);
   const [currentView, setCurrentView] = useState<'browse' | 'compare' | 'bulk' | 'alerts' | 'ai'>('browse');
   const isMobile = useIsMobile();
@@ -66,6 +71,31 @@ const CategoryMaterials = () => {
   // Get deals data
   const { dealOfTheDay, topDiscounts } = useMaterialsDeals(materials || []);
   
+  // Helper function to parse price string to number
+  const parsePrice = (priceStr: string): number => {
+    return parseFloat(priceStr.replace(/[£,]/g, '')) || 0;
+  };
+
+  // Helper function to check if price falls within range
+  const priceInRange = (price: number, range: string): boolean => {
+    switch (range) {
+      case "Under £50":
+        return price < 50;
+      case "£50 - £200":
+        return price >= 50 && price < 200;
+      case "£200 - £500":
+        return price >= 200 && price < 500;
+      case "£500 - £1000":
+        return price >= 500 && price < 1000;
+      case "£1000 - £2500":
+        return price >= 1000 && price < 2500;
+      case "Over £2500":
+        return price >= 2500;
+      default:
+        return true;
+    }
+  };
+
   // Enhanced filtering logic
   const filteredMaterials = useMemo(() => {
     if (!materials) return [];
@@ -82,42 +112,40 @@ const CategoryMaterials = () => {
       );
     }
     
-    // Apply active filters
-    if (activeFilters.length > 0) {
+    // Apply brand filters
+    if (filters.brands.length > 0) {
+      filtered = filtered.filter(material =>
+        filters.brands.some(brand =>
+          material.category?.toLowerCase().includes(brand.toLowerCase()) ||
+          material.name?.toLowerCase().includes(brand.toLowerCase())
+        )
+      );
+    }
+
+    // Apply price range filters
+    if (filters.priceRanges.length > 0) {
       filtered = filtered.filter(material => {
-        return activeFilters.every(filterId => {
-          // Price filters
-          if (filterId.startsWith('price-')) {
-            const price = parseFloat(material.price.replace(/[£,]/g, ''));
-            if (filterId === 'price-0-50') return price <= 50;
-            if (filterId === 'price-50-200') return price > 50 && price <= 200;
-            if (filterId === 'price-200-plus') return price > 200;
-          }
-          
-          // Availability filters
-          if (filterId === 'in-stock') return material.stockStatus === 'In Stock';
-          if (filterId === 'low-stock') return material.stockStatus === 'Low Stock';
-          if (filterId === 'on-sale') return material.isOnSale === true;
-          
-          // Supplier filters
-          if (filterId.startsWith('supplier-')) {
-            const supplierName = filterId.replace('supplier-', '').replace(/-/g, ' ');
-            return material.supplier?.toLowerCase().includes(supplierName);
-          }
-          
-          // Brand/category filters
-          if (filterId.startsWith('brand-')) {
-            const brandName = filterId.replace('brand-', '').replace(/-/g, ' ');
-            return material.category?.toLowerCase().includes(brandName);
-          }
-          
-          return true;
-        });
+        const price = parsePrice(material.price);
+        return filters.priceRanges.some(range => priceInRange(price, range));
       });
+    }
+
+    // Apply availability filters
+    if (filters.availability.length > 0) {
+      filtered = filtered.filter(material =>
+        filters.availability.includes(material.stockStatus)
+      );
+    }
+
+    // Apply supplier filters
+    if (filters.suppliers.length > 0) {
+      filtered = filtered.filter(material =>
+        filters.suppliers.includes(material.supplier)
+      );
     }
     
     return filtered;
-  }, [materials, searchTerm, activeFilters]);
+  }, [materials, searchTerm, filters]);
 
   const pageTitle = `${meta.title} | ElecMate Electrical Materials`;
   const pageDescription = `${meta.title} for UK electricians — ${meta.description}. BS 7671 18th Edition compliant guidance.`.slice(0, 160);
@@ -219,8 +247,8 @@ const CategoryMaterials = () => {
             
             <MaterialFilters
               materials={materials || []}
-              onFiltersChange={setActiveFilters}
-              activeFilters={activeFilters}
+              filters={filters}
+              onFiltersChange={setFilters}
             />
           </div>
 
@@ -276,33 +304,38 @@ const CategoryMaterials = () => {
                 <Card className="border-elec-yellow/20 bg-elec-gray">
                   <CardContent className="p-6 text-center space-y-3">
                     <p className="text-muted-foreground">
-                      {searchTerm || activeFilters.length > 0
-                        ? `No materials found matching your criteria`
-                        : `No materials found in ${meta.title.toLowerCase()} category`
-                      }
+                       {searchTerm || Object.values(filters).some(arr => arr.length > 0)
+                         ? `No materials found matching your criteria`
+                         : `No materials found in ${meta.title.toLowerCase()} category`
+                       }
                     </p>
-                    {(searchTerm || activeFilters.length > 0) && (
-                      <div className="flex gap-2 justify-center">
-                        {searchTerm && (
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => setSearchTerm("")}
-                          >
-                            Clear search
-                          </Button>
-                        )}
-                        {activeFilters.length > 0 && (
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => setActiveFilters([])}
-                          >
-                            Clear filters
-                          </Button>
-                        )}
-                      </div>
-                    )}
+                     {(searchTerm || Object.values(filters).some(arr => arr.length > 0)) && (
+                       <div className="flex gap-2 justify-center">
+                         {searchTerm && (
+                           <Button
+                             variant="outline"
+                             size="sm"
+                             onClick={() => setSearchTerm("")}
+                           >
+                             Clear search
+                           </Button>
+                         )}
+                         {Object.values(filters).some(arr => arr.length > 0) && (
+                           <Button
+                             variant="outline"
+                             size="sm"
+                             onClick={() => setFilters({
+                               brands: [],
+                               priceRanges: [],
+                               availability: [],
+                               suppliers: []
+                             })}
+                           >
+                             Clear filters
+                           </Button>
+                         )}
+                       </div>
+                     )}
                   </CardContent>
                 </Card>
               ) : (
@@ -310,14 +343,19 @@ const CategoryMaterials = () => {
                   <div className="flex items-center justify-between">
                     <p className="text-sm text-muted-foreground">
                       Showing {filteredMaterials.length} product{filteredMaterials.length !== 1 ? 's' : ''}
-                      {(searchTerm || activeFilters.length > 0) && (
+                      {(searchTerm || Object.values(filters).some(arr => arr.length > 0)) && (
                         <Button
                           variant="ghost"
                           size="sm"
-                          onClick={() => {
-                            setSearchTerm("");
-                            setActiveFilters([]);
-                          }}
+                           onClick={() => {
+                             setSearchTerm("");
+                             setFilters({
+                               brands: [],
+                               priceRanges: [],
+                               availability: [],
+                               suppliers: []
+                             });
+                           }}
                           className="ml-2 text-xs text-elec-yellow hover:bg-elec-yellow/10"
                         >
                           Clear all

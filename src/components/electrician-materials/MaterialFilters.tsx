@@ -2,135 +2,215 @@ import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Filter, X } from "lucide-react";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { Filter, ChevronDown, X } from "lucide-react";
+import { MaterialItem } from "@/hooks/useToolsForMaterials";
 
-interface FilterOption {
-  id: string;
-  label: string;
-  category: 'brand' | 'price' | 'availability' | 'supplier';
+export interface MaterialFilterState {
+  brands: string[];
+  priceRanges: string[];
+  availability: string[];
+  suppliers: string[];
 }
 
 interface MaterialFiltersProps {
-  materials: any[];
-  onFiltersChange: (filters: string[]) => void;
-  activeFilters: string[];
+  materials: MaterialItem[];
+  filters: MaterialFilterState;
+  onFiltersChange: (filters: MaterialFilterState) => void;
 }
 
-const MaterialFilters = ({ materials, onFiltersChange, activeFilters }: MaterialFiltersProps) => {
-  const [showAllFilters, setShowAllFilters] = useState(false);
+const MaterialFilters = ({ materials, filters, onFiltersChange }: MaterialFiltersProps) => {
+  const [isExpanded, setIsExpanded] = useState(false);
 
-  // Generate filter options from materials data
-  const filterOptions: FilterOption[] = [
-    // Price ranges
-    { id: 'price-0-50', label: '£0-50', category: 'price' },
-    { id: 'price-50-200', label: '£50-200', category: 'price' },
-    { id: 'price-200-plus', label: '£200+', category: 'price' },
-    
-    // Availability
-    { id: 'in-stock', label: 'In Stock', category: 'availability' },
-    { id: 'low-stock', label: 'Low Stock', category: 'availability' },
-    { id: 'on-sale', label: 'On Sale', category: 'availability' },
-    
-    // Dynamic suppliers from materials
-    ...Array.from(new Set(materials.map(m => m.supplier)))
-      .filter(Boolean)
-      .slice(0, 6)
-      .map(supplier => ({
-        id: `supplier-${supplier.toLowerCase().replace(/\s+/g, '-')}`,
-        label: supplier,
-        category: 'supplier' as const
-      })),
-    
-    // Dynamic brands/categories from materials  
-    ...Array.from(new Set(materials.map(m => m.category)))
-      .filter(Boolean)
-      .slice(0, 6)
-      .map(category => ({
-        id: `brand-${category.toLowerCase().replace(/\s+/g, '-')}`,
-        label: category,
-        category: 'brand' as const
-      }))
+  // Extract unique values from materials
+  const getUniqueValues = () => {
+    const brands = new Set<string>();
+    const suppliers = new Set<string>();
+    const availability = new Set<string>();
+
+    materials.forEach(material => {
+      // Extract brand from material name (first word typically) or use category
+      const firstWord = material.name.split(' ')[0];
+      if (firstWord && firstWord.length > 2) {
+        brands.add(firstWord);
+      }
+      if (material.category) {
+        brands.add(material.category);
+      }
+
+      if (material.supplier) {
+        suppliers.add(material.supplier);
+      }
+
+      if (material.stockStatus) {
+        availability.add(material.stockStatus);
+      }
+    });
+
+    return {
+      brands: Array.from(brands).slice(0, 10), // Limit to top 10
+      suppliers: Array.from(suppliers),
+      availability: Array.from(availability)
+    };
+  };
+
+  const { brands, suppliers, availability } = getUniqueValues();
+  
+  const priceRanges = [
+    "Under £50",
+    "£50 - £200", 
+    "£200 - £500",
+    "£500 - £1000",
+    "£1000 - £2500",
+    "Over £2500"
   ];
 
-  const toggleFilter = (filterId: string) => {
-    const newFilters = activeFilters.includes(filterId)
-      ? activeFilters.filter(id => id !== filterId)
-      : [...activeFilters, filterId];
-    onFiltersChange(newFilters);
+  const toggleFilter = (category: keyof MaterialFilterState, value: string) => {
+    const currentValues = filters[category];
+    const newValues = currentValues.includes(value)
+      ? currentValues.filter(v => v !== value)
+      : [...currentValues, value];
+
+    onFiltersChange({
+      ...filters,
+      [category]: newValues
+    });
   };
 
   const clearAllFilters = () => {
-    onFiltersChange([]);
+    onFiltersChange({
+      brands: [],
+      priceRanges: [],
+      availability: [],
+      suppliers: []
+    });
   };
 
-  const visibleFilters = showAllFilters ? filterOptions : filterOptions.slice(0, 8);
+  const hasActiveFilters = Object.values(filters).some(arr => arr.length > 0);
+  const activeFilterCount = Object.values(filters).reduce((sum, arr) => sum + arr.length, 0);
+
+  const FilterSection = ({ title, items, category }: { title: string; items: string[]; category: keyof MaterialFilterState }) => (
+    <div className="space-y-2">
+      <h4 className="font-medium text-elec-light text-sm">{title}</h4>
+      <div className="flex flex-wrap gap-2">
+        {items.map(item => (
+          <Badge
+            key={item}
+            variant={filters[category].includes(item) ? "default" : "outline"}
+            className={`cursor-pointer transition-all duration-200 ${
+              filters[category].includes(item)
+                ? "bg-elec-yellow text-elec-dark shadow-sm"
+                : "bg-elec-card/50 border-elec-yellow/20 text-elec-light hover:bg-elec-yellow/10 hover:border-elec-yellow/40"
+            }`}
+            onClick={() => toggleFilter(category, item)}
+          >
+            {item}
+            {filters[category].includes(item) && (
+              <X className="h-3 w-3 ml-1" />
+            )}
+          </Badge>
+        ))}
+      </div>
+    </div>
+  );
 
   return (
-    <Card className="bg-elec-card/50 border-elec-yellow/20">
-      <CardContent className="p-4">
-        <div className="flex items-center justify-between mb-3">
-          <div className="flex items-center gap-2">
-            <Filter className="h-4 w-4 text-elec-yellow" />
-            <span className="text-sm font-medium text-elec-light">Quick Filters</span>
-          </div>
-          {activeFilters.length > 0 && (
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={clearAllFilters}
-              className="text-xs text-elec-yellow hover:bg-elec-yellow/10"
-            >
-              Clear all
-            </Button>
+    <div className="space-y-4">
+      {/* Quick Filters Bar */}
+      <div className="flex items-center gap-3 flex-wrap">
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => setIsExpanded(!isExpanded)}
+          className="bg-elec-card/50 border-elec-yellow/20 text-elec-light hover:bg-elec-yellow/10"
+        >
+          <Filter className="h-4 w-4 mr-2" />
+          Filters
+          {activeFilterCount > 0 && (
+            <Badge variant="default" className="ml-2 h-5 w-5 p-0 text-xs bg-elec-yellow text-elec-dark">
+              {activeFilterCount}
+            </Badge>
           )}
-        </div>
+          <ChevronDown className={`h-4 w-4 ml-2 transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`} />
+        </Button>
 
-        <div className="space-y-3">
-          {/* Filter badges */}
-          <div className="flex flex-wrap gap-2">
-            {visibleFilters.map((filter) => {
-              const isActive = activeFilters.includes(filter.id);
-              return (
-                <Badge
-                  key={filter.id}
-                  variant={isActive ? "default" : "outline"}
-                  className={`cursor-pointer transition-all duration-200 ${
-                    isActive
-                      ? "bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
-                      : "border-elec-yellow/30 text-elec-light hover:bg-elec-yellow/10 hover:border-elec-yellow/50"
-                  }`}
-                  onClick={() => toggleFilter(filter.id)}
-                >
-                  {filter.label}
-                  {isActive && <X className="h-3 w-3 ml-1" />}
-                </Badge>
-              );
-            })}
-          </div>
+        {/* Quick filter chips for popular options */}
+        {availability.includes("In Stock") && (
+          <Badge
+            variant={filters.availability.includes("In Stock") ? "default" : "outline"}
+            className={`cursor-pointer ${
+              filters.availability.includes("In Stock")
+                ? "bg-elec-yellow text-elec-dark"
+                : "border-elec-yellow/30 text-elec-light hover:bg-elec-yellow/10"
+            }`}
+            onClick={() => toggleFilter("availability", "In Stock")}
+          >
+            In Stock
+          </Badge>
+        )}
 
-          {/* Show more/less toggle */}
-          {filterOptions.length > 8 && (
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setShowAllFilters(!showAllFilters)}
-              className="text-xs text-elec-yellow hover:bg-elec-yellow/10"
-            >
-              {showAllFilters ? 'Show less' : `Show ${filterOptions.length - 8} more filters`}
-            </Button>
-          )}
+        {suppliers.includes("Screwfix") && (
+          <Badge
+            variant={filters.suppliers.includes("Screwfix") ? "default" : "outline"}
+            className={`cursor-pointer ${
+              filters.suppliers.includes("Screwfix")
+                ? "bg-elec-yellow text-elec-dark"
+                : "border-elec-yellow/30 text-elec-light hover:bg-elec-yellow/10"
+            }`}
+            onClick={() => toggleFilter("suppliers", "Screwfix")}
+          >
+            Screwfix
+          </Badge>
+        )}
 
-          {/* Active filters summary */}
-          {activeFilters.length > 0 && (
-            <div className="pt-2 border-t border-elec-yellow/10">
-              <span className="text-xs text-muted-foreground">
-                {activeFilters.length} filter{activeFilters.length > 1 ? 's' : ''} applied
-              </span>
-            </div>
-          )}
-        </div>
-      </CardContent>
-    </Card>
+        <Badge
+          variant={filters.priceRanges.includes("Under £50") ? "default" : "outline"}
+          className={`cursor-pointer ${
+            filters.priceRanges.includes("Under £50")
+              ? "bg-elec-yellow text-elec-dark"
+              : "border-elec-yellow/30 text-elec-light hover:bg-elec-yellow/10"
+          }`}
+          onClick={() => toggleFilter("priceRanges", "Under £50")}
+        >
+          Under £50
+        </Badge>
+
+        {hasActiveFilters && (
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={clearAllFilters}
+            className="text-elec-yellow hover:bg-elec-yellow/10"
+          >
+            Clear All
+            <X className="h-4 w-4 ml-1" />
+          </Button>
+        )}
+      </div>
+
+      {/* Expanded Filters */}
+      <Collapsible open={isExpanded} onOpenChange={setIsExpanded}>
+        <CollapsibleContent>
+          <Card className="bg-elec-card/30 border-elec-yellow/20">
+            <CardContent className="p-4 space-y-6">
+              <FilterSection title="Price Range" items={priceRanges} category="priceRanges" />
+              
+              {availability.length > 0 && (
+                <FilterSection title="Availability" items={availability} category="availability" />
+              )}
+              
+              {suppliers.length > 0 && (
+                <FilterSection title="Supplier" items={suppliers} category="suppliers" />
+              )}
+              
+              {brands.length > 0 && (
+                <FilterSection title="Brand/Category" items={brands} category="brands" />
+              )}
+            </CardContent>
+          </Card>
+        </CollapsibleContent>
+      </Collapsible>
+    </div>
   );
 };
 
