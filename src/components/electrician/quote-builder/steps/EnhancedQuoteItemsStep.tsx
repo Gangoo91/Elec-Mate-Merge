@@ -7,7 +7,9 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { DropdownTabs } from "@/components/ui/dropdown-tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
-import { Plus, Trash2, Wrench, Package, Zap, Clock, FileText, Copy, TrendingUp } from "lucide-react";
+import { Plus, Trash2, Wrench, Package, Zap, Clock, FileText, Copy, TrendingUp, Tag, Hash, DollarSign, Ruler, MessageSquare, RotateCcw } from "lucide-react";
+import { MobileInputWrapper } from "@/components/ui/mobile-input-wrapper";
+import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
 import { Switch } from "@/components/ui/switch";
 import { QuoteItem, JobTemplate } from "@/types/quote";
 import { JobTemplates } from "../JobTemplates";
@@ -425,39 +427,104 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
                     Manual Item Entry
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-4">
+                <CardContent className="space-y-6">
+                  {/* Category Selection */}
+                  <MobileSelectWrapper
+                    label="Category"
+                    value={newItem.category}
+                    onValueChange={handleCategoryChange}
+                    options={[
+                      { value: "labour", label: "Labour", description: "Work time and services" },
+                      { value: "materials", label: "Materials", description: "Parts and components" },
+                      { value: "equipment", label: "Equipment", description: "Tools and machinery hire" }
+                    ]}
+                    placeholder="Select item category"
+                    icon={<Tag className="h-4 w-4" />}
+                  />
+
+                  {/* Smart Description Input */}
+                  <MobileSelectWrapper
+                    label="Description"
+                    value={newItem.description}
+                    onValueChange={(value) => {
+                      setNewItem(prev => ({ ...prev, description: value }));
+                      
+                      // Auto-populate based on category and description
+                      if (newItem.category === "labour") {
+                        const workerType = workerTypes.find(w => value.toLowerCase().includes(w.name.toLowerCase()));
+                        if (workerType) {
+                          setNewItem(prev => ({ 
+                            ...prev, 
+                            unitPrice: workerType.defaultHourlyRate,
+                            hourlyRate: workerType.defaultHourlyRate,
+                            unit: "hour"
+                          }));
+                        }
+                      } else if (newItem.category === "materials") {
+                        const material = commonMaterials.find(m => 
+                          value.toLowerCase().includes(m.name.toLowerCase())
+                        );
+                        if (material) {
+                          setNewItem(prev => ({ 
+                            ...prev, 
+                            unitPrice: material.defaultPrice,
+                            unit: material.unit
+                          }));
+                        }
+                      }
+                    }}
+                    options={(() => {
+                      const suggestions = [];
+                      
+                      if (newItem.category === "labour") {
+                        suggestions.push(
+                          { value: "Install new consumer unit", label: "Install new consumer unit", description: "Electrical installation work" },
+                          { value: "Replace socket outlet", label: "Replace socket outlet", description: "Socket replacement" },
+                          { value: "Install light fitting", label: "Install light fitting", description: "Lighting installation" },
+                          { value: "Test electrical circuit", label: "Test electrical circuit", description: "Testing and inspection" },
+                          { value: "Install outdoor lighting", label: "Install outdoor lighting", description: "External lighting work" },
+                          { value: "Rewire room", label: "Rewire room", description: "Complete rewiring" }
+                        );
+                      } else if (newItem.category === "materials") {
+                        commonMaterials.forEach(material => {
+                          suggestions.push({
+                            value: material.name,
+                            label: material.name,
+                            description: `£${material.defaultPrice.toFixed(2)}/${material.unit} - ${material.category}`
+                          });
+                        });
+                      } else if (newItem.category === "equipment") {
+                        commonEquipment.forEach(equipment => {
+                          suggestions.push({
+                            value: equipment.name,
+                            label: equipment.name,
+                            description: `£${equipment.dailyRate}/${equipment.unit} - ${equipment.category}`
+                          });
+                        });
+                      }
+                      
+                      // Always allow custom input
+                      if (newItem.description && !suggestions.find(s => s.value === newItem.description)) {
+                        suggestions.unshift({
+                          value: newItem.description,
+                          label: newItem.description,
+                          description: "Custom description"
+                        });
+                      }
+                      
+                      return suggestions;
+                    })()}
+                    placeholder="Enter or select description"
+                    icon={<FileText className="h-4 w-4" />}
+                  />
+
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="description" className="text-sm font-medium">Description</Label>
-                      <Input
-                        value={newItem.description}
-                        onChange={(e) => setNewItem(prev => ({ ...prev, description: e.target.value }))}
-                        placeholder="Item description"
-                        className="h-12"
-                      />
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="category-manual" className="text-sm font-medium">Category</Label>
-                      <Select value={newItem.category} onValueChange={handleCategoryChange}>
-                        <SelectTrigger className="h-12">
-                          <SelectValue placeholder="Select category" />
-                        </SelectTrigger>
-                        <SelectContent className="z-50 bg-background border shadow-lg">
-                          <SelectItem value="labour">Labour</SelectItem>
-                          <SelectItem value="materials">Materials</SelectItem>
-                          <SelectItem value="equipment">Equipment</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="quantity" className="text-sm font-medium">Quantity</Label>
-                      <Input
-                        type="number"
-                        value={newItem.quantity === 0 ? "" : newItem.quantity}
-                        onChange={(e) => {
-                          const value = e.target.value;
+                    {/* Quantity with Quick Select */}
+                    <div className="space-y-3">
+                      <MobileInputWrapper
+                        label="Quantity"
+                        value={newItem.quantity === 0 ? "" : newItem.quantity.toString()}
+                        onChange={(value) => {
                           if (value === '') {
                             setNewItem(prev => ({ ...prev, quantity: 0 }));
                           } else {
@@ -467,62 +534,131 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
                             }
                           }
                         }}
-                        onBlur={(e) => {
-                          const value = parseFloat(e.target.value);
-                          if (isNaN(value) || value <= 0) {
-                            setNewItem(prev => ({ ...prev, quantity: 1 }));
-                          }
-                        }}
-                        min="0.1"
-                        step="0.1"
-                        className="h-12"
-                        placeholder="Enter quantity"
-                      />
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="unit-price" className="text-sm font-medium">Unit Price (£)</Label>
-                      <Input
                         type="number"
-                        value={newItem.unitPrice}
-                        onChange={(e) => setNewItem(prev => ({ ...prev, unitPrice: parseFloat(e.target.value) || 0 }))}
-                        min="0"
-                        step="0.01"
-                        className="h-12"
+                        inputMode="decimal"
+                        step="0.1"
+                        min="0.1"
+                        placeholder="Enter quantity"
+                        icon={<Hash className="h-4 w-4" />}
+                        hint="Use decimal values for partial quantities"
                       />
+                      
+                      {/* Quick Quantity Buttons */}
+                      <div className="flex flex-wrap gap-2">
+                        <Label className="text-xs text-elec-light/70 w-full mb-1">Quick select:</Label>
+                        {[1, 2, 5, 10, 20, 50, 100].map(qty => (
+                          <Button
+                            key={qty}
+                            variant="outline"
+                            size="sm"
+                            onClick={() => setNewItem(prev => ({ ...prev, quantity: qty }))}
+                            className="h-8 px-3 text-xs"
+                          >
+                            {qty}
+                          </Button>
+                        ))}
+                      </div>
                     </div>
 
-                    <div className="space-y-2">
-                      <Label htmlFor="unit" className="text-sm font-medium">Unit</Label>
-                      <Select value={newItem.unit} onValueChange={(value) => setNewItem(prev => ({ ...prev, unit: value }))}>
-                        <SelectTrigger className="h-12">
-                          <SelectValue placeholder="Select unit" />
-                        </SelectTrigger>
-                        <SelectContent className="z-50 bg-background border shadow-lg">
-                          <SelectItem value="each">Each</SelectItem>
-                          <SelectItem value="hour">Hour</SelectItem>
-                          <SelectItem value="day">Day</SelectItem>
-                          <SelectItem value="metre">Metre</SelectItem>
-                          <SelectItem value="m²">Square Metre</SelectItem>
-                          <SelectItem value="point">Point</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="notes" className="text-sm font-medium">Notes (Optional)</Label>
-                      <Textarea
-                        value={newItem.notes}
-                        onChange={(e) => setNewItem(prev => ({ ...prev, notes: e.target.value }))}
-                        placeholder="Additional notes"
-                        rows={2}
-                      />
-                    </div>
+                    {/* Unit Price */}
+                    <MobileInputWrapper
+                      label="Unit Price"
+                      value={newItem.unitPrice === 0 ? "" : newItem.unitPrice.toString()}
+                      onChange={(value) => setNewItem(prev => ({ ...prev, unitPrice: parseFloat(value) || 0 }))}
+                      type="number"
+                      inputMode="decimal"
+                      step="0.01"
+                      min="0"
+                      placeholder="0.00"
+                      icon={<DollarSign className="h-4 w-4" />}
+                      unit="£"
+                      hint="Price per unit excluding VAT"
+                    />
                   </div>
 
-                  <Button onClick={handleAddItem} className="w-full">
-                    Add Item to Quote
-                  </Button>
+                  {/* Enhanced Unit Selection */}
+                  <MobileSelectWrapper
+                    label="Unit"
+                    value={newItem.unit}
+                    onValueChange={(value) => setNewItem(prev => ({ ...prev, unit: value }))}
+                    options={[
+                      // Common units
+                      { value: "each", label: "Each", description: "Individual items" },
+                      { value: "hour", label: "Hour", description: "Time-based pricing" },
+                      { value: "day", label: "Day", description: "Daily rate" },
+                      { value: "week", label: "Week", description: "Weekly rate" },
+                      
+                      // Length measurements
+                      { value: "metre", label: "Metre", description: "Linear measurement" },
+                      { value: "linear metre", label: "Linear Metre", description: "Cable runs, conduit" },
+                      
+                      // Area measurements
+                      { value: "m²", label: "Square Metre", description: "Area coverage" },
+                      
+                      // Electrical specific
+                      { value: "point", label: "Point", description: "Socket/switch points" },
+                      { value: "circuit", label: "Circuit", description: "Complete circuits" },
+                      { value: "way", label: "Way", description: "Distribution board ways" },
+                      { value: "core", label: "Core", description: "Cable cores" },
+                      
+                      // Packaging units
+                      { value: "pack", label: "Pack", description: "Packaged items" },
+                      { value: "roll", label: "Roll", description: "Cable/tape rolls" },
+                      { value: "box", label: "Box", description: "Boxed quantities" },
+                      
+                      // Installation units
+                      { value: "installation", label: "Installation", description: "Complete installation" },
+                      { value: "system", label: "System", description: "Complete system" },
+                      { value: "panel", label: "Panel", description: "Panel installation" }
+                    ]}
+                    placeholder="Select unit type"
+                    icon={<Ruler className="h-4 w-4" />}
+                  />
+
+                  {/* Notes */}
+                  <MobileInputWrapper
+                    label="Notes (Optional)"
+                    value={newItem.notes}
+                    onChange={(value) => setNewItem(prev => ({ ...prev, notes: value }))}
+                    placeholder="Additional details, specifications..."
+                    icon={<MessageSquare className="h-4 w-4" />}
+                    hint="Add any special requirements or notes"
+                  />
+
+                  {/* Action Buttons */}
+                  <div className="flex gap-3">
+                    <Button 
+                      variant="outline" 
+                      onClick={() => {
+                        setNewItem({
+                          description: "",
+                          quantity: 1,
+                          unit: "each",
+                          unitPrice: 0,
+                          category: "labour",
+                          subcategory: "",
+                          workerType: "",
+                          hours: 0,
+                          hourlyRate: 0,
+                          materialCode: "",
+                          equipmentCode: "",
+                          notes: ""
+                        });
+                      }}
+                      className="flex-1"
+                    >
+                      <RotateCcw className="h-4 w-4 mr-2" />
+                      Clear Form
+                    </Button>
+                    <Button 
+                      onClick={handleAddItem} 
+                      className="flex-1"
+                      disabled={!newItem.description || newItem.quantity <= 0 || newItem.unitPrice <= 0}
+                    >
+                      <Plus className="h-4 w-4 mr-2" />
+                      Add Item to Quote
+                    </Button>
+                  </div>
                 </CardContent>
               </Card>
             )
