@@ -333,7 +333,7 @@ export const generateProfessionalQuotePDF = ({ quote, companyProfile }: PDFGener
 
   // Totals and terms section with left-right layout
   const renderTotals = () => {
-    // Create clean grey panel for totals and terms
+    // Create clean grey panel for totals and terms with quadrant layout
     const panelStartY = yPosition + 5;
     pdf.setFillColor(248, 248, 248);
     
@@ -342,56 +342,20 @@ export const generateProfessionalQuotePDF = ({ quote, companyProfile }: PDFGener
     
     pdf.rect(margin, panelStartY, contentWidth, panelHeight, 'F');
     
-    // Left column for terms, right column for totals
+    // Define quadrant positions
     const leftColX = margin + 10;
     const rightColX = margin + (contentWidth * 0.6);
-    let currentY = panelStartY + 12;
+    const topY = panelStartY + 12;
+    const bottomY = panelStartY + 40;
 
-    // TERMS & CONDITIONS (left side)
-    addText('TERMS & CONDITIONS', leftColX, currentY, {
-      fontSize: 10,
-      fontStyle: 'bold',
-      color: primaryColor
-    });
-    
-    let termsY = currentY + 6;
-    const simpleTerms = [
-      '• Payment: 50% deposit, balance within 30 days',
-      '• Valid for 30 days from date issued',
-      '• Materials comply with BS 7671:18th Edition',
-      '• 12 months warranty on workmanship'
-    ];
-
-    const termsPerLine = 2;
-    const termWidth = (contentWidth * 0.5) / termsPerLine;
-    
-    for (let i = 0; i < simpleTerms.length; i += termsPerLine) {
-      const leftTerm = simpleTerms[i];
-      const rightTerm = simpleTerms[i + 1];
-      
-      addText(leftTerm, leftColX, termsY, {
-        fontSize: 8,
-        maxWidth: termWidth - 5
-      });
-      
-      if (rightTerm) {
-        addText(rightTerm, leftColX + termWidth, termsY, {
-          fontSize: 8,
-          maxWidth: termWidth - 5
-        });
-      }
-      
-      termsY += 6;
-    }
-
-    // QUOTE TOTALS (right side)
-    addText('QUOTE TOTALS', rightColX, currentY, {
+    // QUOTE TOTALS (top-right quadrant)
+    addText('QUOTE TOTALS', rightColX, topY, {
       fontSize: 12,
       fontStyle: 'bold',
       color: primaryColor
     });
     
-    let totalsY = currentY + 10;
+    let totalsY = topY + 10;
 
     // Build totals array
     const totalsData = [];
@@ -422,26 +386,63 @@ export const generateProfessionalQuotePDF = ({ quote, companyProfile }: PDFGener
         fontSize: 10,
         fontStyle: 'normal'
       });
-      totalsY += 6;
+      totalsY += 5;
     });
 
-    // Final total with emphasis
-    totalsY += 3;
+    // Final total with emphasis (still in top-right)
+    totalsY += 2;
     pdf.setDrawColor(primaryColor[0], primaryColor[1], primaryColor[2]);
     pdf.setLineWidth(1);
     pdf.line(rightColX, totalsY, rightColX + 70, totalsY);
-    totalsY += 8;
+    totalsY += 6;
 
     addText('TOTAL:', rightColX, totalsY, {
-      fontSize: 14,
+      fontSize: 12,
       fontStyle: 'bold',
       color: primaryColor
     });
     addText(formatCurrency(safeNumber(quote.total)), rightColX + 35, totalsY, {
-      fontSize: 14,
+      fontSize: 12,
       fontStyle: 'bold',
       color: primaryColor
     });
+
+    // TERMS & CONDITIONS (bottom-left quadrant)
+    addText('TERMS & CONDITIONS', leftColX, bottomY, {
+      fontSize: 10,
+      fontStyle: 'bold',
+      color: primaryColor
+    });
+    
+    let termsY = bottomY + 6;
+    const simpleTerms = [
+      '• Payment: 50% deposit, balance within 30 days',
+      '• Valid for 30 days from date issued',
+      '• Materials comply with BS 7671:18th Edition',
+      '• 12 months warranty on workmanship'
+    ];
+
+    const termsPerLine = 2;
+    const termWidth = (contentWidth * 0.5) / termsPerLine;
+    
+    for (let i = 0; i < simpleTerms.length; i += termsPerLine) {
+      const leftTerm = simpleTerms[i];
+      const rightTerm = simpleTerms[i + 1];
+      
+      addText(leftTerm, leftColX, termsY, {
+        fontSize: 8,
+        maxWidth: termWidth - 5
+      });
+      
+      if (rightTerm) {
+        addText(rightTerm, leftColX + termWidth, termsY, {
+          fontSize: 8,
+          maxWidth: termWidth - 5
+        });
+      }
+      
+      termsY += 5;
+    }
 
     yPosition = panelStartY + panelHeight + 10;
     return yPosition;
