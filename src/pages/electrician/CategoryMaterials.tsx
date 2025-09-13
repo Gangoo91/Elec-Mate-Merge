@@ -341,36 +341,6 @@ const CategoryMaterials = () => {
                 </Card>
               ) : (
                 <section aria-label={`${meta.title} products`} className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <p className="text-sm text-muted-foreground">
-                      Showing {filteredMaterials.length} product{filteredMaterials.length !== 1 ? 's' : ''}
-                      {(searchTerm || Object.values(filters).some(arr => arr.length > 0)) && (
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                           onClick={() => {
-                             setSearchTerm("");
-                             setFilters({
-                               brands: [],
-                               priceRanges: [],
-                               availability: [],
-                               suppliers: []
-                             });
-                           }}
-                          className="ml-2 text-xs text-elec-yellow hover:bg-elec-yellow/10"
-                        >
-                          Clear all
-                        </Button>
-                      )}
-                    </p>
-                    <RefreshButton
-                      isFetching={isRefetching}
-                      lastFetchTime={0}
-                      onRefresh={refetch}
-                      categoryId={categoryId}
-                      className="shrink-0"
-                    />
-                  </div>
                    
                   <EnhancedMaterialsGrid
                     materials={filteredMaterials}
