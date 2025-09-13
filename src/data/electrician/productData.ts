@@ -85,6 +85,30 @@ export const productsBySupplier: Record<string, MaterialItem[]> = {
       supplier: "ElectricalDirect",
       image: "/placeholder.svg",
       stockStatus: "In Stock" as "In Stock"
+    },
+    {
+      id: 303,
+      name: "SWA Cable 3-Core 2.5mm² - 50m Drum",
+      category: "Cables",
+      price: "£125.99",
+      supplier: "ElectricalDirect",
+      image: "/placeholder.svg",
+      isOnSale: true,
+      salePrice: "£89.99",
+      stockStatus: "In Stock" as "In Stock",
+      highlights: ["Heavy Duty", "Armoured", "Underground Use"]
+    },
+    {
+      id: 304,
+      name: "Fire Rated Downlights 4-Pack SALE",
+      category: "Lighting",
+      price: "£45.99",
+      supplier: "ElectricalDirect", 
+      image: "/placeholder.svg",
+      isOnSale: true,
+      salePrice: "£29.99",
+      stockStatus: "In Stock" as "In Stock",
+      highlights: ["Fire Rated", "LED Compatible", "Easy Install"]
     }
   ],
   "toolstation": [
@@ -107,6 +131,30 @@ export const productsBySupplier: Record<string, MaterialItem[]> = {
       supplier: "Toolstation",
       image: "/placeholder.svg",
       stockStatus: "In Stock" as "In Stock"
+    },
+    {
+      id: 403,
+      name: "Outdoor Security Floodlight - Clearance",
+      category: "Lighting",
+      price: "£35.99",
+      supplier: "Toolstation",
+      image: "/placeholder.svg",
+      isOnSale: true,
+      salePrice: "£19.99",
+      stockStatus: "Low Stock" as "Low Stock",
+      highlights: ["PIR Sensor", "LED", "Weather Resistant"]
+    },
+    {
+      id: 404,
+      name: "Industrial Extension Lead 25m",
+      category: "Accessories",
+      price: "£79.99",
+      supplier: "Toolstation",
+      image: "/placeholder.svg",
+      isOnSale: true,
+      salePrice: "£59.99",
+      stockStatus: "In Stock" as "In Stock",
+      highlights: ["Heavy Duty", "IP44 Rated", "13A"]
     }
   ]
 };
