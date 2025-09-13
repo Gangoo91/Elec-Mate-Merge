@@ -291,21 +291,23 @@ export const generateProfessionalQuotePDF = ({ quote, companyProfile }: PDFGener
       head: [['#', 'Description', 'Qty', 'Unit', 'Unit Price', 'Total']],
       body: tableData,
       theme: 'grid',
-      tableLineWidth: 0.3,
-      lineWidth: 0.3,
-      lineColor: [200, 200, 200],
+      tableLineWidth: 0.8,
+      lineWidth: 0.8,
+      lineColor: [180, 180, 180],
       headStyles: {
         fillColor: [primaryColor[0], primaryColor[1], primaryColor[2]],
         textColor: [255, 255, 255],
         fontSize: 10,
         fontStyle: 'bold',
-        halign: 'center'
+        halign: 'center',
+        lineWidth: 0.8,
+        lineColor: [180, 180, 180]
       },
       bodyStyles: {
         fontSize: 9,
-        cellPadding: 4,
-        lineColor: [220, 220, 220],
-        lineWidth: 0.3
+        cellPadding: 5,
+        lineColor: [180, 180, 180],
+        lineWidth: 0.8
       },
       columnStyles: {
         0: { halign: 'center', cellWidth: 10 },
@@ -316,15 +318,33 @@ export const generateProfessionalQuotePDF = ({ quote, companyProfile }: PDFGener
         5: { halign: 'right', cellWidth: 25 }
       },
       alternateRowStyles: {
-        fillColor: [252, 252, 252]
+        fillColor: [252, 252, 252],
+        lineColor: [180, 180, 180],
+        lineWidth: 0.8
       },
       styles: {
-        lineWidth: 0.3,
-        lineColor: [220, 220, 220],
-        cellPadding: 4
+        lineWidth: 0.8,
+        lineColor: [180, 180, 180],
+        cellPadding: 5
       },
       rowPageBreak: 'avoid',
       margin: { left: margin, right: margin },
+      didDrawCell: (data) => {
+        // Add professional dividing lines between body rows
+        if (data.section === 'body' && data.row.index < tableData.length - 1) {
+          const { doc, table, cursor } = data;
+          
+          // Draw a stronger horizontal line after each row
+          doc.setDrawColor(160, 160, 160);
+          doc.setLineWidth(0.5);
+          doc.line(
+            table.pageStartX, 
+            cursor.y, 
+            table.pageStartX + table.width, 
+            cursor.y
+          );
+        }
+      },
       didDrawPage: (data) => {
         yPosition = data.cursor?.y || yPosition;
       }
