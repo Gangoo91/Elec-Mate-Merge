@@ -153,13 +153,19 @@ const CategoryMaterials = () => {
 
   const handleAddToCompare = (item: any) => {
     if (selectedMaterials.length >= 4) return;
-    if (!selectedMaterials.find(selected => selected.id === item.id)) {
+    const isAlreadySelected = selectedMaterials.find(selected => 
+      (selected.id && item.id && selected.id === item.id) ||
+      (selected.name === item.name && !selected.id && !item.id)
+    );
+    if (!isAlreadySelected) {
       setSelectedMaterials(prev => [...prev, item]);
     }
   };
 
   const handleRemoveFromCompare = (itemId: string) => {
-    setSelectedMaterials(prev => prev.filter(item => item.id !== itemId));
+    setSelectedMaterials(prev => prev.filter(item => 
+      item.id ? item.id !== itemId : item.name !== itemId
+    ));
   };
 
   const clearComparison = () => {

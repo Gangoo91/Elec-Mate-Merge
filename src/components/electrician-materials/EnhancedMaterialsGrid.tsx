@@ -238,7 +238,10 @@ const EnhancedMaterialsGrid = ({
                 item={material}
                 onAddToCompare={onAddToCompare}
                 onRemoveFromCompare={onRemoveFromCompare}
-                isSelected={selectedItems.some(item => item.id === material.id)}
+                isSelected={selectedItems.some(item => 
+                  (item.id && material.id && item.id === material.id) ||
+                  (item.name === material.name && !item.id && !material.id)
+                )}
                 isCompareDisabled={isCompareDisabled}
               />
             ) : (
@@ -247,7 +250,10 @@ const EnhancedMaterialsGrid = ({
                 item={material}
                 onAddToCompare={onAddToCompare}
                 onRemoveFromCompare={onRemoveFromCompare}
-                isSelected={selectedItems.some(item => item.id === material.id)}
+                isSelected={selectedItems.some(item => 
+                  (item.id && material.id && item.id === material.id) ||
+                  (item.name === material.name && !item.id && !material.id)
+                )}
                 isCompareDisabled={isCompareDisabled}
               />
             )
