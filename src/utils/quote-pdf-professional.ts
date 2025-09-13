@@ -393,7 +393,7 @@ export const generateProfessionalQuotePDF = ({ quote, companyProfile }: PDFGener
     totalsY += 2;
     pdf.setDrawColor(primaryColor[0], primaryColor[1], primaryColor[2]);
     pdf.setLineWidth(1);
-    pdf.line(rightColX, totalsY, rightColX + 70, totalsY);
+    pdf.line(rightColX, totalsY, Math.min(rightColX + 70, margin + contentWidth - 10), totalsY);
     totalsY += 6;
 
     addText('TOTAL:', rightColX, totalsY, {
