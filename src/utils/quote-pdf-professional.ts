@@ -257,25 +257,12 @@ export const generateProfessionalQuotePDF = ({ quote, companyProfile }: PDFGener
       return yPosition + 10;
     }
 
-    // Check if autoTable is available
-    if (typeof pdf.autoTable !== 'function') {
-      console.error('PDF Generation - autoTable not available, using fallback table rendering');
-      // Fallback to simple table rendering - render manually
-      yPosition = addText('Quote Items:', margin, yPosition, {
-        fontSize: 12,
-        fontStyle: 'bold'
-      }) + 10;
-
-      quote.items.forEach((item, index) => {
-        const itemText = `${index + 1}. ${item.description} - Qty: ${item.quantity} ${item.unit} @ ${formatCurrency(item.unitPrice)} = ${formatCurrency(item.totalPrice)}`;
-        yPosition = addText(itemText, margin, yPosition, {
-          fontSize: 9,
-          maxWidth: contentWidth
-        }) + 5;
-      });
-
-      return yPosition + 10;
-    }
+    // Add section title before table
+    yPosition = addText('Quote Items:', margin, yPosition, {
+      fontSize: 12,
+      fontStyle: 'bold',
+      color: primaryColor
+    }) + 8;
 
     const tableData = quote.items.map((item, index) => [
       (index + 1).toString(),
@@ -290,47 +277,46 @@ export const generateProfessionalQuotePDF = ({ quote, companyProfile }: PDFGener
       startY: yPosition,
       head: [['#', 'Description', 'Qty', 'Unit', 'Unit Price', 'Total']],
       body: tableData,
-      theme: 'grid',
-      tableLineWidth: 0.3,
-      lineWidth: 0.3,
-      lineColor: [200, 200, 200],
+      theme: 'striped',
+      tableLineWidth: 0.5,
       headStyles: {
         fillColor: [primaryColor[0], primaryColor[1], primaryColor[2]],
         textColor: [255, 255, 255],
         fontSize: 10,
         fontStyle: 'bold',
-        halign: 'center'
+        halign: 'center',
+        cellPadding: { top: 6, bottom: 6, left: 4, right: 4 }
       },
       bodyStyles: {
         fontSize: 9,
-        cellPadding: 4,
-        lineColor: [220, 220, 220],
+        cellPadding: { top: 5, bottom: 5, left: 4, right: 4 },
+        lineColor: [230, 230, 230],
         lineWidth: 0.3
       },
       columnStyles: {
-        0: { halign: 'center', cellWidth: 10 },
-        1: { halign: 'left', cellWidth: 70 },
-        2: { halign: 'center', cellWidth: 15 },
-        3: { halign: 'center', cellWidth: 15 },
-        4: { halign: 'right', cellWidth: 25 },
-        5: { halign: 'right', cellWidth: 25 }
+        0: { halign: 'center', cellWidth: 12 },
+        1: { halign: 'left', cellWidth: 80 },
+        2: { halign: 'center', cellWidth: 18 },
+        3: { halign: 'center', cellWidth: 18 },
+        4: { halign: 'right', cellWidth: 28 },
+        5: { halign: 'right', cellWidth: 28 }
       },
       alternateRowStyles: {
-        fillColor: [252, 252, 252]
+        fillColor: [248, 249, 250]
       },
       styles: {
         lineWidth: 0.3,
-        lineColor: [220, 220, 220],
-        cellPadding: 4
+        lineColor: [230, 230, 230],
+        overflow: 'linebreak',
+        cellWidth: 'wrap'
       },
-      rowPageBreak: 'avoid',
       margin: { left: margin, right: margin },
-      didDrawPage: (data) => {
-        yPosition = data.cursor?.y || yPosition;
-      }
+      showHead: 'everyPage',
+      rowPageBreak: 'avoid',
+      pageBreak: 'avoid'
     });
 
-    yPosition = (tableResult as any).finalY + 10;
+    yPosition = (tableResult as any).finalY + 15;
 
     return yPosition;
   };
