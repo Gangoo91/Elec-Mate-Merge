@@ -137,61 +137,61 @@ export const JobTemplates = ({ onSelectTemplate }: JobTemplatesProps) => {
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-        {filteredTemplates.map((template) => (
-          <Card key={template.id} className="bg-elec-gray/50 border-elec-yellow/20 hover:bg-elec-gray/80 transition-all duration-200">
-            <CardHeader className="pb-3">
-              <div className="flex items-start justify-between">
-                <div className="space-y-1">
-                  <CardTitle className="text-base">{template.name}</CardTitle>
-                  <p className="text-sm text-muted-foreground">{template.description}</p>
-                </div>
-                <Badge variant="secondary" className={getCategoryColor(template.category)}>
-                  {template.category}
-                </Badge>
-              </div>
-            </CardHeader>
-            <CardContent className="pt-0">
-              <div className="space-y-3">
-                <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <Clock className="h-4 w-4" />
-                  <span>{template.estimatedHours} hour{template.estimatedHours !== 1 ? 's' : ''}</span>
-                </div>
-                
-                <div className="space-y-1">
-                  <p className="text-xs font-medium text-muted-foreground">Includes:</p>
+          {filteredTemplates.map((template) => (
+            <Card key={template.id} className="bg-elec-gray/50 border-elec-yellow/20 hover:bg-elec-gray/80 transition-all duration-200">
+              <CardHeader className="pb-3">
+                <div className="flex items-start justify-between">
                   <div className="space-y-1">
-                    {template.items.slice(0, 3).map((item, index) => (
-                      <div key={index} className="flex items-center gap-2 text-xs">
-                        {item.category === 'labour' && <Wrench className="h-3 w-3" />}
-                        {item.category === 'materials' && <Package className="h-3 w-3" />}
-                        {item.category === 'equipment' && <Zap className="h-3 w-3" />}
-                        <span className="truncate">{item.description}</span>
-                      </div>
-                    ))}
-                    {template.items.length > 3 && (
-                      <p className="text-xs text-muted-foreground">
-                        +{template.items.length - 3} more items
-                      </p>
-                    )}
+                    <CardTitle className="text-base">{template.name}</CardTitle>
+                    <p className="text-sm text-muted-foreground">{template.description}</p>
                   </div>
+                  <Badge variant="secondary" className={getCategoryColor(template.category)}>
+                    {template.category}
+                  </Badge>
                 </div>
-                
-                <Button 
-                  onClick={() => handleTemplateSelect(template)}
-                  disabled={loadingTemplate === template.id}
-                  className="w-full bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 disabled:opacity-50"
-                  size="sm"
-                >
-                  {loadingTemplate === template.id ? (
-                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                  ) : (
-                    <Plus className="h-4 w-4 mr-2" />
-                  )}
-                  {loadingTemplate === template.id ? 'Applying...' : 'Use Template'}
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
+              </CardHeader>
+              <CardContent className="pt-0">
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <Clock className="h-4 w-4" />
+                    <span>{template.estimatedHours} hour{template.estimatedHours !== 1 ? 's' : ''}</span>
+                  </div>
+                  
+                  <div className="space-y-1">
+                    <p className="text-xs font-medium text-muted-foreground">Includes:</p>
+                    <div className="space-y-1">
+                      {template.items.slice(0, 3).map((item, index) => (
+                        <div key={index} className="flex items-center gap-2 text-xs">
+                          {item.category === 'labour' && <Wrench className="h-3 w-3" />}
+                          {item.category === 'materials' && <Package className="h-3 w-3" />}
+                          {item.category === 'equipment' && <Zap className="h-3 w-3" />}
+                          <span className="truncate">{item.description}</span>
+                        </div>
+                      ))}
+                      {template.items.length > 3 && (
+                        <p className="text-xs text-muted-foreground">
+                          +{template.items.length - 3} more items
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                  
+                  <Button 
+                    onClick={() => handleTemplateSelect(template)}
+                    disabled={loadingTemplate === template.id}
+                    className="w-full bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 disabled:opacity-50"
+                    size="sm"
+                  >
+                    {loadingTemplate === template.id ? (
+                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                    ) : (
+                      <Plus className="h-4 w-4 mr-2" />
+                    )}
+                    {loadingTemplate === template.id ? 'Applying...' : 'Use Template'}
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
           ))}
         </div>
       )}
