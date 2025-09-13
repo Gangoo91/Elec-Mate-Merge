@@ -23,6 +23,7 @@ interface DealsData {
 export const useMaterialsDeals = (materials: any[]): DealsData => {
   return useMemo(() => {
     if (!materials || materials.length === 0) {
+      console.log('⚠️ No materials provided to deals detection');
       return {
         dealOfTheDay: null,
         topDiscounts: [],
@@ -31,6 +32,12 @@ export const useMaterialsDeals = (materials: any[]): DealsData => {
     }
 
     console.log('🔍 Processing materials for deals detection:', materials.length);
+    console.log('🔍 Sample materials:', materials.slice(0, 3).map(m => ({ 
+      name: m.name, 
+      isOnSale: m.isOnSale, 
+      salePrice: m.salePrice,
+      price: m.price 
+    })));
     
     // Enhanced deals detection - check for explicit sales and price variations
     const materialsWithDeals = materials.map(material => {
@@ -92,6 +99,9 @@ export const useMaterialsDeals = (materials: any[]): DealsData => {
 
     // Get top 5 discounts (excluding deal of the day)
     const topDiscounts = saleItems.slice(1, 6);
+
+    console.log('🎯 Deal of the day:', dealOfTheDay ? { name: dealOfTheDay.name, discount: dealOfTheDay.discount } : 'None');
+    console.log('🏆 Top discounts:', topDiscounts.length, topDiscounts.map(d => ({ name: d.name, discount: d.discount })));
 
     return {
       dealOfTheDay,

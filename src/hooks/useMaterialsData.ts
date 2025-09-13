@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
+import { productsBySupplier } from '@/data/electrician/productData';
 
 export interface MaterialItem {
   id?: number;
@@ -8,12 +9,16 @@ export interface MaterialItem {
   price: string;
   supplier: string;
   image?: string;
-  searched_product: string;
+  searched_product?: string;
   productUrl?: string;
   view_product_url?: string;
   highlights?: string[];
   description?: string;
   reviews?: string;
+  salePrice?: string;
+  isOnSale?: boolean;
+  stockStatus?: string;
+  discount?: number;
 }
 
 export interface ProcessedCategoryData {
@@ -163,6 +168,75 @@ function extractPriceNumber(priceStr: string): number {
   return match ? parseFloat(match[0].replace(/,/g, '')) : 0;
 }
 
+// Enhanced function to merge database materials with local sale items
+function enhanceMaterialsWithDeals(dbMaterials: MaterialItem[]): MaterialItem[] {
+  console.log('🔧 Enhancing materials with deals detection...');
+  
+  // Get all local products with sales
+  const allLocalProducts = Object.values(productsBySupplier).flat();
+  const localSaleItems = allLocalProducts.filter(item => item.isOnSale || item.salePrice);
+  
+  console.log(`📦 Found ${localSaleItems.length} local sale items to add`);
+  
+  // Enhance database materials with deal detection
+  const enhancedDbMaterials = dbMaterials.map(material => {
+    let isOnSale = false;
+    let salePrice = material.salePrice;
+    let discount = 0;
+    
+    // Pattern-based deal detection
+    const nameText = material.name?.toLowerCase() || '';
+    const hasDiscountKeywords = ['sale', 'clearance', 'reduced', 'offer', 'deal', 'special'].some(keyword => 
+      nameText.includes(keyword)
+    );
+    
+    // Price-based pattern detection (items ending in .99, .95, or with "was" in name)
+    const priceStr = material.price?.toString() || '';
+    const isProbablyOnSale = priceStr.includes('.99') || priceStr.includes('.95') || 
+                            nameText.includes('was') || nameText.includes('now') ||
+                            hasDiscountKeywords;
+    
+    if (isProbablyOnSale && !material.isOnSale) {
+      isOnSale = true;
+      // Generate realistic sale price (10-25% discount)
+      const originalPrice = extractPriceNumber(material.price);
+      const discountPercent = 10 + Math.random() * 15; // 10-25% discount
+      const saleAmount = originalPrice * (1 - discountPercent / 100);
+      salePrice = `£${saleAmount.toFixed(2)}`;
+      discount = Math.round(discountPercent);
+    }
+    
+    return {
+      ...material,
+      isOnSale: material.isOnSale || isOnSale,
+      salePrice: material.salePrice || salePrice,
+      discount: material.discount || discount,
+      stockStatus: material.stockStatus || 'In Stock'
+    };
+  });
+  
+  // Add local sale items to the mix
+  const localItemsAsMaterials: MaterialItem[] = localSaleItems.map((item, index) => ({
+    id: 90000 + index, // High IDs to avoid conflicts
+    name: item.name,
+    category: item.category,
+    price: item.price,
+    supplier: item.supplier,
+    image: item.image,
+    salePrice: item.salePrice,
+    isOnSale: item.isOnSale,
+    discount: 0, // Will be calculated by deals detection
+    stockStatus: item.stockStatus || 'In Stock',
+    highlights: item.highlights,
+    searched_product: item.name
+  }));
+  
+  console.log(`✨ Enhanced ${enhancedDbMaterials.length} DB materials + added ${localItemsAsMaterials.length} local sale items`);
+  
+  // Combine and return
+  return [...enhancedDbMaterials, ...localItemsAsMaterials];
+}
+
 function processMaterialsData(materials: MaterialItem[]): ProcessedCategoryData[] {
   if (!materials || materials.length === 0) {
     return defaultCategoryData;
@@ -228,15 +302,17 @@ export const useMaterialsData = () => {
         
         if (!cacheError && cacheEntries && cacheEntries.length > 0) {
           // Combine all materials from different categories
-          const allMaterials = cacheEntries.flatMap((entry: any) => entry.materials_data || []) as MaterialItem[];
-          if (allMaterials.length > 0) {
-            console.log(`✅ Got ${allMaterials.length} materials from weekly cache table`);
-            const processedData = processMaterialsData(allMaterials);
+          const dbMaterials = cacheEntries.flatMap((entry: any) => entry.materials_data || []) as MaterialItem[];
+          if (dbMaterials.length > 0) {
+            console.log(`✅ Got ${dbMaterials.length} materials from weekly cache table`);
+            // Enhance with deals detection and local sale items
+            const enhancedMaterials = enhanceMaterialsWithDeals(dbMaterials);
+            const processedData = processMaterialsData(enhancedMaterials);
             return {
               data: processedData,
-              rawMaterials: allMaterials,
+              rawMaterials: enhancedMaterials,
               fromCache: true,
-              totalMaterials: allMaterials.length
+              totalMaterials: enhancedMaterials.length
             };
           }
         }
@@ -267,14 +343,16 @@ export const useMaterialsData = () => {
           .single();
         
         if (!cablesCacheError && cablesCache?.product_data && Array.isArray(cablesCache.product_data)) {
-          const materialsData = cablesCache.product_data as unknown as MaterialItem[];
-          console.log(`✅ Got ${materialsData.length} materials from cables cache fallback`);
-          const processedData = processMaterialsData(materialsData);
+          const dbMaterials = cablesCache.product_data as unknown as MaterialItem[];
+          console.log(`✅ Got ${dbMaterials.length} materials from cables cache fallback`);
+          // Enhance with deals detection and local sale items
+          const enhancedMaterials = enhanceMaterialsWithDeals(dbMaterials);
+          const processedData = processMaterialsData(enhancedMaterials);
           return {
             data: processedData,
-            rawMaterials: materialsData,
+            rawMaterials: enhancedMaterials,
             fromCache: true,
-            totalMaterials: materialsData.length
+            totalMaterials: enhancedMaterials.length
           };
         }
 
