@@ -193,12 +193,11 @@ export const generateProfessionalQuotePDF = ({ quote, companyProfile }: PDFGener
         });
       }
       
-      // Render Tel separately with extra bottom padding
+      // Render Tel separately
       if (quote.client.phone) {
         clientY = addText(`Tel:  ${safeText(quote.client.phone)}`, leftColX, clientY + 4, {
           fontSize: 9
         });
-        clientY += 6; // Extra padding after Tel
       }
 
       // Render Email separately  
