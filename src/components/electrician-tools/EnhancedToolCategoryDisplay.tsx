@@ -8,7 +8,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Wrench, ArrowLeft, Filter, RefreshCw, Loader2, Search, Scale, TrendingUp, Calculator, AlertTriangle, Brain, ChevronDown } from "lucide-react";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 
-import { MobileInputWrapper } from "@/components/ui/mobile-input-wrapper";
 import { useIsMobile } from "@/hooks/use-mobile";
 import ToolCard from "@/components/electrician-tools/ToolCard";
 import AIEnhancedToolPriceComparison from "@/components/electrician-tools/AIEnhancedToolPriceComparison";
@@ -17,6 +16,14 @@ import ToolPriceHistoryAlerts from "@/components/electrician-tools/ToolPriceHist
 import { ToolAIInsights } from "./ToolAIInsights";
 import ToolRefreshButton from "@/components/electrician-tools/ToolRefreshButton";
 import { useToolsData, type ToolItem } from "@/hooks/useToolsData";
+
+// New enhanced components
+import DealsOfTheDayBanner from "./DealsOfTheDayBanner";
+import TopDiscountsStrip from "./TopDiscountsStrip";
+import SmartSearchBar from "./SmartSearchBar";
+import ProductFilters, { FilterState } from "./ProductFilters";
+import MoreToolsDropdown from "./MoreToolsDropdown";
+import EnhancedProductGrid from "./EnhancedProductGrid";
 
 const CATEGORY_META: Record<string, { title: string; description: string }> = {
   "test-equipment": {
@@ -76,11 +83,16 @@ const EnhancedToolCategoryDisplay = ({ categoryName }: EnhancedToolCategoryDispl
   // Use comprehensive tools data
   const { data: allTools, isLoading, error, refetch } = useToolsData();
 
-  // Filter state for the tools
+  // Enhanced state management
   const [searchTerm, setSearchTerm] = useState("");
   const [activeTab, setActiveTab] = useState("browse");
   const [selectedItems, setSelectedItems] = useState<ToolItem[]>([]);
-  const [isTabSelectorOpen, setIsTabSelectorOpen] = useState(false);
+  const [filters, setFilters] = useState<FilterState>({
+    brands: [],
+    priceRanges: [],
+    availability: [],
+    suppliers: []
+  });
   const isMobile = useIsMobile();
   
   // Comprehensive category mapping function
@@ -161,20 +173,15 @@ const EnhancedToolCategoryDisplay = ({ categoryName }: EnhancedToolCategoryDispl
       });
     }
     
-    // Apply search filter
-    if (searchTerm) {
-      categoryFiltered = categoryFiltered.filter(tool =>
-        tool.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        tool.description?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        tool.supplier?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        tool.highlights?.some(highlight => 
-          typeof highlight === 'string' && highlight.toLowerCase().includes(searchTerm.toLowerCase())
-        )
-      );
-    }
-    
     return categoryFiltered;
-  }, [allTools, categoryName, searchTerm]);
+  }, [allTools, categoryName]);
+
+  // Get deals for the banner and strip
+  const dealsData = useMemo(() => {
+    const deals = filteredTools.filter(tool => tool.isOnSale && tool.salePrice);
+    const topDeal = deals.length > 0 ? deals[0] : undefined;
+    return { deals, topDeal };
+  }, [filteredTools]);
 
 
   const pageTitle = `${meta.title} | ElecMate Professional Tools`;
@@ -231,127 +238,78 @@ const EnhancedToolCategoryDisplay = ({ categoryName }: EnhancedToolCategoryDispl
       </Helmet>
 
       <header className="mobile-section-spacing">
-        <div className="flex flex-wrap gap-2 mb-4">
+        <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
           <Link to="/electrician/tools">
             <Button variant="outline" size="sm" className="touch-target mobile-interactive bg-elec-gray/50 border-elec-yellow/30 text-elec-light hover:bg-elec-yellow/10">
               <ArrowLeft className="h-4 w-4" /> Back to Tools
             </Button>
           </Link>
+          <div className="flex items-center gap-3">
+            <MoreToolsDropdown 
+              onTabChange={setActiveTab}
+              selectedItemsCount={selectedItems.length}
+            />
+            <ToolRefreshButton
+              isFetching={isLoading}
+              lastFetchTime={0}
+              onRefresh={refetch}
+              categoryName={categoryName}
+              className="shrink-0 touch-target"
+            />
+          </div>
         </div>
         <div className="space-y-3">
           <h1 className="mobile-heading font-bold tracking-tight flex items-center gap-3">
             <Wrench className="h-6 w-6 sm:h-7 sm:w-7 lg:h-8 lg:w-8 text-elec-yellow flex-shrink-0" />
             <span className="min-w-0 text-elec-light">{meta.title}</span>
           </h1>
-          <p className="mobile-text text-text-muted leading-relaxed pl-9 sm:pl-10 lg:pl-11 pb-6">{meta.description}</p>
+          <p className="mobile-text text-text-muted leading-relaxed pl-9 sm:pl-10 lg:pl-11">{meta.description}</p>
         </div>
       </header>
 
-      {/* Advanced Features Navigation */}
-      <section className="mobile-section-spacing relative z-10">
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full relative">
-          {/* Mobile Collapsible Tabs */}
-          {isMobile ? (
-            <div className="mobile-card-spacing">
-              <Collapsible open={isTabSelectorOpen} onOpenChange={setIsTabSelectorOpen}>
-                <CollapsibleTrigger className="w-full mobile-card bg-elec-card/50 border-elec-yellow/20 mobile-interactive touch-target hover:bg-elec-yellow/5 mobile-tap-highlight">
-                  <div className="flex items-center justify-between p-4">
-                    <div className="flex items-center gap-3">
-                      {activeTab === "browse" && <Wrench className="h-5 w-5 text-elec-yellow" />}
-                      {activeTab === "compare" && <Scale className="h-5 w-5 text-elec-yellow" />}
-                      {activeTab === "bulk" && <Calculator className="h-5 w-5 text-elec-yellow" />}
-                      {activeTab === "alerts" && <TrendingUp className="h-5 w-5 text-elec-yellow" />}
-                      {activeTab === "ai" && <Brain className="h-5 w-5 text-elec-yellow" />}
-                      <span className="mobile-text font-medium text-elec-light">
-                        {activeTab === "browse" && "Browse Tools"}
-                        {activeTab === "compare" && "Compare Tools"}
-                        {activeTab === "bulk" && "Bulk Pricing"}
-                        {activeTab === "alerts" && "Price Alerts"}
-                        {activeTab === "ai" && "AI Insights"}
-                      </span>
-                    </div>
-                    <ChevronDown className="h-5 w-5 text-elec-yellow transition-transform duration-200 group-data-[state=open]:rotate-180" />
-                  </div>
-                </CollapsibleTrigger>
-                
-                <CollapsibleContent className="mt-2">
-                  <div className="mobile-card bg-elec-card/30 border-elec-yellow/10 overflow-hidden">
-                    {["browse", "compare", "bulk", "alerts", "ai"].filter(tab => tab !== activeTab).map((tab) => (
-                      <button
-                        key={tab}
-                        onClick={() => {
-                          setActiveTab(tab);
-                          setIsTabSelectorOpen(false);
-                        }}
-                        className="w-full flex items-center gap-3 p-4 text-left mobile-interactive touch-target border-b border-elec-yellow/10 last:border-b-0 text-elec-light hover:bg-elec-yellow/10 mobile-tap-highlight"
-                      >
-                        {tab === "browse" && <Wrench className="h-5 w-5 text-elec-yellow/70" />}
-                        {tab === "compare" && <Scale className="h-5 w-5 text-elec-yellow/70" />}
-                        {tab === "bulk" && <Calculator className="h-5 w-5 text-elec-yellow/70" />}
-                        {tab === "alerts" && <TrendingUp className="h-5 w-5 text-elec-yellow/70" />}
-                        {tab === "ai" && <Brain className="h-5 w-5 text-elec-yellow/70" />}
-                        <span className="mobile-text font-medium">
-                          {tab === "browse" && "Browse Tools"}
-                          {tab === "compare" && "Compare Tools"}
-                          {tab === "bulk" && "Bulk Pricing"}
-                          {tab === "alerts" && "Price Alerts"}
-                          {tab === "ai" && "AI Insights"}
-                        </span>
-                      </button>
-                    ))}
-                  </div>
-                </CollapsibleContent>
-              </Collapsible>
-            </div>
-          ) : (
-            /* Desktop Tabs */
-            <TabsList className="mobile-grid-responsive grid grid-cols-3 lg:grid-cols-5 bg-elec-card/50 border border-elec-yellow/20 p-1 h-fit rounded-xl">
-              <TabsTrigger value="browse" className="mobile-interactive touch-target px-4 py-3 text-sm font-medium data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark data-[state=active]:shadow-sm transition-all duration-200 text-elec-light hover:text-elec-yellow">
-                <Wrench className="h-4 w-4 mr-2" />
-                Browse
-              </TabsTrigger>
-              <TabsTrigger value="compare" className="mobile-interactive touch-target px-4 py-3 text-sm font-medium data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark data-[state=active]:shadow-sm transition-all duration-200 text-elec-light hover:text-elec-yellow">
-                <Scale className="h-4 w-4 mr-2" />
-                Compare
-              </TabsTrigger>
-              <TabsTrigger value="bulk" className="mobile-interactive touch-target px-4 py-3 text-sm font-medium data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark data-[state=active]:shadow-sm transition-all duration-200 text-elec-light hover:text-elec-yellow">
-                <Calculator className="h-4 w-4 mr-2" />
-                Bulk
-              </TabsTrigger>
-              <TabsTrigger value="alerts" className="mobile-interactive touch-target px-4 py-3 text-sm font-medium data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark data-[state=active]:shadow-sm transition-all duration-200 text-elec-light hover:text-elec-yellow">
-                <TrendingUp className="h-4 w-4 mr-2" />
-                Alerts
-              </TabsTrigger>
-              <TabsTrigger value="ai" className="mobile-interactive touch-target px-4 py-3 text-sm font-medium data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark data-[state=active]:shadow-sm transition-all duration-200 text-elec-light hover:text-elec-yellow">
-                <Brain className="h-4 w-4 mr-2" />
-                AI
-              </TabsTrigger>
-            </TabsList>
+      {/* Enhanced Content Section */}
+      {activeTab === "browse" ? (
+        <section className="space-y-6">
+          {/* Deals of the Day Banner */}
+          {dealsData.topDeal && (
+            <DealsOfTheDayBanner deal={dealsData.topDeal} />
           )}
 
-          {/* Search and filters for Browse tab */}
-          {activeTab === "browse" && (
-            <div className="mobile-action-bar">
-              <div className="flex-1 w-full">
-                <MobileInputWrapper
-                  placeholder="Search tools..."
-                  value={searchTerm}
-                  onChange={setSearchTerm}
-                  icon={<Search className="h-4 w-4 text-elec-yellow/70" />}
-                  hint="Search by tool name, supplier, or description"
-                />
-              </div>
-              <div className="flex items-center">
-                <ToolRefreshButton
-                  isFetching={isLoading}
-                  lastFetchTime={0} // No static data - would come from actual cache metadata
-                  onRefresh={refetch}
-                  categoryName={categoryName}
-                  className="shrink-0 touch-target"
-                />
-              </div>
-            </div>
+          {/* Top Discounts Strip */}
+          {dealsData.deals.length > 1 && (
+            <TopDiscountsStrip deals={dealsData.deals} />
           )}
+
+          {/* Smart Search Bar */}
+          <SmartSearchBar
+            value={searchTerm}
+            onChange={setSearchTerm}
+            tools={filteredTools}
+            placeholder="Search tools, brands, suppliers..."
+          />
+
+          {/* Product Filters */}
+          <ProductFilters
+            tools={filteredTools}
+            filters={filters}
+            onFiltersChange={setFilters}
+          />
+
+          {/* Enhanced Product Grid */}
+          <EnhancedProductGrid
+            tools={filteredTools}
+            searchTerm={searchTerm}
+            filters={filters}
+            isLoading={isLoading}
+            onAddToCompare={handleAddToCompare}
+            onRemoveFromCompare={handleRemoveFromCompare}
+            selectedItems={selectedItems}
+            isCompareDisabled={selectedItems.length >= 3}
+          />
+        </section>
+      ) : (
+        <section className="mobile-section-spacing relative z-10">
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full relative">
 
           {/* Quick Compare Bar */}
           {selectedItems.length > 0 && (
@@ -503,6 +461,7 @@ const EnhancedToolCategoryDisplay = ({ categoryName }: EnhancedToolCategoryDispl
           </TabsContent>
         </Tabs>
       </section>
+      )}
     </main>
   );
 };
