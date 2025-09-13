@@ -193,12 +193,17 @@ export const generateProfessionalQuotePDF = ({ quote, companyProfile }: PDFGener
         });
       }
       
-      const clientContact = [];
-      if (quote.client.phone) clientContact.push(`Tel:  ${safeText(quote.client.phone)}`);
-      if (quote.client.email) clientContact.push(`Email:  ${safeText(quote.client.email)}`);
-      
-      if (clientContact.length > 0) {
-        clientY = addText(clientContact.join('\n'), leftColX, clientY + 4, {
+      // Render Tel separately with extra bottom padding
+      if (quote.client.phone) {
+        clientY = addText(`Tel:  ${safeText(quote.client.phone)}`, leftColX, clientY + 4, {
+          fontSize: 9
+        });
+        clientY += 6; // Extra padding after Tel
+      }
+
+      // Render Email separately  
+      if (quote.client.email) {
+        clientY = addText(`Email:  ${safeText(quote.client.email)}`, leftColX, clientY + 4, {
           fontSize: 9
         });
       }
