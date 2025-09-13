@@ -12,6 +12,7 @@ import MaterialPriceComparison from "@/components/electrician-materials/Material
 import BulkPricingCalculator from "@/components/electrician-materials/BulkPricingCalculator";
 import PriceHistoryAlerts from "@/components/electrician-materials/PriceHistoryAlerts";
 import RefreshButton from "@/components/electrician-materials/RefreshButton";
+import EnhancedMaterialsGrid from "@/components/electrician-materials/EnhancedMaterialsGrid";
 import MaterialSmartSearch from "@/components/electrician-materials/MaterialSmartSearch";
 import MaterialFilters, { MaterialFilterState } from "@/components/electrician-materials/MaterialFilters";
 import MaterialsMoreTools from "@/components/electrician-materials/MaterialsMoreTools";
@@ -64,7 +65,7 @@ const CategoryMaterials = () => {
     availability: [],
     suppliers: []
   });
-  const [selectedItems, setSelectedItems] = useState<any[]>([]);
+  const [selectedMaterials, setSelectedMaterials] = useState<any[]>([]);
   const [currentView, setCurrentView] = useState<'browse' | 'compare' | 'bulk' | 'alerts' | 'ai'>('browse');
   const isMobile = useIsMobile();
   
@@ -151,18 +152,18 @@ const CategoryMaterials = () => {
   const pageDescription = `${meta.title} for UK electricians — ${meta.description}. BS 7671 18th Edition compliant guidance.`.slice(0, 160);
 
   const handleAddToCompare = (item: any) => {
-    if (selectedItems.length >= 3) return;
-    if (!selectedItems.find(selected => selected.id === item.id)) {
-      setSelectedItems(prev => [...prev, item]);
+    if (selectedMaterials.length >= 4) return;
+    if (!selectedMaterials.find(selected => selected.id === item.id)) {
+      setSelectedMaterials(prev => [...prev, item]);
     }
   };
 
   const handleRemoveFromCompare = (itemId: string) => {
-    setSelectedItems(prev => prev.filter(item => item.id !== itemId));
+    setSelectedMaterials(prev => prev.filter(item => item.id !== itemId));
   };
 
   const clearComparison = () => {
-    setSelectedItems([]);
+    setSelectedMaterials([]);
   };
 
   if (error) {
@@ -208,7 +209,7 @@ const CategoryMaterials = () => {
             </Button>
           </Link>
           <MaterialsMoreTools
-            selectedCount={selectedItems.length}
+            selectedCount={selectedMaterials.length}
             onCompareClick={() => setCurrentView('compare')}
             onBulkPricingClick={() => setCurrentView('bulk')}
             onPriceAlertsClick={() => setCurrentView('alerts')}
@@ -253,13 +254,13 @@ const CategoryMaterials = () => {
           </div>
 
           {/* Quick Compare Bar */}
-          {selectedItems.length > 0 && (
+          {selectedMaterials.length > 0 && (
             <Card className="bg-elec-yellow/10 border-elec-yellow/30">
               <CardContent className="p-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <Scale className="h-5 w-5 text-elec-yellow" />
-                    <span className="font-medium">{selectedItems.length}/3 items selected for comparison</span>
+                    <span className="font-medium">{selectedMaterials.length}/4 items selected for comparison</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <Button
@@ -370,19 +371,17 @@ const CategoryMaterials = () => {
                       className="shrink-0"
                     />
                   </div>
-                  
-                  <div className={`grid gap-6 pb-6 ${isMobile ? 'grid-cols-1' : 'md:grid-cols-2 lg:grid-cols-3'}`}>
-                    {filteredMaterials.map((item, index) => (
-                      <MaterialCard 
-                        key={item.id || `${item.supplier}-${item.name}-${index}`} 
-                        item={item}
-                        onAddToCompare={handleAddToCompare}
-                        onRemoveFromCompare={handleRemoveFromCompare}
-                        isSelected={selectedItems.some(selected => selected.id === item.id)}
-                        isCompareDisabled={selectedItems.length >= 3 && !selectedItems.some(selected => selected.id === item.id)}
-                      />
-                    ))}
-                  </div>
+                   
+                  <EnhancedMaterialsGrid
+                    materials={filteredMaterials}
+                    searchTerm={searchTerm}
+                    filters={filters}
+                    isLoading={isLoading}
+                    onAddToCompare={handleAddToCompare}
+                    onRemoveFromCompare={handleRemoveFromCompare}
+                    selectedItems={selectedMaterials}
+                    isCompareDisabled={selectedMaterials.length >= 4}
+                  />
                 </section>
               )}
             </>
@@ -405,7 +404,7 @@ const CategoryMaterials = () => {
           </div>
           <MaterialPriceComparison 
             initialQuery={categoryId}
-            selectedItems={selectedItems}
+            selectedItems={selectedMaterials}
             onClearSelection={clearComparison}
           />
         </section>
