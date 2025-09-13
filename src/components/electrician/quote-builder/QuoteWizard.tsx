@@ -17,7 +17,7 @@ const steps = [
   { title: "Client Details", icon: User, description: "Customer information" },
   { title: "Job Details", icon: Briefcase, description: "Scope of work" },
   { title: "Quote Items", icon: FileText, description: "Add labour and materials" },
-  { title: "Settings", icon: Settings, description: "Pricing and VAT settings" },
+  { title: "Settings", icon: Settings, description: "VAT and AI settings" },
   { title: "Review", icon: Calculator, description: "Review and finalise" },
 ];
 
@@ -57,7 +57,7 @@ const {
       case 3:
         return quote.items && quote.items.length > 0;
       case 4:
-        return quote.settings?.labourRate && typeof quote.settings?.overheadPercentage === 'number' && typeof quote.settings?.profitMargin === 'number';
+        return quote.settings?.vatRegistered !== undefined;
       default:
         return true;
     }
