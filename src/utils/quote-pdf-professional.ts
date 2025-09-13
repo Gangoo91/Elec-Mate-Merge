@@ -407,7 +407,7 @@ export const generateProfessionalQuotePDF = ({ quote, companyProfile }: PDFGener
       color: primaryColor
     });
 
-    // TERMS & CONDITIONS (bottom-left quadrant)
+    // TERMS & CONDITIONS (full width below totals)
     addText('TERMS & CONDITIONS', leftColX, bottomY, {
       fontSize: 10,
       fontStyle: 'bold',
@@ -422,27 +422,16 @@ export const generateProfessionalQuotePDF = ({ quote, companyProfile }: PDFGener
       '• 12 months warranty on workmanship'
     ];
 
-    const termsPerLine = 2;
-    const termWidth = (contentWidth * 0.5) / termsPerLine;
+    // Display each term on its own line using full width
+    const termWidth = contentWidth - 20; // Full width minus padding
     
-    for (let i = 0; i < simpleTerms.length; i += termsPerLine) {
-      const leftTerm = simpleTerms[i];
-      const rightTerm = simpleTerms[i + 1];
-      
-      addText(leftTerm, leftColX, termsY, {
+    simpleTerms.forEach(term => {
+      addText(term, leftColX, termsY, {
         fontSize: 8,
-        maxWidth: termWidth - 5
+        maxWidth: termWidth
       });
-      
-      if (rightTerm) {
-        addText(rightTerm, leftColX + termWidth, termsY, {
-          fontSize: 8,
-          maxWidth: termWidth - 5
-        });
-      }
-      
       termsY += 5;
-    }
+    });
 
     yPosition = panelStartY + panelHeight + 10;
     return yPosition;
