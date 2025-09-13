@@ -201,40 +201,6 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
                   </h3>
                 </div>
                 
-                {/* Price Adjustment Controls */}
-                {setPriceAdjustment && (
-                  <div className="bg-primary/5 border border-primary/20 rounded-lg p-4 mb-4">
-                    <div className="flex items-center justify-between mb-3">
-                      <div className="flex items-center gap-2">
-                        <TrendingUp className="h-4 w-4 text-primary" />
-                        <Label className="text-sm font-medium">Price Adjustment</Label>
-                      </div>
-                      <Switch 
-                        checked={priceAdjustment > 0}
-                        onCheckedChange={(checked) => setPriceAdjustment(checked ? 10 : 0)}
-                      />
-                    </div>
-                    {priceAdjustment > 0 && (
-                      <div className="flex items-center gap-3 text-sm">
-                        <Label className="text-sm">Increase:</Label>
-                        <Select value={priceAdjustment.toString()} onValueChange={(value) => setPriceAdjustment(Number(value))}>
-                          <SelectTrigger className="w-24 h-8">
-                            <SelectValue />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="5">5%</SelectItem>
-                            <SelectItem value="10">10%</SelectItem>
-                            <SelectItem value="15">15%</SelectItem>
-                            <SelectItem value="20">20%</SelectItem>
-                          </SelectContent>
-                        </Select>
-                        <span className="text-xs text-muted-foreground">
-                          Applied to all material prices
-                        </span>
-                      </div>
-                    )}
-                  </div>
-                )}
                 
                 <div className="space-y-4">
                   {/* Category Selection */}
@@ -324,20 +290,48 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
 
                   {/* Materials specific fields */}
                   {newItem.category === "materials" && (
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div className="space-y-2">
-                        <Label htmlFor="materialCategory" className="text-sm font-medium">Material Category</Label>
-                        <Select value={newItem.subcategory} onValueChange={(value) => setNewItem(prev => ({ ...prev, subcategory: value }))}>
-                          <SelectTrigger className="h-12">
-                            <SelectValue placeholder="Select category" />
-                          </SelectTrigger>
-                          <SelectContent className="z-50 bg-background border shadow-lg">
-                            {materialCategories.map(cat => (
-                              <SelectItem key={cat.id} value={cat.id}>{cat.name}</SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                      </div>
+                    <div className="space-y-4">
+                      {/* Material Markup Selection */}
+                      {setPriceAdjustment && (
+                        <div className="space-y-2">
+                          <Label className="text-sm font-medium flex items-center gap-2">
+                            <TrendingUp className="h-4 w-4 text-primary" />
+                            Material Markup
+                          </Label>
+                          <Select value={priceAdjustment.toString()} onValueChange={(value) => setPriceAdjustment(Number(value))}>
+                            <SelectTrigger className="h-12">
+                              <SelectValue placeholder="Select markup" />
+                            </SelectTrigger>
+                            <SelectContent className="z-50 bg-background border shadow-lg">
+                              <SelectItem value="0">No markup (0%)</SelectItem>
+                              <SelectItem value="5">5% markup</SelectItem>
+                              <SelectItem value="10">10% markup</SelectItem>
+                              <SelectItem value="15">15% markup</SelectItem>
+                              <SelectItem value="20">20% markup</SelectItem>
+                            </SelectContent>
+                          </Select>
+                          {priceAdjustment > 0 && (
+                            <p className="text-xs text-muted-foreground">
+                              Applied to all material prices below
+                            </p>
+                          )}
+                        </div>
+                      )}
+                      
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                          <Label htmlFor="materialCategory" className="text-sm font-medium">Material Category</Label>
+                          <Select value={newItem.subcategory} onValueChange={(value) => setNewItem(prev => ({ ...prev, subcategory: value }))}>
+                            <SelectTrigger className="h-12">
+                              <SelectValue placeholder="Select category" />
+                            </SelectTrigger>
+                            <SelectContent className="z-50 bg-background border shadow-lg">
+                              {materialCategories.map(cat => (
+                                <SelectItem key={cat.id} value={cat.id}>{cat.name}</SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </div>
 
                       <div className="space-y-2">
                         <Label htmlFor="material" className="text-sm font-medium">Material</Label>
@@ -367,6 +361,7 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
                                })}
                            </SelectContent>
                         </Select>
+                      </div>
                       </div>
                     </div>
                   )}
