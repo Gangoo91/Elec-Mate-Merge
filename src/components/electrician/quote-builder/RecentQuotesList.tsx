@@ -80,25 +80,11 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
         }
       };
 
-      let success = false;
-      
-      if (effectiveQuote.settings?.aiEnhancedPDF) {
-        success = await generateAIEnhancedQuotePDF({
-          quote: effectiveQuote,
-          companyProfile: effectiveCompanyProfile,
-          aiEnhancements: {
-            enhancedDescriptions: true,
-            executiveSummary: true,
-            smartTerms: true,
-            recommendations: true
-          }
-        });
-      } else {
-        success = generateProfessionalQuotePDF({
-          quote: effectiveQuote,
-          companyProfile: effectiveCompanyProfile
-        });
-      }
+      // Always use the regular professional PDF generator
+      const success = generateProfessionalQuotePDF({
+        quote: effectiveQuote,
+        companyProfile: effectiveCompanyProfile
+      });
 
       if (success) {
         toast({
