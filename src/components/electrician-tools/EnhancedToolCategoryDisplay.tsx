@@ -238,7 +238,7 @@ const EnhancedToolCategoryDisplay = ({ categoryName }: EnhancedToolCategoryDispl
       </Helmet>
 
       <header className="mobile-section-spacing">
-        <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+        <div className="flex flex-wrap items-start justify-between gap-4 mb-6">
           <Link to="/electrician/tools">
             <Button variant="outline" size="sm" className="touch-target mobile-interactive bg-elec-gray/50 border-elec-yellow/30 text-elec-light hover:bg-elec-yellow/10">
               <ArrowLeft className="h-4 w-4" /> Back to Tools
