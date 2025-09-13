@@ -122,14 +122,14 @@ export const generateProfessionalQuotePDF = ({ quote, companyProfile }: PDFGener
 
     // Contact info with proper spacing
     if (companyProfile?.company_phone) {
-      yPosition = addText(`Tel: ${safeText(companyProfile.company_phone)}`, margin, yPosition + 3, {
+      yPosition = addText(`Tel:  ${safeText(companyProfile.company_phone)}`, margin, yPosition + 3, {
         fontSize: 9,
         maxWidth: contentWidth - 60
       });
     }
     
     if (companyProfile?.company_email) {
-      yPosition = addText(`Email: ${safeText(companyProfile.company_email)}`, margin, yPosition + 3, {
+      yPosition = addText(`Email:  ${safeText(companyProfile.company_email)}`, margin, yPosition + 3, {
         fontSize: 9,
         maxWidth: contentWidth - 60
       });
@@ -194,8 +194,8 @@ export const generateProfessionalQuotePDF = ({ quote, companyProfile }: PDFGener
       }
       
       const clientContact = [];
-      if (quote.client.phone) clientContact.push(`Tel: ${safeText(quote.client.phone)}`);
-      if (quote.client.email) clientContact.push(`Email: ${safeText(quote.client.email)}`);
+      if (quote.client.phone) clientContact.push(`Tel:  ${safeText(quote.client.phone)}`);
+      if (quote.client.email) clientContact.push(`Email:  ${safeText(quote.client.email)}`);
       
       if (clientContact.length > 0) {
         clientY = addText(clientContact.join('\n'), leftColX, clientY + 4, {
