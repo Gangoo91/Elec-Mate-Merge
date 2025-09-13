@@ -14,7 +14,7 @@ import AIEnhancedToolPriceComparison from "@/components/electrician-tools/AIEnha
 import BulkToolPricingCalculator from "@/components/electrician-tools/BulkToolPricingCalculator";
 import ToolPriceHistoryAlerts from "@/components/electrician-tools/ToolPriceHistoryAlerts";
 import { ToolAIInsights } from "./ToolAIInsights";
-import ToolRefreshButton from "@/components/electrician-tools/ToolRefreshButton";
+
 import { useToolsData, type ToolItem } from "@/hooks/useToolsData";
 
 // New enhanced components
@@ -248,13 +248,6 @@ const EnhancedToolCategoryDisplay = ({ categoryName }: EnhancedToolCategoryDispl
             <MoreToolsDropdown 
               onTabChange={setActiveTab}
               selectedItemsCount={selectedItems.length}
-            />
-            <ToolRefreshButton
-              isFetching={isLoading}
-              lastFetchTime={0}
-              onRefresh={refetch}
-              categoryName={categoryName}
-              className="shrink-0 touch-target"
             />
           </div>
         </div>
