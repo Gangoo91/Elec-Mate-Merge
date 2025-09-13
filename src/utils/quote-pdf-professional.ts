@@ -331,39 +331,35 @@ export const generateProfessionalQuotePDF = ({ quote, companyProfile }: PDFGener
     return yPosition;
   };
 
-  // Professional totals and terms section
+  // Simplified totals and terms section
   const renderTotals = () => {
-    // Create full-width grey panel for totals and terms
+    // Create clean grey panel for totals and terms
     const panelStartY = yPosition + 5;
-    pdf.setFillColor(245, 245, 245);
+    pdf.setFillColor(248, 248, 248);
     
-    // Calculate dynamic panel height based on content
-    const termsHeight = 85; // Estimated height for terms content
-    const totalsHeight = 60; // Height for totals section
-    const panelHeight = Math.max(totalsHeight, termsHeight) + 20;
+    // Calculate panel height for simplified content
+    const panelHeight = 70;
     
     pdf.rect(margin, panelStartY, contentWidth, panelHeight, 'F');
     
-    // Add subtle border
-    pdf.setDrawColor(220, 220, 220);
-    pdf.setLineWidth(0.5);
-    pdf.rect(margin, panelStartY, contentWidth, panelHeight, 'S');
-    
-    // Position totals on the right side
-    const totalsX = pageWidth - margin - 80;
-    const totalsWidth = 75;
-    let totalsY = panelStartY + 10;
+    // Centered totals section at top
+    const centerX = pageWidth / 2;
+    let currentY = panelStartY + 12;
 
-    addText('QUOTE TOTALS', totalsX, totalsY, {
-      fontSize: 11,
+    // Title
+    addText('QUOTE TOTALS', centerX - 25, currentY, {
+      fontSize: 12,
       fontStyle: 'bold',
       color: primaryColor
     });
-    totalsY += 8;
+    currentY += 10;
 
-    const totalsData = [
-      ['Subtotal:', formatCurrency(safeNumber(quote.subtotal))],
-    ];
+    // Build totals array
+    const totalsData = [];
+    
+    if (quote.subtotal) {
+      totalsData.push(['Subtotal:', formatCurrency(safeNumber(quote.subtotal))]);
+    }
 
     if (quote.overhead && quote.overhead > 0) {
       totalsData.push(['Overhead:', formatCurrency(safeNumber(quote.overhead))]);
@@ -377,63 +373,74 @@ export const generateProfessionalQuotePDF = ({ quote, companyProfile }: PDFGener
       totalsData.push(['VAT:', formatCurrency(safeNumber(quote.vatAmount))]);
     }
 
+    // Display subtotals
     totalsData.forEach(([label, amount]) => {
-      addText(label, totalsX, totalsY, {
-        fontSize: 9,
+      addText(label, centerX - 30, currentY, {
+        fontSize: 10,
         fontStyle: 'normal'
       });
-      addText(amount, totalsX + 45, totalsY, {
-        fontSize: 9,
+      addText(amount, centerX + 15, currentY, {
+        fontSize: 10,
         fontStyle: 'normal'
       });
-      totalsY += 5;
+      currentY += 6;
     });
 
-    // Final total line
+    // Final total with emphasis
+    currentY += 3;
     pdf.setDrawColor(primaryColor[0], primaryColor[1], primaryColor[2]);
     pdf.setLineWidth(1);
-    pdf.line(totalsX, totalsY + 2, totalsX + totalsWidth - 5, totalsY + 2);
-    totalsY += 6;
+    pdf.line(centerX - 35, currentY, centerX + 45, currentY);
+    currentY += 8;
 
-    addText('TOTAL:', totalsX, totalsY, {
-      fontSize: 12,
+    addText('TOTAL:', centerX - 30, currentY, {
+      fontSize: 14,
       fontStyle: 'bold',
       color: primaryColor
     });
-    addText(formatCurrency(safeNumber(quote.total)), totalsX + 45, totalsY, {
-      fontSize: 12,
+    addText(formatCurrency(safeNumber(quote.total)), centerX + 15, currentY, {
+      fontSize: 14,
       fontStyle: 'bold',
       color: primaryColor
     });
 
-    // Terms & Conditions on the left side
-    let termsY = panelStartY + 10;
-    const termsX = margin + 10;
-    const termsWidth = contentWidth - 100;
-
-    addText('TERMS & CONDITIONS', termsX, termsY, {
-      fontSize: 11,
+    // Simplified terms below totals
+    currentY += 12;
+    addText('TERMS & CONDITIONS', margin + 10, currentY, {
+      fontSize: 10,
       fontStyle: 'bold',
       color: primaryColor
     });
-    termsY += 8;
+    currentY += 6;
 
-    const termsText = [
-      '• Payment: 50% deposit required, balance due within 30 days of completion',
-      '• Validity: This quotation is valid for 30 days from the date issued',
-      '• Variations: Any additional work must be agreed in writing',
-      '• Materials: All materials comply with BS 7671:18th Edition regulations',
-      '• Warranty: 12 months warranty on workmanship, manufacturer warranty on materials',
-      '• Access: Clear and safe access to be provided by client',
-      '• Delays: We are not liable for delays due to circumstances beyond our control'
+    const simpleTerms = [
+      '• Payment: 50% deposit, balance within 30 days',
+      '• Valid for 30 days from date issued',
+      '• Materials comply with BS 7671:18th Edition',
+      '• 12 months warranty on workmanship'
     ];
 
-    termsText.forEach(term => {
-      termsY = addText(term, termsX, termsY, {
+    const termsPerLine = 2;
+    const termWidth = (contentWidth - 20) / termsPerLine;
+    
+    for (let i = 0; i < simpleTerms.length; i += termsPerLine) {
+      const leftTerm = simpleTerms[i];
+      const rightTerm = simpleTerms[i + 1];
+      
+      addText(leftTerm, margin + 10, currentY, {
         fontSize: 8,
-        maxWidth: termsWidth
-      }) + 1;
-    });
+        maxWidth: termWidth - 5
+      });
+      
+      if (rightTerm) {
+        addText(rightTerm, margin + 10 + termWidth, currentY, {
+          fontSize: 8,
+          maxWidth: termWidth - 5
+        });
+      }
+      
+      currentY += 6;
+    }
 
     yPosition = panelStartY + panelHeight + 10;
     return yPosition;
