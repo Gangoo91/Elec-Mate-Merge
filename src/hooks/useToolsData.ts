@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
+import { useToolsDeals } from './useToolsDeals';
 
 export interface ToolItem {
   id?: number;
@@ -60,7 +61,7 @@ const fetchToolsData = async (): Promise<ToolItem[]> => {
 };
 
 export const useToolsData = () => {
-  return useQuery({
+  const query = useQuery({
     queryKey: ['tools', 'cache-data'],
     queryFn: fetchToolsData,
     staleTime: 5 * 60 * 1000, // 5 minutes - allow more frequent updates
@@ -69,4 +70,15 @@ export const useToolsData = () => {
     refetchOnWindowFocus: false, // Prevent refetch on window focus
     refetchOnReconnect: false, // Prevent refetch on network reconnect
   });
+
+  const dealsData = useToolsDeals(query.data || []);
+
+  return {
+    ...query,
+    data: dealsData.tools,
+    deals: dealsData.deals,
+    dealOfTheDay: dealsData.dealOfTheDay,
+    topDiscounts: dealsData.topDiscounts,
+    dealsCount: dealsData.dealsCount
+  };
 };
