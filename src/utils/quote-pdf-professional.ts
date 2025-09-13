@@ -182,13 +182,13 @@ export const generateProfessionalQuotePDF = ({ quote, companyProfile }: PDFGener
       });
       
       if (quote.client.address) {
-        clientY = addText(safeText(quote.client.address), leftColX, clientY + 2, {
+        clientY = addText(safeText(quote.client.address), leftColX, clientY + 4, {
           fontSize: 9
         });
       }
       
       if (quote.client.postcode) {
-        clientY = addText(safeText(quote.client.postcode), leftColX, clientY + 2, {
+        clientY = addText(safeText(quote.client.postcode), leftColX, clientY + 4, {
           fontSize: 9
         });
       }
@@ -198,7 +198,7 @@ export const generateProfessionalQuotePDF = ({ quote, companyProfile }: PDFGener
       if (quote.client.email) clientContact.push(`Email: ${safeText(quote.client.email)}`);
       
       if (clientContact.length > 0) {
-        clientY = addText(clientContact.join('\n'), leftColX, clientY + 2, {
+        clientY = addText(clientContact.join('\n'), leftColX, clientY + 4, {
           fontSize: 9
         });
       }
@@ -235,7 +235,7 @@ export const generateProfessionalQuotePDF = ({ quote, companyProfile }: PDFGener
       addText(value, rightColX + 25, detailsY, {
         fontSize: 9
       });
-      detailsY += 5;
+      detailsY += 6;
     });
 
     yPosition = Math.max(clientY, detailsY) + 10;
@@ -331,28 +331,67 @@ export const generateProfessionalQuotePDF = ({ quote, companyProfile }: PDFGener
     return yPosition;
   };
 
-  // Simplified totals and terms section
+  // Totals and terms section with left-right layout
   const renderTotals = () => {
     // Create clean grey panel for totals and terms
     const panelStartY = yPosition + 5;
     pdf.setFillColor(248, 248, 248);
     
-    // Calculate panel height for simplified content
+    // Calculate panel height for content
     const panelHeight = 70;
     
     pdf.rect(margin, panelStartY, contentWidth, panelHeight, 'F');
     
-    // Centered totals section at top
-    const centerX = pageWidth / 2;
+    // Left column for terms, right column for totals
+    const leftColX = margin + 10;
+    const rightColX = margin + (contentWidth * 0.6);
     let currentY = panelStartY + 12;
 
-    // Title
-    addText('QUOTE TOTALS', centerX - 25, currentY, {
+    // TERMS & CONDITIONS (left side)
+    addText('TERMS & CONDITIONS', leftColX, currentY, {
+      fontSize: 10,
+      fontStyle: 'bold',
+      color: primaryColor
+    });
+    
+    let termsY = currentY + 6;
+    const simpleTerms = [
+      '• Payment: 50% deposit, balance within 30 days',
+      '• Valid for 30 days from date issued',
+      '• Materials comply with BS 7671:18th Edition',
+      '• 12 months warranty on workmanship'
+    ];
+
+    const termsPerLine = 2;
+    const termWidth = (contentWidth * 0.5) / termsPerLine;
+    
+    for (let i = 0; i < simpleTerms.length; i += termsPerLine) {
+      const leftTerm = simpleTerms[i];
+      const rightTerm = simpleTerms[i + 1];
+      
+      addText(leftTerm, leftColX, termsY, {
+        fontSize: 8,
+        maxWidth: termWidth - 5
+      });
+      
+      if (rightTerm) {
+        addText(rightTerm, leftColX + termWidth, termsY, {
+          fontSize: 8,
+          maxWidth: termWidth - 5
+        });
+      }
+      
+      termsY += 6;
+    }
+
+    // QUOTE TOTALS (right side)
+    addText('QUOTE TOTALS', rightColX, currentY, {
       fontSize: 12,
       fontStyle: 'bold',
       color: primaryColor
     });
-    currentY += 10;
+    
+    let totalsY = currentY + 10;
 
     // Build totals array
     const totalsData = [];
@@ -375,72 +414,34 @@ export const generateProfessionalQuotePDF = ({ quote, companyProfile }: PDFGener
 
     // Display subtotals
     totalsData.forEach(([label, amount]) => {
-      addText(label, centerX - 30, currentY, {
+      addText(label, rightColX, totalsY, {
         fontSize: 10,
         fontStyle: 'normal'
       });
-      addText(amount, centerX + 15, currentY, {
+      addText(amount, rightColX + 35, totalsY, {
         fontSize: 10,
         fontStyle: 'normal'
       });
-      currentY += 6;
+      totalsY += 6;
     });
 
     // Final total with emphasis
-    currentY += 3;
+    totalsY += 3;
     pdf.setDrawColor(primaryColor[0], primaryColor[1], primaryColor[2]);
     pdf.setLineWidth(1);
-    pdf.line(centerX - 35, currentY, centerX + 45, currentY);
-    currentY += 8;
+    pdf.line(rightColX, totalsY, rightColX + 70, totalsY);
+    totalsY += 8;
 
-    addText('TOTAL:', centerX - 30, currentY, {
+    addText('TOTAL:', rightColX, totalsY, {
       fontSize: 14,
       fontStyle: 'bold',
       color: primaryColor
     });
-    addText(formatCurrency(safeNumber(quote.total)), centerX + 15, currentY, {
+    addText(formatCurrency(safeNumber(quote.total)), rightColX + 35, totalsY, {
       fontSize: 14,
       fontStyle: 'bold',
       color: primaryColor
     });
-
-    // Simplified terms below totals
-    currentY += 12;
-    addText('TERMS & CONDITIONS', margin + 10, currentY, {
-      fontSize: 10,
-      fontStyle: 'bold',
-      color: primaryColor
-    });
-    currentY += 6;
-
-    const simpleTerms = [
-      '• Payment: 50% deposit, balance within 30 days',
-      '• Valid for 30 days from date issued',
-      '• Materials comply with BS 7671:18th Edition',
-      '• 12 months warranty on workmanship'
-    ];
-
-    const termsPerLine = 2;
-    const termWidth = (contentWidth - 20) / termsPerLine;
-    
-    for (let i = 0; i < simpleTerms.length; i += termsPerLine) {
-      const leftTerm = simpleTerms[i];
-      const rightTerm = simpleTerms[i + 1];
-      
-      addText(leftTerm, margin + 10, currentY, {
-        fontSize: 8,
-        maxWidth: termWidth - 5
-      });
-      
-      if (rightTerm) {
-        addText(rightTerm, margin + 10 + termWidth, currentY, {
-          fontSize: 8,
-          maxWidth: termWidth - 5
-        });
-      }
-      
-      currentY += 6;
-    }
 
     yPosition = panelStartY + panelHeight + 10;
     return yPosition;
