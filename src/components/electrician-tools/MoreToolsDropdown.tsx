@@ -65,8 +65,8 @@ const MoreToolsDropdown = ({ onTabChange, selectedItemsCount }: MoreToolsDropdow
           </Button>
         </CollapsibleTrigger>
 
-        <CollapsibleContent className="absolute top-full left-0 right-0 md:left-auto md:right-0 z-[9999] mt-2 mx-4 md:mx-0 md:w-80 max-w-[calc(100vw-2rem)] md:max-w-[calc(100vw-1rem)]">
-          <Card className="bg-elec-card border-elec-yellow/20 shadow-lg backdrop-blur-sm">
+        <CollapsibleContent className="fixed top-auto left-4 right-4 md:left-auto md:right-4 md:w-80 z-[9999] mt-2 max-h-[80vh] overflow-auto">
+          <Card className="bg-elec-card/95 border-elec-yellow/20 shadow-xl backdrop-blur-md">
             <CardContent className="p-0">
               <div className="divide-y divide-elec-yellow/10">
                 {tools.map((tool) => {
