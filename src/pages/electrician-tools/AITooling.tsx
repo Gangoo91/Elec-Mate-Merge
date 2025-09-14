@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link } from "react-router-dom";
 import { toolOptions } from "@/components/electrician-tools/ai-tools/constants";
+import DebugToolsButton from "@/components/electrician-tools/DebugToolsButton";
 
 const AITooling = () => {
 
@@ -25,6 +26,10 @@ const AITooling = () => {
                   Back to Electrical Hub
                 </Button>
               </Link>
+              
+              <div className="flex gap-2">
+                <DebugToolsButton />
+              </div>
             </div>
 
             {/* Hero Section */}

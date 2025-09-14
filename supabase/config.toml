@@ -141,3 +141,6 @@ verify_jwt = false
 
 [functions.tools-weekly-refresh]
 verify_jwt = false
+
+[functions.firecrawl-debug-test]
+verify_jwt = false

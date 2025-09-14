@@ -47,7 +47,7 @@ const TOOL_CATEGORIES = {
   }
 };
 
-// Product schema for structured extraction
+// Updated product schema with more flexible extraction
 const productSchema = {
   type: "object",
   properties: {
@@ -56,24 +56,43 @@ const productSchema = {
       items: {
         type: "object",
         properties: {
-          name: { type: "string", description: "Product name" },
-          price: { type: "string", description: "Product price with currency symbol" },
-          availability: { type: "string", description: "Stock status" },
-          image: { type: "string", description: "Product image URL" },
-          productUrl: { type: "string", description: "Link to product page" },
-          description: { type: "string", description: "Product description" },
-          supplier: { type: "string", description: "Supplier name (Screwfix, Toolstation, CEF)" },
-          features: { 
-            type: "array", 
-            items: { type: "string" },
-            description: "Key product features"
+          name: { 
+            type: "string", 
+            description: "Product name, title, or description. Look for product headings, titles in cards, or link text." 
           },
-          specifications: {
-            type: "object",
-            description: "Technical specifications"
+          price: { 
+            type: "string", 
+            description: "Product price including currency symbol (£). Look for price elements, cost displays, or pricing text." 
+          },
+          availability: { 
+            type: "string", 
+            description: "Stock status like 'In Stock', 'Available', 'Out of Stock'. This field is optional." 
+          },
+          image: { 
+            type: "string", 
+            description: "Product image URL or src attribute. This field is optional." 
+          },
+          productUrl: { 
+            type: "string", 
+            description: "Full URL link to the product detail page. This field is optional." 
+          },
+          description: { 
+            type: "string", 
+            description: "Brief product description or features. This field is optional." 
+          },
+          supplier: { 
+            type: "string", 
+            description: "Always set this based on the website domain: 'Screwfix' for screwfix.com, 'Toolstation' for toolstation.com" 
           }
         },
-        required: ["name", "price", "supplier"]
+        required: ["name", "price"]
+      }
+    },
+    pageInfo: {
+      type: "object",
+      properties: {
+        totalFound: { type: "number", description: "Total number of products found on the page" },
+        pageTitle: { type: "string", description: "Title of the webpage" }
       }
     }
   }
@@ -95,36 +114,86 @@ const scrapeCategory = async (firecrawl: FirecrawlApp, category: string, urls: s
       console.log(`📡 Scraping URL: ${url}`);
       const supplier = getSupplierFromUrl(url);
       
+      // First try to get basic content to verify the page loads
+      console.log(`🔍 Testing basic page access for ${url}...`);
+      const basicTest = await firecrawl.scrapeUrl(url, {
+        formats: ['markdown'],
+        timeout: 15000
+      });
+      
+      if (!basicTest.success) {
+        console.error(`❌ Basic page access failed for ${url}:`, basicTest.error);
+        continue; // Skip this URL
+      }
+      
+      console.log(`✅ Basic access successful, content length: ${basicTest.data?.markdown?.length || 0}`);
+      
+      // Now attempt structured extraction with improved prompt
       const crawlResponse = await firecrawl.scrapeUrl(url, {
         formats: ['extract'],
         extract: {
           schema: productSchema,
-          prompt: `Extract ONLY electrical tools and equipment from this ${supplier} page. Focus exclusively on tools used by electricians: wire strippers, crimpers, multimeters, voltage testers, electrical drills, cable tools, conduit benders, electrical safety equipment. EXCLUDE: sealant guns, foam guns, general construction tools, non-electrical items. Include prices, availability, and product details.`
+          prompt: `You are extracting product information from a ${supplier} search results page. 
+
+WHAT TO LOOK FOR:
+- Product cards, tiles, or listings
+- Product names/titles (often in headings or link text)
+- Prices (look for £ symbol, "Price:", cost displays)
+- Any electrical tools, equipment, or supplies
+
+ELECTRICAL TOOLS INCLUDE:
+- Wire strippers, crimpers, electrical pliers
+- Multimeters, voltage testers, electrical testing equipment  
+- Electrical drills, SDS drills, impact drivers
+- Cable strippers, fish tapes, conduit benders
+- Electrical safety equipment, insulated tools
+- Electrical screwdrivers, nut drivers
+- Cable management tools and accessories
+
+EXTRACT ALL PRODUCTS YOU FIND, even if not strictly electrical tools. 
+Set the supplier field to "${supplier}" for all products.
+If you find products but no clear prices, still extract them with price as "Contact for Price" or "See Website".
+
+Focus on quantity over perfect accuracy - we want to see what products are available.`
         },
         timeout: 30000
       });
 
-      if (crawlResponse.success && crawlResponse.extract?.products) {
-        const products = crawlResponse.extract.products.map((product: any) => ({
-          ...product,
-          category,
-          supplier: supplier,
-          lastUpdated: new Date().toISOString(),
-          // Ensure we have required fields
-          availability: product.availability || 'Check Availability',
-          image: product.image || '/placeholder.svg',
-          description: product.description || '',
-          features: product.features || [],
-          specifications: product.specifications || {}
-        }));
+      if (crawlResponse.success && crawlResponse.data?.extract) {
+        const extractedData = crawlResponse.data.extract;
+        console.log(`📋 Raw extraction result:`, JSON.stringify(extractedData, null, 2).substring(0, 500));
         
-        allProducts.push(...products);
-        console.log(`✅ Extracted ${products.length} products from ${supplier}`);
+        if (extractedData.products && Array.isArray(extractedData.products)) {
+          const products = extractedData.products.map((product: any) => ({
+            ...product,
+            category,
+            supplier: supplier,
+            lastUpdated: new Date().toISOString(),
+            // Ensure we have required fields
+            availability: product.availability || 'Check Availability',
+            image: product.image || '/placeholder.svg',
+            description: product.description || '',
+            features: product.features || [],
+            specifications: product.specifications || {}
+          }));
+          
+          allProducts.push(...products);
+          console.log(`✅ Successfully extracted ${products.length} products from ${supplier}`);
+          
+          // Log a sample product for debugging
+          if (products.length > 0) {
+            console.log(`📦 Sample product:`, JSON.stringify(products[0], null, 2));
+          }
+        } else {
+          console.warn(`⚠️ No products array found in extraction result for ${url}`);
+          console.log(`🔍 Available keys in extraction:`, Object.keys(extractedData));
+        }
         
         // Rate limiting between requests
-        await new Promise(resolve => setTimeout(resolve, 2000));
+        await new Promise(resolve => setTimeout(resolve, 3000));
       } else {
-        console.warn(`⚠️ No products found for ${url}`);
+        console.error(`❌ Extraction failed for ${url}:`, crawlResponse.error || 'Unknown error');
+        console.log(`🔍 Response structure:`, JSON.stringify(crawlResponse, null, 2).substring(0, 300));
       }
     } catch (error) {
       console.error(`❌ Error scraping ${url}:`, error);
