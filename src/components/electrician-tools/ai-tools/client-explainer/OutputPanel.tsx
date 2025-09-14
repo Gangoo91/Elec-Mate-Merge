@@ -27,15 +27,29 @@ const OutputPanel = ({ content, settings }: OutputPanelProps) => {
   const processContentForDisplay = (text: string) => {
     if (!text) return text;
     
-    // Add proper line breaks and structure
+    // Clean and structure the text properly
     return text
-      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // Bold formatting
-      .replace(/\*(.*?)\*/g, '<em>$1</em>') // Italic formatting
-      .replace(/BS 7671/g, '<span class="text-elec-yellow font-medium">BS 7671</span>') // Highlight regulations
-      .replace(/(\d{3}\.\d+\.\d+)/g, '<span class="text-blue-400 font-mono text-sm">$1</span>') // Regulation numbers
-      .replace(/(C[123]|FI)/g, '<span class="px-1.5 py-0.5 rounded text-xs font-medium bg-red-500/20 text-red-400">$1</span>') // Classification codes
-      .replace(/\n\n/g, '</p><p class="mb-3">') // Paragraph breaks
-      .replace(/\n/g, '<br/>'); // Line breaks
+      // Remove extra whitespace and normalize line breaks
+      .replace(/\s+/g, ' ')
+      .replace(/\n\s*\n/g, '\n\n')
+      // Format headings
+      .replace(/^(.*?):\s*$/gm, '<h3 class="text-lg font-semibold text-foreground mb-3 mt-6 first:mt-0">$1</h3>')
+      // Format bold text
+      .replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-foreground">$1</strong>')
+      // Format italic text
+      .replace(/\*(.*?)\*/g, '<em class="italic text-foreground/90">$1</em>')
+      // Highlight BS 7671 references
+      .replace(/BS 7671/g, '<span class="text-elec-yellow font-medium bg-elec-yellow/10 px-1 py-0.5 rounded">BS 7671</span>')
+      // Highlight regulation numbers
+      .replace(/(\d{3}\.\d+\.\d+)/g, '<span class="text-blue-400 font-mono text-sm bg-blue-400/10 px-1 py-0.5 rounded">$1</span>')
+      // Highlight classification codes
+      .replace(/(C[123]|FI)/g, '<span class="px-2 py-1 rounded-md text-xs font-semibold bg-red-500/20 text-red-400 border border-red-500/30">$1</span>')
+      // Convert paragraphs
+      .split('\n\n')
+      .map(paragraph => paragraph.trim())
+      .filter(paragraph => paragraph.length > 0)
+      .map(paragraph => `<p class="mb-4 leading-relaxed text-foreground">${paragraph}</p>`)
+      .join('');
   };
 
   const handleCopy = async () => {
@@ -210,11 +224,16 @@ Thank you for choosing our electrical services.`;
               </TabsList>
               
               <TabsContent value="standard" className="mt-4">
-                <div className="mobile-card bg-muted/30 border border-border/50 rounded-lg p-4">
+                <div className="mobile-card bg-muted/30 border border-border/50 rounded-lg p-6">
                   <div 
-                    className="mobile-text leading-relaxed text-foreground"
+                    className="prose prose-sm max-w-none text-foreground leading-7"
+                    style={{ 
+                      fontSize: '15px',
+                      lineHeight: '1.7',
+                      fontFamily: 'system-ui, -apple-system, sans-serif'
+                    }}
                     dangerouslySetInnerHTML={{ 
-                      __html: `<p class="mb-3">${processContentForDisplay(content)}</p>`
+                      __html: processContentForDisplay(content)
                     }}
                   />
                 </div>
@@ -234,11 +253,16 @@ Thank you for choosing our electrical services.`;
                       Open in Email App
                     </Button>
                   </div>
-                  <div className="mobile-card bg-muted/30 border border-border/50 rounded-lg p-4">
+                  <div className="mobile-card bg-muted/30 border border-border/50 rounded-lg p-6">
                     <div 
-                      className="mobile-text leading-relaxed text-foreground"
+                      className="prose prose-sm max-w-none text-foreground leading-7"
+                      style={{ 
+                        fontSize: '15px',
+                        lineHeight: '1.7',
+                        fontFamily: 'system-ui, -apple-system, sans-serif'
+                      }}
                       dangerouslySetInnerHTML={{ 
-                        __html: `<p class="mb-3">${processContentForDisplay(formatForEmail(content))}</p>`
+                        __html: processContentForDisplay(formatForEmail(content))
                       }}
                     />
                   </div>
@@ -259,8 +283,15 @@ Thank you for choosing our electrical services.`;
                       Send Text Message
                     </Button>
                   </div>
-                  <div className="mobile-card bg-muted/30 border border-border/50 rounded-lg p-4">
-                    <div className="mobile-text leading-relaxed text-foreground">
+                  <div className="mobile-card bg-muted/30 border border-border/50 rounded-lg p-6">
+                    <div 
+                      className="text-foreground leading-7"
+                      style={{ 
+                        fontSize: '15px',
+                        lineHeight: '1.7',
+                        fontFamily: 'system-ui, -apple-system, sans-serif'
+                      }}
+                    >
                       {formatForSMS(content)}
                     </div>
                     <div className="mt-3 text-xs text-foreground bg-muted/20 rounded px-2 py-1">
@@ -284,11 +315,16 @@ Thank you for choosing our electrical services.`;
                       Download Document
                     </Button>
                   </div>
-                  <div className="mobile-card bg-muted/30 border border-border/50 rounded-lg p-4">
+                  <div className="mobile-card bg-muted/30 border border-border/50 rounded-lg p-6">
                     <div 
-                      className="mobile-text leading-relaxed text-foreground"
+                      className="prose prose-sm max-w-none text-foreground leading-7"
+                      style={{ 
+                        fontSize: '15px',
+                        lineHeight: '1.7',
+                        fontFamily: 'system-ui, -apple-system, sans-serif'
+                      }}
                       dangerouslySetInnerHTML={{ 
-                        __html: `<p class="mb-3">${processContentForDisplay(formatForQuote(content))}</p>`
+                        __html: processContentForDisplay(formatForQuote(content))
                       }}
                     />
                   </div>
