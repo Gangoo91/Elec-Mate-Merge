@@ -289,10 +289,11 @@ Thank you for choosing our electrical services.`;
                         lineHeight: '1.7',
                         fontFamily: 'system-ui, -apple-system, sans-serif'
                       }}
-                      dangerouslySetInnerHTML={{ 
-                        __html: processContentForDisplay(formatForEmail(content))
-                      }}
-                    />
+                    >
+                      {formatForEmail(content).split('\n').map((line, index) => (
+                        <p key={index} className="mb-4 leading-relaxed text-foreground">{line}</p>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </TabsContent>
