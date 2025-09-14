@@ -1,19 +1,24 @@
 import { useState, useMemo } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Newspaper, AlertTriangle } from "lucide-react";
+import { Newspaper, AlertTriangle, RefreshCw } from "lucide-react";
 import { useIndustryNews, type NewsArticle } from "@/hooks/useIndustryNews";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 import NewsHero from "./NewsHero";
 import NewsGrid from "./NewsGrid";
 import NewsFilters from "./NewsFilters";
 import NewsDetail from "./NewsDetail";
 
 const NewIndustryNewsCard = () => {
-  const { data: articles = [], isLoading, error } = useIndustryNews();
+  const { toast } = useToast();
+  const { data: articles = [], isLoading, error, refetch } = useIndustryNews();
   const [selectedArticle, setSelectedArticle] = useState<NewsArticle | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [sortBy, setSortBy] = useState("newest");
+  const [isScrapingNews, setIsScrapingNews] = useState(false);
 
   // Filter and sort articles
   const filteredAndSortedArticles = useMemo(() => {
@@ -48,6 +53,42 @@ const NewIndustryNewsCard = () => {
 
   const handleReadMore = (article: NewsArticle) => {
     setSelectedArticle(article);
+  };
+
+  const handleRefreshNews = async () => {
+    setIsScrapingNews(true);
+    try {
+      console.log('🔧 Triggering news scraper...');
+      const { data, error } = await supabase.functions.invoke('firecrawl-news-scraper', {
+        body: { trigger: 'manual' }
+      });
+
+      if (error) {
+        console.error('❌ Error calling news scraper:', error);
+        throw error;
+      }
+
+      console.log('✅ News scraper response:', data);
+      
+      toast({
+        title: "News Updated",
+        description: data?.message || "News articles have been refreshed successfully",
+        duration: 5000,
+      });
+
+      // Refresh the news data
+      refetch();
+    } catch (error) {
+      console.error('❌ News refresh failed:', error);
+      toast({
+        title: "Refresh Failed",
+        description: "Failed to refresh news articles. Please try again later.",
+        variant: "destructive",
+        duration: 5000,
+      });
+    } finally {
+      setIsScrapingNews(false);
+    }
   };
 
   if (error) {
@@ -140,17 +181,29 @@ const NewIndustryNewsCard = () => {
           articles={articles}
         />
 
-        {/* Results Summary */}
-        <div className="flex items-center justify-between">
+        {/* Results Summary with Refresh Button */}
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <div className="flex items-center gap-2">
             <Newspaper className="h-5 w-5 text-elec-yellow" />
             <h2 className="text-2xl font-semibold text-elec-yellow">
               Industry News
             </h2>
           </div>
-          <p className="text-sm text-muted-foreground">
-            Showing {filteredAndSortedArticles.length} of {articles.length} articles
-          </p>
+          <div className="flex items-center gap-4">
+            <p className="text-sm text-muted-foreground">
+              Showing {filteredAndSortedArticles.length} of {articles.length} articles
+            </p>
+            <Button
+              onClick={handleRefreshNews}
+              disabled={isScrapingNews}
+              size="sm"
+              variant="outline"
+              className="border-elec-yellow/20 text-elec-yellow hover:bg-elec-yellow/10 hover:border-elec-yellow/40 bg-transparent"
+            >
+              <RefreshCw className={`h-4 w-4 mr-2 ${isScrapingNews ? 'animate-spin' : ''}`} />
+              {isScrapingNews ? 'Updating...' : 'Refresh News'}
+            </Button>
+          </div>
         </div>
 
         {filteredAndSortedArticles.length === 0 ? (

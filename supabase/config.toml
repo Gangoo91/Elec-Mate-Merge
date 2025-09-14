@@ -144,3 +144,6 @@ verify_jwt = false
 
 [functions.firecrawl-debug-test]
 verify_jwt = false
+
+[functions.firecrawl-news-scraper]
+verify_jwt = false
