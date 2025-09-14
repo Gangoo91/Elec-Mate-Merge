@@ -29,33 +29,75 @@ const NewIndustryNewsCard = () => {
   const [sortBy, setSortBy] = useState("newest");
   const [isScrapingNews, setIsScrapingNews] = useState(false);
 
-  // Filter and sort articles
+  // Filter and sort articles with enhanced debugging
   const filteredAndSortedArticles = useMemo(() => {
-    let filtered = articles.filter(article => {
-      const matchesSearch = !searchTerm || 
-        article.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        article.summary.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        article.content.toLowerCase().includes(searchTerm.toLowerCase());
-      
-      const matchesCategory = selectedCategory === "all" || 
-        article.category === selectedCategory;
-      
-      return matchesSearch && matchesCategory;
+    console.log('🔍 Starting filtering process:', {
+      totalArticles: articles.length,
+      searchTerm,
+      selectedCategory,
+      sortBy,
+      sampleArticle: articles[0]
     });
 
-    // Sort articles
-    filtered.sort((a, b) => {
-      switch (sortBy) {
-        case "newest":
-          return new Date(b.date_published).getTime() - new Date(a.date_published).getTime();
-        case "oldest":
-          return new Date(a.date_published).getTime() - new Date(b.date_published).getTime();
-        case "title":
-          return a.title.localeCompare(b.title);
-        default:
-          return 0;
+    // Emergency fallback - if no articles, return empty array
+    if (!articles || articles.length === 0) {
+      console.warn('⚠️ No articles to filter');
+      return [];
+    }
+
+    let filtered = articles.filter(article => {
+      // Debug each article filtering
+      const matchesSearch = !searchTerm || 
+        (article.title && article.title.toLowerCase().includes(searchTerm.toLowerCase())) ||
+        (article.summary && article.summary.toLowerCase().includes(searchTerm.toLowerCase())) ||
+        (article.content && article.content.toLowerCase().includes(searchTerm.toLowerCase()));
+      
+      const matchesCategory = selectedCategory === "all" || 
+        (article.category && article.category === selectedCategory);
+      
+      const passes = matchesSearch && matchesCategory;
+      
+      if (!passes) {
+        console.log(`❌ Article filtered out: "${article.title}" - Search: ${matchesSearch}, Category: ${matchesCategory}`);
       }
+      
+      return passes;
     });
+
+    console.log(`✅ After filtering: ${filtered.length} articles remain`);
+
+    // Sort articles with error handling
+    try {
+      filtered.sort((a, b) => {
+        switch (sortBy) {
+          case "newest":
+            const dateA = new Date(a.date_published);
+            const dateB = new Date(b.date_published);
+            if (isNaN(dateA.getTime()) || isNaN(dateB.getTime())) {
+              console.warn('⚠️ Invalid date found during sorting:', { a: a.date_published, b: b.date_published });
+              return 0;
+            }
+            return dateB.getTime() - dateA.getTime();
+          case "oldest":
+            const dateA2 = new Date(a.date_published);
+            const dateB2 = new Date(b.date_published);
+            if (isNaN(dateA2.getTime()) || isNaN(dateB2.getTime())) {
+              console.warn('⚠️ Invalid date found during sorting:', { a: a.date_published, b: b.date_published });
+              return 0;
+            }
+            return dateA2.getTime() - dateB2.getTime();
+          case "title":
+            return (a.title || '').localeCompare(b.title || '');
+          default:
+            return 0;
+        }
+      });
+    } catch (error) {
+      console.error('❌ Error during sorting:', error);
+      // If sorting fails, return unsorted filtered results
+    }
+
+    console.log(`🎯 Final filtered & sorted articles: ${filtered.length}`, filtered.map(a => ({ title: a.title, category: a.category, date: a.date_published })));
 
     return filtered;
   }, [articles, searchTerm, selectedCategory, sortBy]);
@@ -151,6 +193,16 @@ const NewIndustryNewsCard = () => {
     );
   }
 
+  // TEMPORARY: Show articles even if filtering fails
+  const displayArticles = filteredAndSortedArticles.length > 0 ? filteredAndSortedArticles : articles;
+  
+  console.log('📊 Display decision:', {
+    filteredCount: filteredAndSortedArticles.length,
+    totalCount: articles.length,
+    willDisplay: displayArticles.length,
+    usingFallback: filteredAndSortedArticles.length === 0 && articles.length > 0
+  });
+
   if (articles.length === 0) {
     return (
       <Card className="w-full bg-elec-dark border-elec-yellow/20">
@@ -173,8 +225,8 @@ const NewIndustryNewsCard = () => {
     );
   }
 
-  const heroArticle = filteredAndSortedArticles[0];
-  const remainingArticles = filteredAndSortedArticles.slice(1);
+  const heroArticle = displayArticles[0];
+  const remainingArticles = displayArticles.slice(1);
 
   return (
     <>
@@ -200,7 +252,10 @@ const NewIndustryNewsCard = () => {
           </div>
           <div className="flex items-center gap-4">
             <p className="text-sm text-muted-foreground">
-              Showing {filteredAndSortedArticles.length} of {articles.length} articles
+              Showing {displayArticles.length} of {articles.length} articles
+              {displayArticles.length !== filteredAndSortedArticles.length && (
+                <span className="text-yellow-400 ml-2">(fallback mode)</span>
+              )}
             </p>
             <Button
               onClick={handleRefreshNews}
@@ -215,7 +270,7 @@ const NewIndustryNewsCard = () => {
           </div>
         </div>
 
-        {filteredAndSortedArticles.length === 0 ? (
+        {displayArticles.length === 0 ? (
           <div className="text-center py-12">
             <Newspaper className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
             <p className="text-lg text-muted-foreground mb-2">
