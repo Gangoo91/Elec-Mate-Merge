@@ -217,13 +217,13 @@ const ToolCategoryDisplay = ({ categoryName }: ToolCategoryDisplayProps) => {
                 )}
                 
                 {tool.highlights && tool.highlights.length > 0 && (
-                  <div className="space-y-1">
+                  <ul className="space-y-1.5 list-disc pl-4">
                     {tool.highlights.slice(0, 3).map((highlight, idx) => (
-                      <div key={idx} className="text-xs text-muted-foreground">
-                        • {highlight}
-                      </div>
+                      <li key={idx} className="text-xs text-muted-foreground leading-relaxed">
+                        {highlight}
+                      </li>
                     ))}
-                  </div>
+                  </ul>
                 )}
                 
                 <div className="flex items-center justify-between pt-2">

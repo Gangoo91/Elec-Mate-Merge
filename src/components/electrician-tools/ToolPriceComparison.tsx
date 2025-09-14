@@ -226,11 +226,10 @@ const ToolPriceComparison: React.FC<ToolPriceComparisonProps> = ({
               {tool.highlights && tool.highlights.length > 0 && (
                 <div className="space-y-2">
                   <h4 className="font-medium text-sm">Key Features</h4>
-                  <ul className="text-xs space-y-1">
+                  <ul className="text-xs space-y-1.5 list-disc pl-4">
                     {tool.highlights.slice(0, 3).map((highlight, idx) => (
-                      <li key={idx} className="flex items-start gap-2">
-                        <span className="w-1 h-1 bg-elec-yellow rounded-full mt-1.5 flex-shrink-0"></span>
-                        <span className="text-muted-foreground">{highlight}</span>
+                      <li key={idx} className="leading-relaxed text-muted-foreground">
+                        {highlight}
                       </li>
                     ))}
                   </ul>
