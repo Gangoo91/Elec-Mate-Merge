@@ -30,17 +30,37 @@ const fetchIndustryNews = async (): Promise<NewsArticle[]> => {
     throw new Error(error.message || 'Failed to fetch news data');
   }
 
-  console.log(`✅ Fetched ${data?.length || 0} news articles`, data);
-  return data || [];
+  console.log(`✅ Raw Supabase response:`, { data, dataLength: data?.length, error });
+  console.log(`✅ First article sample:`, data?.[0]);
+  
+  if (!data || data.length === 0) {
+    console.warn('⚠️ No articles returned from database');
+    return [];
+  }
+  
+  console.log(`✅ Successfully fetched ${data.length} news articles`);
+  return data;
 };
 
 export const useIndustryNews = () => {
-  return useQuery({
-    queryKey: ['industry-news'],
+  const query = useQuery({
+    queryKey: ['industry-news-debug'], // Changed key to force fresh query
     queryFn: fetchIndustryNews,
     staleTime: 0, // Force fresh data for debugging
     gcTime: 5 * 60 * 1000, // 5 minutes
     refetchOnWindowFocus: true,
     refetchOnReconnect: true,
+    retry: 1,
   });
+  
+  console.log('🔍 useIndustryNews hook state:', {
+    isLoading: query.isLoading,
+    isError: query.isError,
+    error: query.error,
+    dataLength: query.data?.length,
+    status: query.status,
+    fetchStatus: query.fetchStatus
+  });
+  
+  return query;
 };

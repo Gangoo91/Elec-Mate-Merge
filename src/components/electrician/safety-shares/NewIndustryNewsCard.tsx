@@ -14,6 +14,15 @@ import NewsDetail from "./NewsDetail";
 const NewIndustryNewsCard = () => {
   const { toast } = useToast();
   const { data: articles = [], isLoading, error, refetch } = useIndustryNews();
+  
+  // Enhanced debugging
+  console.log('📰 NewIndustryNewsCard render:', {
+    articlesCount: articles.length,
+    isLoading,
+    hasError: !!error,
+    errorMessage: error?.message,
+    firstArticle: articles[0]?.title
+  });
   const [selectedArticle, setSelectedArticle] = useState<NewsArticle | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
