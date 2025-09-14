@@ -10,7 +10,6 @@ import {
   MapPin, 
   Phone, 
   Calendar,
-  Sparkles,
   CheckCircle2,
   AlertCircle,
   Lightbulb
@@ -93,25 +92,6 @@ const ClientDetailsStep: React.FC<ClientDetailsStepProps> = ({
     });
   };
 
-  const handleQuickFill = () => {
-    const quickFillData = {
-      clientName: "Smith Electrical Ltd",
-      clientAddress: "123 High Street, London, SW1A 1AA",
-      clientPhone: "020 7123 4567",
-      installationAddress: "456 Oak Avenue, London, SW2B 2BB",
-      installationDescription: "Domestic dwelling - 3 bedroom house",
-      estimatedAge: "10-20 years",
-      earthingArrangements: "TN-C-S (PME)",
-      supplyCharacteristics: "230V 50Hz Single Phase",
-      mainSwitchRating: "100A DP"
-    };
-
-    setFormData(prev => ({ ...prev, ...quickFillData }));
-    toast({
-      title: "Demo data filled",
-      description: "Form has been filled with sample data for demonstration.",
-    });
-  };
 
   const propertyTypeOptions = [
     { value: "domestic-house", label: "Domestic House" },
@@ -180,18 +160,6 @@ const ClientDetailsStep: React.FC<ClientDetailsStepProps> = ({
           </div>
         </div>
 
-        {/* Quick Fill Button */}
-        <div className="mt-4 flex justify-end">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={handleQuickFill}
-            className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
-          >
-            <Sparkles className="h-4 w-4 mr-2" />
-            Quick Fill Demo Data
-          </Button>
-        </div>
       </Card>
 
       {/* Form Sections */}
