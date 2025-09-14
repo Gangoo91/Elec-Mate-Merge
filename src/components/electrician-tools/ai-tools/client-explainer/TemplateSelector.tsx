@@ -104,38 +104,38 @@ const TemplateSelector = ({ onSelectTemplate }: TemplateSelectorProps) => {
           return (
             <Card 
               key={template.id} 
-              className="cursor-pointer hover:bg-card/80 border-border/50 transition-all duration-200"
+              className="cursor-pointer hover:bg-card/80 border-border/50 transition-all duration-200 mobile-card touch-target"
               onClick={() => onSelectTemplate(template)}
             >
-              <CardHeader className="pb-2">
-                <div className="flex items-start justify-between">
-                  <div className="flex items-center space-x-2">
-                    <div className="w-8 h-8 rounded-lg bg-muted flex items-center justify-center">
+              <CardHeader className="pb-2 mobile-padding">
+                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2">
+                  <div className="flex items-start space-x-2 flex-1 min-w-0">
+                    <div className="w-8 h-8 rounded-lg bg-muted flex items-center justify-center flex-shrink-0">
                       <Icon className="h-4 w-4 text-elec-yellow" />
                     </div>
-                    <div>
-                      <CardTitle className="text-sm">{template.title}</CardTitle>
-                      <p className="text-xs text-muted-foreground">{template.description}</p>
+                    <div className="flex-1 min-w-0">
+                      <CardTitle className="text-sm text-foreground truncate">{template.title}</CardTitle>
+                      <p className="text-xs text-foreground/70 line-clamp-2 sm:line-clamp-1">{template.description}</p>
                     </div>
                   </div>
-                  <div className="flex gap-1">
-                    <Badge variant="outline" className={getCategoryColor(template.category)}>
+                  <div className="flex gap-1 flex-shrink-0 self-start">
+                    <Badge variant="outline" className={`${getCategoryColor(template.category)} text-xs px-1.5 py-0.5`}>
                       {template.category.toUpperCase()}
                     </Badge>
-                    <Badge variant="outline" className={getUrgencyColor(template.urgency)}>
+                    <Badge variant="outline" className={`${getUrgencyColor(template.urgency)} text-xs px-1.5 py-0.5`}>
                       {template.urgency}
                     </Badge>
                   </div>
                 </div>
               </CardHeader>
-              <CardContent className="pt-0">
-                <p className="text-xs text-muted-foreground line-clamp-2">
+              <CardContent className="pt-0 mobile-padding">
+                <p className="text-xs text-foreground/70 line-clamp-2 mb-3">
                   {template.sample}
                 </p>
                 <Button 
                   variant="ghost" 
                   size="sm" 
-                  className="mt-2 text-elec-yellow hover:bg-elec-yellow/10 w-full"
+                  className="text-elec-yellow hover:bg-elec-yellow/10 w-full touch-target mobile-tap-highlight"
                 >
                   Use Template
                 </Button>
