@@ -40,7 +40,7 @@ const OutputPanel = ({ content, settings }: OutputPanelProps) => {
       
       // Check if it's a heading (ends with colon or is short and caps)
       if (formatted.endsWith(':') || (formatted.length < 50 && formatted === formatted.toUpperCase())) {
-        return `<h3 class="text-xl font-bold text-foreground mb-4 mt-6 first:mt-0">${formatted}</h3>`;
+        return `<h3 class="text-xl font-bold text-foreground mb-6 mt-8 first:mt-0">${formatted}</h3>`;
       }
       
       // Format special terms
@@ -56,17 +56,17 @@ const OutputPanel = ({ content, settings }: OutputPanelProps) => {
       
       if (sentences.length > 2) {
         // Create bullet points for multiple sentences
-        return '<ul class="space-y-2 mb-6 ml-4">' + 
+        return '<ul class="space-y-4 mb-8 ml-0 list-none">' + 
           sentences.map(sentence => {
             const clean = sentence.trim();
             if (!clean) return '';
             const withPeriod = clean.endsWith('.') ? clean : clean + '.';
-            return `<li class="text-foreground leading-relaxed">${withPeriod}</li>`;
+            return `<li class="text-foreground leading-loose pl-6 relative before:content-['•'] before:absolute before:left-0 before:text-elec-yellow before:font-bold">${withPeriod}</li>`;
           }).filter(s => s).join('') + 
         '</ul>';
       } else {
         // Keep as paragraph for short content
-        return `<p class="text-foreground leading-relaxed mb-4">${formatted}</p>`;
+        return `<p class="text-foreground leading-loose mb-6 text-base">${formatted}</p>`;
       }
     }).join('');
   };
