@@ -111,16 +111,6 @@ export const materialCategories = [
     id: "specialist",
     name: "Specialist Systems",
     subcategories: ["Swimming Pool Equipment", "Garden Lighting", "Temporary Supplies", "Stage Lighting", "Agricultural Systems", "Caravan Supplies", "Boat Electrics", "Workshop Equipment", "Garage Supplies", "Shed Electrics"]
-  },
-  {
-    id: "testing",
-    name: "Testing & Certification",
-    subcategories: ["Testing Equipment", "Certificates", "Inspection Tools", "PAT Testing", "RCD Testing", "Insulation Testing", "Earth Loop Testing", "Calibration", "Test Labels", "Compliance Documents"]
-  },
-  {
-    id: "safety-ppe",
-    name: "Safety & PPE",
-    subcategories: ["Hard Hats", "Safety Boots", "High Vis Clothing", "Voltage Testers", "Lockout Devices", "Safety Signs", "First Aid Kits", "Protective Gloves", "Safety Glasses", "Rescue Equipment"]
   }
 ];
 
@@ -133,7 +123,7 @@ const baseMaterials: MaterialItem[] = [
     category: "cables",
     subcategory: "Twin & Earth",
     unit: "metre",
-    defaultPrice: 0.95,
+    defaultPrice: 1.05,
     code: "TE0.5"
   },
   {
@@ -142,7 +132,7 @@ const baseMaterials: MaterialItem[] = [
     category: "cables",
     subcategory: "Twin & Earth",
     unit: "metre",
-    defaultPrice: 1.15,
+    defaultPrice: 1.25,
     code: "TE1.0"
   },
   {
@@ -151,7 +141,7 @@ const baseMaterials: MaterialItem[] = [
     category: "cables",
     subcategory: "Twin & Earth",
     unit: "metre",
-    defaultPrice: 1.35,
+    defaultPrice: 1.45,
     code: "TE1.5"
   },
   {
@@ -160,7 +150,7 @@ const baseMaterials: MaterialItem[] = [
     category: "cables",
     subcategory: "Twin & Earth",
     unit: "metre",
-    defaultPrice: 2.05,
+    defaultPrice: 2.15,
     code: "TE2.5"
   },
   {
@@ -169,7 +159,7 @@ const baseMaterials: MaterialItem[] = [
     category: "cables",
     subcategory: "Twin & Earth",
     unit: "metre",
-    defaultPrice: 3.25,
+    defaultPrice: 3.45,
     code: "TE4.0"
   },
   {
@@ -687,8 +677,17 @@ const baseMaterials: MaterialItem[] = [
     category: "distribution",
     subcategory: "Consumer Units",
     unit: "each",
-    defaultPrice: 85.00,
+    defaultPrice: 165.00,
     code: "CU6W"
+  },
+  {
+    id: "consumer-unit-8w",
+    name: "8 Way Consumer Unit (Metal)",
+    category: "distribution",
+    subcategory: "Consumer Units",
+    unit: "each",
+    defaultPrice: 185.00,
+    code: "CU8W"
   },
   {
     id: "consumer-unit-10w",
@@ -696,8 +695,35 @@ const baseMaterials: MaterialItem[] = [
     category: "distribution", 
     subcategory: "Consumer Units",
     unit: "each",
-    defaultPrice: 125.00,
+    defaultPrice: 215.00,
     code: "CU10W"
+  },
+  {
+    id: "consumer-unit-12w",
+    name: "12 Way Consumer Unit (Metal)",
+    category: "distribution",
+    subcategory: "Consumer Units",
+    unit: "each",
+    defaultPrice: 245.00,
+    code: "CU12W"
+  },
+  {
+    id: "consumer-unit-14w",
+    name: "14 Way Consumer Unit (Metal)",
+    category: "distribution",
+    subcategory: "Consumer Units",
+    unit: "each",
+    defaultPrice: 275.00,
+    code: "CU14W"
+  },
+  {
+    id: "consumer-unit-16w",
+    name: "16 Way Consumer Unit (Metal)",
+    category: "distribution",
+    subcategory: "Consumer Units",
+    unit: "each",
+    defaultPrice: 305.00,
+    code: "CU16W"
   },
   {
     id: "consumer-unit-18w",
@@ -705,8 +731,17 @@ const baseMaterials: MaterialItem[] = [
     category: "distribution",
     subcategory: "Consumer Units",
     unit: "each",
-    defaultPrice: 185.00,
+    defaultPrice: 335.00,
     code: "CU18W"
+  },
+  {
+    id: "consumer-unit-20w",
+    name: "20 Way Consumer Unit (Metal)",
+    category: "distribution",
+    subcategory: "Consumer Units",
+    unit: "each",
+    defaultPrice: 365.00,
+    code: "CU20W"
   },
   {
     id: "mcb-6a-b",
@@ -714,7 +749,7 @@ const baseMaterials: MaterialItem[] = [
     category: "distribution",
     subcategory: "MCBs",
     unit: "each",
-    defaultPrice: 8.50,
+    defaultPrice: 12.50,
     code: "MCB6B"
   },
   {
@@ -723,7 +758,7 @@ const baseMaterials: MaterialItem[] = [
     category: "distribution",
     subcategory: "MCBs",
     unit: "each", 
-    defaultPrice: 9.25,
+    defaultPrice: 15.50,
     code: "MCB16B"
   },
   {
@@ -732,7 +767,7 @@ const baseMaterials: MaterialItem[] = [
     category: "distribution",
     subcategory: "MCBs",
     unit: "each",
-    defaultPrice: 9.75,
+    defaultPrice: 16.50,
     code: "MCB20B"
   },
   {
@@ -741,7 +776,7 @@ const baseMaterials: MaterialItem[] = [
     category: "distribution",
     subcategory: "MCBs",
     unit: "each", 
-    defaultPrice: 13.50,
+    defaultPrice: 18.50,
     code: "MCB32B"
   },
   {
@@ -750,7 +785,7 @@ const baseMaterials: MaterialItem[] = [
     category: "distribution",
     subcategory: "MCBs",
     unit: "each",
-    defaultPrice: 15.25,
+    defaultPrice: 22.00,
     code: "MCB40B"
   },
   {
@@ -759,7 +794,7 @@ const baseMaterials: MaterialItem[] = [
     category: "distribution",
     subcategory: "MCBs",
     unit: "each",
-    defaultPrice: 18.50,
+    defaultPrice: 25.50,
     code: "MCB50B"
   },
   {
@@ -768,7 +803,7 @@ const baseMaterials: MaterialItem[] = [
     category: "distribution",
     subcategory: "RCDs",
     unit: "each",
-    defaultPrice: 52.00,
+    defaultPrice: 75.00,
     code: "RCD30-63"
   },
   {
@@ -777,7 +812,7 @@ const baseMaterials: MaterialItem[] = [
     category: "distribution",
     subcategory: "RCDs",
     unit: "each",
-    defaultPrice: 65.00,
+    defaultPrice: 85.00,
     code: "RCD30-100"
   },
   {
@@ -786,7 +821,7 @@ const baseMaterials: MaterialItem[] = [
     category: "distribution",
     subcategory: "RCBOs",
     unit: "each",
-    defaultPrice: 28.50,
+    defaultPrice: 45.00,
     code: "RCBO20"
   },
   {
@@ -795,7 +830,7 @@ const baseMaterials: MaterialItem[] = [
     category: "distribution",
     subcategory: "RCBOs", 
     unit: "each",
-    defaultPrice: 32.50,
+    defaultPrice: 52.00,
     code: "RCBO32"
   },
   {

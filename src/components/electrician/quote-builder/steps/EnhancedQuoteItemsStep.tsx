@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -7,7 +7,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { DropdownTabs } from "@/components/ui/dropdown-tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
-import { Plus, Trash2, Wrench, Package, Zap, Clock, FileText, Copy, TrendingUp, Tag, Hash, DollarSign, Ruler, MessageSquare, RotateCcw } from "lucide-react";
+import { Plus, Trash2, Wrench, Package, Zap, Clock, FileText, Copy, TrendingUp, Tag, Hash, DollarSign, Ruler, MessageSquare, RotateCcw, Search } from "lucide-react";
 import { MobileInputWrapper } from "@/components/ui/mobile-input-wrapper";
 import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
 import { Switch } from "@/components/ui/switch";
@@ -46,6 +46,8 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
     equipmentCode: "",
     notes: ""
   });
+
+  const [materialSearch, setMaterialSearch] = useState("");
 
 
   const handleTemplateSelect = (template: JobTemplate) => {
@@ -182,6 +184,29 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
     }
     return [];
   };
+
+  // Filter materials based on search and category
+  const filteredMaterials = useMemo(() => {
+    let filtered = commonMaterials;
+
+    // Filter by category if selected
+    if (newItem.subcategory) {
+      filtered = filtered.filter(m => m.category === newItem.subcategory);
+    }
+
+    // Filter by search term
+    if (materialSearch.trim().length >= 2) {
+      const searchTerm = materialSearch.toLowerCase();
+      filtered = filtered.filter(material => 
+        material.name.toLowerCase().includes(searchTerm) ||
+        material.category.toLowerCase().includes(searchTerm) ||
+        material.subcategory.toLowerCase().includes(searchTerm) ||
+        (material.code && material.code.toLowerCase().includes(searchTerm))
+      );
+    }
+
+    return filtered;
+  }, [materialSearch, newItem.subcategory]);
 
   const total = items.reduce((sum, item) => sum + item.totalPrice, 0);
 
@@ -320,14 +345,35 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
                         </div>
                       )}
                       
+                      {/* Search Materials */}
+                      <div className="space-y-2">
+                        <Label htmlFor="materialSearch" className="text-sm font-medium flex items-center gap-2">
+                          <Search className="h-4 w-4" />
+                          Search Materials
+                        </Label>
+                        <Input
+                          id="materialSearch"
+                          placeholder="Search by name, category, or code..."
+                          value={materialSearch}
+                          onChange={(e) => setMaterialSearch(e.target.value)}
+                          className="h-12"
+                        />
+                        {materialSearch.length >= 2 && (
+                          <p className="text-xs text-muted-foreground">
+                            Found {filteredMaterials.length} material{filteredMaterials.length !== 1 ? 's' : ''}
+                          </p>
+                        )}
+                      </div>
+
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="space-y-2">
                           <Label htmlFor="materialCategory" className="text-sm font-medium">Material Category</Label>
-                          <Select value={newItem.subcategory} onValueChange={(value) => setNewItem(prev => ({ ...prev, subcategory: value }))}>
+                          <Select value={newItem.subcategory} onValueChange={(value) => setNewItem(prev => ({ ...prev, subcategory: value, materialCode: "" }))}>
                             <SelectTrigger className="h-12">
                               <SelectValue placeholder="Select category" />
                             </SelectTrigger>
                             <SelectContent className="z-50 bg-background border shadow-lg">
+                              <SelectItem value="">All Categories</SelectItem>
                               {materialCategories.map(cat => (
                                 <SelectItem key={cat.id} value={cat.id}>{cat.name}</SelectItem>
                               ))}
@@ -339,18 +385,18 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
                         <Label htmlFor="material" className="text-sm font-medium">Material</Label>
                         <Select value={newItem.materialCode} onValueChange={handleMaterialSelect}>
                           <SelectTrigger className="h-12">
-                            <SelectValue placeholder="Select material" />
+                            <SelectValue placeholder={filteredMaterials.length > 0 ? "Select material" : "No materials found"} />
                           </SelectTrigger>
-                           <SelectContent className="z-50 bg-background border shadow-lg">
-                             {commonMaterials
-                               .filter(m => !newItem.subcategory || m.category === newItem.subcategory)
-                               .map(material => {
+                           <SelectContent className="z-50 bg-background border shadow-lg max-h-[300px]">
+                             {filteredMaterials.length > 0 ? (
+                               filteredMaterials.map(material => {
                                  const adjustedPrice = calculateAdjustedPrice ? calculateAdjustedPrice(material.defaultPrice) : material.defaultPrice;
                                  return (
                                    <SelectItem key={material.id} value={material.id}>
                                      <div className="flex flex-col">
                                        <span>{material.name}</span>
                                        <span className="text-xs text-muted-foreground">
+                                         {material.code && `${material.code} | `}
                                          {priceAdjustment > 0 ? (
                                            <>Base: £{material.defaultPrice.toFixed(2)} | Adjusted: £{adjustedPrice.toFixed(2)} (+{priceAdjustment}%)</>
                                          ) : (
@@ -360,7 +406,12 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
                                      </div>
                                    </SelectItem>
                                  );
-                               })}
+                               })
+                             ) : (
+                               <SelectItem value="" disabled>
+                                 No materials found
+                               </SelectItem>
+                             )}
                            </SelectContent>
                         </Select>
                       </div>

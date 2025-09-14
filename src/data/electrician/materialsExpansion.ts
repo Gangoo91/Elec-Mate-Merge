@@ -366,7 +366,7 @@ export const additionalMaterials: MaterialItem[] = [
     category: "ev-charging",
     subcategory: "EV Charge Points",
     unit: "each",
-    defaultPrice: 485.00,
+    defaultPrice: 525.00,
     code: "EVCP7KW"
   },
   {
@@ -375,7 +375,7 @@ export const additionalMaterials: MaterialItem[] = [
     category: "ev-charging",
     subcategory: "EV Charge Points",
     unit: "each",
-    defaultPrice: 1250.00,
+    defaultPrice: 1385.00,
     code: "EVCP22KW"
   },
   {
@@ -806,13 +806,386 @@ export const additionalMaterials: MaterialItem[] = [
     defaultPrice: 65.00,
     code: "VOLTTEST"
   },
+  // =============== HEATING & HVAC (25 items) ===============
   {
-    id: "lockout-kit",
-    name: "Electrical Lockout Kit",
-    category: "safety-ppe",
-    subcategory: "Lockout Devices",
+    id: "electric-boiler-12kw",
+    name: "12kW Electric Combi Boiler",
+    category: "heating",
+    subcategory: "Electric Boilers",
+    unit: "each",
+    defaultPrice: 1485.00,
+    code: "EBOILER12KW"
+  },
+  {
+    id: "electric-boiler-18kw",
+    name: "18kW Electric System Boiler",
+    category: "heating",
+    subcategory: "Electric Boilers",
+    unit: "each",
+    defaultPrice: 1885.00,
+    code: "EBOILER18KW"
+  },
+  {
+    id: "heat-pump-air-source",
+    name: "Air Source Heat Pump 8kW",
+    category: "heating",
+    subcategory: "Heat Pumps",
+    unit: "each",
+    defaultPrice: 4250.00,
+    code: "ASHP8KW"
+  },
+  {
+    id: "underfloor-mat-10m",
+    name: "Underfloor Heating Mat 10m²",
+    category: "heating",
+    subcategory: "Underfloor Heating",
+    unit: "each",
+    defaultPrice: 485.00,
+    code: "UFH10M"
+  },
+  {
+    id: "thermostat-smart-wifi",
+    name: "Smart WiFi Thermostat",
+    category: "heating",
+    subcategory: "Thermostats",
+    unit: "each",
+    defaultPrice: 185.00,
+    code: "THERMOSMART"
+  },
+  {
+    id: "immersion-3kw",
+    name: "3kW Immersion Heater Element",
+    category: "heating",
+    subcategory: "Immersion Heaters",
+    unit: "each",
+    defaultPrice: 45.00,
+    code: "IMM3KW"
+  },
+  {
+    id: "storage-heater-2kw",
+    name: "2kW Storage Heater",
+    category: "heating",
+    subcategory: "Storage Heaters",
+    unit: "each",
+    defaultPrice: 385.00,
+    code: "STORAGE2KW"
+  },
+  {
+    id: "towel-rail-electric",
+    name: "Electric Towel Rail 600W",
+    category: "heating",
+    subcategory: "Towel Rails",
+    unit: "each",
+    defaultPrice: 165.00,
+    code: "TOWEL600W"
+  },
+
+  // =============== RENEWABLE ENERGY (20 items) ===============
+  {
+    id: "solar-panel-450w",
+    name: "450W Solar Panel Monocrystalline",
+    category: "renewable-energy",
+    subcategory: "Solar Panels",
+    unit: "each",
+    defaultPrice: 285.00,
+    code: "SOLAR450W"
+  },
+  {
+    id: "inverter-hybrid-5kw",
+    name: "5kW Hybrid Solar Inverter",
+    category: "renewable-energy",
+    subcategory: "Inverters",
+    unit: "each",
+    defaultPrice: 1485.00,
+    code: "INV5KWHYB"
+  },
+  {
+    id: "battery-lithium-10kwh",
+    name: "10kWh Lithium Battery Storage",
+    category: "renewable-energy",
+    subcategory: "Battery Storage",
+    unit: "each",
+    defaultPrice: 4850.00,
+    code: "BATT10KWH"
+  },
+  {
+    id: "generation-meter-ct",
+    name: "CT Generation Meter",
+    category: "renewable-energy",
+    subcategory: "Generation Meters",
+    unit: "each",
+    defaultPrice: 185.00,
+    code: "GENMETCT"
+  },
+  {
+    id: "pv-optimizer",
+    name: "PV Power Optimizer",
+    category: "renewable-energy",
+    subcategory: "Monitoring Systems",
+    unit: "each",
+    defaultPrice: 85.00,
+    code: "PVOPT"
+  },
+  {
+    id: "dc-isolator-32a",
+    name: "32A DC Isolator Switch",
+    category: "renewable-energy",
+    subcategory: "DC Isolators",
+    unit: "each",
+    defaultPrice: 65.00,
+    code: "DCISO32A"
+  },
+
+  // =============== DATA & COMMUNICATIONS (15 items) ===============
+  {
+    id: "network-switch-24p",
+    name: "24 Port Gigabit Switch",
+    category: "data-comms",
+    subcategory: "Network Equipment",
+    unit: "each",
+    defaultPrice: 285.00,
+    code: "SW24P"
+  },
+  {
+    id: "wifi-access-point-6",
+    name: "WiFi 6 Access Point",
+    category: "data-comms",
+    subcategory: "Wi-Fi Access Points",
+    unit: "each",
+    defaultPrice: 185.00,
+    code: "WAP6"
+  },
+  {
+    id: "patch-panel-24p",
+    name: "24 Port Cat6 Patch Panel",
+    category: "data-comms",
+    subcategory: "Patch Panels",
+    unit: "each",
+    defaultPrice: 85.00,
+    code: "PP24CAT6"
+  },
+  {
+    id: "hdmi-matrix-4x4",
+    name: "4x4 HDMI Matrix Switch",
+    category: "data-comms",
+    subcategory: "HDMI Systems",
+    unit: "each",
+    defaultPrice: 385.00,
+    code: "HDMI4X4"
+  },
+  {
+    id: "network-cabinet-12u",
+    name: "12U Network Cabinet",
+    category: "data-comms",
+    subcategory: "Network Cabinets",
+    unit: "each",
+    defaultPrice: 485.00,
+    code: "CAB12U"
+  },
+
+  // =============== SPECIALIST SYSTEMS (15 items) ===============
+  {
+    id: "pool-light-led-12v",
+    name: "12V LED Pool Light",
+    category: "specialist",
+    subcategory: "Swimming Pool Equipment",
+    unit: "each",
+    defaultPrice: 185.00,
+    code: "POOLLED12V"
+  },
+  {
+    id: "pool-pump-timer",
+    name: "Pool Pump Timer Control",
+    category: "specialist",
+    subcategory: "Swimming Pool Equipment",
     unit: "each",
     defaultPrice: 125.00,
-    code: "LOCKOUT"
+    code: "POOLTIMER"
+  },
+  {
+    id: "garden-spike-lights",
+    name: "LED Garden Spike Lights (6 Pack)",
+    category: "specialist",
+    subcategory: "Garden Lighting",
+    unit: "pack",
+    defaultPrice: 85.00,
+    code: "GARSPIKE6"
+  },
+  {
+    id: "temporary-distribution",
+    name: "Temporary Distribution Unit",
+    category: "specialist",
+    subcategory: "Temporary Supplies",
+    unit: "each",
+    defaultPrice: 285.00,
+    code: "TEMPDIST"
+  },
+  {
+    id: "agricultural-socket-ip67",
+    name: "IP67 Agricultural Socket 32A",
+    category: "specialist",
+    subcategory: "Agricultural Systems",
+    unit: "each",
+    defaultPrice: 65.00,
+    code: "AGSOCK32"
+  },
+
+  // =============== INDUSTRIAL & COMMERCIAL (20 items) ===============
+  {
+    id: "contactor-100a-3p",
+    name: "100A 3 Pole Contactor",
+    category: "industrial",
+    subcategory: "Contactors",
+    unit: "each",
+    defaultPrice: 185.00,
+    code: "CONT100A"
+  },
+  {
+    id: "motor-starter-dol-15kw",
+    name: "15kW DOL Motor Starter",
+    category: "industrial",
+    subcategory: "DOL Starters",
+    unit: "each",
+    defaultPrice: 285.00,
+    code: "DOL15KW"
+  },
+  {
+    id: "transformer-10kva",
+    name: "10kVA Distribution Transformer",
+    category: "industrial",
+    subcategory: "Transformers",
+    unit: "each",
+    defaultPrice: 1485.00,
+    code: "XFMR10KVA"
+  },
+  {
+    id: "vsd-7.5kw",
+    name: "7.5kW Variable Speed Drive",
+    category: "industrial",
+    subcategory: "Variable Speed Drives",
+    unit: "each",
+    defaultPrice: 685.00,
+    code: "VSD7P5KW"
+  },
+  {
+    id: "busbar-100a-3p",
+    name: "100A 3 Phase Busbar System",
+    category: "industrial",
+    subcategory: "Busbar Systems",
+    unit: "metre",
+    defaultPrice: 85.00,
+    code: "BUSBAR100A"
+  },
+  {
+    id: "industrial-socket-63a",
+    name: "63A 3 Phase Industrial Socket",
+    category: "industrial",
+    subcategory: "Industrial Sockets",
+    unit: "each",
+    defaultPrice: 125.00,
+    code: "INDSOCK63A"
+  },
+
+  // =============== ADDITIONAL DISTRIBUTION (15 items) ===============
+  {
+    id: "db-tpn-18way",
+    name: "18 Way TPN Distribution Board",
+    category: "distribution",
+    subcategory: "Distribution Boards",
+    unit: "each",
+    defaultPrice: 525.00,
+    code: "DBTPN18W"
+  },
+  {
+    id: "db-tpn-36way",
+    name: "36 Way TPN Distribution Board",
+    category: "distribution",
+    subcategory: "Distribution Boards",
+    unit: "each",
+    defaultPrice: 845.00,
+    code: "DBTPN36W"
+  },
+  {
+    id: "spd-type1-25ka",
+    name: "Type 1 SPD 25kA (3+N)",
+    category: "distribution",
+    subcategory: "Surge Protectors",
+    unit: "each",
+    defaultPrice: 125.00,
+    code: "SPD1-25KA"
+  },
+  {
+    id: "spd-type2-40ka",
+    name: "Type 2 SPD 40kA (3+N)",
+    category: "distribution",
+    subcategory: "Surge Protectors",
+    unit: "each",
+    defaultPrice: 95.00,
+    code: "SPD2-40KA"
+  },
+  {
+    id: "rcbo-type-a-32a",
+    name: "32A Type A RCBO",
+    category: "distribution",
+    subcategory: "RCBOs",
+    unit: "each",
+    defaultPrice: 65.00,
+    code: "RCBOA32"
+  },
+  {
+    id: "time-switch-digital",
+    name: "Digital Time Switch",
+    category: "distribution",
+    subcategory: "Time Clocks",
+    unit: "each",
+    defaultPrice: 85.00,
+    code: "TIMEDIGITAL"
+  },
+
+  // =============== ADDITIONAL CONTAINMENT (10 items) ===============
+  {
+    id: "trunking-100x50",
+    name: "100x50mm PVC Trunking",
+    category: "containment",
+    subcategory: "Trunking",
+    unit: "metre",
+    defaultPrice: 8.50,
+    code: "TRUNK100X50"
+  },
+  {
+    id: "floor-box-4gang",
+    name: "4 Gang Floor Box",
+    category: "containment",
+    subcategory: "Floor Boxes",
+    unit: "each",
+    defaultPrice: 45.00,
+    code: "FLRBOX4G"
+  },
+  {
+    id: "cable-tray-300mm",
+    name: "300mm Perforated Cable Tray",
+    category: "containment",
+    subcategory: "Cable Tray",
+    unit: "metre",
+    defaultPrice: 25.00,
+    code: "TRAY300MM"
+  },
+  {
+    id: "conduit-steel-25mm",
+    name: "25mm Heavy Gauge Steel Conduit",
+    category: "containment",
+    subcategory: "Steel Conduit",
+    unit: "metre",
+    defaultPrice: 8.50,
+    code: "CONSTEEL25"
+  },
+  {
+    id: "gland-brass-25mm",
+    name: "25mm Brass Cable Gland",
+    category: "containment",
+    subcategory: "Cable Glands",
+    unit: "each",
+    defaultPrice: 12.50,
+    code: "GLANDBRASS25"
   }
 ];
