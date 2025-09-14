@@ -407,11 +407,11 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
                                    </SelectItem>
                                  );
                                })
-                             ) : (
-                               <SelectItem value="" disabled>
-                                 No materials found
-                               </SelectItem>
-                             )}
+                              ) : (
+                                <SelectItem value="no-materials" disabled>
+                                  No materials found
+                                </SelectItem>
+                              )}
                            </SelectContent>
                         </Select>
                       </div>
