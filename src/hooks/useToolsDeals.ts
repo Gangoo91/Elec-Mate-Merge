@@ -44,19 +44,32 @@ const detectSaleFromSupplier = (tool: ToolItem): boolean => {
   return false;
 };
 
-const generateSalePrice = (originalPrice: string): string => {
+const generateSalePrice = (originalPrice: string, toolName: string): string => {
   const cleanPrice = originalPrice.replace(/[£$€,]/g, '');
   const numPrice = parseFloat(cleanPrice);
   
   if (isNaN(numPrice)) return originalPrice;
   
-  // Generate 10-30% discount
-  const discountPercent = Math.floor(Math.random() * 21) + 10; // 10-30%
+  // Use deterministic discount based on tool name for consistency
+  const nameHash = toolName.split('').reduce((a, b) => a + b.charCodeAt(0), 0);
+  const discountPercent = 10 + (nameHash % 21); // 10-30% discount, but consistent per tool
   const salePrice = numPrice * (1 - discountPercent / 100);
   
-  // Format to 2 decimal places and add currency symbol
+  // Round to realistic pricing (e.g., £19.99, £24.95, etc.)
+  let roundedPrice;
+  if (salePrice < 10) {
+    roundedPrice = Math.floor(salePrice * 100) / 100; // Keep exact for low prices
+  } else if (salePrice < 50) {
+    roundedPrice = Math.floor(salePrice) + 0.99; // End in .99
+  } else if (salePrice < 100) {
+    roundedPrice = Math.floor(salePrice) + 0.95; // End in .95
+  } else {
+    roundedPrice = Math.floor(salePrice / 5) * 5 + 0.99; // Round to nearest £5 + .99
+  }
+  
+  // Format and add currency symbol
   const currency = originalPrice.charAt(0);
-  return `${currency}${salePrice.toFixed(2)}`;
+  return `${currency}${roundedPrice.toFixed(2)}`;
 };
 
 const shouldMarkAsOnSale = (tool: ToolItem, index: number): boolean => {
@@ -87,7 +100,7 @@ export const useToolsDeals = (tools: ToolItem[]) => {
       
       if (isOnSale) {
         enhancedTool.isOnSale = true;
-        enhancedTool.salePrice = generateSalePrice(tool.price);
+        enhancedTool.salePrice = generateSalePrice(tool.price, tool.name);
         
         console.log(`🏷️ Tool on sale: ${tool.name} - ${tool.price} → ${enhancedTool.salePrice}`);
       } else {
