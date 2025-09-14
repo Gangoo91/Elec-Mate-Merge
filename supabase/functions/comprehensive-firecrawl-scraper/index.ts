@@ -190,28 +190,42 @@ serve(async (req) => {
 
     console.log(`🎉 Scraping completed! Total products found: ${totalProductsFound}`);
 
-    // Store results in database
-    if (allScrapedTools.length > 0) {
-      const expiresAt = new Date();
-      expiresAt.setDate(expiresAt.getDate() + 7); // Cache for 1 week
-
-      const { error: storeError } = await supabase
-        .from('tools_weekly_cache')
-        .insert({
-          tools_data: allScrapedTools,
-          total_products: totalProductsFound,
-          category: 'comprehensive_scrape',
-          expires_at: expiresAt.toISOString(),
-          update_status: 'completed'
-        });
-
-      if (storeError) {
-        console.error('❌ Error storing scraped data:', storeError);
-        throw storeError;
-      }
-
-      console.log('✅ Scraped data stored successfully');
+    // Treat 0 tools found as a failure since this indicates scraping issues
+    if (totalProductsFound === 0) {
+      console.error('❌ No tools found during scraping - this indicates a scraping failure');
+      return new Response(JSON.stringify({
+        success: false,
+        error: 'No tools found during scraping. This may be due to website structure changes, anti-bot protection, or network issues.',
+        categoriesScraped: categoriesToScrape.length,
+        totalProducts: 0,
+        details: 'All supplier websites returned 0 products',
+        tools: []
+      }), {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
+
+    // Store results in database
+    const expiresAt = new Date();
+    expiresAt.setDate(expiresAt.getDate() + 7); // Cache for 1 week
+
+    const { error: storeError } = await supabase
+      .from('tools_weekly_cache')
+      .insert({
+        tools_data: allScrapedTools,
+        total_products: totalProductsFound,
+        category: 'comprehensive_scrape',
+        expires_at: expiresAt.toISOString(),
+        update_status: 'completed'
+      });
+
+    if (storeError) {
+      console.error('❌ Error storing scraped data:', storeError);
+      throw storeError;
+    }
+
+    console.log('✅ Scraped data stored successfully');
 
     return new Response(JSON.stringify({
       success: true,

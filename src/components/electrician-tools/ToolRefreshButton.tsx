@@ -61,23 +61,42 @@ const ToolRefreshButton: React.FC<ToolRefreshButtonProps> = ({
           variant: "destructive",
           duration: 5000,
         });
-      } else {
+      } else if (data?.success) {
         console.log('✅ Refresh success:', data);
         setRefreshStatus('success');
+        
+        const toolCount = data.totalFound || 0;
         
         // Call the parent refresh function to update local state
         onRefresh();
         
         // Force React Query to refetch the tools data
         setTimeout(() => {
-          // This triggers a fresh fetch from the cache
           onRefresh();
         }, 1000);
         
         toast({
-          title: "Tools Updated",
-          description: data?.message || "Successfully refreshed tools data from suppliers.",
+          title: "Tools Updated Successfully",
+          description: `Found ${toolCount} tools across ${data.categoriesScraped?.length || 0} categories.`,
           duration: 4000,
+        });
+      } else {
+        // Handle the case where the function returned success: false
+        console.error('❌ Scraping returned no tools:', data);
+        setRefreshStatus('error');
+        
+        const errorMessage = data?.error || 'No tools found during scraping';
+        let userFriendlyMessage = errorMessage;
+        
+        if (errorMessage.includes('No tools found during scraping')) {
+          userFriendlyMessage = 'Unable to fetch tools data. Supplier websites may be blocking requests or have changed their structure.';
+        }
+        
+        toast({
+          title: "Update Failed",
+          description: userFriendlyMessage,
+          variant: "destructive",
+          duration: 5000,
         });
       }
     } catch (error) {
