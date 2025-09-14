@@ -909,6 +909,7 @@ export type Database = {
       }
       industry_news: {
         Row: {
+          author: string | null
           average_rating: number | null
           canonical_url: string | null
           category: string
@@ -923,6 +924,7 @@ export type Database = {
           is_active: boolean
           keywords: string[] | null
           published_date: string | null
+          quality_score: number | null
           regulatory_body: string
           relevance_score: number | null
           source_name: string | null
@@ -933,6 +935,7 @@ export type Database = {
           view_count: number | null
         }
         Insert: {
+          author?: string | null
           average_rating?: number | null
           canonical_url?: string | null
           category: string
@@ -947,6 +950,7 @@ export type Database = {
           is_active?: boolean
           keywords?: string[] | null
           published_date?: string | null
+          quality_score?: number | null
           regulatory_body: string
           relevance_score?: number | null
           source_name?: string | null
@@ -957,6 +961,7 @@ export type Database = {
           view_count?: number | null
         }
         Update: {
+          author?: string | null
           average_rating?: number | null
           canonical_url?: string | null
           category?: string
@@ -971,6 +976,7 @@ export type Database = {
           is_active?: boolean
           keywords?: string[] | null
           published_date?: string | null
+          quality_score?: number | null
           regulatory_body?: string
           relevance_score?: number | null
           source_name?: string | null
