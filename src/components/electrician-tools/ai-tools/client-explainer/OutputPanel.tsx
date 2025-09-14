@@ -23,6 +23,21 @@ const OutputPanel = ({ content, settings }: OutputPanelProps) => {
   const { toast } = useToast();
   const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
 
+  // Process content for better mobile rendering
+  const processContentForDisplay = (text: string) => {
+    if (!text) return text;
+    
+    // Add proper line breaks and structure
+    return text
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // Bold formatting
+      .replace(/\*(.*?)\*/g, '<em>$1</em>') // Italic formatting
+      .replace(/BS 7671/g, '<span class="text-elec-yellow font-medium">BS 7671</span>') // Highlight regulations
+      .replace(/(\d{3}\.\d+\.\d+)/g, '<span class="text-blue-400 font-mono text-sm">$1</span>') // Regulation numbers
+      .replace(/(C[123]|FI)/g, '<span class="px-1.5 py-0.5 rounded text-xs font-medium bg-red-500/20 text-red-400">$1</span>') // Classification codes
+      .replace(/\n\n/g, '</p><p class="mb-3">') // Paragraph breaks
+      .replace(/\n/g, '<br/>'); // Line breaks
+  };
+
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(content);
@@ -142,20 +157,20 @@ Thank you for choosing our electrical services.`;
   };
 
   return (
-    <Card className="border-border/50 bg-card/50">
-      <CardHeader className="pb-3">
-        <div className="flex items-center justify-between">
+    <Card className="mobile-card border-border/50 bg-card/50">
+      <CardHeader className="mobile-padding pb-3">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           <div className="flex items-center space-x-2">
-            <MessageSquare className="h-4 w-4 text-elec-yellow" />
-            <CardTitle className="text-lg">Client-Friendly Output</CardTitle>
+            <MessageSquare className="h-5 w-5 text-elec-yellow" />
+            <CardTitle className="mobile-heading text-foreground">Client Explanation</CardTitle>
           </div>
           {content && (
-            <div className="flex gap-2">
+            <div className="flex gap-2 w-full sm:w-auto">
               <Button
                 variant="outline"
                 size="sm"
                 onClick={handleCopy}
-                className="border-border/50 hover:bg-card"
+                className="mobile-button-secondary flex-1 sm:flex-none touch-target border-border/50 hover:bg-card text-foreground"
               >
                 <Copy className="h-4 w-4 mr-1" />
                 Copy
@@ -165,16 +180,16 @@ Thank you for choosing our electrical services.`;
                 size="sm"
                 onClick={handleDownloadPDF}
                 disabled={isGeneratingPDF}
-                className="border-border/50 hover:bg-card"
+                className="mobile-button-secondary flex-1 sm:flex-none touch-target border-border/50 hover:bg-card text-foreground"
               >
                 <Download className="h-4 w-4 mr-1" />
-                {isGeneratingPDF ? "Generating..." : "PDF"}
+                {isGeneratingPDF ? "Creating..." : "PDF"}
               </Button>
             </div>
           )}
         </div>
       </CardHeader>
-      <CardContent className="space-y-4">
+      <CardContent className="mobile-padding space-y-4">
         {content ? (
           <>
             {/* Settings display */}
@@ -207,63 +222,77 @@ Thank you for choosing our electrical services.`;
 
             {/* Output formats */}
             <Tabs defaultValue="standard" className="w-full">
-              <TabsList className="grid w-full grid-cols-4">
-                <TabsTrigger value="standard">Standard</TabsTrigger>
-                <TabsTrigger value="email">Email</TabsTrigger>
-                <TabsTrigger value="sms">SMS</TabsTrigger>
-                <TabsTrigger value="quote">Quote</TabsTrigger>
+              <TabsList className="mobile-grid-responsive grid w-full grid-cols-2 sm:grid-cols-4 h-auto">
+                <TabsTrigger value="standard" className="mobile-tap-highlight touch-target text-xs sm:text-sm">
+                  Explanation
+                </TabsTrigger>
+                <TabsTrigger value="email" className="mobile-tap-highlight touch-target text-xs sm:text-sm">
+                  Email
+                </TabsTrigger>
+                <TabsTrigger value="sms" className="mobile-tap-highlight touch-target text-xs sm:text-sm">
+                  Text/SMS
+                </TabsTrigger>
+                <TabsTrigger value="quote" className="mobile-tap-highlight touch-target text-xs sm:text-sm">
+                  Quote
+                </TabsTrigger>
               </TabsList>
               
               <TabsContent value="standard" className="mt-4">
-                <div className="bg-muted/30 border border-border/50 rounded-lg p-4">
-                  <div className="whitespace-pre-wrap text-sm leading-relaxed">
-                    {content}
-                  </div>
+                <div className="mobile-card bg-muted/30 border border-border/50 rounded-lg p-4">
+                  <div 
+                    className="mobile-text leading-relaxed text-foreground"
+                    dangerouslySetInnerHTML={{ 
+                      __html: `<p class="mb-3">${processContentForDisplay(content)}</p>`
+                    }}
+                  />
                 </div>
               </TabsContent>
               
               <TabsContent value="email" className="mt-4">
                 <div className="space-y-3">
-                  <div className="flex justify-between items-center">
-                    <h4 className="text-sm font-medium">Email Template</h4>
+                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
+                    <h4 className="mobile-small-text font-medium text-foreground">Email Template</h4>
                     <Button
                       variant="outline"
                       size="sm"
                       onClick={handleEmailTemplate}
-                      className="text-xs"
+                      className="mobile-button-secondary touch-target w-full sm:w-auto"
                     >
-                      <Mail className="h-3 w-3 mr-1" />
-                      Open in Email
+                      <Mail className="h-4 w-4 mr-1" />
+                      Open in Email App
                     </Button>
                   </div>
-                  <div className="bg-muted/30 border border-border/50 rounded-lg p-4">
-                    <div className="whitespace-pre-wrap text-sm leading-relaxed">
-                      {formatForEmail(content)}
-                    </div>
+                  <div className="mobile-card bg-muted/30 border border-border/50 rounded-lg p-4">
+                    <div 
+                      className="mobile-text leading-relaxed text-foreground"
+                      dangerouslySetInnerHTML={{ 
+                        __html: `<p class="mb-3">${processContentForDisplay(formatForEmail(content))}</p>`
+                      }}
+                    />
                   </div>
                 </div>
               </TabsContent>
               
               <TabsContent value="sms" className="mt-4">
                 <div className="space-y-3">
-                  <div className="flex justify-between items-center">
-                    <h4 className="text-sm font-medium">SMS Version</h4>
+                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
+                    <h4 className="mobile-small-text font-medium text-foreground">Text Message Version</h4>
                     <Button
                       variant="outline"
                       size="sm"
                       onClick={handleSMSTemplate}
-                      className="text-xs"
+                      className="mobile-button-secondary touch-target w-full sm:w-auto"
                     >
-                      <MessageSquare className="h-3 w-3 mr-1" />
-                      Send SMS
+                      <MessageSquare className="h-4 w-4 mr-1" />
+                      Send Text Message
                     </Button>
                   </div>
-                  <div className="bg-muted/30 border border-border/50 rounded-lg p-4">
-                    <div className="whitespace-pre-wrap text-sm leading-relaxed">
+                  <div className="mobile-card bg-muted/30 border border-border/50 rounded-lg p-4">
+                    <div className="mobile-text leading-relaxed text-foreground">
                       {formatForSMS(content)}
                     </div>
-                    <div className="mt-2 text-xs text-muted-foreground">
-                      Character count: {formatForSMS(content).length}/160
+                    <div className="mt-3 text-xs text-muted-foreground bg-muted/20 rounded px-2 py-1">
+                      Characters: {formatForSMS(content).length}/160
                     </div>
                   </div>
                 </div>
@@ -271,33 +300,41 @@ Thank you for choosing our electrical services.`;
               
               <TabsContent value="quote" className="mt-4">
                 <div className="space-y-3">
-                  <div className="flex justify-between items-center">
-                    <h4 className="text-sm font-medium">Quotation Format</h4>
+                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
+                    <h4 className="mobile-small-text font-medium text-foreground">Quotation Format</h4>
                     <Button
                       variant="outline"
                       size="sm"
                       onClick={handleDownloadTxt}
-                      className="text-xs"
+                      className="mobile-button-secondary touch-target w-full sm:w-auto"
                     >
-                      <FileText className="h-3 w-3 mr-1" />
-                      Download
+                      <FileText className="h-4 w-4 mr-1" />
+                      Download Document
                     </Button>
                   </div>
-                  <div className="bg-muted/30 border border-border/50 rounded-lg p-4">
-                    <div className="whitespace-pre-wrap text-sm leading-relaxed">
-                      {formatForQuote(content)}
-                    </div>
+                  <div className="mobile-card bg-muted/30 border border-border/50 rounded-lg p-4">
+                    <div 
+                      className="mobile-text leading-relaxed text-foreground"
+                      dangerouslySetInnerHTML={{ 
+                        __html: `<p class="mb-3">${processContentForDisplay(formatForQuote(content))}</p>`
+                      }}
+                    />
                   </div>
                 </div>
               </TabsContent>
             </Tabs>
           </>
         ) : (
-          <div className="bg-muted/30 border border-border/50 rounded-lg p-8 text-center">
+          <div className="mobile-card bg-muted/30 border border-border/50 rounded-lg p-8 text-center">
             <MessageSquare className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-            <p className="text-muted-foreground">
-              Generated explanation will appear here with multiple format options
-            </p>
+            <div className="space-y-2">
+              <p className="mobile-text text-muted-foreground">
+                Your client-friendly explanation will appear here
+              </p>
+              <p className="mobile-small-text text-muted-foreground/70">
+                Available in multiple formats: standard explanation, email template, text message, and quotation format
+              </p>
+            </div>
           </div>
         )}
       </CardContent>

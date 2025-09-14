@@ -130,114 +130,118 @@ const ClientExplainerPage = () => {
           {/* Hero Section */}
           <ElectricalHeroSection />
 
-          <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 mt-8">
-            {/* Input Panel - Takes 2 columns on xl screens */}
-            <div className="xl:col-span-2 space-y-6">
+          {/* Mobile-first responsive layout */}
+          <div className="space-y-6 lg:grid lg:grid-cols-1 xl:grid-cols-3 lg:gap-6 lg:space-y-0">
+            {/* Input Panel - Full width on mobile, 2 cols on xl */}
+            <div className="xl:col-span-2 space-y-4 mobile-section-spacing">
               {/* Smart Input Section */}
-              <Card className="border-border/50 bg-card/50">
-                <CardHeader>
-                  <div className="flex items-center justify-between">
+              <Card className="mobile-card border-border/50 bg-card/50">
+                <CardHeader className="mobile-padding">
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                     <div className="flex items-center space-x-2">
                       <Brain className="h-5 w-5 text-elec-yellow" />
-                      <CardTitle>Smart Input Assistant</CardTitle>
+                      <CardTitle className="mobile-heading">Client Explanation Tool</CardTitle>
                     </div>
-                    <div className="flex gap-2">
+                    <div className="flex gap-2 w-full sm:w-auto">
                       <Button
                         variant="outline"
                         size="sm"
                         onClick={() => setShowTemplates(!showTemplates)}
-                        className="text-xs"
+                        className="mobile-button-secondary flex-1 sm:flex-none touch-target"
                       >
-                        <Lightbulb className="h-3 w-3 mr-1" />
+                        <Lightbulb className="h-4 w-4 mr-1" />
                         Templates
                       </Button>
                       <Button
                         variant="outline"
                         size="sm"
                         onClick={() => setShowAdvanced(!showAdvanced)}
-                        className="text-xs"
+                        className="mobile-button-secondary flex-1 sm:flex-none touch-target"
                       >
-                        <Zap className="h-3 w-3 mr-1" />
-                        Advanced
+                        <Zap className="h-4 w-4 mr-1" />
+                        Settings
                       </Button>
                     </div>
                   </div>
                 </CardHeader>
-                <CardContent className="space-y-6">
+                <CardContent className="mobile-padding space-y-6">
                   {/* Client Type Selector */}
-                  <ClientTypeSelector
-                    selected={clientType}
-                    onSelect={setClientType}
-                  />
+                  <div className="space-y-3">
+                    <Label className="mobile-subheading text-foreground">Who are you explaining this to?</Label>
+                    <ClientTypeSelector
+                      selected={clientType}
+                      onSelect={setClientType}
+                    />
+                  </div>
 
                   {/* Templates Collapsible */}
                   <Collapsible open={showTemplates} onOpenChange={setShowTemplates}>
-                    <CollapsibleContent className="space-y-4">
+                    <CollapsibleContent className="space-y-4 mt-4">
                       <TemplateSelector onSelectTemplate={handleSelectTemplate} />
                     </CollapsibleContent>
                   </Collapsible>
 
                   {/* Technical Notes Input */}
                   <div className="space-y-3">
-                    <Label htmlFor="technical-notes" className="text-sm font-medium">
-                      Technical Notes or Findings
+                    <Label htmlFor="technical-notes" className="mobile-subheading text-foreground">
+                      Technical Findings or Electrical Work
                     </Label>
                     <Textarea
                       id="technical-notes"
-                      placeholder="Enter your technical findings, test results, issues discovered, or use a template above..."
+                      placeholder="Describe your electrical findings, test results, work completed, or safety concerns. Include specific details like circuit numbers, test readings, or regulation references..."
                       value={technicalNotes}
                       onChange={(e) => setTechnicalNotes(e.target.value)}
-                      className="min-h-[120px] resize-none"
+                      className="mobile-input-spacing min-h-[120px] resize-none text-foreground"
                       rows={6}
                     />
-                    <p className="text-xs text-muted-foreground">
-                      Be specific about what you found. Include test results, observations, and any safety concerns.
+                    <p className="mobile-small-text text-muted-foreground">
+                      Be specific about findings. Include BS 7671 regulation references, test readings, and safety classifications (C1/C2/C3) where applicable.
                     </p>
                   </div>
 
                   {/* Basic Settings */}
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <div className="space-y-4 sm:space-y-0 sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
                     <div className="space-y-2">
-                      <Label className="text-sm font-medium">Tone</Label>
+                      <Label className="mobile-small-text font-medium text-foreground">Communication Style</Label>
                       <Select value={tone} onValueChange={setTone}>
-                        <SelectTrigger className="h-9">
+                        <SelectTrigger className="touch-target mobile-focus text-foreground">
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
                           <SelectItem value="professional">Professional</SelectItem>
-                          <SelectItem value="friendly">Friendly</SelectItem>
-                          <SelectItem value="reassuring">Reassuring</SelectItem>
-                          <SelectItem value="urgent">Urgent</SelectItem>
-                          <SelectItem value="technical">Technical</SelectItem>
+                          <SelectItem value="friendly">Friendly & Approachable</SelectItem>
+                          <SelectItem value="reassuring">Reassuring & Calm</SelectItem>
+                          <SelectItem value="urgent">Direct & Urgent</SelectItem>
+                          <SelectItem value="technical">Technical Detail</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
 
                     <div className="space-y-2">
-                      <Label className="text-sm font-medium">Reading Level</Label>
+                      <Label className="mobile-small-text font-medium text-foreground">Complexity Level</Label>
                       <Select value={readingLevel} onValueChange={setReadingLevel}>
-                        <SelectTrigger className="h-9">
+                        <SelectTrigger className="touch-target mobile-focus text-foreground">
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="simple">Simple (Grade 6-8)</SelectItem>
-                          <SelectItem value="standard">Standard (Grade 9-12)</SelectItem>
-                          <SelectItem value="technical">Technical (Professional)</SelectItem>
+                          <SelectItem value="simple">Simple Language</SelectItem>
+                          <SelectItem value="standard">Standard Explanation</SelectItem>
+                          <SelectItem value="technical">Technical Detail</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
 
-                    <div className="space-y-2">
-                      <Label className="text-sm font-medium">Urgency</Label>
+                    <div className="space-y-2 sm:col-span-2 lg:col-span-1">
+                      <Label className="mobile-small-text font-medium text-foreground">Priority Level</Label>
                       <Select value={urgencyLevel} onValueChange={setUrgencyLevel}>
-                        <SelectTrigger className="h-9">
+                        <SelectTrigger className="touch-target mobile-focus text-foreground">
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="low">Low Priority</SelectItem>
-                          <SelectItem value="medium">Medium Priority</SelectItem>
-                          <SelectItem value="high">High Priority</SelectItem>
-                          <SelectItem value="immediate">Immediate Action</SelectItem>
+                          <SelectItem value="low">Routine Work</SelectItem>
+                          <SelectItem value="medium">Important Issue</SelectItem>
+                          <SelectItem value="high">Safety Concern</SelectItem>
+                          <SelectItem value="immediate">Immediate Action Required</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
@@ -245,50 +249,57 @@ const ClientExplainerPage = () => {
 
                   {/* Advanced Settings */}
                   <Collapsible open={showAdvanced} onOpenChange={setShowAdvanced}>
-                    <CollapsibleContent className="space-y-4">
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div className="flex items-center justify-between p-3 bg-muted/30 rounded-lg">
-                          <div className="space-y-1">
-                            <Label className="text-sm font-medium">Include Analogies</Label>
-                            <p className="text-xs text-muted-foreground">Use everyday comparisons</p>
+                    <CollapsibleContent className="space-y-4 mt-4">
+                      <div className="space-y-3">
+                        <Label className="mobile-small-text font-medium text-foreground">Additional Options</Label>
+                        <div className="grid grid-cols-1 gap-3">
+                          <div className="mobile-card-compact mobile-interactive flex items-center justify-between p-4 bg-muted/30 rounded-lg border border-border/50">
+                            <div className="space-y-1">
+                              <Label className="mobile-small-text font-medium text-foreground">Include Analogies</Label>
+                              <p className="text-xs text-muted-foreground">Use everyday comparisons to explain technical concepts</p>
+                            </div>
+                            <Switch
+                              checked={includeAnalogy}
+                              onCheckedChange={setIncludeAnalogy}
+                              className="ml-3"
+                            />
                           </div>
-                          <Switch
-                            checked={includeAnalogy}
-                            onCheckedChange={setIncludeAnalogy}
-                          />
-                        </div>
 
-                        <div className="flex items-center justify-between p-3 bg-muted/30 rounded-lg">
-                          <div className="space-y-1">
-                            <Label className="text-sm font-medium">Cost Information</Label>
-                            <p className="text-xs text-muted-foreground">Include pricing context</p>
+                          <div className="mobile-card-compact mobile-interactive flex items-center justify-between p-4 bg-muted/30 rounded-lg border border-border/50">
+                            <div className="space-y-1">
+                              <Label className="mobile-small-text font-medium text-foreground">Cost Information</Label>
+                              <p className="text-xs text-muted-foreground">Include pricing context and potential costs</p>
+                            </div>
+                            <Switch
+                              checked={includeCostInfo}
+                              onCheckedChange={setIncludeCostInfo}
+                              className="ml-3"
+                            />
                           </div>
-                          <Switch
-                            checked={includeCostInfo}
-                            onCheckedChange={setIncludeCostInfo}
-                          />
-                        </div>
 
-                        <div className="flex items-center justify-between p-3 bg-muted/30 rounded-lg">
-                          <div className="space-y-1">
-                            <Label className="text-sm font-medium">Safety Emphasis</Label>
-                            <p className="text-xs text-muted-foreground">Highlight safety concerns</p>
+                          <div className="mobile-card-compact mobile-interactive flex items-center justify-between p-4 bg-muted/30 rounded-lg border border-border/50">
+                            <div className="space-y-1">
+                              <Label className="mobile-small-text font-medium text-foreground">Safety Emphasis</Label>
+                              <p className="text-xs text-muted-foreground">Highlight safety concerns and importance</p>
+                            </div>
+                            <Switch
+                              checked={emphasizeSafety}
+                              onCheckedChange={setEmphasizeSafety}
+                              className="ml-3"
+                            />
                           </div>
-                          <Switch
-                            checked={emphasizeSafety}
-                            onCheckedChange={setEmphasizeSafety}
-                          />
-                        </div>
 
-                        <div className="flex items-center justify-between p-3 bg-muted/30 rounded-lg">
-                          <div className="space-y-1">
-                            <Label className="text-sm font-medium">BS 7671 References</Label>
-                            <p className="text-xs text-muted-foreground">Include regulation references</p>
+                          <div className="mobile-card-compact mobile-interactive flex items-center justify-between p-4 bg-muted/30 rounded-lg border border-border/50">
+                            <div className="space-y-1">
+                              <Label className="mobile-small-text font-medium text-foreground">BS 7671 References</Label>
+                              <p className="text-xs text-muted-foreground">Include UK electrical regulation references</p>
+                            </div>
+                            <Switch
+                              checked={includeBS7671}
+                              onCheckedChange={setIncludeBS7671}
+                              className="ml-3"
+                            />
                           </div>
-                          <Switch
-                            checked={includeBS7671}
-                            onCheckedChange={setIncludeBS7671}
-                          />
                         </div>
                       </div>
                     </CollapsibleContent>
@@ -298,17 +309,17 @@ const ClientExplainerPage = () => {
                   <Button 
                     onClick={handleGenerate}
                     disabled={isGenerating || !technicalNotes.trim()}
-                    className="w-full bg-elec-yellow hover:bg-elec-yellow/90 text-black font-medium h-12"
+                    className="mobile-button-primary w-full touch-target bg-elec-yellow hover:bg-elec-yellow/90 text-black font-medium h-12 sm:h-14"
                   >
                     {isGenerating ? (
                       <>
                         <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                        Generating Professional Explanation...
+                        Generating Client-Friendly Explanation...
                       </>
                     ) : (
                       <>
                         <Brain className="mr-2 h-5 w-5" />
-                        Generate Client Explanation
+                        Generate Professional Explanation
                       </>
                     )}
                   </Button>
@@ -316,17 +327,19 @@ const ClientExplainerPage = () => {
               </Card>
             </div>
 
-            {/* Right Column - Preview and Output */}
-            <div className="space-y-6">
-              {/* Live Preview */}
-              <LivePreview
-                content={technicalNotes}
-                tone={tone}
-                readingLevel={readingLevel}
-                clientType={clientType}
-                includeAnalogy={includeAnalogy}
-                emphasizeSafety={emphasizeSafety}
-              />
+            {/* Output Section - Full width on mobile, right column on xl */}
+            <div className="space-y-6 mobile-section-spacing">
+              {/* Live Preview - Hidden on mobile when no content */}
+              <div className="hidden sm:block">
+                <LivePreview
+                  content={technicalNotes}
+                  tone={tone}
+                  readingLevel={readingLevel}
+                  clientType={clientType}
+                  includeAnalogy={includeAnalogy}
+                  emphasizeSafety={emphasizeSafety}
+                />
+              </div>
 
               {/* Output Panel */}
               <OutputPanel

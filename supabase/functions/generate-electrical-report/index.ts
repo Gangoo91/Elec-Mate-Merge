@@ -81,33 +81,36 @@ Format as a Periodic Inspection Report with:
 - Summary of inspection findings`;
 
     case 'client-explainer':
-      return `You are an expert electrician who excels at explaining technical electrical work to clients in a clear, accessible way.
+      return `You are a qualified electrician with expertise in BS 7671:2018+A2:2022 (18th Edition) electrical regulations. You excel at explaining technical electrical work to clients in clear, accessible language whilst maintaining technical accuracy and UK compliance.
 
-Technical Notes to Explain:
+Client Type: ${formData.clientType}
+Technical Findings to Explain:
 ${formData.technicalNotes}
 
 Communication Preferences:
 - Tone: ${formData.tone}
-- Reading Level: ${formData.readingLevel}
-- Include Analogies: ${formData.includeAnalogy ? 'Yes' : 'No'}
-- Include Cost Information: ${formData.includeCostInfo ? 'Yes' : 'No'}
-- Emphasize Safety: ${formData.emphasizeSafety ? 'Yes' : 'No'}
+- Complexity Level: ${formData.readingLevel}
+- Include Analogies: ${formData.includeAnalogy ? 'Yes - use everyday comparisons' : 'No - keep explanations direct'}
+- Include Cost Information: ${formData.includeCostInfo ? 'Yes - mention cost implications' : 'No - focus on technical aspects'}
+- Emphasize Safety: ${formData.emphasizeSafety ? 'Yes - highlight safety importance' : 'No - balanced approach'}
+- Include BS 7671 References: ${formData.includeBS7671 ? 'Yes - include UK regulation references' : 'No - avoid technical references'}
 
-Please convert the technical notes into a client-friendly explanation that:
+CRITICAL REQUIREMENTS:
+1. Use British English spelling and terminology throughout (colour not color, earthing not grounding, etc.)
+2. Reference UK electrical standards and regulations where appropriate
+3. ${formData.includeBS7671 ? 'Include specific BS 7671 regulation numbers (e.g., 411.3.3, 134.1.1) and safety classifications (C1, C2, C3, FI)' : 'Avoid technical regulation references but maintain accuracy'}
+4. Use appropriate ${formData.tone} tone whilst remaining professional
+5. Write at ${formData.readingLevel} complexity level appropriate for a ${formData.clientType}
+6. ${formData.includeAnalogy ? 'Include helpful analogies using British everyday examples (like car MOTs, home insurance, etc.)' : 'Use direct, clear explanations without analogies'}
 
-1. Uses ${formData.tone} language throughout
-2. Is written at a ${formData.readingLevel} reading level
-3. ${formData.includeAnalogy ? 'Includes helpful analogies to explain complex concepts' : 'Avoids analogies and sticks to straightforward explanations'}
-4. ${formData.includeCostInfo ? 'Mentions potential cost implications where relevant' : 'Focuses on the technical work without cost details'}
-5. ${formData.emphasizeSafety ? 'Emphasizes safety implications and why the work is important' : 'Provides balanced information without over-emphasizing safety concerns'}
+Structure your explanation to cover:
+- **What we found:** Clear description of the electrical issue/work
+- **Why it matters:** Safety, compliance, and practical implications
+- **What this means for you:** Direct impact on the client
+- **Next steps:** Clear actions required or recommendations
+- ${formData.includeCostInfo ? '**Cost considerations:** Approximate cost implications and factors affecting pricing' : ''}
 
-The explanation should help the client understand:
-- What was found/done
-- Why it matters
-- What happens next (if applicable)
-- Any actions they might need to take
-
-Keep the explanation conversational and avoid technical jargon unless absolutely necessary (and then explain it clearly).`;
+Use natural, conversational British English. Explain any technical terms you must use. ${formData.emphasizeSafety ? 'Emphasise safety aspects and the importance of prompt action where relevant.' : 'Provide balanced information focusing on practical implications.'} Ensure the explanation helps the client make informed decisions about their electrical installation.`;
 
     case 'consumer-unit':
       return basePrompt + `
