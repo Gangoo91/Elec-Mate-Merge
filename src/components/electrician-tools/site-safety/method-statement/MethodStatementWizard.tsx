@@ -116,25 +116,6 @@ const MethodStatementWizard = () => {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardHeader>
-          <CardTitle className="text-elec-yellow flex items-center gap-2">
-            <ClipboardCheck className="h-5 w-5" />
-            Method Statement Wizard
-          </CardTitle>
-          <div className="space-y-4">
-            {/* Progress Bar */}
-            <div className="space-y-2">
-              <div className="flex justify-between text-sm text-muted-foreground">
-                <span>Step {currentStepIndex + 1} of {steps.length}</span>
-                <span>{Math.round(progress)}% Complete</span>
-              </div>
-              <Progress value={progress} className="h-2" />
-            </div>
-          </div>
-        </CardHeader>
-      </Card>
 
       {/* Step Content */}
       <div className="min-h-[500px]">
