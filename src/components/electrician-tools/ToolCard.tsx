@@ -53,6 +53,47 @@ const ToolCard: React.FC<ToolCardProps> = ({
   const toolInfo = getToolInfo();
   const isPowerTool = item.category?.toLowerCase().includes('power') || toolInfo.cordless;
 
+  // Clean and validate rating/review data
+  const getCleanReviewData = () => {
+    const reviewText = item.reviews || '';
+    
+    // Filter out meaningless rating text patterns
+    const emptyPatterns = [
+      /^0\s*out\s*of\s*5\s*stars?\s*total\s*0\s*ratings?/i,
+      /^0\s*stars?\s*out\s*of\s*5/i,
+      /^no\s*ratings?/i,
+      /^0\s*reviews?/i,
+      /^\s*0\s*$/
+    ];
+    
+    const isEmptyReview = emptyPatterns.some(pattern => pattern.test(reviewText));
+    
+    if (isEmptyReview || !reviewText.trim()) {
+      return null;
+    }
+    
+    // Extract meaningful rating info (e.g., "4.7 stars out of 5 (111)")
+    const ratingMatch = reviewText.match(/(\d+(?:\.\d+)?)\s*(?:stars?\s*)?(?:out\s*of\s*\d+)?\s*\((\d+)\)/i);
+    if (ratingMatch) {
+      const rating = parseFloat(ratingMatch[1]);
+      const count = parseInt(ratingMatch[2]);
+      return { rating, count, text: reviewText };
+    }
+    
+    // Extract simple review counts (e.g., "45 reviews")
+    const countMatch = reviewText.match(/(\d+)\s*reviews?/i);
+    if (countMatch) {
+      const count = parseInt(countMatch[1]);
+      if (count > 0) {
+        return { count, text: reviewText };
+      }
+    }
+    
+    return null;
+  };
+
+  const reviewData = getCleanReviewData();
+
   // Default URLs if not provided in the data
   const getProductUrl = () => {
     const supplier = (item.supplier || "").toLowerCase();
@@ -112,9 +153,9 @@ const ToolCard: React.FC<ToolCardProps> = ({
 
   return (
     <Card className="mobile-card group h-full hover:border-elec-yellow/30 transition-all duration-200 mobile-interactive bg-elec-card/30 border-elec-yellow/20">
-      <CardContent className="p-4 h-full flex flex-col">
+      <CardContent className="p-4 h-full flex flex-col gap-3">
         {/* Header with stock status */}
-        <div className="flex justify-between items-start mb-3 gap-2">
+        <div className="flex justify-between items-start gap-2">
           <div className="flex items-center gap-2 flex-wrap">
             <Badge variant="outline" className="bg-elec-yellow/10 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/20 text-[10px] font-medium">
               {item.category}
@@ -135,12 +176,12 @@ const ToolCard: React.FC<ToolCardProps> = ({
         </div>
 
         {/* Product name */}
-        <h3 className="mobile-text font-semibold text-elec-light mb-3 leading-snug line-clamp-2">
+        <h3 className="mobile-text font-semibold text-elec-light leading-snug line-clamp-2">
           {item.name}
         </h3>
 
         {/* Image */}
-        <div className={`bg-elec-gray/50 border border-elec-yellow/10 rounded-lg ${isMobile ? 'h-40' : 'h-48'} mb-3 flex items-center justify-center overflow-hidden transition-all duration-200 group-hover:border-elec-yellow/20`}>
+        <div className={`bg-elec-gray/50 border border-elec-yellow/10 rounded-lg ${isMobile ? 'h-40' : 'h-48'} flex items-center justify-center overflow-hidden transition-all duration-200 group-hover:border-elec-yellow/20`}>
           <img
             src={imageSrc}
             alt={`${item.name} from ${item.supplier}`}
@@ -152,7 +193,7 @@ const ToolCard: React.FC<ToolCardProps> = ({
         
         {/* Specifications - simplified */}
         {isPowerTool && (toolInfo.type || toolInfo.power || toolInfo.voltage) && (
-          <div className="mb-3">
+          <div>
             <div className="flex flex-wrap gap-1">
               {toolInfo.type && (
                 <Badge variant="secondary" className="text-[10px] bg-elec-gray/50 text-text-subtle border-elec-yellow/10">
@@ -179,34 +220,42 @@ const ToolCard: React.FC<ToolCardProps> = ({
         )}
         
         {/* Supplier */}
-        <div className="mobile-small-text text-text-muted mb-3 font-medium">
+        <div className="mobile-small-text text-text-muted font-medium">
           {item.supplier}
         </div>
         
         {/* Highlights */}
         {item.highlights && item.highlights.length > 0 && (
           <div className="mb-3 flex-1">
-            <ul className="mobile-small-text text-text-subtle space-y-1">
+            <ul className="mobile-small-text text-text-subtle space-y-1.5">
               {item.highlights.slice(0, 3).map((highlight, index) => (
                 <li key={index} className="flex items-start gap-2">
                   <span className="w-1 h-1 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></span>
-                  <span className="line-clamp-2">{highlight}</span>
+                  <span className="line-clamp-2 leading-relaxed">{highlight}</span>
                 </li>
               ))}
             </ul>
           </div>
         )}
 
-        {/* Reviews */}
-        {item.reviews && (
+        {/* Reviews - only show if meaningful */}
+        {reviewData && (
           <div className="mb-3 flex items-center gap-1">
             <Star className="h-3 w-3 fill-current text-elec-yellow" />
-            <span className="mobile-small-text text-text-muted">{item.reviews} reviews</span>
+            {reviewData.rating ? (
+              <span className="mobile-small-text text-text-muted">
+                {reviewData.rating} stars ({reviewData.count} reviews)
+              </span>
+            ) : (
+              <span className="mobile-small-text text-text-muted">
+                {reviewData.count} reviews
+              </span>
+            )}
           </div>
         )}
         
         {/* Price - prominent */}
-        <div className="mb-4 mt-auto">
+        <div className="mt-auto">
           {item.isOnSale ? (
             <div className="flex items-center gap-2 flex-wrap">
               <span className="text-xl font-bold text-elec-yellow">{item.salePrice}</span>
@@ -219,7 +268,7 @@ const ToolCard: React.FC<ToolCardProps> = ({
         </div>
         
         {/* Action buttons */}
-        <div className="mobile-input-spacing mt-auto">
+        <div className="flex flex-col gap-2 mt-3">
           {onAddToCompare && (
             <Button
               onClick={() => {
