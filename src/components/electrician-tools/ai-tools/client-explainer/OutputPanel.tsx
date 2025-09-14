@@ -192,34 +192,6 @@ Thank you for choosing our electrical services.`;
       <CardContent className="mobile-padding space-y-4">
         {content ? (
           <>
-            {/* Settings display */}
-            <div className="flex flex-wrap gap-2 mb-4">
-              <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow bg-elec-yellow/5">
-                {settings.tone}
-              </Badge>
-              <Badge variant="outline" className="border-blue-400/30 text-blue-400 bg-blue-400/5">
-                {settings.readingLevel}
-              </Badge>
-              <Badge variant="outline" className="border-purple-400/30 text-purple-400 bg-purple-400/5">
-                {settings.clientType}
-              </Badge>
-              {settings.includeAnalogy && (
-                <Badge variant="outline" className="border-green-400/30 text-green-400 bg-green-400/5">
-                  analogies
-                </Badge>
-              )}
-              {settings.emphasizeSafety && (
-                <Badge variant="outline" className="border-red-400/30 text-red-400 bg-red-400/5">
-                  safety focus
-                </Badge>
-              )}
-              {settings.includeCostInfo && (
-                <Badge variant="outline" className="border-orange-400/30 text-orange-400 bg-orange-400/5">
-                  cost info
-                </Badge>
-              )}
-            </div>
-
             {/* Output formats */}
             <Tabs defaultValue="standard" className="w-full">
               <TabsList className="mobile-grid-responsive grid w-full grid-cols-2 sm:grid-cols-4 h-auto">
