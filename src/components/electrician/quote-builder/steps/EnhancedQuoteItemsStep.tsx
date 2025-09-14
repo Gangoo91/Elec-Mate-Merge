@@ -373,7 +373,7 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
                               <SelectValue placeholder="Select category" />
                             </SelectTrigger>
                             <SelectContent className="z-50 bg-background border shadow-lg">
-                              <SelectItem value="">All Categories</SelectItem>
+                              <SelectItem value="all-categories">All Categories</SelectItem>
                               {materialCategories.map(cat => (
                                 <SelectItem key={cat.id} value={cat.id}>{cat.name}</SelectItem>
                               ))}
