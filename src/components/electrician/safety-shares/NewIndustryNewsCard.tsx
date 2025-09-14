@@ -1,11 +1,12 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Newspaper, AlertTriangle, RefreshCw, Plus, Settings } from "lucide-react";
-import { useIndustryNews, type NewsArticle } from "@/hooks/useIndustryNews";
-import { supabase } from "@/integrations/supabase/client";
+import { Progress } from "@/components/ui/progress";
+import { Newspaper, AlertTriangle, RefreshCw, Plus, Settings, Clock } from "lucide-react";
+import { type NewsArticle } from "@/hooks/useIndustryNews";
+import { FirecrawlService } from "@/utils/FirecrawlService";
 import { useToast } from "@/hooks/use-toast";
 import NewsHero from "./NewsHero";
 import NewsGrid from "./NewsGrid";
@@ -15,21 +16,46 @@ import NewsManagement from "./NewsManagement";
 
 const NewIndustryNewsCard = () => {
   const { toast } = useToast();
-  const { data: articles = [], isLoading, error, refetch } = useIndustryNews();
   
-  // Enhanced debugging
-  console.log('📰 NewIndustryNewsCard render:', {
-    articlesCount: articles.length,
-    isLoading,
-    hasError: !!error,
-    errorMessage: error?.message,
-    firstArticle: articles[0]?.title
-  });
+  // State for frontend-only news fetching
+  const [articles, setArticles] = useState<NewsArticle[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [selectedArticle, setSelectedArticle] = useState<NewsArticle | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [sortBy, setSortBy] = useState("newest");
   const [isScrapingNews, setIsScrapingNews] = useState(false);
+  const [scrapingProgress, setScrapingProgress] = useState({ current: 0, total: 0, source: '' });
+  const [cacheAge, setCacheAge] = useState<number>(-1);
+
+  // Load cached articles on component mount
+  useEffect(() => {
+    const loadCachedArticles = () => {
+      try {
+        const cached = FirecrawlService.getCachedArticles();
+        if (cached.length > 0) {
+          setArticles(cached);
+          setCacheAge(FirecrawlService.getCacheAge());
+          console.log('📰 Loaded cached articles:', cached.length);
+        }
+      } catch (error) {
+        console.error('Error loading cached articles:', error);
+      }
+    };
+
+    loadCachedArticles();
+  }, []);
+
+  // Enhanced debugging
+  console.log('📰 NewIndustryNewsCard render:', {
+    articlesCount: articles.length,
+    isLoading,
+    hasError: !!error,
+    errorMessage: error,
+    firstArticle: articles[0]?.title,
+    cacheAge: cacheAge > 0 ? Math.round(cacheAge / 1000) + 's' : 'no cache'
+  });
 
   // Filter and sort articles with enhanced debugging
   const filteredAndSortedArticles = useMemo(() => {
@@ -110,37 +136,47 @@ const NewIndustryNewsCard = () => {
 
   const handleRefreshNews = async () => {
     setIsScrapingNews(true);
+    setError(null);
+    setScrapingProgress({ current: 0, total: 4, source: 'Initialising...' });
+    
     try {
-      console.log('🔧 Triggering news scraper...');
-      const { data, error } = await supabase.functions.invoke('firecrawl-news-scraper', {
-        body: { trigger: 'manual' }
+      console.log('🔧 Fetching fresh news directly from sources...');
+      
+      // Use the new direct news fetching method
+      const result = await FirecrawlService.fetchDirectNews((progress) => {
+        setScrapingProgress(progress);
       });
 
-      if (error) {
-        console.error('❌ Error calling news scraper:', error);
-        throw error;
+      if (!result.success) {
+        throw new Error(result.error || 'Failed to fetch news');
       }
 
-      console.log('✅ News scraper response:', data);
+      console.log('✅ Direct news fetch successful:', result.data?.length);
+      
+      // Update state with fresh articles
+      setArticles(result.data || []);
+      setCacheAge(0); // Fresh data
       
       toast({
         title: "News Updated",
-        description: data?.message || "News articles have been refreshed successfully",
+        description: `Successfully fetched ${result.data?.length || 0} fresh articles from electrical industry sources`,
         duration: 5000,
       });
 
-      // Refresh the news data
-      refetch();
     } catch (error) {
       console.error('❌ News refresh failed:', error);
+      const errorMessage = error instanceof Error ? error.message : 'Failed to refresh news articles';
+      setError(errorMessage);
+      
       toast({
         title: "Refresh Failed",
-        description: "Failed to refresh news articles. Please try again later.",
+        description: errorMessage,
         variant: "destructive",
         duration: 5000,
       });
     } finally {
       setIsScrapingNews(false);
+      setScrapingProgress({ current: 0, total: 0, source: '' });
     }
   };
 
@@ -269,6 +305,12 @@ const NewIndustryNewsCard = () => {
               <h2 className="text-2xl font-semibold text-elec-yellow">
                 Industry News
               </h2>
+              {cacheAge > 0 && (
+                <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                  <Clock className="h-3 w-3" />
+                  <span>Cached {Math.round(cacheAge / 60000)}m ago</span>
+                </div>
+              )}
             </div>
             <div className="flex items-center gap-4">
               <p className="text-sm text-muted-foreground">
@@ -282,10 +324,37 @@ const NewIndustryNewsCard = () => {
                 className="border-elec-yellow/20 text-elec-yellow hover:bg-elec-yellow/10 hover:border-elec-yellow/40 bg-transparent"
               >
                 <RefreshCw className={`h-4 w-4 mr-2 ${isScrapingNews ? 'animate-spin' : ''}`} />
-                {isScrapingNews ? 'Updating...' : 'Refresh News'}
+                {isScrapingNews ? 'Fetching...' : 'Refresh News'}
               </Button>
             </div>
           </div>
+
+          {/* Scraping Progress */}
+          {isScrapingNews && (
+            <Card className="bg-elec-card border-elec-yellow/20">
+              <CardContent className="p-4">
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-elec-yellow font-medium">
+                      Fetching fresh industry news...
+                    </span>
+                    <span className="text-xs text-muted-foreground">
+                      {scrapingProgress.current}/{scrapingProgress.total}
+                    </span>
+                  </div>
+                  <Progress 
+                    value={(scrapingProgress.current / Math.max(scrapingProgress.total, 1)) * 100} 
+                    className="h-2"
+                  />
+                  {scrapingProgress.source && (
+                    <p className="text-xs text-muted-foreground">
+                      📡 {scrapingProgress.source}
+                    </p>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+          )}
 
           {displayArticles.length === 0 ? (
             <div className="text-center py-12">
@@ -324,7 +393,15 @@ const NewIndustryNewsCard = () => {
         </TabsContent>
 
         <TabsContent value="manage">
-          <NewsManagement onArticleCreated={refetch} />
+          <NewsManagement onArticleCreated={() => {
+            // For frontend-only approach, we could refresh the direct news
+            // but since this is manual content, we'll just show a message
+            toast({
+              title: "Manual Content Added",
+              description: "Manual content has been added to the database. Use 'Refresh News' to see fresh scraped content.",
+              duration: 3000,
+            });
+          }} />
         </TabsContent>
       </Tabs>
 
