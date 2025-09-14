@@ -309,16 +309,16 @@ const ClientExplainerPage = () => {
                   <Button 
                     onClick={handleGenerate}
                     disabled={isGenerating || !technicalNotes.trim()}
-                    className="mobile-button-primary w-full touch-target bg-gradient-to-r from-elec-yellow to-elec-yellow/90 hover:from-elec-yellow/90 hover:to-elec-yellow/80 text-white font-semibold h-14 sm:h-16 text-base sm:text-lg shadow-lg shadow-elec-yellow/25 border-0 rounded-xl transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
+                    className="mobile-button-primary w-full touch-target bg-gradient-to-r from-elec-yellow to-elec-yellow/90 hover:from-elec-yellow/90 hover:to-elec-yellow/80 text-black font-semibold h-14 sm:h-16 text-base sm:text-lg shadow-lg shadow-elec-yellow/25 border-0 rounded-xl transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
                   >
                     {isGenerating ? (
                       <>
-                        <Loader2 className="mr-3 h-6 w-6 animate-spin" />
+                        <Loader2 className="mr-3 h-6 w-6 animate-spin text-black" />
                         <span className="text-base sm:text-lg">Generating...</span>
                       </>
                     ) : (
                       <>
-                        <Zap className="mr-3 h-6 w-6" />
+                        <Zap className="mr-3 h-6 w-6 text-black" />
                         <span className="text-base sm:text-lg">Generate</span>
                       </>
                     )}
