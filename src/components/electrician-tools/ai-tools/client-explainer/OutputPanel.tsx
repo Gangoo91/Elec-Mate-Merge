@@ -28,28 +28,56 @@ const OutputPanel = ({ content, settings }: OutputPanelProps) => {
     if (!text) return text;
     
     // Clean and structure the text properly
-    return text
+    let processedText = text
       // Remove extra whitespace and normalize line breaks
       .replace(/\s+/g, ' ')
-      .replace(/\n\s*\n/g, '\n\n')
-      // Format headings
-      .replace(/^(.*?):\s*$/gm, '<h3 class="text-lg font-semibold text-foreground mb-3 mt-6 first:mt-0">$1</h3>')
+      .trim();
+
+    // Split into sections and process each
+    const sections = processedText.split(/(?=\n\n|\. [A-Z])/);
+    
+    return sections.map(section => {
+      let formattedSection = section.trim();
+      
+      // Format headings (lines ending with colon)
+      formattedSection = formattedSection.replace(/^(.*?):\s*/gm, '<h3 class="text-lg font-semibold text-foreground mb-3 mt-6 first:mt-0">$1:</h3>');
+      
       // Format bold text
-      .replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-foreground">$1</strong>')
+      formattedSection = formattedSection.replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-foreground">$1</strong>');
+      
       // Format italic text
-      .replace(/\*(.*?)\*/g, '<em class="italic text-foreground/90">$1</em>')
+      formattedSection = formattedSection.replace(/\*(.*?)\*/g, '<em class="italic text-foreground/90">$1</em>');
+      
       // Highlight BS 7671 references
-      .replace(/BS 7671/g, '<span class="text-elec-yellow font-medium bg-elec-yellow/10 px-1 py-0.5 rounded">BS 7671</span>')
+      formattedSection = formattedSection.replace(/BS 7671/g, '<span class="text-elec-yellow font-medium bg-elec-yellow/10 px-1 py-0.5 rounded">BS 7671</span>');
+      
       // Highlight regulation numbers
-      .replace(/(\d{3}\.\d+\.\d+)/g, '<span class="text-blue-400 font-mono text-sm bg-blue-400/10 px-1 py-0.5 rounded">$1</span>')
+      formattedSection = formattedSection.replace(/(\d{3}\.\d+\.\d+)/g, '<span class="text-blue-400 font-mono text-sm bg-blue-400/10 px-1 py-0.5 rounded">$1</span>');
+      
       // Highlight classification codes
-      .replace(/(C[123]|FI)/g, '<span class="px-2 py-1 rounded-md text-xs font-semibold bg-red-500/20 text-red-400 border border-red-500/30">$1</span>')
-      // Convert paragraphs
-      .split('\n\n')
-      .map(paragraph => paragraph.trim())
-      .filter(paragraph => paragraph.length > 0)
-      .map(paragraph => `<p class="mb-4 leading-relaxed text-foreground">${paragraph}</p>`)
-      .join('');
+      formattedSection = formattedSection.replace(/(C[123]|FI)/g, '<span class="px-2 py-1 rounded-md text-xs font-semibold bg-red-500/20 text-red-400 border border-red-500/30">$1</span>');
+      
+      // Convert sentences to bullet points for better readability
+      if (!formattedSection.includes('<h3>') && formattedSection.length > 50) {
+        const sentences = formattedSection.split(/\. (?=[A-Z])/);
+        if (sentences.length > 1) {
+          formattedSection = '<ul class="list-disc list-inside space-y-2 mb-4">' + 
+            sentences.map(sentence => {
+              const cleanSentence = sentence.trim();
+              if (cleanSentence && !cleanSentence.endsWith('.')) {
+                return `<li class="text-foreground leading-relaxed">${cleanSentence}.</li>`;
+              }
+              return `<li class="text-foreground leading-relaxed">${cleanSentence}</li>`;
+            }).join('') + '</ul>';
+        } else {
+          formattedSection = `<p class="mb-4 leading-relaxed text-foreground">${formattedSection}</p>`;
+        }
+      } else if (!formattedSection.includes('<h3>')) {
+        formattedSection = `<p class="mb-4 leading-relaxed text-foreground">${formattedSection}</p>`;
+      }
+      
+      return formattedSection;
+    }).join('');
   };
 
   const handleCopy = async () => {
@@ -226,7 +254,7 @@ Thank you for choosing our electrical services.`;
               <TabsContent value="standard" className="mt-4">
                 <div className="mobile-card bg-muted/30 border border-border/50 rounded-lg p-6">
                   <div 
-                    className="prose prose-sm max-w-none text-foreground leading-7"
+                    className="text-left max-w-none text-foreground"
                     style={{ 
                       fontSize: '15px',
                       lineHeight: '1.7',
@@ -255,7 +283,7 @@ Thank you for choosing our electrical services.`;
                   </div>
                   <div className="mobile-card bg-muted/30 border border-border/50 rounded-lg p-6">
                     <div 
-                      className="prose prose-sm max-w-none text-foreground leading-7"
+                      className="text-left max-w-none text-foreground"
                       style={{ 
                         fontSize: '15px',
                         lineHeight: '1.7',
@@ -317,7 +345,7 @@ Thank you for choosing our electrical services.`;
                   </div>
                   <div className="mobile-card bg-muted/30 border border-border/50 rounded-lg p-6">
                     <div 
-                      className="prose prose-sm max-w-none text-foreground leading-7"
+                      className="text-left max-w-none text-foreground"
                       style={{ 
                         fontSize: '15px',
                         lineHeight: '1.7',
