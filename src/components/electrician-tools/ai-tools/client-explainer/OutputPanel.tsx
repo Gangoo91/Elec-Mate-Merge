@@ -27,56 +27,47 @@ const OutputPanel = ({ content, settings }: OutputPanelProps) => {
   const processContentForDisplay = (text: string) => {
     if (!text) return text;
     
-    // Clean and structure the text properly
-    let processedText = text
-      // Remove extra whitespace and normalize line breaks
+    // Clean the text first
+    let cleanText = text
       .replace(/\s+/g, ' ')
       .trim();
 
-    // Split into sections and process each
-    const sections = processedText.split(/(?=\n\n|\. [A-Z])/);
+    // Split into paragraphs
+    const paragraphs = cleanText.split(/\n\n+/);
     
-    return sections.map(section => {
-      let formattedSection = section.trim();
+    return paragraphs.map(paragraph => {
+      let formatted = paragraph.trim();
       
-      // Format headings (lines ending with colon)
-      formattedSection = formattedSection.replace(/^(.*?):\s*/gm, '<h3 class="text-lg font-semibold text-foreground mb-3 mt-6 first:mt-0">$1:</h3>');
-      
-      // Format bold text
-      formattedSection = formattedSection.replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-foreground">$1</strong>');
-      
-      // Format italic text
-      formattedSection = formattedSection.replace(/\*(.*?)\*/g, '<em class="italic text-foreground/90">$1</em>');
-      
-      // Highlight BS 7671 references
-      formattedSection = formattedSection.replace(/BS 7671/g, '<span class="text-elec-yellow font-medium bg-elec-yellow/10 px-1 py-0.5 rounded">BS 7671</span>');
-      
-      // Highlight regulation numbers
-      formattedSection = formattedSection.replace(/(\d{3}\.\d+\.\d+)/g, '<span class="text-blue-400 font-mono text-sm bg-blue-400/10 px-1 py-0.5 rounded">$1</span>');
-      
-      // Highlight classification codes
-      formattedSection = formattedSection.replace(/(C[123]|FI)/g, '<span class="px-2 py-1 rounded-md text-xs font-semibold bg-red-500/20 text-red-400 border border-red-500/30">$1</span>');
-      
-      // Convert sentences to bullet points for better readability
-      if (!formattedSection.includes('<h3>') && formattedSection.length > 50) {
-        const sentences = formattedSection.split(/\. (?=[A-Z])/);
-        if (sentences.length > 1) {
-          formattedSection = '<ul class="list-disc list-inside space-y-2 mb-4">' + 
-            sentences.map(sentence => {
-              const cleanSentence = sentence.trim();
-              if (cleanSentence && !cleanSentence.endsWith('.')) {
-                return `<li class="text-foreground leading-relaxed">${cleanSentence}.</li>`;
-              }
-              return `<li class="text-foreground leading-relaxed">${cleanSentence}</li>`;
-            }).join('') + '</ul>';
-        } else {
-          formattedSection = `<p class="mb-4 leading-relaxed text-foreground">${formattedSection}</p>`;
-        }
-      } else if (!formattedSection.includes('<h3>')) {
-        formattedSection = `<p class="mb-4 leading-relaxed text-foreground">${formattedSection}</p>`;
+      // Check if it's a heading (ends with colon or is short and caps)
+      if (formatted.endsWith(':') || (formatted.length < 50 && formatted === formatted.toUpperCase())) {
+        return `<h3 class="text-xl font-bold text-foreground mb-4 mt-6 first:mt-0">${formatted}</h3>`;
       }
       
-      return formattedSection;
+      // Format special terms
+      formatted = formatted
+        .replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold">$1</strong>')
+        .replace(/\*(.*?)\*/g, '<em class="italic">$1</em>')
+        .replace(/BS 7671/g, '<span class="text-elec-yellow font-medium">BS 7671</span>')
+        .replace(/(\d{3}\.\d+\.\d+)/g, '<span class="text-blue-400 font-mono">$1</span>')
+        .replace(/(C[123]|FI)/g, '<span class="px-2 py-1 rounded bg-red-500/20 text-red-400 text-sm font-semibold">$1</span>');
+      
+      // Split long paragraphs into sentences for better readability
+      const sentences = formatted.split(/\. (?=[A-Z])/);
+      
+      if (sentences.length > 2) {
+        // Create bullet points for multiple sentences
+        return '<ul class="space-y-2 mb-6 ml-4">' + 
+          sentences.map(sentence => {
+            const clean = sentence.trim();
+            if (!clean) return '';
+            const withPeriod = clean.endsWith('.') ? clean : clean + '.';
+            return `<li class="text-foreground leading-relaxed">${withPeriod}</li>`;
+          }).filter(s => s).join('') + 
+        '</ul>';
+      } else {
+        // Keep as paragraph for short content
+        return `<p class="text-foreground leading-relaxed mb-4">${formatted}</p>`;
+      }
     }).join('');
   };
 
