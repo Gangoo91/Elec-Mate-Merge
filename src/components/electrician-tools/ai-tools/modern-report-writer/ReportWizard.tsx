@@ -207,58 +207,42 @@ const ReportWizard = () => {
           </div>
 
           {/* Progress Bar */}
-          <Card className="bg-elec-gray border-elec-yellow/30 p-6 mb-8">
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <span className="text-sm font-medium text-white">Progress</span>
-                <span className="text-sm text-muted-foreground">{Math.round(progress)}% Complete</span>
-              </div>
-              <Progress value={progress} className="h-2" />
-              
-              {/* Step indicators */}
-              <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mt-6">
-                {steps.map((step, index) => (
-                  <button
-                    key={step.id}
-                    onClick={() => goToStep(step.id)}
-                    disabled={!step.isAccessible}
-                    className={`p-3 rounded-lg text-left transition-all duration-200 ${
-                      currentStep === step.id
-                        ? 'bg-elec-yellow/20 border-2 border-elec-yellow'
-                        : step.isCompleted
-                        ? 'bg-green-500/10 border border-green-500/30 hover:bg-green-500/20'
-                        : step.isAccessible
-                        ? 'bg-elec-dark border border-elec-yellow/20 hover:bg-elec-yellow/10'
-                        : 'bg-muted/20 border border-muted/20 opacity-50 cursor-not-allowed'
-                    }`}
-                  >
-                    <div className="flex items-center gap-2 mb-1">
-                      <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-medium ${
-                        step.isCompleted
-                          ? 'bg-green-500 text-white'
-                          : currentStep === step.id
-                          ? 'bg-elec-yellow text-elec-dark'
-                          : 'bg-muted text-muted-foreground'
-                      }`}>
-                        {step.isCompleted ? <CheckCircle2 className="h-4 w-4" /> : index + 1}
-                      </div>
-                      {currentStep === step.id && (
-                        <Badge variant="secondary" className="text-xs">Current</Badge>
-                      )}
-                    </div>
-                    <h3 className={`text-sm font-medium ${
-                      step.isAccessible ? 'text-white' : 'text-muted-foreground'
-                    }`}>
-                      {step.title}
-                    </h3>
-                    <p className="text-xs text-muted-foreground mt-1">
-                      {step.description}
-                    </p>
-                  </button>
-                ))}
-              </div>
+          <div className="bg-elec-card/30 border border-elec-yellow/20 rounded-lg p-4 mb-8">
+            <div className="flex items-center justify-between mb-3">
+              <span className="text-sm text-muted-foreground">Step {currentStepIndex + 1} of {steps.length}</span>
+              <span className="text-xs text-elec-yellow">{Math.round(progress)}%</span>
             </div>
-          </Card>
+            <Progress value={progress} className="h-1.5 mb-4" />
+            
+            {/* Simple step indicators */}
+            <div className="flex justify-between">
+              {steps.map((step, index) => (
+                <button
+                  key={step.id}
+                  onClick={() => goToStep(step.id)}
+                  disabled={!step.isAccessible}
+                  className={`flex-1 text-center py-2 px-1 rounded transition-colors ${
+                    currentStep === step.id
+                      ? 'text-elec-yellow bg-elec-yellow/10'
+                      : step.isCompleted
+                      ? 'text-green-400'
+                      : step.isAccessible
+                      ? 'text-muted-foreground hover:text-white'
+                      : 'text-muted-foreground/50 cursor-not-allowed'
+                  }`}
+                >
+                  <div className={`w-2 h-2 rounded-full mx-auto mb-1 ${
+                    step.isCompleted
+                      ? 'bg-green-400'
+                      : currentStep === step.id
+                      ? 'bg-elec-yellow'
+                      : 'bg-muted-foreground/30'
+                  }`} />
+                  <span className="text-xs">{step.title.split(' ')[0]}</span>
+                </button>
+              ))}
+            </div>
+          </div>
 
           {/* Current Step Content */}
           <div className="animate-fade-in">
