@@ -481,29 +481,29 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack }: StepsMana
                             </CardContent>
                           </>
                         ) : (
-                          // Collapsed Card View - Like the image
-                          <CardContent className="p-6">
-                            <div className="flex items-start justify-between mb-4">
-                              <div className="flex items-center gap-4">
+                          // Collapsed Card View - Enhanced Mobile Layout
+                          <CardContent className="mobile-padding mobile-card-spacing">
+                            <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-6">
+                              <div className="flex items-start gap-3 sm:gap-4 min-w-0 flex-1">
                                 <div
                                   {...provided.dragHandleProps}
-                                  className="text-muted-foreground hover:text-elec-yellow cursor-grab"
+                                  className="text-foreground/60 hover:text-elec-yellow cursor-grab touch-target flex-shrink-0 mt-1"
                                 >
                                   <GripVertical className="h-5 w-5" />
                                 </div>
-                                <div className="w-10 h-10 rounded-full bg-elec-yellow text-black flex items-center justify-center font-bold text-lg">
+                                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-elec-yellow text-black flex items-center justify-center font-bold text-lg sm:text-xl flex-shrink-0">
                                   {step.stepNumber}
                                 </div>
-                                <div>
-                                  <h3 className="text-xl font-semibold text-elec-yellow mb-1">
+                                <div className="min-w-0 flex-1">
+                                  <h3 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-2 leading-tight">
                                     {step.title || `Step ${step.stepNumber}`}
                                   </h3>
-                                  <p className="text-foreground text-sm">
+                                  <p className="text-foreground text-sm sm:text-base leading-relaxed">
                                     {step.description || 'No description provided'}
                                   </p>
                                 </div>
                               </div>
-                              <div className="flex items-center gap-3">
+                              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-3 flex-shrink-0">
                                 <Badge className={getRiskColor(step.riskLevel)} variant="outline">
                                   {step.riskLevel} risk
                                 </Badge>
@@ -517,37 +517,37 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack }: StepsMana
                                   onClick={() => setExpandedStep(step.id)}
                                   size="sm"
                                   variant="outline"
-                                  className="ml-2"
+                                  className="mobile-button-secondary touch-target"
                                 >
                                   Edit
                                 </Button>
                               </div>
                             </div>
 
-                            {/* Three Column Layout for Requirements */}
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+                            {/* Enhanced Three Column Layout for Mobile */}
+                            <div className="mobile-grid-responsive grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                               {/* Safety Requirements */}
-                              <div>
+                              <div className="mobile-card-compact space-y-3">
                                 <div className="flex items-center gap-2 mb-3">
-                                  <Shield className="h-4 w-4 text-red-400" />
-                                  <h4 className="text-sm font-medium text-foreground">
+                                  <Shield className="h-4 w-4 text-red-400 flex-shrink-0" />
+                                  <h4 className="text-sm font-medium text-foreground mobile-text">
                                     Safety Requirements ({step.safetyRequirements.length})
                                   </h4>
                                 </div>
                                 <ul className="space-y-2">
                                   {step.safetyRequirements.slice(0, 3).map((req, index) => (
-                                    <li key={index} className="text-sm text-foreground flex items-start gap-2">
-                                      <span className="text-red-400 mt-1">•</span>
-                                      {req}
+                                    <li key={index} className="text-sm text-foreground flex items-start gap-2 leading-relaxed">
+                                      <span className="text-red-400 mt-1 flex-shrink-0">•</span>
+                                      <span className="break-words">{req}</span>
                                     </li>
                                   ))}
                                   {step.safetyRequirements.length > 3 && (
-                                    <li className="text-sm text-muted-foreground">
+                                    <li className="text-sm text-foreground/80 font-medium">
                                       +{step.safetyRequirements.length - 3} more
                                     </li>
                                   )}
                                   {step.safetyRequirements.length === 0 && (
-                                    <li className="text-sm text-muted-foreground italic">
+                                    <li className="text-sm text-foreground/60 italic">
                                       No safety requirements added
                                     </li>
                                   )}
@@ -555,27 +555,27 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack }: StepsMana
                               </div>
 
                               {/* Equipment */}
-                              <div>
+                              <div className="mobile-card-compact space-y-3">
                                 <div className="flex items-center gap-2 mb-3">
-                                  <Wrench className="h-4 w-4 text-blue-400" />
-                                  <h4 className="text-sm font-medium text-foreground">
+                                  <Wrench className="h-4 w-4 text-blue-400 flex-shrink-0" />
+                                  <h4 className="text-sm font-medium text-foreground mobile-text">
                                     Equipment ({step.equipmentNeeded.length})
                                   </h4>
                                 </div>
                                 <ul className="space-y-2">
                                   {step.equipmentNeeded.slice(0, 3).map((equipment, index) => (
-                                    <li key={index} className="text-sm text-foreground flex items-start gap-2">
-                                      <span className="text-blue-400 mt-1">•</span>
-                                      {equipment}
+                                    <li key={index} className="text-sm text-foreground flex items-start gap-2 leading-relaxed">
+                                      <span className="text-blue-400 mt-1 flex-shrink-0">•</span>
+                                      <span className="break-words">{equipment}</span>
                                     </li>
                                   ))}
                                   {step.equipmentNeeded.length > 3 && (
-                                    <li className="text-sm text-muted-foreground">
+                                    <li className="text-sm text-foreground/80 font-medium">
                                       +{step.equipmentNeeded.length - 3} more
                                     </li>
                                   )}
                                   {step.equipmentNeeded.length === 0 && (
-                                    <li className="text-sm text-muted-foreground italic">
+                                    <li className="text-sm text-foreground/60 italic">
                                       No equipment specified
                                     </li>
                                   )}
@@ -583,27 +583,27 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack }: StepsMana
                               </div>
 
                               {/* Qualifications */}
-                              <div>
+                              <div className="mobile-card-compact space-y-3 sm:col-span-2 lg:col-span-1">
                                 <div className="flex items-center gap-2 mb-3">
-                                  <GraduationCap className="h-4 w-4 text-green-400" />
-                                  <h4 className="text-sm font-medium text-foreground">
+                                  <GraduationCap className="h-4 w-4 text-green-400 flex-shrink-0" />
+                                  <h4 className="text-sm font-medium text-foreground mobile-text">
                                     Qualifications ({step.qualifications.length})
                                   </h4>
                                 </div>
                                 <ul className="space-y-2">
                                   {step.qualifications.slice(0, 3).map((qual, index) => (
-                                    <li key={index} className="text-sm text-foreground flex items-start gap-2">
-                                      <span className="text-green-400 mt-1">•</span>
-                                      {qual}
+                                    <li key={index} className="text-sm text-foreground flex items-start gap-2 leading-relaxed">
+                                      <span className="text-green-400 mt-1 flex-shrink-0">•</span>
+                                      <span className="break-words">{qual}</span>
                                     </li>
                                   ))}
                                   {step.qualifications.length > 3 && (
-                                    <li className="text-sm text-muted-foreground">
+                                    <li className="text-sm text-foreground/80 font-medium">
                                       +{step.qualifications.length - 3} more
                                     </li>
                                   )}
                                   {step.qualifications.length === 0 && (
-                                    <li className="text-sm text-muted-foreground italic">
+                                    <li className="text-sm text-foreground/60 italic">
                                       No qualifications required
                                     </li>
                                   )}
