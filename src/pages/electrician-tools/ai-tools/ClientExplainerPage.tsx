@@ -309,17 +309,17 @@ const ClientExplainerPage = () => {
                   <Button 
                     onClick={handleGenerate}
                     disabled={isGenerating || !technicalNotes.trim()}
-                    className="mobile-button-primary w-full touch-target bg-elec-yellow hover:bg-elec-yellow/90 text-black font-medium h-12 sm:h-14"
+                    className="mobile-button-primary w-full touch-target bg-gradient-to-r from-elec-yellow to-elec-yellow/90 hover:from-elec-yellow/90 hover:to-elec-yellow/80 text-black font-semibold h-14 sm:h-16 text-base sm:text-lg shadow-lg shadow-elec-yellow/25 border-0 rounded-xl transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
                   >
                     {isGenerating ? (
                       <>
-                        <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                        Generating Client-Friendly Explanation...
+                        <Loader2 className="mr-3 h-6 w-6 animate-spin" />
+                        <span className="text-base sm:text-lg">Generating Professional Explanation...</span>
                       </>
                     ) : (
                       <>
-                        <Brain className="mr-2 h-5 w-5" />
-                        Generate Professional Explanation
+                        <Zap className="mr-3 h-6 w-6" />
+                        <span className="text-base sm:text-lg">Generate Professional Explanation</span>
                       </>
                     )}
                   </Button>
