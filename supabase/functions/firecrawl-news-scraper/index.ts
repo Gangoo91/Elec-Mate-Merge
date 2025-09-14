@@ -1,7 +1,7 @@
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
-import FirecrawlApp from 'https://esm.sh/@mendable/firecrawl-js@1.29.3';
+import FirecrawlApp from 'https://esm.sh/@mendable/firecrawl-js@2.6.0';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -71,8 +71,8 @@ serve(async (req) => {
           limit: 10,
           scrapeOptions: {
             formats: ['markdown', 'extract'],
-            extractorOptions: {
-              extractionSchema: {
+            extract: {
+              schema: {
                 type: "object",
                 properties: {
                   articles: {
@@ -179,11 +179,8 @@ serve(async (req) => {
 
     let insertedCount = 0;
     if (newArticles.length > 0) {
-      // Deactivate old articles from scraping sources
-      await supabase
-        .from('industry_news')
-        .update({ is_active: false })
-        .in('source_name', newsSources.map(s => s.source_name));
+      // Don't deactivate existing articles to preserve static content
+      // Only insert new articles
 
       // Insert new articles in batches
       const batchSize = 10;

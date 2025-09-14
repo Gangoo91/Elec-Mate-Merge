@@ -38,7 +38,9 @@ export const useIndustryNews = () => {
   return useQuery({
     queryKey: ['industry-news'],
     queryFn: fetchIndustryNews,
-    staleTime: 10 * 60 * 1000, // 10 minutes
-    gcTime: 30 * 60 * 1000, // 30 minutes
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    gcTime: 10 * 60 * 1000, // 10 minutes
+    refetchOnWindowFocus: true,
+    refetchOnReconnect: true,
   });
 };
