@@ -56,14 +56,15 @@ const DetailsStep = ({ data, onDataChange, onNext, onBack }: DetailsStepProps) =
 
       {/* Job Information */}
       <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardHeader>
-          <CardTitle className="text-elec-yellow text-lg">Job Information</CardTitle>
+        <CardHeader className="pb-4">
+          <CardTitle className="text-elec-yellow text-lg font-semibold">Job Information</CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <Label htmlFor="jobTitle" className="flex items-center gap-2">
-                <FileText className="h-4 w-4" />
+        <CardContent className="space-y-6 p-6">
+          {/* Primary Job Details */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <Label htmlFor="jobTitle" className="flex items-center gap-2 text-sm font-medium text-foreground mb-2">
+                <FileText className="h-4 w-4 text-elec-yellow" />
                 Job Title *
               </Label>
               <Input
@@ -71,12 +72,14 @@ const DetailsStep = ({ data, onDataChange, onNext, onBack }: DetailsStepProps) =
                 value={data.jobTitle}
                 onChange={(e) => onDataChange({ jobTitle: e.target.value })}
                 placeholder="e.g., Consumer Unit Replacement"
+                className="h-11"
                 required
               />
             </div>
-            <div>
-              <Label htmlFor="location" className="flex items-center gap-2">
-                <MapPin className="h-4 w-4" />
+            
+            <div className="space-y-2">
+              <Label htmlFor="location" className="flex items-center gap-2 text-sm font-medium text-foreground mb-2">
+                <MapPin className="h-4 w-4 text-elec-yellow" />
                 Site Location *
               </Label>
               <Input
@@ -84,11 +87,17 @@ const DetailsStep = ({ data, onDataChange, onNext, onBack }: DetailsStepProps) =
                 value={data.location}
                 onChange={(e) => onDataChange({ location: e.target.value })}
                 placeholder="Full site address"
+                className="h-11"
                 required
               />
             </div>
-            <div>
-              <Label htmlFor="contractor" className="flex items-center gap-2">
+          </div>
+
+          {/* Company and Personnel Details */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <Label htmlFor="contractor" className="flex items-center gap-2 text-sm font-medium text-foreground mb-2">
+                <FileText className="h-4 w-4 text-elec-yellow" />
                 Contractor Company *
               </Label>
               <Input
@@ -96,12 +105,14 @@ const DetailsStep = ({ data, onDataChange, onNext, onBack }: DetailsStepProps) =
                 value={data.contractor}
                 onChange={(e) => onDataChange({ contractor: e.target.value })}
                 placeholder="Company name"
+                className="h-11"
                 required
               />
             </div>
-            <div>
-              <Label htmlFor="supervisor" className="flex items-center gap-2">
-                <Users className="h-4 w-4" />
+            
+            <div className="space-y-2">
+              <Label htmlFor="supervisor" className="flex items-center gap-2 text-sm font-medium text-foreground mb-2">
+                <Users className="h-4 w-4 text-elec-yellow" />
                 Site Supervisor *
               </Label>
               <Input
@@ -109,16 +120,24 @@ const DetailsStep = ({ data, onDataChange, onNext, onBack }: DetailsStepProps) =
                 value={data.supervisor}
                 onChange={(e) => onDataChange({ supervisor: e.target.value })}
                 placeholder="Supervisor name"
+                className="h-11"
                 required
               />
             </div>
-            <div>
-              <Label htmlFor="workType">Type of Work *</Label>
+          </div>
+
+          {/* Work Type and Duration */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <Label htmlFor="workType" className="flex items-center gap-2 text-sm font-medium text-foreground mb-2">
+                <FileText className="h-4 w-4 text-elec-yellow" />
+                Type of Work *
+              </Label>
               <Select 
                 value={data.workType} 
                 onValueChange={(value) => onDataChange({ workType: value })}
               >
-                <SelectTrigger>
+                <SelectTrigger className="h-11">
                   <SelectValue placeholder="Select work type" />
                 </SelectTrigger>
                 <SelectContent>
@@ -128,9 +147,10 @@ const DetailsStep = ({ data, onDataChange, onNext, onBack }: DetailsStepProps) =
                 </SelectContent>
               </Select>
             </div>
-            <div>
-              <Label htmlFor="duration" className="flex items-center gap-2">
-                <Clock className="h-4 w-4" />
+            
+            <div className="space-y-2">
+              <Label htmlFor="duration" className="flex items-center gap-2 text-sm font-medium text-foreground mb-2">
+                <Clock className="h-4 w-4 text-elec-yellow" />
                 Estimated Duration
               </Label>
               <Input
@@ -138,11 +158,16 @@ const DetailsStep = ({ data, onDataChange, onNext, onBack }: DetailsStepProps) =
                 value={data.duration}
                 onChange={(e) => onDataChange({ duration: e.target.value })}
                 placeholder="e.g., 2 days"
+                className="h-11"
               />
             </div>
-            <div>
-              <Label htmlFor="teamSize" className="flex items-center gap-2">
-                <Users className="h-4 w-4" />
+          </div>
+
+          {/* Team and Risk Details */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <Label htmlFor="teamSize" className="flex items-center gap-2 text-sm font-medium text-foreground mb-2">
+                <Users className="h-4 w-4 text-elec-yellow" />
                 Team Size
               </Label>
               <Input
@@ -150,15 +175,20 @@ const DetailsStep = ({ data, onDataChange, onNext, onBack }: DetailsStepProps) =
                 value={data.teamSize}
                 onChange={(e) => onDataChange({ teamSize: e.target.value })}
                 placeholder="Number of personnel"
+                className="h-11"
               />
             </div>
-            <div>
-              <Label htmlFor="overallRiskLevel">Overall Risk Level</Label>
+            
+            <div className="space-y-2">
+              <Label htmlFor="overallRiskLevel" className="flex items-center gap-2 text-sm font-medium text-foreground mb-2">
+                <FileText className="h-4 w-4 text-elec-yellow" />
+                Overall Risk Level
+              </Label>
               <Select 
                 value={data.overallRiskLevel} 
                 onValueChange={(value: 'low' | 'medium' | 'high') => onDataChange({ overallRiskLevel: value })}
               >
-                <SelectTrigger>
+                <SelectTrigger className="h-11">
                   <SelectValue placeholder="Select risk level" />
                 </SelectTrigger>
                 <SelectContent>
@@ -172,33 +202,39 @@ const DetailsStep = ({ data, onDataChange, onNext, onBack }: DetailsStepProps) =
             </div>
           </div>
 
-          <div>
-            <Label htmlFor="description">Job Description</Label>
+          {/* Job Description - Full Width */}
+          <div className="space-y-2">
+            <Label htmlFor="description" className="flex items-center gap-2 text-sm font-medium text-foreground mb-2">
+              <FileText className="h-4 w-4 text-elec-yellow" />
+              Job Description
+            </Label>
             <Textarea
               id="description"
               value={data.description}
               onChange={(e) => onDataChange({ description: e.target.value })}
               placeholder="Provide a detailed description of the work to be carried out"
               rows={4}
+              className="resize-none"
             />
           </div>
 
-          <div>
-            <Label htmlFor="reviewDate" className="flex items-center gap-2">
-              <CalendarIcon className="h-4 w-4" />
+          {/* Review Date */}
+          <div className="space-y-2">
+            <Label htmlFor="reviewDate" className="flex items-center gap-2 text-sm font-medium text-foreground mb-2">
+              <CalendarIcon className="h-4 w-4 text-elec-yellow" />
               Review Date
             </Label>
             <Popover>
               <PopoverTrigger asChild>
                 <Button
                   variant="outline"
-                  className="w-full justify-start text-left font-normal"
+                  className="w-full lg:w-80 h-11 justify-start text-left font-normal"
                 >
                   <CalendarIcon className="mr-2 h-4 w-4" />
                   {data.reviewDate ? format(new Date(data.reviewDate), 'PPP') : 'Select date'}
                 </Button>
               </PopoverTrigger>
-              <PopoverContent className="w-auto p-0">
+              <PopoverContent className="w-auto p-0" align="start">
                 <Calendar
                   mode="single"
                   selected={data.reviewDate ? new Date(data.reviewDate) : undefined}
@@ -247,7 +283,7 @@ const DetailsStep = ({ data, onDataChange, onNext, onBack }: DetailsStepProps) =
       {!isFormValid() && (
         <Card className="border-yellow-500/20 bg-yellow-500/5">
           <CardContent className="p-4">
-            <div className="text-yellow-300 text-sm">
+            <div className="text-yellow-300 text-sm font-medium">
               Please complete all required fields (*) before proceeding.
             </div>
           </CardContent>
@@ -255,11 +291,11 @@ const DetailsStep = ({ data, onDataChange, onNext, onBack }: DetailsStepProps) =
       )}
 
       {/* Continue Button */}
-      <div className="flex justify-end">
+      <div className="flex flex-col sm:flex-row sm:justify-end gap-3 pt-4">
         <Button
           onClick={onNext}
           disabled={!isFormValid()}
-          className="flex items-center gap-2"
+          className="flex items-center justify-center gap-2 h-11 w-full sm:w-auto sm:min-w-[160px]"
         >
           Continue to Steps
         </Button>
