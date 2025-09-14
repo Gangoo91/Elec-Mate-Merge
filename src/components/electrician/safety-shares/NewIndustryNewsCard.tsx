@@ -2,7 +2,8 @@ import { useState, useMemo } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Newspaper, AlertTriangle, RefreshCw } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Newspaper, AlertTriangle, RefreshCw, Plus, Settings } from "lucide-react";
 import { useIndustryNews, type NewsArticle } from "@/hooks/useIndustryNews";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
@@ -10,6 +11,7 @@ import NewsHero from "./NewsHero";
 import NewsGrid from "./NewsGrid";
 import NewsFilters from "./NewsFilters";
 import NewsDetail from "./NewsDetail";
+import NewsManagement from "./NewsManagement";
 
 const NewIndustryNewsCard = () => {
   const { toast } = useToast();
@@ -230,81 +232,101 @@ const NewIndustryNewsCard = () => {
 
   return (
     <>
-      <div className="space-y-8">
-        {/* Filters */}
-        <NewsFilters
-          searchTerm={searchTerm}
-          onSearchChange={setSearchTerm}
-          selectedCategory={selectedCategory}
-          onCategoryChange={setSelectedCategory}
-          sortBy={sortBy}
-          onSortChange={setSortBy}
-          articles={articles}
-        />
+      <Tabs defaultValue="news" className="w-full">
+        <TabsList className="grid w-full grid-cols-2 mb-8 bg-elec-card border border-elec-yellow/20">
+          <TabsTrigger 
+            value="news" 
+            className="data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark text-white"
+          >
+            <Newspaper className="h-4 w-4 mr-2" />
+            Industry News
+          </TabsTrigger>
+          <TabsTrigger 
+            value="manage" 
+            className="data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark text-white"
+          >
+            <Settings className="h-4 w-4 mr-2" />
+            Content Management
+          </TabsTrigger>
+        </TabsList>
 
-        {/* Results Summary with Refresh Button */}
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-          <div className="flex items-center gap-2">
-            <Newspaper className="h-5 w-5 text-elec-yellow" />
-            <h2 className="text-2xl font-semibold text-elec-yellow">
-              Industry News
-            </h2>
-          </div>
-          <div className="flex items-center gap-4">
-            <p className="text-sm text-muted-foreground">
-              Showing {displayArticles.length} of {articles.length} articles
-              {displayArticles.length !== filteredAndSortedArticles.length && (
-                <span className="text-yellow-400 ml-2">(fallback mode)</span>
-              )}
-            </p>
-            <Button
-              onClick={handleRefreshNews}
-              disabled={isScrapingNews}
-              size="sm"
-              variant="outline"
-              className="border-elec-yellow/20 text-elec-yellow hover:bg-elec-yellow/10 hover:border-elec-yellow/40 bg-transparent"
-            >
-              <RefreshCw className={`h-4 w-4 mr-2 ${isScrapingNews ? 'animate-spin' : ''}`} />
-              {isScrapingNews ? 'Updating...' : 'Refresh News'}
-            </Button>
-          </div>
-        </div>
+        <TabsContent value="news" className="space-y-8">
+          {/* Filters */}
+          <NewsFilters
+            searchTerm={searchTerm}
+            onSearchChange={setSearchTerm}
+            selectedCategory={selectedCategory}
+            onCategoryChange={setSelectedCategory}
+            sortBy={sortBy}
+            onSortChange={setSortBy}
+            articles={articles}
+          />
 
-        {displayArticles.length === 0 ? (
-          <div className="text-center py-12">
-            <Newspaper className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
-            <p className="text-lg text-muted-foreground mb-2">
-              No articles match your filters
-            </p>
-            <p className="text-sm text-muted-foreground">
-              Try adjusting your search terms or category filter
-            </p>
+          {/* Results Summary with Refresh Button */}
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+            <div className="flex items-center gap-2">
+              <Newspaper className="h-5 w-5 text-elec-yellow" />
+              <h2 className="text-2xl font-semibold text-elec-yellow">
+                Industry News
+              </h2>
+            </div>
+            <div className="flex items-center gap-4">
+              <p className="text-sm text-muted-foreground">
+                Showing {displayArticles.length} of {articles.length} articles
+              </p>
+              <Button
+                onClick={handleRefreshNews}
+                disabled={isScrapingNews}
+                size="sm"
+                variant="outline"
+                className="border-elec-yellow/20 text-elec-yellow hover:bg-elec-yellow/10 hover:border-elec-yellow/40 bg-transparent"
+              >
+                <RefreshCw className={`h-4 w-4 mr-2 ${isScrapingNews ? 'animate-spin' : ''}`} />
+                {isScrapingNews ? 'Updating...' : 'Refresh News'}
+              </Button>
+            </div>
           </div>
-        ) : (
-          <>
-            {/* Hero Article */}
-            {heroArticle && (
-              <NewsHero 
-                article={heroArticle} 
-                onReadMore={handleReadMore}
-              />
-            )}
 
-            {/* Remaining Articles Grid */}
-            {remainingArticles.length > 0 && (
-              <div className="space-y-6">
-                <h3 className="text-xl font-semibold text-white">
-                  More Industry News
-                </h3>
-                <NewsGrid 
-                  articles={remainingArticles}
+          {displayArticles.length === 0 ? (
+            <div className="text-center py-12">
+              <Newspaper className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
+              <p className="text-lg text-muted-foreground mb-2">
+                No articles match your filters
+              </p>
+              <p className="text-sm text-muted-foreground">
+                Try adjusting your search terms or category filter
+              </p>
+            </div>
+          ) : (
+            <>
+              {/* Hero Article */}
+              {heroArticle && (
+                <NewsHero 
+                  article={heroArticle} 
                   onReadMore={handleReadMore}
                 />
-              </div>
-            )}
-          </>
-        )}
-      </div>
+              )}
+
+              {/* Remaining Articles Grid */}
+              {remainingArticles.length > 0 && (
+                <div className="space-y-6">
+                  <h3 className="text-xl font-semibold text-white">
+                    More Industry News
+                  </h3>
+                  <NewsGrid 
+                    articles={remainingArticles}
+                    onReadMore={handleReadMore}
+                  />
+                </div>
+              )}
+            </>
+          )}
+        </TabsContent>
+
+        <TabsContent value="manage">
+          <NewsManagement onArticleCreated={refetch} />
+        </TabsContent>
+      </Tabs>
 
       {/* Article Detail Modal */}
       <NewsDetail
