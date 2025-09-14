@@ -189,11 +189,10 @@ const MaterialCard: React.FC<MaterialCardProps> = ({
         {/* Highlights */}
         {item.highlights && item.highlights.length > 0 && (
           <div className="mb-3 flex-1">
-            <ul className="mobile-small-text text-text-subtle space-y-1">
+            <ul className="mobile-small-text text-text-subtle space-y-1.5 list-disc pl-4">
               {item.highlights.slice(0, 3).map((highlight, index) => (
-                <li key={index} className="flex items-start gap-2">
-                  <span className="w-1 h-1 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></span>
-                  <span className="line-clamp-2">{highlight}</span>
+                <li key={index} className="leading-relaxed">
+                  {highlight}
                 </li>
               ))}
             </ul>
