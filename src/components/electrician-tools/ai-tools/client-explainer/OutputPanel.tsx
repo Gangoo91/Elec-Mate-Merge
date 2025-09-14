@@ -156,15 +156,24 @@ const OutputPanel = ({ content, settings }: OutputPanelProps) => {
   };
 
   const formatForEmail = (content: string) => {
+    // Clean content by removing all markdown formatting
+    const cleanContent = content
+      .replace(/\*\*(.*?)\*\*/g, '$1') // Remove bold markers
+      .replace(/\*(.*?)\*/g, '$1') // Remove italic markers
+      .replace(/#{1,6}\s/g, '') // Remove heading markers
+      .replace(/[-*+]\s/g, '') // Remove bullet points
+      .replace(/\n\s*\n/g, '\n\n') // Clean up extra line breaks
+      .trim();
+
     return `Dear Valued Client,
 
 I hope this email finds you well. I wanted to provide you with a clear explanation of the electrical work findings from my recent inspection of your property.
 
-**Electrical Inspection Summary:**
+Electrical Inspection Summary:
 
-${content}
+${cleanContent}
 
-**Next Steps:**
+Next Steps:
 If you have any questions about these findings or would like to discuss the recommended work, please don't hesitate to contact me. I'm here to ensure your electrical system is safe and compliant with current regulations.
 
 Thank you for trusting me with your electrical needs. I look forward to hearing from you soon.
