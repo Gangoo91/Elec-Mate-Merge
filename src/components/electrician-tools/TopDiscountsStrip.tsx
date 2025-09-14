@@ -11,19 +11,19 @@ interface TopDiscountsStripProps {
 
 const TopDiscountsStrip = ({ deals, maxDeals = 5 }: TopDiscountsStripProps) => {
   const topDeals = deals
-    .filter(tool => tool.isOnSale && tool.salePrice)
+    .filter(tool => tool.isOnSale && tool.originalPrice)
     .slice(0, maxDeals);
 
   if (topDeals.length === 0) return null;
 
   const calculateSavings = (tool: ToolItem) => {
-    if (!tool.price || !tool.salePrice) return null;
+    if (!tool.originalPrice || !tool.price) return null;
     
-    const originalPrice = parseFloat(tool.price.replace(/[£,]/g, ''));
-    const salePrice = parseFloat(tool.salePrice.replace(/[£,]/g, ''));
+    const originalPrice = parseFloat(tool.originalPrice.replace(/[£,]/g, ''));
+    const currentPrice = parseFloat(tool.price.replace(/[£,]/g, ''));
     
-    if (originalPrice && salePrice) {
-      const savings = originalPrice - salePrice;
+    if (originalPrice && currentPrice && originalPrice > currentPrice) {
+      const savings = originalPrice - currentPrice;
       const percentage = Math.round(((savings / originalPrice) * 100));
       return { percentage, savings: `£${savings.toFixed(2)}` };
     }
@@ -48,7 +48,7 @@ const TopDiscountsStrip = ({ deals, maxDeals = 5 }: TopDiscountsStripProps) => {
     <div className="space-y-3">
       <div className="flex items-center gap-2">
         <Percent className="h-5 w-5 text-elec-yellow" />
-        <h3 className="text-lg font-semibold text-elec-light">Top 5 Discounts</h3>
+        <h3 className="text-lg font-semibold text-elec-light">Best Prices</h3>
       </div>
       
       <div className="flex gap-3 overflow-x-auto pb-2 scroll-smooth scrollbar-hide">
@@ -70,12 +70,12 @@ const TopDiscountsStrip = ({ deals, maxDeals = 5 }: TopDiscountsStripProps) => {
                   
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-2">
-                      <Badge variant="destructive" className="text-xs font-bold">
-                        SALE
+                      <Badge variant="secondary" className="text-xs font-bold bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30">
+                        BEST PRICE
                       </Badge>
                       {savings && (
                         <Badge variant="outline" className="bg-green-500/10 border-green-500/30 text-green-400 text-xs">
-                          {savings.percentage}% OFF
+                          Save {savings.savings}
                         </Badge>
                       )}
                     </div>
@@ -85,12 +85,19 @@ const TopDiscountsStrip = ({ deals, maxDeals = 5 }: TopDiscountsStripProps) => {
                     </h4>
                     
                     <div className="flex items-center gap-2 mb-2">
-                      <span className="font-bold text-elec-yellow text-sm">{tool.salePrice}</span>
-                      <span className="line-through text-text-muted text-xs">{tool.price}</span>
+                      <span className="font-bold text-elec-yellow text-sm">{tool.price}</span>
+                      {tool.originalPrice && (
+                        <span className="line-through text-text-muted text-xs">{tool.originalPrice}</span>
+                      )}
                     </div>
                     
                     <div className="text-xs text-text-muted mb-3">
                       {tool.supplier}
+                      {tool.competitorCount && tool.competitorCount > 0 && (
+                        <span className="block text-green-400">
+                          Beats {tool.competitorCount} competitor{tool.competitorCount > 1 ? 's' : ''}
+                        </span>
+                      )}
                     </div>
                     
                     <a href={getProductUrl(tool)} target="_blank" rel="noopener noreferrer" className="block">

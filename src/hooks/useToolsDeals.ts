@@ -1,89 +1,102 @@
 import { useMemo } from 'react';
 import { type ToolItem } from './useToolsData';
 
-const SALE_KEYWORDS = [
-  'sale', 'clearance', 'reduced', 'discount', 'special', 'offer', 'deal',
-  'promotion', 'bargain', 'value', 'save', 'promo'
-];
+// Similarity threshold for product matching (0-1, higher = more similar)
+const SIMILARITY_THRESHOLD = 0.6;
 
-const SUPPLIER_SALE_PATTERNS = {
-  'screwfix': (name: string, price: string) => 
-    name.toLowerCase().includes('value') || price.includes('.99') || price.includes('.95'),
-  'toolstation': (name: string, price: string) => 
-    name.toLowerCase().includes('professional') || price.includes('.49'),
-  'city-electrical-factors': (name: string) => 
-    name.toLowerCase().includes('trade') || name.toLowerCase().includes('bulk'),
-  'electricaldirect': (name: string) => 
-    name.toLowerCase().includes('electric') || name.toLowerCase().includes('cable')
+interface ProductGroup {
+  tools: ToolItem[];
+  lowestPrice: number;
+  lowestPriceSupplier: string;
+  lowestPriceTool: ToolItem;
+  savings: number;
+}
+
+// Calculate string similarity using Jaccard index
+const calculateSimilarity = (str1: string, str2: string): number => {
+  const normalize = (str: string) => str.toLowerCase().replace(/[^\w\s]/g, '').trim();
+  const words1 = new Set(normalize(str1).split(/\s+/));
+  const words2 = new Set(normalize(str2).split(/\s+/));
+  
+  const intersection = new Set([...words1].filter(x => words2.has(x)));
+  const union = new Set([...words1, ...words2]);
+  
+  return intersection.size / union.size;
 };
 
-const detectSaleFromName = (name: string): boolean => {
-  const lowerName = name.toLowerCase();
-  return SALE_KEYWORDS.some(keyword => lowerName.includes(keyword));
+// Extract key product identifiers for better matching
+const extractProductKey = (tool: ToolItem): string => {
+  const name = tool.name.toLowerCase();
+  // Remove common supplier-specific words and focus on product type
+  return name
+    .replace(/\b(screwfix|toolstation|city electrical|electricaldirect)\b/g, '')
+    .replace(/\b(professional|trade|value|basic|premium)\b/g, '')
+    .replace(/[^\w\s]/g, '')
+    .trim();
 };
 
-const detectSaleFromPrice = (price: string): boolean => {
-  const cleanPrice = price.replace(/[£$€,]/g, '');
-  const numPrice = parseFloat(cleanPrice);
-  
-  if (isNaN(numPrice)) return false;
-  
-  // Items ending in .99, .95, .49 are often sale prices
-  const decimal = numPrice % 1;
-  return decimal === 0.99 || decimal === 0.95 || decimal === 0.49;
+// Group similar products from different suppliers
+const groupSimilarProducts = (tools: ToolItem[]): ProductGroup[] => {
+  const groups: ProductGroup[] = [];
+  const processed = new Set<number>();
+
+  tools.forEach((tool, index) => {
+    if (processed.has(index)) return;
+
+    const currentGroup: ToolItem[] = [tool];
+    processed.add(index);
+
+    // Find similar products from other suppliers
+    tools.forEach((otherTool, otherIndex) => {
+      if (processed.has(otherIndex) || 
+          otherTool.supplier === tool.supplier ||
+          !otherTool.supplier ||
+          !tool.supplier) return;
+
+      const similarity = calculateSimilarity(
+        extractProductKey(tool),
+        extractProductKey(otherTool)
+      );
+
+      if (similarity >= SIMILARITY_THRESHOLD) {
+        currentGroup.push(otherTool);
+        processed.add(otherIndex);
+      }
+    });
+
+    // Only create groups with multiple suppliers
+    if (currentGroup.length > 1) {
+      const prices = currentGroup.map(t => {
+        const cleanPrice = t.price.replace(/[£$€,]/g, '');
+        return parseFloat(cleanPrice);
+      }).filter(p => !isNaN(p));
+
+      if (prices.length > 1) {
+        const lowestPrice = Math.min(...prices);
+        const highestPrice = Math.max(...prices);
+        const lowestPriceTool = currentGroup.find(t => {
+          const price = parseFloat(t.price.replace(/[£$€,]/g, ''));
+          return price === lowestPrice;
+        })!;
+
+        groups.push({
+          tools: currentGroup,
+          lowestPrice,
+          lowestPriceSupplier: lowestPriceTool.supplier || '',
+          lowestPriceTool,
+          savings: highestPrice - lowestPrice
+        });
+      }
+    }
+  });
+
+  return groups;
 };
 
-const detectSaleFromSupplier = (tool: ToolItem): boolean => {
-  const supplier = tool.supplier?.toLowerCase() || '';
-  const pattern = SUPPLIER_SALE_PATTERNS[supplier as keyof typeof SUPPLIER_SALE_PATTERNS];
-  
-  if (pattern && typeof pattern === 'function') {
-    return pattern(tool.name, tool.price);
-  }
-  
-  return false;
-};
-
-const generateSalePrice = (originalPrice: string, toolName: string): string => {
-  const cleanPrice = originalPrice.replace(/[£$€,]/g, '');
-  const numPrice = parseFloat(cleanPrice);
-  
-  if (isNaN(numPrice)) return originalPrice;
-  
-  // Use deterministic discount based on tool name for consistency
-  const nameHash = toolName.split('').reduce((a, b) => a + b.charCodeAt(0), 0);
-  const discountPercent = 10 + (nameHash % 21); // 10-30% discount, but consistent per tool
-  const salePrice = numPrice * (1 - discountPercent / 100);
-  
-  // Round to realistic pricing (e.g., £19.99, £24.95, etc.)
-  let roundedPrice;
-  if (salePrice < 10) {
-    roundedPrice = Math.floor(salePrice * 100) / 100; // Keep exact for low prices
-  } else if (salePrice < 50) {
-    roundedPrice = Math.floor(salePrice) + 0.99; // End in .99
-  } else if (salePrice < 100) {
-    roundedPrice = Math.floor(salePrice) + 0.95; // End in .95
-  } else {
-    roundedPrice = Math.floor(salePrice / 5) * 5 + 0.99; // Round to nearest £5 + .99
-  }
-  
-  // Format and add currency symbol
-  const currency = originalPrice.charAt(0);
-  return `${currency}${roundedPrice.toFixed(2)}`;
-};
-
-const shouldMarkAsOnSale = (tool: ToolItem, index: number): boolean => {
-  // First check if item has obvious sale indicators
-  if (detectSaleFromName(tool.name) || 
-      detectSaleFromPrice(tool.price) || 
-      detectSaleFromSupplier(tool)) {
-    return true;
-  }
-  
-  // For demonstration, randomly mark some items as on sale
-  // Use deterministic randomness based on tool properties
-  const seed = (tool.name.length + tool.price.length + index) % 100;
-  return seed < 25; // ~25% of tools will be on sale
+// Parse price string to number
+const parsePrice = (priceStr: string): number => {
+  const cleanPrice = priceStr.replace(/[£$€,]/g, '');
+  return parseFloat(cleanPrice);
 };
 
 export const useToolsDeals = (tools: ToolItem[]) => {
@@ -93,16 +106,48 @@ export const useToolsDeals = (tools: ToolItem[]) => {
       return [];
     }
 
-    const processedTools = tools.map((tool, index) => {
-      const isOnSale = shouldMarkAsOnSale(tool, index);
+    console.log(`🔧 Processing ${tools.length} tools for price comparison...`);
+    
+    // Group similar products across suppliers
+    const productGroups = groupSimilarProducts(tools);
+    console.log(`📊 Found ${productGroups.length} product groups for comparison`);
+    
+    // Create a map to track which tools are best prices
+    const bestPriceToolIds = new Set<string>();
+    const toolSavingsMap = new Map<string, { originalPrice: string; savings: number; competitorCount: number }>();
+    
+    productGroups.forEach(group => {
+      // Mark the lowest price tool as a deal
+      const bestToolKey = `${group.lowestPriceTool.name}-${group.lowestPriceTool.supplier}`;
+      bestPriceToolIds.add(bestToolKey);
+      
+      // Find the highest price in the group for savings calculation
+      const prices = group.tools.map(t => parsePrice(t.price)).filter(p => !isNaN(p));
+      const highestPrice = Math.max(...prices);
+      const originalPriceStr = group.tools.find(t => parsePrice(t.price) === highestPrice)?.price || group.lowestPriceTool.price;
+      
+      toolSavingsMap.set(bestToolKey, {
+        originalPrice: originalPriceStr,
+        savings: group.savings,
+        competitorCount: group.tools.length - 1
+      });
+      
+      console.log(`💰 Best price: ${group.lowestPriceTool.name} at ${group.lowestPriceSupplier} - £${group.lowestPrice.toFixed(2)} (saves £${group.savings.toFixed(2)} vs ${group.tools.length - 1} competitors)`);
+    });
+
+    // Process all tools and mark best prices as deals
+    const processedTools = tools.map((tool) => {
+      const toolKey = `${tool.name}-${tool.supplier}`;
+      const savingsData = toolSavingsMap.get(toolKey);
+      const isBestPrice = bestPriceToolIds.has(toolKey);
       
       let enhancedTool = { ...tool };
       
-      if (isOnSale) {
+      if (isBestPrice && savingsData && savingsData.savings > 0.50) { // Only show deals with meaningful savings (>50p)
         enhancedTool.isOnSale = true;
-        enhancedTool.salePrice = generateSalePrice(tool.price, tool.name);
-        
-        console.log(`🏷️ Tool on sale: ${tool.name} - ${tool.price} → ${enhancedTool.salePrice}`);
+        enhancedTool.salePrice = tool.price; // The current price IS the best price
+        enhancedTool.originalPrice = savingsData.originalPrice; // Store the higher competitor price
+        enhancedTool.competitorCount = savingsData.competitorCount;
       } else {
         enhancedTool.isOnSale = false;
         enhancedTool.salePrice = undefined;
@@ -112,28 +157,28 @@ export const useToolsDeals = (tools: ToolItem[]) => {
     });
 
     const dealsCount = processedTools.filter(tool => tool.isOnSale).length;
-    console.log(`🎯 Tools deals processing complete: ${dealsCount}/${processedTools.length} tools on sale`);
+    console.log(`🎯 Price comparison complete: ${dealsCount}/${processedTools.length} tools are best prices`);
     
     return processedTools;
   }, [tools]);
 
   const deals = useMemo(() => {
-    return enhancedTools.filter(tool => tool.isOnSale && tool.salePrice);
+    return enhancedTools.filter(tool => tool.isOnSale);
   }, [enhancedTools]);
 
   const dealOfTheDay = useMemo(() => {
     if (deals.length === 0) return null;
     
-    // Find the best deal (highest percentage savings)
+    // Find the deal with the highest absolute savings
     let bestDeal = deals[0];
     let bestSavings = 0;
     
     deals.forEach(deal => {
-      const originalPrice = parseFloat(deal.price.replace(/[£$€,]/g, ''));
-      const salePrice = parseFloat(deal.salePrice!.replace(/[£$€,]/g, ''));
-      
-      if (!isNaN(originalPrice) && !isNaN(salePrice)) {
-        const savings = ((originalPrice - salePrice) / originalPrice) * 100;
+      if (deal.originalPrice) {
+        const originalPrice = parsePrice(deal.originalPrice);
+        const currentPrice = parsePrice(deal.price);
+        const savings = originalPrice - currentPrice;
+        
         if (savings > bestSavings) {
           bestSavings = savings;
           bestDeal = deal;
@@ -141,21 +186,27 @@ export const useToolsDeals = (tools: ToolItem[]) => {
       }
     });
     
-    console.log(`👑 Deal of the Day: ${bestDeal.name} with ${bestSavings.toFixed(1)}% savings`);
+    console.log(`👑 Deal of the Day: ${bestDeal.name} at ${bestDeal.supplier} - saves £${bestSavings.toFixed(2)}`);
     return bestDeal;
   }, [deals]);
 
   const topDiscounts = useMemo(() => {
     return deals
       .map(deal => {
-        const originalPrice = parseFloat(deal.price.replace(/[£$€,]/g, ''));
-        const salePrice = parseFloat(deal.salePrice!.replace(/[£$€,]/g, ''));
-        const savings = !isNaN(originalPrice) && !isNaN(salePrice) 
-          ? ((originalPrice - salePrice) / originalPrice) * 100 
-          : 0;
-        return { ...deal, savingsPercent: savings };
+        if (!deal.originalPrice) return { ...deal, savingsPercent: 0, savingsAmount: 0 };
+        
+        const originalPrice = parsePrice(deal.originalPrice);
+        const currentPrice = parsePrice(deal.price);
+        const savingsAmount = originalPrice - currentPrice;
+        const savingsPercent = (savingsAmount / originalPrice) * 100;
+        
+        return { 
+          ...deal, 
+          savingsPercent: isNaN(savingsPercent) ? 0 : savingsPercent,
+          savingsAmount: isNaN(savingsAmount) ? 0 : savingsAmount
+        };
       })
-      .sort((a, b) => b.savingsPercent - a.savingsPercent)
+      .sort((a, b) => b.savingsAmount - a.savingsAmount) // Sort by absolute savings amount
       .slice(0, 5);
   }, [deals]);
 

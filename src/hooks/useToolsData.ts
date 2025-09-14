@@ -12,6 +12,8 @@ export interface ToolItem {
   stockStatus?: 'In Stock' | 'Out of Stock' | 'Low Stock';
   isOnSale?: boolean;
   salePrice?: string;
+  originalPrice?: string; // Competitor's higher price for comparison
+  competitorCount?: number; // Number of competitors found
   highlights?: string[];
   view_product_url?: string;
   productUrl?: string;
