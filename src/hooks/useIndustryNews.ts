@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 
 export interface NewsArticle {
@@ -14,6 +14,7 @@ export interface NewsArticle {
   average_rating?: number;
   created_at: string;
   updated_at: string;
+  external_url?: string;
 }
 
 const fetchIndustryNews = async (): Promise<NewsArticle[]> => {
@@ -30,27 +31,49 @@ const fetchIndustryNews = async (): Promise<NewsArticle[]> => {
     throw new Error(error.message || 'Failed to fetch news data');
   }
 
-  console.log(`✅ Raw Supabase response:`, { data, dataLength: data?.length, error });
-  console.log(`✅ First article sample:`, data?.[0]);
+  console.log(`✅ Successfully fetched ${data?.length || 0} news articles`);
+  return data || [];
+};
+
+const refreshNewsFromFirecrawl = async (): Promise<{ success: boolean; message: string; articlesInserted: number }> => {
+  console.log('🔄 Refreshing news from Firecrawl...');
   
-  if (!data || data.length === 0) {
-    console.warn('⚠️ No articles returned from database');
-    return [];
+  const { data, error } = await supabase.functions.invoke('firecrawl-news-scraper', {
+    body: { action: 'refresh' }
+  });
+  
+  if (error) {
+    console.error('❌ Error refreshing news:', error);
+    throw new Error(error.message || 'Failed to refresh news');
   }
   
-  console.log(`✅ Successfully fetched ${data.length} news articles`);
+  console.log('✅ News refresh completed:', data);
   return data;
 };
 
 export const useIndustryNews = () => {
+  const queryClient = useQueryClient();
+  
   const query = useQuery({
-    queryKey: ['industry-news-debug'], // Changed key to force fresh query
+    queryKey: ['industry-news'],
     queryFn: fetchIndustryNews,
-    staleTime: 0, // Force fresh data for debugging
-    gcTime: 5 * 60 * 1000, // 5 minutes
-    refetchOnWindowFocus: true,
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    gcTime: 30 * 60 * 1000, // 30 minutes
+    refetchOnWindowFocus: false,
     refetchOnReconnect: true,
-    retry: 1,
+    retry: 2,
+  });
+  
+  const refreshMutation = useMutation({
+    mutationFn: refreshNewsFromFirecrawl,
+    onSuccess: (data) => {
+      // Invalidate and refetch news data after successful refresh
+      queryClient.invalidateQueries({ queryKey: ['industry-news'] });
+      console.log(`🎉 Refresh completed: ${data.articlesInserted} new articles added`);
+    },
+    onError: (error) => {
+      console.error('❌ Refresh failed:', error);
+    }
   });
   
   console.log('🔍 useIndustryNews hook state:', {
@@ -59,8 +82,15 @@ export const useIndustryNews = () => {
     error: query.error,
     dataLength: query.data?.length,
     status: query.status,
-    fetchStatus: query.fetchStatus
+    fetchStatus: query.fetchStatus,
+    isRefreshing: refreshMutation.isPending
   });
   
-  return query;
+  return {
+    ...query,
+    refresh: refreshMutation.mutate,
+    isRefreshing: refreshMutation.isPending,
+    refreshError: refreshMutation.error,
+    refreshSuccess: refreshMutation.isSuccess
+  };
 };

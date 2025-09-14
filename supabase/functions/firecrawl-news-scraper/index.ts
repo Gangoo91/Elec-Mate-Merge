@@ -1,7 +1,6 @@
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
-import FirecrawlApp from 'https://esm.sh/@mendable/firecrawl-js@4.3.4';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -14,7 +13,7 @@ serve(async (req) => {
   }
 
   try {
-    console.log('🔧 Starting news scraping process...');
+    console.log('🔧 Starting Firecrawl news scraping process...');
     
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
@@ -25,111 +24,84 @@ serve(async (req) => {
     }
 
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
-    const app = new FirecrawlApp({ apiKey: firecrawlApiKey });
 
-    // Define news sources with their categories
-    const newsSources = [
-      {
-        url: 'https://www.electricaltimes.co.uk/latest-news/',
-        category: 'General',
-        source_name: 'Electrical Times',
-        regulatory_body: 'Industry'
-      },
-      {
-        url: 'https://professional-electrician.com/category/technical/',
-        category: 'Technical',
-        source_name: 'Professional Electrician',
-        regulatory_body: 'Industry'
-      },
-      {
-        url: 'https://electricalcontractingnews.com/category/safety-and-training/',
-        category: 'Safety',
-        source_name: 'Electrical Contracting News',
-        regulatory_body: 'HSE'
-      },
-      {
-        url: 'https://professional-electrician.com/category/18th-edition/',
-        category: 'BS7671',
-        source_name: 'Professional Electrician',
-        regulatory_body: 'IET'
-      },
-      {
-        url: 'https://www.electricaltimes.co.uk/category/awards-news/',
-        category: 'Industry',
-        source_name: 'Electrical Times',
-        regulatory_body: 'Industry'
-      }
-    ];
+    async function getNews() {
+      const url = "https://api.firecrawl.dev/v2/batch/scrape";
+      const options = {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${firecrawlApiKey}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          urls: [
+            "https://www.electricaltimes.co.uk/latest-news/",
+            "https://professional-electrician.com/category/technical/",
+            "https://electricalcontractingnews.com/category/safety-and-training/",
+            "https://professional-electrician.com/category/18th-edition/",
+            "https://www.electricaltimes.co.uk/category/awards-news/",
+          ],
+          onlyMainContent: true,
+          maxAge: 0,
+          parsers: [],
+          formats: [
+            {
+              type: "json",
+              prompt: "Extract only articles that are directly related to electricians or the electrical industry. Ignore unrelated articles. For each article, include the title, description, date, and url.",
+              schema: {
+                type: "array",
+                items: {
+                  type: "object",
+                  required: ["title", "description", "date", "visit_link"],
+                  properties: {
+                    title: { type: "string" },
+                    description: { type: "string" },
+                    date: { type: "string", description: "date in iso format" },
+                    tags: { type: "string" },
+                    visit_link: { type: "string", description: "link of the article" },
+                    views: { type: "string" },
+                  },
+                },
+              },
+            },
+          ],
+        }),
+      };
 
-    const allArticles = [];
-    
-    for (const source of newsSources) {
-      try {
-        console.log(`📰 Scraping ${source.source_name}: ${source.url}`);
-        
-        const crawlResponse = await app.scrapeUrl(source.url, {
-          formats: ['markdown'],
-          extract: {
-            schema: {
-              type: "object",
-              properties: {
-                articles: {
-                  type: "array",
-                  items: {
-                    type: "object",
-                    properties: {
-                      title: { type: "string" },
-                      summary: { type: "string" },
-                      content: { type: "string" },
-                      date_published: { type: "string" }
-                    }
-                  }
-                }
-              }
-            }
-          }
+      const response = await fetch(url, options);
+      const job = await response.json();
+      console.log("Batch job created:", job);
+
+      let status;
+      let attempts = 0;
+      const maxAttempts = 24; // 2 minutes max (5s * 24)
+
+      do {
+        await new Promise((r) => setTimeout(r, 5000));
+        const res = await fetch(job.url, {
+          headers: { Authorization: `Bearer ${firecrawlApiKey}` },
         });
 
-        if (crawlResponse.success && crawlResponse.extract?.articles) {
-          for (const article of crawlResponse.extract.articles) {
-            if (article.title && article.content) {
-              // Create content hash for deduplication
-              const contentHash = await crypto.subtle.digest(
-                'SHA-256',
-                new TextEncoder().encode(article.title + article.content)
-              );
-              const hashHex = Array.from(new Uint8Array(contentHash))
-                .map(b => b.toString(16).padStart(2, '0'))
-                .join('');
-
-              allArticles.push({
-                title: article.title.substring(0, 255),
-                summary: article.summary?.substring(0, 500) || article.content.substring(0, 500) + '...',
-                content: article.content,
-                category: source.category,
-                source_name: source.source_name,
-                regulatory_body: source.regulatory_body,
-                date_published: article.date_published || new Date().toISOString().split('T')[0],
-                content_hash: hashHex,
-                is_active: true,
-                view_count: 0,
-                average_rating: 0
-              });
-            }
-          }
+        status = await res.json();
+        console.log("Polling status:", status.status);
+        attempts++;
+        
+        if (attempts >= maxAttempts) {
+          throw new Error('Timeout waiting for scraping job to complete');
         }
-        
-        console.log(`✅ Scraped ${source.source_name}: Found articles`);
-        
-      } catch (error) {
-        console.error(`❌ Error scraping ${source.source_name}:`, error);
-        continue;
+      } while (status.status !== "completed" && status.status !== "failed");
+
+      if (status.status === "failed") {
+        throw new Error('Scraping job failed');
       }
+
+      return status.data?.map((article) => article.json).flat() || [];
     }
 
-    console.log(`📊 Total articles found: ${allArticles.length}`);
+    const articles = await getNews();
+    console.log(`📊 Total articles found: ${articles.length}`);
 
-    if (allArticles.length === 0) {
+    if (articles.length === 0) {
       return new Response(
         JSON.stringify({ 
           success: false, 
@@ -140,25 +112,66 @@ serve(async (req) => {
       );
     }
 
-    // Remove duplicate articles based on content hash
-    const uniqueArticles = allArticles.filter((article, index, self) =>
-      index === self.findIndex(a => a.content_hash === article.content_hash)
-    );
+    // Transform articles to match database schema
+    const transformedArticles = articles.map(article => {
+      // Create content hash for deduplication
+      const contentText = article.title + (article.description || '');
+      const contentHash = btoa(contentText).substring(0, 32);
+      
+      // Determine category and regulatory body based on source
+      let category = 'General';
+      let regulatory_body = 'Industry';
+      let source_name = 'Unknown';
+      
+      if (article.visit_link?.includes('electricaltimes.co.uk')) {
+        source_name = 'Electrical Times';
+        if (article.visit_link.includes('awards')) {
+          category = 'Industry';
+        }
+      } else if (article.visit_link?.includes('professional-electrician.com')) {
+        source_name = 'Professional Electrician';
+        if (article.visit_link.includes('technical')) {
+          category = 'Technical';
+        } else if (article.visit_link.includes('18th-edition')) {
+          category = 'BS7671';
+          regulatory_body = 'IET';
+        }
+      } else if (article.visit_link?.includes('electricalcontractingnews.com')) {
+        source_name = 'Electrical Contracting News';
+        if (article.visit_link.includes('safety')) {
+          category = 'Safety';
+          regulatory_body = 'HSE';
+        }
+      }
 
-    console.log(`🔄 Unique articles after deduplication: ${uniqueArticles.length}`);
+      return {
+        title: article.title?.substring(0, 255) || 'Untitled',
+        summary: article.description?.substring(0, 500) || 'No summary available',
+        content: article.description || article.title || 'No content available',
+        category,
+        source_name,
+        regulatory_body,
+        date_published: article.date || new Date().toISOString().split('T')[0],
+        content_hash: contentHash,
+        external_url: article.visit_link,
+        is_active: true,
+        view_count: 0,
+        average_rating: 0
+      };
+    });
 
     // Check for existing articles to avoid duplicates
     const existingHashes = await supabase
       .from('industry_news')
       .select('content_hash')
-      .in('content_hash', uniqueArticles.map(a => a.content_hash));
+      .in('content_hash', transformedArticles.map(a => a.content_hash));
 
     const existingHashSet = new Set(
       existingHashes.data?.map(item => item.content_hash) || []
     );
 
     // Filter out articles that already exist
-    const newArticles = uniqueArticles.filter(
+    const newArticles = transformedArticles.filter(
       article => !existingHashSet.has(article.content_hash)
     );
 
@@ -166,9 +179,6 @@ serve(async (req) => {
 
     let insertedCount = 0;
     if (newArticles.length > 0) {
-      // Don't deactivate existing articles to preserve static content
-      // Only insert new articles
-
       // Insert new articles in batches
       const batchSize = 10;
       for (let i = 0; i < newArticles.length; i += batchSize) {
@@ -192,16 +202,15 @@ serve(async (req) => {
       JSON.stringify({ 
         success: true, 
         message: `Successfully scraped and inserted ${insertedCount} new articles`,
-        totalFound: allArticles.length,
-        uniqueArticles: uniqueArticles.length,
+        totalFound: articles.length,
         articlesInserted: insertedCount,
-        sources: newsSources.map(s => s.source_name)
+        sources: ['Electrical Times', 'Professional Electrician', 'Electrical Contracting News']
       }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
 
   } catch (error) {
-    console.error('❌ Error in news scraping function:', error);
+    console.error('❌ Error in Firecrawl news scraping function:', error);
     return new Response(
       JSON.stringify({ 
         success: false, 

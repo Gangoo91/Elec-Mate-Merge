@@ -13,7 +13,16 @@ import NewsDetail from "./NewsDetail";
 
 const NewIndustryNewsCard = () => {
   const { toast } = useToast();
-  const { data: articles = [], isLoading, error, refetch } = useIndustryNews();
+  const { 
+    data: articles = [], 
+    isLoading, 
+    error, 
+    refetch, 
+    refresh, 
+    isRefreshing, 
+    refreshError, 
+    refreshSuccess 
+  } = useIndustryNews();
   
   // Enhanced debugging
   console.log('📰 NewIndustryNewsCard render:', {
@@ -27,7 +36,6 @@ const NewIndustryNewsCard = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [sortBy, setSortBy] = useState("newest");
-  const [isScrapingNews, setIsScrapingNews] = useState(false);
 
   // Filter and sort articles with enhanced debugging
   const filteredAndSortedArticles = useMemo(() => {
@@ -106,41 +114,27 @@ const NewIndustryNewsCard = () => {
     setSelectedArticle(article);
   };
 
-  const handleRefreshNews = async () => {
-    setIsScrapingNews(true);
-    try {
-      console.log('🔧 Triggering news scraper...');
-      const { data, error } = await supabase.functions.invoke('firecrawl-news-scraper', {
-        body: { trigger: 'manual' }
-      });
-
-      if (error) {
-        console.error('❌ Error calling news scraper:', error);
-        throw error;
-      }
-
-      console.log('✅ News scraper response:', data);
-      
-      toast({
-        title: "News Updated",
-        description: data?.message || "News articles have been refreshed successfully",
-        duration: 5000,
-      });
-
-      // Refresh the news data
-      refetch();
-    } catch (error) {
-      console.error('❌ News refresh failed:', error);
-      toast({
-        title: "Refresh Failed",
-        description: "Failed to refresh news articles. Please try again later.",
-        variant: "destructive",
-        duration: 5000,
-      });
-    } finally {
-      setIsScrapingNews(false);
-    }
+  const handleRefreshNews = () => {
+    refresh();
   };
+
+  // Show toast notifications for refresh state
+  if (refreshSuccess && !isRefreshing) {
+    toast({
+      title: "News Updated",
+      description: "Latest industry news has been fetched successfully",
+      duration: 3000,
+    });
+  }
+
+  if (refreshError) {
+    toast({
+      title: "Refresh Failed", 
+      description: "Failed to fetch latest news. Please try again later.",
+      variant: "destructive",
+      duration: 3000,
+    });
+  }
 
   if (error) {
     return (
@@ -259,13 +253,13 @@ const NewIndustryNewsCard = () => {
             </p>
             <Button
               onClick={handleRefreshNews}
-              disabled={isScrapingNews}
+              disabled={isRefreshing}
               size="sm"
               variant="outline"
               className="border-elec-yellow/20 text-elec-yellow hover:bg-elec-yellow/10 hover:border-elec-yellow/40 bg-transparent"
             >
-              <RefreshCw className={`h-4 w-4 mr-2 ${isScrapingNews ? 'animate-spin' : ''}`} />
-              {isScrapingNews ? 'Updating...' : 'Refresh News'}
+              <RefreshCw className={`h-4 w-4 mr-2 ${isRefreshing ? 'animate-spin' : ''}`} />
+              {isRefreshing ? 'Fetching...' : 'Refresh News'}
             </Button>
           </div>
         </div>
