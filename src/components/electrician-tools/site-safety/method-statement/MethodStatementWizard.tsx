@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
-import { Stepper } from '@/components/ui/stepper';
 import { ArrowLeft, ArrowRight, ClipboardCheck, Download } from 'lucide-react';
 import { MethodStatementData, WizardStep } from '@/types/method-statement';
 import TemplateSelectionStep from './steps/TemplateSelectionStep';
@@ -133,14 +132,6 @@ const MethodStatementWizard = () => {
               </div>
               <Progress value={progress} className="h-2" />
             </div>
-            
-            {/* Stepper */}
-            <Stepper
-              steps={steps}
-              currentStep={currentStep}
-              completedSteps={steps.slice(0, currentStepIndex).map(step => step.id)}
-              className="mt-4"
-            />
           </div>
         </CardHeader>
       </Card>
