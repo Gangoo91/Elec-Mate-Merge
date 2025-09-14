@@ -194,7 +194,7 @@ const ClientExplainerPage = () => {
                       className="mobile-input-spacing min-h-[120px] resize-none text-foreground"
                       rows={6}
                     />
-                    <p className="mobile-small-text text-muted-foreground">
+                    <p className="mobile-small-text text-foreground/70">
                       Be specific about findings. Include BS 7671 regulation references, test readings, and safety classifications (C1/C2/C3) where applicable.
                     </p>
                   </div>
@@ -256,7 +256,7 @@ const ClientExplainerPage = () => {
                           <div className="mobile-card-compact mobile-interactive flex items-center justify-between p-4 bg-muted/30 rounded-lg border border-border/50">
                             <div className="space-y-1">
                               <Label className="mobile-small-text font-medium text-foreground">Include Analogies</Label>
-                              <p className="text-xs text-muted-foreground">Use everyday comparisons to explain technical concepts</p>
+                              <p className="text-xs text-foreground/70">Use everyday comparisons to explain technical concepts</p>
                             </div>
                             <Switch
                               checked={includeAnalogy}
@@ -268,7 +268,7 @@ const ClientExplainerPage = () => {
                           <div className="mobile-card-compact mobile-interactive flex items-center justify-between p-4 bg-muted/30 rounded-lg border border-border/50">
                             <div className="space-y-1">
                               <Label className="mobile-small-text font-medium text-foreground">Cost Information</Label>
-                              <p className="text-xs text-muted-foreground">Include pricing context and potential costs</p>
+                              <p className="text-xs text-foreground/70">Include pricing context and potential costs</p>
                             </div>
                             <Switch
                               checked={includeCostInfo}
@@ -280,7 +280,7 @@ const ClientExplainerPage = () => {
                           <div className="mobile-card-compact mobile-interactive flex items-center justify-between p-4 bg-muted/30 rounded-lg border border-border/50">
                             <div className="space-y-1">
                               <Label className="mobile-small-text font-medium text-foreground">Safety Emphasis</Label>
-                              <p className="text-xs text-muted-foreground">Highlight safety concerns and importance</p>
+                              <p className="text-xs text-foreground/70">Highlight safety concerns and importance</p>
                             </div>
                             <Switch
                               checked={emphasizeSafety}
@@ -292,7 +292,7 @@ const ClientExplainerPage = () => {
                           <div className="mobile-card-compact mobile-interactive flex items-center justify-between p-4 bg-muted/30 rounded-lg border border-border/50">
                             <div className="space-y-1">
                               <Label className="mobile-small-text font-medium text-foreground">BS 7671 References</Label>
-                              <p className="text-xs text-muted-foreground">Include UK electrical regulation references</p>
+                              <p className="text-xs text-foreground/70">Include UK electrical regulation references</p>
                             </div>
                             <Switch
                               checked={includeBS7671}

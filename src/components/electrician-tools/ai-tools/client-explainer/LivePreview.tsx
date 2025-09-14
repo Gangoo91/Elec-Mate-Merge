@@ -67,15 +67,15 @@ const LivePreview = ({
         <div className="grid grid-cols-3 gap-2 text-center">
           <div className="bg-muted/50 rounded-lg p-2">
             <div className="text-lg font-semibold text-foreground">{wordCount}</div>
-            <div className="text-xs text-muted-foreground">Words</div>
+            <div className="text-xs text-foreground">Words</div>
           </div>
           <div className="bg-muted/50 rounded-lg p-2">
             <div className="text-lg font-semibold text-foreground">{readabilityScore}%</div>
-            <div className="text-xs text-muted-foreground">Readability</div>
+            <div className="text-xs text-foreground">Readability</div>
           </div>
           <div className="bg-muted/50 rounded-lg p-2">
             <div className="text-lg font-semibold text-foreground">{readTime}m</div>
-            <div className="text-xs text-muted-foreground">Read Time</div>
+            <div className="text-xs text-foreground">Read Time</div>
           </div>
         </div>
 
@@ -108,14 +108,14 @@ const LivePreview = ({
         {/* Content Preview */}
         {content ? (
           <div className="bg-muted/30 rounded-lg p-3 max-h-32 overflow-y-auto">
-            <p className="text-xs text-muted-foreground line-clamp-6">
+            <p className="text-xs text-foreground line-clamp-6">
               {content.substring(0, 200)}
               {content.length > 200 && "..."}
             </p>
           </div>
         ) : (
           <div className="bg-muted/30 rounded-lg p-3 text-center">
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs text-foreground">
               Preview will appear here as you type
             </p>
           </div>
@@ -124,7 +124,7 @@ const LivePreview = ({
         {/* Readability Indicator */}
         <div className="space-y-1">
           <div className="flex justify-between text-xs">
-            <span className="text-muted-foreground">Readability</span>
+            <span className="text-foreground">Readability</span>
             <span className={`font-medium ${
               readabilityScore >= 80 ? "text-green-400" :
               readabilityScore >= 60 ? "text-yellow-400" : "text-red-400"

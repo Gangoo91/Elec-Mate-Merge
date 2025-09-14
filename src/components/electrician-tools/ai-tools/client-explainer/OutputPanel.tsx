@@ -291,7 +291,7 @@ Thank you for choosing our electrical services.`;
                     <div className="mobile-text leading-relaxed text-foreground">
                       {formatForSMS(content)}
                     </div>
-                    <div className="mt-3 text-xs text-muted-foreground bg-muted/20 rounded px-2 py-1">
+                    <div className="mt-3 text-xs text-foreground bg-muted/20 rounded px-2 py-1">
                       Characters: {formatForSMS(content).length}/160
                     </div>
                   </div>
@@ -326,12 +326,12 @@ Thank you for choosing our electrical services.`;
           </>
         ) : (
           <div className="mobile-card bg-muted/30 border border-border/50 rounded-lg p-8 text-center">
-            <MessageSquare className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+            <MessageSquare className="h-12 w-12 text-foreground/50 mx-auto mb-4" />
             <div className="space-y-2">
-              <p className="mobile-text text-muted-foreground">
+              <p className="mobile-text text-foreground">
                 Your client-friendly explanation will appear here
               </p>
-              <p className="mobile-small-text text-muted-foreground/70">
+              <p className="mobile-small-text text-foreground/70">
                 Available in multiple formats: standard explanation, email template, text message, and quotation format
               </p>
             </div>

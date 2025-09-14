@@ -44,23 +44,23 @@ const ElectricalHeroSection = () => {
           <h1 className="text-2xl font-bold bg-gradient-to-r from-foreground via-elec-yellow to-foreground bg-clip-text text-transparent">
             Client Explainer
           </h1>
-          <p className="text-muted-foreground max-w-2xl mx-auto text-sm leading-relaxed">
+          <p className="text-foreground max-w-2xl mx-auto text-sm leading-relaxed">
             Transform technical electrical findings into clear, professional explanations 
             that clients can understand and trust.
           </p>
         </div>
 
         {/* Feature highlights */}
-        <div className="flex justify-center gap-8 pt-4">
-          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+        <div className="flex flex-wrap justify-center gap-4 sm:gap-8 pt-4">
+          <div className="flex items-center gap-2 text-sm text-foreground">
             <Users className="h-4 w-4 text-elec-yellow" />
             <span>Client-friendly</span>
           </div>
-          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+          <div className="flex items-center gap-2 text-sm text-foreground">
             <Shield className="h-4 w-4 text-green-400" />
             <span>BS 7671 Compliant</span>
           </div>
-          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+          <div className="flex items-center gap-2 text-sm text-foreground">
             <Zap className="h-4 w-4 text-blue-400" />
             <span>Professional</span>
           </div>
