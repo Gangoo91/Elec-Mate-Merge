@@ -1,7 +1,7 @@
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
-import FirecrawlApp from 'https://esm.sh/@mendable/firecrawl-js@2.6.0';
+import FirecrawlApp from 'https://esm.sh/@mendable/firecrawl-js@4.3.4';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -67,30 +67,21 @@ serve(async (req) => {
       try {
         console.log(`📰 Scraping ${source.source_name}: ${source.url}`);
         
-        const crawlResponse = await app.crawlUrl(source.url, {
-          limit: 10,
-          scrapeOptions: {
-            formats: ['markdown', 'extract'],
-            extract: {
-              schema: {
-                type: "object",
-                properties: {
-                  articles: {
-                    type: "array",
-                    items: {
-                      type: "object",
-                      properties: {
-                        title: { type: "string" },
-                        summary: { type: "string" },
-                        content: { type: "string" },
-                        date_published: { type: "string" },
-                        author: { type: "string" },
-                        url: { type: "string" },
-                        tags: {
-                          type: "array",
-                          items: { type: "string" }
-                        }
-                      }
+        const crawlResponse = await app.scrapeUrl(source.url, {
+          formats: ['markdown'],
+          extract: {
+            schema: {
+              type: "object",
+              properties: {
+                articles: {
+                  type: "array",
+                  items: {
+                    type: "object",
+                    properties: {
+                      title: { type: "string" },
+                      summary: { type: "string" },
+                      content: { type: "string" },
+                      date_published: { type: "string" }
                     }
                   }
                 }
@@ -99,35 +90,31 @@ serve(async (req) => {
           }
         });
 
-        if (crawlResponse.success && crawlResponse.data) {
-          for (const page of crawlResponse.data) {
-            if (page.extract?.articles) {
-              for (const article of page.extract.articles) {
-                if (article.title && article.content) {
-                  // Create content hash for deduplication
-                  const contentHash = await crypto.subtle.digest(
-                    'SHA-256',
-                    new TextEncoder().encode(article.title + article.content)
-                  );
-                  const hashHex = Array.from(new Uint8Array(contentHash))
-                    .map(b => b.toString(16).padStart(2, '0'))
-                    .join('');
+        if (crawlResponse.success && crawlResponse.extract?.articles) {
+          for (const article of crawlResponse.extract.articles) {
+            if (article.title && article.content) {
+              // Create content hash for deduplication
+              const contentHash = await crypto.subtle.digest(
+                'SHA-256',
+                new TextEncoder().encode(article.title + article.content)
+              );
+              const hashHex = Array.from(new Uint8Array(contentHash))
+                .map(b => b.toString(16).padStart(2, '0'))
+                .join('');
 
-                  allArticles.push({
-                    title: article.title.substring(0, 255),
-                    summary: article.summary?.substring(0, 500) || article.content.substring(0, 500) + '...',
-                    content: article.content,
-                    category: source.category,
-                    source_name: source.source_name,
-                    regulatory_body: source.regulatory_body,
-                    date_published: article.date_published || new Date().toISOString().split('T')[0],
-                    content_hash: hashHex,
-                    is_active: true,
-                    view_count: 0,
-                    average_rating: 0
-                  });
-                }
-              }
+              allArticles.push({
+                title: article.title.substring(0, 255),
+                summary: article.summary?.substring(0, 500) || article.content.substring(0, 500) + '...',
+                content: article.content,
+                category: source.category,
+                source_name: source.source_name,
+                regulatory_body: source.regulatory_body,
+                date_published: article.date_published || new Date().toISOString().split('T')[0],
+                content_hash: hashHex,
+                is_active: true,
+                view_count: 0,
+                average_rating: 0
+              });
             }
           }
         }

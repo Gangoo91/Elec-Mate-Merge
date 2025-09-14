@@ -30,7 +30,7 @@ const fetchIndustryNews = async (): Promise<NewsArticle[]> => {
     throw new Error(error.message || 'Failed to fetch news data');
   }
 
-  console.log(`✅ Fetched ${data?.length || 0} news articles`);
+  console.log(`✅ Fetched ${data?.length || 0} news articles`, data);
   return data || [];
 };
 
@@ -38,8 +38,8 @@ export const useIndustryNews = () => {
   return useQuery({
     queryKey: ['industry-news'],
     queryFn: fetchIndustryNews,
-    staleTime: 5 * 60 * 1000, // 5 minutes
-    gcTime: 10 * 60 * 1000, // 10 minutes
+    staleTime: 0, // Force fresh data for debugging
+    gcTime: 5 * 60 * 1000, // 5 minutes
     refetchOnWindowFocus: true,
     refetchOnReconnect: true,
   });
