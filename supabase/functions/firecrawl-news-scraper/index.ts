@@ -27,63 +27,37 @@ serve(async (req) => {
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
     const app = new FirecrawlApp({ apiKey: firecrawlApiKey });
 
-    // Enhanced news sources with better targeting for electrical industry
+    // Define news sources with their categories
     const newsSources = [
       {
         url: 'https://www.electricaltimes.co.uk/latest-news/',
-        category: 'Industry News',
+        category: 'General',
         source_name: 'Electrical Times',
-        regulatory_body: 'Industry',
-        priority: 1
+        regulatory_body: 'Industry'
       },
       {
         url: 'https://professional-electrician.com/category/technical/',
         category: 'Technical',
         source_name: 'Professional Electrician',
-        regulatory_body: 'Industry',
-        priority: 2
+        regulatory_body: 'Industry'
       },
       {
         url: 'https://electricalcontractingnews.com/category/safety-and-training/',
         category: 'Safety',
         source_name: 'Electrical Contracting News',
-        regulatory_body: 'HSE',
-        priority: 1
+        regulatory_body: 'HSE'
       },
       {
         url: 'https://professional-electrician.com/category/18th-edition/',
         category: 'BS7671',
         source_name: 'Professional Electrician',
-        regulatory_body: 'IET',
-        priority: 1
+        regulatory_body: 'IET'
       },
       {
-        url: 'https://www.electricaltimes.co.uk/category/training/',
-        category: 'Training',
+        url: 'https://www.electricaltimes.co.uk/category/awards-news/',
+        category: 'Industry',
         source_name: 'Electrical Times',
-        regulatory_body: 'Industry',
-        priority: 2
-      },
-      {
-        url: 'https://www.electricaltimes.co.uk/category/renewables/',
-        category: 'Renewable Energy',
-        source_name: 'Electrical Times',
-        regulatory_body: 'Industry',
-        priority: 2
-      },
-      {
-        url: 'https://www.electricaltimes.co.uk/category/smart-technology/',
-        category: 'Smart Technology',
-        source_name: 'Electrical Times',
-        regulatory_body: 'Industry',
-        priority: 3
-      },
-      {
-        url: 'https://professional-electrician.com/category/apprenticeships/',
-        category: 'Apprenticeships',
-        source_name: 'Professional Electrician',
-        regulatory_body: 'Industry',
-        priority: 2
+        regulatory_body: 'Industry'
       }
     ];
 
@@ -94,10 +68,7 @@ serve(async (req) => {
         console.log(`📰 Scraping ${source.source_name}: ${source.url}`);
         
         const crawlResponse = await app.scrapeUrl(source.url, {
-          formats: ['markdown', 'html'],
-          onlyMainContent: true,
-          includeTags: ['article', 'main', 'content'],
-          excludeTags: ['nav', 'footer', 'aside', 'advertisement'],
+          formats: ['markdown'],
           extract: {
             schema: {
               type: "object",
@@ -107,92 +78,42 @@ serve(async (req) => {
                   items: {
                     type: "object",
                     properties: {
-                      title: { 
-                        type: "string",
-                        description: "Article headline or title"
-                      },
-                      summary: { 
-                        type: "string",
-                        description: "Brief summary or excerpt of the article (2-3 sentences)"
-                      },
-                      content: { 
-                        type: "string",
-                        description: "Full article content in clean text format"
-                      },
-                      date_published: { 
-                        type: "string",
-                        description: "Publication date in ISO format or readable date"
-                      },
-                      url: {
-                        type: "string",
-                        description: "Direct link to the full article"
-                      },
-                      author: {
-                        type: "string",
-                        description: "Article author if available"
-                      }
-                    },
-                    required: ["title", "content"]
+                      title: { type: "string" },
+                      summary: { type: "string" },
+                      content: { type: "string" },
+                      date_published: { type: "string" }
+                    }
                   }
                 }
               }
             }
-          },
-          waitFor: 2000,
-          timeout: 30000
+          }
         });
 
         if (crawlResponse.success && crawlResponse.extract?.articles) {
           for (const article of crawlResponse.extract.articles) {
-            if (article.title && article.content && article.title.length > 10 && article.content.length > 100) {
-              // Enhanced content processing
-              const cleanTitle = article.title.trim().substring(0, 255);
-              const cleanContent = article.content.trim();
-              const cleanSummary = article.summary?.trim().substring(0, 500) || 
-                                cleanContent.substring(0, 300).split(' ').slice(0, -1).join(' ') + '...';
-              
-              // Enhanced date processing
-              let publishedDate = new Date().toISOString().split('T')[0];
-              if (article.date_published) {
-                try {
-                  const parsedDate = new Date(article.date_published);
-                  if (!isNaN(parsedDate.getTime())) {
-                    publishedDate = parsedDate.toISOString().split('T')[0];
-                  }
-                } catch (error) {
-                  console.log(`Date parsing failed for: ${article.date_published}`);
-                }
-              }
-
+            if (article.title && article.content) {
               // Create content hash for deduplication
               const contentHash = await crypto.subtle.digest(
                 'SHA-256',
-                new TextEncoder().encode(cleanTitle + cleanContent)
+                new TextEncoder().encode(article.title + article.content)
               );
               const hashHex = Array.from(new Uint8Array(contentHash))
                 .map(b => b.toString(16).padStart(2, '0'))
                 .join('');
 
-              // Quality score based on content length and source priority
-              const qualityScore = Math.min(100, 
-                (cleanContent.length / 100) + (source.priority * 20)
-              );
-
               allArticles.push({
-                title: cleanTitle,
-                summary: cleanSummary,
-                content: cleanContent,
+                title: article.title.substring(0, 255),
+                summary: article.summary?.substring(0, 500) || article.content.substring(0, 500) + '...',
+                content: article.content,
                 category: source.category,
                 source_name: source.source_name,
                 regulatory_body: source.regulatory_body,
-                date_published: publishedDate,
+                date_published: article.date_published || new Date().toISOString().split('T')[0],
                 content_hash: hashHex,
                 is_active: true,
                 view_count: 0,
-                average_rating: 0,
-                source_url: article.url || source.url,
-                author: article.author?.substring(0, 100) || null,
-                quality_score: Math.round(qualityScore)
+                average_rating: 0
               });
             }
           }

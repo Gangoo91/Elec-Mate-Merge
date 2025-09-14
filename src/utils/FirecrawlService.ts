@@ -5,14 +5,14 @@ interface NewsArticle {
   title: string;
   summary: string;
   content: string;
-  category: string;
-  source_name: string;
+  external_url: string;
+  source_url?: string;
   date_published: string;
   regulatory_body: string;
-  view_count?: number;
-  average_rating?: number;
-  created_at: string;
-  updated_at: string;
+  category: string;
+  keywords: string[];
+  view_count: number;
+  is_active: boolean;
 }
 
 interface CrawlResult {
@@ -125,98 +125,6 @@ export class FirecrawlService {
     }
   }
 
-  // NEW: Frontend-only news fetching without database storage
-  static async fetchDirectNews(onProgress?: (progress: { current: number; total: number; source: string }) => void): Promise<CrawlResult> {
-    try {
-      // Check cache first
-      const cachedArticles = this.getCachedArticles();
-      if (cachedArticles.length > 0 && this.isCacheValid()) {
-        console.log('Returning cached articles:', cachedArticles.length);
-        return {
-          success: true,
-          data: cachedArticles,
-          articlesFound: cachedArticles.length
-        };
-      }
-
-      console.log('🔧 Fetching fresh news directly from Firecrawl...');
-      
-      // Show progress if callback provided
-      if (onProgress) {
-        const sources = ['HSE Safety Updates', 'IET BS7671 Changes', 'Professional Electrician', 'Electrical Review'];
-        for (let i = 0; i < sources.length; i++) {
-          onProgress({
-            current: i + 1,
-            total: sources.length,
-            source: sources[i]
-          });
-          
-          // Small delay for UI feedback
-          if (i < sources.length - 1) {
-            await new Promise(resolve => setTimeout(resolve, 500));
-          }
-        }
-      }
-
-      // Call the new frontend-only edge function
-      const { data, error } = await supabase.functions.invoke('firecrawl-frontend-news');
-
-      if (error) {
-        console.error('Error calling frontend news function:', error);
-        return { 
-          success: false, 
-          error: error.message || 'Failed to fetch news' 
-        };
-      }
-
-      if (!data?.success) {
-        console.error('Frontend news function returned error:', data?.error);
-        return {
-          success: false,
-          error: data?.error || 'Failed to fetch news from sources'
-        };
-      }
-
-      console.log('✅ Frontend news fetch successful:', {
-        articlesFound: data.articles?.length,
-        totalSources: data.sourceResults?.length
-      });
-
-      // Convert to expected format
-      const formattedArticles: NewsArticle[] = data.articles?.map((article: any) => ({
-        id: article.id,
-        title: article.title,
-        summary: article.summary,
-        content: article.content,
-        category: article.category,
-        source_name: article.source_name,
-        date_published: article.date_published,
-        regulatory_body: article.regulatory_body,
-        view_count: article.view_count || 0,
-        average_rating: article.average_rating || 0,
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString()
-      })) || [];
-
-      // Cache the results for 30 minutes
-      this.setCachedArticles(formattedArticles);
-
-      return {
-        success: true,
-        data: formattedArticles,
-        articlesFound: formattedArticles.length
-      };
-
-    } catch (error) {
-      console.error('Error fetching direct news:', error);
-      return {
-        success: false,
-        error: error instanceof Error ? error.message : 'Failed to fetch direct news'
-      };
-    }
-  }
-
-  // Legacy method - still available for database-based approach
   static async fetchLiveNews(onProgress?: (progress: { current: number; total: number; source: string }) => void): Promise<CrawlResult> {
     try {
       console.log('Fetching comprehensive news via enhanced edge function');
@@ -263,14 +171,14 @@ export class FirecrawlService {
         title: article.title,
         summary: article.summary || article.content?.substring(0, 200) + '...' || '',
         content: article.content || '',
-        category: article.category || 'General',
-        source_name: article.source_name || 'Unknown',
+        external_url: article.external_url || article.source_url || '',
+        source_url: article.source_url,
         date_published: article.date_published || article.created_at || new Date().toISOString(),
         regulatory_body: article.regulatory_body || 'Unknown',
+        category: article.category || 'General',
+        keywords: [], // Could be extracted from content in future
         view_count: article.view_count || 0,
-        average_rating: article.average_rating || 0,
-        created_at: article.created_at || new Date().toISOString(),
-        updated_at: article.updated_at || new Date().toISOString()
+        is_active: article.is_active !== false
       })) || [];
 
       // Cache the results
@@ -395,20 +303,20 @@ export class FirecrawlService {
           title,
           summary,
           content: cleanSection,
-          category: source.category,
-          source_name: source.name,
+          external_url: scrapedData.external_url || scrapedData.url || '',
+          source_url: scrapedData.source_url,
           date_published: publishedDate,
           regulatory_body: source.regulatoryBody,
+          category: source.category,
+          keywords: foundKeywords,
           view_count: 0,
-          average_rating: 0,
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString()
+          is_active: true
         });
       });
       
-      // Sort by date (newest first) and limit results
+      // Sort by relevance (more keywords = higher relevance) and limit results
       return articles
-        .sort((a, b) => new Date(b.date_published).getTime() - new Date(a.date_published).getTime())
+        .sort((a, b) => b.keywords.length - a.keywords.length)
         .slice(0, 4); // Limit to 4 articles per source
       
     } catch (error) {
