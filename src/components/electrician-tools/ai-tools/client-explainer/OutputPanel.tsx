@@ -156,16 +156,25 @@ const OutputPanel = ({ content, settings }: OutputPanelProps) => {
   };
 
   const formatForEmail = (content: string) => {
-    return `Dear Client,
+    return `Dear Valued Client,
 
-Please find below the explanation of our electrical findings:
+I hope this email finds you well. I wanted to provide you with a clear explanation of the electrical work findings from my recent inspection of your property.
+
+**Electrical Inspection Summary:**
 
 ${content}
 
-If you have any questions about this explanation, please don't hesitate to contact me.
+**Next Steps:**
+If you have any questions about these findings or would like to discuss the recommended work, please don't hesitate to contact me. I'm here to ensure your electrical system is safe and compliant with current regulations.
+
+Thank you for trusting me with your electrical needs. I look forward to hearing from you soon.
 
 Best regards,
-Your Electrician`;
+
+[Your Name]
+Qualified Electrician
+[Your Contact Details]
+[Your Company Name]`;
   };
 
   const formatForSMS = (content: string) => {
