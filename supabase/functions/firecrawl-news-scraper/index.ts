@@ -113,10 +113,29 @@ serve(async (req) => {
     }
 
     // Transform articles to match database schema
-    const transformedArticles = articles.map(article => {
-      // Create content hash for deduplication
+    const transformedArticles = await Promise.all(articles.map(async article => {
+      // Create content hash for deduplication using Unicode-safe method
       const contentText = article.title + (article.description || '');
-      const contentHash = btoa(contentText).substring(0, 32);
+      let contentHash;
+      
+      try {
+        // Use crypto.subtle.digest for Unicode-safe hashing
+        const encoder = new TextEncoder();
+        const data = encoder.encode(contentText);
+        const hashBuffer = await crypto.subtle.digest('SHA-1', data);
+        const hashArray = Array.from(new Uint8Array(hashBuffer));
+        contentHash = hashArray.map(b => b.toString(16).padStart(2, '0')).join('').substring(0, 32);
+      } catch (hashError) {
+        console.warn('Hash generation failed, using fallback:', hashError);
+        // Fallback: simple string hash
+        let hash = 0;
+        for (let i = 0; i < contentText.length; i++) {
+          const char = contentText.charCodeAt(i);
+          hash = ((hash << 5) - hash) + char;
+          hash = hash & hash; // Convert to 32bit integer
+        }
+        contentHash = Math.abs(hash).toString(16).substring(0, 32);
+      }
       
       // Determine category and regulatory body based on source
       let category = 'General';
@@ -158,7 +177,7 @@ serve(async (req) => {
         view_count: 0,
         average_rating: 0
       };
-    });
+    }));
 
     // Check for existing articles to avoid duplicates
     const existingHashes = await supabase
