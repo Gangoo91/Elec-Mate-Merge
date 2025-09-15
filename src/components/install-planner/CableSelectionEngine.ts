@@ -13,10 +13,10 @@ export class CableSelectionEngine {
     // Prepare smart selection inputs
     const smartInputs = {
       current: designCurrent,
-      installationType: planData.installationType || 'C', // Default to clipped direct
-      ambientTemp: planData.ambientTemp || 30,
-      groupingCircuits: planData.groupingCircuits || 1,
-      length: planData.cableRun || 50,
+      installationType: planData.installationType || planData.installationMethod || 'C', // Default to clipped direct
+      ambientTemp: planData.ambientTemperature ?? planData.environmentalSettings?.ambientTemperature ?? 30,
+      groupingCircuits: planData.groupingFactor ?? planData.environmentalSettings?.globalGroupingFactor ?? 1,
+      length: planData.cableLength ?? 50,
       preferredCableType: planData.cableType,
       applicationContext: this.determineApplicationContext(planData),
       directBurial: planData.installationType === 'D2',
@@ -82,18 +82,40 @@ export class CableSelectionEngine {
   ): CableRecommendation | null {
     if (!smartRec) return null;
 
+    const sizeStr = typeof smartRec.size === 'number' ? `${smartRec.size}mm²` : String(smartRec.size);
+
+    // Map numeric price to cost band
+    const price = smartRec?.pricing?.bestPrice as number | undefined;
+    const costBand: 'low' | 'medium' | 'high' | 'very-high' | undefined =
+      typeof price === 'number'
+        ? price <= 2
+          ? 'low'
+          : price <= 5
+          ? 'medium'
+          : price <= 10
+          ? 'high'
+          : 'very-high'
+        : undefined;
+
+    const availabilityRaw = (smartRec?.pricing?.availability || '').toString().toLowerCase();
+    const availability: 'common' | 'limited' | 'special-order' | undefined = availabilityRaw.includes('special')
+      ? 'special-order'
+      : availabilityRaw.includes('limited')
+      ? 'limited'
+      : availabilityRaw
+      ? 'common'
+      : undefined;
+
     return {
-      size: smartRec.size,
-      cableType: smartRec.cableType,
+      size: sizeStr,
+      type: smartRec.cableName || smartRec.cableType,
       currentCarryingCapacity: smartRec.deratedCapacity,
       voltageDropPercentage: smartRec.voltage_drop,
+      ratedCurrent: Math.round(smartRec.deratedCapacity),
       suitability: smartRec.suitability,
-      reasoning: smartRec.reasoning,
-      costPerMetre: smartRec.pricing.bestPrice,
-      supplier: smartRec.pricing.bestSupplier,
-      availability: smartRec.pricing.availability,
-      leadTime: smartRec.pricing.leadTime,
-      installationNotes: smartRec.installationNotes
+      notes: [smartRec.reasoning, ...(smartRec.installationNotes || [])],
+      cost: costBand,
+      availability
     };
   }
 
@@ -134,7 +156,9 @@ export class CableSelectionEngine {
       });
     }
 
-    if (primary.cableType === 'pvc-twin-earth' && primary.size > 6) {
+    const primarySize = parseFloat(String(primary.size).replace(/[^\d.]/g, '')) || 0;
+    const isTwinEarth = (primary.type || '').toLowerCase().includes('twin') && (primary.type || '').toLowerCase().includes('earth');
+    if (isTwinEarth && primarySize > 6) {
       suggestions.push({
         type: "cable-upgrade",
         title: "Consider SWA Alternative",
@@ -147,12 +171,15 @@ export class CableSelectionEngine {
     // Cost-effective alternatives
     if (cableOptions.length > 1) {
       const alternative = cableOptions[1];
-      if (alternative.costPerMetre && primary.costPerMetre && alternative.costPerMetre < primary.costPerMetre) {
-        const savings = ((primary.costPerMetre - alternative.costPerMetre) / primary.costPerMetre * 100).toFixed(0);
+      const order: Record<string, number> = { low: 1, medium: 2, high: 3, 'very-high': 4 };
+      const altCostRank = alternative.cost ? order[alternative.cost] : Infinity;
+      const priCostRank = primary.cost ? order[primary.cost] : Infinity;
+
+      if (altCostRank < priCostRank) {
         suggestions.push({
           type: "cost-optimization",
-          title: "Cost-Effective Alternative Available",
-          description: `${alternative.cableType} could save ${savings}% on cable costs while meeting requirements.`,
+          title: "Lower-Cost Alternative Available",
+          description: `${alternative.type} offers a lower cost band while meeting requirements.`,
           impact: "low",
           regulation: "BS 7671"
         });
