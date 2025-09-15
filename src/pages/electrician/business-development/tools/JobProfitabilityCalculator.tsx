@@ -7,9 +7,10 @@ import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import BackButton from "@/components/common/BackButton";
 import { useToast } from "@/hooks/use-toast";
-import { Calculator, PoundSterling, HelpCircle, TrendingUp, AlertCircle, CheckCircle, Download, Lightbulb, Settings, History, Share2, Receipt } from "lucide-react";
+import { Calculator, PoundSterling, HelpCircle, TrendingUp, AlertCircle, CheckCircle, Download, Lightbulb, Settings, History, Share2, Receipt, Users } from "lucide-react";
 import { JobPresetSelector } from "@/components/electrician/business-development/job-profitability/JobPresetSelector";
 import { VATCalculator } from "@/components/electrician/business-development/job-profitability/VATCalculator";
+import { WorkerManager, Worker } from "@/components/electrician/business-development/job-profitability/WorkerManager";
 import { labourHoursOptions, hourlyRateOptions, overheadPercentageOptions, profitMarginOptions } from "@/components/electrician/business-development/job-profitability/DropdownOptions";
 import { JobPreset } from "@/components/electrician/business-development/job-profitability/JobTypePresets";
 import { Helmet } from "react-helmet";
@@ -33,6 +34,9 @@ interface JobInputs {
   contingencyPercent: number;
   warrantyReservePercent: number;
   discountPercent: number;
+  // Multi-worker support
+  workers: Worker[];
+  useMultiWorker: boolean;
 }
 
 interface CalculationHistory {
@@ -73,6 +77,14 @@ const JobProfitabilityCalculator = () => {
     contingencyPercent: 0,
     warrantyReservePercent: 0,
     discountPercent: 0,
+    workers: [{
+      id: '1',
+      role: 'Qualified Electrician',
+      hours: 0,
+      hourlyRate: 45,
+      skillLevel: 'qualified'
+    }],
+    useMultiWorker: false,
   });
 
   const [errors, setErrors] = useState<ValidationErrors>({});
@@ -133,8 +145,16 @@ const JobProfitabilityCalculator = () => {
     const newErrors: ValidationErrors = {};
 
     if (inputs.materialCost <= 0) newErrors.materialCost = "Material cost must be greater than £0";
-    if (inputs.labourHours <= 0) newErrors.labourHours = "Labour hours must be greater than 0";
-    if (inputs.hourlyRate <= 0) newErrors.hourlyRate = "Hourly rate must be greater than £0";
+    
+    // Validate labour based on mode
+    if (inputs.useMultiWorker) {
+      if (inputs.workers.length === 0) newErrors.workers = "At least one worker is required";
+      if (totalLabourHours <= 0) newErrors.labourHours = "Total labour hours must be greater than 0";
+      if (totalLabourCost <= 0) newErrors.hourlyRate = "Worker rates must be greater than £0";
+    } else {
+      if (inputs.labourHours <= 0) newErrors.labourHours = "Labour hours must be greater than 0";
+      if (inputs.hourlyRate <= 0) newErrors.hourlyRate = "Hourly rate must be greater than £0";
+    }
 
     // Percent ranges
     const percentFields: (keyof JobInputs)[] = [
@@ -236,6 +256,14 @@ const JobProfitabilityCalculator = () => {
       contingencyPercent: 0,
       warrantyReservePercent: 0,
       discountPercent: 0,
+      workers: [{
+        id: '1',
+        role: 'Qualified Electrician',
+        hours: 0,
+        hourlyRate: 45,
+        skillLevel: 'qualified'
+      }],
+      useMultiWorker: false,
     });
     setErrors({});
     setCalculated(false);
@@ -336,14 +364,55 @@ const JobProfitabilityCalculator = () => {
       contingencyPercent: 5,
       warrantyReservePercent: 0,
       discountPercent: 0,
+      workers: [{
+        id: '1',
+        role: 'Qualified Electrician',
+        hours: 8,
+        hourlyRate: 52,
+        skillLevel: 'qualified'
+      }],
+      useMultiWorker: false,
     });
     setErrors({});
     setCalculated(false);
   };
 
+  // Multi-worker helper functions
+  const handleWorkersChange = (workers: Worker[]) => {
+    const totalHours = workers.reduce((sum, worker) => sum + worker.hours, 0);
+    const totalCost = workers.reduce((sum, worker) => sum + (worker.hours * worker.hourlyRate), 0);
+    const blendedRate = totalHours > 0 ? totalCost / totalHours : 0;
+
+    setInputs(prev => ({
+      ...prev,
+      workers,
+      labourHours: totalHours,
+      hourlyRate: blendedRate
+    }));
+    setCalculated(false);
+  };
+
+  const toggleMultiWorker = () => {
+    setInputs(prev => ({
+      ...prev,
+      useMultiWorker: !prev.useMultiWorker
+    }));
+    setCalculated(false);
+  };
+
+  // Calculate total labour values from workers when in multi-worker mode
+  const totalLabourHours = inputs.useMultiWorker 
+    ? inputs.workers.reduce((sum, worker) => sum + worker.hours, 0)
+    : inputs.labourHours;
+  
+  const totalLabourCost = inputs.useMultiWorker 
+    ? inputs.workers.reduce((sum, worker) => sum + (worker.hours * worker.hourlyRate), 0)
+    : inputs.labourHours * inputs.hourlyRate;
+
   // Calculations (only if calculated is true)
-  const labourCostBase = calculated ? inputs.labourHours * inputs.hourlyRate : 0;
-  const nonBillableCost = calculated ? (inputs.travelHours + inputs.adminHours) * inputs.hourlyRate : 0;
+  const labourCostBase = calculated ? totalLabourCost : 0;
+  const blendedHourlyRate = totalLabourHours > 0 ? totalLabourCost / totalLabourHours : inputs.hourlyRate;
+  const nonBillableCost = calculated ? (inputs.travelHours + inputs.adminHours) * blendedHourlyRate : 0;
   const mileageCost = calculated ? inputs.miles * inputs.mileageRate : 0;
   const consumablesCost = calculated ? inputs.materialCost * (inputs.consumablesPercent / 100) : 0;
   const directCosts = calculated 
@@ -443,50 +512,73 @@ const JobProfitabilityCalculator = () => {
                 hint="Include all materials, cables, accessories, and components"
               />
 
-              {customValues.labourHours ? (
-                <MobileInput
-                  label="Labour Hours"
-                  type="number"
-                  value={inputs.labourHours || ""}
-                  onChange={(e) => updateInput('labourHours', parseFloat(e.target.value) || 0)}
-                  error={errors.labourHours}
-                  clearError={() => clearError('labourHours')}
-                  hint="Total hours including testing and certification"
-                />
-              ) : (
-                <MobileSelectWrapper
-                  label="Labour Hours"
-                  placeholder="Select labour hours"
-                  value={inputs.labourHours.toString()}
-                  onValueChange={(value) => handleDropdownChange('labourHours', value)}
-                  options={labourHoursOptions}
-                  error={errors.labourHours}
-                  hint="Choose typical duration or select custom"
-                />
+              {!inputs.useMultiWorker && (
+                customValues.labourHours ? (
+                  <MobileInput
+                    label="Labour Hours"
+                    type="number"
+                    value={inputs.labourHours || ""}
+                    onChange={(e) => updateInput('labourHours', parseFloat(e.target.value) || 0)}
+                    error={errors.labourHours}
+                    clearError={() => clearError('labourHours')}
+                    hint="Total hours including testing and certification"
+                  />
+                ) : (
+                  <MobileSelectWrapper
+                    label="Labour Hours"
+                    placeholder="Select labour hours"
+                    value={inputs.labourHours.toString()}
+                    onValueChange={(value) => handleDropdownChange('labourHours', value)}
+                    options={labourHoursOptions}
+                    error={errors.labourHours}
+                    hint="Choose typical duration or select custom"
+                  />
+                )
               )}
 
-              {customValues.hourlyRate ? (
-                <MobileInput
-                  label="Hourly Rate"
-                  type="number"
-                  value={inputs.hourlyRate || ""}
-                  onChange={(e) => updateInput('hourlyRate', parseFloat(e.target.value) || 0)}
-                  error={errors.hourlyRate}
-                  clearError={() => clearError('hourlyRate')}
-                  unit="£"
-                  hint="Your standard hourly charging rate"
-                />
-              ) : (
-                <MobileSelectWrapper
-                  label="Hourly Rate"
-                  placeholder="Select hourly rate"
-                  value={inputs.hourlyRate.toString()}
-                  onValueChange={(value) => handleDropdownChange('hourlyRate', value)}
-                  options={hourlyRateOptions}
-                  error={errors.hourlyRate}
-                  hint="Choose standard rate or select custom"
-                />
+              {!inputs.useMultiWorker && (
+                customValues.hourlyRate ? (
+                  <MobileInput
+                    label="Hourly Rate"
+                    type="number"
+                    value={inputs.hourlyRate || ""}
+                    onChange={(e) => updateInput('hourlyRate', parseFloat(e.target.value) || 0)}
+                    error={errors.hourlyRate}
+                    clearError={() => clearError('hourlyRate')}
+                    unit="£"
+                    hint="Your standard hourly charging rate"
+                  />
+                ) : (
+                  <MobileSelectWrapper
+                    label="Hourly Rate"
+                    placeholder="Select hourly rate"
+                    value={inputs.hourlyRate.toString()}
+                    onValueChange={(value) => handleDropdownChange('hourlyRate', value)}
+                    options={hourlyRateOptions}
+                    error={errors.hourlyRate}
+                    hint="Choose standard rate or select custom"
+                  />
+                )
               )}
+
+              {/* Multi-Worker Toggle */}
+              <div className="flex items-center justify-between p-4 bg-elec-dark/20 rounded-lg border border-elec-yellow/10">
+                <div className="flex items-center gap-2">
+                  <Users className="h-4 w-4 text-elec-yellow" />
+                  <span className="text-sm font-medium text-white">Multiple Workers</span>
+                </div>
+                <Button
+                  onClick={toggleMultiWorker}
+                  variant={inputs.useMultiWorker ? "default" : "outline"}
+                  size="sm"
+                  className={inputs.useMultiWorker 
+                    ? "bg-elec-yellow text-elec-dark hover:bg-elec-yellow/80" 
+                    : "border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+                  }
+                >
+                  {inputs.useMultiWorker ? "ON" : "OFF"}
+                </Button>
+              </div>
 
               {customValues.overheadPercentage ? (
                 <MobileInput
@@ -740,6 +832,17 @@ const JobProfitabilityCalculator = () => {
             </CardContent>
           </Card>
         </div>
+      </div>
+
+      {/* Multi-Worker Management Section */}
+      <div className="mt-8">
+        <WorkerManager
+          workers={inputs.workers}
+          onWorkersChange={handleWorkersChange}
+          totalLabourHours={totalLabourHours}
+          totalLabourCost={totalLabourCost}
+          isVisible={inputs.useMultiWorker}
+        />
       </div>
 
       {/* History Section */}
