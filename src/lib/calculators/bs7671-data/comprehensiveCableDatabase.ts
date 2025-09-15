@@ -494,6 +494,242 @@ export const UK_CABLE_DATABASE: Record<string, CompleteCableData> = {
       'Required for systems that must operate during fire',
       'Consider for critical infrastructure'
     ]
+  },
+
+  'micc': {
+    specification: {
+      name: 'MICC (Mineral Insulated Copper Clad)',
+      type: 'micc',
+      description: 'Mineral insulated copper clad cable - BS 6207',
+      maxPracticalSize: 25,
+      standardSizes: [1.0, 1.5, 2.5, 4, 6, 10, 16, 25],
+      temperatureRating: '90C', // Can handle up to 250°C
+      voltageRating: 750,
+      minBendRadius: 6,
+      firePerformance: 'Mineral',
+      uvResistant: true,
+      directBurial: true,
+      mechanicalProtection: 'Heavy',
+      installationMethods: ['C', 'E', 'F']
+    },
+    capacities: [
+      { size: 1.0, referenceMethodA1: 0, referenceMethodA2: 0, referenceMethodB1: 0, referenceMethodB2: 0, referenceMethodC: 28, referenceMethodD1: 0, referenceMethodD2: 0, referenceMethodE: 32, referenceMethodF: 30, referenceMethodG: 0 },
+      { size: 1.5, referenceMethodA1: 0, referenceMethodA2: 0, referenceMethodB1: 0, referenceMethodB2: 0, referenceMethodC: 37, referenceMethodD1: 0, referenceMethodD2: 0, referenceMethodE: 42, referenceMethodF: 40, referenceMethodG: 0 },
+      { size: 2.5, referenceMethodA1: 0, referenceMethodA2: 0, referenceMethodB1: 0, referenceMethodB2: 0, referenceMethodC: 50, referenceMethodD1: 0, referenceMethodD2: 0, referenceMethodE: 57, referenceMethodF: 54, referenceMethodG: 0 },
+      { size: 4, referenceMethodA1: 0, referenceMethodA2: 0, referenceMethodB1: 0, referenceMethodB2: 0, referenceMethodC: 68, referenceMethodD1: 0, referenceMethodD2: 0, referenceMethodE: 77, referenceMethodF: 73, referenceMethodG: 0 },
+      { size: 6, referenceMethodA1: 0, referenceMethodA2: 0, referenceMethodB1: 0, referenceMethodB2: 0, referenceMethodC: 87, referenceMethodD1: 0, referenceMethodD2: 0, referenceMethodE: 98, referenceMethodF: 93, referenceMethodG: 0 },
+      { size: 10, referenceMethodA1: 0, referenceMethodA2: 0, referenceMethodB1: 0, referenceMethodB2: 0, referenceMethodC: 118, referenceMethodD1: 0, referenceMethodD2: 0, referenceMethodE: 134, referenceMethodF: 127, referenceMethodG: 0 },
+      { size: 16, referenceMethodA1: 0, referenceMethodA2: 0, referenceMethodB1: 0, referenceMethodB2: 0, referenceMethodC: 157, referenceMethodD1: 0, referenceMethodD2: 0, referenceMethodE: 178, referenceMethodF: 169, referenceMethodG: 0 },
+      { size: 25, referenceMethodA1: 0, referenceMethodA2: 0, referenceMethodB1: 0, referenceMethodB2: 0, referenceMethodC: 202, referenceMethodD1: 0, referenceMethodD2: 0, referenceMethodE: 229, referenceMethodF: 217, referenceMethodG: 0 }
+    ],
+    pricing: [
+      { size: 1.0, wholesalePrice: 8.45, retailPrice: 11.95, screwfixPrice: 13.85, cefPrice: 11.25, edmundsonPrice: 10.85, toolstationPrice: 13.35, availability: 'Special Order', leadTimeDays: 7, bulkDiscounts: { qty100m: 8, qty500m: 15, qty1000m: 22 } },
+      { size: 1.5, wholesalePrice: 10.25, retailPrice: 14.45, screwfixPrice: 16.75, cefPrice: 13.65, edmundsonPrice: 13.15, toolstationPrice: 16.15, availability: 'Special Order', leadTimeDays: 7, bulkDiscounts: { qty100m: 8, qty500m: 15, qty1000m: 22 } },
+      { size: 2.5, wholesalePrice: 13.85, retailPrice: 19.55, screwfixPrice: 22.65, cefPrice: 18.45, edmundsonPrice: 17.75, toolstationPrice: 21.85, availability: 'Special Order', leadTimeDays: 10, bulkDiscounts: { qty100m: 10, qty500m: 18, qty1000m: 25 } },
+      { size: 4, wholesalePrice: 18.95, retailPrice: 26.75, screwfixPrice: 31.05, cefPrice: 25.25, edmundsonPrice: 24.35, toolstationPrice: 29.95, availability: 'Special Order', leadTimeDays: 10, bulkDiscounts: { qty100m: 10, qty500m: 18, qty1000m: 25 } },
+      { size: 6, wholesalePrice: 24.85, retailPrice: 35.05, screwfixPrice: 40.65, cefPrice: 33.15, edmundsonPrice: 31.95, toolstationPrice: 39.25, availability: 'Special Order', leadTimeDays: 14, bulkDiscounts: { qty100m: 12, qty500m: 20, qty1000m: 28 } },
+      { size: 10, wholesalePrice: 32.45, retailPrice: 45.75, screwfixPrice: 53.15, cefPrice: 43.25, edmundsonPrice: 41.65, toolstationPrice: 51.25, availability: 'Special Order', leadTimeDays: 14, bulkDiscounts: { qty100m: 12, qty500m: 20, qty1000m: 28 } },
+      { size: 16, wholesalePrice: 42.85, retailPrice: 60.45, screwfixPrice: 70.15, cefPrice: 57.25, edmundsonPrice: 55.15, toolstationPrice: 67.75, availability: 'Special Order', leadTimeDays: 21, bulkDiscounts: { qty100m: 15, qty500m: 25, qty1000m: 35 } },
+      { size: 25, wholesalePrice: 56.25, retailPrice: 79.35, screwfixPrice: 92.05, cefPrice: 75.15, edmundsonPrice: 72.35, toolstationPrice: 88.95, availability: 'Special Order', leadTimeDays: 21, bulkDiscounts: { qty100m: 15, qty500m: 25, qty1000m: 35 } }
+    ],
+    voltageDrops: [
+      { size: 1.0, acResistance: 18.10, acReactance: 0.05, voltageDropPerAmpPerMetre: 44 },
+      { size: 1.5, acResistance: 12.10, acReactance: 0.05, voltageDropPerAmpPerMetre: 29 },
+      { size: 2.5, acResistance: 7.30, acReactance: 0.05, voltageDropPerAmpPerMetre: 18 },
+      { size: 4, acResistance: 4.60, acReactance: 0.05, voltageDropPerAmpPerMetre: 11 },
+      { size: 6, acResistance: 3.08, acReactance: 0.05, voltageDropPerAmpPerMetre: 7.3 },
+      { size: 10, acResistance: 1.83, acReactance: 0.05, voltageDropPerAmpPerMetre: 4.4 },
+      { size: 16, acResistance: 1.15, acReactance: 0.05, voltageDropPerAmpPerMetre: 2.8 },
+      { size: 25, acResistance: 0.727, acReactance: 0.05, voltageDropPerAmpPerMetre: 1.75 }
+    ],
+    applications: [
+      'High-temperature environments (ovens, kilns)',
+      'Fire pumps and emergency systems',
+      'Industrial heating circuits',
+      'Petrochemical installations',
+      'Critical life safety systems',
+      'Boiler house wiring'
+    ],
+    limitations: [
+      'Very high cost compared to standard cables',
+      'Requires special termination techniques',
+      'Limited flexibility - difficult bending',
+      'Skilled installation required'
+    ],
+    recommendations: [
+      'Essential for temperatures above 90°C',
+      'Use where fire resistance is critical',
+      'Consider for emergency lighting circuits',
+      'Ensure installers are MICC-trained'
+    ]
+  },
+
+  'h07rn-f': {
+    specification: {
+      name: 'H07RN-F (Heavy Duty Rubber Flexible)',
+      type: 'h07rn-f',
+      description: 'Rubber flexible cable for portable equipment - BS EN 50525-2-21',
+      maxPracticalSize: 50,
+      standardSizes: [1.0, 1.5, 2.5, 4, 6, 10, 16, 25, 35, 50],
+      temperatureRating: '90C',
+      voltageRating: 450,
+      minBendRadius: 8,
+      firePerformance: 'Standard',
+      uvResistant: true,
+      directBurial: false,
+      mechanicalProtection: 'Medium',
+      installationMethods: ['Portable', 'Temporary']
+    },
+    capacities: [
+      { size: 1.0, referenceMethodA1: 0, referenceMethodA2: 0, referenceMethodB1: 0, referenceMethodB2: 0, referenceMethodC: 18, referenceMethodD1: 0, referenceMethodD2: 0, referenceMethodE: 20, referenceMethodF: 0, referenceMethodG: 0 },
+      { size: 1.5, referenceMethodA1: 0, referenceMethodA2: 0, referenceMethodB1: 0, referenceMethodB2: 0, referenceMethodC: 23, referenceMethodD1: 0, referenceMethodD2: 0, referenceMethodE: 26, referenceMethodF: 0, referenceMethodG: 0 },
+      { size: 2.5, referenceMethodA1: 0, referenceMethodA2: 0, referenceMethodB1: 0, referenceMethodB2: 0, referenceMethodC: 32, referenceMethodD1: 0, referenceMethodD2: 0, referenceMethodE: 36, referenceMethodF: 0, referenceMethodG: 0 },
+      { size: 4, referenceMethodA1: 0, referenceMethodA2: 0, referenceMethodB1: 0, referenceMethodB2: 0, referenceMethodC: 43, referenceMethodD1: 0, referenceMethodD2: 0, referenceMethodE: 48, referenceMethodF: 0, referenceMethodG: 0 },
+      { size: 6, referenceMethodA1: 0, referenceMethodA2: 0, referenceMethodB1: 0, referenceMethodB2: 0, referenceMethodC: 55, referenceMethodD1: 0, referenceMethodD2: 0, referenceMethodE: 62, referenceMethodF: 0, referenceMethodG: 0 },
+      { size: 10, referenceMethodA1: 0, referenceMethodA2: 0, referenceMethodB1: 0, referenceMethodB2: 0, referenceMethodC: 75, referenceMethodD1: 0, referenceMethodD2: 0, referenceMethodE: 84, referenceMethodF: 0, referenceMethodG: 0 },
+      { size: 16, referenceMethodA1: 0, referenceMethodA2: 0, referenceMethodB1: 0, referenceMethodB2: 0, referenceMethodC: 100, referenceMethodD1: 0, referenceMethodD2: 0, referenceMethodE: 112, referenceMethodF: 0, referenceMethodG: 0 },
+      { size: 25, referenceMethodA1: 0, referenceMethodA2: 0, referenceMethodB1: 0, referenceMethodB2: 0, referenceMethodC: 128, referenceMethodD1: 0, referenceMethodD2: 0, referenceMethodE: 144, referenceMethodF: 0, referenceMethodG: 0 },
+      { size: 35, referenceMethodA1: 0, referenceMethodA2: 0, referenceMethodB1: 0, referenceMethodB2: 0, referenceMethodC: 153, referenceMethodD1: 0, referenceMethodD2: 0, referenceMethodE: 172, referenceMethodF: 0, referenceMethodG: 0 },
+      { size: 50, referenceMethodA1: 0, referenceMethodA2: 0, referenceMethodB1: 0, referenceMethodB2: 0, referenceMethodC: 184, referenceMethodD1: 0, referenceMethodD2: 0, referenceMethodE: 207, referenceMethodF: 0, referenceMethodG: 0 }
+    ],
+    pricing: [
+      { size: 1.0, wholesalePrice: 2.85, retailPrice: 3.95, screwfixPrice: 4.55, cefPrice: 3.75, edmundsonPrice: 3.65, toolstationPrice: 4.35, availability: 'In Stock', leadTimeDays: 0, bulkDiscounts: { qty100m: 8, qty500m: 15, qty1000m: 22 } },
+      { size: 1.5, wholesalePrice: 3.45, retailPrice: 4.75, screwfixPrice: 5.45, cefPrice: 4.55, edmundsonPrice: 4.35, toolstationPrice: 5.25, availability: 'In Stock', leadTimeDays: 0, bulkDiscounts: { qty100m: 8, qty500m: 15, qty1000m: 22 } },
+      { size: 2.5, wholesalePrice: 4.65, retailPrice: 6.35, screwfixPrice: 7.35, cefPrice: 6.05, edmundsonPrice: 5.85, toolstationPrice: 7.05, availability: 'In Stock', leadTimeDays: 0, bulkDiscounts: { qty100m: 10, qty500m: 18, qty1000m: 25 } },
+      { size: 4, wholesalePrice: 6.85, retailPrice: 9.35, screwfixPrice: 10.85, cefPrice: 8.95, edmundsonPrice: 8.65, toolstationPrice: 10.45, availability: 'In Stock', leadTimeDays: 0, bulkDiscounts: { qty100m: 10, qty500m: 18, qty1000m: 25 } },
+      { size: 6, wholesalePrice: 9.45, retailPrice: 12.95, screwfixPrice: 14.95, cefPrice: 12.35, edmundsonPrice: 11.95, toolstationPrice: 14.45, availability: 'In Stock', leadTimeDays: 0, bulkDiscounts: { qty100m: 12, qty500m: 20, qty1000m: 28 } },
+      { size: 10, wholesalePrice: 14.25, retailPrice: 19.55, screwfixPrice: 22.65, cefPrice: 18.65, edmundsonPrice: 18.05, toolstationPrice: 21.85, availability: 'Low Stock', leadTimeDays: 1, bulkDiscounts: { qty100m: 12, qty500m: 20, qty1000m: 28 } },
+      { size: 16, wholesalePrice: 21.45, retailPrice: 29.35, screwfixPrice: 34.05, cefPrice: 28.05, edmundsonPrice: 27.15, toolstationPrice: 32.85, availability: 'Low Stock', leadTimeDays: 2, bulkDiscounts: { qty100m: 15, qty500m: 25, qty1000m: 35 } },
+      { size: 25, wholesalePrice: 32.85, retailPrice: 44.95, screwfixPrice: 52.15, cefPrice: 43.05, edmundsonPrice: 41.65, toolstationPrice: 50.35, availability: 'Special Order', leadTimeDays: 3, bulkDiscounts: { qty100m: 15, qty500m: 25, qty1000m: 35 } },
+      { size: 35, wholesalePrice: 45.25, retailPrice: 61.95, screwfixPrice: 71.95, cefPrice: 59.35, edmundsonPrice: 57.35, toolstationPrice: 69.45, availability: 'Special Order', leadTimeDays: 7, bulkDiscounts: { qty100m: 18, qty500m: 28, qty1000m: 38 } },
+      { size: 50, wholesalePrice: 62.85, retailPrice: 86.05, screwfixPrice: 99.85, cefPrice: 82.35, edmundsonPrice: 79.65, toolstationPrice: 96.35, availability: 'Special Order', leadTimeDays: 7, bulkDiscounts: { qty100m: 18, qty500m: 28, qty1000m: 38 } }
+    ],
+    voltageDrops: [
+      { size: 1.0, acResistance: 18.10, acReactance: 0.09, voltageDropPerAmpPerMetre: 44 },
+      { size: 1.5, acResistance: 12.10, acReactance: 0.09, voltageDropPerAmpPerMetre: 29 },
+      { size: 2.5, acResistance: 7.30, acReactance: 0.09, voltageDropPerAmpPerMetre: 18 },
+      { size: 4, acResistance: 4.60, acReactance: 0.09, voltageDropPerAmpPerMetre: 11 },
+      { size: 6, acResistance: 3.08, acReactance: 0.09, voltageDropPerAmpPerMetre: 7.3 },
+      { size: 10, acResistance: 1.83, acReactance: 0.09, voltageDropPerAmpPerMetre: 4.4 },
+      { size: 16, acResistance: 1.15, acReactance: 0.09, voltageDropPerAmpPerMetre: 2.8 },
+      { size: 25, acResistance: 0.727, acReactance: 0.09, voltageDropPerAmpPerMetre: 1.75 },
+      { size: 35, acResistance: 0.524, acReactance: 0.09, voltageDropPerAmpPerMetre: 1.25 },
+      { size: 50, acResistance: 0.387, acReactance: 0.09, voltageDropPerAmpPerMetre: 0.93 }
+    ],
+    applications: [
+      'Construction site temporary supplies',
+      'Portable equipment and tools',
+      'Generator connections',
+      'Temporary lighting systems',
+      'Mobile welding equipment',
+      'Event and festival power'
+    ],
+    limitations: [
+      'Not suitable for permanent installation',
+      'Regular inspection required',
+      'Higher voltage drop than fixed cables',
+      'Not suitable for direct burial'
+    ],
+    recommendations: [
+      'Ideal for temporary installations',
+      'Use with RCD protection on construction sites',
+      'Regular testing and inspection essential',
+      'Store coiled cables properly to prevent damage'
+    ]
+  },
+
+  'nyy-j': {
+    specification: {
+      name: 'NYY-J (European Harmonised Cable)',
+      type: 'nyy-j',
+      description: 'European harmonised cable for fixed installations - BS EN 50525-1',
+      maxPracticalSize: 400,
+      standardSizes: [1.5, 2.5, 4, 6, 10, 16, 25, 35, 50, 70, 95, 120, 150, 185, 240, 300, 400],
+      temperatureRating: '90C',
+      voltageRating: 1000,
+      minBendRadius: 6,
+      firePerformance: 'Standard',
+      uvResistant: true,
+      directBurial: true,
+      mechanicalProtection: 'Medium',
+      installationMethods: ['C', 'D1', 'D2', 'E', 'F', 'G']
+    },
+    capacities: [
+      { size: 1.5, referenceMethodA1: 0, referenceMethodA2: 0, referenceMethodB1: 0, referenceMethodB2: 0, referenceMethodC: 30, referenceMethodD1: 23, referenceMethodD2: 25, referenceMethodE: 34, referenceMethodF: 32, referenceMethodG: 36 },
+      { size: 2.5, referenceMethodA1: 0, referenceMethodA2: 0, referenceMethodB1: 0, referenceMethodB2: 0, referenceMethodC: 40, referenceMethodD1: 31, referenceMethodD2: 34, referenceMethodE: 45, referenceMethodF: 43, referenceMethodG: 48 },
+      { size: 4, referenceMethodA1: 0, referenceMethodA2: 0, referenceMethodB1: 0, referenceMethodB2: 0, referenceMethodC: 54, referenceMethodD1: 42, referenceMethodD2: 45, referenceMethodE: 60, referenceMethodF: 57, referenceMethodG: 64 },
+      { size: 6, referenceMethodA1: 0, referenceMethodA2: 0, referenceMethodB1: 0, referenceMethodB2: 0, referenceMethodC: 69, referenceMethodD1: 53, referenceMethodD2: 58, referenceMethodE: 77, referenceMethodF: 73, referenceMethodG: 82 },
+      { size: 10, referenceMethodA1: 0, referenceMethodA2: 0, referenceMethodB1: 0, referenceMethodB2: 0, referenceMethodC: 93, referenceMethodD1: 71, referenceMethodD2: 77, referenceMethodE: 104, referenceMethodF: 99, referenceMethodG: 111 },
+      { size: 16, referenceMethodA1: 0, referenceMethodA2: 0, referenceMethodB1: 0, referenceMethodB2: 0, referenceMethodC: 124, referenceMethodD1: 95, referenceMethodD2: 102, referenceMethodE: 139, referenceMethodF: 132, referenceMethodG: 148 },
+      { size: 25, referenceMethodA1: 0, referenceMethodA2: 0, referenceMethodB1: 0, referenceMethodB2: 0, referenceMethodC: 159, referenceMethodD1: 121, referenceMethodD2: 131, referenceMethodE: 178, referenceMethodF: 170, referenceMethodG: 190 },
+      { size: 35, referenceMethodA1: 0, referenceMethodA2: 0, referenceMethodB1: 0, referenceMethodB2: 0, referenceMethodC: 190, referenceMethodD1: 145, referenceMethodD2: 156, referenceMethodE: 213, referenceMethodF: 203, referenceMethodG: 226 },
+      { size: 50, referenceMethodA1: 0, referenceMethodA2: 0, referenceMethodB1: 0, referenceMethodB2: 0, referenceMethodC: 229, referenceMethodD1: 174, referenceMethodD2: 187, referenceMethodE: 257, referenceMethodF: 245, referenceMethodG: 273 },
+      { size: 70, referenceMethodA1: 0, referenceMethodA2: 0, referenceMethodB1: 0, referenceMethodB2: 0, referenceMethodC: 293, referenceMethodD1: 223, referenceMethodD2: 240, referenceMethodE: 329, referenceMethodF: 313, referenceMethodG: 348 },
+      { size: 95, referenceMethodA1: 0, referenceMethodA2: 0, referenceMethodB1: 0, referenceMethodB2: 0, referenceMethodC: 354, referenceMethodD1: 269, referenceMethodD2: 290, referenceMethodE: 397, referenceMethodF: 378, referenceMethodG: 421 },
+      { size: 120, referenceMethodA1: 0, referenceMethodA2: 0, referenceMethodB1: 0, referenceMethodB2: 0, referenceMethodC: 407, referenceMethodD1: 310, referenceMethodD2: 334, referenceMethodE: 457, referenceMethodF: 435, referenceMethodG: 484 },
+      { size: 150, referenceMethodA1: 0, referenceMethodA2: 0, referenceMethodB1: 0, referenceMethodB2: 0, referenceMethodC: 463, referenceMethodD1: 353, referenceMethodD2: 380, referenceMethodE: 520, referenceMethodF: 495, referenceMethodG: 551 },
+      { size: 185, referenceMethodA1: 0, referenceMethodA2: 0, referenceMethodB1: 0, referenceMethodB2: 0, referenceMethodC: 526, referenceMethodD1: 401, referenceMethodD2: 431, referenceMethodE: 590, referenceMethodF: 562, referenceMethodG: 625 },
+      { size: 240, referenceMethodA1: 0, referenceMethodA2: 0, referenceMethodB1: 0, referenceMethodB2: 0, referenceMethodC: 605, referenceMethodD1: 461, referenceMethodD2: 496, referenceMethodE: 679, referenceMethodF: 646, referenceMethodG: 719 },
+      { size: 300, referenceMethodA1: 0, referenceMethodA2: 0, referenceMethodB1: 0, referenceMethodB2: 0, referenceMethodC: 697, referenceMethodD1: 531, referenceMethodD2: 571, referenceMethodE: 782, referenceMethodF: 744, referenceMethodG: 828 },
+      { size: 400, referenceMethodA1: 0, referenceMethodA2: 0, referenceMethodB1: 0, referenceMethodB2: 0, referenceMethodC: 807, referenceMethodD1: 615, referenceMethodD2: 662, referenceMethodE: 906, referenceMethodF: 862, referenceMethodG: 959 }
+    ],
+    pricing: [
+      { size: 1.5, wholesalePrice: 2.05, retailPrice: 2.85, screwfixPrice: 3.25, cefPrice: 2.70, edmundsonPrice: 2.60, toolstationPrice: 3.15, availability: 'In Stock', leadTimeDays: 0, bulkDiscounts: { qty100m: 8, qty500m: 15, qty1000m: 22 } },
+      { size: 2.5, wholesalePrice: 2.75, retailPrice: 3.75, screwfixPrice: 4.35, cefPrice: 3.60, edmundsonPrice: 3.45, toolstationPrice: 4.15, availability: 'In Stock', leadTimeDays: 0, bulkDiscounts: { qty100m: 8, qty500m: 15, qty1000m: 22 } },
+      { size: 4, wholesalePrice: 3.95, retailPrice: 5.35, screwfixPrice: 6.25, cefPrice: 5.15, edmundsonPrice: 4.95, toolstationPrice: 6.05, availability: 'In Stock', leadTimeDays: 0, bulkDiscounts: { qty100m: 10, qty500m: 18, qty1000m: 25 } },
+      { size: 6, wholesalePrice: 5.85, retailPrice: 7.95, screwfixPrice: 9.25, cefPrice: 7.65, edmundsonPrice: 7.35, toolstationPrice: 8.95, availability: 'In Stock', leadTimeDays: 0, bulkDiscounts: { qty100m: 10, qty500m: 18, qty1000m: 25 } },
+      { size: 10, wholesalePrice: 8.85, retailPrice: 12.05, screwfixPrice: 14.05, cefPrice: 11.55, edmundsonPrice: 11.15, toolstationPrice: 13.55, availability: 'In Stock', leadTimeDays: 0, bulkDiscounts: { qty100m: 12, qty500m: 20, qty1000m: 28 } },
+      { size: 16, wholesalePrice: 13.45, retailPrice: 18.35, screwfixPrice: 21.35, cefPrice: 17.65, edmundsonPrice: 16.95, toolstationPrice: 20.65, availability: 'In Stock', leadTimeDays: 1, bulkDiscounts: { qty100m: 12, qty500m: 20, qty1000m: 28 } },
+      { size: 25, wholesalePrice: 21.15, retailPrice: 28.85, screwfixPrice: 33.55, cefPrice: 27.65, edmundsonPrice: 26.65, toolstationPrice: 32.35, availability: 'Low Stock', leadTimeDays: 1, bulkDiscounts: { qty100m: 15, qty500m: 25, qty1000m: 35 } },
+      { size: 35, wholesalePrice: 29.45, retailPrice: 40.25, screwfixPrice: 46.75, cefPrice: 38.55, edmundsonPrice: 37.15, toolstationPrice: 45.15, availability: 'Low Stock', leadTimeDays: 2, bulkDiscounts: { qty100m: 15, qty500m: 25, qty1000m: 35 } },
+      { size: 50, wholesalePrice: 41.05, retailPrice: 56.05, screwfixPrice: 65.15, cefPrice: 53.75, edmundsonPrice: 51.75, toolstationPrice: 62.95, availability: 'Special Order', leadTimeDays: 3, bulkDiscounts: { qty100m: 18, qty500m: 28, qty1000m: 38 } },
+      { size: 70, wholesalePrice: 61.65, retailPrice: 84.25, screwfixPrice: 97.95, cefPrice: 80.85, edmundsonPrice: 77.85, toolstationPrice: 94.65, availability: 'Special Order', leadTimeDays: 7, bulkDiscounts: { qty100m: 18, qty500m: 28, qty1000m: 38 } },
+      { size: 95, wholesalePrice: 82.35, retailPrice: 112.55, screwfixPrice: 130.75, cefPrice: 107.95, edmundsonPrice: 103.95, toolstationPrice: 126.35, availability: 'Special Order', leadTimeDays: 7, bulkDiscounts: { qty100m: 20, qty500m: 30, qty1000m: 40 } },
+      { size: 120, wholesalePrice: 106.65, retailPrice: 145.75, screwfixPrice: 169.35, cefPrice: 139.85, edmundsonPrice: 134.65, toolstationPrice: 163.65, availability: 'Special Order', leadTimeDays: 10, bulkDiscounts: { qty100m: 20, qty500m: 30, qty1000m: 40 } },
+      { size: 150, wholesalePrice: 133.35, retailPrice: 182.25, screwfixPrice: 211.85, cefPrice: 174.95, edmundsonPrice: 168.45, toolstationPrice: 204.75, availability: 'Special Order', leadTimeDays: 14, bulkDiscounts: { qty100m: 22, qty500m: 32, qty1000m: 42 } },
+      { size: 185, wholesalePrice: 166.05, retailPrice: 226.85, screwfixPrice: 263.75, cefPrice: 217.75, edmundsonPrice: 209.65, toolstationPrice: 254.95, availability: 'Special Order', leadTimeDays: 14, bulkDiscounts: { qty100m: 22, qty500m: 32, qty1000m: 42 } },
+      { size: 240, wholesalePrice: 216.65, retailPrice: 296.05, screwfixPrice: 343.95, cefPrice: 284.05, edmundsonPrice: 273.65, toolstationPrice: 332.55, availability: 'Special Order', leadTimeDays: 21, bulkDiscounts: { qty100m: 25, qty500m: 35, qty1000m: 45 } },
+      { size: 300, wholesalePrice: 276.65, retailPrice: 378.05, screwfixPrice: 439.35, cefPrice: 362.95, edmundsonPrice: 349.35, toolstationPrice: 424.75, availability: 'Special Order', leadTimeDays: 21, bulkDiscounts: { qty100m: 25, qty500m: 35, qty1000m: 45 } },
+      { size: 400, wholesalePrice: 361.85, retailPrice: 494.55, screwfixPrice: 574.85, cefPrice: 474.85, edmundsonPrice: 457.35, toolstationPrice: 555.95, availability: 'Special Order', leadTimeDays: 28, bulkDiscounts: { qty100m: 25, qty500m: 35, qty1000m: 45 } }
+    ],
+    voltageDrops: [
+      { size: 1.5, acResistance: 12.10, acReactance: 0.08, voltageDropPerAmpPerMetre: 29 },
+      { size: 2.5, acResistance: 7.30, acReactance: 0.08, voltageDropPerAmpPerMetre: 18 },
+      { size: 4, acResistance: 4.60, acReactance: 0.08, voltageDropPerAmpPerMetre: 11 },
+      { size: 6, acResistance: 3.08, acReactance: 0.08, voltageDropPerAmpPerMetre: 7.3 },
+      { size: 10, acResistance: 1.83, acReactance: 0.08, voltageDropPerAmpPerMetre: 4.4 },
+      { size: 16, acResistance: 1.15, acReactance: 0.08, voltageDropPerAmpPerMetre: 2.8 },
+      { size: 25, acResistance: 0.727, acReactance: 0.08, voltageDropPerAmpPerMetre: 1.75 },
+      { size: 35, acResistance: 0.524, acReactance: 0.08, voltageDropPerAmpPerMetre: 1.25 },
+      { size: 50, acResistance: 0.387, acReactance: 0.08, voltageDropPerAmpPerMetre: 0.93 },
+      { size: 70, acResistance: 0.268, acReactance: 0.08, voltageDropPerAmpPerMetre: 0.64 },
+      { size: 95, acResistance: 0.193, acReactance: 0.08, voltageDropPerAmpPerMetre: 0.46 },
+      { size: 120, acResistance: 0.153, acReactance: 0.08, voltageDropPerAmpPerMetre: 0.37 },
+      { size: 150, acResistance: 0.124, acReactance: 0.08, voltageDropPerAmpPerMetre: 0.30 },
+      { size: 185, acResistance: 0.099, acReactance: 0.08, voltageDropPerAmpPerMetre: 0.24 },
+      { size: 240, acResistance: 0.075, acReactance: 0.08, voltageDropPerAmpPerMetre: 0.18 },
+      { size: 300, acResistance: 0.060, acReactance: 0.08, voltageDropPerAmpPerMetre: 0.145 },
+      { size: 400, acResistance: 0.047, acReactance: 0.08, voltageDropPerAmpPerMetre: 0.113 }
+    ],
+    applications: [
+      'Solar PV installations',
+      'Electric vehicle charging points',
+      'Ground source heat pump feeds',
+      'Modern commercial installations',
+      'Cost-effective alternative to SWA',
+      'Renewable energy systems'
+    ],
+    limitations: [
+      'Less mechanical protection than SWA',
+      'Newer standard - some electricians unfamiliar',
+      'May require specific approval on some sites'
+    ],
+    recommendations: [
+      'Excellent cost-effective alternative to SWA',
+      'Ideal for renewable energy installations',
+      'Consider for EV charging installations',
+      '15-20% cost saving over equivalent SWA'
+    ]
   }
 };
 
