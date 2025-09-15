@@ -7,10 +7,9 @@ import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import BackButton from "@/components/common/BackButton";
 import { useToast } from "@/hooks/use-toast";
-import { Calculator, PoundSterling, HelpCircle, TrendingUp, AlertCircle, CheckCircle, Download, Lightbulb, Settings, History, Share2, Receipt, Users } from "lucide-react";
+import { Calculator, PoundSterling, HelpCircle, TrendingUp, AlertCircle, CheckCircle, Lightbulb, Settings, History, Share2, Receipt, Users } from "lucide-react";
 import { JobPresetSelector } from "@/components/electrician/business-development/job-profitability/JobPresetSelector";
-import { VATCalculator } from "@/components/electrician/business-development/job-profitability/VATCalculator";
-import { WorkerManager, Worker } from "@/components/electrician/business-development/job-profitability/WorkerManager";
+import { Worker } from "@/components/electrician/business-development/job-profitability/WorkerManager";
 import { labourHoursOptions, hourlyRateOptions, overheadPercentageOptions, profitMarginOptions } from "@/components/electrician/business-development/job-profitability/DropdownOptions";
 import { JobPreset } from "@/components/electrician/business-development/job-profitability/JobTypePresets";
 import { Helmet } from "react-helmet";
@@ -26,7 +25,7 @@ interface JobInputs {
   travelHours: number;
   adminHours: number;
   miles: number;
-  mileageRate: number; // £ per mile
+  mileageRate: number;
   subcontractorCost: number;
   parkingTolls: number;
   consumablesPercent: number;
@@ -34,7 +33,6 @@ interface JobInputs {
   contingencyPercent: number;
   warrantyReservePercent: number;
   discountPercent: number;
-  // Multi-worker support
   workers: Worker[];
   useMultiWorker: boolean;
 }
@@ -118,7 +116,6 @@ const JobProfitabilityCalculator = () => {
       [field]: value
     }));
     
-    // Clear error when user starts typing
     if (errors[field]) {
       setErrors(prev => {
         const newErrors = { ...prev };
@@ -127,7 +124,6 @@ const JobProfitabilityCalculator = () => {
       });
     }
     
-    // Reset calculation state when inputs change
     setCalculated(false);
   };
 
@@ -146,7 +142,6 @@ const JobProfitabilityCalculator = () => {
 
     if (inputs.materialCost <= 0) newErrors.materialCost = "Material cost must be greater than £0";
     
-    // Validate labour based on mode
     if (inputs.useMultiWorker) {
       if (inputs.workers.length === 0) newErrors.workers = "At least one worker is required";
       if (totalLabourHours <= 0) newErrors.labourHours = "Total labour hours must be greater than 0";
@@ -156,7 +151,6 @@ const JobProfitabilityCalculator = () => {
       if (inputs.hourlyRate <= 0) newErrors.hourlyRate = "Hourly rate must be greater than £0";
     }
 
-    // Percent ranges
     const percentFields: (keyof JobInputs)[] = [
       'overheadPercentage', 'desiredProfitMargin', 'consumablesPercent', 'materialMarkupPercent', 'contingencyPercent', 'warrantyReservePercent', 'discountPercent'
     ];
@@ -165,7 +159,6 @@ const JobProfitabilityCalculator = () => {
       if (v < 0 || v > 100) newErrors[f as string] = 'Must be between 0–100%';
     });
 
-    // Non-negative numeric fields
     const nonNegativeFields: (keyof JobInputs)[] = [
       'travelHours','adminHours','miles','mileageRate','subcontractorCost','parkingTolls'
     ];
@@ -192,7 +185,6 @@ const JobProfitabilityCalculator = () => {
 
     setCalculated(true);
     
-    // Save to history
     const vatAmount = vatRegistered ? (inputs.quoteAmount * vatRate) / 100 : 0;
     const labourCostBaseLocal = inputs.labourHours * inputs.hourlyRate;
     const nonBillableCostLocal = (inputs.travelHours + inputs.adminHours) * inputs.hourlyRate;
@@ -210,7 +202,6 @@ const JobProfitabilityCalculator = () => {
     const suggestedClientPriceExVATLocal = discountBaseLocal - discountValueLocal;
     const actualProfitLocal = inputs.quoteAmount - totalCostsLocal;
     const actualProfitMarginLocal = inputs.quoteAmount > 0 ? (actualProfitLocal / inputs.quoteAmount) * 100 : 0;
-    const effectiveMarginLocal = suggestedClientPriceExVATLocal > 0 ? ((suggestedClientPriceExVATLocal - totalCostsLocal) / suggestedClientPriceExVATLocal) * 100 : 0;
     
     const newHistoryItem: CalculationHistory = {
       id: Date.now().toString(),
@@ -226,13 +217,13 @@ const JobProfitabilityCalculator = () => {
       }
     };
     
-    const updatedHistory = [newHistoryItem, ...history.slice(0, 9)]; // Keep last 10
+    const updatedHistory = [newHistoryItem, ...history.slice(0, 9)];
     setHistory(updatedHistory);
     localStorage.setItem('job-profitability-history', JSON.stringify(updatedHistory));
     
     toast({
       title: "Calculation Complete",
-      description: "Your profitability analysis has been updated and saved to history.",
+      description: "Your profitability analysis has been updated.",
       variant: "success"
     });
   };
@@ -347,18 +338,18 @@ const JobProfitabilityCalculator = () => {
 
   const loadExample = () => {
     setInputs({
-      materialCost: 650, // Updated for 2025: 30% material cost inflation
+      materialCost: 650,
       labourHours: 8,
-      hourlyRate: 52, // Updated for 2025: £26/hour to £52/hour reflecting market rates
+      hourlyRate: 52,
       overheadPercentage: 20,
       desiredProfitMargin: 25,
-      quoteAmount: 1100, // Updated proportionally for 2025 costs
+      quoteAmount: 1100,
       travelHours: 1,
       adminHours: 0.5,
       miles: 20,
-      mileageRate: 0.45, // HMRC approved rate 2025
+      mileageRate: 0.45,
       subcontractorCost: 0,
-      parkingTolls: 15, // Updated for 2025: London parking increases
+      parkingTolls: 15,
       consumablesPercent: 5,
       materialMarkupPercent: 10,
       contingencyPercent: 5,
@@ -377,7 +368,6 @@ const JobProfitabilityCalculator = () => {
     setCalculated(false);
   };
 
-  // Multi-worker helper functions
   const handleWorkersChange = (workers: Worker[]) => {
     const totalHours = workers.reduce((sum, worker) => sum + worker.hours, 0);
     const totalCost = workers.reduce((sum, worker) => sum + (worker.hours * worker.hourlyRate), 0);
@@ -400,7 +390,6 @@ const JobProfitabilityCalculator = () => {
     setCalculated(false);
   };
 
-  // Calculate total labour values from workers when in multi-worker mode
   const totalLabourHours = inputs.useMultiWorker 
     ? inputs.workers.reduce((sum, worker) => sum + worker.hours, 0)
     : inputs.labourHours;
@@ -409,7 +398,6 @@ const JobProfitabilityCalculator = () => {
     ? inputs.workers.reduce((sum, worker) => sum + (worker.hours * worker.hourlyRate), 0)
     : inputs.labourHours * inputs.hourlyRate;
 
-  // Calculations (only if calculated is true)
   const labourCostBase = calculated ? totalLabourCost : 0;
   const blendedHourlyRate = totalLabourHours > 0 ? totalLabourCost / totalLabourHours : inputs.hourlyRate;
   const nonBillableCost = calculated ? (inputs.travelHours + inputs.adminHours) * blendedHourlyRate : 0;
@@ -430,9 +418,7 @@ const JobProfitabilityCalculator = () => {
   const suggestedClientPriceExVAT = calculated ? discountBase - discountValue : 0;
   const actualProfit = calculated ? inputs.quoteAmount - totalCosts : 0;
   const actualProfitMargin = calculated && inputs.quoteAmount > 0 ? (actualProfit / inputs.quoteAmount) * 100 : 0;
-  const effectiveMargin = calculated && suggestedClientPriceExVAT > 0 ? ((suggestedClientPriceExVAT - totalCosts) / suggestedClientPriceExVAT) * 100 : 0;
   
-  // VAT calculations
   const vatAmount = calculated && vatRegistered ? (inputs.quoteAmount * vatRate) / 100 : 0;
   const totalWithVAT = calculated ? inputs.quoteAmount + vatAmount : 0;
 
@@ -464,6 +450,12 @@ const JobProfitabilityCalculator = () => {
 
   return (
     <div className="min-h-screen px-4 py-8">
+      <Helmet>
+        <title>Job Profitability Calculator - Electrical Cost Analysis | ElecMate</title>
+        <meta name="description" content="Calculate electrical job profitability with our comprehensive calculator. Analyse quotes, labour costs, materials, and VAT to ensure sustainable profit margins for your electrical business." />
+        <meta name="keywords" content="job profitability calculator, electrical pricing, quote analysis, profit margin, electrical business tools, BS7671 costing, VAT calculator" />
+        <link rel="canonical" href="/electrician/business-development/tools/job-profitability" />
+      </Helmet>
       <div className="max-w-6xl mx-auto">
         <div className="flex flex-col items-center justify-center mb-8">
           <h1 className="text-3xl font-bold tracking-tight mb-4 flex items-center gap-3">
@@ -485,207 +477,359 @@ const JobProfitabilityCalculator = () => {
           ]}
         />
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 mb-8">
-        {/* Job Presets */}
-        <div className="lg:col-span-1">
-          <JobPresetSelector onPresetSelected={handlePresetSelected} />
-        </div>
+        <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 mb-8">
+          <div className="lg:w-1/3">
+            <JobPresetSelector onPresetSelected={handlePresetSelected} />
+          </div>
 
-        {/* Input Section */}
-        <div className="lg:col-span-1">
-          <Card className="border-elec-yellow/20 bg-elec-card">
-            <CardHeader className="text-center">
-              <CardTitle className="text-white flex items-center justify-center gap-2">
-                <PoundSterling className="h-5 w-5 text-elec-yellow" />
-                Job Details
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <MobileInput
-                label="Material Cost"
-                type="number"
-                value={inputs.materialCost || ""}
-                onChange={(e) => updateInput('materialCost', parseFloat(e.target.value) || 0)}
-                error={errors.materialCost}
-                clearError={() => clearError('materialCost')}
-                unit="£"
-                hint="Include all materials, cables, accessories, and components"
-              />
-
-              {!inputs.useMultiWorker && (
-                customValues.labourHours ? (
+          <div className="lg:w-2/3">
+            <Card className="border-elec-yellow/20 bg-elec-card">
+              <CardHeader className="text-center">
+                <CardTitle className="text-white flex items-center justify-center gap-2">
+                  <PoundSterling className="h-5 w-5 text-elec-yellow" />
+                  Job Profitability Calculator
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-8">
+                {/* Basic Job Information */}
+                <div className="space-y-6">
+                  <div className="flex items-center gap-2 mb-4">
+                    <Calculator className="h-4 w-4 text-elec-yellow" />
+                    <h3 className="text-lg font-semibold text-white">Basic Job Information</h3>
+                  </div>
+                  
                   <MobileInput
-                    label="Labour Hours"
+                    label="Material Cost"
                     type="number"
-                    value={inputs.labourHours || ""}
-                    onChange={(e) => updateInput('labourHours', parseFloat(e.target.value) || 0)}
-                    error={errors.labourHours}
-                    clearError={() => clearError('labourHours')}
-                    hint="Total hours including testing and certification"
-                  />
-                ) : (
-                  <MobileSelectWrapper
-                    label="Labour Hours"
-                    placeholder="Select labour hours"
-                    value={inputs.labourHours.toString()}
-                    onValueChange={(value) => handleDropdownChange('labourHours', value)}
-                    options={labourHoursOptions}
-                    error={errors.labourHours}
-                    hint="Choose typical duration or select custom"
-                  />
-                )
-              )}
-
-              {!inputs.useMultiWorker && (
-                customValues.hourlyRate ? (
-                  <MobileInput
-                    label="Hourly Rate"
-                    type="number"
-                    value={inputs.hourlyRate || ""}
-                    onChange={(e) => updateInput('hourlyRate', parseFloat(e.target.value) || 0)}
-                    error={errors.hourlyRate}
-                    clearError={() => clearError('hourlyRate')}
+                    value={inputs.materialCost || ""}
+                    onChange={(e) => updateInput('materialCost', parseFloat(e.target.value) || 0)}
+                    error={errors.materialCost}
+                    clearError={() => clearError('materialCost')}
                     unit="£"
-                    hint="Your standard hourly charging rate"
+                    hint="Include all materials, cables, accessories, and components"
                   />
-                ) : (
-                  <MobileSelectWrapper
-                    label="Hourly Rate"
-                    placeholder="Select hourly rate"
-                    value={inputs.hourlyRate.toString()}
-                    onValueChange={(value) => handleDropdownChange('hourlyRate', value)}
-                    options={hourlyRateOptions}
-                    error={errors.hourlyRate}
-                    hint="Choose standard rate or select custom"
-                  />
-                )
-              )}
 
-              {/* Multi-Worker Toggle */}
-              <div className="flex items-center justify-between p-4 bg-elec-dark/20 rounded-lg border border-elec-yellow/10">
-                <div className="flex items-center gap-2">
-                  <Users className="h-4 w-4 text-elec-yellow" />
-                  <span className="text-sm font-medium text-white">Multiple Workers</span>
+                  <MobileInput
+                    label="Your Quote Amount"
+                    type="number"
+                    value={inputs.quoteAmount || ""}
+                    onChange={(e) => updateInput('quoteAmount', parseFloat(e.target.value) || 0)}
+                    error={errors.quoteAmount}
+                    clearError={() => clearError('quoteAmount')}
+                    unit="£"
+                    hint="The total amount you're quoting to the customer"
+                  />
                 </div>
-                <Button
-                  onClick={toggleMultiWorker}
-                  variant={inputs.useMultiWorker ? "default" : "outline"}
-                  size="sm"
-                  className={inputs.useMultiWorker 
-                    ? "bg-elec-yellow text-elec-dark hover:bg-elec-yellow/80" 
-                    : "border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
-                  }
-                >
-                  {inputs.useMultiWorker ? "ON" : "OFF"}
-                </Button>
-              </div>
 
-              {customValues.overheadPercentage ? (
-                <MobileInput
-                  label="Overhead Percentage"
-                  type="number"
-                  value={inputs.overheadPercentage || ""}
-                  onChange={(e) => updateInput('overheadPercentage', parseFloat(e.target.value) || 0)}
-                  error={errors.overheadPercentage}
-                  clearError={() => clearError('overheadPercentage')}
-                  unit="%"
-                  hint="Vehicle, insurance, tools, office costs"
-                />
-              ) : (
-                <MobileSelectWrapper
-                  label="Overhead Percentage"
-                  placeholder="Select overhead percentage"
-                  value={inputs.overheadPercentage.toString()}
-                  onValueChange={(value) => handleDropdownChange('overheadPercentage', value)}
-                  options={overheadPercentageOptions}
-                  error={errors.overheadPercentage}
-                  hint="Business running costs as percentage"
-                />
-              )}
+                <Separator className="bg-elec-yellow/20" />
 
-              {customValues.desiredProfitMargin ? (
-                <MobileInput
-                  label="Desired Profit Margin"
-                  type="number"
-                  value={inputs.desiredProfitMargin || ""}
-                  onChange={(e) => updateInput('desiredProfitMargin', parseFloat(e.target.value) || 0)}
-                  error={errors.desiredProfitMargin}
-                  clearError={() => clearError('desiredProfitMargin')}
-                  unit="%"
-                  hint="Target profit percentage"
-                />
-              ) : (
-                <MobileSelectWrapper
-                  label="Desired Profit Margin"
-                  placeholder="Select profit margin"
-                  value={inputs.desiredProfitMargin.toString()}
-                  onValueChange={(value) => handleDropdownChange('desiredProfitMargin', value)}
-                  options={profitMarginOptions}
-                  error={errors.desiredProfitMargin}
-                  hint="Target profit for sustainability"
-                />
-              )}
+                {/* Labour Section */}
+                <div className="space-y-6">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <Users className="h-4 w-4 text-elec-yellow" />
+                      <h3 className="text-lg font-semibold text-white">Labour</h3>
+                    </div>
+                    <Button
+                      onClick={toggleMultiWorker}
+                      variant={inputs.useMultiWorker ? "default" : "outline"}
+                      size="sm"
+                      className={inputs.useMultiWorker 
+                        ? "bg-elec-yellow text-elec-dark hover:bg-elec-yellow/80" 
+                        : "border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+                      }
+                    >
+                      {inputs.useMultiWorker ? "Multiple Workers" : "Single Worker"}
+                    </Button>
+                  </div>
 
-              <MobileInput
-                label="Your Quote Amount"
-                type="number"
-                value={inputs.quoteAmount || ""}
-                onChange={(e) => updateInput('quoteAmount', parseFloat(e.target.value) || 0)}
-                error={errors.quoteAmount}
-                clearError={() => clearError('quoteAmount')}
-                unit="£"
-                hint="The total amount you're quoting to the customer"
-              />
+                  {inputs.useMultiWorker ? (
+                    <div className="space-y-4">
+                      <div className="bg-elec-dark/20 rounded-lg p-4 border border-elec-yellow/10">
+                        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-4">
+                          <div>
+                            <div className="text-sm text-white/70">Team Summary</div>
+                            <div className="text-lg font-medium text-white">
+                              {totalLabourHours}h • £{blendedHourlyRate.toFixed(2)}/h • £{totalLabourCost.toFixed(2)} total
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div className="space-y-3">
+                          {inputs.workers.map((worker, index) => (
+                            <div key={worker.id} className="bg-elec-dark/30 rounded-lg p-3 border border-elec-yellow/5">
+                              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                                <div>
+                                  <div className="text-xs text-white/70 mb-1">Role</div>
+                                  <div className="text-sm font-medium text-white">{worker.role}</div>
+                                </div>
+                                <div>
+                                  <div className="text-xs text-white/70 mb-1">Hours</div>
+                                  <div className="text-sm text-white">{worker.hours}h</div>
+                                </div>
+                                <div>
+                                  <div className="text-xs text-white/70 mb-1">Rate</div>
+                                  <div className="text-sm text-white">£{worker.hourlyRate}/h</div>
+                                </div>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                        
+                        <Button
+                          onClick={() => {
+                            const newWorker: Worker = {
+                              id: Date.now().toString(),
+                              role: 'Qualified Electrician',
+                              hours: 0,
+                              hourlyRate: 45,
+                              skillLevel: 'qualified'
+                            };
+                            handleWorkersChange([...inputs.workers, newWorker]);
+                          }}
+                          variant="outline"
+                          size="sm"
+                          className="w-full mt-3 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+                        >
+                          <Users className="h-3 w-3 mr-2" />
+                          Add Worker
+                        </Button>
+                      </div>
+                      {errors.workers && (
+                        <div className="text-sm text-red-400">{errors.workers}</div>
+                      )}
+                    </div>
+                  ) : (
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {customValues.labourHours ? (
+                        <MobileInput
+                          label="Labour Hours"
+                          type="number"
+                          value={inputs.labourHours || ""}
+                          onChange={(e) => updateInput('labourHours', parseFloat(e.target.value) || 0)}
+                          error={errors.labourHours}
+                          clearError={() => clearError('labourHours')}
+                          hint="Total hours including testing and certification"
+                        />
+                      ) : (
+                        <MobileSelectWrapper
+                          label="Labour Hours"
+                          placeholder="Select labour hours"
+                          value={inputs.labourHours.toString()}
+                          onValueChange={(value) => handleDropdownChange('labourHours', value)}
+                          options={labourHoursOptions}
+                          error={errors.labourHours}
+                          hint="Choose typical duration or select custom"
+                        />
+                      )}
 
-              <div className="space-y-3">
-                <Button 
-                  onClick={calculateProfitability}
-                  className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90"
-                  disabled={Object.keys(errors).length > 0}
-                >
-                  <Calculator className="h-4 w-4 mr-2" />
-                  Calculate
-                </Button>
-                
-                <Button 
-                  onClick={loadExample}
-                  variant="outline"
-                  className="w-full border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
-                >
-                  Example
-                </Button>
+                      {customValues.hourlyRate ? (
+                        <MobileInput
+                          label="Hourly Rate"
+                          type="number"
+                          value={inputs.hourlyRate || ""}
+                          onChange={(e) => updateInput('hourlyRate', parseFloat(e.target.value) || 0)}
+                          error={errors.hourlyRate}
+                          clearError={() => clearError('hourlyRate')}
+                          unit="£"
+                          hint="Your standard hourly charging rate"
+                        />
+                      ) : (
+                        <MobileSelectWrapper
+                          label="Hourly Rate"
+                          placeholder="Select hourly rate"
+                          value={inputs.hourlyRate.toString()}
+                          onValueChange={(value) => handleDropdownChange('hourlyRate', value)}
+                          options={hourlyRateOptions}
+                          error={errors.hourlyRate}
+                          hint="Choose standard rate or select custom"
+                        />
+                      )}
+                    </div>
+                  )}
+                </div>
 
-                <Button 
-                  onClick={resetCalculator}
-                  variant="outline"
-                  className="w-full border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
-                >
-                  Reset All
-                </Button>
-                {calculated && (
+                <Separator className="bg-elec-yellow/20" />
+
+                {/* Business Parameters */}
+                <div className="space-y-6">
+                  <div className="flex items-center gap-2">
+                    <Settings className="h-4 w-4 text-elec-yellow" />
+                    <h3 className="text-lg font-semibold text-white">Business Parameters</h3>
+                  </div>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {customValues.overheadPercentage ? (
+                      <MobileInput
+                        label="Overhead Percentage"
+                        type="number"
+                        value={inputs.overheadPercentage || ""}
+                        onChange={(e) => updateInput('overheadPercentage', parseFloat(e.target.value) || 0)}
+                        error={errors.overheadPercentage}
+                        clearError={() => clearError('overheadPercentage')}
+                        unit="%"
+                        hint="Vehicle, insurance, tools, office costs"
+                      />
+                    ) : (
+                      <MobileSelectWrapper
+                        label="Overhead Percentage"
+                        placeholder="Select overhead percentage"
+                        value={inputs.overheadPercentage.toString()}
+                        onValueChange={(value) => handleDropdownChange('overheadPercentage', value)}
+                        options={overheadPercentageOptions}
+                        error={errors.overheadPercentage}
+                        hint="Business running costs as percentage"
+                      />
+                    )}
+
+                    {customValues.desiredProfitMargin ? (
+                      <MobileInput
+                        label="Desired Profit Margin"
+                        type="number"
+                        value={inputs.desiredProfitMargin || ""}
+                        onChange={(e) => updateInput('desiredProfitMargin', parseFloat(e.target.value) || 0)}
+                        error={errors.desiredProfitMargin}
+                        clearError={() => clearError('desiredProfitMargin')}
+                        unit="%"
+                        hint="Target profit percentage"
+                      />
+                    ) : (
+                      <MobileSelectWrapper
+                        label="Desired Profit Margin"
+                        placeholder="Select profit margin"
+                        value={inputs.desiredProfitMargin.toString()}
+                        onValueChange={(value) => handleDropdownChange('desiredProfitMargin', value)}
+                        options={profitMarginOptions}
+                        error={errors.desiredProfitMargin}
+                        hint="Target profit for sustainability"
+                      />
+                    )}
+                  </div>
+                </div>
+
+                <Separator className="bg-elec-yellow/20" />
+
+                {/* VAT Configuration */}
+                <div className="space-y-6">
+                  <div className="flex items-center gap-2">
+                    <Receipt className="h-4 w-4 text-elec-yellow" />
+                    <h3 className="text-lg font-semibold text-white">VAT Configuration</h3>
+                  </div>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <MobileSelectWrapper
+                      label="VAT Registration"
+                      placeholder="Select registration status"
+                      value={vatRegistered ? "registered" : "not-registered"}
+                      onValueChange={(value) => setVATRegistered(value === "registered")}
+                      options={[
+                        { value: "registered", label: "VAT Registered", description: "I am VAT registered" },
+                        { value: "not-registered", label: "Not VAT Registered", description: "I am not VAT registered" }
+                      ]}
+                      hint="Your VAT registration status"
+                    />
+
+                    {vatRegistered && (
+                      <MobileSelectWrapper
+                        label="VAT Rate"
+                        placeholder="Select VAT rate"
+                        value={vatRate.toString()}
+                        onValueChange={(value) => setVATRate(parseFloat(value))}
+                        options={[
+                          { value: "20", label: "Standard Rate (20%)", description: "Most electrical work" },
+                          { value: "5", label: "Reduced Rate (5%)", description: "Energy-saving materials only" },
+                          { value: "0", label: "Zero Rate (0%)", description: "Exempt work" }
+                        ]}
+                        hint="Choose the appropriate VAT rate"
+                      />
+                    )}
+                  </div>
+
+                  {vatRegistered && vatRate === 5 && (
+                    <div className="flex items-start gap-3 p-4 bg-blue-500/10 rounded-lg border border-blue-500/20">
+                      <HelpCircle className="h-5 w-5 text-blue-400 mt-0.5 flex-shrink-0" />
+                      <div>
+                        <div className="flex items-center gap-2 mb-2">
+                          <Badge variant="secondary" className="bg-blue-500/20 text-blue-300 border-blue-500/30">
+                            Reduced Rate
+                          </Badge>
+                        </div>
+                        <p className="text-sm text-blue-200">
+                          The 5% VAT rate applies only to qualifying energy-saving materials and is not applicable to labour or installation costs. 
+                          Ensure your work meets HMRC guidelines for reduced rate VAT.
+                        </p>
+                      </div>
+                    </div>
+                  )}
+
+                  {vatRegistered && (
+                    <div className="bg-elec-dark/20 rounded-lg p-4 border border-elec-yellow/10">
+                      <div className="text-sm text-white/70 mb-2">VAT Preview</div>
+                      <div className="grid grid-cols-3 gap-4 text-center">
+                        <div>
+                          <div className="text-xs text-white/70">Net Amount</div>
+                          <div className="text-lg font-medium text-white">£{inputs.quoteAmount.toFixed(2)}</div>
+                        </div>
+                        <div>
+                          <div className="text-xs text-white/70">VAT ({vatRate}%)</div>
+                          <div className="text-lg font-medium text-white">£{((inputs.quoteAmount * vatRate) / 100).toFixed(2)}</div>
+                        </div>
+                        <div>
+                          <div className="text-xs text-white/70">Total with VAT</div>
+                          <div className="text-lg font-semibold text-elec-yellow">£{(inputs.quoteAmount + (inputs.quoteAmount * vatRate) / 100).toFixed(2)}</div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                <Separator className="bg-elec-yellow/20" />
+
+                {/* Action Buttons */}
+                <div className="space-y-3">
                   <Button 
-                    onClick={shareCalculation}
-                    variant="outline"
-                    className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+                    onClick={calculateProfitability}
+                    className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90 text-lg py-6"
+                    disabled={Object.keys(errors).length > 0}
                   >
-                    <Share2 className="h-4 w-4" />
+                    <Calculator className="h-5 w-5 mr-2" />
+                    Calculate Profitability
                   </Button>
-                )}
-              </div>
-            </CardContent>
-          </Card>
-        </div>
+                  
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    <Button 
+                      onClick={loadExample}
+                      variant="outline"
+                      className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+                    >
+                      <Lightbulb className="h-4 w-4 mr-2" />
+                      Example
+                    </Button>
 
-        {/* VAT Calculator */}
-        <div className="lg:col-span-1">
-          <VATCalculator
-            quoteAmount={inputs.quoteAmount}
-            vatRate={vatRate}
-            onVATRateChange={setVATRate}
-            vatRegistered={vatRegistered}
-            onVATRegistrationChange={setVATRegistered}
-          />
-        </div>
+                    <Button 
+                      onClick={resetCalculator}
+                      variant="outline"
+                      className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+                    >
+                      <History className="h-4 w-4 mr-2" />
+                      Reset
+                    </Button>
+
+                    {calculated && (
+                      <Button 
+                        onClick={shareCalculation}
+                        variant="outline"
+                        className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+                      >
+                        <Share2 className="h-4 w-4 mr-2" />
+                        Share
+                      </Button>
+                    )}
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
         </div>
 
         {/* Results Section */}
@@ -721,7 +865,7 @@ const JobProfitabilityCalculator = () => {
                         <div className="text-lg font-medium text-white">£{inputs.materialCost.toFixed(2)}</div>
                       </div>
                       <div className="text-center py-3">
-                        <div className="text-sm text-white mb-2">Labour Costs ({inputs.labourHours}h × £{inputs.hourlyRate})</div>
+                        <div className="text-sm text-white mb-2">Labour Costs ({totalLabourHours}h × £{blendedHourlyRate.toFixed(2)})</div>
                         <div className="text-lg font-medium text-white">£{labourCostBase.toFixed(2)}</div>
                       </div>
                       <div className="text-center py-3">
@@ -781,7 +925,6 @@ const JobProfitabilityCalculator = () => {
                           {profitabilityStatus.message}
                         </p>
                         
-                        {/* Educational Insight */}
                         <div className="bg-background/10 rounded-lg p-4 mt-4">
                           <div className="flex items-start gap-3">
                             <Lightbulb className="h-5 w-5 text-elec-yellow mt-0.5" />
@@ -833,61 +976,6 @@ const JobProfitabilityCalculator = () => {
           </Card>
         </div>
       </div>
-
-      {/* Multi-Worker Management Section */}
-      <div className="mt-8">
-        <WorkerManager
-          workers={inputs.workers}
-          onWorkersChange={handleWorkersChange}
-          totalLabourHours={totalLabourHours}
-          totalLabourCost={totalLabourCost}
-          isVisible={inputs.useMultiWorker}
-        />
-      </div>
-
-      {/* History Section */}
-      {showHistory && history.length > 0 && (
-        <Card className="border-elec-yellow/20 bg-elec-card mt-8">
-          <CardHeader>
-            <CardTitle className="text-white flex items-center gap-2">
-              <History className="h-5 w-5 text-elec-yellow" />
-              Calculation History
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {history.slice(0, 5).map((item) => (
-                <div key={item.id} className="bg-elec-dark/50 rounded-lg p-4">
-                  <div className="flex justify-between items-start mb-2">
-                    <div>
-                      <h4 className="text-white font-medium">{item.jobType}</h4>
-                      <p className="text-xs text-elec-light/60">
-                        {item.timestamp.toLocaleDateString()} at {item.timestamp.toLocaleTimeString()}
-                      </p>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-elec-yellow font-semibold">£{item.inputs.quoteAmount.toFixed(2)}</p>
-                      <p className={`text-sm ${item.results.actualProfitMargin >= 20 ? 'text-green-400' : 'text-red-400'}`}>
-                        {item.results.actualProfitMargin.toFixed(1)}% margin
-                      </p>
-                    </div>
-                  </div>
-                  <div className="grid grid-cols-3 gap-4 text-xs text-elec-light/70">
-                    <span>Labour: {item.inputs.labourHours}h × £{item.inputs.hourlyRate}</span>
-                    <span>Materials: £{item.inputs.materialCost.toFixed(2)}</span>
-                    <span>Profit: £{item.results.actualProfit.toFixed(2)}</span>
-                  </div>
-                </div>
-              ))}
-              {history.length > 5 && (
-                <p className="text-center text-elec-light/60 text-sm">
-                  Showing 5 of {history.length} calculations
-                </p>
-              )}
-            </div>
-          </CardContent>
-        </Card>
-      )}
 
       {/* Educational Tips */}
       <Card className="border-elec-yellow/20 bg-elec-card mt-8">
