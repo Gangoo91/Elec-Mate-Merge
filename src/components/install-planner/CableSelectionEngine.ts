@@ -5,7 +5,24 @@ import { InstallPlanData, CableRecommendation, InstallationSuggestion, Complianc
 
 export class CableSelectionEngine {
   static calculateCableOptions(planData: InstallPlanData): CableRecommendation[] {
-    return SimplifiedCableSelectionEngine.calculateCableOptions(planData);
+    // Use the improved simplified engine with cross-type fallback and safety checks
+    const options = SimplifiedCableSelectionEngine.calculateCableOptions(planData);
+    
+    // Log for debugging if needed
+    if (options.length > 0) {
+      const firstOption = options[0];
+      console.log(`Cable calculation for ${planData.totalLoad}W load:`, {
+        designCurrent: planData.phases === "single" 
+          ? planData.totalLoad / planData.voltage
+          : planData.totalLoad / (planData.voltage * Math.sqrt(3) * (planData.powerFactor || 0.9)),
+        cableType: planData.cableType,
+        recommendedSize: firstOption.size,
+        capacity: firstOption.currentCarryingCapacity,
+        suitability: firstOption.suitability
+      });
+    }
+    
+    return options;
   }
 
   static generateSuggestions(planData: InstallPlanData, cableOptions: CableRecommendation[]): InstallationSuggestion[] {
