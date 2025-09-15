@@ -14,6 +14,9 @@ import { labourHoursOptions, hourlyRateOptions, overheadPercentageOptions, profi
 import { JobPreset } from "@/components/electrician/business-development/job-profitability/JobTypePresets";
 import { Helmet } from "react-helmet";
 import WhyThisMatters from "@/components/common/WhyThisMatters";
+import MultiWorkerManager, { Worker } from "@/components/business-calculator/MultiWorkerManager";
+import AccuracyEnhancements, { AccuracyInputs } from "@/components/business-calculator/AccuracyEnhancements";
+import { Market2025Insights } from "@/components/business-calculator/Market2025Insights";
 
 interface JobInputs {
   materialCost: number;
@@ -83,6 +86,25 @@ const JobProfitabilityCalculator = () => {
   const [selectedJobType, setSelectedJobType] = useState<string>("");
   const [history, setHistory] = useState<CalculationHistory[]>([]);
   const [showHistory, setShowHistory] = useState(false);
+  const [workers, setWorkers] = useState<Worker[]>([]);
+  const [useMultiWorker, setUseMultiWorker] = useState(false);
+  const [accuracyInputs, setAccuracyInputs] = useState<AccuracyInputs>({
+    weatherDelayPercent: 0,
+    partAvailabilityPercent: 0,
+    reworkAllowancePercent: 0,
+    clientChangePercent: 0,
+    testingHours: 0,
+    certificationHours: 0,
+    complianceHours: 0,
+    remedialPercent: 0,
+    seasonalMultiplier: 1,
+    competitorAdjustment: 0,
+    demandFactor: 1,
+    paymentTermsDays: 30,
+    equipmentDepreciation: 0,
+    trainingHours: 0,
+  });
+  const [jobComplexity, setJobComplexity] = useState<'simple' | 'standard' | 'complex' | 'specialist'>('standard');
 
   // Load history from localStorage on mount
   useEffect(() => {
@@ -342,17 +364,48 @@ const JobProfitabilityCalculator = () => {
   };
 
   // Calculations (only if calculated is true)
-  const labourCostBase = calculated ? inputs.labourHours * inputs.hourlyRate : 0;
+  const getLabourCost = () => {
+    if (!calculated) return 0;
+    
+    if (useMultiWorker && workers.length > 0) {
+      const teamEfficiency = workers.length <= 1 ? 1.0 : 
+                           workers.length === 2 ? 0.95 : 
+                           workers.length === 3 ? 0.90 : 0.85;
+      const rawTeamCost = workers.reduce((total, worker) => 
+        total + (worker.hourlyRate * worker.hoursOnJob), 0);
+      return rawTeamCost / teamEfficiency;
+    }
+    
+    return inputs.labourHours * inputs.hourlyRate;
+  };
+  
+  const labourCostBase = getLabourCost();
   const nonBillableCost = calculated ? (inputs.travelHours + inputs.adminHours) * inputs.hourlyRate : 0;
   const mileageCost = calculated ? inputs.miles * inputs.mileageRate : 0;
   const consumablesCost = calculated ? inputs.materialCost * (inputs.consumablesPercent / 100) : 0;
+  
+  // Enhanced calculations with accuracy factors
+  const electricalSpecificCosts = calculated ? 
+    (accuracyInputs.testingHours + accuracyInputs.certificationHours + accuracyInputs.complianceHours) * inputs.hourlyRate : 0;
+  const remedialCosts = calculated ? inputs.materialCost * (accuracyInputs.remedialPercent / 100) : 0;
+  const equipmentCosts = calculated ? accuracyInputs.equipmentDepreciation : 0;
+  const trainingCosts = calculated ? accuracyInputs.trainingHours * (inputs.hourlyRate * 0.5) : 0; // Training at half rate
+
   const directCosts = calculated 
-    ? inputs.materialCost + labourCostBase + nonBillableCost + mileageCost + inputs.parkingTolls + inputs.subcontractorCost + consumablesCost 
+    ? inputs.materialCost + labourCostBase + nonBillableCost + mileageCost + inputs.parkingTolls + 
+      inputs.subcontractorCost + consumablesCost + electricalSpecificCosts + remedialCosts + 
+      equipmentCosts + trainingCosts
     : 0;
-  const overheadCosts = calculated ? directCosts * (inputs.overheadPercentage / 100) : 0;
-  const contingencyCost = calculated ? directCosts * (inputs.contingencyPercent / 100) : 0;
-  const warrantyReserveCost = calculated ? directCosts * (inputs.warrantyReservePercent / 100) : 0;
-  const totalCosts = calculated ? directCosts + overheadCosts + contingencyCost + warrantyReserveCost : 0;
+  
+  // Apply risk factors to costs
+  const riskAdjustedCosts = calculated ?
+    directCosts * (1 + (accuracyInputs.weatherDelayPercent + accuracyInputs.partAvailabilityPercent + 
+                       accuracyInputs.reworkAllowancePercent + accuracyInputs.clientChangePercent) / 100) : 0;
+  
+  const overheadCosts = calculated ? riskAdjustedCosts * (inputs.overheadPercentage / 100) : 0;
+  const contingencyCost = calculated ? riskAdjustedCosts * (inputs.contingencyPercent / 100) : 0;
+  const warrantyReserveCost = calculated ? riskAdjustedCosts * (inputs.warrantyReservePercent / 100) : 0;
+  const totalCosts = calculated ? riskAdjustedCosts + overheadCosts + contingencyCost + warrantyReserveCost : 0;
 
   const minimumQuoteExVAT = calculated ? totalCosts / Math.max(1 - inputs.desiredProfitMargin / 100, 0.01) : 0;
   const materialMarkupValue = calculated ? inputs.materialCost * (inputs.materialMarkupPercent / 100) : 0;
@@ -401,7 +454,7 @@ const JobProfitabilityCalculator = () => {
             <Calculator className="h-8 w-8 text-elec-yellow" />
             Job Profitability Calculator
           </h1>
-          <p className="text-muted-foreground text-center max-w-2xl mb-6">
+          <p className="text-white text-center max-w-2xl mb-6">
             Analyse quote profitability and calculate minimum pricing to achieve your desired profit margins. 
             BS7671 18th Edition compliant electrical work requires accurate costing for sustainable business growth.
           </p>
@@ -410,11 +463,50 @@ const JobProfitabilityCalculator = () => {
 
         <WhyThisMatters
           points={[
-            "Reveals profit per job so you know which work to chase or drop.",
-            "Captures non-billable time (travel/admin) that quietly kills margin.",
-            "Builds a feedback loop between quoting, delivery and pricing."
+            "Cash flow crisis prevention: Unprofitable jobs can destroy electrical contracting businesses within months, especially with 30-60 day payment terms.",
+            "BS7671 compliance reality: Hidden costs of testing, certification, and remedial work on older installations can kill 15-20% of your margin if not priced correctly.",
+            "Electrical market positioning: Understanding where your pricing sits vs competitors helps you win profitable work while avoiding race-to-bottom pricing wars.",
+            "Professional growth investment: Proper pricing funds essential tool upgrades, 18th Edition updates, and qualifications that keep you competitive and compliant.",
+            "Risk management protection: Complex electrical installations carry inherent risks - proper contingency planning protects against cost overruns that can wipe out months of profit."
           ]}
         />
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 mb-8">
+        {/* Multi-Worker Toggle */}
+        <div className="lg:col-span-2 mb-4">
+          <div className="flex items-center gap-4 p-4 bg-elec-card border border-elec-yellow/20 rounded-lg">
+            <label className="flex items-center gap-2 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={useMultiWorker}
+                onChange={(e) => setUseMultiWorker(e.target.checked)}
+                className="w-4 h-4 text-elec-yellow bg-transparent border-elec-yellow/50 rounded focus:ring-elec-yellow"
+              />
+              <span className="text-white">Multi-Worker Job</span>
+            </label>
+            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
+              {useMultiWorker ? `${workers.length} workers` : 'Single worker'}
+            </Badge>
+          </div>
+        </div>
+
+        {useMultiWorker && (
+          <div className="lg:col-span-2">
+            <MultiWorkerManager
+              workers={workers}
+              onWorkersChange={setWorkers}
+            />
+          </div>
+        )}
+
+        <div className="lg:col-span-2">
+          <AccuracyEnhancements
+            inputs={accuracyInputs}
+            onInputsChange={setAccuracyInputs}
+            jobComplexity={jobComplexity}
+          />
+        </div>
+        </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 mb-8">
         {/* Job Presets */}
@@ -611,7 +703,7 @@ const JobProfitabilityCalculator = () => {
                 <div className="text-center py-12">
                   <Calculator className="h-16 w-16 text-elec-yellow/50 mx-auto mb-4" />
                   <h3 className="text-lg font-semibold text-white mb-2">Ready to Calculate</h3>
-                  <p className="text-muted-foreground">
+                  <p className="text-white">
                     Fill in all job details and click "Calculate" to see your profitability analysis.
                   </p>
                 </div>
@@ -695,7 +787,7 @@ const JobProfitabilityCalculator = () => {
                             <Lightbulb className="h-5 w-5 text-elec-yellow mt-0.5" />
                             <div>
                               <h4 className="text-white font-medium mb-2">Professional Insight</h4>
-                              <p className="text-sm text-muted-foreground">
+                              <p className="text-sm text-white">
                                 {actualProfitMargin >= inputs.desiredProfitMargin
                                   ? "Excellent! Your quote maintains healthy margins while remaining competitive. Consider this pricing structure for similar projects to ensure consistent profitability."
                                   : "Your current quote may not cover all business costs and desired profit. Consider increasing the quote or reviewing your overhead calculations to ensure sustainable business operations."
@@ -707,6 +799,18 @@ const JobProfitabilityCalculator = () => {
                       </div>
                     </>
                   )}
+
+                   {/* Market Intelligence */}
+                   {calculated && (
+                     <>
+                       <Separator className="bg-elec-yellow/30" />
+                       <Market2025Insights
+                         calculatedRate={inputs.hourlyRate}
+                         experienceLevel="qualified"
+                         region="other"
+                       />
+                     </>
+                   )}
 
                    {/* VAT Summary */}
                    {vatRegistered && (
@@ -758,7 +862,7 @@ const JobProfitabilityCalculator = () => {
                   <div className="flex justify-between items-start mb-2">
                     <div>
                       <h4 className="text-white font-medium">{item.jobType}</h4>
-                      <p className="text-xs text-elec-light/60">
+                      <p className="text-xs text-white">
                         {item.timestamp.toLocaleDateString()} at {item.timestamp.toLocaleTimeString()}
                       </p>
                     </div>
@@ -769,7 +873,7 @@ const JobProfitabilityCalculator = () => {
                       </p>
                     </div>
                   </div>
-                  <div className="grid grid-cols-3 gap-4 text-xs text-elec-light/70">
+                  <div className="grid grid-cols-3 gap-4 text-xs text-white">
                     <span>Labour: {item.inputs.labourHours}h × £{item.inputs.hourlyRate}</span>
                     <span>Materials: £{item.inputs.materialCost.toFixed(2)}</span>
                     <span>Profit: £{item.results.actualProfit.toFixed(2)}</span>
@@ -777,7 +881,7 @@ const JobProfitabilityCalculator = () => {
                 </div>
               ))}
               {history.length > 5 && (
-                <p className="text-center text-elec-light/60 text-sm">
+                <p className="text-center text-white text-sm">
                   Showing 5 of {history.length} calculations
                 </p>
               )}
@@ -798,21 +902,21 @@ const JobProfitabilityCalculator = () => {
           <div className="grid md:grid-cols-3 gap-6">
             <div className="space-y-2">
               <h4 className="text-white font-medium">Overhead Costs</h4>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-white">
                 Include vehicle costs, insurance, test equipment calibration, office rent, 
                 and tool replacement in your overhead percentage.
               </p>
             </div>
             <div className="space-y-2">
               <h4 className="text-white font-medium">Profit Margins</h4>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-white">
                 Aim for 20-30% profit margins on domestic work and 15-25% on commercial projects 
                 to ensure business sustainability and growth.
               </p>
             </div>
             <div className="space-y-2">
               <h4 className="text-white font-medium">BS7671 Compliance</h4>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-white">
                 Always factor in time for proper testing, certification, and documentation 
                 required by the 18th Edition regulations.
               </p>
