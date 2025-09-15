@@ -7,16 +7,16 @@ import InfoBox from "@/components/common/InfoBox";
 const currency = (n: number) => `£${n.toFixed(2)}`;
 
 const BreakEvenCalculator: React.FC = () => {
-  const [annualOverheads, setAnnualOverheads] = React.useState(25000);
+  const [annualOverheads, setAnnualOverheads] = React.useState(32000); // Updated for 2025: increased insurance, tools, software costs
   const [chargeableHours, setChargeableHours] = React.useState(1200); // ~50% util of 40h/wk
-  const [labourCostHr, setLabourCostHr] = React.useState(22.5); // fully loaded labour cost if known
+  const [labourCostHr, setLabourCostHr] = React.useState(28); // Updated for 2025: higher minimum wage + on-costs
   const [materialShare, setMaterialShare] = React.useState(30); // % of job value
-  const [materialMarkup, setMaterialMarkup] = React.useState(15); // % markup
+  const [materialMarkup, setMaterialMarkup] = React.useState(18); // Updated for 2025: supply chain costs
   const [targetMargin, setTargetMargin] = React.useState(20); // % margin target
   const [vatRegistered, setVatRegistered] = React.useState(true);
   const [vatRate, setVatRate] = React.useState(20);
   const [exampleHours, setExampleHours] = React.useState(4);
-  const [exampleMats, setExampleMats] = React.useState(100);
+  const [exampleMats, setExampleMats] = React.useState(130); // Updated for 2025: material cost inflation
 
   const overheadPerHour = annualOverheads / Math.max(1, chargeableHours);
   const breakEvenHr = labourCostHr + overheadPerHour;

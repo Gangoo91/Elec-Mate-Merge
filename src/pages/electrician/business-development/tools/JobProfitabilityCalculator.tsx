@@ -319,18 +319,18 @@ const JobProfitabilityCalculator = () => {
 
   const loadExample = () => {
     setInputs({
-      materialCost: 500,
+      materialCost: 650, // Updated for 2025: 30% material cost inflation
       labourHours: 8,
-      hourlyRate: 45,
+      hourlyRate: 52, // Updated for 2025: £26/hour to £52/hour reflecting market rates
       overheadPercentage: 20,
       desiredProfitMargin: 25,
-      quoteAmount: 900,
+      quoteAmount: 1100, // Updated proportionally for 2025 costs
       travelHours: 1,
       adminHours: 0.5,
       miles: 20,
-      mileageRate: 0.45,
+      mileageRate: 0.45, // HMRC approved rate 2025
       subcontractorCost: 0,
-      parkingTolls: 10,
+      parkingTolls: 15, // Updated for 2025: London parking increases
       consumablesPercent: 5,
       materialMarkupPercent: 10,
       contingencyPercent: 5,

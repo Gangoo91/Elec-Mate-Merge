@@ -7,17 +7,17 @@ import InfoBox from "@/components/common/InfoBox";
 const currency = (n: number) => `£${n.toFixed(2)}`;
 
 const StaffCostCalculator: React.FC = () => {
-  const [basePayHr, setBasePayHr] = React.useState(18);
+  const [basePayHr, setBasePayHr] = React.useState(26); // Updated for 2025: above new minimum wage rates
   const [weeklyHours, setWeeklyHours] = React.useState(40);
   const [paidWeeks, setPaidWeeks] = React.useState(52);
   const [holidaysDays, setHolidaysDays] = React.useState(28);
   const [sickDays, setSickDays] = React.useState(3);
   const [niRate, setNiRate] = React.useState(13.8);
   const [pensionRate, setPensionRate] = React.useState(3);
-  const [vanYear, setVanYear] = React.useState(3500);
-  const [toolsYear, setToolsYear] = React.useState(800);
-  const [insuranceYear, setInsuranceYear] = React.useState(1200);
-  const [trainingYear, setTrainingYear] = React.useState(400);
+  const [vanYear, setVanYear] = React.useState(4200); // Updated for 2025: increased fuel, insurance, maintenance
+  const [toolsYear, setToolsYear] = React.useState(1000); // Updated for 2025: tool inflation
+  const [insuranceYear, setInsuranceYear] = React.useState(1500); // Updated for 2025: public liability increases
+  const [trainingYear, setTrainingYear] = React.useState(600); // Updated for 2025: course price increases
   const [utilisation, setUtilisation] = React.useState(65); // % of paid time billed
   const [targetMargin, setTargetMargin] = React.useState(20);
 

@@ -28,11 +28,11 @@ const PricingStrategyCalculator = () => {
   const { toast } = useToast();
   const [calculated, setCalculated] = useState(false);
   const [inputs, setInputs] = useState<PricingInputs>({
-    materialsCost: 850,
+    materialsCost: 1100, // Updated for 2025: 30% material inflation
     labourHours: 8,
-    hourlyRate: 45,
-    overheadPercent: 20,
-    profitMarginPercent: 15,
+    hourlyRate: 52, // Updated for 2025: market rate increase
+    overheadPercent: 22, // Updated for 2025: increased business costs
+    profitMarginPercent: 18, // Updated for 2025: competitive margin
     discountPercent: 0,
   });
 
@@ -94,7 +94,7 @@ const PricingStrategyCalculator = () => {
   };
 
   const reset = () => {
-    setInputs({ materialsCost: 0, labourHours: 0, hourlyRate: 0, overheadPercent: 20, profitMarginPercent: 15, discountPercent: 0 });
+    setInputs({ materialsCost: 0, labourHours: 0, hourlyRate: 0, overheadPercent: 22, profitMarginPercent: 18, discountPercent: 0 });
     setVatRegistered(false);
     setVatRate(0);
     setCalculated(false);

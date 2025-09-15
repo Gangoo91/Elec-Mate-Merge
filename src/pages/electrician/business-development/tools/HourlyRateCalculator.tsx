@@ -10,6 +10,8 @@ import { Clock, PoundSterling, Calculator, CheckCircle, RefreshCw, Save, Info } 
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid } from "recharts";
 import { Helmet } from "react-helmet";
 import WhyThisMatters from "@/components/common/WhyThisMatters";
+import { RegionalRateSelector } from "@/components/business-calculator/RegionalRateSelector";
+import { Market2025Insights } from "@/components/business-calculator/Market2025Insights";
 interface RateInputs {
   annualSalary: number;
   workingDaysPerYear: number;
@@ -36,7 +38,7 @@ interface RateInputs {
 const HourlyRateCalculator = () => {
   const { toast } = useToast();
   const [inputs, setInputs] = useState<RateInputs>({
-    annualSalary: 30000,
+    annualSalary: 35000, // Updated for 2025 market rates
     workingDaysPerYear: 230,
     hoursPerDay: 8,
     paidLeaveDays: 25,
@@ -45,10 +47,10 @@ const HourlyRateCalculator = () => {
     trainingDays: 3,
     employerNI: 13.8,
     employerPension: 3,
-    profFeesAnnual: 600,
-    calibrationAnnual: 200,
-    softwareAnnual: 300,
-    vehicleAnnual: 2400,
+    profFeesAnnual: 1000, // Updated for 2025: NICEIC/ECA membership + insurance increases
+    calibrationAnnual: 300, // Updated for 2025: PAT testers, multifunction testers
+    softwareAnnual: 450, // Updated for 2025: EICR software, apps, cloud storage
+    vehicleAnnual: 4000, // Updated for 2025: fuel, insurance, maintenance increases
     overheadPercentage: 25,
     profitMargin: 25,
     utilizationRate: 75,
@@ -93,7 +95,7 @@ const [calculated, setCalculated] = useState(false);
 
   const reset = () => {
     setInputs({
-      annualSalary: 30000,
+      annualSalary: 35000, // Updated for 2025 market rates
       workingDaysPerYear: 230,
       hoursPerDay: 8,
       paidLeaveDays: 25,
@@ -102,10 +104,10 @@ const [calculated, setCalculated] = useState(false);
       trainingDays: 3,
       employerNI: 13.8,
       employerPension: 3,
-      profFeesAnnual: 600,
-      calibrationAnnual: 200,
-      softwareAnnual: 300,
-      vehicleAnnual: 2400,
+      profFeesAnnual: 1000, // Updated for 2025
+      calibrationAnnual: 300, // Updated for 2025
+      softwareAnnual: 450, // Updated for 2025
+      vehicleAnnual: 4000, // Updated for 2025
       overheadPercentage: 25,
       profitMargin: 25,
       utilizationRate: 75,
