@@ -1,6 +1,6 @@
 import { InstallPlanData, CableRecommendation, InstallationSuggestion, ComplianceCheck, Circuit } from "./types";
 import { getCableDatabase, BS7671_CABLE_DATABASE } from "./EnhancedCableDatabase";
-import { getCableSpecification, ENHANCED_CABLE_DATABASE } from "@/lib/calculators/bs7671-data/comprehensiveCableDatabase";
+import { getCableSpecification, checkFireCompliance, COMPREHENSIVE_CABLE_DATABASE } from "./ComprehensiveCableDatabase";
 import { 
   calculateCableCapacity, 
   calculateVoltageDrop, 
@@ -11,16 +11,6 @@ import {
 import { legacyStandardDeviceRatings, getNextStandardRating } from '@/lib/calculators/utils/calculatorUtils';
 import { zsValues } from '@/components/apprentice/calculators/zs-values/ZsValuesData';
 import { getSuitableDevices, getMaxZs, getRecommendedDeviceType } from '@/lib/calculators/bs7671-data/protectiveDevices';
-import { 
-  mapComplexityToString, 
-  calculateTotalCost, 
-  assessFireCompliance, 
-  checkEnvironmentalSuitability,
-  checkApplicationSuitability,
-  checkInstallationSuitability,
-  getMaxLengthForCable
-} from "./cableSelectionHelpers";
-import { createLegacyCableData, mockCableProperties, checkFireCompliance } from "./cableCompatibilityAdapter";
 
 export class ImprovedCableSelectionEngine {
   
@@ -28,27 +18,27 @@ export class ImprovedCableSelectionEngine {
     const designCurrent = this.calculateDesignCurrent(planData);
     const options: CableRecommendation[] = [];
     
-    // Use enhanced cable database
-    const cableData = ENHANCED_CABLE_DATABASE[planData.cableType];
+    // Use comprehensive cable database that includes XLPE-LSOH specifications
+    const cableTypeDatabase = COMPREHENSIVE_CABLE_DATABASE[planData.cableType];
     const fallbackDatabase = getCableDatabase(isRingCircuit);
     
     // Get available sizes for the selected cable type
-    const availableSizes = cableData ? 
-      cableData.specification.standardSizes.map(s => s.toString()) : 
+    const availableSizes = cableTypeDatabase ? 
+      Object.keys(cableTypeDatabase) : 
       Object.keys(fallbackDatabase);
 
     for (const size of availableSizes) {
       const cableSize = parseFloat(size);
       
       // Get comprehensive cable specification
-      const cableSpec = getCableSpecification(planData.cableType);
-      const pricing = cableData?.pricing.find(p => p.size === cableSize);
-      const capacity = cableData?.capacities.find(c => c.size === cableSize);
-      
-      if (!cableSpec || !pricing || !capacity) continue;
-      
-      const legacyCableData = createLegacyCableData(pricing, cableSpec, cableSize);
-      const fallbackData = fallbackDatabase[size];
+      const cableSpec = getCableSpecification(planData.cableType, size);
+      const cableData = cableSpec ? {
+        currentCarryingCapacity: cableSpec.currentCarryingCapacity,
+        cost: cableSpec.cost,
+        availability: cableSpec.availability,
+        installationComplexity: cableSpec.installationComplexity,
+        maxLength: cableSpec.maxLength
+      } : fallbackDatabase[size];
       
       if (!cableData) continue;
       
@@ -57,7 +47,9 @@ export class ImprovedCableSelectionEngine {
       const capacityInputs = {
         cableType,
         cableSize,
-        ambientTemp: planData.ambientTemperature || 30,
+        ambientTemp: cableSpec?.maxOperatingTemp === 90 ? 
+          Math.min(planData.ambientTemperature || 30, 90) : // XLPE can handle higher temps
+          Math.min(planData.ambientTemperature || 30, 70),   // PVC limited to 70°C
         groupingCircuits: this.getGroupingCircuits(planData),
         designCurrent,
         deviceRating: this.getProposedDeviceRating(designCurrent, cableData),
@@ -113,8 +105,7 @@ export class ImprovedCableSelectionEngine {
       const currentOK = capacityResult.compliance.InLeIz;
       const voltageDropOK = voltageDropResult.compliance.isCompliant;
       const coordinationOK = capacityResult.compliance.IbLeIn;
-      const maxLength = getMaxLengthForCable(planData.cableType, cableSize);
-      const lengthOK = (planData.cableLength || 0) <= maxLength;
+      const lengthOK = planData.cableLength <= cableData.maxLength;
 
       let suitability: "suitable" | "marginal" | "unsuitable";
       if (currentOK && voltageDropOK && coordinationOK && zsOK && lengthOK) {
@@ -128,13 +119,20 @@ export class ImprovedCableSelectionEngine {
       // Generate comprehensive notes with enhanced XLPE-LSOH information
       const notes: string[] = [];
       
-      // Add cable specification information
+      // Add cable specification information for XLPE-LSOH
       if (cableSpec) {
-        const tempRating = cableSpec.temperatureRating;
-        const firePerf = cableSpec.firePerformance;
-        notes.push(`Rated ${tempRating} with ${firePerf} fire performance`);
-        if (firePerf === 'LSOH') {
-          notes.push('Low smoke, zero halogen - suitable for escape routes');
+        const tempRating = cableSpec.maxOperatingTemp;
+        const sheathType = cableSpec.sheathType;
+        const fireRating = cableSpec.firePerformance.rating;
+        
+        notes.push(`🔥 ${tempRating}°C rated ${cableSpec.insulationType}/${sheathType} - ${fireRating} fire performance`);
+        
+        if (cableSpec.sheathType === 'LSOH') {
+          notes.push(`🚭 Low smoke, zero halogen sheath - suitable for escape routes`);
+        }
+        
+        if (cableSpec.firePerformance.circuitIntegrity > 0) {
+          notes.push(`⏱️ ${cableSpec.firePerformance.circuitIntegrity}min circuit integrity at 842°C`);
         }
       }
       
@@ -149,9 +147,9 @@ export class ImprovedCableSelectionEngine {
         notes.push(`✅ Complies with BS7671 - Safety margin: ${capacityResult.compliance.safetyMargin.toFixed(1)}%`);
         if (isRingCircuit) notes.push(`✅ Ring circuit validated`);
         
-        // Temperature performance note
-        if (cableSpec && cableSpec.temperatureRating === '90C') {
-          notes.push('Enhanced temperature performance - 90°C continuous rating');
+        // Add XLPE-LSOH specific benefits
+        if (cableSpec && cableSpec.maxOperatingTemp === 90) {
+          notes.push(`🌡️ Enhanced temperature performance - 90°C continuous rating`);
         }
       }
 

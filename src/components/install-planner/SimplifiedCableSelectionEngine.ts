@@ -106,35 +106,12 @@ export class SimplifiedCableSelectionEngine {
 
   // Calculate cable options for given inputs
   static calculateCableOptions(planData: InstallPlanData): CableRecommendation[] {
-    let options: CableRecommendation[] = [];
+    const options: CableRecommendation[] = [];
     
     // Calculate design current - FIXED for three-phase
     const designCurrent = planData.phases === "single" 
       ? planData.totalLoad / planData.voltage
       : planData.totalLoad / (planData.voltage * Math.sqrt(3) * (planData.powerFactor || 0.9));
-
-    // CRITICAL SAFETY CHECK: Prevent dangerous undersizing
-    if (designCurrent > 70 && planData.cableType === "pvc-twin-earth") {
-      // Add warning that T&E is impractical for high currents
-      options.push({
-        size: "WARNING",
-        type: planData.cableType,
-        currentCarryingCapacity: 0,
-        voltageDropPercentage: 999,
-        ratedCurrent: this.getStandardBreakerRating(designCurrent),
-        suitability: "unsuitable",
-        notes: [
-          "⚠️ WARNING: Twin & Earth not practical for currents above 70A",
-          "🔧 Maximum T&E size: 10mm² (64A clipped direct)",
-          "💡 Recommendation: Use SWA XLPE for high current applications",
-          "📋 Consider 16mm² SWA XLPE (101A) or 25mm² SWA XLPE (134A)"
-        ],
-        cost: "medium",
-        availability: "common",
-        installationComplexity: "simple",
-        specialConsiderations: ["Switch to SWA cable type for this load"]
-      });
-    }
 
     // Get available sizes for the selected cable type
     const availableSizes = Object.keys(SIMPLIFIED_CABLE_DATABASE[planData.cableType] || {});
@@ -146,12 +123,6 @@ export class SimplifiedCableSelectionEngine {
       // Get base capacity for installation method
       const methodKey = this.mapInstallationMethod(planData.installationMethod);
       const baseCapacity = spec.capacity[methodKey] || spec.capacity["clipped-direct"];
-      
-      // CRITICAL: Display actual base capacity, not inflated value
-      if (!baseCapacity || baseCapacity <= 0) {
-        console.warn(`Invalid capacity for ${planData.cableType} ${size}mm² with method ${methodKey}`);
-        continue;
-      }
       
       // Calculate derating factors
       const tempFactor = this.getTemperatureFactor(
@@ -194,8 +165,8 @@ export class SimplifiedCableSelectionEngine {
         const margin = ((deratedCapacity - designCurrent) / designCurrent * 100).toFixed(1);
         notes.push(`✅ BS 7671 compliant with ${margin}% safety margin`);
       } else {
-        if (!currentOK) notes.push(`❌ Insufficient current capacity (need ${designCurrent.toFixed(1)}A)`);
-        if (!voltageDropOK) notes.push(`❌ Voltage drop exceeds BS 7671 limit`);
+        if (!currentOK) notes.push(`❌ Insufficient current capacity`);
+        if (!voltageDropOK) notes.push(`❌ Voltage drop exceeds limit`);
       }
       
       // Application notes
@@ -208,7 +179,7 @@ export class SimplifiedCableSelectionEngine {
       options.push({
         size,
         type: planData.cableType,
-        currentCarryingCapacity: Math.round(deratedCapacity), // Shows derated capacity
+        currentCarryingCapacity: Math.round(deratedCapacity),
         voltageDropPercentage: parseFloat(voltageDropPercent.toFixed(2)),
         ratedCurrent: this.getStandardBreakerRating(designCurrent),
         suitability: overallOK ? "suitable" : "unsuitable",
@@ -220,61 +191,12 @@ export class SimplifiedCableSelectionEngine {
       });
     }
 
-    // If no suitable options found, suggest alternative cable types
-    const suitableOptions = options.filter(opt => opt.suitability === "suitable");
-    if (suitableOptions.length === 0 && designCurrent > 50) {
-      this.addAlternativeCableRecommendations(options, designCurrent, planData);
-    }
-
     // Sort by suitability first, then by size
     return options.sort((a, b) => {
       if (a.suitability === "suitable" && b.suitability !== "suitable") return -1;
       if (b.suitability === "suitable" && a.suitability !== "suitable") return 1;
-      return parseFloat(a.size || "999") - parseFloat(b.size || "999");
+      return parseFloat(a.size) - parseFloat(b.size);
     });
-  }
-
-  // Add alternative cable type recommendations when current type is insufficient
-  private static addAlternativeCableRecommendations(
-    options: CableRecommendation[], 
-    designCurrent: number, 
-    planData: InstallPlanData
-  ): void {
-    // Check if SWA XLPE would work for high currents
-    if (planData.cableType === "pvc-twin-earth" && designCurrent > 50) {
-      const swaOptions = ["16.0", "25.0", "35.0"];
-      
-      for (const size of swaOptions) {
-        const swaSpec = getSimpleCableSpec("swa-xlpe", size);
-        if (!swaSpec) continue;
-        
-        const methodKey = this.mapInstallationMethod(planData.installationMethod);
-        const baseCapacity = swaSpec.capacity[methodKey] || swaSpec.capacity["clipped-direct"];
-        
-        if (baseCapacity >= designCurrent) {
-          options.push({
-            size,
-            type: "swa-xlpe",
-            currentCarryingCapacity: baseCapacity,
-            voltageDropPercentage: 0, // Calculate if needed
-            ratedCurrent: this.getStandardBreakerRating(designCurrent),
-            suitability: "suitable",
-            notes: [
-              `💡 RECOMMENDED ALTERNATIVE: ${swaSpec.name}`,
-              `⚡ Capacity: ${baseCapacity}A (suitable for ${designCurrent.toFixed(1)}A load)`,
-              `🔧 Better choice for high current applications`,
-              `📋 Armoured cable - suitable for outdoor/industrial use`,
-              `💰 Cost: ${swaSpec.costLevel} (worth it for safety)`
-            ],
-            cost: swaSpec.costLevel,
-            availability: "common",
-            installationComplexity: "moderate",
-            specialConsiderations: ["Change cable type to SWA XLPE"]
-          });
-          break; // Only show the first suitable alternative
-        }
-      }
-    }
   }
 
   // Map installation method to capacity key
@@ -313,43 +235,18 @@ export class SimplifiedCableSelectionEngine {
   static generateRecommendations(options: CableRecommendation[]): string[] {
     const recommendations: string[] = [];
     const suitableOptions = options.filter(opt => opt.suitability === "suitable");
-    const warningOptions = options.filter(opt => opt.size === "WARNING");
-    
-    // Show warnings first if any
-    if (warningOptions.length > 0) {
-      const warning = warningOptions[0];
-      recommendations.push("⚠️ CABLE TYPE UNSUITABLE FOR THIS LOAD");
-      warning.notes.forEach(note => {
-        if (note.includes("RECOMMENDED ALTERNATIVE") || note.includes("Consider")) {
-          recommendations.push(note);
-        }
-      });
-    }
     
     if (suitableOptions.length === 0) {
-      recommendations.push("❌ No suitable cable sizes found in selected type");
-      
-      // Check if there are SWA alternatives shown
-      const swaAlternatives = options.filter(opt => opt.type === "swa-xlpe");
-      if (swaAlternatives.length > 0) {
-        const alternative = swaAlternatives[0];
-        recommendations.push(`✅ Recommended: ${alternative.size}mm² SWA XLPE (${alternative.currentCarryingCapacity}A)`);
-        recommendations.push(`🔧 Protection: ${alternative.ratedCurrent}A breaker required`);
-      } else {
-        const largestOption = options.filter(opt => opt.size !== "WARNING")[options.length - 1];
-        if (largestOption) {
-          recommendations.push(`Consider ${largestOption.size}mm² or review installation parameters`);
-        }
+      recommendations.push("No suitable cable sizes found - check design current and cable length");
+      const largestOption = options[options.length - 1];
+      if (largestOption) {
+        recommendations.push(`Consider ${largestOption.size}mm² or review installation parameters`);
       }
     } else {
       // Show multiple suitable options for professional choice
       const primary = suitableOptions[0];
-      if (primary.type === "swa-xlpe") {
-        recommendations.push(`✅ Recommended: ${primary.size}mm² ${primary.type} (${primary.currentCarryingCapacity}A)`);
-      } else {
-        recommendations.push(`Primary choice: ${primary.size}mm² ${primary.type} (${primary.currentCarryingCapacity}A capacity)`);
-      }
-      recommendations.push(`🔧 Protection: ${primary.ratedCurrent}A breaker required`);
+      recommendations.push(`Primary choice: ${primary.size}mm² ${primary.type} (code minimum)`);
+      recommendations.push(`Protection: ${primary.ratedCurrent}A breaker required`);
       
       // Show alternative if available
       if (suitableOptions.length > 1) {
