@@ -145,83 +145,143 @@ const CableRunStep = ({ planData, updatePlanData }: CableRunStepProps) => {
                 <>
                   <div className="flex items-start gap-2">
                     <span className="w-1.5 h-1.5 bg-amber-400 rounded-full mt-2 flex-shrink-0"></span>
+                    <span className="text-sm text-amber-200">BS 7671 Reference Method A1 - Cable clipped to wall/ceiling</span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="w-1.5 h-1.5 bg-amber-400 rounded-full mt-2 flex-shrink-0"></span>
                     <span className="text-sm text-amber-200">Cable clips every 300-400mm horizontally, 250mm vertically</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="w-1.5 h-1.5 bg-amber-400 rounded-full mt-2 flex-shrink-0"></span>
-                    <span className="text-sm text-amber-200">Maintain 50mm separation from other services</span>
+                    <span className="text-sm text-amber-200">Maintain 50mm separation from other services and hot surfaces</span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="w-1.5 h-1.5 bg-amber-400 rounded-full mt-2 flex-shrink-0"></span>
+                    <span className="text-sm text-amber-200">Use appropriate clips - plastic for T&E, metal for SWA</span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="w-1.5 h-1.5 bg-amber-400 rounded-full mt-2 flex-shrink-0"></span>
+                    <span className="text-sm text-amber-200">Avoid sharp bends - minimum bend radius 4x cable diameter</span>
                   </div>
                 </>
               )}
-              {(planData.installationMethod === "conduit-surface" || planData.installationMethod === "conduit-embedded" || planData.installationMethod === "conduit-underground") && (
+              {planData.installationMethod === "in-conduit" && (
                 <>
+                  <div className="flex items-start gap-2">
+                    <span className="w-1.5 h-1.5 bg-amber-400 rounded-full mt-2 flex-shrink-0"></span>
+                    <span className="text-sm text-amber-200">BS 7671 Reference Method B1/B2 - Cables in conduit system</span>
+                  </div>
                   <div className="flex items-start gap-2">
                     <span className="w-1.5 h-1.5 bg-amber-400 rounded-full mt-2 flex-shrink-0"></span>
                     <span className="text-sm text-amber-200">Conduit supports every 1m horizontally, 0.75m vertically</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="w-1.5 h-1.5 bg-amber-400 rounded-full mt-2 flex-shrink-0"></span>
-                    <span className="text-sm text-amber-200">Use appropriate conduit size for cable fill factor (max 45%)</span>
+                    <span className="text-sm text-amber-200">Maximum cable fill factor 45% for 1 cable, 31% for 3+ cables</span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="w-1.5 h-1.5 bg-amber-400 rounded-full mt-2 flex-shrink-0"></span>
+                    <span className="text-sm text-amber-200">Use draw rope/wire for cable pulling - avoid cable damage</span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="w-1.5 h-1.5 bg-amber-400 rounded-full mt-2 flex-shrink-0"></span>
+                    <span className="text-sm text-amber-200">Install inspection boxes every 5m and at direction changes</span>
                   </div>
                 </>
               )}
-              {planData.installationMethod === "direct-buried" && (
+              {planData.installationMethod === "in-trunking" && (
                 <>
                   <div className="flex items-start gap-2">
                     <span className="w-1.5 h-1.5 bg-amber-400 rounded-full mt-2 flex-shrink-0"></span>
-                    <span className="text-sm text-amber-200">Minimum burial depth 450mm, 750mm under roads</span>
+                    <span className="text-sm text-amber-200">BS 7671 Reference Method B1 - Cables in cable trunking</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="w-1.5 h-1.5 bg-amber-400 rounded-full mt-2 flex-shrink-0"></span>
-                    <span className="text-sm text-amber-200">Warning tape 150mm above cable, marker posts required</span>
-                  </div>
-                </>
-              )}
-              {(planData.installationMethod === "trunking-metal" || planData.installationMethod === "trunking-plastic") && (
-                <>
-                  <div className="flex items-start gap-2">
-                    <span className="w-1.5 h-1.5 bg-amber-400 rounded-full mt-2 flex-shrink-0"></span>
-                    <span className="text-sm text-amber-200">Trunking supports every 1.5m, use appropriate size for cable quantity</span>
+                    <span className="text-sm text-amber-200">Trunking supports every 1.5m, secure lid properly throughout</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="w-1.5 h-1.5 bg-amber-400 rounded-full mt-2 flex-shrink-0"></span>
                     <span className="text-sm text-amber-200">Separate power and data cables in different compartments</span>
                   </div>
-                </>
-              )}
-              {(planData.installationMethod === "cable-tray" || planData.installationMethod === "cable-ladder" || planData.installationMethod === "basket-tray") && (
-                <>
                   <div className="flex items-start gap-2">
                     <span className="w-1.5 h-1.5 bg-amber-400 rounded-full mt-2 flex-shrink-0"></span>
-                    <span className="text-sm text-amber-200">Support intervals every 2m for cable trays, 3m for ladders</span>
+                    <span className="text-sm text-amber-200">Leave 25% spare capacity for future cables</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="w-1.5 h-1.5 bg-amber-400 rounded-full mt-2 flex-shrink-0"></span>
-                    <span className="text-sm text-amber-200">Consider cable segregation and fire stopping requirements</span>
+                    <span className="text-sm text-amber-200">Fire barriers required at floor/ceiling penetrations</span>
                   </div>
                 </>
               )}
-              {planData.installationMethod === "overhead" && (
+              {planData.installationMethod === "through-insulation" && (
                 <>
                   <div className="flex items-start gap-2">
                     <span className="w-1.5 h-1.5 bg-amber-400 rounded-full mt-2 flex-shrink-0"></span>
-                    <span className="text-sm text-amber-200">Minimum clearance heights: 5.2m roads, 5.8m HGV routes</span>
+                    <span className="text-sm text-amber-200">BS 7671 Reference Method A2 - Cables in thermal insulation</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="w-1.5 h-1.5 bg-amber-400 rounded-full mt-2 flex-shrink-0"></span>
-                    <span className="text-sm text-amber-200">Weather protection and wind loading considerations</span>
+                    <span className="text-sm text-amber-200">Current rating reduced by derating factor 0.5 (50% reduction)</span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="w-1.5 h-1.5 bg-amber-400 rounded-full mt-2 flex-shrink-0"></span>
+                    <span className="text-sm text-amber-200">Use appropriate cable grade - 90°C thermosetting insulation recommended</span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="w-1.5 h-1.5 bg-amber-400 rounded-full mt-2 flex-shrink-0"></span>
+                    <span className="text-sm text-amber-200">Ensure cable sheath remains intact throughout insulation</span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="w-1.5 h-1.5 bg-amber-400 rounded-full mt-2 flex-shrink-0"></span>
+                    <span className="text-sm text-amber-200">Consider conduit/oval conduit for mechanical protection</span>
                   </div>
                 </>
               )}
-              {(planData.installationMethod === "ceiling-void" || planData.installationMethod === "floor-duct") && (
+              {planData.installationMethod === "underground" && (
                 <>
                   <div className="flex items-start gap-2">
                     <span className="w-1.5 h-1.5 bg-amber-400 rounded-full mt-2 flex-shrink-0"></span>
-                    <span className="text-sm text-amber-200">Fire stopping required at compartment boundaries</span>
+                    <span className="text-sm text-amber-200">BS 7671 Reference Method D1/D2 - Direct buried or ducted</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="w-1.5 h-1.5 bg-amber-400 rounded-full mt-2 flex-shrink-0"></span>
-                    <span className="text-sm text-amber-200">Adequate ventilation and access for maintenance</span>
+                    <span className="text-sm text-amber-200">Minimum burial depth 450mm, 750mm under roads/driveways</span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="w-1.5 h-1.5 bg-amber-400 rounded-full mt-2 flex-shrink-0"></span>
+                    <span className="text-sm text-amber-200">Install warning tape 150mm above cable, use marker posts</span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="w-1.5 h-1.5 bg-amber-400 rounded-full mt-2 flex-shrink-0"></span>
+                    <span className="text-sm text-amber-200">Use SWA cable with appropriate armour earthing</span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="w-1.5 h-1.5 bg-amber-400 rounded-full mt-2 flex-shrink-0"></span>
+                    <span className="text-sm text-amber-200">Sand bedding recommended, avoid sharp stones in backfill</span>
+                  </div>
+                </>
+              )}
+              {planData.installationMethod === "cable-tray" && (
+                <>
+                  <div className="flex items-start gap-2">
+                    <span className="w-1.5 h-1.5 bg-amber-400 rounded-full mt-2 flex-shrink-0"></span>
+                    <span className="text-sm text-amber-200">BS 7671 Reference Method E/F - Cables on trays/ladders</span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="w-1.5 h-1.5 bg-amber-400 rounded-full mt-2 flex-shrink-0"></span>
+                    <span className="text-sm text-amber-200">Support intervals: 2m for cable trays, 3m for cable ladders</span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="w-1.5 h-1.5 bg-amber-400 rounded-full mt-2 flex-shrink-0"></span>
+                    <span className="text-sm text-amber-200">Secure cables with ties every 1.5m to prevent sagging</span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="w-1.5 h-1.5 bg-amber-400 rounded-full mt-2 flex-shrink-0"></span>
+                    <span className="text-sm text-amber-200">Segregate power/data cables, consider fire stopping at penetrations</span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="w-1.5 h-1.5 bg-amber-400 rounded-full mt-2 flex-shrink-0"></span>
+                    <span className="text-sm text-amber-200">Ensure adequate drainage and avoid cable pooling</span>
                   </div>
                 </>
               )}
