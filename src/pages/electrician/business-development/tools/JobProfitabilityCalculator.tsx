@@ -471,53 +471,55 @@ const JobProfitabilityCalculator = () => {
           ]}
         />
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 mb-8">
+        <div className="space-y-6">
         {/* Multi-Worker Toggle */}
-        <div className="lg:col-span-2 mb-4">
-          <div className="flex items-center gap-4 p-4 bg-elec-card border border-elec-yellow/20 rounded-lg">
-            <label className="flex items-center gap-2 cursor-pointer">
-              <input
-                type="checkbox"
-                checked={useMultiWorker}
-                onChange={(e) => setUseMultiWorker(e.target.checked)}
-                className="w-4 h-4 text-elec-yellow bg-transparent border-elec-yellow/50 rounded focus:ring-elec-yellow"
-              />
-              <span className="text-white">Multi-Worker Job</span>
-            </label>
-            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
-              {useMultiWorker ? `${workers.length} workers` : 'Single worker'}
-            </Badge>
-          </div>
-        </div>
+        <Card className="mobile-card bg-elec-darkgrey border-elec-grey">
+          <CardContent className="mobile-card-spacing">
+            <div className="flex items-center justify-between">
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={useMultiWorker}
+                  onChange={(e) => setUseMultiWorker(e.target.checked)}
+                  className="w-4 h-4 text-elec-yellow bg-transparent border-elec-yellow/50 rounded focus:ring-elec-yellow"
+                />
+                <span className="mobile-text text-white">Multi-Worker Job</span>
+              </label>
+              <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow text-xs">
+                {useMultiWorker ? `${workers.length} workers` : 'Single worker'}
+              </Badge>
+            </div>
+          </CardContent>
+        </Card>
 
         {useMultiWorker && (
-          <div className="lg:col-span-2">
-            <MultiWorkerManager
-              workers={workers}
-              onWorkersChange={setWorkers}
-            />
-          </div>
+          <MobileMultiWorkerManager
+            workers={workers}
+            onWorkersChange={setWorkers}
+          />
         )}
 
-        <div className="lg:col-span-2">
-          <AccuracyEnhancements
-            inputs={accuracyInputs}
-            onInputsChange={setAccuracyInputs}
-            jobComplexity={jobComplexity}
-          />
-        </div>
+        <MobileAccuracyEnhancements
+          inputs={accuracyInputs}
+          onInputsChange={setAccuracyInputs}
+          jobComplexity="standard"
+        />
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 mb-8">
+        <div className="space-y-6">
         {/* Job Presets */}
-        <div className="lg:col-span-1">
-          <JobPresetSelector onPresetSelected={handlePresetSelected} />
-        </div>
+        <Card className="mobile-card bg-elec-darkgrey border-elec-grey">
+          <CardHeader className="mobile-card-spacing">
+            <CardTitle className="mobile-subheading text-white">Job Presets</CardTitle>
+          </CardHeader>
+          <CardContent className="mobile-card-spacing">
+            <JobPresetSelector onPresetSelected={handlePresetSelected} />
+          </CardContent>
+        </Card>
 
         {/* Input Section */}
-        <div className="lg:col-span-1">
-          <Card className="border-elec-yellow/20 bg-elec-card">
-            <CardHeader className="text-center">
+        <Card className="mobile-card bg-elec-darkgrey border-elec-grey">
+          <CardHeader className="mobile-card-spacing text-center">
               <CardTitle className="text-white flex items-center justify-center gap-2">
                 <PoundSterling className="h-5 w-5 text-elec-yellow" />
                 Job Details
@@ -924,6 +926,7 @@ const JobProfitabilityCalculator = () => {
           </div>
         </CardContent>
       </Card>
+      </div>
       </div>
     </div>
   );
