@@ -25,7 +25,7 @@ export class CableSelectionEngine {
     };
 
     // Get smart cable selection results
-    const smartResults = calculateSmartCableSelection(smartInputs);
+    const smartResults: any = calculateSmartCableSize(smartInputs as any);
     
     // Convert to legacy format for compatibility
     const options: CableRecommendation[] = [];

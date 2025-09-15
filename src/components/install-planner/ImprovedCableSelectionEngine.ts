@@ -57,9 +57,7 @@ export class ImprovedCableSelectionEngine {
       const capacityInputs = {
         cableType,
         cableSize,
-        ambientTemp: cableSpec?.maxOperatingTemp === 90 ? 
-          Math.min(planData.ambientTemperature || 30, 90) : // XLPE can handle higher temps
-          Math.min(planData.ambientTemperature || 30, 70),   // PVC limited to 70°C
+        ambientTemp: planData.ambientTemperature || 30,
         groupingCircuits: this.getGroupingCircuits(planData),
         designCurrent,
         deviceRating: this.getProposedDeviceRating(designCurrent, cableData),
@@ -115,7 +113,8 @@ export class ImprovedCableSelectionEngine {
       const currentOK = capacityResult.compliance.InLeIz;
       const voltageDropOK = voltageDropResult.compliance.isCompliant;
       const coordinationOK = capacityResult.compliance.IbLeIn;
-      const lengthOK = planData.cableLength <= cableData.maxLength;
+      const maxLength = getMaxLengthForCable(planData.cableType, cableSize);
+      const lengthOK = (planData.cableLength || 0) <= maxLength;
 
       let suitability: "suitable" | "marginal" | "unsuitable";
       if (currentOK && voltageDropOK && coordinationOK && zsOK && lengthOK) {
@@ -129,20 +128,13 @@ export class ImprovedCableSelectionEngine {
       // Generate comprehensive notes with enhanced XLPE-LSOH information
       const notes: string[] = [];
       
-      // Add cable specification information for XLPE-LSOH
+      // Add cable specification information
       if (cableSpec) {
-        const tempRating = cableSpec.maxOperatingTemp;
-        const sheathType = cableSpec.sheathType;
-        const fireRating = cableSpec.firePerformance.rating;
-        
-        notes.push(`🔥 ${tempRating}°C rated ${cableSpec.insulationType}/${sheathType} - ${fireRating} fire performance`);
-        
-        if (cableSpec.sheathType === 'LSOH') {
-          notes.push(`🚭 Low smoke, zero halogen sheath - suitable for escape routes`);
-        }
-        
-        if (cableSpec.firePerformance.circuitIntegrity > 0) {
-          notes.push(`⏱️ ${cableSpec.firePerformance.circuitIntegrity}min circuit integrity at 842°C`);
+        const tempRating = cableSpec.temperatureRating;
+        const firePerf = cableSpec.firePerformance;
+        notes.push(`Rated ${tempRating} with ${firePerf} fire performance`);
+        if (firePerf === 'LSOH') {
+          notes.push('Low smoke, zero halogen - suitable for escape routes');
         }
       }
       
@@ -157,9 +149,9 @@ export class ImprovedCableSelectionEngine {
         notes.push(`✅ Complies with BS7671 - Safety margin: ${capacityResult.compliance.safetyMargin.toFixed(1)}%`);
         if (isRingCircuit) notes.push(`✅ Ring circuit validated`);
         
-        // Add XLPE-LSOH specific benefits
-        if (cableSpec && cableSpec.maxOperatingTemp === 90) {
-          notes.push(`🌡️ Enhanced temperature performance - 90°C continuous rating`);
+        // Temperature performance note
+        if (cableSpec && cableSpec.temperatureRating === '90C') {
+          notes.push('Enhanced temperature performance - 90°C continuous rating');
         }
       }
 

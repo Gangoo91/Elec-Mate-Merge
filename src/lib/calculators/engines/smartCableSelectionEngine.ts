@@ -96,7 +96,8 @@ export const calculateSmartCableSize = (inputs: SmartCableSizingInputs): SmartCa
   alternatives.sort((a, b) => a.totalCost - b.totalCost);
 
   // Calculate analysis factors
-  const tempFactor = getTemperatureFactor(ambientTemp);
+  const rating = ENHANCED_CABLE_DATABASE[optimal.cableType]?.specification.temperatureRating || '70C';
+  const tempFactor = getTemperatureFactor(ambientTemp, rating);
   const groupFactor = getGroupingFactor(groupingCircuits);
   
   const cableData = ENHANCED_CABLE_DATABASE[optimal.cableType];
