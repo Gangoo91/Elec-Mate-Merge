@@ -1,6 +1,6 @@
 import { InstallPlanData, CableRecommendation, InstallationSuggestion, ComplianceCheck, Circuit } from "./types";
 import { getCableDatabase, BS7671_CABLE_DATABASE } from "./EnhancedCableDatabase";
-import { getCableSpecification, checkFireCompliance, COMPREHENSIVE_CABLE_DATABASE } from "./ComprehensiveCableDatabase";
+import { getCableSpecification, ENHANCED_CABLE_DATABASE } from "@/lib/calculators/bs7671-data/comprehensiveCableDatabase";
 import { 
   calculateCableCapacity, 
   calculateVoltageDrop, 

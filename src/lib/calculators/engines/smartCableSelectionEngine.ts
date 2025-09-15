@@ -1,5 +1,5 @@
 // Smart Cable Selection Engine with Real-World Logic
-import { getCableData, findOptimalCableSize, getCablePricing, UK_CABLE_DATABASE } from '../bs7671-data/comprehensiveCableDatabase';
+import { getCablePricing, findOptimalCable, ENHANCED_CABLE_DATABASE } from '../bs7671-data/comprehensiveCableDatabase';
 import { getTemperatureFactor, getGroupingFactor } from '../bs7671-data/temperatureFactors';
 
 export interface SmartCableSizingInputs {
