@@ -7,11 +7,10 @@ import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import BackButton from "@/components/common/BackButton";
 import { useToast } from "@/hooks/use-toast";
-import { Calculator, PoundSterling, HelpCircle, TrendingUp, AlertCircle, CheckCircle, Lightbulb, Settings, History, Share2, Receipt, Users } from "lucide-react";
-import { JobPresetSelector } from "@/components/electrician/business-development/job-profitability/JobPresetSelector";
+import { Calculator, PoundSterling, HelpCircle, TrendingUp, AlertCircle, CheckCircle, Lightbulb, Settings, History, Share2, Receipt, Users, Clock } from "lucide-react";
 import { Worker } from "@/components/electrician/business-development/job-profitability/WorkerManager";
 import { labourHoursOptions, hourlyRateOptions, overheadPercentageOptions, profitMarginOptions } from "@/components/electrician/business-development/job-profitability/DropdownOptions";
-import { JobPreset } from "@/components/electrician/business-development/job-profitability/JobTypePresets";
+import { JobPreset, jobTypePresets, getJobPresetsByCategory, getJobPresetOptions } from "@/components/electrician/business-development/job-profitability/JobTypePresets";
 import { Helmet } from "react-helmet";
 import WhyThisMatters from "@/components/common/WhyThisMatters";
 
@@ -91,6 +90,8 @@ const JobProfitabilityCalculator = () => {
   const [vatRate, setVATRate] = useState(20);
   const [vatRegistered, setVATRegistered] = useState(true);
   const [selectedJobType, setSelectedJobType] = useState<string>("");
+  const [selectedCategory, setSelectedCategory] = useState<string>("All");
+  const [selectedPreset, setSelectedPreset] = useState<string>("");
   const [history, setHistory] = useState<CalculationHistory[]>([]);
   const [showHistory, setShowHistory] = useState(false);
 
@@ -260,6 +261,8 @@ const JobProfitabilityCalculator = () => {
     setCalculated(false);
     setCustomValues({});
     setSelectedJobType("");
+    setSelectedCategory("All");
+    setSelectedPreset("");
     toast({
       title: "Calculator Reset",
       description: "All fields have been cleared.",
@@ -267,23 +270,32 @@ const JobProfitabilityCalculator = () => {
     });
   };
 
-  const handlePresetSelected = (preset: JobPreset) => {
-    setInputs(prev => ({
-      ...prev,
-      labourHours: preset.defaults.labourHours,
-      hourlyRate: preset.defaults.hourlyRate,
-      overheadPercentage: preset.defaults.overheadPercentage,
-      desiredProfitMargin: preset.defaults.desiredProfitMargin,
-    }));
-    setSelectedJobType(preset.name);
-    setCalculated(false);
-    setCustomValues({});
-    toast({
-      title: "Preset Applied",
-      description: `Values loaded for ${preset.name}`,
-      variant: "success"
-    });
+  const handlePresetChange = (presetId: string) => {
+    setSelectedPreset(presetId);
+    const preset = jobTypePresets.find(p => p.id === presetId);
+    if (preset) {
+      setInputs(prev => ({
+        ...prev,
+        labourHours: preset.defaults.labourHours,
+        hourlyRate: preset.defaults.hourlyRate,
+        overheadPercentage: preset.defaults.overheadPercentage,
+        desiredProfitMargin: preset.defaults.desiredProfitMargin,
+      }));
+      setSelectedJobType(preset.name);
+      setCalculated(false);
+      setCustomValues({});
+      toast({
+        title: "Preset Applied",
+        description: `Values loaded for ${preset.name}`,
+        variant: "success"
+      });
+    }
   };
+
+  const categories = getJobPresetsByCategory();
+  const categoryOptions = categories.map(cat => ({ value: cat, label: cat }));
+  const presetOptions = getJobPresetOptions(selectedCategory);
+  const selectedPresetData = jobTypePresets.find(p => p.id === selectedPreset);
 
   const handleDropdownChange = (field: keyof JobInputs, value: string) => {
     if (value === "custom") {
@@ -471,546 +483,502 @@ const JobProfitabilityCalculator = () => {
 
         <WhyThisMatters
           points={[
-            "Reveals profit per job so you know which work to chase or drop.",
-            "Captures non-billable time (travel/admin) that quietly kills margin.",
-            "Builds a feedback loop between quoting, delivery and pricing."
+            "Accurate pricing ensures sustainable profit margins - 25% of electrical businesses fail due to cash flow issues from underpricing",
+            "Understanding all cost components prevents hidden expenses eroding profits - overhead costs typically represent 15-25% of project value",
+            "Multi-worker calculations optimise team efficiency - proper planning can reduce labour costs by 15-20% while improving quality",
+            "VAT implications affect cash flow significantly - ensure your pricing accounts for VAT registration thresholds and payment timing",
+            "Market positioning through data-driven pricing builds customer trust and professional credibility in competitive tenders",
+            "BS7671 18th Edition compliance costs include certification, testing equipment, and ongoing training - factor these into overheads",
+            "Competitive advantage comes from understanding true costs - many contractors operate at break-even without realising",
+            "Cash flow management requires accurate profit forecasting - delays in payment can impact business sustainability",
+            "Regional rate variations affect profitability - London rates may be 30-40% higher than other UK regions",
+            "Emergency and out-of-hours work commands premium pricing - factor in weekend/evening rates for maximum profitability"
           ]}
         />
 
-        <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 mb-8">
-          <div className="lg:w-1/3">
-            <JobPresetSelector onPresetSelected={handlePresetSelected} />
-          </div>
+        <Card className="border-elec-yellow/20 bg-elec-card">
+          <CardHeader>
+            <CardTitle className="text-white flex items-center gap-2">
+              <Calculator className="h-5 w-5 text-elec-yellow" />
+              Job Profitability Calculator
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-6">
+            <div className="space-y-4">
+              <h3 className="text-lg font-medium text-white">Job Type Presets</h3>
+              <div className="grid sm:grid-cols-2 gap-4">
+                <MobileSelectWrapper
+                  label="Job Category"
+                  placeholder="Select category"
+                  value={selectedCategory}
+                  onValueChange={setSelectedCategory}
+                  options={categoryOptions}
+                  hint="Filter presets by work type"
+                />
 
-          <div className="lg:w-2/3">
-            <Card className="border-elec-yellow/20 bg-elec-card">
-              <CardHeader className="text-center">
-                <CardTitle className="text-white flex items-center justify-center gap-2">
-                  <PoundSterling className="h-5 w-5 text-elec-yellow" />
-                  Job Profitability Calculator
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-8">
-                {/* Basic Job Information */}
-                <div className="space-y-6">
-                  <div className="flex items-center gap-2 mb-4">
-                    <Calculator className="h-4 w-4 text-elec-yellow" />
-                    <h3 className="text-lg font-semibold text-white">Basic Job Information</h3>
+                <MobileSelectWrapper
+                  label="Job Type"
+                  placeholder="Select a preset job type"
+                  value={selectedPreset}
+                  onValueChange={handlePresetChange}
+                  options={presetOptions}
+                  hint="Choose a preset to auto-fill typical values"
+                />
+              </div>
+
+              {selectedPresetData && (
+                <div className="bg-elec-dark/50 rounded-lg p-4 space-y-3">
+                  <div className="text-center">
+                    <h4 className="text-white font-medium">{selectedPresetData.name}</h4>
                   </div>
+                  <p className="text-sm text-elec-light/70">{selectedPresetData.description}</p>
                   
-                  <MobileInput
-                    label="Material Cost"
-                    type="number"
-                    value={inputs.materialCost || ""}
-                    onChange={(e) => updateInput('materialCost', parseFloat(e.target.value) || 0)}
-                    error={errors.materialCost}
-                    clearError={() => clearError('materialCost')}
-                    unit="£"
-                    hint="Include all materials, cables, accessories, and components"
-                  />
-
-                  <MobileInput
-                    label="Your Quote Amount"
-                    type="number"
-                    value={inputs.quoteAmount || ""}
-                    onChange={(e) => updateInput('quoteAmount', parseFloat(e.target.value) || 0)}
-                    error={errors.quoteAmount}
-                    clearError={() => clearError('quoteAmount')}
-                    unit="£"
-                    hint="The total amount you're quoting to the customer"
-                  />
-                </div>
-
-                <Separator className="bg-elec-yellow/20" />
-
-                {/* Labour Section */}
-                <div className="space-y-6">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <Users className="h-4 w-4 text-elec-yellow" />
-                      <h3 className="text-lg font-semibold text-white">Labour</h3>
-                    </div>
-                    <Button
-                      onClick={toggleMultiWorker}
-                      variant={inputs.useMultiWorker ? "default" : "outline"}
-                      size="sm"
-                      className={inputs.useMultiWorker 
-                        ? "bg-elec-yellow text-elec-dark hover:bg-elec-yellow/80" 
-                        : "border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
-                      }
-                    >
-                      {inputs.useMultiWorker ? "Multiple Workers" : "Single Worker"}
-                    </Button>
-                  </div>
-
-                  {inputs.useMultiWorker ? (
-                    <div className="space-y-4">
-                      <div className="bg-elec-dark/20 rounded-lg p-4 border border-elec-yellow/10">
-                        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-4">
-                          <div>
-                            <div className="text-sm text-white/70">Team Summary</div>
-                            <div className="text-lg font-medium text-white">
-                              {totalLabourHours}h • £{blendedHourlyRate.toFixed(2)}/h • £{totalLabourCost.toFixed(2)} total
-                            </div>
-                          </div>
-                        </div>
-                        
-                        <div className="space-y-3">
-                          {inputs.workers.map((worker, index) => (
-                            <div key={worker.id} className="bg-elec-dark/30 rounded-lg p-3 border border-elec-yellow/5">
-                              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                                <div>
-                                  <div className="text-xs text-white/70 mb-1">Role</div>
-                                  <div className="text-sm font-medium text-white">{worker.role}</div>
-                                </div>
-                                <div>
-                                  <div className="text-xs text-white/70 mb-1">Hours</div>
-                                  <div className="text-sm text-white">{worker.hours}h</div>
-                                </div>
-                                <div>
-                                  <div className="text-xs text-white/70 mb-1">Rate</div>
-                                  <div className="text-sm text-white">£{worker.hourlyRate}/h</div>
-                                </div>
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                        
-                        <Button
-                          onClick={() => {
-                            const newWorker: Worker = {
-                              id: Date.now().toString(),
-                              role: 'Qualified Electrician',
-                              hours: 0,
-                              hourlyRate: 45,
-                              skillLevel: 'qualified'
-                            };
-                            handleWorkersChange([...inputs.workers, newWorker]);
-                          }}
-                          variant="outline"
-                          size="sm"
-                          className="w-full mt-3 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
-                        >
-                          <Users className="h-3 w-3 mr-2" />
-                          Add Worker
-                        </Button>
+                  <div className="grid grid-cols-2 gap-4 text-sm">
+                    <div className="text-center py-2">
+                      <div className="flex items-center justify-center gap-2 text-elec-yellow mb-1">
+                        <Clock className="h-3 w-3" />
                       </div>
-                      {errors.workers && (
-                        <div className="text-sm text-red-400">{errors.workers}</div>
-                      )}
+                      <div className="text-white font-medium">{selectedPresetData.defaults.labourHours}h</div>
                     </div>
-                  ) : (
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      {customValues.labourHours ? (
-                        <MobileInput
-                          label="Labour Hours"
-                          type="number"
-                          value={inputs.labourHours || ""}
-                          onChange={(e) => updateInput('labourHours', parseFloat(e.target.value) || 0)}
-                          error={errors.labourHours}
-                          clearError={() => clearError('labourHours')}
-                          hint="Total hours including testing and certification"
-                        />
-                      ) : (
-                        <MobileSelectWrapper
-                          label="Labour Hours"
-                          placeholder="Select labour hours"
-                          value={inputs.labourHours.toString()}
-                          onValueChange={(value) => handleDropdownChange('labourHours', value)}
-                          options={labourHoursOptions}
-                          error={errors.labourHours}
-                          hint="Choose typical duration or select custom"
-                        />
-                      )}
-
-                      {customValues.hourlyRate ? (
-                        <MobileInput
-                          label="Hourly Rate"
-                          type="number"
-                          value={inputs.hourlyRate || ""}
-                          onChange={(e) => updateInput('hourlyRate', parseFloat(e.target.value) || 0)}
-                          error={errors.hourlyRate}
-                          clearError={() => clearError('hourlyRate')}
-                          unit="£"
-                          hint="Your standard hourly charging rate"
-                        />
-                      ) : (
-                        <MobileSelectWrapper
-                          label="Hourly Rate"
-                          placeholder="Select hourly rate"
-                          value={inputs.hourlyRate.toString()}
-                          onValueChange={(value) => handleDropdownChange('hourlyRate', value)}
-                          options={hourlyRateOptions}
-                          error={errors.hourlyRate}
-                          hint="Choose standard rate or select custom"
-                        />
-                      )}
+                    <div className="text-center py-2">
+                      <div className="flex items-center justify-center gap-2 text-elec-yellow mb-1">
+                        <PoundSterling className="h-3 w-3" />
+                      </div>
+                      <div className="text-white font-medium">£{selectedPresetData.defaults.hourlyRate}/h</div>
                     </div>
-                  )}
-                </div>
-
-                <Separator className="bg-elec-yellow/20" />
-
-                {/* Business Parameters */}
-                <div className="space-y-6">
-                  <div className="flex items-center gap-2">
-                    <Settings className="h-4 w-4 text-elec-yellow" />
-                    <h3 className="text-lg font-semibold text-white">Business Parameters</h3>
-                  </div>
-                  
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {customValues.overheadPercentage ? (
-                      <MobileInput
-                        label="Overhead Percentage"
-                        type="number"
-                        value={inputs.overheadPercentage || ""}
-                        onChange={(e) => updateInput('overheadPercentage', parseFloat(e.target.value) || 0)}
-                        error={errors.overheadPercentage}
-                        clearError={() => clearError('overheadPercentage')}
-                        unit="%"
-                        hint="Vehicle, insurance, tools, office costs"
-                      />
-                    ) : (
-                      <MobileSelectWrapper
-                        label="Overhead Percentage"
-                        placeholder="Select overhead percentage"
-                        value={inputs.overheadPercentage.toString()}
-                        onValueChange={(value) => handleDropdownChange('overheadPercentage', value)}
-                        options={overheadPercentageOptions}
-                        error={errors.overheadPercentage}
-                        hint="Business running costs as percentage"
-                      />
-                    )}
-
-                    {customValues.desiredProfitMargin ? (
-                      <MobileInput
-                        label="Desired Profit Margin"
-                        type="number"
-                        value={inputs.desiredProfitMargin || ""}
-                        onChange={(e) => updateInput('desiredProfitMargin', parseFloat(e.target.value) || 0)}
-                        error={errors.desiredProfitMargin}
-                        clearError={() => clearError('desiredProfitMargin')}
-                        unit="%"
-                        hint="Target profit percentage"
-                      />
-                    ) : (
-                      <MobileSelectWrapper
-                        label="Desired Profit Margin"
-                        placeholder="Select profit margin"
-                        value={inputs.desiredProfitMargin.toString()}
-                        onValueChange={(value) => handleDropdownChange('desiredProfitMargin', value)}
-                        options={profitMarginOptions}
-                        error={errors.desiredProfitMargin}
-                        hint="Target profit for sustainability"
-                      />
-                    )}
+                    <div className="text-center py-2">
+                      <div className="flex items-center justify-center gap-2 text-elec-yellow mb-1">
+                        <TrendingUp className="h-3 w-3" />
+                      </div>
+                      <div className="text-white font-medium">{selectedPresetData.defaults.overheadPercentage}%</div>
+                      <div className="text-xs text-elec-light/70">overhead</div>
+                    </div>
+                    <div className="text-center py-2">
+                      <div className="flex items-center justify-center gap-2 text-elec-yellow mb-1">
+                        <TrendingUp className="h-3 w-3" />
+                      </div>
+                      <div className="text-white font-medium">{selectedPresetData.defaults.desiredProfitMargin}%</div>
+                      <div className="text-xs text-elec-light/70">profit</div>
+                    </div>
                   </div>
                 </div>
+              )}
+            </div>
 
-                <Separator className="bg-elec-yellow/20" />
+            <Separator className="bg-elec-yellow/20" />
 
-                {/* VAT Configuration */}
-                <div className="space-y-6">
-                  <div className="flex items-center gap-2">
-                    <Receipt className="h-4 w-4 text-elec-yellow" />
-                    <h3 className="text-lg font-semibold text-white">VAT Configuration</h3>
+            <div className="space-y-4">
+              <h3 className="text-lg font-medium text-white">Basic Job Information</h3>
+              <div className="grid sm:grid-cols-2 gap-4">
+                <MobileInput
+                  label="Material Cost"
+                  type="number"
+                  placeholder="Enter material cost"
+                  value={inputs.materialCost || ""}
+                  onChange={(e) => updateInput('materialCost', parseFloat(e.target.value) || 0)}
+                  onFocus={() => clearError('materialCost')}
+                  error={errors.materialCost}
+                />
+
+                <MobileInput
+                  label="Quote Amount (ex VAT)"
+                  type="number"
+                  placeholder="Enter your quote amount"
+                  value={inputs.quoteAmount || ""}
+                  onChange={(e) => updateInput('quoteAmount', parseFloat(e.target.value) || 0)}
+                  onFocus={() => clearError('quoteAmount')}
+                  error={errors.quoteAmount}
+                />
+              </div>
+            </div>
+
+            <Separator className="bg-elec-yellow/20" />
+
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <h3 className="text-lg font-medium text-white">Labour Configuration</h3>
+                <div className="flex items-center space-x-2">
+                  <span className="text-sm text-elec-light">Multi-worker</span>
+                  <input
+                    type="checkbox"
+                    checked={inputs.useMultiWorker}
+                    onChange={toggleMultiWorker}
+                    className="h-4 w-4 rounded border-gray-300 text-elec-yellow focus:ring-elec-yellow focus:ring-offset-0"
+                  />
+                </div>
+              </div>
+
+              {inputs.useMultiWorker ? (
+                <div className="space-y-4">
+                  <div className="bg-elec-dark/50 rounded-lg p-4">
+                    <h4 className="text-white font-medium mb-3">Team Summary</h4>
+                    <div className="grid grid-cols-3 gap-4 text-sm">
+                      <div className="text-center">
+                        <div className="text-elec-yellow text-xs mb-1">Total Hours</div>
+                        <div className="text-white font-medium">{totalLabourHours}h</div>
+                      </div>
+                      <div className="text-center">
+                        <div className="text-elec-yellow text-xs mb-1">Blended Rate</div>
+                        <div className="text-white font-medium">£{blendedHourlyRate.toFixed(2)}/h</div>
+                      </div>
+                      <div className="text-center">
+                        <div className="text-elec-yellow text-xs mb-1">Total Cost</div>
+                        <div className="text-white font-medium">£{totalLabourCost.toFixed(2)}</div>
+                      </div>
+                    </div>
                   </div>
-                  
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <MobileSelectWrapper
-                      label="VAT Registration"
-                      placeholder="Select registration status"
-                      value={vatRegistered ? "registered" : "not-registered"}
-                      onValueChange={(value) => setVATRegistered(value === "registered")}
-                      options={[
-                        { value: "registered", label: "VAT Registered", description: "I am VAT registered" },
-                        { value: "not-registered", label: "Not VAT Registered", description: "I am not VAT registered" }
-                      ]}
-                      hint="Your VAT registration status"
-                    />
 
-                    {vatRegistered && (
-                      <MobileSelectWrapper
-                        label="VAT Rate"
-                        placeholder="Select VAT rate"
-                        value={vatRate.toString()}
-                        onValueChange={(value) => setVATRate(parseFloat(value))}
-                        options={[
-                          { value: "20", label: "Standard Rate (20%)", description: "Most electrical work" },
-                          { value: "5", label: "Reduced Rate (5%)", description: "Energy-saving materials only" },
-                          { value: "0", label: "Zero Rate (0%)", description: "Exempt work" }
-                        ]}
-                        hint="Choose the appropriate VAT rate"
-                      />
-                    )}
-                  </div>
-
-                  {vatRegistered && vatRate === 5 && (
-                    <div className="flex items-start gap-3 p-4 bg-blue-500/10 rounded-lg border border-blue-500/20">
-                      <HelpCircle className="h-5 w-5 text-blue-400 mt-0.5 flex-shrink-0" />
-                      <div>
-                        <div className="flex items-center gap-2 mb-2">
-                          <Badge variant="secondary" className="bg-blue-500/20 text-blue-300 border-blue-500/30">
-                            Reduced Rate
+                  <div className="space-y-3">
+                    {inputs.workers.map((worker, index) => (
+                      <div key={worker.id} className="bg-elec-dark/30 rounded-lg p-4 space-y-3">
+                        <div className="flex items-center justify-between">
+                          <Badge variant="outline" className="text-elec-yellow border-elec-yellow/30">
+                            Worker {index + 1}
                           </Badge>
+                          {inputs.workers.length > 1 && (
+                            <Button
+                              size="sm"
+                              variant="ghost"
+                              onClick={() => {
+                                const newWorkers = inputs.workers.filter(w => w.id !== worker.id);
+                                handleWorkersChange(newWorkers);
+                              }}
+                              className="text-red-400 hover:text-red-300 h-6 w-6 p-0"
+                            >
+                              ×
+                            </Button>
+                          )}
                         </div>
-                        <p className="text-sm text-blue-200">
-                          The 5% VAT rate applies only to qualifying energy-saving materials and is not applicable to labour or installation costs. 
-                          Ensure your work meets HMRC guidelines for reduced rate VAT.
-                        </p>
+                        
+                        <div className="grid grid-cols-2 gap-3">
+                          <MobileInput
+                            label="Hours"
+                            type="number"
+                            placeholder="0"
+                            value={worker.hours || ""}
+                            onChange={(e) => {
+                              const newWorkers = inputs.workers.map(w => 
+                                w.id === worker.id 
+                                  ? { ...w, hours: parseFloat(e.target.value) || 0 }
+                                  : w
+                              );
+                              handleWorkersChange(newWorkers);
+                            }}
+                          />
+                          <MobileInput
+                            label="Rate (£/hr)"
+                            type="number"
+                            placeholder="0"
+                            value={worker.hourlyRate || ""}
+                            onChange={(e) => {
+                              const newWorkers = inputs.workers.map(w => 
+                                w.id === worker.id 
+                                  ? { ...w, hourlyRate: parseFloat(e.target.value) || 0 }
+                                  : w
+                              );
+                              handleWorkersChange(newWorkers);
+                            }}
+                          />
+                        </div>
+                        
+                        <MobileSelectWrapper
+                          label="Role"
+                          value={worker.role}
+                          onValueChange={(value) => {
+                            const newWorkers = inputs.workers.map(w => 
+                              w.id === worker.id 
+                                ? { ...w, role: value }
+                                : w
+                            );
+                            handleWorkersChange(newWorkers);
+                          }}
+                          options={[
+                            { value: 'Qualified Electrician', label: 'Qualified Electrician' },
+                            { value: 'Electrician Mate', label: 'Electrician Mate' },
+                            { value: 'Apprentice', label: 'Apprentice' },
+                            { value: 'Subcontractor', label: 'Subcontractor' },
+                          ]}
+                        />
                       </div>
-                    </div>
-                  )}
-
-                  {vatRegistered && (
-                    <div className="bg-elec-dark/20 rounded-lg p-4 border border-elec-yellow/10">
-                      <div className="text-sm text-white/70 mb-2">VAT Preview</div>
-                      <div className="grid grid-cols-3 gap-4 text-center">
-                        <div>
-                          <div className="text-xs text-white/70">Net Amount</div>
-                          <div className="text-lg font-medium text-white">£{inputs.quoteAmount.toFixed(2)}</div>
-                        </div>
-                        <div>
-                          <div className="text-xs text-white/70">VAT ({vatRate}%)</div>
-                          <div className="text-lg font-medium text-white">£{((inputs.quoteAmount * vatRate) / 100).toFixed(2)}</div>
-                        </div>
-                        <div>
-                          <div className="text-xs text-white/70">Total with VAT</div>
-                          <div className="text-lg font-semibold text-elec-yellow">£{(inputs.quoteAmount + (inputs.quoteAmount * vatRate) / 100).toFixed(2)}</div>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </div>
-
-                <Separator className="bg-elec-yellow/20" />
-
-                {/* Action Buttons */}
-                <div className="space-y-3">
-                  <Button 
-                    onClick={calculateProfitability}
-                    className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90 text-lg py-6"
-                    disabled={Object.keys(errors).length > 0}
-                  >
-                    <Calculator className="h-5 w-5 mr-2" />
-                    Calculate Profitability
-                  </Button>
-                  
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                    <Button 
-                      onClick={loadExample}
+                    ))}
+                    
+                    <Button
                       variant="outline"
-                      className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+                      onClick={() => {
+                        const newWorker: Worker = {
+                          id: Date.now().toString(),
+                          role: 'Qualified Electrician',
+                          hours: 0,
+                          hourlyRate: 45,
+                          skillLevel: 'qualified'
+                        };
+                        handleWorkersChange([...inputs.workers, newWorker]);
+                      }}
+                      className="w-full border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
                     >
-                      <Lightbulb className="h-4 w-4 mr-2" />
-                      Example
+                      <Users className="h-4 w-4 mr-2" />
+                      Add Worker
                     </Button>
-
-                    <Button 
-                      onClick={resetCalculator}
-                      variant="outline"
-                      className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
-                    >
-                      <History className="h-4 w-4 mr-2" />
-                      Reset
-                    </Button>
-
-                    {calculated && (
-                      <Button 
-                        onClick={shareCalculation}
-                        variant="outline"
-                        className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
-                      >
-                        <Share2 className="h-4 w-4 mr-2" />
-                        Share
-                      </Button>
-                    )}
                   </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-
-        {/* Results Section */}
-        <div className="flex justify-center">
-          <div className="w-full max-w-6xl">
-          <Card className="border-elec-yellow/20 bg-elec-card">
-            <CardHeader className="text-center">
-              <CardTitle className="text-white flex items-center justify-center gap-2">
-                <TrendingUp className="h-5 w-5 text-elec-yellow" />
-                Profitability Analysis
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              {!calculated ? (
-                <div className="text-center py-12">
-                  <Calculator className="h-16 w-16 text-elec-yellow/50 mx-auto mb-4" />
-                  <h3 className="text-lg font-semibold text-white mb-2">Ready to Calculate</h3>
-                  <p className="text-muted-foreground">
-                    Fill in all job details and click "Calculate" to see your profitability analysis.
-                  </p>
                 </div>
               ) : (
-                <>
-                  {/* Cost Breakdown */}
-                  <div className="bg-elec-dark/30 rounded-lg p-6 space-y-4">
-                    <h4 className="text-white font-semibold flex items-center gap-2 text-center justify-center">
-                      <PoundSterling className="h-4 w-4 text-elec-yellow" />
-                      Cost Breakdown
-                    </h4>
-                    <div className="space-y-4">
-                      <div className="text-center py-3">
-                        <div className="text-sm text-white mb-2">Material Costs</div>
-                        <div className="text-lg font-medium text-white">£{inputs.materialCost.toFixed(2)}</div>
-                      </div>
-                      <div className="text-center py-3">
-                        <div className="text-sm text-white mb-2">Labour Costs ({totalLabourHours}h × £{blendedHourlyRate.toFixed(2)})</div>
-                        <div className="text-lg font-medium text-white">£{labourCostBase.toFixed(2)}</div>
-                      </div>
-                      <div className="text-center py-3">
-                        <div className="text-sm text-white mb-2">Overhead Costs ({inputs.overheadPercentage}%)</div>
-                        <div className="text-lg font-medium text-white">£{overheadCosts.toFixed(2)}</div>
-                      </div>
-                      <Separator className="bg-elec-yellow/20" />
-                      <div className="text-center py-4 bg-elec-yellow/10 rounded">
-                        <div className="text-sm text-white mb-2">Total Project Costs</div>
-                        <div className="text-xl font-semibold text-elec-yellow">£{totalCosts.toFixed(2)}</div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <Separator className="bg-elec-yellow/30" />
-
-                  {/* Profitability Analysis */}
-                  <div className="bg-elec-dark/30 rounded-lg p-6 space-y-4">
-                    <h4 className="text-white font-semibold flex items-center gap-2 text-center justify-center">
-                      <TrendingUp className="h-4 w-4 text-elec-yellow" />
-                      Profitability Metrics
-                    </h4>
-                    <div className="space-y-4">
-                      <div className="text-center py-3">
-                        <div className="text-sm text-white mb-2">Minimum Quote Required</div>
-                        <div className="text-lg font-semibold text-elec-yellow">£{minimumQuoteExVAT.toFixed(2)}</div>
-                      </div>
-                      <div className="text-center py-3">
-                        <div className="text-sm text-white mb-2">Your Quote</div>
-                        <div className="text-lg font-medium text-white">£{inputs.quoteAmount.toFixed(2)}</div>
-                      </div>
-                      <div className="text-center py-3">
-                        <div className="text-sm text-white mb-2">Actual Profit</div>
-                        <div className={`text-lg font-semibold ${actualProfit >= 0 ? "text-green-400" : "text-red-400"}`}>
-                          £{actualProfit.toFixed(2)}
-                        </div>
-                      </div>
-                      <div className="text-center py-3">
-                        <div className="text-sm text-white mb-2">Actual Profit Margin</div>
-                        <div className={`text-lg font-semibold ${actualProfitMargin >= inputs.desiredProfitMargin ? "text-green-400" : "text-red-400"}`}>
-                          {actualProfitMargin.toFixed(1)}%
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Status Alert */}
-                  {profitabilityStatus && (
-                    <>
-                      <Separator className="bg-elec-yellow/30" />
-                      <div className={`p-6 rounded-lg border ${profitabilityStatus.bgColor}`}>
-                        <div className={`flex items-center gap-3 mb-3 ${profitabilityStatus.color}`}>
-                          {profitabilityStatus.icon}
-                          <h3 className="font-semibold text-lg">{profitabilityStatus.title}</h3>
-                        </div>
-                        <p className={`${profitabilityStatus.color.replace('300', '200')} mb-4`}>
-                          {profitabilityStatus.message}
-                        </p>
-                        
-                        <div className="bg-background/10 rounded-lg p-4 mt-4">
-                          <div className="flex items-start gap-3">
-                            <Lightbulb className="h-5 w-5 text-elec-yellow mt-0.5" />
-                            <div>
-                              <h4 className="text-white font-medium mb-2">Professional Insight</h4>
-                              <p className="text-sm text-muted-foreground">
-                                {actualProfitMargin >= inputs.desiredProfitMargin
-                                  ? "Excellent! Your quote maintains healthy margins while remaining competitive. Consider this pricing structure for similar projects to ensure consistent profitability."
-                                  : "Your current quote may not cover all business costs and desired profit. Consider increasing the quote or reviewing your overhead calculations to ensure sustainable business operations."
-                                }
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </>
+                <div className="grid sm:grid-cols-2 gap-4">
+                  {customValues.labourHours ? (
+                    <MobileInput
+                      label="Labour Hours"
+                      type="number"
+                      placeholder="Enter labour hours"
+                      value={inputs.labourHours || ""}
+                      onChange={(e) => updateInput('labourHours', parseFloat(e.target.value) || 0)}
+                      onFocus={() => clearError('labourHours')}
+                      error={errors.labourHours}
+                    />
+                  ) : (
+                    <MobileSelectWrapper
+                      label="Labour Hours"
+                      placeholder="Select labour hours"
+                      value={inputs.labourHours.toString()}
+                      onValueChange={(value) => handleDropdownChange('labourHours', value)}
+                      options={labourHoursOptions}
+                      hint="Select typical hours or choose custom"
+                      error={errors.labourHours}
+                    />
                   )}
 
-                   {/* VAT Summary */}
-                   {vatRegistered && (
-                     <>
-                       <Separator className="bg-elec-yellow/30" />
-                       <div className="space-y-4">
-                         <h4 className="text-white font-semibold flex items-center justify-center gap-2">
-                           <Receipt className="h-4 w-4 text-elec-yellow" />
-                           VAT Summary
-                         </h4>
-                         <div className="grid md:grid-cols-2 gap-4">
-                            <div className="text-center py-3">
-                              <div className="text-sm text-white mb-2">Net Amount</div>
-                              <div className="text-lg text-white">£{inputs.quoteAmount.toFixed(2)}</div>
-                            </div>
-                            <div className="text-center py-3">
-                              <div className="text-sm text-white mb-2">VAT ({vatRate}%)</div>
-                              <div className="text-lg text-white">£{vatAmount.toFixed(2)}</div>
-                            </div>
-                            <div className="text-center py-4 bg-elec-yellow/10 rounded">
-                              <div className="text-sm text-white mb-2">Total with VAT</div>
-                              <div className="text-xl font-semibold text-elec-yellow">£{totalWithVAT.toFixed(2)}</div>
-                            </div>
-                         </div>
-                       </div>
-                     </>
-                   )}
-
-                </>
+                  {customValues.hourlyRate ? (
+                    <MobileInput
+                      label="Hourly Rate (£)"
+                      type="number"
+                      placeholder="Enter hourly rate"
+                      value={inputs.hourlyRate || ""}
+                      onChange={(e) => updateInput('hourlyRate', parseFloat(e.target.value) || 0)}
+                      onFocus={() => clearError('hourlyRate')}
+                      error={errors.hourlyRate}
+                    />
+                  ) : (
+                    <MobileSelectWrapper
+                      label="Hourly Rate"
+                      placeholder="Select hourly rate"
+                      value={inputs.hourlyRate.toString()}
+                      onValueChange={(value) => handleDropdownChange('hourlyRate', value)}
+                      options={hourlyRateOptions}
+                      hint="Select rate by experience level"
+                      error={errors.hourlyRate}
+                    />
+                  )}
+                </div>
               )}
-            </CardContent>
-          </Card>
-        </div>
-      </div>
+            </div>
 
-      {/* Educational Tips */}
-      <Card className="border-elec-yellow/20 bg-elec-card mt-8">
-        <CardHeader>
-          <CardTitle className="text-white flex items-center gap-2">
-            <HelpCircle className="h-5 w-5 text-elec-yellow" />
-            Professional Tips
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid md:grid-cols-3 gap-6">
-            <div className="space-y-2">
-              <h4 className="text-white font-medium">Overhead Costs</h4>
-              <p className="text-sm text-muted-foreground">
-                Include vehicle costs, insurance, test equipment calibration, office rent, 
-                and tool replacement in your overhead percentage.
-              </p>
+            <Separator className="bg-elec-yellow/20" />
+
+            <div className="space-y-4">
+              <h3 className="text-lg font-medium text-white">Business Parameters</h3>
+              <div className="grid sm:grid-cols-2 gap-4">
+                {customValues.overheadPercentage ? (
+                  <MobileInput
+                    label="Overhead Percentage (%)"
+                    type="number"
+                    placeholder="Enter overhead %"
+                    value={inputs.overheadPercentage || ""}
+                    onChange={(e) => updateInput('overheadPercentage', parseFloat(e.target.value) || 0)}
+                    onFocus={() => clearError('overheadPercentage')}
+                    error={errors.overheadPercentage}
+                  />
+                ) : (
+                  <MobileSelectWrapper
+                    label="Overhead Percentage"
+                    placeholder="Select overhead %"
+                    value={inputs.overheadPercentage.toString()}
+                    onValueChange={(value) => handleDropdownChange('overheadPercentage', value)}
+                    options={overheadPercentageOptions}
+                    hint="Business overhead costs"
+                    error={errors.overheadPercentage}
+                  />
+                )}
+
+                {customValues.desiredProfitMargin ? (
+                  <MobileInput
+                    label="Desired Profit Margin (%)"
+                    type="number"
+                    placeholder="Enter profit margin %"
+                    value={inputs.desiredProfitMargin || ""}
+                    onChange={(e) => updateInput('desiredProfitMargin', parseFloat(e.target.value) || 0)}
+                    onFocus={() => clearError('desiredProfitMargin')}
+                    error={errors.desiredProfitMargin}
+                  />
+                ) : (
+                  <MobileSelectWrapper
+                    label="Desired Profit Margin"
+                    placeholder="Select profit margin %"
+                    value={inputs.desiredProfitMargin.toString()}
+                    onValueChange={(value) => handleDropdownChange('desiredProfitMargin', value)}
+                    options={profitMarginOptions}
+                    hint="Target profit margin"
+                    error={errors.desiredProfitMargin}
+                  />
+                )}
+              </div>
             </div>
-            <div className="space-y-2">
-              <h4 className="text-white font-medium">Profit Margins</h4>
-              <p className="text-sm text-muted-foreground">
-                Aim for 20-30% profit margins on domestic work and 15-25% on commercial projects 
-                to ensure business sustainability and growth.
-              </p>
+
+            <Separator className="bg-elec-yellow/20" />
+
+            <div className="space-y-4">
+              <h3 className="text-lg font-medium text-white">VAT Configuration</h3>
+              <div className="grid sm:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-elec-light">VAT Registration Status</label>
+                  <div className="flex items-center space-x-4">
+                    <label className="flex items-center space-x-2">
+                      <input
+                        type="radio"
+                        checked={vatRegistered}
+                        onChange={() => setVATRegistered(true)}
+                        className="h-4 w-4 text-elec-yellow focus:ring-elec-yellow"
+                      />
+                      <span className="text-sm text-elec-light">VAT Registered</span>
+                    </label>
+                    <label className="flex items-center space-x-2">
+                      <input
+                        type="radio"
+                        checked={!vatRegistered}
+                        onChange={() => setVATRegistered(false)}
+                        className="h-4 w-4 text-elec-yellow focus:ring-elec-yellow"
+                      />
+                      <span className="text-sm text-elec-light">Not Registered</span>
+                    </label>
+                  </div>
+                </div>
+
+                {vatRegistered && (
+                  <MobileSelectWrapper
+                    label="VAT Rate"
+                    placeholder="Select VAT rate"
+                    value={vatRate.toString()}
+                    onValueChange={(value) => setVATRate(parseInt(value))}
+                    options={[
+                      { value: "20", label: "20% - Standard Rate" },
+                      { value: "5", label: "5% - Reduced Rate" },
+                      { value: "0", label: "0% - Zero Rate" }
+                    ]}
+                    hint="Standard rate for most electrical work"
+                  />
+                )}
+              </div>
             </div>
-            <div className="space-y-2">
-              <h4 className="text-white font-medium">BS7671 Compliance</h4>
-              <p className="text-sm text-muted-foreground">
-                Always factor in time for proper testing, certification, and documentation 
-                required by the 18th Edition regulations.
-              </p>
+
+            <div className="flex flex-col sm:flex-row gap-3 pt-4">
+              <Button 
+                onClick={calculateProfitability} 
+                className="flex-1 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 font-medium"
+                size="lg"
+              >
+                <Calculator className="h-4 w-4 mr-2" />
+                Calculate Profitability
+              </Button>
+              <Button 
+                onClick={loadExample} 
+                variant="outline"
+                className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+                size="lg"
+              >
+                <Lightbulb className="h-4 w-4 mr-2" />
+                Load Example
+              </Button>
+              <Button 
+                onClick={resetCalculator} 
+                variant="ghost"
+                className="text-elec-light hover:text-white hover:bg-elec-dark/50"
+                size="lg"
+              >
+                Reset
+              </Button>
             </div>
-          </div>
-        </CardContent>
-      </Card>
+
+            {calculated && (
+              <>
+                <Separator className="bg-elec-yellow/20" />
+                
+                <div className="space-y-4">
+                  <h3 className="text-lg font-medium text-white flex items-center gap-2">
+                    <Receipt className="h-5 w-5 text-elec-yellow" />
+                    Profitability Analysis
+                  </h3>
+
+                  {profitabilityStatus && (
+                    <div className={`p-4 rounded-lg border ${profitabilityStatus.bgColor}`}>
+                      <div className={`flex items-center gap-2 ${profitabilityStatus.color} mb-2`}>
+                        {profitabilityStatus.icon}
+                        <span className="font-medium">{profitabilityStatus.title}</span>
+                      </div>
+                      <p className="text-sm text-elec-light">{profitabilityStatus.message}</p>
+                    </div>
+                  )}
+
+                  <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div className="bg-elec-dark/50 rounded-lg p-4 text-center">
+                      <div className="text-2xl font-bold text-white">£{totalCosts.toFixed(2)}</div>
+                      <div className="text-sm text-elec-light">Total Costs</div>
+                    </div>
+                    <div className="bg-elec-dark/50 rounded-lg p-4 text-center">
+                      <div className="text-2xl font-bold text-white">£{actualProfit.toFixed(2)}</div>
+                      <div className="text-sm text-elec-light">Actual Profit</div>
+                    </div>
+                    <div className="bg-elec-dark/50 rounded-lg p-4 text-center">
+                      <div className={`text-2xl font-bold ${actualProfitMargin >= inputs.desiredProfitMargin ? 'text-green-300' : 'text-red-300'}`}>
+                        {actualProfitMargin.toFixed(1)}%
+                      </div>
+                      <div className="text-sm text-elec-light">Profit Margin</div>
+                    </div>
+                    <div className="bg-elec-dark/50 rounded-lg p-4 text-center">
+                      <div className="text-2xl font-bold text-white">£{minimumQuoteExVAT.toFixed(2)}</div>
+                      <div className="text-sm text-elec-light">Min. Quote</div>
+                    </div>
+                  </div>
+
+                  {vatRegistered && vatAmount > 0 && (
+                    <div className="bg-elec-dark/30 rounded-lg p-4">
+                      <h4 className="text-white font-medium mb-3">VAT Breakdown</h4>
+                      <div className="grid grid-cols-3 gap-4 text-sm">
+                        <div className="text-center">
+                          <div className="text-elec-yellow text-xs mb-1">Quote (ex VAT)</div>
+                          <div className="text-white font-medium">£{inputs.quoteAmount.toFixed(2)}</div>
+                        </div>
+                        <div className="text-center">
+                          <div className="text-elec-yellow text-xs mb-1">VAT ({vatRate}%)</div>
+                          <div className="text-white font-medium">£{vatAmount.toFixed(2)}</div>
+                        </div>
+                        <div className="text-center">
+                          <div className="text-elec-yellow text-xs mb-1">Total (inc VAT)</div>
+                          <div className="text-white font-medium">£{totalWithVAT.toFixed(2)}</div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                <div className="flex flex-col sm:flex-row gap-3 pt-4">
+                  <Button 
+                    onClick={shareCalculation} 
+                    variant="outline"
+                    className="flex-1 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+                  >
+                    <Share2 className="h-4 w-4 mr-2" />
+                    Share Results
+                  </Button>
+                  <Button 
+                    onClick={() => setShowHistory(!showHistory)} 
+                    variant="ghost"
+                    className="text-elec-light hover:text-white hover:bg-elec-dark/50"
+                  >
+                    <History className="h-4 w-4 mr-2" />
+                    History ({history.length})
+                  </Button>
+                </div>
+              </>
+            )}
+          </CardContent>
+        </Card>
       </div>
     </div>
   );
