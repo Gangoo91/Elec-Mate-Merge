@@ -259,7 +259,8 @@ const InstallPlanner = () => {
                  planData.environmentalSettings.environmentalConditions &&
                  planData.environmentalSettings.ze;
         }
-        return planData.cableLength > 0 && planData.installationMethod && planData.cableType;
+        // Cable Run step - only require length and installation method (cable type auto-selected)
+        return planData.cableLength > 0 && planData.installationMethod;
       case 5:
         if (planData.designMode === "multi") {
           return true; // Results step
