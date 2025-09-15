@@ -14,8 +14,8 @@ import { labourHoursOptions, hourlyRateOptions, overheadPercentageOptions, profi
 import { JobPreset } from "@/components/electrician/business-development/job-profitability/JobTypePresets";
 import { Helmet } from "react-helmet";
 import WhyThisMatters from "@/components/common/WhyThisMatters";
-import MultiWorkerManager, { Worker } from "@/components/business-calculator/MultiWorkerManager";
-import AccuracyEnhancements, { AccuracyInputs } from "@/components/business-calculator/AccuracyEnhancements";
+import MobileMultiWorkerManager, { Worker } from "@/components/business-calculator/MobileMultiWorkerManager";
+import MobileAccuracyEnhancements, { AccuracyInputs } from "@/components/business-calculator/MobileAccuracyEnhancements";
 import { Market2025Insights } from "@/components/business-calculator/Market2025Insights";
 
 interface JobInputs {
