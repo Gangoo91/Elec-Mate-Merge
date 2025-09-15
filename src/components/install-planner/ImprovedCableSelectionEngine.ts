@@ -11,6 +11,16 @@ import {
 import { legacyStandardDeviceRatings, getNextStandardRating } from '@/lib/calculators/utils/calculatorUtils';
 import { zsValues } from '@/components/apprentice/calculators/zs-values/ZsValuesData';
 import { getSuitableDevices, getMaxZs, getRecommendedDeviceType } from '@/lib/calculators/bs7671-data/protectiveDevices';
+import { 
+  mapComplexityToString, 
+  calculateTotalCost, 
+  assessFireCompliance, 
+  checkEnvironmentalSuitability,
+  checkApplicationSuitability,
+  checkInstallationSuitability,
+  getMaxLengthForCable
+} from "./cableSelectionHelpers";
+import { createLegacyCableData, mockCableProperties, checkFireCompliance } from "./cableCompatibilityAdapter";
 
 export class ImprovedCableSelectionEngine {
   
@@ -18,27 +28,27 @@ export class ImprovedCableSelectionEngine {
     const designCurrent = this.calculateDesignCurrent(planData);
     const options: CableRecommendation[] = [];
     
-    // Use comprehensive cable database that includes XLPE-LSOH specifications
-    const cableTypeDatabase = COMPREHENSIVE_CABLE_DATABASE[planData.cableType];
+    // Use enhanced cable database
+    const cableData = ENHANCED_CABLE_DATABASE[planData.cableType];
     const fallbackDatabase = getCableDatabase(isRingCircuit);
     
     // Get available sizes for the selected cable type
-    const availableSizes = cableTypeDatabase ? 
-      Object.keys(cableTypeDatabase) : 
+    const availableSizes = cableData ? 
+      cableData.specification.standardSizes.map(s => s.toString()) : 
       Object.keys(fallbackDatabase);
 
     for (const size of availableSizes) {
       const cableSize = parseFloat(size);
       
       // Get comprehensive cable specification
-      const cableSpec = getCableSpecification(planData.cableType, size);
-      const cableData = cableSpec ? {
-        currentCarryingCapacity: cableSpec.currentCarryingCapacity,
-        cost: cableSpec.cost,
-        availability: cableSpec.availability,
-        installationComplexity: cableSpec.installationComplexity,
-        maxLength: cableSpec.maxLength
-      } : fallbackDatabase[size];
+      const cableSpec = getCableSpecification(planData.cableType);
+      const pricing = cableData?.pricing.find(p => p.size === cableSize);
+      const capacity = cableData?.capacities.find(c => c.size === cableSize);
+      
+      if (!cableSpec || !pricing || !capacity) continue;
+      
+      const legacyCableData = createLegacyCableData(pricing, cableSpec, cableSize);
+      const fallbackData = fallbackDatabase[size];
       
       if (!cableData) continue;
       

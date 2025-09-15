@@ -1,6 +1,6 @@
 
 // Professional BS7671 compliant cable selection using comprehensive database
-import { calculateSmartCableSelection } from "../../lib/calculators/engines/smartCableSelectionEngine";
+import { calculateSmartCableSize } from "../../lib/calculators/engines/smartCableSelectionEngine";
 import { InstallPlanData, CableRecommendation, InstallationSuggestion, ComplianceCheck } from "./types";
 
 export class CableSelectionEngine {
