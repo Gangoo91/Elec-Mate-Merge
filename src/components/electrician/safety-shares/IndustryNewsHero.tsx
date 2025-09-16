@@ -48,10 +48,10 @@ const IndustryNewsHero = () => {
 
         {/* Title with electrical styling */}
         <div className="space-y-3 sm:space-y-4">
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-white via-elec-yellow to-white bg-clip-text text-transparent leading-tight">
+          <h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-white via-elec-yellow to-white bg-clip-text text-transparent leading-tight">
             Industry News & Updates
           </h1>
-          <p className="text-white/80 max-w-3xl mx-auto text-base sm:text-lg leading-relaxed px-4">
+          <p className="text-white/80 max-w-3xl mx-auto text-sm sm:text-lg leading-relaxed px-4">
             Stay current with the latest regulatory updates, compliance information, and industry developments 
             from leading electrical bodies and professional sources.
           </p>
