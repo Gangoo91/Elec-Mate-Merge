@@ -79,31 +79,6 @@ const CareerProgression = () => {
 
       {activeSection === null ? (
         <>
-          {/* 2025 Market Insights Banner */}
-          <div className="bg-gradient-to-r from-elec-yellow/10 to-elec-yellow/5 border border-elec-yellow/20 rounded-xl p-6 mb-8">
-            <div className="text-center space-y-3">
-              <h2 className="text-xl font-semibold text-elec-yellow">🚀 2025 Market Update</h2>
-              <p className="text-white text-sm max-w-3xl mx-auto">
-                The electrical industry is experiencing unprecedented growth driven by Net Zero targets, AI infrastructure, 
-                and renewable energy expansion. Skills shortages are pushing day rates up 15-20% year-on-year, creating 
-                exceptional opportunities for qualified electricians to advance their careers.
-              </p>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-4">
-                <div className="bg-elec-grey/50 rounded-lg p-3 border border-elec-yellow/10">
-                  <div className="text-green-400 font-semibold text-sm">High Demand Sectors</div>
-                  <div className="text-white text-xs">EV Charging • Data Centres • Heat Pumps</div>
-                </div>
-                <div className="bg-elec-grey/50 rounded-lg p-3 border border-elec-yellow/10">
-                  <div className="text-blue-400 font-semibold text-sm">Average Rate Increase</div>
-                  <div className="text-white text-xs">£25-50/day higher than 2024</div>
-                </div>
-                <div className="bg-elec-grey/50 rounded-lg p-3 border border-elec-yellow/10">
-                  <div className="text-purple-400 font-semibold text-sm">Critical Skills Gap</div>
-                  <div className="text-white text-xs">50,000+ unfilled positions UK-wide</div>
-                </div>
-              </div>
-            </div>
-          </div>
 
           {/* Career Sections Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 max-w-6xl mx-auto">
