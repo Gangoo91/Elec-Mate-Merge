@@ -32,8 +32,8 @@ const UKRegionalJobMarkets = () => {
             <MapPin className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow" />
             UK Regional Job Markets for Electricians
           </CardTitle>
-          <p className="text-sm sm:text-base text-muted-foreground">
-            Comprehensive regional analysis of job opportunities, pay rates, and growth sectors across the UK
+          <p className="text-sm sm:text-base text-white">
+            Comprehensive 2025 regional analysis of job opportunities, pay rates, and growth sectors across the UK
           </p>
         </CardHeader>
         <CardContent>
@@ -54,14 +54,14 @@ const UKRegionalJobMarkets = () => {
                     <div className="text-center sm:text-left space-y-1">
                       <div className="flex items-center justify-center sm:justify-start gap-1">
                         <PoundSterling className="h-3 w-3 text-green-400" />
-                        <div className="text-xs text-muted-foreground">Daily Rates</div>
+                        <div className="text-xs text-white">Daily Rates</div>
                       </div>
                       <div className="text-sm font-semibold text-green-400">{region.average_rates}</div>
                     </div>
                     <div className="text-center sm:text-left space-y-1">
                       <div className="flex items-center justify-center sm:justify-start gap-1">
                         <Home className="h-3 w-3" />
-                        <div className="text-xs text-muted-foreground">Cost of Living</div>
+                        <div className="text-xs text-white">Cost of Living</div>
                       </div>
                       <div className={`text-sm font-semibold ${getCostColor(region.cost_of_living)}`}>
                         {region.cost_of_living}
@@ -70,7 +70,7 @@ const UKRegionalJobMarkets = () => {
                     <div className="text-center sm:text-left space-y-1">
                       <div className="flex items-center justify-center sm:justify-start gap-1">
                         <Briefcase className="h-3 w-3 text-blue-400" />
-                        <div className="text-xs text-muted-foreground">Job Market</div>
+                        <div className="text-xs text-white">Job Market</div>
                       </div>
                       <div className="text-sm font-semibold text-blue-400">{region.job_availability}</div>
                     </div>
@@ -99,7 +99,7 @@ const UKRegionalJobMarkets = () => {
                     </h4>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                       {region.growth_areas.map((area, idx) => (
-                        <div key={idx} className="text-xs flex items-center gap-2">
+                        <div key={idx} className="text-xs flex items-center gap-2 text-white">
                           <div className="w-1 h-1 rounded-full bg-green-400 flex-shrink-0" />
                           {area}
                         </div>
@@ -115,13 +115,13 @@ const UKRegionalJobMarkets = () => {
                     </h4>
                     <div className="space-y-2">
                       {region.major_employers.slice(0, 4).map((employer, idx) => (
-                        <div key={idx} className="text-xs text-muted-foreground flex items-center gap-2">
+                        <div key={idx} className="text-xs text-white flex items-center gap-2">
                           <div className="w-1 h-1 rounded-full bg-elec-yellow" />
                           {employer}
                         </div>
                       ))}
                       {region.major_employers.length > 4 && (
-                        <div className="text-xs text-muted-foreground italic">
+                        <div className="text-xs text-white italic">
                           +{region.major_employers.length - 4} more major employers
                         </div>
                       )}
@@ -137,7 +137,7 @@ const UKRegionalJobMarkets = () => {
                       </div>
                       <div className="text-xs">
                         <span className="text-elec-yellow font-medium">Best For:</span>
-                        <span className="text-muted-foreground ml-1">
+                        <span className="text-white ml-1">
                           {region.job_availability === "High" ? "High job security, diverse opportunities" :
                            region.job_availability === "Good" ? "Steady work, good prospects" :
                            "Specialized roles, competitive market"}
@@ -145,7 +145,7 @@ const UKRegionalJobMarkets = () => {
                       </div>
                       <div className="text-xs">
                         <span className="text-elec-yellow font-medium">Career Tip:</span>
-                        <span className="text-muted-foreground ml-1">
+                        <span className="text-white ml-1">
                           {region.cost_of_living === "Very High" ? "Consider contractor rates to offset living costs" :
                            region.cost_of_living === "High" ? "Good balance of rates and opportunities" :
                            "Lower costs can mean higher disposable income"}
@@ -161,33 +161,39 @@ const UKRegionalJobMarkets = () => {
           {/* Additional market insights */}
           <Card className="mt-6 border-elec-yellow/10 bg-elec-dark/30">
             <CardContent className="p-6">
-              <h3 className="font-semibold text-elec-yellow mb-4">UK Market Insights</h3>
+              <h3 className="font-semibold text-elec-yellow mb-4">2025 UK Market Insights</h3>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm">
                 <div>
-                  <h4 className="font-medium mb-2 text-blue-400">Market Trends:</h4>
-                  <ul className="space-y-1 text-xs text-muted-foreground">
-                    <li>• Renewable energy driving growth</li>
-                    <li>• Smart home installations increasing</li>
-                    <li>• EV charging infrastructure expanding</li>
-                    <li>• Data centres requiring specialists</li>
+                  <h4 className="font-medium mb-2 text-blue-400">2025 Market Trends:</h4>
+                  <ul className="space-y-1 text-xs text-white">
+                    <li>• Net Zero targets accelerating demand</li>
+                    <li>• Heat pump installations ramping up</li>
+                    <li>• EV charging reaching 50,000+ new points</li>
+                    <li>• AI-driven data centres expanding rapidly</li>
+                    <li>• Grid modernisation creating specialist roles</li>
+                    <li>• Building automation becoming standard</li>
                   </ul>
                 </div>
                 <div>
-                  <h4 className="font-medium mb-2 text-green-400">Best Regions for:</h4>
-                  <ul className="space-y-1 text-xs text-muted-foreground">
-                    <li>• New starters: Midlands, North</li>
-                    <li>• High earners: London, South East</li>
+                  <h4 className="font-medium mb-2 text-green-400">Best Regions for (2025):</h4>
+                  <ul className="space-y-1 text-xs text-white">
+                    <li>• New starters: Midlands, North (lower cost)</li>
+                    <li>• High earners: London, South East (£300+/day)</li>
                     <li>• Work-life balance: Scotland, Wales</li>
-                    <li>• Contractors: London, major cities</li>
+                    <li>• Contractors: Major cities, infrastructure projects</li>
+                    <li>• Specialists: EV/Solar anywhere, data centres</li>
+                    <li>• Nuclear: Cumbria, Suffolk, Somerset</li>
                   </ul>
                 </div>
                 <div>
-                  <h4 className="font-medium mb-2 text-orange-400">Future Outlook:</h4>
-                  <ul className="space-y-1 text-xs text-muted-foreground">
-                    <li>• Skills shortage driving wages up</li>
-                    <li>• Green technologies creating niches</li>
-                    <li>• Regional levelling up initiatives</li>
-                    <li>• Increased automation requiring upskilling</li>
+                  <h4 className="font-medium mb-2 text-orange-400">2025-2030 Outlook:</h4>
+                  <ul className="space-y-1 text-xs text-white">
+                    <li>• Critical skills shortage pushing rates up 15%</li>
+                    <li>• Green tech creating £10k+ salary premiums</li>
+                    <li>• Regional levelling up: Northern investments</li>
+                    <li>• Automation requiring continuous upskilling</li>
+                    <li>• Brexit impact stabilising, EU mobility limited</li>
+                    <li>• Apprenticeship levy driving training investment</li>
                   </ul>
                 </div>
               </div>
