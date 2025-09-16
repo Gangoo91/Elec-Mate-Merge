@@ -231,11 +231,11 @@ const NewIndustryNewsCard = () => {
           </CardTitle>
         </CardHeader>
         <CardContent className="text-center py-12">
-          <Newspaper className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
-          <p className="text-lg text-muted-foreground mb-2">
+          <Newspaper className="h-16 w-16 text-white/40 mx-auto mb-4" />
+          <p className="text-lg text-white mb-2">
             No news articles available
           </p>
-          <p className="text-sm text-muted-foreground mb-4">
+          <p className="text-sm text-white/80 mb-4">
             Click "Refresh News" to fetch the latest industry updates from live sources
           </p>
           <Button
@@ -283,7 +283,7 @@ const NewIndustryNewsCard = () => {
                 )}
               </p>
               {articles.length > 0 && (
-                <p className="text-xs text-white/60 mt-1">
+                <p className="text-xs text-white/80 mt-1">
                   Sources: Electrical Times, Professional Electrician, ECN
                 </p>
               )}
@@ -309,7 +309,7 @@ const NewIndustryNewsCard = () => {
           <p className="text-lg text-white/80 mb-2">
             No articles match your filters
           </p>
-          <p className="text-sm text-white/60">
+          <p className="text-sm text-white/80">
             Try adjusting your search terms or category filter
           </p>
         </div>

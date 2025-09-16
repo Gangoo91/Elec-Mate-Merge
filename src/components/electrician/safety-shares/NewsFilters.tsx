@@ -44,7 +44,7 @@ const NewsFilters = ({
               placeholder="Search news, regulations, safety updates..."
               value={searchTerm}
               onChange={(e) => onSearchChange(e.target.value)}
-              className="w-full pl-12 pr-4 bg-white/5 border-white/20 text-white placeholder:text-white/60 focus:border-elec-yellow/60 focus:ring-2 focus:ring-elec-yellow/20 h-12 sm:h-14 text-base rounded-lg transition-all duration-200 touch-target"
+              className="w-full pl-12 pr-4 bg-white/5 border-white/20 text-white placeholder:text-white/70 focus:border-elec-yellow/60 focus:ring-2 focus:ring-elec-yellow/20 h-12 sm:h-14 text-base rounded-lg transition-all duration-200 touch-target"
             />
           </div>
 
@@ -129,8 +129,8 @@ const NewsFilters = ({
         </div>
         
         {searchTerm && (
-          <div className="text-sm text-white/70 bg-white/5 px-3 py-2 rounded-md border border-white/10 max-w-full overflow-hidden">
-            <span className="text-elec-yellow">Search:</span> <span className="break-words">"{searchTerm}"</span>
+          <div className="text-sm text-white bg-white/5 px-3 py-2 rounded-md border border-white/10 max-w-full overflow-hidden">
+            <span className="text-elec-yellow font-medium">Search:</span> <span className="break-words">"{searchTerm}"</span>
           </div>
         )}
       </div>

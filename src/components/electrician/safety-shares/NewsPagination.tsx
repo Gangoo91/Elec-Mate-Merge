@@ -56,7 +56,7 @@ const NewsPagination = ({ currentPage, totalPages, paginate }: NewsPaginationPro
   return (
     <div className="flex flex-col sm:flex-row items-center justify-center gap-4 py-4">
       {/* Mobile-first navigation info */}
-      <div className="text-sm text-white/70 order-2 sm:order-1">
+      <div className="text-sm text-white/90 order-2 sm:order-1 font-medium">
         Page {currentPage} of {totalPages}
       </div>
       
