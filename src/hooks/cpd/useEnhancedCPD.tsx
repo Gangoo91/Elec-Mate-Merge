@@ -8,6 +8,7 @@ import {
   EvidenceFile 
 } from '@/types/cpd-enhanced';
 import { useToast } from '@/components/ui/use-toast';
+import { supabase } from '@/integrations/supabase/client';
 
 export const useEnhancedCPD = () => {
   const [entries, setEntries] = useState<EnhancedCPDEntry[]>([]);
@@ -17,9 +18,15 @@ export const useEnhancedCPD = () => {
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
 
-  const refreshData = () => {
+  const refreshData = async () => {
     try {
-      const newEntries = enhancedCPDService.getEntries();
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        setLoading(false);
+        return;
+      }
+
+      const newEntries = await enhancedCPDService.getEntries(user.id);
       const newSettings = enhancedCPDService.getSettings();
       const newReminders = enhancedCPDService.getActiveReminders();
       const newCompliance = enhancedCPDService.getComplianceAnalysis();
@@ -46,7 +53,17 @@ export const useEnhancedCPD = () => {
 
   const addEntry = async (entryData: Omit<EnhancedCPDEntry, 'id' | 'createdAt' | 'updatedAt'>) => {
     try {
-      const newEntry = enhancedCPDService.saveEntry(entryData);
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        toast({
+          title: "Authentication required",
+          description: "Please log in to add CPD entries.",
+          variant: "destructive"
+        });
+        return null;
+      }
+
+      const newEntry = await enhancedCPDService.saveEntry(user.id, entryData);
       refreshData();
       toast({
         title: "CPD entry added",
@@ -135,9 +152,12 @@ export const useEnhancedCPD = () => {
     }
   };
 
-  const getAnalytics = () => {
+  const getAnalytics = async () => {
     try {
-      return enhancedCPDService.getDetailedAnalytics();
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return null;
+      
+      return await enhancedCPDService.getDetailedAnalytics(user.id);
     } catch (error) {
       console.error('Error getting analytics:', error);
       return null;

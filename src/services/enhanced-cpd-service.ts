@@ -279,14 +279,14 @@ class EnhancedCPDService {
 
       if (error) throw error;
 
-      return data?.map(this.mapDatabaseToEntry) || [];
+      return data?.map(entry => this.convertToEnhancedEntry(entry)) || [];
     } catch (error) {
       console.error('Error fetching CPD entries:', error);
       return [];
     }
   }
 
-  async saveEntry(entry: Omit<EnhancedCPDEntry, 'id' | 'createdAt' | 'updatedAt'>, userId: string): Promise<EnhancedCPDEntry> {
+  async saveEntry(userId: string, entry: Omit<EnhancedCPDEntry, 'id' | 'createdAt' | 'updatedAt'>): Promise<EnhancedCPDEntry> {
     try {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error('User not authenticated');
@@ -295,48 +295,44 @@ class EnhancedCPDService {
         .from('cpd_entries')
         .insert({
           user_id: userId,
-          date: entry.date,
-          activity: entry.activity,
+          date_completed: entry.date,
+          title: entry.activity,
           category: entry.category,
-          type: entry.type,
+          activity_type: entry.type,
           hours: entry.hours,
-          provider: entry.provider,
           description: entry.description,
-          learning_outcomes: entry.learningOutcomes,
-          reflection_notes: entry.reflectionNotes,
-          skills_gained: entry.skillsGained,
-          evidence_files: JSON.stringify(entry.evidenceFiles),
-          status: entry.status || 'pending',
-          is_automatic: entry.isAutomatic || false
+          learning_outcomes: entry.learningOutcomes ? [entry.learningOutcomes] : [],
+          evidence_files: JSON.stringify(entry.evidenceFiles || []),
+          is_verified: entry.status === 'verified'
         })
         .select()
         .single();
 
       if (error) throw error;
 
-      return this.mapDatabaseToEntry(data);
+      return this.convertToEnhancedEntry(data);
     } catch (error) {
       console.error('Error saving CPD entry:', error);
       throw error;
     }
   }
 
-  private mapDatabaseToEntry(data: any): EnhancedCPDEntry {
+  private convertToEnhancedEntry(data: any): EnhancedCPDEntry {
     return {
       id: data.id,
-      date: data.date,
-      activity: data.activity,
+      date: data.date_completed,
+      activity: data.title,
       category: data.category,
-      type: data.type,
+      type: data.activity_type,
       hours: data.hours,
-      provider: data.provider,
-      description: data.description,
-      learningOutcomes: data.learning_outcomes,
-      reflectionNotes: data.reflection_notes,
-      skillsGained: data.skills_gained || [],
-      evidenceFiles: data.evidence_files ? JSON.parse(data.evidence_files) : [],
-      status: data.status,
-      isAutomatic: data.is_automatic,
+      provider: '',
+      description: data.description || '',
+      learningOutcomes: Array.isArray(data.learning_outcomes) ? data.learning_outcomes.join('; ') : data.learning_outcomes || '',
+      reflectionNotes: '',
+      skillsGained: [],
+      evidenceFiles: Array.isArray(data.evidence_files) ? data.evidence_files : [],
+      status: data.is_verified ? 'verified' : 'pending',
+      isAutomatic: false,
       createdAt: data.created_at,
       updatedAt: data.updated_at
     };
@@ -367,14 +363,15 @@ class EnhancedCPDService {
       if (profBodyError) throw profBodyError;
 
       const totalHours = entries?.reduce((sum, entry) => sum + entry.hours, 0) || 0;
-      const requiredHours = profBody?.cpd_hours_required || 35;
+      const requiredHours = profBody?.annual_cpd_hours || 35;
       const compliancePercentage = Math.round((totalHours / requiredHours) * 100);
       
-      const verifiedEntries = entries?.filter(e => e.status === 'verified').length || 0;
-      const pendingEntries = entries?.filter(e => e.status === 'pending').length || 0;
+      const verifiedEntries = entries?.filter(e => e.is_verified).length || 0;
+      const pendingEntries = entries?.filter(e => !e.is_verified).length || 0;
 
-      // Calculate category breakdown
-      const categoryStats = profBody?.professional_body_categories?.map((cat: any) => {
+      // Calculate category breakdown from categories JSON
+      const categories = Array.isArray(profBody?.categories) ? profBody.categories : [];
+      const categoryStats = categories.map((cat: any) => {
         const categoryEntries = entries?.filter(e => e.category === cat.category_name) || [];
         const completedHours = categoryEntries.reduce((sum, entry) => sum + entry.hours, 0);
         const requiredHours = cat.required_hours || 0;
@@ -487,8 +484,8 @@ class EnhancedCPDService {
   }
 
   // Analytics & Reporting
-  getDetailedAnalytics() {
-    const entries = this.getEntries();
+  async getDetailedAnalytics(userId: string) {
+    const entries = await this.getEntries(userId);
     const currentYear = new Date().getFullYear();
     
     // Time-based analysis

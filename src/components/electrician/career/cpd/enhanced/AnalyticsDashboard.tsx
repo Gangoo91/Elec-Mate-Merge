@@ -34,8 +34,15 @@ import { useEnhancedCPD } from '@/hooks/cpd/useEnhancedCPD';
 const AnalyticsDashboard = () => {
   const { getAnalytics } = useEnhancedCPD();
   const [selectedPeriod, setSelectedPeriod] = useState('current-year');
+  const [analytics, setAnalytics] = useState<any>(null);
   
-  const analytics = getAnalytics();
+  useEffect(() => {
+    const loadAnalytics = async () => {
+      const data = await getAnalytics();
+      setAnalytics(data);
+    };
+    loadAnalytics();
+  }, [getAnalytics]);
 
   if (!analytics) {
     return (
