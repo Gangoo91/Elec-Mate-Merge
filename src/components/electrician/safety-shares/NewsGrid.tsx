@@ -6,11 +6,7 @@ import { format, formatDistanceToNow } from "date-fns";
 import type { NewsArticle } from "@/hooks/useIndustryNews";
 import { isValidUrl } from "@/utils/urlUtils";
 
-// Import placeholder images
-import bs7671Image from "@/assets/news-placeholders/bs7671.jpg";
-import hseImage from "@/assets/news-placeholders/hse.jpg";
-import niceicImage from "@/assets/news-placeholders/niceic.jpg";
-import generalImage from "@/assets/news-placeholders/general.jpg";
+// Placeholder image paths from public directory
 
 interface NewsGridProps {
   articles: NewsArticle[];
@@ -64,16 +60,16 @@ const NewsGrid = ({ articles, excludeId }: NewsGridProps) => {
   const getCategoryImage = (category: string) => {
     switch (category?.toLowerCase()) {
       case "bs7671":
-        return bs7671Image;
+        return "/news-placeholders/bs7671.jpg";
       case "hse":
       case "fire safety":
       case "construction safety":
       case "safety technology":
-        return hseImage;
+        return "/news-placeholders/hse.jpg";
       case "niceic":
-        return niceicImage;
+        return "/news-placeholders/niceic.jpg";
       default:
-        return generalImage;
+        return "/news-placeholders/general.jpg";
     }
   };
 
