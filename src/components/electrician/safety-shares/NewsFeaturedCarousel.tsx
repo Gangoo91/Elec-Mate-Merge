@@ -63,18 +63,13 @@ const NewsFeaturedCarousel = ({ articles, className }: NewsFeaturedCarouselProps
   return (
     <div className={cn("space-y-4", className)}>
       {/* Section Header */}
-      <div className="flex items-center justify-between">
-        <div className="space-y-1">
-          <h2 className="text-xl sm:text-2xl font-bold text-white">
-            Featured News
-          </h2>
-          <p className="text-sm text-white/80">
-            Latest industry updates and regulatory changes
-          </p>
-        </div>
-        <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
-          {featuredArticles.length} Articles
-        </Badge>
+      <div className="space-y-1">
+        <h2 className="text-xl sm:text-2xl font-bold text-white">
+          Featured News
+        </h2>
+        <p className="text-sm text-white/80">
+          Latest industry updates and regulatory changes
+        </p>
       </div>
 
       {/* Carousel */}
