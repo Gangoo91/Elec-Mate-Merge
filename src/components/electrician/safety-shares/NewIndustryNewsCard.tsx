@@ -10,6 +10,7 @@ import { isValidUrl } from "@/utils/urlUtils";
 import NewsHero from "./NewsHero";
 import NewsGrid from "./NewsGrid";
 import NewsFilters from "./NewsFilters";
+import NewsPagination from "./NewsPagination";
 
 const NewIndustryNewsCard = () => {
   const { toast } = useToast();
@@ -36,6 +37,9 @@ const NewIndustryNewsCard = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [sortBy, setSortBy] = useState("newest");
+  const [currentPage, setCurrentPage] = useState(1);
+  
+  const ITEMS_PER_PAGE = 12; // 1 hero + 11 grid articles
 
   // Filter and sort articles with enhanced debugging
   const filteredAndSortedArticles = useMemo(() => {
@@ -112,6 +116,23 @@ const NewIndustryNewsCard = () => {
     return filtered;
   }, [articles, searchTerm, selectedCategory, sortBy]);
 
+  // Reset to first page when filters change
+  const resetPageOnFilterChange = useMemo(() => {
+    setCurrentPage(1);
+  }, [searchTerm, selectedCategory, sortBy]);
+
+  // Calculate pagination
+  const totalPages = Math.ceil(filteredAndSortedArticles.length / ITEMS_PER_PAGE);
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+  const endIndex = startIndex + ITEMS_PER_PAGE;
+  const paginatedArticles = filteredAndSortedArticles.slice(startIndex, endIndex);
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    // Scroll to top when page changes
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
 
   const handleRefreshNews = () => {
     console.log('🔄 User clicked refresh news button - fetching live data with Firecrawl');
@@ -187,14 +208,17 @@ const NewIndustryNewsCard = () => {
     );
   }
 
-  // TEMPORARY: Show articles even if filtering fails
-  const displayArticles = filteredAndSortedArticles.length > 0 ? filteredAndSortedArticles : articles;
+  // Use paginated articles for display
+  const displayArticles = paginatedArticles.length > 0 ? paginatedArticles : 
+    (filteredAndSortedArticles.length > 0 ? filteredAndSortedArticles : articles).slice(0, ITEMS_PER_PAGE);
   
   console.log('📊 Display decision:', {
     filteredCount: filteredAndSortedArticles.length,
     totalCount: articles.length,
-    willDisplay: displayArticles.length,
-    usingFallback: filteredAndSortedArticles.length === 0 && articles.length > 0
+    currentPage,
+    totalPages,
+    paginatedCount: paginatedArticles.length,
+    willDisplay: displayArticles.length
   });
 
   if (articles.length === 0) {
@@ -260,9 +284,9 @@ const NewIndustryNewsCard = () => {
           <div className="flex items-center gap-4">
             <div className="text-sm text-muted-foreground">
               <p>
-                Showing {displayArticles.length} of {articles.length} articles
-                {displayArticles.length !== filteredAndSortedArticles.length && (
-                  <span className="text-yellow-400 ml-2">(fallback mode)</span>
+                Showing {startIndex + 1}-{Math.min(endIndex, filteredAndSortedArticles.length)} of {filteredAndSortedArticles.length} articles
+                {totalPages > 1 && (
+                  <span className="text-elec-yellow ml-2">(Page {currentPage} of {totalPages})</span>
                 )}
               </p>
               {articles.length > 0 && (
@@ -313,8 +337,17 @@ const NewIndustryNewsCard = () => {
                   articles={remainingArticles}
                 />
               </div>
-            )}
-          </>
+              )}
+            </>
+          )}
+
+        {/* Pagination */}
+        {filteredAndSortedArticles.length > ITEMS_PER_PAGE && (
+          <NewsPagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            paginate={handlePageChange}
+          />
         )}
       </div>
 
