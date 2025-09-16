@@ -9,6 +9,7 @@ import KnowingYourWorthTab from "@/components/job-vacancies/tabs/KnowingYourWort
 import AIJobMatcher from "@/components/job-vacancies/AIJobMatcher";
 import ModernJobCard from "@/components/job-vacancies/ModernJobCard";
 import JobInsights from "@/components/job-vacancies/JobInsights";
+import JobMarketInsights from "@/components/job-vacancies/JobMarketInsights";
 
 import { useJobListings } from "@/hooks/job-vacancies/useJobListings";
 import { Search, MessageCircle, PoundSterling, Brain, BarChart3 } from "lucide-react";
@@ -142,21 +143,7 @@ const JobVacancies = ({ onBack }: JobVacanciesProps) => {
             icon: BarChart3,
             content: (
               <div className="space-y-6">
-                <JobInsights jobs={jobs} location="" />
-                
-                {/* Career Development Tips */}
-                <div className="grid gap-4 mt-6">
-                  <div className="bg-elec-card border border-elec-yellow/20 rounded-lg p-6">
-                    <h3 className="text-lg font-semibold text-elec-light mb-4">Career Development</h3>
-                    <ul className="space-y-2 text-sm text-muted-foreground">
-                      <li>• Stay updated with the latest BS7671 18th Edition requirements</li>
-                      <li>• Consider specializing in high-demand areas like EV charging or solar</li>
-                      <li>• Maintain your NICEIC or NAPIT registration</li>
-                      <li>• Network with other professionals through trade associations</li>
-                      <li>• Keep your qualifications current and consider additional certifications</li>
-                    </ul>
-                  </div>
-                </div>
+                <JobMarketInsights jobCount={jobs.length} />
               </div>
             )
           },
