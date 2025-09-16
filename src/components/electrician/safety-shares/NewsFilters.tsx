@@ -44,7 +44,7 @@ const NewsFilters = ({
               placeholder="Search news, regulations, safety updates..."
               value={searchTerm}
               onChange={(e) => onSearchChange(e.target.value)}
-              className="w-full pl-12 pr-4 bg-white/5 border-white/20 text-white placeholder:text-white/70 focus:border-elec-yellow/60 focus:ring-2 focus:ring-elec-yellow/20 h-12 sm:h-14 text-base rounded-lg transition-all duration-200 touch-target"
+              className="w-full pl-12 pr-4 bg-white/5 border-white/20 text-white placeholder:text-white/70 focus:border-elec-yellow/60 focus:ring-2 focus:ring-elec-yellow/20 h-10 sm:h-14 text-sm sm:text-base rounded-lg transition-all duration-200 touch-target"
             />
           </div>
 
@@ -56,24 +56,24 @@ const NewsFilters = ({
                 variant={sortBy === 'newest' ? 'default' : 'outline'}
                 size="sm"
                 onClick={() => onSortChange('newest')}
-                className={`flex-1 min-w-[120px] touch-target min-h-[44px] transition-all duration-200 ${sortBy === 'newest' 
+                className={`flex-1 min-w-[120px] touch-target min-h-[40px] sm:min-h-[44px] transition-all duration-200 text-sm sm:text-base ${sortBy === 'newest' 
                   ? "bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 font-medium shadow-lg" 
                   : "border-white/30 text-white hover:bg-white/10 hover:border-white/50 bg-white/5"
                 }`}
               >
-                <Clock className="h-4 w-4 mr-2" />
+                <Clock className="h-3 w-3 sm:h-4 sm:w-4 mr-2" />
                 Latest
               </Button>
               <Button
                 variant={sortBy === 'views_desc' ? 'default' : 'outline'}
                 size="sm"
                 onClick={() => onSortChange('views_desc')}
-                className={`flex-1 min-w-[120px] touch-target min-h-[44px] transition-all duration-200 ${sortBy === 'views_desc' 
+                className={`flex-1 min-w-[120px] touch-target min-h-[40px] sm:min-h-[44px] transition-all duration-200 text-sm sm:text-base ${sortBy === 'views_desc' 
                   ? "bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 font-medium shadow-lg" 
                   : "border-white/30 text-white hover:bg-white/10 hover:border-white/50 bg-white/5"
                 }`}
               >
-                <TrendingUp className="h-4 w-4 mr-2" />
+                <TrendingUp className="h-3 w-3 sm:h-4 sm:w-4 mr-2" />
                 Trending
               </Button>
             </div>
@@ -81,8 +81,8 @@ const NewsFilters = ({
             {/* Dropdown Filters - Mobile Optimized */}
             <div className="flex flex-col sm:flex-row gap-3 w-full">
               <Select value={selectedCategory} onValueChange={onCategoryChange}>
-                <SelectTrigger className="w-full bg-white/5 border-white/30 text-white h-12 sm:h-11 rounded-lg hover:border-white/50 focus:border-elec-yellow/60 focus:ring-2 focus:ring-elec-yellow/20 transition-all duration-200 touch-target">
-                  <Filter className="h-4 w-4 mr-2 text-elec-yellow" />
+                <SelectTrigger className="w-full bg-white/5 border-white/30 text-white h-10 sm:h-11 rounded-lg hover:border-white/50 focus:border-elec-yellow/60 focus:ring-2 focus:ring-elec-yellow/20 transition-all duration-200 touch-target text-sm sm:text-base">
+                  <Filter className="h-3 w-3 sm:h-4 sm:w-4 mr-2 text-elec-yellow" />
                   <SelectValue placeholder="Filter by Category" />
                 </SelectTrigger>
                 <SelectContent className="bg-elec-dark/95 border-white/30 backdrop-blur-md z-50 rounded-lg shadow-xl">
@@ -101,7 +101,7 @@ const NewsFilters = ({
               </Select>
 
               <Select value={sortBy} onValueChange={onSortChange}>
-                <SelectTrigger className="w-full bg-white/5 border-white/30 text-white h-12 sm:h-11 rounded-lg hover:border-white/50 focus:border-elec-yellow/60 focus:ring-2 focus:ring-elec-yellow/20 transition-all duration-200 touch-target">
+                <SelectTrigger className="w-full bg-white/5 border-white/30 text-white h-10 sm:h-11 rounded-lg hover:border-white/50 focus:border-elec-yellow/60 focus:ring-2 focus:ring-elec-yellow/20 transition-all duration-200 touch-target text-sm sm:text-base">
                   <SelectValue placeholder="Sort by" />
                 </SelectTrigger>
                 <SelectContent className="bg-elec-dark/95 border-white/30 backdrop-blur-md z-50 rounded-lg shadow-xl">
