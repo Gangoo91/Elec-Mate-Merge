@@ -115,6 +115,7 @@ const NewIndustryNewsCard = () => {
   };
 
   const handleRefreshNews = () => {
+    console.log('🔄 User clicked refresh news button - fetching live data with Firecrawl');
     refresh();
   };
 

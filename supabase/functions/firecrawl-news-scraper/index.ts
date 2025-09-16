@@ -20,8 +20,21 @@ serve(async (req) => {
     const firecrawlApiKey = Deno.env.get('FIRECRAWL_API_KEY');
 
     if (!firecrawlApiKey) {
-      throw new Error('FIRECRAWL_API_KEY not found');
+      console.error('❌ FIRECRAWL_API_KEY not found in environment variables');
+      return new Response(
+        JSON.stringify({ 
+          success: false, 
+          message: 'Firecrawl API key not configured. Please add your Firecrawl API key in Supabase Edge Function Secrets.',
+          articlesProcessed: 0 
+        }),
+        { 
+          status: 500,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+        }
+      );
     }
+
+    console.log('✅ Firecrawl API key found, proceeding with scraping...');
 
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
@@ -107,6 +120,12 @@ serve(async (req) => {
           
           if (!response.ok) {
             console.error(`❌ HTTP error for ${source.source}: ${response.status} ${response.statusText}`);
+            try {
+              const errorText = await response.text();
+              console.error(`❌ Error details for ${source.source}:`, errorText);
+            } catch (e) {
+              console.error(`❌ Could not read error details for ${source.source}:`, e);
+            }
             continue;
           }
 
@@ -139,22 +158,20 @@ serve(async (req) => {
 
       console.log(`📰 Total articles collected: ${allArticles.length}`);
       return allArticles;
-
-      const response = await fetch(url, options);
-      const job = await response.json();
-      console.log("Batch job created:", job);
-
     }
 
     const articles = await getNews();
     console.log(`📊 Total articles found: ${articles.length}`);
 
     if (articles.length === 0) {
+      console.log('⚠️ No articles found from any source - this might be due to website blocking or API limits');
       return new Response(
         JSON.stringify({ 
           success: false, 
-          message: 'No articles found',
-          articlesProcessed: 0 
+          message: 'No articles found from any source. This could be due to website blocking, API limits, or the sites being temporarily unavailable.',
+          articlesProcessed: 0,
+          suggestion: 'Try again later or check if the news websites are accessible.',
+          sources: ['Electrical Times', 'Professional Electrician', 'Electrical Contracting News']
         }),
         { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
