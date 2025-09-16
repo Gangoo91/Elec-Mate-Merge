@@ -278,11 +278,6 @@ const NewIndustryNewsCard = () => {
                   Industry News
                 </h2>
               </div>
-              {articles.length > 0 && (
-                <div className="text-xs bg-elec-yellow/20 text-elec-yellow px-3 py-1.5 rounded-full whitespace-nowrap">
-                  Live from Firecrawl
-                </div>
-              )}
             </div>
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 w-full sm:w-auto min-w-0">
               <div className="text-sm text-muted-foreground min-w-0 flex-1 sm:flex-initial">
