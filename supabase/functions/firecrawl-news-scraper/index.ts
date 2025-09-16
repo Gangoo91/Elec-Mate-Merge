@@ -209,6 +209,7 @@ serve(async (req) => {
         date_published: publishDate,
         content_hash: contentHash,
         external_url: article.url || article.source_url,
+        image_url: article.imageUrl || null,
         is_active: true,
         view_count: 0,
         average_rating: 0
