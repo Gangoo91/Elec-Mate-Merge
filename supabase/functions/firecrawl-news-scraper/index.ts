@@ -30,6 +30,7 @@ serve(async (req) => {
       
       const url = "https://api.firecrawl.dev/v1/scrape";
       const sources = [
+        {
           url: "https://www.electricaltimes.co.uk/latest-news/",
           category: "Industry",
           source: "Electrical Times"
