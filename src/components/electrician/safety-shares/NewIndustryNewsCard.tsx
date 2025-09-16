@@ -11,6 +11,7 @@ import NewsHero from "./NewsHero";
 import NewsGrid from "./NewsGrid";
 import NewsFilters from "./NewsFilters";
 import NewsPagination from "./NewsPagination";
+import NewsFeaturedCarousel from "./NewsFeaturedCarousel";
 
 const NewIndustryNewsCard = () => {
   const { toast } = useToast();
@@ -39,7 +40,7 @@ const NewIndustryNewsCard = () => {
   const [sortBy, setSortBy] = useState("newest");
   const [currentPage, setCurrentPage] = useState(1);
   
-  const ITEMS_PER_PAGE = 12; // 1 hero + 11 grid articles
+  const ITEMS_PER_PAGE = 18; // 6 carousel + 12 grid articles
 
   // Filter and sort articles with enhanced debugging
   const filteredAndSortedArticles = useMemo(() => {
@@ -221,6 +222,10 @@ const NewIndustryNewsCard = () => {
     willDisplay: displayArticles.length
   });
 
+  // Split articles for carousel and grid
+  const carouselArticles = displayArticles.slice(0, 6);
+  const gridArticles = displayArticles.slice(6);
+
   if (articles.length === 0) {
     return (
       <Card className="w-full bg-elec-dark border-elec-yellow/20">
@@ -251,8 +256,6 @@ const NewIndustryNewsCard = () => {
     );
   }
 
-  const heroArticle = displayArticles[0];
-  const remainingArticles = displayArticles.slice(1);
 
   return (
     <div className="space-y-6 sm:space-y-8">
@@ -315,17 +318,17 @@ const NewIndustryNewsCard = () => {
         </div>
       ) : (
         <div className="space-y-6 sm:space-y-8">
-          {/* Hero Article */}
-          {heroArticle && (
-            <div className="transform transition-all duration-300 hover:scale-[1.01]">
-              <NewsHero 
-                article={heroArticle}
+          {/* Featured Carousel */}
+          {carouselArticles.length > 0 && (
+            <div className="transform transition-all duration-300">
+              <NewsFeaturedCarousel 
+                articles={carouselArticles}
               />
             </div>
           )}
 
           {/* Remaining Articles Grid */}
-          {remainingArticles.length > 0 && (
+          {gridArticles.length > 0 && (
             <div className="space-y-4 sm:space-y-6">
               <div className="flex items-center gap-3">
                 <div className="h-px bg-gradient-to-r from-transparent via-elec-yellow/30 to-transparent flex-1" />
@@ -336,7 +339,7 @@ const NewIndustryNewsCard = () => {
               </div>
               <div className="transform transition-all duration-300">
                 <NewsGrid 
-                  articles={remainingArticles}
+                  articles={gridArticles}
                 />
               </div>
             </div>
