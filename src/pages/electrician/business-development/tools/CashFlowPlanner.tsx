@@ -2,6 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import BackButton from "@/components/common/BackButton";
 import { useToast } from "@/hooks/use-toast";
 import { TrendingUp, Calculator, BarChart3, Target, Settings, Plus, Minus } from "lucide-react";
@@ -30,6 +31,8 @@ const CashFlowPlanner = () => {
     removeExpenseCategory,
     updateSettings
   } = useCashFlow();
+
+  const [activeTab, setActiveTab] = useState("setup");
 
   const [showAddIncome, setShowAddIncome] = useState(false);
   const [showAddExpense, setShowAddExpense] = useState(false);
@@ -112,32 +115,59 @@ const CashFlowPlanner = () => {
         ]}
       />
 
-      <Tabs defaultValue="setup" className="space-y-6">
-        <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 h-auto">
-          <TabsTrigger value="setup" className="flex flex-col sm:flex-row items-center gap-1 sm:gap-2 py-3 px-2 text-xs sm:text-sm">
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
+        {/* Mobile Dropdown */}
+        <div className="sm:hidden">
+          <Select value={activeTab} onValueChange={setActiveTab}>
+            <SelectTrigger className="w-full bg-elec-card border-elec-yellow/20">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent className="bg-elec-card border-elec-yellow/20">
+              <SelectItem value="setup" className="flex items-center gap-2">
+                <Settings className="h-4 w-4" />
+                Setup
+              </SelectItem>
+              <SelectItem value="projections" className="flex items-center gap-2">
+                <Calculator className="h-4 w-4" />
+                Projections
+              </SelectItem>
+              <SelectItem value="charts" className="flex items-center gap-2">
+                <BarChart3 className="h-4 w-4" />
+                Charts
+              </SelectItem>
+              <SelectItem value="scenarios" className="flex items-center gap-2">
+                <Target className="h-4 w-4" />
+                Scenarios
+              </SelectItem>
+              <SelectItem value="insights" className="flex items-center gap-2">
+                <TrendingUp className="h-4 w-4" />
+                Insights
+              </SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+
+        {/* Desktop Tabs */}
+        <TabsList className="hidden sm:grid w-full grid-cols-3 lg:grid-cols-5 h-auto">
+          <TabsTrigger value="setup" className="flex items-center gap-2 py-3 px-2">
             <Settings className="h-4 w-4" />
-            <span className="hidden sm:inline">Setup</span>
-            <span className="sm:hidden">Setup</span>
+            Setup
           </TabsTrigger>
-          <TabsTrigger value="projections" className="flex flex-col sm:flex-row items-center gap-1 sm:gap-2 py-3 px-2 text-xs sm:text-sm">
+          <TabsTrigger value="projections" className="flex items-center gap-2 py-3 px-2">
             <Calculator className="h-4 w-4" />
-            <span className="hidden sm:inline">Projections</span>
-            <span className="sm:hidden">Projects</span>
+            Projections
           </TabsTrigger>
-          <TabsTrigger value="charts" className="flex flex-col sm:flex-row items-center gap-1 sm:gap-2 py-3 px-2 text-xs sm:text-sm">
+          <TabsTrigger value="charts" className="flex items-center gap-2 py-3 px-2">
             <BarChart3 className="h-4 w-4" />
-            <span className="hidden sm:inline">Charts</span>
-            <span className="sm:hidden">Charts</span>
+            Charts
           </TabsTrigger>
-          <TabsTrigger value="scenarios" className="flex flex-col sm:flex-row items-center gap-1 sm:gap-2 py-3 px-2 text-xs sm:text-sm">
+          <TabsTrigger value="scenarios" className="flex items-center gap-2 py-3 px-2">
             <Target className="h-4 w-4" />
-            <span className="hidden sm:inline">Scenarios</span>
-            <span className="sm:hidden">Scenes</span>
+            Scenarios
           </TabsTrigger>
-          <TabsTrigger value="insights" className="flex flex-col sm:flex-row items-center gap-1 sm:gap-2 py-3 px-2 text-xs sm:text-sm">
+          <TabsTrigger value="insights" className="flex items-center gap-2 py-3 px-2">
             <TrendingUp className="h-4 w-4" />
-            <span className="hidden sm:inline">Insights</span>
-            <span className="sm:hidden">Insights</span>
+            Insights
           </TabsTrigger>
         </TabsList>
 
