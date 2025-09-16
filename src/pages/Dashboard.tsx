@@ -67,14 +67,8 @@ const Dashboard = () => {
       {/* Quick Access Section */}
       <DashboardQuickAccess />
 
-      {/* Active Quotes Section */}
-      <QuoteDashboardCard quotes={savedQuotes} />
-
       {/* Overview Cards */}
       <DashboardOverview user={userData} />
-
-      {/* Quotes History Section */}
-      <QuotesHistorySection quotes={savedQuotes} />
 
       {/* Trial Status */}
       <TrialBanner />
