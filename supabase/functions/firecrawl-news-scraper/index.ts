@@ -142,11 +142,6 @@ serve(async (req) => {
 
       console.log(`📰 Total articles collected: ${allArticles.length}`);
       return allArticles;
-
-      const response = await fetch(url, options);
-      const job = await response.json();
-      console.log("Batch job created:", job);
-
     }
 
     const articles = await getNews();
