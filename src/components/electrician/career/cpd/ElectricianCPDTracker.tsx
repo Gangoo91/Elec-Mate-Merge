@@ -6,10 +6,14 @@ import ComplianceDashboard from "./enhanced/ComplianceDashboard";
 import ActivityTemplates from "./enhanced/ActivityTemplates";
 import AnalyticsDashboard from "./enhanced/AnalyticsDashboard";
 import MobileEnhancedCPD from "./enhanced/MobileEnhancedCPD";
+import CPDEntryForm from "../../../apprentice/career/cpd/CPDEntryForm";
+import CPDHistory from "../../../apprentice/career/cpd/CPDHistory";
+import CPDGoals from "../../../apprentice/career/cpd/CPDGoals";
+import CPDDashboard from "../../../apprentice/career/cpd/enhanced/CPDDashboard";
 import { useCPDAutoTracking } from "@/hooks/cpd/useCPDAutoTracking";
 
 const ElectricianCPDTracker = () => {
-  const [activeTab, setActiveTab] = useState("overview");
+  const [activeTab, setActiveTab] = useState("compliance");
   const [isMobile, setIsMobile] = useState(false);
   
   // Initialize auto-tracking for the CPD tracker
@@ -70,10 +74,9 @@ const ElectricianCPDTracker = () => {
 
         {/* Mobile Content */}
         <div className="p-4">
-          {activeTab === "overview" && (
+          {activeTab === "compliance" && (
             <MobileEnhancedCPD 
               onAddEntry={handleAddEntry}
-              onViewEntry={handleViewEntry}
               onViewHistory={handleViewHistory}
             />
           )}
@@ -82,7 +85,7 @@ const ElectricianCPDTracker = () => {
               <div className="flex items-center justify-between">
                 <h2 className="text-lg font-semibold text-white">Add CPD Entry</h2>
                 <button 
-                  onClick={() => setActiveTab("overview")}
+                  onClick={() => setActiveTab("compliance")}
                   className="text-elec-yellow text-sm"
                 >
                   Back
@@ -96,7 +99,7 @@ const ElectricianCPDTracker = () => {
               <div className="flex items-center justify-between">
                 <h2 className="text-lg font-semibold text-white">CPD History</h2>
                 <button 
-                  onClick={() => setActiveTab("overview")}
+                  onClick={() => setActiveTab("compliance")}
                   className="text-elec-yellow text-sm"
                 >
                   Back
@@ -110,7 +113,7 @@ const ElectricianCPDTracker = () => {
               <div className="flex items-center justify-between">
                 <h2 className="text-lg font-semibold text-white">CPD Goals</h2>
                 <button 
-                  onClick={() => setActiveTab("overview")}
+                  onClick={() => setActiveTab("compliance")}
                   className="text-elec-yellow text-sm"
                 >
                   Back
@@ -126,9 +129,27 @@ const ElectricianCPDTracker = () => {
 
   const cpdTabs: DropdownTab[] = [
     {
+      value: "compliance",
+      label: "Compliance",
+      icon: TrendingUp,
+      content: <ComplianceDashboard />
+    },
+    {
+      value: "templates", 
+      label: "Templates",
+      icon: Clock,
+      content: <ActivityTemplates />
+    },
+    {
+      value: "analytics",
+      label: "Analytics",
+      icon: Award,
+      content: <AnalyticsDashboard />
+    },
+    {
       value: "overview",
       label: "Overview",
-      icon: TrendingUp,
+      icon: Target,
       content: (
         <CPDDashboard 
           onAddEntry={handleAddEntry}
@@ -136,24 +157,6 @@ const ElectricianCPDTracker = () => {
           onManageGoals={handleManageGoals}
         />
       )
-    },
-    {
-      value: "log-activity",
-      label: "Log Activity",
-      icon: Clock,
-      content: <CPDEntryForm />
-    },
-    {
-      value: "history",
-      label: "History",
-      icon: Award,
-      content: <CPDHistory />
-    },
-    {
-      value: "goals",
-      label: "Goals",
-      icon: Target,
-      content: <CPDGoals />
     }
   ];
 
@@ -164,11 +167,11 @@ const ElectricianCPDTracker = () => {
       <div className="text-center space-y-4">
         <div className="flex items-center justify-center gap-3">
           <Clock className="h-8 w-8 text-elec-yellow" />
-          <h1 className="text-3xl font-bold text-white">Electrician CPD Tracker</h1>
+          <h1 className="text-3xl font-bold text-white">Enhanced CPD Tracker</h1>
         </div>
         <p className="text-muted-foreground max-w-2xl mx-auto">
-          Track your Continuing Professional Development activities as a qualified electrician. 
-          Set goals, log activities, and monitor your progress to maintain compliance with industry requirements.
+          Professional-grade CPD tracking with compliance monitoring, evidence management, 
+          and industry-specific templates for UK electricians.
         </p>
       </div>
 
