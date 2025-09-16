@@ -115,7 +115,7 @@ const NewsGrid = ({ articles, excludeId }: NewsGridProps) => {
               onClick={() => window.open(article.external_url, '_blank', 'noopener,noreferrer')}
             >
               {/* Article Image */}
-              <div className={`relative overflow-hidden ${isFeatured ? 'h-64' : 'h-48'}`}>
+              <div className={`relative overflow-hidden ${isFeatured ? 'h-40 sm:h-56' : 'h-32 sm:h-40'}`}>
                 <img
                   src={article.image_url || getCategoryImage(article.category)}
                   alt={article.title}
@@ -150,28 +150,28 @@ const NewsGrid = ({ articles, excludeId }: NewsGridProps) => {
                 </div>
               </div>
               
-              <div className={`p-6 h-full flex flex-col relative z-10 ${isFeatured ? 'sm:p-8' : ''}`}>
+              <div className={`p-4 sm:p-5 h-full flex flex-col relative z-10 ${isFeatured ? 'sm:p-6' : ''}`}>
                 {/* Header with source */}
-                <div className="flex items-start justify-between mb-4">
+                <div className="flex items-start justify-between mb-3">
                   <span className="text-xs text-white/80 font-medium">{article.source_name}</span>
                 </div>
 
                 {/* Title */}
-                <h3 className={`font-bold text-white mb-3 leading-tight group-hover:text-elec-yellow transition-colors duration-300 ${
+                <h3 className={`font-bold text-white mb-2 leading-tight group-hover:text-elec-yellow transition-colors duration-300 ${
                   isFeatured ? 'text-xl sm:text-2xl line-clamp-3' : 'text-lg line-clamp-2'
                 }`}>
                   {article.title}
                 </h3>
 
                 {/* Summary */}
-                <p className={`text-white/90 mb-6 flex-grow leading-relaxed ${
+                <p className={`text-white/90 mb-4 flex-grow leading-relaxed ${
                   isFeatured ? 'text-base line-clamp-4' : 'text-sm line-clamp-3'
                 }`}>
                   {article.summary}
                 </p>
 
                 {/* Meta Information */}
-                <div className="space-y-4">
+                <div className="space-y-3">
                   <div className="flex items-center justify-between text-xs text-white/80">
                     <div className="flex items-center gap-3">
                       <div className="flex items-center gap-1">
