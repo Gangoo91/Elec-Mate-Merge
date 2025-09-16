@@ -2,12 +2,10 @@ import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DropdownTabs, DropdownTab } from "@/components/ui/dropdown-tabs";
 import { Clock, Target, TrendingUp, Award } from "lucide-react";
-import CPDOverview from "../../../apprentice/career/cpd/CPDOverview";
-import CPDEntryForm from "../../../apprentice/career/cpd/CPDEntryForm";
-import CPDHistory from "../../../apprentice/career/cpd/CPDHistory";
-import CPDGoals from "../../../apprentice/career/cpd/CPDGoals";
-import CPDDashboard from "../../../apprentice/career/cpd/enhanced/CPDDashboard";
-import MobileCPDTracker from "../../../apprentice/career/cpd/enhanced/MobileCPDTracker";
+import ComplianceDashboard from "./enhanced/ComplianceDashboard";
+import ActivityTemplates from "./enhanced/ActivityTemplates";
+import AnalyticsDashboard from "./enhanced/AnalyticsDashboard";
+import MobileEnhancedCPD from "./enhanced/MobileEnhancedCPD";
 import { useCPDAutoTracking } from "@/hooks/cpd/useCPDAutoTracking";
 
 const ElectricianCPDTracker = () => {
@@ -73,7 +71,7 @@ const ElectricianCPDTracker = () => {
         {/* Mobile Content */}
         <div className="p-4">
           {activeTab === "overview" && (
-            <MobileCPDTracker 
+            <MobileEnhancedCPD 
               onAddEntry={handleAddEntry}
               onViewEntry={handleViewEntry}
               onViewHistory={handleViewHistory}
