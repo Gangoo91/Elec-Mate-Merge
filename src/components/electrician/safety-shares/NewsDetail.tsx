@@ -103,7 +103,7 @@ const NewsDetail = ({ article, isOpen, onClose }: NewsDetailProps) => {
               <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
                 {article.regulatory_body}
               </Badge>
-              <div className="flex items-center gap-1 text-sm text-muted-foreground">
+              <div className="flex items-center gap-1 text-sm text-white/90">
                 <Clock className="h-4 w-4" />
                 <span>{getReadTime(article.content)}</span>
               </div>
@@ -113,7 +113,7 @@ const NewsDetail = ({ article, isOpen, onClose }: NewsDetailProps) => {
               {article.title}
             </DialogTitle>
             
-            <div className="flex items-center gap-6 text-sm text-muted-foreground">
+            <div className="flex items-center gap-6 text-sm text-white/80">
               <div className="flex items-center gap-2">
                 <Calendar className="h-4 w-4" />
                 <span>{format(new Date(article.date_published), 'dd MMMM yyyy')}</span>
@@ -169,7 +169,7 @@ const NewsDetail = ({ article, isOpen, onClose }: NewsDetailProps) => {
               </Button>
               
               <div className="flex items-center gap-1">
-                <span className="text-sm text-muted-foreground mr-2">Rate:</span>
+                <span className="text-sm text-white/90 mr-2">Rate:</span>
                 {[1, 2, 3, 4, 5].map((star) => (
                   <Star
                     key={star}
@@ -184,7 +184,7 @@ const NewsDetail = ({ article, isOpen, onClose }: NewsDetailProps) => {
               </div>
             </div>
             
-            <div className="text-sm text-muted-foreground">
+            <div className="text-sm text-white/80">
               Published by {article.source_name}
             </div>
           </div>

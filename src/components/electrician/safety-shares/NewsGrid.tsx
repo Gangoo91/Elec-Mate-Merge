@@ -90,7 +90,7 @@ const NewsGrid = ({ articles, excludeId }: NewsGridProps) => {
           <ExternalLink className="h-8 w-8 text-elec-yellow" />
         </div>
         <h3 className="text-lg font-semibold text-white mb-2">No Articles Found</h3>
-        <p className="text-muted-foreground">Try adjusting your search or filter criteria.</p>
+        <p className="text-white/90">Try adjusting your search or filter criteria.</p>
       </div>
     );
   }
@@ -153,7 +153,7 @@ const NewsGrid = ({ articles, excludeId }: NewsGridProps) => {
               <div className={`p-6 h-full flex flex-col relative z-10 ${isFeatured ? 'sm:p-8' : ''}`}>
                 {/* Header with source */}
                 <div className="flex items-start justify-between mb-4">
-                  <span className="text-xs text-muted-foreground font-medium">{article.source_name}</span>
+                  <span className="text-xs text-white/80 font-medium">{article.source_name}</span>
                 </div>
 
                 {/* Title */}
@@ -164,7 +164,7 @@ const NewsGrid = ({ articles, excludeId }: NewsGridProps) => {
                 </h3>
 
                 {/* Summary */}
-                <p className={`text-muted-foreground mb-6 flex-grow leading-relaxed ${
+                <p className={`text-white/90 mb-6 flex-grow leading-relaxed ${
                   isFeatured ? 'text-base line-clamp-4' : 'text-sm line-clamp-3'
                 }`}>
                   {article.summary}
@@ -172,7 +172,7 @@ const NewsGrid = ({ articles, excludeId }: NewsGridProps) => {
 
                 {/* Meta Information */}
                 <div className="space-y-4">
-                  <div className="flex items-center justify-between text-xs text-muted-foreground">
+                  <div className="flex items-center justify-between text-xs text-white/80">
                     <div className="flex items-center gap-3">
                       <div className="flex items-center gap-1">
                         <Calendar className="h-3 w-3" />
