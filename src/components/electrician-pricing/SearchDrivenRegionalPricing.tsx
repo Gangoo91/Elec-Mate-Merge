@@ -33,6 +33,22 @@ const SearchDrivenRegionalPricing = ({ regionalData }: SearchDrivenRegionalPrici
   const [searchTerm, setSearchTerm] = useState("");
   const [showResults, setShowResults] = useState(false);
 
+  // Quick search options
+  const quickLocations = ["London", "Manchester", "Birmingham", "Leeds", "Bristol"];
+  const quickJobTypes = [
+    "Socket Installation",
+    "Consumer Unit",
+    "Rewiring",
+    "Testing",
+    "Fault Finding",
+    "Light Switch",
+    "Outdoor Socket",
+    "Cooker Point",
+    "EV Charger",
+    "Smoke Alarm"
+  ];
+
+
   const handleSearch = () => {
     if (searchTerm.trim()) {
       setShowResults(true);
@@ -48,6 +64,11 @@ const SearchDrivenRegionalPricing = ({ regionalData }: SearchDrivenRegionalPrici
   const clearSearch = () => {
     setSearchTerm("");
     setShowResults(false);
+  };
+
+  const handleQuickSearch = (term: string) => {
+    setSearchTerm(term);
+    setShowResults(true);
   };
 
   // Filter data based on search term
@@ -133,18 +154,41 @@ const SearchDrivenRegionalPricing = ({ regionalData }: SearchDrivenRegionalPrici
           )
         ) : (
           /* Welcome State */
-          <div className="text-center py-8 text-muted-foreground">
-            <Search className="h-12 w-12 mx-auto mb-4 opacity-50" />
-            <p className="font-medium mb-2">Search Regional Job Pricing</p>
-            <p className="text-sm">
-              Enter a region, county, or job type to view current pricing information across the UK.
-            </p>
-            <div className="flex flex-wrap justify-center gap-2 mt-4 text-xs">
-              <Badge variant="outline">London</Badge>
-              <Badge variant="outline">Manchester</Badge>
-              <Badge variant="outline">Birmingham</Badge>
-              <Badge variant="outline">Installation</Badge>
-              <Badge variant="outline">Testing</Badge>
+          <div className="py-6 text-muted-foreground">
+            <p className="font-medium mb-3 text-center">Quick search</p>
+
+            <div className="mb-5">
+              <h4 className="text-xs uppercase tracking-wider text-elec-yellow/80 mb-2 text-center">Popular locations</h4>
+              <div className="flex flex-wrap justify-center gap-2">
+                {quickLocations.map((loc) => (
+                  <Button
+                    key={loc}
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handleQuickSearch(loc)}
+                    className="border-elec-yellow/30 text-white hover:bg-elec-yellow/10 hover:border-elec-yellow"
+                  >
+                    {loc}
+                  </Button>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <h4 className="text-xs uppercase tracking-wider text-elec-yellow/80 mb-2 text-center">Common jobs</h4>
+              <div className="flex flex-wrap justify-center gap-2">
+                {quickJobTypes.map((job) => (
+                  <Button
+                    key={job}
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handleQuickSearch(job)}
+                    className="border-elec-yellow/30 text-white hover:bg-elec-yellow/10 hover:border-elec-yellow"
+                  >
+                    {job}
+                  </Button>
+                ))}
+              </div>
             </div>
           </div>
         )}

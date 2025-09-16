@@ -105,11 +105,12 @@ const EnhancedPricingCard = ({ pricingData }: EnhancedPricingCardProps) => {
       <CardContent className="pt-0">
         {/* Main Price Display */}
         <div className="text-center p-4 bg-elec-yellow/10 rounded-lg mb-4">
-          <div className="text-2xl font-bold text-elec-yellow mb-1">
-            {formatPrice(pricingData.average_price)}
+          <div className="text-xs text-muted-foreground uppercase tracking-wide">From</div>
+          <div className="text-3xl font-extrabold text-elec-yellow mb-1">
+            {formatPrice(pricingData.min_price)}
           </div>
           <div className="text-xs text-muted-foreground mb-2">
-            Average {pricingData.unit}
+            Avg: {formatPrice(pricingData.average_price)} · {pricingData.unit}
           </div>
           <div className="text-sm text-muted-foreground">
             Range: {formatPrice(pricingData.min_price)} - {formatPrice(pricingData.max_price)}
