@@ -32,96 +32,105 @@ const NewsFilters = ({
     articles.filter(article => article.category === selectedCategory).length;
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
       {/* Professional News Toolbar */}
-      <div className="bg-elec-card/50 border border-elec-yellow/10 rounded-lg p-4 sm:p-6">
-        <div className="flex flex-col lg:flex-row gap-4 items-start lg:items-center">
-          {/* Search Bar */}
-          <div className="flex-1 relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+      <div className="bg-elec-card/80 border border-elec-yellow/20 rounded-xl p-6 backdrop-blur-sm">
+        <div className="space-y-4">
+          {/* Search Bar - Full Width */}
+          <div className="relative">
+            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
             <Input
               type="text"
-              placeholder="Search electrical industry news..."
+              placeholder="Search electrical industry news, regulations, safety updates..."
               value={searchTerm}
               onChange={(e) => onSearchChange(e.target.value)}
-              className="pl-10 bg-elec-dark/50 border-elec-yellow/20 text-white placeholder:text-muted-foreground focus:border-elec-yellow/40 h-11"
+              className="pl-12 pr-4 bg-elec-dark/70 border-elec-yellow/30 text-white placeholder:text-muted-foreground focus:border-elec-yellow/60 focus:ring-2 focus:ring-elec-yellow/20 h-12 text-base rounded-lg"
             />
           </div>
 
-          {/* Quick Filters */}
-          <div className="flex flex-wrap gap-2">
-            <Button
-              variant={sortBy === 'newest' ? 'default' : 'outline'}
-              size="sm"
-              onClick={() => onSortChange('newest')}
-              className="border-elec-yellow/20 text-elec-yellow hover:bg-elec-yellow/10"
-            >
-              <Clock className="h-3 w-3 mr-1" />
-              Latest
-            </Button>
-            <Button
-              variant={sortBy === 'views_desc' ? 'default' : 'outline'}
-              size="sm"
-              onClick={() => onSortChange('views_desc')}
-              className="border-elec-yellow/20 text-elec-yellow hover:bg-elec-yellow/10"
-            >
-              <TrendingUp className="h-3 w-3 mr-1" />
-              Trending
-            </Button>
-          </div>
+          {/* Filters Row */}
+          <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
+            {/* Quick Sort Buttons */}
+            <div className="flex flex-wrap gap-3">
+              <Button
+                variant={sortBy === 'newest' ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => onSortChange('newest')}
+                className={sortBy === 'newest' 
+                  ? "bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 font-medium" 
+                  : "border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 hover:border-elec-yellow/50 bg-transparent"
+                }
+              >
+                <Clock className="h-4 w-4 mr-2" />
+                Latest
+              </Button>
+              <Button
+                variant={sortBy === 'views_desc' ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => onSortChange('views_desc')}
+                className={sortBy === 'views_desc' 
+                  ? "bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 font-medium" 
+                  : "border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 hover:border-elec-yellow/50 bg-transparent"
+                }
+              >
+                <TrendingUp className="h-4 w-4 mr-2" />
+                Trending
+              </Button>
+            </div>
 
-          {/* Advanced Filters */}
-          <div className="flex gap-3">
-            <Select value={selectedCategory} onValueChange={onCategoryChange}>
-              <SelectTrigger className="w-48 bg-elec-dark/50 border-elec-yellow/20 text-white h-11">
-                <Filter className="h-4 w-4 mr-2" />
-                <SelectValue placeholder="Category" />
-              </SelectTrigger>
-              <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                <SelectItem value="all" className="text-white hover:bg-elec-yellow/10">
-                  All Categories ({totalArticles})
-                </SelectItem>
-                {uniqueCategories.map((category) => {
-                  const count = articles.filter(a => a.category === category).length;
-                  return (
-                    <SelectItem key={category} value={category} className="text-white hover:bg-elec-yellow/10">
-                      {category} ({count})
-                    </SelectItem>
-                  );
-                })}
-              </SelectContent>
-            </Select>
+            {/* Dropdown Filters */}
+            <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+              <Select value={selectedCategory} onValueChange={onCategoryChange}>
+                <SelectTrigger className="w-full sm:w-56 bg-elec-dark/80 border-elec-yellow/30 text-white h-11 rounded-lg hover:border-elec-yellow/50 focus:border-elec-yellow/60 focus:ring-2 focus:ring-elec-yellow/20">
+                  <Filter className="h-4 w-4 mr-2 text-elec-yellow" />
+                  <SelectValue placeholder="Filter by Category" />
+                </SelectTrigger>
+                <SelectContent className="bg-elec-dark/95 border-elec-yellow/30 backdrop-blur-md z-50 rounded-lg shadow-xl">
+                  <SelectItem value="all" className="text-white hover:bg-elec-yellow/15 focus:bg-elec-yellow/15 rounded-md">
+                    All Categories ({totalArticles})
+                  </SelectItem>
+                  {uniqueCategories.map((category) => {
+                    const count = articles.filter(a => a.category === category).length;
+                    return (
+                      <SelectItem key={category} value={category} className="text-white hover:bg-elec-yellow/15 focus:bg-elec-yellow/15 rounded-md">
+                        {category} ({count})
+                      </SelectItem>
+                    );
+                  })}
+                </SelectContent>
+              </Select>
 
-            <Select value={sortBy} onValueChange={onSortChange}>
-              <SelectTrigger className="w-40 bg-elec-dark/50 border-elec-yellow/20 text-white h-11">
-                <SelectValue placeholder="Sort" />
-              </SelectTrigger>
-              <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                <SelectItem value="newest" className="text-white hover:bg-elec-yellow/10">Latest First</SelectItem>
-                <SelectItem value="oldest" className="text-white hover:bg-elec-yellow/10">Oldest First</SelectItem>
-                <SelectItem value="title" className="text-white hover:bg-elec-yellow/10">Alphabetical</SelectItem>
-              </SelectContent>
-            </Select>
+              <Select value={sortBy} onValueChange={onSortChange}>
+                <SelectTrigger className="w-full sm:w-44 bg-elec-dark/80 border-elec-yellow/30 text-white h-11 rounded-lg hover:border-elec-yellow/50 focus:border-elec-yellow/60 focus:ring-2 focus:ring-elec-yellow/20">
+                  <SelectValue placeholder="Sort by" />
+                </SelectTrigger>
+                <SelectContent className="bg-elec-dark/95 border-elec-yellow/30 backdrop-blur-md z-50 rounded-lg shadow-xl">
+                  <SelectItem value="newest" className="text-white hover:bg-elec-yellow/15 focus:bg-elec-yellow/15 rounded-md">Latest First</SelectItem>
+                  <SelectItem value="oldest" className="text-white hover:bg-elec-yellow/15 focus:bg-elec-yellow/15 rounded-md">Oldest First</SelectItem>
+                  <SelectItem value="title" className="text-white hover:bg-elec-yellow/15 focus:bg-elec-yellow/15 rounded-md">Alphabetical</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
           </div>
         </div>
       </div>
 
       {/* Results Summary */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+        <div className="flex flex-wrap items-center gap-3">
+          <Badge variant="outline" className="border-elec-yellow/40 text-elec-yellow bg-elec-yellow/10 px-3 py-1.5 text-sm font-medium">
             {filteredCount} {filteredCount === 1 ? 'Article' : 'Articles'}
           </Badge>
           {selectedCategory !== 'all' && (
-            <Badge variant="secondary" className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/20">
-              {selectedCategory}
+            <Badge variant="secondary" className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30 px-3 py-1.5 text-sm">
+              Category: {selectedCategory}
             </Badge>
           )}
         </div>
         
         {searchTerm && (
-          <div className="text-sm text-muted-foreground">
-            Results for "{searchTerm}"
+          <div className="text-sm text-muted-foreground bg-elec-dark/30 px-3 py-1.5 rounded-md border border-elec-yellow/10">
+            Search: "{searchTerm}"
           </div>
         )}
       </div>
