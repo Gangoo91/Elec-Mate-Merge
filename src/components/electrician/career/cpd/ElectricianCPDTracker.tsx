@@ -10,6 +10,7 @@ import CPDEntryForm from "../../../apprentice/career/cpd/CPDEntryForm";
 import CPDHistory from "../../../apprentice/career/cpd/CPDHistory";
 import CPDGoals from "../../../apprentice/career/cpd/CPDGoals";
 import CPDDashboard from "../../../apprentice/career/cpd/enhanced/CPDDashboard";
+import EnhancedCPDDashboard from "./EnhancedCPDDashboard";
 import { useCPDAutoTracking } from "@/hooks/cpd/useCPDAutoTracking";
 
 const ElectricianCPDTracker = () => {
@@ -75,9 +76,10 @@ const ElectricianCPDTracker = () => {
         {/* Mobile Content */}
         <div className="p-4">
           {activeTab === "compliance" && (
-            <MobileEnhancedCPD 
+            <EnhancedCPDDashboard 
               onAddEntry={handleAddEntry}
               onViewHistory={handleViewHistory}
+              onManageGoals={handleManageGoals}
             />
           )}
           {activeTab === "log-activity" && (
@@ -133,7 +135,7 @@ const ElectricianCPDTracker = () => {
       label: "Compliance",
       icon: TrendingUp,
       content: (
-        <ComplianceDashboard 
+        <EnhancedCPDDashboard 
           onAddEntry={handleAddEntry}
           onViewHistory={handleViewHistory}
           onManageGoals={handleManageGoals}

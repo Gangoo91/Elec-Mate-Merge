@@ -565,6 +565,171 @@ export type Database = {
         }
         Relationships: []
       }
+      cpd_entries: {
+        Row: {
+          activity_type: string
+          category: string
+          created_at: string
+          date_completed: string
+          description: string | null
+          evidence_files: Json | null
+          hours: number
+          id: string
+          is_verified: boolean | null
+          learning_outcomes: string[] | null
+          professional_body_id: string | null
+          title: string
+          updated_at: string
+          user_id: string
+          verification_status: string | null
+          verified_at: string | null
+          verified_by: string | null
+        }
+        Insert: {
+          activity_type: string
+          category: string
+          created_at?: string
+          date_completed: string
+          description?: string | null
+          evidence_files?: Json | null
+          hours: number
+          id?: string
+          is_verified?: boolean | null
+          learning_outcomes?: string[] | null
+          professional_body_id?: string | null
+          title: string
+          updated_at?: string
+          user_id: string
+          verification_status?: string | null
+          verified_at?: string | null
+          verified_by?: string | null
+        }
+        Update: {
+          activity_type?: string
+          category?: string
+          created_at?: string
+          date_completed?: string
+          description?: string | null
+          evidence_files?: Json | null
+          hours?: number
+          id?: string
+          is_verified?: boolean | null
+          learning_outcomes?: string[] | null
+          professional_body_id?: string | null
+          title?: string
+          updated_at?: string
+          user_id?: string
+          verification_status?: string | null
+          verified_at?: string | null
+          verified_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cpd_entries_professional_body_id_fkey"
+            columns: ["professional_body_id"]
+            isOneToOne: false
+            referencedRelation: "professional_bodies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      cpd_evidence_files: {
+        Row: {
+          cpd_entry_id: string
+          file_name: string
+          file_size: number | null
+          file_type: string
+          file_url: string
+          id: string
+          ocr_text: string | null
+          uploaded_at: string
+          user_id: string
+          verification_status: string | null
+        }
+        Insert: {
+          cpd_entry_id: string
+          file_name: string
+          file_size?: number | null
+          file_type: string
+          file_url: string
+          id?: string
+          ocr_text?: string | null
+          uploaded_at?: string
+          user_id: string
+          verification_status?: string | null
+        }
+        Update: {
+          cpd_entry_id?: string
+          file_name?: string
+          file_size?: number | null
+          file_type?: string
+          file_url?: string
+          id?: string
+          ocr_text?: string | null
+          uploaded_at?: string
+          user_id?: string
+          verification_status?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cpd_evidence_files_cpd_entry_id_fkey"
+            columns: ["cpd_entry_id"]
+            isOneToOne: false
+            referencedRelation: "cpd_entries"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      cpd_portfolios: {
+        Row: {
+          compliance_percentage: number
+          generated_at: string
+          id: string
+          pdf_url: string | null
+          period_end: string
+          period_start: string
+          professional_body_id: string
+          status: string | null
+          title: string
+          total_hours: number
+          user_id: string
+        }
+        Insert: {
+          compliance_percentage: number
+          generated_at?: string
+          id?: string
+          pdf_url?: string | null
+          period_end: string
+          period_start: string
+          professional_body_id: string
+          status?: string | null
+          title: string
+          total_hours: number
+          user_id: string
+        }
+        Update: {
+          compliance_percentage?: number
+          generated_at?: string
+          id?: string
+          pdf_url?: string | null
+          period_end?: string
+          period_start?: string
+          professional_body_id?: string
+          status?: string | null
+          title?: string
+          total_hours?: number
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cpd_portfolios_professional_body_id_fkey"
+            columns: ["professional_body_id"]
+            isOneToOne: false
+            referencedRelation: "professional_bodies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       education_market_stats: {
         Row: {
           expires_at: string
@@ -909,6 +1074,7 @@ export type Database = {
       }
       industry_news: {
         Row: {
+          author: string | null
           average_rating: number | null
           canonical_url: string | null
           category: string
@@ -923,6 +1089,7 @@ export type Database = {
           is_active: boolean
           keywords: string[] | null
           published_date: string | null
+          quality_score: number | null
           regulatory_body: string
           relevance_score: number | null
           source_name: string | null
@@ -933,6 +1100,7 @@ export type Database = {
           view_count: number | null
         }
         Insert: {
+          author?: string | null
           average_rating?: number | null
           canonical_url?: string | null
           category: string
@@ -947,6 +1115,7 @@ export type Database = {
           is_active?: boolean
           keywords?: string[] | null
           published_date?: string | null
+          quality_score?: number | null
           regulatory_body: string
           relevance_score?: number | null
           source_name?: string | null
@@ -957,6 +1126,7 @@ export type Database = {
           view_count?: number | null
         }
         Update: {
+          author?: string | null
           average_rating?: number | null
           canonical_url?: string | null
           category?: string
@@ -971,6 +1141,7 @@ export type Database = {
           is_active?: boolean
           keywords?: string[] | null
           published_date?: string | null
+          quality_score?: number | null
           regulatory_body?: string
           relevance_score?: number | null
           source_name?: string | null
@@ -1834,6 +2005,51 @@ export type Database = {
           notes?: string | null
           records_processed?: number
           status?: string
+        }
+        Relationships: []
+      }
+      professional_bodies: {
+        Row: {
+          annual_cpd_hours: number
+          assessment_cycle: string
+          categories: Json
+          code: string
+          created_at: string
+          description: string | null
+          id: string
+          name: string
+          renewal_period_months: number
+          requirements: Json
+          updated_at: string
+          website_url: string | null
+        }
+        Insert: {
+          annual_cpd_hours: number
+          assessment_cycle?: string
+          categories?: Json
+          code: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          name: string
+          renewal_period_months?: number
+          requirements?: Json
+          updated_at?: string
+          website_url?: string | null
+        }
+        Update: {
+          annual_cpd_hours?: number
+          assessment_cycle?: string
+          categories?: Json
+          code?: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          name?: string
+          renewal_period_months?: number
+          requirements?: Json
+          updated_at?: string
+          website_url?: string | null
         }
         Relationships: []
       }
@@ -3267,6 +3483,50 @@ export type Database = {
           user_id?: string
         }
         Relationships: []
+      }
+      user_professional_memberships: {
+        Row: {
+          created_at: string
+          id: string
+          is_active: boolean
+          membership_number: string | null
+          professional_body_id: string
+          registration_date: string | null
+          renewal_date: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          membership_number?: string | null
+          professional_body_id: string
+          registration_date?: string | null
+          renewal_date?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          membership_number?: string | null
+          professional_body_id?: string
+          registration_date?: string | null
+          renewal_date?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_professional_memberships_professional_body_id_fkey"
+            columns: ["professional_body_id"]
+            isOneToOne: false
+            referencedRelation: "professional_bodies"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       user_qualification_selections: {
         Row: {
