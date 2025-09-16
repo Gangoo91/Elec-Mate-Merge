@@ -49,9 +49,9 @@ const NewsFilters = ({
           </div>
 
           {/* Filters Row */}
-          <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between w-full min-w-0">
+          <div className="flex flex-col sm:flex-row gap-4 items-stretch sm:items-center w-full min-w-0">
             {/* Quick Sort Buttons */}
-            <div className="flex flex-wrap gap-2 sm:gap-3 min-w-0">
+            <div className="flex flex-wrap gap-2 sm:gap-3 min-w-0 flex-1 sm:flex-initial">
               <Button
                 variant={sortBy === 'newest' ? 'default' : 'outline'}
                 size="sm"
@@ -79,9 +79,9 @@ const NewsFilters = ({
             </div>
 
             {/* Dropdown Filters */}
-            <div className="flex flex-col xs:flex-row gap-2 sm:gap-3 w-full sm:w-auto min-w-0 max-w-full">
+            <div className="flex flex-col xs:flex-row gap-2 sm:gap-3 w-full sm:w-auto sm:flex-1 lg:flex-initial min-w-0 max-w-full">
               <Select value={selectedCategory} onValueChange={onCategoryChange}>
-                <SelectTrigger className="w-full sm:w-48 lg:w-56 bg-elec-dark/80 border-elec-yellow/30 text-white h-11 rounded-lg hover:border-elec-yellow/50 focus:border-elec-yellow/60 focus:ring-2 focus:ring-elec-yellow/20 min-w-0">
+                <SelectTrigger className="flex-1 sm:min-w-[12rem] lg:w-56 bg-elec-dark/80 border-elec-yellow/30 text-white h-11 rounded-lg hover:border-elec-yellow/50 focus:border-elec-yellow/60 focus:ring-2 focus:ring-elec-yellow/20 min-w-0">
                   <Filter className="h-4 w-4 mr-2 text-elec-yellow" />
                   <SelectValue placeholder="Filter by Category" />
                 </SelectTrigger>
@@ -101,7 +101,7 @@ const NewsFilters = ({
               </Select>
 
               <Select value={sortBy} onValueChange={onSortChange}>
-                <SelectTrigger className="w-full sm:w-36 lg:w-44 bg-elec-dark/80 border-elec-yellow/30 text-white h-11 rounded-lg hover:border-elec-yellow/50 focus:border-elec-yellow/60 focus:ring-2 focus:ring-elec-yellow/20 min-w-0">
+                <SelectTrigger className="flex-1 sm:min-w-[9rem] lg:w-44 bg-elec-dark/80 border-elec-yellow/30 text-white h-11 rounded-lg hover:border-elec-yellow/50 focus:border-elec-yellow/60 focus:ring-2 focus:ring-elec-yellow/20 min-w-0">
                   <SelectValue placeholder="Sort by" />
                 </SelectTrigger>
                 <SelectContent className="bg-elec-dark/95 border-elec-yellow/30 backdrop-blur-md z-50 rounded-lg shadow-xl">
