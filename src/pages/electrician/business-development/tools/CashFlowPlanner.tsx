@@ -120,28 +120,45 @@ const CashFlowPlanner = () => {
         <div className="sm:hidden">
           <Select value={activeTab} onValueChange={setActiveTab}>
             <SelectTrigger className="w-full bg-elec-card border-elec-yellow/20">
-              <SelectValue />
+              <div className="flex items-center gap-2">
+                {activeTab === "setup" && <Settings className="h-4 w-4" />}
+                {activeTab === "projections" && <Calculator className="h-4 w-4" />}
+                {activeTab === "charts" && <BarChart3 className="h-4 w-4" />}
+                {activeTab === "scenarios" && <Target className="h-4 w-4" />}
+                {activeTab === "insights" && <TrendingUp className="h-4 w-4" />}
+                <SelectValue placeholder="Select tab" />
+              </div>
             </SelectTrigger>
             <SelectContent className="bg-elec-card border-elec-yellow/20">
-              <SelectItem value="setup" className="flex items-center gap-2">
-                <Settings className="h-4 w-4" />
-                Setup
+              <SelectItem value="setup">
+                <div className="flex items-center gap-2">
+                  <Settings className="h-4 w-4" />
+                  Setup
+                </div>
               </SelectItem>
-              <SelectItem value="projections" className="flex items-center gap-2">
-                <Calculator className="h-4 w-4" />
-                Projections
+              <SelectItem value="projections">
+                <div className="flex items-center gap-2">
+                  <Calculator className="h-4 w-4" />
+                  Projections
+                </div>
               </SelectItem>
-              <SelectItem value="charts" className="flex items-center gap-2">
-                <BarChart3 className="h-4 w-4" />
-                Charts
+              <SelectItem value="charts">
+                <div className="flex items-center gap-2">
+                  <BarChart3 className="h-4 w-4" />
+                  Charts
+                </div>
               </SelectItem>
-              <SelectItem value="scenarios" className="flex items-center gap-2">
-                <Target className="h-4 w-4" />
-                Scenarios
+              <SelectItem value="scenarios">
+                <div className="flex items-center gap-2">
+                  <Target className="h-4 w-4" />
+                  Scenarios
+                </div>
               </SelectItem>
-              <SelectItem value="insights" className="flex items-center gap-2">
-                <TrendingUp className="h-4 w-4" />
-                Insights
+              <SelectItem value="insights">
+                <div className="flex items-center gap-2">
+                  <TrendingUp className="h-4 w-4" />
+                  Insights
+                </div>
               </SelectItem>
             </SelectContent>
           </Select>
