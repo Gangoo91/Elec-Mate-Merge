@@ -54,8 +54,8 @@ const CareerProgression = () => {
       <div className="space-y-3">
         {!activeSection && (
           <>
-            <h1 className="text-3xl sm:text-4xl font-bold text-center mb-4">
-              Electrician Career Progression Hub 2025
+            <h1 className="text-xl sm:text-2xl font-bold text-center mb-4">
+              Career Progression
             </h1>
             <p className="text-sm sm:text-base text-white text-center max-w-4xl mx-auto px-4">
               Advanced career development resources for qualified electricians. Stay ahead with 2025 industry insights, 
