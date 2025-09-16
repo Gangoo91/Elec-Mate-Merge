@@ -10,7 +10,7 @@ import { TrainingEvidenceItem } from "@/types/time-tracking";
 interface TrainingEvidenceDialogProps {
   trigger: React.ReactNode;
   title: string;
-  onAddEvidence: (evidence: Omit<TrainingEvidenceItem, 'id'>) => void;
+  onAddEvidence: (evidence: Omit<TrainingEvidenceItem, 'id'>, files: File[]) => void;
   isUploading: boolean;
   setIsUploading: (value: boolean) => void;
 }
@@ -24,8 +24,8 @@ const TrainingEvidenceDialog = ({
 }: TrainingEvidenceDialogProps) => {
   const [open, setOpen] = useState(false);
 
-  const handleAddEvidence = (evidence: Omit<TrainingEvidenceItem, 'id'>) => {
-    onAddEvidence(evidence);
+  const handleAddEvidence = (evidence: Omit<TrainingEvidenceItem, 'id'>, files: File[]) => {
+    onAddEvidence(evidence, files);
     // Close dialog after successful submission
     setOpen(false);
   };

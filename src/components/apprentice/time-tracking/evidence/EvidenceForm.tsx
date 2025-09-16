@@ -7,10 +7,10 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { TrainingEvidenceItem } from "@/types/time-tracking";
 import { trainingTypes } from "./trainingEvidenceData";
-import { ArrowLeftCircle } from "lucide-react";
+import FileUpload from "@/components/shared/FileUpload";
 
 interface EvidenceFormProps {
-  onAddEvidence: (evidence: Omit<TrainingEvidenceItem, 'id'>) => void;
+  onAddEvidence: (evidence: Omit<TrainingEvidenceItem, 'id'>, files: File[]) => void;
   isUploading: boolean;
   setIsUploading: (value: boolean) => void;
 }
@@ -20,40 +20,35 @@ const EvidenceForm = ({ onAddEvidence, isUploading, setIsUploading }: EvidenceFo
   const [type, setType] = React.useState("");
   const [date, setDate] = React.useState("");
   const [description, setDescription] = React.useState("");
-  const [files, setFiles] = React.useState<FileList | null>(null);
+  const [selectedFiles, setSelectedFiles] = React.useState<File[]>([]);
   const [hours, setHours] = React.useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setIsUploading(true);
     
-    // Get file names from the FileList
-    const fileNames: string[] = [];
-    if (files) {
-      for (let i = 0; i < files.length; i++) {
-        fileNames.push(files[i].name);
-      }
-    }
+    onAddEvidence({
+      title,
+      type,
+      date,
+      description,
+      files: selectedFiles.map(f => f.name)
+    }, selectedFiles);
     
-    // Simulate upload delay
-    setTimeout(() => {
-      onAddEvidence({
-        title,
-        type,
-        date,
-        description,
-        files: fileNames
-      });
-      
-      // Reset form
-      setTitle("");
-      setType("");
-      setDate("");
-      setDescription("");
-      setFiles(null);
-      setHours("");
-      setIsUploading(false);
-    }, 1500);
+    // Reset form
+    setTitle("");
+    setType("");
+    setDate("");
+    setDescription("");
+    setSelectedFiles([]);
+    setHours("");
+  };
+
+  const handleFileSelect = (files: File[]) => {
+    setSelectedFiles(prev => [...prev, ...files]);
+  };
+
+  const handleRemoveFile = (index: number) => {
+    setSelectedFiles(prev => prev.filter((_, i) => i !== index));
   };
 
   return (
@@ -112,20 +107,16 @@ const EvidenceForm = ({ onAddEvidence, isUploading, setIsUploading }: EvidenceFo
       </div>
       
       <div className="space-y-2">
-        <Label htmlFor="evidence-files">Upload Files</Label>
-        <Input 
-          id="evidence-files" 
-          type="file" 
-          accept=".pdf,.jpg,.jpeg,.png,.doc,.docx" 
-          required 
-          multiple
-          className="bg-elec-dark"
-          onChange={(e) => setFiles(e.target.files)}
+        <Label>Upload Evidence Files</Label>
+        <FileUpload
+          onFileSelect={handleFileSelect}
+          selectedFiles={selectedFiles}
+          onRemoveFile={handleRemoveFile}
+          multiple={true}
+          acceptedTypes=".jpg,.jpeg,.png,.pdf,.doc,.docx"
+          maxSize={10}
+          disabled={isUploading}
         />
-        <p className="text-xs text-muted-foreground">
-          Upload photos, PDFs or documents that provide evidence of your training.
-          Max size: 10MB per file
-        </p>
       </div>
       
       <div className="space-y-2">

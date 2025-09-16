@@ -28,8 +28,8 @@ const TrainingEvidence = () => {
     ? evidenceItems 
     : evidenceItems.filter(item => item.type.toLowerCase() === activeTab);
 
-  const handleAddEvidence = (evidence: Omit<TrainingEvidenceItem, 'id'>) => {
-    addEvidence(evidence);
+  const handleAddEvidence = (evidence: Omit<TrainingEvidenceItem, 'id'>, files: File[]) => {
+    addEvidence(evidence, files);
     // Close dialog after successfully adding evidence
     setDialogOpen(false);
   };
