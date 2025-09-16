@@ -119,7 +119,7 @@ const NewsGrid = ({ articles, excludeId }: NewsGridProps) => {
               </div>
 
               {/* Content */}
-              <div className={`p-4 sm:p-5 space-y-3 flex flex-col ${isFeatured ? 'h-[calc(100%-14rem)] sm:h-[calc(100%-16rem)]' : 'h-[calc(100%-8rem)] sm:h-[calc(100%-10rem)]'}`}>
+              <div className="p-4 sm:p-5 space-y-3 flex flex-col h-[calc(100%-10rem)] sm:h-[calc(100%-12rem)]">
                 {/* Meta Info */}
                 <div className="flex items-center justify-between text-xs text-white/80">
                   <div className="flex items-center gap-3">
