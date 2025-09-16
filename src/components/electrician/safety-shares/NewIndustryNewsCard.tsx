@@ -272,12 +272,10 @@ const NewIndustryNewsCard = () => {
         <div className="flex flex-col gap-4 w-full">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 w-full min-w-0">
             <div className="flex flex-wrap items-center gap-3 min-w-0">
-              <div className="flex items-center gap-2 min-w-0">
-                <Newspaper className="h-5 w-5 text-elec-yellow flex-shrink-0" />
-                <h2 className="text-xl sm:text-2xl font-semibold text-elec-yellow truncate">
-                  Industry News
-                </h2>
-              </div>
+              <Newspaper className="h-5 w-5 text-elec-yellow flex-shrink-0" />
+              <h2 className="text-xl sm:text-2xl font-semibold text-elec-yellow truncate">
+                Industry News
+              </h2>
             </div>
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 w-full sm:w-auto min-w-0">
               <div className="text-sm text-muted-foreground min-w-0 flex-1 sm:flex-initial">
