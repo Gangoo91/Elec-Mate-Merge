@@ -103,7 +103,7 @@ const NewsGrid = ({ articles, excludeId }: NewsGridProps) => {
                 
                 {/* Category Badge */}
                 <div className="absolute top-3 left-3">
-                  <Badge className={cn("text-xs font-medium !text-white", getCategoryColor(article.category))}>
+                  <Badge className={cn("text-xs font-medium", getCategoryColor(article.category))}>
                     {article.category}
                   </Badge>
                 </div>
@@ -111,7 +111,7 @@ const NewsGrid = ({ articles, excludeId }: NewsGridProps) => {
                 {/* Regulatory Body Badge */}
                 {article.regulatory_body && (
                   <div className="absolute top-3 right-3">
-                    <Badge variant="outline" className="border-elec-yellow/30 !text-elec-yellow text-xs">
+                    <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow text-xs">
                       {article.regulatory_body}
                     </Badge>
                   </div>
@@ -141,14 +141,14 @@ const NewsGrid = ({ articles, excludeId }: NewsGridProps) => {
                 </div>
 
                 {/* Title */}
-                <h3 className={`font-semibold !text-white line-clamp-2 leading-tight flex-grow ${
+                <h3 className={`font-semibold text-white line-clamp-2 leading-tight flex-grow ${
                   isFeatured ? 'text-base sm:text-lg' : 'text-sm sm:text-base'
                 }`} style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
                   {article.title}
                 </h3>
 
                 {/* Summary */}
-                <p className={`!text-white/90 line-clamp-2 leading-relaxed flex-grow ${
+                <p className={`text-white/90 line-clamp-2 leading-relaxed flex-grow ${
                   isFeatured ? 'text-sm sm:text-base' : 'text-xs sm:text-sm'
                 }`} style={{ textShadow: '0 1px 2px rgba(0,0,0,0.5)' }}>
                   {article.summary}
