@@ -132,7 +132,13 @@ const ElectricianCPDTracker = () => {
       value: "compliance",
       label: "Compliance",
       icon: TrendingUp,
-      content: <ComplianceDashboard />
+      content: (
+        <ComplianceDashboard 
+          onAddEntry={handleAddEntry}
+          onViewHistory={handleViewHistory}
+          onManageGoals={handleManageGoals}
+        />
+      )
     },
     {
       value: "templates", 

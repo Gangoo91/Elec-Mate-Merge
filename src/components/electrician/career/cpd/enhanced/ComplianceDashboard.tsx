@@ -12,12 +12,55 @@ import {
   Target,
   TrendingUp,
   Calendar,
-  Award
+  Award,
+  Plus,
+  Download,
+  FileText,
+  Bell
 } from 'lucide-react';
 import { useEnhancedCPD } from '@/hooks/cpd/useEnhancedCPD';
+import { cpdExportService } from '@/services/cpdExportService';
+import { useCPDData } from '@/hooks/cpd/useCPDData';
+import { CPDStats } from '@/services/cpdDataService';
 
-const ComplianceDashboard = () => {
+interface ComplianceDashboardProps {
+  onAddEntry?: () => void;
+  onViewHistory?: () => void;
+  onManageGoals?: () => void;
+}
+
+const ComplianceDashboard = ({ onAddEntry, onViewHistory, onManageGoals }: ComplianceDashboardProps = {}) => {
   const { compliance, settings, reminders, loading } = useEnhancedCPD();
+  const { entries, goals } = useCPDData();
+
+  const handleExportPDF = () => {
+    if (compliance && entries && goals) {
+      const statsData: CPDStats = {
+        totalHours: compliance.hoursCompleted,
+        hoursThisYear: compliance.hoursCompleted,
+        targetHours: compliance.hoursRequired,
+        completionPercentage: Math.round((compliance.hoursCompleted / compliance.hoursRequired) * 100),
+        daysRemaining: Math.ceil((new Date('2024-12-31').getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24)),
+        hoursThisMonth: entries.filter(e => 
+          new Date(e.date).getMonth() === new Date().getMonth() &&
+          new Date(e.date).getFullYear() === new Date().getFullYear()
+        ).reduce((sum, e) => sum + e.hours, 0),
+        averageHoursPerMonth: compliance.hoursCompleted / 12,
+        categoryBreakdown: compliance.categoryGaps.map(gap => ({
+          category: gap.category,
+          hours: gap.completed,
+          percentage: Math.round((gap.completed / compliance.hoursCompleted) * 100)
+        }))
+      };
+      cpdExportService.exportToPDF(entries, statsData, goals);
+    }
+  };
+
+  const handleExportCSV = () => {
+    if (entries) {
+      cpdExportService.exportToCSV(entries);
+    }
+  };
 
   if (loading || !compliance || !settings) {
     return (
@@ -65,6 +108,65 @@ const ComplianceDashboard = () => {
 
   return (
     <div className="space-y-6">
+      {/* Action Buttons */}
+      <div className="flex flex-wrap gap-3">
+        {onAddEntry && (
+          <Button onClick={onAddEntry} className="bg-elec-yellow text-elec-dark hover:bg-amber-400">
+            <Plus className="mr-2 h-4 w-4" />
+            Add CPD Entry
+          </Button>
+        )}
+        {onViewHistory && (
+          <Button variant="outline" onClick={onViewHistory} className="border-elec-yellow/30">
+            <Clock className="mr-2 h-4 w-4" />
+            View History
+          </Button>
+        )}
+        {onManageGoals && (
+          <Button variant="outline" onClick={onManageGoals} className="border-elec-yellow/30">
+            <Target className="mr-2 h-4 w-4" />
+            Manage Goals
+          </Button>
+        )}
+        <Button variant="outline" onClick={handleExportPDF} className="border-elec-yellow/30">
+          <Download className="mr-2 h-4 w-4" />
+          Export PDF
+        </Button>
+        <Button variant="outline" onClick={handleExportCSV} className="border-elec-yellow/30">
+          <FileText className="mr-2 h-4 w-4" />
+          Export CSV
+        </Button>
+      </div>
+
+      {/* Regulatory Compliance Status */}
+      <Card className="bg-elec-grey border-elec-yellow/20">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2 text-foreground">
+            <Shield className="h-5 w-5 text-elec-yellow" />
+            BS 7671 18th Edition Compliance
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="text-center p-4 bg-muted/10 rounded-lg">
+              <CheckCircle className="h-8 w-8 text-green-400 mx-auto mb-2" />
+              <p className="text-sm font-medium text-foreground">18th Edition</p>
+              <p className="text-xs text-muted-foreground">Current Standard</p>
+            </div>
+            <div className="text-center p-4 bg-muted/10 rounded-lg">
+              <Award className="h-8 w-8 text-elec-yellow mx-auto mb-2" />
+              <p className="text-sm font-medium text-foreground">Regulation Updates</p>
+              <p className="text-xs text-muted-foreground">Amendment 2</p>
+            </div>
+            <div className="text-center p-4 bg-muted/10 rounded-lg">
+              <Bell className="h-8 w-8 text-amber-400 mx-auto mb-2" />
+              <p className="text-sm font-medium text-foreground">Next Review</p>
+              <p className="text-xs text-muted-foreground">2025 Expected</p>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
       {/* High Priority Alerts */}
       {reminders.filter(r => r.priority === 'high').map(reminder => (
         <Alert key={reminder.id} className="border-red-500/30 bg-red-500/5">
