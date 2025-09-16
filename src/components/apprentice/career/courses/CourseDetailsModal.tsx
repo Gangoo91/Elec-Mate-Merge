@@ -176,7 +176,7 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
 
   return (
     <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
-      <div className="bg-elec-dark border border-elec-yellow/20 rounded-lg w-full max-w-5xl max-h-[90vh] overflow-y-auto">
+      <div className="bg-elec-grey border border-elec-yellow/20 rounded-lg w-full max-w-5xl max-h-[90vh] overflow-y-auto">
         <div className="p-6 space-y-6">
           {/* Header */}
           <div className="flex justify-between items-start">
@@ -222,9 +222,9 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
                   {loadingContact ? "Getting Contact..." : "Get Contact Details"}
                 </Button>
               </div>
-              <p className="text-muted-foreground mt-2 text-justify">{course.description}</p>
+              <p className="text-white mt-2 text-justify">{course.description}</p>
               {isLiveCourse && course.source && (
-                <p className="text-xs text-muted-foreground mt-1 flex items-center gap-1">
+                <p className="text-xs text-white mt-1 flex items-center gap-1">
                   <Database className="h-3 w-3" />
                   Source: {course.source}
                 </p>
@@ -237,39 +237,39 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
 
           {/* Key Information Grid */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <Card className="bg-elec-gray border-elec-yellow/10">
+            <Card className="bg-elec-grey border-elec-yellow/10">
               <CardContent className="p-4 text-center">
                 <Clock className="h-5 w-5 text-elec-yellow mx-auto mb-2" />
                 <div className="font-medium">{course.duration}</div>
-                <div className="text-xs text-muted-foreground">Duration</div>
+                <div className="text-xs text-white">Duration</div>
               </CardContent>
             </Card>
-            <Card className="bg-elec-gray border-elec-yellow/10">
+            <Card className="bg-elec-grey border-elec-yellow/10">
               <CardContent className="p-4 text-center">
                 <Users className="h-5 w-5 text-elec-yellow mx-auto mb-2" />
                 <div className="font-medium">{course.level}</div>
-                <div className="text-xs text-muted-foreground">Level</div>
+                <div className="text-xs text-white">Level</div>
               </CardContent>
             </Card>
-            <Card className="bg-elec-gray border-elec-yellow/10">
+            <Card className="bg-elec-grey border-elec-yellow/10">
               <CardContent className="p-4 text-center">
                 <PoundSterling className="h-5 w-5 text-elec-yellow mx-auto mb-2" />
                 <div className="font-medium text-sm">{course.price}</div>
-                <div className="text-xs text-muted-foreground">Price Range</div>
+                <div className="text-xs text-white">Price Range</div>
               </CardContent>
             </Card>
-            <Card className="bg-elec-gray border-elec-yellow/10">
+            <Card className="bg-elec-grey border-elec-yellow/10">
               <CardContent className="p-4 text-center">
                 <TrendingUp className="h-5 w-5 text-elec-yellow mx-auto mb-2" />
                 <div className="font-medium">{course.futureProofing}/5</div>
-                <div className="text-xs text-muted-foreground">Future-Proof</div>
+                <div className="text-xs text-white">Future-Proof</div>
               </CardContent>
             </Card>
           </div>
 
           {/* Industry Information */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <Card className="border-elec-yellow/10 bg-elec-gray">
+            <Card className="border-elec-yellow/10 bg-elec-grey">
               <CardHeader className="pb-3">
                 <CardTitle className="text-lg flex items-center gap-2">
                   <TrendingUp className="h-4 w-4 text-elec-yellow" />
@@ -296,7 +296,7 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
               </CardContent>
             </Card>
 
-            <Card className="border-elec-yellow/10 bg-elec-gray">
+            <Card className="border-elec-yellow/10 bg-elec-grey">
               <CardHeader className="pb-3">
                 <CardTitle className="text-lg flex items-center gap-2">
                   <Award className="h-4 w-4 text-elec-yellow" />
@@ -317,7 +317,7 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
 
           {/* Course Content */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <Card className="border-elec-yellow/10 bg-elec-gray">
+            <Card className="border-elec-yellow/10 bg-elec-grey">
               <CardHeader className="pb-3">
                 <CardTitle className="text-lg flex items-center gap-2">
                   <BookOpen className="h-4 w-4 text-elec-yellow" />
@@ -329,14 +329,14 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
                   {displayCourseOutline.map((item, idx) => (
                     <div key={idx} className="flex items-start gap-2 text-sm">
                       <CheckCircle className="h-3 w-3 text-green-400 flex-shrink-0 mt-0.5" />
-                      <span className="text-muted-foreground">{item}</span>
+                      <span className="text-white">{item}</span>
                     </div>
                   ))}
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="border-elec-yellow/10 bg-elec-gray">
+            <Card className="border-elec-yellow/10 bg-elec-grey">
               <CardHeader className="pb-3">
                 <CardTitle className="text-lg flex items-center gap-2">
                   <Target className="h-4 w-4 text-elec-yellow" />
@@ -348,7 +348,7 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
                   {displayCareerOutcomes.map((outcome, idx) => (
                     <div key={idx} className="flex items-start gap-2 text-sm">
                       <CheckCircle className="h-3 w-3 text-green-400 flex-shrink-0 mt-0.5" />
-                      <span className="text-muted-foreground">{outcome}</span>
+                      <span className="text-white">{outcome}</span>
                     </div>
                   ))}
                 </div>
@@ -358,7 +358,7 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
 
           {/* Assessment & Prerequisites */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <Card className="border-elec-yellow/10 bg-elec-gray">
+            <Card className="border-elec-yellow/10 bg-elec-grey">
               <CardHeader className="pb-3">
                 <CardTitle className="text-lg flex items-center gap-2">
                   <GraduationCap className="h-4 w-4 text-elec-yellow" />
@@ -368,18 +368,18 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
               <CardContent className="space-y-2">
                 <div className="text-sm">
                   <span className="font-medium">Method: </span>
-                  <span className="text-muted-foreground">{course.assessmentMethod}</span>
+                  <span className="text-white">{course.assessmentMethod}</span>
                 </div>
                 <div className="text-sm">
                   <span className="font-medium">Continuous Assessment: </span>
-                  <span className="text-muted-foreground">
+                  <span className="text-white">
                     {course.continuousAssessment ? "Yes" : "Final exam only"}
                   </span>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="border-elec-yellow/10 bg-elec-gray">
+            <Card className="border-elec-yellow/10 bg-elec-grey">
               <CardHeader className="pb-3">
                 <CardTitle className="text-lg">Prerequisites</CardTitle>
               </CardHeader>
@@ -388,7 +388,7 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
                   {displayPrerequisites.map((prereq, idx) => (
                     <div key={idx} className="flex items-center gap-2 text-sm">
                       <div className="w-1 h-1 rounded-full bg-elec-yellow" />
-                      <span className="text-muted-foreground">{prereq}</span>
+                      <span className="text-white">{prereq}</span>
                     </div>
                   ))}
                 </div>
@@ -397,7 +397,7 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
           </div>
 
           {/* Locations */}
-          <Card className="border-elec-yellow/10 bg-elec-gray">
+          <Card className="border-elec-yellow/10 bg-elec-grey">
             <CardHeader className="pb-3">
               <CardTitle className="text-lg flex items-center gap-2">
                 <MapPin className="h-4 w-4 text-elec-yellow" />
@@ -409,7 +409,7 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
                 {displayLocations.map((location, idx) => (
                   <span 
                     key={idx} 
-                    className="text-sm bg-elec-gray/60 px-3 py-1 rounded-md flex items-center gap-1"
+                    className="text-sm bg-elec-grey/60 px-3 py-1 rounded-md flex items-center gap-1"
                   >
                     <MapPin className="h-3 w-3" />
                     {location}
@@ -420,7 +420,7 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
           </Card>
 
           {/* Course Dates */}
-          <Card className="border-elec-yellow/10 bg-elec-gray">
+          <Card className="border-elec-yellow/10 bg-elec-grey">
             <CardHeader className="pb-3">
               <CardTitle className="text-lg flex items-center gap-2">
                 <Calendar className="h-4 w-4 text-elec-yellow" />
@@ -544,7 +544,7 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
           )}
 
           {/* Contact Form - Hidden */}
-          <Card className="border-elec-yellow/20 bg-elec-gray/50 hidden">
+          <Card className="border-elec-yellow/20 bg-elec-grey/50 hidden">
             <CardHeader className="pb-3">
               <CardTitle className="text-lg flex items-center gap-2">
                 <Mail className="h-4 w-4 text-elec-yellow" />
