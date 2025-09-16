@@ -207,53 +207,6 @@ const LivePricingRedesigned = () => {
           </CardContent>
         </Card>
 
-        {/* Market Insights Bar */}
-        <Card className="border-elec-yellow/20 bg-gradient-to-r from-elec-gray/30 to-elec-gray/10">
-          <CardContent className="p-4">
-            <div className="flex items-center justify-between mb-3">
-              <h3 className="font-semibold flex items-center gap-2">
-                <TrendingUp className="h-4 w-4 text-elec-yellow" />
-                Market Insights
-              </h3>
-              <Badge className="bg-elec-yellow/20 text-elec-yellow text-xs">LIVE</Badge>
-            </div>
-            
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              <div>
-                <h4 className="text-sm font-medium mb-2">Trending Materials</h4>
-                <div className="space-y-1">
-                  {marketInsights.trending.map((item, index) => (
-                    <div key={index} className="flex items-center justify-between text-xs">
-                      <span>{item.name}</span>
-                      <PriceTrendIndicator trend={item.trend} change={item.change} />
-                    </div>
-                  ))}
-                </div>
-              </div>
-              
-              <div className="sm:col-span-2 lg:col-span-2">
-                <h4 className="text-sm font-medium mb-2 flex items-center gap-1">
-                  <Bell className="h-3 w-3" />
-                  Market Alerts
-                </h4>
-                <div className="space-y-2">
-                  {marketInsights.alerts.map((alert, index) => (
-                    <div key={index} className={`flex items-start gap-2 text-xs p-2 rounded ${
-                      alert.urgent ? 'bg-red-500/10 border border-red-500/20' : 'bg-blue-500/10 border border-blue-500/20'
-                    }`}>
-                      {alert.urgent ? (
-                        <AlertTriangle className="h-3 w-3 text-red-400 mt-0.5 flex-shrink-0" />
-                      ) : (
-                        <Clock className="h-3 w-3 text-blue-400 mt-0.5 flex-shrink-0" />
-                      )}
-                      <span className={alert.urgent ? 'text-red-300' : 'text-blue-300'}>{alert.message}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
 
         {/* Tabbed Interface */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
@@ -266,18 +219,18 @@ const LivePricingRedesigned = () => {
               <span>Regional</span>
             </TabsTrigger>
             <TabsTrigger 
-              value="market" 
-              className="flex flex-col sm:flex-row items-center gap-1 py-3 text-xs sm:text-sm data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark"
-            >
-              <TrendingUp className="h-4 w-4" />
-              <span>Insights</span>
-            </TabsTrigger>
-            <TabsTrigger 
               value="submit" 
               className="flex flex-col sm:flex-row items-center gap-1 py-3 text-xs sm:text-sm data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark"
             >
               <Users className="h-4 w-4" />
               <span>Submit</span>
+            </TabsTrigger>
+            <TabsTrigger 
+              value="market" 
+              className="flex flex-col sm:flex-row items-center gap-1 py-3 text-xs sm:text-sm data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark"
+            >
+              <TrendingUp className="h-4 w-4" />
+              <span>Insights</span>
             </TabsTrigger>
             <TabsTrigger 
               value="scrap" 
@@ -297,6 +250,18 @@ const LivePricingRedesigned = () => {
                 </Badge>
               </div>
               <EnhancedRegionalPricing />
+            </div>
+          </TabsContent>
+
+          <TabsContent value="submit" className="space-y-6 animate-fade-in">
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <h2 className="text-xl font-semibold">Community Price Submission</h2>
+                <Badge className="bg-purple-500/20 text-purple-400 border-purple-500/30">
+                  Community Driven
+                </Badge>
+              </div>
+              <CommunityPriceSubmission />
             </div>
           </TabsContent>
 
