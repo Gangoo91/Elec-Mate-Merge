@@ -269,42 +269,46 @@ const NewIndustryNewsCard = () => {
         />
 
         {/* Results Summary with Refresh Button */}
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-          <div className="flex items-center gap-2">
-            <Newspaper className="h-5 w-5 text-elec-yellow" />
-            <h2 className="text-2xl font-semibold text-elec-yellow">
-              Industry News
-            </h2>
-            {articles.length > 0 && (
-              <div className="text-xs bg-elec-yellow/20 text-elec-yellow px-2 py-1 rounded-full">
-                Live from Firecrawl
+        <div className="flex flex-col gap-4 w-full">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 w-full min-w-0">
+            <div className="flex flex-wrap items-center gap-3 min-w-0">
+              <div className="flex items-center gap-2 min-w-0">
+                <Newspaper className="h-5 w-5 text-elec-yellow flex-shrink-0" />
+                <h2 className="text-xl sm:text-2xl font-semibold text-elec-yellow truncate">
+                  Industry News
+                </h2>
               </div>
-            )}
-          </div>
-          <div className="flex items-center gap-4">
-            <div className="text-sm text-muted-foreground">
-              <p>
-                Showing {startIndex + 1}-{Math.min(endIndex, filteredAndSortedArticles.length)} of {filteredAndSortedArticles.length} articles
-                {totalPages > 1 && (
-                  <span className="text-elec-yellow ml-2">(Page {currentPage} of {totalPages})</span>
-                )}
-              </p>
               {articles.length > 0 && (
-                <p className="text-xs opacity-75">
-                  Sources: Electrical Times, Professional Electrician, ECN
-                </p>
+                <div className="text-xs bg-elec-yellow/20 text-elec-yellow px-3 py-1.5 rounded-full whitespace-nowrap">
+                  Live from Firecrawl
+                </div>
               )}
             </div>
-            <Button
-              onClick={handleRefreshNews}
-              disabled={isRefreshing}
-              size="sm"
-              variant="outline"
-              className="border-elec-yellow/20 text-elec-yellow hover:bg-elec-yellow/10 hover:border-elec-yellow/40 bg-transparent"
-            >
-              <RefreshCw className={`h-4 w-4 mr-2 ${isRefreshing ? 'animate-spin' : ''}`} />
-              {isRefreshing ? 'Fetching Latest...' : 'Refresh News'}
-            </Button>
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 w-full sm:w-auto min-w-0">
+              <div className="text-sm text-muted-foreground min-w-0 flex-1 sm:flex-initial">
+                <p className="break-words">
+                  Showing {startIndex + 1}-{Math.min(endIndex, filteredAndSortedArticles.length)} of {filteredAndSortedArticles.length} articles
+                  {totalPages > 1 && (
+                    <span className="text-elec-yellow ml-2 whitespace-nowrap">(Page {currentPage} of {totalPages})</span>
+                  )}
+                </p>
+                {articles.length > 0 && (
+                  <p className="text-xs opacity-75 mt-1">
+                    Sources: Electrical Times, Professional Electrician, ECN
+                  </p>
+                )}
+              </div>
+              <Button
+                onClick={handleRefreshNews}
+                disabled={isRefreshing}
+                size="sm"
+                variant="outline"
+                className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 hover:border-elec-yellow/50 bg-transparent whitespace-nowrap flex-shrink-0"
+              >
+                <RefreshCw className={`h-4 w-4 mr-2 ${isRefreshing ? 'animate-spin' : ''}`} />
+                {isRefreshing ? 'Fetching Latest...' : 'Refresh News'}
+              </Button>
+            </div>
           </div>
         </div>
 
