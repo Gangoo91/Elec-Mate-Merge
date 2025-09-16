@@ -8,10 +8,9 @@ import { isValidUrl } from "@/utils/urlUtils";
 
 interface NewsHeroProps {
   article: NewsArticle;
-  onReadMore: (article: NewsArticle) => void;
 }
 
-const NewsHero = ({ article, onReadMore }: NewsHeroProps) => {
+const NewsHero = ({ article }: NewsHeroProps) => {
   const getCategoryColor = (category: string) => {
     switch (category?.toLowerCase()) {
       case "bs7671":
@@ -65,28 +64,17 @@ const NewsHero = ({ article, onReadMore }: NewsHeroProps) => {
               </div>
             </div>
             
-            <div className="flex items-center gap-4">
+            <div className="flex justify-center">
               <Button 
-                onClick={() => onReadMore(article)}
-                className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 transition-all duration-200"
+                variant="outline"
                 size="lg"
+                className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 border-elec-yellow transition-all duration-200"
+                onClick={() => window.open(article.external_url, '_blank', 'noopener,noreferrer')}
+                aria-label="Visit original article"
               >
-                Read Full Article
-                <ArrowRight className="h-5 w-5 ml-2" />
+                Visit Source
+                <ExternalLink className="h-5 w-5 ml-2" />
               </Button>
-              
-              {isValidUrl(article.external_url) && (
-                <Button 
-                  variant="outline"
-                  size="lg"
-                  className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
-                  onClick={() => window.open(article.external_url, '_blank', 'noopener,noreferrer')}
-                  aria-label="Visit original article"
-                >
-                  Visit Source
-                  <ExternalLink className="h-5 w-5 ml-2" />
-                </Button>
-              )}
             </div>
           </div>
           

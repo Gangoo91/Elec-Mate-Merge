@@ -8,11 +8,10 @@ import { isValidUrl } from "@/utils/urlUtils";
 
 interface NewsGridProps {
   articles: NewsArticle[];
-  onReadMore: (article: NewsArticle) => void;
   excludeId?: string;
 }
 
-const NewsGrid = ({ articles, onReadMore, excludeId }: NewsGridProps) => {
+const NewsGrid = ({ articles, excludeId }: NewsGridProps) => {
   const filteredArticles = excludeId 
     ? articles.filter(article => article.id !== excludeId)
     : articles;
@@ -69,7 +68,7 @@ const NewsGrid = ({ articles, onReadMore, excludeId }: NewsGridProps) => {
         <Card 
           key={article.id}
           className="bg-elec-card border-elec-yellow/10 hover:border-elec-yellow/30 transition-all duration-300 hover:shadow-lg hover:shadow-elec-yellow/5 group cursor-pointer"
-          onClick={() => onReadMore(article)}
+          onClick={() => window.open(article.external_url, '_blank', 'noopener,noreferrer')}
         >
           <CardHeader className="pb-3">
             <div className="flex items-start justify-between mb-3">
@@ -115,33 +114,20 @@ const NewsGrid = ({ articles, onReadMore, excludeId }: NewsGridProps) => {
               </div>
             </div>
             
-            <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-all duration-200">
+            <div className="flex justify-center opacity-0 group-hover:opacity-100 transition-all duration-200">
               <Button 
                 variant="ghost" 
                 size="sm"
-                className="text-elec-yellow hover:bg-elec-yellow/10 hover:text-elec-yellow flex-1"
+                className="text-elec-yellow hover:bg-elec-yellow/10 hover:text-elec-yellow"
                 onClick={(e) => {
                   e.stopPropagation();
-                  onReadMore(article);
+                  window.open(article.external_url, '_blank', 'noopener,noreferrer');
                 }}
+                aria-label="Visit original article"
               >
-                Read More
+                Visit Website
+                <ExternalLink className="h-3 w-3 ml-1" />
               </Button>
-              
-              {isValidUrl(article.external_url) && (
-                <Button 
-                  variant="outline" 
-                  size="sm"
-                  className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    window.open(article.external_url, '_blank', 'noopener,noreferrer');
-                  }}
-                  aria-label="Visit original article"
-                >
-                  <ExternalLink className="h-3 w-3" />
-                </Button>
-              )}
             </div>
             
             <div className="mt-3 pt-3 border-t border-elec-yellow/10">

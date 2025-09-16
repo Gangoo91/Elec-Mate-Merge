@@ -6,10 +6,10 @@ import { Newspaper, AlertTriangle, RefreshCw } from "lucide-react";
 import { useIndustryNews, type NewsArticle } from "@/hooks/useIndustryNews";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { isValidUrl } from "@/utils/urlUtils";
 import NewsHero from "./NewsHero";
 import NewsGrid from "./NewsGrid";
 import NewsFilters from "./NewsFilters";
-import NewsDetail from "./NewsDetail";
 
 const NewIndustryNewsCard = () => {
   const { toast } = useToast();
@@ -32,7 +32,7 @@ const NewIndustryNewsCard = () => {
     errorMessage: error?.message,
     firstArticle: articles[0]?.title
   });
-  const [selectedArticle, setSelectedArticle] = useState<NewsArticle | null>(null);
+  
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [sortBy, setSortBy] = useState("newest");
@@ -63,10 +63,12 @@ const NewIndustryNewsCard = () => {
       const matchesCategory = selectedCategory === "all" || 
         (article.category && article.category === selectedCategory);
       
-      const passes = matchesSearch && matchesCategory;
+      const hasValidUrl = isValidUrl(article.external_url);
+      
+      const passes = matchesSearch && matchesCategory && hasValidUrl;
       
       if (!passes) {
-        console.log(`❌ Article filtered out: "${article.title}" - Search: ${matchesSearch}, Category: ${matchesCategory}`);
+        console.log(`❌ Article filtered out: "${article.title}" - Search: ${matchesSearch}, Category: ${matchesCategory}, ValidURL: ${hasValidUrl}`);
       }
       
       return passes;
@@ -110,9 +112,6 @@ const NewIndustryNewsCard = () => {
     return filtered;
   }, [articles, searchTerm, selectedCategory, sortBy]);
 
-  const handleReadMore = (article: NewsArticle) => {
-    setSelectedArticle(article);
-  };
 
   const handleRefreshNews = () => {
     console.log('🔄 User clicked refresh news button - fetching live data with Firecrawl');
@@ -300,8 +299,7 @@ const NewIndustryNewsCard = () => {
             {/* Hero Article */}
             {heroArticle && (
               <NewsHero 
-                article={heroArticle} 
-                onReadMore={handleReadMore}
+                article={heroArticle}
               />
             )}
 
@@ -313,7 +311,6 @@ const NewIndustryNewsCard = () => {
                 </h3>
                 <NewsGrid 
                   articles={remainingArticles}
-                  onReadMore={handleReadMore}
                 />
               </div>
             )}
@@ -321,12 +318,6 @@ const NewIndustryNewsCard = () => {
         )}
       </div>
 
-      {/* Article Detail Modal */}
-      <NewsDetail
-        article={selectedArticle}
-        isOpen={!!selectedArticle}
-        onClose={() => setSelectedArticle(null)}
-      />
     </>
   );
 };
