@@ -255,9 +255,9 @@ const NewIndustryNewsCard = () => {
   const remainingArticles = displayArticles.slice(1);
 
   return (
-    <>
-      <div className="space-y-8">
-        {/* Filters */}
+    <div className="space-y-6 sm:space-y-8">
+      {/* Mobile-optimized Filters */}
+      <div className="bg-white/5 rounded-xl border border-white/10 p-4 sm:p-6">
         <NewsFilters
           searchTerm={searchTerm}
           onSearchChange={setSearchTerm}
@@ -267,82 +267,94 @@ const NewIndustryNewsCard = () => {
           onSortChange={setSortBy}
           articles={articles}
         />
+      </div>
 
-        {/* Results Summary with Refresh Button */}
-        <div className="flex flex-col gap-4 w-full">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 w-full min-w-0">
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 w-full min-w-0">
-              <div className="text-sm text-muted-foreground min-w-0 flex-1 sm:flex-initial">
-                <p className="break-words text-left">
-                  Showing {startIndex + 1}-{Math.min(endIndex, filteredAndSortedArticles.length)} of {filteredAndSortedArticles.length} articles
-                  {totalPages > 1 && (
-                    <span className="text-elec-yellow ml-2 whitespace-nowrap">(Page {currentPage} of {totalPages})</span>
-                  )}
-                </p>
-                {articles.length > 0 && (
-                  <p className="text-xs opacity-75 mt-1">
-                    Sources: Electrical Times, Professional Electrician, ECN
-                  </p>
+      {/* Mobile-optimized Results Summary with Refresh Button */}
+      <div className="bg-white/5 rounded-lg border border-white/10 p-3 sm:p-4">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4">
+          <div className="flex flex-col gap-2 min-w-0 flex-1">
+            <div className="text-sm text-white/80">
+              <p className="break-words">
+                Showing <span className="text-elec-yellow font-medium">{startIndex + 1}-{Math.min(endIndex, filteredAndSortedArticles.length)}</span> of <span className="text-elec-yellow font-medium">{filteredAndSortedArticles.length}</span> articles
+                {totalPages > 1 && (
+                  <span className="text-elec-yellow/80 ml-2 text-xs">
+                    (Page {currentPage} of {totalPages})
+                  </span>
                 )}
-              </div>
-              <Button
-                onClick={handleRefreshNews}
-                disabled={isRefreshing}
-                size="sm"
-                variant="outline"
-                className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 hover:border-elec-yellow/50 bg-transparent whitespace-nowrap flex-shrink-0 ml-auto"
-              >
-                <RefreshCw className={`h-4 w-4 mr-2 ${isRefreshing ? 'animate-spin' : ''}`} />
-                {isRefreshing ? 'Fetching Latest...' : 'Refresh News'}
-              </Button>
+              </p>
+              {articles.length > 0 && (
+                <p className="text-xs text-white/60 mt-1">
+                  Sources: Electrical Times, Professional Electrician, ECN
+                </p>
+              )}
             </div>
           </div>
+          <Button
+            onClick={handleRefreshNews}
+            disabled={isRefreshing}
+            size="sm"
+            variant="outline"
+            className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 hover:border-elec-yellow/50 bg-transparent whitespace-nowrap flex-shrink-0 transition-all duration-200 touch-target min-h-[44px]"
+          >
+            <RefreshCw className={`h-4 w-4 mr-2 ${isRefreshing ? 'animate-spin' : ''}`} />
+            <span className="hidden xs:inline">{isRefreshing ? 'Fetching Latest...' : 'Refresh News'}</span>
+            <span className="xs:hidden">{isRefreshing ? 'Fetching...' : 'Refresh'}</span>
+          </Button>
         </div>
+      </div>
 
-        {displayArticles.length === 0 ? (
-          <div className="text-center py-12">
-            <Newspaper className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
-            <p className="text-lg text-muted-foreground mb-2">
-              No articles match your filters
-            </p>
-            <p className="text-sm text-muted-foreground">
-              Try adjusting your search terms or category filter
-            </p>
-          </div>
-        ) : (
-          <>
-            {/* Hero Article */}
-            {heroArticle && (
+      {displayArticles.length === 0 ? (
+        <div className="text-center py-12 bg-white/5 rounded-xl border border-white/10">
+          <Newspaper className="h-16 w-16 text-white/40 mx-auto mb-4" />
+          <p className="text-lg text-white/80 mb-2">
+            No articles match your filters
+          </p>
+          <p className="text-sm text-white/60">
+            Try adjusting your search terms or category filter
+          </p>
+        </div>
+      ) : (
+        <div className="space-y-6 sm:space-y-8">
+          {/* Hero Article */}
+          {heroArticle && (
+            <div className="transform transition-all duration-300 hover:scale-[1.01]">
               <NewsHero 
                 article={heroArticle}
               />
-            )}
+            </div>
+          )}
 
-            {/* Remaining Articles Grid */}
-            {remainingArticles.length > 0 && (
-              <div className="space-y-6">
-                <h3 className="text-xl font-semibold text-white">
+          {/* Remaining Articles Grid */}
+          {remainingArticles.length > 0 && (
+            <div className="space-y-4 sm:space-y-6">
+              <div className="flex items-center gap-3">
+                <div className="h-px bg-gradient-to-r from-transparent via-elec-yellow/30 to-transparent flex-1" />
+                <h3 className="text-lg sm:text-xl font-semibold text-white px-4">
                   More Industry News
                 </h3>
+                <div className="h-px bg-gradient-to-r from-transparent via-elec-yellow/30 to-transparent flex-1" />
+              </div>
+              <div className="transform transition-all duration-300">
                 <NewsGrid 
                   articles={remainingArticles}
                 />
               </div>
-              )}
-            </>
+            </div>
           )}
+        </div>
+      )}
 
-        {/* Pagination */}
-        {filteredAndSortedArticles.length > ITEMS_PER_PAGE && (
+      {/* Enhanced Mobile-friendly Pagination */}
+      {filteredAndSortedArticles.length > ITEMS_PER_PAGE && (
+        <div className="bg-white/5 rounded-xl border border-white/10 p-4">
           <NewsPagination
             currentPage={currentPage}
             totalPages={totalPages}
             paginate={handlePageChange}
           />
-        )}
-      </div>
-
-    </>
+        </div>
+      )}
+    </div>
   );
 };
 

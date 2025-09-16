@@ -54,52 +54,63 @@ const NewsPagination = ({ currentPage, totalPages, paginate }: NewsPaginationPro
   };
 
   return (
-    <div className="flex items-center justify-center space-x-2 py-4">
-      <Button
-        variant="outline"
-        size="sm"
-        onClick={() => paginate(currentPage - 1)}
-        disabled={currentPage === 1}
-        className="border-elec-yellow/20 text-elec-yellow hover:bg-elec-yellow/10 disabled:opacity-50 disabled:cursor-not-allowed"
-      >
-        <ChevronLeft className="h-4 w-4 mr-1" />
-        Previous
-      </Button>
-
-      <div className="flex items-center space-x-1">
-        {getPageNumbers().map((page, index) => (
-          page === '...' ? (
-            <div key={`ellipsis-${index}`} className="px-2">
-              <MoreHorizontal className="h-4 w-4 text-muted-foreground" />
-            </div>
-          ) : (
-            <Button
-              key={page}
-              variant={currentPage === page ? "default" : "outline"}
-              size="sm"
-              onClick={() => paginate(page as number)}
-              className={
-                currentPage === page
-                  ? "bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
-                  : "border-elec-yellow/20 text-elec-yellow hover:bg-elec-yellow/10"
-              }
-            >
-              {page}
-            </Button>
-          )
-        ))}
+    <div className="flex flex-col sm:flex-row items-center justify-center gap-4 py-4">
+      {/* Mobile-first navigation info */}
+      <div className="text-sm text-white/70 order-2 sm:order-1">
+        Page {currentPage} of {totalPages}
       </div>
+      
+      {/* Navigation buttons */}
+      <div className="flex items-center gap-2 order-1 sm:order-2">
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => paginate(currentPage - 1)}
+          disabled={currentPage === 1}
+          className="border-white/30 text-white hover:bg-white/10 disabled:opacity-50 disabled:cursor-not-allowed bg-white/5 touch-target min-h-[44px] transition-all duration-200"
+        >
+          <ChevronLeft className="h-4 w-4 mr-1" />
+          <span className="hidden xs:inline">Previous</span>
+          <span className="xs:hidden">Prev</span>
+        </Button>
 
-      <Button
-        variant="outline"
-        size="sm"
-        onClick={() => paginate(currentPage + 1)}
-        disabled={currentPage === totalPages}
-        className="border-elec-yellow/20 text-elec-yellow hover:bg-elec-yellow/10 disabled:opacity-50 disabled:cursor-not-allowed"
-      >
-        Next
-        <ChevronRight className="h-4 w-4 ml-1" />
-      </Button>
+        {/* Desktop page numbers - hidden on mobile */}
+        <div className="hidden sm:flex items-center gap-1">
+          {getPageNumbers().map((page, index) => (
+            page === '...' ? (
+              <div key={`ellipsis-${index}`} className="px-2">
+                <MoreHorizontal className="h-4 w-4 text-white/40" />
+              </div>
+            ) : (
+              <Button
+                key={page}
+                variant={currentPage === page ? "default" : "outline"}
+                size="sm"
+                onClick={() => paginate(page as number)}
+                className={`transition-all duration-200 ${
+                  currentPage === page
+                    ? "bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 shadow-lg"
+                    : "border-white/30 text-white hover:bg-white/10 bg-white/5"
+                }`}
+              >
+                {page}
+              </Button>
+            )
+          ))}
+        </div>
+
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => paginate(currentPage + 1)}
+          disabled={currentPage === totalPages}
+          className="border-white/30 text-white hover:bg-white/10 disabled:opacity-50 disabled:cursor-not-allowed bg-white/5 touch-target min-h-[44px] transition-all duration-200"
+        >
+          <span className="hidden xs:inline">Next</span>
+          <span className="xs:hidden">Next</span>
+          <ChevronRight className="h-4 w-4 ml-1" />
+        </Button>
+      </div>
     </div>
   );
 };
