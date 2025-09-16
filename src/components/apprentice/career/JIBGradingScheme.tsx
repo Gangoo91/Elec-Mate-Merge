@@ -292,26 +292,26 @@ const JIBGradingScheme = () => {
           </div>
 
           {/* Top metrics grid: 2x2 on mobile, 4 cols on desktop; square tiles with coloured icons */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
-            <div className="aspect-square rounded-lg border border-elec-yellow/20 bg-elec-gray p-3 flex flex-col items-center justify-center text-center">
-              <Award className="h-6 w-6 text-purple-400" aria-hidden="true" />
-              <div className="mt-2 font-semibold text-sm">6 Grades</div>
-              <div className="text-[11px] text-white">Progression pathway</div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+            <div className="aspect-square rounded-lg border border-elec-yellow/20 bg-elec-gray p-4 flex flex-col items-center justify-center text-center">
+              <Award className="h-8 w-8 text-purple-400 mb-3" aria-hidden="true" />
+              <div className="font-semibold text-base text-white">6 Grades</div>
+              <div className="text-xs text-white/80">Progression pathway</div>
             </div>
-            <div className="aspect-square rounded-lg border border-elec-yellow/20 bg-elec-gray p-3 flex flex-col items-center justify-center text-center">
-              <Clock className="h-6 w-6 text-elec-yellow" aria-hidden="true" />
-              <div className="mt-2 font-semibold text-sm">4–5 yrs</div>
-              <div className="text-[11px] text-white">To Gold Card</div>
+            <div className="aspect-square rounded-lg border border-elec-yellow/20 bg-elec-gray p-4 flex flex-col items-center justify-center text-center">
+              <Clock className="h-8 w-8 text-elec-yellow mb-3" aria-hidden="true" />
+              <div className="font-semibold text-base text-white">4–5 yrs</div>
+              <div className="text-xs text-white/80">To Gold Card</div>
             </div>
-            <div className="aspect-square rounded-lg border border-elec-yellow/20 bg-elec-gray p-3 flex flex-col items-center justify-center text-center">
-              <Shield className="h-6 w-6 text-green-400" aria-hidden="true" />
-              <div className="mt-2 font-semibold text-sm">3‑year</div>
-              <div className="text-[11px] text-white">ECS renewal</div>
+            <div className="aspect-square rounded-lg border border-elec-yellow/20 bg-elec-gray p-4 flex flex-col items-center justify-center text-center">
+              <Shield className="h-8 w-8 text-green-400 mb-3" aria-hidden="true" />
+              <div className="font-semibold text-base text-white">3‑year</div>
+              <div className="text-xs text-white/80">ECS renewal</div>
             </div>
-            <div className="aspect-square rounded-lg border border-elec-yellow/20 bg-elec-gray p-3 flex flex-col items-center justify-center text-center">
-              <Briefcase className="h-6 w-6 text-blue-400" aria-hidden="true" />
-              <div className="mt-2 font-semibold text-sm">UK‑wide</div>
-              <div className="text-[11px] text-white">Employer recognition</div>
+            <div className="aspect-square rounded-lg border border-elec-yellow/20 bg-elec-gray p-4 flex flex-col items-center justify-center text-center">
+              <Briefcase className="h-8 w-8 text-blue-400 mb-3" aria-hidden="true" />
+              <div className="font-semibold text-base text-white">UK‑wide</div>
+              <div className="text-xs text-white/80">Employer recognition</div>
             </div>
           </div>
 
@@ -447,61 +447,70 @@ const JIBGradingScheme = () => {
                               <Badge className={grade.color}>Grade {selectedGradeIndex + 1}</Badge>
                             </div>
                           </div>
-                            <div className="space-y-4">
-                              <div>
-                                <h4 className="text-sm font-medium mb-2 text-elec-yellow flex items-center gap-1">
-                                  <BookOpen className="h-3 w-3" /> Requirements
+                            <div className="space-y-6">
+                              <div className="space-y-3">
+                                <h4 className="text-base font-semibold mb-3 text-elec-yellow flex items-center gap-2">
+                                  <BookOpen className="h-4 w-4" /> Requirements
                                 </h4>
-                                <div className="space-y-1">
+                                <div className="space-y-2">
                                   {grade.requirements.map((req, idx) => (
-                                    <div key={idx} className="text-xs text-white flex items-start gap-2">
-                                      <CheckCircle className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
-                                      {req}
+                                    <div key={idx} className="text-sm text-white flex items-start gap-3 leading-relaxed">
+                                      <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
+                                      <span>{req}</span>
                                     </div>
                                   ))}
                                 </div>
                               </div>
-                              <div>
-                                <h4 className="text-sm font-medium mb-2 text-elec-yellow flex items-center gap-1">
-                                  <Award className="h-3 w-3" /> Benefits
+                              
+                              <div className="space-y-3">
+                                <h4 className="text-base font-semibold mb-3 text-elec-yellow flex items-center gap-2">
+                                  <Award className="h-4 w-4" /> Benefits
                                 </h4>
-                                <div className="space-y-1">
+                                <div className="space-y-2">
                                   {grade.benefits.map((benefit, idx) => (
-                                    <div key={idx} className="text-xs text-white flex items-start gap-2">
-                                      <div className="w-1 h-1 rounded-full bg-elec-yellow mt-1.5 flex-shrink-0" />
-                                      {benefit}
+                                    <div key={idx} className="text-sm text-white flex items-start gap-3 leading-relaxed">
+                                      <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
+                                      <span>{benefit}</span>
                                     </div>
                                   ))}
                                 </div>
                               </div>
-                              <div>
-                                <h4 className="text-sm font-medium mb-2 text-elec-yellow flex items-center gap-1">
-                                  <Clock className="h-3 w-3" /> Duration
+                              
+                              <div className="space-y-3">
+                                <h4 className="text-base font-semibold mb-3 text-elec-yellow flex items-center gap-2">
+                                  <Clock className="h-4 w-4" /> Duration & Timeline
                                 </h4>
-                                <div className="text-sm text-white">{grade.duration}</div>
+                                <div className="text-sm text-white leading-relaxed">{grade.duration}</div>
+                                {grade.fastTrack && (
+                                  <div className="text-sm text-blue-400 leading-relaxed">
+                                    <strong>Fast Track:</strong> {grade.fastTrack}
+                                  </div>
+                                )}
                               </div>
-                              <div>
-                                <h4 className="text-sm font-medium mb-2 text-elec-yellow flex items-center gap-1">
-                                  <Briefcase className="h-3 w-3" /> Typical Responsibilities
+                              
+                              <div className="space-y-3">
+                                <h4 className="text-base font-semibold mb-3 text-elec-yellow flex items-center gap-2">
+                                  <Briefcase className="h-4 w-4" /> Typical Responsibilities
                                 </h4>
-                                <div className="space-y-1">
+                                <div className="space-y-2">
                                   {grade.responsibilities.map((resp, idx) => (
-                                    <div key={idx} className="text-xs text-white flex items-start gap-2">
-                                      <div className="w-1 h-1 rounded-full bg-blue-400 mt-1.5 flex-shrink-0" />
-                                      {resp}
+                                    <div key={idx} className="text-sm text-white flex items-start gap-3 leading-relaxed">
+                                      <div className="w-1.5 h-1.5 rounded-full bg-blue-400 mt-2 flex-shrink-0" />
+                                      <span>{resp}</span>
                                     </div>
                                   ))}
                                 </div>
                               </div>
-                              <div>
-                                <h4 className="text-sm font-medium mb-2 text-elec-yellow flex items-center gap-1">
-                                  <BookOpen className="h-3 w-3" /> Recommended CPD/Courses
+                              
+                              <div className="space-y-3">
+                                <h4 className="text-base font-semibold mb-3 text-elec-yellow flex items-center gap-2">
+                                  <BookOpen className="h-4 w-4" /> Recommended CPD/Courses
                                 </h4>
-                                <div className="space-y-1">
+                                <div className="space-y-2">
                                   {grade.cpd.map((course, idx) => (
-                                    <div key={idx} className="text-xs text-white flex items-start gap-2">
-                                      <div className="w-1 h-1 rounded-full bg-purple-400 mt-1.5 flex-shrink-0" />
-                                      {course}
+                                    <div key={idx} className="text-sm text-white flex items-start gap-3 leading-relaxed">
+                                      <div className="w-1.5 h-1.5 rounded-full bg-purple-400 mt-2 flex-shrink-0" />
+                                      <span>{course}</span>
                                     </div>
                                   ))}
                                 </div>
@@ -522,65 +531,76 @@ const JIBGradingScheme = () => {
                             <Badge className={grade.color}>Grade {index + 1}</Badge>
                           </div>
                         </div>
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                          <div>
-                            <h4 className="text-sm font-medium mb-2 text-elec-yellow flex items-center gap-1">
-                              <BookOpen className="h-3 w-3" /> Requirements
-                            </h4>
-                            <div className="space-y-1">
-                              {grade.requirements.map((req, idx) => (
-                                <div key={idx} className="text-xs text-white flex items-start gap-2">
-                                  <CheckCircle className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
-                                  {req}
+                        <div className="space-y-6">
+                          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <div className="space-y-3">
+                              <h4 className="text-base font-semibold text-elec-yellow flex items-center gap-2">
+                                <BookOpen className="h-4 w-4" /> Requirements
+                              </h4>
+                              <div className="space-y-2">
+                                {grade.requirements.map((req, idx) => (
+                                  <div key={idx} className="text-sm text-white flex items-start gap-3 leading-relaxed">
+                                    <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
+                                    <span>{req}</span>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                            
+                            <div className="space-y-3">
+                              <h4 className="text-base font-semibold text-elec-yellow flex items-center gap-2">
+                                <Award className="h-4 w-4" /> Benefits
+                              </h4>
+                              <div className="space-y-2">
+                                {grade.benefits.map((benefit, idx) => (
+                                  <div key={idx} className="text-sm text-white flex items-start gap-3 leading-relaxed">
+                                    <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
+                                    <span>{benefit}</span>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                            
+                            <div className="space-y-3">
+                              <h4 className="text-base font-semibold text-elec-yellow flex items-center gap-2">
+                                <Clock className="h-4 w-4" /> Duration & Timeline
+                              </h4>
+                              <div className="text-sm text-white leading-relaxed">{grade.duration}</div>
+                              {grade.fastTrack && (
+                                <div className="text-sm text-blue-400 leading-relaxed">
+                                  <strong>Fast Track:</strong> {grade.fastTrack}
                                 </div>
-                              ))}
+                              )}
                             </div>
                           </div>
-                          <div>
-                            <h4 className="text-sm font-medium mb-2 text-elec-yellow flex items-center gap-1">
-                              <Award className="h-3 w-3" /> Benefits
-                            </h4>
-                            <div className="space-y-1">
-                              {grade.benefits.map((benefit, idx) => (
-                                <div key={idx} className="text-xs text-white flex items-start gap-2">
-                                  <div className="w-1 h-1 rounded-full bg-elec-yellow mt-1.5 flex-shrink-0" />
-                                  {benefit}
-                                </div>
-                              ))}
+                          
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div className="space-y-3">
+                              <h4 className="text-base font-semibold text-elec-yellow flex items-center gap-2">
+                                <Briefcase className="h-4 w-4" /> Typical Responsibilities
+                              </h4>
+                              <div className="space-y-2">
+                                {grade.responsibilities.map((resp, idx) => (
+                                  <div key={idx} className="text-sm text-white flex items-start gap-3 leading-relaxed">
+                                    <div className="w-1.5 h-1.5 rounded-full bg-blue-400 mt-2 flex-shrink-0" />
+                                    <span>{resp}</span>
+                                  </div>
+                                ))}
+                              </div>
                             </div>
-                          </div>
-                          <div>
-                            <h4 className="text-sm font-medium mb-2 text-elec-yellow flex items-center gap-1">
-                              <Clock className="h-3 w-3" /> Duration
-                            </h4>
-                            <div className="text-sm text-white">{grade.duration}</div>
-                          </div>
-                        </div>
-                        <div className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-3">
-                          <div>
-                            <h4 className="text-sm font-medium mb-2 text-elec-yellow flex items-center gap-1">
-                              <Briefcase className="h-3 w-3" /> Typical Responsibilities
-                            </h4>
-                            <div className="space-y-1">
-                              {grade.responsibilities.map((resp, idx) => (
-                                <div key={idx} className="text-xs text-white flex items-start gap-2">
-                                  <div className="w-1 h-1 rounded-full bg-blue-400 mt-1.5 flex-shrink-0" />
-                                  {resp}
-                                </div>
-                              ))}
-                            </div>
-                          </div>
-                          <div>
-                            <h4 className="text-sm font-medium mb-2 text-elec-yellow flex items-center gap-1">
-                              <BookOpen className="h-3 w-3" /> Recommended CPD/Courses
-                            </h4>
-                            <div className="space-y-1">
-                              {grade.cpd.map((course, idx) => (
-                                <div key={idx} className="text-xs text-white flex items-start gap-2">
-                                  <div className="w-1 h-1 rounded-full bg-purple-400 mt-1.5 flex-shrink-0" />
-                                  {course}
-                                </div>
-                              ))}
+                            
+                            <div className="space-y-3">
+                              <h4 className="text-base font-semibold text-elec-yellow flex items-center gap-2">
+                                <BookOpen className="h-4 w-4" /> Recommended CPD/Courses
+                              </h4>
+                              <div className="space-y-2">
+                                {grade.cpd.map((course, idx) => (
+                                  <div key={idx} className="text-sm text-white flex items-start gap-3 leading-relaxed">
+                                    <div className="w-1.5 h-1.5 rounded-full bg-purple-400 mt-2 flex-shrink-0" />
+                                    <span>{course}</span>
+                                  </div>
+                                ))}
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -743,26 +763,49 @@ const JIBGradingScheme = () => {
             <MobileAccordionItem value="pathway">
               <MobileAccordionTrigger className="bg-elec-gray border-elec-yellow/20" icon={<TrendingUp className="h-4 w-4 text-green-400" />}>Upgrade Pathways</MobileAccordionTrigger>
               <MobileAccordionContent className="bg-elec-gray border-x border-b border-elec-yellow/20 rounded-b-lg p-3">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-                  <div className="rounded border border-elec-yellow/20 bg-elec-gray p-3">
-                    <div className="text-base font-medium mb-1">Standard Route</div>
-                    <div className="text-xs space-y-1">
-                      <div>Apprentice → Improver → Electrician (Gold) → Approved → Technician</div>
-                      <div className="text-white">Typical 6–10 years to Technician depending on experience and quals.</div>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <div className="space-y-4 p-4 rounded-lg border border-elec-yellow/20 bg-elec-gray/50">
+                    <div className="flex items-center gap-2">
+                      <TrendingUp className="h-5 w-5 text-green-400" />
+                      <h4 className="text-base font-semibold text-elec-yellow">Standard Route</h4>
+                    </div>
+                    <div className="space-y-3">
+                      <div className="text-sm text-white leading-relaxed">
+                        Apprentice → Improver → Electrician (Gold) → Approved → Technician
+                      </div>
+                      <div className="text-sm text-white/80 leading-relaxed">
+                        Typical 6–10 years to Technician depending on experience and qualifications.
+                      </div>
                     </div>
                   </div>
-                  <div className="rounded border border-elec-yellow/20 bg-elec-gray p-3">
-                    <div className="text-base font-medium mb-1">Supervisor/Manager Route</div>
-                    <div className="text-xs space-y-1">
-                      <div>Approved/Technician → Chargehand → Site Supervisor → Manager</div>
-                      <div className="text-white">Add leadership (SSSTS/SMSTS/IOSH) and project delivery experience.</div>
+                  
+                  <div className="space-y-4 p-4 rounded-lg border border-elec-yellow/20 bg-elec-gray/50">
+                    <div className="flex items-center gap-2">
+                      <Users className="h-5 w-5 text-blue-400" />
+                      <h4 className="text-base font-semibold text-elec-yellow">Supervisor/Manager Route</h4>
+                    </div>
+                    <div className="space-y-3">
+                      <div className="text-sm text-white leading-relaxed">
+                        Approved/Technician → Chargehand → Site Supervisor → Manager
+                      </div>
+                      <div className="text-sm text-white/80 leading-relaxed">
+                        Add leadership (SSSTS/SMSTS/IOSH) and project delivery experience.
+                      </div>
                     </div>
                   </div>
-                  <div className="rounded border border-elec-yellow/20 bg-elec-gray p-3">
-                    <div className="text-base font-medium mb-1">Fast‑Track / APL</div>
-                    <div className="text-xs space-y-1">
-                      <div>Experienced workers scheme with evidence portfolio</div>
-                      <div className="text-white">Recognition of prior learning can reduce time to Gold/Approved.</div>
+                  
+                  <div className="space-y-4 p-4 rounded-lg border border-elec-yellow/20 bg-elec-gray/50">
+                    <div className="flex items-center gap-2">
+                      <Zap className="h-5 w-5 text-purple-400" />
+                      <h4 className="text-base font-semibold text-elec-yellow">Fast‑Track / APL</h4>
+                    </div>
+                    <div className="space-y-3">
+                      <div className="text-sm text-white leading-relaxed">
+                        Experienced workers scheme with evidence portfolio
+                      </div>
+                      <div className="text-sm text-white/80 leading-relaxed">
+                        Recognition of prior learning can reduce time to Gold/Approved.
+                      </div>
                     </div>
                   </div>
                 </div>
