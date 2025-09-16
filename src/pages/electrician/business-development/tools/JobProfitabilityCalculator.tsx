@@ -8,9 +8,10 @@ import { Badge } from "@/components/ui/badge";
 import BackButton from "@/components/common/BackButton";
 import { useToast } from "@/hooks/use-toast";
 import { Calculator, PoundSterling, HelpCircle, TrendingUp, AlertCircle, CheckCircle, Lightbulb, Settings, History, Share2, Receipt, Users, Clock } from "lucide-react";
-import { Worker } from "@/components/electrician/business-development/job-profitability/WorkerManager";
+import type { Worker } from "@/components/electrician/business-development/job-profitability/WorkerManager";
 import { labourHoursOptions, hourlyRateOptions, overheadPercentageOptions, profitMarginOptions } from "@/components/electrician/business-development/job-profitability/DropdownOptions";
-import { JobPreset, jobTypePresets, getJobPresetsByCategory, getJobPresetOptions } from "@/components/electrician/business-development/job-profitability/JobTypePresets";
+import type { JobPreset } from "@/components/electrician/business-development/job-profitability/JobTypePresets";
+import { jobTypePresets, getJobPresetsByCategory, getJobPresetOptions } from "@/components/electrician/business-development/job-profitability/JobTypePresets";
 import { Helmet } from "react-helmet";
 import WhyThisMatters from "@/components/common/WhyThisMatters";
 
