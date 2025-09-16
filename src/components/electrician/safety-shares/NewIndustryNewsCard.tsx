@@ -211,9 +211,17 @@ const NewIndustryNewsCard = () => {
           <p className="text-lg text-muted-foreground mb-2">
             No news articles available
           </p>
-          <p className="text-sm text-muted-foreground">
-            Check back later for the latest industry updates
+          <p className="text-sm text-muted-foreground mb-4">
+            Click "Refresh News" to fetch the latest industry updates from live sources
           </p>
+          <Button
+            onClick={handleRefreshNews}
+            disabled={isRefreshing}
+            className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
+          >
+            <RefreshCw className={`h-4 w-4 mr-2 ${isRefreshing ? 'animate-spin' : ''}`} />
+            {isRefreshing ? 'Fetching News...' : 'Get Latest News'}
+          </Button>
         </CardContent>
       </Card>
     );
@@ -243,14 +251,26 @@ const NewIndustryNewsCard = () => {
             <h2 className="text-2xl font-semibold text-elec-yellow">
               Industry News
             </h2>
+            {articles.length > 0 && (
+              <div className="text-xs bg-elec-yellow/20 text-elec-yellow px-2 py-1 rounded-full">
+                Live from Firecrawl
+              </div>
+            )}
           </div>
           <div className="flex items-center gap-4">
-            <p className="text-sm text-muted-foreground">
-              Showing {displayArticles.length} of {articles.length} articles
-              {displayArticles.length !== filteredAndSortedArticles.length && (
-                <span className="text-yellow-400 ml-2">(fallback mode)</span>
+            <div className="text-sm text-muted-foreground">
+              <p>
+                Showing {displayArticles.length} of {articles.length} articles
+                {displayArticles.length !== filteredAndSortedArticles.length && (
+                  <span className="text-yellow-400 ml-2">(fallback mode)</span>
+                )}
+              </p>
+              {articles.length > 0 && (
+                <p className="text-xs opacity-75">
+                  Sources: Electrical Times, Professional Electrician, ECN
+                </p>
               )}
-            </p>
+            </div>
             <Button
               onClick={handleRefreshNews}
               disabled={isRefreshing}
@@ -259,7 +279,7 @@ const NewIndustryNewsCard = () => {
               className="border-elec-yellow/20 text-elec-yellow hover:bg-elec-yellow/10 hover:border-elec-yellow/40 bg-transparent"
             >
               <RefreshCw className={`h-4 w-4 mr-2 ${isRefreshing ? 'animate-spin' : ''}`} />
-              {isRefreshing ? 'Fetching...' : 'Refresh News'}
+              {isRefreshing ? 'Fetching Latest...' : 'Refresh News'}
             </Button>
           </div>
         </div>

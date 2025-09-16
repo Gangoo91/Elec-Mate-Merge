@@ -26,76 +26,124 @@ serve(async (req) => {
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
     async function getNews() {
-      const url = "https://api.firecrawl.dev/v2/batch/scrape";
-      const options = {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${firecrawlApiKey}`,
-          "Content-Type": "application/json",
+      console.log('🚀 Starting news scraping with Firecrawl API...');
+      
+      const url = "https://api.firecrawl.dev/v2/scrape";
+      const sources = [
+        {
+          url: "https://www.electricaltimes.co.uk/latest-news/",
+          category: "Industry",
+          source: "Electrical Times"
         },
-        body: JSON.stringify({
-          urls: [
-            "https://www.electricaltimes.co.uk/latest-news/",
-            "https://professional-electrician.com/category/technical/",
-            "https://electricalcontractingnews.com/category/safety-and-training/",
-            "https://professional-electrician.com/category/18th-edition/",
-            "https://www.electricaltimes.co.uk/category/awards-news/",
-          ],
-          onlyMainContent: true,
-          maxAge: 0,
-          parsers: [],
-          formats: [
-            {
-              type: "json",
-              prompt: "Extract only articles that are directly related to electricians or the electrical industry. Ignore unrelated articles. For each article, include the title, description, date, and url.",
-              schema: {
-                type: "array",
-                items: {
-                  type: "object",
-                  required: ["title", "description", "date", "visit_link"],
-                  properties: {
-                    title: { type: "string" },
-                    description: { type: "string" },
-                    date: { type: "string", description: "date in iso format" },
-                    tags: { type: "string" },
-                    visit_link: { type: "string", description: "link of the article" },
-                    views: { type: "string" },
-                  },
-                },
-              },
+        {
+          url: "https://professional-electrician.com/category/technical/",
+          category: "Technical",
+          source: "Professional Electrician"
+        },
+        {
+          url: "https://electricalcontractingnews.com/category/safety-and-training/",
+          category: "Safety",
+          source: "Electrical Contracting News"
+        },
+        {
+          url: "https://professional-electrician.com/category/18th-edition/",
+          category: "BS7671",
+          source: "Professional Electrician"
+        }
+      ];
+
+      const allArticles = [];
+      
+      for (const source of sources) {
+        try {
+          console.log(`📡 Scraping ${source.source}: ${source.url}`);
+          
+          const options = {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${firecrawlApiKey}`,
+              "Content-Type": "application/json",
             },
-          ],
-        }),
-      };
+            body: JSON.stringify({
+              url: source.url,
+              formats: ["json"],
+              onlyMainContent: true,
+              includeTags: ["article", "h1", "h2", "h3", "time", "date"],
+              excludeTags: ["nav", "footer", "aside", "script"],
+              waitFor: 2000,
+              actions: [
+                {
+                  type: "wait",
+                  milliseconds: 1000
+                }
+              ],
+              extract: {
+                schema: {
+                  type: "object",
+                  properties: {
+                    articles: {
+                      type: "array",
+                      items: {
+                        type: "object",
+                        properties: {
+                          title: { type: "string" },
+                          description: { type: "string" },
+                          url: { type: "string" },
+                          date: { type: "string" },
+                          author: { type: "string" },
+                          excerpt: { type: "string" }
+                        },
+                        required: ["title"]
+                      }
+                    }
+                  },
+                  required: ["articles"]
+                }
+              }
+            }),
+          };
+
+          const response = await fetch(url, options);
+          
+          if (!response.ok) {
+            console.error(`❌ HTTP error for ${source.source}: ${response.status} ${response.statusText}`);
+            continue;
+          }
+
+          const result = await response.json();
+          console.log(`📊 Response for ${source.source}:`, result.success ? 'Success' : 'Failed');
+          
+          if (result.success && result.data?.extract?.articles) {
+            const articles = result.data.extract.articles
+              .filter(article => article.title && article.title.length > 10)
+              .map(article => ({
+                ...article,
+                source_category: source.category,
+                source_name: source.source,
+                source_url: source.url
+              }));
+            
+            allArticles.push(...articles);
+            console.log(`✅ Found ${articles.length} articles from ${source.source}`);
+          } else {
+            console.warn(`⚠️ No articles found for ${source.source}`);
+          }
+          
+          // Rate limiting delay
+          await new Promise(resolve => setTimeout(resolve, 1000));
+          
+        } catch (error) {
+          console.error(`❌ Error scraping ${source.source}:`, error);
+        }
+      }
+
+      console.log(`📰 Total articles collected: ${allArticles.length}`);
+      return allArticles;
 
       const response = await fetch(url, options);
       const job = await response.json();
       console.log("Batch job created:", job);
 
-      let status;
-      let attempts = 0;
-      const maxAttempts = 24; // 2 minutes max (5s * 24)
-
-      do {
-        await new Promise((r) => setTimeout(r, 5000));
-        const res = await fetch(job.url, {
-          headers: { Authorization: `Bearer ${firecrawlApiKey}` },
-        });
-
-        status = await res.json();
-        console.log("Polling status:", status.status);
-        attempts++;
-        
-        if (attempts >= maxAttempts) {
-          throw new Error('Timeout waiting for scraping job to complete');
-        }
-      } while (status.status !== "completed" && status.status !== "failed");
-
-      if (status.status === "failed") {
-        throw new Error('Scraping job failed');
-      }
-
-      return status.data?.map((article) => article.json).flat() || [];
     }
 
     const articles = await getNews();
@@ -115,7 +163,7 @@ serve(async (req) => {
     // Transform articles to match database schema
     const transformedArticles = await Promise.all(articles.map(async article => {
       // Create content hash for deduplication using Unicode-safe method
-      const contentText = article.title + (article.description || '');
+      const contentText = article.title + (article.description || article.excerpt || '');
       let contentHash;
       
       try {
@@ -137,42 +185,29 @@ serve(async (req) => {
         contentHash = Math.abs(hash).toString(16).substring(0, 32);
       }
       
-      // Determine category and regulatory body based on source
-      let category = 'General';
-      let regulatory_body = 'Industry';
-      let source_name = 'Unknown';
-      
-      if (article.visit_link?.includes('electricaltimes.co.uk')) {
-        source_name = 'Electrical Times';
-        if (article.visit_link.includes('awards')) {
-          category = 'Industry';
-        }
-      } else if (article.visit_link?.includes('professional-electrician.com')) {
-        source_name = 'Professional Electrician';
-        if (article.visit_link.includes('technical')) {
-          category = 'Technical';
-        } else if (article.visit_link.includes('18th-edition')) {
-          category = 'BS7671';
-          regulatory_body = 'IET';
-        }
-      } else if (article.visit_link?.includes('electricalcontractingnews.com')) {
-        source_name = 'Electrical Contracting News';
-        if (article.visit_link.includes('safety')) {
-          category = 'Safety';
-          regulatory_body = 'HSE';
+      // Parse date safely
+      let publishDate = new Date().toISOString().split('T')[0];
+      if (article.date) {
+        try {
+          const parsed = new Date(article.date);
+          if (!isNaN(parsed.getTime())) {
+            publishDate = parsed.toISOString().split('T')[0];
+          }
+        } catch (e) {
+          console.warn('Date parsing failed:', article.date);
         }
       }
 
       return {
         title: article.title?.substring(0, 255) || 'Untitled',
-        summary: article.description?.substring(0, 500) || 'No summary available',
-        content: article.description || article.title || 'No content available',
-        category,
-        source_name,
-        regulatory_body,
-        date_published: article.date || new Date().toISOString().split('T')[0],
+        summary: (article.description || article.excerpt || 'No summary available').substring(0, 500),
+        content: article.description || article.excerpt || article.title || 'No content available',
+        category: article.source_category || 'General',
+        source_name: article.source_name || 'Unknown',
+        regulatory_body: article.source_category === 'BS7671' ? 'IET' : (article.source_category === 'Safety' ? 'HSE' : 'Industry'),
+        date_published: publishDate,
         content_hash: contentHash,
-        external_url: article.visit_link,
+        external_url: article.url || article.source_url,
         is_active: true,
         view_count: 0,
         average_rating: 0
@@ -223,7 +258,8 @@ serve(async (req) => {
         message: `Successfully scraped and inserted ${insertedCount} new articles`,
         totalFound: articles.length,
         articlesInserted: insertedCount,
-        sources: ['Electrical Times', 'Professional Electrician', 'Electrical Contracting News']
+        sources: ['Electrical Times', 'Professional Electrician', 'Electrical Contracting News'],
+        timestamp: new Date().toISOString()
       }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
