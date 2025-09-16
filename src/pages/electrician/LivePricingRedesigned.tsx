@@ -22,11 +22,10 @@ import {
 import { Link } from "react-router-dom";
 import { useLiveMetalPrices } from "@/hooks/useLiveMetalPrices";
 import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
 
 // Import existing components
 import MaterialPriceComparison from "@/components/electrician-materials/MaterialPriceComparison";
-import SearchDrivenRegionalPricing from "@/components/electrician-pricing/SearchDrivenRegionalPricing";
+import EnhancedRegionalPricing from "@/components/electrician-pricing/EnhancedRegionalPricing";
 import CommunityPriceSubmission from "@/components/electrician-pricing/CommunityPriceSubmission";
 import CompactPricingGrid from "@/components/electrician-pricing/CompactPricingGrid";
 
@@ -123,8 +122,6 @@ const LivePricingRedesigned = () => {
   const { toast } = useToast();
   const [activeTab, setActiveTab] = useState("regional");
   const [searchQuery, setSearchQuery] = useState("");
-  const [regionalData, setRegionalData] = useState([]);
-  const [loadingRegional, setLoadingRegional] = useState(true);
   
   // Mock data for enhanced features
   const searchSuggestions = [
@@ -147,61 +144,6 @@ const LivePricingRedesigned = () => {
       { type: "supply_shortage", message: "High demand for consumer units in London area", urgent: false }
     ]
   };
-
-  // Fetch regional pricing data
-  useEffect(() => {
-    const fetchRegionalData = async () => {
-      try {
-        setLoadingRegional(true);
-        const { data: pricingData, error } = await supabase
-          .from('regional_job_pricing')
-          .select('*')
-          .order('last_updated', { ascending: false });
-
-        if (error) {
-          console.error('Error fetching regional data:', error);
-          toast({
-            title: "Data Load Error",
-            description: "Unable to load regional pricing data. Using fallback data.",
-            variant: "destructive"
-          });
-          return;
-        }
-
-        // Transform data to match component interface
-        const transformedData = pricingData?.map(item => ({
-          id: item.id,
-          region: item.region,
-          county: item.county,
-          job_type: item.job_type,
-          job_category: item.job_category || 'Electrical',
-          min_price: item.min_price,
-          max_price: item.max_price,
-          average_price: item.average_price,
-          currency: item.currency || 'GBP',
-          unit: item.unit || 'per job',
-          complexity_level: item.complexity_level || 'standard',
-          last_updated: item.last_updated,
-          data_source: item.data_source || 'community',
-          confidence_score: item.confidence_score || 85,
-          is_approximate: false // Default value since this field might not exist in DB
-        })) || [];
-
-        setRegionalData(transformedData);
-      } catch (error) {
-        console.error('Error:', error);
-        toast({
-          title: "Connection Error",
-          description: "Unable to connect to pricing database.",
-          variant: "destructive"
-        });
-      } finally {
-        setLoadingRegional(false);
-      }
-    };
-
-    fetchRegionalData();
-  }, [toast]);
 
   const handleSearch = () => {
     if (!searchQuery.trim()) {
@@ -296,12 +238,7 @@ const LivePricingRedesigned = () => {
                   Regional Data
                 </Badge>
               </div>
-              
-              {loadingRegional ? (
-                <PricingSkeleton />
-              ) : (
-                <SearchDrivenRegionalPricing regionalData={regionalData} />
-              )}
+              <EnhancedRegionalPricing />
             </div>
           </TabsContent>
 
