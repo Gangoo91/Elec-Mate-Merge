@@ -1086,6 +1086,7 @@ export type Database = {
           external_id: string | null
           external_url: string | null
           id: string
+          image_url: string | null
           is_active: boolean
           keywords: string[] | null
           published_date: string | null
@@ -1112,6 +1113,7 @@ export type Database = {
           external_id?: string | null
           external_url?: string | null
           id?: string
+          image_url?: string | null
           is_active?: boolean
           keywords?: string[] | null
           published_date?: string | null
@@ -1138,6 +1140,7 @@ export type Database = {
           external_id?: string | null
           external_url?: string | null
           id?: string
+          image_url?: string | null
           is_active?: boolean
           keywords?: string[] | null
           published_date?: string | null

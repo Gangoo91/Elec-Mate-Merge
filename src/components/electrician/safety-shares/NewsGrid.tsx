@@ -6,6 +6,12 @@ import { format, formatDistanceToNow } from "date-fns";
 import type { NewsArticle } from "@/hooks/useIndustryNews";
 import { isValidUrl } from "@/utils/urlUtils";
 
+// Import placeholder images
+import bs7671Image from "@/assets/news-placeholders/bs7671.jpg";
+import hseImage from "@/assets/news-placeholders/hse.jpg";
+import niceicImage from "@/assets/news-placeholders/niceic.jpg";
+import generalImage from "@/assets/news-placeholders/general.jpg";
+
 interface NewsGridProps {
   articles: NewsArticle[];
   excludeId?: string;
@@ -55,6 +61,22 @@ const NewsGrid = ({ articles, excludeId }: NewsGridProps) => {
     }
   };
 
+  const getCategoryImage = (category: string) => {
+    switch (category?.toLowerCase()) {
+      case "bs7671":
+        return bs7671Image;
+      case "hse":
+      case "fire safety":
+      case "construction safety":
+      case "safety technology":
+        return hseImage;
+      case "niceic":
+        return niceicImage;
+      default:
+        return generalImage;
+    }
+  };
+
   const getReadTime = (content: string) => {
     const wordsPerMinute = 200;
     const wordCount = content.split(' ').length;
@@ -96,33 +118,46 @@ const NewsGrid = ({ articles, excludeId }: NewsGridProps) => {
               }`}
               onClick={() => window.open(article.external_url, '_blank', 'noopener,noreferrer')}
             >
-              {/* Gradient Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-elec-yellow/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              {/* Article Image */}
+              <div className={`relative overflow-hidden ${isFeatured ? 'h-64' : 'h-48'}`}>
+                <img
+                  src={article.image_url || getCategoryImage(article.category)}
+                  alt={article.title}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  onError={(e) => {
+                    e.currentTarget.src = getCategoryImage(article.category);
+                  }}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                <div className="absolute top-4 left-4">
+                  <Badge className={`${getCategoryColor(article.category)} text-xs font-semibold uppercase tracking-wide backdrop-blur-sm`}>
+                    {article.category}
+                  </Badge>
+                </div>
+                <div className="absolute top-4 right-4 flex items-center gap-2">
+                  {isPopular(article) && (
+                    <Badge className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30 text-xs backdrop-blur-sm">
+                      <TrendingUp className="h-2 w-2 mr-1" />
+                      Popular
+                    </Badge>
+                  )}
+                  {isHighRated(article) && (
+                    <Badge className="bg-green-500/20 text-green-400 border-green-500/30 text-xs backdrop-blur-sm">
+                      <Star className="h-2 w-2 mr-1 fill-current" />
+                      Top Rated
+                    </Badge>
+                  )}
+                </div>
+                <div className="absolute bottom-4 right-4 text-xs text-white/90 flex items-center gap-1 backdrop-blur-sm bg-black/30 rounded px-2 py-1">
+                  <Clock className="h-3 w-3" />
+                  {readTime}m
+                </div>
+              </div>
               
               <div className={`p-6 h-full flex flex-col relative z-10 ${isFeatured ? 'sm:p-8' : ''}`}>
-                {/* Header with badges and indicators */}
+                {/* Header with source */}
                 <div className="flex items-start justify-between mb-4">
-                  <div className="flex flex-wrap items-center gap-2">
-                    <Badge className={`${getCategoryColor(article.category)} text-xs font-semibold uppercase tracking-wide`}>
-                      {article.category}
-                    </Badge>
-                    {isPopular(article) && (
-                      <Badge className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/20 text-xs">
-                        <TrendingUp className="h-2 w-2 mr-1" />
-                        Popular
-                      </Badge>
-                    )}
-                    {isHighRated(article) && (
-                      <Badge className="bg-green-500/10 text-green-400 border-green-500/20 text-xs">
-                        <Star className="h-2 w-2 mr-1 fill-current" />
-                        Top Rated
-                      </Badge>
-                    )}
-                  </div>
-                  <div className="text-xs text-muted-foreground flex items-center gap-1">
-                    <Clock className="h-3 w-3" />
-                    {readTime}m
-                  </div>
+                  <span className="text-xs text-muted-foreground font-medium">{article.source_name}</span>
                 </div>
 
                 {/* Title */}

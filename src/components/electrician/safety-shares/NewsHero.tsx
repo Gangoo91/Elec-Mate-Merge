@@ -6,6 +6,12 @@ import { format, formatDistanceToNow } from "date-fns";
 import type { NewsArticle } from "@/hooks/useIndustryNews";
 import { isValidUrl } from "@/utils/urlUtils";
 
+// Import placeholder images
+import bs7671Image from "@/assets/news-placeholders/bs7671.jpg";
+import hseImage from "@/assets/news-placeholders/hse.jpg";
+import niceicImage from "@/assets/news-placeholders/niceic.jpg";
+import generalImage from "@/assets/news-placeholders/general.jpg";
+
 interface NewsHeroProps {
   article: NewsArticle;
 }
@@ -25,6 +31,22 @@ const NewsHero = ({ article }: NewsHeroProps) => {
         return "bg-cyan-500/20 text-cyan-400 border-cyan-500/30";
       default:
         return "bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30";
+    }
+  };
+
+  const getCategoryImage = (category: string) => {
+    switch (category?.toLowerCase()) {
+      case "bs7671":
+        return bs7671Image;
+      case "hse":
+      case "fire safety":
+      case "construction safety":
+      case "safety technology":
+        return hseImage;
+      case "niceic":
+        return niceicImage;
+      default:
+        return generalImage;
     }
   };
 
@@ -81,9 +103,25 @@ const NewsHero = ({ article }: NewsHeroProps) => {
             </div>
           </div>
 
-          {/* Hero Content */}
-          <div className="grid lg:grid-cols-12 gap-8 items-start">
-            <div className="lg:col-span-10">
+          {/* Hero Content with Image */}
+          <div className="grid lg:grid-cols-12 gap-8 items-center">
+            {/* Hero Image */}
+            <div className="lg:col-span-5 order-2 lg:order-1">
+              <div className="relative overflow-hidden rounded-2xl shadow-2xl">
+                <img
+                  src={article.image_url || getCategoryImage(article.category)}
+                  alt={article.title}
+                  className="w-full h-64 sm:h-80 lg:h-96 object-cover"
+                  onError={(e) => {
+                    e.currentTarget.src = getCategoryImage(article.category);
+                  }}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+              </div>
+            </div>
+
+            {/* Content */}
+            <div className="lg:col-span-7 order-1 lg:order-2">
               {/* Title */}
               <h1 className="text-2xl sm:text-3xl lg:text-5xl font-bold text-white mb-6 leading-tight tracking-tight">
                 {article.title}
@@ -129,15 +167,6 @@ const NewsHero = ({ article }: NewsHeroProps) => {
                   <Bookmark className="h-5 w-5 mr-2" />
                   Save for Later
                 </Button>
-              </div>
-            </div>
-
-            {/* Visual Element */}
-            <div className="lg:col-span-2 flex justify-center lg:justify-end">
-              <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-full bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 flex items-center justify-center border border-elec-yellow/20">
-                <span className="text-3xl sm:text-4xl font-bold text-elec-yellow">
-                  {article.category.charAt(0)}
-                </span>
               </div>
             </div>
           </div>

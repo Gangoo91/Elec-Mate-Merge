@@ -15,6 +15,7 @@ export interface NewsArticle {
   created_at: string;
   updated_at: string;
   external_url?: string;
+  image_url?: string;
 }
 
 const fetchIndustryNews = async (): Promise<NewsArticle[]> => {
