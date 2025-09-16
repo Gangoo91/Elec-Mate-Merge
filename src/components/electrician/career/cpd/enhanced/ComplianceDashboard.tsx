@@ -24,7 +24,7 @@ const ComplianceDashboard = () => {
       <div className="space-y-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {[...Array(3)].map((_, i) => (
-            <Card key={i} className="animate-pulse">
+            <Card key={i} className="bg-elec-grey animate-pulse">
               <CardContent className="p-6">
                 <div className="h-20 bg-muted rounded"></div>
               </CardContent>
@@ -76,7 +76,7 @@ const ComplianceDashboard = () => {
       ))}
 
       {/* Overall Compliance Status */}
-      <Card className="bg-card border-border">
+      <Card className="bg-elec-grey border-border">
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-foreground">
             {getStatusIcon(compliance.overallStatus)}
@@ -105,7 +105,7 @@ const ComplianceDashboard = () => {
       {/* Professional Bodies Status */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {settings.professionalBodies.map((body, index) => (
-          <Card key={index} className="bg-card border-border">
+          <Card key={index} className="bg-elec-grey border-border">
             <CardHeader className="pb-3">
               <CardTitle className="text-sm text-foreground">{body.body} Compliance</CardTitle>
             </CardHeader>
@@ -140,7 +140,7 @@ const ComplianceDashboard = () => {
       </div>
 
       {/* Category Gaps Analysis */}
-      <Card className="bg-card border-border">
+      <Card className="bg-elec-grey border-border">
         <CardHeader>
           <CardTitle className="text-foreground">Category Progress</CardTitle>
         </CardHeader>
@@ -182,7 +182,7 @@ const ComplianceDashboard = () => {
 
       {/* Recommendations */}
       {compliance.recommendations.length > 0 && (
-        <Card className="bg-card border-border">
+        <Card className="bg-elec-grey border-border">
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-foreground">
               <TrendingUp className="h-5 w-5" />
@@ -204,7 +204,7 @@ const ComplianceDashboard = () => {
 
       {/* Upcoming Deadlines */}
       {compliance.nextDeadlines.length > 0 && (
-        <Card className="bg-card border-border">
+        <Card className="bg-elec-grey border-border">
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-foreground">
               <Calendar className="h-5 w-5" />
