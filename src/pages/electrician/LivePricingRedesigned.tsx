@@ -166,7 +166,7 @@ const LivePricingRedesigned = () => {
         <meta name="keywords" content="live electrical pricing, UK material costs, regional job rates, price comparison" />
       </Helmet>
 
-      <div className="sticky top-0 z-40 bg-elec-dark/95 backdrop-blur-sm border-b border-elec-yellow/20">
+      <div className="bg-elec-dark border-b border-elec-yellow/20">
         <div className="flex items-center justify-between p-4">
           <div className="flex items-center gap-3">
             <PoundSterling className="h-6 w-6 text-elec-yellow" />
