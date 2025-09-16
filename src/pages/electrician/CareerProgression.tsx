@@ -52,13 +52,17 @@ const CareerProgression = () => {
 
       {/* Header */}
       <div className="space-y-3">
-        <h1 className="text-3xl sm:text-4xl font-bold text-center mb-4">
-          Electrician Career Progression Hub 2025
-        </h1>
-        <p className="text-sm sm:text-base text-white text-center max-w-4xl mx-auto px-4">
-          Advanced career development resources for qualified electricians. Stay ahead with 2025 industry insights, 
-          emerging technologies, and strategic career planning tools designed for professional growth in the electrical sector.
-        </p>
+        {!activeSection && (
+          <>
+            <h1 className="text-3xl sm:text-4xl font-bold text-center mb-4">
+              Electrician Career Progression Hub 2025
+            </h1>
+            <p className="text-sm sm:text-base text-white text-center max-w-4xl mx-auto px-4">
+              Advanced career development resources for qualified electricians. Stay ahead with 2025 industry insights, 
+              emerging technologies, and strategic career planning tools designed for professional growth in the electrical sector.
+            </p>
+          </>
+        )}
         {!activeSection && (
           <Link to="/electrician" className="w-full sm:w-auto">
             <Button variant="outline" className="flex items-center gap-2 w-full">
