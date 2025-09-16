@@ -26,122 +26,150 @@ serve(async (req) => {
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
     async function getNews() {
-      console.log('🚀 Starting news scraping with Firecrawl API...');
+      console.log('🚀 Starting news scraping with Firecrawl v2 batch API...');
       
-      const url = "https://api.firecrawl.dev/v1/scrape";
-      const sources = [
-        {
-          url: "https://www.electricaltimes.co.uk/latest-news/",
-          category: "Industry",
-          source: "Electrical Times"
-        },
-        {
-          url: "https://professional-electrician.com/category/technical/",
-          category: "Technical",
-          source: "Professional Electrician"
-        },
-        {
-          url: "https://electricalcontractingnews.com/category/safety-and-training/",
-          category: "Safety",
-          source: "Electrical Contracting News"
-        },
-        {
-          url: "https://professional-electrician.com/category/18th-edition/",
-          category: "BS7671",
-          source: "Professional Electrician"
-        }
+      const url = "https://api.firecrawl.dev/v2/batch/scrape";
+      const urls = [
+        "https://www.electricaltimes.co.uk/latest-news/",
+        "https://professional-electrician.com/category/technical/",
+        "https://electricalcontractingnews.com/category/safety-and-training/",
+        "https://professional-electrician.com/category/18th-edition/",
+        "https://www.electricaltimes.co.uk/category/electrical-safety/"
       ];
 
-      const allArticles = [];
-      
-      for (const source of sources) {
-        try {
-          console.log(`📡 Scraping ${source.source}: ${source.url}`);
-          
-          const options = {
-            method: "POST",
-            headers: {
-              Authorization: `Bearer ${firecrawlApiKey}`,
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              url: source.url,
-              pageOptions: {
-                onlyMainContent: true,
-                includeHtml: false,
-                waitFor: 2000
-              },
-              extractorOptions: {
-                mode: "llm-extraction",
-                extractionPrompt: `Extract all news articles from this electrical industry page. For each article, extract:
-                - title: The headline of the article
-                - description: A brief summary or excerpt
-                - url: The link to the full article (if available)
-                - date: Publication date in any format
-                - imageUrl: URL of the article's main image (if available)
-                
-                Focus on electrical safety, regulations, BS7671, industry news, training, and technical content.`,
-                extractionSchema: {
+      const options = {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${firecrawlApiKey}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          urls: urls,
+          onlyMainContent: true,
+          maxAge: 0,
+          parsers: [],
+          formats: [
+            {
+              type: "json",
+              prompt: "Extract only articles that are directly related to electricians or the electrical industry. Ignore unrelated articles. For each article, include the title, description, date, and url.",
+              schema: {
+                type: "array",
+                items: {
                   type: "object",
+                  required: ["title", "description", "date", "visit_link"],
                   properties: {
-                    articles: {
-                      type: "array",
-                      items: {
-                        type: "object",
-                        properties: {
-                          title: { type: "string", description: "Article headline" },
-                          description: { type: "string", description: "Article summary or excerpt" },
-                          url: { type: "string", description: "Link to full article" },
-                          date: { type: "string", description: "Publication date" },
-                          imageUrl: { type: "string", description: "Article image URL" }
-                        },
-                        required: ["title"]
-                      }
-                    }
+                    title: { type: "string" },
+                    description: { type: "string" },
+                    date: { type: "string", description: "date in iso format" },
+                    tags: { type: "string" },
+                    visit_link: { type: "string", description: "link of the article" },
+                    views: { type: "string" },
+                    imageUrl: { type: "string" },
                   },
-                  required: ["articles"]
-                }
-              }
-            }),
+                },
+              },
+            },
+          ],
+        }),
+      };
+
+      try {
+        console.log('📡 Creating batch scraping job...');
+        const response = await fetch(url, options);
+        
+        if (!response.ok) {
+          const errorText = await response.text();
+          console.error(`❌ HTTP error creating batch job: ${response.status} ${response.statusText}`, errorText);
+          throw new Error(`Failed to create batch job: ${response.status} ${response.statusText}`);
+        }
+
+        const job = await response.json();
+        console.log("✅ Batch job created:", job.id);
+
+        if (!job.url) {
+          throw new Error('No job URL returned from batch creation');
+        }
+
+        // Poll for completion
+        let status;
+        let pollCount = 0;
+        const maxPolls = 60; // 5 minutes timeout (5 seconds * 60)
+        
+        console.log('🔄 Polling for batch job completion...');
+        
+        do {
+          await new Promise((r) => setTimeout(r, 5000)); // 5 second intervals
+          
+          const pollResponse = await fetch(job.url, {
+            headers: { Authorization: `Bearer ${firecrawlApiKey}` },
+          });
+
+          if (!pollResponse.ok) {
+            console.error(`❌ Error polling job status: ${pollResponse.status}`);
+            break;
+          }
+
+          status = await pollResponse.json();
+          console.log(`📊 Polling status (${pollCount + 1}/${maxPolls}):`, status.status);
+          
+          pollCount++;
+          
+          if (pollCount >= maxPolls) {
+            console.error('❌ Batch job timeout after 5 minutes');
+            throw new Error('Batch job timeout');
+          }
+          
+        } while (status.status !== "completed" && status.status !== "failed");
+
+        if (status.status === "failed") {
+          console.error('❌ Batch job failed:', status);
+          throw new Error('Batch job failed');
+        }
+
+        console.log('🎉 Batch job completed successfully');
+        
+        // Process the results
+        const allArticles = [];
+        
+        if (status.data && Array.isArray(status.data)) {
+          const sourceMap = {
+            "https://www.electricaltimes.co.uk/latest-news/": { category: "Industry", source: "Electrical Times" },
+            "https://professional-electrician.com/category/technical/": { category: "Technical", source: "Professional Electrician" },
+            "https://electricalcontractingnews.com/category/safety-and-training/": { category: "Safety", source: "Electrical Contracting News" },
+            "https://professional-electrician.com/category/18th-edition/": { category: "BS7671", source: "Professional Electrician" },
+            "https://www.electricaltimes.co.uk/category/electrical-safety/": { category: "Safety", source: "Electrical Times" }
           };
 
-          const response = await fetch(url, options);
-          
-          if (!response.ok) {
-            const errorText = await response.text();
-            console.error(`❌ HTTP error for ${source.source}: ${response.status} ${response.statusText}`, errorText);
-            continue;
+          for (const result of status.data) {
+            if (result.json && Array.isArray(result.json)) {
+              const sourceInfo = sourceMap[result.url] || { category: "General", source: "Unknown" };
+              
+              const processedArticles = result.json
+                .filter(article => article.title && article.title.length > 10)
+                .map(article => ({
+                  title: article.title,
+                  description: article.description,
+                  url: article.visit_link || article.url,
+                  date: article.date,
+                  imageUrl: article.imageUrl,
+                  source_category: sourceInfo.category,
+                  source_name: sourceInfo.source,
+                  source_url: result.url
+                }));
+              
+              allArticles.push(...processedArticles);
+              console.log(`✅ Processed ${processedArticles.length} articles from ${sourceInfo.source}`);
+            }
           }
-
-          const result = await response.json();
-          console.log(`📊 Response for ${source.source}:`, result.success ? 'Success' : 'Failed');
-          
-          if (result.success && result.data?.extract?.articles) {
-            const articles = result.data.extract.articles
-              .filter(article => article.title && article.title.length > 10)
-              .map(article => ({
-                ...article,
-                source_category: source.category,
-                source_name: source.source,
-                source_url: source.url
-              }));
-            
-            allArticles.push(...articles);
-            console.log(`✅ Found ${articles.length} articles from ${source.source}`);
-          } else {
-            console.warn(`⚠️ No articles found for ${source.source}`, result);
-          }
-          
-          // Rate limiting delay
-          await new Promise(resolve => setTimeout(resolve, 1000));
-          
-        } catch (error) {
-          console.error(`❌ Error scraping ${source.source}:`, error);
         }
-      }
 
-      console.log(`📰 Total articles collected: ${allArticles.length}`);
-      return allArticles;
+        console.log(`📰 Total articles collected: ${allArticles.length}`);
+        return allArticles;
+        
+      } catch (error) {
+        console.error('❌ Error in batch scraping:', error);
+        throw error;
+      }
     }
 
     const articles = await getNews();
