@@ -1,8 +1,8 @@
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Calendar, Eye, Star, Clock, ExternalLink, TrendingUp } from "lucide-react";
-import { format, formatDistanceToNow } from "date-fns";
+import { Calendar, Eye, Star, Clock, ExternalLink } from "lucide-react";
+import { format } from "date-fns";
+import { cn } from "@/lib/utils";
 import type { NewsArticle } from "@/hooks/useIndustryNews";
 import { isValidUrl } from "@/utils/urlUtils";
 
@@ -19,42 +19,16 @@ const NewsGrid = ({ articles, excludeId }: NewsGridProps) => {
     : articles;
 
   const getCategoryColor = (category: string) => {
-    switch (category?.toLowerCase()) {
-      case "bs7671":
-        return "bg-blue-500/20 text-blue-400 border-blue-500/30";
-      case "hse":
-        return "bg-red-500/20 text-red-400 border-red-500/30";
-      case "infrastructure":
-        return "bg-purple-500/20 text-purple-400 border-purple-500/30";
-      case "training":
-        return "bg-green-500/20 text-green-400 border-green-500/30";
-      case "smart technology":
-        return "bg-cyan-500/20 text-cyan-400 border-cyan-500/30";
-      case "electric vehicles":
-        return "bg-orange-500/20 text-orange-400 border-orange-500/30";
-      case "fire safety":
-        return "bg-red-600/20 text-red-300 border-red-600/30";
-      case "renewable energy":
-        return "bg-green-600/20 text-green-300 border-green-600/30";
-      case "testing standards":
-        return "bg-indigo-500/20 text-indigo-400 border-indigo-500/30";
-      case "healthcare":
-        return "bg-pink-500/20 text-pink-400 border-pink-500/30";
-      case "regulation":
-        return "bg-amber-500/20 text-amber-400 border-amber-500/30";
-      case "smart grid":
-        return "bg-teal-500/20 text-teal-400 border-teal-500/30";
-      case "energy storage":
-        return "bg-violet-500/20 text-violet-400 border-violet-500/30";
-      case "construction safety":
-        return "bg-yellow-500/20 text-yellow-400 border-yellow-500/30";
-      case "safety technology":
-        return "bg-slate-500/20 text-slate-400 border-slate-500/30";
-      case "apprenticeships":
-        return "bg-emerald-500/20 text-emerald-400 border-emerald-500/30";
-      default:
-        return "bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30";
-    }
+    const colors = {
+      "Regulation": "bg-red-500/20 border-red-500/30 text-red-300",
+      "Safety": "bg-orange-500/20 border-orange-500/30 text-orange-300",
+      "Technology": "bg-blue-500/20 border-blue-500/30 text-blue-300",
+      "Industry": "bg-green-500/20 border-green-500/30 text-green-300",
+      "Standards": "bg-purple-500/20 border-purple-500/30 text-purple-300",
+      "News": "bg-cyan-500/20 border-cyan-500/30 text-cyan-300",
+      "Training": "bg-yellow-500/20 border-yellow-500/30 text-yellow-300",
+    };
+    return colors[category as keyof typeof colors] || "bg-white/10 border-white/20 text-white/80";
   };
 
   const getCategoryImage = (category: string) => {
@@ -107,111 +81,101 @@ const NewsGrid = ({ articles, excludeId }: NewsGridProps) => {
           const isFeatured = isFirst && filteredArticles.length > 1;
 
           return (
-            <Card 
-              key={article.id} 
-              className={`group cursor-pointer transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl bg-elec-card/90 border-elec-yellow/10 hover:border-elec-yellow/30 relative overflow-hidden backdrop-blur-sm ${
+            <div 
+              key={article.id}
+              className={`bg-gradient-to-br from-white/10 via-white/5 to-transparent rounded-xl border border-white/10 overflow-hidden group hover:border-elec-yellow/30 transition-all duration-300 hover:shadow-xl hover:shadow-elec-yellow/10 hover:scale-[1.02] h-full cursor-pointer ${
                 isFeatured ? 'md:col-span-2 xl:col-span-2' : ''
               }`}
               onClick={() => window.open(article.external_url, '_blank', 'noopener,noreferrer')}
             >
-              {/* Article Image */}
+              {/* Image */}
               <div className={`relative overflow-hidden ${isFeatured ? 'h-40 sm:h-56' : 'h-32 sm:h-40'}`}>
                 <img
                   src={article.image_url || getCategoryImage(article.category)}
                   alt={article.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  loading="lazy"
                   onError={(e) => {
                     e.currentTarget.src = getCategoryImage(article.category);
                   }}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-                <div className="absolute top-4 left-4">
-                  <Badge className={`${getCategoryColor(article.category)} text-xs font-semibold uppercase tracking-wide backdrop-blur-sm`}>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+                
+                {/* Category Badge */}
+                <div className="absolute top-3 left-3">
+                  <Badge className={cn("text-xs font-medium", getCategoryColor(article.category))}>
                     {article.category}
                   </Badge>
                 </div>
-                <div className="absolute top-4 right-4 flex items-center gap-2">
-                  {isPopular(article) && (
-                    <Badge className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30 text-xs backdrop-blur-sm">
-                      <TrendingUp className="h-2 w-2 mr-1" />
-                      Popular
+
+                {/* Regulatory Body Badge */}
+                {article.regulatory_body && (
+                  <div className="absolute top-3 right-3">
+                    <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow text-xs">
+                      {article.regulatory_body}
                     </Badge>
-                  )}
-                  {isHighRated(article) && (
-                    <Badge className="bg-green-500/20 text-green-400 border-green-500/30 text-xs backdrop-blur-sm">
-                      <Star className="h-2 w-2 mr-1 fill-current" />
-                      Top Rated
-                    </Badge>
-                  )}
-                </div>
-                <div className="absolute bottom-4 right-4 text-xs text-white/90 flex items-center gap-1 backdrop-blur-sm bg-black/30 rounded px-2 py-1">
-                  <Clock className="h-3 w-3" />
-                  {readTime}m
-                </div>
+                  </div>
+                )}
               </div>
-              
-              <div className={`p-4 sm:p-5 h-full flex flex-col relative z-10 ${isFeatured ? 'sm:p-6' : ''}`}>
-                {/* Header with source */}
-                <div className="flex items-start justify-between mb-3">
-                  <span className="text-xs text-white/80 font-medium">{article.source_name}</span>
+
+              {/* Content */}
+              <div className={`p-4 sm:p-5 space-y-3 flex flex-col ${isFeatured ? 'h-[calc(100%-14rem)] sm:h-[calc(100%-16rem)]' : 'h-[calc(100%-8rem)] sm:h-[calc(100%-10rem)]'}`}>
+                {/* Meta Info */}
+                <div className="flex items-center justify-between text-xs text-white/80">
+                  <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-1">
+                      <Eye className="h-3 w-3" />
+                      <span>{article.view_count?.toLocaleString() || 0}</span>
+                    </div>
+                    {article.average_rating && (
+                      <div className="flex items-center gap-1">
+                        <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
+                        <span>{article.average_rating.toFixed(1)}</span>
+                      </div>
+                    )}
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <Clock className="h-3 w-3" />
+                    <span>{readTime} min read</span>
+                  </div>
                 </div>
 
                 {/* Title */}
-                <h3 className={`font-bold text-white mb-2 leading-tight group-hover:text-elec-yellow transition-colors duration-300 ${
-                  isFeatured ? 'text-xl sm:text-2xl line-clamp-3' : 'text-lg line-clamp-2'
+                <h3 className={`font-semibold text-white line-clamp-2 leading-tight flex-grow ${
+                  isFeatured ? 'text-base sm:text-lg' : 'text-sm sm:text-base'
                 }`}>
                   {article.title}
                 </h3>
 
                 {/* Summary */}
-                <p className={`text-white/90 mb-4 flex-grow leading-relaxed ${
-                  isFeatured ? 'text-base line-clamp-4' : 'text-sm line-clamp-3'
+                <p className={`text-white/90 line-clamp-2 leading-relaxed flex-grow ${
+                  isFeatured ? 'text-sm sm:text-base' : 'text-xs sm:text-sm'
                 }`}>
                   {article.summary}
                 </p>
 
-                {/* Meta Information */}
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between text-xs text-white/80">
-                    <div className="flex items-center gap-3">
-                      <div className="flex items-center gap-1">
-                        <Calendar className="h-3 w-3" />
-                        <span>{formattedDate}</span>
-                      </div>
-                      <span className="text-elec-yellow/60">•</span>
-                      <span>{formattedTime}</span>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      {article.view_count !== undefined && (
-                        <div className="flex items-center gap-1">
-                          <Eye className="h-3 w-3" />
-                          <span>{article.view_count.toLocaleString()}</span>
-                        </div>
-                      )}
-                      {article.average_rating && article.average_rating > 0 && (
-                        <div className="flex items-center gap-1">
-                          <Star className="h-3 w-3 fill-current text-elec-yellow" />
-                          <span>{article.average_rating.toFixed(1)}</span>
-                        </div>
-                      )}
-                    </div>
+                {/* Footer */}
+                <div className="flex items-center justify-between mt-auto pt-3 border-t border-white/10">
+                  <div className="flex items-center gap-2 text-xs text-white/80">
+                    <Calendar className="h-3 w-3" />
+                    <span>{format(new Date(article.date_published), 'dd MMM yyyy')}</span>
                   </div>
-
-                  {/* Action Button */}
+                  
                   <Button
-                    size={isFeatured ? "default" : "sm"}
-                    variant="outline"
-                    className="w-full opacity-0 group-hover:opacity-100 transition-all duration-500 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 transform translate-y-2 group-hover:translate-y-0"
+                    size="sm"
+                    variant="ghost"
+                    className="h-8 px-3 text-elec-yellow hover:bg-elec-yellow/10 hover:text-elec-yellow group/btn"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      window.open(article.external_url, '_blank', 'noopener,noreferrer');
+                    }}
                   >
-                    <ExternalLink className="h-3 w-3 mr-2" />
-                    Read Full Story
+                    <span className="text-xs">Read</span>
+                    <ExternalLink className="h-3 w-3 ml-1 transition-transform group-hover/btn:translate-x-0.5" />
                   </Button>
                 </div>
               </div>
-
-              {/* Hover accent */}
-              <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-elec-yellow via-elec-yellow/80 to-transparent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
-            </Card>
+            </div>
           );
         })}
       </div>
