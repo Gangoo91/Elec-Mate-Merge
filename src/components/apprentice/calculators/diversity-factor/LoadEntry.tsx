@@ -67,9 +67,11 @@ export function LoadEntry({
             error={errors[`${load.id}_type`]}
           />
 
-          <div className="grid grid-cols-2 gap-3">
+          <div className="space-y-4 sm:space-y-3 sm:grid sm:grid-cols-2 sm:gap-3">
             <div className="space-y-2">
-              <Label htmlFor={`connected-load-${load.id}`}>Connected Load (A)</Label>
+              <Label htmlFor={`connected-load-${load.id}`} className="text-sm font-medium">
+                Connected Load (A)
+              </Label>
               <Input
                 id={`connected-load-${load.id}`}
                 type="number"
@@ -78,7 +80,7 @@ export function LoadEntry({
                 placeholder="Enter load"
                 value={load.connectedLoad}
                 onChange={(e) => onUpdate(load.id, 'connectedLoad', e.target.value)}
-                className={`bg-card border ${errors[`${load.id}_connectedLoad`] ? 'border-destructive' : 'border-muted/40'}`}
+                className={`h-12 text-base bg-card border ${errors[`${load.id}_connectedLoad`] ? 'border-destructive' : 'border-muted/40'}`}
               />
               {errors[`${load.id}_connectedLoad`] && (
                 <p className="text-xs text-destructive flex items-center gap-1">
@@ -89,7 +91,9 @@ export function LoadEntry({
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor={`units-${load.id}`}>Number of Units</Label>
+              <Label htmlFor={`units-${load.id}`} className="text-sm font-medium">
+                Number of Units
+              </Label>
               <Input
                 id={`units-${load.id}`}
                 type="number"
@@ -97,7 +101,7 @@ export function LoadEntry({
                 placeholder="1"
                 value={load.numberOfUnits}
                 onChange={(e) => onUpdate(load.id, 'numberOfUnits', e.target.value)}
-                className={`bg-card border ${errors[`${load.id}_numberOfUnits`] ? 'border-destructive' : 'border-muted/40'}`}
+                className={`h-12 text-base bg-card border ${errors[`${load.id}_numberOfUnits`] ? 'border-destructive' : 'border-muted/40'}`}
               />
               {errors[`${load.id}_numberOfUnits`] && (
                 <p className="text-xs text-destructive flex items-center gap-1">
