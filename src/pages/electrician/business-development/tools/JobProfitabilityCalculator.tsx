@@ -141,7 +141,7 @@ const JobProfitabilityCalculator = () => {
   const validateInputs = (): boolean => {
     const newErrors: ValidationErrors = {};
 
-    if (inputs.materialCost <= 0) newErrors.materialCost = "Material cost must be greater than £0";
+    if (inputs.materialCost < 0) newErrors.materialCost = "Material cost cannot be negative";
     
     if (inputs.useMultiWorker) {
       if (inputs.workers.length === 0) newErrors.workers = "At least one worker is required";
