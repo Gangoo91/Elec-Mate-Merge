@@ -1,7 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Calendar, Clock, ArrowRight, ExternalLink } from "lucide-react";
+import { Calendar, Clock, ExternalLink, Eye, Star, Bookmark } from "lucide-react";
 import { format, formatDistanceToNow } from "date-fns";
 import type { NewsArticle } from "@/hooks/useIndustryNews";
 import { isValidUrl } from "@/utils/urlUtils";
@@ -28,73 +28,122 @@ const NewsHero = ({ article }: NewsHeroProps) => {
     }
   };
 
+  // Calculate read time (rough estimate: 200 words per minute)
+  const readTime = Math.max(1, Math.ceil(article.content.split(' ').length / 200));
+
   return (
-    <Card className="relative overflow-hidden bg-gradient-to-r from-elec-dark to-elec-gray border-elec-yellow/20">
-      <CardContent className="p-8">
-        <div className="grid lg:grid-cols-2 gap-8 items-center">
-          {/* Content */}
-          <div className="space-y-6">
-            <div className="flex items-center gap-3">
-              <Badge className={getCategoryColor(article.category)}>
-                {article.category}
-              </Badge>
-              <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
-                {article.regulatory_body}
-              </Badge>
-            </div>
-            
-            <div className="space-y-4">
-              <h1 className="text-3xl lg:text-4xl font-bold text-white leading-tight">
-                {article.title}
-              </h1>
-              
-              <p className="text-lg text-gray-300 leading-relaxed">
-                {article.summary}
-              </p>
-            </div>
-            
-            <div className="flex items-center gap-6 text-sm text-muted-foreground">
-              <div className="flex items-center gap-2">
-                <Calendar className="h-4 w-4" />
-                <span>{format(new Date(article.date_published), 'dd MMM yyyy')}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Clock className="h-4 w-4" />
-                <span>{formatDistanceToNow(new Date(article.date_published), { addSuffix: true })}</span>
-              </div>
-            </div>
-            
-            <div className="flex justify-center">
-              <Button 
-                variant="outline"
-                size="lg"
-                className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 border-elec-yellow transition-all duration-200"
-                onClick={() => window.open(article.external_url, '_blank', 'noopener,noreferrer')}
-                aria-label="Visit original article"
-              >
-                Visit Source
-                <ExternalLink className="h-5 w-5 ml-2" />
-              </Button>
-            </div>
+    <div className="relative">
+      {/* Breaking News Banner */}
+      <div className="bg-gradient-to-r from-elec-yellow via-elec-yellow/90 to-elec-yellow/70 text-elec-dark px-4 py-2 mb-6 rounded-lg">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <Badge className="bg-elec-dark text-elec-yellow animate-pulse">
+              FEATURED
+            </Badge>
+            <span className="font-bold text-sm">Latest Industry Update</span>
           </div>
-          
-          {/* Visual Element */}
-          <div className="relative h-64 lg:h-80">
-            <div className="absolute inset-0 bg-gradient-to-br from-elec-yellow/20 to-transparent rounded-lg">
-              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                <div className="w-32 h-32 border-4 border-elec-yellow/30 rounded-full flex items-center justify-center">
-                  <div className="w-20 h-20 bg-elec-yellow/20 rounded-full flex items-center justify-center">
-                    <span className="text-2xl font-bold text-elec-yellow">
-                      {article.category.charAt(0)}
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
+          <div className="text-xs font-medium">
+            {format(new Date(article.date_published), 'HH:mm')}
           </div>
         </div>
-      </CardContent>
-    </Card>
+      </div>
+
+      {/* Main Hero Card */}
+      <Card className="relative overflow-hidden bg-gradient-to-br from-elec-card/95 via-elec-card/90 to-elec-card/85 border-elec-yellow/20 hover:border-elec-yellow/30 transition-all duration-500 shadow-2xl">
+        {/* Background Pattern */}
+        <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
+        
+        <CardContent className="relative p-6 sm:p-8 lg:p-12">
+          {/* Top Meta Bar */}
+          <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+            <div className="flex flex-wrap items-center gap-3">
+              <Badge className={`${getCategoryColor(article.category)} font-semibold text-xs uppercase tracking-wide`}>
+                {article.category}
+              </Badge>
+              {article.regulatory_body && (
+                <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow text-xs">
+                  {article.regulatory_body}
+                </Badge>
+              )}
+            </div>
+            
+            <div className="flex items-center gap-4 text-xs text-muted-foreground">
+              <div className="flex items-center gap-1">
+                <Eye className="h-3 w-3" />
+                <span>{article.view_count?.toLocaleString() || 0}</span>
+              </div>
+              {article.average_rating && article.average_rating > 0 && (
+                <div className="flex items-center gap-1">
+                  <Star className="h-3 w-3 fill-current text-elec-yellow" />
+                  <span>{article.average_rating.toFixed(1)}</span>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Hero Content */}
+          <div className="grid lg:grid-cols-12 gap-8 items-start">
+            <div className="lg:col-span-10">
+              {/* Title */}
+              <h1 className="text-2xl sm:text-3xl lg:text-5xl font-bold text-white mb-6 leading-tight tracking-tight">
+                {article.title}
+              </h1>
+
+              {/* Summary */}
+              <p className="text-base sm:text-lg text-muted-foreground mb-8 leading-relaxed font-light">
+                {article.summary}
+              </p>
+
+              {/* Publication Details */}
+              <div className="flex flex-wrap items-center gap-6 text-sm text-muted-foreground mb-8">
+                <div className="flex items-center gap-2">
+                  <Calendar className="h-4 w-4" />
+                  <span className="font-medium">{format(new Date(article.date_published), 'EEEE, MMMM dd, yyyy')}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Clock className="h-4 w-4" />
+                  <span>{readTime} min read</span>
+                </div>
+                <div className="text-elec-yellow font-medium">
+                  {article.source_name || 'ElecMate News'}
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex flex-wrap gap-4">
+                <Button
+                  size="lg"
+                  className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 font-semibold px-8 shadow-lg"
+                  onClick={() => window.open(article.external_url, '_blank', 'noopener,noreferrer')}
+                  aria-label="Visit original article"
+                >
+                  <ExternalLink className="h-5 w-5 mr-2" />
+                  Read Full Article
+                </Button>
+                
+                <Button
+                  variant="outline"
+                  size="lg"
+                  className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+                >
+                  <Bookmark className="h-5 w-5 mr-2" />
+                  Save for Later
+                </Button>
+              </div>
+            </div>
+
+            {/* Visual Element */}
+            <div className="lg:col-span-2 flex justify-center lg:justify-end">
+              <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-full bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 flex items-center justify-center border border-elec-yellow/20">
+                <span className="text-3xl sm:text-4xl font-bold text-elec-yellow">
+                  {article.category.charAt(0)}
+                </span>
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
   );
 };
 
