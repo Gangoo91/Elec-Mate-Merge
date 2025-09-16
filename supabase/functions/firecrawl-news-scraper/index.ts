@@ -7,293 +7,275 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-// News sources with URL mapping for Firecrawl v2 batch API
-const newsSources = [
-  {
-    name: 'Electrical Times',
-    url: 'https://www.electricaltimes.co.uk/latest-news/',
-    category: 'Industry News'
-  },
-  {
-    name: 'Professional Electrician Technical',
-    url: 'https://professional-electrician.com/category/technical/',
-    category: 'Technical'
-  },
-  {
-    name: 'Electrical Contracting News',
-    url: 'https://electricalcontractingnews.com/category/safety-and-training/',
-    category: 'Safety & Training'
-  },
-  {
-    name: 'Professional Electrician 18th Edition',
-    url: 'https://professional-electrician.com/category/18th-edition/',
-    category: '18th Edition'
-  },
-  {
-    name: 'Electrical Times Categories',
-    url: 'https://www.electricaltimes.co.uk/cate',
-    category: 'General'
-  }
-];
-
-// Get news using Firecrawl v2 batch API
-async function getNews(firecrawlApiKey: string): Promise<any[]> {
-  console.log('🚀 Starting Firecrawl v2 batch news scraping...');
-  
-  const url = "https://api.firecrawl.dev/v2/batch/scrape";
-  const options = {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${firecrawlApiKey}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      urls: newsSources.map(source => source.url),
-      onlyMainContent: true,
-      maxAge: 0,
-      parsers: [],
-      formats: [
-        {
-          type: "json",
-          prompt: "Extract only articles that are directly related to electricians or the electrical industry. Ignore unrelated articles. For each article, include the title, description, date, and url.",
-          schema: {
-            type: "array",
-            items: {
-              type: "object",
-              required: ["title", "description", "date", "visit_link"],
-              properties: {
-                title: { type: "string" },
-                description: { type: "string" },
-                date: { type: "string", description: "date in iso format" },
-                tags: { type: "string" },
-                visit_link: { type: "string", description: "link of the article" },
-                views: { type: "string" },
-              },
-            },
-          },
-        },
-      ],
-    }),
-  };
-
-  console.log('📡 Creating batch scrape job...');
-  const response = await fetch(url, options);
-  
-  if (!response.ok) {
-    throw new Error(`Firecrawl API error: ${response.status} ${response.statusText}`);
-  }
-  
-  const job = await response.json();
-  console.log("✅ Batch job created:", job.id);
-
-  let status;
-  let attempts = 0;
-  const maxAttempts = 60; // 5 minutes max wait time
-
-  console.log('⏳ Polling for job completion...');
-  do {
-    if (attempts >= maxAttempts) {
-      throw new Error('Batch job timeout after 5 minutes');
-    }
-    
-    await new Promise((r) => setTimeout(r, 5000)); // Wait 5 seconds
-    
-    const res = await fetch(job.url, {
-      headers: { Authorization: `Bearer ${firecrawlApiKey}` },
-    });
-    
-    if (!res.ok) {
-      throw new Error(`Failed to check job status: ${res.status}`);
-    }
-
-    status = await res.json();
-    console.log(`🔄 Job status: ${status.status} (attempt ${attempts + 1})`);
-    attempts++;
-  } while (status.status !== "completed" && status.status !== "failed");
-
-  if (status.status === "failed") {
-    throw new Error(`Batch job failed: ${status.error || 'Unknown error'}`);
-  }
-
-  console.log('🎉 Batch job completed successfully');
-  
-  // Extract and flatten articles from all sources
-  const allArticles = status.data?.map((result, index) => {
-    const sourceInfo = newsSources[index];
-    const articles = result.json || [];
-    
-    console.log(`📄 Source ${sourceInfo.name}: ${articles.length} articles found`);
-    
-    // Add source information to each article
-    return articles.map(article => ({
-      ...article,
-      source_name: sourceInfo.name,
-      category: sourceInfo.category,
-      source_url: sourceInfo.url
-    }));
-  }).flat() || [];
-
-  console.log(`📊 Total articles extracted: ${allArticles.length}`);
-  return allArticles;
-}
-
-// Generate content hash for deduplication
-function generateContentHash(title: string, sourceUrl: string): string {
-  const content = title + (sourceUrl || '');
-  return Array.from(new TextEncoder().encode(content))
-    .map(b => b.toString(16).padStart(2, '0'))
-    .join('')
-    .substring(0, 32);
-}
-
-// Transform and validate article data
-function transformArticle(article: any): any {
-  // Parse date - handle various formats
-  let datePublished;
-  try {
-    if (article.date) {
-      datePublished = new Date(article.date).toISOString().split('T')[0];
-    } else {
-      datePublished = new Date().toISOString().split('T')[0];
-    }
-  } catch {
-    datePublished = new Date().toISOString().split('T')[0];
-  }
-
-  return {
-    title: article.title?.substring(0, 500) || 'Untitled',
-    summary: article.description?.substring(0, 1000) || '',
-    content: article.description?.substring(0, 5000) || '',
-    category: article.category || 'General',
-    source_name: article.source_name || 'Unknown Source',
-    external_url: article.visit_link || article.url || null,
-    date_published: datePublished,
-    regulatory_body: 'Industry',
-    content_hash: generateContentHash(article.title || '', article.visit_link || ''),
-    is_active: true,
-    view_count: 0,
-    average_rating: 0
-  };
-}
-
-// Insert articles into database
-async function insertArticles(articles: any[], supabase: any): Promise<number> {
-  if (!articles.length) {
-    console.log('📭 No articles to insert');
-    return 0;
-  }
-  
-  console.log(`📝 Processing ${articles.length} articles for insertion...`);
-  
-  // Check for existing articles to avoid duplicates
-  const { data: existingArticles } = await supabase
-    .from('industry_news')
-    .select('title, content_hash')
-    .eq('is_active', true);
-  
-  const existingHashes = new Set(existingArticles?.map(a => a.content_hash) || []);
-  const existingTitles = new Set(existingArticles?.map(a => a.title.toLowerCase()) || []);
-  
-  // Transform and filter articles
-  const validArticles = articles
-    .filter(article => article.title && article.description) // Must have title and description
-    .map(transformArticle)
-    .filter(article => {
-      const titleLower = article.title.toLowerCase();
-      return !existingHashes.has(article.content_hash) && !existingTitles.has(titleLower);
-    });
-  
-  console.log(`📥 New unique articles to insert: ${validArticles.length}`);
-  
-  if (validArticles.length === 0) {
-    return 0;
-  }
-  
-  // Insert in batches
-  const batchSize = 10;
-  let insertedCount = 0;
-  
-  for (let i = 0; i < validArticles.length; i += batchSize) {
-    const batch = validArticles.slice(i, i + batchSize);
-    const { error } = await supabase
-      .from('industry_news')
-      .insert(batch);
-    
-    if (error) {
-      console.error(`❌ Error inserting batch ${i + 1}-${Math.min(i + batchSize, validArticles.length)}:`, error);
-    } else {
-      console.log(`✅ Inserted batch ${i + 1}-${Math.min(i + batchSize, validArticles.length)}`);
-      insertedCount += batch.length;
-    }
-  }
-  
-  return insertedCount;
-}
-
 serve(async (req) => {
-  // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
-  
+
   try {
-    console.log('🔧 Starting Firecrawl v2 news aggregation...');
+    console.log('🔧 Starting Firecrawl news scraping process...');
     
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const firecrawlApiKey = Deno.env.get('FIRECRAWL_API_KEY');
 
     if (!firecrawlApiKey) {
-      console.error('❌ FIRECRAWL_API_KEY not found in environment variables');
-      return new Response(
-        JSON.stringify({ 
-          success: false, 
-          message: 'Firecrawl API key not configured. Please add your Firecrawl API key in Supabase Edge Function Secrets.',
-          articlesInserted: 0 
-        }),
-        { 
-          status: 500,
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
-        }
-      );
+      throw new Error('FIRECRAWL_API_KEY not found');
     }
 
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
-    
-    // Get news articles using batch API
-    const articles = await getNews(firecrawlApiKey);
-    
-    // Insert new articles
-    const articlesInserted = await insertArticles(articles, supabase);
-    
-    console.log(`🎉 News aggregation completed: ${articlesInserted} new articles added`);
-    
-    return new Response(
-      JSON.stringify({
-        success: true,
-        message: `News aggregation completed successfully`,
-        articlesInserted,
-        totalArticlesProcessed: articles.length,
-        timestamp: new Date().toISOString()
-      }),
-      { 
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        status: 200 
+
+    async function getNews() {
+      console.log('🚀 Starting news scraping with Firecrawl API...');
+      
+      const url = "https://api.firecrawl.dev/v2/scrape";
+      const sources = [
+        {
+          url: "https://www.electricaltimes.co.uk/latest-news/",
+          category: "Industry",
+          source: "Electrical Times"
+        },
+        {
+          url: "https://professional-electrician.com/category/technical/",
+          category: "Technical",
+          source: "Professional Electrician"
+        },
+        {
+          url: "https://electricalcontractingnews.com/category/safety-and-training/",
+          category: "Safety",
+          source: "Electrical Contracting News"
+        },
+        {
+          url: "https://professional-electrician.com/category/18th-edition/",
+          category: "BS7671",
+          source: "Professional Electrician"
+        }
+      ];
+
+      const allArticles = [];
+      
+      for (const source of sources) {
+        try {
+          console.log(`📡 Scraping ${source.source}: ${source.url}`);
+          
+          const options = {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${firecrawlApiKey}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              url: source.url,
+              formats: ["json"],
+              onlyMainContent: true,
+              includeTags: ["article", "h1", "h2", "h3", "time", "date"],
+              excludeTags: ["nav", "footer", "aside", "script"],
+              waitFor: 2000,
+              actions: [
+                {
+                  type: "wait",
+                  milliseconds: 1000
+                }
+              ],
+              extract: {
+                schema: {
+                  type: "object",
+                  properties: {
+                    articles: {
+                      type: "array",
+                      items: {
+                        type: "object",
+                        properties: {
+                          title: { type: "string" },
+                          description: { type: "string" },
+                          url: { type: "string" },
+                          date: { type: "string" },
+                          author: { type: "string" },
+                          excerpt: { type: "string" },
+                          imageUrl: {type: "string"},
+                        },
+                        required: ["title"]
+                      }
+                    }
+                  },
+                  required: ["articles"]
+                }
+              }
+            }),
+          };
+
+          const response = await fetch(url, options);
+          
+          if (!response.ok) {
+            console.error(`❌ HTTP error for ${source.source}: ${response.status} ${response.statusText}`);
+            continue;
+          }
+
+          const result = await response.json();
+          console.log(`📊 Response for ${source.source}:`, result.success ? 'Success' : 'Failed');
+          
+          if (result.success && result.data?.extract?.articles) {
+            const articles = result.data.extract.articles
+              .filter(article => article.title && article.title.length > 10)
+              .map(article => ({
+                ...article,
+                source_category: source.category,
+                source_name: source.source,
+                source_url: source.url
+              }));
+            
+            allArticles.push(...articles);
+            console.log(`✅ Found ${articles.length} articles from ${source.source}`);
+          } else {
+            console.warn(`⚠️ No articles found for ${source.source}`);
+          }
+          
+          // Rate limiting delay
+          await new Promise(resolve => setTimeout(resolve, 1000));
+          
+        } catch (error) {
+          console.error(`❌ Error scraping ${source.source}:`, error);
+        }
       }
+
+      console.log(`📰 Total articles collected: ${allArticles.length}`);
+      return allArticles;
+
+      const response = await fetch(url, options);
+      const job = await response.json();
+      console.log("Batch job created:", job);
+
+    }
+
+    const articles = await getNews();
+    console.log(`📊 Total articles found: ${articles.length}`);
+
+    if (articles.length === 0) {
+      return new Response(
+        JSON.stringify({ 
+          success: false, 
+          message: 'No articles found',
+          articlesProcessed: 0 
+        }),
+        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
+    // Transform articles to match database schema
+    const transformedArticles = await Promise.all(articles.map(async article => {
+      // Create content hash for deduplication using Unicode-safe method
+      const contentText = article.title + (article.description || article.excerpt || '');
+      let contentHash;
+      
+      try {
+        // Use crypto.subtle.digest for Unicode-safe hashing
+        const encoder = new TextEncoder();
+        const data = encoder.encode(contentText);
+        const hashBuffer = await crypto.subtle.digest('SHA-1', data);
+        const hashArray = Array.from(new Uint8Array(hashBuffer));
+        contentHash = hashArray.map(b => b.toString(16).padStart(2, '0')).join('').substring(0, 32);
+      } catch (hashError) {
+        console.warn('Hash generation failed, using fallback:', hashError);
+        // Fallback: simple string hash
+        let hash = 0;
+        for (let i = 0; i < contentText.length; i++) {
+          const char = contentText.charCodeAt(i);
+          hash = ((hash << 5) - hash) + char;
+          hash = hash & hash; // Convert to 32bit integer
+        }
+        contentHash = Math.abs(hash).toString(16).substring(0, 32);
+      }
+      
+      // Parse date safely
+      let publishDate = new Date().toISOString().split('T')[0];
+      if (article.date) {
+        try {
+          const parsed = new Date(article.date);
+          if (!isNaN(parsed.getTime())) {
+            publishDate = parsed.toISOString().split('T')[0];
+          }
+        } catch (e) {
+          console.warn('Date parsing failed:', article.date);
+        }
+      }
+
+      return {
+        title: article.title?.substring(0, 255) || 'Untitled',
+        summary: (article.description || article.excerpt || 'No summary available').substring(0, 500),
+        content: article.description || article.excerpt || article.title || 'No content available',
+        category: article.source_category || 'General',
+        source_name: article.source_name || 'Unknown',
+        regulatory_body: article.source_category === 'BS7671' ? 'IET' : (article.source_category === 'Safety' ? 'HSE' : 'Industry'),
+        date_published: publishDate,
+        content_hash: contentHash,
+        external_url: article.url || article.source_url,
+        is_active: true,
+        view_count: 0,
+        average_rating: 0
+      };
+    }));
+
+    // Check for existing articles to avoid duplicates
+    const existingHashes = await supabase
+      .from('industry_news')
+      .select('content_hash')
+      .in('content_hash', transformedArticles.map(a => a.content_hash));
+
+    const existingHashSet = new Set(
+      existingHashes.data?.map(item => item.content_hash) || []
     );
-    
-  } catch (error) {
-    console.error('❌ News aggregation failed:', error);
-    
+
+    // Filter out articles that already exist
+    const newArticles = transformedArticles.filter(
+      article => !existingHashSet.has(article.content_hash)
+    );
+
+    console.log(`📥 New articles to insert: ${newArticles.length}`);
+
+    let insertedCount = 0;
+    if (newArticles.length > 0) {
+      // Insert new articles in batches
+      const batchSize = 10;
+      for (let i = 0; i < newArticles.length; i += batchSize) {
+        const batch = newArticles.slice(i, i + batchSize);
+        const { error } = await supabase
+          .from('industry_news')
+          .insert(batch);
+
+        if (error) {
+          console.error(`❌ Error inserting batch ${i}-${i + batch.length}:`, error);
+        } else {
+          insertedCount += batch.length;
+          console.log(`✅ Inserted batch ${i}-${i + batch.length}`);
+        }
+      }
+    }
+
+    console.log(`🎉 News scraping completed: ${insertedCount} articles inserted`);
+
     return new Response(
-      JSON.stringify({
-        success: false,
-        error: error.message,
+      JSON.stringify({ 
+        success: true, 
+        message: `Successfully scraped and inserted ${insertedCount} new articles`,
+        totalFound: articles.length,
+        articlesInserted: insertedCount,
+        sources: ['Electrical Times', 'Professional Electrician', 'Electrical Contracting News'],
         timestamp: new Date().toISOString()
       }),
+      { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+    );
+
+  } catch (error) {
+    console.error('❌ Error in Firecrawl news scraping function:', error);
+    return new Response(
+      JSON.stringify({ 
+        success: false, 
+        error: error.message,
+        articlesProcessed: 0 
+      }),
       { 
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        status: 500 
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
       }
     );
   }
