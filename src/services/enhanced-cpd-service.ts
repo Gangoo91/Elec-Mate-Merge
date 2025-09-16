@@ -8,6 +8,7 @@ import {
   CPDCategory
 } from '@/types/cpd-enhanced';
 import { supabase } from '@/integrations/supabase/client';
+import { professionalBodyService } from '@/services/professionalBodyService';
 
 export interface CPDComplianceStats {
   compliance_percentage: number;
@@ -26,6 +27,8 @@ export interface CPDComplianceStats {
 }
 
 class EnhancedCPDService {
+  private readonly REMINDERS_KEY = 'cpd_reminders';
+  private readonly SETTINGS_KEY = 'cpd_settings';
 
   // Professional Body Compliance
   getProfessionalBodyRequirements(): ProfessionalBodyRequirement[] {
@@ -47,7 +50,7 @@ class EnhancedCPDService {
   }
 
   getComplianceAnalysis(): ComplianceAnalysis {
-    const entries = this.getEntries();
+    const entries = this.getDefaultEntries();
     const requirements = this.getProfessionalBodyRequirements();
     const currentYear = new Date().getFullYear();
     
@@ -272,7 +275,7 @@ class EnhancedCPDService {
         .from('cpd_entries')
         .select('*')
         .eq('user_id', userId)
-        .order('date', { ascending: false });
+        .order('date_completed', { ascending: false });
 
       if (error) throw error;
 
@@ -349,15 +352,15 @@ class EnhancedCPDService {
         .from('cpd_entries')
         .select('*')
         .eq('user_id', userId)
-        .gte('date', `${currentYear}-01-01`)
-        .lte('date', `${currentYear}-12-31`);
+        .gte('date_completed', `${currentYear}-01-01`)
+        .lte('date_completed', `${currentYear}-12-31`);
 
       if (entriesError) throw entriesError;
 
-      // Get professional body requirements
+      // Get professional body
       const { data: profBody, error: profBodyError } = await supabase
         .from('professional_bodies')
-        .select('*, professional_body_categories(*)')
+        .select('*')
         .eq('id', professionalBodyId)
         .single();
 
