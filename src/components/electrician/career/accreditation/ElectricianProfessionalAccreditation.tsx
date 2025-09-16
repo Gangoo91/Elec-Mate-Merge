@@ -113,7 +113,7 @@ const ElectricianProfessionalAccreditation = () => {
           <Award className="h-6 w-6 text-elec-yellow" />
           Professional Accreditations for Electricians
         </h2>
-        <p className="text-muted-foreground">
+        <p className="text-white">
           Advance your electrical career with recognised professional accreditations. From industry memberships 
           to specialist certifications, discover the credentials that will enhance your professional standing 
           and open new opportunities in the electrical industry.
@@ -131,37 +131,85 @@ const ElectricianProfessionalAccreditation = () => {
       />
 
       {/* Information Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <Card className="border-elec-yellow/20 bg-gradient-to-br from-elec-gray to-elec-gray/80">
-          <CardHeader>
-            <CardTitle className="text-lg flex items-center gap-2">
-              <Target className="h-5 w-5 text-elec-yellow" />
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <Card className="border-elec-yellow/20 bg-elec-grey">
+          <CardHeader className="pb-4">
+            <CardTitle className="text-xl flex items-center gap-3">
+              <Target className="h-6 w-6 text-elec-yellow" />
               Why Get Accredited as an Electrician?
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-3">
-            <div className="space-y-2 text-sm text-muted-foreground">
-              <p>• <strong className="text-white">Professional Recognition:</strong> Demonstrate your expertise and commitment to electrical industry standards</p>
-              <p>• <strong className="text-white">Career Advancement:</strong> Access senior electrician positions and increased earning potential</p>
-              <p>• <strong className="text-white">Regulatory Compliance:</strong> Meet BS 7671 and industry requirements for electrical work</p>
-              <p>• <strong className="text-white">Industry Network:</strong> Connect with electrical professionals and exclusive opportunities</p>
+          <CardContent className="space-y-4">
+            <div className="space-y-4 text-sm">
+              <div className="flex items-start gap-3">
+                <div className="w-2 h-2 rounded-full bg-elec-yellow mt-2 flex-shrink-0"></div>
+                <div>
+                  <p className="font-semibold text-white mb-1">Professional Recognition</p>
+                  <p className="text-white/90 leading-relaxed">Demonstrate your expertise and commitment to electrical industry standards. Gain credibility with employers, clients, and peers through recognised qualifications.</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="w-2 h-2 rounded-full bg-elec-yellow mt-2 flex-shrink-0"></div>
+                <div>
+                  <p className="font-semibold text-white mb-1">Career Advancement</p>
+                  <p className="text-white/90 leading-relaxed">Access senior electrician positions and increased earning potential. Studies show accredited electricians earn 15-25% more than non-accredited peers.</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="w-2 h-2 rounded-full bg-elec-yellow mt-2 flex-shrink-0"></div>
+                <div>
+                  <p className="font-semibold text-white mb-1">Regulatory Compliance</p>
+                  <p className="text-white/90 leading-relaxed">Meet BS 7671 and industry requirements for electrical work. Stay compliant with Part P regulations and building control requirements.</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="w-2 h-2 rounded-full bg-elec-yellow mt-2 flex-shrink-0"></div>
+                <div>
+                  <p className="font-semibold text-white mb-1">Industry Network</p>
+                  <p className="text-white/90 leading-relaxed">Connect with electrical professionals and exclusive opportunities. Access CPD events, technical support, and career development resources.</p>
+                </div>
+              </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="border-elec-yellow/20 bg-gradient-to-br from-elec-gray to-elec-gray/80">
-          <CardHeader>
-            <CardTitle className="text-lg flex items-center gap-2">
-              <Info className="h-5 w-5 text-elec-yellow" />
+        <Card className="border-elec-yellow/20 bg-elec-grey">
+          <CardHeader className="pb-4">
+            <CardTitle className="text-xl flex items-center gap-3">
+              <Info className="h-6 w-6 text-elec-yellow" />
               Getting Started
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-3">
-            <div className="space-y-2 text-sm text-muted-foreground">
-              <p>• <strong className="text-white">Assess Your Experience:</strong> Consider your electrical work experience and specialisation areas</p>
-              <p>• <strong className="text-white">Check Prerequisites:</strong> Ensure you meet the electrical qualifications required</p>
-              <p>• <strong className="text-white">Plan Investment:</strong> Budget for certification costs and ongoing professional development</p>
-              <p>• <strong className="text-white">Start Early:</strong> Many electrical accreditations require significant practical experience</p>
+          <CardContent className="space-y-4">
+            <div className="space-y-4 text-sm">
+              <div className="flex items-start gap-3">
+                <div className="w-2 h-2 rounded-full bg-elec-yellow mt-2 flex-shrink-0"></div>
+                <div>
+                  <p className="font-semibold text-white mb-1">Assess Your Experience</p>
+                  <p className="text-white/90 leading-relaxed">Consider your electrical work experience and specialisation areas. Most accreditations require 2-5 years of relevant experience in electrical installation work.</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="w-2 h-2 rounded-full bg-elec-yellow mt-2 flex-shrink-0"></div>
+                <div>
+                  <p className="font-semibold text-white mb-1">Check Prerequisites</p>
+                  <p className="text-white/90 leading-relaxed">Ensure you meet the electrical qualifications required. Typically Level 3 electrical qualifications, AM2, and relevant work portfolio evidence.</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="w-2 h-2 rounded-full bg-elec-yellow mt-2 flex-shrink-0"></div>
+                <div>
+                  <p className="font-semibold text-white mb-1">Plan Investment</p>
+                  <p className="text-white/90 leading-relaxed">Budget for certification costs and ongoing professional development. Initial costs range from £200-£1,500 with annual membership fees.</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="w-2 h-2 rounded-full bg-elec-yellow mt-2 flex-shrink-0"></div>
+                <div>
+                  <p className="font-semibold text-white mb-1">Start Early</p>
+                  <p className="text-white/90 leading-relaxed">Many electrical accreditations require significant practical experience. Begin the application process 3-6 months before your target date.</p>
+                </div>
+              </div>
             </div>
           </CardContent>
         </Card>
@@ -190,11 +238,11 @@ const ElectricianProfessionalAccreditation = () => {
 
       {/* Empty State */}
       {filteredOptions.length === 0 && (
-        <Card className="border-elec-yellow/20 bg-elec-gray">
+        <Card className="border-elec-yellow/20 bg-elec-grey">
           <CardContent className="p-8 text-center">
-            <BookOpen className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+            <BookOpen className="h-12 w-12 text-white mx-auto mb-4" />
             <h3 className="text-lg font-medium mb-2">No accreditations found</h3>
-            <p className="text-muted-foreground mb-4">
+            <p className="text-white mb-4">
               Try adjusting your search criteria or explore different categories.
             </p>
             <Button variant="outline" onClick={handleReset}>
@@ -205,7 +253,7 @@ const ElectricianProfessionalAccreditation = () => {
       )}
 
       {/* Additional Resources */}
-      <Card className="border-elec-yellow/20 bg-elec-gray/50">
+      <Card className="border-elec-yellow/20 bg-elec-grey">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Users className="h-5 w-5 text-elec-yellow" />
@@ -214,10 +262,10 @@ const ElectricianProfessionalAccreditation = () => {
         </CardHeader>
         <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <h4 className="font-medium mb-3 text-amber-400">Professional Bodies</h4>
+            <h4 className="font-medium mb-3 text-elec-yellow">Professional Bodies</h4>
             <div className="space-y-3 text-sm">
               <div className="flex items-center justify-between">
-                <span className="text-muted-foreground">Institution of Engineering and Technology (IET)</span>
+                <span className="text-white">Institution of Engineering and Technology (IET)</span>
                 <Button 
                   variant="ghost" 
                   size="sm"
@@ -227,7 +275,7 @@ const ElectricianProfessionalAccreditation = () => {
                 </Button>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-muted-foreground">Electrical Contractors' Association (ECA)</span>
+                <span className="text-white">Electrical Contractors' Association (ECA)</span>
                 <Button 
                   variant="ghost" 
                   size="sm"
@@ -237,7 +285,7 @@ const ElectricianProfessionalAccreditation = () => {
                 </Button>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-muted-foreground">NICEIC</span>
+                <span className="text-white">NICEIC</span>
                 <Button 
                   variant="ghost" 
                   size="sm"
@@ -250,10 +298,10 @@ const ElectricianProfessionalAccreditation = () => {
           </div>
           
           <div>
-            <h4 className="font-medium mb-3 text-amber-400">Scheme Providers</h4>
+            <h4 className="font-medium mb-3 text-elec-yellow">Scheme Providers</h4>
             <div className="space-y-3 text-sm">
               <div className="flex items-center justify-between">
-                <span className="text-muted-foreground">NAPIT Electrical Certification</span>
+                <span className="text-white">NAPIT Electrical Certification</span>
                 <Button 
                   variant="ghost" 
                   size="sm"
@@ -263,7 +311,7 @@ const ElectricianProfessionalAccreditation = () => {
                 </Button>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-muted-foreground">STROMA Certification</span>
+                <span className="text-white">STROMA Certification</span>
                 <Button 
                   variant="ghost" 
                   size="sm"
@@ -273,8 +321,8 @@ const ElectricianProfessionalAccreditation = () => {
                 </Button>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-muted-foreground">Local Training Centres</span>
-                <ArrowRight className="h-3 w-3 text-muted-foreground" />
+                <span className="text-white">Local Training Centres</span>
+                <ArrowRight className="h-3 w-3 text-white" />
               </div>
             </div>
           </div>
