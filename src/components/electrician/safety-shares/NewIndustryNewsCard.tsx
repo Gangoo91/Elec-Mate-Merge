@@ -290,7 +290,7 @@ const NewIndustryNewsCard = () => {
                 disabled={isRefreshing}
                 size="sm"
                 variant="outline"
-                className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 hover:border-elec-yellow/50 bg-transparent whitespace-nowrap flex-shrink-0"
+                className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 hover:border-elec-yellow/50 bg-transparent whitespace-nowrap flex-shrink-0 ml-auto"
               >
                 <RefreshCw className={`h-4 w-4 mr-2 ${isRefreshing ? 'animate-spin' : ''}`} />
                 {isRefreshing ? 'Fetching Latest...' : 'Refresh News'}
