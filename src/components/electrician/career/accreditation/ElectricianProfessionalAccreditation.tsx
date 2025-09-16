@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -19,6 +20,7 @@ import AccreditationAnalytics from "../../../apprentice/career/accreditation/Acc
 import { enhancedAccreditationOptions, AccreditationOption } from "../../../apprentice/career/accreditation/enhancedAccreditationData";
 
 const ElectricianProfessionalAccreditation = () => {
+  const isMobile = useIsMobile();
   const [filteredOptions, setFilteredOptions] = useState<AccreditationOption[]>(enhancedAccreditationOptions);
   const [selectedAccreditation, setSelectedAccreditation] = useState<AccreditationOption | null>(null);
   const [viewMode, setViewMode] = useState<"grid" | "details">("grid");
@@ -131,7 +133,7 @@ const ElectricianProfessionalAccreditation = () => {
       />
 
       {/* Information Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className={`grid gap-6 ${isMobile ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-2'}`}>
         <Card className="border-elec-yellow/20 bg-elec-grey">
           <CardHeader className="pb-4">
             <CardTitle className="text-xl flex items-center gap-3">
@@ -226,7 +228,7 @@ const ElectricianProfessionalAccreditation = () => {
       </div>
 
       {/* Accreditations Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className={`grid gap-6 ${isMobile ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'}`}>
         {filteredOptions.map((accreditation) => (
           <AccreditationCard
             key={accreditation.id}
@@ -260,69 +262,105 @@ const ElectricianProfessionalAccreditation = () => {
             Electrical Industry Resources
           </CardTitle>
         </CardHeader>
-        <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <h4 className="font-medium mb-3 text-elec-yellow">Professional Bodies</h4>
-            <div className="space-y-3 text-sm">
-              <div className="flex items-center justify-between">
-                <span className="text-white">Institution of Engineering and Technology (IET)</span>
+        <CardContent className={`grid gap-6 ${isMobile ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-2'}`}>
+          <div className="space-y-4">
+            <h4 className="font-semibold text-lg text-elec-yellow flex items-center gap-2">
+              <Award className="h-5 w-5" />
+              Professional Bodies
+            </h4>
+            <div className="space-y-4">
+              <div className="flex items-center justify-between p-3 rounded-lg bg-elec-grey/50 border border-elec-yellow/10 hover:border-elec-yellow/30 transition-colors">
+                <div className="flex-1">
+                  <p className="font-medium text-white">Institution of Engineering and Technology (IET)</p>
+                  <p className="text-sm text-white/80 mt-1">Professional engineering institution for electrical professionals</p>
+                </div>
                 <Button 
                   variant="ghost" 
-                  size="sm"
+                  size={isMobile ? "sm" : "default"}
+                  className="ml-3 text-elec-yellow hover:text-white hover:bg-elec-yellow/20"
                   onClick={() => window.open('https://www.theiet.org', '_blank')}
                 >
-                  <ExternalLink className="h-3 w-3" />
+                  <ExternalLink className={`${isMobile ? 'h-4 w-4' : 'h-5 w-5'}`} />
                 </Button>
               </div>
-              <div className="flex items-center justify-between">
-                <span className="text-white">Electrical Contractors' Association (ECA)</span>
+              <div className="flex items-center justify-between p-3 rounded-lg bg-elec-grey/50 border border-elec-yellow/10 hover:border-elec-yellow/30 transition-colors">
+                <div className="flex-1">
+                  <p className="font-medium text-white">Electrical Contractors' Association (ECA)</p>
+                  <p className="text-sm text-white/80 mt-1">Trade association for electrical contractors and installers</p>
+                </div>
                 <Button 
                   variant="ghost" 
-                  size="sm"
+                  size={isMobile ? "sm" : "default"}
+                  className="ml-3 text-elec-yellow hover:text-white hover:bg-elec-yellow/20"
                   onClick={() => window.open('https://www.eca.co.uk', '_blank')}
                 >
-                  <ExternalLink className="h-3 w-3" />
+                  <ExternalLink className={`${isMobile ? 'h-4 w-4' : 'h-5 w-5'}`} />
                 </Button>
               </div>
-              <div className="flex items-center justify-between">
-                <span className="text-white">NICEIC</span>
+              <div className="flex items-center justify-between p-3 rounded-lg bg-elec-grey/50 border border-elec-yellow/10 hover:border-elec-yellow/30 transition-colors">
+                <div className="flex-1">
+                  <p className="font-medium text-white">NICEIC</p>
+                  <p className="text-sm text-white/80 mt-1">Leading voluntary regulatory body for electrical contractors</p>
+                </div>
                 <Button 
                   variant="ghost" 
-                  size="sm"
+                  size={isMobile ? "sm" : "default"}
+                  className="ml-3 text-elec-yellow hover:text-white hover:bg-elec-yellow/20"
                   onClick={() => window.open('https://www.niceic.com', '_blank')}
                 >
-                  <ExternalLink className="h-3 w-3" />
+                  <ExternalLink className={`${isMobile ? 'h-4 w-4' : 'h-5 w-5'}`} />
                 </Button>
               </div>
             </div>
           </div>
           
-          <div>
-            <h4 className="font-medium mb-3 text-elec-yellow">Scheme Providers</h4>
-            <div className="space-y-3 text-sm">
-              <div className="flex items-center justify-between">
-                <span className="text-white">NAPIT Electrical Certification</span>
+          <div className="space-y-4">
+            <h4 className="font-semibold text-lg text-elec-yellow flex items-center gap-2">
+              <BookOpen className="h-5 w-5" />
+              Scheme Providers
+            </h4>
+            <div className="space-y-4">
+              <div className="flex items-center justify-between p-3 rounded-lg bg-elec-grey/50 border border-elec-yellow/10 hover:border-elec-yellow/30 transition-colors">
+                <div className="flex-1">
+                  <p className="font-medium text-white">NAPIT Electrical Certification</p>
+                  <p className="text-sm text-white/80 mt-1">Certification and registration for electrical competency</p>
+                </div>
                 <Button 
                   variant="ghost" 
-                  size="sm"
+                  size={isMobile ? "sm" : "default"}
+                  className="ml-3 text-elec-yellow hover:text-white hover:bg-elec-yellow/20"
                   onClick={() => window.open('https://www.napit.org.uk', '_blank')}
                 >
-                  <ExternalLink className="h-3 w-3" />
+                  <ExternalLink className={`${isMobile ? 'h-4 w-4' : 'h-5 w-5'}`} />
                 </Button>
               </div>
-              <div className="flex items-center justify-between">
-                <span className="text-white">STROMA Certification</span>
+              <div className="flex items-center justify-between p-3 rounded-lg bg-elec-grey/50 border border-elec-yellow/10 hover:border-elec-yellow/30 transition-colors">
+                <div className="flex-1">
+                  <p className="font-medium text-white">STROMA Certification</p>
+                  <p className="text-sm text-white/80 mt-1">Assessment and certification services for electrical work</p>
+                </div>
                 <Button 
                   variant="ghost" 
-                  size="sm"
+                  size={isMobile ? "sm" : "default"}
+                  className="ml-3 text-elec-yellow hover:text-white hover:bg-elec-yellow/20"
                   onClick={() => window.open('https://www.stroma.com', '_blank')}
                 >
-                  <ExternalLink className="h-3 w-3" />
+                  <ExternalLink className={`${isMobile ? 'h-4 w-4' : 'h-5 w-5'}`} />
                 </Button>
               </div>
-              <div className="flex items-center justify-between">
-                <span className="text-white">Local Training Centres</span>
-                <ArrowRight className="h-3 w-3 text-white" />
+              <div className="flex items-center justify-between p-3 rounded-lg bg-elec-grey/50 border border-elec-yellow/10 hover:border-elec-yellow/30 transition-colors">
+                <div className="flex-1">
+                  <p className="font-medium text-white">Find Local Training Centres</p>
+                  <p className="text-sm text-white/80 mt-1">Discover approved training providers in your area</p>
+                </div>
+                <Button 
+                  variant="ghost" 
+                  size={isMobile ? "sm" : "default"}
+                  className="ml-3 text-elec-yellow hover:text-white hover:bg-elec-yellow/20"
+                  onClick={() => window.open('https://www.findapprenticeship.service.gov.uk/apprenticeship-training-providers', '_blank')}
+                >
+                  <ExternalLink className={`${isMobile ? 'h-4 w-4' : 'h-5 w-5'}`} />
+                </Button>
               </div>
             </div>
           </div>
