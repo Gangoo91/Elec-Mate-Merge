@@ -77,19 +77,15 @@ const NewsGrid = ({ articles, excludeId }: NewsGridProps) => {
           const formattedDate = format(new Date(article.date_published), 'MMM dd, yyyy');
           const formattedTime = format(new Date(article.date_published), 'HH:mm');
           const readTime = getReadTime(article.content);
-          const isFirst = index === 0;
-          const isFeatured = isFirst && filteredArticles.length > 1;
 
           return (
             <div 
               key={article.id}
-              className={`bg-gradient-to-br from-white/10 via-white/5 to-transparent rounded-xl border border-white/10 overflow-hidden group hover:border-elec-yellow/30 transition-all duration-300 hover:shadow-xl hover:shadow-elec-yellow/10 hover:scale-[1.02] h-full cursor-pointer ${
-                isFeatured ? 'md:col-span-2 xl:col-span-2' : ''
-              }`}
+              className="bg-gradient-to-br from-white/10 via-white/5 to-transparent rounded-xl border border-white/10 overflow-hidden group hover:border-elec-yellow/30 transition-all duration-300 hover:shadow-xl hover:shadow-elec-yellow/10 hover:scale-[1.02] h-full cursor-pointer"
               onClick={() => window.open(article.external_url, '_blank', 'noopener,noreferrer')}
             >
               {/* Image */}
-              <div className={`relative overflow-hidden ${isFeatured ? 'h-40 sm:h-56' : 'h-32 sm:h-40'}`}>
+              <div className="relative overflow-hidden h-40 sm:h-48">
                 <img
                   src={article.image_url || getCategoryImage(article.category)}
                   alt={article.title}
@@ -141,16 +137,12 @@ const NewsGrid = ({ articles, excludeId }: NewsGridProps) => {
                 </div>
 
                 {/* Title */}
-                <h3 className={`font-semibold text-white line-clamp-2 leading-tight flex-grow ${
-                  isFeatured ? 'text-base sm:text-lg' : 'text-sm sm:text-base'
-                }`} style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
+                <h3 className="font-semibold text-white line-clamp-2 leading-tight flex-grow text-sm sm:text-base" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
                   {article.title}
                 </h3>
 
                 {/* Summary */}
-                <p className={`text-white/90 line-clamp-2 leading-relaxed flex-grow ${
-                  isFeatured ? 'text-sm sm:text-base' : 'text-xs sm:text-sm'
-                }`} style={{ textShadow: '0 1px 2px rgba(0,0,0,0.5)' }}>
+                <p className="text-white/90 line-clamp-2 leading-relaxed flex-grow text-xs sm:text-sm" style={{ textShadow: '0 1px 2px rgba(0,0,0,0.5)' }}>
                   {article.summary}
                 </p>
 
