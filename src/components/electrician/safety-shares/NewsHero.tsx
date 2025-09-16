@@ -1,9 +1,10 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Calendar, Clock, ArrowRight } from "lucide-react";
+import { Calendar, Clock, ArrowRight, ExternalLink } from "lucide-react";
 import { format, formatDistanceToNow } from "date-fns";
 import type { NewsArticle } from "@/hooks/useIndustryNews";
+import { isValidUrl } from "@/utils/urlUtils";
 
 interface NewsHeroProps {
   article: NewsArticle;
@@ -64,14 +65,29 @@ const NewsHero = ({ article, onReadMore }: NewsHeroProps) => {
               </div>
             </div>
             
-            <Button 
-              onClick={() => onReadMore(article)}
-              className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 transition-all duration-200"
-              size="lg"
-            >
-              Read Full Article
-              <ArrowRight className="h-5 w-5 ml-2" />
-            </Button>
+            <div className="flex items-center gap-4">
+              <Button 
+                onClick={() => onReadMore(article)}
+                className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 transition-all duration-200"
+                size="lg"
+              >
+                Read Full Article
+                <ArrowRight className="h-5 w-5 ml-2" />
+              </Button>
+              
+              {isValidUrl(article.external_url) && (
+                <Button 
+                  variant="outline"
+                  size="lg"
+                  className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+                  onClick={() => window.open(article.external_url, '_blank', 'noopener,noreferrer')}
+                  aria-label="Visit original article"
+                >
+                  Visit Source
+                  <ExternalLink className="h-5 w-5 ml-2" />
+                </Button>
+              )}
+            </div>
           </div>
           
           {/* Visual Element */}

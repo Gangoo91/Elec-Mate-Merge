@@ -1,9 +1,10 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Calendar, Eye, Star, Clock } from "lucide-react";
+import { Calendar, Eye, Star, Clock, ExternalLink } from "lucide-react";
 import { format, formatDistanceToNow } from "date-fns";
 import type { NewsArticle } from "@/hooks/useIndustryNews";
+import { isValidUrl } from "@/utils/urlUtils";
 
 interface NewsGridProps {
   articles: NewsArticle[];
@@ -91,7 +92,7 @@ const NewsGrid = ({ articles, onReadMore, excludeId }: NewsGridProps) => {
               {article.summary}
             </p>
             
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-4 text-xs text-muted-foreground">
                 <div className="flex items-center gap-1">
                   <Calendar className="h-3 w-3" />
@@ -112,11 +113,13 @@ const NewsGrid = ({ articles, onReadMore, excludeId }: NewsGridProps) => {
                   </div>
                 )}
               </div>
-              
+            </div>
+            
+            <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-all duration-200">
               <Button 
                 variant="ghost" 
                 size="sm"
-                className="text-elec-yellow hover:bg-elec-yellow/10 hover:text-elec-yellow opacity-0 group-hover:opacity-100 transition-all duration-200"
+                className="text-elec-yellow hover:bg-elec-yellow/10 hover:text-elec-yellow flex-1"
                 onClick={(e) => {
                   e.stopPropagation();
                   onReadMore(article);
@@ -124,6 +127,21 @@ const NewsGrid = ({ articles, onReadMore, excludeId }: NewsGridProps) => {
               >
                 Read More
               </Button>
+              
+              {isValidUrl(article.external_url) && (
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    window.open(article.external_url, '_blank', 'noopener,noreferrer');
+                  }}
+                  aria-label="Visit original article"
+                >
+                  <ExternalLink className="h-3 w-3" />
+                </Button>
+              )}
             </div>
             
             <div className="mt-3 pt-3 border-t border-elec-yellow/10">
