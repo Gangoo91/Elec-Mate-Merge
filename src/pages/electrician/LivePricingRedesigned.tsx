@@ -195,17 +195,6 @@ const LivePricingRedesigned = () => {
       </div>
 
       <div className="p-4 space-y-6">
-        {/* Enhanced Search Bar */}
-        <Card className="border-elec-yellow/30 bg-elec-gray/50">
-          <CardContent className="p-4">
-            <EnhancedSearchBox
-              value={searchQuery}
-              onChange={setSearchQuery}
-              onSearch={handleSearch}
-              suggestions={searchSuggestions}
-            />
-          </CardContent>
-        </Card>
 
 
         {/* Tabbed Interface */}
