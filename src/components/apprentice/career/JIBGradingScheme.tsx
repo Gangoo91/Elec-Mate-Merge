@@ -2,7 +2,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { MobileAccordion, MobileAccordionItem, MobileAccordionTrigger, MobileAccordionContent } from "@/components/ui/mobile-accordion";
-import { Award, Clock, BookOpen, CheckCircle, Shield, Briefcase, MapPin, TrendingUp, Users, Banknote } from "lucide-react";
+import { Award, Clock, BookOpen, CheckCircle, Shield, Briefcase, MapPin, TrendingUp, Users, Banknote, Calculator, Target, DollarSign, Building, Zap, Settings, Lightbulb } from "lucide-react";
 import { useState } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
 
@@ -15,103 +15,130 @@ const JIBGradingScheme = () => {
       grade: "Apprentice",
       color: "bg-blue-500/20 text-blue-400 border-blue-500/30",
       hourlyRate: "£7.55 minimum (2025)",
+      dayRate: "£60-65/day typical",
       requirements: [
         "Enrolled on approved Level 3 apprenticeship programme", 
         "Working towards 2357/5357 NVQ Diploma",
         "Health & Safety test passed (CSCS Construction)",
         "Monthly college attendance (day/block release)",
-        "Employer mentorship programme"
+        "Employer mentorship programme",
+        "DBS check (Basic level) for some sites"
       ],
       benefits: [
         "Apprentice minimum wage protection (£7.55/hr minimum)",
-        "Structured 4-year training pathway with portfolio building",
+        "Structured 4-year training pathway with portfolio building", 
         "Industry recognition and ECS Apprentice card eligibility",
         "Government funding support (up to £18,000 per apprentice)",
-        "Clear progression route to Improver status"
+        "Clear progression route to Improver status",
+        "Access to JTL/NICEIC/ECA apprentice support networks",
+        "Career development guidance and mentorship"
       ],
       responsibilities: [
-        "Basic electrical installation under supervision",
+        "Basic electrical installation under direct supervision",
         "Cable pulling, containment installation, basic connections",
         "Health & safety compliance and risk awareness",
         "Portfolio evidence collection and reflective practice",
-        "College assignment completion and practical assessments"
+        "College assignment completion and practical assessments",
+        "Site housekeeping and tool maintenance",
+        "Following method statements and risk assessments"
       ],
       cpd: [
         "18th Edition BS 7671 preparation (Year 3-4)",
         "First Aid at Work certification",
         "Working at Height awareness training",
         "Fire safety and emergency procedures",
-        "Manufacturer product training (cable management, accessories)"
+        "Manufacturer product training (cable management, accessories)",
+        "Digital skills development (apps, testing equipment)",
+        "EV charging fundamentals introduction"
       ],
-      duration: "4 years (Level 3 apprenticeship standard)"
+      duration: "4 years (Level 3 apprenticeship standard)",
+      fastTrack: "Adult apprenticeships may complete in 2-3 years with prior experience"
     },
     {
       grade: "Improver",
       color: "bg-purple-500/20 text-purple-400 border-purple-500/30", 
-      hourlyRate: "£15-18/hr typical (2025)",
+      hourlyRate: "£15-20/hr typical (2025)",
+      dayRate: "£160-220/day London premium",
       requirements: [
         "Level 3 NVQ Diploma (2357/5357) completed",
         "18th Edition BS 7671 (2382-22) certificate current",
         "Working towards AM2/AM2S practical assessment",
         "Minimum 6 months post-qualification experience",
-        "ECS Health & Safety test passed"
+        "ECS Health & Safety test passed",
+        "Evidence portfolio demonstrating practical competence"
       ],
       benefits: [
-        "Higher pay rates (£15-18/hr typical, £160-190/day)",
+        "Higher pay rates (£15-20/hr typical, £160-220/day)",
         "More complex work opportunities and reduced supervision",
         "Preparation pathway for ECS Gold Card application",
-        "Access to specialist training courses (EV, Solar PV)",
-        "Career development discussions with senior electricians"
+        "Access to specialist training courses (EV, Solar PV, Smart Buildings)",
+        "Career development discussions with senior electricians",
+        "Opportunity to work on renewable energy projects",
+        "Access to manufacturer training programs (Schneider, ABB, Siemens)"
       ],
       responsibilities: [
         "Installation and commissioning of electrical circuits",
-        "Basic testing and inspection procedures",
-        "Fault diagnosis on simple circuits",
-        "Mentoring new apprentices",
-        "Quality assurance and compliance checking"
+        "Basic testing and inspection procedures (dead tests)",
+        "Fault diagnosis on simple circuits and domestic installations",
+        "Mentoring new apprentices and work experience students",
+        "Quality assurance and compliance checking",
+        "Customer interaction under supervision",
+        "Site survey assistance and material calculations"
       ],
       cpd: [
         "AM2/AM2S practical assessment preparation",
         "2391-52 Initial Verification and Certification",
         "EV Charging installation (2919) introduction",
-        "Solar PV systems overview (2399)",
-        "Site safety leadership (SSSTS preparation)"
+        "Solar PV systems overview (2399) and battery storage",
+        "Site safety leadership (SSSTS preparation)",
+        "Smart home technology and IoT integration",
+        "Heat pump electrical installation basics"
       ],
-      duration: "1-2 years pathway to Electrician status"
+      duration: "1-2 years pathway to Electrician status",
+      fastTrack: "Experienced workers may progress faster with APL assessment"
     },
     {
       grade: "Electrician (Gold Card)",
       color: "bg-yellow-500/20 text-yellow-400 border-yellow-500/30",
-      hourlyRate: "£20-25/hr base (2025)",
+      hourlyRate: "£22-28/hr base (2025)",
+      dayRate: "£200-320/day + regional premiums",
       requirements: [
         "Level 3 NVQ Diploma (2357/5357) completed",
         "AM2/AM2S practical assessment passed",
         "18th Edition BS 7671 (2382-22) current certificate",
-        "ECS Health & Safety test valid",
-        "Minimum 2 years post-qualification experience"
+        "ECS Health & Safety test valid (renewed every 3 years)",
+        "Minimum 2 years post-qualification experience",
+        "Evidence of competent person status"
       ],
       benefits: [
-        "ECS Gold Card recognition UK-wide",
-        "Skilled worker rates (£20-25/hr, £180-280/day)",
-        "Industry-wide acceptance for site access",
+        "ECS Gold Card recognition UK-wide (industry standard)",
+        "Skilled worker rates (£22-28/hr base, £200-320/day)",
+        "Industry-wide acceptance for site access and security clearance",
         "Independent working authority on complex installations",
-        "Pathway to specialist roles and further qualifications"
+        "Pathway to specialist roles and further qualifications",
+        "Access to NICEIC/NAPIT contractor schemes",
+        "Self-employment opportunities with Part P registration"
       ],
       responsibilities: [
         "Complete electrical installations from design to commissioning",
-        "Testing, inspection and certification of electrical work",
-        "Fault finding and repair on complex systems",
-        "Customer liaison and technical explanations",
-        "Compliance with BS 7671 and building regulations"
+        "Testing, inspection and certification of electrical work (periodic)",
+        "Fault finding and repair on complex industrial/commercial systems",
+        "Customer liaison, technical explanations and quotations",
+        "Compliance with BS 7671, building regulations and CDM",
+        "Risk assessment creation and method statement implementation",
+        "Supervision of junior electricians and apprentices"
       ],
       cpd: [
-        "18th Edition Amendment updates (as released)",
-        "2391-52 Inspection, Testing and Certification",
-        "Specialist manufacturer training (Schneider, ABB, Legrand)",
-        "Smart building systems and IoT integration",
-        "Customer service and communication skills"
+        "18th Edition Amendment updates (A3 expected 2026)",
+        "2391-52 Inspection, Testing and Certification (essential)",
+        "Specialist manufacturer training (Schneider, ABB, Legrand, Hager)",
+        "Smart building systems, IoT integration and BMS",
+        "Customer service and communication skills",
+        "EV charging installation and maintenance (City & Guilds 2919)",
+        "Solar PV design and installation with battery storage"
       ],
-      duration: "Career level with ongoing development"
+      duration: "Career level with ongoing development",
+      specializations: ["EV Charging", "Solar PV", "Industrial Automation", "Data Centres", "Fire & Security"]
     },
     {
       grade: "Approved Electrician (JIB)",
@@ -230,6 +257,40 @@ const JIBGradingScheme = () => {
           </p>
         </header>
         <div>
+          {/* 2025 Market Insights Banner */}
+          <div className="bg-gradient-to-r from-elec-yellow/10 to-elec-yellow/5 border border-elec-yellow/20 rounded-xl p-4 mb-6">
+            <div className="text-center space-y-3">
+              <h3 className="text-lg font-semibold text-elec-yellow flex items-center justify-center gap-2">
+                <TrendingUp className="h-5 w-5" />
+                2025 Industry Update
+              </h3>
+              <p className="text-white text-sm max-w-3xl mx-auto leading-relaxed">
+                Record skills shortage pushing rates up 15-20% year-on-year. Net Zero targets creating unprecedented 
+                demand for EV charging, heat pump, and data centre specialists. Prime time for career advancement.
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-4">
+                <div className="bg-elec-gray/50 rounded-lg p-3 border border-elec-yellow/10">
+                  <div className="text-green-400 font-semibold text-sm flex items-center gap-1">
+                    <Zap className="h-3 w-3" /> High Demand 2025
+                  </div>
+                  <div className="text-white text-xs">EV Charging • Data Centres • Heat Pumps • Smart Buildings</div>
+                </div>
+                <div className="bg-elec-gray/50 rounded-lg p-3 border border-elec-yellow/10">
+                  <div className="text-blue-400 font-semibold text-sm flex items-center gap-1">
+                    <DollarSign className="h-3 w-3" /> Rate Premiums
+                  </div>
+                  <div className="text-white text-xs">+£25-50/day vs 2024 • Specialists +£100/day</div>
+                </div>
+                <div className="bg-elec-gray/50 rounded-lg p-3 border border-elec-yellow/10">
+                  <div className="text-purple-400 font-semibold text-sm flex items-center gap-1">
+                    <Target className="h-3 w-3" /> Skills Gap
+                  </div>
+                  <div className="text-white text-xs">50,000+ unfilled positions • Fast progression opportunities</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
           {/* Top metrics grid: 2x2 on mobile, 4 cols on desktop; square tiles with coloured icons */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
             <div className="aspect-square rounded-lg border border-elec-yellow/20 bg-elec-gray p-3 flex flex-col items-center justify-center text-center">
@@ -256,6 +317,106 @@ const JIBGradingScheme = () => {
 
           {/* Structured content like Skills Development (mobile‑first accordion) */}
           <MobileAccordion type="multiple" className="space-y-4">
+            {/* Quick Rate Calculator */}
+            <MobileAccordionItem value="calculator">
+              <MobileAccordionTrigger className="bg-elec-gray border-elec-yellow/20" icon={<Calculator className="h-4 w-4 text-blue-400" />}>Quick Rate Calculator (2025)</MobileAccordionTrigger>
+              <MobileAccordionContent className="bg-elec-gray border-x border-b border-elec-yellow/20 rounded-b-lg p-3">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-3">
+                    <h4 className="font-medium text-elec-yellow">Estimate Your Day Rate</h4>
+                    <div className="space-y-2 text-xs">
+                      <div className="bg-elec-gray/50 p-3 rounded border border-elec-yellow/10">
+                        <div className="font-medium text-white mb-2">Gold Card Electrician (Base)</div>
+                        <div className="space-y-1">
+                          <div className="flex justify-between">
+                            <span className="text-white">Regional:</span>
+                            <span className="text-elec-yellow">£200-280/day</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-white">London:</span>
+                            <span className="text-elec-yellow">£220-340/day</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-white">+ EV Specialist:</span>
+                            <span className="text-green-400">+£30-50/day</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-white">+ 2391 Testing:</span>
+                            <span className="text-green-400">+£20-40/day</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="space-y-3">
+                    <h4 className="font-medium text-elec-yellow">Progression Target Calculator</h4>
+                    <div className="bg-elec-gray/50 p-3 rounded border border-elec-yellow/10 text-xs">
+                      <div className="space-y-2">
+                        <div className="text-white">Current: Improver (£180/day)</div>
+                        <div className="text-white">Next: Gold Card (+£40-80/day)</div>
+                        <div className="text-white">Required: AM2 + 2 years experience</div>
+                        <div className="text-green-400 font-medium">Potential increase: £8,000-16,000/year</div>
+                      </div>
+                    </div>
+                    <div className="bg-blue-500/10 p-3 rounded border border-blue-400/20 text-xs">
+                      <div className="text-white">
+                        <strong className="text-blue-400">Self-employment bonus:</strong> Add 25-40% to employee rates to cover benefits, tax, and profit margin.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </MobileAccordionContent>
+            </MobileAccordionItem>
+
+            {/* Industry Trends 2025 */}
+            <MobileAccordionItem value="trends">
+              <MobileAccordionTrigger className="bg-elec-gray border-elec-yellow/20" icon={<TrendingUp className="h-4 w-4 text-green-400" />}>2025 Industry Trends & Opportunities</MobileAccordionTrigger>
+              <MobileAccordionContent className="bg-elec-gray border-x border-b border-elec-yellow/20 rounded-b-lg p-3">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="rounded border border-green-400/20 bg-green-500/5 p-3">
+                    <div className="text-base font-medium mb-2 text-green-400 flex items-center gap-2">
+                      <Zap className="h-4 w-4" />
+                      Net Zero Impact
+                    </div>
+                    <div className="text-xs space-y-1 text-white">
+                      <div>• 175,000+ new green jobs by 2030</div>
+                      <div>• Heat pump installations: 600,000/year target</div>
+                      <div>• EV charging: 300,000 public points needed</div>
+                      <div>• Solar PV growth: 40GW target by 2030</div>
+                      <div className="text-green-400 font-medium mt-2">Skills premium: £50-100/day for certified specialists</div>
+                    </div>
+                  </div>
+                  
+                  <div className="rounded border border-blue-400/20 bg-blue-500/5 p-3">
+                    <div className="text-base font-medium mb-2 text-blue-400 flex items-center gap-2">
+                      <Building className="h-4 w-4" />
+                      AI & Data Infrastructure
+                    </div>
+                    <div className="text-xs space-y-1 text-white">
+                      <div>• Data centre boom: £25bn investment</div>
+                      <div>• Smart building integration expanding</div>
+                      <div>• IoT and BMS specialists in demand</div>
+                      <div>• Critical power systems growth</div>
+                      <div className="text-blue-400 font-medium mt-2">Specialist roles: £300-500+/day</div>
+                    </div>
+                  </div>
+                  
+                  <div className="rounded border border-purple-400/20 bg-purple-500/5 p-3">
+                    <div className="text-base font-medium mb-2 text-purple-400 flex items-center gap-2">
+                      <Target className="h-4 w-4" />
+                      Skills Gap Crisis
+                    </div>
+                    <div className="text-xs space-y-1 text-white">
+                      <div>• 50,000+ unfilled positions nationally</div>
+                      <div>• Apprentice applications down 15%</div>
+                      <div>• Aging workforce: 40% over 50</div>
+                      <div>• Regional shortages acute in South East</div>
+                      <div className="text-purple-400 font-medium mt-2">Fast progression opportunities available</div>
+                    </div>
+                  </div>
+                </div>
+              </MobileAccordionContent>
+            </MobileAccordionItem>
             {/* JIB Grades (moved existing content) */}
             <MobileAccordionItem value="grades">
               <MobileAccordionTrigger className="bg-elec-gray border-elec-yellow/20" icon={<Award className="h-4 w-4 text-purple-400" />}>JIB Grades & Requirements</MobileAccordionTrigger>
@@ -432,8 +593,19 @@ const JIBGradingScheme = () => {
 
             {/* ECS cards */}
             <MobileAccordionItem value="ecs">
-              <MobileAccordionTrigger className="bg-elec-gray border-elec-yellow/20" icon={<Shield className="h-4 w-4 text-green-400" />}>ECS Cards & Categories</MobileAccordionTrigger>
+              <MobileAccordionTrigger className="bg-elec-gray border-elec-yellow/20" icon={<Shield className="h-4 w-4 text-green-400" />}>ECS Cards & Categories (2025)</MobileAccordionTrigger>
               <MobileAccordionContent className="bg-elec-gray border-x border-b border-elec-yellow/20 rounded-b-lg p-3">
+                <div className="mb-4 p-3 bg-elec-yellow/10 rounded border border-elec-yellow/20">
+                  <h4 className="text-sm font-medium text-elec-yellow mb-2">2025 Application Fees (Current)</h4>
+                  <div className="grid grid-cols-2 gap-2 text-xs text-white">
+                    <div>• Apprentice: £36</div>
+                    <div>• Gold Card: £42</div>
+                    <div>• Approved: £70</div>
+                    <div>• Supervisor: £126</div>
+                  </div>
+                  <p className="text-xs text-white mt-2">3-year validity • Digital cards issued immediately • Physical cards posted within 5 working days</p>
+                </div>
+                
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div className="rounded border border-elec-yellow/20 bg-elec-gray p-3">
                     <div className="text-base font-medium mb-1">Core Electrical</div>
@@ -443,27 +615,28 @@ const JIBGradingScheme = () => {
                           <Badge key={t} variant="outline" className="border-elec-yellow/30 text-elec-yellow">{t}</Badge>
                         ))}
                       </div>
-                      <p className="text-xs text-white">Cards verify competence, qualifications and H&S.</p>
+                      <p className="text-xs text-white">Cards verify competence, qualifications and health & safety knowledge.</p>
                     </div>
                   </div>
                   <div className="rounded border border-elec-yellow/20 bg-elec-gray p-3">
-                    <div className="text-base font-medium mb-1">Specialist Disciplines</div>
+                    <div className="text-base font-medium mb-1">2025 Specialist Categories</div>
                     <div className="text-sm space-y-2">
                       <div className="flex flex-wrap gap-2">
-                        {["Data Comms","Fire & Security","Network Cabling","EV Charging","Renewables","H.V. (authorised)"].map((t) => (
-                          <Badge key={t} variant="outline" className="border-elec-yellow/30 text-elec-yellow">{t}</Badge>
+                        {["EV Charging","Smart Buildings","Data Centres","Fire & Security","Network Cabling","Solar PV","Heat Pumps","H.V. Authorised","Energy Storage"].map((t) => (
+                          <Badge key={t} variant="outline" className="border-green-400/30 text-green-400">{t}</Badge>
                         ))}
                       </div>
-                      <p className="text-xs text-white">Specialist routes often require manufacturer or scheme approval.</p>
+                      <p className="text-xs text-white">High-demand specializations requiring additional certifications and manufacturer approvals.</p>
                     </div>
                   </div>
                   <div className="rounded border border-elec-yellow/20 bg-elec-gray p-3">
-                    <div className="text-base font-medium mb-1">Application Steps</div>
+                    <div className="text-base font-medium mb-1">Digital-First Process (2025)</div>
                     <div className="text-xs space-y-1">
-                      <div className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-green-400" /> Create MyECS account</div>
-                      <div className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-green-400" /> Upload qualifications & photo ID</div>
-                      <div className="flex items-center gap-2"><Clock className="h-3 w-3 text-elec-yellow" /> Book H&S test (if required)</div>
-                      <div className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-green-400" /> Submit and await verification (3–10 working days)</div>
+                      <div className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-green-400" /> Create MyECS account (digital verification)</div>
+                      <div className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-green-400" /> Upload qualifications (PDF format accepted)</div>
+                      <div className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-green-400" /> Passport-style photo (mobile upload)</div>
+                      <div className="flex items-center gap-2"><Clock className="h-3 w-3 text-elec-yellow" /> Book H&S test online (if required)</div>
+                      <div className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-green-400" /> Instant digital card upon approval</div>
                     </div>
                   </div>
                 </div>
@@ -472,35 +645,94 @@ const JIBGradingScheme = () => {
 
             {/* Pay & allowances */}
             <MobileAccordionItem value="pay">
-              <MobileAccordionTrigger className="bg-elec-gray border-elec-yellow/20" icon={<Briefcase className="h-4 w-4 text-blue-400" />}>Pay Rates & Allowances</MobileAccordionTrigger>
+              <MobileAccordionTrigger className="bg-elec-gray border-elec-yellow/20" icon={<Banknote className="h-4 w-4 text-green-400" />}>2025 Pay Rates & Regional Breakdown</MobileAccordionTrigger>
               <MobileAccordionContent className="bg-elec-gray border-x border-b border-elec-yellow/20 rounded-b-lg p-3">
+                <div className="mb-4 p-3 bg-green-500/10 rounded border border-green-400/20">
+                  <h4 className="text-sm font-medium text-green-400 mb-2 flex items-center gap-2">
+                    <TrendingUp className="h-3 w-3" />
+                    2025 Rate Increases: +15-20% YoY
+                  </h4>
+                  <p className="text-xs text-white">Skills shortage driving unprecedented rate growth. Specialist roles commanding significant premiums.</p>
+                </div>
+                
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
                   <div className="rounded border border-elec-yellow/20 bg-elec-gray p-3">
-                    <div className="text-base font-medium mb-1">Indicative Day Rates</div>
-                    <div className="space-y-1 text-xs">
-                      <div className="flex items-center gap-2"><Banknote className="h-3 w-3 text-elec-yellow" /> Electrician: £180–£260</div>
-                      <div className="flex items-center gap-2"><Banknote className="h-3 w-3 text-elec-yellow" /> Approved: £220–£320</div>
-                      <div className="flex items-center gap-2"><Banknote className="h-3 w-3 text-elec-yellow" /> Technician/Supervisor: £260–£400+</div>
-                      <div className="mt-2 text-[11px] text-white">Overtime typical: x1.5 (weekday eves), x2 (Sundays/Bank Hols)</div>
-                      <p className="text-white mt-2">Varies by region, project type and experience.</p>
+                    <div className="text-base font-medium mb-1 flex items-center gap-2">
+                      <Calculator className="h-4 w-4 text-elec-yellow" />
+                      2025 Day Rates by Region
+                    </div>
+                    <div className="space-y-2 text-xs">
+                      <div className="bg-elec-gray/50 p-2 rounded">
+                        <div className="font-medium text-elec-yellow">London & M25</div>
+                        <div className="text-white">Electrician: £220-340/day</div>
+                        <div className="text-white">Approved: £280-420/day</div>
+                        <div className="text-white">Supervisor: £350-500+/day</div>
+                      </div>
+                      <div className="bg-elec-gray/50 p-2 rounded">
+                        <div className="font-medium text-blue-400">Regional (England/Wales)</div>
+                        <div className="text-white">Electrician: £180-280/day</div>
+                        <div className="text-white">Approved: £220-350/day</div>
+                        <div className="text-white">Supervisor: £280-420/day</div>
+                      </div>
+                      <div className="bg-elec-gray/50 p-2 rounded">
+                        <div className="font-medium text-purple-400">Scotland (SJIB)</div>
+                        <div className="text-white">Similar to regional + 5-10%</div>
+                      </div>
                     </div>
                   </div>
+                  
                   <div className="rounded border border-elec-yellow/20 bg-elec-gray p-3">
-                    <div className="text-base font-medium mb-1">JIB Working Rules</div>
-                    <div className="text-xs space-y-1">
-                      <div>• Standardised pay scales (check latest JIB agreement)</div>
-                      <div>• Overtime, lodge and travel allowances where applicable</div>
-                      <div>• Holiday and pension arrangements</div>
-                      <div>• Travel time/uplifts may apply on large sites</div>
+                    <div className="text-base font-medium mb-1 flex items-center gap-2">
+                      <Building className="h-4 w-4 text-blue-400" />
+                      Project Type Premiums (2025)
+                    </div>
+                    <div className="text-xs space-y-2">
+                      <div className="flex justify-between">
+                        <span className="text-white">Data Centres:</span>
+                        <span className="text-green-400">+20-25%</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-white">Nuclear/Power:</span>
+                        <span className="text-green-400">+25-30%</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-white">EV Infrastructure:</span>
+                        <span className="text-green-400">+15-20%</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-white">Smart Buildings:</span>
+                        <span className="text-green-400">+10-15%</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-white">Domestic/Small Commercial:</span>
+                        <span className="text-white">Base rate</span>
+                      </div>
+                      <div className="mt-2 p-2 bg-elec-yellow/10 rounded">
+                        <div className="text-xs text-white">Overtime rates: 1.5x after 8hrs weekdays, 2x Sundays/Bank holidays</div>
+                      </div>
                     </div>
                   </div>
+                  
                   <div className="rounded border border-elec-yellow/20 bg-elec-gray p-3">
-                    <div className="text-base font-medium mb-1">Regional Notes</div>
+                    <div className="text-base font-medium mb-1 flex items-center gap-2">
+                      <DollarSign className="h-4 w-4 text-purple-400" />
+                      Allowances & Benefits
+                    </div>
                     <div className="text-xs space-y-1">
-                      <div className="flex items-center gap-2"><MapPin className="h-3 w-3 text-elec-yellow" /> London & SE tend to command higher rates</div>
-                      <div className="flex items-center gap-2"><MapPin className="h-3 w-3 text-elec-yellow" /> Scotland: SJIB equivalent grading and rates</div>
-                      <div className="flex items-center gap-2"><MapPin className="h-3 w-3 text-elec-yellow" /> Major projects can offer enhanced uplifts</div>
-                      <div className="text-[11px] text-white">Check NAECI/Blue Book for certain industrial sites.</div>
+                      <div className="font-medium text-elec-yellow">Travel & Accommodation</div>
+                      <div className="text-white">• Mileage: £0.45-0.65/mile</div>
+                      <div className="text-white">• Lodging: £35-55/night (tax-free)</div>
+                      <div className="text-white">• Subsistence: £10-25/day</div>
+                      
+                      <div className="font-medium text-elec-yellow mt-2">JIB Benefits Package</div>
+                      <div className="text-white">• Pension: 8% employer contribution</div>
+                      <div className="text-white">• Annual leave: 22+ days</div>
+                      <div className="text-white">• Sick pay: Statutory + enhanced</div>
+                      <div className="text-white">• Training allowances</div>
+                      
+                      <div className="mt-2 p-2 bg-blue-500/10 rounded">
+                        <div className="text-xs text-white">Self-employed rates typically 25-40% higher to cover benefits/pension</div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -666,20 +898,20 @@ const JIBGradingScheme = () => {
                     <p className="text-xs text-white">Not legally, but widely required by employers and sites for proof of competence.</p>
                   </div>
                   <div>
-                    <div className="font-medium text-elec-yellow">Do I need 2391 for Approved?</div>
-                    <p className="text-xs text-muted-foreground">Yes, Inspection & Testing is typically required for JIB Approved Electrician status.</p>
-                  </div>
-                  <div>
-                    <div className="font-medium text-elec-yellow">What about Scotland?</div>
-                    <p className="text-xs text-muted-foreground">Scotland follows SJIB which mirrors JIB; check SJIB for local details.</p>
-                  </div>
-                  <div>
-                    <div className="font-medium text-elec-yellow">How long does verification take?</div>
-                    <p className="text-xs text-muted-foreground">Usually 3–10 working days once all evidence is uploaded and validated.</p>
-                  </div>
-                  <div>
-                    <div className="font-medium text-elec-yellow">Do I need a physical card?</div>
-                    <p className="text-xs text-muted-foreground">The digital card is available immediately after approval; physical cards are posted and may take a few days.</p>
+                     <div className="font-medium text-elec-yellow">Do I need 2391 for Approved?</div>
+                     <p className="text-xs text-white">Yes, Inspection & Testing (2391-52) is typically required for JIB Approved Electrician status.</p>
+                   </div>
+                   <div>
+                     <div className="font-medium text-elec-yellow">What about Scotland?</div>
+                     <p className="text-xs text-white">Scotland follows SJIB which mirrors JIB; check SJIB for local details and rates.</p>
+                   </div>
+                   <div>
+                     <div className="font-medium text-elec-yellow">How long does verification take?</div>
+                     <p className="text-xs text-white">Usually 3–10 working days once all evidence is uploaded and validated.</p>
+                   </div>
+                   <div>
+                     <div className="font-medium text-elec-yellow">Do I need a physical card?</div>
+                     <p className="text-xs text-white">The digital card is available immediately after approval; physical cards are posted and may take a few days.</p>
                   </div>
                 </div>
               </MobileAccordionContent>
