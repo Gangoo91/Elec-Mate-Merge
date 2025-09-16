@@ -273,7 +273,7 @@ const NewIndustryNewsCard = () => {
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 w-full min-w-0">
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 w-full min-w-0">
               <div className="text-sm text-muted-foreground min-w-0 flex-1 sm:flex-initial">
-                <p className="break-words">
+                <p className="break-words text-left">
                   Showing {startIndex + 1}-{Math.min(endIndex, filteredAndSortedArticles.length)} of {filteredAndSortedArticles.length} articles
                   {totalPages > 1 && (
                     <span className="text-elec-yellow ml-2 whitespace-nowrap">(Page {currentPage} of {totalPages})</span>
