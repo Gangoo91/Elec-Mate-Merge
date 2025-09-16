@@ -28,7 +28,8 @@ const CommunityPriceSubmission = () => {
 
   const jobTypes = [
     "Socket Installation",
-    "Light Fitting",
+    "Light Fitting", 
+    "Light Switch",
     "Rewire Full House",
     "Consumer Unit Replacement",
     "Electrical Inspection",
@@ -36,7 +37,9 @@ const CommunityPriceSubmission = () => {
     "Garden Lighting",
     "EV Charger Installation",
     "Smoke Alarm Installation",
-    "Shower Installation"
+    "Shower Installation",
+    "Outdoor Socket",
+    "Cooker Point"
   ];
 
   const units = [
