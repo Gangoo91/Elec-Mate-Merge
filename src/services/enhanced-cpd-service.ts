@@ -7,11 +7,25 @@ import {
   EvidenceFile,
   CPDCategory
 } from '@/types/cpd-enhanced';
+import { supabase } from '@/integrations/supabase/client';
+
+export interface CPDComplianceStats {
+  compliance_percentage: number;
+  total_hours: number;
+  required_hours: number;
+  entries_count: number;
+  verified_entries: number;
+  pending_verification: number;
+  categories: {
+    id: string;
+    name: string;
+    completed_hours: number;
+    required_hours: number;
+    percentage: number;
+  }[];
+}
 
 class EnhancedCPDService {
-  private readonly ENTRIES_KEY = 'enhanced_cpd_entries';
-  private readonly SETTINGS_KEY = 'cpd_settings';
-  private readonly REMINDERS_KEY = 'cpd_reminders';
 
   // Professional Body Compliance
   getProfessionalBodyRequirements(): ProfessionalBodyRequirement[] {
@@ -138,24 +152,39 @@ class EnhancedCPDService {
   }
 
   // Enhanced Evidence Management
-  uploadEvidence(entryId: string, file: File, type: string): Promise<EvidenceFile> {
-    return new Promise((resolve) => {
-      // Simulate file upload and OCR processing
+  async uploadEvidence(entryId: string, file: File, type: string): Promise<EvidenceFile> {
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) throw new Error('User not authenticated');
+
+      // Upload file to Supabase storage
+      const fileName = `${user.id}/${entryId}/${crypto.randomUUID()}-${file.name}`;
+      const { data: uploadData, error: uploadError } = await supabase.storage
+        .from('cpd-evidence')
+        .upload(fileName, file);
+
+      if (uploadError) throw uploadError;
+
+      // Get signed URL for the uploaded file
+      const { data: urlData } = await supabase.storage
+        .from('cpd-evidence')
+        .createSignedUrl(fileName, 60 * 60 * 24 * 365); // 1 year expiry
+
       const evidenceFile: EvidenceFile = {
         id: crypto.randomUUID(),
         type: type as any,
         fileName: file.name,
-        fileUrl: URL.createObjectURL(file),
+        fileUrl: urlData?.signedUrl || '',
         uploadDate: new Date().toISOString(),
         verified: false,
         extractedData: this.simulateOCRExtraction(file.name)
       };
 
-      // In real implementation, this would upload to cloud storage
-      // and perform actual OCR processing
-      
-      setTimeout(() => resolve(evidenceFile), 1000);
-    });
+      return evidenceFile;
+    } catch (error) {
+      console.error('Error uploading evidence:', error);
+      throw error;
+    }
   }
 
   private simulateOCRExtraction(fileName: string): Record<string, any> {
@@ -237,37 +266,175 @@ class EnhancedCPDService {
   }
 
   // Enhanced Entry Management
-  getEntries(): EnhancedCPDEntry[] {
-    const stored = localStorage.getItem(this.ENTRIES_KEY);
-    return stored ? JSON.parse(stored) : this.getDefaultEntries();
+  async getEntries(userId: string): Promise<EnhancedCPDEntry[]> {
+    try {
+      const { data, error } = await supabase
+        .from('cpd_entries')
+        .select('*')
+        .eq('user_id', userId)
+        .order('date', { ascending: false });
+
+      if (error) throw error;
+
+      return data?.map(this.mapDatabaseToEntry) || [];
+    } catch (error) {
+      console.error('Error fetching CPD entries:', error);
+      return [];
+    }
   }
 
-  saveEntry(entry: Omit<EnhancedCPDEntry, 'id' | 'createdAt' | 'updatedAt'>): EnhancedCPDEntry {
-    const entries = this.getEntries();
-    const newEntry: EnhancedCPDEntry = {
-      ...entry,
-      id: crypto.randomUUID(),
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
+  async saveEntry(entry: Omit<EnhancedCPDEntry, 'id' | 'createdAt' | 'updatedAt'>, userId: string): Promise<EnhancedCPDEntry> {
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) throw new Error('User not authenticated');
+
+      const { data, error } = await supabase
+        .from('cpd_entries')
+        .insert({
+          user_id: userId,
+          date: entry.date,
+          activity: entry.activity,
+          category: entry.category,
+          type: entry.type,
+          hours: entry.hours,
+          provider: entry.provider,
+          description: entry.description,
+          learning_outcomes: entry.learningOutcomes,
+          reflection_notes: entry.reflectionNotes,
+          skills_gained: entry.skillsGained,
+          evidence_files: JSON.stringify(entry.evidenceFiles),
+          status: entry.status || 'pending',
+          is_automatic: entry.isAutomatic || false
+        })
+        .select()
+        .single();
+
+      if (error) throw error;
+
+      return this.mapDatabaseToEntry(data);
+    } catch (error) {
+      console.error('Error saving CPD entry:', error);
+      throw error;
+    }
+  }
+
+  private mapDatabaseToEntry(data: any): EnhancedCPDEntry {
+    return {
+      id: data.id,
+      date: data.date,
+      activity: data.activity,
+      category: data.category,
+      type: data.type,
+      hours: data.hours,
+      provider: data.provider,
+      description: data.description,
+      learningOutcomes: data.learning_outcomes,
+      reflectionNotes: data.reflection_notes,
+      skillsGained: data.skills_gained || [],
+      evidenceFiles: data.evidence_files ? JSON.parse(data.evidence_files) : [],
+      status: data.status,
+      isAutomatic: data.is_automatic,
+      createdAt: data.created_at,
+      updatedAt: data.updated_at
     };
-    
-    entries.push(newEntry);
-    this.saveEntries(entries);
-    return newEntry;
   }
 
-  private saveEntries(entries: EnhancedCPDEntry[]): void {
-    localStorage.setItem(this.ENTRIES_KEY, JSON.stringify(entries));
+  // New Supabase methods for enhanced dashboard
+  async getComplianceStats(userId: string, professionalBodyId: string): Promise<CPDComplianceStats> {
+    try {
+      const currentYear = new Date().getFullYear();
+      
+      // Get entries for current year
+      const { data: entries, error: entriesError } = await supabase
+        .from('cpd_entries')
+        .select('*')
+        .eq('user_id', userId)
+        .gte('date', `${currentYear}-01-01`)
+        .lte('date', `${currentYear}-12-31`);
+
+      if (entriesError) throw entriesError;
+
+      // Get professional body requirements
+      const { data: profBody, error: profBodyError } = await supabase
+        .from('professional_bodies')
+        .select('*, professional_body_categories(*)')
+        .eq('id', professionalBodyId)
+        .single();
+
+      if (profBodyError) throw profBodyError;
+
+      const totalHours = entries?.reduce((sum, entry) => sum + entry.hours, 0) || 0;
+      const requiredHours = profBody?.cpd_hours_required || 35;
+      const compliancePercentage = Math.round((totalHours / requiredHours) * 100);
+      
+      const verifiedEntries = entries?.filter(e => e.status === 'verified').length || 0;
+      const pendingEntries = entries?.filter(e => e.status === 'pending').length || 0;
+
+      // Calculate category breakdown
+      const categoryStats = profBody?.professional_body_categories?.map((cat: any) => {
+        const categoryEntries = entries?.filter(e => e.category === cat.category_name) || [];
+        const completedHours = categoryEntries.reduce((sum, entry) => sum + entry.hours, 0);
+        const requiredHours = cat.required_hours || 0;
+        
+        return {
+          id: cat.id,
+          name: cat.category_name,
+          completed_hours: completedHours,
+          required_hours: requiredHours,
+          percentage: requiredHours > 0 ? Math.round((completedHours / requiredHours) * 100) : 0
+        };
+      }) || [];
+
+      return {
+        compliance_percentage: compliancePercentage,
+        total_hours: totalHours,
+        required_hours: requiredHours,
+        entries_count: entries?.length || 0,
+        verified_entries: verifiedEntries,
+        pending_verification: pendingEntries,
+        categories: categoryStats
+      };
+    } catch (error) {
+      console.error('Error getting compliance stats:', error);
+      throw error;
+    }
+  }
+
+  async generatePortfolio(userId: string, professionalBodyId: string, title: string): Promise<void> {
+    try {
+      const entries = await this.getEntries(userId);
+      const stats = await this.getComplianceStats(userId, professionalBodyId);
+      
+      // Insert portfolio record
+      const { data, error } = await supabase
+        .from('cpd_portfolios')
+        .insert({
+          user_id: userId,
+          professional_body_id: professionalBodyId,
+          title,
+          period_start: `${new Date().getFullYear()}-01-01`,
+          period_end: `${new Date().getFullYear()}-12-31`,
+          total_hours: stats.total_hours,
+          compliance_percentage: stats.compliance_percentage,
+          status: 'ready'
+        });
+
+      if (error) throw error;
+    } catch (error) {
+      console.error('Error generating portfolio:', error);
+      throw error;
+    }
   }
 
   // Settings Management
   getSettings(): CPDSettings {
-    const stored = localStorage.getItem(this.SETTINGS_KEY);
-    return stored ? JSON.parse(stored) : this.getDefaultSettings();
+    // Return default settings for now - in real implementation this would be from database
+    return this.getDefaultSettings();
   }
 
   saveSettings(settings: CPDSettings): void {
-    localStorage.setItem(this.SETTINGS_KEY, JSON.stringify(settings));
+    // In real implementation this would save to database
+    console.log('Settings saved:', settings);
   }
 
   private getDefaultSettings(): CPDSettings {
