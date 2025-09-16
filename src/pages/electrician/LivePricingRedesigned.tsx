@@ -9,10 +9,10 @@ import {
   PoundSterling, 
   ArrowLeft, 
   RefreshCw, 
-  Zap, 
   TrendingUp, 
   MapPin, 
   Users, 
+  Recycle,
   Search,
   Bell,
   CheckCircle,
@@ -120,7 +120,7 @@ const EnhancedSearchBox = ({
 const LivePricingRedesigned = () => {
   const { data, isLoading, refreshPrices } = useLiveMetalPrices();
   const { toast } = useToast();
-  const [activeTab, setActiveTab] = useState("materials");
+  const [activeTab, setActiveTab] = useState("regional");
   const [searchQuery, setSearchQuery] = useState("");
   
   // Mock data for enhanced features
@@ -212,7 +212,7 @@ const LivePricingRedesigned = () => {
           <CardContent className="p-4">
             <div className="flex items-center justify-between mb-3">
               <h3 className="font-semibold flex items-center gap-2">
-                <Zap className="h-4 w-4 text-elec-yellow" />
+                <TrendingUp className="h-4 w-4 text-elec-yellow" />
                 Market Insights
               </h3>
               <Badge className="bg-elec-yellow/20 text-elec-yellow text-xs">LIVE</Badge>
@@ -259,13 +259,6 @@ const LivePricingRedesigned = () => {
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
           <TabsList className="grid w-full grid-cols-4 bg-elec-gray border border-elec-yellow/20 h-auto p-1">
             <TabsTrigger 
-              value="materials" 
-              className="flex flex-col sm:flex-row items-center gap-1 py-3 text-xs sm:text-sm data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark"
-            >
-              <Zap className="h-4 w-4" />
-              <span>Materials</span>
-            </TabsTrigger>
-            <TabsTrigger 
               value="regional" 
               className="flex flex-col sm:flex-row items-center gap-1 py-3 text-xs sm:text-sm data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark"
             >
@@ -286,43 +279,14 @@ const LivePricingRedesigned = () => {
               <Users className="h-4 w-4" />
               <span>Submit</span>
             </TabsTrigger>
+            <TabsTrigger 
+              value="scrap" 
+              className="flex flex-col sm:flex-row items-center gap-1 py-3 text-xs sm:text-sm data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark"
+            >
+              <Recycle className="h-4 w-4" />
+              <span>Scrap Metal</span>
+            </TabsTrigger>
           </TabsList>
-
-          <TabsContent value="materials" className="space-y-6 animate-fade-in">
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <h2 className="text-xl font-semibold">Material Price Comparison</h2>
-                <Badge className="bg-green-500/20 text-green-400 border-green-500/30">
-                  <CheckCircle className="h-3 w-3 mr-1" />
-                  Live Data
-                </Badge>
-              </div>
-              
-              {isLoading ? (
-                <PricingSkeleton />
-              ) : data ? (
-                <CompactPricingGrid
-                  metalPrices={data.metalPrices}
-                  lastUpdated={data.lastUpdated}
-                  isLive={data.isLive}
-                  dataSource={data.dataSource}
-                />
-              ) : (
-                <Card className="p-8 text-center border-elec-yellow/20 bg-elec-gray">
-                  <AlertTriangle className="h-12 w-12 text-orange-400 mx-auto mb-4" />
-                  <h3 className="font-medium mb-2">Data Temporarily Unavailable</h3>
-                  <p className="text-sm text-muted-foreground mb-4">
-                    Unable to fetch live pricing data. Please try refreshing.
-                  </p>
-                  <Button onClick={() => refreshPrices(true)} size="sm">
-                    Try Again
-                  </Button>
-                </Card>
-              )}
-              
-              <MaterialPriceComparison />
-            </div>
-          </TabsContent>
 
           <TabsContent value="regional" className="space-y-6 animate-fade-in">
             <div className="space-y-4">
@@ -422,6 +386,42 @@ const LivePricingRedesigned = () => {
                 </Badge>
               </div>
               <CommunityPriceSubmission />
+            </div>
+          </TabsContent>
+
+          <TabsContent value="scrap" className="space-y-6 animate-fade-in">
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <h2 className="text-xl font-semibold">Scrap Metal Prices</h2>
+                <Badge className="bg-orange-500/20 text-orange-400 border-orange-500/30">
+                  <Recycle className="h-3 w-3 mr-1" />
+                  Recycling Rates
+                </Badge>
+              </div>
+              
+              {isLoading ? (
+                <PricingSkeleton />
+              ) : data ? (
+                <CompactPricingGrid
+                  metalPrices={data.metalPrices}
+                  lastUpdated={data.lastUpdated}
+                  isLive={data.isLive}
+                  dataSource={data.dataSource}
+                />
+              ) : (
+                <Card className="p-8 text-center border-elec-yellow/20 bg-elec-gray">
+                  <AlertTriangle className="h-12 w-12 text-orange-400 mx-auto mb-4" />
+                  <h3 className="font-medium mb-2">Data Temporarily Unavailable</h3>
+                  <p className="text-sm text-muted-foreground mb-4">
+                    Unable to fetch scrap metal pricing data. Please try refreshing.
+                  </p>
+                  <Button onClick={() => refreshPrices(true)} size="sm">
+                    Try Again
+                  </Button>
+                </Card>
+              )}
+              
+              <MaterialPriceComparison />
             </div>
           </TabsContent>
         </Tabs>
