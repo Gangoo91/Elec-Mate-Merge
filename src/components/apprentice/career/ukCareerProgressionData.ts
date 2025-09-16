@@ -112,11 +112,11 @@ export const ukCareerLevels: UKCareerLevel[] = [
       ukQualifications[3]  // 18th Edition
     ],
     salary_ranges: {
-      london: "£18,000 - £25,000",
-      south_east: "£16,000 - £23,000",
-      midlands: "£15,000 - £21,000",
-      north: "£14,000 - £20,000",
-      scotland_wales: "£14,000 - £20,000"
+      london: "£19,500 - £27,000",
+      south_east: "£17,500 - £25,000",
+      midlands: "£16,000 - £22,500",
+      north: "£15,000 - £21,500",
+      scotland_wales: "£15,000 - £21,500"
     },
     progression_timeline: "4 years typical apprenticeship duration",
     time_to_achieve: "0–4 years",
@@ -154,11 +154,11 @@ export const ukCareerLevels: UKCareerLevel[] = [
       ukQualifications[3]  // 18th Edition
     ],
     salary_ranges: {
-      london: "£25,000 - £32,000",
-      south_east: "£23,000 - £30,000",
-      midlands: "£21,000 - £28,000",
-      north: "£20,000 - £26,000",
-      scotland_wales: "£20,000 - £26,000"
+      london: "£27,000 - £35,000",
+      south_east: "£25,000 - £32,500",
+      midlands: "£22,500 - £30,000",
+      north: "£21,500 - £28,000",
+      scotland_wales: "£21,500 - £28,000"
     },
     progression_timeline: "1-2 years between apprentice and approved status",
     time_to_achieve: "~1–2 years from Apprentice",
@@ -197,11 +197,11 @@ export const ukCareerLevels: UKCareerLevel[] = [
       ukQualifications[3]  // 18th Edition
     ],
     salary_ranges: {
-      london: "£32,000 - £42,000",
-      south_east: "£30,000 - £40,000",
-      midlands: "£27,000 - £37,000",
-      north: "£25,000 - £35,000",
-      scotland_wales: "£25,000 - £35,000"
+      london: "£35,000 - £46,000",
+      south_east: "£32,500 - £43,000",
+      midlands: "£29,000 - £40,000",
+      north: "£27,000 - £38,000",
+      scotland_wales: "£27,000 - £38,000"
     },
     progression_timeline: "Achieved after NVQ3 + AM2 (Gold Card)",
     time_to_achieve: "Typically 4–7 years total",
@@ -244,11 +244,11 @@ export const ukCareerLevels: UKCareerLevel[] = [
       ukQualifications[4]  // 2391
     ],
     salary_ranges: {
-      london: "£35,000 - £45,000",
-      south_east: "£32,000 - £42,000",
-      midlands: "£28,000 - £38,000",
-      north: "£26,000 - £36,000",
-      scotland_wales: "£26,000 - £36,000"
+      london: "£38,000 - £50,000",
+      south_east: "£35,000 - £46,000",
+      midlands: "£30,500 - £42,000",
+      north: "£28,500 - £40,000",
+      scotland_wales: "£28,500 - £40,000"
     },
     progression_timeline: "1-3 years from Electrician with 2391 and experience",
     time_to_achieve: "~1–3 years from Electrician",
@@ -290,11 +290,11 @@ export const ukCareerLevels: UKCareerLevel[] = [
       ukQualifications[5]  // HNC
     ],
     salary_ranges: {
-      london: "£45,000 - £65,000",
-      south_east: "£42,000 - £60,000",
-      midlands: "£38,000 - £55,000",
-      north: "£35,000 - £50,000",
-      scotland_wales: "£35,000 - £50,000"
+      london: "£50,000 - £72,000",
+      south_east: "£46,000 - £66,000",
+      midlands: "£41,000 - £60,000",
+      north: "£38,000 - £55,000",
+      scotland_wales: "£38,000 - £55,000"
     },
     progression_timeline: "2-4 years from Approved with leadership experience",
     time_to_achieve: "~2–4 years from Approved",
@@ -326,11 +326,11 @@ export const ukCareerLevels: UKCareerLevel[] = [
       ukQualifications[4]  // 2391
     ],
     salary_ranges: {
-      london: "£40,000 - £80,000+",
-      south_east: "£35,000 - £70,000+",
-      midlands: "£30,000 - £60,000+",
-      north: "£28,000 - £55,000+",
-      scotland_wales: "£28,000 - £55,000+"
+      london: "£45,000 - £90,000+",
+      south_east: "£40,000 - £80,000+",
+      midlands: "£35,000 - £70,000+",
+      north: "£32,000 - £65,000+",
+      scotland_wales: "£32,000 - £65,000+"
     },
     progression_timeline: "Can start after approved status with business setup",
     time_to_achieve: "Varies — depends on business setup",
