@@ -375,88 +375,131 @@ const CashFlowPlanner = () => {
             <CardHeader>
               <CardTitle className="text-white">Settings & Assumptions</CardTitle>
             </CardHeader>
-            <CardContent className="grid gap-4 md:grid-cols-4">
-              <MobileInput
-                label="Starting Cash Balance"
-                value={state.startingBalance.toString()}
-                onChange={(e) => updateSettings({ startingBalance: parseFloat(e.target.value) || 0 })}
-                type="number"
-                unit="£"
-                hint="Current cash on hand"
-              />
-              <MobileInput
-                label="Emergency Fund Target"
-                value={state.emergencyFundTarget.toString()}
-                onChange={(e) => updateSettings({ emergencyFundTarget: parseFloat(e.target.value) || 0 })}
-                type="number"
-                unit="£"
-                hint="Target emergency reserve"
-              />
-              <MobileSelectWrapper
-                label="VAT Quarter"
-                value={state.vatQuarter.toString()}
-                onValueChange={(value) => updateSettings({ vatQuarter: parseInt(value) })}
-                options={[
-                  { value: '1', label: 'Jan/Apr/Jul/Oct' },
-                  { value: '2', label: 'Feb/May/Aug/Nov' },
-                  { value: '3', label: 'Mar/Jun/Sep/Dec' }
-                ]}
-              />
-              <MobileSelectWrapper
-                label="Active Scenario"
-                value={state.selectedScenario}
-                onValueChange={(value) => updateSettings({ selectedScenario: value })}
-                options={state.scenarios.map(scenario => ({
-                  value: scenario.id,
-                  label: scenario.name
-                }))}
-              />
+            <CardContent>
+              {/* Mobile-first grid layout with responsive breakpoints */}
+              <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                
+                {/* Row 1 - Primary Settings */}
+                <div className="space-y-2">
+                  <MobileInput
+                    label="Starting Cash Balance"
+                    value={state.startingBalance.toString()}
+                    onChange={(e) => updateSettings({ startingBalance: parseFloat(e.target.value) || 0 })}
+                    type="number"
+                    unit="£"
+                  />
+                  <p className="text-xs text-muted-foreground">Current cash on hand</p>
+                </div>
 
-              {/* New realism settings */}
-              <MobileSelectWrapper
-                label="VAT Scheme"
-                value={state.vatScheme}
-                onValueChange={(value) => updateSettings({ vatScheme: value as any })}
-                options={[
-                  { value: 'standard', label: 'Standard' },
-                  { value: 'flat-rate', label: 'Flat Rate' }
-                ]}
-                hint="Affects quarterly VAT payment"
-              />
-              {state.vatScheme === 'flat-rate' && (
-                <MobileInput
-                  label="Flat Rate %"
-                  value={state.flatRatePercent.toString()}
-                  onChange={(e) => updateSettings({ flatRatePercent: parseFloat(e.target.value) || 0 })}
-                  type="number"
-                  unit="%"
-                  hint="Typical 12.5% for services"
-                />
-              )}
-              <MobileInput
-                label="Bad Debt % of Income"
-                value={state.badDebtPercent.toString()}
-                onChange={(e) => updateSettings({ badDebtPercent: parseFloat(e.target.value) || 0 })}
-                type="number"
-                unit="%"
-                hint="Allowance for non-payment"
-              />
-              <MobileInput
-                label="Card Fees % of Income"
-                value={state.cardFeesPercent.toString()}
-                onChange={(e) => updateSettings({ cardFeesPercent: parseFloat(e.target.value) || 0 })}
-                type="number"
-                unit="%"
-                hint="Payment processing fees"
-              />
-              <MobileInput
-                label="Monthly Loan Repayments"
-                value={state.monthlyLoanRepayments.toString()}
-                onChange={(e) => updateSettings({ monthlyLoanRepayments: parseFloat(e.target.value) || 0 })}
-                type="number"
-                unit="£"
-                hint="Simple fixed monthly amount"
-              />
+                <div className="space-y-2">
+                  <MobileInput
+                    label="Emergency Fund Target"
+                    value={state.emergencyFundTarget.toString()}
+                    onChange={(e) => updateSettings({ emergencyFundTarget: parseFloat(e.target.value) || 0 })}
+                    type="number"
+                    unit="£"
+                  />
+                  <p className="text-xs text-muted-foreground">Target emergency reserve</p>
+                </div>
+
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2 mb-1">
+                    <div className="w-1 h-4 bg-elec-yellow rounded-full"></div>
+                    <span className="text-sm font-medium text-white">VAT Quarter</span>
+                  </div>
+                  <MobileSelectWrapper
+                    label=""
+                    value={state.vatQuarter.toString()}
+                    onValueChange={(value) => updateSettings({ vatQuarter: parseInt(value) })}
+                    options={[
+                      { value: '1', label: 'Jan/Apr/Jul/Oct' },
+                      { value: '2', label: 'Feb/May/Aug/Nov' },
+                      { value: '3', label: 'Mar/Jun/Sep/Dec' }
+                    ]}
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2 mb-1">
+                    <div className="w-1 h-4 bg-elec-yellow rounded-full"></div>
+                    <span className="text-sm font-medium text-white">Active Scenario</span>
+                  </div>
+                  <MobileSelectWrapper
+                    label=""
+                    value={state.selectedScenario}
+                    onValueChange={(value) => updateSettings({ selectedScenario: value })}
+                    options={state.scenarios.map(scenario => ({
+                      value: scenario.id,
+                      label: scenario.name
+                    }))}
+                  />
+                </div>
+
+                {/* Row 2 - Secondary Settings */}
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2 mb-1">
+                    <div className="w-1 h-4 bg-elec-yellow rounded-full"></div>
+                    <span className="text-sm font-medium text-white">VAT Scheme</span>
+                  </div>
+                  <MobileSelectWrapper
+                    label=""
+                    value={state.vatScheme}
+                    onValueChange={(value) => updateSettings({ vatScheme: value as any })}
+                    options={[
+                      { value: 'standard', label: 'Standard' },
+                      { value: 'flat-rate', label: 'Flat Rate' }
+                    ]}
+                  />
+                  <p className="text-xs text-muted-foreground">Affects quarterly VAT payment</p>
+                </div>
+
+                <div className="space-y-2">
+                  <MobileInput
+                    label="Bad Debt % of Income"
+                    value={state.badDebtPercent.toString()}
+                    onChange={(e) => updateSettings({ badDebtPercent: parseFloat(e.target.value) || 0 })}
+                    type="number"
+                    unit="%"
+                  />
+                  <p className="text-xs text-muted-foreground">Allowance for non-payment</p>
+                </div>
+
+                <div className="space-y-2">
+                  <MobileInput
+                    label="Card Fees % of Income"
+                    value={state.cardFeesPercent.toString()}
+                    onChange={(e) => updateSettings({ cardFeesPercent: parseFloat(e.target.value) || 0 })}
+                    type="number"
+                    unit="%"
+                  />
+                  <p className="text-xs text-muted-foreground">Payment processing fees</p>
+                </div>
+
+                <div className="space-y-2">
+                  <MobileInput
+                    label="Monthly Loan Repayments"
+                    value={state.monthlyLoanRepayments.toString()}
+                    onChange={(e) => updateSettings({ monthlyLoanRepayments: parseFloat(e.target.value) || 0 })}
+                    type="number"
+                    unit="£"
+                  />
+                  <p className="text-xs text-muted-foreground">Simple fixed monthly amount</p>
+                </div>
+
+                {/* Conditional Flat Rate Field */}
+                {state.vatScheme === 'flat-rate' && (
+                  <div className="space-y-2">
+                    <MobileInput
+                      label="Flat Rate %"
+                      value={state.flatRatePercent.toString()}
+                      onChange={(e) => updateSettings({ flatRatePercent: parseFloat(e.target.value) || 0 })}
+                      type="number"
+                      unit="%"
+                    />
+                    <p className="text-xs text-muted-foreground">Typical 12.5% for services</p>
+                  </div>
+                )}
+              </div>
             </CardContent>
           </Card>
         </TabsContent>
