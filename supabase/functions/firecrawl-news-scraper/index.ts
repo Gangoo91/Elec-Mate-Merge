@@ -28,8 +28,7 @@ serve(async (req) => {
     async function getNews() {
       console.log('🚀 Starting news scraping with Firecrawl API...');
       
-      const url = "https://api.firecrawl.dev/v2/scrape";
-      const sources = [
+      const url = "https://api.firecrawl.dev/v1/scrape";
         {
           url: "https://www.electricaltimes.co.uk/latest-news/",
           category: "Industry",
@@ -66,19 +65,22 @@ serve(async (req) => {
             },
             body: JSON.stringify({
               url: source.url,
-              formats: ["json"],
-              onlyMainContent: true,
-              includeTags: ["article", "h1", "h2", "h3", "time", "date"],
-              excludeTags: ["nav", "footer", "aside", "script"],
-              waitFor: 2000,
-              actions: [
-                {
-                  type: "wait",
-                  milliseconds: 1000
-                }
-              ],
-              extract: {
-                schema: {
+              pageOptions: {
+                onlyMainContent: true,
+                includeHtml: false,
+                waitFor: 2000
+              },
+              extractorOptions: {
+                mode: "llm-extraction",
+                extractionPrompt: `Extract all news articles from this electrical industry page. For each article, extract:
+                - title: The headline of the article
+                - description: A brief summary or excerpt
+                - url: The link to the full article (if available)
+                - date: Publication date in any format
+                - imageUrl: URL of the article's main image (if available)
+                
+                Focus on electrical safety, regulations, BS7671, industry news, training, and technical content.`,
+                extractionSchema: {
                   type: "object",
                   properties: {
                     articles: {
@@ -86,13 +88,11 @@ serve(async (req) => {
                       items: {
                         type: "object",
                         properties: {
-                          title: { type: "string" },
-                          description: { type: "string" },
-                          url: { type: "string" },
-                          date: { type: "string" },
-                          author: { type: "string" },
-                          excerpt: { type: "string" },
-                          imageUrl: {type: "string"},
+                          title: { type: "string", description: "Article headline" },
+                          description: { type: "string", description: "Article summary or excerpt" },
+                          url: { type: "string", description: "Link to full article" },
+                          date: { type: "string", description: "Publication date" },
+                          imageUrl: { type: "string", description: "Article image URL" }
                         },
                         required: ["title"]
                       }
@@ -107,7 +107,8 @@ serve(async (req) => {
           const response = await fetch(url, options);
           
           if (!response.ok) {
-            console.error(`❌ HTTP error for ${source.source}: ${response.status} ${response.statusText}`);
+            const errorText = await response.text();
+            console.error(`❌ HTTP error for ${source.source}: ${response.status} ${response.statusText}`, errorText);
             continue;
           }
 
@@ -127,7 +128,7 @@ serve(async (req) => {
             allArticles.push(...articles);
             console.log(`✅ Found ${articles.length} articles from ${source.source}`);
           } else {
-            console.warn(`⚠️ No articles found for ${source.source}`);
+            console.warn(`⚠️ No articles found for ${source.source}`, result);
           }
           
           // Rate limiting delay
