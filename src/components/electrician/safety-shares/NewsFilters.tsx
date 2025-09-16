@@ -32,26 +32,26 @@ const NewsFilters = ({
     articles.filter(article => article.category === selectedCategory).length;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 w-full">
       {/* Professional News Toolbar */}
-      <div className="bg-elec-card/80 border border-elec-yellow/20 rounded-xl p-6 backdrop-blur-sm">
-        <div className="space-y-4">
+      <div className="bg-elec-card/80 border border-elec-yellow/20 rounded-xl p-4 sm:p-6 backdrop-blur-sm w-full overflow-hidden">
+        <div className="space-y-4 w-full min-w-0">
           {/* Search Bar - Full Width */}
-          <div className="relative">
-            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+          <div className="relative w-full">
+            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground z-10" />
             <Input
               type="text"
               placeholder="Search electrical industry news, regulations, safety updates..."
               value={searchTerm}
               onChange={(e) => onSearchChange(e.target.value)}
-              className="pl-12 pr-4 bg-elec-dark/70 border-elec-yellow/30 text-white placeholder:text-muted-foreground focus:border-elec-yellow/60 focus:ring-2 focus:ring-elec-yellow/20 h-12 text-base rounded-lg"
+              className="w-full pl-12 pr-4 bg-elec-dark/70 border-elec-yellow/30 text-white placeholder:text-muted-foreground focus:border-elec-yellow/60 focus:ring-2 focus:ring-elec-yellow/20 h-12 text-base rounded-lg"
             />
           </div>
 
           {/* Filters Row */}
-          <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
+          <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between w-full min-w-0">
             {/* Quick Sort Buttons */}
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-wrap gap-2 sm:gap-3 min-w-0">
               <Button
                 variant={sortBy === 'newest' ? 'default' : 'outline'}
                 size="sm"
@@ -79,9 +79,9 @@ const NewsFilters = ({
             </div>
 
             {/* Dropdown Filters */}
-            <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+            <div className="flex flex-col xs:flex-row gap-2 sm:gap-3 w-full sm:w-auto min-w-0 max-w-full">
               <Select value={selectedCategory} onValueChange={onCategoryChange}>
-                <SelectTrigger className="w-full sm:w-56 bg-elec-dark/80 border-elec-yellow/30 text-white h-11 rounded-lg hover:border-elec-yellow/50 focus:border-elec-yellow/60 focus:ring-2 focus:ring-elec-yellow/20">
+                <SelectTrigger className="w-full sm:w-48 lg:w-56 bg-elec-dark/80 border-elec-yellow/30 text-white h-11 rounded-lg hover:border-elec-yellow/50 focus:border-elec-yellow/60 focus:ring-2 focus:ring-elec-yellow/20 min-w-0">
                   <Filter className="h-4 w-4 mr-2 text-elec-yellow" />
                   <SelectValue placeholder="Filter by Category" />
                 </SelectTrigger>
@@ -101,7 +101,7 @@ const NewsFilters = ({
               </Select>
 
               <Select value={sortBy} onValueChange={onSortChange}>
-                <SelectTrigger className="w-full sm:w-44 bg-elec-dark/80 border-elec-yellow/30 text-white h-11 rounded-lg hover:border-elec-yellow/50 focus:border-elec-yellow/60 focus:ring-2 focus:ring-elec-yellow/20">
+                <SelectTrigger className="w-full sm:w-36 lg:w-44 bg-elec-dark/80 border-elec-yellow/30 text-white h-11 rounded-lg hover:border-elec-yellow/50 focus:border-elec-yellow/60 focus:ring-2 focus:ring-elec-yellow/20 min-w-0">
                   <SelectValue placeholder="Sort by" />
                 </SelectTrigger>
                 <SelectContent className="bg-elec-dark/95 border-elec-yellow/30 backdrop-blur-md z-50 rounded-lg shadow-xl">
