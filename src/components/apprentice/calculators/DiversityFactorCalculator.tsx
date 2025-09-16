@@ -1,33 +1,34 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { Wrench, Calculator, Info, AlertTriangle, CheckCircle2, RotateCcw, Zap } from "lucide-react";
-import { useDiversityCalculator } from "./diversity-factor/useDiversityCalculator";
+import { Wrench, Info, CheckCircle2, RotateCcw, Zap, Plus, BarChart3 } from "lucide-react";
+import { useMultiLoadDiversityCalculator } from "./diversity-factor/useMultiLoadDiversityCalculator";
+import { LoadEntry } from "./diversity-factor/LoadEntry";
 import { useState } from "react";
 
 const DiversityFactorCalculator = () => {
   const {
-    loadType,
-    connectedLoad,
-    numberOfUnits,
+    loads,
+    location,
+    supplyVoltage,
     result,
     errors,
-    setLoadType,
-    setConnectedLoad,
-    setNumberOfUnits,
+    addLoad,
+    removeLoad,
+    updateLoad,
+    setLocation,
+    setSupplyVoltage,
     resetCalculator,
     clearError,
-    diversityFactors
-  } = useDiversityCalculator();
+    loadTypes
+  } = useMultiLoadDiversityCalculator();
 
   const [supplyType, setSupplyType] = useState<string>("single-phase");
-  const [supplyVoltage, setSupplyVoltage] = useState<string>("230");
 
   const calculateEstimatedCurrent = () => {
     if (!result) return 0;
@@ -35,7 +36,7 @@ const DiversityFactorCalculator = () => {
     const voltage = parseFloat(supplyVoltage);
     const voltageFactor = supplyType === "three-phase" ? Math.sqrt(3) : 1;
     
-    return (result.demandAfterDiversity * 1000) / (voltage * voltageFactor);
+    return result.diversifiedCurrent;
   };
 
   const getMainDeviceRecommendation = () => {
@@ -55,6 +56,22 @@ const DiversityFactorCalculator = () => {
     return "125A+ Switch Disconnector";
   };
 
+  const locationOptions = [
+    { value: "domestic", label: "Domestic Installation" },
+    { value: "commercial", label: "Commercial Installation" },
+    { value: "industrial", label: "Industrial Installation" }
+  ];
+
+  const voltageOptions = [
+    { value: "230", label: "230V" },
+    { value: "400", label: "400V" }
+  ];
+
+  const supplyTypeOptions = [
+    { value: "single-phase", label: "Single Phase" },
+    { value: "three-phase", label: "Three Phase" }
+  ];
+
   return (
     <Card className="border-elec-yellow/20 bg-elec-gray">
       <CardHeader>
@@ -72,122 +89,64 @@ const DiversityFactorCalculator = () => {
         </div>
       </CardHeader>
       <CardContent className="space-y-6">
-        <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-          {/* Input Section */}
+        <div className="space-y-6">
+          {/* Configuration Section */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <MobileSelectWrapper
+              label="Installation Type"
+              value={location}
+              onValueChange={setLocation}
+              options={locationOptions}
+              placeholder="Select installation type"
+            />
+            
+            <MobileSelectWrapper
+              label="Supply Type"
+              value={supplyType}
+              onValueChange={setSupplyType}
+              options={supplyTypeOptions}
+              placeholder="Select supply type"
+            />
+            
+            <MobileSelectWrapper
+              label="Supply Voltage (V)"
+              value={supplyVoltage}
+              onValueChange={setSupplyVoltage}
+              options={voltageOptions}
+              placeholder="Select voltage"
+            />
+          </div>
+
+          <Separator />
+
+          {/* Loads Section */}
           <div className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="supply-type">Supply Type</Label>
-                <Select value={supplyType} onValueChange={setSupplyType}>
-                  <SelectTrigger className="bg-card border border-muted/40">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent className="bg-background border border-muted/40 z-50">
-                    <SelectItem value="single-phase">Single Phase</SelectItem>
-                    <SelectItem value="three-phase">Three Phase</SelectItem>
-                  </SelectContent>
-                </Select>
+            <div className="flex items-center justify-between">
+              <div>
+                <h3 className="text-lg font-semibold">Circuit Loads</h3>
+                <p className="text-sm text-muted-foreground">Add multiple loads for comprehensive diversity calculation</p>
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="supply-voltage">Supply Voltage (V)</Label>
-                <Select value={supplyVoltage} onValueChange={setSupplyVoltage}>
-                  <SelectTrigger className="bg-card border border-muted/40">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent className="bg-background border border-muted/40 z-50">
-                    <SelectItem value="230">230V</SelectItem>
-                    <SelectItem value="400">400V</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
+              <Button onClick={addLoad} size="sm" className="bg-primary hover:bg-primary/90">
+                <Plus className="h-4 w-4 mr-2" />
+                Add Load
+              </Button>
             </div>
 
-            <Separator />
-
-            <div className="space-y-2">
-              <Label htmlFor="load-type">Load Type</Label>
-              <Select value={loadType} onValueChange={(value) => {
-                setLoadType(value);
-                clearError('loadType');
-              }}>
-                <SelectTrigger className={`bg-card border ${errors.loadType ? 'border-destructive' : 'border-muted/40'}`}>
-                  <SelectValue placeholder="Select load type" />
-                </SelectTrigger>
-                <SelectContent className="bg-background border border-muted/40 z-50">
-                  {Object.entries(diversityFactors).map(([key, factor]) => (
-                    <SelectItem key={key} value={key}>
-                      {factor.description}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              {errors.loadType && (
-                <p className="text-sm text-destructive flex items-center gap-1">
-                  <AlertTriangle className="h-3 w-3" />
-                  {errors.loadType}
-                </p>
-              )}
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="connected-load">Connected Load (A)</Label>
-              <Input
-                id="connected-load"
-                type="number"
-                step="0.1"
-                min="0"
-                placeholder="Enter total connected load"
-                value={connectedLoad}
-                onChange={(e) => {
-                  setConnectedLoad(e.target.value);
-                  clearError('connectedLoad');
-                }}
-                className={`bg-card border ${errors.connectedLoad ? 'border-destructive' : 'border-muted/40'}`}
-              />
-              {errors.connectedLoad && (
-                <p className="text-sm text-destructive flex items-center gap-1">
-                  <AlertTriangle className="h-3 w-3" />
-                  {errors.connectedLoad}
-                </p>
-              )}
-            </div>
-
-            {loadType && diversityFactors[loadType]?.calculationMethod === 'unit-based' && (
-              <div className="space-y-2">
-                <Label htmlFor="number-of-units">Number of Units</Label>
-                <Input
-                  id="number-of-units"
-                  type="number"
-                  min="1"
-                  placeholder="Enter number of units"
-                  value={numberOfUnits}
-                  onChange={(e) => {
-                    setNumberOfUnits(e.target.value);
-                    clearError('numberOfUnits');
-                  }}
-                  className={`bg-card border ${errors.numberOfUnits ? 'border-destructive' : 'border-muted/40'}`}
+            <div className="space-y-3">
+              {loads.map((load, index) => (
+                <LoadEntry
+                  key={load.id}
+                  load={load}
+                  index={index}
+                  canRemove={loads.length > 1}
+                  loadTypes={loadTypes}
+                  errors={errors}
+                  onUpdate={updateLoad}
+                  onRemove={removeLoad}
+                  onClearError={clearError}
                 />
-                {errors.numberOfUnits && (
-                  <p className="text-sm text-destructive flex items-center gap-1">
-                    <AlertTriangle className="h-3 w-3" />
-                    {errors.numberOfUnits}
-                  </p>
-                )}
-              </div>
-            )}
-
-            {loadType && (
-              <Alert className="border-blue-500/20 bg-blue-500/10">
-                <Info className="h-4 w-4 text-blue-500" />
-                <AlertDescription className="text-blue-200">
-                  <div className="space-y-1">
-                    <p className="font-medium">Diversity Factor: {(diversityFactors[loadType].diversityFactor * 100).toFixed(0)}%</p>
-                    <p className="text-sm">{diversityFactors[loadType].description}</p>
-                    <p className="text-xs">Method: {diversityFactors[loadType].calculationMethod}</p>
-                  </div>
-                </AlertDescription>
-              </Alert>
-            )}
+              ))}
+            </div>
 
             <div className="flex gap-2">
               <Button variant="outline" onClick={resetCalculator} className="w-full">
@@ -197,9 +156,11 @@ const DiversityFactorCalculator = () => {
             </div>
           </div>
 
+          <Separator />
+
           {/* Results Section */}
           <div className="space-y-4">
-            <div className="rounded-md bg-muted/50 p-6 min-h-[300px]">
+            <div className="rounded-md bg-muted/50 p-6 min-h-[400px]">
               {result ? (
                 <div className="space-y-4">
                   <div className="flex items-center gap-2 mb-4">
@@ -207,24 +168,48 @@ const DiversityFactorCalculator = () => {
                     <h3 className="text-lg font-semibold">Diversity Results</h3>
                   </div>
 
-                  <div className="space-y-3">
-                    <div className="flex justify-between">
-                      <span className="text-sm text-muted-foreground">Connected Load:</span>
-                      <span className="font-semibold">{result.totalConnectedLoad} A</span>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <span className="text-xs text-muted-foreground">Total Installed Load</span>
+                      <div className="text-lg font-semibold">{result.totalInstalledLoad.toFixed(2)} kW</div>
+                      <div className="text-sm text-muted-foreground">{result.totalDesignCurrent.toFixed(1)} A</div>
                     </div>
-                    <div className="flex justify-between p-3 bg-elec-yellow/10 rounded">
-                      <span className="text-sm font-medium">Demand After Diversity:</span>
-                      <span className="text-xl font-bold text-elec-yellow">{result.demandAfterDiversity} A</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-sm text-muted-foreground">Diversity Factor Applied:</span>
-                      <span className="font-semibold">{(result.diversityFactor * 100).toFixed(0)}%</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-sm text-muted-foreground">Estimated Current:</span>
-                      <span className="font-semibold text-elec-yellow">{calculateEstimatedCurrent().toFixed(1)} A</span>
+                    <div className="space-y-2">
+                      <span className="text-xs text-muted-foreground">Diversified Load</span>
+                      <div className="text-lg font-bold text-primary">{result.diversifiedLoad.toFixed(2)} kW</div>
+                      <div className="text-sm font-semibold text-primary">{result.diversifiedCurrent.toFixed(1)} A</div>
                     </div>
                   </div>
+
+                  <div className="bg-primary/10 border border-primary/20 rounded p-3">
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm font-medium">Overall Diversity Factor:</span>
+                      <span className="text-lg font-bold text-primary">{(result.overallDiversityFactor * 100).toFixed(0)}%</span>
+                    </div>
+                  </div>
+
+                  {result.breakdownByType.length > 0 && (
+                    <div className="space-y-3">
+                      <div className="flex items-center gap-2">
+                        <BarChart3 className="h-4 w-4" />
+                        <span className="text-sm font-medium">Load Breakdown</span>
+                      </div>
+                      <div className="space-y-2">
+                        {result.breakdownByType.map((breakdown, index) => (
+                          <div key={index} className="bg-muted/20 rounded p-3">
+                            <div className="flex justify-between items-center mb-1">
+                              <span className="text-sm font-medium capitalize">{breakdown.type.replace('-', ' ')}</span>
+                              <span className="text-sm font-semibold">{(breakdown.diversityFactor * 100).toFixed(0)}%</span>
+                            </div>
+                            <div className="flex justify-between text-xs text-muted-foreground">
+                              <span>{breakdown.installedLoad.toFixed(2)} kW → {breakdown.diversifiedLoad.toFixed(2)} kW</span>
+                              <span>-{(breakdown.installedLoad - breakdown.diversifiedLoad).toFixed(2)} kW</span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
 
                   <Separator />
 
@@ -241,59 +226,65 @@ const DiversityFactorCalculator = () => {
 
                   <div className="bg-blue-500/10 border border-blue-500/30 rounded p-3">
                     <div className="text-sm text-blue-300">
-                      <p className="font-medium text-blue-400">Load Reduction:</p>
-                      <p>{result.loadReduction} A saved ({((result.loadReduction / result.totalConnectedLoad) * 100).toFixed(1)}% reduction)</p>
+                      <p className="font-medium text-blue-400">Total Load Reduction:</p>
+                      <p>{(result.totalInstalledLoad - result.diversifiedLoad).toFixed(2)} kW saved ({((result.totalInstalledLoad - result.diversifiedLoad) / result.totalInstalledLoad * 100).toFixed(1)}% reduction)</p>
                     </div>
                   </div>
 
-                  <div className="text-xs text-muted-foreground">
-                    <p>Calculation: {result.totalConnectedLoad} A × {(result.diversityFactor * 100).toFixed(0)}% = {result.demandAfterDiversity} A</p>
-                    <p>Method: {result.calculationMethod}</p>
-                  </div>
+                  {result.complianceNotes.length > 0 && (
+                    <div className="space-y-2">
+                      <p className="text-xs font-medium">Compliance Notes:</p>
+                      <div className="space-y-1">
+                        {result.complianceNotes.map((note, index) => (
+                          <p key={index} className="text-xs text-muted-foreground">• {note}</p>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
               ) : (
                 <div className="flex items-center justify-center h-full text-muted-foreground">
                   <div className="text-center">
                     <Wrench className="h-12 w-12 mx-auto mb-3 opacity-50" />
-                    <p>Select load type and enter values to calculate diversity</p>
+                    <p>Add loads and configure settings to calculate diversity</p>
                   </div>
                 </div>
               )}
             </div>
 
-            {/* What This Means Panel */}
-            <Alert className="border-blue-500/20 bg-blue-500/10">
-              <Info className="h-4 w-4 text-blue-500" />
-              <AlertDescription className="text-blue-200">
-                <div className="space-y-2">
-                  <p className="font-medium">What This Means:</p>
-                  <ul className="text-sm space-y-1">
-                    <li>• Diversity recognises that not all loads operate simultaneously</li>
-                    <li>• Allows more economical sizing of cables and protective devices</li>
-                    <li>• Current calculation determines circuit protection requirements</li>
-                    <li>• Consider future load growth and expansion</li>
-                  </ul>
-                </div>
-              </AlertDescription>
-            </Alert>
+          {/* What This Means Panel */}
+          <Alert className="border-blue-500/20 bg-blue-500/10">
+            <Info className="h-4 w-4 text-blue-500" />
+            <AlertDescription className="text-blue-200">
+              <div className="space-y-2">
+                <p className="font-medium">What This Means:</p>
+                <ul className="text-sm space-y-1">
+                  <li>• Diversity recognises that not all loads operate simultaneously</li>
+                  <li>• Allows more economical sizing of cables and protective devices</li>
+                  <li>• Current calculation determines circuit protection requirements</li>
+                  <li>• Consider future load growth and expansion</li>
+                </ul>
+              </div>
+            </AlertDescription>
+          </Alert>
 
-            {/* BS 7671 Guidance */}
-            <Alert className="border-green-500/20 bg-green-500/10">
-              <Info className="h-4 w-4 text-green-500" />
-              <AlertDescription className="text-green-200">
-                <div className="space-y-2">
-                  <p className="font-medium">BS 7671 Regulations:</p>
-                  <ul className="text-sm space-y-1">
-                    <li>• Diversity factors from Table 311 (Appendix 1)</li>
-                    <li>• Consider simultaneity and load patterns</li>
-                    <li>• Apply to final circuits and distribution boards</li>
-                    <li>• Document diversity assumptions for future reference</li>
-                  </ul>
-                </div>
-              </AlertDescription>
-            </Alert>
-          </div>
+          {/* BS 7671 Guidance */}
+          <Alert className="border-green-500/20 bg-green-500/10">
+            <Info className="h-4 w-4 text-green-500" />
+            <AlertDescription className="text-green-200">
+              <div className="space-y-2">
+                <p className="font-medium">BS 7671 Regulations:</p>
+                <ul className="text-sm space-y-1">
+                  <li>• Diversity factors from Table 311 (Appendix 1)</li>
+                  <li>• Consider simultaneity and load patterns</li>
+                  <li>• Apply to final circuits and distribution boards</li>
+                  <li>• Document diversity assumptions for future reference</li>
+                </ul>
+              </div>
+            </AlertDescription>
+          </Alert>
         </div>
+      </div>
       </CardContent>
     </Card>
   );
