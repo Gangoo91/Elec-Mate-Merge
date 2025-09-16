@@ -113,26 +113,31 @@ const CashFlowPlanner = () => {
       />
 
       <Tabs defaultValue="setup" className="space-y-6">
-        <TabsList className="grid w-full grid-cols-5">
-          <TabsTrigger value="setup" className="flex items-center gap-2">
+        <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 h-auto">
+          <TabsTrigger value="setup" className="flex flex-col sm:flex-row items-center gap-1 sm:gap-2 py-3 px-2 text-xs sm:text-sm">
             <Settings className="h-4 w-4" />
-            Setup
+            <span className="hidden sm:inline">Setup</span>
+            <span className="sm:hidden">Setup</span>
           </TabsTrigger>
-          <TabsTrigger value="projections" className="flex items-center gap-2">
+          <TabsTrigger value="projections" className="flex flex-col sm:flex-row items-center gap-1 sm:gap-2 py-3 px-2 text-xs sm:text-sm">
             <Calculator className="h-4 w-4" />
-            Projections
+            <span className="hidden sm:inline">Projections</span>
+            <span className="sm:hidden">Projects</span>
           </TabsTrigger>
-          <TabsTrigger value="charts" className="flex items-center gap-2">
+          <TabsTrigger value="charts" className="flex flex-col sm:flex-row items-center gap-1 sm:gap-2 py-3 px-2 text-xs sm:text-sm">
             <BarChart3 className="h-4 w-4" />
-            Charts
+            <span className="hidden sm:inline">Charts</span>
+            <span className="sm:hidden">Charts</span>
           </TabsTrigger>
-          <TabsTrigger value="scenarios" className="flex items-center gap-2">
+          <TabsTrigger value="scenarios" className="flex flex-col sm:flex-row items-center gap-1 sm:gap-2 py-3 px-2 text-xs sm:text-sm">
             <Target className="h-4 w-4" />
-            Scenarios
+            <span className="hidden sm:inline">Scenarios</span>
+            <span className="sm:hidden">Scenes</span>
           </TabsTrigger>
-          <TabsTrigger value="insights" className="flex items-center gap-2">
+          <TabsTrigger value="insights" className="flex flex-col sm:flex-row items-center gap-1 sm:gap-2 py-3 px-2 text-xs sm:text-sm">
             <TrendingUp className="h-4 w-4" />
-            Insights
+            <span className="hidden sm:inline">Insights</span>
+            <span className="sm:hidden">Insights</span>
           </TabsTrigger>
         </TabsList>
 
