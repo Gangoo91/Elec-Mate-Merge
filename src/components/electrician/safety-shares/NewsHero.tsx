@@ -71,9 +71,9 @@ const NewsHero = ({ article }: NewsHeroProps) => {
         {/* Background Pattern */}
         <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
         
-        <CardContent className="relative p-6 sm:p-8 lg:p-12">
+        <CardContent className="relative p-4 sm:p-6 lg:p-8">
           {/* Top Meta Bar */}
-          <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+          <div className="flex flex-wrap items-center justify-between gap-4 mb-4">
             <div className="flex flex-wrap items-center gap-3">
               <Badge className={`${getCategoryColor(article.category)} font-semibold text-xs uppercase tracking-wide`}>
                 {article.category}
@@ -100,14 +100,14 @@ const NewsHero = ({ article }: NewsHeroProps) => {
           </div>
 
           {/* Hero Content with Image */}
-          <div className="grid lg:grid-cols-12 gap-8 items-center">
+          <div className="grid lg:grid-cols-12 gap-6 items-center">
             {/* Hero Image */}
             <div className="lg:col-span-5 order-2 lg:order-1">
               <div className="relative overflow-hidden rounded-2xl shadow-2xl">
                 <img
                   src={article.image_url || getCategoryImage(article.category)}
                   alt={article.title}
-                  className="w-full h-64 sm:h-80 lg:h-96 object-cover"
+                  className="w-full h-48 sm:h-56 lg:h-64 object-cover"
                   onError={(e) => {
                     e.currentTarget.src = getCategoryImage(article.category);
                   }}
@@ -119,17 +119,17 @@ const NewsHero = ({ article }: NewsHeroProps) => {
             {/* Content */}
             <div className="lg:col-span-7 order-1 lg:order-2">
               {/* Title */}
-              <h1 className="text-2xl sm:text-3xl lg:text-5xl font-bold text-white mb-6 leading-tight tracking-tight">
+              <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white mb-4 leading-tight tracking-tight">
                 {article.title}
               </h1>
 
               {/* Summary */}
-              <p className="text-base sm:text-lg text-muted-foreground mb-8 leading-relaxed font-light">
+              <p className="text-sm sm:text-base text-muted-foreground mb-6 leading-relaxed font-light">
                 {article.summary}
               </p>
 
               {/* Publication Details */}
-              <div className="flex flex-wrap items-center gap-6 text-sm text-muted-foreground mb-8">
+              <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground mb-6">
                 <div className="flex items-center gap-2">
                   <Calendar className="h-4 w-4" />
                   <span className="font-medium">{format(new Date(article.date_published), 'EEEE, MMMM dd, yyyy')}</span>
