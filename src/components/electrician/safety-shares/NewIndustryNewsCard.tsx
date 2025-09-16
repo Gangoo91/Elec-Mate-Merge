@@ -271,7 +271,7 @@ const NewIndustryNewsCard = () => {
         {/* Results Summary with Refresh Button */}
         <div className="flex flex-col gap-4 w-full">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 w-full min-w-0">
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 w-full sm:w-auto min-w-0">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 w-full min-w-0">
               <div className="text-sm text-muted-foreground min-w-0 flex-1 sm:flex-initial">
                 <p className="break-words">
                   Showing {startIndex + 1}-{Math.min(endIndex, filteredAndSortedArticles.length)} of {filteredAndSortedArticles.length} articles
