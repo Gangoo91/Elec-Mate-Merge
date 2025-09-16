@@ -37,14 +37,14 @@ const AccreditationCard = ({ accreditation, onViewDetails }: AccreditationCardPr
   };
 
   return (
-    <Card className="border-elec-yellow/20 bg-elec-gray hover:bg-elec-gray/80 transition-all duration-300 h-full">
-      <CardHeader className="pb-3">
+    <Card className="border-elec-yellow/20 bg-elec-grey hover:bg-elec-grey/80 transition-all duration-300 h-full flex flex-col">
+      <CardHeader className="pb-4">
         <div className="flex items-start justify-between gap-3">
           <div className="flex-1 min-w-0">
-            <CardTitle className="text-lg font-semibold text-white leading-tight">
+            <CardTitle className="text-lg font-semibold text-white leading-tight mb-2">
               {accreditation.title}
             </CardTitle>
-            <p className="text-sm text-elec-yellow mt-1">{accreditation.provider}</p>
+            <p className="text-sm text-elec-yellow">{accreditation.provider}</p>
           </div>
           <div className="flex flex-col items-end gap-2 flex-shrink-0">
             <Badge variant="outline" className={getDifficultyColor(accreditation.difficulty)}>
@@ -59,66 +59,66 @@ const AccreditationCard = ({ accreditation, onViewDetails }: AccreditationCardPr
         </div>
       </CardHeader>
       
-      <CardContent className="space-y-4">
-        <p className="text-sm text-muted-foreground leading-relaxed">
+      <CardContent className="flex-1 flex flex-col space-y-4">
+        <p className="text-sm text-white leading-relaxed">
           {accreditation.description}
         </p>
         
-        <div className="grid grid-cols-2 gap-3 text-xs">
+        <div className="grid grid-cols-2 gap-4 text-xs">
           <div className="flex items-center gap-2">
-            <Clock className="h-3 w-3 text-elec-yellow flex-shrink-0" />
-            <span className="text-muted-foreground truncate">{accreditation.duration}</span>
+            <Clock className="h-4 w-4 text-elec-yellow flex-shrink-0" />
+            <span className="text-white truncate">{accreditation.duration}</span>
           </div>
           <div className="flex items-center gap-2">
-            <PoundSterling className="h-3 w-3 text-elec-yellow flex-shrink-0" />
-            <span className="text-muted-foreground truncate">{accreditation.cost}</span>
+            <PoundSterling className="h-4 w-4 text-elec-yellow flex-shrink-0" />
+            <span className="text-white truncate">{accreditation.cost}</span>
           </div>
           <div className="flex items-center gap-2">
-            <MapPin className="h-3 w-3 text-elec-yellow flex-shrink-0" />
-            <span className="text-muted-foreground truncate">
+            <MapPin className="h-4 w-4 text-elec-yellow flex-shrink-0" />
+            <span className="text-white truncate">
               {accreditation.locations.slice(0, 2).join(", ")}
               {accreditation.locations.length > 2 && "..."}
             </span>
           </div>
           <div className="flex items-center gap-2">
-            <TrendingUp className={`h-3 w-3 flex-shrink-0 ${getPopularityColor(accreditation.popularity)}`} />
-            <span className="text-muted-foreground">{accreditation.popularity}% popularity</span>
+            <TrendingUp className={`h-4 w-4 flex-shrink-0 ${getPopularityColor(accreditation.popularity)}`} />
+            <span className="text-white">{accreditation.popularity}% popularity</span>
           </div>
         </div>
         
-        <div className="space-y-2">
-          <h4 className="text-xs font-medium text-amber-400">Key Benefits:</h4>
-          <div className="space-y-1">
+        <div className="space-y-3 flex-1">
+          <h4 className="text-sm font-medium text-elec-yellow">Key Benefits:</h4>
+          <div className="space-y-2">
             {accreditation.benefits.slice(0, 3).map((benefit, idx) => (
               <div key={idx} className="flex items-start gap-2">
                 <CheckCircle className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
-                <span className="text-xs text-muted-foreground leading-tight">{benefit}</span>
+                <span className="text-xs text-white leading-relaxed">{benefit}</span>
               </div>
             ))}
             {accreditation.benefits.length > 3 && (
-              <p className="text-xs text-elec-yellow">
+              <p className="text-xs text-elec-yellow font-medium">
                 +{accreditation.benefits.length - 3} more benefits
               </p>
             )}
           </div>
         </div>
         
-        <div className="flex gap-2 pt-2">
+        <div className="flex gap-2 pt-4 mt-auto">
           <Button 
             onClick={() => onViewDetails(accreditation)}
-            className="flex-1 bg-elec-yellow text-elec-dark hover:bg-amber-400 text-sm h-8"
+            className="flex-1 bg-elec-yellow text-elec-dark hover:bg-amber-400 text-sm h-9 font-medium"
           >
-            <Award className="mr-1 h-3 w-3" />
+            <Award className="mr-2 h-4 w-4" />
             View Details
           </Button>
           {accreditation.website !== "Various providers" && (
             <Button 
               variant="outline" 
               size="sm"
-              className="border-elec-yellow/30 hover:bg-elec-yellow/10 h-8 px-3"
+              className="border-elec-yellow/30 hover:bg-elec-yellow/10 h-9 px-3"
               onClick={() => window.open(accreditation.website, '_blank')}
             >
-              <ExternalLink className="h-3 w-3" />
+              <ExternalLink className="h-4 w-4" />
             </Button>
           )}
         </div>
