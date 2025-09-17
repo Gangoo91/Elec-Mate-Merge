@@ -14,8 +14,18 @@ import {
   Info, 
   CheckCircle, 
   AlertTriangle,
-  Download,
-  Share
+  Calendar,
+  Target,
+  Phone,
+  FileText,
+  ExternalLink,
+  Clock,
+  MapPin,
+  Building,
+  User,
+  Briefcase,
+  Share,
+  Download
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { 
@@ -221,9 +231,9 @@ const EnhancedFundingCalculator = () => {
       }
     }
 
-    // Calculate results
+    // Calculate results with more realistic funding coverage
     const fundingGap = calculateFundingGap(cost, totalFunding);
-    const fundingCoverage = (totalFunding / cost) * 100;
+    const fundingCoverage = Math.min((totalFunding / cost) * 100, 100);
     const monthlyRepayment = calculateMonthlyRepayment(
       salary, 
       FUNDING_RATES_2025.advancedLearnerLoan.repaymentThreshold
@@ -307,10 +317,10 @@ const EnhancedFundingCalculator = () => {
 
   return (
     <div className="space-y-6">
-      <Card className="border-primary/20">
+      <Card className="border-elec-yellow/20 bg-elec-card">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Calculator className="h-5 w-5 text-primary" />
+          <CardTitle className="flex items-center gap-2 text-foreground">
+            <Calculator className="h-5 w-5 text-elec-yellow" />
             Enhanced Funding Calculator 2025
           </CardTitle>
           <p className="text-sm text-muted-foreground">
@@ -318,11 +328,11 @@ const EnhancedFundingCalculator = () => {
           </p>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="courseLevel">Course Level *</Label>
+              <Label htmlFor="courseLevel" className="text-foreground">Course Level *</Label>
               <Select value={inputs.courseLevel} onValueChange={(value) => handleInputChange("courseLevel", value)}>
-                <SelectTrigger>
+                <SelectTrigger className="border-elec-yellow/20 focus:border-elec-yellow">
                   <SelectValue placeholder="Select level" />
                 </SelectTrigger>
                 <SelectContent>
@@ -336,9 +346,9 @@ const EnhancedFundingCalculator = () => {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="courseCategory">Course Category *</Label>
+              <Label htmlFor="courseCategory" className="text-foreground">Course Category *</Label>
               <Select value={inputs.courseCategory} onValueChange={(value) => handleInputChange("courseCategory", value)}>
-                <SelectTrigger>
+                <SelectTrigger className="border-elec-yellow/20 focus:border-elec-yellow">
                   <SelectValue placeholder="Select category" />
                 </SelectTrigger>
                 <SelectContent>
@@ -353,42 +363,45 @@ const EnhancedFundingCalculator = () => {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="courseCost">Course Cost (£) *</Label>
+              <Label htmlFor="courseCost" className="text-foreground">Course Cost (£) *</Label>
               <Input
                 id="courseCost"
                 type="number"
                 placeholder="e.g. 6500"
                 value={inputs.courseCost}
                 onChange={(e) => handleInputChange("courseCost", e.target.value)}
+                className="border-elec-yellow/20 focus:border-elec-yellow"
               />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="currentSalary">Annual Salary (£) *</Label>
+              <Label htmlFor="currentSalary" className="text-foreground">Annual Salary (£) *</Label>
               <Input
                 id="currentSalary"
                 type="number"
                 placeholder="e.g. 32000"
                 value={inputs.currentSalary}
                 onChange={(e) => handleInputChange("currentSalary", e.target.value)}
+                className="border-elec-yellow/20 focus:border-elec-yellow"
               />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="age">Age *</Label>
+              <Label htmlFor="age" className="text-foreground">Age *</Label>
               <Input
                 id="age"
                 type="number"
                 placeholder="e.g. 28"
                 value={inputs.age}
                 onChange={(e) => handleInputChange("age", e.target.value)}
+                className="border-elec-yellow/20 focus:border-elec-yellow"
               />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="employmentStatus">Employment Status *</Label>
+              <Label htmlFor="employmentStatus" className="text-foreground">Employment Status *</Label>
               <Select value={inputs.employmentStatus} onValueChange={(value) => handleInputChange("employmentStatus", value)}>
-                <SelectTrigger>
+                <SelectTrigger className="border-elec-yellow/20 focus:border-elec-yellow">
                   <SelectValue placeholder="Select status" />
                 </SelectTrigger>
                 <SelectContent>
@@ -401,9 +414,9 @@ const EnhancedFundingCalculator = () => {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="region">Region</Label>
+              <Label htmlFor="region" className="text-foreground">Region</Label>
               <Select value={inputs.region} onValueChange={(value) => handleInputChange("region", value)}>
-                <SelectTrigger>
+                <SelectTrigger className="border-elec-yellow/20 focus:border-elec-yellow">
                   <SelectValue placeholder="Select region" />
                 </SelectTrigger>
                 <SelectContent>
@@ -421,9 +434,9 @@ const EnhancedFundingCalculator = () => {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="employerSize">Employer Size</Label>
+              <Label htmlFor="employerSize" className="text-foreground">Employer Size</Label>
               <Select value={inputs.employerSize} onValueChange={(value) => handleInputChange("employerSize", value)}>
-                <SelectTrigger>
+                <SelectTrigger className="border-elec-yellow/20 focus:border-elec-yellow">
                   <SelectValue placeholder="Select size" />
                 </SelectTrigger>
                 <SelectContent>
@@ -435,19 +448,20 @@ const EnhancedFundingCalculator = () => {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="employerContribution">Employer Contribution (£)</Label>
+              <Label htmlFor="employerContribution" className="text-foreground">Employer Contribution (£)</Label>
               <Input
                 id="employerContribution"
                 type="number"
                 placeholder="e.g. 2000"
                 value={inputs.employerContribution}
                 onChange={(e) => handleInputChange("employerContribution", e.target.value)}
+                className="border-elec-yellow/20 focus:border-elec-yellow"
               />
             </div>
           </div>
 
           <div className="flex gap-4">
-            <Button onClick={calculateEnhancedFunding} size="lg" className="flex-1">
+            <Button onClick={calculateEnhancedFunding} size="lg" className="flex-1 bg-elec-yellow text-background hover:bg-elec-yellow/90">
               <Calculator className="mr-2 h-4 w-4" />
               Calculate Enhanced Funding
             </Button>
@@ -457,77 +471,117 @@ const EnhancedFundingCalculator = () => {
 
       {result && (
         <Tabs value={activeTab} onValueChange={setActiveTab}>
-          <TabsList className="grid w-full grid-cols-4">
-            <TabsTrigger value="overview">Overview</TabsTrigger>
-            <TabsTrigger value="sources">Funding Sources</TabsTrigger>
-            <TabsTrigger value="timeline">Timeline</TabsTrigger>
-            <TabsTrigger value="recommendations">Action Plan</TabsTrigger>
+          <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 gap-1 md:gap-0 bg-elec-card/50 p-1">
+            <TabsTrigger value="overview" className="text-xs md:text-sm px-2 md:px-3 py-2 data-[state=active]:bg-elec-yellow data-[state=active]:text-background">Overview</TabsTrigger>
+            <TabsTrigger value="sources" className="text-xs md:text-sm px-2 md:px-3 py-2 data-[state=active]:bg-elec-yellow data-[state=active]:text-background">Sources</TabsTrigger>
+            <TabsTrigger value="timeline" className="text-xs md:text-sm px-2 md:px-3 py-2 data-[state=active]:bg-elec-yellow data-[state=active]:text-background">Timeline</TabsTrigger>
+            <TabsTrigger value="recommendations" className="text-xs md:text-sm px-2 md:px-3 py-2 data-[state=active]:bg-elec-yellow data-[state=active]:text-background">Action Plan</TabsTrigger>
           </TabsList>
 
           <TabsContent value="overview" className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <Card className="border-primary/20">
+              <Card className="border-elec-yellow/20 bg-elec-card">
                 <CardContent className="p-6">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-sm text-muted-foreground">Total Cost</p>
-                      <p className="text-2xl font-bold">£{result.totalCost.toLocaleString()}</p>
+                      <p className="text-sm text-muted-foreground">Total Course Cost</p>
+                      <p className="text-2xl font-bold text-foreground">£{result.totalCost.toLocaleString()}</p>
                     </div>
-                    <PoundSterling className="h-8 w-8 text-muted-foreground" />
+                    <PoundSterling className="h-8 w-8 text-elec-yellow" />
                   </div>
                 </CardContent>
               </Card>
 
-              <Card className="border-green-500/20 bg-green-500/5">
+              <Card className="border-elec-yellow/20 bg-elec-card">
                 <CardContent className="p-6">
                   <div className="flex items-center justify-between">
                     <div>
                       <p className="text-sm text-muted-foreground">Available Funding</p>
-                      <p className="text-2xl font-bold text-green-600">£{result.totalFunding.toLocaleString()}</p>
+                      <p className="text-2xl font-bold text-elec-yellow">£{result.totalFunding.toLocaleString()}</p>
                     </div>
-                    <CheckCircle className="h-8 w-8 text-green-600" />
+                    <CheckCircle className="h-8 w-8 text-elec-yellow" />
                   </div>
                 </CardContent>
               </Card>
 
-              <Card className={`border-${result.fundingGap > 0 ? 'orange' : 'green'}-500/20 bg-${result.fundingGap > 0 ? 'orange' : 'green'}-500/5`}>
+              <Card className={`border-elec-yellow/20 bg-elec-card ${result.fundingGap > 0 ? 'border-orange-500/30' : 'border-green-500/30'}`}>
                 <CardContent className="p-6">
                   <div className="flex items-center justify-between">
                     <div>
                       <p className="text-sm text-muted-foreground">Funding Gap</p>
-                      <p className={`text-2xl font-bold text-${result.fundingGap > 0 ? 'orange' : 'green'}-600`}>
+                      <p className={`text-2xl font-bold ${result.fundingGap > 0 ? 'text-orange-500' : 'text-green-500'}`}>
                         £{result.fundingGap.toLocaleString()}
                       </p>
                     </div>
                     {result.fundingGap > 0 ? 
-                      <AlertTriangle className="h-8 w-8 text-orange-600" /> :
-                      <CheckCircle className="h-8 w-8 text-green-600" />
+                      <AlertTriangle className="h-8 w-8 text-orange-500" /> :
+                      <CheckCircle className="h-8 w-8 text-green-500" />
                     }
                   </div>
                 </CardContent>
               </Card>
             </div>
 
-            <Card>
+            <Card className="border-elec-yellow/20 bg-elec-card">
               <CardHeader>
-                <CardTitle>Funding Coverage</CardTitle>
+                <CardTitle className="text-foreground">Funding Coverage Analysis</CardTitle>
+                <p className="text-sm text-muted-foreground">Comprehensive breakdown of your funding situation</p>
               </CardHeader>
-              <CardContent>
-                <div className="space-y-2">
+              <CardContent className="space-y-6">
+                <div className="space-y-3">
                   <div className="flex justify-between text-sm">
-                    <span>Coverage: {result.fundingCoverage.toFixed(1)}%</span>
-                    <span>£{result.totalFunding.toLocaleString()} of £{result.totalCost.toLocaleString()}</span>
+                    <span className="text-foreground font-medium">Coverage: {result.fundingCoverage.toFixed(1)}%</span>
+                    <span className="text-foreground">£{result.totalFunding.toLocaleString()} of £{result.totalCost.toLocaleString()}</span>
                   </div>
-                  <Progress value={result.fundingCoverage} className="h-3" />
+                  <Progress value={result.fundingCoverage} className="h-4 bg-muted" />
+                  <div className="flex justify-between text-xs text-muted-foreground">
+                    <span>0%</span>
+                    <span>50%</span>
+                    <span>100%</span>
+                  </div>
                 </div>
-                {result.monthlyRepayment > 0 && (
-                  <div className="mt-4 p-4 bg-muted rounded-lg">
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm">Monthly loan repayment:</span>
-                      <span className="font-semibold">£{result.monthlyRepayment.toFixed(0)}/month</span>
+                
+                {/* Funding Sources Summary */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="p-4 border border-elec-yellow/20 rounded-lg bg-elec-card/50">
+                    <h4 className="font-semibold text-foreground mb-2">Funding Sources</h4>
+                    <p className="text-sm text-muted-foreground">{result.fundingSources.length} sources identified</p>
+                    <div className="mt-2 space-y-1">
+                      {result.fundingSources.slice(0, 3).map((source, index) => (
+                        <div key={index} className="flex justify-between text-xs">
+                          <span className="text-foreground">{source.name}</span>
+                          <span className="text-elec-yellow">£{source.amount.toLocaleString()}</span>
+                        </div>
+                      ))}
                     </div>
-                    <p className="text-xs text-muted-foreground mt-1">
-                      Based on current salary, starts when earning over £{FUNDING_RATES_2025.advancedLearnerLoan.repaymentThreshold.toLocaleString()}
+                  </div>
+                  
+                  <div className="p-4 border border-elec-yellow/20 rounded-lg bg-elec-card/50">
+                    <h4 className="font-semibold text-foreground mb-2">Financial Impact</h4>
+                    <div className="space-y-2 text-sm">
+                      <div className="flex justify-between">
+                        <span className="text-muted-foreground">Monthly repayment:</span>
+                        <span className="text-foreground font-medium">£{result.monthlyRepayment.toFixed(0)}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-muted-foreground">Repayment starts:</span>
+                        <span className="text-foreground font-medium">£{FUNDING_RATES_2025.advancedLearnerLoan.repaymentThreshold.toLocaleString()}+ salary</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {result.monthlyRepayment > 0 && (
+                  <div className="p-4 border border-elec-yellow/20 rounded-lg bg-elec-card/50">
+                    <div className="flex items-center gap-2 mb-2">
+                      <Info className="h-4 w-4 text-elec-yellow" />
+                      <h4 className="font-semibold text-foreground">Repayment Information</h4>
+                    </div>
+                    <p className="text-sm text-foreground mb-2">
+                      Monthly loan repayments of <strong>£{result.monthlyRepayment.toFixed(0)}</strong> will start automatically when your salary exceeds £{FUNDING_RATES_2025.advancedLearnerLoan.repaymentThreshold.toLocaleString()} per year.
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      Repayments are calculated at 9% of income above the threshold and collected through PAYE.
                     </p>
                   </div>
                 )}
@@ -536,102 +590,293 @@ const EnhancedFundingCalculator = () => {
           </TabsContent>
 
           <TabsContent value="sources" className="space-y-4">
-            <div className="flex justify-between items-center">
-              <h3 className="text-lg font-semibold">Available Funding Sources</h3>
-              <div className="flex gap-2">
-                <Button variant="outline" size="sm" onClick={shareResults}>
-                  <Share className="mr-2 h-4 w-4" />
-                  Share
-                </Button>
-                <Button variant="outline" size="sm" onClick={exportResults}>
-                  <Download className="mr-2 h-4 w-4" />
-                  Export
-                </Button>
-              </div>
+            <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4">
+              <h3 className="text-lg font-semibold text-foreground">Comprehensive Funding Sources</h3>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
               {result.fundingSources.map((source, index) => (
-                <Card key={index} className="border-primary/10">
+                <Card key={index} className="border-elec-yellow/20 bg-elec-card hover:border-elec-yellow/40 transition-colors">
                   <CardContent className="p-4">
-                    <div className="flex justify-between items-start mb-2">
-                      <h4 className="font-semibold">{source.name}</h4>
+                    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-3 gap-2">
+                      <h4 className="font-semibold text-foreground">{source.name}</h4>
                       <Badge variant={
                         source.type === 'grant' ? 'default' : 
                         source.type === 'loan' ? 'secondary' :
                         source.type === 'employer' ? 'outline' : 'destructive'
-                      }>
+                      } className="self-start">
                         {source.type}
                       </Badge>
                     </div>
-                    <p className="text-2xl font-bold text-primary mb-2">
+                    <p className="text-2xl font-bold text-elec-yellow mb-3">
                       £{source.amount.toLocaleString()}
                     </p>
-                    <p className="text-sm text-muted-foreground mb-2">
+                    <p className="text-sm text-muted-foreground mb-3">
                       {source.description}
                     </p>
-                    <p className="text-xs text-muted-foreground">
-                      <strong>Eligibility:</strong> {source.eligibility}
-                    </p>
-                    {source.applicationUrl && (
-                      <Button variant="link" size="sm" className="p-0 mt-2 h-auto">
-                        <a href={source.applicationUrl} target="_blank" rel="noopener noreferrer">
-                          Apply Now →
-                        </a>
-                      </Button>
-                    )}
+                    <div className="space-y-2">
+                      <p className="text-xs text-muted-foreground">
+                        <strong className="text-foreground">Eligibility:</strong> {source.eligibility}
+                      </p>
+                      {source.deadline && (
+                        <p className="text-xs text-orange-600">
+                          <Clock className="inline h-3 w-3 mr-1" />
+                          <strong>Deadline:</strong> {source.deadline}
+                        </p>
+                      )}
+                      {source.applicationUrl && (
+                        <Button variant="outline" size="sm" className="w-full mt-3 border-elec-yellow/50 hover:bg-elec-yellow hover:text-background">
+                          <ExternalLink className="mr-2 h-4 w-4" />
+                          <a href={source.applicationUrl} target="_blank" rel="noopener noreferrer" className="flex items-center">
+                            Apply Now
+                          </a>
+                        </Button>
+                      )}
+                    </div>
                   </CardContent>
                 </Card>
               ))}
             </div>
+
+            {/* Additional Funding Sources */}
+            <Card className="border-elec-yellow/20 bg-elec-card">
+              <CardHeader>
+                <CardTitle className="text-foreground">Additional Funding Opportunities</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="p-4 border border-elec-yellow/20 rounded-lg">
+                    <h4 className="font-semibold text-foreground mb-2">Construction Skills Fund</h4>
+                    <p className="text-sm text-muted-foreground mb-2">Up to £2,000 for electrical qualifications</p>
+                    <p className="text-xs text-muted-foreground">Available for construction workers</p>
+                  </div>
+                  <div className="p-4 border border-elec-yellow/20 rounded-lg">
+                    <h4 className="font-semibold text-foreground mb-2">Energy & Utility Skills</h4>
+                    <p className="text-sm text-muted-foreground mb-2">Industry-specific funding available</p>
+                    <p className="text-xs text-muted-foreground">For renewable energy courses</p>
+                  </div>
+                  <div className="p-4 border border-elec-yellow/20 rounded-lg">
+                    <h4 className="font-semibold text-foreground mb-2">Regional Development Grants</h4>
+                    <p className="text-sm text-muted-foreground mb-2">Location-based funding support</p>
+                    <p className="text-xs text-muted-foreground">Varies by region and priority skills</p>
+                  </div>
+                  <div className="p-4 border border-elec-yellow/20 rounded-lg">
+                    <h4 className="font-semibold text-foreground mb-2">Tax Relief Options</h4>
+                    <p className="text-sm text-muted-foreground mb-2">Corporation Tax relief available</p>
+                    <p className="text-xs text-muted-foreground">For business-related training</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
           </TabsContent>
 
           <TabsContent value="timeline" className="space-y-4">
-            <Card>
+            <Card className="border-elec-yellow/20 bg-elec-card">
               <CardHeader>
-                <CardTitle>Funding Application Timeline</CardTitle>
+                <CardTitle className="text-foreground">Comprehensive Funding Timeline</CardTitle>
+                <p className="text-sm text-muted-foreground">Your step-by-step guide to securing education funding</p>
               </CardHeader>
               <CardContent>
-                <div className="space-y-4">
-                  {result.timeline.map((item, index) => (
-                    <div key={index} className="flex items-center gap-4 p-4 border rounded-lg">
-                      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
-                        <span className="text-sm font-semibold">{index + 1}</span>
-                      </div>
-                      <div className="flex-1">
-                        <h4 className="font-semibold">{item.phase}</h4>
-                        <p className="text-sm text-muted-foreground">{item.action}</p>
-                        <p className="text-xs text-muted-foreground">Timeline: {item.timeframe}</p>
-                      </div>
+                <div className="space-y-6">
+                  {/* Pre-Application Phase */}
+                  <div className="flex items-start gap-4 p-4 border border-elec-yellow/20 rounded-lg bg-elec-card/50">
+                    <div className="flex-shrink-0 w-10 h-10 rounded-full bg-elec-yellow/20 flex items-center justify-center">
+                      <Clock className="h-5 w-5 text-elec-yellow" />
                     </div>
-                  ))}
+                    <div className="flex-1">
+                      <h4 className="font-semibold text-foreground">Pre-Application Phase</h4>
+                      <p className="text-sm text-foreground mb-2">Research and prepare your applications</p>
+                      <p className="text-xs text-foreground">Timeline: 4-6 weeks before course start</p>
+                      <ul className="mt-2 space-y-1 text-xs text-foreground">
+                        <li>• Research course providers and costs</li>
+                        <li>• Check eligibility criteria for funding sources</li>
+                        <li>• Gather required documentation</li>
+                        <li>• Speak with employer about support options</li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  {/* Application Phase */}
+                  <div className="flex items-start gap-4 p-4 border border-elec-yellow/20 rounded-lg bg-elec-card/50">
+                    <div className="flex-shrink-0 w-10 h-10 rounded-full bg-elec-yellow/20 flex items-center justify-center">
+                      <FileText className="h-5 w-5 text-elec-yellow" />
+                    </div>
+                    <div className="flex-1">
+                      <h4 className="font-semibold text-foreground">Application Phase</h4>
+                      <p className="text-sm text-foreground mb-2">Submit applications for funding</p>
+                      <p className="text-xs text-foreground">Timeline: 2-4 weeks</p>
+                      <ul className="mt-2 space-y-1 text-xs text-foreground">
+                        <li>• Submit Student Finance application online</li>
+                        <li>• Apply for Skills Bank funding if eligible</li>
+                        <li>• Contact professional bodies for grants</li>
+                        <li>• Finalise employer contribution agreements</li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  {/* Approval Phase */}
+                  <div className="flex items-start gap-4 p-4 border border-elec-yellow/20 rounded-lg bg-elec-card/50">
+                    <div className="flex-shrink-0 w-10 h-10 rounded-full bg-elec-yellow/20 flex items-center justify-center">
+                      <CheckCircle className="h-5 w-5 text-elec-yellow" />
+                    </div>
+                    <div className="flex-1">
+                      <h4 className="font-semibold text-foreground">Approval & Enrollment</h4>
+                      <p className="text-sm text-foreground mb-2">Receive funding decisions and enroll</p>
+                      <p className="text-xs text-foreground">Timeline: 1-3 weeks</p>
+                      <ul className="mt-2 space-y-1 text-xs text-foreground">
+                        <li>• Receive funding approval notifications</li>
+                        <li>• Complete course enrollment</li>
+                        <li>• Set up payment schedules</li>
+                        <li>• Confirm all funding arrangements</li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  {/* Course Progress */}
+                  <div className="flex items-start gap-4 p-4 border border-elec-yellow/20 rounded-lg bg-elec-card/50">
+                    <div className="flex-shrink-0 w-10 h-10 rounded-full bg-elec-yellow/20 flex items-center justify-center">
+                      <TrendingUp className="h-5 w-5 text-elec-yellow" />
+                    </div>
+                    <div className="flex-1">
+                      <h4 className="font-semibold text-foreground">During Course</h4>
+                      <p className="text-sm text-foreground mb-2">Maintain funding and track progress</p>
+                      <p className="text-xs text-foreground">Timeline: Course duration</p>
+                      <ul className="mt-2 space-y-1 text-xs text-foreground">
+                        <li>• Monitor payment schedules</li>
+                        <li>• Maintain academic progress requirements</li>
+                        <li>• Keep employer informed of progress</li>
+                        <li>• Plan for completion and career advancement</li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  {/* Post-Completion */}
+                  <div className="flex items-start gap-4 p-4 border border-elec-yellow/20 rounded-lg bg-elec-card/50">
+                    <div className="flex-shrink-0 w-10 h-10 rounded-full bg-elec-yellow/20 flex items-center justify-center">
+                      <Target className="h-5 w-5 text-elec-yellow" />
+                    </div>
+                    <div className="flex-1">
+                      <h4 className="font-semibold text-foreground">Post-Completion</h4>
+                      <p className="text-sm text-foreground mb-2">Transition to repayment and career advancement</p>
+                      <p className="text-xs text-foreground">Timeline: After graduation</p>
+                      <ul className="mt-2 space-y-1 text-xs text-foreground">
+                        <li>• Begin loan repayments (if applicable)</li>
+                        <li>• Update professional registrations</li>
+                        <li>• Pursue career advancement opportunities</li>
+                        <li>• Consider additional qualifications</li>
+                      </ul>
+                    </div>
+                  </div>
                 </div>
               </CardContent>
             </Card>
           </TabsContent>
 
           <TabsContent value="recommendations" className="space-y-4">
-            <Card>
+            <Card className="border-elec-yellow/20 bg-elec-card">
               <CardHeader>
-                <CardTitle>Personalized Action Plan</CardTitle>
+                <CardTitle className="text-foreground">Your Personalised Action Plan</CardTitle>
+                <p className="text-sm text-muted-foreground">Tailored next steps based on your funding analysis</p>
               </CardHeader>
-              <CardContent>
-                <div className="space-y-3">
+              <CardContent className="space-y-6">
+                {/* Immediate Actions */}
+                <div className="space-y-4">
+                  <h4 className="font-semibold text-foreground flex items-center gap-2">
+                    <Target className="h-5 w-5 text-elec-yellow" />
+                    Immediate Actions (Next 7 Days)
+                  </h4>
                   {result.recommendations.map((rec, index) => (
-                    <div key={index} className="flex items-start gap-3 p-3 bg-muted rounded-lg">
-                      <CheckCircle className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
-                      <p className="text-sm">{rec}</p>
+                    <div key={index} className="flex items-start gap-3 p-4 border border-elec-yellow/20 rounded-lg bg-elec-card/50">
+                      <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
+                      <p className="text-sm text-foreground">{rec}</p>
                     </div>
                   ))}
                 </div>
 
-                {result.taxBenefits > 0 && (
-                  <div className="mt-4 p-4 bg-green-500/10 border border-green-500/20 rounded-lg">
-                    <div className="flex items-center gap-2 mb-2">
-                      <TrendingUp className="h-5 w-5 text-green-600" />
-                      <h4 className="font-semibold text-green-800">Tax Benefits Available</h4>
+                {/* Key Contacts */}
+                <div className="space-y-4">
+                  <h4 className="font-semibold text-foreground flex items-center gap-2">
+                    <Phone className="h-5 w-5 text-elec-yellow" />
+                    Key Contacts
+                  </h4>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="p-4 border border-elec-yellow/20 rounded-lg bg-elec-card/50">
+                      <h5 className="font-semibold text-foreground mb-2">Student Finance England</h5>
+                      <p className="text-sm text-foreground mb-1">Phone: 0300 100 0607</p>
+                      <p className="text-xs text-muted-foreground">For loan and grant applications</p>
                     </div>
-                    <p className="text-sm text-green-700">
+                    <div className="p-4 border border-elec-yellow/20 rounded-lg bg-elec-card/50">
+                      <h5 className="font-semibold text-foreground mb-2">Skills Bank Team</h5>
+                      <p className="text-sm text-foreground mb-1">Email: skillsbank@education.gov.uk</p>
+                      <p className="text-xs text-muted-foreground">For professional qualification funding</p>
+                    </div>
+                    <div className="p-4 border border-elec-yellow/20 rounded-lg bg-elec-card/50">
+                      <h5 className="font-semibold text-foreground mb-2">IET Education Support</h5>
+                      <p className="text-sm text-foreground mb-1">Phone: 01438 313311</p>
+                      <p className="text-xs text-muted-foreground">For electrical engineering funding</p>
+                    </div>
+                    <div className="p-4 border border-elec-yellow/20 rounded-lg bg-elec-card/50">
+                      <h5 className="font-semibold text-foreground mb-2">Local Skills Hub</h5>
+                      <p className="text-sm text-foreground mb-1">Search: gov.uk/guidance/local-skills-improvement-plans</p>
+                      <p className="text-xs text-muted-foreground">For regional funding opportunities</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Document Templates */}
+                <div className="space-y-4">
+                  <h4 className="font-semibold text-foreground flex items-center gap-2">
+                    <FileText className="h-5 w-5 text-elec-yellow" />
+                    Document Templates
+                  </h4>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <Button variant="outline" className="h-auto p-4 flex flex-col items-start border-elec-yellow/20 hover:bg-elec-yellow hover:text-background">
+                      <h5 className="font-semibold mb-1">Employer Request Letter</h5>
+                      <p className="text-xs opacity-80">Template for requesting employer funding</p>
+                    </Button>
+                    <Button variant="outline" className="h-auto p-4 flex flex-col items-start border-elec-yellow/20 hover:bg-elec-yellow hover:text-background">
+                      <h5 className="font-semibold mb-1">ROI Calculation</h5>
+                      <p className="text-xs opacity-80">Show business benefits to employers</p>
+                    </Button>
+                    <Button variant="outline" className="h-auto p-4 flex flex-col items-start border-elec-yellow/20 hover:bg-elec-yellow hover:text-background">
+                      <h5 className="font-semibold mb-1">Personal Statement</h5>
+                      <p className="text-xs opacity-80">For funding applications</p>
+                    </Button>
+                  </div>
+                </div>
+
+                {/* ROI Calculator */}
+                <div className="p-6 border border-elec-yellow/20 rounded-lg bg-elec-card/50">
+                  <h4 className="font-semibold text-foreground mb-4 flex items-center gap-2">
+                    <TrendingUp className="h-5 w-5 text-elec-yellow" />
+                    Return on Investment Analysis
+                  </h4>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div className="text-center">
+                      <p className="text-2xl font-bold text-elec-yellow">£{((parseFloat(inputs.currentSalary) || 0) * 0.15).toLocaleString()}</p>
+                      <p className="text-sm text-foreground">Potential salary increase</p>
+                      <p className="text-xs text-muted-foreground">15% average for qualified electricians</p>
+                    </div>
+                    <div className="text-center">
+                      <p className="text-2xl font-bold text-elec-yellow">{Math.round((parseFloat(inputs.courseCost) || 0) / (((parseFloat(inputs.currentSalary) || 0) * 0.15) || 1))} months</p>
+                      <p className="text-sm text-foreground">Payback period</p>
+                      <p className="text-xs text-muted-foreground">Time to recover investment</p>
+                    </div>
+                    <div className="text-center">
+                      <p className="text-2xl font-bold text-elec-yellow">£{(((parseFloat(inputs.currentSalary) || 0) * 0.15) * 10 - (parseFloat(inputs.courseCost) || 0)).toLocaleString()}</p>
+                      <p className="text-sm text-foreground">10-year net gain</p>
+                      <p className="text-xs text-muted-foreground">Total career value increase</p>
+                    </div>
+                  </div>
+                </div>
+
+                {result.taxBenefits > 0 && (
+                  <div className="p-4 bg-elec-yellow/10 border border-elec-yellow/20 rounded-lg">
+                    <div className="flex items-center gap-2 mb-2">
+                      <TrendingUp className="h-5 w-5 text-elec-yellow" />
+                      <h4 className="font-semibold text-foreground">Tax Benefits Available</h4>
+                    </div>
+                    <p className="text-sm text-foreground">
                       As a VAT-registered business, you can reclaim £{result.taxBenefits.toLocaleString()} in VAT on course fees.
                     </p>
                   </div>
