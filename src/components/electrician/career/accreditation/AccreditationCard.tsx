@@ -45,7 +45,7 @@ const AccreditationCard = ({ accreditation, onViewDetails }: AccreditationCardPr
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
         
         {/* Logo section */}
-        <div className="absolute top-3 left-3 flex items-center gap-3">
+        <div className="absolute top-3 left-3">
           <div 
             className="w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center border-2 bg-white/10 backdrop-blur-sm"
             style={{ borderColor: brandInfo.brandColor }}
@@ -78,22 +78,7 @@ const AccreditationCard = ({ accreditation, onViewDetails }: AccreditationCardPr
               </span>
             )}
           </div>
-          
-          {/* Category Badge */}
-          <Badge className={cn("text-xs font-medium", getCategoryColor(accreditation.category))}>
-            {accreditation.category}
-          </Badge>
         </div>
-
-        {/* Online Available Badge */}
-        {accreditation.onlineAvailable && (
-          <div className="absolute top-3 right-3">
-            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow text-xs">
-              Online Available
-            </Badge>
-          </div>
-        )}
-
         {/* Level Badge - positioned at bottom of header */}
         <div className="absolute bottom-3 left-3">
           <Badge variant="outline" className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30 text-xs">
