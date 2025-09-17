@@ -165,7 +165,7 @@ const ElectricianProfessionalAccreditation = () => {
       </div>
 
       {/* Accreditations Grid */}
-      <div className={`grid gap-6 auto-rows-fr ${isMobile ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'}`}>
+      <div className={`grid gap-4 sm:gap-6 auto-rows-fr ${isMobile ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'}`}>
         {enhancedAccreditationOptions.map((accreditation) => (
           <AccreditationCard
             key={accreditation.id}
