@@ -92,12 +92,6 @@ const ModernCoursesGrid = ({ courses, excludeId, onCourseClick }: ModernCoursesG
 
             {/* Badges */}
             <div className="flex flex-wrap gap-2">
-              <Badge className={cn("text-xs", getCategoryColor(course.category))}>
-                {course.category}
-              </Badge>
-              <Badge className={cn("text-xs", getDemandColor(course.industryDemand))}>
-                {course.industryDemand} Demand
-              </Badge>
               {course.isLive && (
                 <Badge className="bg-elec-yellow/20 border-elec-yellow/30 text-elec-yellow text-xs">
                   Live Data

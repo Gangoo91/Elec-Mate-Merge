@@ -118,20 +118,6 @@ const ModernCoursesFeaturedCarousel = ({ courses, className, onCourseClick }: Mo
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
                   
-                  {/* Category Badge */}
-                  <div className="absolute top-2 left-2">
-                    <Badge className={cn("text-xs font-medium", getCategoryColor(course.category))}>
-                      {course.category}
-                    </Badge>
-                  </div>
-
-                  {/* Demand Badge */}
-                  <div className="absolute top-2 right-2">
-                    <Badge className={cn("text-xs font-medium", getDemandColor(course.industryDemand))}>
-                      {course.industryDemand} Demand
-                    </Badge>
-                  </div>
-
                   {/* Live Data Indicator */}
                   {course.isLive && (
                     <div className="absolute bottom-2 left-2">
