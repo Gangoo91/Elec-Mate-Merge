@@ -40,7 +40,7 @@ const CourseSearchForm = ({ onSearch, onReset }: CourseSearchFormProps) => {
   const [showAdvanced, setShowAdvanced] = useState(false);
 
   const handleFilterChange = (key: keyof CourseSearchFilters, value: string) => {
-    const newFilters = { ...filters, [key]: value };
+    const newFilters = { ...filters, [key]: value === "all" ? "" : value };
     setFilters(newFilters);
     onSearch(newFilters);
   };
@@ -90,7 +90,7 @@ const CourseSearchForm = ({ onSearch, onReset }: CourseSearchFormProps) => {
               <SelectValue placeholder="Category" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">All Categories</SelectItem>
+              <SelectItem value="all">All Categories</SelectItem>
               <SelectItem value="Electrical Installation">Electrical Installation</SelectItem>
               <SelectItem value="Inspection & Testing">Inspection & Testing</SelectItem>
               <SelectItem value="Renewable Energy">Renewable Energy</SelectItem>
@@ -104,7 +104,7 @@ const CourseSearchForm = ({ onSearch, onReset }: CourseSearchFormProps) => {
               <SelectValue placeholder="Study Mode" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">All Formats</SelectItem>
+              <SelectItem value="all">All Formats</SelectItem>
               <SelectItem value="Online">Online</SelectItem>
               <SelectItem value="In-Person">In-Person</SelectItem>
               <SelectItem value="Hybrid">Hybrid</SelectItem>
@@ -118,7 +118,7 @@ const CourseSearchForm = ({ onSearch, onReset }: CourseSearchFormProps) => {
               <SelectValue placeholder="Location" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">All Locations</SelectItem>
+              <SelectItem value="all">All Locations</SelectItem>
               <SelectItem value="London">London</SelectItem>
               <SelectItem value="Manchester">Manchester</SelectItem>
               <SelectItem value="Birmingham">Birmingham</SelectItem>
@@ -165,7 +165,7 @@ const CourseSearchForm = ({ onSearch, onReset }: CourseSearchFormProps) => {
                   <SelectValue placeholder="Level" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">All Levels</SelectItem>
+                  <SelectItem value="all">All Levels</SelectItem>
                   <SelectItem value="Beginner">Beginner</SelectItem>
                   <SelectItem value="Intermediate">Intermediate</SelectItem>
                   <SelectItem value="Advanced">Advanced</SelectItem>
@@ -180,7 +180,7 @@ const CourseSearchForm = ({ onSearch, onReset }: CourseSearchFormProps) => {
                   <SelectValue placeholder="Provider Type" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">All Providers</SelectItem>
+                  <SelectItem value="all">All Providers</SelectItem>
                   <SelectItem value="College">College</SelectItem>
                   <SelectItem value="Training Centre">Training Centre</SelectItem>
                   <SelectItem value="University">University</SelectItem>
@@ -193,7 +193,7 @@ const CourseSearchForm = ({ onSearch, onReset }: CourseSearchFormProps) => {
                   <SelectValue placeholder="Max Price" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">Any Price</SelectItem>
+                  <SelectItem value="all">Any Price</SelectItem>
                   <SelectItem value="500">Under £500</SelectItem>
                   <SelectItem value="1000">Under £1,000</SelectItem>
                   <SelectItem value="2000">Under £2,000</SelectItem>
@@ -206,7 +206,7 @@ const CourseSearchForm = ({ onSearch, onReset }: CourseSearchFormProps) => {
                   <SelectValue placeholder="Duration" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">Any Duration</SelectItem>
+                  <SelectItem value="all">Any Duration</SelectItem>
                   <SelectItem value="1">1 day</SelectItem>
                   <SelectItem value="3">Up to 3 days</SelectItem>
                   <SelectItem value="7">Up to 1 week</SelectItem>
