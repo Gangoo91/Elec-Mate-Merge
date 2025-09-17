@@ -80,25 +80,6 @@ const CareerProgression = () => {
       {activeSection === null ? (
         <>
 
-          {/* Welcome Section */}
-          <Card className="border-elec-yellow/20 bg-elec-gray mb-8">
-            <CardContent className="p-6 text-center">
-              <h2 className="text-xl font-semibold mb-3 text-white">
-                Professional Development Centre
-              </h2>
-              <p className="text-muted-foreground leading-relaxed mb-4">
-                The electrical industry offers exceptional opportunities for career advancement and professional growth. 
-                Our comprehensive resources help you navigate pathways from qualified electrician to specialist roles, 
-                management positions, and entrepreneurial ventures. Each section provides targeted guidance aligned 
-                with current industry standards and emerging market demands.
-              </p>
-              <div className="flex flex-wrap justify-center gap-4 text-sm text-elec-yellow">
-                <span>• BS 7671 18th Edition Compliant</span>
-                <span>• JIB Grade Progression</span>
-                <span>• Industry-Leading Resources</span>
-              </div>
-            </CardContent>
-          </Card>
 
           {/* Career Sections Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
