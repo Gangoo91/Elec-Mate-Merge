@@ -51,14 +51,14 @@ const ModernCoursesFeaturedCarousel = ({ courses, className, onCourseClick }: Mo
 
   const getCategoryImage = (category: string) => {
     const images = {
-      "Essential Updates": "https://images.unsplash.com/photo-1581092921461-eab62e97a780?w=400&h=250&fit=crop&auto=format",
-      "Emerging Technologies": "https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=400&h=250&fit=crop&auto=format",
-      "Safety & Compliance": "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=400&h=250&fit=crop&auto=format",
-      "Specialized Systems": "https://images.unsplash.com/photo-1581094651181-35942459ef62?w=400&h=250&fit=crop&auto=format",
-      "Professional Development": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=250&fit=crop&auto=format",
-      "Business Skills": "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=400&h=250&fit=crop&auto=format",
+      "Essential Updates": "https://images.unsplash.com/photo-1621905252507-b35492cc74b4?w=400&h=250&fit=crop&auto=format",
+      "Emerging Technologies": "https://images.unsplash.com/photo-1593941707882-a5bac6861d75?w=400&h=250&fit=crop&auto=format", 
+      "Safety & Compliance": "https://images.unsplash.com/photo-1581094651181-35942459ef62?w=400&h=250&fit=crop&auto=format",
+      "Specialized Systems": "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400&h=250&fit=crop&auto=format",
+      "Professional Development": "https://images.unsplash.com/photo-1621905252507-b35492cc74b4?w=400&h=250&fit=crop&auto=format",
+      "Business Skills": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&h=250&fit=crop&auto=format",
     };
-    return images[category as keyof typeof images] || "https://images.unsplash.com/photo-1581092921461-eab62e97a780?w=400&h=250&fit=crop&auto=format";
+    return images[category as keyof typeof images] || "https://images.unsplash.com/photo-1621905252507-b35492cc74b4?w=400&h=250&fit=crop&auto=format";
   };
 
   const formatDuration = (duration: string) => {

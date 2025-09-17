@@ -37,15 +37,15 @@ const CourseNewsCard = ({ course, className, onClick }: CourseNewsCardProps) => 
 
   const getCategoryImage = (category: string) => {
     const images = {
-      "Electrical": "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=400&h=250&fit=crop&auto=format",
-      "Safety": "https://images.unsplash.com/photo-1581092921461-eab62e97a780?w=400&h=250&fit=crop&auto=format",
-      "Engineering": "https://images.unsplash.com/photo-1518611012118-696072aa579a?w=400&h=250&fit=crop&auto=format",
-      "Technology": "https://images.unsplash.com/photo-1518611012118-696072aa579a?w=400&h=250&fit=crop&auto=format",
-      "Management": "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=400&h=250&fit=crop&auto=format",
-      "Compliance": "https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=400&h=250&fit=crop&auto=format",
-      "Testing": "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=400&h=250&fit=crop&auto=format",
+      "Electrical": "https://images.unsplash.com/photo-1621905252507-b35492cc74b4?w=400&h=250&fit=crop&auto=format",
+      "Safety": "https://images.unsplash.com/photo-1581094651181-35942459ef62?w=400&h=250&fit=crop&auto=format",
+      "Engineering": "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400&h=250&fit=crop&auto=format",
+      "Technology": "https://images.unsplash.com/photo-1593941707882-a5bac6861d75?w=400&h=250&fit=crop&auto=format",
+      "Management": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&h=250&fit=crop&auto=format",
+      "Compliance": "https://images.unsplash.com/photo-1581094651181-35942459ef62?w=400&h=250&fit=crop&auto=format",
+      "Testing": "https://images.unsplash.com/photo-1621905252507-b35492cc74b4?w=400&h=250&fit=crop&auto=format",
     };
-    return images[category as keyof typeof images] || "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=400&h=250&fit=crop&auto=format";
+    return images[category as keyof typeof images] || "https://images.unsplash.com/photo-1621905252507-b35492cc74b4?w=400&h=250&fit=crop&auto=format";
   };
 
   const formatPrice = (price: string) => {
