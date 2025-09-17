@@ -1,98 +1,34 @@
-import React, { useState, useMemo, useEffect } from "react";
-import { DropdownTabs } from "@/components/ui/dropdown-tabs";
-import EnhancedCourseGridCard from "./EnhancedCourseGridCard";
-import EnhancedTrainingCenterCard from "../../../apprentice/career/courses/EnhancedTrainingCenterCard";
-import ModernCourseDetailsModal from "./ModernCourseDetailsModal";
-import TrainingCentreDetailsModal from "../../../apprentice/career/courses/TrainingCenterDetailsModal";
-import CourseSelectionTips from "../../../apprentice/career/courses/CourseSelectionTips";
-import EmptySearchResults from "../../../apprentice/career/courses/EmptySearchResults";
-// Removed separate search components for simplified interface
-import FeaturedCoursesCarousel from "./FeaturedCoursesCarousel";
-import CourseFeaturedCarousel from "./CourseFeaturedCarousel";
-import CourseBookmarkManager, { useBookmarkManager } from "./CourseBookmarkManager";
-import CourseCompareMode from "./CourseCompareMode";
-import { useCourseComparison } from "@/hooks/useCourseComparison";
-import CourseMap from "./CourseMap";
-import GoogleMapsLoader from "../../../job-vacancies/GoogleMapsLoader";
-import { 
-  EnhancedCareerCourse,
-  EnhancedTrainingCenter,
-  enhancedCareerCourses,
-  courseAnalytics
-} from "../../../apprentice/career/courses/enhancedCoursesData";
-import LocationBasedCourseSearch from "../../../apprentice/career/courses/LocationBasedCourseSearch";
-import { useLiveEducationData, LiveEducationData } from "@/hooks/useLiveEducationData";
-import { useDebounce } from "@/hooks/useDebounce";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useLocationCache } from "@/hooks/useLocationCache";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { BookOpen, Users, Plus, Scale, FileDown, RefreshCw, Wifi, WifiOff, Map, List, Search } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
-import { useIsMobile } from "@/hooks/use-mobile";
-import CourseGridSkeleton from "./CourseGridSkeleton";
-import JobPagination from "../../../job-vacancies/JobPagination";
-import { useCareerBookmarks } from "@/hooks/career/useCareerBookmarks";
-import { parsePrice, parseDuration, parseDate, getNumericRating, getDemandScore, getFutureProofingScore } from "@/utils/courseSorting";
-import { fallbackElectricalCourses } from "@/data/fallbackCourses";
-import { electricianCategories } from "@/data/electricianCourseCategories";
+import { BookOpen, ArrowLeft, PoundSterling, Calculator, RefreshCw, Loader2, AlertCircle } from "lucide-react";
+import { useLiveEducationData, LiveEducationData } from "@/hooks/useLiveEducationData";
+import EnhancedCourseCard from "./EnhancedCourseCard";
+import CourseSearchForm from "./CourseSearchForm";
+import CourseAnalyticsDashboard from "./CourseAnalyticsDashboard";
+import ModernCourseDetailsModal from "./ModernCourseDetailsModal";
+import FundingCalculator from "../../../apprentice/career/education/FundingCalculator";
+import EducationCacheManager from "./EducationCacheManager";
+import { EnhancedCareerCourse } from "@/components/apprentice/career/courses/enhancedCoursesData";
+
+interface CourseFilters {
+  searchTerm: string;
+  category: string;
+  level: string;
+  format: string;
+  location: string;
+  provider: string;
+  maxPrice: string;
+  duration: string;
+  sortBy: string;
+}
 
 const ElectricianCareerCourses = () => {
+  const { educationData, analytics, loading, error, lastUpdated, isFromCache, refreshData, cacheInfo } = useLiveEducationData('electrical');
+  const [filteredCourses, setFilteredCourses] = useState<EnhancedCareerCourse[]>([]);
   const [selectedCourse, setSelectedCourse] = useState<EnhancedCareerCourse | null>(null);
-  const [selectedCenter, setSelectedCenter] = useState<EnhancedTrainingCenter | null>(null);
-  const [activeTab, setActiveTab] = useState("courses");
-  const [currentSort, setCurrentSort] = useState("relevance");
-  const [viewMode, setViewMode] = useState<"grid" | "list" | "map">("grid");
-  const [showBookmarks, setShowBookmarks] = useState(false);
-  const [showComparison, setShowComparison] = useState(false);
-  const [selectedCourseId, setSelectedCourseId] = useState<string | null>(null);
-  const [nearbyProviders, setNearbyProviders] = useState<any[]>([]);
-  
-  // Pagination state
-  const [currentPage, setCurrentPage] = useState(1);
-  const [coursesPerPage, setCoursesPerPage] = useState(20);
-  
-  // Location-based filtering state
-  const [userLocation, setUserLocation] = useState<string | null>(null);
-  const [userCoordinates, setUserCoordinates] = useState<google.maps.LatLngLiteral | null>(null);
-  const [searchRadius, setSearchRadius] = useState(25);
-  const [isAutoDetecting, setIsAutoDetecting] = useState(false);
-  const [autoLocationAttempted, setAutoLocationAttempted] = useState(false);
-  const { reverseGeocodeWithCache, geocodeWithCache } = useLocationCache();
-  
-  const { toast } = useToast();
-  const isMobile = useIsMobile();
-  const { toggleBookmark: toggleDatabaseBookmark, isBookmarked: isDatabaseBookmarked } = useCareerBookmarks();
-  const { 
-    addToComparison, 
-    removeFromComparison, 
-    clearComparison,
-    isInComparison, 
-    selectedCount, 
-    selectedCourses,
-    selectedCourseData 
-  } = useCourseComparison();
-
-  // Simplified search state
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("All Categories");
-
-  // Debounced search to prevent excessive API calls
-  const debouncedSearchQuery = useDebounce(searchQuery, 500);
-
-  // Live education data hook - unified with further education section
-  const {
-    educationData,
-    analytics,
-    loading: isLoadingLive,
-    error: liveError,
-    isFromCache,
-    cacheInfo,
-    refreshData: refreshCourses
-  } = useLiveEducationData('electrical');
+  const [viewMode, setViewMode] = useState<"grid" | "funding">("grid");
+  const [modalOpen, setModalOpen] = useState(false);
 
   // Convert education data to course format
   const mapEducationDataToCourse = (education: LiveEducationData): EnhancedCareerCourse => ({
@@ -105,17 +41,17 @@ const ElectricianCareerCourses = () => {
     price: education.tuitionFees,
     format: education.studyMode,
     nextDates: [education.nextIntake],
-    rating: education.rating,
+    rating: education.rating || 4.0,
     locations: education.locations,
     category: education.category,
-    industryDemand: mapDemandLevel(education.employmentRate),
-    futureProofing: Math.round(education.employmentRate / 20), // Scale 0-100 to 0-5
+    industryDemand: mapDemandLevel(education.employmentRate || 70),
+    futureProofing: Math.round((education.employmentRate || 70) / 20),
     salaryImpact: education.averageStartingSalary,
-    careerOutcomes: education.progressionOptions,
+    careerOutcomes: education.progressionOptions || [],
     accreditation: education.entryRequirements,
     employerSupport: true,
     prerequisites: education.entryRequirements,
-    courseOutline: education.keyTopics,
+    courseOutline: education.keyTopics || [],
     assessmentMethod: 'Assessment varies',
     continuousAssessment: false,
     isLive: true,
@@ -129,750 +65,338 @@ const ElectricianCareerCourses = () => {
     return "Low";
   };
 
-  // Extract data with enhanced fallback logic
-  const hasLiveCourses = educationData && educationData.length > 0;
-  const liveCourses = hasLiveCourses ? educationData.map(mapEducationDataToCourse) : enhancedCareerCourses;
-  const liveTotal = hasLiveCourses ? educationData.length : enhancedCareerCourses.length;
-  const liveSummary = analytics ? {
-    totalCourses: analytics.totalCourses,
-    liveCourses: analytics.totalCourses,
-    sourceBreakdown: [{
-      source: 'Live Education API',
-      courseCount: analytics.totalCourses,
-      success: true,
-      error: null
-    }],
-    lastUpdated: new Date().toISOString()
-  } : undefined;
-  const isLiveData = hasLiveCourses && !liveError;
-  const isUsingFallback = !hasLiveCourses;
-  const isSearching = isLoadingLive;
-
-  // Reset pagination when search changes
+  // Convert education data to courses when data changes
   useEffect(() => {
-    setCurrentPage(1);
-  }, [searchQuery, selectedCategory]);
-
-  // Handle courses per page change
-  const handleCoursesPerPageChange = (value: string) => {
-    const newCoursesPerPage = value === "all" ? -1 : parseInt(value);
-    setCoursesPerPage(newCoursesPerPage);
-    setCurrentPage(1); // Reset to first page
-  };
-
-  // Enhanced sorting change handler with forced re-computation
-  const [sortVersion, setSortVersion] = useState(0);
-  const handleSortChange = (newSort: string) => {
-    console.log('🔀 Changing sort to:', newSort, '(client-side only)');
-    setCurrentSort(newSort);
-    setSortVersion(prev => prev + 1); // Force useMemo re-computation
-    console.log('🔄 Sort version bumped to:', sortVersion + 1);
-  };
-
-  // Initial load
-  useEffect(() => {
-    if (!educationData && !isLoadingLive && !liveError) {
-      refreshCourses();
+    if (educationData) {
+      const courses = educationData.map(mapEducationDataToCourse);
+      setFilteredCourses(courses);
     }
-  }, [educationData, isLoadingLive, liveError, refreshCourses]);
+  }, [educationData]);
 
-  // For map view, only use Google Places providers (no geocoding needed)
-  const providersForMap = useMemo(() => {
-    console.log('Providers for map:', nearbyProviders.length);
-    return nearbyProviders;
-  }, [nearbyProviders]);
-
-  // Simplified filtering logic focusing on electrician upskilling
-  const filteredAndSortedCourses = useMemo(() => {
-    let filtered = liveCourses.filter(course => {
-      // Enhanced electrician-specific keywords
-      const title = course.title.toLowerCase();
-      const description = course.description.toLowerCase();
-      const category = course.category.toLowerCase();
-      const searchText = `${title} ${description} ${category}`;
-      
-      const electricianKeywords = [
-        'electrical', 'electric', 'wiring', '18th edition', 'inspection', 'testing', 'pat testing', 
-        'installation', 'mewp', 'ipaf', 'ev charging', 'bms', 'fire alarm', 'high voltage', 
-        'switching', 'instrumentation', 'maintenance', 'compex', 'hvac', 'safe a life', 'ecs',
-        'emergency first aid', 'regulation', 'compliance', 'safety', 'renewable energy',
-        'solar', 'battery storage', 'smart home', 'automation', 'data centre'
-      ];
-      
-      const hasElectricalContent = electricianKeywords.some(keyword => searchText.includes(keyword));
-      
-      if (!hasElectricalContent) {
-        return false;
-      }
-
-      // Search query filter
-      if (searchQuery) {
-        const query = searchQuery.toLowerCase();
-        const matches = 
-          title.includes(query) ||
-          course.provider.toLowerCase().includes(query) ||
-          description.includes(query) ||
-          category.includes(query);
-        if (!matches) return false;
-      }
-
-      // Category filter
-      if (selectedCategory !== "All Categories" && course.category !== selectedCategory) {
-        return false;
-      }
-
-      return true;
-    });
-
-    // Sort the filtered courses based on current sort option
-    const sortedCourses = [...filtered].sort((a, b) => {
-      switch (currentSort) {
-        case "relevance":
-          // Sort by industry demand first, then by rating
-          const demandScore = (course: EnhancedCareerCourse) => {
-            switch (course.industryDemand) {
-              case "High": return 3;
-              case "Medium": return 2;
-              case "Low": return 1;
-              default: return 0;
-            }
-          };
-          const demandDiff = demandScore(b) - demandScore(a);
-          return demandDiff !== 0 ? demandDiff : b.rating - a.rating;
-
-        case "price_low":
-          return parsePrice(a.price) - parsePrice(b.price);
-
-        case "price_high":
-          return parsePrice(b.price) - parsePrice(a.price);
-
-        case "duration_short":
-          return parseDuration(a.duration) - parseDuration(b.duration);
-
-        case "duration_long":
-          return parseDuration(b.duration) - parseDuration(a.duration);
-
-        case "rating":
-          return getNumericRating(b.rating) - getNumericRating(a.rating);
-
-        case "demand":
-          return getDemandScore(b.industryDemand) - getDemandScore(a.industryDemand);
-
-        case "future_proofing":
-          return getFutureProofingScore(b.futureProofing) - getFutureProofingScore(a.futureProofing);
-
-        case "newest":
-          // Use earliest next date as a proxy for newest courses
-          const aDate = parseDate(a.nextDates[0]);
-          const bDate = parseDate(b.nextDates[0]);
-          return aDate.getTime() - bDate.getTime();
-
-        default:
-          return 0;
-      }
-    });
+  const handleFiltersChange = (filters: CourseFilters) => {
+    if (!educationData) return;
     
-    return sortedCourses;
-  }, [liveCourses, searchQuery, selectedCategory, currentSort, sortVersion]);
+    let filtered = educationData.map(mapEducationDataToCourse);
 
-  // Pagination calculations
-  const totalFilteredCourses = filteredAndSortedCourses.length;
-  const indexOfLastCourse = coursesPerPage === -1 ? totalFilteredCourses : currentPage * coursesPerPage;
-  const indexOfFirstCourse = coursesPerPage === -1 ? 0 : indexOfLastCourse - coursesPerPage;
-  const currentCourses = coursesPerPage === -1 
-    ? filteredAndSortedCourses 
-    : filteredAndSortedCourses.slice(indexOfFirstCourse, indexOfLastCourse);
-
-  // Total pages calculation
-  const totalPages = coursesPerPage === -1 ? 1 : Math.ceil(totalFilteredCourses / coursesPerPage);
-
-  const handlePageChange = (pageNumber: number) => {
-    setCurrentPage(pageNumber);
-    // Scroll to top of results
-    const element = document.querySelector('[data-courses-section]');
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  };
-
-  // Handle location selection from dropdown or manual input
-  const handleLocationSelect = async (location: string, coordinates?: google.maps.LatLngLiteral) => {
-    if (!location || location === "All Locations") {
-      handleClearLocation();
-      return;
+    // Apply search term filter
+    if (filters.searchTerm) {
+      const searchLower = filters.searchTerm.toLowerCase();
+      filtered = filtered.filter(course => 
+        course.title.toLowerCase().includes(searchLower) ||
+        course.provider.toLowerCase().includes(searchLower) ||
+        course.description.toLowerCase().includes(searchLower) ||
+        course.courseOutline.some(topic => topic.toLowerCase().includes(searchLower))
+      );
     }
 
-    setUserLocation(location);
-    
-    try {
-      if (coordinates) {
-        setUserCoordinates(coordinates);
-      } else {
-        // Use cached geocoding to get coordinates
-        const result = await geocodeWithCache(location);
-        if (result?.coordinates) {
-          setUserCoordinates({ lat: result.coordinates.lat, lng: result.coordinates.lng });
-        }
-      }
-    } catch (error) {
-      console.error('Failed to geocode location:', error);
-      // Continue without coordinates - we can still filter by text
-    }
-  };
-
-  const handleManualLocationSet = (location: string) => {
-    setUserLocation(location);
-  };
-
-  const handleClearLocation = () => {
-    setUserLocation(null);
-    setUserCoordinates(null);
-  };
-
-  const handleLocationFound = (location: { name: string; coordinates: google.maps.LatLngLiteral }) => {
-    setUserLocation(location.name);
-    setUserCoordinates(location.coordinates);
-  };
-
-  const handleRadiusChange = (radius: number) => {
-    setSearchRadius(radius);
-  };
-
-  const handleProviderSearchFromLocation = () => {
-    searchNearbyProviders();
-  };
-
-  // Function to search for nearby providers using the edge function
-  const searchNearbyProviders = async () => {
-    if (!userLocation) {
-      toast({
-        title: "Location required",
-        description: "Please set your location first to find nearby training providers",
-        variant: "destructive"
-      });
-      return;
+    // Apply category filter
+    if (filters.category) {
+      filtered = filtered.filter(course => course.category === filters.category);
     }
 
-    try {
-      console.log('Searching for training providers near:', userLocation);
-      
-      const { data, error } = await supabase.functions.invoke('find-training-providers', {
-        body: { 
-          postcode: userLocation,
-          radius: searchRadius * 1609.34, // Convert miles to meters
-          courseType: 'electrical'
-        }
-      });
+    // Apply level filter
+    if (filters.level) {
+      filtered = filtered.filter(course => course.level === filters.level);
+    }
 
-      if (error) {
-        console.error('Error finding providers:', error);
-        throw error;
-      }
+    // Apply format filter
+    if (filters.format) {
+      filtered = filtered.filter(course => course.format === filters.format);
+    }
 
-      if (data?.providers?.length > 0) {
-        handleNearbyProvidersFound(data.providers);
-        toast({
-          title: "Training providers found",
-          description: `Found ${data.providers.length} training providers within ${searchRadius} miles`,
+    // Apply location filter
+    if (filters.location) {
+      const locationLower = filters.location.toLowerCase();
+      filtered = filtered.filter(course => 
+        course.locations.some(loc => loc.toLowerCase().includes(locationLower))
+      );
+    }
+
+    // Apply sorting
+    switch (filters.sortBy) {
+      case "rating":
+        filtered.sort((a, b) => (b.rating || 0) - (a.rating || 0));
+        break;
+      case "price":
+        filtered.sort((a, b) => {
+          const aPrice = parseInt(a.price.replace(/[^\d]/g, "") || "0");
+          const bPrice = parseInt(b.price.replace(/[^\d]/g, "") || "0");
+          return aPrice - bPrice;
         });
-      } else {
-        toast({
-          title: "No providers found",
-          description: `No training providers found within ${searchRadius} miles. Try increasing the search radius.`,
-          variant: "destructive"
+        break;
+      case "duration":
+        filtered.sort((a, b) => {
+          const aDuration = parseInt(a.duration.match(/\d+/)?.[0] || "0");
+          const bDuration = parseInt(b.duration.match(/\d+/)?.[0] || "0");
+          return aDuration - bDuration;
         });
-      }
-    } catch (error) {
-      console.error('Error searching for providers:', error);
-      toast({
-        title: "Search failed",
-        description: "Failed to find nearby training providers. Please try again.",
-        variant: "destructive"
-      });
+        break;
+      case "title":
+        filtered.sort((a, b) => a.title.localeCompare(b.title));
+        break;
+    }
+
+    setFilteredCourses(filtered);
+  };
+
+  const handleReset = () => {
+    if (educationData) {
+      setFilteredCourses(educationData.map(mapEducationDataToCourse));
     }
   };
 
-  // Handle nearby providers found from Google Places
-  const handleNearbyProvidersFound = (providers: any[]) => {
-    setNearbyProviders(providers);
-    console.log('Nearby providers found:', providers.length);
-  };
-
-  // Auto-detect user location when map view is first loaded
-  const handleAutoLocationDetection = async () => {
-    if (autoLocationAttempted || isAutoDetecting) return;
-    
-    setIsAutoDetecting(true);
-    setAutoLocationAttempted(true);
-
-    try {
-      const position = await new Promise<GeolocationPosition>((resolve, reject) => {
-        navigator.geolocation.getCurrentPosition(resolve, reject, {
-          enableHighAccuracy: true,
-          timeout: 10000,
-          maximumAge: 300000 // 5 minutes
-        });
-      });
-
-      const { latitude, longitude } = position.coords;
-      
-      // Use cached reverse geocoding
-      const locationName = await reverseGeocodeWithCache(latitude, longitude);
-      const coordinates = { lat: latitude, lng: longitude };
-      
-      setUserLocation(locationName);
-      setUserCoordinates(coordinates);
-      
-      toast({
-        title: "Location Detected",
-        description: `Using your current location: ${locationName}`,
-      });
-      
-      // Automatically search for providers
-      searchNearbyProviders();
-      
-    } catch (error) {
-      console.error('Auto-location detection failed:', error);
-      if (error instanceof GeolocationPositionError) {
-        switch (error.code) {
-          case error.PERMISSION_DENIED:
-            toast({
-              title: "Location Permission",
-              description: "Location access denied. Please search manually or enable location permissions.",
-              variant: "destructive",
-            });
-            break;
-          case error.POSITION_UNAVAILABLE:
-            toast({
-              title: "Location Unavailable",
-              description: "Location unavailable. Please search manually.",
-              variant: "destructive",
-            });
-            break;
-          case error.TIMEOUT:
-            toast({
-              title: "Location Timeout",
-              description: "Location detection timed out. Please search manually.",
-              variant: "destructive",
-            });
-            break;
-        }
-      } else {
-        toast({
-          title: "Location Error",
-          description: "Failed to detect location. Please search manually.",
-          variant: "destructive",
-        });
-      }
-    } finally {
-      setIsAutoDetecting(false);
-    }
-  };
-
-  // Auto-detect location when switching to map view (only once per session)
-  useEffect(() => {
-    if (viewMode === "map" && !autoLocationAttempted && !userLocation && window.google?.maps) {
-      handleAutoLocationDetection();
-    }
-  }, [viewMode, autoLocationAttempted, userLocation]);
-
-  const handleCourseSelect = (courseId: string) => {
-    setSelectedCourseId(courseId);
-  };
-
-  const handleCourseDeselect = () => {
-    setSelectedCourseId(null);
-  };
-
-  const handleResetFilters = () => {
-    setSearchQuery("");
-    setSelectedCategory("All Categories");
-    setCurrentSort("relevance");
-    setCurrentPage(1);
-    handleClearLocation();
-  };
-
-  // PDF Export functionality
-  const exportToPDF = async () => {
-    try {
-      const { jsPDF } = await import('jspdf');
-      const pdf = new jsPDF();
-      
-      pdf.setFontSize(20);
-      pdf.text('Career Course Search Results', 20, 30);
-      
-      pdf.setFontSize(12);
-      let yPosition = 50;
-      
-      filteredAndSortedCourses.slice(0, 10).forEach((course, index) => {
-        if (yPosition > 270) {
-          pdf.addPage();
-          yPosition = 30;
-        }
-        
-        pdf.setFont(undefined, 'bold');
-        pdf.text(`${index + 1}. ${course.title}`, 20, yPosition);
-        yPosition += 10;
-        
-        pdf.setFont(undefined, 'normal');
-        pdf.text(`Provider: ${course.provider}`, 25, yPosition);
-        yPosition += 7;
-        
-        pdf.text(`Duration: ${course.duration} | Level: ${course.level}`, 25, yPosition);
-        yPosition += 7;
-        
-        pdf.text(`Price: ${course.price}`, 25, yPosition);
-        yPosition += 7;
-        
-        pdf.text(`Rating: ${course.rating}/5 | Demand: ${course.industryDemand}`, 25, yPosition);
-        yPosition += 15;
-      });
-      
-      pdf.save('course-search-results.pdf');
-      
-      toast({
-        title: "PDF exported successfully",
-        description: "Your course search results have been saved as PDF.",
-        variant: "success"
-      });
-    } catch (error) {
-      toast({
-        title: "Export failed",
-        description: "There was an error exporting the PDF.",
-        variant: "destructive"
-      });
-    }
-  };
-
-  const viewCourseDetails = (course: EnhancedCareerCourse) => {
+  const handleViewDetails = (course: EnhancedCareerCourse) => {
     setSelectedCourse(course);
+    setModalOpen(true);
   };
 
-  const viewCenterDetails = (center: EnhancedTrainingCenter) => {
-    setSelectedCenter(center);
-  };
-
-  const handleClose = () => {
+  const handleBackToGrid = () => {
     setSelectedCourse(null);
-    setSelectedCenter(null);
+    setViewMode("grid");
   };
 
-  const handleCourseClick = (course: EnhancedCareerCourse) => {
-    setSelectedCourse(course);
+  const handleShowFundingCalculator = () => {
+    setViewMode("funding");
   };
+
+  if (viewMode === "funding") {
+    return (
+      <div className="space-y-6">
+        <div className="flex items-center gap-4">
+          <Button variant="outline" onClick={handleBackToGrid}>
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Back to Course Options
+          </Button>
+        </div>
+        <FundingCalculator />
+      </div>
+    );
+  }
+
+  // Get featured courses (top 6 highest rated)
+  const featuredCourses = filteredCourses
+    .filter(course => (course.rating || 0) >= 4.0)
+    .slice(0, 6);
+  
+  // Get remaining courses for grid
+  const gridCourses = filteredCourses.filter(course => 
+    !featuredCourses.find(featured => featured.id === course.id)
+  );
 
   return (
-    <div className="space-y-6">
-      {/* Professional Career Courses Header */}
-      <header className="border-b border-elec-yellow/10 bg-elec-dark/95 backdrop-blur-sm -mx-4 sm:-mx-6 px-4 sm:px-6 py-6">
-        <div className="space-y-4">
-          {/* Main Header */}
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-lg bg-elec-yellow flex items-center justify-center">
-                <BookOpen className="h-5 w-5 text-elec-dark" />
-              </div>
-              <div>
-                <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
-                  Career Courses & <span className="text-elec-yellow">Professional Development</span>
-                </h1>
-                <p className="text-sm text-white/80 mt-1">
-                  Advance your electrical career with industry-recognised qualifications and emerging technology training
-                </p>
-              </div>
-            </div>
-            
-            {/* Live Status Indicator */}
-            <div className="flex items-center gap-2 text-xs text-white/60">
-              {isLiveData ? (
-                <>
-                  <Wifi className="h-3 w-3 text-green-400" />
-                  <span className="hidden sm:inline">Live Data</span>
-                </>
-              ) : (
-                <>
-                  <WifiOff className="h-3 w-3 text-orange-400" />
-                  <span className="hidden sm:inline">Cached</span>
-                </>
-              )}
-            </div>
-          </div>
-
-          {/* Statistics Row */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-            <div className="text-center sm:text-left">
-              <div className="text-2xl font-bold text-elec-yellow">{totalFilteredCourses}</div>
-              <div className="text-xs text-white/60">Available Courses</div>
-            </div>
-            <div className="text-center sm:text-left">
-              <div className="text-2xl font-bold text-elec-yellow">{courseAnalytics.totalProviders}</div>
-              <div className="text-xs text-white/60">Training Providers</div>
-            </div>
-            <div className="text-center sm:text-left">
-              <div className="text-2xl font-bold text-elec-yellow">{courseAnalytics.averageRating}/5</div>
-              <div className="text-xs text-white/60">Average Rating</div>
-            </div>
-            <div className="text-center sm:text-left">
-              <div className="text-2xl font-bold text-elec-yellow">{courseAnalytics.highDemandCourses}</div>
-              <div className="text-xs text-white/60">High Demand</div>
-            </div>
+    <div className="space-y-8">
+      {/* Hero Section with Analytics */}
+      <div className="space-y-6">
+        <div className="text-center space-y-4">
+          <h1 className="text-4xl font-bold text-white">
+            Electrical Career Courses
+          </h1>
+          <p className="text-lg text-white/80 max-w-3xl mx-auto">
+            Advance your electrical career with professional courses from leading UK providers. 
+            Stay current with regulations, expand your skills, and increase your earning potential.
+          </p>
+          <div className="flex flex-wrap justify-center gap-4">
+            <Button onClick={handleShowFundingCalculator} variant="outline">
+              <Calculator className="mr-2 h-4 w-4" />
+              Course Funding Calculator
+            </Button>
+            <Button onClick={() => refreshData(true)} variant="outline">
+              <RefreshCw className="mr-2 h-4 w-4" />
+              Refresh Course Data
+            </Button>
           </div>
         </div>
-      </header>
-
-      {/* Featured Courses Carousel */}
-      <div className="space-y-6">
-        <CourseFeaturedCarousel 
-          courses={filteredAndSortedCourses.slice(0, 6)}
-          onCourseClick={handleCourseClick}
-        />
+        
+        {/* Analytics Dashboard */}
+        <CourseAnalyticsDashboard />
       </div>
 
-      {/* Simplified Search Interface */}
-      <div className="space-y-4">
-        {/* Single Search Bar with Category Pills */}
-        <Card className="border-elec-yellow/20 bg-elec-gray/50">
-          <CardContent className="p-6">
-            <div className="space-y-4">
-              {/* Search Input */}
-              <div className="relative">
-                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-elec-yellow" />
-                <Input
-                  placeholder="Search electrician courses: MEWP, EV Charging, 18th Edition, Fire Alarms..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-12 h-12 text-lg bg-background border-elec-yellow/30 focus:border-elec-yellow"
-                />
-              </div>
-              
-              {/* Category Pills */}
-              <div className="flex flex-wrap gap-2">
-                {electricianCategories.map((category) => (
-                  <Button
-                    key={category}
-                    variant={selectedCategory === category ? "default" : "outline"}
-                    size="sm"
-                    onClick={() => setSelectedCategory(selectedCategory === category ? "All Categories" : category)}
-                    className={selectedCategory === category ? 
-                      "bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90" : 
-                      "border-elec-yellow/30 hover:bg-elec-yellow/10"
-                    }
-                  >
-                    {category}
-                  </Button>
-                ))}
-              </div>
-              
-              {/* Results Count */}
-              <div className="flex items-center justify-between">
-                <Badge variant="outline" className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30">
-                  {totalFilteredCourses} courses found
-                </Badge>
-                
-                {/* Simple Sort */}
-                <Select value={currentSort} onValueChange={handleSortChange}>
-                  <SelectTrigger className="w-40">
-                    <SelectValue placeholder="Sort by" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="relevance">Most Relevant</SelectItem>
-                    <SelectItem value="demand">High Demand</SelectItem>
-                    <SelectItem value="price_low">Price: Low to High</SelectItem>
-                    <SelectItem value="rating">Highest Rated</SelectItem>
-                    <SelectItem value="newest">Newest First</SelectItem>
-                  </SelectContent>
-                </Select>
+      {/* Error Message */}
+      {error && (
+        <Card className="border-destructive/20 bg-destructive/5">
+          <CardContent className="p-4">
+            <div className="flex items-start gap-3 text-destructive">
+              <AlertCircle className="h-5 w-5 flex-shrink-0 mt-0.5" />
+              <div className="text-sm leading-relaxed">
+                <strong>Connection Issue:</strong> {error} - Showing cached data if available.
               </div>
             </div>
           </CardContent>
         </Card>
-        
-        {/* Additional Controls */}
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-          <div className="flex flex-wrap items-center gap-2">
-            {/* Courses per page selector */}
-            <div className="flex items-center gap-2">
-              <span className="text-sm text-muted-foreground hidden sm:inline">Show:</span>
-              <Select value={coursesPerPage === -1 ? "all" : coursesPerPage.toString()} onValueChange={handleCoursesPerPageChange}>
-                <SelectTrigger className="w-20 h-8">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="20">20</SelectItem>
-                  <SelectItem value="50">50</SelectItem>
-                  <SelectItem value="100">100</SelectItem>
-                  <SelectItem value="all">All</SelectItem>
-                </SelectContent>
-              </Select>
+      )}
+
+      {/* Loading State */}
+      {loading && (
+        <div className="flex flex-col items-center justify-center py-16 space-y-4">
+          <Loader2 className="h-12 w-12 animate-spin text-elec-yellow" />
+          <div className="text-center space-y-3">
+            <span className="text-lg font-medium text-white">Fetching live course data...</span>
+            <div className="text-sm text-white/80 max-w-md mx-auto leading-relaxed">
+              Gathering latest courses from training providers and colleges
             </div>
           </div>
-
-          {/* View mode controls */}
-          <div className="flex items-center gap-2">
-            <Button
-              variant={viewMode === "grid" ? "default" : "outline"}
-              size="sm"
-              onClick={() => setViewMode("grid")}
-              className="h-8"
-            >
-              <List className="h-4 w-4" />
-            </Button>
-            <Button
-              variant={viewMode === "map" ? "default" : "outline"}
-              size="sm"
-              onClick={() => setViewMode("map")}
-              className="h-8"
-            >
-              <Map className="h-4 w-4" />
-            </Button>
-            
-            {/* Bookmark toggle */}
-            <Button
-              variant={showBookmarks ? "default" : "outline"}
-              size="sm"
-              onClick={() => setShowBookmarks(!showBookmarks)}
-              className="h-8"
-            >
-              <span className="hidden sm:inline">Bookmarks</span>
-              <span className="sm:hidden">★</span>
-            </Button>
-            
-            {/* Comparison toggle */}
-            {selectedCount > 0 && (
-              <Button
-                variant={showComparison ? "default" : "outline"}
-                size="sm"
-                onClick={() => setShowComparison(!showComparison)}
-                className="h-8"
-              >
-                <Scale className="h-4 w-4 mr-1" />
-                <span className="hidden sm:inline">Compare</span>
-                <span className="sm:hidden">{selectedCount}</span>
-              </Button>
-            )}
-          </div>
         </div>
-      </div>
+      )}
 
-      {/* All Available Courses Section */}
-      <div className="space-y-4">
-        <div className="border-b border-elec-yellow/20 pb-4">
-          <h2 className="text-xl sm:text-2xl font-bold text-white">
-            All Available Courses
-          </h2>
-          <p className="text-sm text-white/80 mt-1">
-            Browse our complete catalogue of electrical training courses and qualifications
-          </p>
-        </div>
+      {!loading && (
+        <>
+          {/* Cache Manager */}
+          {cacheInfo && (
+            <EducationCacheManager 
+              cacheInfo={cacheInfo}
+              onRefreshComplete={() => refreshData(true)}
+            />
+          )}
 
-        {/* Main content based on view mode */}
-        {viewMode === "map" ? (
-          <div className="space-y-4">
-            {/* Google Maps Integration */}
-            <GoogleMapsLoader>
-              <CourseMap
-                nearbyProviders={providersForMap}
-                selectedCourse={selectedCourseId}
-                onCourseSelect={handleCourseSelect}
-                onCourseDeselect={handleCourseDeselect}
-                userLocation={userLocation}
-                userCoordinates={userCoordinates}
-                searchRadius={searchRadius}
-                isLoading={isAutoDetecting || isSearching}
-              />
-            </GoogleMapsLoader>
-            
-            {/* Location-based search */}
-            <LocationBasedCourseSearch
-              onLocationSelect={handleLocationSelect}
-              onRadiusChange={handleRadiusChange}
-              currentLocation={userLocation}
-              searchRadius={searchRadius}
-              isAutoDetecting={isAutoDetecting}
-              onProviderSearch={handleProviderSearchFromLocation}
-              onUseCurrentLocation={handleAutoLocationDetection}
+          {/* Search and Filters */}
+          <div id="course-filters">
+            <CourseSearchForm
+              onSearch={handleFiltersChange}
+              onReset={handleReset}
             />
           </div>
-        ) : (
-          <div className="space-y-6">
-            {/* Course Comparison Tool */}
-            {showComparison && (
-              <CourseCompareMode
-                courses={liveCourses}
-                onViewDetails={viewCourseDetails}
-                selectedCourseData={selectedCourseData}
-                onAddToComparison={(course) => addToComparison(course.id, course)}
-                onRemoveFromComparison={removeFromComparison}
-                onClearComparison={clearComparison}
-              />
-            )}
 
-            {/* Bookmark Manager */}
-            {showBookmarks && (
-              <CourseBookmarkManager
-                courses={liveCourses}
-                onViewDetails={viewCourseDetails}
-              />
-            )}
-
-            {/* Results Display */}
-            {isSearching ? (
-              <CourseGridSkeleton />
-            ) : filteredAndSortedCourses.length === 0 ? (
-              <EmptySearchResults
-                type="courses"
-                onReset={handleResetFilters}
-              />
-            ) : (
-              <div className="space-y-4">
-                {/* Courses Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-                  {currentCourses.map((course) => (
-                    <EnhancedCourseGridCard
-                      key={course.id}
-                      course={course}
-                      onClick={() => viewCourseDetails(course)}
-                    />
-                  ))}
-                </div>
-
-                {/* Pagination */}
-                {coursesPerPage !== -1 && totalPages > 1 && (
-                  <div className="flex justify-center pt-6">
-                    <JobPagination
-                      currentPage={currentPage}
-                      totalPages={totalPages}
-                      paginate={handlePageChange}
-                    />
+          {/* Results Section */}
+          {filteredCourses.length === 0 ? (
+            <Card>
+              <CardContent className="p-8 text-center">
+                <BookOpen className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
+                <h3 className="text-xl font-semibold mb-3">No courses found</h3>
+                <p className="text-muted-foreground mb-6 max-w-md mx-auto">
+                  Try adjusting your search criteria or explore different categories.
+                </p>
+                <Button variant="outline" onClick={handleReset}>
+                  Reset Filters
+                </Button>
+              </CardContent>
+            </Card>
+          ) : (
+            <div className="space-y-8">
+              {/* Featured Courses */}
+              {featuredCourses.length > 0 && (
+                <div className="space-y-6">
+                  <div className="flex items-center gap-3">
+                    <div className="h-px bg-gradient-to-r from-transparent via-elec-yellow/30 to-transparent flex-1" />
+                    <h3 className="text-xl font-semibold text-white px-4">
+                      Featured Courses
+                    </h3>
+                    <div className="h-px bg-gradient-to-r from-transparent via-elec-yellow/30 to-transparent flex-1" />
                   </div>
-                )}
-              </div>
-            )}
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {featuredCourses.map((course) => (
+                      <EnhancedCourseCard
+                        key={course.id}
+                        course={course}
+                        onViewDetails={handleViewDetails}
+                      />
+                    ))}
+                  </div>
+                </div>
+              )}
 
-            {/* Course Selection Tips */}
-            {!isSearching && (
-              <CourseSelectionTips />
-            )}
+              {/* All Courses Grid */}
+              {gridCourses.length > 0 && (
+                <div className="space-y-6">
+                  <div className="flex items-center gap-3">
+                    <div className="h-px bg-gradient-to-r from-transparent via-elec-yellow/30 to-transparent flex-1" />
+                    <h3 className="text-xl font-semibold text-white px-4">
+                      {featuredCourses.length > 0 ? 'More Courses' : 'All Courses'}
+                    </h3>
+                    <div className="h-px bg-gradient-to-r from-transparent via-elec-yellow/30 to-transparent flex-1" />
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {gridCourses.map((course) => (
+                      <EnhancedCourseCard
+                        key={course.id}
+                        course={course}
+                        onViewDetails={handleViewDetails}
+                      />
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+        </>
+      )}
+
+      {/* Funding Information Card */}
+      <Card className="bg-gradient-to-br from-elec-card to-elec-card/80 border-elec-yellow/20">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-3">
+            <div className="p-2 rounded-full bg-elec-yellow/10">
+              <PoundSterling className="h-5 w-5 text-elec-yellow flex-shrink-0" />
+            </div>
+            UK Course Funding Support
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {/* Government Support Section */}
+            <div className="space-y-4">
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
+                <h4 className="font-semibold text-elec-yellow">Government Support</h4>
+              </div>
+              <div className="space-y-4">
+                <div className="bg-background/30 rounded-lg p-4 border border-elec-yellow/10">
+                  <h5 className="font-semibold text-white text-sm mb-2 flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
+                    Skills Bootcamp
+                  </h5>
+                  <p className="text-white/80 text-sm leading-relaxed">
+                    Free courses for adults looking to build sector-specific skills. Up to 16 weeks training.
+                  </p>
+                </div>
+                <div className="bg-background/30 rounded-lg p-4 border border-elec-yellow/10">
+                  <h5 className="font-semibold text-white text-sm mb-2 flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
+                    Adult Education Budget
+                  </h5>
+                  <p className="text-white/80 text-sm leading-relaxed">
+                    Funding for first Level 2 and Level 3 qualifications for adults (19+).
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Industry & Employer Support Section */}
+            <div className="space-y-4">
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
+                <h4 className="font-semibold text-elec-yellow">Industry & Employer Support</h4>
+              </div>
+              <div className="space-y-4">
+                <div className="bg-background/30 rounded-lg p-4 border border-elec-yellow/10">
+                  <h5 className="font-semibold text-white text-sm mb-2 flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
+                    Apprenticeship Levy
+                  </h5>
+                  <p className="text-white/80 text-sm leading-relaxed">
+                    Large employers can use levy funds for employee training and development.
+                  </p>
+                </div>
+                <div className="bg-background/30 rounded-lg p-4 border border-elec-yellow/10">
+                  <h5 className="font-semibold text-white text-sm mb-2 flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
+                    Professional Body Grants
+                  </h5>
+                  <p className="text-white/80 text-sm leading-relaxed">
+                    IET, ECA, and NICEIC offer grants and scholarships for continuing professional development.
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
-        )}
-      </div>
+        </CardContent>
+      </Card>
 
       {/* Course Details Modal */}
-      {selectedCourse && (
-        <ModernCourseDetailsModal
-          course={selectedCourse}
-          open={!!selectedCourse}
-          onOpenChange={(open) => !open && handleClose()}
-        />
-      )}
-
-      {/* Training Center Details Modal */}
-      {selectedCenter && (
-        <TrainingCentreDetailsModal
-          center={selectedCenter}
-          onClose={handleClose}
-        />
-      )}
+      <ModernCourseDetailsModal
+        course={selectedCourse}
+        open={modalOpen}
+        onOpenChange={setModalOpen}
+      />
     </div>
   );
 };
