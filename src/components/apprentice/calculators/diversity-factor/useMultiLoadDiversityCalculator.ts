@@ -169,44 +169,45 @@ export function useMultiLoadDiversityCalculator() {
     return newErrors;
   };
 
-  // Map UI load types to diversity engine types
+  // Map UI load types to diversity engine types - BS 7671 compliant mapping
   const mapLoadTypeToEngineType = (uiType: string): CircuitLoad['type'] => {
     const typeMapping: Record<string, CircuitLoad['type']> = {
-      // Lighting types → 'lighting'
+      // Lighting types → 'lighting' (66% domestic, 90% commercial per BS 7671 Table A1)
       'led-lighting': 'lighting',
       'fluorescent-lighting': 'lighting',
       'general-lighting': 'lighting',
-      'emergency-lighting': 'lighting',
+      'emergency-lighting': 'small-power', // No diversity - treat as 100% load
       
-      // Socket types → 'socket-outlet'
+      // Socket types → 'socket-outlet' (First 10A at 100%, remainder 40% per BS 7671)
       'ring-main-sockets': 'socket-outlet',
       'radial-sockets': 'socket-outlet',
-      'dedicated-sockets': 'socket-outlet',
+      'dedicated-sockets': 'small-power', // 100% diversity - no reduction
       
-      // Cooking types → 'cooker'
+      // Cooking types → 'cooker' (First 10A at 100%, remainder 30% domestic per BS 7671)
       'electric-cooker': 'cooker',
       'commercial-catering': 'cooker',
       
-      // Water heating types → 'water-heating'
-      'immersion-heater': 'water-heating',
-      'instantaneous-water': 'water-heating',
+      // Water heating types - Proper BS 7671 classification
+      'immersion-heater': 'water-heating', // Storage water heating - 100% diversity
+      'electric-shower': 'shower', // Electric showers - 100% diversity per BS 7671
+      'instantaneous-water': 'shower', // Instantaneous water heaters - treat as showers
       
-      // Space heating types → 'space-heating'
+      // Space heating types → 'space-heating' (100% per BS 7671 Table A1)
       'electric-heating': 'space-heating',
       'heat-pumps': 'space-heating',
       'underfloor-heating': 'space-heating',
       
-      // Motor types → 'motor'
+      // Motor types → 'motor' (Largest 100%, others 80% commercial/industrial)
       'single-motor': 'motor',
       'motor-group': 'motor',
       'lift-motor': 'motor',
       'air-conditioning': 'motor',
       
-      // Small power and other types → 'small-power'
-      'small-power': 'small-power',
-      'ev-charging': 'small-power',
-      'welding-equipment': 'small-power',
-      'server-equipment': 'small-power'
+      // Special equipment - Map to appropriate types for proper diversity
+      'small-power': 'small-power', // First 10A at 100%, remainder 40%
+      'ev-charging': 'water-heating', // 100% diversity - no reduction allowed
+      'welding-equipment': 'water-heating', // 100% diversity for industrial equipment
+      'server-equipment': 'water-heating' // 100% diversity for critical loads
     };
     
     return typeMapping[uiType] || 'small-power';
