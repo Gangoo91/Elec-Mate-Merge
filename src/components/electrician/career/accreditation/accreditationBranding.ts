@@ -73,6 +73,11 @@ export const getBrandInfo = (accreditationBody: string): AccreditationBrand => {
 export const getLogoUrl = (accreditationBody: string, website?: string): string | null => {
   const brand = getBrandInfo(accreditationBody);
   
+  // Skip logo fetching for ELECSA as Clearbit returns wrong logo
+  if (accreditationBody === "ELECSA" || accreditationBody === "ELECSA/Certsure") {
+    return null;
+  }
+  
   // 1. Use explicit brand logoUrl if available
   if (brand.logoUrl) {
     return brand.logoUrl;
