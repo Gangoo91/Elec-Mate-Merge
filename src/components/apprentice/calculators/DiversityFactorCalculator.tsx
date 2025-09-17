@@ -6,7 +6,8 @@ import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { Wrench, Info, CheckCircle2, RotateCcw, Zap, Plus, BarChart3 } from "lucide-react";
+import { Switch } from "@/components/ui/switch";
+import { Wrench, Info, CheckCircle2, RotateCcw, Zap, Plus, BarChart3, Calculator, Lightbulb, TrendingDown } from "lucide-react";
 import { useMultiLoadDiversityCalculator } from "./diversity-factor/useMultiLoadDiversityCalculator";
 import { LoadEntry } from "./diversity-factor/LoadEntry";
 import { useState } from "react";
@@ -16,13 +17,17 @@ const DiversityFactorCalculator = () => {
     loads,
     location,
     supplyVoltage,
+    inputMode,
     result,
     errors,
+    showResults,
     addLoad,
     removeLoad,
     updateLoad,
     setLocation,
     setSupplyVoltage,
+    toggleInputMode,
+    calculateDemand,
     resetCalculator,
     clearError,
     loadTypes
@@ -91,30 +96,54 @@ const DiversityFactorCalculator = () => {
       <CardContent className="space-y-6">
         <div className="space-y-6">
           {/* Configuration Section */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <MobileSelectWrapper
-              label="Installation Type"
-              value={location}
-              onValueChange={setLocation}
-              options={locationOptions}
-              placeholder="Select installation type"
-            />
-            
-            <MobileSelectWrapper
-              label="Supply Type"
-              value={supplyType}
-              onValueChange={setSupplyType}
-              options={supplyTypeOptions}
-              placeholder="Select supply type"
-            />
-            
-            <MobileSelectWrapper
-              label="Supply Voltage (V)"
-              value={supplyVoltage}
-              onValueChange={setSupplyVoltage}
-              options={voltageOptions}
-              placeholder="Select voltage"
-            />
+          <div className="space-y-4">
+            {/* Input Mode Toggle */}
+            <div className="flex items-center justify-between p-4 bg-muted/50 rounded-lg">
+              <div className="space-y-1">
+                <Label className="text-sm font-medium">Input Mode</Label>
+                <p className="text-xs text-muted-foreground">
+                  Choose between kilowatt or amperage input
+                </p>
+              </div>
+              <div className="flex items-center space-x-3">
+                <span className={`text-sm ${inputMode === 'amperage' ? 'font-semibold text-primary' : 'text-muted-foreground'}`}>
+                  Amperage (A)
+                </span>
+                <Switch
+                  checked={inputMode === 'kw'}
+                  onCheckedChange={(checked) => toggleInputMode(checked ? 'kw' : 'amperage')}
+                />
+                <span className={`text-sm ${inputMode === 'kw' ? 'font-semibold text-primary' : 'text-muted-foreground'}`}>
+                  Power (kW)
+                </span>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <MobileSelectWrapper
+                label="Installation Type"
+                value={location}
+                onValueChange={setLocation}
+                options={locationOptions}
+                placeholder="Select installation type"
+              />
+              
+              <MobileSelectWrapper
+                label="Supply Type"
+                value={supplyType}
+                onValueChange={setSupplyType}
+                options={supplyTypeOptions}
+                placeholder="Select supply type"
+              />
+              
+              <MobileSelectWrapper
+                label="Supply Voltage (V)"
+                value={supplyVoltage}
+                onValueChange={setSupplyVoltage}
+                options={voltageOptions}
+                placeholder="Select voltage"
+              />
+            </div>
           </div>
 
           <Separator />
@@ -141,6 +170,8 @@ const DiversityFactorCalculator = () => {
                   canRemove={loads.length > 1}
                   loadTypes={loadTypes}
                   errors={errors}
+                  inputMode={inputMode}
+                  supplyVoltage={supplyVoltage}
                   onUpdate={updateLoad}
                   onRemove={removeLoad}
                   onClearError={clearError}
@@ -149,9 +180,17 @@ const DiversityFactorCalculator = () => {
             </div>
 
             <div className="flex gap-2">
-              <Button variant="outline" onClick={resetCalculator} className="w-full">
+              <Button 
+                onClick={calculateDemand}
+                className="flex-1 bg-primary hover:bg-primary/90"
+                disabled={loads.some(load => !load.type || !load.connectedLoad)}
+              >
+                <Calculator className="h-4 w-4 mr-2" />
+                Calculate Diversity
+              </Button>
+              <Button variant="outline" onClick={resetCalculator}>
                 <RotateCcw className="h-4 w-4 mr-2" />
-                Reset Calculator
+                Reset
               </Button>
             </div>
           </div>
@@ -161,7 +200,7 @@ const DiversityFactorCalculator = () => {
           {/* Results Section */}
           <div className="space-y-4">
             <div className="rounded-md bg-muted/50 p-6 min-h-[400px]">
-              {result ? (
+              {showResults && result ? (
                 <div className="space-y-4">
                   <div className="flex items-center gap-2 mb-4">
                     <CheckCircle2 className="h-5 w-5 text-green-500" />
@@ -245,28 +284,79 @@ const DiversityFactorCalculator = () => {
               ) : (
                 <div className="flex items-center justify-center h-full text-muted-foreground">
                   <div className="text-center">
-                    <Wrench className="h-12 w-12 mx-auto mb-3 opacity-50" />
-                    <p>Add loads and configure settings to calculate diversity</p>
+                    <Calculator className="h-12 w-12 mx-auto mb-3 opacity-50" />
+                    <p className="text-lg font-medium mb-2">Ready to Calculate</p>
+                    <p>Add your circuit loads and click "Calculate Diversity" to see results</p>
+                    <div className="mt-4 text-sm space-y-1">
+                      <p>• Configure installation type and voltage</p>
+                      <p>• Add circuit loads with their types</p>
+                      <p>• Choose between kW or Amperage input</p>
+                      <p>• Get BS 7671 compliant diversity calculations</p>
+                    </div>
                   </div>
                 </div>
               )}
             </div>
 
-          {/* What This Means Panel */}
-          <Alert className="border-blue-500/20 bg-blue-500/10">
-            <Info className="h-4 w-4 text-blue-500" />
-            <AlertDescription className="text-blue-200">
-              <div className="space-y-2">
-                <p className="font-medium">What This Means:</p>
-                <ul className="text-sm space-y-1">
-                  <li>• Diversity recognises that not all loads operate simultaneously</li>
-                  <li>• Allows more economical sizing of cables and protective devices</li>
-                  <li>• Current calculation determines circuit protection requirements</li>
-                  <li>• Consider future load growth and expansion</li>
-                </ul>
-              </div>
-            </AlertDescription>
-          </Alert>
+          {showResults && result && (
+            <>
+              {/* What This Means Panel */}
+              <Alert className="border-blue-500/20 bg-blue-500/10">
+                <Lightbulb className="h-4 w-4 text-blue-500" />
+                <AlertDescription className="text-blue-200">
+                  <div className="space-y-3">
+                    <p className="font-medium text-blue-300">What This Means:</p>
+                    <div className="grid md:grid-cols-2 gap-4 text-sm">
+                      <div className="space-y-2">
+                        <h4 className="font-medium text-blue-300">Practical Impact:</h4>
+                        <ul className="space-y-1">
+                          <li>• <strong>Cable Savings:</strong> Use smaller cables than total connected load suggests</li>
+                          <li>• <strong>Protection:</strong> {getMainDeviceRecommendation()} recommended</li>
+                          <li>• <strong>Cost Reduction:</strong> {((result.totalInstalledLoad - result.diversifiedLoad) / result.totalInstalledLoad * 100).toFixed(1)}% load reduction saves on installation costs</li>
+                        </ul>
+                      </div>
+                      <div className="space-y-2">
+                        <h4 className="font-medium text-blue-300">Engineering Basis:</h4>
+                        <ul className="space-y-1">
+                          <li>• <strong>Diversity Factor:</strong> Not all loads operate simultaneously</li>
+                          <li>• <strong>BS 7671 Compliance:</strong> Based on Table 311 diversity factors</li>
+                          <li>• <strong>Real Usage:</strong> Reflects actual electrical demand patterns</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </AlertDescription>
+              </Alert>
+
+              {/* Practical Recommendations */}
+              <Alert className="border-green-500/20 bg-green-500/10">
+                <TrendingDown className="h-4 w-4 text-green-500" />
+                <AlertDescription className="text-green-200">
+                  <div className="space-y-3">
+                    <p className="font-medium text-green-300">Next Steps & Recommendations:</p>
+                    <div className="grid md:grid-cols-2 gap-4 text-sm">
+                      <div className="space-y-2">
+                        <h4 className="font-medium text-green-300">Cable Sizing:</h4>
+                        <ul className="space-y-1">
+                          <li>• Design for {result.diversifiedCurrent.toFixed(1)}A, not {result.totalDesignCurrent.toFixed(1)}A</li>
+                          <li>• Consider voltage drop at diversified current</li>
+                          <li>• Apply derating factors for installation method</li>
+                        </ul>
+                      </div>
+                      <div className="space-y-2">
+                        <h4 className="font-medium text-green-300">Future Considerations:</h4>
+                        <ul className="space-y-1">
+                          <li>• Plan for 20-30% future load growth</li>
+                          <li>• Review diversity if load patterns change</li>
+                          <li>• Document assumptions for future reference</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </AlertDescription>
+              </Alert>
+            </>
+          )}
 
           {/* BS 7671 Guidance */}
           <Alert className="border-green-500/20 bg-green-500/10">

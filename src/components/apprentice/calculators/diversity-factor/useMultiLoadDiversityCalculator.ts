@@ -6,37 +6,97 @@ interface LoadEntry {
   type: string;
   connectedLoad: string;
   numberOfUnits: string;
-  power: string; // kW
+  power: string; // kW or A depending on input mode
+  inputMode: 'kw' | 'amperage';
+  powerFactor: string;
 }
 
 interface ValidationErrors {
   [key: string]: string;
 }
 
-// BS 7671 Table 311 - Load types for diversity calculations
+// Enhanced BS 7671 Table 311 - Load types for diversity calculations
 const LOAD_TYPES = {
-  "lighting": "Lighting circuits: 66% of total connected load",
-  "socket-outlet": "Socket outlets: 10A + 50% of remainder, or 40% if total ≤ 10A", 
-  "cooker": "Cooking appliances: 10A + 30% of remainder, or 60% if total ≤ 10A",
-  "water-heating": "Water heating: 100% of connected load (no diversity)",
-  "space-heating": "Space heating: 100% of connected load (no diversity)",
-  "motor": "Motors: 75% of total connected load",
-  "shower": "Electric showers: 100% of connected load",
-  "small-power": "Small power: 40% after first 10A at 100%"
+  // Lighting Categories
+  "led-lighting": "LED Lighting Circuits (90% diversity) - Modern energy efficient lighting",
+  "fluorescent-lighting": "Fluorescent Lighting (85% diversity) - Commercial/industrial lighting", 
+  "general-lighting": "General Lighting Circuits (66% diversity) - Mixed lighting types",
+  "emergency-lighting": "Emergency Lighting (100% diversity) - No diversity allowed",
+  
+  // Socket Outlet Categories  
+  "ring-main-sockets": "Ring Main Socket Outlets (First 10A at 100%, remainder 50%) - BS 7671 standard",
+  "radial-sockets": "Radial Socket Outlets (40% diversity if ≤10A, else special calc) - Kitchen/utility areas",
+  "dedicated-sockets": "Dedicated Socket Outlets (100% diversity) - Specific equipment only",
+  
+  // Cooking & Water Heating
+  "electric-cooker": "Electric Cooker (First 10A at 100%, remainder 30%) - Domestic cooking",
+  "commercial-catering": "Commercial Catering Equipment (80% diversity) - Professional kitchens",
+  "immersion-heater": "Immersion Heater (100% diversity) - Water heating, no diversity",
+  "instantaneous-water": "Instantaneous Water Heater (100% diversity) - Electric showers/taps",
+  
+  // Space Heating
+  "electric-heating": "Electric Space Heating (100% diversity) - Panel heaters, storage heaters", 
+  "heat-pumps": "Heat Pump Systems (100% diversity) - Air source/ground source heating",
+  "underfloor-heating": "Underfloor Heating (75% diversity) - Electric UFH systems",
+  
+  // Motors & Equipment
+  "single-motor": "Single Phase Motors (75% diversity) - Individual motor loads",
+  "motor-group": "Motor Group (60% diversity) - Multiple motors unlikely to run together",
+  "lift-motor": "Lift Motors (100% diversity) - Passenger/goods lifts",
+  "air-conditioning": "Air Conditioning (80% diversity) - HVAC systems",
+  
+  // Specialist Equipment
+  "ev-charging": "EV Charging Points (100% diversity) - Electric vehicle charging",
+  "welding-equipment": "Welding Equipment (70% diversity) - Not continuous use",
+  "small-power": "Small Power Circuits (40% after first 10A) - General equipment",
+  "server-equipment": "Server/IT Equipment (95% diversity) - Critical systems"
 } as const;
 
 export function useMultiLoadDiversityCalculator() {
   const [loads, setLoads] = useState<LoadEntry[]>([
-    { id: '1', type: '', connectedLoad: '', numberOfUnits: '1', power: '' }
+    { id: '1', type: '', connectedLoad: '', numberOfUnits: '1', power: '', inputMode: 'amperage', powerFactor: '0.9' }
   ]);
   const [location, setLocation] = useState<'domestic' | 'commercial' | 'industrial'>('domestic');
   const [supplyVoltage, setSupplyVoltage] = useState("230");
+  const [inputMode, setInputMode] = useState<'kw' | 'amperage'>('amperage');
   const [result, setResult] = useState<DiversityResult | null>(null);
   const [errors, setErrors] = useState<ValidationErrors>({});
+  const [showResults, setShowResults] = useState(false);
 
   const addLoad = () => {
     const newId = (Math.max(...loads.map(l => parseInt(l.id))) + 1).toString();
-    setLoads([...loads, { id: newId, type: '', connectedLoad: '', numberOfUnits: '1', power: '' }]);
+    setLoads([...loads, { id: newId, type: '', connectedLoad: '', numberOfUnits: '1', power: '', inputMode, powerFactor: '0.9' }]);
+  };
+
+  const toggleInputMode = (newMode: 'kw' | 'amperage') => {
+    setInputMode(newMode);
+    // Convert existing loads to new input mode
+    setLoads(loads.map(load => {
+      if (!load.connectedLoad) return { ...load, inputMode: newMode };
+      
+      const voltage = parseFloat(supplyVoltage);
+      const pf = parseFloat(load.powerFactor) || 0.9;
+      const currentValue = parseFloat(load.connectedLoad);
+      
+      if (isNaN(currentValue) || isNaN(voltage)) return { ...load, inputMode: newMode };
+      
+      let convertedValue: number;
+      if (newMode === 'kw' && load.inputMode === 'amperage') {
+        // A to kW: P = V × I × PF / 1000
+        convertedValue = (voltage * currentValue * pf) / 1000;
+      } else if (newMode === 'amperage' && load.inputMode === 'kw') {
+        // kW to A: I = P × 1000 / (V × PF)
+        convertedValue = (currentValue * 1000) / (voltage * pf);
+      } else {
+        convertedValue = currentValue;
+      }
+      
+      return { 
+        ...load, 
+        inputMode: newMode, 
+        connectedLoad: convertedValue.toFixed(2)
+      };
+    }));
   };
 
   const removeLoad = (id: string) => {
@@ -115,6 +175,7 @@ export function useMultiLoadDiversityCalculator() {
 
     if (Object.keys(validationErrors).length > 0) {
       setResult(null);
+      setShowResults(false);
       return;
     }
 
@@ -123,14 +184,26 @@ export function useMultiLoadDiversityCalculator() {
       const connected = parseFloat(load.connectedLoad);
       const units = parseInt(load.numberOfUnits);
       const voltage = parseFloat(supplyVoltage);
-      const totalCurrent = connected * units;
-      const powerKW = (totalCurrent * voltage) / 1000;
+      const pf = parseFloat(load.powerFactor) || 0.9;
+      
+      let designCurrent: number;
+      let installedPower: number;
+      
+      if (load.inputMode === 'kw') {
+        // Convert kW to current: I = P × 1000 / (V × PF)
+        installedPower = connected * units;
+        designCurrent = (installedPower * 1000) / (voltage * pf);
+      } else {
+        // Input is already in amperage
+        designCurrent = connected * units;
+        installedPower = (designCurrent * voltage * pf) / 1000;
+      }
 
       return {
         id: load.id,
         type: load.type as any,
-        designCurrent: totalCurrent,
-        installedPower: powerKW,
+        designCurrent,
+        installedPower,
         quantity: units,
         location
       };
@@ -139,18 +212,21 @@ export function useMultiLoadDiversityCalculator() {
     try {
       const diversityResult = calculateDiversity(circuits, parseFloat(supplyVoltage));
       setResult(diversityResult);
+      setShowResults(true);
     } catch (error) {
       console.error('Diversity calculation error:', error);
       setResult(null);
+      setShowResults(false);
     }
   };
 
   const resetCalculator = () => {
-    setLoads([{ id: '1', type: '', connectedLoad: '', numberOfUnits: '1', power: '' }]);
+    setLoads([{ id: '1', type: '', connectedLoad: '', numberOfUnits: '1', power: '', inputMode, powerFactor: '0.9' }]);
     setLocation('domestic');
     setSupplyVoltage("230");
     setResult(null);
     setErrors({});
+    setShowResults(false);
   };
 
   const clearError = (field: string) => {
@@ -163,8 +239,10 @@ export function useMultiLoadDiversityCalculator() {
     loads,
     location,
     supplyVoltage,
+    inputMode,
     result,
     errors,
+    showResults,
     
     // Actions
     addLoad,
@@ -172,6 +250,7 @@ export function useMultiLoadDiversityCalculator() {
     updateLoad,
     setLocation: (value: string) => setLocation(value as 'domestic' | 'commercial' | 'industrial'),
     setSupplyVoltage,
+    toggleInputMode,
     calculateDemand,
     resetCalculator,
     clearError,
