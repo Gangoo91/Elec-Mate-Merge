@@ -67,7 +67,7 @@ const CourseNewsCard = ({ course, className, onClick }: CourseNewsCardProps) => 
       onClick={onClick}
     >
       {/* Image */}
-      <div className="relative h-24 sm:h-28 overflow-hidden">
+      <div className="relative h-32 sm:h-36 lg:h-40 overflow-hidden">
         <img
           src={getCategoryImage(course.category)}
           alt={course.title}
@@ -78,7 +78,7 @@ const CourseNewsCard = ({ course, className, onClick }: CourseNewsCardProps) => 
       </div>
 
       {/* Content */}
-      <div className="p-3 sm:p-4 space-y-2 flex flex-col h-[calc(100%-6rem)] sm:h-[calc(100%-7rem)]">
+      <div className="p-4 sm:p-5 lg:p-6 space-y-3 sm:space-y-4 flex flex-col h-[calc(100%-8rem)] sm:h-[calc(100%-9rem)] lg:h-[calc(100%-10rem)]">
         {/* Meta Info */}
         <div className="flex items-center justify-between text-xs text-white/80">
           <div className="flex items-center gap-3">
@@ -100,17 +100,17 @@ const CourseNewsCard = ({ course, className, onClick }: CourseNewsCardProps) => 
         </div>
 
         {/* Title */}
-        <h3 className="font-semibold text-white line-clamp-2 text-xs sm:text-sm leading-tight">
+        <h3 className="font-semibold text-white line-clamp-2 text-sm sm:text-base lg:text-lg leading-tight">
           {course.title}
         </h3>
 
         {/* Provider */}
-        <p className="text-elec-yellow text-xs font-medium">
+        <p className="text-elec-yellow text-xs sm:text-sm font-medium">
           {course.provider}
         </p>
 
         {/* Description */}
-        <p className="text-white/90 text-xs line-clamp-2 leading-relaxed flex-grow">
+        <p className="text-white/90 text-xs sm:text-sm line-clamp-3 lg:line-clamp-2 leading-relaxed flex-grow">
           {course.description}
         </p>
 
