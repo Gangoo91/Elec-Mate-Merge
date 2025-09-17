@@ -58,8 +58,8 @@ const CareerProgression = () => {
               Career Progression
             </h1>
             <p className="text-sm sm:text-base text-white text-center max-w-4xl mx-auto px-4">
-              Advanced career development resources for qualified electricians. Stay ahead with 2025 industry insights, 
-              emerging technologies, and strategic career planning tools designed for professional growth in the electrical sector.
+              Comprehensive career development resources for qualified electricians. Explore emerging technologies, 
+              strategic career planning tools, and professional growth opportunities in the rapidly evolving electrical sector.
             </p>
           </>
         )}
@@ -80,151 +80,364 @@ const CareerProgression = () => {
       {activeSection === null ? (
         <>
 
+          {/* Welcome Section */}
+          <Card className="border-elec-yellow/20 bg-elec-gray mb-8">
+            <CardContent className="p-6 text-center">
+              <h2 className="text-xl font-semibold mb-3 text-white">
+                Professional Development Centre
+              </h2>
+              <p className="text-muted-foreground leading-relaxed mb-4">
+                The electrical industry offers exceptional opportunities for career advancement and professional growth. 
+                Our comprehensive resources help you navigate pathways from qualified electrician to specialist roles, 
+                management positions, and entrepreneurial ventures. Each section provides targeted guidance aligned 
+                with current industry standards and emerging market demands.
+              </p>
+              <div className="flex flex-wrap justify-center gap-4 text-sm text-elec-yellow">
+                <span>• BS 7671 18th Edition Compliant</span>
+                <span>• JIB Grade Progression</span>
+                <span>• Industry-Leading Resources</span>
+              </div>
+            </CardContent>
+          </Card>
+
           {/* Career Sections Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
             {electricianCareerSections.map((section) => (
-              <SimpleCareerCard 
+              <Card 
                 key={section.id}
-                title={section.title}
-                icon={section.icon}
+                className="border-elec-yellow/20 bg-elec-gray h-full hover:bg-elec-gray/90 transition-all duration-300 cursor-pointer hover-scale group"
                 onClick={() => setActiveSection(section.id)}
-              />
+              >
+                <CardContent className="p-6 text-center h-full flex flex-col justify-between">
+                  <div>
+                    <div className="mb-4 flex justify-center">
+                      {section.icon}
+                    </div>
+                    <h3 className="text-lg font-semibold text-white mb-2">{section.title}</h3>
+                    <p className="text-sm text-muted-foreground">{section.description}</p>
+                  </div>
+                  <div className="mt-4 text-xs text-elec-yellow opacity-0 group-hover:opacity-100 transition-opacity">
+                    Click to explore →
+                  </div>
+                </CardContent>
+              </Card>
             ))}
+            
             {/* Job Vacancies Card */}
-            <SimpleCareerCard 
-              title="Job Vacancies"
-              icon={<Briefcase className="h-10 w-10 sm:h-12 sm:w-12 text-elec-yellow" />}
+            <Card 
+              className="border-elec-yellow/20 bg-elec-gray h-full hover:bg-elec-gray/90 transition-all duration-300 cursor-pointer hover-scale group"
               onClick={() => setActiveSection("job-vacancies")}
-            />
-          </div>
-
-          {/* Enhanced Professional Development Stats */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <Card className="border-elec-yellow/20 bg-elec-gray/50">
-              <CardContent className="p-4 text-center">
-                <div className="text-2xl font-bold text-elec-yellow">
-                  {marketData?.careerpathways || '12'}+
+            >
+              <CardContent className="p-6 text-center h-full flex flex-col justify-between">
+                <div>
+                  <div className="mb-4 flex justify-center">
+                    <Briefcase className="h-12 w-12 text-elec-yellow opacity-80" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-white mb-2">Job Vacancies</h3>
+                  <p className="text-sm text-muted-foreground">Browse current electrical job opportunities and positions</p>
                 </div>
-                <div className="text-sm text-white">Advanced Pathways</div>
-                <div className="text-xs text-white/70 mt-1">Updated for 2025</div>
-              </CardContent>
-            </Card>
-            <Card className="border-elec-yellow/20 bg-elec-gray/50">
-              <CardContent className="p-4 text-center">
-                <div className="text-2xl font-bold text-elec-yellow">
-                  {marketData?.totalCourses || '284'}+
+                <div className="mt-4 text-xs text-elec-yellow opacity-0 group-hover:opacity-100 transition-opacity">
+                  Click to explore →
                 </div>
-                <div className="text-sm text-white">Professional Courses</div>
-                <div className="text-xs text-white/70 mt-1">Including Net Zero skills</div>
-              </CardContent>
-            </Card>
-            <Card className="border-elec-yellow/20 bg-elec-gray/50">
-              <CardContent className="p-4 text-center">
-                <div className="text-2xl font-bold text-elec-yellow">
-                  {marketData?.professionalRange || '£35k-£80k+'}
-                </div>
-                <div className="text-sm text-white">Salary Range</div>
-                <div className="text-xs text-white/70 mt-1">2025 market rates</div>
-              </CardContent>
-            </Card>
-            <Card className="border-elec-yellow/20 bg-elec-gray/50">
-              <CardContent className="p-4 text-center">
-                <div className="text-2xl font-bold text-elec-yellow">15%</div>
-                <div className="text-sm text-white">Rate Increase</div>
-                <div className="text-xs text-white/70 mt-1">Skills shortage premium</div>
               </CardContent>
             </Card>
           </div>
 
-          {/* New: 2025 Career Opportunities Spotlight */}
-          <div className="bg-elec-grey border border-elec-yellow/20 rounded-xl p-6">
-            <h3 className="text-xl font-semibold text-elec-yellow mb-4 text-center">
-              🎯 Top Career Opportunities in 2025
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <div className="bg-elec-gray/50 rounded-lg p-4 border border-green-500/20">
-                <div className="flex items-center gap-2 mb-3">
-                  <div className="w-3 h-3 rounded-full bg-green-400"></div>
-                  <h4 className="font-semibold text-green-400">EV Charging Specialist</h4>
+          {/* Industry Statistics */}
+          <Card className="border-elec-yellow/20 bg-elec-gray mb-6">
+            <CardContent className="p-6">
+              <h3 className="text-xl font-semibold text-elec-yellow mb-6 text-center">Industry Overview</h3>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-elec-yellow mb-2">
+                    {marketData?.careerpathways || '15'}+
+                  </div>
+                  <div className="text-sm text-white font-medium">Specialist Pathways</div>
+                  <div className="text-xs text-white/70 mt-1">Available career routes</div>
                 </div>
-                <p className="text-white text-sm mb-2">Install and maintain electric vehicle charging infrastructure</p>
-                <div className="text-green-300 text-xs">£280-420/day • High demand • Future-proof</div>
-                <div className="text-white text-xs mt-1">Required: 2919 qualification + 3 years experience</div>
-              </div>
-              
-              <div className="bg-elec-gray/50 rounded-lg p-4 border border-blue-500/20">
-                <div className="flex items-center gap-2 mb-3">
-                  <div className="w-3 h-3 rounded-full bg-blue-400"></div>
-                  <h4 className="font-semibold text-blue-400">Data Centre Technician</h4>
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-elec-yellow mb-2">
+                    {marketData?.totalCourses || '350'}+
+                  </div>
+                  <div className="text-sm text-white font-medium">Training Courses</div>
+                  <div className="text-xs text-white/70 mt-1">Professional development</div>
                 </div>
-                <p className="text-white text-sm mb-2">Support AI infrastructure and cloud computing facilities</p>
-                <div className="text-blue-300 text-xs">£320-480/day • Rapid growth • High tech</div>
-                <div className="text-white text-xs mt-1">Required: HV competence + cooling systems knowledge</div>
-              </div>
-              
-              <div className="bg-elec-gray/50 rounded-lg p-4 border border-purple-500/20">
-                <div className="flex items-center gap-2 mb-3">
-                  <div className="w-3 h-3 rounded-full bg-purple-400"></div>
-                  <h4 className="font-semibold text-purple-400">Heat Pump Engineer</h4>
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-elec-yellow mb-2">
+                    {marketData?.professionalRange || '£30k-£85k+'}
+                  </div>
+                  <div className="text-sm text-white font-medium">Salary Range</div>
+                  <div className="text-xs text-white/70 mt-1">Current market rates</div>
                 </div>
-                <p className="text-white text-sm mb-2">Install renewable heating systems and heat pump technology</p>
-                <div className="text-purple-300 text-xs">£250-380/day • Government-backed • Growing</div>
-                <div className="text-white text-xs mt-1">Required: MCS certification + electrical competence</div>
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-elec-yellow mb-2">18%</div>
+                  <div className="text-sm text-white font-medium">Growth Forecast</div>
+                  <div className="text-xs text-white/70 mt-1">Next 5 years</div>
+                </div>
               </div>
-            </div>
-          </div>
+            </CardContent>
+          </Card>
 
-          {/* New: Quick Career Actions */}
-          <div className="bg-elec-grey border border-elec-yellow/20 rounded-xl p-6">
-            <h3 className="text-xl font-semibold text-elec-yellow mb-4 text-center">
-              ⚡ Quick Career Actions for 2025
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="space-y-4">
-                <h4 className="font-semibold text-white">This Month</h4>
-                <div className="space-y-2">
-                  <div className="flex items-center gap-2 text-sm">
-                    <div className="w-2 h-2 rounded-full bg-elec-yellow"></div>
-                    <span className="text-white">Update CV with latest projects and certifications</span>
+          {/* High-Demand Career Opportunities */}
+          <Card className="border-elec-yellow/20 bg-elec-gray">
+            <CardContent className="p-6">
+              <h3 className="text-xl font-semibold text-elec-yellow mb-6 text-center">
+                🎯 High-Demand Career Opportunities
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="bg-elec-dark/50 rounded-lg p-5 border border-green-500/30 hover:border-green-500/50 transition-colors">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-4 h-4 rounded-full bg-green-400"></div>
+                    <h4 className="font-semibold text-green-400 text-lg">EV Charging Specialist</h4>
                   </div>
-                  <div className="flex items-center gap-2 text-sm">
-                    <div className="w-2 h-2 rounded-full bg-elec-yellow"></div>
-                    <span className="text-white">Research EV charging or heat pump training courses</span>
+                  <p className="text-white text-sm mb-3 leading-relaxed">
+                    Design, install and maintain electric vehicle charging infrastructure for commercial and residential applications
+                  </p>
+                  <div className="space-y-2 text-sm">
+                    <div className="text-green-300 font-medium">£280-420/day • High demand • Future-proof</div>
+                    <div className="text-white/80">Required: 2919 qualification + 3 years experience</div>
+                    <div className="text-white/60 text-xs">Growth: 300% increase in demand over 3 years</div>
                   </div>
-                  <div className="flex items-center gap-2 text-sm">
-                    <div className="w-2 h-2 rounded-full bg-elec-yellow"></div>
-                    <span className="text-white">Join LinkedIn electrical industry groups</span>
+                </div>
+                
+                <div className="bg-elec-dark/50 rounded-lg p-5 border border-blue-500/30 hover:border-blue-500/50 transition-colors">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-4 h-4 rounded-full bg-blue-400"></div>
+                    <h4 className="font-semibold text-blue-400 text-lg">Data Centre Technician</h4>
                   </div>
-                  <div className="flex items-center gap-2 text-sm">
-                    <div className="w-2 h-2 rounded-full bg-elec-yellow"></div>
-                    <span className="text-white">Check JIB rate cards for 2025 updates</span>
+                  <p className="text-white text-sm mb-3 leading-relaxed">
+                    Support critical AI infrastructure and cloud computing facilities with advanced electrical systems
+                  </p>
+                  <div className="space-y-2 text-sm">
+                    <div className="text-blue-300 font-medium">£320-480/day • Rapid growth • High tech</div>
+                    <div className="text-white/80">Required: HV competence + cooling systems knowledge</div>
+                    <div className="text-white/60 text-xs">Growth: AI boom driving massive expansion</div>
+                  </div>
+                </div>
+                
+                <div className="bg-elec-dark/50 rounded-lg p-5 border border-purple-500/30 hover:border-purple-500/50 transition-colors">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-4 h-4 rounded-full bg-purple-400"></div>
+                    <h4 className="font-semibold text-purple-400 text-lg">Heat Pump Engineer</h4>
+                  </div>
+                  <p className="text-white text-sm mb-3 leading-relaxed">
+                    Install renewable heating systems and advanced heat pump technology for domestic and commercial use
+                  </p>
+                  <div className="space-y-2 text-sm">
+                    <div className="text-purple-300 font-medium">£250-380/day • Government-backed • Growing</div>
+                    <div className="text-white/80">Required: MCS certification + electrical competence</div>
+                    <div className="text-white/60 text-xs">Growth: Net Zero targets driving demand</div>
+                  </div>
+                </div>
+                
+                <div className="bg-elec-dark/50 rounded-lg p-5 border border-orange-500/30 hover:border-orange-500/50 transition-colors">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-4 h-4 rounded-full bg-orange-400"></div>
+                    <h4 className="font-semibold text-orange-400 text-lg">Solar PV Installer</h4>
+                  </div>
+                  <p className="text-white text-sm mb-3 leading-relaxed">
+                    Design and install solar photovoltaic systems with battery storage and grid connection expertise
+                  </p>
+                  <div className="space-y-2 text-sm">
+                    <div className="text-orange-300 font-medium">£240-350/day • Renewable focus • Expanding</div>
+                    <div className="text-white/80">Required: 2399 qualification + MCS accreditation</div>
+                    <div className="text-white/60 text-xs">Growth: Record installations year on year</div>
+                  </div>
+                </div>
+                
+                <div className="bg-elec-dark/50 rounded-lg p-5 border border-red-500/30 hover:border-red-500/50 transition-colors">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-4 h-4 rounded-full bg-red-400"></div>
+                    <h4 className="font-semibold text-red-400 text-lg">Smart Building Engineer</h4>
+                  </div>
+                  <p className="text-white text-sm mb-3 leading-relaxed">
+                    Integrate IoT systems, BMS controls, and intelligent building automation with electrical installations
+                  </p>
+                  <div className="space-y-2 text-sm">
+                    <div className="text-red-300 font-medium">£300-450/day • Technology focus • Premium</div>
+                    <div className="text-white/80">Required: BMS knowledge + electrical qualification</div>
+                    <div className="text-white/60 text-xs">Growth: Smart city initiatives accelerating</div>
+                  </div>
+                </div>
+                
+                <div className="bg-elec-dark/50 rounded-lg p-5 border border-cyan-500/30 hover:border-cyan-500/50 transition-colors">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-4 h-4 rounded-full bg-cyan-400"></div>
+                    <h4 className="font-semibold text-cyan-400 text-lg">Electrical Project Manager</h4>
+                  </div>
+                  <p className="text-white text-sm mb-3 leading-relaxed">
+                    Lead complex electrical projects from design through commissioning with team management responsibilities
+                  </p>
+                  <div className="space-y-2 text-sm">
+                    <div className="text-cyan-300 font-medium">£400-600/day • Leadership • Strategic</div>
+                    <div className="text-white/80">Required: Degree/HNC + 5+ years experience</div>
+                    <div className="text-white/60 text-xs">Growth: Infrastructure investment boom</div>
                   </div>
                 </div>
               </div>
-              
-              <div className="space-y-4">
-                <h4 className="font-semibold text-white">Next 3 Months</h4>
-                <div className="space-y-2">
-                  <div className="flex items-center gap-2 text-sm">
-                    <div className="w-2 h-2 rounded-full bg-blue-400"></div>
-                    <span className="text-white">Book specialist training (2919, 2399, MCS)</span>
+            </CardContent>
+          </Card>
+
+          {/* Professional Development Roadmap */}
+          <Card className="border-elec-yellow/20 bg-elec-gray">
+            <CardContent className="p-6">
+              <h3 className="text-xl font-semibold text-elec-yellow mb-6 text-center">
+                ⚡ Professional Development Roadmap
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="space-y-4">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-8 h-8 rounded-full bg-elec-yellow/20 flex items-center justify-center">
+                      <span className="text-elec-yellow font-semibold text-sm">1</span>
+                    </div>
+                    <h4 className="font-semibold text-white text-lg">Immediate Actions</h4>
                   </div>
-                  <div className="flex items-center gap-2 text-sm">
-                    <div className="w-2 h-2 rounded-full bg-blue-400"></div>
-                    <span className="text-white">Attend industry trade shows and networking events</span>
+                  <div className="space-y-3">
+                    <div className="flex items-start gap-3 text-sm">
+                      <div className="w-2 h-2 rounded-full bg-elec-yellow mt-2 flex-shrink-0"></div>
+                      <span className="text-white">Update CV with latest projects and certifications</span>
+                    </div>
+                    <div className="flex items-start gap-3 text-sm">
+                      <div className="w-2 h-2 rounded-full bg-elec-yellow mt-2 flex-shrink-0"></div>
+                      <span className="text-white">Research emerging technology training (EV, heat pumps, solar)</span>
+                    </div>
+                    <div className="flex items-start gap-3 text-sm">
+                      <div className="w-2 h-2 rounded-full bg-elec-yellow mt-2 flex-shrink-0"></div>
+                      <span className="text-white">Join professional networking groups and LinkedIn communities</span>
+                    </div>
+                    <div className="flex items-start gap-3 text-sm">
+                      <div className="w-2 h-2 rounded-full bg-elec-yellow mt-2 flex-shrink-0"></div>
+                      <span className="text-white">Review current JIB grade and advancement requirements</span>
+                    </div>
+                    <div className="flex items-start gap-3 text-sm">
+                      <div className="w-2 h-2 rounded-full bg-elec-yellow mt-2 flex-shrink-0"></div>
+                      <span className="text-white">Set up job alerts for specialist roles</span>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-2 text-sm">
-                    <div className="w-2 h-2 rounded-full bg-blue-400"></div>
-                    <span className="text-white">Explore contractor vs employed salary comparisons</span>
+                </div>
+                
+                <div className="space-y-4">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-8 h-8 rounded-full bg-blue-400/20 flex items-center justify-center">
+                      <span className="text-blue-400 font-semibold text-sm">2</span>
+                    </div>
+                    <h4 className="font-semibold text-white text-lg">3-Month Goals</h4>
                   </div>
-                  <div className="flex items-center gap-2 text-sm">
-                    <div className="w-2 h-2 rounded-full bg-blue-400"></div>
-                    <span className="text-white">Consider professional membership (IET, ECA)</span>
+                  <div className="space-y-3">
+                    <div className="flex items-start gap-3 text-sm">
+                      <div className="w-2 h-2 rounded-full bg-blue-400 mt-2 flex-shrink-0"></div>
+                      <span className="text-white">Book specialist training courses (2919, 2399, MCS certification)</span>
+                    </div>
+                    <div className="flex items-start gap-3 text-sm">
+                      <div className="w-2 h-2 rounded-full bg-blue-400 mt-2 flex-shrink-0"></div>
+                      <span className="text-white">Attend industry trade shows and networking events</span>
+                    </div>
+                    <div className="flex items-start gap-3 text-sm">
+                      <div className="w-2 h-2 rounded-full bg-blue-400 mt-2 flex-shrink-0"></div>
+                      <span className="text-white">Complete market research on day rates vs salary positions</span>
+                    </div>
+                    <div className="flex items-start gap-3 text-sm">
+                      <div className="w-2 h-2 rounded-full bg-blue-400 mt-2 flex-shrink-0"></div>
+                      <span className="text-white">Apply for professional membership (IET, ECA, NAPIT)</span>
+                    </div>
+                    <div className="flex items-start gap-3 text-sm">
+                      <div className="w-2 h-2 rounded-full bg-blue-400 mt-2 flex-shrink-0"></div>
+                      <span className="text-white">Start building portfolio of specialist work examples</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="space-y-4">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-8 h-8 rounded-full bg-green-400/20 flex items-center justify-center">
+                      <span className="text-green-400 font-semibold text-sm">3</span>
+                    </div>
+                    <h4 className="font-semibold text-white text-lg">Long-term Strategy</h4>
+                  </div>
+                  <div className="space-y-3">
+                    <div className="flex items-start gap-3 text-sm">
+                      <div className="w-2 h-2 rounded-full bg-green-400 mt-2 flex-shrink-0"></div>
+                      <span className="text-white">Complete advanced qualifications in chosen specialisation</span>
+                    </div>
+                    <div className="flex items-start gap-3 text-sm">
+                      <div className="w-2 h-2 rounded-full bg-green-400 mt-2 flex-shrink-0"></div>
+                      <span className="text-white">Build reputation as subject matter expert through projects</span>
+                    </div>
+                    <div className="flex items-start gap-3 text-sm">
+                      <div className="w-2 h-2 rounded-full bg-green-400 mt-2 flex-shrink-0"></div>
+                      <span className="text-white">Consider further education (HNC/HND/Degree) if applicable</span>
+                    </div>
+                    <div className="flex items-start gap-3 text-sm">
+                      <div className="w-2 h-2 rounded-full bg-green-400 mt-2 flex-shrink-0"></div>
+                      <span className="text-white">Evaluate contracting vs employment career paths</span>
+                    </div>
+                    <div className="flex items-start gap-3 text-sm">
+                      <div className="w-2 h-2 rounded-full bg-green-400 mt-2 flex-shrink-0"></div>
+                      <span className="text-white">Explore business ownership or partnership opportunities</span>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
+            </CardContent>
+          </Card>
+          
+          {/* Industry Insights */}
+          <Card className="border-elec-yellow/20 bg-elec-gray">
+            <CardContent className="p-6">
+              <h3 className="text-xl font-semibold text-elec-yellow mb-6 text-center">
+                📊 Current Industry Insights
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-4">
+                  <h4 className="font-semibold text-white text-lg flex items-center gap-2">
+                    <span className="text-green-400">↗</span> Market Trends
+                  </h4>
+                  <div className="space-y-3 text-sm">
+                    <div className="flex justify-between items-center p-3 bg-elec-dark/50 rounded-lg">
+                      <span className="text-white">Net Zero Skills Premium</span>
+                      <span className="text-green-400 font-medium">+25%</span>
+                    </div>
+                    <div className="flex justify-between items-center p-3 bg-elec-dark/50 rounded-lg">
+                      <span className="text-white">EV Infrastructure Demand</span>
+                      <span className="text-green-400 font-medium">+300%</span>
+                    </div>
+                    <div className="flex justify-between items-center p-3 bg-elec-dark/50 rounded-lg">
+                      <span className="text-white">Smart Home Integration</span>
+                      <span className="text-blue-400 font-medium">+180%</span>
+                    </div>
+                    <div className="flex justify-between items-center p-3 bg-elec-dark/50 rounded-lg">
+                      <span className="text-white">Data Centre Growth</span>
+                      <span className="text-purple-400 font-medium">+220%</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="space-y-4">
+                  <h4 className="font-semibold text-white text-lg flex items-center gap-2">
+                    <span className="text-blue-400">💼</span> Regional Opportunities
+                  </h4>
+                  <div className="space-y-3 text-sm">
+                    <div className="flex justify-between items-center p-3 bg-elec-dark/50 rounded-lg">
+                      <span className="text-white">London & South East</span>
+                      <span className="text-elec-yellow font-medium">£350-500/day</span>
+                    </div>
+                    <div className="flex justify-between items-center p-3 bg-elec-dark/50 rounded-lg">
+                      <span className="text-white">Manchester & North West</span>
+                      <span className="text-elec-yellow font-medium">£280-400/day</span>
+                    </div>
+                    <div className="flex justify-between items-center p-3 bg-elec-dark/50 rounded-lg">
+                      <span className="text-white">Scotland (Edinburgh/Glasgow)</span>
+                      <span className="text-elec-yellow font-medium">£300-420/day</span>
+                    </div>
+                    <div className="flex justify-between items-center p-3 bg-elec-dark/50 rounded-lg">
+                      <span className="text-white">Wales & South West</span>
+                      <span className="text-elec-yellow font-medium">£260-380/day</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
         </>
       ) : (
         <div className="space-y-4">
