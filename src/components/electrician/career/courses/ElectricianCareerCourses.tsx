@@ -19,7 +19,8 @@ import GoogleMapsLoader from "../../../job-vacancies/GoogleMapsLoader";
 import { 
   EnhancedCareerCourse,
   EnhancedTrainingCenter,
-  enhancedCareerCourses
+  enhancedCareerCourses,
+  courseAnalytics
 } from "../../../apprentice/career/courses/enhancedCoursesData";
 import LocationBasedCourseSearch from "../../../apprentice/career/courses/LocationBasedCourseSearch";
 import { useLiveEducationData, LiveEducationData } from "@/hooks/useLiveEducationData";
@@ -140,8 +141,8 @@ const ElectricianCareerCourses = () => {
 
   // Extract data with enhanced fallback logic
   const hasLiveCourses = educationData && educationData.length > 0;
-  const liveCourses = hasLiveCourses ? educationData.map(mapEducationDataToCourse) : fallbackElectricalCourses;
-  const liveTotal = hasLiveCourses ? educationData.length : fallbackElectricalCourses.length;
+  const liveCourses = hasLiveCourses ? educationData.map(mapEducationDataToCourse) : enhancedCareerCourses;
+  const liveTotal = hasLiveCourses ? educationData.length : enhancedCareerCourses.length;
   const liveSummary = analytics ? {
     totalCourses: analytics.totalCourses,
     liveCourses: analytics.totalCourses,
@@ -191,153 +192,6 @@ const ElectricianCareerCourses = () => {
       refreshCourses();
     }
   }, [educationData, isLoadingLive, liveError, refreshCourses]);
-
-  // Location-based distance calculation helper
-  const calculateDistance = (lat1: number, lon1: number, lat2: number, lon2: number): number => {
-    const R = 3959; // Earth's radius in miles
-    const dLat = (lat2 - lat1) * Math.PI / 180;
-    const dLon = (lon2 - lon1) * Math.PI / 180;
-    const a = 
-      Math.sin(dLat/2) * Math.sin(dLat/2) +
-      Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * 
-      Math.sin(dLon/2) * Math.sin(dLon/2);
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-    return R * c;
-  };
-
-  // Handle nearby providers found from Google Places
-  const handleNearbyProvidersFound = (providers: any[]) => {
-    setNearbyProviders(providers);
-    console.log('Nearby providers found:', providers.length);
-  };
-
-  // Auto-detect user location when map view is first loaded
-  const handleAutoLocationDetection = async () => {
-    if (autoLocationAttempted || isAutoDetecting) return;
-    
-    setIsAutoDetecting(true);
-    setAutoLocationAttempted(true);
-
-    try {
-      const position = await new Promise<GeolocationPosition>((resolve, reject) => {
-        navigator.geolocation.getCurrentPosition(resolve, reject, {
-          enableHighAccuracy: true,
-          timeout: 10000,
-          maximumAge: 300000 // 5 minutes
-        });
-      });
-
-      const { latitude, longitude } = position.coords;
-      
-      // Use cached reverse geocoding
-      const locationName = await reverseGeocodeWithCache(latitude, longitude);
-      const coordinates = { lat: latitude, lng: longitude };
-      
-      setUserLocation(locationName);
-      setUserCoordinates(coordinates);
-      
-      toast({
-        title: "Location Detected",
-        description: `Using your current location: ${locationName}`,
-      });
-      
-      // Automatically search for providers
-      searchNearbyProviders();
-      
-    } catch (error) {
-      console.error('Auto-location detection failed:', error);
-      if (error instanceof GeolocationPositionError) {
-        switch (error.code) {
-          case error.PERMISSION_DENIED:
-            toast({
-              title: "Location Permission",
-              description: "Location access denied. Please search manually or enable location permissions.",
-              variant: "destructive",
-            });
-            break;
-          case error.POSITION_UNAVAILABLE:
-            toast({
-              title: "Location Unavailable",
-              description: "Location unavailable. Please search manually.",
-              variant: "destructive",
-            });
-            break;
-          case error.TIMEOUT:
-            toast({
-              title: "Location Timeout",
-              description: "Location detection timed out. Please search manually.",
-              variant: "destructive",
-            });
-            break;
-        }
-      } else {
-        toast({
-          title: "Location Error",
-          description: "Failed to detect location. Please search manually.",
-          variant: "destructive",
-        });
-      }
-    } finally {
-      setIsAutoDetecting(false);
-    }
-  };
-
-  // Auto-detect location when switching to map view (only once per session)
-  useEffect(() => {
-    if (viewMode === "map" && !autoLocationAttempted && !userLocation && window.google?.maps) {
-      handleAutoLocationDetection();
-    }
-  }, [viewMode, autoLocationAttempted, userLocation]);
-
-  // Function to search for nearby providers using the edge function
-  const searchNearbyProviders = async () => {
-    if (!userLocation) {
-      toast({
-        title: "Location required",
-        description: "Please set your location first to find nearby training providers",
-        variant: "destructive"
-      });
-      return;
-    }
-
-    try {
-      console.log('Searching for training providers near:', userLocation);
-      
-      const { data, error } = await supabase.functions.invoke('find-training-providers', {
-        body: { 
-          postcode: userLocation,
-          radius: searchRadius * 1609.34, // Convert miles to meters
-          courseType: 'electrical'
-        }
-      });
-
-      if (error) {
-        console.error('Error finding providers:', error);
-        throw error;
-      }
-
-      if (data?.providers?.length > 0) {
-        handleNearbyProvidersFound(data.providers);
-        toast({
-          title: "Training providers found",
-          description: `Found ${data.providers.length} training providers within ${searchRadius} miles`,
-        });
-      } else {
-        toast({
-          title: "No providers found",
-          description: `No training providers found within ${searchRadius} miles. Try increasing the search radius.`,
-          variant: "destructive"
-        });
-      }
-    } catch (error) {
-      console.error('Error searching for providers:', error);
-      toast({
-        title: "Search failed",
-        description: "Failed to find nearby training providers. Please try again.",
-        variant: "destructive"
-      });
-    }
-  };
 
   // For map view, only use Google Places providers (no geocoding needed)
   const providersForMap = useMemo(() => {
@@ -442,193 +296,146 @@ const ElectricianCareerCourses = () => {
       return true;
     });
 
-    // Sorting with robust data parsing and debugging
-    const sortOption = sortOptions.find(opt => opt.key === currentSort);
-    if (sortOption) {
-      console.log('🔄 Sorting by:', currentSort, 'Direction:', sortOption.direction);
-      console.log('📊 Sample course data for sorting:', filtered.slice(0, 2).map(c => ({
-        title: c.title,
-        price: c.price,
-        duration: c.duration,
-        rating: c.rating,
-        industryDemand: c.industryDemand,
-        futureProofing: c.futureProofing
-      })));
-      
-      filtered.sort((a, b) => {
-        // Validate course data before sorting
-        if (!a || !b) {
-          console.warn('⚠️ Invalid course data in sorting:', { a: !!a, b: !!b });
+    // Sort the filtered courses based on current sort option
+    const sortedCourses = [...filtered].sort((a, b) => {
+      switch (currentSort) {
+        case "relevance":
+          // Sort by industry demand first, then by rating
+          const demandScore = (course: EnhancedCareerCourse) => {
+            switch (course.industryDemand) {
+              case "High": return 3;
+              case "Medium": return 2;
+              case "Low": return 1;
+              default: return 0;
+            }
+          };
+          const demandDiff = demandScore(b) - demandScore(a);
+          return demandDiff !== 0 ? demandDiff : b.rating - a.rating;
+
+        case "price_low":
+          return parsePrice(a.price) - parsePrice(b.price);
+
+        case "price_high":
+          return parsePrice(b.price) - parsePrice(a.price);
+
+        case "duration_short":
+          return parseDuration(a.duration) - parseDuration(b.duration);
+
+        case "duration_long":
+          return parseDuration(b.duration) - parseDuration(a.duration);
+
+        case "rating":
+          return getNumericRating(b.rating) - getNumericRating(a.rating);
+
+        case "demand":
+          return getDemandScore(b.industryDemand) - getDemandScore(a.industryDemand);
+
+        case "future_proofing":
+          return getFutureProofingScore(b.futureProofing) - getFutureProofingScore(a.futureProofing);
+
+        case "newest":
+          // Use earliest next date as a proxy for newest courses
+          const aDate = parseDate(a.nextDates[0]);
+          const bDate = parseDate(b.nextDates[0]);
+          return aDate.getTime() - bDate.getTime();
+
+        default:
           return 0;
-        }
-
-        let comparison = 0;
-        
-        switch (sortOption.key) {
-          case "relevance":
-            const relevanceA = getNumericRating(a.rating) * getFutureProofingScore(a.futureProofing);
-            const relevanceB = getNumericRating(b.rating) * getFutureProofingScore(b.futureProofing);
-            comparison = relevanceB - relevanceA;
-            console.log(`Relevance sort: ${a.title} (${relevanceA}) vs ${b.title} (${relevanceB}) = ${comparison}`);
-            if (comparison === 0) comparison = a.title.localeCompare(b.title);
-            break;
-
-          case "rating":
-            const ratingA = getNumericRating(a.rating);
-            const ratingB = getNumericRating(b.rating);
-            comparison = ratingA - ratingB;
-            console.log(`Rating sort: ${a.title} (${a.rating}→${ratingA}) vs ${b.title} (${b.rating}→${ratingB}) = ${comparison}`);
-            if (comparison === 0) comparison = a.title.localeCompare(b.title);
-            break;
-            
-          case "price":
-          case "price-low":
-          case "price-high":
-            const priceA = parsePrice(a.price || '');
-            const priceB = parsePrice(b.price || '');
-            // Handle price-low vs price-high direction
-            if (sortOption.key === "price-high") {
-              comparison = priceB - priceA; // High to low
-            } else {
-              comparison = priceA - priceB; // Low to high
-            }
-            console.log(`💰 Price sort (${sortOption.key}): ${a.title} (${a.price}→£${priceA}) vs ${b.title} (${b.price}→£${priceB}) = ${comparison}`);
-            if (comparison === 0) comparison = a.title.localeCompare(b.title);
-            break;
-            
-          case "duration":
-            const durationA = parseDuration(a.duration || '');
-            const durationB = parseDuration(b.duration || '');
-            comparison = durationA - durationB;
-            console.log(`Duration sort: ${a.title} (${a.duration}→${durationA}w) vs ${b.title} (${b.duration}→${durationB}w) = ${comparison}`);
-            if (comparison === 0) comparison = a.title.localeCompare(b.title);
-            break;
-            
-          case "demand":
-            const demandA = getDemandScore(a.industryDemand || '');
-            const demandB = getDemandScore(b.industryDemand || '');
-            comparison = demandA - demandB;
-            console.log(`Demand sort: ${a.title} (${a.industryDemand}→${demandA}) vs ${b.title} (${b.industryDemand}→${demandB}) = ${comparison}`);
-            if (comparison === 0) {
-              comparison = getNumericRating(a.rating) - getNumericRating(b.rating);
-              if (comparison === 0) comparison = a.title.localeCompare(b.title);
-            }
-            break;
-            
-          case "future-proof":
-            const futureA = getFutureProofingScore(a.futureProofing);
-            const futureB = getFutureProofingScore(b.futureProofing);
-            comparison = futureA - futureB;
-            console.log(`Future-proof sort: ${a.title} (${a.futureProofing}→${futureA}) vs ${b.title} (${b.futureProofing}→${futureB}) = ${comparison}`);
-            if (comparison === 0) comparison = a.title.localeCompare(b.title);
-            break;
-            
-          case "title":
-            // Enhanced alphabetical sorting with robust validation
-            const titleA = a.title || '';
-            const titleB = b.title || '';
-            
-            if (!titleA && !titleB) {
-              comparison = 0;
-            } else if (!titleA) {
-              comparison = 1; // Move invalid titles to end
-            } else if (!titleB) {
-              comparison = -1; // Move invalid titles to end
-            } else {
-              comparison = titleA.localeCompare(titleB);
-            }
-            
-            console.log(`📝 Title sort: "${titleA}" vs "${titleB}" = ${comparison}`);
-            break;
-            
-          case "provider":
-            comparison = a.provider.localeCompare(b.provider);
-            console.log(`Provider sort: ${a.provider} vs ${b.provider} = ${comparison}`);
-            if (comparison === 0) comparison = a.title.localeCompare(b.title);
-            break;
-            
-          case "next-date":
-            const dateA = parseDate(a.nextDates);
-            const dateB = parseDate(b.nextDates);
-            comparison = dateA.getTime() - dateB.getTime();
-            console.log(`Date sort: ${a.title} (${a.nextDates}→${dateA}) vs ${b.title} (${b.nextDates}→${dateB}) = ${comparison}`);
-            if (comparison === 0) comparison = a.title.localeCompare(b.title);
-            break;
-            
-          default:
-            const defaultRelevanceA = getNumericRating(a.rating) * getFutureProofingScore(a.futureProofing);
-            const defaultRelevanceB = getNumericRating(b.rating) * getFutureProofingScore(b.futureProofing);
-            comparison = defaultRelevanceA - defaultRelevanceB;
-            console.log(`Default relevance sort: ${a.title} (${defaultRelevanceA}) vs ${b.title} (${defaultRelevanceB}) = ${comparison}`);
-            if (comparison === 0) comparison = a.title.localeCompare(b.title);
-        }
-        
-        // Apply sort direction consistently
-        return sortOption.direction === "desc" ? -comparison : comparison;
-      });
-      
-      console.log('✅ Sorted courses:', filtered.slice(0, 3).map(c => c.title));
-    }
-
-    return filtered;
-  }, [liveCourses, filters, currentSort, sortVersion]);
+      }
+    });
+    
+    console.log('🔍 Filtering results:', {
+      total: liveCourses.length,
+      filtered: filtered.length,
+      sorted: sortedCourses.length,
+      currentSort,
+      sortVersion
+    });
+    
+    return sortedCourses;
+  }, [liveCourses, filters, currentSort, sortVersion, userLocation, userCoordinates]);
 
   // Pagination calculations
-  const totalPages = coursesPerPage === -1 ? 1 : Math.ceil(filteredAndSortedCourses.length / coursesPerPage);
-  const indexOfLastCourse = coursesPerPage === -1 ? filteredAndSortedCourses.length : currentPage * coursesPerPage;
+  const totalFilteredCourses = filteredAndSortedCourses.length;
+  const indexOfLastCourse = coursesPerPage === -1 ? totalFilteredCourses : currentPage * coursesPerPage;
   const indexOfFirstCourse = coursesPerPage === -1 ? 0 : indexOfLastCourse - coursesPerPage;
-  const currentCourses = filteredAndSortedCourses.slice(indexOfFirstCourse, indexOfLastCourse);
+  const currentCourses = coursesPerPage === -1 
+    ? filteredAndSortedCourses 
+    : filteredAndSortedCourses.slice(indexOfFirstCourse, indexOfLastCourse);
 
-  // Pagination handler
-  const paginate = (pageNumber: number) => {
+  // Total pages calculation
+  const totalPages = coursesPerPage === -1 ? 1 : Math.ceil(totalFilteredCourses / coursesPerPage);
+
+  const handlePageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber);
-    // Scroll to top of courses section
-    const coursesSection = document.querySelector('[data-courses-section]');
-    if (coursesSection) {
-      coursesSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    // Scroll to top of results
+    const element = document.querySelector('[data-courses-section]');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   };
 
-  // Remove training centers for electricians - live-only approach
-  const filteredCenters: EnhancedTrainingCenter[] = [];
+  // Handle location selection from dropdown or manual input
+  const handleLocationSelect = async (location: string) => {
+    if (!location || location === "All Locations") {
+      handleClearLocation();
+      return;
+    }
 
-  // Location handling functions
-  const handleLocationSelect = (location: string, coordinates?: google.maps.LatLngLiteral) => {
     setUserLocation(location);
-    setUserCoordinates(coordinates || null);
     
-    toast({
-      title: "Location set",
-      description: `Filtering courses within ${searchRadius} miles of ${location}`,
-      variant: "success"
-    });
+    try {
+      // Use cached geocoding to get coordinates
+      const coordinates = await geocodeWithCache(location);
+      if (coordinates) {
+        setUserCoordinates({ lat: coordinates.latitude, lng: coordinates.longitude });
+      }
+    } catch (error) {
+      console.error('Failed to geocode location:', error);
+      // Continue without coordinates - we can still filter by text
+    }
   };
 
-  const handleRadiusChange = (radius: number) => {
-    setSearchRadius(radius);
-    
-    if (userLocation) {
-      toast({
-        title: "Radius updated",
-        description: `Now showing courses within ${radius} miles`,
-        variant: "default"
-      });
-    }
+  const handleManualLocationSet = (location: string) => {
+    setUserLocation(location);
   };
 
   const handleClearLocation = () => {
     setUserLocation(null);
     setUserCoordinates(null);
+    setFilters(prev => ({ ...prev, location: "All Locations" }));
   };
 
-  // Handler for when location search triggers provider search
-  const handleProviderSearchFromLocation = async (location: string, coordinates: google.maps.LatLngLiteral) => {
+  const handleLocationFound = (location: { name: string; coordinates: google.maps.LatLngLiteral }) => {
+    setUserLocation(location.name);
+    setUserCoordinates(location.coordinates);
+  };
+
+  const handleRadiusChange = (radius: number) => {
+    setSearchRadius(radius);
+  };
+
+  const handleProviderSearchFromLocation = () => {
+    searchNearbyProviders();
+  };
+
+  // Function to search for nearby providers using the edge function
+  const searchNearbyProviders = async () => {
+    if (!userLocation) {
+      toast({
+        title: "Location required",
+        description: "Please set your location first to find nearby training providers",
+        variant: "destructive"
+      });
+      return;
+    }
+
     try {
-      console.log('Auto-searching for training providers near:', location);
+      console.log('Searching for training providers near:', userLocation);
       
       const { data, error } = await supabase.functions.invoke('find-training-providers', {
         body: { 
-          postcode: location,
+          postcode: userLocation,
           radius: searchRadius * 1609.34, // Convert miles to meters
           courseType: 'electrical'
         }
@@ -643,12 +450,12 @@ const ElectricianCareerCourses = () => {
         handleNearbyProvidersFound(data.providers);
         toast({
           title: "Training providers found",
-          description: `Found ${data.providers.length} electrical training providers within ${searchRadius} miles`,
+          description: `Found ${data.providers.length} training providers within ${searchRadius} miles`,
         });
       } else {
         toast({
           title: "No providers found",
-          description: `No electrical training providers found within ${searchRadius} miles. Try increasing the search radius.`,
+          description: `No training providers found within ${searchRadius} miles. Try increasing the search radius.`,
           variant: "destructive"
         });
       }
@@ -662,6 +469,90 @@ const ElectricianCareerCourses = () => {
     }
   };
 
+  // Handle nearby providers found from Google Places
+  const handleNearbyProvidersFound = (providers: any[]) => {
+    setNearbyProviders(providers);
+    console.log('Nearby providers found:', providers.length);
+  };
+
+  // Auto-detect user location when map view is first loaded
+  const handleAutoLocationDetection = async () => {
+    if (autoLocationAttempted || isAutoDetecting) return;
+    
+    setIsAutoDetecting(true);
+    setAutoLocationAttempted(true);
+
+    try {
+      const position = await new Promise<GeolocationPosition>((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(resolve, reject, {
+          enableHighAccuracy: true,
+          timeout: 10000,
+          maximumAge: 300000 // 5 minutes
+        });
+      });
+
+      const { latitude, longitude } = position.coords;
+      
+      // Use cached reverse geocoding
+      const locationName = await reverseGeocodeWithCache(latitude, longitude);
+      const coordinates = { lat: latitude, lng: longitude };
+      
+      setUserLocation(locationName);
+      setUserCoordinates(coordinates);
+      
+      toast({
+        title: "Location Detected",
+        description: `Using your current location: ${locationName}`,
+      });
+      
+      // Automatically search for providers
+      searchNearbyProviders();
+      
+    } catch (error) {
+      console.error('Auto-location detection failed:', error);
+      if (error instanceof GeolocationPositionError) {
+        switch (error.code) {
+          case error.PERMISSION_DENIED:
+            toast({
+              title: "Location Permission",
+              description: "Location access denied. Please search manually or enable location permissions.",
+              variant: "destructive",
+            });
+            break;
+          case error.POSITION_UNAVAILABLE:
+            toast({
+              title: "Location Unavailable",
+              description: "Location unavailable. Please search manually.",
+              variant: "destructive",
+            });
+            break;
+          case error.TIMEOUT:
+            toast({
+              title: "Location Timeout",
+              description: "Location detection timed out. Please search manually.",
+              variant: "destructive",
+            });
+            break;
+        }
+      } else {
+        toast({
+          title: "Location Error",
+          description: "Failed to detect location. Please search manually.",
+          variant: "destructive",
+        });
+      }
+    } finally {
+      setIsAutoDetecting(false);
+    }
+  };
+
+  // Auto-detect location when switching to map view (only once per session)
+  useEffect(() => {
+    if (viewMode === "map" && !autoLocationAttempted && !userLocation && window.google?.maps) {
+      handleAutoLocationDetection();
+    }
+  }, [viewMode, autoLocationAttempted, userLocation]);
+
   const handleCourseSelect = (courseId: string) => {
     setSelectedCourseId(courseId);
   };
@@ -669,7 +560,6 @@ const ElectricianCareerCourses = () => {
   const handleCourseDeselect = () => {
     setSelectedCourseId(null);
   };
-
 
   const handleResetFilters = () => {
     setFilters({
@@ -751,92 +641,198 @@ const ElectricianCareerCourses = () => {
     setSelectedCenter(null);
   };
 
+  const handleCourseClick = (course: EnhancedCareerCourse) => {
+    setSelectedCourse(course);
+  };
+
   return (
-    <div className="space-y-6 overflow-x-hidden min-w-0 max-w-full">
-
-      {/* Course Comparison Tool */}
-      {showComparison && (
-        <CourseCompareMode
-          courses={liveCourses}
-          onViewDetails={viewCourseDetails}
-          selectedCourseData={selectedCourseData}
-          onAddToComparison={(course) => addToComparison(course.id, course)}
-          onRemoveFromComparison={removeFromComparison}
-          onClearComparison={clearComparison}
-        />
-      )}
-
-      {/* Bookmark Manager */}
-      {showBookmarks && (
-        <CourseBookmarkManager
-          courses={liveCourses}
-          onViewDetails={viewCourseDetails}
-        />
-      )}
-
-      {/* Sorting and View Controls */}
-      {viewMode !== "map" && (
-        <CourseSorting
-          currentSort={currentSort}
-          onSortChange={handleSortChange}
-          totalResults={filteredAndSortedCourses.length}
-          viewMode={viewMode as "grid" | "list"}
-          onViewModeChange={(mode) => setViewMode(mode as "grid" | "list" | "map")}
-        />
-      )}
-
-      {/* Main Content */}
-      <div className="space-y-6">
-        {viewMode !== "map" && (
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-2 pb-4 border-b border-border" data-courses-section>
-            <div className="flex items-center gap-2">
-              <BookOpen className="h-5 w-5 text-elec-yellow" />
-              <h2 className="text-lg font-semibold">
-                Live Courses ({filteredAndSortedCourses.length})
-              </h2>
-              {filteredAndSortedCourses.length > 0 && (
-                <Badge variant="secondary" className="text-xs">
-                  {coursesPerPage === -1 
-                    ? `${filteredAndSortedCourses.length} courses${isSearching ? ' so far' : ''}` 
-                    : `Showing ${indexOfFirstCourse + 1}-${Math.min(indexOfLastCourse, filteredAndSortedCourses.length)} of ${filteredAndSortedCourses.length}${isSearching ? ' so far' : ''}`
-                  }
-                </Badge>
-              )}
-              {userLocation && (
-                <Badge variant="outline" className="text-xs">
-                  Within {searchRadius} miles of {userLocation.split(',')[0]}
-                </Badge>
-              )}
+    <div className="space-y-6">
+      {/* Professional Career Courses Header */}
+      <header className="border-b border-elec-yellow/10 bg-elec-dark/95 backdrop-blur-sm -mx-4 sm:-mx-6 px-4 sm:px-6 py-6">
+        <div className="space-y-4">
+          {/* Main Header */}
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-lg bg-elec-yellow flex items-center justify-center">
+                <BookOpen className="h-5 w-5 text-elec-dark" />
+              </div>
+              <div>
+                <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+                  Career Courses & <span className="text-elec-yellow">Professional Development</span>
+                </h1>
+                <p className="text-sm text-white/80 mt-1">
+                  Advance your electrical career with industry-recognised qualifications and emerging technology training
+                </p>
+              </div>
             </div>
             
-            {/* Courses Per Page Selector */}
+            {/* Live Status Indicator */}
+            <div className="flex items-center gap-2 text-xs text-white/60">
+              {isLiveData ? (
+                <>
+                  <Wifi className="h-3 w-3 text-green-400" />
+                  <span className="hidden sm:inline">Live Data</span>
+                </>
+              ) : (
+                <>
+                  <WifiOff className="h-3 w-3 text-orange-400" />
+                  <span className="hidden sm:inline">Cached</span>
+                </>
+              )}
+            </div>
+          </div>
+
+          {/* Statistics Row */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            <div className="text-center sm:text-left">
+              <div className="text-2xl font-bold text-elec-yellow">{totalFilteredCourses}</div>
+              <div className="text-xs text-white/60">Available Courses</div>
+            </div>
+            <div className="text-center sm:text-left">
+              <div className="text-2xl font-bold text-elec-yellow">{courseAnalytics.totalProviders}</div>
+              <div className="text-xs text-white/60">Training Providers</div>
+            </div>
+            <div className="text-center sm:text-left">
+              <div className="text-2xl font-bold text-elec-yellow">{courseAnalytics.averageRating}/5</div>
+              <div className="text-xs text-white/60">Average Rating</div>
+            </div>
+            <div className="text-center sm:text-left">
+              <div className="text-2xl font-bold text-elec-yellow">{courseAnalytics.highDemandCourses}</div>
+              <div className="text-xs text-white/60">High Demand</div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      {/* Featured Courses Carousel */}
+      <div className="space-y-6">
+        <CourseFeaturedCarousel 
+          courses={filteredAndSortedCourses.slice(0, 6)}
+          onCourseClick={handleCourseClick}
+        />
+      </div>
+
+      {/* Enhanced search and controls */}
+      <div className="space-y-4">
+        <EnhancedCourseSearch
+          filters={filters}
+          onFiltersChange={setFilters}
+          userLocation={userLocation}
+          onClearLocation={handleClearLocation}
+          isAutoDetecting={isAutoDetecting}
+          radius={searchRadius}
+          onRadiusChange={setSearchRadius}
+          onRefresh={refreshCourses}
+          isLoading={isSearching}
+          isLiveData={isLiveData}
+          totalResults={totalFilteredCourses}
+        />
+
+        {/* Course sorting and view controls */}
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+          <div className="flex flex-wrap items-center gap-2">
+            <CourseSorting 
+              currentSort={currentSort} 
+              onSortChange={handleSortChange}
+              totalResults={totalFilteredCourses}
+              viewMode={viewMode as "grid" | "list"}
+              onViewModeChange={(mode) => setViewMode(mode as "grid" | "list" | "map")}
+            />
+            
+            {/* Courses per page selector */}
             <div className="flex items-center gap-2">
-              <span className="text-sm text-muted-foreground hidden sm:inline">Courses per page:</span>
-              <span className="text-sm text-muted-foreground sm:hidden">Per page:</span>
-              <Select
-                value={coursesPerPage === -1 ? "all" : coursesPerPage.toString()} 
-                onValueChange={handleCoursesPerPageChange}
-                disabled={isSearching}
-              >
-                <SelectTrigger className="w-auto min-w-[100px] bg-background border-border">
+              <span className="text-sm text-muted-foreground hidden sm:inline">Show:</span>
+              <Select value={coursesPerPage === -1 ? "all" : coursesPerPage.toString()} onValueChange={handleCoursesPerPageChange}>
+                <SelectTrigger className="w-20 h-8">
                   <SelectValue />
                 </SelectTrigger>
-                <SelectContent className="bg-popover border-border">
-                  <SelectItem value="5">5</SelectItem>
-                  <SelectItem value="10">10</SelectItem>
+                <SelectContent>
                   <SelectItem value="20">20</SelectItem>
                   <SelectItem value="50">50</SelectItem>
+                  <SelectItem value="100">100</SelectItem>
                   <SelectItem value="all">All</SelectItem>
                 </SelectContent>
               </Select>
             </div>
           </div>
-        )}
-        
-        {/* Map View */}
+
+          {/* View mode controls */}
+          <div className="flex items-center gap-2">
+            <Button
+              variant={viewMode === "grid" ? "default" : "outline"}
+              size="sm"
+              onClick={() => setViewMode("grid")}
+              className="h-8"
+            >
+              <List className="h-4 w-4" />
+            </Button>
+            <Button
+              variant={viewMode === "map" ? "default" : "outline"}
+              size="sm"
+              onClick={() => setViewMode("map")}
+              className="h-8"
+            >
+              <Map className="h-4 w-4" />
+            </Button>
+            
+            {/* Bookmark toggle */}
+            <Button
+              variant={showBookmarks ? "default" : "outline"}
+              size="sm"
+              onClick={() => setShowBookmarks(!showBookmarks)}
+              className="h-8"
+            >
+              <span className="hidden sm:inline">Bookmarks</span>
+              <span className="sm:hidden">★</span>
+            </Button>
+            
+            {/* Comparison toggle */}
+            {selectedCount > 0 && (
+              <Button
+                variant={showComparison ? "default" : "outline"}
+                size="sm"
+                onClick={() => setShowComparison(!showComparison)}
+                className="h-8"
+              >
+                <Scale className="h-4 w-4 mr-1" />
+                <span className="hidden sm:inline">Compare</span>
+                <span className="sm:hidden">{selectedCount}</span>
+              </Button>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* All Available Courses Section */}
+      <div className="space-y-4">
+        <div className="border-b border-elec-yellow/20 pb-4">
+          <h2 className="text-xl sm:text-2xl font-bold text-white">
+            All Available Courses
+          </h2>
+          <p className="text-sm text-white/80 mt-1">
+            Browse our complete catalogue of electrical training courses and qualifications
+          </p>
+        </div>
+
+        {/* Main content based on view mode */}
         {viewMode === "map" ? (
           <div className="space-y-4">
-            {/* Enhanced Location Search with Provider Discovery - Only in Map View */}
+            {/* Google Maps Integration */}
+            <GoogleMapsLoader>
+              <CourseMap
+                providers={providersForMap}
+                userLocation={userCoordinates}
+                onProviderSelect={(provider) => {
+                  console.log('Selected provider:', provider);
+                  toast({
+                    title: "Training Provider",
+                    description: `${provider.name} - ${provider.vicinity || 'Contact for more details'}`,
+                  });
+                }}
+              />
+            </GoogleMapsLoader>
+            
+            {/* Location-based search */}
             <LocationBasedCourseSearch
               onLocationSelect={handleLocationSelect}
               onRadiusChange={handleRadiusChange}
@@ -846,128 +842,106 @@ const ElectricianCareerCourses = () => {
               onProviderSearch={handleProviderSearchFromLocation}
               onUseCurrentLocation={handleAutoLocationDetection}
             />
-            
-            
-            <GoogleMapsLoader>
-              <CourseMap 
-                nearbyProviders={providersForMap}
-                selectedCourse={selectedCourseId}
-                onCourseSelect={handleCourseSelect}
-                onCourseDeselect={handleCourseDeselect}
-                userLocation={userLocation}
-                userCoordinates={userCoordinates}
-                searchRadius={searchRadius}
-                isLoading={isLoadingLive}
-              />
-            </GoogleMapsLoader>
           </div>
         ) : (
-          /* Grid/List View */
           <div className="space-y-6">
-            {isLoadingLive && !isLiveData ? (
-              /* Show skeleton loading on initial load */
+            {/* Course Comparison Tool */}
+            {showComparison && (
+              <CourseCompareMode
+                courses={liveCourses}
+                onViewDetails={viewCourseDetails}
+                selectedCourseData={selectedCourseData}
+                onAddToComparison={(course) => addToComparison(course.id, course)}
+                onRemoveFromComparison={removeFromComparison}
+                onClearComparison={clearComparison}
+              />
+            )}
+
+            {/* Bookmark Manager */}
+            {showBookmarks && (
+              <CourseBookmarkManager
+                courses={liveCourses}
+                onViewDetails={viewCourseDetails}
+              />
+            )}
+
+            {/* Results Display */}
+            {isSearching ? (
+              <CourseGridSkeleton />
+            ) : filteredAndSortedCourses.length === 0 ? (
+              <EmptySearchResults
+                searchQuery={filters.searchQuery}
+                onResetFilters={handleResetFilters}
+                suggestions={[
+                  "18th Edition Wiring Regulations",
+                  "EV Charging Installation",
+                  "Inspection and Testing",
+                  "Solar PV Installation"
+                ]}
+              />
+            ) : (
               <div className="space-y-4">
-                <div className="text-center py-8">
-                  <h3 className="text-lg font-medium text-elec-yellow mb-2">Finding electrical courses for you...</h3>
-                  <p className="text-sm text-muted-foreground">Searching training providers across the UK</p>
+                {/* Courses Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+                  {currentCourses.map((course) => (
+                    <EnhancedCourseCard
+                      key={course.id}
+                      course={course}
+                      onViewDetails={() => viewCourseDetails(course)}
+                      onToggleBookmark={(courseId) => toggleDatabaseBookmark('course', courseId.toString())}
+                      isBookmarked={isDatabaseBookmarked('course', course.id.toString())}
+                      onAddToComparison={() => addToComparison(course.id, course)}
+                      onRemoveFromComparison={() => removeFromComparison(course.id)}
+                      isInComparison={isInComparison(course.id)}
+                      canAddToComparison={selectedCount < 3}
+                    />
+                  ))}
                 </div>
-                <CourseGridSkeleton count={9} />
-              </div>
-            ) : filteredAndSortedCourses.length > 0 ? (
-              <div className="space-y-6">
-                 <div className={viewMode === "grid" ? 
-                   "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8" : 
-                   "space-y-4 md:space-y-6"
-                 }>
-                   {currentCourses.map((course) => (
-                   <div key={course.id} className="relative group">
-                     <CourseNewsCard 
-                       course={course}
-                       onClick={() => viewCourseDetails(course)}
-                     />
-                     
-                     {/* Action Buttons - Positioned below rating badge area */}
-                     <div className="absolute top-12 right-2 flex flex-col gap-1 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-200 mt-[10px]">
-                       <Button
-                         variant="ghost"
-                         size="sm"
-                         onClick={() => toggleDatabaseBookmark(String(course.id))}
-                         className={`min-h-[40px] min-w-[40px] p-0 md:h-8 md:w-8 rounded-full bg-background/80 backdrop-blur-sm border border-border/50 ${isDatabaseBookmarked(String(course.id)) ? 
-                           'text-elec-yellow hover:text-elec-yellow/80 border-elec-yellow/50' : 
-                           'text-muted-foreground hover:text-elec-yellow hover:border-elec-yellow/50'
-                         }`}
-                         title={isDatabaseBookmarked(String(course.id)) ? "Remove from saved" : "Save course"}
-                       >
-                         <BookOpen className="h-4 w-4" />
-                       </Button>
-                       
-                       <Button
-                         variant="ghost"
-                         size="sm"
-                         onClick={() => addToComparison(course.id, course)}
-                         className={`min-h-[40px] min-w-[40px] p-0 md:h-8 md:w-8 rounded-full bg-background/80 backdrop-blur-sm border border-border/50 ${isInComparison(course.id) ? 
-                           'text-blue-400 hover:text-blue-300 border-blue-400/50' : 
-                           'text-muted-foreground hover:text-blue-400 hover:border-blue-400/50'
-                         }`}
-                         title="Add to comparison"
-                         disabled={selectedCount >= 3 && !isInComparison(course.id)}
-                       >
-                         <Plus className="h-4 w-4" />
-                       </Button>
-                     </div>
-                   </div>
-                   ))}
-                </div>
-                
+
                 {/* Pagination */}
-                {filteredAndSortedCourses.length > 0 && coursesPerPage !== -1 && filteredAndSortedCourses.length > coursesPerPage && (
-                  <JobPagination
-                    currentPage={currentPage}
-                    totalPages={totalPages}
-                    paginate={paginate}
-                  />
+                {coursesPerPage !== -1 && totalPages > 1 && (
+                  <div className="flex justify-center pt-6">
+                    <JobPagination
+                      currentPage={currentPage}
+                      totalPages={totalPages}
+                      onPageChange={handlePageChange}
+                    />
+                  </div>
                 )}
               </div>
-            ) : liveError ? (
-              /* Error state with retry option */
-              <Card className="border-destructive/20 bg-destructive/5">
-                <CardContent className="p-6 text-center">
-                  <div className="space-y-4">
-                    <WifiOff className="h-12 w-12 text-destructive mx-auto" />
-                    <div>
-                      <h3 className="text-lg font-medium">Failed to load courses</h3>
-                      <p className="text-sm text-muted-foreground mt-1">{liveError}</p>
-                    </div>
-                    <Button onClick={() => refreshCourses()} variant="outline">
-                      <RefreshCw className="h-4 w-4 mr-2" />
-                      Try Again
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            ) : (
-              <EmptySearchResults type="courses" onReset={handleResetFilters} />
+            )}
+
+            {/* Course Selection Tips */}
+            {!isSearching && (
+              <CourseSelectionTips />
             )}
           </div>
         )}
       </div>
-      
+
       {/* Course Details Modal */}
       {selectedCourse && (
-        <ModernCourseDetailsModal 
+        <ModernCourseDetailsModal
           course={selectedCourse}
-          open={true}
-          onOpenChange={(open) => !open && setSelectedCourse(null)}
+          isOpen={!!selectedCourse}
+          onClose={handleClose}
+          onToggleBookmark={(courseId) => toggleDatabaseBookmark('course', courseId.toString())}
+          isBookmarked={isDatabaseBookmarked('course', selectedCourse.id.toString())}
+          onAddToComparison={() => addToComparison(selectedCourse.id, selectedCourse)}
+          onRemoveFromComparison={() => removeFromComparison(selectedCourse.id)}
+          isInComparison={isInComparison(selectedCourse.id)}
+          canAddToComparison={selectedCount < 3}
         />
       )}
-      
-      {/* Training Centre Details Modal */}
-      {selectedCenter && (
-        <TrainingCentreDetailsModal center={selectedCenter} onClose={handleClose} />
-      )}
 
-      {/* Course Selection Tips */}
-      <CourseSelectionTips />
+      {/* Training Center Details Modal */}
+      {selectedCenter && (
+        <TrainingCentreDetailsModal
+          center={selectedCenter}
+          isOpen={!!selectedCenter}
+          onClose={handleClose}
+        />
+      )}
     </div>
   );
 };
