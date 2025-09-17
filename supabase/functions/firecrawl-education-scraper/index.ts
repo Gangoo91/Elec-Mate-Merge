@@ -41,6 +41,7 @@ interface LiveEducationData {
   employmentRate: number;
   averageStartingSalary: string;
   courseUrl: string;
+  imageUrl?: string;
   lastUpdated: string;
 }
 
@@ -193,6 +194,7 @@ function transformFirecrawlToEducationData(firecrawlCourses: FirecrawlCourse[]):
       employmentRate,
       averageStartingSalary: '£28,000',
       courseUrl: course.visit_link,
+      imageUrl: course.imageUrl,
       lastUpdated: new Date().toISOString()
     };
   });

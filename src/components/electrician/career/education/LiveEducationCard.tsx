@@ -53,7 +53,23 @@ const LiveEducationCard = ({ option, onViewDetails }: LiveEducationCardProps) =>
   };
 
   return (
-    <Card className="border-elec-yellow/30 bg-gradient-to-b from-elec-gray to-elec-gray/80 hover:from-elec-gray/90 hover:to-elec-gray/70 transition-all duration-300 cursor-pointer shadow-lg shadow-black/20 h-full group">
+    <Card className="border-elec-yellow/30 bg-gradient-to-b from-elec-gray to-elec-gray/80 hover:from-elec-gray/90 hover:to-elec-gray/70 transition-all duration-300 cursor-pointer shadow-lg shadow-black/20 h-full group overflow-hidden">
+      {/* Course Image */}
+      {option.imageUrl && (
+        <div className="relative h-40 w-full overflow-hidden">
+          <img 
+            src={option.imageUrl} 
+            alt={`${option.title} course image`}
+            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+            onError={(e) => {
+              e.currentTarget.style.display = 'none';
+            }}
+            loading="lazy"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-elec-gray/80 to-transparent"></div>
+        </div>
+      )}
+      
       <CardHeader className="space-y-3">
         <div className="flex items-start justify-between">
           <div className="flex items-center gap-2">

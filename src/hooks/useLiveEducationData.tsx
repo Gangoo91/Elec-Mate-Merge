@@ -22,6 +22,7 @@ export interface LiveEducationData {
   employmentRate: number;
   averageStartingSalary: string;
   courseUrl: string;
+  imageUrl?: string;
   lastUpdated: string;
 }
 
