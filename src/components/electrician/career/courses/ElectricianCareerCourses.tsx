@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useEffect } from "react";
 import { DropdownTabs } from "@/components/ui/dropdown-tabs";
-import EnhancedCourseCard from "../../../apprentice/career/courses/EnhancedCourseCard";
+import EnhancedCourseGridCard from "./EnhancedCourseGridCard";
 import EnhancedTrainingCenterCard from "../../../apprentice/career/courses/EnhancedTrainingCenterCard";
 import ModernCourseDetailsModal from "./ModernCourseDetailsModal";
 import TrainingCentreDetailsModal from "../../../apprentice/career/courses/TrainingCenterDetailsModal";
@@ -9,7 +9,6 @@ import EmptySearchResults from "../../../apprentice/career/courses/EmptySearchRe
 // Removed separate search components for simplified interface
 import FeaturedCoursesCarousel from "./FeaturedCoursesCarousel";
 import CourseFeaturedCarousel from "./CourseFeaturedCarousel";
-import CourseNewsCard from "./CourseNewsCard";
 import CourseBookmarkManager, { useBookmarkManager } from "./CourseBookmarkManager";
 import CourseCompareMode from "./CourseCompareMode";
 import { useCourseComparison } from "@/hooks/useCourseComparison";
@@ -829,10 +828,10 @@ const ElectricianCareerCourses = () => {
                 {/* Courses Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                   {currentCourses.map((course) => (
-                    <EnhancedCourseCard
+                    <EnhancedCourseGridCard
                       key={course.id}
                       course={course}
-                      onViewDetails={viewCourseDetails}
+                      onClick={() => viewCourseDetails(course)}
                     />
                   ))}
                 </div>

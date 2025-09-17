@@ -320,7 +320,8 @@ export const enhancedCareerCourses: EnhancedCareerCourse[] = [
       "Practical operation training"
     ],
     assessmentMethod: "Practical test and theory exam",
-    continuousAssessment: false
+    continuousAssessment: false,
+    external_url: "https://www.ipaf.org/en/training/courses"
   },
   {
     id: 8,
@@ -716,7 +717,193 @@ export const enhancedCareerCourses: EnhancedCareerCourse[] = [
       "Safety management systems"
     ],
     assessmentMethod: "Safety scenario assessment",
-    continuousAssessment: false
+    continuousAssessment: false,
+    external_url: "https://www.renewablesafety.org.uk/training"
+  },
+  {
+    id: 19,
+    title: "PAT Testing (Portable Appliance Testing)",
+    provider: "PAT Testing Academy",
+    description: "Comprehensive training on portable appliance testing procedures, safety standards, and certification for electrical equipment inspection.",
+    duration: "1 day",
+    level: "Beginner",
+    price: "£150 - £250",
+    format: "Hands-on practical training with certification",
+    nextDates: ["10 June 2025", "24 June 2025", "8 July 2025", "22 July 2025"],
+    rating: 4.8,
+    locations: ["London", "Manchester", "Birmingham", "Leeds", "Glasgow", "Online"],
+    category: "Safety & Compliance",
+    industryDemand: "High",
+    futureProofing: 4,
+    salaryImpact: "£1,000 - £2,500 annual increase",
+    careerOutcomes: [
+      "PAT testing certification",
+      "Compliance specialist",
+      "Self-employment opportunities",
+      "Safety inspector roles"
+    ],
+    accreditation: ["City & Guilds 2377", "IET Approved", "NICEIC Recognition"],
+    employerSupport: true,
+    prerequisites: ["Basic electrical knowledge", "18th Edition preferred"],
+    courseOutline: [
+      "PAT testing regulations",
+      "Testing procedures and frequencies",
+      "Visual inspections",
+      "Electrical testing methods",
+      "Documentation and certification",
+      "Business opportunities"
+    ],
+    assessmentMethod: "Practical testing and written exam",
+    continuousAssessment: false,
+    external_url: "https://www.pattesting.com/training"
+  },
+  {
+    id: 20,
+    title: "CompEx (Explosive Atmospheres)",
+    provider: "CompEx Training Ltd",
+    description: "Essential certification for working with electrical equipment in hazardous areas and explosive atmospheres.",
+    duration: "3-5 days",
+    level: "Advanced",
+    price: "£695 - £995",
+    format: "Classroom with practical scenarios",
+    nextDates: ["17 June 2025", "15 July 2025", "19 August 2025", "16 September 2025"],
+    rating: 4.9,
+    locations: ["Aberdeen", "London", "Manchester", "Hull"],
+    category: "Professional Development",
+    industryDemand: "High",
+    futureProofing: 4,
+    salaryImpact: "£5,000 - £10,000 annual increase",
+    careerOutcomes: [
+      "Hazardous area specialist",
+      "Oil & gas industry opportunities",
+      "Chemical plant installations",
+      "Offshore work eligibility"
+    ],
+    accreditation: ["CompEx Certified", "IECEx Recognition", "ATEX Compliant"],
+    employerSupport: true,
+    prerequisites: ["Electrical qualification", "Industrial experience", "NEBOSH beneficial"],
+    courseOutline: [
+      "Hazardous area principles",
+      "Equipment selection and installation",
+      "Inspection and maintenance",
+      "Certification requirements",
+      "Safety procedures",
+      "Practical applications"
+    ],
+    assessmentMethod: "Written exam and practical assessment",
+    continuousAssessment: true,
+    external_url: "https://www.compex.org.uk/training"
+  },
+  {
+    id: 21,
+    title: "High Voltage Switching Operations",
+    provider: "HV Training Solutions",
+    description: "Authorised person training for high voltage switching operations and electrical safety in high voltage environments.",
+    duration: "5 days",
+    level: "Advanced",
+    price: "£1,195 - £1,495",
+    format: "Practical training with live HV demonstrations",
+    nextDates: ["24 June 2025", "22 July 2025", "26 August 2025", "23 September 2025"],
+    rating: 4.8,
+    locations: ["Birmingham", "Manchester", "Edinburgh", "Cardiff"],
+    category: "Professional Development",
+    industryDemand: "High",
+    futureProofing: 4,
+    salaryImpact: "£8,000 - £15,000 annual increase",
+    careerOutcomes: [
+      "Authorised Person (AP) status",
+      "HV switching authorisation",
+      "Utility company opportunities",
+      "Senior electrical roles"
+    ],
+    accreditation: ["ENA Recognition", "DNO Approved", "Utility Standards"],
+    employerSupport: false,
+    prerequisites: ["Advanced electrical qualification", "HV awareness training", "Medical fitness"],
+    courseOutline: [
+      "HV safety rules and procedures",
+      "Switching operations",
+      "Permit to work systems",
+      "Emergency procedures",
+      "Risk assessment",
+      "Practical switching exercises"
+    ],
+    assessmentMethod: "Practical switching test and written exam",
+    continuousAssessment: true,
+    external_url: "https://www.hvtraining.co.uk/courses"
+  },
+  {
+    id: 22,
+    title: "Emergency First Aid at Work",
+    provider: "Red Cross Training",
+    description: "Essential first aid training for electricians working in potentially hazardous environments, including electrical emergency procedures.",
+    duration: "1 day",
+    level: "Beginner",
+    price: "£85 - £150",
+    format: "Practical hands-on training with scenarios",
+    nextDates: ["5 June 2025", "12 June 2025", "19 June 2025", "26 June 2025"],
+    rating: 4.9,
+    locations: ["All major cities", "On-site training available"],
+    category: "Safety & Compliance",
+    industryDemand: "High",
+    futureProofing: 5,
+    salaryImpact: "£500 - £1,500 annual increase",
+    careerOutcomes: [
+      "First aid certification",
+      "Enhanced safety credentials",
+      "Site safety responsibilities",
+      "Emergency response capability"
+    ],
+    accreditation: ["HSE Approved", "Ofqual Regulated", "Red Cross Certified"],
+    employerSupport: true,
+    prerequisites: ["None"],
+    courseOutline: [
+      "Primary survey and CPR",
+      "Dealing with unconscious casualties",
+      "Electric shock procedures",
+      "Burns and bleeding control",
+      "Shock and heart conditions",
+      "Record keeping and reporting"
+    ],
+    assessmentMethod: "Practical assessment throughout course",
+    continuousAssessment: true,
+    external_url: "https://www.redcross.org.uk/first-aid-training"
+  },
+  {
+    id: 23,
+    title: "ECS Card Application & Health & Safety",
+    provider: "ECS Assessment Centres",
+    description: "Health & safety assessment and ECS card application support for electricians working on construction sites.",
+    duration: "Half day",
+    level: "Beginner",
+    price: "£50 - £85",
+    format: "Assessment centre with online test",
+    nextDates: ["Available daily at assessment centres"],
+    rating: 4.6,
+    locations: ["Nationwide assessment centres"],
+    category: "Safety & Compliance",
+    industryDemand: "High",
+    futureProofing: 4,
+    salaryImpact: "£1,000 - £3,000 annual increase",
+    careerOutcomes: [
+      "Construction site access",
+      "ECS card certification",
+      "Enhanced employability",
+      "Compliance with site requirements"
+    ],
+    accreditation: ["ECS Approved", "CSCS Equivalent", "JIB Recognition"],
+    employerSupport: true,
+    prerequisites: ["Electrical qualification", "Basic health & safety knowledge"],
+    courseOutline: [
+      "Construction health & safety",
+      "Electrical safety on sites",
+      "Risk assessment principles",
+      "Personal protective equipment",
+      "Emergency procedures",
+      "Environmental awareness"
+    ],
+    assessmentMethod: "Computer-based health & safety test",
+    continuousAssessment: false,
+    external_url: "https://www.ecscard.org.uk/apply"
   }
 ];
 
