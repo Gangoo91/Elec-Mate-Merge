@@ -157,19 +157,6 @@ export function useMultiLoadDiversityCalculator() {
     setErrors(prev => ({ ...prev, [field]: undefined }));
   };
 
-  // Auto-calculate when inputs change (after a brief delay)
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      const hasValidLoads = loads.some(load => 
-        load.type && load.connectedLoad && load.numberOfUnits
-      );
-      if (hasValidLoads) {
-        calculateDemand();
-      }
-    }, 500);
-
-    return () => clearTimeout(timer);
-  }, [loads, location, supplyVoltage]);
 
   return {
     // State
