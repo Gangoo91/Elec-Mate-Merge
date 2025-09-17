@@ -9,6 +9,8 @@ import EmptySearchResults from "../../../apprentice/career/courses/EmptySearchRe
 import EnhancedCourseSearch from "./EnhancedCourseSearch";
 import CourseSorting, { sortOptions } from "./CourseSorting";
 import FeaturedCoursesCarousel from "./FeaturedCoursesCarousel";
+import CourseFeaturedCarousel from "./CourseFeaturedCarousel";
+import CourseNewsCard from "./CourseNewsCard";
 import CourseBookmarkManager, { useBookmarkManager } from "./CourseBookmarkManager";
 import CourseCompareMode from "./CourseCompareMode";
 import { useCourseComparison } from "@/hooks/useCourseComparison";
@@ -903,24 +905,83 @@ const ElectricianCareerCourses = () => {
         </div>
       </div>
 
+      {/* Professional Header */}
+      <div className="bg-white/5 rounded-xl border border-white/10 p-4 sm:p-6">
+        <div className="space-y-1 mb-4">
+          <h1 className="text-2xl sm:text-3xl font-bold text-white">
+            UK Electrical Career Courses & Training
+          </h1>
+          <p className="text-sm text-white/80">
+            Professional electrical courses from leading UK training providers
+          </p>
+        </div>
+        
+        {/* Live data indicators */}
+        <div className="bg-white/5 rounded-lg border border-white/10 p-3 sm:p-4">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4">
+            <div className="flex flex-col gap-2 min-w-0 flex-1">
+              <div className="text-sm text-white/80">
+                <p className="break-words">
+                  Available Courses: <span className="text-elec-yellow font-medium">{filteredAndSortedCourses.length}</span>
+                  {isUsingFallback && (
+                    <span className="text-elec-yellow/80 ml-2 text-xs">
+                      (Cached Data)
+                    </span>
+                  )}
+                </p>
+                {liveTotal > 0 && (
+                  <p className="text-xs text-white/80 mt-1">
+                    Sources: {isLiveData ? 'Live Education API' : 'Cached Training Data'}
+                  </p>
+                )}
+              </div>
+            </div>
+            <Button
+              onClick={() => refreshCourses()}
+              disabled={isLoadingLive}
+              size="sm"
+              variant="outline"
+              className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 hover:border-elec-yellow/50 bg-transparent whitespace-nowrap flex-shrink-0 transition-all duration-200 touch-target min-h-[44px]"
+            >
+              <RefreshCw className={`h-4 w-4 mr-2 ${isLoadingLive ? 'animate-spin' : ''}`} />
+              <span className="hidden xs:inline">{isLoadingLive ? 'Updating...' : 'Refresh Courses'}</span>
+              <span className="xs:hidden">{isLoadingLive ? 'Updating...' : 'Refresh'}</span>
+            </Button>
+          </div>
+        </div>
+      </div>
+
       {/* Featured Courses Carousel - Hidden in map view */}
       {viewMode !== "map" && liveCourses.length > 0 && (
-        <FeaturedCoursesCarousel 
-          courses={liveCourses.slice(0, 6)} 
-          onViewDetails={viewCourseDetails} 
-        />
+        <div className="transform transition-all duration-300">
+          <CourseFeaturedCarousel 
+            courses={liveCourses.slice(0, 6)} 
+            onCourseClick={viewCourseDetails} 
+          />
+        </div>
       )}
 
       {/* Enhanced Search and Filters - Hidden in map view */}
       {viewMode !== "map" && (
-               <EnhancedCourseSearch 
-                 filters={filters}
-                 onFiltersChange={setFilters}
-                 onReset={handleResetFilters}
-                 totalResults={filteredAndSortedCourses.length}
-                 isSearching={isSearching}
-                 viewMode={viewMode}
-               />
+        <div className="space-y-4 sm:space-y-6">
+          <div className="flex items-center gap-3">
+            <div className="h-px bg-gradient-to-r from-transparent via-elec-yellow/30 to-transparent flex-1" />
+            <h3 className="text-lg sm:text-xl font-semibold text-white px-4">
+              More Courses
+            </h3>
+            <div className="h-px bg-gradient-to-r from-transparent via-elec-yellow/30 to-transparent flex-1" />
+          </div>
+          <div className="bg-white/5 rounded-xl border border-white/10 p-4 sm:p-6">
+            <EnhancedCourseSearch 
+              filters={filters}
+              onFiltersChange={setFilters}
+              onReset={handleResetFilters}
+              totalResults={filteredAndSortedCourses.length}
+              isSearching={isSearching}
+              viewMode={viewMode}
+            />
+          </div>
+        </div>
       )}
 
       {/* Course Comparison Tool */}
@@ -1044,53 +1105,48 @@ const ElectricianCareerCourses = () => {
               </div>
             ) : filteredAndSortedCourses.length > 0 ? (
               <div className="space-y-6">
-                <div className={viewMode === "grid" ? 
-                  "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4 md:gap-6" : 
-                  "space-y-4 md:space-y-6"
-                }>
-                  {currentCourses.map((course) => (
-                  <div key={course.id} className="relative group">
-                    <EnhancedCourseCard 
-                      course={course}
-                      onViewDetails={viewCourseDetails}
-                    />
-                    
-                    {/* Top Badges Row - Hidden LIVE badge per user request */}
-                    <div className="absolute top-2 left-2 flex flex-wrap gap-1 max-w-[calc(100%-120px)]">
-                      {/* LIVE badge hidden */}
-                    </div>
-                    
-                    {/* Action Buttons - Positioned below rating badge area */}
-                    <div className="absolute top-12 right-2 flex flex-col gap-1 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-200 mt-[10px]">
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => toggleDatabaseBookmark(String(course.id))}
-                        className={`min-h-[40px] min-w-[40px] p-0 md:h-8 md:w-8 rounded-full bg-background/80 backdrop-blur-sm border border-border/50 ${isDatabaseBookmarked(String(course.id)) ? 
-                          'text-elec-yellow hover:text-elec-yellow/80 border-elec-yellow/50' : 
-                          'text-muted-foreground hover:text-elec-yellow hover:border-elec-yellow/50'
-                        }`}
-                        title={isDatabaseBookmarked(String(course.id)) ? "Remove from saved" : "Save course"}
-                      >
-                        <BookOpen className="h-4 w-4" />
-                      </Button>
-                      
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => addToComparison(course.id, course)}
-                        className={`min-h-[40px] min-w-[40px] p-0 md:h-8 md:w-8 rounded-full bg-background/80 backdrop-blur-sm border border-border/50 ${isInComparison(course.id) ? 
-                          'text-blue-400 hover:text-blue-300 border-blue-400/50' : 
-                          'text-muted-foreground hover:text-blue-400 hover:border-blue-400/50'
-                        }`}
-                        title="Add to comparison"
-                        disabled={selectedCount >= 3 && !isInComparison(course.id)}
-                      >
-                        <Plus className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  </div>
-                  ))}
+                 <div className={viewMode === "grid" ? 
+                   "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4 md:gap-6" : 
+                   "space-y-4 md:space-y-6"
+                 }>
+                   {currentCourses.map((course) => (
+                   <div key={course.id} className="relative group">
+                     <CourseNewsCard 
+                       course={course}
+                       onClick={() => viewCourseDetails(course)}
+                     />
+                     
+                     {/* Action Buttons - Positioned below rating badge area */}
+                     <div className="absolute top-12 right-2 flex flex-col gap-1 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-200 mt-[10px]">
+                       <Button
+                         variant="ghost"
+                         size="sm"
+                         onClick={() => toggleDatabaseBookmark(String(course.id))}
+                         className={`min-h-[40px] min-w-[40px] p-0 md:h-8 md:w-8 rounded-full bg-background/80 backdrop-blur-sm border border-border/50 ${isDatabaseBookmarked(String(course.id)) ? 
+                           'text-elec-yellow hover:text-elec-yellow/80 border-elec-yellow/50' : 
+                           'text-muted-foreground hover:text-elec-yellow hover:border-elec-yellow/50'
+                         }`}
+                         title={isDatabaseBookmarked(String(course.id)) ? "Remove from saved" : "Save course"}
+                       >
+                         <BookOpen className="h-4 w-4" />
+                       </Button>
+                       
+                       <Button
+                         variant="ghost"
+                         size="sm"
+                         onClick={() => addToComparison(course.id, course)}
+                         className={`min-h-[40px] min-w-[40px] p-0 md:h-8 md:w-8 rounded-full bg-background/80 backdrop-blur-sm border border-border/50 ${isInComparison(course.id) ? 
+                           'text-blue-400 hover:text-blue-300 border-blue-400/50' : 
+                           'text-muted-foreground hover:text-blue-400 hover:border-blue-400/50'
+                         }`}
+                         title="Add to comparison"
+                         disabled={selectedCount >= 3 && !isInComparison(course.id)}
+                       >
+                         <Plus className="h-4 w-4" />
+                       </Button>
+                     </div>
+                   </div>
+                   ))}
                 </div>
                 
                 {/* Pagination */}
