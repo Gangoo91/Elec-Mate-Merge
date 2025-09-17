@@ -1,12 +1,12 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { 
   Award, MapPin, Clock, PoundSterling, 
-  TrendingUp, ExternalLink, Users, CheckCircle, Calendar
+  TrendingUp, ExternalLink, Users, Calendar, Eye, Star
 } from "lucide-react";
 import { AccreditationOption } from "../../../apprentice/career/accreditation/enhancedAccreditationData";
 import { isValidUrl } from "@/utils/urlUtils";
+import { cn } from "@/lib/utils";
 
 interface AccreditationCardProps {
   accreditation: AccreditationOption;
@@ -14,8 +14,16 @@ interface AccreditationCardProps {
 }
 
 const AccreditationCard = ({ accreditation, onViewDetails }: AccreditationCardProps) => {
-  const isAvailableOnline = () => {
-    return accreditation.onlineAvailable;
+  const getCategoryColor = (category: string) => {
+    const colors = {
+      "Professional Bodies": "bg-purple-500/20 border-purple-500/30 text-purple-300",
+      "Trade Associations": "bg-blue-500/20 border-blue-500/30 text-blue-300",
+      "Safety Certifications": "bg-red-500/20 border-red-500/30 text-red-300",
+      "Specialist Skills": "bg-yellow-500/20 border-yellow-500/30 text-yellow-300",
+      "Management & Leadership": "bg-green-500/20 border-green-500/30 text-green-300",
+      "Health & Safety": "bg-orange-500/20 border-orange-500/30 text-orange-300",
+    };
+    return colors[category as keyof typeof colors] || "bg-white/10 border-white/20 text-white/80";
   };
 
   const getPopularityColor = (popularity: number) => {
@@ -24,80 +32,79 @@ const AccreditationCard = ({ accreditation, onViewDetails }: AccreditationCardPr
     return 'text-red-400';
   };
 
-  const getCategoryIcon = (category: string) => {
-    switch (category.toLowerCase()) {
-      case 'professional bodies':
-        return '🏆';
-      case 'trade associations':
-        return '🔧';
-      case 'safety certifications':
-        return '🛡️';
-      case 'specialist skills':
-        return '⚡';
-      case 'management & leadership':
-        return '👥';
-      case 'health & safety':
-        return '🦺';
-      default:
-        return '📋';
-    }
-  };
-
   return (
-    <Card className="border-elec-yellow/30 bg-gradient-to-b from-elec-gray to-elec-gray/80 hover:from-elec-gray/90 hover:to-elec-gray/70 transition-all duration-300 cursor-pointer shadow-lg shadow-black/20 h-full group">
-      <CardHeader className="space-y-3">
-        <div className="flex items-start justify-between">
-          <div className="flex items-center gap-2">
-            <span className="text-lg">{getCategoryIcon(accreditation.category)}</span>
-            <Badge variant="outline" className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30 text-xs">
-              {accreditation.level}
-            </Badge>
-          </div>
-          {isAvailableOnline() && (
-            <Badge className="bg-green-500/20 text-green-400 border-green-500/30 text-xs">
+    <div 
+      className="bg-gradient-to-br from-white/10 via-white/5 to-transparent rounded-xl border border-white/10 overflow-hidden group hover:border-elec-yellow/30 transition-all duration-300 hover:shadow-xl hover:shadow-elec-yellow/10 hover:scale-[1.02] h-full cursor-pointer"
+      onClick={() => onViewDetails(accreditation)}
+    >
+      {/* Header section with badge overlay (replaces image) */}
+      <div className="relative overflow-hidden h-40 sm:h-48 bg-gradient-to-br from-elec-yellow/10 via-elec-yellow/5 to-transparent">
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+        
+        {/* Category Badge */}
+        <div className="absolute top-3 left-3">
+          <Badge className={cn("text-xs font-medium", getCategoryColor(accreditation.category))}>
+            {accreditation.category}
+          </Badge>
+        </div>
+
+        {/* Online Available Badge */}
+        {accreditation.onlineAvailable && (
+          <div className="absolute top-3 right-3">
+            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow text-xs">
               Online Available
             </Badge>
-          )}
-        </div>
-        
-        <CardTitle className="text-lg leading-tight group-hover:text-elec-yellow transition-colors">
-          {accreditation.title}
-        </CardTitle>
-        
-        <div className="flex items-center gap-2 text-sm text-amber-400">
-          <Award className="h-4 w-4" />
-          <span className="font-medium">{accreditation.provider}</span>
-        </div>
-      </CardHeader>
+          </div>
+        )}
 
-      <CardContent className="space-y-4">
-        <p className="text-sm text-muted-foreground line-clamp-3">
-          {accreditation.description}
-        </p>
+        {/* Level Badge - positioned at bottom of header */}
+        <div className="absolute bottom-3 left-3">
+          <Badge variant="outline" className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30 text-xs">
+            {accreditation.level}
+          </Badge>
+        </div>
+      </div>
 
-        {/* Key Metrics */}
-        <div className="grid grid-cols-2 gap-3 text-xs">
-          <div className="flex items-center gap-1">
-            <TrendingUp className={`h-3 w-3 ${getPopularityColor(accreditation.popularity)}`} />
-            <span className="text-white font-medium">{accreditation.popularity}%</span>
-            <span className="text-muted-foreground">popular</span>
+      {/* Content */}
+      <div className="p-4 sm:p-5 space-y-3 flex flex-col h-[calc(100%-10rem)] sm:h-[calc(100%-12rem)]">
+        {/* Meta Info Row */}
+        <div className="flex items-center justify-between text-xs text-white/80">
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-1">
+              <TrendingUp className={`h-3 w-3 ${getPopularityColor(accreditation.popularity)}`} />
+              <span>{accreditation.popularity}%</span>
+            </div>
+            <div className="flex items-center gap-1">
+              <Users className="h-3 w-3 text-blue-400" />
+              <span>{accreditation.accreditationBody.length > 15 ? accreditation.accreditationBody.substring(0, 15) + '...' : accreditation.accreditationBody}</span>
+            </div>
           </div>
           <div className="flex items-center gap-1">
-            <Users className="h-3 w-3 text-blue-400" />
-            <span className="text-white font-medium">{accreditation.accreditationBody.substring(0, 15)}</span>
-            <span className="text-muted-foreground">body</span>
-          </div>
-        </div>
-
-        {/* Duration and Study Mode */}
-        <div className="flex items-center justify-between text-xs">
-          <div className="flex items-center gap-1 text-muted-foreground">
             <Clock className="h-3 w-3" />
             <span>{accreditation.duration}</span>
           </div>
-          <Badge variant="outline" className="bg-blue-500/10 text-blue-400 border-blue-500/30 text-xs">
-            {accreditation.onlineAvailable ? 'Online' : 'In-Person'}
-          </Badge>
+        </div>
+
+        {/* Title */}
+        <h3 className="font-semibold text-white line-clamp-2 leading-tight flex-grow text-sm sm:text-base" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
+          {accreditation.title}
+        </h3>
+
+        {/* Provider */}
+        <div className="flex items-center gap-2 text-xs text-amber-400">
+          <Award className="h-3 w-3" />
+          <span className="font-medium">{accreditation.provider}</span>
+        </div>
+
+        {/* Description */}
+        <p className="text-white/90 line-clamp-2 leading-relaxed flex-grow text-xs sm:text-sm" style={{ textShadow: '0 1px 2px rgba(0,0,0,0.5)' }}>
+          {accreditation.description}
+        </p>
+
+        {/* Cost - prominently displayed */}
+        <div className="flex items-center gap-1 text-sm font-medium text-elec-yellow">
+          <PoundSterling className="h-4 w-4" />
+          <span>{accreditation.cost}</span>
         </div>
 
         {/* Location */}
@@ -111,24 +118,9 @@ const AccreditationCard = ({ accreditation, onViewDetails }: AccreditationCardPr
           </div>
         )}
 
-        {/* Fees */}
-        <div className="flex items-center gap-1 text-sm font-medium text-elec-yellow">
-          <PoundSterling className="h-4 w-4" />
-          <span>{accreditation.cost}</span>
-        </div>
-
-        {/* Renewal Period */}
-        {accreditation.renewalPeriod && (
-          <div className="flex items-center gap-1 text-xs text-green-400">
-            <Calendar className="h-3 w-3" />
-            <span>Renewal: {accreditation.renewalPeriod}</span>
-          </div>
-        )}
-
         {/* Key Benefits Preview */}
         {accreditation.benefits.length > 0 && (
           <div className="space-y-2">
-            <span className="text-xs font-medium text-muted-foreground">Key Benefits:</span>
             <div className="flex flex-wrap gap-1">
               {accreditation.benefits.slice(0, 3).map((benefit, idx) => (
                 <Badge 
@@ -148,40 +140,42 @@ const AccreditationCard = ({ accreditation, onViewDetails }: AccreditationCardPr
           </div>
         )}
 
-        {/* Action Buttons */}
-        <div className="flex gap-2 pt-2">
-          <Button 
-            onClick={() => onViewDetails(accreditation)}
-            variant="outline"
-            className="flex-1 border-elec-yellow/30 hover:bg-elec-yellow/10 text-xs"
-          >
-            View Details
-          </Button>
-          {isValidUrl(accreditation.website) && (
-            <Button 
-              variant="ghost" 
+        {/* Footer */}
+        <div className="flex items-center justify-between mt-auto pt-3 border-t border-white/10">
+          <div className="flex items-center gap-2 text-xs text-white/80">
+            <Calendar className="h-3 w-3" />
+            <span>{accreditation.renewalPeriod || 'No renewal'}</span>
+          </div>
+          
+          <div className="flex items-center gap-2">
+            <Button
               size="sm"
-              className="px-2 hover:bg-elec-yellow/10"
+              variant="ghost"
+              className="h-8 px-3 text-elec-yellow hover:bg-elec-yellow/10 hover:text-elec-yellow group/btn"
               onClick={(e) => {
                 e.stopPropagation();
-                window.open(accreditation.website, '_blank');
+                onViewDetails(accreditation);
               }}
             >
-              <ExternalLink className="h-3 w-3" />
+              <span className="text-xs">View Details</span>
             </Button>
-          )}
-        </div>
-
-        {/* Live Data Indicator */}
-        <div className="flex items-center justify-between text-xs text-muted-foreground pt-2 border-t border-elec-yellow/10">
-          <div className="flex items-center gap-1">
-            <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-            <span>Live data</span>
+            {isValidUrl(accreditation.website) && (
+              <Button
+                size="sm"
+                variant="ghost"
+                className="h-8 px-2 text-elec-yellow hover:bg-elec-yellow/10 hover:text-elec-yellow group/btn"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  window.open(accreditation.website, '_blank');
+                }}
+              >
+                <ExternalLink className="h-3 w-3 transition-transform group-hover/btn:translate-x-0.5" />
+              </Button>
+            )}
           </div>
-          <span>{new Date().toLocaleDateString()}</span>
         </div>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 };
 
