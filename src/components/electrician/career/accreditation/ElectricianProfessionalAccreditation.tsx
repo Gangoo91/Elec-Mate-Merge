@@ -17,6 +17,7 @@ import AccreditationSearchForm, { AccreditationSearchFilters } from "../../../ap
 import AccreditationCard from "../../../apprentice/career/accreditation/AccreditationCard";
 import AccreditationDetailView from "../../../apprentice/career/accreditation/AccreditationDetailView";
 import AccreditationAnalytics from "../../../apprentice/career/accreditation/AccreditationAnalytics";
+import ResourceCard from "./ResourceCard";
 import { enhancedAccreditationOptions, AccreditationOption } from "../../../apprentice/career/accreditation/enhancedAccreditationData";
 
 const ElectricianProfessionalAccreditation = () => {
@@ -262,106 +263,58 @@ const ElectricianProfessionalAccreditation = () => {
             Electrical Industry Resources
           </CardTitle>
         </CardHeader>
-        <CardContent className={`grid gap-6 ${isMobile ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-2'}`}>
-          <div className="space-y-4">
+        <CardContent className={`grid gap-6 ${isMobile ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-2'} items-start`}>
+          <div className="space-y-4 h-full">
             <h4 className="font-semibold text-lg text-elec-yellow flex items-center gap-2">
               <Award className="h-5 w-5" />
               Professional Bodies
             </h4>
-            <div className="space-y-4">
-              <div className="flex items-center justify-between p-3 rounded-lg bg-elec-grey/50 border border-elec-yellow/10 hover:border-elec-yellow/30 transition-colors">
-                <div className="flex-1">
-                  <p className="font-medium text-white">Institution of Engineering and Technology (IET)</p>
-                  <p className="text-sm text-white/80 mt-1">Professional engineering institution for electrical professionals</p>
-                </div>
-                <Button 
-                  variant="ghost" 
-                  size={isMobile ? "sm" : "default"}
-                  className="ml-3 text-elec-yellow hover:text-white hover:bg-elec-yellow/20"
-                  onClick={() => window.open('https://www.theiet.org', '_blank')}
-                >
-                  <ExternalLink className={`${isMobile ? 'h-4 w-4' : 'h-5 w-5'}`} />
-                </Button>
-              </div>
-              <div className="flex items-center justify-between p-3 rounded-lg bg-elec-grey/50 border border-elec-yellow/10 hover:border-elec-yellow/30 transition-colors">
-                <div className="flex-1">
-                  <p className="font-medium text-white">Electrical Contractors' Association (ECA)</p>
-                  <p className="text-sm text-white/80 mt-1">Trade association for electrical contractors and installers</p>
-                </div>
-                <Button 
-                  variant="ghost" 
-                  size={isMobile ? "sm" : "default"}
-                  className="ml-3 text-elec-yellow hover:text-white hover:bg-elec-yellow/20"
-                  onClick={() => window.open('https://www.eca.co.uk', '_blank')}
-                >
-                  <ExternalLink className={`${isMobile ? 'h-4 w-4' : 'h-5 w-5'}`} />
-                </Button>
-              </div>
-              <div className="flex items-center justify-between p-3 rounded-lg bg-elec-grey/50 border border-elec-yellow/10 hover:border-elec-yellow/30 transition-colors">
-                <div className="flex-1">
-                  <p className="font-medium text-white">NICEIC</p>
-                  <p className="text-sm text-white/80 mt-1">Leading voluntary regulatory body for electrical contractors</p>
-                </div>
-                <Button 
-                  variant="ghost" 
-                  size={isMobile ? "sm" : "default"}
-                  className="ml-3 text-elec-yellow hover:text-white hover:bg-elec-yellow/20"
-                  onClick={() => window.open('https://www.niceic.com', '_blank')}
-                >
-                  <ExternalLink className={`${isMobile ? 'h-4 w-4' : 'h-5 w-5'}`} />
-                </Button>
-              </div>
+            <div className="grid gap-4 auto-rows-fr">
+              <ResourceCard
+                title="Institution of Engineering and Technology (IET)"
+                description="Professional engineering institution for electrical professionals"
+                url="https://www.theiet.org"
+                isMobile={isMobile}
+              />
+              <ResourceCard
+                title="Electrical Contractors' Association (ECA)"
+                description="Trade association for electrical contractors and installers"
+                url="https://www.eca.co.uk"
+                isMobile={isMobile}
+              />
+              <ResourceCard
+                title="NICEIC"
+                description="Leading voluntary regulatory body for electrical contractors"
+                url="https://www.niceic.com"
+                isMobile={isMobile}
+              />
             </div>
           </div>
           
-          <div className="space-y-4">
+          <div className="space-y-4 h-full">
             <h4 className="font-semibold text-lg text-elec-yellow flex items-center gap-2">
               <BookOpen className="h-5 w-5" />
               Scheme Providers
             </h4>
-            <div className="space-y-4">
-              <div className="flex items-center justify-between p-3 rounded-lg bg-elec-grey/50 border border-elec-yellow/10 hover:border-elec-yellow/30 transition-colors">
-                <div className="flex-1">
-                  <p className="font-medium text-white">NAPIT Electrical Certification</p>
-                  <p className="text-sm text-white/80 mt-1">Certification and registration for electrical competency</p>
-                </div>
-                <Button 
-                  variant="ghost" 
-                  size={isMobile ? "sm" : "default"}
-                  className="ml-3 text-elec-yellow hover:text-white hover:bg-elec-yellow/20"
-                  onClick={() => window.open('https://www.napit.org.uk', '_blank')}
-                >
-                  <ExternalLink className={`${isMobile ? 'h-4 w-4' : 'h-5 w-5'}`} />
-                </Button>
-              </div>
-              <div className="flex items-center justify-between p-3 rounded-lg bg-elec-grey/50 border border-elec-yellow/10 hover:border-elec-yellow/30 transition-colors">
-                <div className="flex-1">
-                  <p className="font-medium text-white">STROMA Certification</p>
-                  <p className="text-sm text-white/80 mt-1">Assessment and certification services for electrical work</p>
-                </div>
-                <Button 
-                  variant="ghost" 
-                  size={isMobile ? "sm" : "default"}
-                  className="ml-3 text-elec-yellow hover:text-white hover:bg-elec-yellow/20"
-                  onClick={() => window.open('https://www.stroma.com', '_blank')}
-                >
-                  <ExternalLink className={`${isMobile ? 'h-4 w-4' : 'h-5 w-5'}`} />
-                </Button>
-              </div>
-              <div className="flex items-center justify-between p-3 rounded-lg bg-elec-grey/50 border border-elec-yellow/10 hover:border-elec-yellow/30 transition-colors">
-                <div className="flex-1">
-                  <p className="font-medium text-white">Find Local Training Centres</p>
-                  <p className="text-sm text-white/80 mt-1">Discover approved training providers in your area</p>
-                </div>
-                <Button 
-                  variant="ghost" 
-                  size={isMobile ? "sm" : "default"}
-                  className="ml-3 text-elec-yellow hover:text-white hover:bg-elec-yellow/20"
-                  onClick={() => window.open('https://www.findapprenticeship.service.gov.uk/apprenticeship-training-providers', '_blank')}
-                >
-                  <ExternalLink className={`${isMobile ? 'h-4 w-4' : 'h-5 w-5'}`} />
-                </Button>
-              </div>
+            <div className="grid gap-4 auto-rows-fr">
+              <ResourceCard
+                title="NAPIT Electrical Certification"
+                description="Certification and registration for electrical competency"
+                url="https://www.napit.org.uk"
+                isMobile={isMobile}
+              />
+              <ResourceCard
+                title="STROMA Certification"
+                description="Assessment and certification services for electrical work"
+                url="https://www.stroma.com"
+                isMobile={isMobile}
+              />
+              <ResourceCard
+                title="Find Local Training Centres"
+                description="Discover approved training providers in your area"
+                url="https://www.findapprenticeship.service.gov.uk/apprenticeship-training-providers"
+                isMobile={isMobile}
+              />
             </div>
           </div>
         </CardContent>
