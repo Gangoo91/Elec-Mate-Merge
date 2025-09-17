@@ -9,11 +9,10 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Target, Plus, Calendar, TrendingUp, Edit, Trash2 } from "lucide-react";
-import { useCPDData } from "@/hooks/cpd/useCPDData";
-import { CPDGoal } from "@/services/cpdDataService";
+import { useUnifiedCPD, type CPDGoal } from "@/hooks/cpd/useUnifiedCPD";
 
 const CPDGoals = () => {
-  const { goals, addGoal, updateGoal, deleteGoal } = useCPDData();
+  const { goals, addGoal, updateGoal, deleteGoal, loading } = useUnifiedCPD();
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
   const [editingGoal, setEditingGoal] = useState<CPDGoal | null>(null);
   const [formData, setFormData] = useState({

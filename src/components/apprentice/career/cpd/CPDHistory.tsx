@@ -1,101 +1,72 @@
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Search, Filter, Download, Eye } from "lucide-react";
+import { Search, Filter, Download, Eye, FileText, Loader2 } from "lucide-react";
+import { useUnifiedCPD } from "@/hooks/cpd/useUnifiedCPD";
+import { format } from "date-fns";
 
 const CPDHistory = () => {
+  const { entries, loading, deleteEntry, updateEntry } = useUnifiedCPD();
   const [searchTerm, setSearchTerm] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("all");
   const [yearFilter, setYearFilter] = useState("all");
+  const [statusFilter, setStatusFilter] = useState("all");
 
-  // Mock data - in real implementation this would come from the database
-  const cpdEntries = [
-    {
-      id: 1,
-      date: "2024-01-15",
-      activity: "BS 7671 18th Edition Update Seminar",
-      category: "Regulations & Standards",
-      type: "Formal Learning",
-      hours: 4,
-      provider: "IET",
-      status: "Verified"
-    },
-    {
-      id: 2,
-      date: "2024-01-10",
-      activity: "Cable Sizing and Selection Workshop",
-      category: "Technical Skills",
-      type: "Work-based Learning",
-      hours: 3,
-      provider: "Company Training",
-      status: "Pending"
-    },
-    {
-      id: 3,
-      date: "2024-01-05",
-      activity: "Health & Safety Refresher Course",
-      category: "Health & Safety",
-      type: "Formal Learning",
-      hours: 2,
-      provider: "IOSH",
-      status: "Verified"
-    },
-    {
-      id: 4,
-      date: "2023-12-20",
-      activity: "Customer Service Excellence",
-      category: "Customer Service",
-      type: "Self-directed Learning",
-      hours: 1.5,
-      provider: "Online Course",
-      status: "Verified"
-    },
-    {
-      id: 5,
-      date: "2023-12-15",
-      activity: "Environmental Awareness Training",
-      category: "Environmental Awareness",
-      type: "Professional Activity",
-      hours: 2,
-      provider: "Environmental Agency",
-      status: "Verified"
-    }
-  ];
-
-  const categories = [
-    "Technical Skills",
-    "Regulations & Standards",
-    "Health & Safety",
-    "Management & Leadership",
-    "Customer Service",
-    "Environmental Awareness",
-    "Quality Systems"
-  ];
-
-  const years = ["2024", "2023", "2022", "2021"];
-
-  const filteredEntries = cpdEntries.filter(entry => {
-    const matchesSearch = entry.activity.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         entry.provider.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory = categoryFilter === "all" || entry.category === categoryFilter;
-    const matchesYear = yearFilter === "all" || entry.date.startsWith(yearFilter);
-    
-    return matchesSearch && matchesCategory && matchesYear;
-  });
-
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case "Verified": return "bg-green-500/10 text-green-400 border-green-500/30";
-      case "Pending": return "bg-amber-500/10 text-amber-400 border-amber-500/30";
-      default: return "bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30";
-    }
+  const categoryNames: Record<string, string> = {
+    "technical-skills": "Technical Skills",
+    "regulations-standards": "Regulations & Standards",
+    "safety-health": "Safety & Health",
+    "business-commercial": "Business & Commercial",
+    "professional-ethics": "Professional Ethics",
+    "environmental-sustainability": "Environmental Sustainability",
+    "digital-technology": "Digital Technology",
+    "customer-service": "Customer Service"
   };
 
-  const totalHours = filteredEntries.reduce((sum, entry) => sum + entry.hours, 0);
+  const activityTypeNames: Record<string, string> = {
+    "formal-training": "Formal Training",
+    "work-based-learning": "Work-based Learning",
+    "self-directed-study": "Self-directed Study",
+    "professional-activities": "Professional Activities",
+    "conferences-seminars": "Conferences & Seminars",
+    "mentoring": "Mentoring",
+    "assessment-preparation": "Assessment Preparation"
+  };
+
+  const categories = Object.entries(categoryNames);
+  
+  const years = useMemo(() => {
+    const entryYears = entries.map(entry => 
+      new Date(entry.date_completed).getFullYear().toString()
+    );
+    return [...new Set(entryYears)].sort().reverse();
+  }, [entries]);
+
+  const filteredEntries = useMemo(() => {
+    return entries.filter(entry => {
+      const matchesSearch = entry.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                           (entry.description?.toLowerCase().includes(searchTerm.toLowerCase()));
+      const matchesCategory = categoryFilter === "all" || entry.category === categoryFilter;
+      const matchesYear = yearFilter === "all" || entry.date_completed.startsWith(yearFilter);
+      const matchesStatus = statusFilter === "all" || 
+        (statusFilter === "verified" && entry.is_verified) ||
+        (statusFilter === "pending" && !entry.is_verified);
+      
+      return matchesSearch && matchesCategory && matchesYear && matchesStatus;
+    });
+  }, [entries, searchTerm, categoryFilter, yearFilter, statusFilter]);
+
+  const getStatusColor = (isVerified: boolean) => {
+    return isVerified 
+      ? "bg-green-500/10 text-green-400 border-green-500/30"
+      : "bg-amber-500/10 text-amber-400 border-amber-500/30";
+  };
+
+  const totalHours = filteredEntries.reduce((sum, entry) => sum + parseFloat(entry.hours.toString()), 0);
 
   return (
     <div className="space-y-6">
@@ -108,7 +79,7 @@ const CPDHistory = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
@@ -125,8 +96,8 @@ const CPDHistory = () => {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">All Categories</SelectItem>
-                {categories.map(category => (
-                  <SelectItem key={category} value={category}>{category}</SelectItem>
+                {categories.map(([id, name]) => (
+                  <SelectItem key={id} value={id}>{name}</SelectItem>
                 ))}
               </SelectContent>
             </Select>
@@ -143,9 +114,21 @@ const CPDHistory = () => {
               </SelectContent>
             </Select>
 
+            <Select value={statusFilter} onValueChange={setStatusFilter}>
+              <SelectTrigger className="bg-elec-dark border-elec-yellow/20 text-white">
+                <SelectValue placeholder="All Status" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Status</SelectItem>
+                <SelectItem value="verified">Verified</SelectItem>
+                <SelectItem value="pending">Pending</SelectItem>
+              </SelectContent>
+            </Select>
+
             <Button 
               variant="outline" 
               className="border-elec-yellow/30 hover:bg-elec-yellow/10"
+              disabled={filteredEntries.length === 0}
             >
               <Download className="mr-2 h-4 w-4" />
               Export
@@ -170,45 +153,71 @@ const CPDHistory = () => {
       </Card>
 
       {/* CPD Entries List */}
-      <div className="space-y-4">
-        {filteredEntries.map((entry) => (
-          <Card key={entry.id} className="border-elec-yellow/20 bg-elec-gray hover:bg-elec-gray/80 transition-colors">
-            <CardContent className="p-4">
-              <div className="flex items-start justify-between">
-                <div className="space-y-2 flex-1">
-                  <div className="flex items-start gap-3">
-                    <div className="space-y-1 flex-1">
-                      <h3 className="font-semibold text-white">{entry.activity}</h3>
-                      <p className="text-sm text-muted-foreground">{entry.provider}</p>
+      {loading ? (
+        <Card className="border-elec-yellow/20 bg-elec-gray">
+          <CardContent className="p-8 text-center">
+            <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4 text-elec-yellow" />
+            <p className="text-muted-foreground">Loading CPD entries...</p>
+          </CardContent>
+        </Card>
+      ) : (
+        <div className="space-y-4">
+          {filteredEntries.map((entry) => (
+            <Card key={entry.id} className="border-elec-yellow/20 bg-elec-gray hover:bg-elec-gray/80 transition-colors">
+              <CardContent className="p-4">
+                <div className="flex items-start justify-between">
+                  <div className="space-y-2 flex-1">
+                    <div className="flex items-start gap-3">
+                      <div className="space-y-1 flex-1">
+                        <h3 className="font-semibold text-white">{entry.title}</h3>
+                        {entry.description && (
+                          <p className="text-sm text-muted-foreground">{entry.description}</p>
+                        )}
+                      </div>
+                      <div className="flex gap-2">
+                        <Badge variant="outline" className={getStatusColor(entry.is_verified)}>
+                          {entry.is_verified ? 'Verified' : 'Pending'}
+                        </Badge>
+                        {entry.evidence_files && entry.evidence_files.length > 0 && (
+                          <Badge variant="outline" className="border-blue-500/30 text-blue-400">
+                            <FileText className="h-3 w-3 mr-1" />
+                            Evidence
+                          </Badge>
+                        )}
+                      </div>
                     </div>
-                    <Badge variant="outline" className={getStatusColor(entry.status)}>
-                      {entry.status}
-                    </Badge>
+                    
+                    <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
+                      <span>{format(new Date(entry.date_completed), 'dd MMM yyyy')}</span>
+                      <span>•</span>
+                      <span>{entry.hours} hours</span>
+                      <span>•</span>
+                      <span>{categoryNames[entry.category] || entry.category}</span>
+                      <span>•</span>
+                      <span>{activityTypeNames[entry.activity_type] || entry.activity_type}</span>
+                    </div>
+                    
+                    {entry.learning_outcomes && entry.learning_outcomes.length > 0 && (
+                      <div className="text-sm">
+                        <span className="text-muted-foreground">Learning outcomes:</span>
+                        <p className="text-white mt-1">{entry.learning_outcomes.join(', ')}</p>
+                      </div>
+                    )}
                   </div>
                   
-                  <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
-                    <span>{entry.date}</span>
-                    <span>•</span>
-                    <span>{entry.hours} hours</span>
-                    <span>•</span>
-                    <span>{entry.category}</span>
-                    <span>•</span>
-                    <span>{entry.type}</span>
-                  </div>
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    className="border-elec-yellow/30 hover:bg-elec-yellow/10 ml-4"
+                  >
+                    <Eye className="h-4 w-4" />
+                  </Button>
                 </div>
-                
-                <Button 
-                  variant="outline" 
-                  size="sm"
-                  className="border-elec-yellow/30 hover:bg-elec-yellow/10 ml-4"
-                >
-                  <Eye className="h-4 w-4" />
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      )}
 
       {filteredEntries.length === 0 && (
         <Card className="border-elec-yellow/20 bg-elec-gray">

@@ -8,82 +8,143 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Label } from "@/components/ui/label";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { CalendarIcon, Plus, Save } from "lucide-react";
+import { CalendarIcon, Plus, Save, Upload, AlertCircle } from "lucide-react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
+import { useUnifiedCPD } from "@/hooks/cpd/useUnifiedCPD";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
-const CPDEntryForm = () => {
+interface CPDEntryFormProps {
+  onSuccess?: () => void;
+}
+
+const CPDEntryForm = ({ onSuccess }: CPDEntryFormProps = {}) => {
+  const { addEntry, activeMembership, memberships, loading } = useUnifiedCPD();
   const [date, setDate] = useState<Date>();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
-    activity: "",
+    title: "",
     hours: "",
     category: "",
     type: "",
-    provider: "",
     description: "",
-    learningOutcomes: "",
-    certificate: ""
+    learningOutcomes: ""
   });
 
   const categories = [
-    "Technical Skills",
-    "Regulations & Standards",
-    "Health & Safety",
-    "Management & Leadership",
-    "Customer Service",
-    "Environmental Awareness",
-    "Quality Systems"
+    { id: "technical-skills", name: "Technical Skills" },
+    { id: "regulations-standards", name: "Regulations & Standards" },
+    { id: "safety-health", name: "Safety & Health" },
+    { id: "business-commercial", name: "Business & Commercial" },
+    { id: "professional-ethics", name: "Professional Ethics" },
+    { id: "environmental-sustainability", name: "Environmental Sustainability" },
+    { id: "digital-technology", name: "Digital Technology" },
+    { id: "customer-service", name: "Customer Service" }
   ];
 
   const activityTypes = [
-    "Formal Learning",
-    "Work-based Learning",
-    "Self-directed Learning",
-    "Professional Activity"
+    { id: "formal-training", name: "Formal Training" },
+    { id: "work-based-learning", name: "Work-based Learning" },
+    { id: "self-directed-study", name: "Self-directed Study" },
+    { id: "professional-activities", name: "Professional Activities" },
+    { id: "conferences-seminars", name: "Conferences & Seminars" },
+    { id: "mentoring", name: "Mentoring" },
+    { id: "assessment-preparation", name: "Assessment Preparation" }
   ];
 
   const handleInputChange = (field: string, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // In a real implementation, this would save to the database
-    console.log("CPD Entry:", { ...formData, date });
-    // Reset form
-    setFormData({
-      activity: "",
-      hours: "",
-      category: "",
-      type: "",
-      provider: "",
-      description: "",
-      learningOutcomes: "",
-      certificate: ""
-    });
-    setDate(undefined);
+    
+    if (!date || !formData.title || !formData.hours || !formData.category || !formData.type) {
+      return;
+    }
+
+    setIsSubmitting(true);
+    
+    try {
+      const entryData = {
+        title: formData.title,
+        description: formData.description,
+        activity_type: formData.type,
+        category: formData.category,
+        hours: parseFloat(formData.hours),
+        date_completed: date.toISOString().split('T')[0],
+        learning_outcomes: formData.learningOutcomes ? [formData.learningOutcomes] : undefined
+      };
+
+      const result = await addEntry(entryData);
+      
+      if (result) {
+        // Reset form
+        setFormData({
+          title: "",
+          hours: "",
+          category: "",
+          type: "",
+          description: "",
+          learningOutcomes: ""
+        });
+        setDate(undefined);
+        onSuccess?.();
+      }
+    } catch (error) {
+      console.error('Error submitting CPD entry:', error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
+
+  if (loading) {
+    return (
+      <Card className="border-elec-yellow/20 bg-elec-gray">
+        <CardContent className="p-8 text-center">
+          <div className="text-muted-foreground">Loading CPD system...</div>
+        </CardContent>
+      </Card>
+    );
+  }
 
   return (
     <div className="space-y-6">
+      {/* Professional Body Status */}
+      {(!activeMembership || memberships.length === 0) && (
+        <Alert className="border-amber-500/50 bg-amber-500/10">
+          <AlertCircle className="h-4 w-4" />
+          <AlertDescription className="text-amber-200">
+            {memberships.length === 0 
+              ? "Please set up your professional body membership in settings to enable CPD tracking."
+              : "No active professional body selected. CPD entries will be saved but may not count towards compliance."}
+          </AlertDescription>
+        </Alert>
+      )}
+
       <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Plus className="h-5 w-5 text-elec-yellow" />
             Log CPD Activity
           </CardTitle>
+          {activeMembership && (
+            <p className="text-sm text-muted-foreground">
+              Recording for {activeMembership.professional_body?.name}
+            </p>
+          )}
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {/* Activity Name */}
+              {/* Activity Title */}
               <div className="space-y-2">
-                <Label htmlFor="activity">Activity Name</Label>
+                <Label htmlFor="title">Activity Title *</Label>
                 <Input
-                  id="activity"
-                  value={formData.activity}
-                  onChange={(e) => handleInputChange("activity", e.target.value)}
-                  placeholder="e.g., BS 7671 Update Course"
+                  id="title"
+                  value={formData.title}
+                  onChange={(e) => handleInputChange("title", e.target.value)}
+                  placeholder="e.g., BS 7671 18th Edition Update Course"
                   className="bg-elec-dark border-elec-yellow/20 text-white"
                   required
                 />
@@ -118,7 +179,7 @@ const CPDEntryForm = () => {
 
               {/* Hours */}
               <div className="space-y-2">
-                <Label htmlFor="hours">Hours</Label>
+                <Label htmlFor="hours">Hours *</Label>
                 <Input
                   id="hours"
                   type="number"
@@ -134,14 +195,14 @@ const CPDEntryForm = () => {
 
               {/* Category */}
               <div className="space-y-2">
-                <Label>Category</Label>
-                <Select value={formData.category} onValueChange={(value) => handleInputChange("category", value)}>
+                <Label>Category *</Label>
+                <Select value={formData.category} onValueChange={(value) => handleInputChange("category", value)} required>
                   <SelectTrigger className="bg-elec-dark border-elec-yellow/20 text-white">
                     <SelectValue placeholder="Select category" />
                   </SelectTrigger>
                   <SelectContent>
                     {categories.map(category => (
-                      <SelectItem key={category} value={category}>{category}</SelectItem>
+                      <SelectItem key={category.id} value={category.id}>{category.name}</SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
@@ -149,30 +210,19 @@ const CPDEntryForm = () => {
 
               {/* Activity Type */}
               <div className="space-y-2">
-                <Label>Activity Type</Label>
-                <Select value={formData.type} onValueChange={(value) => handleInputChange("type", value)}>
+                <Label>Activity Type *</Label>
+                <Select value={formData.type} onValueChange={(value) => handleInputChange("type", value)} required>
                   <SelectTrigger className="bg-elec-dark border-elec-yellow/20 text-white">
                     <SelectValue placeholder="Select type" />
                   </SelectTrigger>
                   <SelectContent>
                     {activityTypes.map(type => (
-                      <SelectItem key={type} value={type}>{type}</SelectItem>
+                      <SelectItem key={type.id} value={type.id}>{type.name}</SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
               </div>
 
-              {/* Provider */}
-              <div className="space-y-2">
-                <Label htmlFor="provider">Provider / Organisation</Label>
-                <Input
-                  id="provider"
-                  value={formData.provider}
-                  onChange={(e) => handleInputChange("provider", e.target.value)}
-                  placeholder="e.g., IET, NICEIC, Company Name"
-                  className="bg-elec-dark border-elec-yellow/20 text-white"
-                />
-              </div>
             </div>
 
             {/* Description */}
@@ -201,24 +251,14 @@ const CPDEntryForm = () => {
               />
             </div>
 
-            {/* Certificate */}
-            <div className="space-y-2">
-              <Label htmlFor="certificate">Certificate / Evidence</Label>
-              <Input
-                id="certificate"
-                value={formData.certificate}
-                onChange={(e) => handleInputChange("certificate", e.target.value)}
-                placeholder="Certificate number or reference to evidence"
-                className="bg-elec-dark border-elec-yellow/20 text-white"
-              />
-            </div>
 
             <Button 
               type="submit" 
-              className="w-full bg-elec-yellow text-elec-dark hover:bg-amber-400"
+              disabled={isSubmitting || !date || !formData.title || !formData.hours || !formData.category || !formData.type}
+              className="w-full bg-elec-yellow text-elec-dark hover:bg-amber-400 disabled:opacity-50"
             >
               <Save className="mr-2 h-4 w-4" />
-              Save CPD Entry
+              {isSubmitting ? "Saving..." : "Save CPD Entry"}
             </Button>
           </form>
         </CardContent>

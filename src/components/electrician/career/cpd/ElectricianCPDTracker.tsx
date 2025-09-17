@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DropdownTabs, DropdownTab } from "@/components/ui/dropdown-tabs";
-import { Clock, Target, TrendingUp, Award } from "lucide-react";
+import { Clock, Target, TrendingUp, Award, ClipboardList, History } from "lucide-react";
 import ComplianceDashboard from "./enhanced/ComplianceDashboard";
 import ActivityTemplates from "./enhanced/ActivityTemplates";
 import AnalyticsDashboard from "./enhanced/AnalyticsDashboard";
@@ -12,10 +12,12 @@ import CPDGoals from "../../../apprentice/career/cpd/CPDGoals";
 import CPDDashboard from "../../../apprentice/career/cpd/enhanced/CPDDashboard";
 import EnhancedCPDDashboard from "./EnhancedCPDDashboard";
 import { useCPDAutoTracking } from "@/hooks/cpd/useCPDAutoTracking";
+import { useUnifiedCPD } from "@/hooks/cpd/useUnifiedCPD";
 
 const ElectricianCPDTracker = () => {
   const [activeTab, setActiveTab] = useState("compliance");
   const [isMobile, setIsMobile] = useState(false);
+  const { generatePortfolio, loading } = useUnifiedCPD();
   
   // Initialize auto-tracking for the CPD tracker
   const { startTracking, stopTracking } = useCPDAutoTracking({
@@ -58,6 +60,13 @@ const ElectricianCPDTracker = () => {
     setActiveTab("history");
   };
 
+  const handleExportPortfolio = async () => {
+    const portfolio = await generatePortfolio(`CPD Portfolio - ${new Date().getFullYear()}`);
+    if (portfolio) {
+      // Portfolio created successfully - user will see toast notification
+    }
+  };
+
   // Mobile-first responsive design
   if (isMobile) {
     return (
@@ -93,7 +102,7 @@ const ElectricianCPDTracker = () => {
                   Back
                 </button>
               </div>
-              <CPDEntryForm />
+              <CPDEntryForm onSuccess={() => setActiveTab("compliance")} />
             </div>
           )}
           {activeTab === "history" && (
@@ -143,6 +152,24 @@ const ElectricianCPDTracker = () => {
       )
     },
     {
+      value: "log-activity",
+      label: "Log Activity", 
+      icon: ClipboardList,
+      content: <CPDEntryForm onSuccess={() => setActiveTab("compliance")} />
+    },
+    {
+      value: "history",
+      label: "History",
+      icon: History,
+      content: <CPDHistory />
+    },
+    {
+      value: "goals",
+      label: "Goals",
+      icon: Target,
+      content: <CPDGoals />
+    },
+    {
       value: "templates", 
       label: "Templates",
       icon: Clock,
@@ -153,18 +180,6 @@ const ElectricianCPDTracker = () => {
       label: "Analytics",
       icon: Award,
       content: <AnalyticsDashboard />
-    },
-    {
-      value: "overview",
-      label: "Overview",
-      icon: Target,
-      content: (
-        <CPDDashboard 
-          onAddEntry={handleAddEntry}
-          onViewHistory={handleViewHistory}
-          onManageGoals={handleManageGoals}
-        />
-      )
     }
   ];
 
