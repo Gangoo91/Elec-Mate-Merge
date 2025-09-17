@@ -134,7 +134,7 @@ const ElectricianAccreditationDetailView = ({ accreditation, onBack }: Electrici
       {/* Detailed Information Tabs */}
       <div className="space-y-6">
         <Tabs defaultValue="benefits" className="space-y-0">
-          <TabsList className="grid w-full grid-cols-2 md:grid-cols-5 gap-1 bg-elec-dark p-1 rounded-lg mb-8">
+          <TabsList className="grid w-full grid-cols-2 md:grid-cols-5 gap-1 bg-elec-dark p-1 rounded-lg mb-4 md:mb-8">
             <TabsTrigger 
               value="benefits" 
               className="text-xs md:text-sm px-2 py-3 rounded-md data-[state=active]:bg-elec-yellow data-[state=active]:text-black text-white/70 hover:text-white transition-all"
@@ -167,7 +167,7 @@ const ElectricianAccreditationDetailView = ({ accreditation, onBack }: Electrici
             </TabsTrigger>
           </TabsList>
 
-          <TabsContent value="benefits" className="mt-0">
+          <TabsContent value="benefits" className="mt-6 md:mt-0">
             <Card className="border-elec-yellow/20 bg-elec-gray">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 text-white">
@@ -254,7 +254,7 @@ const ElectricianAccreditationDetailView = ({ accreditation, onBack }: Electrici
             </Card>
           </TabsContent>
 
-          <TabsContent value="requirements" className="mt-0">
+          <TabsContent value="requirements" className="mt-6 md:mt-0">
             <Card className="border-elec-yellow/20 bg-elec-gray">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 text-white">
@@ -381,7 +381,7 @@ const ElectricianAccreditationDetailView = ({ accreditation, onBack }: Electrici
             </Card>
           </TabsContent>
 
-          <TabsContent value="process" className="mt-0">
+          <TabsContent value="process" className="mt-6 md:mt-0">
             <Card className="border-elec-yellow/20 bg-elec-gray">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 text-white">
@@ -482,7 +482,7 @@ const ElectricianAccreditationDetailView = ({ accreditation, onBack }: Electrici
             </Card>
           </TabsContent>
 
-          <TabsContent value="getting-started" className="mt-0">
+          <TabsContent value="getting-started" className="mt-6 md:mt-0">
             <Card className="border-elec-yellow/20 bg-elec-gray">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 text-white">
@@ -609,7 +609,7 @@ const ElectricianAccreditationDetailView = ({ accreditation, onBack }: Electrici
             </Card>
           </TabsContent>
 
-          <TabsContent value="details" className="mt-0">
+          <TabsContent value="details" className="mt-6 md:mt-0">
             <Card className="border-elec-yellow/20 bg-elec-gray">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 text-white">
