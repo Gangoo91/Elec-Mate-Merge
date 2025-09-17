@@ -376,7 +376,7 @@ const ElectricianCareerCourses = () => {
   };
 
   // Handle location selection from dropdown or manual input
-  const handleLocationSelect = async (location: string) => {
+  const handleLocationSelect = async (location: string, coordinates?: google.maps.LatLngLiteral) => {
     if (!location || location === "All Locations") {
       handleClearLocation();
       return;
@@ -385,10 +385,14 @@ const ElectricianCareerCourses = () => {
     setUserLocation(location);
     
     try {
-      // Use cached geocoding to get coordinates
-      const coordinates = await geocodeWithCache(location);
       if (coordinates) {
-        setUserCoordinates({ lat: coordinates.latitude, lng: coordinates.longitude });
+        setUserCoordinates(coordinates);
+      } else {
+        // Use cached geocoding to get coordinates
+        const result = await geocodeWithCache(location);
+        if (result?.coordinates) {
+          setUserCoordinates({ lat: result.coordinates.lat, lng: result.coordinates.lng });
+        }
       }
     } catch (error) {
       console.error('Failed to geocode location:', error);
@@ -717,15 +721,10 @@ const ElectricianCareerCourses = () => {
         <EnhancedCourseSearch
           filters={filters}
           onFiltersChange={setFilters}
-          userLocation={userLocation}
-          onClearLocation={handleClearLocation}
-          isAutoDetecting={isAutoDetecting}
-          radius={searchRadius}
-          onRadiusChange={setSearchRadius}
-          onRefresh={refreshCourses}
-          isLoading={isSearching}
-          isLiveData={isLiveData}
+          onReset={handleResetFilters}
           totalResults={totalFilteredCourses}
+          isSearching={isSearching}
+          viewMode={viewMode as "grid" | "list" | "map"}
         />
 
         {/* Course sorting and view controls */}
@@ -820,15 +819,14 @@ const ElectricianCareerCourses = () => {
             {/* Google Maps Integration */}
             <GoogleMapsLoader>
               <CourseMap
-                providers={providersForMap}
-                userLocation={userCoordinates}
-                onProviderSelect={(provider) => {
-                  console.log('Selected provider:', provider);
-                  toast({
-                    title: "Training Provider",
-                    description: `${provider.name} - ${provider.vicinity || 'Contact for more details'}`,
-                  });
-                }}
+                nearbyProviders={providersForMap}
+                selectedCourse={selectedCourseId}
+                onCourseSelect={handleCourseSelect}
+                onCourseDeselect={handleCourseDeselect}
+                userLocation={userLocation}
+                userCoordinates={userCoordinates}
+                searchRadius={searchRadius}
+                isLoading={isAutoDetecting || isSearching}
               />
             </GoogleMapsLoader>
             
@@ -870,14 +868,8 @@ const ElectricianCareerCourses = () => {
               <CourseGridSkeleton />
             ) : filteredAndSortedCourses.length === 0 ? (
               <EmptySearchResults
-                searchQuery={filters.searchQuery}
-                onResetFilters={handleResetFilters}
-                suggestions={[
-                  "18th Edition Wiring Regulations",
-                  "EV Charging Installation",
-                  "Inspection and Testing",
-                  "Solar PV Installation"
-                ]}
+                type="courses"
+                onReset={handleResetFilters}
               />
             ) : (
               <div className="space-y-4">
@@ -887,13 +879,7 @@ const ElectricianCareerCourses = () => {
                     <EnhancedCourseCard
                       key={course.id}
                       course={course}
-                      onViewDetails={() => viewCourseDetails(course)}
-                      onToggleBookmark={(courseId) => toggleDatabaseBookmark('course', courseId.toString())}
-                      isBookmarked={isDatabaseBookmarked('course', course.id.toString())}
-                      onAddToComparison={() => addToComparison(course.id, course)}
-                      onRemoveFromComparison={() => removeFromComparison(course.id)}
-                      isInComparison={isInComparison(course.id)}
-                      canAddToComparison={selectedCount < 3}
+                      onViewDetails={viewCourseDetails}
                     />
                   ))}
                 </div>
@@ -904,7 +890,7 @@ const ElectricianCareerCourses = () => {
                     <JobPagination
                       currentPage={currentPage}
                       totalPages={totalPages}
-                      onPageChange={handlePageChange}
+                      paginate={handlePageChange}
                     />
                   </div>
                 )}
@@ -923,14 +909,8 @@ const ElectricianCareerCourses = () => {
       {selectedCourse && (
         <ModernCourseDetailsModal
           course={selectedCourse}
-          isOpen={!!selectedCourse}
-          onClose={handleClose}
-          onToggleBookmark={(courseId) => toggleDatabaseBookmark('course', courseId.toString())}
-          isBookmarked={isDatabaseBookmarked('course', selectedCourse.id.toString())}
-          onAddToComparison={() => addToComparison(selectedCourse.id, selectedCourse)}
-          onRemoveFromComparison={() => removeFromComparison(selectedCourse.id)}
-          isInComparison={isInComparison(selectedCourse.id)}
-          canAddToComparison={selectedCount < 3}
+          open={!!selectedCourse}
+          onOpenChange={(open) => !open && handleClose()}
         />
       )}
 
@@ -938,7 +918,6 @@ const ElectricianCareerCourses = () => {
       {selectedCenter && (
         <TrainingCentreDetailsModal
           center={selectedCenter}
-          isOpen={!!selectedCenter}
           onClose={handleClose}
         />
       )}
