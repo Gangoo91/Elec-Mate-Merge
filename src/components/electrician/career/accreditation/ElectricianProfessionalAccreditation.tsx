@@ -13,7 +13,6 @@ import {
   Info,
   ArrowRight
 } from "lucide-react";
-import AccreditationSearchForm, { AccreditationSearchFilters } from "../../../apprentice/career/accreditation/AccreditationSearchForm";
 import AccreditationCard from "../../../apprentice/career/accreditation/AccreditationCard";
 import AccreditationDetailView from "../../../apprentice/career/accreditation/AccreditationDetailView";
 import AccreditationAnalytics from "../../../apprentice/career/accreditation/AccreditationAnalytics";
@@ -22,88 +21,21 @@ import { enhancedAccreditationOptions, AccreditationOption } from "../../../appr
 
 const ElectricianProfessionalAccreditation = () => {
   const isMobile = useIsMobile();
-  const [filteredOptions, setFilteredOptions] = useState<AccreditationOption[]>(enhancedAccreditationOptions);
   const [selectedAccreditation, setSelectedAccreditation] = useState<AccreditationOption | null>(null);
-  const [viewMode, setViewMode] = useState<"grid" | "details">("grid");
-
-  const handleSearch = (filters: AccreditationSearchFilters) => {
-    let filtered = enhancedAccreditationOptions;
-
-    // Apply search term filter
-    if (filters.searchTerm) {
-      const searchLower = filters.searchTerm.toLowerCase();
-      filtered = filtered.filter(option => 
-        option.title.toLowerCase().includes(searchLower) ||
-        option.provider.toLowerCase().includes(searchLower) ||
-        option.description.toLowerCase().includes(searchLower) ||
-        option.benefits.some(benefit => benefit.toLowerCase().includes(searchLower)) ||
-        option.category.toLowerCase().includes(searchLower)
-      );
-    }
-
-    // Apply category filter
-    if (filters.category && filters.category !== "All Categories") {
-      filtered = filtered.filter(option => option.category === filters.category);
-    }
-
-    // Apply level filter
-    if (filters.level && filters.level !== "All Levels") {
-      filtered = filtered.filter(option => option.level === filters.level);
-    }
-
-    // Apply online filter
-    if (filters.onlineOnly) {
-      filtered = filtered.filter(option => option.onlineAvailable);
-    }
-
-    // Apply cost filter
-    if (filters.maxCost && filters.maxCost !== "All Costs") {
-      filtered = filtered.filter(option => {
-        const costStr = option.cost.toLowerCase();
-        switch (filters.maxCost) {
-          case "Under £200":
-            return costStr.includes("£150") || costStr.includes("£100") || costStr.includes("under");
-          case "£200-£500":
-            return costStr.includes("£200") || costStr.includes("£300") || costStr.includes("£400") || costStr.includes("£250");
-          case "£500-£1000":
-            return costStr.includes("£500") || costStr.includes("£600") || costStr.includes("£700") || costStr.includes("£800") || costStr.includes("£900");
-          case "Over £1000":
-            return costStr.includes("£1000") || costStr.includes("£1200") || costStr.includes("over £1000");
-          default:
-            return true;
-        }
-      });
-    }
-
-    // Apply provider filter
-    if (filters.provider && filters.provider !== "All Providers") {
-      filtered = filtered.filter(option => 
-        option.accreditationBody === filters.provider || option.provider.includes(filters.provider)
-      );
-    }
-
-    setFilteredOptions(filtered);
-  };
-
-  const handleReset = () => {
-    setFilteredOptions(enhancedAccreditationOptions);
-  };
 
   const handleViewDetails = (accreditation: AccreditationOption) => {
     setSelectedAccreditation(accreditation);
-    setViewMode("details");
   };
 
-  const handleBackToGrid = () => {
+  const handleCloseDetails = () => {
     setSelectedAccreditation(null);
-    setViewMode("grid");
   };
 
-  if (viewMode === "details" && selectedAccreditation) {
+  if (selectedAccreditation) {
     return (
-      <AccreditationDetailView
-        accreditation={selectedAccreditation}
-        onBack={handleBackToGrid}
+      <AccreditationDetailView 
+        accreditation={selectedAccreditation} 
+        onBack={handleCloseDetails}
       />
     );
   }
@@ -126,12 +58,6 @@ const ElectricianProfessionalAccreditation = () => {
       {/* Analytics Dashboard */}
       <AccreditationAnalytics />
 
-      {/* Search and Filters */}
-      <AccreditationSearchForm 
-        onSearch={handleSearch} 
-        onReset={handleReset}
-        resultsCount={filteredOptions.length}
-      />
 
       {/* Information Cards */}
       <div className={`grid gap-6 ${isMobile ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-2'}`}>
@@ -223,14 +149,14 @@ const ElectricianProfessionalAccreditation = () => {
         <div className="flex items-center gap-2">
           <h3 className="text-lg font-medium">Available Accreditations</h3>
           <Badge variant="outline" className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30">
-            {filteredOptions.length} {filteredOptions.length === 1 ? 'option' : 'options'}
+            {enhancedAccreditationOptions.length} {enhancedAccreditationOptions.length === 1 ? 'option' : 'options'}
           </Badge>
         </div>
       </div>
 
       {/* Accreditations Grid */}
       <div className={`grid gap-6 auto-rows-fr ${isMobile ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'}`}>
-        {filteredOptions.map((accreditation) => (
+        {enhancedAccreditationOptions.map((accreditation) => (
           <AccreditationCard
             key={accreditation.id}
             accreditation={accreditation}
@@ -239,21 +165,6 @@ const ElectricianProfessionalAccreditation = () => {
         ))}
       </div>
 
-      {/* Empty State */}
-      {filteredOptions.length === 0 && (
-        <Card className="border-elec-yellow/20 bg-elec-grey">
-          <CardContent className="p-8 text-center">
-            <BookOpen className="h-12 w-12 text-white mx-auto mb-4" />
-            <h3 className="text-lg font-medium mb-2">No accreditations found</h3>
-            <p className="text-white mb-4">
-              Try adjusting your search criteria or explore different categories.
-            </p>
-            <Button variant="outline" onClick={handleReset}>
-              Reset Filters
-            </Button>
-          </CardContent>
-        </Card>
-      )}
 
       {/* Additional Resources */}
       <Card className="border-elec-yellow/20 bg-elec-grey">
