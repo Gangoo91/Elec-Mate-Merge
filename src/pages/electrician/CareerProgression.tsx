@@ -285,108 +285,108 @@ const CareerProgression = () => {
                 ⚡ Professional Development Roadmap
               </h3>
               
-              {/* Mobile-first stacked layout, then grid on md+ */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
+              {/* Grid with equal height columns and proper dividers */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 md:divide-x md:divide-elec-yellow/10 items-stretch">
                 {/* Column 1: Immediate Actions */}
-                <div className="space-y-3 sm:space-y-4 h-full">
-                  <div className="flex items-center gap-3 mb-3 sm:mb-4">
-                    <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-elec-yellow/20 flex items-center justify-center flex-shrink-0">
+                <div className="flex flex-col h-full">
+                  <div className="flex items-center gap-3 mb-4 h-16">
+                    <div className="w-8 h-8 rounded-full bg-elec-yellow/20 flex items-center justify-center flex-shrink-0">
                       <span className="text-elec-yellow font-semibold text-sm">1</span>
                     </div>
-                    <h4 className="font-semibold text-white text-base sm:text-lg">Immediate Actions</h4>
+                    <h4 className="font-semibold text-white text-base sm:text-lg leading-tight">Immediate Actions</h4>
                   </div>
                   
-                  <div className="space-y-2 sm:space-y-3">
-                    <ul className="space-y-2 sm:space-y-3">
-                      <li className="flex items-start gap-2 sm:gap-3">
-                        <span className="w-1.5 h-1.5 rounded-full bg-elec-yellow mt-1.5 sm:mt-2 flex-shrink-0"></span>
-                        <span className="text-white text-xs sm:text-sm leading-relaxed">Update CV with latest projects and certifications</span>
+                  <div className="flex-1">
+                    <ul aria-label="Immediate actions for career development" className="space-y-3">
+                      <li className="relative pl-4">
+                        <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-elec-yellow"></span>
+                        <span className="text-white text-sm leading-relaxed">Update CV with latest projects and certifications</span>
                       </li>
-                      <li className="flex items-start gap-2 sm:gap-3">
-                        <span className="w-1.5 h-1.5 rounded-full bg-elec-yellow mt-1.5 sm:mt-2 flex-shrink-0"></span>
-                        <span className="text-white text-xs sm:text-sm leading-relaxed">Research emerging technology training (EV, heat pumps, solar)</span>
+                      <li className="relative pl-4">
+                        <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-elec-yellow"></span>
+                        <span className="text-white text-sm leading-relaxed">Research emerging technology training (EV, heat pumps, solar)</span>
                       </li>
-                      <li className="flex items-start gap-2 sm:gap-3">
-                        <span className="w-1.5 h-1.5 rounded-full bg-elec-yellow mt-1.5 sm:mt-2 flex-shrink-0"></span>
-                        <span className="text-white text-xs sm:text-sm leading-relaxed">Join professional networking groups and LinkedIn communities</span>
+                      <li className="relative pl-4">
+                        <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-elec-yellow"></span>
+                        <span className="text-white text-sm leading-relaxed">Join professional networking groups and LinkedIn communities</span>
                       </li>
-                      <li className="flex items-start gap-2 sm:gap-3">
-                        <span className="w-1.5 h-1.5 rounded-full bg-elec-yellow mt-1.5 sm:mt-2 flex-shrink-0"></span>
-                        <span className="text-white text-xs sm:text-sm leading-relaxed">Review current JIB grade and advancement requirements</span>
+                      <li className="relative pl-4">
+                        <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-elec-yellow"></span>
+                        <span className="text-white text-sm leading-relaxed">Review current JIB grade and advancement requirements</span>
                       </li>
-                      <li className="flex items-start gap-2 sm:gap-3">
-                        <span className="w-1.5 h-1.5 rounded-full bg-elec-yellow mt-1.5 sm:mt-2 flex-shrink-0"></span>
-                        <span className="text-white text-xs sm:text-sm leading-relaxed">Set up job alerts for specialist roles</span>
+                      <li className="relative pl-4">
+                        <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-elec-yellow"></span>
+                        <span className="text-white text-sm leading-relaxed">Set up job alerts for specialist roles</span>
                       </li>
                     </ul>
                   </div>
                 </div>
                 
                 {/* Column 2: 3-Month Goals */}
-                <div className="space-y-3 sm:space-y-4 h-full md:border-l md:border-elec-yellow/10 md:pl-4 lg:pl-6">
-                  <div className="flex items-center gap-3 mb-3 sm:mb-4">
-                    <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-blue-400/20 flex items-center justify-center flex-shrink-0">
+                <div className="flex flex-col h-full md:pl-6">
+                  <div className="flex items-center gap-3 mb-4 h-16">
+                    <div className="w-8 h-8 rounded-full bg-blue-400/20 flex items-center justify-center flex-shrink-0">
                       <span className="text-blue-400 font-semibold text-sm">2</span>
                     </div>
-                    <h4 className="font-semibold text-white text-base sm:text-lg">3-Month Goals</h4>
+                    <h4 className="font-semibold text-white text-base sm:text-lg leading-tight">3-Month Goals</h4>
                   </div>
                   
-                  <div className="space-y-2 sm:space-y-3">
-                    <ul className="space-y-2 sm:space-y-3">
-                      <li className="flex items-start gap-2 sm:gap-3">
-                        <span className="w-1.5 h-1.5 rounded-full bg-blue-400 mt-1.5 sm:mt-2 flex-shrink-0"></span>
-                        <span className="text-white text-xs sm:text-sm leading-relaxed">Book specialist training courses (2919, 2399, MCS certification)</span>
+                  <div className="flex-1">
+                    <ul aria-label="Three month career development goals" className="space-y-3">
+                      <li className="relative pl-4">
+                        <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-blue-400"></span>
+                        <span className="text-white text-sm leading-relaxed">Book specialist training courses (2919, 2399, MCS certification)</span>
                       </li>
-                      <li className="flex items-start gap-2 sm:gap-3">
-                        <span className="w-1.5 h-1.5 rounded-full bg-blue-400 mt-1.5 sm:mt-2 flex-shrink-0"></span>
-                        <span className="text-white text-xs sm:text-sm leading-relaxed">Attend industry trade shows and networking events</span>
+                      <li className="relative pl-4">
+                        <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-blue-400"></span>
+                        <span className="text-white text-sm leading-relaxed">Attend industry trade shows and networking events</span>
                       </li>
-                      <li className="flex items-start gap-2 sm:gap-3">
-                        <span className="w-1.5 h-1.5 rounded-full bg-blue-400 mt-1.5 sm:mt-2 flex-shrink-0"></span>
-                        <span className="text-white text-xs sm:text-sm leading-relaxed">Complete market research on day rates vs salary positions</span>
+                      <li className="relative pl-4">
+                        <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-blue-400"></span>
+                        <span className="text-white text-sm leading-relaxed">Complete market research on day rates vs salary positions</span>
                       </li>
-                      <li className="flex items-start gap-2 sm:gap-3">
-                        <span className="w-1.5 h-1.5 rounded-full bg-blue-400 mt-1.5 sm:mt-2 flex-shrink-0"></span>
-                        <span className="text-white text-xs sm:text-sm leading-relaxed">Apply for professional membership (IET, ECA, NAPIT)</span>
+                      <li className="relative pl-4">
+                        <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-blue-400"></span>
+                        <span className="text-white text-sm leading-relaxed">Apply for professional membership (IET, ECA, NAPIT)</span>
                       </li>
-                      <li className="flex items-start gap-2 sm:gap-3">
-                        <span className="w-1.5 h-1.5 rounded-full bg-blue-400 mt-1.5 sm:mt-2 flex-shrink-0"></span>
-                        <span className="text-white text-xs sm:text-sm leading-relaxed">Start building portfolio of specialist work examples</span>
+                      <li className="relative pl-4">
+                        <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-blue-400"></span>
+                        <span className="text-white text-sm leading-relaxed">Start building portfolio of specialist work examples</span>
                       </li>
                     </ul>
                   </div>
                 </div>
                 
                 {/* Column 3: Long-term Strategy */}
-                <div className="space-y-3 sm:space-y-4 h-full md:border-l md:border-elec-yellow/10 md:pl-4 lg:pl-6">
-                  <div className="flex items-center gap-3 mb-3 sm:mb-4">
-                    <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-green-400/20 flex items-center justify-center flex-shrink-0">
+                <div className="flex flex-col h-full md:pl-6">
+                  <div className="flex items-center gap-3 mb-4 h-16">
+                    <div className="w-8 h-8 rounded-full bg-green-400/20 flex items-center justify-center flex-shrink-0">
                       <span className="text-green-400 font-semibold text-sm">3</span>
                     </div>
-                    <h4 className="font-semibold text-white text-base sm:text-lg">Long-term Strategy</h4>
+                    <h4 className="font-semibold text-white text-base sm:text-lg leading-tight">Long-term Strategy</h4>
                   </div>
                   
-                  <div className="space-y-2 sm:space-y-3">
-                    <ul className="space-y-2 sm:space-y-3">
-                      <li className="flex items-start gap-2 sm:gap-3">
-                        <span className="w-1.5 h-1.5 rounded-full bg-green-400 mt-1.5 sm:mt-2 flex-shrink-0"></span>
-                        <span className="text-white text-xs sm:text-sm leading-relaxed">Complete advanced qualifications in chosen specialisation</span>
+                  <div className="flex-1">
+                    <ul aria-label="Long-term career strategy items" className="space-y-3">
+                      <li className="relative pl-4">
+                        <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-green-400"></span>
+                        <span className="text-white text-sm leading-relaxed">Complete advanced qualifications in chosen specialisation</span>
                       </li>
-                      <li className="flex items-start gap-2 sm:gap-3">
-                        <span className="w-1.5 h-1.5 rounded-full bg-green-400 mt-1.5 sm:mt-2 flex-shrink-0"></span>
-                        <span className="text-white text-xs sm:text-sm leading-relaxed">Build reputation as subject matter expert through projects</span>
+                      <li className="relative pl-4">
+                        <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-green-400"></span>
+                        <span className="text-white text-sm leading-relaxed">Build reputation as subject matter expert through projects</span>
                       </li>
-                      <li className="flex items-start gap-2 sm:gap-3">
-                        <span className="w-1.5 h-1.5 rounded-full bg-green-400 mt-1.5 sm:mt-2 flex-shrink-0"></span>
-                        <span className="text-white text-xs sm:text-sm leading-relaxed">Consider further education (HNC/HND/Degree) if applicable</span>
+                      <li className="relative pl-4">
+                        <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-green-400"></span>
+                        <span className="text-white text-sm leading-relaxed">Consider further education (HNC/HND/Degree) if applicable</span>
                       </li>
-                      <li className="flex items-start gap-2 sm:gap-3">
-                        <span className="w-1.5 h-1.5 rounded-full bg-green-400 mt-1.5 sm:mt-2 flex-shrink-0"></span>
-                        <span className="text-white text-xs sm:text-sm leading-relaxed">Evaluate contracting vs employment career paths</span>
+                      <li className="relative pl-4">
+                        <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-green-400"></span>
+                        <span className="text-white text-sm leading-relaxed">Evaluate contracting vs employment career paths</span>
                       </li>
-                      <li className="flex items-start gap-2 sm:gap-3">
-                        <span className="w-1.5 h-1.5 rounded-full bg-green-400 mt-1.5 sm:mt-2 flex-shrink-0"></span>
-                        <span className="text-white text-xs sm:text-sm leading-relaxed">Explore business ownership or partnership opportunities</span>
+                      <li className="relative pl-4">
+                        <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-green-400"></span>
+                        <span className="text-white text-sm leading-relaxed">Explore business ownership or partnership opportunities</span>
                       </li>
                     </ul>
                   </div>
