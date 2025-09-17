@@ -55,8 +55,23 @@ const ModernEducationGrid = ({ programmes, excludeId, onProgrammeClick }: Modern
   };
 
   const formatDuration = (duration: string) => {
-    const match = duration.match(/(\d+)/);
-    return match ? `${match[1]} year${parseInt(match[1]) > 1 ? 's' : ''}` : duration;
+    // Handle various duration formats
+    const patterns = [
+      { regex: /(\d+)\s*years?/i, format: (n: number) => `${n} year${n > 1 ? 's' : ''}` },
+      { regex: /(\d+)\s*months?/i, format: (n: number) => `${n} month${n > 1 ? 's' : ''}` },
+      { regex: /(\d+)\s*weeks?/i, format: (n: number) => `${n} week${n > 1 ? 's' : ''}` },
+      { regex: /(\d+)\s*days?/i, format: (n: number) => `${n} day${n > 1 ? 's' : ''}` }
+    ];
+
+    for (const pattern of patterns) {
+      const match = duration.match(pattern.regex);
+      if (match) {
+        const number = parseInt(match[1]);
+        return pattern.format(number);
+      }
+    }
+
+    return duration;
   };
 
   const isHighRated = (programme: LiveEducationData) => programme.rating >= 4.0;
@@ -85,7 +100,7 @@ const ModernEducationGrid = ({ programmes, excludeId, onProgrammeClick }: Modern
             onClick={() => onProgrammeClick?.(programme)}
           >
             {/* Image */}
-            <div className="relative overflow-hidden h-40 sm:h-48">
+            <div className="relative overflow-hidden h-32 sm:h-36">
               <img
                 src={getCategoryImage(programme.category)}
                 alt={programme.title}
@@ -95,21 +110,21 @@ const ModernEducationGrid = ({ programmes, excludeId, onProgrammeClick }: Modern
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
               
               {/* Category Badge */}
-              <div className="absolute top-3 left-3">
+              <div className="absolute top-2 left-2">
                 <Badge className={cn("text-xs font-medium", getCategoryColor(programme.category))}>
                   {programme.category}
                 </Badge>
               </div>
 
               {/* Level Badge */}
-              <div className="absolute top-3 right-3">
+              <div className="absolute top-2 right-2">
                 <Badge className={cn("text-xs font-medium", getLevelColor(programme.level))}>
                   {programme.level}
                 </Badge>
               </div>
 
               {/* Special Indicators */}
-              <div className="absolute bottom-3 left-3 flex gap-2">
+              <div className="absolute bottom-2 left-2 flex gap-1">
                 {isHighEmployment(programme) && (
                   <Badge className="bg-elec-yellow/20 border-elec-yellow/30 text-elec-yellow text-xs">
                     <TrendingUp className="h-3 w-3 mr-1" />
@@ -125,7 +140,7 @@ const ModernEducationGrid = ({ programmes, excludeId, onProgrammeClick }: Modern
             </div>
 
             {/* Content */}
-            <div className="p-4 sm:p-5 space-y-3 flex flex-col h-[calc(100%-10rem)] sm:h-[calc(100%-12rem)]">
+            <div className="p-3 sm:p-4 space-y-2 flex flex-col h-[calc(100%-8rem)] sm:h-[calc(100%-9rem)]">
               {/* Meta Info */}
               <div className="flex items-center justify-between text-xs text-white/80">
                 <div className="flex items-center gap-3">

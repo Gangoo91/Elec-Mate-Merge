@@ -7,14 +7,15 @@ import ModernEducationHero from "./ModernEducationHero";
 import ModernEducationFeaturedCarousel from "./ModernEducationFeaturedCarousel";
 import ModernEducationGrid from "./ModernEducationGrid";
 import ModernEducationFilters, { EducationFilters } from "./ModernEducationFilters";
+import ModernEducationDetailsModal from "./ModernEducationDetailsModal";
 import FundingCalculator from "../../../apprentice/career/education/FundingCalculator";
-import LiveEducationCard from "./LiveEducationCard";
 
 const ElectricianFurtherEducation = () => {
   const { educationData, analytics, loading, error, lastUpdated, isFromCache, refreshData } = useLiveEducationData('all');
   const [filteredOptions, setFilteredOptions] = useState<LiveEducationData[]>([]);
   const [selectedOption, setSelectedOption] = useState<LiveEducationData | null>(null);
-  const [viewMode, setViewMode] = useState<"grid" | "details" | "funding">("grid");
+  const [viewMode, setViewMode] = useState<"grid" | "funding">("grid");
+  const [modalOpen, setModalOpen] = useState(false);
 
   // Update filtered options when education data changes
   useEffect(() => {
@@ -94,7 +95,7 @@ const ElectricianFurtherEducation = () => {
 
   const handleViewDetails = (option: LiveEducationData) => {
     setSelectedOption(option);
-    setViewMode("details");
+    setModalOpen(true);
   };
 
   const handleBackToGrid = () => {
@@ -120,36 +121,6 @@ const ElectricianFurtherEducation = () => {
     );
   }
 
-  if (viewMode === "details" && selectedOption) {
-    return (
-      <div className="space-y-6">
-        <div className="flex items-center gap-4">
-          <Button variant="outline" onClick={handleBackToGrid}>
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Education Options
-          </Button>
-        </div>
-        
-        <Card className="border-elec-yellow/20 bg-elec-gray">
-          <CardHeader>
-            <CardTitle className="text-2xl">{selectedOption.title}</CardTitle>
-            <p className="text-amber-400">{selectedOption.institution}</p>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            <p className="text-muted-foreground">{selectedOption.description}</p>
-            
-            {/* Detailed information sections would go here */}
-            <div className="text-center py-8">
-              <p className="text-muted-foreground">
-                Detailed view implementation would continue here with comprehensive information,
-                application forms, funding calculators, etc.
-              </p>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-    );
-  }
 
   // Get featured programmes (top 6 highest rated or employment rate)
   const featuredProgrammes = filteredOptions
@@ -279,31 +250,31 @@ const ElectricianFurtherEducation = () => {
               </div>
               <div className="space-y-4">
                 <div className="bg-background/30 rounded-lg p-4 border border-elec-yellow/10">
-                  <h5 className="font-semibold text-foreground text-sm mb-2 flex items-center gap-2">
+                  <h5 className="font-semibold text-white text-sm mb-2 flex items-center gap-2">
                     <span className="w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
                     Advanced Learner Loan (19+)
                   </h5>
-                  <p className="text-muted-foreground text-sm leading-relaxed">
+                  <p className="text-white/80 text-sm leading-relaxed">
                     Available for Level 3-6 qualifications. No upfront fees, only repay when earning £25,000+. 
                     9% of income above threshold.
                   </p>
                 </div>
                 <div className="bg-background/30 rounded-lg p-4 border border-elec-yellow/10">
-                  <h5 className="font-semibold text-foreground text-sm mb-2 flex items-center gap-2">
+                  <h5 className="font-semibold text-white text-sm mb-2 flex items-center gap-2">
                     <span className="w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
                     Student Finance England
                   </h5>
-                  <p className="text-muted-foreground text-sm leading-relaxed">
+                  <p className="text-white/80 text-sm leading-relaxed">
                     Tuition fee loans up to £9,250 for degrees. Maintenance loans available based on household income. 
                     Repayment at 9% above £27,295.
                   </p>
                 </div>
                 <div className="bg-background/30 rounded-lg p-4 border border-elec-yellow/10">
-                  <h5 className="font-semibold text-foreground text-sm mb-2 flex items-center gap-2">
+                  <h5 className="font-semibold text-white text-sm mb-2 flex items-center gap-2">
                     <span className="w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
                     Postgraduate Loan
                   </h5>
-                  <p className="text-muted-foreground text-sm leading-relaxed">
+                  <p className="text-white/80 text-sm leading-relaxed">
                     Up to £12,167 for Master's study. 6% interest rate. Same repayment terms as undergraduate loans.
                   </p>
                 </div>
@@ -318,29 +289,29 @@ const ElectricianFurtherEducation = () => {
               </div>
               <div className="space-y-4">
                 <div className="bg-background/30 rounded-lg p-4 border border-elec-yellow/10">
-                  <h5 className="font-semibold text-foreground text-sm mb-2 flex items-center gap-2">
+                  <h5 className="font-semibold text-white text-sm mb-2 flex items-center gap-2">
                     <span className="w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
                     Apprenticeship Levy
                   </h5>
-                  <p className="text-muted-foreground text-sm leading-relaxed">
+                  <p className="text-white/80 text-sm leading-relaxed">
                     Large employers (£3M+ payroll) contribute 0.5% to apprenticeship levy. Can fund degree apprenticeships.
                   </p>
                 </div>
                 <div className="bg-background/30 rounded-lg p-4 border border-elec-yellow/10">
-                  <h5 className="font-semibold text-foreground text-sm mb-2 flex items-center gap-2">
+                  <h5 className="font-semibold text-white text-sm mb-2 flex items-center gap-2">
                     <span className="w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
                     Professional Body Grants
                   </h5>
-                  <p className="text-muted-foreground text-sm leading-relaxed">
+                  <p className="text-white/80 text-sm leading-relaxed">
                     IET scholarships (£1,000-£10,000), ECA Educational Trust grants, NECA bursaries for electrical study.
                   </p>
                 </div>
                 <div className="bg-background/30 rounded-lg p-4 border border-elec-yellow/10">
-                  <h5 className="font-semibold text-foreground text-sm mb-2 flex items-center gap-2">
+                  <h5 className="font-semibold text-white text-sm mb-2 flex items-center gap-2">
                     <span className="w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
                     Career Development Loans
                   </h5>
-                  <p className="text-muted-foreground text-sm leading-relaxed">
+                  <p className="text-white/80 text-sm leading-relaxed">
                     Bank loans for vocational training. Government pays interest during study and one month after.
                   </p>
                 </div>
@@ -349,6 +320,13 @@ const ElectricianFurtherEducation = () => {
           </div>
         </CardContent>
       </Card>
+
+      {/* Education Details Modal */}
+      <ModernEducationDetailsModal
+        programme={selectedOption}
+        open={modalOpen}
+        onOpenChange={setModalOpen}
+      />
     </div>
   );
 };

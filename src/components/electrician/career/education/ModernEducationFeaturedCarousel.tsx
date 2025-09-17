@@ -68,9 +68,23 @@ const ModernEducationFeaturedCarousel = ({ programmes, className, onProgrammeCli
   };
 
   const formatDuration = (duration: string) => {
-    // Extract number of years from duration string
-    const match = duration.match(/(\d+)/);
-    return match ? `${match[1]} year${parseInt(match[1]) > 1 ? 's' : ''}` : duration;
+    // Handle various duration formats
+    const patterns = [
+      { regex: /(\d+)\s*years?/i, format: (n: number) => `${n} year${n > 1 ? 's' : ''}` },
+      { regex: /(\d+)\s*months?/i, format: (n: number) => `${n} month${n > 1 ? 's' : ''}` },
+      { regex: /(\d+)\s*weeks?/i, format: (n: number) => `${n} week${n > 1 ? 's' : ''}` },
+      { regex: /(\d+)\s*days?/i, format: (n: number) => `${n} day${n > 1 ? 's' : ''}` }
+    ];
+
+    for (const pattern of patterns) {
+      const match = duration.match(pattern.regex);
+      if (match) {
+        const number = parseInt(match[1]);
+        return pattern.format(number);
+      }
+    }
+
+    return duration;
   };
 
   return (
@@ -101,7 +115,7 @@ const ModernEducationFeaturedCarousel = ({ programmes, className, onProgrammeCli
               <div className="bg-gradient-to-br from-white/10 via-white/5 to-transparent rounded-xl border border-white/10 overflow-hidden group hover:border-elec-yellow/30 transition-all duration-300 hover:shadow-xl hover:shadow-elec-yellow/10 hover:scale-[1.02] h-full cursor-pointer"
                    onClick={() => onProgrammeClick?.(programme)}>
                 {/* Image */}
-                <div className="relative h-40 sm:h-48 overflow-hidden">
+                <div className="relative h-32 sm:h-36 overflow-hidden">
                   <img
                     src={getCategoryImage(programme.category)}
                     alt={programme.title}
@@ -111,14 +125,14 @@ const ModernEducationFeaturedCarousel = ({ programmes, className, onProgrammeCli
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
                   
                   {/* Category Badge */}
-                  <div className="absolute top-3 left-3">
+                  <div className="absolute top-2 left-2">
                     <Badge className={cn("text-xs font-medium", getCategoryColor(programme.category))}>
                       {programme.category}
                     </Badge>
                   </div>
 
                   {/* Level Badge */}
-                  <div className="absolute top-3 right-3">
+                  <div className="absolute top-2 right-2">
                     <Badge className={cn("text-xs font-medium", getLevelColor(programme.level))}>
                       {programme.level}
                     </Badge>
@@ -126,7 +140,7 @@ const ModernEducationFeaturedCarousel = ({ programmes, className, onProgrammeCli
 
                   {/* High Demand Indicator */}
                   {programme.employmentRate >= 90 && (
-                    <div className="absolute bottom-3 left-3">
+                    <div className="absolute bottom-2 left-2">
                       <Badge className="bg-elec-yellow/20 border-elec-yellow/30 text-elec-yellow text-xs">
                         High Demand
                       </Badge>
@@ -135,7 +149,7 @@ const ModernEducationFeaturedCarousel = ({ programmes, className, onProgrammeCli
                 </div>
 
                 {/* Content */}
-                <div className="p-4 sm:p-5 space-y-3 flex flex-col h-[calc(100%-10rem)] sm:h-[calc(100%-12rem)]">
+                <div className="p-3 sm:p-4 space-y-2 flex flex-col h-[calc(100%-8rem)] sm:h-[calc(100%-9rem)]">
                   {/* Meta Info */}
                   <div className="flex items-center justify-between text-xs text-white/80">
                     <div className="flex items-center gap-3">
