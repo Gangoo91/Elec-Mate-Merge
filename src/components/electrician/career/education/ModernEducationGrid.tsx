@@ -102,10 +102,13 @@ const ModernEducationGrid = ({ programmes, excludeId, onProgrammeClick }: Modern
             {/* Image */}
             <div className="relative overflow-hidden h-32 sm:h-36">
               <img
-                src={getCategoryImage(programme.category)}
+                src={programme.imageUrl || getCategoryImage(programme.category)}
                 alt={programme.title}
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                 loading="lazy"
+                onError={(e) => {
+                  e.currentTarget.src = getCategoryImage(programme.category);
+                }}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
               
