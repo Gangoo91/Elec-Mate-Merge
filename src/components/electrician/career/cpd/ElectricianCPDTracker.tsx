@@ -1,22 +1,24 @@
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DropdownTabs, DropdownTab } from "@/components/ui/dropdown-tabs";
-import { Clock, Target, TrendingUp, Award, ClipboardList, History } from "lucide-react";
+import { Clock, Target, TrendingUp, Award, ClipboardList, History, Settings } from "lucide-react";
 import ComplianceDashboard from "./enhanced/ComplianceDashboard";
 import ActivityTemplates from "./enhanced/ActivityTemplates";
 import AnalyticsDashboard from "./enhanced/AnalyticsDashboard";
 import MobileEnhancedCPD from "./enhanced/MobileEnhancedCPD";
-import CPDEntryForm from "../../../apprentice/career/cpd/CPDEntryForm";
+import EnhancedCPDEntryForm from "./enhanced/EnhancedCPDEntryForm";
 import CPDHistory from "../../../apprentice/career/cpd/CPDHistory";
 import CPDGoals from "../../../apprentice/career/cpd/CPDGoals";
 import CPDDashboard from "../../../apprentice/career/cpd/enhanced/CPDDashboard";
 import EnhancedCPDDashboard from "./EnhancedCPDDashboard";
 import { useCPDAutoTracking } from "@/hooks/cpd/useCPDAutoTracking";
 import { useUnifiedCPD } from "@/hooks/cpd/useUnifiedCPD";
+import ProfessionalBodyManager from "./ProfessionalBodyManager";
 
 const ElectricianCPDTracker = () => {
   const [activeTab, setActiveTab] = useState("compliance");
   const [isMobile, setIsMobile] = useState(false);
+  const [showProfessionalBodyManager, setShowProfessionalBodyManager] = useState(false);
   const { generatePortfolio, loading } = useUnifiedCPD();
   
   // Initialize auto-tracking for the CPD tracker
@@ -73,12 +75,20 @@ const ElectricianCPDTracker = () => {
       <div className="min-h-screen bg-elec-dark">
         {/* Header */}
         <div className="bg-elec-dark border-b border-elec-yellow/20 p-4">
-          <div className="flex items-center gap-3">
-            <Clock className="h-6 w-6 text-elec-yellow" />
-            <div>
-              <h1 className="text-lg font-bold text-white">Electrician CPD Tracker</h1>
-              <p className="text-xs text-muted-foreground">Professional Development</p>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <Clock className="h-6 w-6 text-elec-yellow" />
+              <div>
+                <h1 className="text-lg font-bold text-white">Electrician CPD Tracker</h1>
+                <p className="text-xs text-muted-foreground">Professional Development</p>
+              </div>
             </div>
+            <button
+              onClick={() => setActiveTab("settings")}
+              className="text-elec-yellow hover:text-amber-400"
+            >
+              <Settings className="h-5 w-5" />
+            </button>
           </div>
         </div>
 
@@ -102,7 +112,7 @@ const ElectricianCPDTracker = () => {
                   Back
                 </button>
               </div>
-              <CPDEntryForm onSuccess={() => setActiveTab("compliance")} />
+              <EnhancedCPDEntryForm onSuccess={() => setActiveTab("compliance")} />
             </div>
           )}
           {activeTab === "history" && (
@@ -133,6 +143,56 @@ const ElectricianCPDTracker = () => {
               <CPDGoals />
             </div>
           )}
+          {activeTab === "settings" && (
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <h2 className="text-lg font-semibold text-white">Professional Body Settings</h2>
+                <button 
+                  onClick={() => setActiveTab("compliance")}
+                  className="text-elec-yellow text-sm"
+                >
+                  Back
+                </button>
+              </div>
+              <ProfessionalBodyManager />
+            </div>
+          )}
+          {activeTab === "settings" && (
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <h2 className="text-lg font-semibold text-white">Professional Body Settings</h2>
+                <button 
+                  onClick={() => setActiveTab("compliance")}
+                  className="text-elec-yellow text-sm"
+                >
+                  Back
+                </button>
+              </div>
+              <ProfessionalBodyManager />
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  }
+
+  // Show Professional Body Manager in modal if requested
+  if (showProfessionalBodyManager && !isMobile) {
+    return (
+      <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+        <div className="bg-elec-gray rounded-lg border border-elec-yellow/20 w-full max-w-4xl max-h-[90vh] overflow-auto">
+          <div className="p-6">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-2xl font-bold text-white">Professional Body Settings</h2>
+              <button
+                onClick={() => setShowProfessionalBodyManager(false)}
+                className="text-muted-foreground hover:text-white"
+              >
+                ✕
+              </button>
+            </div>
+            <ProfessionalBodyManager onClose={() => setShowProfessionalBodyManager(false)} />
+          </div>
         </div>
       </div>
     );
@@ -155,7 +215,7 @@ const ElectricianCPDTracker = () => {
       value: "log-activity",
       label: "Log Activity", 
       icon: ClipboardList,
-      content: <CPDEntryForm onSuccess={() => setActiveTab("compliance")} />
+      content: <EnhancedCPDEntryForm onSuccess={() => setActiveTab("compliance")} />
     },
     {
       value: "history",
@@ -180,6 +240,12 @@ const ElectricianCPDTracker = () => {
       label: "Analytics",
       icon: Award,
       content: <AnalyticsDashboard />
+    },
+    {
+      value: "settings",
+      label: "Settings",
+      icon: Settings,
+      content: <ProfessionalBodyManager />
     }
   ];
 
@@ -196,6 +262,15 @@ const ElectricianCPDTracker = () => {
           Professional-grade CPD tracking with compliance monitoring, evidence management, 
           and industry-specific templates for UK electricians.
         </p>
+        <div className="flex justify-center">
+          <button
+            onClick={() => setShowProfessionalBodyManager(true)}
+            className="text-elec-yellow hover:text-amber-400 text-sm flex items-center gap-2"
+          >
+            <Settings className="h-4 w-4" />
+            Manage Professional Bodies
+          </button>
+        </div>
       </div>
 
       {/* Main Content */}
