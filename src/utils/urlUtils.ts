@@ -7,7 +7,7 @@ export const isValidUrl = (url?: string): boolean => {
   if (!url || typeof url !== 'string') return false;
   
   // Filter out placeholder text
-  const placeholders = ['link in bio', 'see bio', 'link below', 'coming soon', 'tbc', 'tba'];
+  const placeholders = ['link in bio', 'see bio', 'link below', 'coming soon', 'tbc', 'tba', 'various providers'];
   if (placeholders.some(placeholder => url.toLowerCase().includes(placeholder))) {
     return false;
   }

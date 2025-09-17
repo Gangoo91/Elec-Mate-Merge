@@ -13,6 +13,7 @@ import {
   CheckCircle
 } from "lucide-react";
 import { AccreditationOption } from "./enhancedAccreditationData";
+import { isValidUrl } from "@/utils/urlUtils";
 
 interface AccreditationCardProps {
   accreditation: AccreditationOption;
@@ -59,7 +60,7 @@ const AccreditationCard = ({ accreditation, onViewDetails }: AccreditationCardPr
         </div>
       </CardHeader>
       
-      <CardContent className="flex-1 flex flex-col space-y-4">
+      <CardContent className="flex-1 flex flex-col space-y-4 min-h-0">
         <p className="text-sm text-white leading-relaxed">
           {accreditation.description}
         </p>
@@ -86,9 +87,9 @@ const AccreditationCard = ({ accreditation, onViewDetails }: AccreditationCardPr
           </div>
         </div>
         
-        <div className="space-y-3 flex-1">
+        <div className="space-y-3 flex-1 min-h-0 flex flex-col">
           <h4 className="text-sm font-medium text-elec-yellow">Key Benefits:</h4>
-          <div className="space-y-2">
+          <div className="space-y-2 flex-1">
             {accreditation.benefits.slice(0, 3).map((benefit, idx) => (
               <div key={idx} className="flex items-start gap-2">
                 <CheckCircle className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
@@ -111,7 +112,7 @@ const AccreditationCard = ({ accreditation, onViewDetails }: AccreditationCardPr
             <Award className="mr-2 h-4 w-4" />
             View Details
           </Button>
-          {accreditation.website !== "Various providers" && (
+          {isValidUrl(accreditation.website) && (
             <Button 
               variant="outline" 
               size="sm"
