@@ -46,6 +46,18 @@ const ModernCoursesGrid = ({ courses, excludeId, onCourseClick }: ModernCoursesG
     return colors[demand as keyof typeof colors] || "bg-white/10 border-white/20 text-white/80";
   };
 
+  const getCategoryImage = (category: string) => {
+    const images = {
+      "Essential Updates": "https://images.unsplash.com/photo-1581092921461-eab62e97a780?w=400&h=250&fit=crop&auto=format",
+      "Emerging Technologies": "https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=400&h=250&fit=crop&auto=format",
+      "Safety & Compliance": "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=400&h=250&fit=crop&auto=format",
+      "Specialized Systems": "https://images.unsplash.com/photo-1581094651181-35942459ef62?w=400&h=250&fit=crop&auto=format",
+      "Professional Development": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=250&fit=crop&auto=format",
+      "Business Skills": "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=400&h=250&fit=crop&auto=format",
+    };
+    return images[category as keyof typeof images] || "https://images.unsplash.com/photo-1581092921461-eab62e97a780?w=400&h=250&fit=crop&auto=format";
+  };
+
   const formatDuration = (duration: string) => {
     const patterns = [
       { regex: /(\d+)\s*days?/i, format: (n: number) => `${n} day${n > 1 ? 's' : ''}` },
@@ -70,106 +82,80 @@ const ModernCoursesGrid = ({ courses, excludeId, onCourseClick }: ModernCoursesG
       {filteredCourses.map((course) => (
         <div
           key={course.id}
-          className="bg-gradient-to-br from-white/10 via-white/5 to-transparent rounded-xl border border-white/10 overflow-hidden group hover:border-elec-yellow/30 transition-all duration-300 hover:shadow-xl hover:shadow-elec-yellow/10 hover:scale-[1.02] cursor-pointer"
+          className="bg-gradient-to-br from-white/10 via-white/5 to-transparent rounded-xl border border-white/10 overflow-hidden group hover:border-elec-yellow/30 transition-all duration-300 hover:shadow-xl hover:shadow-elec-yellow/10 hover:scale-[1.02] h-full cursor-pointer"
           onClick={() => onCourseClick?.(course)}
         >
-          {/* Header */}
-          <div className="p-4 pb-3 border-b border-white/10">
-            <div className="flex items-start justify-between gap-3 mb-3">
-              <div className="flex-1 min-w-0">
-                <h3 className="font-semibold text-white text-base line-clamp-2 leading-tight mb-2">
-                  {course.title}
-                </h3>
-                <p className="text-elec-yellow text-sm font-medium">{course.provider}</p>
-              </div>
-              
-              {/* Rating */}
-              <div className="flex items-center gap-1 bg-white/10 rounded-full px-2 py-1 backdrop-blur-sm">
-                <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
-                <span className="text-xs text-white font-medium">{course.rating.toFixed(1)}</span>
-              </div>
-            </div>
-
-            {/* Badges */}
-            <div className="flex flex-wrap gap-2">
-              {course.isLive && (
+          {/* Image */}
+          <div className="relative h-32 sm:h-36 overflow-hidden">
+            <img
+              src={getCategoryImage(course.category)}
+              alt={course.title}
+              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+              loading="lazy"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+            
+            {/* Live Data Indicator */}
+            {course.isLive && (
+              <div className="absolute bottom-2 left-2">
                 <Badge className="bg-elec-yellow/20 border-elec-yellow/30 text-elec-yellow text-xs">
                   Live Data
                 </Badge>
-              )}
-            </div>
+              </div>
+            )}
           </div>
 
           {/* Content */}
-          <div className="p-4 space-y-4">
-            {/* Description */}
-            <p className="text-sm text-white/80 line-clamp-3 leading-relaxed">
-              {course.description}
-            </p>
-
-            {/* Course Details Grid */}
-            <div className="grid grid-cols-2 gap-3 text-xs text-white/80">
-              <div className="space-y-2">
-                <div className="flex items-center gap-2">
-                  <Clock className="h-3 w-3 text-elec-yellow" />
-                  <span>{formatDuration(course.duration)}</span>
+          <div className="p-3 sm:p-4 space-y-2 flex flex-col h-[calc(100%-8rem)] sm:h-[calc(100%-9rem)]">
+            {/* Meta Info */}
+            <div className="flex items-center justify-between text-xs text-white/80">
+              <div className="flex items-center gap-3">
+                <div className="flex items-center gap-1">
+                  <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
+                  <span>{course.rating.toFixed(1)}</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <Zap className="h-3 w-3 text-elec-yellow" />
+                <div className="flex items-center gap-1">
+                  <Zap className="h-3 w-3" />
                   <span>{course.level}</span>
                 </div>
               </div>
-              
-              <div className="space-y-2">
-                <div className="flex items-center gap-2">
-                  <TrendingUp className="h-3 w-3 text-elec-yellow" />
-                  <span className="font-medium">{course.price}</span>
-                </div>
-                {course.locations.length > 0 && (
-                  <div className="flex items-center gap-2">
-                    <MapPin className="h-3 w-3 text-elec-yellow" />
-                    <span className="line-clamp-1">{course.locations[0]}</span>
-                    {course.locations.length > 1 && (
-                      <span className="text-elec-yellow">+{course.locations.length - 1}</span>
-                    )}
-                  </div>
-                )}
+              <div className="flex items-center gap-1">
+                <Clock className="h-3 w-3" />
+                <span>{formatDuration(course.duration)}</span>
               </div>
             </div>
 
-            {/* Format & Next Dates */}
-            <div className="space-y-2">
-              <div className="text-xs text-white/80">
-                <span className="font-medium text-white">Format:</span> {course.format}
+            {/* Title */}
+            <h3 className="font-semibold text-white line-clamp-2 text-sm sm:text-base leading-tight flex-grow">
+              {course.title}
+            </h3>
+
+            {/* Provider */}
+            <p className="text-elec-yellow text-xs sm:text-sm font-medium">
+              {course.provider}
+            </p>
+
+            {/* Format & Locations */}
+            <div className="text-white/80 text-xs space-y-1">
+              <div className="flex items-center gap-1">
+                <span className="font-medium">Format:</span>
+                <span>{course.format}</span>
               </div>
-              
-              {course.nextDates && course.nextDates.length > 0 && (
-                <div className="text-xs text-white/80">
-                  <span className="font-medium text-white">Next dates:</span>
-                  <div className="flex flex-wrap gap-1 mt-1">
-                    {course.nextDates.slice(0, 2).map((date, index) => (
-                      <Badge key={index} variant="outline" className="text-xs border-white/20 text-white/80">
-                        {date}
-                      </Badge>
-                    ))}
-                    {course.nextDates.length > 2 && (
-                      <Badge variant="outline" className="text-xs border-elec-yellow/30 text-elec-yellow">
-                        +{course.nextDates.length - 2} more
-                      </Badge>
-                    )}
-                  </div>
+              {course.locations.length > 0 && (
+                <div className="flex items-center gap-1">
+                  <MapPin className="h-3 w-3" />
+                  <span className="line-clamp-1">{course.locations[0]}</span>
+                  {course.locations.length > 1 && (
+                    <span className="text-elec-yellow">+{course.locations.length - 1}</span>
+                  )}
                 </div>
               )}
             </div>
-          </div>
 
-          {/* Footer */}
-          <div className="p-4 pt-0">
-            <div className="flex items-center justify-between pt-3 border-t border-white/10">
-              <div className="text-xs text-white/60">
-                {course.salaryImpact && (
-                  <span>Salary impact: <span className="text-elec-yellow font-medium">{course.salaryImpact}</span></span>
-                )}
+            {/* Footer */}
+            <div className="flex items-center justify-between mt-auto pt-3 border-t border-white/10">
+              <div className="text-xs text-white/80">
+                <span className="font-medium">{course.price}</span>
               </div>
               
               <Button
@@ -181,7 +167,7 @@ const ModernCoursesGrid = ({ courses, excludeId, onCourseClick }: ModernCoursesG
                   onCourseClick?.(course);
                 }}
               >
-                <span className="text-xs">View Details</span>
+                <span className="text-xs">View</span>
                 <ExternalLink className="h-3 w-3 ml-1 transition-transform group-hover/btn:translate-x-0.5" />
               </Button>
             </div>
