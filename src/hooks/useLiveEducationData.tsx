@@ -71,102 +71,136 @@ export const useLiveEducationData = (category: string = 'all'): UseLiveEducation
     try {
       setLoading(true);
       setError(null);
-
       console.log('🔍 Fetching live education data...');
 
-      // Clear cache if force refresh is requested
-      if (forceRefresh) {
-        console.log('🗑️ Clearing cached education data...');
-        const { error: deleteError } = await supabase
-          .from('live_education_cache')
-          .delete()
-          .eq('category', category);
-        
-        if (deleteError) {
-          console.warn('⚠️ Failed to clear cache:', deleteError.message);
-        } else {
-          console.log('✅ Cache cleared successfully');
-        }
-      } else {
-        // Check for valid cached data only if not force refreshing
-        const { data: cachedData } = await supabase
+      // Check for cached data first (if not forcing refresh)
+      if (!forceRefresh) {
+        const { data: cachedData, error: cacheError } = await supabase
           .from('live_education_cache')
           .select('*')
           .eq('category', category)
-          .gt('expires_at', new Date().toISOString())
-          .single();
+          .gte('expires_at', new Date().toISOString())
+          .maybeSingle();
 
-        if (cachedData) {
-          console.log('✅ Using cached education data');
-          setEducationData((cachedData.education_data as unknown as LiveEducationData[]) || []);
-          setAnalytics((cachedData.analytics_data as unknown as LiveEducationAnalytics) || null);
-          setLastUpdated(cachedData.created_at);
+        if (!cacheError && cachedData?.education_data && cachedData?.analytics_data) {
+          const educationArray = cachedData.education_data as unknown as LiveEducationData[];
+          console.log(`⚡ Using cached education data (${educationArray.length} programmes)`);
+          setEducationData(educationArray || []);
+          setAnalytics(cachedData.analytics_data as unknown as LiveEducationAnalytics || null);
+          setLastUpdated(cachedData.last_refreshed);
           setIsFromCache(true);
-          
-          // Set cache info from database
-          if (cachedData.next_refresh_date) {
-            const daysUntilRefresh = Math.ceil((new Date(cachedData.next_refresh_date).getTime() - Date.now()) / (1000 * 60 * 60 * 24));
-            setCacheInfo({
-              nextRefresh: cachedData.next_refresh_date,
-              cacheVersion: cachedData.cache_version || 1,
-              refreshStatus: cachedData.refresh_status || 'completed',
-              daysUntilRefresh: Math.max(0, daysUntilRefresh)
-            });
-          }
-          
+          setCacheInfo({
+            nextRefresh: cachedData.next_refresh_date,
+            cacheVersion: cachedData.cache_version,
+            refreshStatus: cachedData.refresh_status,
+            daysUntilRefresh: Math.ceil((new Date(cachedData.next_refresh_date).getTime() - Date.now()) / (1000 * 60 * 60 * 24))
+          });
           setLoading(false);
           return;
         }
       }
 
-      // Fetch fresh data from edge function
+      // If no cache or force refresh, fetch fresh data with timeout
       console.log('📡 Fetching fresh education data from edge function...');
-      const { data, error: functionError } = await supabase.functions.invoke('live-education-aggregator', {
-        body: { category, refresh: forceRefresh, limit: 50 } // Limit to 50 courses for performance
-      });
+      
+      const fetchWithTimeout = async (timeoutMs: number) => {
+        return Promise.race([
+          supabase.functions.invoke('live-education-aggregator', {
+            body: { 
+              category, 
+              refresh: forceRefresh, 
+              limit: 50 
+            }
+          }),
+          new Promise((_, reject) => 
+            setTimeout(() => reject(new Error('Request timeout')), timeoutMs)
+          )
+        ]);
+      };
+
+      let data, functionError;
+      try {
+        const result = await fetchWithTimeout(15000) as any; // 15 second timeout
+        data = result.data;
+        functionError = result.error;
+      } catch (timeoutError) {
+        console.warn('⏰ Request timed out, using cached data');
+        functionError = timeoutError;
+      }
 
       if (functionError) {
-        throw new Error(functionError.message);
-      }
-
-      if (data.success) {
-        setEducationData(data.data || []);
-        setAnalytics(data.analytics || null);
-        setLastUpdated(data.lastUpdated);
-        setIsFromCache(data.cached || false);
+        console.error('❌ Function error:', functionError);
         
-        // Set cache info from fresh data response
-        if (data.cacheInfo) {
-          setCacheInfo(data.cacheInfo);
+        // Try to get latest cached data as fallback
+        const { data: fallbackData } = await supabase
+          .from('live_education_cache')
+          .select('*')
+          .eq('category', category)
+          .order('created_at', { ascending: false })
+          .maybeSingle();
+
+        if (fallbackData?.education_data) {
+          const fallbackArray = fallbackData.education_data as unknown as LiveEducationData[];
+          console.log(`🔄 Using fallback cached data (${fallbackArray.length} programmes)`);
+          setEducationData(fallbackArray || []);
+          setAnalytics(fallbackData.analytics_data as unknown as LiveEducationAnalytics || null);
+          setLastUpdated(fallbackData.last_refreshed);
+          setIsFromCache(true);
+          setCacheInfo({
+            nextRefresh: fallbackData.next_refresh_date,
+            cacheVersion: fallbackData.cache_version,
+            refreshStatus: 'expired',
+            daysUntilRefresh: 0
+          });
         }
         
-        console.log(`✅ Loaded ${data.data?.length || 0} education programmes`);
-      } else {
-        throw new Error(data.error || 'Failed to fetch education data');
+        setError('Unable to fetch fresh data - showing cached results if available');
+        setLoading(false);
+        return;
       }
-    } catch (err) {
-      console.error('❌ Error fetching education data:', err);
-      setError(err instanceof Error ? err.message : 'Failed to fetch education data');
+
+      if (data?.success && data?.data && data?.analytics) {
+        console.log(`✅ Loaded ${data.data.length} education programmes`);
+        setEducationData(data.data);
+        setAnalytics(data.analytics);
+        setLastUpdated(new Date().toISOString());
+        setIsFromCache(false);
+        setCacheInfo(data.cacheInfo || null);
+        setError(null);
+      } else {
+        console.warn('⚠️ Unexpected response format:', data);
+        setError('Unexpected response format from education service');
+      }
+
+    } catch (error) {
+      console.error('❌ Error fetching education data:', error);
+      setError(error instanceof Error ? error.message : 'Failed to fetch education data');
       
-      // Fallback to any available cached data (even if expired)
+      // Try to get latest cached data as fallback
       try {
         const { data: fallbackData } = await supabase
           .from('live_education_cache')
           .select('*')
           .eq('category', category)
           .order('created_at', { ascending: false })
-          .limit(1)
-          .single();
+          .maybeSingle();
 
-        if (fallbackData) {
-          console.log('⚠️ Using fallback cached data');
-          setEducationData((fallbackData.education_data as unknown as LiveEducationData[]) || []);
-          setAnalytics((fallbackData.analytics_data as unknown as LiveEducationAnalytics) || null);
-          setLastUpdated(fallbackData.created_at);
+        if (fallbackData?.education_data) {
+          const errorFallbackArray = fallbackData.education_data as unknown as LiveEducationData[];
+          console.log(`🔄 Using fallback cached data after error (${errorFallbackArray.length} programmes)`);
+          setEducationData(errorFallbackArray || []);
+          setAnalytics(fallbackData.analytics_data as unknown as LiveEducationAnalytics || null);
+          setLastUpdated(fallbackData.last_refreshed);
           setIsFromCache(true);
+          setCacheInfo({
+            nextRefresh: fallbackData.next_refresh_date,
+            cacheVersion: fallbackData.cache_version,
+            refreshStatus: 'error',
+            daysUntilRefresh: 0
+          });
         }
       } catch (fallbackError) {
-        console.error('❌ No fallback data available:', fallbackError);
+        console.error('❌ Failed to get fallback data:', fallbackError);
       }
     } finally {
       setLoading(false);

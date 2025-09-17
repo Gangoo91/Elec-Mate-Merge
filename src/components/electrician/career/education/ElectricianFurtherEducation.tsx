@@ -9,9 +9,10 @@ import ModernEducationGrid from "./ModernEducationGrid";
 import ModernEducationFilters, { EducationFilters } from "./ModernEducationFilters";
 import ModernEducationDetailsModal from "./ModernEducationDetailsModal";
 import FundingCalculator from "../../../apprentice/career/education/FundingCalculator";
+import EducationCacheManager from "../courses/EducationCacheManager";
 
 const ElectricianFurtherEducation = () => {
-  const { educationData, analytics, loading, error, lastUpdated, isFromCache, refreshData } = useLiveEducationData('all');
+  const { educationData, analytics, loading, error, lastUpdated, isFromCache, refreshData, cacheInfo } = useLiveEducationData('all');
   const [filteredOptions, setFilteredOptions] = useState<LiveEducationData[]>([]);
   const [selectedOption, setSelectedOption] = useState<LiveEducationData | null>(null);
   const [viewMode, setViewMode] = useState<"grid" | "funding">("grid");
@@ -59,13 +60,13 @@ const ElectricianFurtherEducation = () => {
       );
     }
 
-    // Apply sorting
+  // Apply sorting
     switch (filters.sortBy) {
       case "rating":
-        filtered.sort((a, b) => b.rating - a.rating);
+        filtered.sort((a, b) => (b.rating || 0) - (a.rating || 0));
         break;
       case "employment":
-        filtered.sort((a, b) => b.employmentRate - a.employmentRate);
+        filtered.sort((a, b) => (b.employmentRate || 0) - (a.employmentRate || 0));
         break;
       case "title":
         filtered.sort((a, b) => a.title.localeCompare(b.title));
@@ -124,7 +125,7 @@ const ElectricianFurtherEducation = () => {
 
   // Get featured programmes (top 6 highest rated or employment rate)
   const featuredProgrammes = filteredOptions
-    .filter(prog => prog.rating >= 4.0 || prog.employmentRate >= 80)
+    .filter(prog => (prog.rating || 0) >= 4.0 || (prog.employmentRate || 0) >= 80)
     .slice(0, 6);
   
   // Get remaining programmes for grid
@@ -171,6 +172,14 @@ const ElectricianFurtherEducation = () => {
 
       {!loading && (
         <>
+          {/* Cache Manager */}
+          {cacheInfo && (
+            <EducationCacheManager 
+              cacheInfo={cacheInfo}
+              onRefreshComplete={() => refreshData(true)}
+            />
+          )}
+
           {/* Modern Filters */}
           <div id="education-filters">
             <ModernEducationFilters
