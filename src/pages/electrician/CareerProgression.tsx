@@ -4,7 +4,8 @@ import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "react-router-dom";
-import SimpleCareerCard from "@/components/electrician/career/SimpleCareerCard";
+import EnhancedCareerCard from "@/components/electrician/career/EnhancedCareerCard";
+import EnhancedStatsCard from "@/components/electrician/career/EnhancedStatsCard";
 import CareerPathways from "@/components/electrician/career/CareerPathways";
 import CareerCourses from "@/components/electrician/career/CareerCourses";
 import EnhancedFurtherEducation from "@/components/electrician/career/EnhancedFurtherEducation";
@@ -12,7 +13,7 @@ import ProfessionalAccreditation from "@/components/electrician/career/Professio
 import CPDTracker from "@/components/electrician/career/CPDTracker";
 import JobVacancies from "@/pages/electrician/JobVacancies";
 import { electricianCareerSections } from "@/components/electrician/career/SectionData";
-import { Briefcase } from "lucide-react";
+import { Briefcase, Clock, BookOpen, GraduationCap, Award } from "lucide-react";
 import { useLiveMarketData } from "@/hooks/useLiveMarketData";
 
 const CareerProgression = () => {
@@ -82,58 +83,100 @@ const CareerProgression = () => {
 
           {/* Career Sections Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 max-w-6xl mx-auto">
-            {electricianCareerSections.map((section) => (
-              <SimpleCareerCard 
-                key={section.id}
-                title={section.title}
-                icon={section.icon}
-                onClick={() => setActiveSection(section.id)}
-              />
-            ))}
-            {/* Job Vacancies Card */}
-            <SimpleCareerCard 
+            <EnhancedCareerCard 
+              title="CPD Tracker"
+              description="Track and manage your Continuing Professional Development hours and goals"
+              icon={<Clock className="h-10 w-10 sm:h-12 sm:w-12 text-elec-yellow opacity-80" />}
+              onClick={() => setActiveSection("cpd")}
+              category="Professional Development"
+              popularity={95}
+              timeToComplete="Ongoing"
+              skillLevel="Beginner"
+              certificationRequired={false}
+            />
+            <EnhancedCareerCard 
+              title="Career Pathways"
+              description="Explore different career advancement routes in the electrical industry"
+              icon={<Briefcase className="h-10 w-10 sm:h-12 sm:w-12 text-elec-yellow opacity-80" />}
+              onClick={() => setActiveSection("pathways")}
+              category="Career Planning"
+              popularity={88}
+              timeToComplete="2-5 years"
+              skillLevel="Intermediate"
+              certificationRequired={true}
+            />
+            <EnhancedCareerCard 
+              title="Career Courses"
+              description="Professional courses to enhance your electrical career skills"
+              icon={<BookOpen className="h-10 w-10 sm:h-12 sm:w-12 text-elec-yellow opacity-80" />}
+              onClick={() => setActiveSection("courses")}
+              category="Skills Development"
+              popularity={92}
+              timeToComplete="3-12 months"
+              skillLevel="Intermediate"
+              certificationRequired={true}
+            />
+            <EnhancedCareerCard 
+              title="Further Education"
+              description="Degrees and advanced learning opportunities for electrical professionals"
+              icon={<GraduationCap className="h-10 w-10 sm:h-12 sm:w-12 text-elec-yellow opacity-80" />}
+              onClick={() => setActiveSection("education")}
+              category="Higher Education"
+              popularity={76}
+              timeToComplete="2-4 years"
+              skillLevel="Advanced"
+              certificationRequired={false}
+            />
+            <EnhancedCareerCard 
+              title="Professional Accreditation"
+              description="Essential qualifications and certifications for career advancement"
+              icon={<Award className="h-10 w-10 sm:h-12 sm:w-12 text-elec-yellow opacity-80" />}
+              onClick={() => setActiveSection("accreditation")}
+              category="Certifications"
+              popularity={85}
+              timeToComplete="6-18 months"
+              skillLevel="Intermediate"
+              certificationRequired={true}
+            />
+            <EnhancedCareerCard 
               title="Job Vacancies"
-              icon={<Briefcase className="h-10 w-10 sm:h-12 sm:w-12 text-elec-yellow" />}
+              description="Browse current opportunities and apply for electrical positions"
+              icon={<Briefcase className="h-10 w-10 sm:h-12 sm:w-12 text-elec-yellow opacity-80" />}
               onClick={() => setActiveSection("job-vacancies")}
+              category="Job Search"
+              popularity={99}
+              timeToComplete="Immediate"
+              skillLevel="Beginner"
+              certificationRequired={false}
             />
           </div>
 
           {/* Enhanced Professional Development Stats */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <Card className="border-elec-yellow/20 bg-elec-gray/50">
-              <CardContent className="p-4 text-center">
-                <div className="text-2xl font-bold text-elec-yellow">
-                  {marketData?.careerpathways || '12'}+
-                </div>
-                <div className="text-sm text-white">Advanced Pathways</div>
-                <div className="text-xs text-white/70 mt-1">Updated for 2025</div>
-              </CardContent>
-            </Card>
-            <Card className="border-elec-yellow/20 bg-elec-gray/50">
-              <CardContent className="p-4 text-center">
-                <div className="text-2xl font-bold text-elec-yellow">
-                  {marketData?.totalCourses || '284'}+
-                </div>
-                <div className="text-sm text-white">Professional Courses</div>
-                <div className="text-xs text-white/70 mt-1">Including Net Zero skills</div>
-              </CardContent>
-            </Card>
-            <Card className="border-elec-yellow/20 bg-elec-gray/50">
-              <CardContent className="p-4 text-center">
-                <div className="text-2xl font-bold text-elec-yellow">
-                  {marketData?.professionalRange || '£35k-£80k+'}
-                </div>
-                <div className="text-sm text-white">Salary Range</div>
-                <div className="text-xs text-white/70 mt-1">2025 market rates</div>
-              </CardContent>
-            </Card>
-            <Card className="border-elec-yellow/20 bg-elec-gray/50">
-              <CardContent className="p-4 text-center">
-                <div className="text-2xl font-bold text-elec-yellow">15%</div>
-                <div className="text-sm text-white">Rate Increase</div>
-                <div className="text-xs text-white/70 mt-1">Skills shortage premium</div>
-              </CardContent>
-            </Card>
+            <EnhancedStatsCard 
+              value={`${marketData?.careerpathways || '12'}+`}
+              label="Advanced Pathways"
+              subtitle="Updated for 2025"
+              trend="up"
+            />
+            <EnhancedStatsCard 
+              value={`${marketData?.totalCourses || '284'}+`}
+              label="Professional Courses"
+              subtitle="Including Net Zero skills"
+              trend="up"
+            />
+            <EnhancedStatsCard 
+              value={marketData?.professionalRange || '£35k-£80k+'}
+              label="Salary Range"
+              subtitle="2025 market rates"
+              trend="up"
+            />
+            <EnhancedStatsCard 
+              value="15%"
+              label="Rate Increase"
+              subtitle="Skills shortage premium"
+              trend="up"
+            />
           </div>
 
           {/* New: 2025 Career Opportunities Spotlight */}
