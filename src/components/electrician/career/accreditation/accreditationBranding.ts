@@ -14,12 +14,12 @@ const brandMap: Record<string, AccreditationBrand> = {
     logoUrl: "https://logo.clearbit.com/napit.org.uk"
   },
   "ELECSA": {
-    brandColor: "#F36F21",
-    logoUrl: "https://logo.clearbit.com/elecsa.co.uk"
+    brandColor: "#F36F21"
+    // Using generic fallback as Clearbit doesn't have correct ELECSA logo
   },
   "ELECSA/Certsure": {
-    brandColor: "#F36F21",
-    logoUrl: "https://logo.clearbit.com/elecsa.co.uk"
+    brandColor: "#F36F21"
+    // Using generic fallback as Clearbit doesn't have correct ELECSA logo
   },
   "STROMA": {
     brandColor: "#00A859",

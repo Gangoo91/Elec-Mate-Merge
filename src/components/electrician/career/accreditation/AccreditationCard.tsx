@@ -47,14 +47,14 @@ const AccreditationCard = ({ accreditation, onViewDetails }: AccreditationCardPr
         {/* Logo section */}
         <div className="absolute top-3 left-3">
           <div 
-            className="w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center border-2 bg-white/10 backdrop-blur-sm"
+            className="w-16 h-16 sm:w-20 sm:h-20 rounded-full flex items-center justify-center border-2 bg-white/10 backdrop-blur-sm"
             style={{ borderColor: brandInfo.brandColor }}
           >
             {logoUrl ? (
               <img 
                 src={logoUrl}
                 alt={`${accreditation.accreditationBody} logo`}
-                className="w-6 h-6 sm:w-8 sm:h-8 object-contain"
+                className="w-10 h-10 sm:w-12 sm:h-12 object-contain"
                 loading="lazy"
                 decoding="async"
                 referrerPolicy="no-referrer"
@@ -71,7 +71,7 @@ const AccreditationCard = ({ accreditation, onViewDetails }: AccreditationCardPr
               />
             ) : (
               <span 
-                className="text-xs sm:text-sm font-bold text-white"
+                className="text-sm sm:text-base font-bold text-white"
                 style={{ backgroundColor: brandInfo.brandColor + '20' }}
               >
                 {getInitials(accreditation.accreditationBody)}
