@@ -60,11 +60,12 @@ export interface CourseAnalytics {
 
 export const courseCategories = [
   "All Categories",
-  "Essential Qualifications",
-  "Emerging Technologies", 
-  "Safety & Compliance",
-  "Specialised Skills",
-  "Business & Management"
+  "Safety & Compliance", 
+  "Essential Updates",
+  "Emerging Technologies",
+  "Specialized Systems", 
+  "Professional Development",
+  "Business Skills"
 ];
 
 export const enhancedCareerCourses: EnhancedCareerCourse[] = [
@@ -80,7 +81,7 @@ export const enhancedCareerCourses: EnhancedCareerCourse[] = [
     nextDates: ["15 June 2025", "22 July 2025", "18 August 2025", "15 September 2025"],
     rating: 4.8,
     locations: ["London", "Manchester", "Birmingham", "Glasgow", "Cardiff", "Online"],
-    category: "Essential Qualifications",
+    category: "Essential Updates",
     industryDemand: "High",
     futureProofing: 5,
     salaryImpact: "£2,000 - £4,000 annual increase",
@@ -117,7 +118,7 @@ export const enhancedCareerCourses: EnhancedCareerCourse[] = [
     nextDates: ["10 June 2025", "14 July 2025", "11 September 2025", "9 October 2025"],
     rating: 4.7,
     locations: ["Cardiff", "Newcastle", "London", "Edinburgh", "Bristol"],
-    category: "Essential Qualifications",
+    category: "Essential Updates",
     industryDemand: "High",
     futureProofing: 5,
     salaryImpact: "£3,000 - £6,000 annual increase",
@@ -225,7 +226,7 @@ export const enhancedCareerCourses: EnhancedCareerCourse[] = [
     nextDates: ["8 June 2025", "10 August 2025", "12 October 2025", "7 December 2025"],
     rating: 4.8,
     locations: ["London", "Manchester", "Birmingham", "Glasgow"],
-    category: "Specialised Skills",
+    category: "Specialized Systems",
     industryDemand: "High",
     futureProofing: 4,
     salaryImpact: "£3,000 - £5,000 annual increase",
@@ -441,7 +442,7 @@ export const enhancedCareerCourses: EnhancedCareerCourse[] = [
     nextDates: ["17 June 2025", "29 July 2025", "19 August 2025", "30 September 2025"],
     rating: 4.9,
     locations: ["London", "Manchester", "Edinburgh"],
-    category: "Specialised Skills",
+    category: "Specialized Systems",
     industryDemand: "High",
     futureProofing: 4,
     salaryImpact: "£8,000 - £15,000 annual increase",

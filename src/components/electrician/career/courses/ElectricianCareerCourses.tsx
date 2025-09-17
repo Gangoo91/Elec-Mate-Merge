@@ -6,8 +6,7 @@ import ModernCourseDetailsModal from "./ModernCourseDetailsModal";
 import TrainingCentreDetailsModal from "../../../apprentice/career/courses/TrainingCenterDetailsModal";
 import CourseSelectionTips from "../../../apprentice/career/courses/CourseSelectionTips";
 import EmptySearchResults from "../../../apprentice/career/courses/EmptySearchResults";
-import EnhancedCourseSearch from "./EnhancedCourseSearch";
-import CourseSorting, { sortOptions } from "./CourseSorting";
+// Removed separate search components for simplified interface
 import FeaturedCoursesCarousel from "./FeaturedCoursesCarousel";
 import CourseFeaturedCarousel from "./CourseFeaturedCarousel";
 import CourseNewsCard from "./CourseNewsCard";
@@ -29,8 +28,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useLocationCache } from "@/hooks/useLocationCache";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { BookOpen, Users, Plus, Scale, FileDown, RefreshCw, Wifi, WifiOff, Map, List } from "lucide-react";
+import { BookOpen, Users, Plus, Scale, FileDown, RefreshCw, Wifi, WifiOff, Map, List, Search } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -39,6 +39,7 @@ import JobPagination from "../../../job-vacancies/JobPagination";
 import { useCareerBookmarks } from "@/hooks/career/useCareerBookmarks";
 import { parsePrice, parseDuration, parseDate, getNumericRating, getDemandScore, getFutureProofingScore } from "@/utils/courseSorting";
 import { fallbackElectricalCourses } from "@/data/fallbackCourses";
+import { electricianCategories } from "@/data/electricianCourseCategories";
 
 const ElectricianCareerCourses = () => {
   const [selectedCourse, setSelectedCourse] = useState<EnhancedCareerCourse | null>(null);
@@ -76,22 +77,12 @@ const ElectricianCareerCourses = () => {
     selectedCourseData 
   } = useCourseComparison();
 
-  // Search and filter state
-  const [filters, setFilters] = useState({
-    searchQuery: "",
-    category: "All Categories",
-    level: "All Levels",
-    location: "All Locations",
-    priceRange: [0, 2000] as [number, number],
-    duration: "Any Duration",
-    industryDemand: "All",
-    format: "All Formats",
-    rating: 0
-  });
+  // Simplified search state
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("All Categories");
 
   // Debounced search to prevent excessive API calls
-  const debouncedSearchQuery = useDebounce(filters.searchQuery, 500);
-  const debouncedLocation = useDebounce(filters.location, 300);
+  const debouncedSearchQuery = useDebounce(searchQuery, 500);
 
   // Live education data hook - unified with further education section
   const {
@@ -158,17 +149,10 @@ const ElectricianCareerCourses = () => {
   const isUsingFallback = !hasLiveCourses;
   const isSearching = isLoadingLive;
 
-  // Auto-refetch courses when debounced search criteria change  
-  useEffect(() => {
-    if (debouncedSearchQuery || debouncedLocation !== "All Locations") {
-      console.log('🔄 Triggering course search with:', { debouncedSearchQuery, debouncedLocation });
-    }
-  }, [debouncedSearchQuery, debouncedLocation]);
-
-  // Reset pagination when filters change
+  // Reset pagination when search changes
   useEffect(() => {
     setCurrentPage(1);
-  }, [filters, debouncedSearchQuery, debouncedLocation]);
+  }, [searchQuery, selectedCategory]);
 
   // Handle courses per page change
   const handleCoursesPerPageChange = (value: string) => {
@@ -199,97 +183,42 @@ const ElectricianCareerCourses = () => {
     return nearbyProviders;
   }, [nearbyProviders]);
 
-  // Enhanced filtering and sorting logic using live data
+  // Simplified filtering logic focusing on electrician upskilling
   const filteredAndSortedCourses = useMemo(() => {
-    console.log('🔄 useMemo recomputing with:', { currentSort, sortVersion, coursesCount: liveCourses.length });
     let filtered = liveCourses.filter(course => {
-      // Category whitelist filter - only show electrical, engineering, tech, and safety courses
+      // Enhanced electrician-specific keywords
       const title = course.title.toLowerCase();
       const description = course.description.toLowerCase();
       const category = course.category.toLowerCase();
       const searchText = `${title} ${description} ${category}`;
       
-      const electricalKeywords = ['electrical', 'electric', 'wiring', '18th edition', 'inspection', 'testing', 'pat testing', 'installation'];
-      const engineeringKeywords = ['engineering', 'engineer', 'technical', 'design', 'construction', 'building'];
-      const techKeywords = ['technology', 'tech', 'digital', 'computer', 'software', 'automation', 'smart', 'iot'];
-      const safetyKeywords = ['safety', 'health', 'risk', 'hazard', 'protection', 'compliance', 'regulation'];
+      const electricianKeywords = [
+        'electrical', 'electric', 'wiring', '18th edition', 'inspection', 'testing', 'pat testing', 
+        'installation', 'mewp', 'ipaf', 'ev charging', 'bms', 'fire alarm', 'high voltage', 
+        'switching', 'instrumentation', 'maintenance', 'compex', 'hvac', 'safe a life', 'ecs',
+        'emergency first aid', 'regulation', 'compliance', 'safety', 'renewable energy',
+        'solar', 'battery storage', 'smart home', 'automation', 'data centre'
+      ];
       
-      const hasElectrical = electricalKeywords.some(keyword => searchText.includes(keyword));
-      const hasEngineering = engineeringKeywords.some(keyword => searchText.includes(keyword));
-      const hasTech = techKeywords.some(keyword => searchText.includes(keyword));
-      const hasSafety = safetyKeywords.some(keyword => searchText.includes(keyword));
+      const hasElectricalContent = electricianKeywords.some(keyword => searchText.includes(keyword));
       
-      if (!hasElectrical && !hasEngineering && !hasTech && !hasSafety) {
+      if (!hasElectricalContent) {
         return false;
       }
+
       // Search query filter
-      if (filters.searchQuery) {
-        const query = filters.searchQuery.toLowerCase();
+      if (searchQuery) {
+        const query = searchQuery.toLowerCase();
         const matches = 
-          course.title.toLowerCase().includes(query) ||
+          title.includes(query) ||
           course.provider.toLowerCase().includes(query) ||
-          course.description.toLowerCase().includes(query) ||
-          course.category.toLowerCase().includes(query);
+          description.includes(query) ||
+          category.includes(query);
         if (!matches) return false;
       }
 
       // Category filter
-      if (filters.category !== "All Categories" && course.category !== filters.category) {
-        return false;
-      }
-
-      // Level filter
-      if (filters.level !== "All Levels" && course.level !== filters.level) {
-        return false;
-      }
-
-      // Location filter - now supports both dropdown and radius-based filtering
-      if (filters.location !== "All Locations") {
-        const hasLocation = course.locations.some(loc => 
-          loc.toLowerCase().includes(filters.location.toLowerCase())
-        );
-        if (!hasLocation) return false;
-      }
-
-      // Radius-based location filtering
-      if (userCoordinates && userLocation) {
-        const courseWithinRadius = course.locations.some(location => {
-          // This would need geocoding for precise distance calculation
-          // For now, we'll use a simple text-based proximity check
-          const locationLower = location.toLowerCase();
-          const userLocationLower = userLocation.toLowerCase();
-          
-          // Extract city names for comparison
-          const userCity = userLocationLower.split(',')[0].trim();
-          return locationLower.includes(userCity) || locationLower.includes('online') || locationLower.includes('remote');
-        });
-        
-        if (!courseWithinRadius) return false;
-      }
-
-      // Price range filter
-      const coursePrice = parseInt(course.price.match(/£(\d+)/)?.[1] || "0");
-      if (coursePrice < filters.priceRange[0] || coursePrice > filters.priceRange[1]) {
-        return false;
-      }
-
-      // Duration filter
-      if (filters.duration !== "Any Duration" && !course.duration.includes(filters.duration)) {
-        return false;
-      }
-
-      // Industry demand filter
-      if (filters.industryDemand !== "All" && course.industryDemand !== filters.industryDemand) {
-        return false;
-      }
-
-      // Format filter
-      if (filters.format !== "All Formats" && !course.format.toLowerCase().includes(filters.format.toLowerCase())) {
-        return false;
-      }
-
-      // Rating filter
-      if (filters.rating > 0 && course.rating < filters.rating) {
+      if (selectedCategory !== "All Categories" && course.category !== selectedCategory) {
         return false;
       }
 
@@ -344,16 +273,8 @@ const ElectricianCareerCourses = () => {
       }
     });
     
-    console.log('🔍 Filtering results:', {
-      total: liveCourses.length,
-      filtered: filtered.length,
-      sorted: sortedCourses.length,
-      currentSort,
-      sortVersion
-    });
-    
     return sortedCourses;
-  }, [liveCourses, filters, currentSort, sortVersion, userLocation, userCoordinates]);
+  }, [liveCourses, searchQuery, selectedCategory, currentSort, sortVersion]);
 
   // Pagination calculations
   const totalFilteredCourses = filteredAndSortedCourses.length;
@@ -407,7 +328,6 @@ const ElectricianCareerCourses = () => {
   const handleClearLocation = () => {
     setUserLocation(null);
     setUserCoordinates(null);
-    setFilters(prev => ({ ...prev, location: "All Locations" }));
   };
 
   const handleLocationFound = (location: { name: string; coordinates: google.maps.LatLngLiteral }) => {
@@ -566,17 +486,10 @@ const ElectricianCareerCourses = () => {
   };
 
   const handleResetFilters = () => {
-    setFilters({
-      searchQuery: "",
-      category: "All Categories",
-      level: "All Levels",
-      location: "All Locations",
-      priceRange: [0, 2000],
-      duration: "Any Duration",
-      industryDemand: "All",
-      format: "All Formats",
-      rating: 0
-    });
+    setSearchQuery("");
+    setSelectedCategory("All Categories");
+    setCurrentSort("relevance");
+    setCurrentPage(1);
     handleClearLocation();
   };
 
@@ -716,28 +629,68 @@ const ElectricianCareerCourses = () => {
         />
       </div>
 
-      {/* Enhanced search and controls */}
+      {/* Simplified Search Interface */}
       <div className="space-y-4">
-        <EnhancedCourseSearch
-          filters={filters}
-          onFiltersChange={setFilters}
-          onReset={handleResetFilters}
-          totalResults={totalFilteredCourses}
-          isSearching={isSearching}
-          viewMode={viewMode as "grid" | "list" | "map"}
-        />
-
-        {/* Course sorting and view controls */}
+        {/* Single Search Bar with Category Pills */}
+        <Card className="border-elec-yellow/20 bg-elec-gray/50">
+          <CardContent className="p-6">
+            <div className="space-y-4">
+              {/* Search Input */}
+              <div className="relative">
+                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-elec-yellow" />
+                <Input
+                  placeholder="Search electrician courses: MEWP, EV Charging, 18th Edition, Fire Alarms..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="pl-12 h-12 text-lg bg-background border-elec-yellow/30 focus:border-elec-yellow"
+                />
+              </div>
+              
+              {/* Category Pills */}
+              <div className="flex flex-wrap gap-2">
+                {electricianCategories.map((category) => (
+                  <Button
+                    key={category}
+                    variant={selectedCategory === category ? "default" : "outline"}
+                    size="sm"
+                    onClick={() => setSelectedCategory(selectedCategory === category ? "All Categories" : category)}
+                    className={selectedCategory === category ? 
+                      "bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90" : 
+                      "border-elec-yellow/30 hover:bg-elec-yellow/10"
+                    }
+                  >
+                    {category}
+                  </Button>
+                ))}
+              </div>
+              
+              {/* Results Count */}
+              <div className="flex items-center justify-between">
+                <Badge variant="outline" className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30">
+                  {totalFilteredCourses} courses found
+                </Badge>
+                
+                {/* Simple Sort */}
+                <Select value={currentSort} onValueChange={handleSortChange}>
+                  <SelectTrigger className="w-40">
+                    <SelectValue placeholder="Sort by" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="relevance">Most Relevant</SelectItem>
+                    <SelectItem value="demand">High Demand</SelectItem>
+                    <SelectItem value="price_low">Price: Low to High</SelectItem>
+                    <SelectItem value="rating">Highest Rated</SelectItem>
+                    <SelectItem value="newest">Newest First</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+        
+        {/* Additional Controls */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <div className="flex flex-wrap items-center gap-2">
-            <CourseSorting 
-              currentSort={currentSort} 
-              onSortChange={handleSortChange}
-              totalResults={totalFilteredCourses}
-              viewMode={viewMode as "grid" | "list"}
-              onViewModeChange={(mode) => setViewMode(mode as "grid" | "list" | "map")}
-            />
-            
             {/* Courses per page selector */}
             <div className="flex items-center gap-2">
               <span className="text-sm text-muted-foreground hidden sm:inline">Show:</span>
