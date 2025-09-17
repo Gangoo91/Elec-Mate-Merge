@@ -30,6 +30,13 @@ export const DropdownTabs: React.FC<DropdownTabsProps> = ({
   const [activeTab, setActiveTab] = useState(defaultValue || tabs[0]?.value || "");
   const isMobile = useIsMobile();
 
+  // Update activeTab when defaultValue changes externally
+  React.useEffect(() => {
+    if (defaultValue && defaultValue !== activeTab) {
+      setActiveTab(defaultValue);
+    }
+  }, [defaultValue]);
+
   const handleValueChange = (value: string) => {
     setActiveTab(value);
     onValueChange?.(value);

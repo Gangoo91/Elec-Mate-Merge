@@ -205,6 +205,7 @@ const ElectricianCPDTracker = () => {
         placeholder="Select CPD section"
         onValueChange={setActiveTab}
         className="w-full"
+        key={activeTab} // Force re-render when activeTab changes
       />
     </div>
   );
