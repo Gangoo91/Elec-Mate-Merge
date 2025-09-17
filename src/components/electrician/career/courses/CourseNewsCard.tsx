@@ -75,16 +75,6 @@ const CourseNewsCard = ({ course, className, onClick }: CourseNewsCardProps) => 
           loading="lazy"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
-
-        {/* Level Badge */}
-        {course.level && (
-          <div className="absolute bottom-2 left-2">
-            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow text-xs">
-              <Award className="h-3 w-3 mr-1" />
-              {course.level}
-            </Badge>
-          </div>
-        )}
       </div>
 
       {/* Content */}
