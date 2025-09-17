@@ -9,7 +9,6 @@ import ModernEducationGrid from "./ModernEducationGrid";
 import ModernEducationFilters, { EducationFilters } from "./ModernEducationFilters";
 import ModernEducationDetailsModal from "./ModernEducationDetailsModal";
 import FundingCalculator from "../../../apprentice/career/education/FundingCalculator";
-import EducationCacheManager from "../courses/EducationCacheManager";
 
 const ElectricianFurtherEducation = () => {
   const { educationData, analytics, loading, error, lastUpdated, isFromCache, refreshData, cacheInfo } = useLiveEducationData('all');
@@ -172,13 +171,6 @@ const ElectricianFurtherEducation = () => {
 
       {!loading && (
         <>
-          {/* Cache Manager */}
-          {cacheInfo && (
-            <EducationCacheManager 
-              cacheInfo={cacheInfo}
-              onRefreshComplete={() => refreshData(true)}
-            />
-          )}
 
           {/* Modern Filters */}
           <div id="education-filters">
