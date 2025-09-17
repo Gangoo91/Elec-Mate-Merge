@@ -14,7 +14,7 @@ import {
   ArrowRight
 } from "lucide-react";
 import AccreditationCard from "./AccreditationCard";
-import AccreditationDetailView from "../../../apprentice/career/accreditation/AccreditationDetailView";
+import ElectricianAccreditationDetailView from "./ElectricianAccreditationDetailView";
 import AccreditationAnalytics from "../../../apprentice/career/accreditation/AccreditationAnalytics";
 import ResourceCard from "./ResourceCard";
 import { enhancedAccreditationOptions, AccreditationOption } from "../../../apprentice/career/accreditation/enhancedAccreditationData";
@@ -33,7 +33,7 @@ const ElectricianProfessionalAccreditation = () => {
 
   if (selectedAccreditation) {
     return (
-      <AccreditationDetailView 
+      <ElectricianAccreditationDetailView 
         accreditation={selectedAccreditation} 
         onBack={handleCloseDetails}
       />
