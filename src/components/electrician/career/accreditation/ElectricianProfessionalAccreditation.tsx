@@ -60,93 +60,93 @@ const ElectricianProfessionalAccreditation = () => {
 
 
       {/* Information Cards */}
-      <div className={`grid gap-8 ${isMobile ? 'grid-cols-1' : 'grid-cols-1 lg:grid-cols-2'} items-start`}>
-        <Card className="border-elec-yellow/30 bg-gradient-to-br from-elec-grey via-elec-grey/95 to-elec-grey/90 shadow-lg hover:shadow-xl hover:shadow-elec-yellow/10 transition-all duration-300 h-full">
-          <CardHeader className="pb-6 bg-gradient-to-r from-elec-yellow/10 to-transparent">
-            <CardTitle className="text-2xl font-bold flex items-center gap-3 text-white">
-              <div className="p-2 rounded-lg bg-elec-yellow/20 border border-elec-yellow/30">
-                <Target className="h-7 w-7 text-elec-yellow" />
+      <div className={`grid gap-12 ${isMobile ? 'grid-cols-1' : 'grid-cols-1 lg:grid-cols-2'} items-start`}>
+        <Card className="border-elec-yellow/30 bg-gradient-to-br from-elec-grey via-elec-grey/95 to-elec-grey/90 shadow-xl hover:shadow-2xl hover:shadow-elec-yellow/20 transition-all duration-500 h-full overflow-hidden">
+          <CardHeader className="pb-8 bg-gradient-to-r from-elec-yellow/15 via-elec-yellow/10 to-transparent border-b border-elec-yellow/20">
+            <CardTitle className="text-2xl font-bold flex items-center gap-4 text-white">
+              <div className="p-3 rounded-xl bg-elec-yellow/20 border border-elec-yellow/40 shadow-lg">
+                <Target className="h-8 w-8 text-elec-yellow" />
               </div>
               Why Get Accredited as an Electrician?
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-6 flex-1">
-            <div className="space-y-6">
-              <div className="group flex items-start gap-4 p-4 rounded-lg bg-elec-yellow/5 border border-elec-yellow/10 hover:border-elec-yellow/20 transition-all duration-200">
-                <div className="w-3 h-3 rounded-full bg-elec-yellow mt-2 flex-shrink-0 shadow-lg shadow-elec-yellow/30"></div>
-                <div className="flex-1">
-                  <h4 className="font-bold text-white mb-2 text-lg">Professional Recognition</h4>
-                  <p className="text-white/85 leading-relaxed">Demonstrate your expertise and commitment to electrical industry standards. Gain credibility with employers, clients, and peers through recognised qualifications.</p>
+          <CardContent className="p-8 space-y-8 flex-1">
+            <div className="space-y-8">
+              <div className="group flex items-start gap-6 p-6 rounded-xl bg-gradient-to-r from-elec-yellow/8 to-elec-yellow/4 border border-elec-yellow/15 hover:border-elec-yellow/30 hover:from-elec-yellow/12 hover:to-elec-yellow/6 transition-all duration-300">
+                <div className="w-4 h-4 rounded-full bg-elec-yellow mt-3 flex-shrink-0 shadow-lg shadow-elec-yellow/50"></div>
+                <div className="flex-1 space-y-3">
+                  <h4 className="font-bold text-white text-xl">Professional Recognition</h4>
+                  <p className="text-white/90 leading-relaxed text-base">Demonstrate your expertise and commitment to electrical industry standards. Gain credibility with employers, clients, and peers through recognised qualifications.</p>
                 </div>
               </div>
               
-              <div className="group flex items-start gap-4 p-4 rounded-lg bg-elec-yellow/5 border border-elec-yellow/10 hover:border-elec-yellow/20 transition-all duration-200">
-                <div className="w-3 h-3 rounded-full bg-elec-yellow mt-2 flex-shrink-0 shadow-lg shadow-elec-yellow/30"></div>
-                <div className="flex-1">
-                  <h4 className="font-bold text-white mb-2 text-lg">Career Advancement</h4>
-                  <p className="text-white/85 leading-relaxed">Access senior electrician positions and increased earning potential. Studies show accredited electricians earn <span className="text-elec-yellow font-semibold">15-25% more</span> than non-accredited peers.</p>
+              <div className="group flex items-start gap-6 p-6 rounded-xl bg-gradient-to-r from-elec-yellow/8 to-elec-yellow/4 border border-elec-yellow/15 hover:border-elec-yellow/30 hover:from-elec-yellow/12 hover:to-elec-yellow/6 transition-all duration-300">
+                <div className="w-4 h-4 rounded-full bg-elec-yellow mt-3 flex-shrink-0 shadow-lg shadow-elec-yellow/50"></div>
+                <div className="flex-1 space-y-3">
+                  <h4 className="font-bold text-white text-xl">Career Advancement</h4>
+                  <p className="text-white/90 leading-relaxed text-base">Access senior electrician positions and increased earning potential. Studies show accredited electricians earn <span className="text-elec-yellow font-bold bg-elec-yellow/20 px-2 py-1 rounded">15-25% more</span> than non-accredited peers.</p>
                 </div>
               </div>
               
-              <div className="group flex items-start gap-4 p-4 rounded-lg bg-elec-yellow/5 border border-elec-yellow/10 hover:border-elec-yellow/20 transition-all duration-200">
-                <div className="w-3 h-3 rounded-full bg-elec-yellow mt-2 flex-shrink-0 shadow-lg shadow-elec-yellow/30"></div>
-                <div className="flex-1">
-                  <h4 className="font-bold text-white mb-2 text-lg">Regulatory Compliance</h4>
-                  <p className="text-white/85 leading-relaxed">Meet <span className="text-elec-yellow font-semibold">BS 7671</span> and industry requirements for electrical work. Stay compliant with Part P regulations and building control requirements.</p>
+              <div className="group flex items-start gap-6 p-6 rounded-xl bg-gradient-to-r from-elec-yellow/8 to-elec-yellow/4 border border-elec-yellow/15 hover:border-elec-yellow/30 hover:from-elec-yellow/12 hover:to-elec-yellow/6 transition-all duration-300">
+                <div className="w-4 h-4 rounded-full bg-elec-yellow mt-3 flex-shrink-0 shadow-lg shadow-elec-yellow/50"></div>
+                <div className="flex-1 space-y-3">
+                  <h4 className="font-bold text-white text-xl">Regulatory Compliance</h4>
+                  <p className="text-white/90 leading-relaxed text-base">Meet <span className="text-elec-yellow font-bold bg-elec-yellow/20 px-2 py-1 rounded">BS 7671</span> and industry requirements for electrical work. Stay compliant with Part P regulations and building control requirements.</p>
                 </div>
               </div>
               
-              <div className="group flex items-start gap-4 p-4 rounded-lg bg-elec-yellow/5 border border-elec-yellow/10 hover:border-elec-yellow/20 transition-all duration-200">
-                <div className="w-3 h-3 rounded-full bg-elec-yellow mt-2 flex-shrink-0 shadow-lg shadow-elec-yellow/30"></div>
-                <div className="flex-1">
-                  <h4 className="font-bold text-white mb-2 text-lg">Industry Network</h4>
-                  <p className="text-white/85 leading-relaxed">Connect with electrical professionals and exclusive opportunities. Access CPD events, technical support, and career development resources.</p>
+              <div className="group flex items-start gap-6 p-6 rounded-xl bg-gradient-to-r from-elec-yellow/8 to-elec-yellow/4 border border-elec-yellow/15 hover:border-elec-yellow/30 hover:from-elec-yellow/12 hover:to-elec-yellow/6 transition-all duration-300">
+                <div className="w-4 h-4 rounded-full bg-elec-yellow mt-3 flex-shrink-0 shadow-lg shadow-elec-yellow/50"></div>
+                <div className="flex-1 space-y-3">
+                  <h4 className="font-bold text-white text-xl">Industry Network</h4>
+                  <p className="text-white/90 leading-relaxed text-base">Connect with electrical professionals and exclusive opportunities. Access CPD events, technical support, and career development resources.</p>
                 </div>
               </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="border-elec-yellow/30 bg-gradient-to-br from-elec-grey via-elec-grey/95 to-elec-grey/90 shadow-lg hover:shadow-xl hover:shadow-elec-yellow/10 transition-all duration-300 h-full">
-          <CardHeader className="pb-6 bg-gradient-to-r from-elec-yellow/10 to-transparent">
-            <CardTitle className="text-2xl font-bold flex items-center gap-3 text-white">
-              <div className="p-2 rounded-lg bg-elec-yellow/20 border border-elec-yellow/30">
-                <Info className="h-7 w-7 text-elec-yellow" />
+        <Card className="border-elec-yellow/30 bg-gradient-to-br from-elec-grey via-elec-grey/95 to-elec-grey/90 shadow-xl hover:shadow-2xl hover:shadow-elec-yellow/20 transition-all duration-500 h-full overflow-hidden">
+          <CardHeader className="pb-8 bg-gradient-to-r from-elec-yellow/15 via-elec-yellow/10 to-transparent border-b border-elec-yellow/20">
+            <CardTitle className="text-2xl font-bold flex items-center gap-4 text-white">
+              <div className="p-3 rounded-xl bg-elec-yellow/20 border border-elec-yellow/40 shadow-lg">
+                <Info className="h-8 w-8 text-elec-yellow" />
               </div>
               Getting Started
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-6 flex-1">
-            <div className="space-y-6">
-              <div className="group flex items-start gap-4 p-4 rounded-lg bg-elec-yellow/5 border border-elec-yellow/10 hover:border-elec-yellow/20 transition-all duration-200">
-                <div className="w-3 h-3 rounded-full bg-elec-yellow mt-2 flex-shrink-0 shadow-lg shadow-elec-yellow/30"></div>
-                <div className="flex-1">
-                  <h4 className="font-bold text-white mb-2 text-lg">Assess Your Experience</h4>
-                  <p className="text-white/85 leading-relaxed">Consider your electrical work experience and specialisation areas. Most accreditations require <span className="text-elec-yellow font-semibold">2-5 years</span> of relevant experience in electrical installation work.</p>
+          <CardContent className="p-8 space-y-8 flex-1">
+            <div className="space-y-8">
+              <div className="group flex items-start gap-6 p-6 rounded-xl bg-gradient-to-r from-elec-yellow/8 to-elec-yellow/4 border border-elec-yellow/15 hover:border-elec-yellow/30 hover:from-elec-yellow/12 hover:to-elec-yellow/6 transition-all duration-300">
+                <div className="w-4 h-4 rounded-full bg-elec-yellow mt-3 flex-shrink-0 shadow-lg shadow-elec-yellow/50"></div>
+                <div className="flex-1 space-y-3">
+                  <h4 className="font-bold text-white text-xl">Assess Your Experience</h4>
+                  <p className="text-white/90 leading-relaxed text-base">Consider your electrical work experience and specialisation areas. Most accreditations require <span className="text-elec-yellow font-bold bg-elec-yellow/20 px-2 py-1 rounded">2-5 years</span> of relevant experience in electrical installation work.</p>
                 </div>
               </div>
               
-              <div className="group flex items-start gap-4 p-4 rounded-lg bg-elec-yellow/5 border border-elec-yellow/10 hover:border-elec-yellow/20 transition-all duration-200">
-                <div className="w-3 h-3 rounded-full bg-elec-yellow mt-2 flex-shrink-0 shadow-lg shadow-elec-yellow/30"></div>
-                <div className="flex-1">
-                  <h4 className="font-bold text-white mb-2 text-lg">Check Prerequisites</h4>
-                  <p className="text-white/85 leading-relaxed">Ensure you meet the electrical qualifications required. Typically <span className="text-elec-yellow font-semibold">Level 3 electrical qualifications, AM2</span>, and relevant work portfolio evidence.</p>
+              <div className="group flex items-start gap-6 p-6 rounded-xl bg-gradient-to-r from-elec-yellow/8 to-elec-yellow/4 border border-elec-yellow/15 hover:border-elec-yellow/30 hover:from-elec-yellow/12 hover:to-elec-yellow/6 transition-all duration-300">
+                <div className="w-4 h-4 rounded-full bg-elec-yellow mt-3 flex-shrink-0 shadow-lg shadow-elec-yellow/50"></div>
+                <div className="flex-1 space-y-3">
+                  <h4 className="font-bold text-white text-xl">Check Prerequisites</h4>
+                  <p className="text-white/90 leading-relaxed text-base">Ensure you meet the electrical qualifications required. Typically <span className="text-elec-yellow font-bold bg-elec-yellow/20 px-2 py-1 rounded">Level 3 electrical qualifications, AM2</span>, and relevant work portfolio evidence.</p>
                 </div>
               </div>
               
-              <div className="group flex items-start gap-4 p-4 rounded-lg bg-elec-yellow/5 border border-elec-yellow/10 hover:border-elec-yellow/20 transition-all duration-200">
-                <div className="w-3 h-3 rounded-full bg-elec-yellow mt-2 flex-shrink-0 shadow-lg shadow-elec-yellow/30"></div>
-                <div className="flex-1">
-                  <h4 className="font-bold text-white mb-2 text-lg">Plan Investment</h4>
-                  <p className="text-white/85 leading-relaxed">Budget for certification costs and ongoing professional development. Initial costs range from <span className="text-elec-yellow font-semibold">£200-£1,500</span> with annual membership fees.</p>
+              <div className="group flex items-start gap-6 p-6 rounded-xl bg-gradient-to-r from-elec-yellow/8 to-elec-yellow/4 border border-elec-yellow/15 hover:border-elec-yellow/30 hover:from-elec-yellow/12 hover:to-elec-yellow/6 transition-all duration-300">
+                <div className="w-4 h-4 rounded-full bg-elec-yellow mt-3 flex-shrink-0 shadow-lg shadow-elec-yellow/50"></div>
+                <div className="flex-1 space-y-3">
+                  <h4 className="font-bold text-white text-xl">Plan Investment</h4>
+                  <p className="text-white/90 leading-relaxed text-base">Budget for certification costs and ongoing professional development. Initial costs range from <span className="text-elec-yellow font-bold bg-elec-yellow/20 px-2 py-1 rounded">£200-£1,500</span> with annual membership fees.</p>
                 </div>
               </div>
               
-              <div className="group flex items-start gap-4 p-4 rounded-lg bg-elec-yellow/5 border border-elec-yellow/10 hover:border-elec-yellow/20 transition-all duration-200">
-                <div className="w-3 h-3 rounded-full bg-elec-yellow mt-2 flex-shrink-0 shadow-lg shadow-elec-yellow/30"></div>
-                <div className="flex-1">
-                  <h4 className="font-bold text-white mb-2 text-lg">Start Early</h4>
-                  <p className="text-white/85 leading-relaxed">Many electrical accreditations require significant practical experience. Begin the application process <span className="text-elec-yellow font-semibold">3-6 months</span> before your target date.</p>
+              <div className="group flex items-start gap-6 p-6 rounded-xl bg-gradient-to-r from-elec-yellow/8 to-elec-yellow/4 border border-elec-yellow/15 hover:border-elec-yellow/30 hover:from-elec-yellow/12 hover:to-elec-yellow/6 transition-all duration-300">
+                <div className="w-4 h-4 rounded-full bg-elec-yellow mt-3 flex-shrink-0 shadow-lg shadow-elec-yellow/50"></div>
+                <div className="flex-1 space-y-3">
+                  <h4 className="font-bold text-white text-xl">Start Early</h4>
+                  <p className="text-white/90 leading-relaxed text-base">Many electrical accreditations require significant practical experience. Begin the application process <span className="text-elec-yellow font-bold bg-elec-yellow/20 px-2 py-1 rounded">3-6 months</span> before your target date.</p>
                 </div>
               </div>
             </div>
