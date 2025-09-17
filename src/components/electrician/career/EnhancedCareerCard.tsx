@@ -47,20 +47,6 @@ const EnhancedCareerCard = ({
       {/* Header with gradient overlay */}
       <div className="relative overflow-hidden h-24 sm:h-28 bg-gradient-to-br from-elec-yellow/20 via-elec-yellow/10 to-transparent">
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
-        
-        {/* Category Badge */}
-        <div className="absolute top-3 left-3">
-          <Badge className="bg-elec-yellow/20 border-elec-yellow/30 text-elec-yellow text-xs font-medium">
-            {category}
-          </Badge>
-        </div>
-
-        {/* Skill Level Badge */}
-        <div className="absolute top-3 right-3">
-          <Badge className={cn("text-xs font-medium", getSkillLevelColor(skillLevel))}>
-            {skillLevel}
-          </Badge>
-        </div>
 
         {/* Icon centered */}
         <div className="absolute inset-0 flex items-center justify-center">
