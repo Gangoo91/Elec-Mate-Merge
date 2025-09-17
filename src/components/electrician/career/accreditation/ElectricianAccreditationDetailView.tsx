@@ -266,10 +266,10 @@ const ElectricianAccreditationDetailView = ({ accreditation, onBack }: Electrici
                 {/* Essential Qualifications */}
                 <div className="space-y-4">
                   <h4 className="text-lg font-semibold text-elec-yellow">Essential Qualifications</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="p-4 bg-elec-dark/50 rounded-lg border border-amber-500/20">
-                      <h5 className="font-medium text-amber-400 mb-2">Minimum Qualifications</h5>
-                      <div className="space-y-2">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 auto-rows-fr">
+                    <div className="p-4 bg-elec-dark/50 rounded-lg border border-amber-500/20 h-full flex flex-col">
+                      <h5 className="font-medium text-amber-400 mb-3">Minimum Qualifications</h5>
+                      <div className="space-y-2 flex-1">
                         {accreditation.requirements.map((requirement, idx) => (
                           <div key={idx} className="flex items-start gap-3">
                             <CheckCircle className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
@@ -278,9 +278,9 @@ const ElectricianAccreditationDetailView = ({ accreditation, onBack }: Electrici
                         ))}
                       </div>
                     </div>
-                    <div className="p-4 bg-elec-dark/50 rounded-lg border border-green-500/20">
-                      <h5 className="font-medium text-green-400 mb-2">Alternative Pathways</h5>
-                      <div className="space-y-2 text-sm text-white/90">
+                    <div className="p-4 bg-elec-dark/50 rounded-lg border border-green-500/20 h-full flex flex-col">
+                      <h5 className="font-medium text-green-400 mb-3">Alternative Pathways</h5>
+                      <div className="space-y-2 text-sm text-white/90 flex-1">
                         <p>• Equivalent overseas qualifications may be accepted</p>
                         <p>• Apprenticeship completion with appropriate level</p>
                         <p>• Combination of experience and portfolio assessment</p>
@@ -293,18 +293,18 @@ const ElectricianAccreditationDetailView = ({ accreditation, onBack }: Electrici
                 {/* Experience Requirements */}
                 <div className="space-y-4">
                   <h4 className="text-lg font-semibold text-elec-yellow">Experience Requirements</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div className="p-4 bg-blue-500/10 border border-blue-500/20 rounded-lg">
-                      <h5 className="font-medium text-blue-400 mb-2">Years Required</h5>
-                      <p className="text-sm text-white/90">Minimum 2-4 years post-qualification experience in electrical installation, testing, or design work.</p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 auto-rows-fr">
+                    <div className="p-4 bg-blue-500/10 border border-blue-500/20 rounded-lg h-full flex flex-col">
+                      <h5 className="font-medium text-blue-400 mb-3">Years Required</h5>
+                      <p className="text-sm text-white/90 flex-1">Minimum 2-4 years post-qualification experience in electrical installation, testing, or design work.</p>
                     </div>
-                    <div className="p-4 bg-purple-500/10 border border-purple-500/20 rounded-lg">
-                      <h5 className="font-medium text-purple-400 mb-2">Type of Work</h5>
-                      <p className="text-sm text-white/90">Domestic, commercial, or industrial electrical work with evidence of competence across multiple areas.</p>
+                    <div className="p-4 bg-purple-500/10 border border-purple-500/20 rounded-lg h-full flex flex-col">
+                      <h5 className="font-medium text-purple-400 mb-3">Type of Work</h5>
+                      <p className="text-sm text-white/90 flex-1">Domestic, commercial, or industrial electrical work with evidence of competence across multiple areas.</p>
                     </div>
-                    <div className="p-4 bg-green-500/10 border border-green-500/20 rounded-lg">
-                      <h5 className="font-medium text-green-400 mb-2">Portfolio</h5>
-                      <p className="text-sm text-white/90">Documented evidence of completed projects, installations, and ongoing professional development.</p>
+                    <div className="p-4 bg-green-500/10 border border-green-500/20 rounded-lg h-full flex flex-col">
+                      <h5 className="font-medium text-green-400 mb-3">Portfolio</h5>
+                      <p className="text-sm text-white/90 flex-1">Documented evidence of completed projects, installations, and ongoing professional development.</p>
                     </div>
                   </div>
                 </div>
@@ -312,10 +312,10 @@ const ElectricianAccreditationDetailView = ({ accreditation, onBack }: Electrici
                 {/* Technical Competencies */}
                 <div className="space-y-4">
                   <h4 className="text-lg font-semibold text-elec-yellow">Technical Competencies</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="p-4 bg-elec-dark/50 rounded-lg border border-elec-yellow/20">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 auto-rows-fr">
+                    <div className="p-4 bg-elec-dark/50 rounded-lg border border-elec-yellow/20 h-full flex flex-col">
                       <h5 className="font-medium text-amber-400 mb-3">Core Skills Required</h5>
-                      <div className="space-y-2 text-sm text-white/90">
+                      <div className="space-y-2 text-sm text-white/90 flex-1">
                         <p>• Electrical installation to BS 7671 standards</p>
                         <p>• Testing and inspection procedures</p>
                         <p>• Fault diagnosis and remedial work</p>
@@ -323,9 +323,9 @@ const ElectricianAccreditationDetailView = ({ accreditation, onBack }: Electrici
                         <p>• Health and safety compliance</p>
                       </div>
                     </div>
-                    <div className="p-4 bg-elec-dark/50 rounded-lg border border-elec-yellow/20">
+                    <div className="p-4 bg-elec-dark/50 rounded-lg border border-elec-yellow/20 h-full flex flex-col">
                       <h5 className="font-medium text-amber-400 mb-3">Assessment Areas</h5>
-                      <div className="space-y-2 text-sm text-white/90">
+                      <div className="space-y-2 text-sm text-white/90 flex-1">
                         <p>• Practical installation assessment</p>
                         <p>• Testing and inspection competence</p>
                         <p>• Knowledge of current regulations</p>
@@ -339,19 +339,19 @@ const ElectricianAccreditationDetailView = ({ accreditation, onBack }: Electrici
                 {/* Business Requirements */}
                 <div className="space-y-4">
                   <h4 className="text-lg font-semibold text-elec-yellow">Business Requirements</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-lg">
-                      <h5 className="font-medium text-red-400 mb-2">Insurance & Legal</h5>
-                      <div className="space-y-2 text-sm text-white/90">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 auto-rows-fr">
+                    <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-lg h-full flex flex-col">
+                      <h5 className="font-medium text-red-400 mb-3">Insurance & Legal</h5>
+                      <div className="space-y-2 text-sm text-white/90 flex-1">
                         <p>• Public liability insurance (minimum £2m)</p>
                         <p>• Professional indemnity cover</p>
                         <p>• Valid business registration</p>
                         <p>• Compliance with relevant legislation</p>
                       </div>
                     </div>
-                    <div className="p-4 bg-elec-dark/50 rounded-lg border border-elec-yellow/20">
-                      <h5 className="font-medium text-amber-400 mb-2">Documentation</h5>
-                      <div className="space-y-2 text-sm text-white/90">
+                    <div className="p-4 bg-elec-dark/50 rounded-lg border border-elec-yellow/20 h-full flex flex-col">
+                      <h5 className="font-medium text-amber-400 mb-3">Documentation</h5>
+                      <div className="space-y-2 text-sm text-white/90 flex-1">
                         <p>• Qualification certificates</p>
                         <p>• Work portfolio and references</p>
                         <p>• CPD records and training evidence</p>
