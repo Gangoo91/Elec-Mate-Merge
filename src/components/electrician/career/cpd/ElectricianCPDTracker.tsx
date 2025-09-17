@@ -72,7 +72,7 @@ const ElectricianCPDTracker = () => {
     return (
       <div className="min-h-screen bg-elec-dark">
         {/* Header */}
-        <div className="sticky top-0 z-20 bg-elec-dark/95 backdrop-blur-sm border-b border-elec-yellow/20 p-4">
+        <div className="bg-elec-dark border-b border-elec-yellow/20 p-4">
           <div className="flex items-center gap-3">
             <Clock className="h-6 w-6 text-elec-yellow" />
             <div>
