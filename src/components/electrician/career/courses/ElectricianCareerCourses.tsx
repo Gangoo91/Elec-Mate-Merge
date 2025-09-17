@@ -1183,11 +1183,13 @@ const ElectricianCareerCourses = () => {
       </div>
       
       {/* Course Details Modal */}
-      <ModernCourseDetailsModal 
-        course={selectedCourse}
-        open={!!selectedCourse}
-        onOpenChange={(open) => !open && setSelectedCourse(null)}
-      />
+      {selectedCourse && (
+        <ModernCourseDetailsModal 
+          course={selectedCourse}
+          open={true}
+          onOpenChange={(open) => !open && setSelectedCourse(null)}
+        />
+      )}
       
       {/* Training Centre Details Modal */}
       {selectedCenter && (

@@ -25,13 +25,18 @@ import {
 import { EnhancedCareerCourse } from "../../../apprentice/career/courses/enhancedCoursesData";
 
 interface ModernCourseDetailsModalProps {
-  course: EnhancedCareerCourse;
+  course: EnhancedCareerCourse | null;
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }
 
 const ModernCourseDetailsModal = ({ course, open, onOpenChange }: ModernCourseDetailsModalProps) => {
   const [showMoreDetails, setShowMoreDetails] = useState(false);
+
+  // Early return if no course data
+  if (!course) {
+    return null;
+  }
 
   const handleViewProvider = () => {
     if (course.external_url) {
