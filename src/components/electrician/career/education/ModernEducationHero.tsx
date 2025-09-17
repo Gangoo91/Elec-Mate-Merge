@@ -1,7 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { GraduationCap, Users, TrendingUp, Star, BookOpen, Calculator } from "lucide-react";
+import { GraduationCap, Users, TrendingUp, Star, BookOpen, Calculator, RefreshCw, Loader2 } from "lucide-react";
 import type { LiveEducationAnalytics } from "@/hooks/useLiveEducationData";
 
 interface ModernEducationHeroProps {
@@ -9,9 +9,11 @@ interface ModernEducationHeroProps {
   isFromCache: boolean;
   lastUpdated: string | null;
   onFundingCalculator: () => void;
+  onRefreshData: () => void;
+  isRefreshing: boolean;
 }
 
-const ModernEducationHero = ({ analytics, isFromCache, lastUpdated, onFundingCalculator }: ModernEducationHeroProps) => {
+const ModernEducationHero = ({ analytics, isFromCache, lastUpdated, onFundingCalculator, onRefreshData, isRefreshing }: ModernEducationHeroProps) => {
   return (
     <div className="relative">
       {/* Hero Section */}
@@ -95,12 +97,15 @@ const ModernEducationHero = ({ analytics, isFromCache, lastUpdated, onFundingCal
             <Button
               variant="outline"
               className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 px-8 py-3 rounded-lg"
-              onClick={() => {
-                const filterSection = document.getElementById('education-filters');
-                filterSection?.scrollIntoView({ behavior: 'smooth' });
-              }}
+              onClick={onRefreshData}
+              disabled={isRefreshing}
             >
-              Browse Programmes
+              {isRefreshing ? (
+                <Loader2 className="h-5 w-5 mr-2 animate-spin" />
+              ) : (
+                <RefreshCw className="h-5 w-5 mr-2" />
+              )}
+              {isRefreshing ? 'Refreshing...' : 'Refresh Live Data'}
             </Button>
           </div>
 

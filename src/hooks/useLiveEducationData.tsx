@@ -101,11 +101,11 @@ export const useLiveEducationData = (category: string = 'all'): UseLiveEducation
       }
 
       // If no cache or force refresh, fetch fresh data with timeout
-      console.log('📡 Fetching fresh education data from edge function...');
+      console.log('📡 Fetching fresh education data from Firecrawl...');
       
       const fetchWithTimeout = async (timeoutMs: number) => {
         return Promise.race([
-          supabase.functions.invoke('live-education-aggregator', {
+          supabase.functions.invoke('firecrawl-education-scraper', {
             body: { 
               category, 
               refresh: forceRefresh, 
@@ -120,11 +120,11 @@ export const useLiveEducationData = (category: string = 'all'): UseLiveEducation
 
       let data, functionError;
       try {
-        const result = await fetchWithTimeout(15000) as any; // 15 second timeout
+        const result = await fetchWithTimeout(30000) as any; // 30 second timeout for Firecrawl
         data = result.data;
         functionError = result.error;
       } catch (timeoutError) {
-        console.warn('⏰ Request timed out, using cached data');
+        console.warn('⏰ Firecrawl request timed out, using cached data');
         functionError = timeoutError;
       }
 

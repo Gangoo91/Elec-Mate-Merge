@@ -16,6 +16,7 @@ const ElectricianFurtherEducation = () => {
   const [selectedOption, setSelectedOption] = useState<LiveEducationData | null>(null);
   const [viewMode, setViewMode] = useState<"grid" | "funding">("grid");
   const [modalOpen, setModalOpen] = useState(false);
+  const [isRefreshing, setIsRefreshing] = useState(false);
 
   // Update filtered options when education data changes
   useEffect(() => {
@@ -107,6 +108,15 @@ const ElectricianFurtherEducation = () => {
     setViewMode("funding");
   };
 
+  const handleRefreshData = async () => {
+    try {
+      setIsRefreshing(true);
+      await refreshData(true); // Force refresh
+    } finally {
+      setIsRefreshing(false);
+    }
+  };
+
   if (viewMode === "funding") {
     return (
       <div className="space-y-6">
@@ -140,6 +150,8 @@ const ElectricianFurtherEducation = () => {
         isFromCache={isFromCache}
         lastUpdated={lastUpdated}
         onFundingCalculator={handleShowFundingCalculator}
+        onRefreshData={handleRefreshData}
+        isRefreshing={isRefreshing}
       />
 
       {/* Error Message */}
