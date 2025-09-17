@@ -78,7 +78,7 @@ const ModernEducationHero = ({ analytics, isFromCache, lastUpdated, onFundingCal
                 <div className="flex items-center justify-center mb-2">
                   <TrendingUp className="h-5 w-5 text-elec-yellow" />
                 </div>
-                <div className="text-2xl sm:text-3xl font-bold text-white">{analytics.averageEmploymentRate || 0}%</div>
+                <div className="text-2xl sm:text-3xl font-bold text-white">{(analytics.averageEmploymentRate || 0).toFixed(1)}%</div>
                 <div className="text-xs sm:text-sm text-white/80">Employment</div>
               </div>
             </div>
