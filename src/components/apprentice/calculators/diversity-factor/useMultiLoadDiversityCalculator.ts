@@ -169,6 +169,49 @@ export function useMultiLoadDiversityCalculator() {
     return newErrors;
   };
 
+  // Map UI load types to diversity engine types
+  const mapLoadTypeToEngineType = (uiType: string): CircuitLoad['type'] => {
+    const typeMapping: Record<string, CircuitLoad['type']> = {
+      // Lighting types → 'lighting'
+      'led-lighting': 'lighting',
+      'fluorescent-lighting': 'lighting',
+      'general-lighting': 'lighting',
+      'emergency-lighting': 'lighting',
+      
+      // Socket types → 'socket-outlet'
+      'ring-main-sockets': 'socket-outlet',
+      'radial-sockets': 'socket-outlet',
+      'dedicated-sockets': 'socket-outlet',
+      
+      // Cooking types → 'cooker'
+      'electric-cooker': 'cooker',
+      'commercial-catering': 'cooker',
+      
+      // Water heating types → 'water-heating'
+      'immersion-heater': 'water-heating',
+      'instantaneous-water': 'water-heating',
+      
+      // Space heating types → 'space-heating'
+      'electric-heating': 'space-heating',
+      'heat-pumps': 'space-heating',
+      'underfloor-heating': 'space-heating',
+      
+      // Motor types → 'motor'
+      'single-motor': 'motor',
+      'motor-group': 'motor',
+      'lift-motor': 'motor',
+      'air-conditioning': 'motor',
+      
+      // Small power and other types → 'small-power'
+      'small-power': 'small-power',
+      'ev-charging': 'small-power',
+      'welding-equipment': 'small-power',
+      'server-equipment': 'small-power'
+    };
+    
+    return typeMapping[uiType] || 'small-power';
+  };
+
   const calculateDemand = () => {
     const validationErrors = validateInputs();
     setErrors(validationErrors);
@@ -201,7 +244,7 @@ export function useMultiLoadDiversityCalculator() {
 
       return {
         id: load.id,
-        type: load.type as any,
+        type: mapLoadTypeToEngineType(load.type), // Use mapped type
         designCurrent,
         installedPower,
         quantity: units,
