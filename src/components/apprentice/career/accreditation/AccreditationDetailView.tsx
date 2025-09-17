@@ -39,7 +39,7 @@ const AccreditationDetailView = ({ accreditation, onBack }: AccreditationDetailV
     return Array.from({ length: 5 }, (_, i) => (
       <Star 
         key={i} 
-        className={`h-4 w-4 ${i < stars ? 'text-elec-yellow fill-current' : 'text-muted-foreground'}`} 
+        className={`h-4 w-4 ${i < stars ? 'text-elec-yellow fill-current' : 'text-white/30'}`} 
       />
     ));
   };
@@ -134,12 +134,12 @@ const AccreditationDetailView = ({ accreditation, onBack }: AccreditationDetailV
 
       {/* Detailed Information Tabs */}
       <Tabs defaultValue="benefits" className="space-y-4">
-        <TabsList className="grid w-full grid-cols-5 bg-elec-dark">
-          <TabsTrigger value="benefits">Benefits</TabsTrigger>
-          <TabsTrigger value="requirements">Requirements</TabsTrigger>
-          <TabsTrigger value="process">Process</TabsTrigger>
-          <TabsTrigger value="getting-started">Getting Started</TabsTrigger>
-          <TabsTrigger value="details">Details</TabsTrigger>
+        <TabsList className="grid w-full grid-cols-2 md:grid-cols-5 gap-1 bg-elec-dark">
+          <TabsTrigger value="benefits" className="text-xs md:text-sm">Benefits</TabsTrigger>
+          <TabsTrigger value="requirements" className="text-xs md:text-sm">Requirements</TabsTrigger>
+          <TabsTrigger value="process" className="text-xs md:text-sm">Process</TabsTrigger>
+          <TabsTrigger value="getting-started" className="text-xs md:text-sm">Get Started</TabsTrigger>
+          <TabsTrigger value="details" className="text-xs md:text-sm">Details</TabsTrigger>
         </TabsList>
 
         <TabsContent value="benefits">
