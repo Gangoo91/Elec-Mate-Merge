@@ -233,7 +233,11 @@ const ElectricianFurtherEducation = () => {
                   <div className="transform transition-all duration-300">
                     <ModernEducationGrid 
                       programmes={gridProgrammes}
-                      onProgrammeClick={handleViewDetails}
+                      onProgrammeClick={(programme) => {
+                        console.log('Programme data:', programme);
+                        console.log('Image URL:', programme.imageUrl);
+                        handleViewDetails(programme);
+                      }}
                     />
                   </div>
                 </div>
