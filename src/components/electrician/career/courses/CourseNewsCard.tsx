@@ -37,15 +37,15 @@ const CourseNewsCard = ({ course, className, onClick }: CourseNewsCardProps) => 
 
   const getCategoryImage = (category: string) => {
     const images = {
-      "Electrical": "https://images.unsplash.com/photo-1621905252507-b35492cc74b4?w=400&h=250&fit=crop&auto=format",
-      "Safety": "https://images.unsplash.com/photo-1581094651181-35942459ef62?w=400&h=250&fit=crop&auto=format",
-      "Engineering": "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400&h=250&fit=crop&auto=format",
-      "Technology": "https://images.unsplash.com/photo-1593941707882-a5bac6861d75?w=400&h=250&fit=crop&auto=format",
-      "Management": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&h=250&fit=crop&auto=format",
-      "Compliance": "https://images.unsplash.com/photo-1581094651181-35942459ef62?w=400&h=250&fit=crop&auto=format",
-      "Testing": "https://images.unsplash.com/photo-1621905252507-b35492cc74b4?w=400&h=250&fit=crop&auto=format",
+      "Electrical": "https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=400&h=250&fit=crop&auto=format&q=80",
+      "Safety": "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=400&h=250&fit=crop&auto=format&q=80",
+      "Engineering": "https://images.unsplash.com/photo-1581092921461-eab62e97a780?w=400&h=250&fit=crop&auto=format&q=80",
+      "Technology": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&h=250&fit=crop&auto=format&q=80",
+      "Management": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=250&fit=crop&auto=format&q=80",
+      "Compliance": "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=400&h=250&fit=crop&auto=format&q=80",
+      "Testing": "https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=400&h=250&fit=crop&auto=format&q=80",
     };
-    return images[category as keyof typeof images] || "https://images.unsplash.com/photo-1621905252507-b35492cc74b4?w=400&h=250&fit=crop&auto=format";
+    return images[category as keyof typeof images] || "https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=400&h=250&fit=crop&auto=format&q=80";
   };
 
   const formatPrice = (price: string) => {
