@@ -87,11 +87,11 @@ const ModernCourseDetailsModal = ({ course, open, onOpenChange }: ModernCourseDe
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto p-0 gap-0">
+      <DialogContent className="max-w-4xl max-h-[95vh] sm:max-h-[90vh] overflow-y-auto p-0 gap-0 mx-2 sm:mx-4 w-[calc(100vw-1rem)] sm:w-full">
         {/* Hero Section */}
-        <DialogHeader className="p-6 pb-4 space-y-4">
-          <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
-            <div className="flex-1 space-y-3">
+        <DialogHeader className="p-4 sm:p-6 pb-3 sm:pb-4 space-y-3 sm:space-y-4">
+          <div className="flex flex-col gap-3 sm:gap-4">
+            <div className="flex-1 space-y-2 sm:space-y-3">
               {/* Badges */}
               <div className="flex flex-wrap items-center gap-2">
                 <Badge 
@@ -115,78 +115,78 @@ const ModernCourseDetailsModal = ({ course, open, onOpenChange }: ModernCourseDe
               </div>
 
               {/* Course Title */}
-              <DialogTitle className="text-xl sm:text-2xl font-semibold leading-tight text-foreground">
+              <DialogTitle className="text-lg sm:text-xl lg:text-2xl font-semibold leading-tight text-foreground">
                 {course.title}
               </DialogTitle>
 
               {/* Provider */}
-              <div className="text-lg font-medium text-elec-yellow">
+              <div className="text-base sm:text-lg font-medium text-elec-yellow">
                 {course.provider}
               </div>
 
               {/* Description */}
-              <p className="text-muted-foreground text-sm sm:text-base leading-relaxed">
+              <p className="text-muted-foreground text-xs sm:text-sm lg:text-base leading-relaxed">
                 {course.description}
               </p>
             </div>
 
             {/* Action Buttons */}
-            <div className="flex flex-col sm:flex-row gap-2 sm:ml-4 shrink-0">
+            <div className="flex gap-2 w-full">
               <Button 
                 onClick={handleViewProvider}
                 disabled={!course.external_url}
-                className="w-full sm:w-auto"
+                className="flex-1 sm:flex-none"
                 size="sm"
               >
-                <ExternalLink className="h-4 w-4 mr-2" />
-                View Provider Site
+                <ExternalLink className="h-3 w-3 sm:h-4 sm:w-4 mr-2" />
+                <span className="text-xs sm:text-sm">View Provider</span>
               </Button>
             </div>
           </div>
         </DialogHeader>
 
-        <div className="px-6 pb-6 space-y-6">
+        <div className="px-4 sm:px-6 pb-4 sm:pb-6 space-y-4 sm:space-y-6">
           {/* Key Information Cards */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <div className="grid grid-cols-2 gap-2 sm:gap-3">
             <Card className="bg-background/50 border-border/50">
-              <CardContent className="p-4 text-center">
-                <Clock className="h-5 w-5 text-elec-yellow mx-auto mb-2" />
-                <div className="font-medium text-sm">{course.duration}</div>
+              <CardContent className="p-3 sm:p-4 text-center">
+                <Clock className="h-4 w-4 sm:h-5 sm:w-5 text-elec-yellow mx-auto mb-1 sm:mb-2" />
+                <div className="font-medium text-xs sm:text-sm">{course.duration}</div>
                 <div className="text-xs text-muted-foreground">Duration</div>
               </CardContent>
             </Card>
             
             <Card className="bg-background/50 border-border/50">
-              <CardContent className="p-4 text-center">
-                <Users className="h-5 w-5 text-elec-yellow mx-auto mb-2" />
-                <div className="font-medium text-sm">{course.level}</div>
+              <CardContent className="p-3 sm:p-4 text-center">
+                <Users className="h-4 w-4 sm:h-5 sm:w-5 text-elec-yellow mx-auto mb-1 sm:mb-2" />
+                <div className="font-medium text-xs sm:text-sm">{course.level}</div>
                 <div className="text-xs text-muted-foreground">Level</div>
               </CardContent>
             </Card>
             
             <Card className="bg-background/50 border-border/50">
-              <CardContent className="p-4 text-center">
-                <PoundSterling className="h-5 w-5 text-elec-yellow mx-auto mb-2" />
-                <div className="font-medium text-sm">{course.price}</div>
+              <CardContent className="p-3 sm:p-4 text-center">
+                <PoundSterling className="h-4 w-4 sm:h-5 sm:w-5 text-elec-yellow mx-auto mb-1 sm:mb-2" />
+                <div className="font-medium text-xs sm:text-sm">{course.price}</div>
                 <div className="text-xs text-muted-foreground">Price</div>
               </CardContent>
             </Card>
             
             <Card className="bg-background/50 border-border/50">
-              <CardContent className="p-4 text-center">
-                <MapPin className="h-5 w-5 text-elec-yellow mx-auto mb-2" />
-                <div className="font-medium text-sm">{course.format}</div>
+              <CardContent className="p-3 sm:p-4 text-center">
+                <MapPin className="h-4 w-4 sm:h-5 sm:w-5 text-elec-yellow mx-auto mb-1 sm:mb-2" />
+                <div className="font-medium text-xs sm:text-sm">{course.format}</div>
                 <div className="text-xs text-muted-foreground">Format</div>
               </CardContent>
             </Card>
           </div>
 
           {/* Industry Demand & Next Dates */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-3 sm:gap-4">
             <Card className="bg-background/50 border-border/50">
-              <CardContent className="p-4">
+              <CardContent className="p-3 sm:p-4">
                 <div className="flex items-center justify-between">
-                  <span className="text-sm font-medium">Industry Demand</span>
+                  <span className="text-xs sm:text-sm font-medium">Industry Demand</span>
                   <Badge 
                     variant="outline" 
                     className={`text-xs ${getDemandColor(course.industryDemand)}`}
@@ -198,12 +198,12 @@ const ModernCourseDetailsModal = ({ course, open, onOpenChange }: ModernCourseDe
             </Card>
 
             <Card className="bg-background/50 border-border/50">
-              <CardContent className="p-4">
+              <CardContent className="p-3 sm:p-4">
                 <div className="flex items-center gap-2">
-                  <Calendar className="h-4 w-4 text-elec-yellow" />
-                  <span className="text-sm font-medium">Next Start</span>
+                  <Calendar className="h-3 w-3 sm:h-4 sm:w-4 text-elec-yellow" />
+                  <span className="text-xs sm:text-sm font-medium">Next Start</span>
                 </div>
-                <div className="text-sm text-muted-foreground mt-1">
+                <div className="text-xs sm:text-sm text-muted-foreground mt-1">
                   {displayNextDates[0]}
                 </div>
               </CardContent>
@@ -212,12 +212,12 @@ const ModernCourseDetailsModal = ({ course, open, onOpenChange }: ModernCourseDe
 
           {/* Locations */}
           <Card className="bg-background/50 border-border/50">
-            <CardContent className="p-4">
-              <div className="flex items-center gap-2 mb-3">
-                <MapPin className="h-4 w-4 text-elec-yellow" />
-                <span className="font-medium">Available Locations</span>
+            <CardContent className="p-3 sm:p-4">
+              <div className="flex items-center gap-2 mb-2 sm:mb-3">
+                <MapPin className="h-3 w-3 sm:h-4 sm:w-4 text-elec-yellow" />
+                <span className="font-medium text-xs sm:text-sm">Available Locations</span>
               </div>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-1 sm:gap-2">
                 {displayLocations.slice(0, 3).map((location, idx) => (
                   <Badge key={idx} variant="secondary" className="text-xs">
                     {location}
@@ -240,7 +240,7 @@ const ModernCourseDetailsModal = ({ course, open, onOpenChange }: ModernCourseDe
                 className="w-full justify-between"
                 size="sm"
               >
-                <span>More Course Details</span>
+                <span className="text-xs sm:text-sm">More Course Details</span>
                 {showMoreDetails ? (
                   <ChevronUp className="h-4 w-4" />
                 ) : (
@@ -249,21 +249,21 @@ const ModernCourseDetailsModal = ({ course, open, onOpenChange }: ModernCourseDe
               </Button>
             </CollapsibleTrigger>
             
-            <CollapsibleContent className="space-y-4 mt-4">
+            <CollapsibleContent className="space-y-3 sm:space-y-4 mt-3 sm:mt-4">
               <Separator />
               
               {/* Course Outline & Career Outcomes */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 gap-4 sm:gap-6">
                 <Card className="bg-background/50 border-border/50">
-                  <CardContent className="p-4">
-                    <div className="flex items-center gap-2 mb-3">
-                      <BookOpen className="h-4 w-4 text-elec-yellow" />
-                      <span className="font-medium">Course Outline</span>
+                  <CardContent className="p-3 sm:p-4">
+                    <div className="flex items-center gap-2 mb-2 sm:mb-3">
+                      <BookOpen className="h-3 w-3 sm:h-4 sm:w-4 text-elec-yellow" />
+                      <span className="font-medium text-xs sm:text-sm">Course Outline</span>
                     </div>
-                    <div className="space-y-2">
+                    <div className="space-y-1 sm:space-y-2">
                       {displayCourseOutline.map((item, idx) => (
-                        <div key={idx} className="text-sm text-muted-foreground flex items-start gap-2">
-                          <div className="w-1 h-1 rounded-full bg-elec-yellow mt-2 shrink-0" />
+                        <div key={idx} className="text-xs sm:text-sm text-muted-foreground flex items-start gap-2">
+                          <div className="w-1 h-1 rounded-full bg-elec-yellow mt-1.5 sm:mt-2 shrink-0" />
                           <span>{item}</span>
                         </div>
                       ))}
@@ -272,15 +272,15 @@ const ModernCourseDetailsModal = ({ course, open, onOpenChange }: ModernCourseDe
                 </Card>
 
                 <Card className="bg-background/50 border-border/50">
-                  <CardContent className="p-4">
-                    <div className="flex items-center gap-2 mb-3">
-                      <Target className="h-4 w-4 text-elec-yellow" />
-                      <span className="font-medium">Career Outcomes</span>
+                  <CardContent className="p-3 sm:p-4">
+                    <div className="flex items-center gap-2 mb-2 sm:mb-3">
+                      <Target className="h-3 w-3 sm:h-4 sm:w-4 text-elec-yellow" />
+                      <span className="font-medium text-xs sm:text-sm">Career Outcomes</span>
                     </div>
-                    <div className="space-y-2">
+                    <div className="space-y-1 sm:space-y-2">
                       {displayCareerOutcomes.map((outcome, idx) => (
-                        <div key={idx} className="text-sm text-muted-foreground flex items-start gap-2">
-                          <div className="w-1 h-1 rounded-full bg-elec-yellow mt-2 shrink-0" />
+                        <div key={idx} className="text-xs sm:text-sm text-muted-foreground flex items-start gap-2">
+                          <div className="w-1 h-1 rounded-full bg-elec-yellow mt-1.5 sm:mt-2 shrink-0" />
                           <span>{outcome}</span>
                         </div>
                       ))}
@@ -292,10 +292,10 @@ const ModernCourseDetailsModal = ({ course, open, onOpenChange }: ModernCourseDe
               {/* Additional Information */}
               {course.salaryImpact && (
                 <Card className="bg-background/50 border-border/50">
-                  <CardContent className="p-4">
+                  <CardContent className="p-3 sm:p-4">
                     <div className="flex items-center justify-between">
-                      <span className="font-medium">Salary Impact</span>
-                      <span className="text-green-400 font-medium">{course.salaryImpact}</span>
+                      <span className="font-medium text-xs sm:text-sm">Salary Impact</span>
+                      <span className="text-green-400 font-medium text-xs sm:text-sm">{course.salaryImpact}</span>
                     </div>
                   </CardContent>
                 </Card>
@@ -303,23 +303,23 @@ const ModernCourseDetailsModal = ({ course, open, onOpenChange }: ModernCourseDe
 
               {/* Contact Information */}
               <Card className="bg-background/50 border-border/50">
-                <CardContent className="p-4">
-                  <div className="flex items-center gap-2 mb-3">
-                    <Phone className="h-4 w-4 text-elec-yellow" />
-                    <span className="font-medium">Get in Touch</span>
+                <CardContent className="p-3 sm:p-4">
+                  <div className="flex items-center gap-2 mb-2 sm:mb-3">
+                    <Phone className="h-3 w-3 sm:h-4 sm:w-4 text-elec-yellow" />
+                    <span className="font-medium text-xs sm:text-sm">Get in Touch</span>
                   </div>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-xs sm:text-sm text-muted-foreground">
                     Contact {course.provider} directly for course availability, pricing details, and enrollment information.
                   </p>
                   {course.external_url && (
                     <Button 
                       variant="outline" 
                       size="sm" 
-                      className="mt-3 w-full sm:w-auto"
+                      className="mt-2 sm:mt-3 w-full"
                       onClick={handleViewProvider}
                     >
-                      <ExternalLink className="h-4 w-4 mr-2" />
-                      Visit Provider Website
+                      <ExternalLink className="h-3 w-3 sm:h-4 sm:w-4 mr-2" />
+                      <span className="text-xs sm:text-sm">Visit Provider Website</span>
                     </Button>
                   )}
                 </CardContent>
