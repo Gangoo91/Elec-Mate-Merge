@@ -203,7 +203,7 @@ const ModernEducationGrid = ({ programmes, excludeId, onProgrammeClick }: Modern
                   className="h-8 px-3 text-elec-yellow hover:bg-elec-yellow/10 hover:text-elec-yellow group/btn"
                   onClick={(e) => {
                     e.stopPropagation();
-                    onProgrammeClick?.(programme);
+                    window.open(programme.courseUrl, '_blank');
                   }}
                 >
                   <span className="text-xs">View</span>
