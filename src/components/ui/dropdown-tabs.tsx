@@ -39,8 +39,8 @@ export const DropdownTabs: React.FC<DropdownTabsProps> = ({
 
   // Mobile-optimized trigger styling
   const defaultTriggerClassName = isMobile 
-    ? "w-full max-w-sm h-12 text-base" 
-    : "w-[280px] md:w-[320px]";
+    ? "w-full max-w-sm h-12 text-base bg-background border-border" 
+    : "w-[280px] md:w-[320px] bg-background border-border";
 
   return (
     <div className={`w-full space-y-6 ${className}`}>
@@ -70,7 +70,7 @@ export const DropdownTabs: React.FC<DropdownTabsProps> = ({
             position="popper"
             side="bottom"
             sideOffset={8}
-            className={`${isMobile ? 'w-[calc(100vw-2rem)] max-h-[70vh]' : 'max-h-[80vh]'} bg-elec-gray border border-elec-yellow/20 shadow-xl rounded-lg overflow-y-auto`}
+            className={`${isMobile ? 'w-[calc(100vw-2rem)] max-h-[70vh]' : 'max-h-[80vh]'} bg-background border border-border shadow-2xl rounded-lg overflow-y-auto z-50`}
           >
             {tabs.map((tab) => {
               const IconComponent = tab.icon;
@@ -78,7 +78,7 @@ export const DropdownTabs: React.FC<DropdownTabsProps> = ({
                 <SelectItem 
                   key={tab.value} 
                   value={tab.value}
-                  className={isMobile ? 'h-12 px-4' : ''}
+                  className={`${isMobile ? 'h-12 px-4 text-base' : ''} hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground`}
                 >
                   <div className="flex items-center gap-2">
                     {IconComponent && (
