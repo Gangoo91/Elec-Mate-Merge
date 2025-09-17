@@ -280,101 +280,115 @@ const CareerProgression = () => {
 
           {/* Professional Development Roadmap */}
           <Card className="border-elec-yellow/20 bg-elec-gray">
-            <CardContent className="p-6">
-              <h3 className="text-xl font-semibold text-elec-yellow mb-6 text-center">
+            <CardContent className="p-4 sm:p-6">
+              <h3 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 sm:mb-6 text-center">
                 ⚡ Professional Development Roadmap
               </h3>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="space-y-4">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-8 h-8 rounded-full bg-elec-yellow/20 flex items-center justify-center">
+              
+              {/* Mobile-first stacked layout, then grid on md+ */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
+                {/* Column 1: Immediate Actions */}
+                <div className="space-y-3 sm:space-y-4 h-full">
+                  <div className="flex items-center gap-3 mb-3 sm:mb-4">
+                    <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-elec-yellow/20 flex items-center justify-center flex-shrink-0">
                       <span className="text-elec-yellow font-semibold text-sm">1</span>
                     </div>
-                    <h4 className="font-semibold text-white text-lg">Immediate Actions</h4>
+                    <h4 className="font-semibold text-white text-base sm:text-lg">Immediate Actions</h4>
                   </div>
-                  <div className="space-y-3">
-                    <div className="flex items-start gap-3 text-sm">
-                      <div className="w-2 h-2 rounded-full bg-elec-yellow mt-2 flex-shrink-0"></div>
-                      <span className="text-white">Update CV with latest projects and certifications</span>
-                    </div>
-                    <div className="flex items-start gap-3 text-sm">
-                      <div className="w-2 h-2 rounded-full bg-elec-yellow mt-2 flex-shrink-0"></div>
-                      <span className="text-white">Research emerging technology training (EV, heat pumps, solar)</span>
-                    </div>
-                    <div className="flex items-start gap-3 text-sm">
-                      <div className="w-2 h-2 rounded-full bg-elec-yellow mt-2 flex-shrink-0"></div>
-                      <span className="text-white">Join professional networking groups and LinkedIn communities</span>
-                    </div>
-                    <div className="flex items-start gap-3 text-sm">
-                      <div className="w-2 h-2 rounded-full bg-elec-yellow mt-2 flex-shrink-0"></div>
-                      <span className="text-white">Review current JIB grade and advancement requirements</span>
-                    </div>
-                    <div className="flex items-start gap-3 text-sm">
-                      <div className="w-2 h-2 rounded-full bg-elec-yellow mt-2 flex-shrink-0"></div>
-                      <span className="text-white">Set up job alerts for specialist roles</span>
-                    </div>
+                  
+                  <div className="space-y-2 sm:space-y-3">
+                    <ul className="space-y-2 sm:space-y-3">
+                      <li className="flex items-start gap-2 sm:gap-3">
+                        <span className="w-1.5 h-1.5 rounded-full bg-elec-yellow mt-1.5 sm:mt-2 flex-shrink-0"></span>
+                        <span className="text-white text-xs sm:text-sm leading-relaxed">Update CV with latest projects and certifications</span>
+                      </li>
+                      <li className="flex items-start gap-2 sm:gap-3">
+                        <span className="w-1.5 h-1.5 rounded-full bg-elec-yellow mt-1.5 sm:mt-2 flex-shrink-0"></span>
+                        <span className="text-white text-xs sm:text-sm leading-relaxed">Research emerging technology training (EV, heat pumps, solar)</span>
+                      </li>
+                      <li className="flex items-start gap-2 sm:gap-3">
+                        <span className="w-1.5 h-1.5 rounded-full bg-elec-yellow mt-1.5 sm:mt-2 flex-shrink-0"></span>
+                        <span className="text-white text-xs sm:text-sm leading-relaxed">Join professional networking groups and LinkedIn communities</span>
+                      </li>
+                      <li className="flex items-start gap-2 sm:gap-3">
+                        <span className="w-1.5 h-1.5 rounded-full bg-elec-yellow mt-1.5 sm:mt-2 flex-shrink-0"></span>
+                        <span className="text-white text-xs sm:text-sm leading-relaxed">Review current JIB grade and advancement requirements</span>
+                      </li>
+                      <li className="flex items-start gap-2 sm:gap-3">
+                        <span className="w-1.5 h-1.5 rounded-full bg-elec-yellow mt-1.5 sm:mt-2 flex-shrink-0"></span>
+                        <span className="text-white text-xs sm:text-sm leading-relaxed">Set up job alerts for specialist roles</span>
+                      </li>
+                    </ul>
                   </div>
                 </div>
                 
-                <div className="space-y-4">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-8 h-8 rounded-full bg-blue-400/20 flex items-center justify-center">
+                {/* Column 2: 3-Month Goals */}
+                <div className="space-y-3 sm:space-y-4 h-full md:border-l md:border-elec-yellow/10 md:pl-4 lg:pl-6">
+                  <div className="flex items-center gap-3 mb-3 sm:mb-4">
+                    <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-blue-400/20 flex items-center justify-center flex-shrink-0">
                       <span className="text-blue-400 font-semibold text-sm">2</span>
                     </div>
-                    <h4 className="font-semibold text-white text-lg">3-Month Goals</h4>
+                    <h4 className="font-semibold text-white text-base sm:text-lg">3-Month Goals</h4>
                   </div>
-                  <div className="space-y-3">
-                    <div className="flex items-start gap-3 text-sm">
-                      <div className="w-2 h-2 rounded-full bg-blue-400 mt-2 flex-shrink-0"></div>
-                      <span className="text-white">Book specialist training courses (2919, 2399, MCS certification)</span>
-                    </div>
-                    <div className="flex items-start gap-3 text-sm">
-                      <div className="w-2 h-2 rounded-full bg-blue-400 mt-2 flex-shrink-0"></div>
-                      <span className="text-white">Attend industry trade shows and networking events</span>
-                    </div>
-                    <div className="flex items-start gap-3 text-sm">
-                      <div className="w-2 h-2 rounded-full bg-blue-400 mt-2 flex-shrink-0"></div>
-                      <span className="text-white">Complete market research on day rates vs salary positions</span>
-                    </div>
-                    <div className="flex items-start gap-3 text-sm">
-                      <div className="w-2 h-2 rounded-full bg-blue-400 mt-2 flex-shrink-0"></div>
-                      <span className="text-white">Apply for professional membership (IET, ECA, NAPIT)</span>
-                    </div>
-                    <div className="flex items-start gap-3 text-sm">
-                      <div className="w-2 h-2 rounded-full bg-blue-400 mt-2 flex-shrink-0"></div>
-                      <span className="text-white">Start building portfolio of specialist work examples</span>
-                    </div>
+                  
+                  <div className="space-y-2 sm:space-y-3">
+                    <ul className="space-y-2 sm:space-y-3">
+                      <li className="flex items-start gap-2 sm:gap-3">
+                        <span className="w-1.5 h-1.5 rounded-full bg-blue-400 mt-1.5 sm:mt-2 flex-shrink-0"></span>
+                        <span className="text-white text-xs sm:text-sm leading-relaxed">Book specialist training courses (2919, 2399, MCS certification)</span>
+                      </li>
+                      <li className="flex items-start gap-2 sm:gap-3">
+                        <span className="w-1.5 h-1.5 rounded-full bg-blue-400 mt-1.5 sm:mt-2 flex-shrink-0"></span>
+                        <span className="text-white text-xs sm:text-sm leading-relaxed">Attend industry trade shows and networking events</span>
+                      </li>
+                      <li className="flex items-start gap-2 sm:gap-3">
+                        <span className="w-1.5 h-1.5 rounded-full bg-blue-400 mt-1.5 sm:mt-2 flex-shrink-0"></span>
+                        <span className="text-white text-xs sm:text-sm leading-relaxed">Complete market research on day rates vs salary positions</span>
+                      </li>
+                      <li className="flex items-start gap-2 sm:gap-3">
+                        <span className="w-1.5 h-1.5 rounded-full bg-blue-400 mt-1.5 sm:mt-2 flex-shrink-0"></span>
+                        <span className="text-white text-xs sm:text-sm leading-relaxed">Apply for professional membership (IET, ECA, NAPIT)</span>
+                      </li>
+                      <li className="flex items-start gap-2 sm:gap-3">
+                        <span className="w-1.5 h-1.5 rounded-full bg-blue-400 mt-1.5 sm:mt-2 flex-shrink-0"></span>
+                        <span className="text-white text-xs sm:text-sm leading-relaxed">Start building portfolio of specialist work examples</span>
+                      </li>
+                    </ul>
                   </div>
                 </div>
                 
-                <div className="space-y-4">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-8 h-8 rounded-full bg-green-400/20 flex items-center justify-center">
+                {/* Column 3: Long-term Strategy */}
+                <div className="space-y-3 sm:space-y-4 h-full md:border-l md:border-elec-yellow/10 md:pl-4 lg:pl-6">
+                  <div className="flex items-center gap-3 mb-3 sm:mb-4">
+                    <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-green-400/20 flex items-center justify-center flex-shrink-0">
                       <span className="text-green-400 font-semibold text-sm">3</span>
                     </div>
-                    <h4 className="font-semibold text-white text-lg">Long-term Strategy</h4>
+                    <h4 className="font-semibold text-white text-base sm:text-lg">Long-term Strategy</h4>
                   </div>
-                  <div className="space-y-3">
-                    <div className="flex items-start gap-3 text-sm">
-                      <div className="w-2 h-2 rounded-full bg-green-400 mt-2 flex-shrink-0"></div>
-                      <span className="text-white">Complete advanced qualifications in chosen specialisation</span>
-                    </div>
-                    <div className="flex items-start gap-3 text-sm">
-                      <div className="w-2 h-2 rounded-full bg-green-400 mt-2 flex-shrink-0"></div>
-                      <span className="text-white">Build reputation as subject matter expert through projects</span>
-                    </div>
-                    <div className="flex items-start gap-3 text-sm">
-                      <div className="w-2 h-2 rounded-full bg-green-400 mt-2 flex-shrink-0"></div>
-                      <span className="text-white">Consider further education (HNC/HND/Degree) if applicable</span>
-                    </div>
-                    <div className="flex items-start gap-3 text-sm">
-                      <div className="w-2 h-2 rounded-full bg-green-400 mt-2 flex-shrink-0"></div>
-                      <span className="text-white">Evaluate contracting vs employment career paths</span>
-                    </div>
-                    <div className="flex items-start gap-3 text-sm">
-                      <div className="w-2 h-2 rounded-full bg-green-400 mt-2 flex-shrink-0"></div>
-                      <span className="text-white">Explore business ownership or partnership opportunities</span>
-                    </div>
+                  
+                  <div className="space-y-2 sm:space-y-3">
+                    <ul className="space-y-2 sm:space-y-3">
+                      <li className="flex items-start gap-2 sm:gap-3">
+                        <span className="w-1.5 h-1.5 rounded-full bg-green-400 mt-1.5 sm:mt-2 flex-shrink-0"></span>
+                        <span className="text-white text-xs sm:text-sm leading-relaxed">Complete advanced qualifications in chosen specialisation</span>
+                      </li>
+                      <li className="flex items-start gap-2 sm:gap-3">
+                        <span className="w-1.5 h-1.5 rounded-full bg-green-400 mt-1.5 sm:mt-2 flex-shrink-0"></span>
+                        <span className="text-white text-xs sm:text-sm leading-relaxed">Build reputation as subject matter expert through projects</span>
+                      </li>
+                      <li className="flex items-start gap-2 sm:gap-3">
+                        <span className="w-1.5 h-1.5 rounded-full bg-green-400 mt-1.5 sm:mt-2 flex-shrink-0"></span>
+                        <span className="text-white text-xs sm:text-sm leading-relaxed">Consider further education (HNC/HND/Degree) if applicable</span>
+                      </li>
+                      <li className="flex items-start gap-2 sm:gap-3">
+                        <span className="w-1.5 h-1.5 rounded-full bg-green-400 mt-1.5 sm:mt-2 flex-shrink-0"></span>
+                        <span className="text-white text-xs sm:text-sm leading-relaxed">Evaluate contracting vs employment career paths</span>
+                      </li>
+                      <li className="flex items-start gap-2 sm:gap-3">
+                        <span className="w-1.5 h-1.5 rounded-full bg-green-400 mt-1.5 sm:mt-2 flex-shrink-0"></span>
+                        <span className="text-white text-xs sm:text-sm leading-relaxed">Explore business ownership or partnership opportunities</span>
+                      </li>
+                    </ul>
                   </div>
                 </div>
               </div>
