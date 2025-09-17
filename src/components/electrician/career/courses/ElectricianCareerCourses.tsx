@@ -2,7 +2,7 @@ import React, { useState, useMemo, useEffect } from "react";
 import { DropdownTabs } from "@/components/ui/dropdown-tabs";
 import EnhancedCourseCard from "../../../apprentice/career/courses/EnhancedCourseCard";
 import EnhancedTrainingCenterCard from "../../../apprentice/career/courses/EnhancedTrainingCenterCard";
-import CourseDetailsModal from "../../../apprentice/career/courses/CourseDetailsModal";
+import ModernCourseDetailsModal from "./ModernCourseDetailsModal";
 import TrainingCentreDetailsModal from "../../../apprentice/career/courses/TrainingCenterDetailsModal";
 import CourseSelectionTips from "../../../apprentice/career/courses/CourseSelectionTips";
 import EmptySearchResults from "../../../apprentice/career/courses/EmptySearchResults";
@@ -1183,9 +1183,11 @@ const ElectricianCareerCourses = () => {
       </div>
       
       {/* Course Details Modal */}
-      {selectedCourse && (
-        <CourseDetailsModal course={selectedCourse} onClose={handleClose} />
-      )}
+      <ModernCourseDetailsModal 
+        course={selectedCourse}
+        open={!!selectedCourse}
+        onOpenChange={(open) => !open && setSelectedCourse(null)}
+      />
       
       {/* Training Centre Details Modal */}
       {selectedCenter && (
