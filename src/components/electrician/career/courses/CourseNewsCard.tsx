@@ -67,7 +67,7 @@ const CourseNewsCard = ({ course, className, onClick }: CourseNewsCardProps) => 
       onClick={onClick}
     >
       {/* Image */}
-      <div className="relative h-40 sm:h-48 overflow-hidden">
+      <div className="relative h-24 sm:h-28 overflow-hidden">
         <img
           src={getCategoryImage(course.category)}
           alt={course.title}
@@ -75,25 +75,10 @@ const CourseNewsCard = ({ course, className, onClick }: CourseNewsCardProps) => 
           loading="lazy"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
-        
-        {/* Category Badge */}
-        <div className="absolute top-3 left-3">
-          <Badge className={cn("text-xs font-medium", getCategoryColor(course.category))}>
-            {course.category}
-          </Badge>
-        </div>
-
-        {/* Demand Badge */}
-        <div className="absolute top-3 right-3">
-          <Badge className={cn("text-xs font-medium", getDemandColor(course.industryDemand))}>
-            <TrendingUp className="h-3 w-3 mr-1" />
-            {course.industryDemand} Demand
-          </Badge>
-        </div>
 
         {/* Level Badge */}
         {course.level && (
-          <div className="absolute bottom-3 left-3">
+          <div className="absolute bottom-2 left-2">
             <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow text-xs">
               <Award className="h-3 w-3 mr-1" />
               {course.level}
@@ -103,7 +88,7 @@ const CourseNewsCard = ({ course, className, onClick }: CourseNewsCardProps) => 
       </div>
 
       {/* Content */}
-      <div className="p-4 sm:p-5 space-y-3 flex flex-col h-[calc(100%-10rem)] sm:h-[calc(100%-12rem)]">
+      <div className="p-3 sm:p-4 space-y-2 flex flex-col h-[calc(100%-6rem)] sm:h-[calc(100%-7rem)]">
         {/* Meta Info */}
         <div className="flex items-center justify-between text-xs text-white/80">
           <div className="flex items-center gap-3">
@@ -125,17 +110,17 @@ const CourseNewsCard = ({ course, className, onClick }: CourseNewsCardProps) => 
         </div>
 
         {/* Title */}
-        <h3 className="font-semibold text-white line-clamp-2 text-sm sm:text-base leading-tight flex-grow">
+        <h3 className="font-semibold text-white line-clamp-2 text-xs sm:text-sm leading-tight">
           {course.title}
         </h3>
 
         {/* Provider */}
-        <p className="text-elec-yellow text-xs sm:text-sm font-medium">
+        <p className="text-elec-yellow text-xs font-medium">
           {course.provider}
         </p>
 
         {/* Description */}
-        <p className="text-white/90 text-xs sm:text-sm line-clamp-2 leading-relaxed flex-grow">
+        <p className="text-white/90 text-xs line-clamp-2 leading-relaxed flex-grow">
           {course.description}
         </p>
 

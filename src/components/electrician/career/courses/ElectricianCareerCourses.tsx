@@ -52,7 +52,7 @@ const ElectricianCareerCourses = () => {
   
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
-  const [coursesPerPage, setCoursesPerPage] = useState(10);
+  const [coursesPerPage, setCoursesPerPage] = useState(20);
   
   // Location-based filtering state
   const [userLocation, setUserLocation] = useState<string | null>(null);
@@ -1106,7 +1106,7 @@ const ElectricianCareerCourses = () => {
             ) : filteredAndSortedCourses.length > 0 ? (
               <div className="space-y-6">
                  <div className={viewMode === "grid" ? 
-                   "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4 md:gap-6" : 
+                   "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-3 md:gap-4" : 
                    "space-y-4 md:space-y-6"
                  }>
                    {currentCourses.map((course) => (
