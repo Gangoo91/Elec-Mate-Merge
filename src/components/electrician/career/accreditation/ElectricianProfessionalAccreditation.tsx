@@ -13,7 +13,7 @@ import {
   Info,
   ArrowRight
 } from "lucide-react";
-import AccreditationCard from "../../../apprentice/career/accreditation/AccreditationCard";
+import AccreditationCard from "./AccreditationCard";
 import AccreditationDetailView from "../../../apprentice/career/accreditation/AccreditationDetailView";
 import AccreditationAnalytics from "../../../apprentice/career/accreditation/AccreditationAnalytics";
 import ResourceCard from "./ResourceCard";
