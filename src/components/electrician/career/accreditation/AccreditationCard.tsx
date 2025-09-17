@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { 
   Award, MapPin, Clock, PoundSterling, 
-  TrendingUp, ExternalLink, Users, CheckCircle
+  TrendingUp, ExternalLink, Users, CheckCircle, Calendar
 } from "lucide-react";
 import { AccreditationOption } from "../../../apprentice/career/accreditation/enhancedAccreditationData";
 import { isValidUrl } from "@/utils/urlUtils";
@@ -14,14 +14,8 @@ interface AccreditationCardProps {
 }
 
 const AccreditationCard = ({ accreditation, onViewDetails }: AccreditationCardProps) => {
-  const getDifficultyColor = (difficulty: string) => {
-    switch (difficulty) {
-      case "Entry Level": return "bg-green-500/10 text-green-400 border-green-500/30";
-      case "Intermediate": return "bg-amber-500/10 text-amber-400 border-amber-500/30";
-      case "Advanced": return "bg-red-500/10 text-red-400 border-red-500/30";
-      case "Expert": return "bg-purple-500/10 text-purple-400 border-purple-500/30";
-      default: return "bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30";
-    }
+  const isAvailableOnline = () => {
+    return accreditation.onlineAvailable;
   };
 
   const getPopularityColor = (popularity: number) => {
@@ -49,21 +43,6 @@ const AccreditationCard = ({ accreditation, onViewDetails }: AccreditationCardPr
     }
   };
 
-  const getStatusIndicator = () => {
-    if (accreditation.onlineAvailable) {
-      return {
-        color: 'text-green-400',
-        text: 'Available Online'
-      };
-    }
-    return {
-      color: 'text-blue-400', 
-      text: 'In-Person Required'
-    };
-  };
-
-  const statusInfo = getStatusIndicator();
-
   return (
     <Card className="border-elec-yellow/30 bg-gradient-to-b from-elec-gray to-elec-gray/80 hover:from-elec-gray/90 hover:to-elec-gray/70 transition-all duration-300 cursor-pointer shadow-lg shadow-black/20 h-full group">
       <CardHeader className="space-y-3">
@@ -74,9 +53,11 @@ const AccreditationCard = ({ accreditation, onViewDetails }: AccreditationCardPr
               {accreditation.level}
             </Badge>
           </div>
-          <Badge variant="outline" className={getDifficultyColor(accreditation.difficulty)}>
-            {accreditation.difficulty}
-          </Badge>
+          {isAvailableOnline() && (
+            <Badge className="bg-green-500/20 text-green-400 border-green-500/30 text-xs">
+              Online Available
+            </Badge>
+          )}
         </div>
         
         <CardTitle className="text-lg leading-tight group-hover:text-elec-yellow transition-colors">
@@ -103,19 +84,19 @@ const AccreditationCard = ({ accreditation, onViewDetails }: AccreditationCardPr
           </div>
           <div className="flex items-center gap-1">
             <Users className="h-3 w-3 text-blue-400" />
-            <span className="text-white font-medium">{accreditation.accreditationBody}</span>
+            <span className="text-white font-medium">{accreditation.accreditationBody.substring(0, 15)}</span>
             <span className="text-muted-foreground">body</span>
           </div>
         </div>
 
-        {/* Duration and Cost */}
+        {/* Duration and Study Mode */}
         <div className="flex items-center justify-between text-xs">
           <div className="flex items-center gap-1 text-muted-foreground">
             <Clock className="h-3 w-3" />
             <span>{accreditation.duration}</span>
           </div>
           <Badge variant="outline" className="bg-blue-500/10 text-blue-400 border-blue-500/30 text-xs">
-            {accreditation.onlineAvailable ? 'Online Available' : 'In-Person'}
+            {accreditation.onlineAvailable ? 'Online' : 'In-Person'}
           </Badge>
         </div>
 
@@ -130,7 +111,7 @@ const AccreditationCard = ({ accreditation, onViewDetails }: AccreditationCardPr
           </div>
         )}
 
-        {/* Cost */}
+        {/* Fees */}
         <div className="flex items-center gap-1 text-sm font-medium text-elec-yellow">
           <PoundSterling className="h-4 w-4" />
           <span>{accreditation.cost}</span>
@@ -139,7 +120,7 @@ const AccreditationCard = ({ accreditation, onViewDetails }: AccreditationCardPr
         {/* Renewal Period */}
         {accreditation.renewalPeriod && (
           <div className="flex items-center gap-1 text-xs text-green-400">
-            <CheckCircle className="h-3 w-3" />
+            <Calendar className="h-3 w-3" />
             <span>Renewal: {accreditation.renewalPeriod}</span>
           </div>
         )}
@@ -155,7 +136,7 @@ const AccreditationCard = ({ accreditation, onViewDetails }: AccreditationCardPr
                   variant="outline" 
                   className="bg-elec-dark/50 text-white border-elec-yellow/20 text-xs"
                 >
-                  {benefit.length > 20 ? `${benefit.slice(0, 17)}...` : benefit}
+                  {benefit}
                 </Badge>
               ))}
               {accreditation.benefits.length > 3 && (
@@ -191,13 +172,13 @@ const AccreditationCard = ({ accreditation, onViewDetails }: AccreditationCardPr
           )}
         </div>
 
-        {/* Professional Status Indicator */}
+        {/* Live Data Indicator */}
         <div className="flex items-center justify-between text-xs text-muted-foreground pt-2 border-t border-elec-yellow/10">
           <div className="flex items-center gap-1">
-            <div className={`w-2 h-2 rounded-full ${statusInfo.color === 'text-green-400' ? 'bg-green-400' : 'bg-blue-400'}`}></div>
-            <span className={statusInfo.color}>{statusInfo.text}</span>
+            <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+            <span>Live data</span>
           </div>
-          <span>Professional Status</span>
+          <span>{new Date().toLocaleDateString()}</span>
         </div>
       </CardContent>
     </Card>
