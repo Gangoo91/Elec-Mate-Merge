@@ -116,14 +116,24 @@ const CourseNewsCard = ({ course, className, onClick }: CourseNewsCardProps) => 
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
           loading="lazy"
           onError={(e) => {
+            const target = e.currentTarget;
             const imageKey = course.id.toString();
+            const currentSrc = target.src;
+            
+            // If it's already our fallback SVG, don't change anything
+            if (currentSrc.startsWith('data:image/svg+xml')) {
+              return;
+            }
+            
+            // If this is the first error, try another image from the category
             if (!erroredImages.current.has(imageKey)) {
               erroredImages.current.add(imageKey);
               const fallbackImages = getCategoryImages(course.category);
               const nextIndex = (Math.abs(parseInt(imageKey)) + 1) % fallbackImages.length;
-              e.currentTarget.src = fallbackImages[nextIndex];
+              target.src = fallbackImages[nextIndex];
             } else {
-              e.currentTarget.src = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjI1MCIgdmlld0JveD0iMCAwIDQwMCAyNTAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iMjUwIiBmaWxsPSIjMzMzIi8+Cjx0ZXh0IHg9IjIwMCIgeT0iMTI1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjZmZmIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTYiPkVsZWN0cmljYWwgQ291cnNlPC90ZXh0Pgo8L3N2Zz4=";
+              // Use the ultimate fallback - base64 SVG
+              target.src = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjI1MCIgdmlld0JveD0iMCAwIDQwMCAyNTAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iMjUwIiBmaWxsPSIjMmEyYTJhIi8+CjxjaXJjbGUgY3g9IjIwMCIgY3k9IjEwMCIgcj0iMzAiIGZpbGw9IiM0YTRhNGEiLz4KPHRleHQgeD0iMjAwIiB5PSIxNzAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiNhYWEiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZm9udC13ZWlnaHQ9IjUwMCI+RWxlY3RyaWNhbCBDb3Vyc2U8L3RleHQ+Cjwvc3ZnPg==";
             }
           }}
         />
