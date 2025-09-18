@@ -93,19 +93,30 @@ const ModernCoursesGrid = ({ courses, excludeId, onCourseClick }: ModernCoursesG
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
               loading="lazy"
               onError={(e) => {
+                console.log(`Course "${course.title}": Using fallback category image for ${course.category}`);
                 e.currentTarget.src = getCategoryImage(course.category);
+              }}
+              onLoad={() => {
+                if (!course.image_url) {
+                  console.log(`Course "${course.title}": Displaying category fallback image (no provider image available)`);
+                }
               }}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
             
-            {/* Live Data Indicator */}
-            {course.isLive && (
-              <div className="absolute bottom-2 left-2">
-                <Badge className="bg-elec-yellow/20 border-elec-yellow/30 text-elec-yellow text-xs">
-                  Live Data
+            {/* Course Type Indicators */}
+            <div className="absolute bottom-2 left-2 flex gap-2">
+              {course.isLive && (
+                <Badge className="bg-green-500/20 border-green-500/30 text-green-300 text-xs">
+                  Live Course
                 </Badge>
-              </div>
-            )}
+              )}
+              {!course.image_url && (
+                <Badge className="bg-blue-500/20 border-blue-500/30 text-blue-300 text-xs">
+                  Stock Image
+                </Badge>
+              )}
+            </div>
           </div>
 
           {/* Content */}
