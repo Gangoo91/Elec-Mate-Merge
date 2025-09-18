@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { format } from "date-fns";
 import { Calendar, Clock, Eye, Star, ExternalLink, Users, MapPin, PoundSterling, TrendingUp, Award } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
@@ -13,6 +13,7 @@ interface CourseNewsCardProps {
 }
 
 const CourseNewsCard = ({ course, className, onClick }: CourseNewsCardProps) => {
+  const erroredImages = useRef(new Set<string>());
   const getCategoryColor = (category: string) => {
     const colors = {
       "Electrical": "bg-blue-500/20 border-blue-500/30 text-blue-300",
@@ -69,10 +70,17 @@ const CourseNewsCard = ({ course, className, onClick }: CourseNewsCardProps) => 
       {/* Image */}
       <div className="relative h-32 sm:h-36 lg:h-40 overflow-hidden">
         <img
-          src={getCategoryImage(course.category)}
-          alt={course.title}
+          src={course.image_url || getCategoryImage(course.category)}
+          alt={`${course.title} - Electrical Training Course`}
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
           loading="lazy"
+          onError={(e) => {
+            const imageKey = course.id.toString();
+            if (!erroredImages.current.has(imageKey)) {
+              erroredImages.current.add(imageKey);
+              e.currentTarget.src = getCategoryImage(course.category);
+            }
+          }}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
       </div>
