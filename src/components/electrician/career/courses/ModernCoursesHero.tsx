@@ -1,15 +1,24 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { BookOpen, Users, TrendingUp, Star, Calculator, Zap } from "lucide-react";
+import { BookOpen, Users, TrendingUp, Star, Calculator, Zap, RefreshCw, Clock } from "lucide-react";
 import type { CourseAnalytics } from "@/components/apprentice/career/courses/enhancedCoursesData";
 
 interface ModernCoursesHeroProps {
   analytics: CourseAnalytics | null;
   onFundingCalculator: () => void;
+  onRefreshData?: () => void;
+  isRefreshing?: boolean;
+  lastUpdated?: string | null;
 }
 
-const ModernCoursesHero = ({ analytics, onFundingCalculator }: ModernCoursesHeroProps) => {
+const ModernCoursesHero = ({ 
+  analytics, 
+  onFundingCalculator, 
+  onRefreshData, 
+  isRefreshing = false, 
+  lastUpdated 
+}: ModernCoursesHeroProps) => {
   return (
     <div className="relative">
       {/* Hero Section */}
@@ -82,6 +91,18 @@ const ModernCoursesHero = ({ analytics, onFundingCalculator }: ModernCoursesHero
               Funding Calculator
             </Button>
             
+            {onRefreshData && (
+              <Button
+                onClick={onRefreshData}
+                disabled={isRefreshing}
+                variant="outline"
+                className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 px-8 py-3 rounded-lg disabled:opacity-50"
+              >
+                <RefreshCw className={`h-5 w-5 mr-2 ${isRefreshing ? 'animate-spin' : ''}`} />
+                {isRefreshing ? 'Refreshing...' : 'Refresh Courses'}
+              </Button>
+            )}
+            
             <Button
               variant="outline"
               className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 px-8 py-3 rounded-lg"
@@ -93,6 +114,14 @@ const ModernCoursesHero = ({ analytics, onFundingCalculator }: ModernCoursesHero
               Browse Courses
             </Button>
           </div>
+
+          {/* Last Updated Info */}
+          {lastUpdated && (
+            <div className="flex items-center justify-center gap-2 text-sm text-white/70">
+              <Clock className="h-4 w-4" />
+              <span>Last updated: {new Date(lastUpdated).toLocaleString()}</span>
+            </div>
+          )}
 
           {/* Top Categories Preview */}
           {analytics?.topCategories && analytics.topCategories.length > 0 && (

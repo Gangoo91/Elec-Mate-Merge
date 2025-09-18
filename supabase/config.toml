@@ -150,3 +150,6 @@ verify_jwt = false
 
 [functions.firecrawl-news-scraper]
 verify_jwt = false
+
+[functions.live-courses-scraper]
+verify_jwt = false

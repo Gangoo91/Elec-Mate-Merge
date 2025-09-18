@@ -13,13 +13,17 @@ import {
   EnhancedCareerCourse 
 } from "@/components/apprentice/career/courses/enhancedCoursesData";
 import { generateCoursesAnalytics } from "./coursesAnalyticsHelper";
+import { useLiveCourses, LiveCourse } from "@/hooks/useLiveCourses";
 
 const ElectricianCareerCourses = () => {
-  const [allCourses] = useState<EnhancedCareerCourse[]>(enhancedCareerCourses);
+  const [allCourses, setAllCourses] = useState<EnhancedCareerCourse[]>(enhancedCareerCourses);
   const [filteredCourses, setFilteredCourses] = useState<EnhancedCareerCourse[]>([]);
   const [selectedCourse, setSelectedCourse] = useState<EnhancedCareerCourse | null>(null);
   const [viewMode, setViewMode] = useState<"grid" | "funding">("grid");
   const [modalOpen, setModalOpen] = useState(false);
+
+  // Live courses functionality
+  const { fetchLiveCourses, isLoading: isRefreshing, lastUpdated } = useLiveCourses();
 
   // Generate analytics from courses data
   const analytics = generateCoursesAnalytics(allCourses);
@@ -119,6 +123,26 @@ const ElectricianCareerCourses = () => {
     setViewMode("funding");
   };
 
+  // Transform live course to enhanced course format
+  const transformLiveCourse = (liveCourse: LiveCourse): EnhancedCareerCourse => ({
+    ...liveCourse,
+    futureProofing: liveCourse.futureProofing === 'Excellent' ? 5 : 4,
+    accreditation: [liveCourse.accreditation],
+    employerSupport: liveCourse.employerSupport === 'High'
+  });
+
+  const handleRefreshData = async () => {
+    const result = await fetchLiveCourses();
+    if (result?.success && result.data) {
+      // Transform live courses to match EnhancedCareerCourse format
+      const transformedLiveCourses = result.data.map(transformLiveCourse);
+      
+      // Merge with static courses, prioritizing live data
+      const mergedCourses = [...transformedLiveCourses, ...enhancedCareerCourses];
+      setAllCourses(mergedCourses);
+    }
+  };
+
   if (viewMode === "funding") {
     return (
       <div className="space-y-6">
@@ -149,6 +173,9 @@ const ElectricianCareerCourses = () => {
       <ModernCoursesHero 
         analytics={analytics}
         onFundingCalculator={handleShowFundingCalculator}
+        onRefreshData={handleRefreshData}
+        isRefreshing={isRefreshing}
+        lastUpdated={lastUpdated}
       />
 
       {/* Modern Filters */}
