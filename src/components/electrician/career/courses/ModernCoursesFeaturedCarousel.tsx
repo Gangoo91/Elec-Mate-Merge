@@ -2,6 +2,7 @@ import { useState, useRef } from "react";
 import { Calendar, Clock, MapPin, Star, ExternalLink, ChevronLeft, ChevronRight, Zap } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { isValidUrl } from "@/utils/urlUtils";
 import { 
   Carousel, 
   CarouselContent, 
@@ -194,7 +195,11 @@ const ModernCoursesFeaturedCarousel = ({ courses, className, onCourseClick }: Mo
                       className="h-8 px-3 text-elec-yellow hover:bg-elec-yellow/10 hover:text-elec-yellow group/btn"
                       onClick={(e) => {
                         e.stopPropagation();
-                        onCourseClick?.(course);
+                        if (course.external_url && isValidUrl(course.external_url)) {
+                          window.open(course.external_url, '_blank');
+                        } else {
+                          onCourseClick?.(course);
+                        }
                       }}
                     >
                       <span className="text-xs">View</span>
