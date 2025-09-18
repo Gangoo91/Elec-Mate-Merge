@@ -16,7 +16,7 @@ import { generateCoursesAnalytics } from "./coursesAnalyticsHelper";
 import { useLiveCourses, LiveCourse } from "@/hooks/useLiveCourses";
 
 const ElectricianCareerCourses = () => {
-  const [allCourses, setAllCourses] = useState<EnhancedCareerCourse[]>(enhancedCareerCourses);
+  const [allCourses, setAllCourses] = useState<EnhancedCareerCourse[]>([]);
   const [filteredCourses, setFilteredCourses] = useState<EnhancedCareerCourse[]>([]);
   const [selectedCourse, setSelectedCourse] = useState<EnhancedCareerCourse | null>(null);
   const [viewMode, setViewMode] = useState<"grid" | "funding">("grid");
@@ -30,6 +30,10 @@ const ElectricianCareerCourses = () => {
 
   useEffect(() => {
     setFilteredCourses(allCourses);
+    // Auto-fetch live data on mount if no courses available
+    if (allCourses.length === 0) {
+      handleRefreshData();
+    }
   }, [allCourses]);
 
   const handleFiltersChange = (filters: CourseFilters) => {
@@ -139,9 +143,8 @@ const ElectricianCareerCourses = () => {
       // Transform live courses to match EnhancedCareerCourse format
       const transformedLiveCourses = result.data.map(transformLiveCourse);
       
-      // Merge with static courses, prioritizing live data
-      const mergedCourses = [...transformedLiveCourses, ...enhancedCareerCourses];
-      setAllCourses(mergedCourses);
+      // Only show live courses data
+      setAllCourses(transformedLiveCourses);
     }
   };
 
@@ -195,9 +198,9 @@ const ElectricianCareerCourses = () => {
         <Card>
           <CardContent className="p-8 text-center">
             <BookOpen className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
-            <h3 className="text-xl font-semibold mb-3">No courses found</h3>
+            <h3 className="text-xl font-semibold mb-3">No live courses available</h3>
             <p className="text-muted-foreground mb-6 max-w-md mx-auto">
-              Try adjusting your search criteria or explore different categories.
+              Refresh to fetch the latest courses from training providers, or try adjusting your search criteria.
             </p>
             <Button variant="outline" onClick={handleReset}>
               Reset Filters
