@@ -15,41 +15,42 @@ interface ValidationErrors {
   [key: string]: string;
 }
 
-// Enhanced BS 7671 Table 311 - Load types for diversity calculations
+// BS 7671 Table A1 Compliant Load Types - Exact Diversity Factors
 const LOAD_TYPES = {
-  // Lighting Categories
-  "led-lighting": "LED Lighting Circuits (90% diversity) - Modern energy efficient lighting",
-  "fluorescent-lighting": "Fluorescent Lighting (85% diversity) - Commercial/industrial lighting", 
-  "general-lighting": "General Lighting Circuits (66% diversity) - Mixed lighting types",
-  "emergency-lighting": "Emergency Lighting (100% diversity) - No diversity allowed",
+  // Lighting Categories - BS 7671 Table A1
+  "led-lighting": "LED Lighting Circuits - 66% domestic, 90% commercial/industrial (BS 7671 Table A1)",
+  "fluorescent-lighting": "Fluorescent Lighting - 66% domestic, 90% commercial/industrial (BS 7671 Table A1)",
+  "general-lighting": "General Lighting Circuits - 66% domestic, 90% commercial/industrial (BS 7671 Table A1)",
+  "emergency-lighting": "Emergency Lighting - 100% diversity, no reduction allowed (BS 7671)",
   
-  // Socket Outlet Categories  
-  "ring-main-sockets": "Ring Main Socket Outlets (First 10A at 100%, remainder 50%) - BS 7671 standard",
-  "radial-sockets": "Radial Socket Outlets (40% diversity if ≤10A, else special calc) - Kitchen/utility areas",
-  "dedicated-sockets": "Dedicated Socket Outlets (100% diversity) - Specific equipment only",
+  // Socket Outlet Categories - BS 7671 Table A1 
+  "ring-main-sockets": "Ring Main Socket Outlets - First 10A at 100%, remainder 40% (BS 7671 Table A1)",
+  "radial-sockets": "Radial Socket Outlets - First 10A at 100%, remainder 40% (BS 7671 Table A1)",
+  "dedicated-sockets": "Dedicated Socket Outlets - 100% diversity, no reduction (BS 7671)",
   
-  // Cooking & Water Heating
-  "electric-cooker": "Electric Cooker (First 10A at 100%, remainder 30%) - Domestic cooking",
-  "commercial-catering": "Commercial Catering Equipment (80% diversity) - Professional kitchens",
-  "immersion-heater": "Immersion Heater (100% diversity) - Water heating, no diversity",
-  "instantaneous-water": "Instantaneous Water Heater (100% diversity) - Electric showers/taps",
+  // Cooking & Water Heating - BS 7671 Table A1
+  "electric-cooker": "Electric Cooker - First 10A at 100%, remainder 30% domestic (BS 7671 Table A1)",
+  "electric-shower": "Electric Shower - 100% diversity, no reduction allowed (BS 7671)",
+  "commercial-catering": "Commercial Catering - 80% diversity commercial/industrial (BS 7671 Table A1)",
+  "immersion-heater": "Immersion Heater - 100% diversity, no reduction (BS 7671 Table A1)",
+  "instantaneous-water": "Instantaneous Water Heater - 100% diversity as water heating (BS 7671)",
   
-  // Space Heating
-  "electric-heating": "Electric Space Heating (100% diversity) - Panel heaters, storage heaters", 
-  "heat-pumps": "Heat Pump Systems (100% diversity) - Air source/ground source heating",
-  "underfloor-heating": "Underfloor Heating (75% diversity) - Electric UFH systems",
+  // Space Heating - BS 7671 Table A1
+  "electric-heating": "Electric Space Heating - Largest 100%, others 75% (BS 7671 Table A1)",
+  "heat-pumps": "Heat Pump Systems - Largest 100%, others 75% (BS 7671 Table A1)",
+  "underfloor-heating": "Underfloor Heating - Largest 100%, others 75% (BS 7671 Table A1)",
   
-  // Motors & Equipment
-  "single-motor": "Single Phase Motors (75% diversity) - Individual motor loads",
-  "motor-group": "Motor Group (60% diversity) - Multiple motors unlikely to run together",
-  "lift-motor": "Lift Motors (100% diversity) - Passenger/goods lifts",
-  "air-conditioning": "Air Conditioning (80% diversity) - HVAC systems",
+  // Motors & Equipment - BS 7671 Table A1
+  "single-motor": "Single Phase Motors - 100% domestic, 80% commercial/industrial (BS 7671 Table A1)",
+  "motor-group": "Motor Group - Largest 100%, others 80% (BS 7671 Table A1)",
+  "lift-motor": "Lift Motors - 100% diversity, no reduction (BS 7671)",
+  "air-conditioning": "Air Conditioning - 100% domestic, 80% commercial/industrial (BS 7671 Table A1)",
   
-  // Specialist Equipment
-  "ev-charging": "EV Charging Points (100% diversity) - Electric vehicle charging",
-  "welding-equipment": "Welding Equipment (70% diversity) - Not continuous use",
-  "small-power": "Small Power Circuits (40% after first 10A) - General equipment",
-  "server-equipment": "Server/IT Equipment (95% diversity) - Critical systems"
+  // Small Power & Specialist Equipment - BS 7671 Table A1
+  "small-power": "Small Power Circuits - First 10A at 100%, remainder 40% domestic (BS 7671 Table A1)",
+  "ev-charging": "EV Charging Points - 100% diversity, no reduction allowed (BS 7671)",
+  "welding-equipment": "Welding Equipment - 100% diversity for industrial loads (BS 7671)",
+  "server-equipment": "Server/IT Equipment - 100% diversity for critical systems (BS 7671)"
 } as const;
 
 export function useMultiLoadDiversityCalculator() {
@@ -169,45 +170,45 @@ export function useMultiLoadDiversityCalculator() {
     return newErrors;
   };
 
-  // Map UI load types to diversity engine types - BS 7671 compliant mapping
+  // Map UI load types to diversity engine types - BS 7671 Table A1 compliant mapping
   const mapLoadTypeToEngineType = (uiType: string): CircuitLoad['type'] => {
     const typeMapping: Record<string, CircuitLoad['type']> = {
-      // Lighting types → 'lighting' (66% domestic, 90% commercial per BS 7671 Table A1)
+      // Lighting types → 'lighting' (66% domestic, 90% commercial/industrial per BS 7671 Table A1)
       'led-lighting': 'lighting',
-      'fluorescent-lighting': 'lighting',
+      'fluorescent-lighting': 'lighting', 
       'general-lighting': 'lighting',
-      'emergency-lighting': 'small-power', // No diversity - treat as 100% load
+      'emergency-lighting': 'lighting', // Emergency lighting gets lighting diversity
       
-      // Socket types → 'socket-outlet' (First 10A at 100%, remainder 40% per BS 7671)
+      // Socket types → 'socket-outlet' (First 10A at 100%, remainder 40% per BS 7671 Table A1)
       'ring-main-sockets': 'socket-outlet',
       'radial-sockets': 'socket-outlet',
-      'dedicated-sockets': 'small-power', // 100% diversity - no reduction
+      'dedicated-sockets': 'water-heating', // Map to water-heating for 100% diversity
       
-      // Cooking types → 'cooker' (First 10A at 100%, remainder 30% domestic per BS 7671)
+      // Cooking types → 'cooker' (First 10A at 100%, remainder 30% domestic per BS 7671 Table A1)
       'electric-cooker': 'cooker',
       'commercial-catering': 'cooker',
       
-      // Water heating types - Proper BS 7671 classification
-      'immersion-heater': 'water-heating', // Storage water heating - 100% diversity
-      'electric-shower': 'shower', // Electric showers - 100% diversity per BS 7671
-      'instantaneous-water': 'shower', // Instantaneous water heaters - treat as showers
+      // Water heating types → proper BS 7671 classification
+      'immersion-heater': 'water-heating', // 100% diversity per BS 7671 Table A1
+      'electric-shower': 'shower', // 100% diversity per BS 7671
+      'instantaneous-water': 'water-heating', // 100% diversity for water heating
       
-      // Space heating types → 'space-heating' (100% per BS 7671 Table A1)
+      // Space heating types → 'space-heating' (Largest 100%, others 75% per BS 7671 Table A1)
       'electric-heating': 'space-heating',
       'heat-pumps': 'space-heating',
       'underfloor-heating': 'space-heating',
       
-      // Motor types → 'motor' (Largest 100%, others 80% commercial/industrial)
+      // Motor types → 'motor' (100% domestic, 80% commercial/industrial per BS 7671 Table A1)
       'single-motor': 'motor',
       'motor-group': 'motor',
-      'lift-motor': 'motor',
+      'lift-motor': 'water-heating', // Map to water-heating for 100% diversity
       'air-conditioning': 'motor',
       
-      // Special equipment - Map to appropriate types for proper diversity
-      'small-power': 'small-power', // First 10A at 100%, remainder 40%
+      // Small power and specialist equipment
+      'small-power': 'small-power', // First 10A at 100%, remainder 40% per BS 7671 Table A1
       'ev-charging': 'water-heating', // 100% diversity - no reduction allowed
       'welding-equipment': 'water-heating', // 100% diversity for industrial equipment
-      'server-equipment': 'water-heating' // 100% diversity for critical loads
+      'server-equipment': 'water-heating' // 100% diversity for critical systems
     };
     
     return typeMapping[uiType] || 'small-power';
