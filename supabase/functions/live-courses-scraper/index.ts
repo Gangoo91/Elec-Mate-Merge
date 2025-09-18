@@ -140,7 +140,7 @@ serve(async (req) => {
       price: course.price || 'Contact for pricing',
       format: course.mode || 'Mixed',
       nextDates: ['Contact provider'],
-      rating: course.rating ? parseFloat(course.rating) : null,
+      rating: course.rating ? parseFloat(course.rating) : 4.0,
       locations: course.location ? [course.location] : ['UK'],
       category: 'Electrical',
       industryDemand: 'Medium' as const,
@@ -156,7 +156,9 @@ serve(async (req) => {
       source: 'live',
       isLive: true,
       tags: course.tags ? course.tags.split(',').map((t: string) => t.trim()) : [],
-      visitLink: course.visit_link || ''
+      visitLink: course.visit_link || '',
+      external_url: course.visit_link || '',
+      image_url: course.image_url || null
     }));
 
     // Cache the results

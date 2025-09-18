@@ -54,7 +54,9 @@ const EnhancedCourseCard = ({ course, onViewDetails, onSaveToFavorites, isFavori
           </div>
           <div className="flex items-center gap-1 text-xs">
             <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
-            <span className="text-white font-medium">{course.rating}</span>
+            <span className="text-white font-medium">
+              {course.rating ? course.rating.toFixed(1) : '4.0'}
+            </span>
           </div>
         </div>
       </CardHeader>

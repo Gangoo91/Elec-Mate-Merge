@@ -45,7 +45,7 @@ const EnhancedCourseGridCard = ({ course, onClick }: EnhancedCourseGridCardProps
           </div>
           <div className="flex items-center gap-1 bg-amber-500/20 text-amber-400 px-2 py-1 rounded border border-amber-500/30 text-xs font-medium">
             <Star className="h-3 w-3 fill-current" />
-            {course.rating}
+            {course.rating ? course.rating.toFixed(1) : '4.0'}
           </div>
         </div>
 
