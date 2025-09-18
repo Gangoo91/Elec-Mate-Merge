@@ -48,17 +48,58 @@ const ModernCoursesGrid = ({ courses, excludeId, onCourseClick }: ModernCoursesG
     return colors[demand as keyof typeof colors] || "bg-white/10 border-white/20 text-white/80";
   };
 
-  const getCategoryImage = (category: string) => {
-    const images = {
-      "Essential Updates": "https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=400&h=250&fit=crop&auto=format&q=80",
-      "Emerging Technologies": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&h=250&fit=crop&auto=format&q=80", 
-      "Safety & Compliance": "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=400&h=250&fit=crop&auto=format&q=80",
-      "Specialized Systems": "https://images.unsplash.com/photo-1581092921461-eab62e97a780?w=400&h=250&fit=crop&auto=format&q=80",
-      "Professional Development": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=250&fit=crop&auto=format&q=80",
-      "Business Skills": "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=400&h=250&fit=crop&auto=format&q=80",
-      "Electrical": "https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=400&h=250&fit=crop&auto=format&q=80",
+  const getCategoryImages = (category: string) => {
+    const imageArrays = {
+      "Essential Updates": [
+        "https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=400&h=250&fit=crop&auto=format&q=80",
+        "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=400&h=250&fit=crop&auto=format&q=80",
+        "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=400&h=250&fit=crop&auto=format&q=80",
+        "https://images.unsplash.com/photo-1454391304352-2bf4678b1a7a?w=400&h=250&fit=crop&auto=format&q=80",
+      ],
+      "Emerging Technologies": [
+        "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&h=250&fit=crop&auto=format&q=80",
+        "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=400&h=250&fit=crop&auto=format&q=80",
+        "https://images.unsplash.com/photo-1593941707882-a5bac6861d75?w=400&h=250&fit=crop&auto=format&q=80",
+        "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400&h=250&fit=crop&auto=format&q=80",
+      ],
+      "Safety & Compliance": [
+        "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=400&h=250&fit=crop&auto=format&q=80",
+        "https://images.unsplash.com/photo-1584464491033-06628f3a6b7b?w=400&h=250&fit=crop&auto=format&q=80",
+        "https://images.unsplash.com/photo-1581092921461-eab62e97a780?w=400&h=250&fit=crop&auto=format&q=80",
+        "https://images.unsplash.com/photo-1563720223185-11003d516935?w=400&h=250&fit=crop&auto=format&q=80",
+      ],
+      "Specialized Systems": [
+        "https://images.unsplash.com/photo-1581092921461-eab62e97a780?w=400&h=250&fit=crop&auto=format&q=80",
+        "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400&h=250&fit=crop&auto=format&q=80",
+        "https://images.unsplash.com/photo-1604871000636-074fa5117945?w=400&h=250&fit=crop&auto=format&q=80",
+        "https://images.unsplash.com/photo-1594736797933-d0bc02e42ecb?w=400&h=250&fit=crop&auto=format&q=80",
+      ],
+      "Professional Development": [
+        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=250&fit=crop&auto=format&q=80",
+        "https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=400&h=250&fit=crop&auto=format&q=80",
+        "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=400&h=250&fit=crop&auto=format&q=80",
+        "https://images.unsplash.com/photo-1556761175-b413da4baf72?w=400&h=250&fit=crop&auto=format&q=80",
+      ],
+      "Business Skills": [
+        "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=400&h=250&fit=crop&auto=format&q=80",
+        "https://images.unsplash.com/photo-1553028826-f4804a6dfd3f?w=400&h=250&fit=crop&auto=format&q=80",
+        "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?w=400&h=250&fit=crop&auto=format&q=80",
+        "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=250&fit=crop&auto=format&q=80",
+      ],
+      "Electrical": [
+        "https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=400&h=250&fit=crop&auto=format&q=80",
+        "https://images.unsplash.com/photo-1454391304352-2bf4678b1a7a?w=400&h=250&fit=crop&auto=format&q=80",
+        "https://images.unsplash.com/photo-1565814329452-e1efa11c5b89?w=400&h=250&fit=crop&auto=format&q=80",
+        "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=400&h=250&fit=crop&auto=format&q=80",
+      ],
     };
-    return images[category as keyof typeof images] || "https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=400&h=250&fit=crop&auto=format&q=80";
+    return imageArrays[category as keyof typeof imageArrays] || imageArrays["Electrical"];
+  };
+
+  const getCategoryImage = (category: string, courseId?: string | number) => {
+    const images = getCategoryImages(category);
+    const index = courseId ? Math.abs(parseInt(courseId.toString()) % images.length) : 0;
+    return images[index];
   };
 
   const formatDuration = (duration: string) => {
@@ -91,7 +132,7 @@ const ModernCoursesGrid = ({ courses, excludeId, onCourseClick }: ModernCoursesG
           {/* Image */}
           <div className="relative h-32 sm:h-36 overflow-hidden">
             <img
-              src={course.image_url || getCategoryImage(course.category)}
+              src={course.image_url || getCategoryImage(course.category, course.id)}
               alt={`${course.title} - Electrical Training Course`}
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
               loading="lazy"
@@ -99,7 +140,11 @@ const ModernCoursesGrid = ({ courses, excludeId, onCourseClick }: ModernCoursesG
                 const imageKey = course.id.toString();
                 if (!erroredImages.current.has(imageKey)) {
                   erroredImages.current.add(imageKey);
-                  e.currentTarget.src = getCategoryImage(course.category);
+                  const fallbackImages = getCategoryImages(course.category);
+                  const nextIndex = (Math.abs(parseInt(imageKey)) + 1) % fallbackImages.length;
+                  e.currentTarget.src = fallbackImages[nextIndex];
+                } else {
+                  e.currentTarget.src = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjI1MCIgdmlld0JveD0iMCAwIDQwMCAyNTAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iMjUwIiBmaWxsPSIjMzMzIi8+Cjx0ZXh0IHg9IjIwMCIgeT0iMTI1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjZmZmIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTYiPkVsZWN0cmljYWwgQ291cnNlPC90ZXh0Pgo8L3N2Zz4=";
                 }
               }}
             />
