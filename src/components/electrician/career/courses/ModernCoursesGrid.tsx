@@ -164,8 +164,8 @@ const ModernCoursesGrid = ({ courses, excludeId, onCourseClick }: ModernCoursesG
                 className="h-8 px-3 text-elec-yellow hover:bg-elec-yellow/10 hover:text-elec-yellow group/btn"
                 onClick={(e) => {
                   e.stopPropagation();
-                  if (course.external_url) {
-                    window.open(course.external_url, '_blank');
+                  if (course.external_url || (course as any).visitLink) {
+                    window.open(course.external_url || (course as any).visitLink, '_blank');
                   } else {
                     onCourseClick?.(course);
                   }

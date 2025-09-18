@@ -127,6 +127,7 @@ const ElectricianCareerCourses = () => {
   const transformLiveCourse = (liveCourse: LiveCourse): EnhancedCareerCourse => ({
     ...liveCourse,
     rating: liveCourse.rating ?? 4.0, // Default rating when null
+    external_url: liveCourse.visitLink, // Map visitLink to external_url for navigation
     futureProofing: liveCourse.futureProofing === 'Excellent' ? 5 : 4,
     accreditation: [liveCourse.accreditation],
     employerSupport: liveCourse.employerSupport === 'High'
