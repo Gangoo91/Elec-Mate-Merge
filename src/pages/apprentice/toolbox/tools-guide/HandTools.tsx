@@ -74,7 +74,7 @@ const HandTools = () => {
 
         {isLoading ? (
           <div className="space-y-8">
-            <ToolsFeaturedCarousel />
+            <ToolsFeaturedCarousel tools={[]} />
           </div>
         ) : handTools.length === 0 ? (
           <div className="text-center py-16">
@@ -89,7 +89,7 @@ const HandTools = () => {
             {/* Featured Carousel */}
             {featuredTools.length > 0 && (
               <div className="transform transition-all duration-300">
-                <ToolsFeaturedCarousel />
+                <ToolsFeaturedCarousel tools={featuredTools} />
               </div>
             )}
 

@@ -12,11 +12,11 @@ import { Zap, ShoppingCart, ExternalLink, ChevronLeft, ChevronRight, Pound, Pack
 import type { ToolItem } from "@/hooks/useToolsData";
 
 interface ToolsFeaturedCarouselProps {
-  tools: ToolItem[];
+  tools?: ToolItem[];
   className?: string;
 }
 
-const ToolsFeaturedCarousel = ({ tools, className }: ToolsFeaturedCarouselProps) => {
+const ToolsFeaturedCarousel = ({ tools = [], className }: ToolsFeaturedCarouselProps) => {
   // Show up to 6 featured tools
   const featuredTools = tools.slice(0, 6);
 
