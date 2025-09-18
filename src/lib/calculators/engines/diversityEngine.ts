@@ -175,8 +175,7 @@ export const calculateDomesticDiversity = (
   lightingLoad: number,
   socketLoad: number,
   cookerLoad: number = 0,
-  showerLoad: number = 0,
-  additionalLoads: { type: string; load: number }[] = []
+  showerLoad: number = 0
 ): DiversityResult => {
   const circuits: CircuitLoad[] = [];
 
@@ -227,7 +226,7 @@ export const calculateDomesticDiversity = (
   additionalLoads.forEach((load, index) => {
     circuits.push({
       id: `additional-${index}`,
-      type: load.type as any,
+      type: load.type,
       designCurrent: (load.load * 1000) / 230,
       installedPower: load.load,
       quantity: 1,
