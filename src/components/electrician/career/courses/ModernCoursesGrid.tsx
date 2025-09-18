@@ -112,7 +112,7 @@ const ModernCoursesGrid = ({ courses, excludeId, onCourseClick }: ModernCoursesG
               <div className="flex items-center gap-3">
                 <div className="flex items-center gap-1">
                   <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
-                  <span>{course.rating.toFixed(1)}</span>
+                  <span>{(course.rating ?? 4.0).toFixed(1)}</span>
                 </div>
                 <div className="flex items-center gap-1">
                   <Zap className="h-3 w-3" />
