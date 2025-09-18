@@ -165,7 +165,7 @@ const ElectricianCareerCourses = () => {
 
   // Get featured courses (top 6 highest rated or high demand)
   const featuredCourses = filteredCourses
-    .filter(course => (course.rating || 0) >= 4.5 || course.industryDemand === "High")
+    .filter(course => (course.rating || 0) >= 4.0 || course.industryDemand === "High")
     .slice(0, 6);
   
   // Get remaining courses for grid
