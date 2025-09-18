@@ -113,10 +113,14 @@ const ModernCoursesFeaturedCarousel = ({ courses, className, onCourseClick }: Mo
                 {/* Image */}
                 <div className="relative h-32 sm:h-36 overflow-hidden">
                   <img
-                    src={getCategoryImage(course.category)}
+                    src={course.image_url || getCategoryImage(course.category)}
                     alt={course.title}
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                     loading="lazy"
+                    onError={(e) => {
+                      console.log(`Course "${course.title}": Using fallback category image for ${course.category}`);
+                      e.currentTarget.src = getCategoryImage(course.category);
+                    }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
                   
