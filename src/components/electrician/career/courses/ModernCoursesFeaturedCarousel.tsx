@@ -19,10 +19,12 @@ interface ModernCoursesFeaturedCarouselProps {
 }
 
 const ModernCoursesFeaturedCarousel = ({ courses, className, onCourseClick }: ModernCoursesFeaturedCarouselProps) => {
-  // Show up to 6 featured courses (high rating or high demand)
-  const featuredCourses = courses
-    .filter(course => course.rating >= 4.5 || course.industryDemand === "High")
-    .slice(0, 6);
+  // Show up to 6 courses passed from parent (already filtered as "featured")
+  const featuredCourses = courses.slice(0, 6);
+  
+  // Debug logging
+  console.log('ModernCoursesFeaturedCarousel - courses received:', courses.length);
+  console.log('ModernCoursesFeaturedCarousel - featuredCourses:', featuredCourses.length);
 
   if (featuredCourses.length === 0) {
     return null;
