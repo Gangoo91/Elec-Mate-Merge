@@ -29,6 +29,7 @@ export interface LiveCourse {
   isLive: boolean;
   tags?: string[];
   visitLink?: string;
+  image_url?: string;
 }
 
 export interface LiveCoursesResponse {

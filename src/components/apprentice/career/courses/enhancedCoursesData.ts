@@ -27,6 +27,7 @@ export interface EnhancedCareerCourse {
   isLive?: boolean;
   external_url?: string;
   source?: string;
+  image_url?: string;
 }
 
 export interface EnhancedTrainingCenter {
