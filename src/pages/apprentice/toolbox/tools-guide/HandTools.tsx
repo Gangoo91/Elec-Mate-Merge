@@ -32,7 +32,7 @@ const HandTools = () => {
 
   // Get featured tools (first 6 for carousel)
   const featuredTools = handTools.slice(0, 6);
-  const featuredToolIds = featuredTools.map(tool => tool.id || 0);
+  const featuredToolIds = featuredTools.map(tool => tool.id || tool.name);
   
   // Get remaining tools for grid
   const gridTools = handTools.slice(6);

@@ -8,7 +8,7 @@ import {
   CarouselPrevious 
 } from "@/components/ui/carousel";
 import { cn } from "@/lib/utils";
-import { Zap, ShoppingCart, ExternalLink, ChevronLeft, ChevronRight, Pound, Package } from "lucide-react";
+import { Zap, ShoppingCart, ExternalLink, ChevronLeft, ChevronRight, PoundSterling, Package } from "lucide-react";
 import type { ToolItem } from "@/hooks/useToolsData";
 
 interface ToolsFeaturedCarouselProps {
@@ -81,7 +81,7 @@ const ToolsFeaturedCarousel = ({ tools = [], className }: ToolsFeaturedCarouselP
       >
         <CarouselContent className="-ml-2 md:-ml-4">
           {featuredTools.map((tool, index) => (
-            <CarouselItem key={tool.id} className="pl-2 md:pl-4 basis-[85%] sm:basis-[60%] md:basis-[45%] lg:basis-[33%]">
+            <CarouselItem key={`tool-${index}`} className="pl-2 md:pl-4 basis-[85%] sm:basis-[60%] md:basis-[45%] lg:basis-[33%]">
               <div className="bg-gradient-to-br from-white/10 via-white/5 to-transparent rounded-xl border border-white/10 overflow-hidden group hover:border-elec-yellow/30 transition-all duration-300 hover:shadow-xl hover:shadow-elec-yellow/10 hover:scale-[1.02] h-full">
                 {/* Image */}
                 <div className="relative h-40 sm:h-48 overflow-hidden">
@@ -114,7 +114,7 @@ const ToolsFeaturedCarousel = ({ tools = [], className }: ToolsFeaturedCarouselP
                   <div className="flex items-center justify-between text-xs text-white/80">
                     <div className="flex items-center gap-3">
                       <div className="flex items-center gap-1">
-                        <Pound className="h-3 w-3" />
+                        <PoundSterling className="h-3 w-3" />
                         <span>{tool.salePrice || tool.price || "£0"}</span>
                       </div>
                       {tool.stockStatus && (

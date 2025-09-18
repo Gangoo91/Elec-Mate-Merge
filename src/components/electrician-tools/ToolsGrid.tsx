@@ -1,6 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Zap, ShoppingCart, ExternalLink, Pound, Package } from "lucide-react";
+import { Zap, ShoppingCart, ExternalLink, PoundSterling, Package } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { ToolItem } from "@/hooks/useToolsData";
 
@@ -10,10 +10,12 @@ interface ToolsGridProps {
   className?: string;
 }
 
-const ToolsGrid = ({ tools, excludeIds = [], className }: ToolsGridProps) => {
-  const filteredTools = excludeIds.length > 0 
-    ? tools.filter(tool => !excludeIds.includes(tool.id))
-    : tools;
+const ToolsGrid = ({ tools = [], excludeIds = [], className }: ToolsGridProps) => {
+  const filteredTools = tools.filter(tool => {
+    if (!excludeIds.length) return true;
+    const toolId = tool.id || tool.name;
+    return !excludeIds.includes(toolId);
+  });
 
   const getCategoryColor = (category: string) => {
     const colors = {
@@ -66,7 +68,7 @@ const ToolsGrid = ({ tools, excludeIds = [], className }: ToolsGridProps) => {
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
         {filteredTools.map((tool, index) => (
           <div 
-            key={tool.id}
+            key={`tool-grid-${index}`}
             className="bg-gradient-to-br from-white/10 via-white/5 to-transparent rounded-xl border border-white/10 overflow-hidden group hover:border-elec-yellow/30 transition-all duration-300 hover:shadow-xl hover:shadow-elec-yellow/10 hover:scale-[1.02] h-full cursor-pointer"
             onClick={() => tool.productUrl && window.open(tool.productUrl, '_blank', 'noopener,noreferrer')}
           >
@@ -104,7 +106,7 @@ const ToolsGrid = ({ tools, excludeIds = [], className }: ToolsGridProps) => {
               <div className="flex items-center justify-between text-xs text-white/80">
                 <div className="flex items-center gap-3">
                   <div className="flex items-center gap-1">
-                    <Pound className="h-3 w-3" />
+                    <PoundSterling className="h-3 w-3" />
                     <span>{tool.salePrice || tool.price || "£0"}</span>
                   </div>
                   {tool.stockStatus && (
