@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Calendar, Clock, MapPin, Star, ExternalLink, ChevronLeft, ChevronRight, Zap } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -21,10 +21,7 @@ interface ModernCoursesFeaturedCarouselProps {
 const ModernCoursesFeaturedCarousel = ({ courses, className, onCourseClick }: ModernCoursesFeaturedCarouselProps) => {
   // Show up to 6 courses passed from parent (already filtered as "featured")
   const featuredCourses = courses.slice(0, 6);
-  
-  // Debug logging
-  console.log('ModernCoursesFeaturedCarousel - courses received:', courses.length);
-  console.log('ModernCoursesFeaturedCarousel - featuredCourses:', featuredCourses.length);
+  const erroredImages = useRef(new Set<string>());
 
   if (featuredCourses.length === 0) {
     return null;
@@ -59,6 +56,7 @@ const ModernCoursesFeaturedCarousel = ({ courses, className, onCourseClick }: Mo
       "Specialized Systems": "https://images.unsplash.com/photo-1581092921461-eab62e97a780?w=400&h=250&fit=crop&auto=format&q=80",
       "Professional Development": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=250&fit=crop&auto=format&q=80",
       "Business Skills": "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=400&h=250&fit=crop&auto=format&q=80",
+      "Electrical": "https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=400&h=250&fit=crop&auto=format&q=80",
     };
     return images[category as keyof typeof images] || "https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=400&h=250&fit=crop&auto=format&q=80";
   };
@@ -114,12 +112,15 @@ const ModernCoursesFeaturedCarousel = ({ courses, className, onCourseClick }: Mo
                 <div className="relative h-32 sm:h-36 overflow-hidden">
                   <img
                     src={course.image_url || getCategoryImage(course.category)}
-                    alt={course.title}
+                    alt={`${course.title} - Electrical Training Course`}
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                     loading="lazy"
                     onError={(e) => {
-                      console.log(`Course "${course.title}": Using fallback category image for ${course.category}`);
-                      e.currentTarget.src = getCategoryImage(course.category);
+                      const imageKey = course.id.toString();
+                      if (!erroredImages.current.has(imageKey)) {
+                        erroredImages.current.add(imageKey);
+                        e.currentTarget.src = getCategoryImage(course.category);
+                      }
                     }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
