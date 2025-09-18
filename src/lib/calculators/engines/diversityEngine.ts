@@ -223,16 +223,5 @@ export const calculateDomesticDiversity = (
     });
   }
 
-  additionalLoads.forEach((load, index) => {
-    circuits.push({
-      id: `additional-${index}`,
-      type: load.type,
-      designCurrent: (load.load * 1000) / 230,
-      installedPower: load.load,
-      quantity: 1,
-      location: 'domestic'
-    });
-  });
-
   return calculateDiversity(circuits);
 };
