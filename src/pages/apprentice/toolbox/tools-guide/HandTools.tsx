@@ -14,40 +14,25 @@ const HandTools = () => {
 
   // Filter tools for hand tools and apply search
   const handTools = tools.filter(tool => {
-    const toolName = tool.name?.toLowerCase() || '';
-    const toolCategory = tool.category?.toLowerCase() || '';
-    
-    // More inclusive hand tool filtering
-    const isHandTool = toolCategory.includes('hand') || 
-                     toolCategory.includes('tool') ||
-                     toolName.includes('screwdriver') ||
-                     toolName.includes('pliers') ||
-                     toolName.includes('spanner') ||
-                     toolName.includes('wrench') ||
-                     toolName.includes('cutter') ||
-                     toolName.includes('stripper') ||
-                     toolName.includes('hammer') ||
-                     toolName.includes('knife') ||
-                     toolName.includes('set') ||
-                     toolName.includes('kit');
+    const isHandTool = tool.category?.toLowerCase().includes('hand') || 
+                     tool.name.toLowerCase().includes('screwdriver') ||
+                     tool.name.toLowerCase().includes('pliers') ||
+                     tool.name.toLowerCase().includes('spanner') ||
+                     tool.name.toLowerCase().includes('wrench') ||
+                     tool.name.toLowerCase().includes('cutter') ||
+                     tool.name.toLowerCase().includes('stripper');
     
     const matchesSearch = !searchTerm || 
-      toolName.includes(searchTerm.toLowerCase()) ||
-      toolCategory.includes(searchTerm.toLowerCase()) ||
-      (tool.supplier?.toLowerCase() || '').includes(searchTerm.toLowerCase());
+      tool.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      tool.category?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      tool.supplier?.toLowerCase().includes(searchTerm.toLowerCase());
     
     return isHandTool && matchesSearch;
   });
 
-  // Debug logging
-  console.log('🔧 Total tools:', tools.length);
-  console.log('🔧 Hand tools found:', handTools.length);
-  console.log('🔧 Sample tool:', tools[0]);
-  console.log('🔧 Sample hand tool:', handTools[0]);
-
   // Get featured tools (first 6 for carousel)
   const featuredTools = handTools.slice(0, 6);
-  const featuredToolIds = featuredTools.map(tool => tool.id || tool.name);
+  const featuredToolIds = featuredTools.map(tool => tool.id || 0);
   
   // Get remaining tools for grid
   const gridTools = handTools.slice(6);
@@ -89,7 +74,7 @@ const HandTools = () => {
 
         {isLoading ? (
           <div className="space-y-8">
-            <ToolsFeaturedCarousel tools={[]} />
+            <ToolsFeaturedCarousel />
           </div>
         ) : handTools.length === 0 ? (
           <div className="text-center py-16">
@@ -104,7 +89,7 @@ const HandTools = () => {
             {/* Featured Carousel */}
             {featuredTools.length > 0 && (
               <div className="transform transition-all duration-300">
-                <ToolsFeaturedCarousel tools={featuredTools} />
+                <ToolsFeaturedCarousel />
               </div>
             )}
 
