@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Calendar, MapPin, Star, Clock, ExternalLink, Zap, TrendingUp } from "lucide-react";
@@ -11,6 +12,7 @@ interface ModernCoursesGridProps {
 }
 
 const ModernCoursesGrid = ({ courses, excludeId, onCourseClick }: ModernCoursesGridProps) => {
+  const erroredImages = useRef(new Set<string>());
   const filteredCourses = excludeId 
     ? courses.filter(course => course.id !== excludeId)
     : courses;
@@ -54,6 +56,7 @@ const ModernCoursesGrid = ({ courses, excludeId, onCourseClick }: ModernCoursesG
       "Specialized Systems": "https://images.unsplash.com/photo-1581092921461-eab62e97a780?w=400&h=250&fit=crop&auto=format&q=80",
       "Professional Development": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=250&fit=crop&auto=format&q=80",
       "Business Skills": "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=400&h=250&fit=crop&auto=format&q=80",
+      "Electrical": "https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=400&h=250&fit=crop&auto=format&q=80",
     };
     return images[category as keyof typeof images] || "https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=400&h=250&fit=crop&auto=format&q=80";
   };
@@ -89,16 +92,14 @@ const ModernCoursesGrid = ({ courses, excludeId, onCourseClick }: ModernCoursesG
           <div className="relative h-32 sm:h-36 overflow-hidden">
             <img
               src={course.image_url || getCategoryImage(course.category)}
-              alt={course.title}
+              alt={`${course.title} - Electrical Training Course`}
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
               loading="lazy"
               onError={(e) => {
-                console.log(`Course "${course.title}": Using fallback category image for ${course.category}`);
-                e.currentTarget.src = getCategoryImage(course.category);
-              }}
-              onLoad={() => {
-                if (!course.image_url) {
-                  console.log(`Course "${course.title}": Displaying category fallback image (no provider image available)`);
+                const imageKey = course.id.toString();
+                if (!erroredImages.current.has(imageKey)) {
+                  erroredImages.current.add(imageKey);
+                  e.currentTarget.src = getCategoryImage(course.category);
                 }
               }}
             />
