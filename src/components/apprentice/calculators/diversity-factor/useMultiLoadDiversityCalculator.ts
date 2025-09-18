@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { calculateDiversity, CircuitLoad, DiversityResult } from "@/lib/calculators/engines/diversityEngine";
 
-interface LoadEntry {
+interface UILoadEntry {
   id: string;
   type: string;
   connectedLoad: string;
@@ -16,7 +16,7 @@ interface ValidationErrors {
 }
 
 // BS 7671 Table A1 Compliant Load Types - Exact Diversity Factors
-const LOAD_TYPES = {
+const LOAD_TYPES: Record<string, string> = {
   // Lighting Categories - BS 7671 Table A1
   "led-lighting": "LED Lighting Circuits - 66% domestic, 90% commercial/industrial (BS 7671 Table A1)",
   "fluorescent-lighting": "Fluorescent Lighting - 66% domestic, 90% commercial/industrial (BS 7671 Table A1)",
@@ -51,10 +51,10 @@ const LOAD_TYPES = {
   "ev-charging": "EV Charging Points - 100% diversity, no reduction allowed (BS 7671)",
   "welding-equipment": "Welding Equipment - 100% diversity for industrial loads (BS 7671)",
   "server-equipment": "Server/IT Equipment - 100% diversity for critical systems (BS 7671)"
-} as const;
+};
 
 export function useMultiLoadDiversityCalculator() {
-  const [loads, setLoads] = useState<LoadEntry[]>([
+  const [loads, setLoads] = useState<UILoadEntry[]>([
     { id: '1', type: '', connectedLoad: '', numberOfUnits: '1', power: '', inputMode: 'amperage', powerFactor: '0.9' }
   ]);
   const [location, setLocation] = useState<'domestic' | 'commercial' | 'industrial'>('domestic');
@@ -114,12 +114,12 @@ export function useMultiLoadDiversityCalculator() {
     }
   };
 
-  const updateLoad = (id: string, field: keyof LoadEntry, value: string) => {
+  const updateLoad = (id: string, field: keyof UILoadEntry, value: string) => {
     setLoads(loads.map(load => 
       load.id === id ? { ...load, [field]: value } : load
     ));
     // Clear error when user updates field
-    clearError(`${id}_${field}`);
+    clearError(`${id}_${String(field)}`);
     
     // Auto-calculate power when load or units change
     if (field === 'connectedLoad' || field === 'numberOfUnits') {

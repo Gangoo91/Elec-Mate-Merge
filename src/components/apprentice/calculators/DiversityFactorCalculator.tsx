@@ -37,13 +37,8 @@ const DiversityFactorCalculator = () => {
 
   const calculateEstimatedCurrent = () => {
     if (!result) return 0;
-    
-    const voltage = parseFloat(supplyVoltage);
-    const voltageFactor = supplyType === "three-phase" ? Math.sqrt(3) : 1;
-    
     return result.diversifiedCurrent;
   };
-
   const getMainDeviceRecommendation = () => {
     const current = calculateEstimatedCurrent();
     
