@@ -17,6 +17,7 @@ import {
   X,
   Filter
 } from "lucide-react";
+import RealMarketInsights from "./RealMarketInsights";
 import { supabase } from "@/integrations/supabase/client";
 import { useJobTypes } from "@/hooks/useJobTypes";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -649,16 +650,27 @@ const ModernRegionalPricing = () => {
           </Card>
         )}
 
-        {/* Community Contribution Tab */}
+        {/* Enhanced Tab Navigation */}
         <div className="mt-12">
           <Tabs defaultValue="search" className="w-full">
-            <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="search">Search Results</TabsTrigger>
+            <TabsList className="grid w-full grid-cols-3">
+              <TabsTrigger value="search">
+                <MapPin className="h-4 w-4 mr-2" />
+                Regional
+              </TabsTrigger>
+              <TabsTrigger value="insights">
+                <TrendingUp className="h-4 w-4 mr-2" />
+                Insights
+              </TabsTrigger>
               <TabsTrigger value="contribute">
                 <Users className="h-4 w-4 mr-2" />
                 Contribute Data
               </TabsTrigger>
             </TabsList>
+            
+            <TabsContent value="insights" className="mt-8">
+              <RealMarketInsights />
+            </TabsContent>
             
             <TabsContent value="contribute" className="mt-8">
               <ModernSubmitPage />
