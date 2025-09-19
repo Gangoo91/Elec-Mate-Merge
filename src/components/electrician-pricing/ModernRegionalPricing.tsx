@@ -185,7 +185,10 @@ const ModernRegionalPricing = () => {
     setShowSuggestions(false);
   };
 
-  const formatPrice = (price: number, unit: string, currency: string = 'GBP') => {
+  const formatPrice = (price: number | null | undefined, unit: string, currency: string = 'GBP') => {
+    if (price === null || price === undefined || isNaN(price)) {
+      return 'Price TBC';
+    }
     const symbol = currency === 'GBP' ? '£' : currency;
     return `${symbol}${price.toLocaleString()}${unit ? ` ${unit}` : ''}`;
   };
@@ -291,6 +294,14 @@ const ModernRegionalPricing = () => {
                           setShowSuggestions(true);
                         }
                       }}
+                      onBlur={(e) => {
+                        // Keep suggestions open if clicking on them
+                        setTimeout(() => {
+                          if (!e.currentTarget.contains(document.activeElement)) {
+                            setShowSuggestions(false);
+                          }
+                        }, 150);
+                      }}
                     />
                     {searchLocation && (
                       <Button
@@ -309,38 +320,42 @@ const ModernRegionalPricing = () => {
                     )}
                   </div>
 
-                  {/* Inline Suggestions */}
+                  {/* Inline Suggestions - Better UX without absolute positioning */}
                   {showSuggestions && (searchSuggestions.length > 0 || isFetchingSuggestions) && (
-                    <Card className="absolute top-full left-0 right-0 mt-2 z-50 border-primary/20 shadow-xl">
-                      <CardContent className="p-0">
-                        {isFetchingSuggestions ? (
-                          <div className="p-4 text-center">
-                            <Loader2 className="h-4 w-4 animate-spin mx-auto mb-2" />
-                            <p className="text-sm text-muted-foreground">Searching locations...</p>
-                          </div>
-                        ) : (
-                          <div className="max-h-64 overflow-y-auto">
-                            {searchSuggestions.map((suggestion) => (
-                              <button
-                                key={suggestion.district_code}
-                                onClick={() => handleSuggestionClick(suggestion)}
-                                className="w-full p-4 text-left hover:bg-accent/50 border-b border-border/20 last:border-b-0 transition-colors"
-                              >
-                                <div className="flex items-center gap-3">
-                                  <MapPin className="h-4 w-4 text-primary flex-shrink-0" />
-                                  <div>
-                                    <p className="font-medium">{suggestion.district_code}</p>
-                                    <p className="text-sm text-muted-foreground">
-                                      {suggestion.local_authority}, {suggestion.region}
-                                    </p>
+                    <div className="mt-2 animate-in fade-in-0 slide-in-from-top-2 duration-200">
+                      <Card className="border-primary/20 shadow-lg">
+                        <CardContent className="p-0">
+                          {isFetchingSuggestions ? (
+                            <div className="p-4 text-center">
+                              <Loader2 className="h-4 w-4 animate-spin mx-auto mb-2" />
+                              <p className="text-sm text-muted-foreground">Searching locations...</p>
+                            </div>
+                          ) : (
+                            <div className="max-h-48 overflow-y-auto">
+                              {searchSuggestions.map((suggestion) => (
+                                <button
+                                  key={suggestion.district_code}
+                                  onClick={() => handleSuggestionClick(suggestion)}
+                                  className="w-full p-3 text-left hover:bg-accent/80 border-b border-border/20 last:border-b-0 transition-all duration-150 hover:scale-[1.01]"
+                                >
+                                  <div className="flex items-center gap-3">
+                                    <div className="p-1.5 rounded-md bg-primary/10">
+                                      <MapPin className="h-3.5 w-3.5 text-primary flex-shrink-0" />
+                                    </div>
+                                    <div>
+                                      <p className="font-medium text-sm">{suggestion.district_code}</p>
+                                      <p className="text-xs text-muted-foreground">
+                                        {suggestion.local_authority}, {suggestion.region}
+                                      </p>
+                                    </div>
                                   </div>
-                                </div>
-                              </button>
-                            ))}
-                          </div>
-                        )}
-                      </CardContent>
-                    </Card>
+                                </button>
+                              ))}
+                            </div>
+                          )}
+                        </CardContent>
+                      </Card>
+                    </div>
                   )}
                 </div>
 
