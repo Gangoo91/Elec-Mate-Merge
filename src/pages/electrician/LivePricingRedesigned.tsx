@@ -26,7 +26,7 @@ import { useToast } from "@/hooks/use-toast";
 // Import existing components
 import MaterialPriceComparison from "@/components/electrician-materials/MaterialPriceComparison";
 import EnhancedRegionalPricing from "@/components/electrician-pricing/EnhancedRegionalPricing";
-import CommunityPriceSubmission from "@/components/electrician-pricing/CommunityPriceSubmission";
+import ModernSubmitPage from "@/components/electrician-pricing/ModernSubmitPage";
 import CompactPricingGrid from "@/components/electrician-pricing/CompactPricingGrid";
 
 // Loading skeleton component
@@ -243,15 +243,7 @@ const LivePricingRedesigned = () => {
           </TabsContent>
 
           <TabsContent value="submit" className="space-y-6 animate-fade-in">
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <h2 className="text-xl font-semibold">Community Price Submission</h2>
-                <Badge className="bg-purple-500/20 text-purple-400 border-purple-500/30">
-                  Community Driven
-                </Badge>
-              </div>
-              <CommunityPriceSubmission />
-            </div>
+            <ModernSubmitPage />
           </TabsContent>
 
           <TabsContent value="market" className="space-y-6 animate-fade-in">
@@ -332,15 +324,7 @@ const LivePricingRedesigned = () => {
           </TabsContent>
 
           <TabsContent value="submit" className="space-y-6 animate-fade-in">
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <h2 className="text-xl font-semibold">Community Price Submission</h2>
-                <Badge className="bg-purple-500/20 text-purple-400 border-purple-500/30">
-                  Community Driven
-                </Badge>
-              </div>
-              <CommunityPriceSubmission />
-            </div>
+            <ModernSubmitPage />
           </TabsContent>
 
           <TabsContent value="scrap" className="space-y-6 animate-fade-in">

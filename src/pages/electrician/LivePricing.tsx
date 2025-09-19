@@ -11,7 +11,7 @@ import EnhancedRegionalPricing from "@/components/electrician-pricing/EnhancedRe
 import CompactMarketAlerts from "@/components/electrician-pricing/CompactMarketAlerts";
 import CompactScrapMerchantFinder from "@/components/electrician-pricing/CompactScrapMerchantFinder";
 
-import CommunityPriceSubmission from "@/components/electrician-pricing/CommunityPriceSubmission";
+
 
 const LivePricing = () => {
   const { data, isLoading, refreshPrices } = useLiveMetalPrices();
@@ -74,37 +74,6 @@ const LivePricing = () => {
 
           {/* Enhanced Regional Job Pricing */}
           <EnhancedRegionalPricing />
-
-          {/* Community Price Submission - Enhanced with better instructions */}
-          <div data-community-form>
-            <Card className="border-elec-yellow/20 bg-elec-gray mb-4">
-              <CardContent className="p-4">
-                <div className="flex items-center gap-2 mb-2">
-                  <Users className="h-5 w-5 text-elec-yellow" />
-                  <h3 className="font-medium text-white">Share Pricing with Fellow Electricians</h3>
-                </div>
-                <p className="text-sm text-white mb-3">
-                  Help build the most accurate UK electrical pricing database by sharing recent job quotes from your area. 
-                  Your submissions help fellow electricians stay competitive.
-                </p>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs text-white">
-                  <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
-                    <span>Anonymous submissions</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
-                    <span>Reviewed before publication</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
-                    <span>Builds regional estimates</span>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-            <CommunityPriceSubmission />
-          </div>
 
           {/* Compact Pricing Grid */}
           {isLoading ? (
