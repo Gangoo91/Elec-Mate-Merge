@@ -21,6 +21,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useJobTypes } from "@/hooks/useJobTypes";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import ModernSubmitPage from "./ModernSubmitPage";
+import RealMarketInsights from "./RealMarketInsights";
 
 interface RegionalPricingData {
   id: string;
@@ -652,13 +653,21 @@ const ModernRegionalPricing = () => {
         {/* Community Contribution Tab */}
         <div className="mt-12">
           <Tabs defaultValue="search" className="w-full">
-            <TabsList className="grid w-full grid-cols-2">
+            <TabsList className="grid w-full grid-cols-3">
               <TabsTrigger value="search">Search Results</TabsTrigger>
+              <TabsTrigger value="insights">
+                <TrendingUp className="h-4 w-4 mr-2" />
+                Market Insights
+              </TabsTrigger>
               <TabsTrigger value="contribute">
                 <Users className="h-4 w-4 mr-2" />
                 Contribute Data
               </TabsTrigger>
             </TabsList>
+            
+            <TabsContent value="insights" className="mt-8">
+              <RealMarketInsights jobCount={searchResults.length} />
+            </TabsContent>
             
             <TabsContent value="contribute" className="mt-8">
               <ModernSubmitPage />
