@@ -140,15 +140,12 @@ const EnhancedPricingCard = ({ pricingData }: EnhancedPricingCardProps) => {
         <div className="bg-gradient-to-r from-primary/8 via-primary/5 to-primary/8 rounded-xl p-5 border border-primary/15 hover:border-primary/25 transition-all duration-300">
           <div className="text-center space-y-4">
             <div>
-              <div className="mobile-small-text text-muted-foreground uppercase tracking-wider font-semibold mb-2">Starting from</div>
+              <div className="mobile-small-text text-muted-foreground uppercase tracking-wider font-semibold mb-2">Average daily rate</div>
               <div className="text-3xl sm:text-4xl font-black text-primary mb-2 tracking-tight">
-                {formatPrice(pricingData.min_price)}
+                {formatPrice(fallbackAverage)}
               </div>
               <div className="mobile-small-text text-muted-foreground">
-                {fallbackAverage && (
-                  <>Avg: {formatPrice(fallbackAverage)} • </>
-                )}
-                {pricingData.unit}
+                From {formatPrice(pricingData.min_price)} to {formatPrice(pricingData.max_price)} • {pricingData.unit}
               </div>
             </div>
 
