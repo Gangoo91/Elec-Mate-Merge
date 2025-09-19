@@ -30,7 +30,7 @@ const ScrapPriceTable = ({ items }: ScrapPriceTableProps) => {
         <CardTitle className="text-xl">Scrap Metal Prices</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="overflow-x-auto">
+        <div>
           <Table>
             <TableHeader>
               <TableRow>
