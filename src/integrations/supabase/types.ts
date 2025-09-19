@@ -277,6 +277,63 @@ export type Database = {
         }
         Relationships: []
       }
+      community_pricing_submissions: {
+        Row: {
+          actual_price: number
+          completion_date: string
+          complexity_notes: string | null
+          created_at: string
+          id: string
+          ip_address: unknown | null
+          job_description: string | null
+          job_type: string
+          labour_hours: number | null
+          materials_cost: number | null
+          postcode_district: string
+          user_agent: string | null
+          user_id: string | null
+          verification_status: string | null
+          verified_at: string | null
+          verified_by: string | null
+        }
+        Insert: {
+          actual_price: number
+          completion_date: string
+          complexity_notes?: string | null
+          created_at?: string
+          id?: string
+          ip_address?: unknown | null
+          job_description?: string | null
+          job_type: string
+          labour_hours?: number | null
+          materials_cost?: number | null
+          postcode_district: string
+          user_agent?: string | null
+          user_id?: string | null
+          verification_status?: string | null
+          verified_at?: string | null
+          verified_by?: string | null
+        }
+        Update: {
+          actual_price?: number
+          completion_date?: string
+          complexity_notes?: string | null
+          created_at?: string
+          id?: string
+          ip_address?: unknown | null
+          job_description?: string | null
+          job_type?: string
+          labour_hours?: number | null
+          materials_cost?: number | null
+          postcode_district?: string
+          user_agent?: string | null
+          user_id?: string | null
+          verification_status?: string | null
+          verified_at?: string | null
+          verified_by?: string | null
+        }
+        Relationships: []
+      }
       community_stats: {
         Row: {
           active_users: number | null
@@ -759,6 +816,86 @@ export type Database = {
           value?: string
         }
         Relationships: []
+      }
+      enhanced_regional_pricing: {
+        Row: {
+          avg_price: number
+          complexity_level: string
+          confidence_score: number | null
+          created_at: string
+          currency: string
+          data_source_id: string | null
+          expires_at: string | null
+          id: string
+          job_category: string
+          job_type: string
+          last_verified_at: string | null
+          market_factors: Json | null
+          max_price: number
+          median_price: number | null
+          min_price: number
+          postcode_district: string
+          raw_data: Json | null
+          sample_size: number | null
+          seasonal_adjustment: number | null
+          unit: string
+          updated_at: string
+        }
+        Insert: {
+          avg_price: number
+          complexity_level?: string
+          confidence_score?: number | null
+          created_at?: string
+          currency?: string
+          data_source_id?: string | null
+          expires_at?: string | null
+          id?: string
+          job_category: string
+          job_type: string
+          last_verified_at?: string | null
+          market_factors?: Json | null
+          max_price: number
+          median_price?: number | null
+          min_price: number
+          postcode_district: string
+          raw_data?: Json | null
+          sample_size?: number | null
+          seasonal_adjustment?: number | null
+          unit?: string
+          updated_at?: string
+        }
+        Update: {
+          avg_price?: number
+          complexity_level?: string
+          confidence_score?: number | null
+          created_at?: string
+          currency?: string
+          data_source_id?: string | null
+          expires_at?: string | null
+          id?: string
+          job_category?: string
+          job_type?: string
+          last_verified_at?: string | null
+          market_factors?: Json | null
+          max_price?: number
+          median_price?: number | null
+          min_price?: number
+          postcode_district?: string
+          raw_data?: Json | null
+          sample_size?: number | null
+          seasonal_adjustment?: number | null
+          unit?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "enhanced_regional_pricing_data_source_id_fkey"
+            columns: ["data_source_id"]
+            isOneToOne: false
+            referencedRelation: "pricing_data_sources"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       evidence_uploads: {
         Row: {
@@ -1433,6 +1570,7 @@ export type Database = {
           keywords: string
           last_updated: string
           location: string
+          postcode_district: string | null
         }
         Insert: {
           created_at?: string
@@ -1443,6 +1581,7 @@ export type Database = {
           keywords: string
           last_updated?: string
           location: string
+          postcode_district?: string | null
         }
         Update: {
           created_at?: string
@@ -1453,6 +1592,7 @@ export type Database = {
           keywords?: string
           last_updated?: string
           location?: string
+          postcode_district?: string | null
         }
         Relationships: []
       }
@@ -1975,6 +2115,48 @@ export type Database = {
           unit?: string
           updated_at?: string
           user_agent?: string | null
+        }
+        Relationships: []
+      }
+      pricing_data_sources: {
+        Row: {
+          api_config: Json | null
+          base_url: string | null
+          created_at: string
+          id: string
+          is_active: boolean
+          last_scraped_at: string | null
+          reliability_score: number | null
+          scrape_frequency_hours: number | null
+          source_name: string
+          source_type: string
+          updated_at: string
+        }
+        Insert: {
+          api_config?: Json | null
+          base_url?: string | null
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          last_scraped_at?: string | null
+          reliability_score?: number | null
+          scrape_frequency_hours?: number | null
+          source_name: string
+          source_type: string
+          updated_at?: string
+        }
+        Update: {
+          api_config?: Json | null
+          base_url?: string | null
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          last_scraped_at?: string | null
+          reliability_score?: number | null
+          scrape_frequency_hours?: number | null
+          source_name?: string
+          source_type?: string
+          updated_at?: string
         }
         Relationships: []
       }
@@ -3418,6 +3600,57 @@ export type Database = {
         }
         Relationships: []
       }
+      uk_postcode_districts: {
+        Row: {
+          area_code: string
+          avg_household_income: number | null
+          contractor_density: number | null
+          county: string | null
+          created_at: string
+          district_code: string
+          id: string
+          latitude: number
+          local_authority: string | null
+          longitude: number
+          region: string
+          transport_score: number | null
+          updated_at: string
+          urban_rural_classification: string | null
+        }
+        Insert: {
+          area_code: string
+          avg_household_income?: number | null
+          contractor_density?: number | null
+          county?: string | null
+          created_at?: string
+          district_code: string
+          id?: string
+          latitude: number
+          local_authority?: string | null
+          longitude: number
+          region: string
+          transport_score?: number | null
+          updated_at?: string
+          urban_rural_classification?: string | null
+        }
+        Update: {
+          area_code?: string
+          avg_household_income?: number | null
+          contractor_density?: number | null
+          county?: string | null
+          created_at?: string
+          district_code?: string
+          id?: string
+          latitude?: number
+          local_authority?: string | null
+          longitude?: number
+          region?: string
+          transport_score?: number | null
+          updated_at?: string
+          urban_rural_classification?: string | null
+        }
+        Relationships: []
+      }
       uk_regions: {
         Row: {
           county: string | null
@@ -3678,6 +3911,10 @@ export type Database = {
         Args: Record<PropertyKey, never>
         Returns: undefined
       }
+      cleanup_expired_pricing_data: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
       cleanup_expired_tool_cache: {
         Args: Record<PropertyKey, never>
         Returns: undefined
@@ -3685,6 +3922,10 @@ export type Database = {
       cleanup_expired_tools_cache: {
         Args: Record<PropertyKey, never>
         Returns: undefined
+      }
+      extract_postcode_district: {
+        Args: { full_postcode: string }
+        Returns: string
       }
       generate_content_hash: {
         Args: { content: string; source_url: string; title: string }
