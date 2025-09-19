@@ -27,13 +27,27 @@ interface EnhancedPricingCardProps {
 }
 
 const EnhancedPricingCard = ({ pricingData }: EnhancedPricingCardProps) => {
-  const formatPrice = (price: number): string => {
+  const formatPrice = (price: number | null | undefined): string => {
+    if (price === null || price === undefined || isNaN(price)) {
+      return 'Price TBC';
+    }
     return new Intl.NumberFormat('en-GB', {
       style: 'currency',
       currency: pricingData.currency || 'GBP',
       minimumFractionDigits: 0,
       maximumFractionDigits: 0,
     }).format(price);
+  };
+
+  const calculateFallbackAverage = (): number | null => {
+    if (pricingData.average_price && !isNaN(pricingData.average_price)) {
+      return pricingData.average_price;
+    }
+    if (pricingData.min_price && pricingData.max_price && 
+        !isNaN(pricingData.min_price) && !isNaN(pricingData.max_price)) {
+      return Math.round((pricingData.min_price + pricingData.max_price) / 2);
+    }
+    return null;
   };
 
   const getComplexityColor = (complexity: string) => {
@@ -62,18 +76,26 @@ const EnhancedPricingCard = ({ pricingData }: EnhancedPricingCardProps) => {
   const getDataFreshness = (lastUpdated: string) => {
     const now = new Date();
     const updated = new Date(lastUpdated);
+    
+    // Handle invalid dates
+    if (isNaN(updated.getTime())) {
+      return { text: 'Date unknown', color: 'secondary' };
+    }
+    
     const diffInDays = Math.floor((now.getTime() - updated.getTime()) / (1000 * 60 * 60 * 24));
     
-    if (diffInDays === 0) return { text: 'Today', color: 'success' };
-    if (diffInDays === 1) return { text: 'Yesterday', color: 'success' };
-    if (diffInDays <= 7) return { text: `${diffInDays} days ago`, color: 'default' };
-    if (diffInDays <= 30) return { text: `${diffInDays} days ago`, color: 'warning' };
-    return { text: `${diffInDays} days ago`, color: 'destructive' };
+    if (diffInDays === 0) return { text: 'Today', color: 'default' };
+    if (diffInDays === 1) return { text: 'Yesterday', color: 'default' };
+    if (diffInDays <= 7) return { text: `${diffInDays}d ago`, color: 'default' };
+    if (diffInDays <= 30) return { text: `${diffInDays}d ago`, color: 'secondary' };
+    return { text: `${diffInDays}d ago`, color: 'destructive' };
   };
 
   // Calculate price position within range
-  const priceRange = pricingData.max_price - pricingData.min_price;
-  const avgPosition = priceRange > 0 ? ((pricingData.average_price - pricingData.min_price) / priceRange) * 100 : 50;
+  const fallbackAverage = calculateFallbackAverage();
+  const priceRange = (pricingData.max_price || 0) - (pricingData.min_price || 0);
+  const avgPosition = priceRange > 0 && fallbackAverage ? 
+    ((fallbackAverage - (pricingData.min_price || 0)) / priceRange) * 100 : 50;
 
   const freshness = getDataFreshness(pricingData.last_updated);
 
@@ -115,37 +137,44 @@ const EnhancedPricingCard = ({ pricingData }: EnhancedPricingCardProps) => {
       
       <CardContent className="pt-0 space-y-4">
         {/* Enhanced Price Display with Visual Bar */}
-        <div className="bg-elec-yellow/10 rounded-lg p-4 border border-elec-yellow/20">
-          <div className="text-center mb-3">
-            <div className="mobile-small-text text-muted-foreground uppercase tracking-wide mb-1">From</div>
-            <div className="text-2xl sm:text-3xl font-extrabold text-elec-yellow mb-1">
-              {formatPrice(pricingData.min_price)}
+        <div className="bg-gradient-to-r from-primary/8 via-primary/5 to-primary/8 rounded-xl p-5 border border-primary/15 hover:border-primary/25 transition-all duration-300">
+          <div className="text-center space-y-4">
+            <div>
+              <div className="mobile-small-text text-muted-foreground uppercase tracking-wider font-semibold mb-2">Starting from</div>
+              <div className="text-3xl sm:text-4xl font-black text-primary mb-2 tracking-tight">
+                {formatPrice(pricingData.min_price)}
+              </div>
+              <div className="mobile-small-text text-muted-foreground">
+                {fallbackAverage && (
+                  <>Avg: {formatPrice(fallbackAverage)} • </>
+                )}
+                {pricingData.unit}
+              </div>
             </div>
-            <div className="mobile-small-text text-muted-foreground">
-              Avg: {formatPrice(pricingData.average_price)} • {pricingData.unit}
-            </div>
-          </div>
 
-          {/* Price Range Visualization */}
-          <div className="space-y-2">
-            <div className="flex justify-between mobile-small-text text-muted-foreground">
-              <span>Min: {formatPrice(pricingData.min_price)}</span>
-              <span>Max: {formatPrice(pricingData.max_price)}</span>
-            </div>
-            <div className="relative">
-              <Progress value={100} className="h-2 bg-elec-gray" />
-              <div 
-                className="absolute top-0 left-0 h-2 bg-elec-yellow rounded-full transition-all duration-500"
-                style={{ width: `${Math.min(avgPosition, 100)}%` }}
-              />
-              <div 
-                className="absolute top-0 w-1 h-2 bg-white rounded-full transform -translate-x-0.5"
-                style={{ left: `${Math.min(avgPosition, 100)}%` }}
-              />
-            </div>
-            <div className="text-center mobile-small-text text-elec-yellow/80">
-              Average price position
-            </div>
+            {/* Price Range Visualization */}
+            {pricingData.min_price && pricingData.max_price && (
+              <div className="space-y-3">
+                <div className="flex justify-between mobile-small-text text-muted-foreground">
+                  <span>Min: {formatPrice(pricingData.min_price)}</span>
+                  <span>Max: {formatPrice(pricingData.max_price)}</span>
+                </div>
+                <div className="relative h-2 bg-muted/30 rounded-full overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-primary/40 rounded-full"></div>
+                  {fallbackAverage && (
+                    <div 
+                      className="absolute top-0 w-1 h-2 bg-primary rounded-full transform -translate-x-0.5 transition-all duration-700"
+                      style={{ left: `${Math.min(Math.max(avgPosition, 0), 100)}%` }}
+                    />
+                  )}
+                </div>
+                {fallbackAverage && (
+                  <div className="mobile-small-text text-primary/80 font-medium">
+                    Average position in range
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         </div>
 

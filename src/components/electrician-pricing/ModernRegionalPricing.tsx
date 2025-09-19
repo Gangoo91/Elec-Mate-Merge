@@ -193,73 +193,159 @@ const ModernRegionalPricing = () => {
     return `${symbol}${price.toLocaleString()}${unit ? ` ${unit}` : ''}`;
   };
 
+  const calculateFallbackAverage = (min: number | null, max: number | null): number | null => {
+    if (min !== null && max !== null && !isNaN(min) && !isNaN(max)) {
+      return Math.round((min + max) / 2);
+    }
+    return null;
+  };
+
+  const getDataFreshness = (lastUpdated: string) => {
+    const now = new Date();
+    const updated = new Date(lastUpdated);
+    
+    // Handle invalid dates
+    if (isNaN(updated.getTime())) {
+      return { text: 'Date unknown', color: 'secondary' };
+    }
+    
+    const diffInDays = Math.floor((now.getTime() - updated.getTime()) / (1000 * 60 * 60 * 24));
+    
+    if (diffInDays === 0) return { text: 'Today', color: 'default' };
+    if (diffInDays === 1) return { text: 'Yesterday', color: 'default' };
+    if (diffInDays <= 7) return { text: `${diffInDays}d ago`, color: 'default' };
+    if (diffInDays <= 30) return { text: `${diffInDays}d ago`, color: 'secondary' };
+    return { text: `${diffInDays}d ago`, color: 'destructive' };
+  };
+
   const getComplexityColor = (level: string) => {
-    switch (level) {
-      case 'basic': return 'bg-green-500/20 text-green-400';
-      case 'standard': return 'bg-blue-500/20 text-blue-400';
-      case 'complex': return 'bg-orange-500/20 text-orange-400';
-      case 'expert': return 'bg-red-500/20 text-red-400';
-      default: return 'bg-muted/20 text-muted-foreground';
+    switch (level?.toLowerCase()) {
+      case 'basic': 
+      case 'simple': 
+        return 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30';
+      case 'standard': 
+      case 'medium': 
+        return 'bg-blue-500/20 text-blue-400 border-blue-500/30';
+      case 'complex': 
+      case 'advanced': 
+        return 'bg-amber-500/20 text-amber-400 border-amber-500/30';
+      case 'expert': 
+      case 'specialist': 
+        return 'bg-red-500/20 text-red-400 border-red-500/30';
+      default: 
+        return 'bg-muted/20 text-muted-foreground border-muted/30';
     }
   };
 
-  const renderPricingCard = (item: RegionalPricingData) => (
-    <Card key={item.id} className="mobile-card hover:shadow-lg transition-all duration-300 hover:border-primary/40">
-      <CardContent className="p-4 sm:p-6">
-        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
-          <div className="flex-1">
-            <div className="flex items-start gap-3 mb-3">
-              <div className="p-2 rounded-lg bg-primary/10">
-                <Zap className="h-4 w-4 text-primary" />
-              </div>
-              <div className="flex-1">
-                <h3 className="font-semibold text-foreground mb-1">{item.job_type}</h3>
-                <p className="text-sm text-muted-foreground">{item.job_category}</p>
-                <div className="flex items-center gap-2 mt-2">
-                  <MapPin className="h-3 w-3 text-muted-foreground" />
-                  <span className="text-xs text-muted-foreground">
-                    {item.region}{item.county && `, ${item.county}`}
-                  </span>
+  const renderPricingCard = (item: RegionalPricingData) => {
+    const fallbackAverage = item.average_price || calculateFallbackAverage(item.min_price, item.max_price);
+    const priceRange = (item.max_price || 0) - (item.min_price || 0);
+    const avgPosition = priceRange > 0 && fallbackAverage ? 
+      ((fallbackAverage - (item.min_price || 0)) / priceRange) * 100 : 50;
+    const freshness = getDataFreshness(item.last_updated);
+
+    return (
+      <Card key={item.id} className="group relative overflow-hidden border-primary/20 bg-gradient-to-br from-card via-card to-card/90 hover:border-primary/40 hover:shadow-xl hover:shadow-primary/10 transition-all duration-500 hover:-translate-y-1">
+        {/* Subtle background pattern */}
+        <div className="absolute inset-0 bg-grid-pattern opacity-[0.02] pointer-events-none"></div>
+        
+        <CardContent className="relative p-6 space-y-6">
+          {/* Header Section */}
+          <div className="space-y-3">
+            <div className="flex items-start justify-between gap-3">
+              <div className="flex items-start gap-3 flex-1">
+                <div className="p-2.5 rounded-xl bg-gradient-to-br from-primary/20 to-primary/10 group-hover:from-primary/30 group-hover:to-primary/20 transition-all duration-300">
+                  <Zap className="h-5 w-5 text-primary" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h3 className="font-bold text-lg text-foreground group-hover:text-primary transition-colors duration-300 line-clamp-2">
+                    {item.job_type}
+                  </h3>
+                  <p className="text-sm text-muted-foreground mt-1">{item.job_category}</p>
                 </div>
               </div>
-            </div>
-
-            <div className="grid grid-cols-3 gap-4 mb-4">
-              <div className="text-center">
-                <p className="text-xs text-muted-foreground mb-1">Min</p>
-                <p className="font-semibold text-sm">{formatPrice(item.min_price, item.unit)}</p>
-              </div>
-              <div className="text-center">
-                <p className="text-xs text-muted-foreground mb-1">Average</p>
-                <p className="font-semibold text-sm text-primary">{formatPrice(item.average_price, item.unit)}</p>
-              </div>
-              <div className="text-center">
-                <p className="text-xs text-muted-foreground mb-1">Max</p>
-                <p className="font-semibold text-sm">{formatPrice(item.max_price, item.unit)}</p>
+              <div className="flex flex-wrap gap-1.5 items-start">
+                <Badge className={`text-xs font-medium ${getComplexityColor(item.complexity_level)}`}>
+                  {item.complexity_level}
+                </Badge>
               </div>
             </div>
 
-            <div className="flex flex-wrap gap-2">
-              <Badge className={`text-xs ${getComplexityColor(item.complexity_level)}`}>
-                {item.complexity_level}
-              </Badge>
+            {/* Location */}
+            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+              <MapPin className="h-4 w-4 text-primary/70 flex-shrink-0" />
+              <span className="font-medium">{item.region}</span>
+              {item.county && <span className="text-muted-foreground/70">• {item.county}</span>}
+            </div>
+          </div>
+
+          {/* Enhanced Price Display */}
+          <div className="bg-gradient-to-r from-primary/5 via-primary/3 to-primary/5 rounded-xl p-5 border border-primary/10 group-hover:border-primary/20 transition-all duration-300">
+            <div className="text-center space-y-4">
+              {/* Main Price */}
+              <div>
+                <div className="text-xs uppercase tracking-wider text-muted-foreground font-semibold mb-2">Starting from</div>
+                <div className="text-3xl font-black text-primary mb-2 tracking-tight">
+                  {formatPrice(item.min_price, '')}
+                </div>
+                <div className="text-sm text-muted-foreground">
+                  {fallbackAverage && (
+                    <>Avg: {formatPrice(fallbackAverage, '')} • </>
+                  )}
+                  {item.unit}
+                </div>
+              </div>
+
+              {/* Price Range Visualization */}
+              {item.min_price !== null && item.max_price !== null && (
+                <div className="space-y-3">
+                  <div className="flex justify-between text-xs text-muted-foreground">
+                    <span>Min: {formatPrice(item.min_price, '')}</span>
+                    <span>Max: {formatPrice(item.max_price, '')}</span>
+                  </div>
+                  <div className="relative h-2 bg-muted/30 rounded-full overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-primary/40 rounded-full"></div>
+                    {fallbackAverage && (
+                      <div 
+                        className="absolute top-0 w-1 h-2 bg-primary rounded-full transform -translate-x-0.5 transition-all duration-700"
+                        style={{ left: `${Math.min(Math.max(avgPosition, 0), 100)}%` }}
+                      />
+                    )}
+                  </div>
+                  {fallbackAverage && (
+                    <div className="text-xs text-primary/80 font-medium">
+                      Average position in range
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Metadata Footer */}
+          <div className="flex items-center justify-between pt-2 border-t border-border/50">
+            <div className="flex items-center gap-3">
               <Badge variant="secondary" className="text-xs">
                 {item.data_source === 'community' ? (
                   <><Users className="h-3 w-3 mr-1" />Community</>
                 ) : (
-                  <><TrendingUp className="h-3 w-3 mr-1" />Market Data</>
+                  <><TrendingUp className="h-3 w-3 mr-1" />Market</>
                 )}
               </Badge>
-              <Badge variant="outline" className="text-xs">
+              <Badge variant={freshness.color as any} className="text-xs">
                 <Clock className="h-3 w-3 mr-1" />
-                {new Date(item.last_updated).toLocaleDateString()}
+                {freshness.text}
               </Badge>
             </div>
+            <div className="flex items-center gap-1">
+              <Star className="h-3 w-3 text-yellow-500 fill-current" />
+              <span className="text-xs text-muted-foreground">Verified</span>
+            </div>
           </div>
-        </div>
-      </CardContent>
-    </Card>
-  );
+        </CardContent>
+      </Card>
+    );
+  };
 
   return (
     <div className="min-h-screen bg-background">
