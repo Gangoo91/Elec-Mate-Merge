@@ -20,7 +20,7 @@ import {
 import { supabase } from "@/integrations/supabase/client";
 import { useJobTypes } from "@/hooks/useJobTypes";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import CommunityPricingSubmission from "./CommunityPricingSubmission";
+import ModernSubmitPage from "./ModernSubmitPage";
 
 interface RegionalPricingData {
   id: string;
@@ -661,11 +661,7 @@ const ModernRegionalPricing = () => {
             </TabsList>
             
             <TabsContent value="contribute" className="mt-8">
-              <CommunityPricingSubmission onSubmissionSuccess={() => {
-                if (searchLocation.trim()) {
-                  handleSearch();
-                }
-              }} />
+              <ModernSubmitPage />
             </TabsContent>
           </Tabs>
         </div>
