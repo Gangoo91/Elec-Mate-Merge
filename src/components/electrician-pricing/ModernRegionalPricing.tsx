@@ -112,16 +112,7 @@ const ModernRegionalPricing = () => {
     }
   }, []);
 
-  // Auto-search when location and job type change
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      if (searchLocation.trim() && searchLocation.length >= 2) {
-        handleSearch();
-      }
-    }, 800);
-
-    return () => clearTimeout(timeoutId);
-  }, [searchLocation, selectedJobType]);
+  // Remove auto-search to use explicit search button instead
 
   // Fetch suggestions when input changes
   useEffect(() => {
@@ -403,6 +394,38 @@ const ModernRegionalPricing = () => {
                       )}
                     </SelectContent>
                   </Select>
+                </div>
+
+                {/* Search Button */}
+                <div className="flex gap-3 pt-2">
+                  <Button 
+                    onClick={handleSearch}
+                    disabled={!searchLocation.trim() || isSearching}
+                    className="flex-1 h-12 bg-primary hover:bg-primary/90 text-primary-foreground"
+                  >
+                    {isSearching ? (
+                      <>
+                        <Loader2 className="h-5 w-5 mr-2 animate-spin" />
+                        Searching...
+                      </>
+                    ) : (
+                      <>
+                        <Search className="h-5 w-5 mr-2" />
+                        Search Pricing
+                      </>
+                    )}
+                  </Button>
+                  
+                  {searchPerformed && (
+                    <Button 
+                      onClick={clearSearch}
+                      variant="outline"
+                      className="h-12 px-6 border-primary/30 hover:bg-primary/10"
+                    >
+                      <X className="h-5 w-5 mr-2" />
+                      Clear
+                    </Button>
+                  )}
                 </div>
               </div>
             </CardContent>
