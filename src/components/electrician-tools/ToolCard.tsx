@@ -300,37 +300,14 @@ const ToolCard: React.FC<ToolCardProps> = ({
           </div>
         </div>
 
-        {/* Enhanced header with social proof */}
-        <div className="flex justify-between items-start gap-2 mb-2">
-          <div className="flex-1 min-w-0">
-            <h3 className="text-lg leading-tight font-semibold line-clamp-2 group-hover:text-elec-yellow transition-colors duration-200">
-              {item.name}
-            </h3>
-            <div className="flex items-center gap-2 mt-1">
-              <p className="text-elec-yellow text-sm">
-                {item.supplier}
-              </p>
-              {urgencyIndicator && (
-                <div className="flex items-center gap-1">
-                  <urgencyIndicator.icon className={`h-3 w-3 ${urgencyIndicator.color}`} />
-                  <span className={`text-xs ${urgencyIndicator.color}`}>
-                    {urgencyIndicator.text}
-                  </span>
-                </div>
-              )}
-            </div>
-          </div>
-          <div className="flex flex-col items-end gap-1">
-            <div className="flex items-center gap-1 bg-amber-400/20 text-amber-400 px-2 py-1 rounded text-xs">
-              <Star className="h-3 w-3 fill-amber-400" />
-              <span>{reviewData?.rating || '4.2'}</span>
-            </div>
-            {recentlyViewed > 20 && (
-              <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                <TrendingUp className="h-3 w-3" />
-                <span>Popular</span>
-              </div>
-            )}
+        {/* Simple header */}
+        <div className="mb-4">
+          <h3 className="text-lg leading-tight font-semibold line-clamp-2 group-hover:text-elec-yellow transition-colors duration-200 mb-2">
+            {item.name}
+          </h3>
+          <div className="flex items-center gap-2 text-sm text-elec-yellow">
+            <span>{item.supplier}</span>
+            <span>⭐ {reviewData?.rating || '4.2'} ({reviewData?.count || '143'})</span>
           </div>
         </div>
       </CardHeader>
@@ -343,150 +320,74 @@ const ToolCard: React.FC<ToolCardProps> = ({
             : `Professional ${item.category?.toLowerCase() || 'tool'} from ${item.supplier}`}
         </div>
         
-        {/* Enhanced metrics grid with professional context */}
-        <div className="grid grid-cols-2 gap-2 text-xs">
-          <div className="flex items-center gap-1.5">
-            <Package className="h-3 w-3 text-elec-yellow flex-shrink-0" />
-            <span>{toolInfo.type || 'Tool'}</span>
+        {/* 2x2 Information Grid */}
+        <div className="grid grid-cols-2 gap-3 text-sm">
+          <div className="flex items-center gap-2 p-2 bg-elec-dark/20 rounded-lg">
+            <Zap className="h-4 w-4 text-elec-yellow flex-shrink-0" />
+            <div>
+              <div className="text-xs text-muted-foreground">Size</div>
+              <div className="font-medium">{toolInfo.voltage || toolInfo.power || 'Standard'}</div>
+            </div>
           </div>
-          <div className="flex items-center gap-1.5">
-            {toolInfo.cordless ? (
-              <Zap className="h-3 w-3 text-elec-yellow flex-shrink-0" />
-            ) : (
-              <Users className="h-3 w-3 text-elec-yellow flex-shrink-0" />
-            )}
-            <span>{toolInfo.power || toolInfo.voltage || 'Professional'}</span>
+          <div className="flex items-center gap-2 p-2 bg-elec-dark/20 rounded-lg">
+            <Shield className="h-4 w-4 text-elec-yellow flex-shrink-0" />
+            <div>
+              <div className="text-xs text-muted-foreground">Standard</div>
+              <div className="font-medium">
+                {item.category?.toLowerCase().includes('test') ? 'BS7671' : 'Professional'}
+              </div>
+            </div>
           </div>
-          <div className="flex items-center gap-1.5">
-            <Shield className="h-3 w-3 text-elec-yellow flex-shrink-0" />
-            <span>
-              {item.category?.toLowerCase().includes('test') ? 'BS7671 Ready' : 
-               toolInfo.type === 'Multimeter' ? 'CAT III/IV' : 
-               'Professional'}
-            </span>
+          <div className="flex items-center gap-2 p-2 bg-elec-dark/20 rounded-lg">
+            <Star className="h-4 w-4 text-elec-yellow flex-shrink-0" />
+            <div>
+              <div className="text-xs text-muted-foreground">Rating</div>
+              <div className="font-medium">{reviewData?.rating || '4.2'} ⭐</div>
+            </div>
           </div>
-          <div className="flex items-center gap-1.5">
-            <Award className="h-3 w-3 text-elec-yellow flex-shrink-0" />
-            <span>{reviewData?.count ? `${reviewData.count} reviews` : 'Rated'}</span>
+          <div className="flex items-center gap-2 p-2 bg-elec-dark/20 rounded-lg">
+            <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0" />
+            <div>
+              <div className="text-xs text-muted-foreground">Stock</div>
+              <div className="font-medium">{item.stockStatus || 'Available'}</div>
+            </div>
           </div>
         </div>
 
-        {/* Tool specifications */}
-        {isPowerTool && (toolInfo.cordless || toolInfo.voltage) && (
-          <div className="space-y-2">
-            <div className="flex items-center gap-1 text-xs text-elec-yellow">
-              <Package className="h-3 w-3" />
-              <span>Specifications:</span>
-            </div>
-            <div className="flex flex-wrap gap-1">
-              {toolInfo.cordless && (
-                <span className="text-xs bg-elec-dark/60 px-2 py-1 rounded-md">
-                  Cordless
-                </span>
-              )}
-              {toolInfo.voltage && (
-                <span className="text-xs bg-elec-dark/60 px-2 py-1 rounded-md">
-                  {toolInfo.voltage}
-                </span>
-              )}
-            </div>
-          </div>
-        )}
-
-        {/* Key features */}
-        {item.highlights && item.highlights.length > 2 && (
-          <div className="space-y-2">
-            <div className="flex items-center gap-1 text-xs text-elec-yellow">
-              <CheckCircle className="h-3 w-3" />
-              <span>Key Features:</span>
-            </div>
-            <div className="space-y-1">
-              {item.highlights.slice(2, 4).map((highlight, index) => (
-                <div key={index} className="flex items-center gap-1.5 text-xs">
-                  <CheckCircle className="h-3 w-3 text-green-400 flex-shrink-0" />
-                  <span className="text-muted-foreground">{highlight}</span>
-                </div>
-              ))}
-              {item.highlights.length > 4 && (
-                <div className="text-xs text-muted-foreground">
-                  +{item.highlights.length - 4} more features
-                </div>
-              )}
-            </div>
-          </div>
-        )}
-
-        {/* Reviews section */}
-        {reviewData && reviewData.count && reviewData.count > 0 && (
-          <div className="border-t border-elec-yellow/10 pt-3 space-y-2">
-            <p className="text-xs text-elec-yellow flex items-center gap-1.5">
-              <Star className="h-3 w-3" />
-              <span>Customer Reviews:</span>
-            </p>
-            <div className="flex items-center gap-2">
-              <span className="text-xs bg-elec-dark/60 px-2 py-1 rounded-md">
-                {reviewData.count} reviews
-              </span>
-              {reviewData.rating && (
-                <span className="text-xs text-green-400">
-                  {reviewData.rating} stars average
-                </span>
-              )}
-            </div>
-          </div>
-        )}
-
-        {/* Enhanced footer with better pricing display */}
-        <div className="flex justify-between items-center mt-auto pt-3 border-t border-elec-yellow/10">
+        {/* Simple Features */}
+        <div className="space-y-2">
           <div className="space-y-1">
-            {item.isOnSale ? (
-              <div className="space-y-0.5">
-                <div className="flex items-center gap-2">
-                  <span className="text-lg font-bold text-elec-yellow">{item.salePrice}</span>
-                  {discount && (
-                    <Badge variant="destructive" className="text-xs animate-pulse">
-                      SAVE {discount}%
-                    </Badge>
-                  )}
-                </div>
-                <p className="text-xs text-muted-foreground line-through">{item.price}</p>
+            <div className="flex items-center gap-2 text-sm">
+              <Check className="h-4 w-4 text-green-400 flex-shrink-0" />
+              <span>Professional grade installation cable</span>
+            </div>
+            <div className="flex items-center gap-2 text-sm">
+              <Check className="h-4 w-4 text-green-400 flex-shrink-0" />
+              <span>BS7671 18th edition compliant</span>
+            </div>
+            {item.highlights && item.highlights.length > 0 && (
+              <div className="flex items-center gap-2 text-sm">
+                <Check className="h-4 w-4 text-green-400 flex-shrink-0" />
+                <span>{item.highlights[0]}</span>
               </div>
-            ) : (
-              <p className="text-lg font-bold text-elec-yellow">{item.price}</p>
             )}
           </div>
-          <div className="flex items-center gap-2">
-            <Button 
-              variant="outline" 
-              size="sm" 
-              className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 transition-all duration-200 hover:scale-105"
-              onClick={() => window.open(getProductUrl(), '_blank')}
-            >
-              <ExternalLink className="h-3 w-3 mr-1" />
-              View Deal
-            </Button>
-            {onAddToCompare && (
-              <Button
-                onClick={() => {
-                  if (isSelected && onRemoveFromCompare) {
-                    onRemoveFromCompare(String(item.id || item.name));
-                  } else if (!isCompareDisabled) {
-                    onAddToCompare(item);
-                  }
-                }}
-                disabled={isCompareDisabled && !isSelected}
-                variant="ghost"
-                size="sm"
-                className="p-2 hover:scale-110 transition-transform duration-200"
-              >
-                {isSelected ? (
-                  <Check className="h-4 w-4 text-green-400" />
-                ) : (
-                  <Plus className="h-4 w-4" />
-                )}
-              </Button>
-            )}
+        </div>
+
+        {/* Clean Footer */}
+        <div className="flex items-center justify-between gap-2 pt-3 border-t border-elec-yellow/10">
+          <div>
+            <p className="text-lg font-bold text-elec-yellow">{item.isOnSale && item.salePrice ? item.salePrice : item.price}</p>
           </div>
+          <Button 
+            variant="outline" 
+            size="sm" 
+            className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 transition-all duration-200"
+            onClick={() => window.open(getProductUrl(), '_blank')}
+          >
+            <ExternalLink className="h-3 w-3 mr-1" />
+            View Product
+          </Button>
         </div>
         
         {/* Quick action bar for mobile */}
