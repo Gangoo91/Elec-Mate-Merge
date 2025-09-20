@@ -163,7 +163,7 @@ const JobSpecificRecommendations = () => {
               <job.icon className="h-6 w-6" />
               <div className="text-center">
                 <div className="font-medium">{job.title}</div>
-                <div className="text-xs opacity-80">{job.description}</div>
+                <div className="text-xs text-white/80">{job.description}</div>
               </div>
             </Button>
           ))}
