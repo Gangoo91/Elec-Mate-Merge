@@ -294,7 +294,7 @@ const ToolCard: React.FC<ToolCardProps> = ({
             <div className="text-xs font-medium text-foreground">BS7671 18th</div>
           </div>
           
-          <div className="bg-background/50 p-2 space-y-1">
+          <div className="p-2 border border-white/10 space-y-1">
             <div className="flex items-center gap-1 text-xs text-muted-foreground">
               <Star className="h-3 w-3 text-yellow-400" />
               Rating
