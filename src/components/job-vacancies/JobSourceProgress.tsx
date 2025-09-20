@@ -58,65 +58,7 @@ const JobSourceProgress: React.FC<JobSourceProgressProps> = ({ searchProgress })
     return null;
   }
 
-  return (
-    <Card className="border-elec-yellow/20 bg-elec-card/50">
-      <div className="space-y-4">
-          {/* Overall Progress */}
-          <div className="space-y-2">
-            <div className="flex items-center justify-between">
-              <span className="text-sm font-medium text-elec-light">
-                {searchProgress.isSearching ? 'Searching job sources...' : 'Search completed'}
-              </span>
-              <span className="text-sm text-muted-foreground">
-                {searchProgress.completedSources}/{searchProgress.totalSources} sources
-              </span>
-            </div>
-            <Progress value={progressPercentage} className="h-2" />
-            {searchProgress.totalJobsFound > 0 && (
-              <div className="text-center">
-                <Badge variant="secondary" className="bg-elec-yellow/20 text-elec-yellow">
-                  {searchProgress.totalJobsFound} jobs found so far
-                </Badge>
-              </div>
-            )}
-          </div>
-
-          {/* Individual Source Status */}
-          {searchProgress.isSearching && (
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-2">
-              {searchProgress.sources.map((source) => (
-                <div 
-                  key={source.source}
-                  className="flex items-center gap-2 p-2 rounded-lg bg-elec-gray/30"
-                >
-                  {getStatusIcon(source.status)}
-                  <div className="flex-1 min-w-0">
-                    <div className="text-xs font-medium text-elec-light truncate">
-                      {source.source}
-                    </div>
-                    {source.jobCount > 0 && (
-                      <div className="text-xs text-muted-foreground">
-                        {source.jobCount} jobs
-                      </div>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-
-          {/* Still Searching Message */}
-          {searchProgress.isSearching && (
-            <div className="text-center py-2">
-              <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
-                <Loader2 className="h-4 w-4 animate-spin" />
-                Still searching remaining sources...
-              </div>
-            </div>
-          )}
-        </div>
-    </Card>
-  );
+  return null;
 };
 
 export default JobSourceProgress;
