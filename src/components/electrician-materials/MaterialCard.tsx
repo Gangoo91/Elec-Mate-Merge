@@ -114,10 +114,10 @@ const MaterialCard: React.FC<MaterialCardProps> = ({
   })();
 
   return (
-    <Card className="border-elec-yellow/20 bg-elec-gray h-full hover:border-elec-yellow/40 transition-all duration-300">
+    <Card className="border-elec-yellow/20 bg-elec-gray h-full hover:border-elec-yellow/40 transition-all duration-300 overflow-hidden">
       <CardHeader className="pb-3">
-        {/* Image section */}
-        <div className="relative overflow-hidden rounded-lg -mx-6 -mt-6 mb-4">
+        {/* Simplified image section matching course cards */}
+        <div className="relative -mx-6 -mt-6 mb-4">
           <div className="h-32 sm:h-36 overflow-hidden">
             <img
               src={imageSrc}
@@ -127,9 +127,9 @@ const MaterialCard: React.FC<MaterialCardProps> = ({
               onError={(e) => { (e.currentTarget as HTMLImageElement).src = "/placeholder.svg"; }}
             />
           </div>
-          {/* Badges overlaid on image */}
+          {/* Simplified badges matching course card style */}
           <div className="absolute top-2 left-2 right-2 flex items-start justify-between gap-2">
-            <Badge variant="outline" className="bg-elec-dark/80 text-elec-yellow border-elec-yellow/30 text-xs">
+            <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30 text-xs">
               {item.category}
             </Badge>
             {item.stockStatus && (
@@ -149,7 +149,7 @@ const MaterialCard: React.FC<MaterialCardProps> = ({
           </div>
         </div>
 
-        {/* Header Section */}
+        {/* Course card style header */}
         <div className="flex justify-between items-start gap-2 mb-2">
           <div className="flex-1 min-w-0">
             <h3 className="text-lg leading-tight font-semibold line-clamp-2">
@@ -166,8 +166,15 @@ const MaterialCard: React.FC<MaterialCardProps> = ({
         </div>
       </CardHeader>
       
-      <CardContent className="pt-0 flex-grow flex flex-col space-y-4">
-        {/* Product specifications */}
+      <CardContent className="pt-0 flex-grow flex flex-col space-y-3">
+        {/* Simplified product info matching course cards */}
+        <div className="text-sm text-muted-foreground leading-relaxed line-clamp-2">
+          {item.highlights && item.highlights.length > 0 
+            ? item.highlights.slice(0, 2).join(" • ") 
+            : `Quality ${item.category.toLowerCase()} from ${item.supplier}`}
+        </div>
+        
+        {/* Key metrics grid matching course card style */}
         <div className="grid grid-cols-2 gap-2 text-xs">
           <div className="flex items-center gap-1.5">
             <Package className="h-3 w-3 text-elec-yellow flex-shrink-0" />
@@ -175,20 +182,16 @@ const MaterialCard: React.FC<MaterialCardProps> = ({
           </div>
           <div className="flex items-center gap-1.5">
             <Users className="h-3 w-3 text-elec-yellow flex-shrink-0" />
-            <span>{isCable && cableInfo.size ? cableInfo.size : 'Standard'}</span>
+            <span>{isCable && cableInfo.size ? cableInfo.size : 'Pro Grade'}</span>
           </div>
-          {item.stockStatus && (
-            <>
-              <div className="flex items-center gap-1.5">
-                <Clock className="h-3 w-3 text-elec-yellow flex-shrink-0" />
-                <span>Stock: {item.stockStatus}</span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <Star className="h-3 w-3 text-elec-yellow flex-shrink-0" />
-                <span>Quality: 4.2/5</span>
-              </div>
-            </>
-          )}
+          <div className="flex items-center gap-1.5">
+            <Clock className="h-3 w-3 text-elec-yellow flex-shrink-0" />
+            <span>{item.stockStatus || 'Available'}</span>
+          </div>
+          <div className="flex items-center gap-1.5">
+            <Star className="h-3 w-3 text-elec-yellow flex-shrink-0" />
+            <span>Quality: 4.2/5</span>
+          </div>
         </div>
 
         {/* Product details */}
