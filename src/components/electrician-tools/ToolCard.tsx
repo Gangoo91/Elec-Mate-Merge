@@ -278,7 +278,7 @@ const ToolCard: React.FC<ToolCardProps> = ({
 
         {/* 2x2 Information grid */}
         <div className="grid grid-cols-2 gap-2 mb-4">
-          <div className="bg-muted rounded-lg p-2 space-y-1">
+          <div className="bg-background/50 p-2 space-y-1">
             <div className="flex items-center gap-1 text-xs text-muted-foreground">
               <Zap className="h-3 w-3 text-elec-yellow" />
               Specifications
@@ -286,7 +286,7 @@ const ToolCard: React.FC<ToolCardProps> = ({
             <div className="text-xs font-medium text-foreground">Professional Grade</div>
           </div>
           
-          <div className="bg-muted rounded-lg p-2 space-y-1">
+          <div className="bg-background/50 p-2 space-y-1">
             <div className="flex items-center gap-1 text-xs text-muted-foreground">
               <Shield className="h-3 w-3 text-blue-400" />
               Standard
@@ -294,7 +294,7 @@ const ToolCard: React.FC<ToolCardProps> = ({
             <div className="text-xs font-medium text-foreground">BS7671 18th</div>
           </div>
           
-          <div className="bg-muted rounded-lg p-2 space-y-1">
+          <div className="bg-background/50 p-2 space-y-1">
             <div className="flex items-center gap-1 text-xs text-muted-foreground">
               <Star className="h-3 w-3 text-yellow-400" />
               Rating
@@ -302,7 +302,7 @@ const ToolCard: React.FC<ToolCardProps> = ({
             <div className="text-xs font-medium text-foreground">4.5/5</div>
           </div>
           
-          <div className="bg-muted rounded-lg p-2 space-y-1">
+          <div className="bg-background/50 p-2 space-y-1">
             <div className="flex items-center gap-1 text-xs text-muted-foreground">
               <CheckCircle className="h-3 w-3 text-green-400" />
               Stock
