@@ -114,29 +114,43 @@ const MaterialCard: React.FC<MaterialCardProps> = ({
   })();
 
   return (
-    <Card className="group hover:shadow-lg transition-all duration-300 hover:border-elec-yellow/30 bg-elec-card border-elec-yellow/10 hover:scale-[1.02]">
+    <Card className="group hover:shadow-lg transition-all duration-300 hover:border-elec-yellow/30 bg-elec-card border-elec-yellow/10 hover:scale-[1.02] overflow-hidden">
+      {/* Image at the very top */}
+      <div className="relative overflow-hidden bg-elec-gray/50">
+        <div className={`${isMobile ? 'h-40' : 'h-48'} flex items-center justify-center`}>
+          <img
+            src={imageSrc}
+            alt={`${item.name} from ${item.supplier}`}
+            loading="lazy"
+            className="object-cover w-full h-full transition-transform duration-200 group-hover:scale-105"
+            onError={(e) => { (e.currentTarget as HTMLImageElement).src = "/placeholder.svg"; }}
+          />
+        </div>
+        {/* Badges overlaid on image */}
+        <div className="absolute top-3 left-3 right-3 flex items-start justify-between gap-2">
+          <Badge variant="secondary" className="text-xs bg-black/70 text-white border-white/20">
+            {item.category}
+          </Badge>
+          {item.stockStatus && (
+            <Badge 
+              className={
+                item.stockStatus === "In Stock" 
+                  ? "bg-green-500/80 text-white border-green-500/30" :
+                item.stockStatus === "Low Stock" 
+                  ? "bg-yellow-500/80 text-white border-yellow-500/30" :
+                  "bg-red-500/80 text-white border-red-500/30"
+              }
+              variant="outline"
+            >
+              {item.stockStatus}
+            </Badge>
+          )}
+        </div>
+      </div>
+
       <CardHeader className="pb-4">
         <div className="flex items-start justify-between gap-3">
           <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-2 mb-2">
-              <Badge variant="secondary" className="text-xs">
-                {item.category}
-              </Badge>
-              {item.stockStatus && (
-                <Badge 
-                  className={
-                    item.stockStatus === "In Stock" 
-                      ? "bg-green-500/10 text-green-400 border-green-500/20" :
-                    item.stockStatus === "Low Stock" 
-                      ? "bg-yellow-500/10 text-yellow-400 border-yellow-500/20" :
-                      "bg-red-500/10 text-red-400 border-red-500/20"
-                  }
-                  variant="outline"
-                >
-                  {item.stockStatus}
-                </Badge>
-              )}
-            </div>
             <h3 className="font-semibold text-lg text-white group-hover:text-elec-yellow transition-colors line-clamp-2">
               {item.name}
             </h3>
@@ -152,18 +166,6 @@ const MaterialCard: React.FC<MaterialCardProps> = ({
       </CardHeader>
 
       <CardContent className="space-y-4">
-        {/* Image */}
-        <div className="relative overflow-hidden rounded-lg bg-elec-gray/50 border border-elec-yellow/10 group-hover:border-elec-yellow/20 transition-all duration-200">
-          <div className={`${isMobile ? 'h-40' : 'h-48'} flex items-center justify-center`}>
-            <img
-              src={imageSrc}
-              alt={`${item.name} from ${item.supplier}`}
-              loading="lazy"
-              className="object-cover w-full h-full transition-transform duration-200 group-hover:scale-105"
-              onError={(e) => { (e.currentTarget as HTMLImageElement).src = "/placeholder.svg"; }}
-            />
-          </div>
-        </div>
 
         {/* Specifications Grid */}
         <div className="grid grid-cols-2 gap-3 text-sm">
