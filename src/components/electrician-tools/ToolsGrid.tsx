@@ -16,15 +16,15 @@ const ToolsGrid = ({ tools, excludeIds = [] }: ToolsGridProps) => {
 
   const getCategoryColor = (category: string) => {
     const colors = {
-      "Hand Tools": "bg-blue-500/20 border-blue-500/30 text-blue-300",
-      "Power Tools": "bg-orange-500/20 border-orange-500/30 text-orange-300",
-      "Testing Equipment": "bg-purple-500/20 border-purple-500/30 text-purple-300",
-      "Safety Equipment": "bg-red-500/20 border-red-500/30 text-red-300",
-      "Cable & Wire": "bg-green-500/20 border-green-500/30 text-green-300",
-      "Electrical Components": "bg-cyan-500/20 border-cyan-500/30 text-cyan-300",
-      "Tools": "bg-yellow-500/20 border-yellow-500/30 text-yellow-300",
+      "Hand Tools": "bg-blue-600/90 border-blue-400 text-white",
+      "Power Tools": "bg-orange-600/90 border-orange-400 text-white",
+      "Testing Equipment": "bg-purple-600/90 border-purple-400 text-white",
+      "Safety Equipment": "bg-red-600/90 border-red-400 text-white",
+      "Cable & Wire": "bg-green-600/90 border-green-400 text-white",
+      "Electrical Components": "bg-cyan-600/90 border-cyan-400 text-white",
+      "Tools": "bg-yellow-600/90 border-yellow-400 text-elec-dark",
     };
-    return colors[category as keyof typeof colors] || "bg-white/10 border-white/20 text-white/80";
+    return colors[category as keyof typeof colors] || "bg-elec-light/90 border-white/30 text-white";
   };
 
   const getToolImage = (tool: ToolItem) => {
@@ -106,20 +106,20 @@ const ToolsGrid = ({ tools, excludeIds = [] }: ToolsGridProps) => {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
                 
                 {/* Category Badge */}
-                <div className="absolute top-3 left-3">
-                  <Badge className={cn("text-xs font-medium", getCategoryColor(tool.category || "Tools"))}>
+                <div className="absolute top-3 left-3 z-10">
+                  <Badge className={cn("text-xs font-medium shadow-lg backdrop-blur-sm", getCategoryColor(tool.category || "Tools"))}>
                     {tool.category || "Tools"}
                   </Badge>
                 </div>
 
                 {/* Deal/Supplier Badge */}
-                <div className="absolute top-3 right-3">
+                <div className="absolute top-3 right-3 z-10">
                   {isDeal ? (
-                    <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow text-xs bg-elec-yellow/10">
+                    <Badge variant="outline" className="border-elec-yellow bg-elec-dark/90 text-elec-yellow text-xs shadow-lg backdrop-blur-sm">
                       {discount > 0 ? `${discount}% OFF` : "DEAL"}
                     </Badge>
                   ) : (
-                    <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow text-xs">
+                    <Badge variant="outline" className="border-white/30 bg-elec-dark/90 text-white text-xs shadow-lg backdrop-blur-sm">
                       {tool.supplier || "Screwfix"}
                     </Badge>
                   )}

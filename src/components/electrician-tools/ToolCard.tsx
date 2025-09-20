@@ -242,21 +242,21 @@ const ToolCard: React.FC<ToolCardProps> = ({
             />
           </div>
           {/* Enhanced badges overlaid on image */}
-          <div className="absolute top-2 left-2 right-2 flex items-start justify-between gap-2">
+          <div className="absolute top-2 left-2 right-2 flex items-start justify-between gap-2 z-20">
             <div className="flex flex-col gap-1">
-              <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30 text-xs">
+              <Badge className="bg-blue-600/90 text-white border-blue-400 text-xs shadow-lg backdrop-blur-sm">
                 {item.category}
               </Badge>
               {/* Dynamic badges */}
               {dynamicBadges.map((badge, index) => (
                 <Badge 
                   key={index}
-                  className={`text-xs ${
-                    badge.variant === "destructive" ? "bg-red-500/20 text-red-400 border-red-500/30" :
-                    badge.variant === "warning" ? "bg-yellow-500/20 text-yellow-400 border-yellow-500/30" :
-                    badge.variant === "success" ? "bg-green-500/20 text-green-400 border-green-500/30" :
-                    badge.variant === "gold" ? "bg-amber-500/20 text-amber-400 border-amber-500/30" :
-                    "bg-purple-500/20 text-purple-400 border-purple-500/30"
+                  className={`text-xs shadow-lg backdrop-blur-sm ${
+                    badge.variant === "destructive" ? "bg-red-600/90 text-white border-red-400" :
+                    badge.variant === "warning" ? "bg-yellow-600/90 text-white border-yellow-400" :
+                    badge.variant === "success" ? "bg-green-600/90 text-white border-green-400" :
+                    badge.variant === "gold" ? "bg-amber-600/90 text-white border-amber-400" :
+                    "bg-purple-600/90 text-white border-purple-400"
                   } ${badge.animate ? "animate-pulse" : ""}`}
                   variant="outline"
                 >
@@ -266,19 +266,19 @@ const ToolCard: React.FC<ToolCardProps> = ({
             </div>
             <div className="flex flex-col gap-1 items-end">
               {discount && (
-                <Badge className="bg-red-500/20 text-red-400 border-red-500/30 text-xs font-bold animate-pulse">
+                <Badge className="bg-red-600/95 text-white border-red-400 text-xs font-bold animate-pulse shadow-lg backdrop-blur-sm">
                   -{discount}%
                 </Badge>
               )}
               {item.stockStatus && (
                 <Badge 
-                  className={
+                  className={`shadow-lg backdrop-blur-sm ${
                     item.stockStatus === "In Stock" 
-                      ? "bg-green-500/20 text-green-400 border-green-500/30" :
+                      ? "bg-green-600/90 text-white border-green-400" :
                     item.stockStatus === "Low Stock" 
-                      ? "bg-yellow-500/20 text-yellow-400 border-yellow-500/30 animate-pulse" :
-                      "bg-red-500/20 text-red-400 border-red-500/30 animate-pulse"
-                  }
+                      ? "bg-yellow-600/90 text-white border-yellow-400 animate-pulse" :
+                      "bg-red-600/90 text-white border-red-400 animate-pulse"
+                  }`}
                   variant="outline"
                 >
                   {item.stockStatus}
