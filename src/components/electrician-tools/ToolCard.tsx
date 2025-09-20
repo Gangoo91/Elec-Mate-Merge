@@ -337,7 +337,7 @@ const ToolCard: React.FC<ToolCardProps> = ({
           <Button 
             size="sm" 
             onClick={() => window.open(getProductUrl(), '_blank')}
-            className="flex-1 bg-elec-yellow hover:bg-elec-yellow/90 text-background"
+            className="flex-1 border border-elec-yellow text-elec-yellow bg-transparent hover:bg-elec-yellow hover:text-background transition-colors"
           >
             View Product
             <ExternalLink className="w-3 h-3 ml-1" />
