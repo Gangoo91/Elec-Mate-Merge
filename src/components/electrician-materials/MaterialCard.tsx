@@ -123,7 +123,8 @@ const MaterialCard: React.FC<MaterialCardProps> = ({
             src={imageSrc}
             alt={`${item.name} from ${item.supplier}`}
             loading="lazy"
-            className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-110"
+            className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105 transform-gpu"
+            style={{ transformOrigin: 'center center' }}
             onError={(e) => { (e.currentTarget as HTMLImageElement).src = "/placeholder.svg"; }}
           />
         </div>
