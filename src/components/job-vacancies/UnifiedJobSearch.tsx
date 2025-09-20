@@ -456,7 +456,7 @@ const UnifiedJobSearch = () => {
       {/* Job Results */}
       {filteredJobs.length > 0 && (
         <div className="space-y-4">
-          <div className="flex items-center justify-between flex-wrap gap-2">
+          <div className="flex items-center justify-between flex-wrap gap-2 px-2">
             <h3 className="text-lg font-semibold text-elec-light">
               {searchProgress.isSearching ? 'Partial Results' : 'Job Results'} 
               {filteredJobs.length > 0 && (
