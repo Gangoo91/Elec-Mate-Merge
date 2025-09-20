@@ -114,16 +114,16 @@ const MaterialCard: React.FC<MaterialCardProps> = ({
   })();
 
   return (
-    <Card className="group bg-elec-gray hover:bg-elec-gray/80 border-elec-yellow/20 hover:border-elec-yellow/50 transition-all duration-300 h-full cursor-pointer">
+    <Card className="group bg-gradient-to-br from-white/10 via-white/5 to-transparent rounded-xl border border-white/10 hover:border-elec-yellow/30 transition-all duration-300 hover:shadow-xl hover:shadow-elec-yellow/10 hover:scale-[1.02] h-full cursor-pointer">
       {/* Image at the very top */}
-      <div className="relative overflow-hidden rounded-t-xl transform-gpu">
+      <div className="relative overflow-hidden rounded-t-xl">
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent z-10"></div>
         <div className={`${isMobile ? 'h-40' : 'h-48'} overflow-hidden`}>
           <img
             src={imageSrc}
             alt={`${item.name} from ${item.supplier}`}
             loading="lazy"
-            className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-110 transform-gpu"
+            className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-110"
             onError={(e) => { (e.currentTarget as HTMLImageElement).src = "/placeholder.svg"; }}
           />
         </div>
