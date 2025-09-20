@@ -97,7 +97,7 @@ const ToolsGrid = ({ tools, excludeIds = [] }: ToolsGridProps) => {
                 <img
                   src={getToolImage(tool)}
                   alt={tool.name}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  className="w-full h-full object-cover transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:scale-110"
                   loading="lazy"
                   onError={(e) => {
                     e.currentTarget.src = getToolImage(tool);

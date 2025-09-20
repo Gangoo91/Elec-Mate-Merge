@@ -134,7 +134,7 @@ const ToolsFeaturedCarousel = ({ className }: ToolsFeaturedCarouselProps) => {
                     <img
                       src={getToolImage(tool)}
                       alt={tool.name}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      className="w-full h-full object-cover transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:scale-110"
                       loading="lazy"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
