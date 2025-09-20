@@ -224,184 +224,131 @@ const ToolCard: React.FC<ToolCardProps> = ({
   const discount = getDiscountPercentage();
 
   return (
-    <Card 
-      className="bg-transparent bg-gradient-to-br from-white/10 via-white/5 to-transparent border-white/10 hover:border-elec-yellow/30 hover:shadow-xl hover:shadow-elec-yellow/10 hover:scale-[1.02] transition-all duration-300 rounded-xl overflow-hidden h-full relative group"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      <CardHeader className="pb-3">
-        {/* Image section matching course cards */}
-        <div className="relative -mx-6 -mt-6 mb-4">
-          <div className="h-32 sm:h-36 overflow-hidden">
-            <img
-              src={imageSrc}
-              alt={`${item.name} from ${item.supplier}`}
-              loading="lazy"
-              className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
-              onError={(e) => { (e.currentTarget as HTMLImageElement).src = "/placeholder.svg"; }}
-            />
-          </div>
-          {/* Enhanced badges overlaid on image */}
-          <div className="absolute top-2 left-2 right-2 flex items-start justify-between gap-2 z-20">
-            <div className="flex flex-col gap-1">
-              <Badge className="bg-blue-600/90 text-white border-blue-400 text-xs shadow-lg backdrop-blur-sm">
-                {item.category}
-              </Badge>
-              {/* Dynamic badges */}
-              {dynamicBadges.map((badge, index) => (
-                <Badge 
-                  key={index}
-                  className={`text-xs shadow-lg backdrop-blur-sm ${
-                    badge.variant === "destructive" ? "bg-red-600/90 text-white border-red-400" :
-                    badge.variant === "warning" ? "bg-yellow-600/90 text-white border-yellow-400" :
-                    badge.variant === "success" ? "bg-green-600/90 text-white border-green-400" :
-                    badge.variant === "gold" ? "bg-amber-600/90 text-white border-amber-400" :
-                    "bg-purple-600/90 text-white border-purple-400"
-                  } ${badge.animate ? "animate-pulse" : ""}`}
-                  variant="outline"
-                >
-                  {badge.label}
-                </Badge>
-              ))}
-            </div>
-            <div className="flex flex-col gap-1 items-end">
-              {discount && (
-                <Badge className="bg-red-600/95 text-white border-red-400 text-xs font-bold animate-pulse shadow-lg backdrop-blur-sm">
-                  -{discount}%
-                </Badge>
-              )}
-              {item.stockStatus && (
-                <Badge 
-                  className={`shadow-lg backdrop-blur-sm ${
-                    item.stockStatus === "In Stock" 
-                      ? "bg-green-600/90 text-white border-green-400" :
-                    item.stockStatus === "Low Stock" 
-                      ? "bg-yellow-600/90 text-white border-yellow-400 animate-pulse" :
-                      "bg-red-600/90 text-white border-red-400 animate-pulse"
-                  }`}
-                  variant="outline"
-                >
-                  {item.stockStatus}
-                </Badge>
-              )}
-            </div>
-          </div>
-          
-          {/* Interactive overlay on hover */}
-          <div className={`absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-4 ${isHovered ? 'opacity-100' : ''}`}>
-            <Button 
-              size="sm" 
-              className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300"
-              onClick={() => window.open(getProductUrl(), '_blank')}
-            >
-              <ShoppingCart className="h-4 w-4 mr-1" />
-              Quick View
-            </Button>
-          </div>
+    <Card className="bg-card border-border hover:border-elec-yellow/20 transition-all duration-200 rounded-lg overflow-hidden h-full">
+      {/* Image section */}
+      <div className="relative">
+        <div className="h-48 overflow-hidden">
+          <img
+            src={imageSrc}
+            alt={`${item.name} from ${item.supplier}`}
+            loading="lazy"
+            className="object-cover w-full h-full"
+            onError={(e) => { (e.currentTarget as HTMLImageElement).src = "/placeholder.svg"; }}
+          />
         </div>
+        
+        {/* Simple badges overlaid on image */}
+        <div className="absolute top-2 left-2 right-2 flex items-start justify-between">
+          <Badge className="bg-background/90 text-foreground border-border text-xs">
+            {item.category}
+          </Badge>
+          {discount && (
+            <Badge className="bg-destructive text-destructive-foreground text-xs font-bold">
+              -{discount}%
+            </Badge>
+          )}
+        </div>
+        
+        {/* Bottom left badge for recent views */}
+        <div className="absolute bottom-2 left-2">
+          <Badge className="bg-background/90 text-foreground border-border text-xs">
+            <Eye className="w-3 h-3 mr-1" />
+            {recentlyViewed}
+          </Badge>
+        </div>
+      </div>
 
-      </CardHeader>
-      
-      <CardContent className="pt-0 flex-grow flex flex-col">
-        {/* Supplier section at top */}
-        <div className="flex items-center justify-between text-sm text-muted-foreground mb-2">
-          <Package className="h-4 w-4" />
-          <span className="font-medium">{item.supplier}</span>
-          <span>⭐ {reviewData?.rating || '4.8'}</span>
-          <span className="text-xs">({reviewData?.count || '143'})</span>
+      <CardContent className="p-4 flex-grow flex flex-col">
+        {/* Supplier and rating section */}
+        <div className="flex items-center justify-between text-sm mb-3">
+          <div className="flex items-center gap-1">
+            <div className="w-3 h-3 bg-elec-yellow" style={{ clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)' }}></div>
+            <span className="font-medium text-foreground">{item.supplier}</span>
+          </div>
+          <div className="flex items-center gap-1">
+            <Star className="w-3 h-3 fill-yellow-400 text-yellow-400" />
+            <span className="text-foreground">{reviewData?.rating || '4.5'}</span>
+          </div>
         </div>
 
         {/* Product title */}
-        <h3 className="text-lg leading-tight font-semibold line-clamp-2 group-hover:text-elec-yellow transition-colors duration-200 mb-4">
+        <h3 className="text-lg font-semibold line-clamp-2 mb-4 text-foreground">
           {item.name}
         </h3>
 
-        {/* 2x2 Information grid - clean layout */}
-        <div className="grid grid-cols-2 gap-3 mb-4">
-          <div className="bg-muted/50 rounded-lg p-3 space-y-1">
-            <div className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
-              <Zap className="h-3 w-3" />
+        {/* 2x2 Information grid */}
+        <div className="grid grid-cols-2 gap-2 mb-4">
+          <div className="bg-muted rounded-lg p-2 space-y-1">
+            <div className="flex items-center gap-1 text-xs text-muted-foreground">
+              <Zap className="h-3 w-3 text-elec-yellow" />
               Specifications
             </div>
-            <div className="text-sm font-medium">
-              {item.name.includes('Cable') ? 'Multi-core' : 
-               item.name.includes('Socket') ? '13A' :
-               item.name.includes('Switch') ? '2-way' : 'Professional'}
-            </div>
+            <div className="text-xs font-medium text-foreground">Professional Grade</div>
           </div>
           
-          <div className="bg-muted/50 rounded-lg p-3 space-y-1">
-            <div className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
-              <Shield className="h-3 w-3" />
+          <div className="bg-muted rounded-lg p-2 space-y-1">
+            <div className="flex items-center gap-1 text-xs text-muted-foreground">
+              <Shield className="h-3 w-3 text-blue-400" />
               Standard
             </div>
-            <div className="text-sm font-medium">BS7671</div>
+            <div className="text-xs font-medium text-foreground">BS7671 18th</div>
           </div>
           
-          <div className="bg-muted/50 rounded-lg p-3 space-y-1">
-            <div className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
-              <Star className="h-3 w-3" />
+          <div className="bg-muted rounded-lg p-2 space-y-1">
+            <div className="flex items-center gap-1 text-xs text-muted-foreground">
+              <Star className="h-3 w-3 text-yellow-400" />
               Rating
             </div>
-            <div className="text-sm font-medium">⭐ {reviewData?.rating || '4.8'}</div>
+            <div className="text-xs font-medium text-foreground">4.5/5</div>
           </div>
           
-          <div className="bg-muted/50 rounded-lg p-3 space-y-1">
-            <div className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
-              <CheckCircle className="h-3 w-3" />
+          <div className="bg-muted rounded-lg p-2 space-y-1">
+            <div className="flex items-center gap-1 text-xs text-muted-foreground">
+              <CheckCircle className="h-3 w-3 text-green-400" />
               Stock
             </div>
-            <div className="text-sm font-medium text-green-600">In Stock</div>
+            <div className="text-xs font-medium text-foreground">In Stock</div>
           </div>
         </div>
 
-        {/* Simple features list with checkmarks */}
-        <div className="space-y-2 mb-4">
-          <div className="space-y-1 text-left">
-            <div className="flex items-center gap-2 text-sm">
-              <CheckCircle className="h-4 w-4 text-green-600" />
-              <span>Professional grade electrical tool</span>
-            </div>
-            <div className="flex items-center gap-2 text-sm">
-              <CheckCircle className="h-4 w-4 text-green-600" />
-              <span>BS7671 18th edition compliant</span>
-            </div>
-            {item.highlights && item.highlights[0] && (
-              <div className="flex items-center gap-2 text-sm">
-                <CheckCircle className="h-4 w-4 text-green-600" />
-                <span>{item.highlights[0]}</span>
-              </div>
-            )}
+        {/* Features list */}
+        <div className="space-y-1 mb-4">
+          <div className="flex items-center gap-2 text-xs text-muted-foreground">
+            <Check className="h-3 w-3 text-green-400" />
+            <span>Professional quality construction</span>
+          </div>
+          <div className="flex items-center gap-2 text-xs text-muted-foreground">
+            <Check className="h-3 w-3 text-green-400" />
+            <span>BS7671 18th edition compliant</span>
+          </div>
+          <div className="flex items-center gap-2 text-xs text-muted-foreground">
+            <Check className="h-3 w-3 text-green-400" />
+            <span>Suitable for commercial use</span>
           </div>
         </div>
 
-        {/* Price section */}
-        <div className="flex items-center justify-between mb-3 pt-2 border-t">
-          <div className="flex items-center gap-2">
-            <span className="text-lg font-bold text-primary">
+        {/* Price and stock section */}
+        <div className="flex items-center justify-between mb-3">
+          <div className="flex flex-col">
+            <span className="text-lg font-bold text-elec-yellow">
               {item.salePrice || item.price}
             </span>
-            {item.salePrice && item.salePrice !== item.price && (
-              <span className="text-sm text-muted-foreground line-through">
-                {item.price}
-              </span>
-            )}
-            <span className="text-xs text-muted-foreground">Inc Vat</span>
+            <span className="text-xs text-muted-foreground">inc. VAT</span>
           </div>
           <Badge variant="success" className="text-xs">
-            {item.stockStatus || 'In Stock'}
+            In Stock
           </Badge>
         </div>
 
-        {/* Button section with compare */}
+        {/* Button section */}
         <div className="flex gap-2 mt-auto">
           <Button 
             size="sm" 
             onClick={() => window.open(getProductUrl(), '_blank')}
-            className="flex-1 gap-2"
+            className="flex-1 bg-elec-yellow hover:bg-elec-yellow/90 text-background"
           >
             View Product
-            <ExternalLink className="h-3 w-3" />
+            <ExternalLink className="w-3 h-3 ml-1" />
           </Button>
           <Button 
             size="sm" 
@@ -419,29 +366,6 @@ const ToolCard: React.FC<ToolCardProps> = ({
             {isSelected ? <Check className="h-4 w-4" /> : <Plus className="h-4 w-4" />}
           </Button>
         </div>
-        
-        {/* Quick action bar for mobile */}
-        {isMobile && isHovered && (
-          <div className="absolute bottom-2 left-2 right-2 flex gap-2 animate-fade-in">
-            <Button 
-              size="sm" 
-              className="flex-1 bg-elec-yellow/90 text-elec-dark hover:bg-elec-yellow"
-              onClick={() => window.open(getProductUrl(), '_blank')}
-            >
-              Quick Buy
-            </Button>
-            {onAddToCompare && (
-              <Button 
-                size="sm" 
-                variant="outline"
-                className="border-elec-yellow/50"
-                onClick={() => onAddToCompare && onAddToCompare(item)}
-              >
-                Compare
-              </Button>
-            )}
-          </div>
-        )}
       </CardContent>
     </Card>
   );
