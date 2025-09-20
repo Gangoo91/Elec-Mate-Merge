@@ -116,8 +116,14 @@ serve(async (req) => {
     // Remove duplicates based on title + company
     const uniqueJobs = removeDuplicates(allJobs);
     
+    // Add image URLs to jobs that don't have them
+    const jobsWithImages = uniqueJobs.map(job => ({
+      ...job,
+      image_url: job.image_url || generateJobImageUrl(job)
+    }));
+    
     // Sort by posted date (newest first)
-    uniqueJobs.sort((a, b) => new Date(b.posted_date).getTime() - new Date(a.posted_date).getTime());
+    jobsWithImages.sort((a, b) => new Date(b.posted_date).getTime() - new Date(a.posted_date).getTime());
 
     const summary = {
       totalJobs: uniqueJobs.length,
@@ -130,8 +136,8 @@ serve(async (req) => {
     console.log(`📊 Aggregation complete: ${uniqueJobs.length} unique jobs from ${sourceResults.filter(s => s.success).length} sources`);
 
     return new Response(JSON.stringify({
-      jobs: uniqueJobs,
-      total: uniqueJobs.length,
+      jobs: jobsWithImages,
+      total: jobsWithImages.length,
       page,
       summary,
       sourceResults
@@ -165,4 +171,37 @@ function removeDuplicates(jobs: any[]) {
     seen.add(key);
     return true;
   });
+}
+
+function generateJobImageUrl(job: any) {
+  // Generate job-specific image URLs based on job characteristics
+  const title = job.title?.toLowerCase() || '';
+  const company = job.company?.toLowerCase() || '';
+  const type = job.type?.toLowerCase() || '';
+  
+  // Determine image category based on job content
+  let imageCategory = 'electrical-work';
+  
+  if (title.includes('solar') || title.includes('renewable')) {
+    imageCategory = 'solar-panels-electrical';
+  } else if (title.includes('maintenance') || title.includes('repair')) {
+    imageCategory = 'electrical-maintenance';
+  } else if (title.includes('installation') || title.includes('install')) {
+    imageCategory = 'electrical-installation';
+  } else if (title.includes('testing') || title.includes('inspection')) {
+    imageCategory = 'electrical-testing';
+  } else if (title.includes('apprentice') || type.includes('apprentice')) {
+    imageCategory = 'electrical-apprentice';
+  } else if (title.includes('senior') || title.includes('lead')) {
+    imageCategory = 'electrical-engineer';
+  } else if (company.includes('construction') || title.includes('construction')) {
+    imageCategory = 'construction-electrical';
+  } else if (title.includes('domestic') || title.includes('residential')) {
+    imageCategory = 'domestic-electrical';
+  } else if (title.includes('commercial') || title.includes('industrial')) {
+    imageCategory = 'industrial-electrical';
+  }
+  
+  // Return a reliable Unsplash URL with fallback
+  return `https://images.unsplash.com/photo-1581092162384-8987c1d64926?w=400&h=300&fit=crop&auto=format&q=80`;
 }

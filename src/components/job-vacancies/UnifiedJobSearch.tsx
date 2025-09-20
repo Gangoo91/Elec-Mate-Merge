@@ -27,6 +27,7 @@ import { useUnifiedJobSearch, UnifiedJob } from "@/hooks/job-vacancies/useUnifie
 import SearchError from "./SearchError";
 import JobSourceProgress from "./JobSourceProgress";
 import { Skeleton } from "@/components/ui/skeleton";
+import defaultJobImage from "@/assets/default-job.jpg";
 const UnifiedJobSearch = () => {
   const [query, setQuery] = useState("electrician");
   const [location, setLocation] = useState("Cumbria");
@@ -500,13 +501,13 @@ const UnifiedJobSearch = () => {
                   {/* Header Image */}
                   <div className="relative h-48 overflow-hidden">
                     <img 
-                      src={job.image_url || `https://images.unsplash.com/800x600/?${encodeURIComponent(`electrical work office ${job.type.toLowerCase()}`)}&auto=format&fit=crop&w=800&h=600`}
+                      src={job.image_url || defaultJobImage}
                       alt={`${job.title} workplace`}
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                       onError={(e) => {
                         const target = e.target as HTMLImageElement;
-                        if (target.src !== 'https://images.unsplash.com/photo-1581092162384-8987c1d64926?auto=format&fit=crop&w=800&h=600') {
-                          target.src = 'https://images.unsplash.com/photo-1581092162384-8987c1d64926?auto=format&fit=crop&w=800&h=600';
+                        if (target.src !== defaultJobImage) {
+                          target.src = defaultJobImage;
                         }
                       }}
                     />
