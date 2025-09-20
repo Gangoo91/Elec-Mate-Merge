@@ -114,31 +114,32 @@ const MaterialCard: React.FC<MaterialCardProps> = ({
   })();
 
   return (
-    <Card className="group hover:shadow-lg transition-all duration-300 hover:border-elec-yellow/30 bg-elec-card border-elec-yellow/10 hover:scale-[1.02] overflow-hidden">
+    <Card className="group bg-gradient-to-br from-white/10 via-white/5 to-transparent rounded-xl border border-white/10 hover:border-elec-yellow/30 transition-all duration-300 hover:shadow-xl hover:shadow-elec-yellow/10 hover:scale-[1.02] h-full cursor-pointer">
       {/* Image at the very top */}
-      <div className="relative overflow-hidden bg-elec-gray/50">
-        <div className={`${isMobile ? 'h-40' : 'h-48'} flex items-center justify-center`}>
+      <div className="relative overflow-hidden rounded-t-xl">
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent z-10"></div>
+        <div className={`${isMobile ? 'h-40' : 'h-48'} overflow-hidden`}>
           <img
             src={imageSrc}
             alt={`${item.name} from ${item.supplier}`}
             loading="lazy"
-            className="object-cover w-full h-full transition-transform duration-200 group-hover:scale-105"
+            className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-110"
             onError={(e) => { (e.currentTarget as HTMLImageElement).src = "/placeholder.svg"; }}
           />
         </div>
         {/* Badges overlaid on image */}
-        <div className="absolute top-3 left-3 right-3 flex items-start justify-between gap-2">
-          <Badge variant="secondary" className="text-xs bg-black/70 text-white border-white/20">
+        <div className="absolute top-3 left-3 right-3 flex items-start justify-between gap-2 z-20">
+          <Badge variant="secondary" className="text-xs bg-black/70 text-white border-white/20 backdrop-blur-sm">
             {item.category}
           </Badge>
           {item.stockStatus && (
             <Badge 
               className={
                 item.stockStatus === "In Stock" 
-                  ? "bg-green-500/80 text-white border-green-500/30" :
+                  ? "bg-green-500/80 text-white border-green-500/30 backdrop-blur-sm" :
                 item.stockStatus === "Low Stock" 
-                  ? "bg-yellow-500/80 text-white border-yellow-500/30" :
-                  "bg-red-500/80 text-white border-red-500/30"
+                  ? "bg-yellow-500/80 text-white border-yellow-500/30 backdrop-blur-sm" :
+                  "bg-red-500/80 text-white border-red-500/30 backdrop-blur-sm"
               }
               variant="outline"
             >
@@ -148,13 +149,17 @@ const MaterialCard: React.FC<MaterialCardProps> = ({
         </div>
       </div>
 
-      <CardHeader className="pb-4">
+      <div className="p-4 sm:p-5 space-y-3 flex flex-col flex-1">
+        {/* Header Section */}
         <div className="flex items-start justify-between gap-3">
           <div className="flex-1 min-w-0">
-            <h3 className="font-semibold text-lg text-white group-hover:text-elec-yellow transition-colors line-clamp-2">
+            <h3 
+              className="font-semibold text-sm sm:text-base text-white group-hover:text-elec-yellow transition-colors line-clamp-2"
+              style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}
+            >
               {item.name}
             </h3>
-            <p className="text-elec-yellow font-medium mt-1">
+            <p className="text-elec-yellow font-medium mt-1 text-xs sm:text-sm">
               {item.supplier}
             </p>
           </div>
@@ -163,9 +168,6 @@ const MaterialCard: React.FC<MaterialCardProps> = ({
             <span className="text-white font-medium">4.2</span>
           </div>
         </div>
-      </CardHeader>
-
-      <CardContent className="space-y-4">
 
         {/* Specifications Grid */}
         <div className="grid grid-cols-2 gap-3 text-sm">
@@ -240,7 +242,7 @@ const MaterialCard: React.FC<MaterialCardProps> = ({
         <div className="flex items-center justify-between pt-2">
           <Button 
             onClick={() => window.open(getProductUrl(), '_blank')}
-            className="flex-1 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-medium"
+            className="flex-1 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold"
           >
             View Deal
             <ExternalLink className="ml-2 h-4 w-4" />
@@ -267,7 +269,7 @@ const MaterialCard: React.FC<MaterialCardProps> = ({
             </Button>
           )}
         </div>
-      </CardContent>
+      </div>
     </Card>
   );
 };
