@@ -6,6 +6,8 @@ import { SortAsc, SortDesc, Grid, List, Loader2 } from "lucide-react";
 import { ToolItem } from "@/hooks/useToolsData";
 import ToolCard from "./ToolCard";
 import { FilterState } from "./ProductFilters";
+import { usePagination } from "@/hooks/usePagination";
+import ProductPagination from "@/components/ui/product-pagination";
 
 interface EnhancedProductGridProps {
   tools: ToolItem[];
@@ -130,6 +132,22 @@ const EnhancedProductGrid = ({
     }
   }, [filteredTools, sortBy]);
 
+  // Pagination
+  const {
+    currentItems: currentTools,
+    currentPage,
+    totalPages,
+    itemsPerPage,
+    totalItems,
+    startIndex,
+    endIndex,
+    setCurrentPage,
+    setItemsPerPage
+  } = usePagination<ToolItem>({
+    items: sortedTools,
+    itemsPerPage: 12
+  });
+
   if (isLoading) {
     return (
       <div className="flex items-center justify-center py-12">
@@ -140,11 +158,11 @@ const EnhancedProductGrid = ({
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6" data-pagination-target>
       {/* Results Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="text-elec-light">
-          <span className="font-semibold">{sortedTools.length}</span> tools found
+          <span className="font-semibold">{totalItems}</span> tools found
           {searchTerm && (
             <span className="text-text-muted"> for "{searchTerm}"</span>
           )}
@@ -213,7 +231,7 @@ const EnhancedProductGrid = ({
       </div>
 
       {/* Product Grid/List */}
-      {sortedTools.length === 0 ? (
+      {totalItems === 0 ? (
         <Card className="bg-elec-card/30 border-elec-yellow/20">
           <CardContent className="p-8 text-center">
             <p className="text-elec-light mb-2">No tools found matching your criteria</p>
@@ -221,21 +239,36 @@ const EnhancedProductGrid = ({
           </CardContent>
         </Card>
       ) : (
-        <div className={viewMode === "grid" 
-          ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6"
-          : "space-y-4"
-        }>
-          {sortedTools.map((tool) => (
-            <ToolCard
-              key={tool.id || tool.name}
-              item={tool}
-              onAddToCompare={onAddToCompare}
-              onRemoveFromCompare={onRemoveFromCompare}
-              isSelected={selectedItems.some(item => item.id === tool.id)}
-              isCompareDisabled={isCompareDisabled}
-            />
-          ))}
-        </div>
+        <>
+          <div className={viewMode === "grid" 
+            ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6"
+            : "space-y-4"
+          }>
+            {currentTools.map((tool) => (
+              <ToolCard
+                key={tool.id || tool.name}
+                item={tool}
+                onAddToCompare={onAddToCompare}
+                onRemoveFromCompare={onRemoveFromCompare}
+                isSelected={selectedItems.some(item => item.id === tool.id)}
+                isCompareDisabled={isCompareDisabled}
+              />
+            ))}
+          </div>
+
+          {/* Pagination */}
+          <ProductPagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            totalItems={totalItems}
+            startIndex={startIndex}
+            endIndex={endIndex}
+            itemsPerPage={itemsPerPage}
+            onPageChange={setCurrentPage}
+            onItemsPerPageChange={setItemsPerPage}
+            itemType="tools"
+          />
+        </>
       )}
     </div>
   );

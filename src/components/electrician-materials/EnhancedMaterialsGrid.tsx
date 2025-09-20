@@ -7,6 +7,8 @@ import MaterialCard from "./MaterialCard";
 import MaterialListCard from "./MaterialListCard";
 import { MaterialFilterState } from "./MaterialFilters";
 import { MaterialItem } from "@/hooks/useToolsForMaterials";
+import { usePagination } from "@/hooks/usePagination";
+import ProductPagination from "@/components/ui/product-pagination";
 
 interface EnhancedMaterialsGridProps {
   materials: MaterialItem[];
@@ -136,6 +138,22 @@ const EnhancedMaterialsGrid = ({
     }
   }, [filteredMaterials, sortBy]);
 
+  // Pagination
+  const {
+    currentItems: currentMaterials,
+    currentPage,
+    totalPages,
+    itemsPerPage,
+    totalItems,
+    startIndex,
+    endIndex,
+    setCurrentPage,
+    setItemsPerPage
+  } = usePagination<MaterialItem>({
+    items: sortedMaterials,
+    itemsPerPage: 12
+  });
+
   if (isLoading) {
     return (
       <div className="flex items-center justify-center py-12">
@@ -146,11 +164,11 @@ const EnhancedMaterialsGrid = ({
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6" data-pagination-target>
       {/* Results Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="text-elec-light">
-          <span className="font-semibold">{sortedMaterials.length}</span> materials found
+          <span className="font-semibold">{totalItems}</span> materials found
           {searchTerm && (
             <span className="text-text-muted"> for "{searchTerm}"</span>
           )}
@@ -219,7 +237,7 @@ const EnhancedMaterialsGrid = ({
       </div>
 
       {/* Product Grid/List */}
-      {sortedMaterials.length === 0 ? (
+      {totalItems === 0 ? (
         <Card className="border-elec-yellow/20">
           <CardContent className="p-8 text-center">
             <p className="text-elec-light mb-2">No materials found matching your criteria</p>
@@ -227,38 +245,53 @@ const EnhancedMaterialsGrid = ({
           </CardContent>
         </Card>
       ) : (
-        <div className={viewMode === "grid" 
-          ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
-          : "space-y-4"
-        }>
-          {sortedMaterials.map((material, index) => (
-            viewMode === "grid" ? (
-              <MaterialCard
-                key={`${material.id || material.name}-${material.supplier}-${index}`}
-                item={material}
-                onAddToCompare={onAddToCompare}
-                onRemoveFromCompare={onRemoveFromCompare}
-                isSelected={selectedItems.some(item => 
-                  (item.id && material.id && item.id === material.id) ||
-                  (item.name === material.name && !item.id && !material.id)
-                )}
-                isCompareDisabled={isCompareDisabled}
-              />
-            ) : (
-              <MaterialListCard
-                key={`${material.id || material.name}-${material.supplier}-${index}`}
-                item={material}
-                onAddToCompare={onAddToCompare}
-                onRemoveFromCompare={onRemoveFromCompare}
-                isSelected={selectedItems.some(item => 
-                  (item.id && material.id && item.id === material.id) ||
-                  (item.name === material.name && !item.id && !material.id)
-                )}
-                isCompareDisabled={isCompareDisabled}
-              />
-            )
-          ))}
-        </div>
+        <>
+          <div className={viewMode === "grid" 
+            ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+            : "space-y-4"
+          }>
+            {currentMaterials.map((material, index) => (
+              viewMode === "grid" ? (
+                <MaterialCard
+                  key={`${material.id || material.name}-${material.supplier}-${index}`}
+                  item={material}
+                  onAddToCompare={onAddToCompare}
+                  onRemoveFromCompare={onRemoveFromCompare}
+                  isSelected={selectedItems.some(item => 
+                    (item.id && material.id && item.id === material.id) ||
+                    (item.name === material.name && !item.id && !material.id)
+                  )}
+                  isCompareDisabled={isCompareDisabled}
+                />
+              ) : (
+                <MaterialListCard
+                  key={`${material.id || material.name}-${material.supplier}-${index}`}
+                  item={material}
+                  onAddToCompare={onAddToCompare}
+                  onRemoveFromCompare={onRemoveFromCompare}
+                  isSelected={selectedItems.some(item => 
+                    (item.id && material.id && item.id === material.id) ||
+                    (item.name === material.name && !item.id && !material.id)
+                  )}
+                  isCompareDisabled={isCompareDisabled}
+                />
+              )
+            ))}
+          </div>
+
+          {/* Pagination */}
+          <ProductPagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            totalItems={totalItems}
+            startIndex={startIndex}
+            endIndex={endIndex}
+            itemsPerPage={itemsPerPage}
+            onPageChange={setCurrentPage}
+            onItemsPerPageChange={setItemsPerPage}
+            itemType="materials"
+          />
+        </>
       )}
     </div>
   );
