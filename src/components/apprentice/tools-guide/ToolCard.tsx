@@ -32,7 +32,7 @@ const ToolCard = ({ title, icon, description, items, apprenticeTip, ukConsiderat
   };
 
   return (
-    <Card className="border-elec-yellow/20 bg-elec-gray h-full">
+    <Card className="bg-gradient-to-br from-white/10 via-white/5 to-transparent border-white/10 hover:border-elec-yellow/30 hover:shadow-xl hover:shadow-elec-yellow/10 hover:scale-[1.02] transition-all duration-300 rounded-xl overflow-hidden h-full">
       <CardHeader>
         <div className="flex items-center gap-3 mb-2">
           {icon}
