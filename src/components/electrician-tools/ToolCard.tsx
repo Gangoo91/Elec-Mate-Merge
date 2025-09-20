@@ -313,17 +313,17 @@ const ToolCard: React.FC<ToolCardProps> = ({
 
         {/* Features list */}
         <div className="space-y-1 mb-4">
-          <div className="flex items-center gap-2 text-xs text-muted-foreground">
+          <div className="flex items-center gap-2 p-2 rounded-lg bg-white/5 border border-white/10">
             <Check className="h-3 w-3 text-green-400" />
-            <span>Professional quality construction</span>
+            <span className="text-xs text-muted-foreground">Professional quality construction</span>
           </div>
-          <div className="flex items-center gap-2 text-xs text-muted-foreground">
+          <div className="flex items-center gap-2 p-2 rounded-lg bg-white/5 border border-white/10">
             <Check className="h-3 w-3 text-green-400" />
-            <span>BS7671 18th edition compliant</span>
+            <span className="text-xs text-muted-foreground">BS7671 18th edition compliant</span>
           </div>
-          <div className="flex items-center gap-2 text-xs text-muted-foreground">
+          <div className="flex items-center gap-2 p-2 rounded-lg bg-white/5 border border-white/10">
             <Check className="h-3 w-3 text-green-400" />
-            <span>Suitable for commercial use</span>
+            <span className="text-xs text-muted-foreground">Suitable for commercial use</span>
           </div>
         </div>
 
