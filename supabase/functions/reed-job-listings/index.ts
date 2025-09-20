@@ -76,6 +76,7 @@ serve(async (req) => {
       id: job.jobId.toString(),
       title: job.jobTitle,
       company: job.employerName,
+      image_url: job.imageUrl || "",
       location: job.locationName,
       salary: job.minimumSalary && job.maximumSalary ? 
         `£${job.minimumSalary.toLocaleString()} - £${job.maximumSalary.toLocaleString()}${job.currency === 'GBP' ? '' : ' ' + job.currency}` :

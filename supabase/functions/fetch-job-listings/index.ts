@@ -62,6 +62,7 @@ Deno.serve(async (req) => {
     const jobsToInsert = aggregatedData.jobs.map((job: any) => ({
       title: job.title || 'Electrician Position',
       company: job.company || 'Unknown Company',
+      image_url: job.imageUrl || "",
       location: job.location || 'UK',
       salary: job.salary || 'Competitive',
       type: job.type || 'Full-time',

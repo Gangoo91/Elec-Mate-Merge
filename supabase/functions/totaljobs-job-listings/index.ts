@@ -47,6 +47,7 @@ serve(async (req) => {
                   type: "object",
                   properties: {
                     jobTitle: { type: "string", description: "The title of the job" },
+                    imageUrl: { type: "string", description: "The image of the job" },
                     company: { type: "string", description: "The company offering the job" },
                     location: { type: "string", description: "The job location" },
                     employmentType: { type: "string", description: "The contract type (e.g., Full-time, Contract)" },
@@ -105,6 +106,7 @@ function processFirecrawlJobs(jobs: any[], source: string) {
       id: jobId,
       title: job.jobTitle || 'Unknown Position',
       company: job.company || 'Unknown Company',
+      image_url: job.imageUrl || "",
       location: job.location || 'Unknown Location',
       salary: job.salary || null,
       type: job.employmentType || 'Full-time',
