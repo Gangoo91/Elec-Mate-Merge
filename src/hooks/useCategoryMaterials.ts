@@ -27,75 +27,51 @@ export const useCategoryMaterials = (categoryId: string): UseCategoryMaterialsRe
       // Enhanced category filtering with multiple search criteria
       switch (categoryId) {
         case 'cables':
-          return materialCategory.includes('cable') || 
+          return materialCategory.includes('cables') || 
                  materialCategory.includes('wiring') ||
-                 materialCategory.includes('armoured') ||
-                 materialCategory.includes('sleeve') ||
-                 materialCategory.includes('twin') ||
-                 materialCategory.includes('earth') ||
+                 materialCategory.includes('cable') ||
                  searchedProduct.includes('cable') ||
-                 materialName.includes('cable') ||
-                 materialName.includes('wire');
+                 materialName.includes('cable');
                  
         case 'components':
-          return materialCategory.includes('component') ||
-                 materialCategory.includes('switch') ||
-                 materialCategory.includes('socket') ||
-                 materialCategory.includes('consumer') ||
-                 materialCategory.includes('board') ||
-                 materialCategory.includes('unit') ||
+          return materialCategory.includes('electrical components') ||
+                 materialCategory.includes('components') ||
+                 materialCategory.includes('consumer units') ||
                  searchedProduct.includes('mcb') ||
                  searchedProduct.includes('rcd') ||
                  searchedProduct.includes('switch') ||
                  searchedProduct.includes('socket') ||
                  materialName.includes('mcb') ||
-                 materialName.includes('rcd') ||
-                 materialName.includes('switch') ||
-                 materialName.includes('socket');
+                 materialName.includes('rcd');
                  
         case 'protection':
           return materialCategory.includes('protection') ||
                  materialCategory.includes('safety') ||
                  materialCategory.includes('earthing') ||
-                 materialCategory.includes('earth') ||
-                 materialCategory.includes('rcd') ||
-                 materialCategory.includes('surge') ||
                  searchedProduct.includes('protection') ||
                  searchedProduct.includes('earth') ||
-                 searchedProduct.includes('rcd') ||
-                 materialName.includes('protection') ||
-                 materialName.includes('earth') ||
-                 materialName.includes('rcd');
+                 materialName.includes('protection');
                  
         case 'accessories':
           return materialCategory.includes('accessories') ||
                  materialCategory.includes('installation') ||
                  materialCategory.includes('junction') ||
-                 materialCategory.includes('gland') ||
-                 materialCategory.includes('box') ||
-                 materialCategory.includes('conduit') ||
-                 materialCategory.includes('trunking') ||
+                 materialCategory.includes('glands') ||
                  searchedProduct.includes('box') ||
                  searchedProduct.includes('conduit') ||
                  searchedProduct.includes('gland') ||
-                 searchedProduct.includes('clip') ||
-                 materialName.includes('box') ||
-                 materialName.includes('gland') ||
-                 materialName.includes('clip');
+                 materialName.includes('box');
                  
         case 'lighting':
           return materialCategory.includes('lighting') ||
-                 materialCategory.includes('light') ||
                  materialCategory.includes('led') ||
                  materialCategory.includes('downlight') ||
                  materialCategory.includes('batten') ||
-                 materialCategory.includes('fitting') ||
                  searchedProduct.includes('light') ||
                  searchedProduct.includes('led') ||
-                 searchedProduct.includes('lamp') ||
                  materialName.includes('light') ||
-                 materialName.includes('led') ||
-                 materialName.includes('lamp');
+                 materialName.includes('led');
+                 
                  
         default:
           return false;
