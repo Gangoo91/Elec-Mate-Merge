@@ -24,6 +24,7 @@ import SmartSearchBar from "./SmartSearchBar";
 import ProductFilters, { FilterState } from "./ProductFilters";
 import MoreToolsDropdown from "./MoreToolsDropdown";
 import EnhancedProductGrid from "./EnhancedProductGrid";
+import CategoryToolsCarousel from "./CategoryToolsCarousel";
 
 // Hand Tools specific components
 import ToolComparison from "./ToolComparison";
@@ -304,6 +305,13 @@ const EnhancedToolCategoryDisplay = ({ categoryName }: EnhancedToolCategoryDispl
           {dealsData.deals.length > 1 && (
             <TopDiscountsStrip deals={dealsData.deals} />
           )}
+
+          {/* Top 6 Category Products Carousel */}
+          <CategoryToolsCarousel 
+            tools={filteredTools} 
+            categoryName={categoryName}
+            className="mobile-section-spacing"
+          />
 
           {/* Smart Search Bar */}
           <SmartSearchBar
