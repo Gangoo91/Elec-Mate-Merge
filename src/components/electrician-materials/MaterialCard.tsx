@@ -1,8 +1,8 @@
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ExternalLink, Plus, Minus, Check } from "lucide-react";
+import { ExternalLink, Plus, Check, Star, Package, Users, Clock } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 import { MaterialItem as BaseMaterialItem } from "@/data/electrician/productData";
@@ -114,106 +114,135 @@ const MaterialCard: React.FC<MaterialCardProps> = ({
   })();
 
   return (
-    <Card className="mobile-card group h-full hover:border-elec-yellow/30 transition-all duration-200 mobile-interactive bg-elec-card/30 border-elec-yellow/20">
-      <CardContent className="p-4 h-full flex flex-col">
-        {/* Header with stock status */}
-        <div className="flex justify-between items-start mb-3 gap-2">
-          <div className="flex items-center gap-2 flex-wrap">
-            <Badge variant="outline" className="bg-elec-yellow/10 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/20 text-[10px] font-medium">
-              {item.category}
-            </Badge>
+    <Card className="group hover:shadow-lg transition-all duration-300 hover:border-elec-yellow/30 bg-elec-card border-elec-yellow/10 hover:scale-[1.02]">
+      <CardHeader className="pb-4">
+        <div className="flex items-start justify-between gap-3">
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center gap-2 mb-2">
+              <Badge variant="secondary" className="text-xs">
+                {item.category}
+              </Badge>
+              {item.stockStatus && (
+                <Badge 
+                  className={
+                    item.stockStatus === "In Stock" 
+                      ? "bg-green-500/10 text-green-400 border-green-500/20" :
+                    item.stockStatus === "Low Stock" 
+                      ? "bg-yellow-500/10 text-yellow-400 border-yellow-500/20" :
+                      "bg-red-500/10 text-red-400 border-red-500/20"
+                  }
+                  variant="outline"
+                >
+                  {item.stockStatus}
+                </Badge>
+              )}
+            </div>
+            <h3 className="font-semibold text-lg text-white group-hover:text-elec-yellow transition-colors line-clamp-2">
+              {item.name}
+            </h3>
+            <p className="text-elec-yellow font-medium mt-1">
+              {item.supplier}
+            </p>
           </div>
-          {item.stockStatus && (
-            <Badge 
-              variant={
-                item.stockStatus === "In Stock" ? "success" :
-                item.stockStatus === "Low Stock" ? "warning" :
-                "destructive"
-              }
-              className="text-[10px] font-medium flex-shrink-0"
-            >
-              {item.stockStatus}
-            </Badge>
-          )}
+          <div className="flex items-center gap-1 text-xs">
+            <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
+            <span className="text-white font-medium">4.2</span>
+          </div>
         </div>
+      </CardHeader>
 
-        {/* Product name */}
-        <h3 className="mobile-text font-semibold text-elec-light mb-3 leading-snug line-clamp-2">
-          {item.name}
-        </h3>
-
+      <CardContent className="space-y-4">
         {/* Image */}
-        <div className={`bg-elec-gray/50 border border-elec-yellow/10 rounded-lg ${isMobile ? 'h-40' : 'h-48'} mb-3 flex items-center justify-center overflow-hidden transition-all duration-200 group-hover:border-elec-yellow/20`}>
-          <img
-            src={imageSrc}
-            alt={`${item.name} from ${item.supplier}`}
-            loading="lazy"
-            className="object-cover w-full h-full transition-transform duration-200 group-hover:scale-105"
-            onError={(e) => { (e.currentTarget as HTMLImageElement).src = "/placeholder.svg"; }}
-          />
+        <div className="relative overflow-hidden rounded-lg bg-elec-gray/50 border border-elec-yellow/10 group-hover:border-elec-yellow/20 transition-all duration-200">
+          <div className={`${isMobile ? 'h-40' : 'h-48'} flex items-center justify-center`}>
+            <img
+              src={imageSrc}
+              alt={`${item.name} from ${item.supplier}`}
+              loading="lazy"
+              className="object-cover w-full h-full transition-transform duration-200 group-hover:scale-105"
+              onError={(e) => { (e.currentTarget as HTMLImageElement).src = "/placeholder.svg"; }}
+            />
+          </div>
         </div>
-        
-        {/* Specifications - simplified */}
-        {isCable && (cableInfo.type || cableInfo.size || cableInfo.length) && (
-          <div className="mb-3">
+
+        {/* Specifications Grid */}
+        <div className="grid grid-cols-2 gap-3 text-sm">
+          <div className="flex items-center gap-2">
+            <Package className="h-4 w-4 text-elec-yellow flex-shrink-0" />
+            <div>
+              <div className="text-white/60 text-xs">Type</div>
+              <div className="text-white font-medium">{isCable && cableInfo.type ? cableInfo.type : 'Standard'}</div>
+            </div>
+          </div>
+          <div className="flex items-center gap-2">
+            <Users className="h-4 w-4 text-elec-yellow flex-shrink-0" />
+            <div>
+              <div className="text-white/60 text-xs">Size</div>
+              <div className="text-white font-medium">{isCable && cableInfo.size ? cableInfo.size : 'Standard'}</div>
+            </div>
+          </div>
+        </div>
+
+        {/* Additional specifications for cables */}
+        {isCable && (cableInfo.length || cableInfo.cores) && (
+          <div className="space-y-2">
             <div className="flex flex-wrap gap-1">
-              {cableInfo.type && (
-                <Badge variant="secondary" className="text-[10px] bg-elec-gray/50 text-text-subtle border-elec-yellow/10">
-                  {cableInfo.type}
-                </Badge>
-              )}
-              {cableInfo.size && (
-                <Badge variant="secondary" className="text-[10px] bg-elec-gray/50 text-text-subtle border-elec-yellow/10">
-                  {cableInfo.size}
-                </Badge>
-              )}
               {cableInfo.length && (
-                <Badge variant="secondary" className="text-[10px] bg-elec-gray/50 text-text-subtle border-elec-yellow/10">
+                <Badge variant="outline" className="text-xs bg-elec-yellow/10 text-elec-yellow border-elec-yellow/20">
                   {cableInfo.length}
                 </Badge>
               )}
               {cableInfo.cores && (
-                <Badge variant="secondary" className="text-[10px] bg-elec-gray/50 text-text-subtle border-elec-yellow/10">
+                <Badge variant="outline" className="text-xs bg-elec-yellow/10 text-elec-yellow border-elec-yellow/20">
                   {cableInfo.cores}
                 </Badge>
               )}
             </div>
           </div>
         )}
-        
-        {/* Supplier */}
-        <div className="mobile-small-text text-text-muted mb-3 font-medium">
-          {item.supplier}
-        </div>
-        
+
         {/* Highlights */}
         {item.highlights && item.highlights.length > 0 && (
-          <div className="mb-3 flex-1">
-            <ul className="mobile-small-text text-text-subtle space-y-1.5 list-disc pl-4">
+          <div className="space-y-2">
+            <h4 className="text-sm font-medium text-white">Key Features:</h4>
+            <div className="flex flex-wrap gap-1">
               {item.highlights.slice(0, 3).map((highlight, index) => (
-                <li key={index} className="leading-relaxed">
+                <Badge key={index} variant="outline" className="text-xs bg-elec-yellow/10 text-elec-yellow border-elec-yellow/20">
                   {highlight}
-                </li>
+                </Badge>
               ))}
-            </ul>
+              {item.highlights.length > 3 && (
+                <Badge variant="outline" className="text-xs text-white/60">
+                  +{item.highlights.length - 3} more
+                </Badge>
+              )}
+            </div>
           </div>
         )}
-        
-        {/* Price - prominent */}
-        <div className="mb-4 mt-auto">
+
+        {/* Price section */}
+        <div className="bg-background/30 rounded-lg p-3 border border-elec-yellow/10">
+          <div className="text-xs text-white/60 mb-1">Price</div>
           {item.isOnSale ? (
             <div className="flex items-center gap-2 flex-wrap">
-              <span className="text-xl font-bold text-elec-yellow">{item.salePrice}</span>
-              <span className="line-through text-text-muted mobile-small-text">{item.price}</span>
-              <Badge variant="destructive" className="text-[10px] font-medium">SALE</Badge>
+              <span className="text-elec-yellow font-semibold text-lg">{item.salePrice}</span>
+              <span className="line-through text-white/60 text-sm">{item.price}</span>
+              <Badge variant="destructive" className="text-xs">SALE</Badge>
             </div>
           ) : (
-            <span className="text-xl font-bold text-elec-yellow">{item.price}</span>
+            <span className="text-elec-yellow font-semibold text-lg">{item.price}</span>
           )}
         </div>
-        
+
         {/* Action buttons */}
-        <div className="mobile-input-spacing mt-auto">
+        <div className="flex items-center justify-between pt-2">
+          <Button 
+            onClick={() => window.open(getProductUrl(), '_blank')}
+            className="flex-1 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-medium"
+          >
+            View Deal
+            <ExternalLink className="ml-2 h-4 w-4" />
+          </Button>
           {onAddToCompare && (
             <Button
               onClick={() => {
@@ -224,30 +253,17 @@ const MaterialCard: React.FC<MaterialCardProps> = ({
                 }
               }}
               disabled={isCompareDisabled && !isSelected}
-              variant={isSelected ? "gold" : "outline"}
+              variant="ghost"
               size="sm"
-              className={`w-full touch-target mobile-interactive ${isSelected ? 'shadow-sm' : 'bg-elec-yellow/10 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/20'}`}
+              className="ml-2 p-2"
             >
               {isSelected ? (
-                <>
-                  <Check className="h-4 w-4 mr-2" />
-                  Selected
-                </>
+                <Check className={`h-4 w-4 text-green-400`} />
               ) : (
-                <>
-                  <Plus className="h-4 w-4 mr-2" />
-                  Compare
-                </>
+                <Plus className="h-4 w-4 text-white/60" />
               )}
             </Button>
           )}
-          
-          <a href={getProductUrl()} target="_blank" rel="noopener noreferrer" className="block w-full">
-            <Button variant="gold" size="sm" className="w-full touch-target mobile-interactive shadow-sm hover:shadow-md transition-shadow duration-200">
-              View Deal
-              <ExternalLink className="h-4 w-4 ml-2" />
-            </Button>
-          </a>
         </div>
       </CardContent>
     </Card>
