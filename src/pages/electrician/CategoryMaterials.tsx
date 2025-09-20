@@ -20,7 +20,7 @@ import MaterialDealsOfTheDay from "@/components/electrician-materials/MaterialDe
 import MaterialTopDiscounts from "@/components/electrician-materials/MaterialTopDiscounts";
 import MaterialComparison from "@/components/electrician-materials/MaterialComparison";
 import MaterialTips from "@/components/electrician-materials/MaterialTips";
-import JobSpecificMaterialRecommendations from "@/components/electrician-materials/JobSpecificMaterialRecommendations";
+
 import QuickMaterialFinder from "@/components/electrician-materials/QuickMaterialFinder";
 import { useCategoryMaterials } from "@/hooks/useCategoryMaterials";
 import { useMaterialsDeals } from "@/hooks/useMaterialsDeals";
@@ -254,7 +254,7 @@ const CategoryMaterials = () => {
           
           <MaterialTips />
           
-          <JobSpecificMaterialRecommendations />
+          
 
           {/* Smart Search + Filters */}
           <div className="space-y-4">
