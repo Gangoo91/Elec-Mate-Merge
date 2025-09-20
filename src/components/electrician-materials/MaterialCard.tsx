@@ -222,7 +222,7 @@ const MaterialCard: React.FC<MaterialCardProps> = ({
 
   return (
     <Card 
-      className="bg-gradient-to-br from-white/10 via-white/5 to-transparent border-white/10 hover:border-elec-yellow/30 hover:shadow-xl hover:shadow-elec-yellow/10 hover:scale-[1.02] transition-all duration-300 rounded-xl overflow-hidden h-full group"
+      className="bg-gradient-to-br from-card/50 via-card/30 to-transparent border-border hover:border-elec-yellow/30 hover:shadow-lg transition-all duration-300"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
