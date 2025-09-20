@@ -303,17 +303,18 @@ const ToolCard: React.FC<ToolCardProps> = ({
       </CardHeader>
       
       <CardContent className="pt-0 flex-grow flex flex-col">
-        {/* Simple header - tool name and supplier with rating */}
-        <div className="space-y-2 mb-4">
-          <h3 className="text-lg leading-tight font-semibold line-clamp-2 group-hover:text-elec-yellow transition-colors duration-200">
-            {item.name}
-          </h3>
-          <div className="flex items-center gap-2 text-sm text-muted-foreground">
-            <span className="font-medium">{item.supplier}</span>
-            <span>⭐ {reviewData?.rating || '4.8'}</span>
-            <span className="text-xs">({reviewData?.count || '143'})</span>
-          </div>
+        {/* Supplier section at top */}
+        <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
+          <Package className="h-4 w-4" />
+          <span className="font-medium">{item.supplier}</span>
+          <span>⭐ {reviewData?.rating || '4.8'}</span>
+          <span className="text-xs">({reviewData?.count || '143'})</span>
         </div>
+
+        {/* Product title */}
+        <h3 className="text-lg leading-tight font-semibold line-clamp-2 group-hover:text-elec-yellow transition-colors duration-200 mb-4">
+          {item.name}
+        </h3>
 
         {/* 2x2 Information grid - clean layout */}
         <div className="grid grid-cols-2 gap-3 mb-4">
@@ -374,25 +375,48 @@ const ToolCard: React.FC<ToolCardProps> = ({
           </div>
         </div>
 
-        {/* Clean footer with price and single button */}
-        <div className="flex items-center justify-between pt-2 border-t mt-auto">
+        {/* Price section */}
+        <div className="flex items-center justify-between mb-3 pt-2 border-t">
           <div className="flex items-center gap-2">
             <span className="text-lg font-bold text-primary">
-              £{item.salePrice || item.price}
+              {item.salePrice || item.price}
             </span>
             {item.salePrice && item.salePrice !== item.price && (
               <span className="text-sm text-muted-foreground line-through">
-                £{item.price}
+                {item.price}
               </span>
             )}
+            <span className="text-xs text-muted-foreground">Inc Vat</span>
           </div>
+          <Badge variant="success" className="text-xs">
+            {item.stockStatus || 'In Stock'}
+          </Badge>
+        </div>
+
+        {/* Button section with compare */}
+        <div className="flex gap-2 mt-auto">
           <Button 
             size="sm" 
             onClick={() => window.open(getProductUrl(), '_blank')}
-            className="gap-2"
+            className="flex-1 gap-2"
           >
             View Product
             <ExternalLink className="h-3 w-3" />
+          </Button>
+          <Button 
+            size="sm" 
+            variant="outline"
+            onClick={() => {
+              if (isSelected && onRemoveFromCompare) {
+                onRemoveFromCompare(item.id.toString());
+              } else if (onAddToCompare) {
+                onAddToCompare(item);
+              }
+            }}
+            disabled={isCompareDisabled && !isSelected}
+            className="px-3"
+          >
+            {isSelected ? <Check className="h-4 w-4" /> : <Plus className="h-4 w-4" />}
           </Button>
         </div>
         
