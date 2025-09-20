@@ -320,16 +320,18 @@ const ToolCard: React.FC<ToolCardProps> = ({
         </div>
 
         {/* Price and stock section */}
-        <div className="flex items-center justify-between mb-3">
-          <div className="flex flex-col">
-            <span className="text-lg font-bold text-elec-yellow">
-              {item.salePrice || item.price}
-            </span>
-            <span className="text-xs text-muted-foreground">inc. VAT</span>
+        <div className="space-y-3 pt-2 border-t border-white/10">
+          <div className="flex items-center justify-between">
+            <div className="flex flex-col">
+              <span className="text-lg font-bold text-elec-yellow">
+                {item.salePrice || item.price}
+              </span>
+              <span className="text-xs text-muted-foreground">inc. VAT</span>
+            </div>
+            <Badge variant="success" className="text-xs">
+              In Stock
+            </Badge>
           </div>
-          <Badge variant="success" className="text-xs">
-            In Stock
-          </Badge>
         </div>
 
         {/* Button section */}
