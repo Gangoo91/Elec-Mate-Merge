@@ -60,8 +60,7 @@ const JobSourceProgress: React.FC<JobSourceProgressProps> = ({ searchProgress })
 
   return (
     <Card className="border-elec-yellow/20 bg-elec-card/50">
-      <CardContent className="p-4">
-        <div className="space-y-4">
+      <div className="space-y-4">
           {/* Overall Progress */}
           <div className="space-y-2">
             <div className="flex items-center justify-between">
@@ -116,7 +115,6 @@ const JobSourceProgress: React.FC<JobSourceProgressProps> = ({ searchProgress })
             </div>
           )}
         </div>
-      </CardContent>
     </Card>
   );
 };
