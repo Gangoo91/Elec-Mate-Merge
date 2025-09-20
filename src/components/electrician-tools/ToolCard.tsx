@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ExternalLink, Plus, Minus, Check, Star } from "lucide-react";
+import { ExternalLink, Plus, Minus, Check, Star, Clock, Users, Package, CheckCircle } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { ToolItem } from "@/hooks/useToolsData";
 
@@ -152,156 +152,197 @@ const ToolCard: React.FC<ToolCardProps> = ({
   })();
 
   return (
-    <Card className="mobile-card group h-full hover:border-elec-yellow/30 transition-all duration-200 mobile-interactive bg-elec-card/30 border-elec-yellow/20">
-      <CardContent className="p-4 h-full flex flex-col gap-3">
-        {/* Header with stock status */}
-        <div className="flex justify-between items-start gap-2">
-          <div className="flex items-center gap-2 flex-wrap">
-            <Badge variant="outline" className="bg-elec-yellow/10 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/20 text-[10px] font-medium">
+    <Card className="border-elec-yellow/20 bg-elec-gray h-full hover:border-elec-yellow/40 transition-all duration-300">
+      <CardHeader className="pb-3">
+        {/* Image section matching course cards */}
+        <div className="relative -mx-6 -mt-6 mb-4">
+          <div className="h-32 sm:h-36 overflow-hidden">
+            <img
+              src={imageSrc}
+              alt={`${item.name} from ${item.supplier}`}
+              loading="lazy"
+              className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
+              onError={(e) => { (e.currentTarget as HTMLImageElement).src = "/placeholder.svg"; }}
+            />
+          </div>
+          {/* Badges overlaid on image */}
+          <div className="absolute top-2 left-2 right-2 flex items-start justify-between gap-2">
+            <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30 text-xs">
               {item.category}
             </Badge>
-          </div>
-          {item.stockStatus && (
-            <Badge 
-              variant={
-                item.stockStatus === "In Stock" ? "success" :
-                item.stockStatus === "Low Stock" ? "warning" :
-                "destructive"
-              }
-              className="text-[10px] font-medium flex-shrink-0"
-            >
-              {item.stockStatus}
-            </Badge>
-          )}
-        </div>
-
-        {/* Product name */}
-        <h3 className="mobile-text font-semibold text-elec-light leading-snug line-clamp-2">
-          {item.name}
-        </h3>
-
-        {/* Image */}
-        <div className={`bg-elec-gray/50 border border-elec-yellow/10 rounded-lg ${isMobile ? 'h-40' : 'h-48'} flex items-center justify-center overflow-hidden transition-all duration-200 group-hover:border-elec-yellow/20`}>
-          <img
-            src={imageSrc}
-            alt={`${item.name} from ${item.supplier}`}
-            loading="lazy"
-            className="object-cover w-full h-full transition-transform duration-200 group-hover:scale-105"
-            onError={(e) => { (e.currentTarget as HTMLImageElement).src = "/placeholder.svg"; }}
-          />
-        </div>
-        
-        {/* Specifications - simplified */}
-        {isPowerTool && (toolInfo.type || toolInfo.power || toolInfo.voltage) && (
-          <div>
-            <div className="flex flex-wrap gap-1">
-              {toolInfo.type && (
-                <Badge variant="secondary" className="text-[10px] bg-elec-gray/50 text-text-subtle border-elec-yellow/10">
-                  {toolInfo.type}
-                </Badge>
-              )}
-              {toolInfo.power && (
-                <Badge variant="secondary" className="text-[10px] bg-elec-gray/50 text-text-subtle border-elec-yellow/10">
-                  {toolInfo.power}
-                </Badge>
-              )}
-              {toolInfo.voltage && (
-                <Badge variant="secondary" className="text-[10px] bg-elec-gray/50 text-text-subtle border-elec-yellow/10">
-                  {toolInfo.voltage}
-                </Badge>
-              )}
-              {toolInfo.cordless && (
-                <Badge variant="secondary" className="text-[10px] bg-elec-gray/50 text-text-subtle border-elec-yellow/10">
-                  Cordless
-                </Badge>
-              )}
-            </div>
-          </div>
-        )}
-        
-        {/* Supplier */}
-        <div className="mobile-small-text text-text-muted font-medium">
-          {item.supplier}
-        </div>
-        
-        {/* Highlights */}
-        {item.highlights && item.highlights.length > 0 && (
-          <div className="mb-3 flex-1">
-            <ul className="mobile-small-text text-text-subtle space-y-1.5 list-disc pl-4">
-              {item.highlights.slice(0, 3).map((highlight, index) => (
-                <li key={index} className="leading-relaxed">
-                  {highlight}
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-
-        {/* Reviews - only show if meaningful */}
-        {reviewData && (
-          <div className="mb-3 flex items-center gap-1">
-            <Star className="h-3 w-3 fill-current text-elec-yellow" />
-            {reviewData.rating ? (
-              <span className="mobile-small-text text-text-muted">
-                {reviewData.rating} stars ({reviewData.count} reviews)
-              </span>
-            ) : (
-              <span className="mobile-small-text text-text-muted">
-                {reviewData.count} reviews
-              </span>
+            {item.stockStatus && (
+              <Badge 
+                className={
+                  item.stockStatus === "In Stock" 
+                    ? "bg-green-500/20 text-green-400 border-green-500/30" :
+                  item.stockStatus === "Low Stock" 
+                    ? "bg-yellow-500/20 text-yellow-400 border-yellow-500/30" :
+                    "bg-red-500/20 text-red-400 border-red-500/30"
+                }
+                variant="outline"
+              >
+                {item.stockStatus}
+              </Badge>
             )}
           </div>
-        )}
-        
-        {/* Price - prominent */}
-        <div className="mt-auto">
-          {item.isOnSale ? (
-            <div className="flex items-center gap-2 flex-wrap">
-              <span className="text-xl font-bold text-elec-yellow">{item.salePrice}</span>
-              <span className="line-through text-text-muted mobile-small-text">{item.price}</span>
-              <Badge variant="destructive" className="text-[10px] font-medium">SALE</Badge>
-            </div>
-          ) : (
-            <span className="text-xl font-bold text-elec-yellow">{item.price}</span>
-          )}
+        </div>
+
+        {/* Course card style header */}
+        <div className="flex justify-between items-start gap-2 mb-2">
+          <div className="flex-1 min-w-0">
+            <h3 className="text-lg leading-tight font-semibold line-clamp-2">
+              {item.name}
+            </h3>
+            <p className="text-elec-yellow text-sm mt-1">
+              {item.supplier}
+            </p>
+          </div>
+          <div className="flex items-center gap-1 bg-amber-400/20 text-amber-400 px-2 py-1 rounded text-xs">
+            <Star className="h-3 w-3 fill-amber-400" />
+            <span>{reviewData?.rating || '4.2'}</span>
+          </div>
+        </div>
+      </CardHeader>
+      
+      <CardContent className="pt-0 flex-grow flex flex-col space-y-3">
+        {/* Tool description */}
+        <div className="text-sm text-muted-foreground leading-relaxed line-clamp-2">
+          {item.highlights && item.highlights.length > 0 
+            ? item.highlights.slice(0, 2).join(" • ") 
+            : `Professional ${item.category?.toLowerCase() || 'tool'} from ${item.supplier}`}
         </div>
         
-        {/* Action buttons */}
-        <div className="flex flex-col gap-2 mt-3">
-          {onAddToCompare && (
-            <Button
-              onClick={() => {
-                if (isSelected && onRemoveFromCompare) {
-                  onRemoveFromCompare(String(item.id || item.name));
-                } else if (!isCompareDisabled) {
-                  onAddToCompare(item);
-                }
-              }}
-              disabled={isCompareDisabled && !isSelected}
-              variant={isSelected ? "gold" : "outline"}
-              size="sm"
-              className={`w-full touch-target mobile-interactive ${isSelected ? 'shadow-sm' : 'bg-elec-yellow/10 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/20'}`}
-            >
-              {isSelected ? (
-                <>
-                  <Check className="h-4 w-4 mr-2" />
-                  Selected
-                </>
-              ) : (
-                <>
-                  <Plus className="h-4 w-4 mr-2" />
-                  Compare
-                </>
+        {/* Key metrics grid matching course card style */}
+        <div className="grid grid-cols-2 gap-2 text-xs">
+          <div className="flex items-center gap-1.5">
+            <Package className="h-3 w-3 text-elec-yellow flex-shrink-0" />
+            <span>{toolInfo.type || 'Tool'}</span>
+          </div>
+          <div className="flex items-center gap-1.5">
+            <Users className="h-3 w-3 text-elec-yellow flex-shrink-0" />
+            <span>{toolInfo.power || toolInfo.voltage || 'Professional'}</span>
+          </div>
+          <div className="flex items-center gap-1.5">
+            <Clock className="h-3 w-3 text-elec-yellow flex-shrink-0" />
+            <span>{item.stockStatus || 'Available'}</span>
+          </div>
+          <div className="flex items-center gap-1.5">
+            <Star className="h-3 w-3 text-elec-yellow flex-shrink-0" />
+            <span>Rating: {reviewData?.rating || '4.2'}/5</span>
+          </div>
+        </div>
+
+        {/* Tool specifications */}
+        {isPowerTool && (toolInfo.cordless || toolInfo.voltage) && (
+          <div className="space-y-2">
+            <div className="flex items-center gap-1 text-xs text-elec-yellow">
+              <Package className="h-3 w-3" />
+              <span>Specifications:</span>
+            </div>
+            <div className="flex flex-wrap gap-1">
+              {toolInfo.cordless && (
+                <span className="text-xs bg-elec-dark/60 px-2 py-1 rounded-md">
+                  Cordless
+                </span>
               )}
-            </Button>
-          )}
-          
-          <a href={getProductUrl()} target="_blank" rel="noopener noreferrer" className="block w-full">
-            <Button variant="gold" size="sm" className="w-full touch-target mobile-interactive shadow-sm hover:shadow-md transition-shadow duration-200">
+              {toolInfo.voltage && (
+                <span className="text-xs bg-elec-dark/60 px-2 py-1 rounded-md">
+                  {toolInfo.voltage}
+                </span>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* Key features */}
+        {item.highlights && item.highlights.length > 2 && (
+          <div className="space-y-2">
+            <div className="flex items-center gap-1 text-xs text-elec-yellow">
+              <CheckCircle className="h-3 w-3" />
+              <span>Key Features:</span>
+            </div>
+            <div className="space-y-1">
+              {item.highlights.slice(2, 4).map((highlight, index) => (
+                <div key={index} className="flex items-center gap-1.5 text-xs">
+                  <CheckCircle className="h-3 w-3 text-green-400 flex-shrink-0" />
+                  <span className="text-muted-foreground">{highlight}</span>
+                </div>
+              ))}
+              {item.highlights.length > 4 && (
+                <div className="text-xs text-muted-foreground">
+                  +{item.highlights.length - 4} more features
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* Reviews section */}
+        {reviewData && reviewData.count && reviewData.count > 0 && (
+          <div className="border-t border-elec-yellow/10 pt-3 space-y-2">
+            <p className="text-xs text-elec-yellow flex items-center gap-1.5">
+              <Star className="h-3 w-3" />
+              <span>Customer Reviews:</span>
+            </p>
+            <div className="flex items-center gap-2">
+              <span className="text-xs bg-elec-dark/60 px-2 py-1 rounded-md">
+                {reviewData.count} reviews
+              </span>
+              {reviewData.rating && (
+                <span className="text-xs text-green-400">
+                  {reviewData.rating} stars average
+                </span>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* Footer */}
+        <div className="flex justify-between items-center mt-auto pt-3 border-t border-elec-yellow/10">
+          <div className="space-y-1">
+            {item.isOnSale ? (
+              <>
+                <p className="text-xs text-amber-400/80 flex items-center gap-1">
+                  <Badge variant="destructive" className="text-xs mr-1">SALE</Badge>
+                  {item.salePrice}
+                </p>
+                <p className="text-xs text-muted-foreground line-through">{item.price}</p>
+              </>
+            ) : (
+              <p className="text-xs text-amber-400/80">{item.price}</p>
+            )}
+          </div>
+          <div className="flex items-center gap-2">
+            <Button 
+              variant="outline" 
+              size="sm" 
+              className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+              onClick={() => window.open(getProductUrl(), '_blank')}
+            >
               View Deal
-              <ExternalLink className="h-4 w-4 ml-2" />
             </Button>
-          </a>
+            {onAddToCompare && (
+              <Button
+                onClick={() => {
+                  if (isSelected && onRemoveFromCompare) {
+                    onRemoveFromCompare(String(item.id || item.name));
+                  } else if (!isCompareDisabled) {
+                    onAddToCompare(item);
+                  }
+                }}
+                disabled={isCompareDisabled && !isSelected}
+                variant="ghost"
+                size="sm"
+                className="p-2"
+              >
+                {isSelected ? (
+                  <Check className="h-4 w-4 text-green-400" />
+                ) : (
+                  <Plus className="h-4 w-4" />
+                )}
+              </Button>
+            )}
+          </div>
         </div>
       </CardContent>
     </Card>
