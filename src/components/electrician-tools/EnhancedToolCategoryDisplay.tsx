@@ -270,20 +270,24 @@ const EnhancedToolCategoryDisplay = ({ categoryName }: EnhancedToolCategoryDispl
       {/* Enhanced Content Section */}
       {activeTab === "browse" ? (
         <section className="space-y-6">
-          {/* Special Hand Tools sections */}
+          {/* Top 6 Category Products Carousel */}
+          <CategoryToolsCarousel 
+            tools={filteredTools} 
+            categoryName={categoryName}
+            className="mobile-section-spacing"
+          />
+
+          {/* Quick Tool Finder - Available for all categories */}
+          <QuickToolFinder />
+          
+          {/* Professional Tips - Available for all categories */}
+          <ProfessionalTips />
+
+          {/* Hand Tools specific sections */}
           {categoryName.toLowerCase() === "hand tools" && (
             <div className="space-y-8">
-              {/* Quick Tool Finder */}
-              <QuickToolFinder />
-              
-              {/* Tool Comparison */}
+              {/* Tool Comparison - Hand Tools specific */}
               <ToolComparison tools={filteredTools} />
-              
-              {/* Professional Tips */}
-              <ProfessionalTips />
-              
-              {/* Job-Specific Recommendations */}
-              
               
               {/* Section Divider */}
               <div className="flex items-center gap-3 py-4">
@@ -306,12 +310,6 @@ const EnhancedToolCategoryDisplay = ({ categoryName }: EnhancedToolCategoryDispl
             <TopDiscountsStrip deals={dealsData.deals} />
           )}
 
-          {/* Top 6 Category Products Carousel */}
-          <CategoryToolsCarousel 
-            tools={filteredTools} 
-            categoryName={categoryName}
-            className="mobile-section-spacing"
-          />
 
           {/* Smart Search Bar */}
           <SmartSearchBar
