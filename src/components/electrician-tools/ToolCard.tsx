@@ -152,7 +152,7 @@ const ToolCard: React.FC<ToolCardProps> = ({
   })();
 
   return (
-    <Card className="bg-transparent border-white/10 hover:border-elec-yellow/30 hover:shadow-xl hover:shadow-elec-yellow/10 hover:scale-[1.02] transition-all duration-300 rounded-xl overflow-hidden h-full">
+    <Card className="bg-transparent bg-gradient-to-br from-white/10 via-white/5 to-transparent border-white/10 hover:border-elec-yellow/30 hover:shadow-xl hover:shadow-elec-yellow/10 hover:scale-[1.02] transition-all duration-300 rounded-xl overflow-hidden h-full">
       <CardHeader className="pb-3">
         {/* Image section matching course cards */}
         <div className="relative -mx-6 -mt-6 mb-4">
