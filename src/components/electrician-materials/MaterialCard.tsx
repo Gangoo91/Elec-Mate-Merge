@@ -114,7 +114,7 @@ const MaterialCard: React.FC<MaterialCardProps> = ({
   })();
 
   return (
-    <Card className="group bg-gradient-to-br from-white/10 via-white/5 to-transparent rounded-xl border border-white/10 hover:border-elec-yellow/30 transition-all duration-300 hover:shadow-xl hover:shadow-elec-yellow/10 hover:scale-[1.02] h-full cursor-pointer overflow-hidden">
+    <Card className="group border-elec-yellow/20 bg-elec-gray hover:border-elec-yellow/50 hover:bg-elec-gray/80 transition-all duration-300 cursor-pointer h-full overflow-hidden">
       {/* Image at the very top */}
       <div className="relative overflow-hidden rounded-t-xl">
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent z-10 overflow-hidden"></div>
