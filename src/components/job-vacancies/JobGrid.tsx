@@ -37,19 +37,25 @@ const JobGrid: React.FC<JobGridProps> = ({
 }) => {
   if (isLoading) {
     return (
-      <div className="flex justify-center py-8">
-        <div className="animate-spin h-8 w-8 border-4 border-elec-yellow border-t-transparent rounded-full"></div>
+      <div className="bg-gradient-to-br from-white/5 via-white/2 to-transparent border border-white/10 rounded-xl p-8 backdrop-blur-sm">
+        <div className="flex justify-center">
+          <div className="animate-spin h-8 w-8 border-4 border-elec-yellow border-t-transparent rounded-full"></div>
+        </div>
       </div>
     );
   }
 
   if (jobs.length === 0) {
     return (
-      <div className="p-8 text-center border border-dashed border-elec-yellow/20 rounded-lg">
-        <FileText className="h-12 w-12 text-elec-yellow/50 mx-auto mb-3" />
-        <h3 className="text-lg font-medium">No matching jobs found</h3>
-        <p className="text-muted-foreground mt-1">Try adjusting your filters or check back later for new opportunities</p>
-        <Button onClick={resetFilters} variant="outline" className="mt-4">
+      <div className="bg-gradient-to-br from-white/5 via-white/2 to-transparent border border-white/10 rounded-xl p-8 text-center backdrop-blur-sm">
+        <FileText className="h-16 w-16 text-white/40 mx-auto mb-4" />
+        <h3 className="text-lg font-medium text-white mb-2">No matching jobs found</h3>
+        <p className="text-white/80 mt-1">Try adjusting your filters or check back later for new opportunities</p>
+        <Button 
+          onClick={resetFilters} 
+          variant="outline" 
+          className="mt-4 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 hover:border-elec-yellow/50"
+        >
           View All Jobs
         </Button>
       </div>
@@ -57,7 +63,7 @@ const JobGrid: React.FC<JobGridProps> = ({
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
+    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 sm:gap-8">
       {jobs.map(job => (
         <JobCard
           key={job.id}

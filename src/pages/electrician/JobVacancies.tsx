@@ -102,14 +102,18 @@ const JobVacancies = ({ onBack }: JobVacanciesProps) => {
 
 
   return (
-    <div className="min-h-screen bg-elec-gray rounded-sm">
-      <div className="container mx-auto px-4 py-6 space-y-6 animate-fade-in">
+    <div className="min-h-screen bg-gradient-to-br from-elec-dark via-elec-dark/98 to-elec-dark/95">
+      <div className="container mx-auto px-4 py-6 space-y-6 sm:space-y-8 animate-fade-in">
         <Helmet>
           <title>UK Electrician Job Vacancies | Mobile Job Search</title>
           <meta name="description" content="Find electrician jobs across the UK with mobile-first search, filters and insights. BS7671-aware." />
           <link rel="canonical" href="/electrician/job-vacancies" />
         </Helmet>
-        <JobVacancyHeader onBack={onBack} />
+        
+        {/* Enhanced Header with gradient background */}
+        <div className="bg-gradient-to-br from-white/10 via-white/5 to-transparent border border-white/10 rounded-xl p-6 backdrop-blur-sm">
+          <JobVacancyHeader onBack={onBack} />
+        </div>
 
         <DropdownTabs
           defaultValue="job-search"
@@ -120,47 +124,59 @@ const JobVacancies = ({ onBack }: JobVacanciesProps) => {
               label: "Job Search",
               icon: Search,
               content: (
-                <div className="space-y-6">
-                  {/* CV Builder - Full width at top */}
-                  <div className="w-full">
+                <div className="space-y-6 sm:space-y-8">
+                  {/* CV Builder - Enhanced styling */}
+                  <div className="bg-gradient-to-br from-white/10 via-white/5 to-transparent border border-white/10 rounded-xl overflow-hidden backdrop-blur-sm transition-all duration-300 hover:border-elec-yellow/30">
                     <CVBuilderBox />
                   </div>
 
-                  {/* Unified Job Search */}
-                  <div className="w-full">
+                  {/* Unified Job Search - Enhanced container */}
+                  <div className="bg-gradient-to-br from-white/5 via-white/2 to-transparent border border-white/10 rounded-xl overflow-hidden backdrop-blur-sm">
                     <UnifiedJobSearch />
                   </div>
 
-                  {/* Job Insights - always show when jobs are available */}
+                  {/* Job Insights - Enhanced styling when available */}
                   {jobs.length > 0 && (
-                    <JobInsights jobs={jobs} location="" />
+                    <div className="bg-gradient-to-br from-white/10 via-white/5 to-transparent border border-white/10 rounded-xl p-6 backdrop-blur-sm transition-all duration-300 hover:border-elec-yellow/30">
+                      <JobInsights jobs={jobs} location="" />
+                    </div>
                   )}
                 </div>
               )
             },
-          {
-            value: "market-insights",
-            label: "Market Insights",
-            icon: BarChart3,
-            content: (
-              <div className="space-y-6">
-                <JobMarketInsights jobCount={jobs.length} />
-              </div>
-            )
-          },
-          {
-            value: "interview-guidance",
-            label: "Interview Guidance",
-            icon: MessageCircle,
-            content: <InterviewGuidanceTab />
-          },
-          {
-            value: "knowing-your-worth",
-            label: "Know Your Worth",
-            icon: PoundSterling,
-            content: <KnowingYourWorthTab />
-          }
-        ]}
+            {
+              value: "market-insights",
+              label: "Market Insights",
+              icon: BarChart3,
+              content: (
+                <div className="space-y-6 sm:space-y-8">
+                  <div className="bg-gradient-to-br from-white/10 via-white/5 to-transparent border border-white/10 rounded-xl p-6 backdrop-blur-sm">
+                    <JobMarketInsights jobCount={jobs.length} />
+                  </div>
+                </div>
+              )
+            },
+            {
+              value: "interview-guidance",
+              label: "Interview Guidance",
+              icon: MessageCircle,
+              content: (
+                <div className="bg-gradient-to-br from-white/10 via-white/5 to-transparent border border-white/10 rounded-xl p-6 backdrop-blur-sm">
+                  <InterviewGuidanceTab />
+                </div>
+              )
+            },
+            {
+              value: "knowing-your-worth",
+              label: "Know Your Worth",
+              icon: PoundSterling,
+              content: (
+                <div className="bg-gradient-to-br from-white/10 via-white/5 to-transparent border border-white/10 rounded-xl p-6 backdrop-blur-sm">
+                  <KnowingYourWorthTab />
+                </div>
+              )
+            }
+          ]}
         />
       </div>
     </div>
