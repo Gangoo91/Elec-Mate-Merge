@@ -25,6 +25,12 @@ import ProductFilters, { FilterState } from "./ProductFilters";
 import MoreToolsDropdown from "./MoreToolsDropdown";
 import EnhancedProductGrid from "./EnhancedProductGrid";
 
+// Hand Tools specific components
+import ToolComparison from "./ToolComparison";
+import ProfessionalTips from "./ProfessionalTips";
+import JobSpecificRecommendations from "./JobSpecificRecommendations";
+import QuickToolFinder from "./QuickToolFinder";
+
 const CATEGORY_META: Record<string, { title: string; description: string }> = {
   "test-equipment": {
     title: "Test Equipment",
@@ -263,6 +269,32 @@ const EnhancedToolCategoryDisplay = ({ categoryName }: EnhancedToolCategoryDispl
       {/* Enhanced Content Section */}
       {activeTab === "browse" ? (
         <section className="space-y-6">
+          {/* Special Hand Tools sections */}
+          {categoryName.toLowerCase() === "hand tools" && (
+            <div className="space-y-8">
+              {/* Quick Tool Finder */}
+              <QuickToolFinder />
+              
+              {/* Tool Comparison */}
+              <ToolComparison tools={filteredTools} />
+              
+              {/* Professional Tips */}
+              <ProfessionalTips />
+              
+              {/* Job-Specific Recommendations */}
+              <JobSpecificRecommendations />
+              
+              {/* Section Divider */}
+              <div className="flex items-center gap-3 py-4">
+                <div className="h-px bg-gradient-to-r from-transparent via-elec-yellow/30 to-transparent flex-1" />
+                <h3 className="text-xl font-semibold text-white px-4">
+                  Browse Hand Tools
+                </h3>
+                <div className="h-px bg-gradient-to-r from-transparent via-elec-yellow/30 to-transparent flex-1" />
+              </div>
+            </div>
+          )}
+
           {/* Deals of the Day Banner */}
           {dealsData.topDeal && (
             <DealsOfTheDayBanner deal={dealsData.topDeal} />
