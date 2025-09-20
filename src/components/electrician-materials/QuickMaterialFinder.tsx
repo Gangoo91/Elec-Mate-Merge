@@ -298,7 +298,7 @@ const QuickMaterialFinder = () => {
                     <span className="font-medium text-white">{option.label}</span>
                     <ArrowRight className="h-4 w-4 text-green-400" />
                   </div>
-                  <p className="text-sm text-white/80 break-words overflow-wrap-anywhere">{option.description}</p>
+                  <p className="text-sm text-white/80 break-words overflow-wrap-anywhere text-wrap">{option.description}</p>
                 </div>
               </Button>
             ))}
