@@ -114,7 +114,7 @@ const MaterialCard: React.FC<MaterialCardProps> = ({
   })();
 
   return (
-    <Card className="border-elec-yellow/20 bg-elec-gray hover:border-elec-yellow/50 hover:bg-elec-gray/80 transition-all duration-300 cursor-pointer h-full flex flex-col group">
+    <Card className="bg-slate-800/90 border-slate-700 hover:border-elec-yellow/50 transition-all duration-300 hover:scale-[1.02] cursor-pointer h-full flex flex-col group">
       <CardHeader className="pb-3">
         {/* Image at the very top */}
         <div className="relative overflow-hidden rounded-lg -mx-6 -mt-6 mb-4">
@@ -131,7 +131,7 @@ const MaterialCard: React.FC<MaterialCardProps> = ({
           </div>
           {/* Badges overlaid on image */}
           <div className="absolute top-3 left-3 right-3 flex items-start justify-between gap-2 z-20">
-            <Badge variant="secondary" className="text-xs bg-black/70 text-white border-white/20 backdrop-blur-sm">
+            <Badge variant="outline" className="bg-slate-700/50 text-slate-300 border-slate-600 text-xs font-medium">
               {item.category}
             </Badge>
             {item.stockStatus && (
@@ -154,10 +154,10 @@ const MaterialCard: React.FC<MaterialCardProps> = ({
         {/* Header Section */}
         <div className="flex items-start justify-between gap-3">
           <div className="flex-1 min-w-0">
-            <h3 className="text-lg font-semibold text-elec-yellow group-hover:text-elec-yellow/90 transition-colors line-clamp-2">
+            <h3 className="text-base text-white leading-tight line-clamp-2 group-hover:text-elec-yellow transition-colors">
               {item.name}
             </h3>
-            <p className="text-sm text-elec-light/80 mt-1">
+            <p className="text-elec-yellow font-medium text-sm mt-1">
               {item.supplier}
             </p>
           </div>
@@ -175,14 +175,14 @@ const MaterialCard: React.FC<MaterialCardProps> = ({
             <div className="flex items-center gap-2">
               <Package className="h-4 w-4 text-elec-yellow flex-shrink-0" />
               <div>
-                <div className="text-white/60 text-xs">Type</div>
+                <div className="text-slate-500 text-xs">Type</div>
                 <div className="text-white font-medium">{isCable && cableInfo.type ? cableInfo.type : 'Standard'}</div>
               </div>
             </div>
             <div className="flex items-center gap-2">
               <Users className="h-4 w-4 text-elec-yellow flex-shrink-0" />
               <div>
-                <div className="text-white/60 text-xs">Size</div>
+                <div className="text-slate-500 text-xs">Size</div>
                 <div className="text-white font-medium">{isCable && cableInfo.size ? cableInfo.size : 'Standard'}</div>
               </div>
             </div>
@@ -224,12 +224,12 @@ const MaterialCard: React.FC<MaterialCardProps> = ({
           )}
 
           {/* Price section */}
-          <div className="bg-background/30 rounded-lg p-3 border border-elec-yellow/10">
-            <div className="text-xs text-white/60 mb-1">Price</div>
+          <div className="bg-slate-700/30 rounded-lg p-3 border border-slate-700">
+            <div className="text-xs text-slate-500 mb-1">Price</div>
             {item.isOnSale ? (
               <div className="flex items-center gap-2 flex-wrap">
                 <span className="text-elec-yellow font-semibold text-lg">{item.salePrice}</span>
-                <span className="line-through text-white/60 text-sm">{item.price}</span>
+                <span className="line-through text-slate-400 text-sm">{item.price}</span>
                 <Badge variant="destructive" className="text-xs">SALE</Badge>
               </div>
             ) : (
@@ -264,7 +264,7 @@ const MaterialCard: React.FC<MaterialCardProps> = ({
               {isSelected ? (
                 <Check className={`h-4 w-4 text-green-400`} />
               ) : (
-                <Plus className="h-4 w-4 text-white/60" />
+                <Plus className="h-4 w-4 text-slate-400" />
               )}
             </Button>
           )}
