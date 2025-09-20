@@ -114,7 +114,7 @@ const MaterialCard: React.FC<MaterialCardProps> = ({
   })();
 
   return (
-    <Card className="border-elec-yellow/20 bg-elec-gray h-full hover:border-elec-yellow/40 transition-all duration-300 overflow-hidden">
+    <Card className="bg-transparent bg-gradient-to-br from-white/10 via-white/5 to-transparent border-elec-yellow/20 bg-elec-gray h-full hover:border-elec-yellow/40 transition-all duration-300 overflow-hidden">
       <CardHeader className="pb-3">
         {/* Simplified image section matching course cards */}
         <div className="relative -mx-6 -mt-6 mb-4">
